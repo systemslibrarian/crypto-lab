@@ -467,7 +467,6 @@
           </div>
         </div>
         <nav class="masthead-nav" aria-label="Primary">
-          <a class="nav-link" href="#catalog">Projects</a>
           <a class="nav-link" href="https://github.com/systemslibrarian" target="_blank" rel="noopener">GitHub</a>
           <a class="cta" href="https://ciphermuseum.com" target="_blank" rel="noopener">Open Cipher Museum</a>
         </nav>
@@ -485,9 +484,9 @@
             <div class="feature-copy">An interactive museum spanning 2,500 years of cryptographic history. Ten halls, thirty-seven ciphers, live encryption demos, and cryptanalysis labs. It works as both a public-facing showcase and a serious educational piece.</div>
             <div class="feature-meta">
               <div class="stack">
-                <span class="chip">HTML/CSS/JS</span>
-                <span class="chip">Static</span>
-                <span class="chip">History</span>
+                <span class="chip">37 Ciphers</span>
+                <span class="chip">10 Halls</span>
+                <span class="chip">2,500 Years</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -499,9 +498,9 @@
             <div class="feature-copy">One container, two passphrases, two messages. A practical demonstration of plausible deniability, forensic ambiguity, and browser-first UX around serious primitives.</div>
             <div class="feature-meta">
               <div class="stack">
-                <span class="chip">Rust/WASM</span>
                 <span class="chip">Argon2id</span>
-                <span class="chip">ChaCha20</span>
+                <span class="chip">ChaCha20-Poly1305</span>
+                <span class="chip">SHA-256</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -513,9 +512,10 @@
             <div class="feature-copy">Six exhibits from Ali Baba cave to zk-SNARK intuition, with real Schnorr arithmetic, commitments, and replayable transcripts instead of vague metaphors.</div>
             <div class="feature-meta">
               <div class="stack">
-                <span class="chip">HTML/JS</span>
                 <span class="chip">Schnorr</span>
-                <span class="chip">SHA-256</span>
+                <span class="chip">SHA-256 Commitments</span>
+                <span class="chip">Fiat-Shamir</span>
+                <span class="chip">zk-SNARK</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -529,9 +529,9 @@
             <div class="project-copy">Derive any password from a master passphrase using HMAC-DRBG. Nothing stored, nothing synced, nothing left behind to breach.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">TypeScript</span>
-                <span class="chip">PBKDF2</span>
+                <span class="chip">PBKDF2-SHA-256</span>
                 <span class="chip">HMAC-DRBG</span>
+                <span class="chip">Rejection Sampling</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -543,9 +543,10 @@
             <div class="project-copy">A live Dual_EC_DRBG backdoor demo showing state recovery and future-output prediction while standard statistical tests still appear clean.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">TypeScript</span>
+                <span class="chip">Dual_EC_DRBG</span>
+                <span class="chip">HMAC-DRBG</span>
+                <span class="chip">ChaCha20-DRBG</span>
                 <span class="chip">P-256</span>
-                <span class="chip">NIST</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -557,9 +558,9 @@
             <div class="project-copy">ECIES P-256 and RSA-OAEP compared side by side with live timing, key-size tradeoffs, and a simple sealed-letter mental model.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">TypeScript</span>
-                <span class="chip">WebCrypto</span>
-                <span class="chip">ECIES</span>
+                <span class="chip">ECIES P-256</span>
+                <span class="chip">RSA-OAEP</span>
+                <span class="chip">AES-256-GCM</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -571,9 +572,10 @@
             <div class="project-copy">Threshold file encryption using secret sharing and Korean post-quantum cryptography, compiled to WASM for direct browser use.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">Rust/WASM</span>
-                <span class="chip">ML-KEM</span>
-                <span class="chip">Shamir</span>
+                <span class="chip">AES-256-GCM</span>
+                <span class="chip">Shamir SSS</span>
+                <span class="chip">SMAUG-T</span>
+                <span class="chip">HAETAE</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -599,9 +601,11 @@
             <div class="project-copy">Secure optical file transfer through QR-code GIFs with fountain codes for loss recovery and fail-closed cryptography for real-world awkward channels.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">Python</span>
-                <span class="chip">AES-GCM</span>
-                <span class="chip">Fountain Codes</span>
+                <span class="chip">AES-256-GCM</span>
+                <span class="chip">Argon2id</span>
+                <span class="chip">ML-KEM-1024</span>
+                <span class="chip">X25519</span>
+                <span class="chip">Dilithium3</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -613,8 +617,9 @@
             <div class="project-copy">A modern Rust reimplementation of SNOW with AEAD support, Argon2id-derived keys, and steganographic output options.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">Rust</span>
-                <span class="chip">AEAD</span>
+                <span class="chip">XChaCha20-Poly1305</span>
+                <span class="chip">Argon2id</span>
+                <span class="chip">HKDF-SHA-256</span>
                 <span class="chip">Steganography</span>
               </div>
               <span class="arrow">→</span>
@@ -627,9 +632,10 @@
             <div class="project-copy">AES-GCM encrypted messaging delivered as Morse code with audio playback and browser decoding. Intentionally playful, still grounded in real primitives.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">HTML/JS</span>
-                <span class="chip">AES-GCM</span>
-                <span class="chip">Morse</span>
+                <span class="chip">AES-256-GCM</span>
+                <span class="chip">Argon2id</span>
+                <span class="chip">HKDF-SHA-256</span>
+                <span class="chip">Ed25519</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -641,9 +647,9 @@
             <div class="project-copy">Information-theoretic private information retrieval applied to catalog privacy. A direct bridge from library ethics to concrete mathematical guarantees.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">TypeScript</span>
                 <span class="chip">IT-PIR</span>
-                <span class="chip">Vite</span>
+                <span class="chip">XOR Secret Sharing</span>
+                <span class="chip">Chor et al. 1995</span>
               </div>
               <span class="arrow">→</span>
             </div>

@@ -13,7 +13,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | Project | Concept | Primitives |
 |---|---|---|
 | [Shadow Vault](https://systemslibrarian.github.io/shadow-vault/) | Deniable Encryption | Argon2id · ChaCha20-Poly1305 · SHA-256 |
-| [ZK Proof Lab](https://systemslibrarian.github.io/zk-proof-lab/) | Zero-Knowledge Proofs | Schnorr · Fiat-Shamir · SHA-256 Commitments |
+| [ZK Proof Lab](https://systemslibrarian.github.io/zk-proof-lab/) | Zero-Knowledge Proofs | Schnorr · Fiat-Shamir · SHA-256 Commitments · zk-SNARK |
 
 ---
 
@@ -21,17 +21,17 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 
 | Project | Category | Stack |
 |---|---|---|
-| [Shadow Vault](https://systemslibrarian.github.io/shadow-vault/) | Deniable Encryption | Rust/WASM · Argon2id · ChaCha20-Poly1305 |
-| [ZK Proof Lab](https://systemslibrarian.github.io/zk-proof-lab/) | Zero-Knowledge Proofs | HTML/JS · Schnorr · Fiat-Shamir |
-| [Phantom Vault](https://systemslibrarian.github.io/phantom-vault/) | Stateless Passwords | TypeScript · PBKDF2-SHA-256 · HMAC-DRBG |
-| [Corrupted Oracle](https://systemslibrarian.github.io/corrupted-oracle/) | Backdoored RNG | TypeScript · Dual\_EC\_DRBG · P-256 |
-| [Iron Letter](https://systemslibrarian.github.io/iron-letter/) | Asymmetric Encryption | TypeScript · WebCrypto · ECIES · RSA-OAEP |
-| [Quantum Vault KpqC](https://systemslibrarian.github.io/quantum-vault-kpqc/) | Post-Quantum | Rust/WASM · ML-KEM · HAETAE · Shamir SSS |
-| [Blind Oracle](https://systemslibrarian.github.io/blind-oracle/) | Homomorphic Encryption | TypeScript · Rust · TFHE-rs |
-| [Snow 2](https://systemslibrarian.github.io/snow2/) | Stream Cipher | Rust · XChaCha20-Poly1305 · Argon2id · HKDF |
-| [Dad Mode Morse](https://systemslibrarian.github.io/dad-mode-morse2/) | Encrypted Morse | HTML/JS · AES-256-GCM · Argon2id · Ed25519 |
-| [Patron Shield](https://systemslibrarian.github.io/patron-shield/) | Library Privacy | TypeScript · IT-PIR · XOR Secret Sharing |
-| [Crypto Compare](https://systemslibrarian.github.io/crypto-compare/) | Algorithm Reference | TypeScript · 85 Algorithms · PQ-Safe Filter |
+| [Shadow Vault](https://systemslibrarian.github.io/shadow-vault/) | Deniable Encryption | Argon2id · ChaCha20-Poly1305 · SHA-256 |
+| [ZK Proof Lab](https://systemslibrarian.github.io/zk-proof-lab/) | Zero-Knowledge Proofs | Schnorr · SHA-256 Commitments · Fiat-Shamir · zk-SNARK |
+| [Phantom Vault](https://systemslibrarian.github.io/phantom-vault/) | Stateless Passwords | PBKDF2-SHA-256 · HMAC-DRBG · Rejection Sampling |
+| [Corrupted Oracle](https://systemslibrarian.github.io/corrupted-oracle/) | Backdoored RNG | Dual\_EC\_DRBG · HMAC-DRBG · ChaCha20-DRBG · P-256 |
+| [Iron Letter](https://systemslibrarian.github.io/iron-letter/) | Asymmetric Encryption | ECIES P-256 · RSA-OAEP · AES-256-GCM |
+| [Quantum Vault KpqC](https://systemslibrarian.github.io/quantum-vault-kpqc/) | Post-Quantum | AES-256-GCM · Shamir SSS · SMAUG-T · HAETAE |
+| [Blind Oracle](https://systemslibrarian.github.io/blind-oracle/) | Homomorphic Encryption | TFHE-rs |
+| [Snow 2](https://systemslibrarian.github.io/snow2/) | Stream Cipher | XChaCha20-Poly1305 · Argon2id · HKDF-SHA-256 · Steganography |
+| [Dad Mode Morse](https://systemslibrarian.github.io/dad-mode-morse2/) | Encrypted Morse | AES-256-GCM · Argon2id · HKDF-SHA-256 · Ed25519 |
+| [Patron Shield](https://systemslibrarian.github.io/patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
+| [Crypto Compare](https://systemslibrarian.github.io/crypto-compare/) | Algorithm Reference | NIST · PQ-Safe |
 
 ---
 
@@ -48,7 +48,7 @@ These sit outside the browser-demo scope of Crypto Lab but belong to the same co
 
 Each demo is self-contained: one concept, one repository, full source. Documentation and threat models are included where the attack surface warrants it.
 
-Built by [Paul Clark](https://github.com/systemslibrarian) — IT Librarian & Systems Analyst at Leon County Public Library.
+Built by [Paul Clark](https://github.com/systemslibrarian) — IT Librarian & Systems Analyst.
 
 ---
 

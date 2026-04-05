@@ -168,16 +168,6 @@
       padding: 42px 0 30px;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(340px, 0.9fr);
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .hero-main,
-    .hero-side,
-    .section-card,
     .feature-card,
     .project-card,
     .footer-quote {
@@ -189,13 +179,11 @@
 
     .hero-main {
       padding: 34px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 520px;
       background:
         linear-gradient(145deg, rgba(53, 214, 187, 0.07), transparent 30%),
         linear-gradient(180deg, rgba(8, 17, 24, 0.92), rgba(8, 17, 24, 0.82));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
     }
 
     .eyebrow {
@@ -246,57 +234,6 @@
       margin-top: 30px;
     }
 
-    .hero-strip {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 34px;
-    }
-
-    .signal {
-      border: 1px solid var(--border);
-      background: rgba(10, 22, 29, 0.78);
-      padding: 16px 18px;
-      min-height: 116px;
-    }
-
-    .signal-label {
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 10px;
-    }
-
-    .signal-value {
-      color: var(--text-hi);
-      font-size: 28px;
-      line-height: 1;
-      margin: 12px 0 10px;
-    }
-
-    .signal-note {
-      color: var(--text-dim);
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .hero-side {
-      padding: 24px;
-      display: grid;
-      grid-template-rows: auto auto 1fr;
-      gap: 16px;
-      background:
-        linear-gradient(180deg, rgba(12, 24, 33, 0.96), rgba(8, 17, 24, 0.84));
-    }
-
-    .side-panel {
-      border: 1px solid var(--border);
-      background: rgba(8, 17, 24, 0.8);
-      padding: 18px;
-    }
-
-    .panel-kicker,
-    .section-kicker,
     .card-kicker {
       display: inline-flex;
       align-items: center;
@@ -307,8 +244,6 @@
       font-size: 10px;
     }
 
-    .panel-kicker::before,
-    .section-kicker::before,
     .card-kicker::before {
       content: '';
       width: 18px;
@@ -316,99 +251,8 @@
       background: currentColor;
     }
 
-    .side-panel h2,
-    .section-card h2 {
-      font-family: var(--serif);
-      font-weight: 400;
-      color: var(--text-hi);
-      font-size: 1.85rem;
-      line-height: 1.05;
-      margin: 12px 0 12px;
-    }
-
-    .side-panel p,
-    .section-card p {
-      color: var(--text);
-      font-size: 12.5px;
-      line-height: 1.75;
-    }
-
-    .mission-list,
-    .timeline,
-    .quick-links {
-      display: grid;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .mission-item,
-    .timeline-item,
-    .quick-link {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 12px;
-      align-items: start;
-      padding-top: 10px;
-      border-top: 1px solid rgba(99, 128, 146, 0.18);
-    }
-
-    .mission-item:first-child,
-    .timeline-item:first-child,
-    .quick-link:first-child {
-      border-top: none;
-      padding-top: 0;
-    }
-
-    .mission-index,
-    .timeline-year {
-      color: var(--teal);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      min-width: 64px;
-    }
-
-    .mission-text strong,
-    .quick-link strong {
-      color: var(--text-hi);
-      display: block;
-      font-size: 12px;
-      margin-bottom: 4px;
-    }
-
-    .mission-text span,
-    .timeline-copy,
-    .quick-link span {
-      color: var(--text-dim);
-      font-size: 11px;
-      line-height: 1.65;
-    }
-
-    .quick-link {
-      text-decoration: none;
-      transition: color 0.2s ease, transform 0.2s ease;
-    }
-
-    .quick-link:hover {
-      transform: translateX(2px);
-    }
-
     .content {
       padding: 18px 0 56px;
-    }
-
-    .section-card {
-      padding: 28px;
-      margin-bottom: 22px;
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .section-card p {
-      max-width: 60ch;
     }
 
     .feature-grid,
@@ -575,8 +419,7 @@
     }
 
     .masthead,
-    .hero-grid,
-    .section-card,
+    .hero-main,
     .feature-grid,
     .project-grid,
     .footer-quote {
@@ -584,7 +427,6 @@
     }
 
     @media (max-width: 1080px) {
-      .hero-grid,
       .feature-grid {
         grid-template-columns: 1fr;
       }
@@ -592,10 +434,6 @@
       .feature-card.primary,
       .feature-card.secondary {
         grid-column: auto;
-      }
-
-      .hero-main {
-        min-height: auto;
       }
     }
 
@@ -609,7 +447,6 @@
       }
 
       .masthead,
-      .section-card,
       .footer-quote {
         align-items: flex-start;
       }
@@ -620,8 +457,6 @@
       }
 
       .hero-main,
-      .hero-side,
-      .section-card,
       .feature-card,
       .project-card,
       .footer-quote {
@@ -630,10 +465,6 @@
 
       h1 {
         font-size: clamp(2.7rem, 16vw, 4.3rem);
-      }
-
-      .hero-strip {
-        grid-template-columns: 1fr;
       }
 
       blockquote {
@@ -654,8 +485,7 @@
           </div>
         </div>
         <nav class="masthead-nav" aria-label="Primary">
-          <a class="nav-link" href="#featured">Featured</a>
-          <a class="nav-link" href="#catalog">Catalog</a>
+          <a class="nav-link" href="#catalog">Projects</a>
           <a class="nav-link" href="https://github.com/systemslibrarian" target="_blank" rel="noopener">GitHub</a>
           <a class="cta" href="https://ciphermuseum.com" target="_blank" rel="noopener">Open Cipher Museum</a>
         </nav>
@@ -666,117 +496,20 @@
   <main>
     <section class="hero">
       <div class="wrap">
-        <div class="hero-grid">
           <div class="hero-main">
-            <div>
-              <div class="eyebrow">Museum, Lab, Playground</div>
-              <h1>Real crypto, <span>made legible</span>.</h1>
-              <p class="hero-copy">A browser-native collection of cryptography demos, reference tools, and historical exhibits. The point is not decorative cyber UI. The point is to make hard ideas visible: deniable encryption, zero-knowledge, private retrieval, post-quantum primitives, stream ciphers, and the older systems that shaped them.</p>
-              <div class="hero-actions">
-                <a class="cta" href="#featured">Explore Featured Work</a>
-                <a class="button-link" href="#catalog">Browse All Projects</a>
-              </div>
-            </div>
-
-            <div class="hero-strip" aria-label="Collection highlights">
-              <div class="signal">
-                <div class="signal-label">Projects</div>
-                <div class="signal-value">13</div>
-                <div class="signal-note">Browser-based demos and tools across modern, historical, and post-quantum cryptography.</div>
-              </div>
-              <div class="signal">
-                <div class="signal-label">Span</div>
-                <div class="signal-value">2,500y</div>
-                <div class="signal-note">From Caesar and Enigma to ML-KEM, FHE, and zero-knowledge proof systems.</div>
-              </div>
-              <div class="signal">
-                <div class="signal-label">Build Style</div>
-                <div class="signal-value">Static</div>
-                <div class="signal-note">No accounts, no backend dependency, no installation barrier. Open a page and use it.</div>
-              </div>
+            <div class="eyebrow">Museum, Lab, Playground</div>
+            <h1>Real crypto, <span>made legible</span>.</h1>
+            <p class="hero-copy">Browser-native cryptography demos, reference tools, and historical exhibits spanning 2,500 years — from Caesar to post-quantum. 13 projects, no accounts, no backends.</p>
+            <div class="hero-actions">
+              <a class="cta" href="https://ciphermuseum.com" target="_blank" rel="noopener">Open Cipher Museum</a>
+              <a class="button-link" href="#catalog">Browse All Projects</a>
             </div>
           </div>
-
-          <aside class="hero-side" aria-label="Collection overview">
-            <div class="side-panel">
-              <div class="panel-kicker">Why This Page Exists</div>
-              <h2>A better front door for the collection</h2>
-              <p>This page now behaves like a curated index instead of a sparse link dump. It frames the body of work, gives visitors a few clear starting points, and uses the available width to communicate scope immediately.</p>
-              <div class="mission-list">
-                <div class="mission-item">
-                  <div class="mission-index">01</div>
-                  <div class="mission-text">
-                    <strong>Educational without being toy-like</strong>
-                    <span>Every project is interactive, but the cryptographic concepts and comparisons are real.</span>
-                  </div>
-                </div>
-                <div class="mission-item">
-                  <div class="mission-index">02</div>
-                  <div class="mission-text">
-                    <strong>Useful for profile traffic</strong>
-                    <span>Someone landing here from GitHub can understand the range of work within seconds.</span>
-                  </div>
-                </div>
-                <div class="mission-item">
-                  <div class="mission-index">03</div>
-                  <div class="mission-text">
-                    <strong>Designed for scanning</strong>
-                    <span>Featured entries handle storytelling first; the catalog handles breadth second.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="side-panel">
-              <div class="panel-kicker">Coverage</div>
-              <div class="timeline">
-                <div class="timeline-item">
-                  <div class="timeline-year">Classical</div>
-                  <div class="timeline-copy">Cipher Museum, Morse, and hands-on cryptanalysis.</div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">Applied</div>
-                  <div class="timeline-copy">Password derivation, deniable storage, ECIES, privacy tooling.</div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">Advanced</div>
-                  <div class="timeline-copy">Dual_EC_DRBG backdoors, FHE, Schnorr proofs, post-quantum vaults.</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="side-panel">
-              <div class="panel-kicker">Start Here</div>
-              <div class="quick-links">
-                <a class="quick-link" href="https://ciphermuseum.com" target="_blank" rel="noopener">
-                  <strong>Cipher Museum</strong>
-                  <span>Historical cryptography with exhibits, halls, and live cipher demos.</span>
-                </a>
-                <a class="quick-link" href="https://systemslibrarian.github.io/shadow-vault/" target="_blank" rel="noopener">
-                  <strong>Shadow Vault</strong>
-                  <span>Deniable encryption with decoy and real payloads inside one container.</span>
-                </a>
-                <a class="quick-link" href="https://systemslibrarian.github.io/zk-proof-lab/" target="_blank" rel="noopener">
-                  <strong>ZK Proof Lab</strong>
-                  <span>Interactive proofs from intuition-building examples to real Schnorr arithmetic.</span>
-                </a>
-              </div>
-            </div>
-          </aside>
-        </div>
       </div>
     </section>
 
-    <section class="content" id="featured">
+    <section class="content" id="catalog">
       <div class="wrap">
-        <div class="section-card">
-          <div>
-            <div class="section-kicker">Featured Projects</div>
-            <h2>Best entry points for a first visit</h2>
-          </div>
-          <p>These are the strongest introductions to the collection: one historical anchor, one advanced systems demo, and one modern cryptography explainer. Together they show the range without forcing a visitor to decode the entire catalog first.</p>
-        </div>
-
         <div class="feature-grid">
           <a class="feature-card primary" href="https://ciphermuseum.com" target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Museum · 37 Ciphers</div>
@@ -819,14 +552,6 @@
               <span class="arrow">→</span>
             </div>
           </a>
-        </div>
-
-        <div class="section-card" id="catalog">
-          <div>
-            <div class="section-kicker">Full Catalog</div>
-            <h2>The wider cryptography collection</h2>
-          </div>
-          <p>Everything below is still directly accessible, but now the grid reads like a proper catalog rather than a half-empty landing screen. Categories stay visible, the cards carry their own context, and the layout remains dense across large displays.</p>
         </div>
 
         <div class="project-grid">

@@ -31,7 +31,6 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Snow 2](https://systemslibrarian.github.io/snow2/) | Stream Cipher | XChaCha20-Poly1305 · Argon2id · HKDF-SHA-256 · Steganography |
 | [Dad Mode Morse](https://systemslibrarian.github.io/dad-mode-morse2/) | Encrypted Morse | AES-256-GCM · Argon2id · HKDF-SHA-256 · Ed25519 |
 | [Patron Shield](https://systemslibrarian.github.io/patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
-| [Crypto Compare](https://systemslibrarian.github.io/crypto-compare/) | Algorithm Reference | NIST · PQ-Safe |
 
 ---
 
@@ -39,6 +38,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 
 These sit outside the browser-demo scope of Crypto Lab but belong to the same collection:
 
+- **[Crypto Compare](https://systemslibrarian.github.io/crypto-compare/)** — Algorithm reference covering NIST and PQ-Safe standards.
 - **[Cipher Museum](https://ciphermuseum.com)** — An interactive museum spanning 2,500 years of cryptographic history. Ten halls, 37 ciphers, live encryption demos, and cryptanalysis labs.
 - **[Meow Decoder](https://www.meowdecoder.com/)** — Secure optical air-gap file transfer via QR-code GIFs. AES-256-GCM + Argon2id + ML-KEM-1024 + fountain codes. Python + Rust.
 

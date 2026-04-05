@@ -6,567 +6,981 @@
   <title>Crypto Lab — Paul Clark / systemslibrarian</title>
   <meta name="description" content="A collection of browser-based cryptography demonstrations spanning 2,500 years of cryptographic history to post-quantum." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:opsz,wght,SOFT@9..144,400,50;9..144,500,50&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #080c0f;
-      --bg2:       #0d1318;
-      --border:    #1a252e;
-      --border-hi: #1e3040;
-      --teal:      #2dd4bf;
-      --teal-dim:  #1a8c7d;
-      --amber:     #f59e0b;
-      --red:       #f43f5e;
-      --violet:    #8b5cf6;
-      --text:      #c8d8e4;
-      --text-dim:  #5a7080;
-      --text-hi:   #e8f4fc;
-      --mono:      'DM Mono', monospace;
-      --serif:     'Instrument Serif', Georgia, serif;
+      --bg: #071016;
+      --bg-soft: #0b1821;
+      --panel: rgba(8, 18, 25, 0.88);
+      --panel-strong: #0d1d27;
+      --border: rgba(99, 128, 146, 0.2);
+      --border-strong: rgba(99, 128, 146, 0.34);
+      --text: #c8d9e5;
+      --text-dim: #7e98aa;
+      --text-hi: #f2f8fb;
+      --teal: #35d6bb;
+      --amber: #ffb84d;
+      --crimson: #ff6b7f;
+      --violet: #9f88ff;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Fraunces', Georgia, serif;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top center, rgba(53, 214, 187, 0.12), transparent 32%),
+        radial-gradient(circle at 85% 15%, rgba(159, 136, 255, 0.08), transparent 24%),
+        linear-gradient(180deg, #081016 0%, #071016 50%, #060d13 100%);
       color: var(--text);
       font-family: var(--mono);
       font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
+      line-height: 1.65;
     }
 
-    /* ── grid bg ── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        linear-gradient(rgba(38, 62, 78, 0.22) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(38, 62, 78, 0.22) 1px, transparent 1px);
       background-size: 48px 48px;
-      opacity: 0.35;
+      mask-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.18));
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ── glow ── */
-    body::after {
-      content: '';
-      position: fixed;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 500px;
-      background: radial-gradient(ellipse, rgba(45,212,191,0.07) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
+    a { color: inherit; }
 
     .wrap {
       position: relative;
       z-index: 1;
-      max-width: 1100px;
+      width: min(1280px, calc(100% - 40px));
       margin: 0 auto;
-      padding: 0 24px;
     }
 
-    /* ── header ── */
-    header {
-      padding: 72px 0 56px;
-      border-bottom: 1px solid var(--border);
+    .site-header {
+      padding: 28px 0 20px;
     }
 
-    .eyebrow {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 28px;
-      height: 1px;
-      background: var(--teal);
-    }
-
-    h1 {
-      font-family: var(--serif);
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      font-weight: 400;
-      color: var(--text-hi);
-      line-height: 1.1;
-      margin-bottom: 20px;
-      letter-spacing: -0.01em;
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--teal);
-    }
-
-    .subtitle {
-      max-width: 580px;
-      color: var(--text);
-      font-size: 13.5px;
-      line-height: 1.75;
-    }
-
-    .meta-row {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      margin-top: 28px;
-      flex-wrap: wrap;
-    }
-
-    .meta-tag {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      border: 1px solid var(--border-hi);
-      padding: 4px 10px;
-      border-radius: 2px;
-    }
-
-    .github-link {
-      font-size: 12px;
-      color: var(--teal);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: color 0.2s;
-    }
-    .github-link:hover { color: var(--text-hi); }
-    .github-link svg { opacity: 0.7; }
-
-    /* ── stats bar ── */
-    .stats {
-      display: flex;
-      gap: 0;
-      margin: 40px 0 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      max-width: 560px;
-    }
-    .stat {
-      flex: 1;
-      padding: 14px 20px;
-      border-right: 1px solid var(--border);
-      background: var(--bg2);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-num {
-      font-size: 22px;
-      font-weight: 500;
-      color: var(--teal);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .stat-label {
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    /* ── section ── */
-    section {
-      padding: 24px 0;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 32px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    .section-title {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── grid ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .card {
-      background: var(--bg);
-      padding: 28px 28px 24px;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      transition: background 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 0;
-      background: var(--accent, var(--teal));
-      transition: height 0.3s ease;
-    }
-    .card:hover::before { height: 100%; }
-    .card:hover { background: var(--bg2); }
-
-    .card-tag {
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent, var(--teal));
-      margin-bottom: 12px;
-      opacity: 0.85;
-    }
-
-    .card-name {
-      font-family: var(--serif);
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--text-hi);
-      line-height: 1.2;
-      margin-bottom: 10px;
-    }
-
-    .card-desc {
-      font-size: 12.5px;
-      color: var(--text);
-      line-height: 1.65;
-      flex: 1;
-      margin-bottom: 18px;
-    }
-
-    .card-footer {
+    .masthead {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
-      padding-top: 14px;
-      margin-top: auto;
+      gap: 24px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
     }
 
-    .card-stack {
+    .brand {
       display: flex;
-      gap: 6px;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border-strong);
+      display: grid;
+      place-items: center;
+      color: var(--teal);
+      background: rgba(9, 18, 24, 0.9);
+      box-shadow: inset 0 0 0 1px rgba(53, 214, 187, 0.08);
+    }
+
+    .brand-copy strong,
+    .brand-copy span {
+      display: block;
+    }
+
+    .brand-copy strong {
+      color: var(--text-hi);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .brand-copy span {
+      color: var(--text-dim);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .masthead-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-link,
+    .cta,
+    .button-link {
+      text-decoration: none;
+      border: 1px solid var(--border-strong);
+      padding: 10px 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 11px;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-link,
+    .button-link {
+      color: var(--text-dim);
+      background: rgba(8, 17, 24, 0.74);
+    }
+
+    .cta {
+      color: var(--bg);
+      background: var(--teal);
+      border-color: rgba(53, 214, 187, 0.8);
+      box-shadow: 0 10px 30px rgba(53, 214, 187, 0.18);
+    }
+
+    .nav-link:hover,
+    .button-link:hover,
+    .cta:hover {
+      transform: translateY(-1px);
+      border-color: rgba(242, 248, 251, 0.4);
+      color: var(--text-hi);
+    }
+
+    .cta:hover {
+      color: var(--bg);
+      background: #53e2ca;
+    }
+
+    .hero {
+      padding: 42px 0 30px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(340px, 0.9fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-main,
+    .hero-side,
+    .section-card,
+    .feature-card,
+    .project-card,
+    .footer-quote {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 520px;
+      background:
+        linear-gradient(145deg, rgba(53, 214, 187, 0.07), transparent 30%),
+        linear-gradient(180deg, rgba(8, 17, 24, 0.92), rgba(8, 17, 24, 0.82));
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1 {
+      max-width: 12ch;
+      font-family: var(--serif);
+      font-size: clamp(3.4rem, 8vw, 6.4rem);
+      font-weight: 500;
+      line-height: 0.95;
+      color: var(--text-hi);
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+
+    h1 span {
+      color: var(--teal);
+      font-style: italic;
+    }
+
+    .hero-copy {
+      max-width: 62ch;
+      margin-top: 24px;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .hero-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .signal {
+      border: 1px solid var(--border);
+      background: rgba(10, 22, 29, 0.78);
+      padding: 16px 18px;
+      min-height: 116px;
+    }
+
+    .signal-label {
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 10px;
+    }
+
+    .signal-value {
+      color: var(--text-hi);
+      font-size: 28px;
+      line-height: 1;
+      margin: 12px 0 10px;
+    }
+
+    .signal-note {
+      color: var(--text-dim);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .hero-side {
+      padding: 24px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 16px;
+      background:
+        linear-gradient(180deg, rgba(12, 24, 33, 0.96), rgba(8, 17, 24, 0.84));
+    }
+
+    .side-panel {
+      border: 1px solid var(--border);
+      background: rgba(8, 17, 24, 0.8);
+      padding: 18px;
+    }
+
+    .panel-kicker,
+    .section-kicker,
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 10px;
+    }
+
+    .panel-kicker::before,
+    .section-kicker::before,
+    .card-kicker::before {
+      content: '';
+      width: 18px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .side-panel h2,
+    .section-card h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      color: var(--text-hi);
+      font-size: 1.85rem;
+      line-height: 1.05;
+      margin: 12px 0 12px;
+    }
+
+    .side-panel p,
+    .section-card p {
+      color: var(--text);
+      font-size: 12.5px;
+      line-height: 1.75;
+    }
+
+    .mission-list,
+    .timeline,
+    .quick-links {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .mission-item,
+    .timeline-item,
+    .quick-link {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start;
+      padding-top: 10px;
+      border-top: 1px solid rgba(99, 128, 146, 0.18);
+    }
+
+    .mission-item:first-child,
+    .timeline-item:first-child,
+    .quick-link:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .mission-index,
+    .timeline-year {
+      color: var(--teal);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      min-width: 64px;
+    }
+
+    .mission-text strong,
+    .quick-link strong {
+      color: var(--text-hi);
+      display: block;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .mission-text span,
+    .timeline-copy,
+    .quick-link span {
+      color: var(--text-dim);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .quick-link {
+      text-decoration: none;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .quick-link:hover {
+      transform: translateX(2px);
+    }
+
+    .content {
+      padding: 18px 0 56px;
+    }
+
+    .section-card {
+      padding: 28px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-card p {
+      max-width: 60ch;
+    }
+
+    .feature-grid,
+    .project-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .feature-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      margin-bottom: 24px;
+    }
+
+    .feature-card {
+      position: relative;
+      overflow: hidden;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      min-height: 270px;
+      text-decoration: none;
+      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.03), transparent 38%),
+        rgba(9, 18, 24, 0.9);
+    }
+
+    .feature-card::after,
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent, var(--teal)), transparent 72%);
+      opacity: 0.9;
+    }
+
+    .feature-card:hover,
+    .project-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(242, 248, 251, 0.24);
+      background: rgba(12, 23, 31, 0.98);
+    }
+
+    .feature-card.primary {
+      grid-column: span 7;
+      min-height: 340px;
+    }
+
+    .feature-card.secondary {
+      grid-column: span 5;
+    }
+
+    .feature-title,
+    .project-title {
+      font-family: var(--serif);
+      font-size: 1.9rem;
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--text-hi);
+      margin: 14px 0 12px;
+    }
+
+    .feature-copy,
+    .project-copy {
+      color: var(--text);
+      font-size: 12.5px;
+      line-height: 1.75;
+    }
+
+    .feature-meta,
+    .project-meta {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(99, 128, 146, 0.18);
+    }
+
+    .stack {
+      display: flex;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .chip {
+      padding: 4px 8px;
+      border: 1px solid var(--border-strong);
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
       font-size: 9.5px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 2px 7px;
-      border: 1px solid var(--border-hi);
-      color: var(--text-dim);
-      border-radius: 2px;
+      background: rgba(8, 17, 24, 0.78);
     }
 
-    .card-arrow {
-      font-size: 16px;
+    .arrow {
       color: var(--accent, var(--teal));
-      opacity: 0;
-      transform: translateX(-6px);
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .card:hover .card-arrow {
-      opacity: 1;
-      transform: translateX(0);
+      font-size: 16px;
+      transition: transform 0.2s ease;
     }
 
-    /* ── scripture ── */
-    .scripture {
-      border-top: 1px solid var(--border);
-      padding: 48px 0;
-      text-align: center;
+    .feature-card:hover .arrow,
+    .project-card:hover .arrow {
+      transform: translateX(4px);
     }
-    .scripture blockquote {
+
+    .project-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+      background: rgba(9, 18, 24, 0.9);
+    }
+
+    .project-title {
+      font-size: 1.45rem;
+      margin-top: 12px;
+    }
+
+    .footer {
+      padding: 0 0 48px;
+    }
+
+    .footer-quote {
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      background:
+        linear-gradient(180deg, rgba(11, 24, 33, 0.92), rgba(8, 17, 24, 0.82));
+    }
+
+    blockquote {
       font-family: var(--serif);
-      font-style: italic;
-      font-size: 1.05rem;
-      color: var(--text-dim);
-      max-width: 480px;
-      margin: 0 auto 8px;
-      line-height: 1.7;
+      color: var(--text-hi);
+      font-size: 1.35rem;
+      line-height: 1.4;
+      max-width: 34ch;
     }
-    .scripture cite {
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--teal-dim);
+
+    cite {
+      color: var(--teal);
       font-style: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 11px;
     }
 
-    /* ── animations ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    header .wrap > * {
+    .masthead,
+    .hero-grid,
+    .section-card,
+    .feature-grid,
+    .project-grid,
+    .footer-quote {
       animation: fadeUp 0.6s ease both;
     }
-    header .wrap > *:nth-child(1) { animation-delay: 0.05s; }
-    header .wrap > *:nth-child(2) { animation-delay: 0.12s; }
-    header .wrap > *:nth-child(3) { animation-delay: 0.19s; }
-    header .wrap > *:nth-child(4) { animation-delay: 0.26s; }
-    header .wrap > *:nth-child(5) { animation-delay: 0.33s; }
 
-    .card {
-      animation: fadeUp 0.5s ease both;
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card.primary,
+      .feature-card.secondary {
+        grid-column: auto;
+      }
+
+      .hero-main {
+        min-height: auto;
+      }
     }
 
-    @media (max-width: 600px) {
-      header { padding: 48px 0 40px; }
-      .grid { grid-template-columns: 1fr; }
-      .stats { max-width: 100%; }
+    @media (max-width: 760px) {
+      .wrap {
+        width: min(100% - 24px, 1280px);
+      }
+
+      .site-header {
+        padding-top: 16px;
+      }
+
+      .masthead,
+      .section-card,
+      .footer-quote {
+        align-items: flex-start;
+      }
+
+      .masthead-nav,
+      .hero-actions {
+        width: 100%;
+      }
+
+      .hero-main,
+      .hero-side,
+      .section-card,
+      .feature-card,
+      .project-card,
+      .footer-quote {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: clamp(2.7rem, 16vw, 4.3rem);
+      }
+
+      .hero-strip {
+        grid-template-columns: 1fr;
+      }
+
+      blockquote {
+        font-size: 1.15rem;
+      }
     }
   </style>
 </head>
 <body>
-
-<header>
-  <div class="wrap">
-    <div class="eyebrow">Cryptography Laboratory</div>
-    <p class="subtitle">Real cryptography. Real primitives. All of it runs in your browser.</p>
-
-
-
-  </div>
-</header>
-
-<section>
-  <div class="wrap">
-
-
-      <a class="card" href="https://systemslibrarian.github.io/shadow-vault/" target="_blank" rel="noopener" style="--accent: #2dd4bf; animation-delay: 0.05s">
-        <div class="card-tag">Deniable Encryption</div>
-        <div class="card-name">Shadow Vault</div>
-        <div class="card-desc">One container, two passphrases, two messages. The real one and the decoy. No forensic fingerprint. No way to prove which is which.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">Rust/WASM</span>
-            <span class="chip">Argon2id</span>
-            <span class="chip">ChaCha20</span>
+  <header class="site-header">
+    <div class="wrap">
+      <div class="masthead">
+        <div class="brand">
+          <div class="brand-mark">CL</div>
+          <div class="brand-copy">
+            <strong>Crypto Lab</strong>
+            <span>systemslibrarian collection</span>
           </div>
-          <span class="card-arrow">→</span>
         </div>
-      </a>
-
-      <a class="card" href="https://systemslibrarian.github.io/phantom-vault/" target="_blank" rel="noopener" style="--accent: #8b5cf6; animation-delay: 0.1s">
-        <div class="card-tag">Stateless Passwords</div>
-        <div class="card-name">Phantom Vault</div>
-        <div class="card-desc">Derive any password from a master passphrase using HMAC-DRBG. Nothing stored, nothing synced, nothing to breach.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">TypeScript</span>
-            <span class="chip">PBKDF2</span>
-            <span class="chip">HMAC-DRBG</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://systemslibrarian.github.io/corrupted-oracle/" target="_blank" rel="noopener" style="--accent: #f43f5e; animation-delay: 0.15s">
-        <div class="card-tag">Backdoored RNG</div>
-        <div class="card-name">Corrupted Oracle</div>
-        <div class="card-desc">The standard was compromised. Here's the proof. Live Dual_EC_DRBG backdoor — watch state recovery predict every future output while all statistical tests pass.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">TypeScript</span>
-            <span class="chip">P-256</span>
-            <span class="chip">NIST</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://systemslibrarian.github.io/iron-letter/" target="_blank" rel="noopener" style="--accent: #f59e0b; animation-delay: 0.2s">
-        <div class="card-tag">Asymmetric Encryption</div>
-        <div class="card-name">Iron Letter</div>
-        <div class="card-desc">ECIES P-256 vs RSA-OAEP, side by side. Seal a letter. Only one key can open it. Key size, timing, and security level compared in real time.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">TypeScript</span>
-            <span class="chip">WebCrypto</span>
-            <span class="chip">ECIES</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://systemslibrarian.github.io/quantum-vault-kpqc/" target="_blank" rel="noopener" style="--accent: #2dd4bf; animation-delay: 0.25s">
-        <div class="card-tag">Post-Quantum</div>
-        <div class="card-name">Quantum Vault KpqC</div>
-        <div class="card-desc">Threshold file encryption using Shamir Secret Sharing and Korean post-quantum cryptography — SMAUG-T and HAETAE compiled to WASM.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">Rust/WASM</span>
-            <span class="chip">ML-KEM</span>
-            <span class="chip">Shamir</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://systemslibrarian.github.io/blind-oracle/" target="_blank" rel="noopener" style="--accent: #8b5cf6; animation-delay: 0.3s">
-        <div class="card-tag">Homomorphic Encryption</div>
-        <div class="card-name">Blind Oracle</div>
-        <div class="card-desc">The server computed your data. It never saw a single bit. Live FHE demo using TFHE-rs — the server adds two numbers without decrypting either.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">TypeScript</span>
-            <span class="chip">Rust</span>
-            <span class="chip">TFHE-rs</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://systemslibrarian.github.io/zk-proof-lab/" target="_blank" rel="noopener" style="--accent: #f43f5e; animation-delay: 0.35s">
-        <div class="card-tag">Zero-Knowledge Proofs</div>
-        <div class="card-name">ZK Proof Lab</div>
-        <div class="card-desc">Six interactive exhibits from Ali Baba cave to zk-SNARK. Real Schnorr arithmetic, SHA-256 commitments, and transcript replay with deterministic presets.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">HTML/JS</span>
-            <span class="chip">Schnorr</span>
-            <span class="chip">SHA-256</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://www.meowdecoder.com/" target="_blank" rel="noopener" style="--accent: #f59e0b; animation-delay: 0.4s">
-        <div class="card-tag">Air-Gap Transfer</div>
-        <div class="card-name">Meow Decoder</div>
-        <div class="card-desc">Secure optical air-gap file transfer via QR-code GIFs. Fountain codes for camera loss. Fail-closed crypto. Hiss secrets into yarn balls.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">Python</span>
-            <span class="chip">AES-GCM</span>
-            <span class="chip">Fountain Codes</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-
-      <a class="card" href="https://systemslibrarian.github.io/snow2/" target="_blank" rel="noopener" style="--accent: #2dd4bf; animation-delay: 0.45s">
-        <div class="card-tag">Stream Cipher</div>
-        <div class="card-name">Snow 2</div>
-        <div class="card-desc">A modern Rust reimplementation of SNOW with strong 2026 cryptography. AEAD, Argon2id key derivation, and steganographic output support.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">Rust</span>
-            <span class="chip">AEAD</span>
-            <span class="chip">Steganography</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://systemslibrarian.github.io/dad-mode-morse2/" target="_blank" rel="noopener" style="--accent: #f43f5e; animation-delay: 0.5s">
-        <div class="card-tag">Encrypted Morse</div>
-        <div class="card-name">Dad Mode Morse</div>
-        <div class="card-desc">Encrypt messages with AES-GCM and transmit as Morse code with beep audio and copy/paste decoding. Covert communication with a dad joke energy.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">HTML/JS</span>
-            <span class="chip">AES-GCM</span>
-            <span class="chip">Morse</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://systemslibrarian.github.io/patron-shield/" target="_blank" rel="noopener" style="--accent: #2dd4bf; animation-delay: 0.55s">
-        <div class="card-tag">Library Privacy · IT-PIR</div>
-        <div class="card-name">Patron Shield</div>
-        <div class="card-desc">Information-Theoretic Private Information Retrieval applied to library catalog privacy — because patrons deserve mathematical guarantees, not just policy promises.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">TypeScript</span>
-            <span class="chip">IT-PIR</span>
-            <span class="chip">Vite</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://systemslibrarian.github.io/crypto-compare/" target="_blank" rel="noopener" style="--accent: #8b5cf6; animation-delay: 0.5s">
-        <div class="card-tag">Reference · 85 Algorithms</div>
-        <div class="card-name">Crypto Compare</div>
-        <div class="card-desc">16 categories, 85 algorithms, 16+ countries. Comparison tool with beginner and advanced modes, post-quantum-safe filtering, and justification report export.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">TypeScript</span>
-            <span class="chip">NIST</span>
-            <span class="chip">PQ-Safe</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
+        <nav class="masthead-nav" aria-label="Primary">
+          <a class="nav-link" href="#featured">Featured</a>
+          <a class="nav-link" href="#catalog">Catalog</a>
+          <a class="nav-link" href="https://github.com/systemslibrarian" target="_blank" rel="noopener">GitHub</a>
+          <a class="cta" href="https://ciphermuseum.com" target="_blank" rel="noopener">Open Cipher Museum</a>
+        </nav>
+      </div>
     </div>
+  </header>
 
-    <div class="grid" style="margin-top: 1px">
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="hero-main">
+            <div>
+              <div class="eyebrow">Museum, Lab, Playground</div>
+              <h1>Real crypto, <span>made legible</span>.</h1>
+              <p class="hero-copy">A browser-native collection of cryptography demos, reference tools, and historical exhibits. The point is not decorative cyber UI. The point is to make hard ideas visible: deniable encryption, zero-knowledge, private retrieval, post-quantum primitives, stream ciphers, and the older systems that shaped them.</p>
+              <div class="hero-actions">
+                <a class="cta" href="#featured">Explore Featured Work</a>
+                <a class="button-link" href="#catalog">Browse All Projects</a>
+              </div>
+            </div>
 
-      <a class="card" href="https://ciphermuseum.com" target="_blank" rel="noopener" style="--accent: #f59e0b; animation-delay: 0.05s">
-        <div class="card-tag">Museum · 37 Ciphers</div>
-        <div class="card-name">Cipher Museum</div>
-        <div class="card-desc">An interactive museum spanning 2,500 years of cryptographic history. 10 halls, 37 ciphers, live encryption demos, and cryptanalysis labs. From Caesar to Enigma.</div>
-        <div class="card-footer">
-          <div class="card-stack">
-            <span class="chip">HTML/CSS/JS</span>
-            <span class="chip">Static</span>
+            <div class="hero-strip" aria-label="Collection highlights">
+              <div class="signal">
+                <div class="signal-label">Projects</div>
+                <div class="signal-value">13</div>
+                <div class="signal-note">Browser-based demos and tools across modern, historical, and post-quantum cryptography.</div>
+              </div>
+              <div class="signal">
+                <div class="signal-label">Span</div>
+                <div class="signal-value">2,500y</div>
+                <div class="signal-note">From Caesar and Enigma to ML-KEM, FHE, and zero-knowledge proof systems.</div>
+              </div>
+              <div class="signal">
+                <div class="signal-label">Build Style</div>
+                <div class="signal-value">Static</div>
+                <div class="signal-note">No accounts, no backend dependency, no installation barrier. Open a page and use it.</div>
+              </div>
+            </div>
           </div>
-          <span class="card-arrow">→</span>
+
+          <aside class="hero-side" aria-label="Collection overview">
+            <div class="side-panel">
+              <div class="panel-kicker">Why This Page Exists</div>
+              <h2>A better front door for the collection</h2>
+              <p>This page now behaves like a curated index instead of a sparse link dump. It frames the body of work, gives visitors a few clear starting points, and uses the available width to communicate scope immediately.</p>
+              <div class="mission-list">
+                <div class="mission-item">
+                  <div class="mission-index">01</div>
+                  <div class="mission-text">
+                    <strong>Educational without being toy-like</strong>
+                    <span>Every project is interactive, but the cryptographic concepts and comparisons are real.</span>
+                  </div>
+                </div>
+                <div class="mission-item">
+                  <div class="mission-index">02</div>
+                  <div class="mission-text">
+                    <strong>Useful for profile traffic</strong>
+                    <span>Someone landing here from GitHub can understand the range of work within seconds.</span>
+                  </div>
+                </div>
+                <div class="mission-item">
+                  <div class="mission-index">03</div>
+                  <div class="mission-text">
+                    <strong>Designed for scanning</strong>
+                    <span>Featured entries handle storytelling first; the catalog handles breadth second.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="side-panel">
+              <div class="panel-kicker">Coverage</div>
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="timeline-year">Classical</div>
+                  <div class="timeline-copy">Cipher Museum, Morse, and hands-on cryptanalysis.</div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-year">Applied</div>
+                  <div class="timeline-copy">Password derivation, deniable storage, ECIES, privacy tooling.</div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-year">Advanced</div>
+                  <div class="timeline-copy">Dual_EC_DRBG backdoors, FHE, Schnorr proofs, post-quantum vaults.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="side-panel">
+              <div class="panel-kicker">Start Here</div>
+              <div class="quick-links">
+                <a class="quick-link" href="https://ciphermuseum.com" target="_blank" rel="noopener">
+                  <strong>Cipher Museum</strong>
+                  <span>Historical cryptography with exhibits, halls, and live cipher demos.</span>
+                </a>
+                <a class="quick-link" href="https://systemslibrarian.github.io/shadow-vault/" target="_blank" rel="noopener">
+                  <strong>Shadow Vault</strong>
+                  <span>Deniable encryption with decoy and real payloads inside one container.</span>
+                </a>
+                <a class="quick-link" href="https://systemslibrarian.github.io/zk-proof-lab/" target="_blank" rel="noopener">
+                  <strong>ZK Proof Lab</strong>
+                  <span>Interactive proofs from intuition-building examples to real Schnorr arithmetic.</span>
+                </a>
+              </div>
+            </div>
+          </aside>
         </div>
-      </a>
+      </div>
+    </section>
 
+    <section class="content" id="featured">
+      <div class="wrap">
+        <div class="section-card">
+          <div>
+            <div class="section-kicker">Featured Projects</div>
+            <h2>Best entry points for a first visit</h2>
+          </div>
+          <p>These are the strongest introductions to the collection: one historical anchor, one advanced systems demo, and one modern cryptography explainer. Together they show the range without forcing a visitor to decode the entire catalog first.</p>
+        </div>
+
+        <div class="feature-grid">
+          <a class="feature-card primary" href="https://ciphermuseum.com" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Museum · 37 Ciphers</div>
+            <div class="feature-title">Cipher Museum</div>
+            <div class="feature-copy">An interactive museum spanning 2,500 years of cryptographic history. Ten halls, thirty-seven ciphers, live encryption demos, and cryptanalysis labs. It works as both a public-facing showcase and a serious educational piece.</div>
+            <div class="feature-meta">
+              <div class="stack">
+                <span class="chip">HTML/CSS/JS</span>
+                <span class="chip">Static</span>
+                <span class="chip">History</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="feature-card secondary" href="https://systemslibrarian.github.io/shadow-vault/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Deniable Encryption</div>
+            <div class="feature-title">Shadow Vault</div>
+            <div class="feature-copy">One container, two passphrases, two messages. A practical demonstration of plausible deniability, forensic ambiguity, and browser-first UX around serious primitives.</div>
+            <div class="feature-meta">
+              <div class="stack">
+                <span class="chip">Rust/WASM</span>
+                <span class="chip">Argon2id</span>
+                <span class="chip">ChaCha20</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="feature-card secondary" href="https://systemslibrarian.github.io/zk-proof-lab/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Zero-Knowledge Proofs</div>
+            <div class="feature-title">ZK Proof Lab</div>
+            <div class="feature-copy">Six exhibits from Ali Baba cave to zk-SNARK intuition, with real Schnorr arithmetic, commitments, and replayable transcripts instead of vague metaphors.</div>
+            <div class="feature-meta">
+              <div class="stack">
+                <span class="chip">HTML/JS</span>
+                <span class="chip">Schnorr</span>
+                <span class="chip">SHA-256</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="section-card" id="catalog">
+          <div>
+            <div class="section-kicker">Full Catalog</div>
+            <h2>The wider cryptography collection</h2>
+          </div>
+          <p>Everything below is still directly accessible, but now the grid reads like a proper catalog rather than a half-empty landing screen. Categories stay visible, the cards carry their own context, and the layout remains dense across large displays.</p>
+        </div>
+
+        <div class="project-grid">
+          <a class="project-card" href="https://systemslibrarian.github.io/phantom-vault/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Stateless Passwords</div>
+            <div class="project-title">Phantom Vault</div>
+            <div class="project-copy">Derive any password from a master passphrase using HMAC-DRBG. Nothing stored, nothing synced, nothing left behind to breach.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">TypeScript</span>
+                <span class="chip">PBKDF2</span>
+                <span class="chip">HMAC-DRBG</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/corrupted-oracle/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Backdoored RNG</div>
+            <div class="project-title">Corrupted Oracle</div>
+            <div class="project-copy">A live Dual_EC_DRBG backdoor demo showing state recovery and future-output prediction while standard statistical tests still appear clean.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">TypeScript</span>
+                <span class="chip">P-256</span>
+                <span class="chip">NIST</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/iron-letter/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Asymmetric Encryption</div>
+            <div class="project-title">Iron Letter</div>
+            <div class="project-copy">ECIES P-256 and RSA-OAEP compared side by side with live timing, key-size tradeoffs, and a simple sealed-letter mental model.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">TypeScript</span>
+                <span class="chip">WebCrypto</span>
+                <span class="chip">ECIES</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/quantum-vault-kpqc/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Post-Quantum</div>
+            <div class="project-title">Quantum Vault KpqC</div>
+            <div class="project-copy">Threshold file encryption using secret sharing and Korean post-quantum cryptography, compiled to WASM for direct browser use.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Rust/WASM</span>
+                <span class="chip">ML-KEM</span>
+                <span class="chip">Shamir</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/blind-oracle/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Homomorphic Encryption</div>
+            <div class="project-title">Blind Oracle</div>
+            <div class="project-copy">A server computes on encrypted values without seeing the plaintext. A concise, live introduction to FHE using TFHE-rs.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">TypeScript</span>
+                <span class="chip">Rust</span>
+                <span class="chip">TFHE-rs</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://www.meowdecoder.com/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Air-Gap Transfer</div>
+            <div class="project-title">Meow Decoder</div>
+            <div class="project-copy">Secure optical file transfer through QR-code GIFs with fountain codes for loss recovery and fail-closed cryptography for real-world awkward channels.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Python</span>
+                <span class="chip">AES-GCM</span>
+                <span class="chip">Fountain Codes</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/snow2/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Stream Cipher</div>
+            <div class="project-title">Snow 2</div>
+            <div class="project-copy">A modern Rust reimplementation of SNOW with AEAD support, Argon2id-derived keys, and steganographic output options.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Rust</span>
+                <span class="chip">AEAD</span>
+                <span class="chip">Steganography</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/dad-mode-morse2/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Encrypted Morse</div>
+            <div class="project-title">Dad Mode Morse</div>
+            <div class="project-copy">AES-GCM encrypted messaging delivered as Morse code with audio playback and browser decoding. Intentionally playful, still grounded in real primitives.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">HTML/JS</span>
+                <span class="chip">AES-GCM</span>
+                <span class="chip">Morse</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/patron-shield/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Library Privacy</div>
+            <div class="project-title">Patron Shield</div>
+            <div class="project-copy">Information-theoretic private information retrieval applied to catalog privacy. A direct bridge from library ethics to concrete mathematical guarantees.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">TypeScript</span>
+                <span class="chip">IT-PIR</span>
+                <span class="chip">Vite</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-compare/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Algorithm Reference</div>
+            <div class="project-title">Crypto Compare</div>
+            <div class="project-copy">A comparison tool spanning 85 algorithms and 16 categories, with beginner and advanced modes plus post-quantum-safe filtering.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">TypeScript</span>
+                <span class="chip">NIST</span>
+                <span class="chip">PQ-Safe</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-quote">
+        <blockquote>So whether you eat or drink or whatever you do, do it all for the glory of God.</blockquote>
+        <cite>1 Corinthians 10:31</cite>
+      </div>
     </div>
-  </div>
-</section>
-
-<div class="scripture">
-  <div class="wrap">
-    <blockquote>So whether you eat or drink or whatever you do,<br>do it all for the glory of God.</blockquote>
-    <cite>1 Corinthians 10:31</cite>
-  </div>
-</div>
-
+  </footer>
 </body>
 </html>

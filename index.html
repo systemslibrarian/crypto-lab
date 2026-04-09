@@ -334,7 +334,7 @@
     .chip {
       padding: 4px 8px;
       border: 1px solid var(--border-strong);
-      color: var(--text-dim);
+      color: var(--text);
       text-transform: uppercase;
       letter-spacing: 0.09em;
       font-size: 9.5px;
@@ -586,6 +586,121 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
+
+    /* ── Light theme ── */
+    html.light {
+      --bg: #f4f6f8;
+      --bg-soft: #eaecf0;
+      --panel: rgba(255, 255, 255, 0.92);
+      --panel-strong: #ffffff;
+      --border: rgba(60, 80, 100, 0.16);
+      --border-strong: rgba(60, 80, 100, 0.28);
+      --text: #3a4a58;
+      --text-dim: #6b7f8e;
+      --text-hi: #1a2530;
+      --teal: #1aab94;
+      --amber: #c87a00;
+      --crimson: #d44058;
+      --violet: #6b5ce7;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.08);
+    }
+
+    html.light body {
+      background: linear-gradient(180deg, #f4f6f8 0%, #eef1f4 50%, #e8ecf0 100%);
+    }
+
+    html.light body::before {
+      background-image:
+        linear-gradient(rgba(60, 80, 100, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(60, 80, 100, 0.07) 1px, transparent 1px);
+    }
+
+    html.light .hero-main {
+      background: linear-gradient(145deg, rgba(26, 171, 148, 0.06), transparent 30%), rgba(255, 255, 255, 0.88);
+    }
+
+    html.light .feature-card {
+      background: linear-gradient(160deg, rgba(0, 0, 0, 0.02), transparent 38%), rgba(255, 255, 255, 0.94);
+    }
+
+    html.light .feature-card:hover,
+    html.light .project-card:hover {
+      background: #ffffff;
+    }
+
+    html.light .project-card {
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    html.light .chip {
+      background: rgba(60, 80, 100, 0.06);
+    }
+
+    html.light .filter-bar {
+      background: rgba(244, 246, 248, 0.94);
+    }
+
+    html.light .search-bar input {
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    html.light .filter-chip {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    html.light .filter-chip.active {
+      background: rgba(26, 171, 148, 0.08);
+    }
+
+    html.light .search-kbd {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    html.light .nav-link,
+    html.light .button-link {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    html.light .brand-mark {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    html.light .footer-quote {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.78));
+    }
+
+    html.light .cta {
+      color: #fff;
+    }
+
+    html.light .cta:hover {
+      color: #fff;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border-strong);
+      background: rgba(8, 17, 24, 0.74);
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 16px;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .theme-toggle:hover {
+      border-color: rgba(242, 248, 251, 0.4);
+      color: var(--text-hi);
+    }
+
+    html.light .theme-toggle {
+      background: rgba(255, 255, 255, 0.6);
+    }
   </style>
 </head>
 <body>
@@ -601,6 +716,9 @@
         </div>
         <nav class="masthead-nav" aria-label="Primary">
           <a class="nav-link" href="https://github.com/systemslibrarian" target="_blank" rel="noopener">GitHub</a>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+            <span id="theme-icon">☀</span>
+          </button>
         </nav>
       </div>
     </div>
@@ -621,30 +739,31 @@
         </div>
         <div class="no-results" id="no-results">No demos found.</div>
         <div class="feature-grid">
-          <a class="feature-card secondary" href="https://systemslibrarian.github.io/crypto-lab-shadow-vault/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
-            <div class="card-kicker">Deniable Encryption</div>
-            <div class="feature-title">Shadow Vault</div>
-            <div class="feature-copy">One container, two passphrases, two messages. A practical demonstration of plausible deniability, forensic ambiguity, and browser-first UX around serious primitives.</div>
+          <a class="feature-card secondary" href="https://systemslibrarian.github.io/snow2/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Stream Cipher</div>
+            <div class="feature-title">Snow 2</div>
+            <div class="feature-copy">A modern Rust reimplementation of SNOW with AEAD support, Argon2id-derived keys, and steganographic output options.</div>
             <div class="feature-meta">
               <div class="stack">
+                <span class="chip">XChaCha20-Poly1305</span>
                 <span class="chip">Argon2id</span>
-                <span class="chip">ChaCha20-Poly1305</span>
-                <span class="chip">SHA-256</span>
+                <span class="chip">HKDF-SHA-256</span>
+                <span class="chip">Steganography</span>
               </div>
               <span class="arrow">→</span>
             </div>
           </a>
 
-          <a class="feature-card secondary" href="https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
-            <div class="card-kicker">Zero-Knowledge Proofs</div>
-            <div class="feature-title">ZK Proof Lab</div>
-            <div class="feature-copy">Six exhibits from Ali Baba cave to zk-SNARK intuition, with real Schnorr arithmetic, commitments, and replayable transcripts instead of vague metaphors.</div>
+          <a class="feature-card secondary" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Post-Quantum</div>
+            <div class="feature-title">Quantum Vault KpqC</div>
+            <div class="feature-copy">Threshold file encryption using secret sharing and Korean post-quantum cryptography, compiled to WASM for direct browser use.</div>
             <div class="feature-meta">
               <div class="stack">
-                <span class="chip">Schnorr</span>
-                <span class="chip">SHA-256 Commitments</span>
-                <span class="chip">Fiat-Shamir</span>
-                <span class="chip">zk-SNARK</span>
+                <span class="chip">AES-256-GCM</span>
+                <span class="chip">Shamir SSS</span>
+                <span class="chip">SMAUG-T</span>
+                <span class="chip">HAETAE</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -695,16 +814,30 @@
             </div>
           </a>
 
-          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
-            <div class="card-kicker">Post-Quantum</div>
-            <div class="project-title">Quantum Vault KpqC</div>
-            <div class="project-copy">Threshold file encryption using secret sharing and Korean post-quantum cryptography, compiled to WASM for direct browser use.</div>
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-shadow-vault/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Deniable Encryption</div>
+            <div class="project-title">Shadow Vault</div>
+            <div class="project-copy">One container, two passphrases, two messages. A practical demonstration of plausible deniability, forensic ambiguity, and browser-first UX around serious primitives.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">AES-256-GCM</span>
-                <span class="chip">Shamir SSS</span>
-                <span class="chip">SMAUG-T</span>
-                <span class="chip">HAETAE</span>
+                <span class="chip">Argon2id</span>
+                <span class="chip">ChaCha20-Poly1305</span>
+                <span class="chip">SHA-256</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Zero-Knowledge Proofs</div>
+            <div class="project-title">ZK Proof Lab</div>
+            <div class="project-copy">Six exhibits from Ali Baba cave to zk-SNARK intuition, with real Schnorr arithmetic, commitments, and replayable transcripts instead of vague metaphors.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Schnorr</span>
+                <span class="chip">SHA-256 Commitments</span>
+                <span class="chip">Fiat-Shamir</span>
+                <span class="chip">zk-SNARK</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -719,21 +852,6 @@
                 <span class="chip">TypeScript</span>
                 <span class="chip">Rust</span>
                 <span class="chip">TFHE-rs</span>
-              </div>
-              <span class="arrow">→</span>
-            </div>
-          </a>
-
-          <a class="project-card" href="https://systemslibrarian.github.io/snow2/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
-            <div class="card-kicker">Stream Cipher</div>
-            <div class="project-title">Snow 2</div>
-            <div class="project-copy">A modern Rust reimplementation of SNOW with AEAD support, Argon2id-derived keys, and steganographic output options.</div>
-            <div class="project-meta">
-              <div class="stack">
-                <span class="chip">XChaCha20-Poly1305</span>
-                <span class="chip">Argon2id</span>
-                <span class="chip">HKDF-SHA-256</span>
-                <span class="chip">Steganography</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -1475,6 +1593,34 @@
     /* Init */
     readHash();
     if (!location.hash) filter();
+  })();
+
+  /* Theme toggle */
+  (function () {
+    var html = document.documentElement;
+    var btn = document.getElementById('theme-toggle');
+    var icon = document.getElementById('theme-icon');
+    var stored = localStorage.getItem('theme');
+
+    function apply(theme) {
+      if (theme === 'light') {
+        html.classList.add('light');
+        icon.textContent = '\u263E';
+      } else {
+        html.classList.remove('light');
+        icon.textContent = '\u2600';
+      }
+    }
+
+    if (stored) {
+      apply(stored);
+    }
+
+    btn.addEventListener('click', function () {
+      var next = html.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('theme', next);
+      apply(next);
+    });
   })();
   </script>
 

@@ -530,19 +530,23 @@
       height: 28px;
       display: none;
       place-items: center;
-      border: none;
-      background: none;
-      color: var(--text-dim);
-      font-size: 16px;
+      border: 1px solid var(--border-strong);
+      background: rgba(53, 214, 187, 0.10);
+      color: var(--teal);
+      font-size: 15px;
       cursor: pointer;
       padding: 0;
       line-height: 1;
       font-family: var(--mono);
-      transition: color 0.15s ease;
+      border-radius: 2px;
+      transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      z-index: 2;
     }
 
     .search-clear:hover {
       color: var(--text-hi);
+      background: rgba(53, 214, 187, 0.20);
+      border-color: var(--teal);
     }
 
     .search-clear.visible {

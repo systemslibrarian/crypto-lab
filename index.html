@@ -453,6 +453,134 @@
       }
     }
 
+    .filter-bar {
+      grid-column: 1 / -1;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(7, 16, 22, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 14px 0 12px;
+      margin: -14px 0 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .search-bar {
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 14px 18px 14px 44px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-hi);
+      background: rgba(9, 18, 24, 0.9);
+      border: 1px solid var(--border-strong);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .search-bar input::placeholder {
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .search-bar input:focus {
+      border-color: var(--teal);
+    }
+
+    .search-bar::before {
+      content: '⌕';
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .search-kbd {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 2px 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      border: 1px solid var(--border-strong);
+      background: rgba(8, 17, 24, 0.78);
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+    }
+
+    .search-bar input:focus ~ .search-kbd {
+      opacity: 0;
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      padding: 4px 10px;
+      border: 1px solid var(--border-strong);
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      font-size: 9.5px;
+      font-family: var(--mono);
+      background: rgba(8, 17, 24, 0.78);
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .filter-chip:hover {
+      border-color: rgba(242, 248, 251, 0.3);
+      color: var(--text);
+    }
+
+    .filter-chip.active {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: rgba(53, 214, 187, 0.08);
+    }
+
+    .card-count {
+      color: var(--text-dim);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-dim);
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      display: none;
+    }
+
+    @media (max-width: 760px) {
+      .search-kbd { display: none; }
+    }
+
     @media (min-width: 761px) and (max-width: 1120px) {
       .content .wrap {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -481,6 +609,17 @@
   <main>
     <section class="content" id="catalog">
       <div class="wrap">
+        <div class="filter-bar" id="filter-bar">
+          <div class="search-bar">
+            <input type="text" id="demo-search" placeholder="Filter demos — try 'ratchet', 'post-quantum', 'AES-256-GCM'…" aria-label="Filter demos" />
+            <kbd class="search-kbd">/</kbd>
+          </div>
+          <div class="filter-row">
+            <div class="filter-chips" id="filter-chips"></div>
+            <div class="card-count" id="card-count"></div>
+          </div>
+        </div>
+        <div class="no-results" id="no-results">No demos found.</div>
         <div class="feature-grid">
           <a class="feature-card secondary" href="https://systemslibrarian.github.io/crypto-lab-shadow-vault/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Deniable Encryption</div>
@@ -1217,6 +1356,127 @@
       </div>
     </div>
   </section>
+
+  <script>
+  (function () {
+    var CATEGORIES = [
+      ['Post-Quantum', /post-quantum|code-based/i],
+      ['Attacks', /cryptanalysis|oracle|side-channel|backdoored|nonce misuse/i],
+      ['Signatures', /signature|digital sign|pairing/i],
+      ['Encryption', /block cipher|stream cipher|encrypted|deniable|format-preserving|asymmetric/i],
+      ['Hashing & KDFs', /hash|kdf|key derivation|message authentication|mac primitive|merkle|stateless/i],
+      ['Key Exchange', /key exchange|key agreement|noise protocol|forward-secret|hybrid|elliptic|public-key/i],
+      ['Protocols', /zero-knowledge|mpc|oblivious|pir|homomorphic|secret sharing|library privacy/i],
+      ['Historical', /historical/i]
+    ];
+
+    var input = document.getElementById('demo-search');
+    var noResults = document.getElementById('no-results');
+    var cardCount = document.getElementById('card-count');
+    var chipsEl = document.getElementById('filter-chips');
+    var cards = Array.from(document.querySelectorAll('.feature-card, .project-card'));
+    var total = cards.length;
+    var activeCategory = '';
+
+    var cardData = cards.map(function (card) {
+      var title = (card.querySelector('.feature-title, .project-title') || {}).textContent || '';
+      var copy = (card.querySelector('.feature-copy, .project-copy') || {}).textContent || '';
+      var kicker = (card.querySelector('.card-kicker') || {}).textContent || '';
+      var chips = Array.from(card.querySelectorAll('.chip')).map(function (c) { return c.textContent; }).join(' ');
+      var haystack = (title + ' ' + copy + ' ' + kicker + ' ' + chips).toLowerCase();
+      var cats = [];
+      CATEGORIES.forEach(function (cat) { if (cat[1].test(kicker)) cats.push(cat[0]); });
+      return { el: card, haystack: haystack, categories: cats };
+    });
+
+    /* Build filter chips */
+    var allBtn = document.createElement('button');
+    allBtn.className = 'filter-chip active';
+    allBtn.setAttribute('data-category', '');
+    allBtn.textContent = 'All';
+    chipsEl.appendChild(allBtn);
+    CATEGORIES.forEach(function (cat) {
+      var btn = document.createElement('button');
+      btn.className = 'filter-chip';
+      btn.setAttribute('data-category', cat[0]);
+      btn.textContent = cat[0];
+      chipsEl.appendChild(btn);
+    });
+
+    /* Unified filter */
+    function filter() {
+      var q = input.value.toLowerCase().trim();
+      var visible = 0;
+      cardData.forEach(function (d) {
+        var matchCat = !activeCategory || d.categories.indexOf(activeCategory) !== -1;
+        var matchText = !q || d.haystack.indexOf(q) !== -1;
+        if (matchCat && matchText) { d.el.style.display = ''; visible++; }
+        else { d.el.style.display = 'none'; }
+      });
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+      cardCount.textContent = 'Showing ' + visible + ' of ' + total;
+      syncHash();
+    }
+
+    /* Category clicks */
+    chipsEl.addEventListener('click', function (e) {
+      var btn = e.target.closest('.filter-chip');
+      if (!btn) return;
+      activeCategory = btn.getAttribute('data-category');
+      Array.from(chipsEl.children).forEach(function (c) { c.classList.remove('active'); });
+      btn.classList.add('active');
+      filter();
+    });
+
+    input.addEventListener('input', filter);
+
+    /* URL hash sync */
+    function syncHash() {
+      var parts = [];
+      if (activeCategory) parts.push('cat=' + encodeURIComponent(activeCategory));
+      if (input.value.trim()) parts.push('q=' + encodeURIComponent(input.value.trim()));
+      var hash = parts.length ? '#' + parts.join('&') : '';
+      if (location.hash !== hash) {
+        history.replaceState(null, '', hash || location.pathname + location.search);
+      }
+    }
+
+    function readHash() {
+      var hash = location.hash.slice(1);
+      if (!hash) return;
+      var params = {};
+      hash.split('&').forEach(function (p) {
+        var kv = p.split('=');
+        if (kv.length === 2) params[kv[0]] = decodeURIComponent(kv[1]);
+      });
+      if (params.q) input.value = params.q;
+      if (params.cat) {
+        activeCategory = params.cat;
+        Array.from(chipsEl.children).forEach(function (c) {
+          c.classList.toggle('active', c.getAttribute('data-category') === activeCategory);
+        });
+      }
+      filter();
+    }
+
+    window.addEventListener('hashchange', readHash);
+
+    /* Keyboard shortcut: / to focus search */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        var tag = (document.activeElement || {}).tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+        if ((document.activeElement || {}).isContentEditable) return;
+        e.preventDefault();
+        input.focus();
+      }
+    });
+
+    /* Init */
+    readHash();
+    if (!location.hash) filter();
+  })();
+  </script>
 
   <footer class="footer">
     <div class="wrap">

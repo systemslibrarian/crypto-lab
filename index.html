@@ -521,6 +521,38 @@
       opacity: 0;
     }
 
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      display: none;
+      place-items: center;
+      border: none;
+      background: none;
+      color: var(--text-dim);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      font-family: var(--mono);
+      transition: color 0.15s ease;
+    }
+
+    .search-clear:hover {
+      color: var(--text-hi);
+    }
+
+    .search-clear.visible {
+      display: grid;
+    }
+
+    .search-clear.visible ~ .search-kbd {
+      display: none;
+    }
+
     .filter-row {
       display: flex;
       align-items: center;
@@ -730,6 +762,7 @@
         <div class="filter-bar" id="filter-bar">
           <div class="search-bar">
             <input type="text" id="demo-search" placeholder="Filter demos — try 'ratchet', 'post-quantum', 'AES-256-GCM'…" aria-label="Filter demos" />
+            <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
             <kbd class="search-kbd">/</kbd>
           </div>
           <div class="filter-row">
@@ -1302,7 +1335,7 @@
           </a>
 
           <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
-            <div class="card-kicker">Hash Internals</div>
+            <div class="card-kicker">Hash Construction</div>
             <div class="project-title">Hash Zoo</div>
             <div class="project-copy">SHA-256 vs SHA3-256 vs BLAKE3 internals — live avalanche analysis, Merkle-Damgård/sponge/tree construction diagrams, and timing benchmarks.</div>
             <div class="project-meta">
@@ -1436,7 +1469,7 @@
           </a>
 
           <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
-            <div class="card-kicker">IT-PIR Library Privacy</div>
+            <div class="card-kicker">IT-PIR</div>
             <div class="project-title">Oblivious Shelf</div>
             <div class="project-copy">2-server XOR Private Information Retrieval (Chor et al. 1995) — a patron retrieves any book from a 16-item catalog without the server learning which one was requested. Step-by-step query walkthrough and privacy audit.</div>
             <div class="project-meta">
@@ -1492,6 +1525,7 @@
     var noResults = document.getElementById('no-results');
     var cardCount = document.getElementById('card-count');
     var chipsEl = document.getElementById('filter-chips');
+    var clearBtn = document.getElementById('search-clear');
     var cards = Array.from(document.querySelectorAll('.feature-card, .project-card'));
     var total = cards.length;
     var activeCategory = '';
@@ -1547,6 +1581,18 @@
     });
 
     input.addEventListener('input', filter);
+
+    /* Clear button */
+    function updateClear() {
+      clearBtn.classList.toggle('visible', input.value.length > 0);
+    }
+    input.addEventListener('input', updateClear);
+    clearBtn.addEventListener('click', function () {
+      input.value = '';
+      updateClear();
+      input.focus();
+      filter();
+    });
 
     /* URL hash sync */
     function syncHash() {

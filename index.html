@@ -242,6 +242,14 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
       font-size: 10px;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-kicker:hover {
+      color: var(--teal);
     }
 
     .card-kicker::before {
@@ -1573,6 +1581,23 @@
       cardCount.textContent = 'Showing ' + visible + ' of ' + total;
       syncHash();
     }
+
+    /* Kicker clicks — filter by topic */
+    document.addEventListener('click', function (e) {
+      var kicker = e.target.closest('.card-kicker');
+      if (!kicker) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var topic = kicker.textContent.trim();
+      input.value = topic;
+      updateClear();
+      activeCategory = '';
+      Array.from(chipsEl.children).forEach(function (c) {
+        c.classList.toggle('active', c.getAttribute('data-category') === '');
+      });
+      filter();
+      input.focus();
+    });
 
     /* Category clicks */
     chipsEl.addEventListener('click', function (e) {

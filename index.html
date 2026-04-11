@@ -1583,20 +1583,21 @@
     }
 
     /* Kicker clicks — filter by topic */
-    document.addEventListener('click', function (e) {
-      var kicker = e.target.closest('.card-kicker');
-      if (!kicker) return;
-      e.preventDefault();
-      e.stopPropagation();
-      var topic = kicker.textContent.trim();
-      input.value = topic;
-      updateClear();
-      activeCategory = '';
-      Array.from(chipsEl.children).forEach(function (c) {
-        c.classList.toggle('active', c.getAttribute('data-category') === '');
+    document.querySelectorAll('.card-kicker').forEach(function (kicker) {
+      kicker.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var topic = kicker.textContent.trim();
+        input.value = topic;
+        updateClear();
+        activeCategory = '';
+        Array.from(chipsEl.children).forEach(function (c) {
+          c.classList.toggle('active', c.getAttribute('data-category') === '');
+        });
+        filter();
+        input.focus();
+        window.scrollTo({ top: document.getElementById('filter-bar').offsetTop - 10, behavior: 'smooth' });
       });
-      filter();
-      input.focus();
     });
 
     /* Category clicks */

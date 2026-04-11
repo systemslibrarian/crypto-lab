@@ -1582,24 +1582,6 @@
       syncHash();
     }
 
-    /* Kicker clicks — filter by topic */
-    document.querySelectorAll('.card-kicker').forEach(function (kicker) {
-      kicker.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var topic = kicker.textContent.trim();
-        input.value = topic;
-        updateClear();
-        activeCategory = '';
-        Array.from(chipsEl.children).forEach(function (c) {
-          c.classList.toggle('active', c.getAttribute('data-category') === '');
-        });
-        filter();
-        input.focus();
-        window.scrollTo({ top: document.getElementById('filter-bar').offsetTop - 10, behavior: 'smooth' });
-      });
-    });
-
     /* Category clicks */
     chipsEl.addEventListener('click', function (e) {
       var btn = e.target.closest('.filter-chip');
@@ -1622,6 +1604,33 @@
       updateClear();
       input.focus();
       filter();
+    });
+
+    /* Kicker clicks — filter by topic */
+    cards.forEach(function (card) {
+      var kicker = card.querySelector('.card-kicker');
+      if (!kicker) return;
+      /* Block the <a> from navigating when kicker is clicked */
+      card.addEventListener('click', function (e) {
+        if (e.target === kicker || kicker.contains(e.target)) {
+          e.preventDefault();
+        }
+      }, true);
+      kicker.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var topic = kicker.textContent.trim();
+        input.value = topic;
+        updateClear();
+        activeCategory = '';
+        Array.from(chipsEl.children).forEach(function (c) {
+          c.classList.toggle('active', c.getAttribute('data-category') === '');
+        });
+        filter();
+        input.focus();
+        document.getElementById('filter-bar').scrollIntoView({ behavior: 'smooth' });
+        return false;
+      });
     });
 
     /* URL hash sync */

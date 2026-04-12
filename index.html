@@ -1655,8 +1655,8 @@
       if (!hash) return;
       var params = {};
       hash.split('&').forEach(function (p) {
-        var kv = p.split('=');
-        if (kv.length === 2) params[kv[0]] = decodeURIComponent(kv[1]);
+        var idx = p.indexOf('=');
+        if (idx > 0) params[p.slice(0, idx)] = decodeURIComponent(p.slice(idx + 1));
       });
       if (params.q) input.value = params.q;
       if (params.cat) {
@@ -1683,7 +1683,7 @@
 
     /* Init */
     readHash();
-    if (!location.hash) filter();
+    if (!location.hash || location.hash === '#') filter();
   })();
 
   /* Theme toggle */

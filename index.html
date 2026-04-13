@@ -1681,6 +1681,111 @@
             </div>
           </a>
 
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Password Hashing</div>
+            <div class="project-title">Bcrypt Forge</div>
+            <div class="project-copy">Bcrypt anatomy, cost factor benchmarking, timing-safe verification, and a real-world breach simulation. The workhorse password hash, dissected.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">bcrypt</span>
+                <span class="chip">Blowfish</span>
+                <span class="chip">Cost Factor</span>
+                <span class="chip">Timing-Safe</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-blind-sign/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Blind Signatures</div>
+            <div class="project-title">Blind Sign</div>
+            <div class="project-copy">Chaum RSA blind signatures and Schnorr EC blind signatures — anonymous e-cash, private voting, and unlinkability proofs. The signer signs without seeing the message.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Chaum RSA</span>
+                <span class="chip">Schnorr EC</span>
+                <span class="chip">e-Cash</span>
+                <span class="chip">Unlinkability</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-commit-gate/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Commitment Schemes</div>
+            <div class="project-title">Commit Gate</div>
+            <div class="project-copy">Hash commitments and Pedersen commitments — binding, hiding, sealed-bid auction, and homomorphic addition. The primitive beneath ZKPs, MPC, and VSS.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Hash Commitment</span>
+                <span class="chip">Pedersen</span>
+                <span class="chip">Binding &amp; Hiding</span>
+                <span class="chip">Homomorphic</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-pki-chain/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">PKI &amp; Certificates</div>
+            <div class="project-title">PKI Chain</div>
+            <div class="project-copy">X.509 certificate chains, trust store validation, CA compromise cascades, Certificate Transparency with Merkle inclusion proofs, and post-quantum migration to ML-DSA.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">X.509</span>
+                <span class="chip">Certificate Transparency</span>
+                <span class="chip">CA Compromise</span>
+                <span class="chip">ML-DSA</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-protocol-compose/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Protocol Composition</div>
+            <div class="project-title">Protocol Compose</div>
+            <div class="project-copy">MAC-then-Encrypt vs Encrypt-then-MAC, padding oracle attack, CRIME, and the composition failures that drove TLS 1.3. Safe primitives composed unsafely break everything.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">MAC-then-Encrypt</span>
+                <span class="chip">Encrypt-then-MAC</span>
+                <span class="chip">CRIME</span>
+                <span class="chip">TLS 1.3</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-ring-sign/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Ring Signatures</div>
+            <div class="project-title">Ring Sign</div>
+            <div class="project-copy">LSAG ring signatures — key image linkability, double-spend detection, group signatures with manager opening, and Monero transaction privacy. Sign as one-of-many without revealing which.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">LSAG</span>
+                <span class="chip">Key Image</span>
+                <span class="chip">Group Signatures</span>
+                <span class="chip">Monero</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Threshold Decryption</div>
+            <div class="project-title">Threshold Decrypt</div>
+            <div class="project-copy">ElGamal over P-256 — distributed key generation, verifiable partial decryptions with NIZK proofs, and t-of-n combination without any party holding the full private key.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">ElGamal</span>
+                <span class="chip">P-256</span>
+                <span class="chip">NIZK Proofs</span>
+                <span class="chip">t-of-n</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -1710,12 +1815,12 @@
   (function () {
     var CATEGORIES = [
       ['Post-Quantum', /post-quantum|code-based/i],
-      ['Attacks', /cryptanalysis|oracle|side-channel|backdoored|nonce misuse/i],
-      ['Signatures', /signature|digital sign|pairing/i],
+      ['Attacks', /cryptanalysis|oracle|side-channel|backdoored|nonce misuse|protocol composition/i],
+      ['Signatures', /signature|digital sign|pairing|blind sign/i],
       ['Encryption', /block cipher|stream cipher|encrypted|deniable|format-preserving|asymmetric/i],
-      ['Hashing & KDFs', /hash|kdf|key derivation|message authentication|mac primitive|merkle|stateless/i],
-      ['Key Exchange', /key exchange|key agreement|noise protocol|forward-secret|hybrid|elliptic|public-key/i],
-      ['Protocols', /zero-knowledge|mpc|oblivious|pir|homomorphic|secret sharing|library privacy/i],
+      ['Hashing & KDFs', /hash|kdf|key derivation|message authentication|mac primitive|merkle|stateless|password hash/i],
+      ['Key Exchange', /key exchange|key agreement|noise protocol|forward-secret|hybrid|elliptic|public-key|pki|certificate/i],
+      ['Protocols', /zero-knowledge|mpc|oblivious|pir|homomorphic|secret sharing|library privacy|commitment|threshold/i],
       ['Historical', /historical/i]
     ];
 

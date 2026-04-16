@@ -73,102 +73,7 @@
       margin: 0 auto;
     }
 
-    .site-header {
-      padding: 28px 0 20px;
-    }
 
-    .masthead {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--border-strong);
-      display: grid;
-      place-items: center;
-      color: var(--teal);
-      background: rgba(9, 18, 24, 0.9);
-      box-shadow: inset 0 0 0 1px rgba(53, 214, 187, 0.08);
-    }
-
-    .brand-copy strong,
-    .brand-copy span {
-      display: block;
-    }
-
-    .brand-copy strong {
-      color: var(--text-hi);
-      font-size: 13px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .brand-copy span {
-      color: var(--text-dim);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-
-    .masthead-nav {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .nav-link,
-    .cta,
-    .button-link {
-      text-decoration: none;
-      border: 1px solid var(--border-strong);
-      padding: 10px 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-size: 11px;
-      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-    }
-
-    .nav-link,
-    .button-link {
-      color: var(--text-dim);
-      background: rgba(8, 17, 24, 0.74);
-    }
-
-    .cta {
-      color: var(--bg);
-      background: var(--teal);
-      border-color: rgba(53, 214, 187, 0.8);
-      box-shadow: 0 10px 30px rgba(53, 214, 187, 0.18);
-    }
-
-    .nav-link:hover,
-    .button-link:hover,
-    .cta:hover {
-      transform: translateY(-1px);
-      border-color: rgba(242, 248, 251, 0.4);
-      color: var(--text-hi);
-    }
-
-    .cta:hover {
-      color: var(--bg);
-      background: #53e2ca;
-    }
 
     .hero {
       padding: 42px 0 30px;
@@ -418,7 +323,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .masthead,
+    .cl-header,
     .hero-main,
     .feature-grid,
     .project-grid,
@@ -437,16 +342,10 @@
         width: min(100% - 24px, 1280px);
       }
 
-      .site-header {
-        padding-top: 16px;
-      }
-
-      .masthead,
       .footer-quote {
         align-items: flex-start;
       }
 
-      .masthead-nav,
       .hero-actions {
         width: 100%;
       }
@@ -706,72 +605,165 @@
       background: rgba(255, 255, 255, 0.8);
     }
 
-    html.light .nav-link,
-    html.light .button-link {
-      background: rgba(255, 255, 255, 0.6);
-    }
 
-    html.light .brand-mark {
-      background: rgba(255, 255, 255, 0.9);
-    }
 
     html.light .footer-quote {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.78));
     }
 
-    html.light .cta {
-      color: #fff;
+    /* ── Standardized Crypto Lab header ───────────────────── */
+    .cl-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 20px;
+      background: #0e1f1e;
+      position: relative;
+      overflow: hidden;
     }
 
-    html.light .cta:hover {
-      color: #fff;
+    .cl-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(77, 207, 176, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77, 207, 176, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
     }
 
-    /* Theme toggle button */
-    .theme-toggle {
-      display: grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--border-strong);
-      background: rgba(8, 17, 24, 0.74);
-      color: var(--text-dim);
-      cursor: pointer;
+    .cl-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cl-badge {
+      width: 36px;
+      height: 36px;
+      background: #162b2a;
+      border: 1px solid #2a4a44;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #4dcfb0;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .cl-header-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cl-title {
       font-size: 16px;
-      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
-      padding: 0;
+      font-weight: 700;
+      color: #e8f5f2;
+      letter-spacing: 1.5px;
+      line-height: 1.2;
+    }
+
+    .cl-sub {
+      font-size: 11px;
+      color: #4dcfb0;
+      letter-spacing: 1px;
+      font-family: monospace;
+      opacity: 0.8;
+      text-decoration: none;
+    }
+
+    .cl-sub:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .cl-header-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cl-nav-btn {
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: monospace;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #4dcfb0;
+      background: #162b2a;
+      border: 1px solid #2a4a44;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .cl-nav-btn:hover {
+      background: #1e3c3a;
+      border-color: #4dcfb0;
+    }
+
+    .cl-theme-toggle {
+      width: 36px;
+      height: 36px;
+      background: #162b2a;
+      border: 1px solid #2a4a44;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      color: #4dcfb0;
+      transition: background 0.15s, border-color 0.15s;
       line-height: 1;
     }
 
-    .theme-toggle:hover {
-      border-color: rgba(242, 248, 251, 0.4);
-      color: var(--text-hi);
+    .cl-theme-toggle:hover {
+      background: #1e3c3a;
+      border-color: #4dcfb0;
     }
-
-    html.light .theme-toggle {
-      background: rgba(255, 255, 255, 0.6);
-    }
+    /* ────────────────────────────────────────────────────── */
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap">
-      <div class="masthead">
-        <div class="brand">
-          <div class="brand-mark">CL</div>
-          <div class="brand-copy">
-            <strong>Crypto Lab</strong>
-            <span>systemslibrarian collection</span>
-          </div>
-        </div>
-        <nav class="masthead-nav" aria-label="Primary">
-          <a class="nav-link" href="https://github.com/systemslibrarian" target="_blank" rel="noopener">GitHub</a>
-          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
-            <span id="theme-icon">☀</span>
-          </button>
-        </nav>
+  <header class="cl-header">
+    <div class="cl-header-left">
+      <div class="cl-badge">CL</div>
+      <div class="cl-header-text">
+        <span class="cl-title">CRYPTO LAB</span>
+        <a class="cl-sub"
+           href="https://systemslibrarian.dev"
+           target="_blank"
+           rel="noopener">
+          systemslibrarian.dev
+        </a>
       </div>
     </div>
+    <nav class="cl-header-nav">
+      <a class="cl-nav-btn"
+         href="https://github.com/systemslibrarian/crypto-lab"
+         target="_blank"
+         rel="noopener">
+        GitHub
+      </a>
+      <button class="cl-theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        ☀
+      </button>
+    </nav>
   </header>
 
   <main>
@@ -953,7 +945,7 @@
             </div>
           </a>
 
-          <a class="project-card" href="https://systemslibrarian.github.io/cryto-lab-ckks-lab/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-ckks-lab/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Homomorphic Encryption</div>
             <div class="project-title">CKKS Lab</div>
             <div class="project-copy">Approximate FHE for encrypted floating-point arithmetic, homomorphic neural network inference, rescaling, and the complete FHE trilogy (TFHE + BGV/BFV + CKKS).</div>
@@ -1786,6 +1778,21 @@
             </div>
           </a>
 
+          <a class="project-card" href="https://systemslibrarian.github.io/crypto-lab-j-uniward/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Steganography</div>
+            <div class="project-title">J-UNIWARD</div>
+            <div class="project-copy">JPEG steganography via Universal Wavelet Relative Distortion — adaptive DCT coefficient embedding that minimizes wavelet-domain detectability. The state-of-the-art in content-adaptive JPEG steganography.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">J-UNIWARD</span>
+                <span class="chip">DCT</span>
+                <span class="chip">Wavelet Distortion</span>
+                <span class="chip">Adaptive Embedding</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -1974,17 +1981,19 @@
   /* Theme toggle */
   (function () {
     var html = document.documentElement;
-    var btn = document.getElementById('theme-toggle');
-    var icon = document.getElementById('theme-icon');
+    var btn = document.getElementById('themeToggle');
+    if (!btn) return;
     var stored = localStorage.getItem('theme');
 
     function apply(theme) {
       if (theme === 'light') {
         html.classList.add('light');
-        icon.textContent = '\u263E';
+        btn.textContent = '\u263E';
+        btn.setAttribute('aria-label', 'Switch to dark mode');
       } else {
         html.classList.remove('light');
-        icon.textContent = '\u2600';
+        btn.textContent = '\u2600';
+        btn.setAttribute('aria-label', 'Switch to light mode');
       }
     }
 

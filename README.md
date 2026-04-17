@@ -33,6 +33,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) | Code-Based KEM | HQC · Reed-Muller · Reed-Solomon · Post-Quantum |
 | [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) | Commitment Schemes | Hash Commitment · Pedersen · Binding & Hiding · Homomorphic Addition |
 | [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) | CSPRNG | HMAC_DRBG · CTR_DRBG · Hash_DRBG · NIST SP 800-90A |
+| [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) | Quantum Key Distribution | Photon Polarization · Basis Sifting · QBER · Privacy Amplification |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | Deniable Encryption | Argon2id · ChaCha20-Poly1305 · SHA-256 |
 | [Biham Lens](https://systemslibrarian.github.io/crypto-lab-biham-lens/) | Differential Cryptanalysis | Differential Cryptanalysis · SPN · DDT · Chosen-Plaintext |
 | [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | Digital Signatures | Ed25519 · Deterministic Nonces · ZIP215 · Cofactor |
@@ -46,7 +47,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) | Hash-Based Signatures | SLH-DSA · SPHINCS+ · SHA-256 · FORS |
 | [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | Historical Cipher | Substitution · Transposition · Atbash |
 | [Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) | Homomorphic Encryption | TFHE-rs |
-| [CKKS Lab](https://systemslibrarian.github.io/cryto-lab-ckks-lab/) | Homomorphic Encryption | CKKS · RLWE · Approximate FHE · Encrypted Inference |
+| [CKKS Lab](https://systemslibrarian.github.io/crypto-lab-ckks-lab/) | Homomorphic Encryption | CKKS · RLWE · Approximate FHE · Encrypted Inference |
 | [FHE Arena](https://systemslibrarian.github.io/crypto-lab-fhe-arena/) | Homomorphic Encryption | BGV/BFV · RLWE · Noise Budget · SIMD Batching |
 | [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) | Hybrid Key Exchange | X25519 · ML-KEM-768 · HKDF-SHA256 · AES-256-GCM |
 | [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) | IT-PIR Library Privacy | XOR PIR · Chor et al. 1995 · 2-Server PIR · Privacy Audit |
@@ -56,6 +57,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Poly1305 MAC](https://systemslibrarian.github.io/crypto-lab-poly1305-mac/) | MAC Primitive | Poly1305 · GF(2¹³⁰−5) · Key-Reuse Attack · Polynomial Stepper |
 | [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) | Merkle Trees | SHA-256 · Merkle Tree · Inclusion Proofs · Certificate Transparency |
 | [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) | Message Authentication | HMAC · CMAC · Poly1305 · GHASH |
+| [Model Breach](https://systemslibrarian.github.io/crypto-lab-model-breach/) | Threat Modeling & Cryptanalysis | HiAE · Candidate Enumeration · MITM State Recovery · Guess-and-Determine |
 | [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) | Noise Protocol Framework | X25519 · HKDF · WireGuard · Handshake Patterns |
 | [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) | Nonce Misuse Resistance | AES-GCM · AES-GCM-SIV · RFC 8452 · Synthetic IV |
 | [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) | Oblivious Transfer | Simplest OT · Chou-Orlandi 2015 · X25519 · AES-256-GCM |
@@ -68,9 +70,11 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) | Post-Quantum KEM | Classic McEliece · Goppa Codes · Post-Quantum |
 | [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) | Post-Quantum Signatures | ML-DSA · CRYSTALS-Dilithium · Lattice |
 | [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) | Post-Quantum Signatures | Falcon · NTRU · FFT Sampling · Post-Quantum |
+| [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) | Quantum Cryptanalysis | Grover's Algorithm · Amplitude Amplification · Oracle Phase Kickback · AES Key Search |
 | [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) | Protocol Composition | MAC-then-Encrypt · Encrypt-then-MAC · CRIME · TLS 1.3 |
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | Public-Key Cryptography | RSA · OAEP · PSS · PKCS#1 |
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | Ring Signatures | LSAG · Key Image · Group Signatures · Monero |
+| [Shor](https://systemslibrarian.github.io/crypto-lab-shor/) | Quantum Cryptanalysis | Shor's Algorithm · Period Finding · QFT · Continued Fractions |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |
 | [Shamir Visual](https://systemslibrarian.github.io/crypto-lab-shamir-visual/) | Secret Sharing Visualizer | Shamir SSS · Lagrange Interpolation · Polynomial Graph |
 | [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Yao’s Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party Computation |

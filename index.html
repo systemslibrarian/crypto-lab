@@ -374,7 +374,7 @@
       background: rgba(7, 16, 22, 0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 14px 0 12px;
+      padding: 14px 16px 12px;
       margin: -14px 0 4px;
       border-bottom: 1px solid var(--border);
     }
@@ -472,26 +472,35 @@
 
     .filter-row {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 14px;
+      margin-top: 12px;
       flex-wrap: wrap;
     }
 
     .filter-chips {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1 1 680px;
+      min-width: 0;
+    }
+
+    .filter-chip-row {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
     }
 
     .filter-chip {
-      padding: 4px 10px;
+      padding: 6px 10px;
+      min-height: 30px;
       border: 1px solid var(--border-strong);
       color: var(--text-dim);
       text-transform: uppercase;
       letter-spacing: 0.09em;
-      font-size: 9.5px;
+      font-size: 10px;
       font-family: var(--mono);
       background: rgba(8, 17, 24, 0.78);
       cursor: pointer;
@@ -514,6 +523,7 @@
       font-size: 11px;
       letter-spacing: 0.06em;
       white-space: nowrap;
+      padding-top: 4px;
     }
 
     .no-results {
@@ -528,6 +538,40 @@
 
     @media (max-width: 760px) {
       .search-kbd { display: none; }
+
+      .filter-bar {
+        padding: 12px 10px 10px;
+      }
+
+      .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .filter-chips {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        flex-basis: 100%;
+      }
+
+      .filter-chip-row {
+        display: contents;
+      }
+
+      .filter-chip {
+        min-height: 34px;
+        padding: 8px 10px;
+        font-size: 10px;
+      }
+
+      .card-count {
+        width: 100%;
+        text-align: left;
+        padding-top: 2px;
+      }
     }
 
     @media (min-width: 761px) and (max-width: 1120px) {
@@ -2009,17 +2053,23 @@
     });
 
     /* Build filter chips */
-    var allBtn = document.createElement('button');
-    allBtn.className = 'filter-chip active';
-    allBtn.setAttribute('data-category', '');
-    allBtn.textContent = 'ALL';
-    chipsEl.appendChild(allBtn);
-    CATEGORIES.forEach(function (cat) {
+    var categoriesWithAll = ['ALL'].concat(CATEGORIES);
+    var splitIndex = Math.ceil(categoriesWithAll.length / 2);
+    var topRowEl = document.createElement('div');
+    var bottomRowEl = document.createElement('div');
+    topRowEl.className = 'filter-chip-row';
+    bottomRowEl.className = 'filter-chip-row';
+    chipsEl.appendChild(topRowEl);
+    chipsEl.appendChild(bottomRowEl);
+
+    categoriesWithAll.forEach(function (cat, index) {
       var btn = document.createElement('button');
-      btn.className = 'filter-chip';
-      btn.setAttribute('data-category', cat);
+      var isAll = cat === 'ALL';
+      btn.className = 'filter-chip' + (isAll ? ' active' : '');
+      btn.setAttribute('data-category', isAll ? '' : cat);
       btn.textContent = cat;
-      chipsEl.appendChild(btn);
+      if (index < splitIndex) topRowEl.appendChild(btn);
+      else bottomRowEl.appendChild(btn);
     });
 
     /* Unified filter */
@@ -2042,7 +2092,7 @@
       var btn = e.target.closest('.filter-chip');
       if (!btn) return;
       activeCategory = btn.getAttribute('data-category');
-      Array.from(chipsEl.children).forEach(function (c) { c.classList.remove('active'); });
+      Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) { c.classList.remove('active'); });
       btn.classList.add('active');
       filter();
     });
@@ -2078,7 +2128,7 @@
         input.value = topic;
         updateClear();
         activeCategory = '';
-        Array.from(chipsEl.children).forEach(function (c) {
+        Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {
           c.classList.toggle('active', c.getAttribute('data-category') === '');
         });
         filter();
@@ -2110,7 +2160,7 @@
       if (params.q) input.value = params.q;
       if (params.cat) {
         activeCategory = params.cat;
-        Array.from(chipsEl.children).forEach(function (c) {
+        Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {
           c.classList.toggle('active', c.getAttribute('data-category') === activeCategory);
         });
       }

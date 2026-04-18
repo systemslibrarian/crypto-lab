@@ -2,6 +2,8 @@
 
 > Browser-based cryptography demos — no backends, no accounts, just the math.
 
+> A curated cryptography lab — from fundamentals to cutting-edge research
+
 A curated collection of single-concept cryptography demonstrations. Each one isolates a real primitive or protocol and makes it interactive in the browser. Classic algorithms, post-quantum schemes, zero-knowledge proofs — all grounded in real specifications, not toy reimplementations.
 
 **Live →** https://systemslibrarian.github.io/crypto-lab/
@@ -90,6 +92,12 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) | Threshold ECDSA | GG20 · Paillier · secp256k1 · Distributed Key Generation |
 | [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) | Threshold Signatures | FROST (RFC 9591) · Ed25519 · Nonce Commitments · VSS Commitments |
 | [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) | Timing Side-Channel | Timing Attack · HMAC · RSA · Cache-Timing |
+| [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) | Post-Quantum Isogeny | SIDH · CSIDH · SQIsign · Castryck-Decru |
+| [Lattice Fault](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) | Post-Quantum Side-Channel | ML-KEM · ML-DSA · KyberSlash · Fault Injection |
+| [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | Post-Quantum Cryptanalysis | LLL · BKZ · Gram-Schmidt · Toy LWE |
+| [MPCitH Sign](https://systemslibrarian.github.io/crypto-lab-mpcith-sign/) | Post-Quantum Signatures | MPC-in-the-Head · Fiat-Shamir · SHA-256 Commitments · Merkle Proofs |
+| [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) | Password-Authenticated Key Exchange | OPAQUE · OPRF · 3DH · AES-256-GCM |
+| [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) | Verifiable Randomness | ECVRF P-256 · Wesolowski VDF · RANDAO · RFC 9381 |
 | [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) | Verifiable Secret Sharing | Feldman VSS · Pedersen VSS · Commitment Verification · Cheating Detection |
 | [SNARK Arena](https://systemslibrarian.github.io/crypto-lab-snark-arena/) | Zero-Knowledge Proofs | Groth16 · PLONK · Trusted Setup · zk-SNARK |
 | [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) | Zero-Knowledge Proofs | zk-STARK · AIR Constraints · FRI · Post-Quantum |

@@ -76,7 +76,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | Ring Signatures | LSAG · Key Image · Group Signatures · Monero |
 | [Shor](https://systemslibrarian.github.io/crypto-lab-shor/) | Quantum Cryptanalysis | Shor's Algorithm · Period Finding · QFT · Continued Fractions |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |
-| [Shamir Visual](https://systemslibrarian.github.io/crypto-lab-shamir-visual/) | Secret Sharing Visualizer | Shamir SSS · Lagrange Interpolation · Polynomial Graph |
+
 | [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Yao’s Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party Computation |
 | [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | Secure MPC | Shamir SSS · GF(2⁶¹−1) · Lagrange Interpolation · Additive Homomorphism |
 | [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | Stateful Hash-Based Signatures | LMS · HSS · W-OTS+ · NIST SP 800-208 |

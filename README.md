@@ -87,6 +87,11 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) | Stream Cipher | ChaCha20 · ARX · Nonce Reuse · Keystream |
 | [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) | Threshold Decryption | ElGamal · P-256 · NIZK Proofs · t-of-n |
 | [Threshold ML-DSA](https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/) | Threshold Signatures | Threshold ML-DSA · Distributed Signing · k-of-n · Post-Quantum |
+| [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
+| [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) | Zero-Knowledge Range Proofs | Bulletproofs · ristretto255 · Range Proofs · Inner-Product Argument |
+| [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) | Lattice Attack | ECDSA · Hidden Number Problem · LLL Reduction · secp256k1 |
+| [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) | Authentication Protocol | RFC 4120 · Needham-Schroeder · Lowe Attack · AES-256-CTS |
+| [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) | Group Messaging Security | MLS (RFC 9420) · TreeKEM · Epoch Key Schedule · Forward Secrecy |
 | [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) | Threshold ECDSA | GG20 · Paillier · secp256k1 · Distributed Key Generation |
 | [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) | Threshold Signatures | FROST (RFC 9591) · Ed25519 · Nonce Commitments · VSS Commitments |
 | [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) | Timing Side-Channel | Timing Attack · HMAC · RSA · Cache-Timing |

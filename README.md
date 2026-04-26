@@ -133,7 +133,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 These sit outside the browser-demo scope of Crypto Lab but belong to the same collection:
 
 - **[Crypto Compare](https://systemslibrarian.github.io/crypto-compare/)** — Algorithm reference covering NIST and PQ-Safe standards.
-- **[Cipher Museum](https://ciphermuseum.com)** — An interactive museum spanning 2,500 years of cryptographic history. Ten halls, 37 ciphers, live encryption demos, and cryptanalysis labs.
+- **[Cipher Museum](https://ciphermuseum.com)** — An interactive museum spanning 3,900 years of cryptographic history. Thirteen halls, 140 exhibits, live encryption demos, and cryptanalysis labs.
 - **[Meow Decoder](https://www.meowdecoder.com/)** — Secure optical air-gap file transfer via QR-code GIFs. AES-256-GCM + Argon2id + ML-KEM-1024 + fountain codes. Python + Rust.
 
 ---

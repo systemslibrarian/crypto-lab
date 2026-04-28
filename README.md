@@ -6,7 +6,7 @@
 
 A curated collection of single-concept cryptography demonstrations. Each one isolates a real primitive or protocol and makes it interactive in the browser. Classic algorithms, post-quantum schemes, zero-knowledge proofs — all grounded in real specifications, not toy reimplementations.
 
-**Live →** https://systemslibrarian.github.io/crypto-lab/
+**Live →** https://crypto-lab.systemslibrarian.dev/
 
 ---
 

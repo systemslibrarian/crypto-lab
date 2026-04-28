@@ -58,6 +58,36 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) | Key Derivation | HKDF · PBKDF2 · scrypt · Argon2id |
 | [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
 | [Poly1305 MAC](https://systemslibrarian.github.io/crypto-lab-poly1305-mac/) | MAC Primitive | Poly1305 · GF(2¹³⁰−5) · Key-Reuse Attack · Polynomial Stepper |
+| [Phantom Vault](https://systemslibrarian.github.io/crypto-lab-phantom-vault/) | Stateless Passwords | PBKDF2-SHA-256 · HMAC-DRBG · Rejection Sampling |
+| [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) | Backdoored RNG | Dual_EC_DRBG · HMAC-DRBG · ChaCha20-DRBG · P-256 |
+| [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) | CSPRNG | HMAC_DRBG · CTR_DRBG · Hash_DRBG · NIST SP 800-90A |
+| [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) | Quantum Key Distribution | Photon Polarization · Basis Sifting · QBER · Privacy Amplification |
+| [Shor](https://systemslibrarian.github.io/crypto-lab-shor/) | Quantum Cryptanalysis | Shor's Algorithm · Period Finding · QFT · Continued Fractions |
+| [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) | Quantum Cryptanalysis | Grover's Algorithm · Amplitude Amplification · Oracle Phase Kickback · AES Key Search |
+| [Model Breach](https://systemslibrarian.github.io/crypto-lab-model-breach/) | Threat Modeling & Cryptanalysis | HiAE · Candidate Enumeration · MITM State Recovery · Guess-and-Determine |
+| [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) | Zero-Knowledge Proofs | Schnorr · SHA-256 Commitments · Fiat-Shamir · zk-SNARK |
+| [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) | Zero-Knowledge Proofs | zk-STARK · AIR Constraints · FRI · Post-Quantum |
+| [SNARK Arena](https://systemslibrarian.github.io/crypto-lab-snark-arena/) | Zero-Knowledge Proofs | Groth16 · PLONK · Trusted Setup · zk-SNARK |
+| [Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) | Homomorphic Encryption | TFHE-rs |
+| [CKKS Lab](https://systemslibrarian.github.io/crypto-lab-ckks-lab/) | Homomorphic Encryption | CKKS · RLWE · Approximate FHE · Encrypted Inference |
+| [FHE Arena](https://systemslibrarian.github.io/crypto-lab-fhe-arena/) | Homomorphic Encryption | BGV/BFV · RLWE · Noise Budget · SIMD Batching |
+| [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
+| [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) | Verifiable Secret Sharing | Feldman VSS · Pedersen VSS · Commitment Verification · Cheating Detection |
+| [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Yao’s Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party Computation |
+| [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | Secure MPC | Shamir SSS · GF(2⁶¹−1) · Lagrange Interpolation · Additive Homomorphism |
+| [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) | Threshold Signatures | FROST (RFC 9591) · Ed25519 · Nonce Commitments · VSS Commitments |
+| [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) | Post-Quantum Signatures | ML-DSA · CRYSTALS-Dilithium · Lattice |
+| [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) | Post-Quantum KEM | ML-KEM · CRYSTALS-Kyber · Lattice · AES-256-GCM |
+| [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) | Steganography | J-UNIWARD · DCT · Wavelet Distortion · Adaptive Embedding |
+| [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) | Steganography | LSB · DCT · Adaptive Embedding · Chi-Squared Steganalysis |
+| [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) | Stream Cipher | ChaCha20 · ARX · Nonce Reuse · Keystream |
+| [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) | Threshold Decryption | ElGamal · P-256 · NIZK Proofs · t-of-n |
+| [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
+| [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) | Zero-Knowledge Range Proofs | Bulletproofs · ristretto255 · Range Proofs · Inner-Product Argument |
+| [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) | Lattice Attack | ECDSA · Hidden Number Problem · LLL Reduction · secp256k1 |
+| [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) | Authentication Protocol | RFC 4120 · Needham-Schroeder · Lowe Attack · AES-256-CTS |
+| [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) | Group Messaging Security | MLS (RFC 9420) · TreeKEM · Epoch Key Schedule · Forward Secrecy |
+| [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) | Threshold ECDSA | GG20 · Paillier · secp256k1 · Distributed Key Generation |
 | [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) | Merkle Trees | SHA-256 · Merkle Tree · Inclusion Proofs · Certificate Transparency |
 | [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) | Message Authentication | HMAC · CMAC · Poly1305 · GHASH |
 | [Model Breach](https://systemslibrarian.github.io/crypto-lab-model-breach/) | Threat Modeling & Cryptanalysis | HiAE · Candidate Enumeration · MITM State Recovery · Guess-and-Determine |

@@ -816,15 +816,15 @@
         <div class="filter-bar" id="filter-bar">
           <div class="search-bar">
             <input type="text" id="demo-search" placeholder="Filter demos…" aria-label="Filter demos" />
-            <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
-            <kbd class="search-kbd">/</kbd>
+            <button class="search-clear" id="search-clear" aria-label="Clear search" hidden>✕</button>
+            <kbd class="search-kbd" aria-hidden="true">/</kbd>
           </div>
           <div class="filter-row">
             <div class="filter-chips" id="filter-chips"></div>
             <div class="card-count" id="card-count"></div>
           </div>
         </div>
-        <div class="no-results" id="no-results">No demos found.</div>
+        <div class="no-results" id="no-results" hidden>No demos found.</div>
         <div class="feature-grid">
           <a class="feature-card secondary" data-category="ENCRYPTION | STEGANOGRAPHY" href="https://systemslibrarian.github.io/snow2/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Stream Cipher</div>
@@ -2472,6 +2472,7 @@
         if (matchCat && matchText) { d.el.style.display = ''; visible++; }
         else { d.el.style.display = 'none'; }
       });
+      noResults.hidden = visible !== 0;
       noResults.style.display = visible === 0 ? 'block' : 'none';
       cardCount.textContent = 'Showing ' + visible + ' of ' + total;
       syncHash();
@@ -2491,7 +2492,9 @@
 
     /* Clear button */
     function updateClear() {
-      clearBtn.classList.toggle('visible', input.value.length > 0);
+      var has = input.value.length > 0;
+      clearBtn.classList.toggle('visible', has);
+      clearBtn.hidden = !has;
     }
     input.addEventListener('input', updateClear);
     clearBtn.addEventListener('click', function () {

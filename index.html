@@ -824,7 +824,7 @@
             <div class="card-count" id="card-count"></div>
           </div>
         </div>
-        <div class="no-results" id="no-results" hidden>No demos found.</div>
+        <div class="no-results" id="no-results" hidden></div>
         <div class="feature-grid">
           <a class="feature-card secondary" data-category="ENCRYPTION | STEGANOGRAPHY" href="https://systemslibrarian.github.io/snow2/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Stream Cipher</div>
@@ -2472,8 +2472,10 @@
         if (matchCat && matchText) { d.el.style.display = ''; visible++; }
         else { d.el.style.display = 'none'; }
       });
-      noResults.hidden = visible !== 0;
-      noResults.style.display = visible === 0 ? 'block' : 'none';
+      var empty = visible === 0;
+      noResults.hidden = !empty;
+      noResults.style.display = empty ? 'block' : 'none';
+      noResults.textContent = empty ? 'No demos found.' : '';
       cardCount.textContent = 'Showing ' + visible + ' of ' + total;
       syncHash();
     }

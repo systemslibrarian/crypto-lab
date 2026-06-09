@@ -2992,6 +2992,36 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ssh-handshake/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Secure Shell Handshake</div>
+            <div class="project-title">SSH Handshake</div>
+            <div class="project-copy">SSH transport-layer handshake and TOFU host-key pinning — ephemeral X25519 / ECDH, Ed25519 signatures over the exchange hash, and known_hosts change detection across StrictHostKeyChecking modes.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">X25519</span>
+                <span class="chip">Ed25519</span>
+                <span class="chip">TOFU</span>
+                <span class="chip">known_hosts</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">HD Wallet Mechanics</div>
+            <div class="project-title">Bitcoin Wallet</div>
+            <div class="project-copy">Bitcoin wallet pipeline in the browser — secp256k1 keys to P2PKH and P2WPKH addresses via HASH160, plus BIP-39 mnemonics, PBKDF2 seed stretching, and BIP-32 hardened child derivation.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">secp256k1</span>
+                <span class="chip">BIP-32</span>
+                <span class="chip">BIP-39</span>
+                <span class="chip">Bech32</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -3064,6 +3094,7 @@
           { title: 'Noise Pipe' },
           { title: 'OPAQUE Gate' },
           { title: 'WebAuthn' },
+          { title: 'SSH Handshake' },
           { title: 'PQ TLS Handshake' }
         ]
       },
@@ -3156,7 +3187,8 @@
       'Jevil': 'public-key',
       'PQ Families': 'post-quantum',
       'Key Exchange': 'key-exchange', 'Web of Trust': 'key-exchange',
-      'WebAuthn': 'key-exchange',
+      'WebAuthn': 'key-exchange', 'SSH Handshake': 'key-exchange',
+      'Bitcoin Wallet': 'public-key',
       'Dead Sea Cipher': 'historical', 'Stego Suite': 'historical',
       'J-UNIWARD': 'historical'
     };
@@ -3170,7 +3202,7 @@
     var REAL_WORLD_TITLES = [
       'Kerberos v5','PKI Chain','MLS Group','Ratchet Wire','X3DH Wire',
       'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
-      'WebAuthn','Web of Trust'
+      'WebAuthn','Web of Trust','SSH Handshake','Bitcoin Wallet'
     ];
     var TITLE_TO_EXTRA_CATS = {};
     FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });

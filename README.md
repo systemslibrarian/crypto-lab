@@ -56,6 +56,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | Hash Internals | SHA-256 · SHA3-256 · BLAKE3 · Merkle-Damgård · Sponge |
 | [LMS/XMSS](https://systemslibrarian.github.io/crypto-lab-lms-xmss/) | Hash-Based Signatures | LMS · XMSS · HSS · NIST SP 800-208 |
 | [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) | Hash-Based Signatures | SLH-DSA · SPHINCS+ · SHA-256 · FORS |
+| [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | HD Wallet Mechanics | secp256k1 · BIP-32 · BIP-39 · Bech32 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | High-Security Curves | X448 · Ed448 · RFC 7748 · RFC 8032 |
 | [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | Historical Cipher | Substitution · Transposition · Atbash |
 | [Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) | Homomorphic Encryption | TFHE-rs |
@@ -115,6 +116,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | Quantum Threat | HNDL · Mosca's Theorem · Q-Day Timeline · PQC Migration |
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | Ring Signatures | LSAG · Key Image · Group Signatures · Monero |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |
+| [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | Secure Shell Handshake | X25519 · Ed25519 · TOFU · known_hosts |
 | [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Yao’s Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party Computation |
 | [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | Secure MPC | Shamir SSS · GF(2⁶¹−1) · Lagrange Interpolation · Additive Homomorphism |
 | [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | Stateful Hash-Based Signatures | LMS · HSS · W-OTS+ · NIST SP 800-208 |

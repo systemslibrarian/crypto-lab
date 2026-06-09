@@ -536,6 +536,72 @@
       display: none;
     }
 
+    .crypto-tree-wrap {
+      grid-column: 1 / -1;
+      margin: 8px 0 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .crypto-tree-label {
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+      margin: 0;
+    }
+
+    .crypto-tree {
+      margin: 0;
+      padding: 16px 20px 18px;
+      background: rgba(8, 17, 24, 0.55);
+      border: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.85;
+      color: var(--text-dim);
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .crypto-tree-root {
+      color: var(--text-hi);
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      letter-spacing: 0.01em;
+    }
+
+    .crypto-tree a {
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+      border-bottom: 1px dashed transparent;
+      padding-bottom: 1px;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .crypto-tree a:hover {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+    }
+
+    .crypto-tree a.active {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+    }
+
+    html.light .crypto-tree {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (max-width: 600px) {
+      .crypto-tree {
+        font-size: 11.5px;
+        padding: 14px 14px 16px;
+      }
+    }
+
     .learning-paths {
       grid-column: 1 / -1;
       margin: 4px 0 14px;
@@ -1063,6 +1129,19 @@
   <main>
     <section class="content" id="catalog">
       <div class="wrap">
+        <div class="crypto-tree-wrap" id="crypto-tree-wrap">
+          <span class="crypto-tree-label">The cryptography map &middot; click a branch</span>
+<pre class="crypto-tree" aria-label="Cryptography map"><span class="crypto-tree-root">Cryptography</span>
+&#9500;&#9472;&#9472; <a data-tree-target="ENCRYPTION">Encryption</a>
+&#9500;&#9472;&#9472; <a data-tree-target="SIGNATURES">Signatures</a>
+&#9500;&#9472;&#9472; <a data-tree-target="KEY EXCHANGE">Key Exchange</a>
+&#9500;&#9472;&#9472; <a data-tree-set="Kerberos v5|OPAQUE Gate|WebAuthn|PKI Chain|X3DH Wire|Noise Pipe">Authentication</a>
+&#9500;&#9472;&#9472; <a data-tree-target="PRIVACY">Privacy</a>
+&#9500;&#9472;&#9472; <a data-tree-target="ZERO-KNOWLEDGE">Zero Knowledge</a>
+&#9500;&#9472;&#9472; <a data-tree-set="Shor|Grover|BB84">Quantum Computing</a>
+&#9500;&#9472;&#9472; <a data-tree-target="POST-QUANTUM">Post-Quantum</a>
+&#9492;&#9472;&#9472; <a data-tree-target="ATTACKS">Cryptanalysis</a></pre>
+        </div>
         <div class="learning-paths" id="learning-paths" aria-label="Learning paths">
           <p class="learning-paths-label">Learning Paths · pick a journey</p>
         </div>
@@ -2955,9 +3034,11 @@
     var cardCount = document.getElementById('card-count');
     var chipsEl = document.getElementById('filter-chips');
     var clearBtn = document.getElementById('search-clear');
+    var treeEl = document.querySelector('.crypto-tree');
     var cards = Array.from(document.querySelectorAll('.feature-card, .project-card'));
     var total = cards.length;
     var activeCategory = '';
+    var activeSet = null;
 
     var cardData = cards.map(function (card) {
       var title = ((card.querySelector('.feature-title, .project-title') || {}).textContent || '').trim();
@@ -2974,8 +3055,13 @@
       var section = TITLE_TO_SECTION[title] || '';
       if (section) card.setAttribute('data-section', section);
       var haystack = (title + ' ' + copy + ' ' + kicker + ' ' + chips + ' ' + cats.join(' ')).toLowerCase();
-      return { el: card, haystack: haystack, categories: cats, section: section };
+      return { el: card, title: title, haystack: haystack, categories: cats, section: section };
     });
+
+    function clearTreeActive() {
+      if (!treeEl) return;
+      Array.from(treeEl.querySelectorAll('a')).forEach(function (a) { a.classList.remove('active'); });
+    }
 
     /* Group cards by section, insert section H2 headers into the project-grid.
        Featured cards are folded into their section so the curriculum starts
@@ -3079,8 +3165,10 @@
         if (!card) return;
         var details = a.closest('details');
         if (details) details.removeAttribute('open');
-        if (activeCategory || input.value) {
+        if (activeCategory || input.value || activeSet) {
           activeCategory = '';
+          activeSet = null;
+          clearTreeActive();
           input.value = '';
           updateClear();
           Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {
@@ -3121,9 +3209,10 @@
       var visible = 0;
       var sectionCounts = {};
       cardData.forEach(function (d) {
+        var matchSet = !activeSet || activeSet.indexOf(d.title) !== -1;
         var matchCat = !activeCategory || d.categories.includes(activeCategory);
         var matchText = !q || d.haystack.indexOf(q) !== -1;
-        if (matchCat && matchText) {
+        if (matchSet && matchCat && matchText) {
           d.el.style.display = '';
           visible++;
           if (d.section) sectionCounts[d.section] = (sectionCounts[d.section] || 0) + 1;
@@ -3148,10 +3237,37 @@
       var btn = e.target.closest('.filter-chip');
       if (!btn) return;
       activeCategory = btn.getAttribute('data-category');
+      activeSet = null;
+      clearTreeActive();
       Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) { c.classList.remove('active'); });
       btn.classList.add('active');
       filter();
     });
+
+    /* Crypto-tree clicks: data-tree-target activates a chip;
+       data-tree-set activates a curated title set. */
+    if (treeEl) {
+      treeEl.addEventListener('click', function (e) {
+        var a = e.target.closest('a[data-tree-target], a[data-tree-set]');
+        if (!a) return;
+        e.preventDefault();
+        var target = a.getAttribute('data-tree-target');
+        var set = a.getAttribute('data-tree-set');
+        if (target) {
+          activeCategory = target;
+          activeSet = null;
+        } else if (set) {
+          activeCategory = '';
+          activeSet = set.split('|').map(function (t) { return t.trim(); }).filter(Boolean);
+        }
+        clearTreeActive();
+        a.classList.add('active');
+        Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {
+          c.classList.toggle('active', c.getAttribute('data-category') === (target || ''));
+        });
+        filter();
+      });
+    }
 
     input.addEventListener('input', filter);
 
@@ -3186,6 +3302,8 @@
         input.value = topic;
         updateClear();
         activeCategory = '';
+        activeSet = null;
+        clearTreeActive();
         Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {
           c.classList.toggle('active', c.getAttribute('data-category') === '');
         });
@@ -3248,8 +3366,10 @@
         var target = a.getAttribute('data-target');
         var h = document.getElementById('section-' + target);
         if (!h) return;
-        if (activeCategory || input.value) {
+        if (activeCategory || input.value || activeSet) {
           activeCategory = '';
+          activeSet = null;
+          clearTreeActive();
           input.value = '';
           updateClear();
           Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {

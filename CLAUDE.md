@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+> **Trigger phrase: "add new demo"** (also: "add a new demo", "new demo"). When the user says any of these followed by a GitHub repo URL, slug, or description, execute the "Adding a new demo" workflow below end-to-end without further prompting unless required info is missing. Do not commit or push — finish the edits, run the self-check, and report back so the user can review the diff.
+
 This is the source for **Crypto Lab** (https://crypto-lab.systemslibrarian.dev/) — a single-page static site (`index.html` + `README.md`) deployed via GitHub Pages from `main`.
 
 The catalog has three navigation layers and they all live in `index.html`:

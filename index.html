@@ -1096,6 +1096,139 @@
       background: #1e3c3a;
       border-color: #4dcfb0;
     }
+
+    .cl-menu-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cl-menu-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .nav-menu-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 10, 14, 0.55);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 90;
+      opacity: 0;
+      transition: opacity 0.24s ease;
+      pointer-events: none;
+    }
+
+    .nav-menu-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      max-height: 100vh;
+      overflow-y: auto;
+      background: linear-gradient(180deg, #0b1821 0%, #081218 100%);
+      border-bottom: 1px solid var(--border-strong);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+      transform: translateY(-100%);
+      transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+      visibility: hidden;
+    }
+
+    .nav-menu.open {
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    .nav-menu-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 22px 24px 30px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .nav-menu-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-menu-title {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      color: var(--text-hi);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-menu-close {
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--text-dim);
+      background: transparent;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .nav-menu-close:hover {
+      color: var(--teal);
+      border-color: var(--teal);
+      background: rgba(53, 214, 187, 0.08);
+    }
+
+    html.light .nav-menu {
+      background: linear-gradient(180deg, #ffffff 0%, #f4f6f8 100%);
+    }
+
+    html.light .nav-menu-backdrop {
+      background: rgba(40, 60, 75, 0.35);
+    }
+
+    /* When inside the menu, override the catalog-grid-spanning rules
+       that the moved nav blocks used to depend on. */
+    .nav-menu .crypto-tree-wrap,
+    .nav-menu .learning-paths,
+    .nav-menu .section-nav {
+      grid-column: auto;
+      margin: 0;
+    }
+
+    .nav-menu .learning-paths {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 1120px) {
+      .nav-menu .learning-paths {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-menu-inner {
+        padding: 16px 16px 26px;
+        gap: 18px;
+      }
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
     /* ────────────────────────────────────────────────────── */
   </style>
 </head>
@@ -1114,6 +1247,10 @@
       </div>
     </div>
     <nav class="cl-header-nav">
+      <button class="cl-nav-btn cl-menu-btn" id="menuToggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Open navigation menu">
+        <span class="cl-menu-icon" aria-hidden="true">&#9776;</span>
+        <span>Menu</span>
+      </button>
       <a class="cl-nav-btn"
          href="https://github.com/systemslibrarian/crypto-lab"
          target="_blank"
@@ -1126,11 +1263,15 @@
     </nav>
   </header>
 
-  <main>
-    <section class="content" id="catalog">
-      <div class="wrap">
-        <div class="crypto-tree-wrap" id="crypto-tree-wrap">
-          <span class="crypto-tree-label">The cryptography map &middot; click a branch</span>
+  <div class="nav-menu-backdrop" id="nav-menu-backdrop" hidden></div>
+  <div class="nav-menu" id="nav-menu" aria-hidden="true">
+    <div class="nav-menu-inner">
+      <div class="nav-menu-head">
+        <span class="nav-menu-title">Navigate</span>
+        <button class="nav-menu-close" id="menuClose" aria-label="Close menu">&times;</button>
+      </div>
+      <div class="crypto-tree-wrap" id="crypto-tree-wrap">
+        <span class="crypto-tree-label">The cryptography map &middot; click a branch</span>
 <pre class="crypto-tree" aria-label="Cryptography map"><span class="crypto-tree-root">Cryptography</span>
 &#9500;&#9472;&#9472; <a data-tree-target="ENCRYPTION">Encryption</a>
 &#9500;&#9472;&#9472; <a data-tree-target="SIGNATURES">Signatures</a>
@@ -1141,21 +1282,27 @@
 &#9500;&#9472;&#9472; <a data-tree-set="Shor|Grover|BB84">Quantum Computing</a>
 &#9500;&#9472;&#9472; <a data-tree-target="POST-QUANTUM">Post-Quantum</a>
 &#9492;&#9472;&#9472; <a data-tree-target="ATTACKS">Cryptanalysis</a></pre>
-        </div>
-        <div class="learning-paths" id="learning-paths" aria-label="Learning paths">
-          <p class="learning-paths-label">Learning Paths · pick a journey</p>
-        </div>
-        <nav class="section-nav" id="section-nav" aria-label="Jump to section">
-          <span class="section-nav-label">Jump to</span>
-          <a href="#section-foundations"   data-target="foundations">Foundations</a>
-          <a href="#section-symmetric"     data-target="symmetric">Symmetric</a>
-          <a href="#section-public-key"    data-target="public-key">Public-Key</a>
-          <a href="#section-key-exchange"  data-target="key-exchange">Key Exchange</a>
-          <a href="#section-privacy"       data-target="privacy">Privacy &amp; Advanced</a>
-          <a href="#section-post-quantum"  data-target="post-quantum">Post-Quantum</a>
-          <a href="#section-cryptanalysis" data-target="cryptanalysis">Cryptanalysis</a>
-          <a href="#section-historical"    data-target="historical">Historical</a>
-        </nav>
+      </div>
+      <div class="learning-paths" id="learning-paths" aria-label="Learning paths">
+        <p class="learning-paths-label">Learning Paths · pick a journey</p>
+      </div>
+      <nav class="section-nav" id="section-nav" aria-label="Jump to section">
+        <span class="section-nav-label">Jump to</span>
+        <a href="#section-foundations"   data-target="foundations">Foundations</a>
+        <a href="#section-symmetric"     data-target="symmetric">Symmetric</a>
+        <a href="#section-public-key"    data-target="public-key">Public-Key</a>
+        <a href="#section-key-exchange"  data-target="key-exchange">Key Exchange</a>
+        <a href="#section-privacy"       data-target="privacy">Privacy &amp; Advanced</a>
+        <a href="#section-post-quantum"  data-target="post-quantum">Post-Quantum</a>
+        <a href="#section-cryptanalysis" data-target="cryptanalysis">Cryptanalysis</a>
+        <a href="#section-historical"    data-target="historical">Historical</a>
+      </nav>
+    </div>
+  </div>
+
+  <main>
+    <section class="content" id="catalog">
+      <div class="wrap">
         <div class="filter-bar" id="filter-bar">
           <div class="search-bar">
             <input type="text" id="demo-search" placeholder="Filter demos…" aria-label="Filter demos" />
@@ -3035,6 +3182,33 @@
     var chipsEl = document.getElementById('filter-chips');
     var clearBtn = document.getElementById('search-clear');
     var treeEl = document.querySelector('.crypto-tree');
+    var navMenu = document.getElementById('nav-menu');
+    var navBackdrop = document.getElementById('nav-menu-backdrop');
+    var menuToggle = document.getElementById('menuToggle');
+    var menuClose = document.getElementById('menuClose');
+
+    function setMenuOpen(open) {
+      if (!navMenu) return;
+      navMenu.classList.toggle('open', open);
+      navMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (navBackdrop) {
+        navBackdrop.classList.toggle('open', open);
+        navBackdrop.hidden = !open;
+      }
+      if (menuToggle) menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.classList.toggle('menu-open', open);
+    }
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', function () {
+        setMenuOpen(!navMenu.classList.contains('open'));
+      });
+    }
+    if (menuClose) menuClose.addEventListener('click', function () { setMenuOpen(false); });
+    if (navBackdrop) navBackdrop.addEventListener('click', function () { setMenuOpen(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navMenu && navMenu.classList.contains('open')) setMenuOpen(false);
+    });
     var cards = Array.from(document.querySelectorAll('.feature-card, .project-card'));
     var total = cards.length;
     var activeCategory = '';
@@ -3176,6 +3350,7 @@
           });
           filter();
         }
+        setMenuOpen(false);
         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         card.classList.remove('flash');
         void card.offsetWidth;
@@ -3245,7 +3420,7 @@
     });
 
     /* Crypto-tree clicks: data-tree-target activates a chip;
-       data-tree-set activates a curated title set. */
+       data-tree-set activates a curated title set. Closes menu after click. */
     if (treeEl) {
       treeEl.addEventListener('click', function (e) {
         var a = e.target.closest('a[data-tree-target], a[data-tree-set]');
@@ -3266,6 +3441,9 @@
           c.classList.toggle('active', c.getAttribute('data-category') === (target || ''));
         });
         filter();
+        setMenuOpen(false);
+        var catalog = document.getElementById('catalog');
+        if (catalog) catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
 
@@ -3356,7 +3534,7 @@
       }
     });
 
-    /* Section-nav anchor clicks: clear filter + smooth-scroll */
+    /* Section-nav anchor clicks: clear filter + close menu + smooth-scroll */
     var sectionNav = document.getElementById('section-nav');
     if (sectionNav) {
       sectionNav.addEventListener('click', function (e) {
@@ -3377,6 +3555,7 @@
           });
           filter();
         }
+        setMenuOpen(false);
         h.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }

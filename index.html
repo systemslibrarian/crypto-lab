@@ -690,14 +690,14 @@
     }
 
     @keyframes cardFlash {
-      0%   { box-shadow: var(--shadow); }
-      30%  { box-shadow: 0 0 0 2px var(--teal), var(--shadow); }
-      100% { box-shadow: var(--shadow); }
+      0%   { box-shadow: var(--shadow); transform: translateY(0); }
+      22%  { box-shadow: 0 0 0 2px var(--teal), 0 12px 28px rgba(53, 214, 187, 0.28); transform: translateY(-3px); }
+      100% { box-shadow: var(--shadow); transform: translateY(0); }
     }
 
     .project-card.flash,
     .feature-card.flash {
-      animation: cardFlash 1.4s ease-in-out;
+      animation: cardFlash 700ms ease-out;
     }
 
     @media (max-width: 1120px) {
@@ -3077,6 +3077,8 @@
         var t = a.getAttribute('data-step-target');
         var card = titleToCard[t];
         if (!card) return;
+        var details = a.closest('details');
+        if (details) details.removeAttribute('open');
         if (activeCategory || input.value) {
           activeCategory = '';
           input.value = '';

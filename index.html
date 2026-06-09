@@ -2616,7 +2616,9 @@
       return { el: card, haystack: haystack, categories: cats, section: section };
     });
 
-    /* Group cards by section, insert section H2 headers into the project-grid */
+    /* Group cards by section, insert section H2 headers into the project-grid.
+       Featured cards are folded into their section so the curriculum starts
+       at the top of the catalog. */
     var projectGrid = document.querySelector('.project-grid');
     var sectionHeaderEls = {};
     if (projectGrid) {
@@ -2629,7 +2631,7 @@
         projectGrid.appendChild(h2);
         sectionHeaderEls[s.id] = h2;
         cardData.forEach(function (d) {
-          if (d.section === s.id && d.el.classList.contains('project-card')) {
+          if (d.section === s.id) {
             projectGrid.appendChild(d.el);
           }
         });

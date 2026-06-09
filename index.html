@@ -536,6 +536,78 @@
       display: none;
     }
 
+    .section-nav {
+      grid-column: 1 / -1;
+      margin: 6px 0 -2px;
+      padding: 8px 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+
+    .section-nav-label {
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-right: 4px;
+    }
+
+    .section-nav a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      background: rgba(8, 17, 24, 0.5);
+      transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    }
+
+    .section-nav a:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: rgba(53, 214, 187, 0.06);
+    }
+
+    html.light .section-nav a {
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .section-header {
+      grid-column: 1 / -1;
+      margin: 26px 0 4px;
+      padding: 16px 4px 10px;
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      color: var(--text-hi);
+      border-bottom: 1px solid var(--border-strong);
+      scroll-margin-top: 160px;
+    }
+
+    .section-header:first-of-type {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 760px) {
+      .section-header {
+        font-size: 1.3rem;
+        margin-top: 18px;
+        scroll-margin-top: 220px;
+      }
+
+      .section-nav {
+        font-size: 10px;
+        gap: 6px;
+      }
+
+      .section-nav a {
+        padding: 4px 8px;
+      }
+    }
+
     @media (max-width: 760px) {
       .search-kbd { display: none; }
 
@@ -813,6 +885,17 @@
   <main>
     <section class="content" id="catalog">
       <div class="wrap">
+        <nav class="section-nav" id="section-nav" aria-label="Jump to section">
+          <span class="section-nav-label">Jump to</span>
+          <a href="#section-foundations"   data-target="foundations">Foundations</a>
+          <a href="#section-symmetric"     data-target="symmetric">Symmetric</a>
+          <a href="#section-public-key"    data-target="public-key">Public-Key</a>
+          <a href="#section-key-exchange"  data-target="key-exchange">Key Exchange</a>
+          <a href="#section-privacy"       data-target="privacy">Privacy &amp; Advanced</a>
+          <a href="#section-post-quantum"  data-target="post-quantum">Post-Quantum</a>
+          <a href="#section-cryptanalysis" data-target="cryptanalysis">Cryptanalysis</a>
+          <a href="#section-historical"    data-target="historical">Historical</a>
+        </nav>
         <div class="filter-bar" id="filter-bar">
           <div class="search-bar">
             <input type="text" id="demo-search" placeholder="Filter demos…" aria-label="Filter demos" />
@@ -2406,21 +2489,105 @@
   <script>
   (function () {
     var CATEGORIES = [
-      'POST-QUANTUM',
+      'FOUNDATIONS',
+      'ENCRYPTION',
+      'SIGNATURES',
+      'KEY EXCHANGE',
+      'PROTOCOLS',
+      'MPC & THRESHOLD',
+      'PRIVACY',
       'ZERO-KNOWLEDGE',
       'HOMOMORPHIC',
-      'MPC & THRESHOLD',
-      'ATTACKS',
-      'SIGNATURES',
-      'ENCRYPTION',
-      'KEY EXCHANGE',
       'HASHING & KDFS',
-      'PRIVACY',
-      'STEGANOGRAPHY',
       'RANDOMNESS',
-      'PROTOCOLS',
+      'POST-QUANTUM',
+      'ATTACKS',
+      'REAL-WORLD SYSTEMS',
+      'STEGANOGRAPHY',
       'HISTORICAL'
     ];
+
+    var SECTIONS = [
+      { id: 'foundations',   label: 'Foundations' },
+      { id: 'symmetric',     label: 'Symmetric Encryption' },
+      { id: 'public-key',    label: 'Public-Key & Signatures' },
+      { id: 'key-exchange',  label: 'Key Exchange & Protocols' },
+      { id: 'privacy',       label: 'Privacy & Advanced' },
+      { id: 'post-quantum',  label: 'Post-Quantum' },
+      { id: 'cryptanalysis', label: 'Cryptanalysis' },
+      { id: 'historical',    label: 'Historical & Steganography' }
+    ];
+
+    var TITLE_TO_SECTION = {
+      'Phantom Vault': 'foundations', 'DRBG Arena': 'foundations',
+      'Babel Hash': 'foundations', 'Hash Zoo': 'foundations',
+      'World Hashes': 'foundations', 'MAC Race': 'foundations',
+      'Poly1305 MAC': 'foundations', 'KDF Chain': 'foundations',
+      'KDF Arena': 'foundations', 'Bcrypt Forge': 'foundations',
+      'Merkle Vault': 'foundations', 'Commit Gate': 'foundations',
+      'Shamir Gate': 'foundations', 'VRF Gate': 'foundations',
+      'Curve Lens': 'foundations',
+      'Snow 2': 'symmetric', 'Iron Serpent': 'symmetric',
+      'World Ciphers': 'symmetric', 'AES Modes': 'symmetric',
+      'ChaCha20 Stream': 'symmetric', 'Format Ward': 'symmetric',
+      'AEGIS Gate': 'symmetric', 'Ascon': 'symmetric',
+      'Shadow Vault': 'symmetric', 'Dad Mode Morse': 'symmetric',
+      'Iron Letter': 'public-key', 'RSA Forge': 'public-key',
+      'Ed25519 Forge': 'public-key', 'ECDSA Forge': 'public-key',
+      'Curve448': 'public-key', 'ElGamal Plain': 'public-key',
+      'IBE Gate': 'public-key', 'Blind Sign': 'public-key',
+      'Ring Sign': 'public-key', 'SPHINCS+ Ledger': 'public-key',
+      'LMS Ledger': 'public-key', 'LMS/XMSS': 'public-key',
+      'Pairing Gate': 'public-key',
+      'Hybrid Wire': 'key-exchange', 'X3DH Wire': 'key-exchange',
+      'Noise Pipe': 'key-exchange', 'Ratchet Wire': 'key-exchange',
+      'MLS Group': 'key-exchange', 'Kerberos v5': 'key-exchange',
+      'PKI Chain': 'key-exchange', 'OPAQUE Gate': 'key-exchange',
+      'Envelope KMS': 'key-exchange',
+      'ZK Proof Lab': 'privacy', 'STARK Tower': 'privacy',
+      'SNARK Arena': 'privacy', 'Bulletproofs': 'privacy',
+      'Blind Oracle': 'privacy', 'CKKS Lab': 'privacy',
+      'FHE Arena': 'privacy', 'Paillier Gate': 'privacy',
+      'Patron Shield': 'privacy', 'Oblivious Shelf': 'privacy',
+      'ORAM Vault': 'privacy', 'PSI Gate': 'privacy',
+      'VSS Gate': 'privacy', 'Garbled Gate': 'privacy',
+      'Silent Tally': 'privacy', 'OT Gate': 'privacy',
+      'FROST Threshold': 'privacy', 'GG20 Wallet': 'privacy',
+      'Threshold Decrypt': 'privacy',
+      'Quantum Vault KpqC': 'post-quantum', 'Kyber Vault': 'post-quantum',
+      'McEliece Gate': 'post-quantum', 'Frodo Vault': 'post-quantum',
+      'BIKE Vault': 'post-quantum', 'HQC Vault': 'post-quantum',
+      'NTRU Classic': 'post-quantum', 'S-Cloud+ Vault': 'post-quantum',
+      'Isogeny Gate': 'post-quantum', 'Dilithium Seal': 'post-quantum',
+      'Falcon Seal': 'post-quantum', 'HAWK': 'post-quantum',
+      'Dilithium Reject': 'post-quantum', 'Hybrid Sign': 'post-quantum',
+      'MPCitH Sign': 'post-quantum', 'Threshold ML-DSA': 'post-quantum',
+      'PQ TLS Handshake': 'post-quantum', 'Harvest Timeline': 'post-quantum',
+      'Harvest Vault': 'post-quantum', 'PQ Rotation': 'post-quantum',
+      'BB84': 'post-quantum', 'Shor': 'post-quantum', 'Grover': 'post-quantum',
+      'Corrupted Oracle': 'cryptanalysis', 'Model Breach': 'cryptanalysis',
+      'Biham Lens': 'cryptanalysis', 'Padding Oracle': 'cryptanalysis',
+      'Timing Oracle': 'cryptanalysis', 'Nonce Guard': 'cryptanalysis',
+      'Nonce Lattice': 'cryptanalysis', 'Lattice Fault': 'cryptanalysis',
+      'LLL Break': 'cryptanalysis', 'HQC Timing Break': 'cryptanalysis',
+      'KyberSlash': 'cryptanalysis', 'Protocol Compose': 'cryptanalysis',
+      'Dead Sea Cipher': 'historical', 'Stego Suite': 'historical',
+      'J-UNIWARD': 'historical'
+    };
+
+    var FOUNDATIONS_TITLES = [
+      'Phantom Vault','DRBG Arena','Babel Hash','Hash Zoo','World Hashes',
+      'MAC Race','Poly1305 MAC','KDF Chain','KDF Arena','Bcrypt Forge',
+      'Merkle Vault','Commit Gate','Shamir Gate','VRF Gate','Curve Lens',
+      'Pairing Gate'
+    ];
+    var REAL_WORLD_TITLES = [
+      'Kerberos v5','PKI Chain','MLS Group','Ratchet Wire','X3DH Wire',
+      'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet'
+    ];
+    var TITLE_TO_EXTRA_CATS = {};
+    FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });
+    REAL_WORLD_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('REAL-WORLD SYSTEMS'); });
 
     var input = document.getElementById('demo-search');
     var noResults = document.getElementById('no-results');
@@ -2432,15 +2599,42 @@
     var activeCategory = '';
 
     var cardData = cards.map(function (card) {
-      var title = (card.querySelector('.feature-title, .project-title') || {}).textContent || '';
+      var title = ((card.querySelector('.feature-title, .project-title') || {}).textContent || '').trim();
       var copy = (card.querySelector('.feature-copy, .project-copy') || {}).textContent || '';
       var kicker = (card.querySelector('.card-kicker') || {}).textContent || '';
       var chips = Array.from(card.querySelectorAll('.chip')).map(function (c) { return c.textContent; }).join(' ');
-      var haystack = (title + ' ' + copy + ' ' + kicker + ' ' + chips).toLowerCase();
       var raw = card.getAttribute('data-category') || '';
       var cats = raw.split('|').map(function (c) { return c.trim(); }).filter(Boolean);
-      return { el: card, haystack: haystack, categories: cats };
+      var extras = TITLE_TO_EXTRA_CATS[title] || [];
+      if (extras.length) {
+        extras.forEach(function (e) { if (cats.indexOf(e) === -1) cats.push(e); });
+        card.setAttribute('data-category', cats.join(' | '));
+      }
+      var section = TITLE_TO_SECTION[title] || '';
+      if (section) card.setAttribute('data-section', section);
+      var haystack = (title + ' ' + copy + ' ' + kicker + ' ' + chips + ' ' + cats.join(' ')).toLowerCase();
+      return { el: card, haystack: haystack, categories: cats, section: section };
     });
+
+    /* Group cards by section, insert section H2 headers into the project-grid */
+    var projectGrid = document.querySelector('.project-grid');
+    var sectionHeaderEls = {};
+    if (projectGrid) {
+      SECTIONS.forEach(function (s) {
+        var h2 = document.createElement('h2');
+        h2.className = 'section-header';
+        h2.id = 'section-' + s.id;
+        h2.setAttribute('data-section', s.id);
+        h2.textContent = s.label;
+        projectGrid.appendChild(h2);
+        sectionHeaderEls[s.id] = h2;
+        cardData.forEach(function (d) {
+          if (d.section === s.id && d.el.classList.contains('project-card')) {
+            projectGrid.appendChild(d.el);
+          }
+        });
+      });
+    }
 
     /* Build filter chips */
     var categoriesWithAll = ['ALL'].concat(CATEGORIES);
@@ -2466,11 +2660,21 @@
     function filter() {
       var q = input.value.toLowerCase().trim();
       var visible = 0;
+      var sectionCounts = {};
       cardData.forEach(function (d) {
         var matchCat = !activeCategory || d.categories.includes(activeCategory);
         var matchText = !q || d.haystack.indexOf(q) !== -1;
-        if (matchCat && matchText) { d.el.style.display = ''; visible++; }
-        else { d.el.style.display = 'none'; }
+        if (matchCat && matchText) {
+          d.el.style.display = '';
+          visible++;
+          if (d.section) sectionCounts[d.section] = (sectionCounts[d.section] || 0) + 1;
+        } else {
+          d.el.style.display = 'none';
+        }
+      });
+      SECTIONS.forEach(function (s) {
+        var h = sectionHeaderEls[s.id];
+        if (h) h.style.display = sectionCounts[s.id] ? '' : 'none';
       });
       var empty = visible === 0;
       noResults.hidden = !empty;
@@ -2574,6 +2778,29 @@
         input.focus();
       }
     });
+
+    /* Section-nav anchor clicks: clear filter + smooth-scroll */
+    var sectionNav = document.getElementById('section-nav');
+    if (sectionNav) {
+      sectionNav.addEventListener('click', function (e) {
+        var a = e.target.closest('a[data-target]');
+        if (!a) return;
+        e.preventDefault();
+        var target = a.getAttribute('data-target');
+        var h = document.getElementById('section-' + target);
+        if (!h) return;
+        if (activeCategory || input.value) {
+          activeCategory = '';
+          input.value = '';
+          updateClear();
+          Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {
+            c.classList.toggle('active', c.getAttribute('data-category') === '');
+          });
+          filter();
+        }
+        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
 
     /* Init */
     readHash();

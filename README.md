@@ -39,6 +39,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) | Code-Based KEM | HQC · Reed-Muller · Reed-Solomon · Post-Quantum |
 | [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) | Commitment Schemes | Hash Commitment · Pedersen · Binding & Hiding · Homomorphic Addition |
 | [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) | CSPRNG | HMAC_DRBG · CTR_DRBG · Hash_DRBG · NIST SP 800-90A |
+| [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) *(WIP)* | Decentralized Trust | PGP · OpenPGP · Key Signing · Trust Graph |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | Deniable Encryption | Argon2id · ChaCha20-Poly1305 · SHA-256 |
 | [Biham Lens](https://systemslibrarian.github.io/crypto-lab-biham-lens/) | Differential Cryptanalysis | Differential Cryptanalysis · SPN · DDT · Chosen-Plaintext |
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | Digital Signatures | ECDSA · secp256k1 · RFC 6979 · Nonce Reuse |
@@ -66,6 +67,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) | IT-PIR Library Privacy | XOR PIR · Chor et al. 1995 · 2-Server PIR · Privacy Audit |
 | [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) | KDF Benchmarks | HKDF · PBKDF2 · scrypt · Argon2id |
 | [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) | Key Derivation | HKDF · PBKDF2 · scrypt · Argon2id |
+| [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) *(WIP)* | Key Exchange Overview | Diffie-Hellman · ECDH · X25519 · ML-KEM |
 | [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) | Lattice Attack | ECDSA · Hidden Number Problem · LLL Reduction · secp256k1 |
 | [NTRU Classic](https://systemslibrarian.github.io/crypto-lab-ntru-classic/) | Lattice Cryptography | NTRU · Polynomial Rings · Lattice · EESS#1 |
 | [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
@@ -77,6 +79,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) | Nonce Misuse Resistance | AES-GCM · AES-GCM-SIV · RFC 8452 · Synthetic IV |
 | [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) | Oblivious Transfer | Simplest OT · Chou-Orlandi 2015 · X25519 · AES-256-GCM |
 | [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) | Pairing Cryptography | BLS12-381 · BLS Signatures · Signature Aggregation · Rogue Key Attack |
+| [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) *(WIP)* | Passkeys & Authentication | WebAuthn · FIDO2 · Passkeys · Attestation |
 | [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) | Password Hashing | bcrypt · Blowfish · Cost Factor · Timing-Safe Verification |
 | [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) | Password-Authenticated Key Exchange | OPAQUE · OPRF · 3DH · AES-256-GCM |
 | [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) | PKI & Certificates | X.509 · Certificate Transparency · CA Compromise · ML-DSA |

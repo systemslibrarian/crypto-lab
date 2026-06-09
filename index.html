@@ -536,6 +536,184 @@
       display: none;
     }
 
+    .learning-paths {
+      grid-column: 1 / -1;
+      margin: 4px 0 14px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .learning-paths-label {
+      grid-column: 1 / -1;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+      margin: 0;
+    }
+
+    .path-card {
+      border: 1px solid var(--border);
+      background: rgba(8, 17, 24, 0.6);
+      padding: 14px 16px 12px;
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .path-card:hover {
+      border-color: rgba(53, 214, 187, 0.4);
+    }
+
+    .path-card[open] {
+      border-color: var(--border-strong);
+      background: rgba(8, 17, 24, 0.88);
+    }
+
+    .path-summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      outline: none;
+    }
+
+    .path-summary::-webkit-details-marker { display: none; }
+    .path-summary::marker { content: ''; }
+
+    .path-summary::after {
+      content: '+';
+      color: var(--text-dim);
+      font-size: 16px;
+      line-height: 1;
+      transition: transform 0.18s ease, color 0.18s ease;
+    }
+
+    .path-card[open] .path-summary::after {
+      content: '\2212';
+      color: var(--teal);
+    }
+
+    .path-label {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--text-hi);
+      flex: 1 1 auto;
+    }
+
+    .path-count {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .path-blurb {
+      margin: 10px 0 12px;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    .path-steps {
+      list-style: decimal inside;
+      margin: 0;
+      padding: 0;
+      font-size: 12.5px;
+      line-height: 1.95;
+    }
+
+    .path-step {
+      color: var(--text);
+      padding: 1px 0;
+    }
+
+    .path-step a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .path-step a:hover {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+    }
+
+    .path-step.wip,
+    .path-step.wip a {
+      color: var(--text-dim);
+    }
+
+    .path-step.wip a:hover {
+      color: var(--amber);
+      border-bottom-color: var(--amber);
+    }
+
+    .wip-badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 6px;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid var(--amber);
+      vertical-align: 2px;
+    }
+
+    .project-card.wip-card,
+    .feature-card.wip-card {
+      opacity: 0.78;
+      border-style: dashed;
+    }
+
+    .project-card.wip-card:hover,
+    .feature-card.wip-card:hover {
+      opacity: 1;
+    }
+
+    .wip-card-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 3px 8px;
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid var(--amber);
+      background: rgba(255, 184, 77, 0.08);
+      z-index: 1;
+    }
+
+    @keyframes cardFlash {
+      0%   { box-shadow: var(--shadow); }
+      30%  { box-shadow: 0 0 0 2px var(--teal), var(--shadow); }
+      100% { box-shadow: var(--shadow); }
+    }
+
+    .project-card.flash,
+    .feature-card.flash {
+      animation: cardFlash 1.4s ease-in-out;
+    }
+
+    @media (max-width: 1120px) {
+      .learning-paths {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    html.light .path-card {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    html.light .path-card[open] {
+      background: rgba(255, 255, 255, 0.94);
+    }
+
     .section-nav {
       grid-column: 1 / -1;
       margin: 6px 0 -2px;
@@ -885,6 +1063,9 @@
   <main>
     <section class="content" id="catalog">
       <div class="wrap">
+        <div class="learning-paths" id="learning-paths" aria-label="Learning paths">
+          <p class="learning-paths-label">Learning Paths · pick a journey</p>
+        </div>
         <nav class="section-nav" id="section-nav" aria-label="Jump to section">
           <span class="section-nav-label">Jump to</span>
           <a href="#section-foundations"   data-target="foundations">Foundations</a>
@@ -2461,6 +2642,130 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-zk-arena/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Zero-Knowledge Proofs</div>
+            <div class="project-title">ZK Arena</div>
+            <div class="project-copy">A side-by-side comparison playground for zk-SNARK and zk-STARK proof systems — setup phases, proving overhead, verification cost, and the tradeoff space between Groth16, PLONK, and STARKs.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">zk-SNARK</span>
+                <span class="chip">zk-STARK</span>
+                <span class="chip">Proof Systems</span>
+                <span class="chip">Comparison</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-jevil/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Few-Time Signatures</div>
+            <div class="project-title">Jevil</div>
+            <div class="project-copy">A hash-based few-time signature scheme over the Goldilocks field using Lagrange interpolation — bounded-use signing with reusable verification keys.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Jevil</span>
+                <span class="chip">Hash-Based</span>
+                <span class="chip">Goldilocks Field</span>
+                <span class="chip">Lagrange Interpolation</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Post-Quantum Side-Channel</div>
+            <div class="project-title">Ciphertext Mirror</div>
+            <div class="project-copy">An ML-KEM side-channel walkthrough — manipulating ciphertexts through the Fujisaki-Okamoto transform, LDPC decoder behavior, and NTT blinding countermeasures.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">ML-KEM</span>
+                <span class="chip">FO Transform</span>
+                <span class="chip">LDPC Decoder</span>
+                <span class="chip">NTT Blinding</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Post-Quantum Side-Channel</div>
+            <div class="project-title">HQC Timing</div>
+            <div class="project-copy">HQC's BCH decoder leaks timing — observe how constant-time mitigations reshape the attack surface against the code-based KEM finalist.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">HQC</span>
+                <span class="chip">BCH Decoder</span>
+                <span class="chip">Timing Oracle</span>
+                <span class="chip">Constant-Time</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Post-Quantum Overview</div>
+            <div class="project-title">PQ Families</div>
+            <div class="project-copy">A guided tour of the five post-quantum problem families — lattice, code-based, hash-based, multivariate, and isogeny — with the assumptions, history, and standardization status of each.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Lattice</span>
+                <span class="chip">Code-Based</span>
+                <span class="chip">Hash-Based</span>
+                <span class="chip">Multivariate</span>
+                <span class="chip">Isogeny</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card wip-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-key-exchange/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <span class="wip-card-badge">WIP</span>
+            <div class="card-kicker">Key Exchange Overview</div>
+            <div class="project-title">Key Exchange</div>
+            <div class="project-copy">A walkthrough of key exchange across history and protocol families — from Diffie-Hellman to modern hybrid post-quantum handshakes, with shared assumptions and threat models per era.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Diffie-Hellman</span>
+                <span class="chip">ECDH</span>
+                <span class="chip">X25519</span>
+                <span class="chip">ML-KEM</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card wip-card" data-category="SIGNATURES | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-web-of-trust/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <span class="wip-card-badge">WIP</span>
+            <div class="card-kicker">Decentralized Trust</div>
+            <div class="project-title">Web of Trust</div>
+            <div class="project-copy">A PGP-style trust graph — sign each other's keys, walk introduction chains, observe how trust flows (and breaks) without a central authority.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">PGP</span>
+                <span class="chip">OpenPGP</span>
+                <span class="chip">Key Signing</span>
+                <span class="chip">Trust Graph</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card wip-card" data-category="PROTOCOLS | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-webauthn/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <span class="wip-card-badge">WIP</span>
+            <div class="card-kicker">Passkeys &amp; Authentication</div>
+            <div class="project-title">WebAuthn</div>
+            <div class="project-copy">Passwordless authentication via FIDO2 / WebAuthn — attestation, assertion, platform vs cross-platform authenticators, and the journey from passwords to passkeys.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">WebAuthn</span>
+                <span class="chip">FIDO2</span>
+                <span class="chip">Passkeys</span>
+                <span class="chip">Attestation</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -2518,6 +2823,55 @@
       { id: 'historical',    label: 'Historical & Steganography' }
     ];
 
+    var LEARNING_PATHS = [
+      {
+        id: 'developer',
+        label: 'Developer Path',
+        blurb: "A builder's journey — from primitives to the protocols you actually ship.",
+        steps: [
+          { title: 'Babel Hash' },
+          { title: 'AES Modes' },
+          { title: 'KDF Chain' },
+          { title: 'RSA Forge' },
+          { title: 'Curve Lens' },
+          { title: 'X3DH Wire' },
+          { title: 'Noise Pipe' },
+          { title: 'OPAQUE Gate' },
+          { title: 'WebAuthn' },
+          { title: 'PQ TLS Handshake' }
+        ]
+      },
+      {
+        id: 'cryptanalyst',
+        label: 'Cryptanalyst Path',
+        blurb: "An attacker's lens — classical ciphers to post-quantum side channels.",
+        steps: [
+          { title: 'Dead Sea Cipher' },
+          { title: 'Biham Lens' },
+          { title: 'Padding Oracle' },
+          { title: 'Timing Oracle' },
+          { title: 'Nonce Lattice' },
+          { title: 'KyberSlash' },
+          { title: 'HQC Timing' },
+          { title: 'Lattice Fault' }
+        ]
+      },
+      {
+        id: 'post-quantum',
+        label: 'Post-Quantum Path',
+        blurb: 'A focused track on PQ KEMs, signatures, hybrids, and migration.',
+        steps: [
+          { title: 'PQ Families' },
+          { title: 'Kyber Vault' },
+          { title: 'Dilithium Seal' },
+          { title: 'Hybrid Wire' },
+          { title: 'PQ TLS Handshake' },
+          { title: 'PQ Rotation' },
+          { title: 'Harvest Timeline' }
+        ]
+      }
+    ];
+
     var TITLE_TO_SECTION = {
       'Phantom Vault': 'foundations', 'DRBG Arena': 'foundations',
       'Babel Hash': 'foundations', 'Hash Zoo': 'foundations',
@@ -2571,6 +2925,12 @@
       'Nonce Lattice': 'cryptanalysis', 'Lattice Fault': 'cryptanalysis',
       'LLL Break': 'cryptanalysis', 'HQC Timing Break': 'cryptanalysis',
       'KyberSlash': 'cryptanalysis', 'Protocol Compose': 'cryptanalysis',
+      'Ciphertext Mirror': 'cryptanalysis', 'HQC Timing': 'cryptanalysis',
+      'ZK Arena': 'privacy',
+      'Jevil': 'public-key',
+      'PQ Families': 'post-quantum',
+      'Key Exchange': 'key-exchange', 'Web of Trust': 'key-exchange',
+      'WebAuthn': 'key-exchange',
       'Dead Sea Cipher': 'historical', 'Stego Suite': 'historical',
       'J-UNIWARD': 'historical'
     };
@@ -2583,7 +2943,8 @@
     ];
     var REAL_WORLD_TITLES = [
       'Kerberos v5','PKI Chain','MLS Group','Ratchet Wire','X3DH Wire',
-      'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet'
+      'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
+      'WebAuthn','Web of Trust'
     ];
     var TITLE_TO_EXTRA_CATS = {};
     FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });
@@ -2635,6 +2996,100 @@
             projectGrid.appendChild(d.el);
           }
         });
+      });
+    }
+
+    /* Build Learning Paths panel. Jump-only behavior: clicking a step
+       clears any active filter and smooth-scrolls to that card. */
+    var titleToCard = {};
+    cardData.forEach(function (d) {
+      var t = (d.el.querySelector('.feature-title, .project-title') || {}).textContent;
+      if (t) titleToCard[t.trim()] = d.el;
+    });
+
+    var pathsContainer = document.getElementById('learning-paths');
+    if (pathsContainer) {
+      LEARNING_PATHS.forEach(function (path) {
+        var details = document.createElement('details');
+        details.className = 'path-card';
+        details.id = 'path-' + path.id;
+
+        var summary = document.createElement('summary');
+        summary.className = 'path-summary';
+        var label = document.createElement('span');
+        label.className = 'path-label';
+        label.textContent = path.label;
+        var count = document.createElement('span');
+        count.className = 'path-count';
+        count.textContent = path.steps.length + ' steps';
+        summary.appendChild(label);
+        summary.appendChild(count);
+        details.appendChild(summary);
+
+        var blurb = document.createElement('p');
+        blurb.className = 'path-blurb';
+        blurb.textContent = path.blurb;
+        details.appendChild(blurb);
+
+        var ol = document.createElement('ol');
+        ol.className = 'path-steps';
+        path.steps.forEach(function (step) {
+          var li = document.createElement('li');
+          li.className = 'path-step' + (step.wip ? ' wip' : '');
+          var link;
+          if (step.wip) {
+            link = document.createElement('a');
+            link.href = step.url || '#';
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.textContent = step.title;
+            li.appendChild(link);
+            var badge = document.createElement('span');
+            badge.className = 'wip-badge';
+            badge.textContent = 'WIP';
+            li.appendChild(badge);
+          } else if (titleToCard[step.title]) {
+            link = document.createElement('a');
+            link.href = '#';
+            link.setAttribute('data-step-target', step.title);
+            link.textContent = step.title;
+            li.appendChild(link);
+            if (titleToCard[step.title].classList.contains('wip-card')) {
+              li.classList.add('wip');
+              var inlineBadge = document.createElement('span');
+              inlineBadge.className = 'wip-badge';
+              inlineBadge.textContent = 'WIP';
+              li.appendChild(inlineBadge);
+            }
+          } else {
+            li.appendChild(document.createTextNode(step.title));
+          }
+          ol.appendChild(li);
+        });
+        details.appendChild(ol);
+        pathsContainer.appendChild(details);
+      });
+
+      pathsContainer.addEventListener('click', function (e) {
+        var a = e.target.closest('a[data-step-target]');
+        if (!a) return;
+        e.preventDefault();
+        var t = a.getAttribute('data-step-target');
+        var card = titleToCard[t];
+        if (!card) return;
+        if (activeCategory || input.value) {
+          activeCategory = '';
+          input.value = '';
+          updateClear();
+          Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {
+            c.classList.toggle('active', c.getAttribute('data-category') === '');
+          });
+          filter();
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.classList.remove('flash');
+        void card.offsetWidth;
+        card.classList.add('flash');
       });
     }
 

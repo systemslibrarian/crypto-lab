@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crypto Lab — Paul Clark / systemslibrarian</title>
   <meta name="description" content="A curated cryptography lab — from fundamentals to cutting-edge research" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:opsz,wght,SOFT@9..144,400,50;9..144,500,50&display=swap" rel="stylesheet" />
@@ -385,14 +386,14 @@
 
     .search-bar input {
       width: 100%;
-      padding: 14px 18px 14px 44px;
+      padding: 14px 50px 14px 44px;
       font-family: var(--mono);
       font-size: 13px;
       color: var(--text-hi);
       background: rgba(9, 18, 24, 0.9);
       border: 1px solid var(--border-strong);
       outline: none;
-      transition: border-color 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .search-bar input::placeholder {
@@ -402,6 +403,7 @@
 
     .search-bar input:focus {
       border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(53, 214, 187, 0.15);
     }
 
     .search-bar::before {
@@ -494,6 +496,9 @@
     }
 
     .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
       padding: 6px 10px;
       min-height: 30px;
       border: 1px solid var(--border-strong);
@@ -504,26 +509,77 @@
       font-family: var(--mono);
       background: rgba(8, 17, 24, 0.78);
       cursor: pointer;
-      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .filter-chip .chip-count {
+      color: var(--text-dim);
+      opacity: 0.65;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+      transition: color 0.2s ease, opacity 0.2s ease;
     }
 
     .filter-chip:hover {
-      border-color: rgba(242, 248, 251, 0.3);
+      border-color: rgba(53, 214, 187, 0.45);
       color: var(--text);
+      background: rgba(53, 214, 187, 0.04);
+    }
+
+    .filter-chip:hover .chip-count {
+      color: var(--text);
+      opacity: 0.9;
     }
 
     .filter-chip.active {
       border-color: var(--teal);
       color: var(--teal);
-      background: rgba(53, 214, 187, 0.08);
+      background: rgba(53, 214, 187, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(53, 214, 187, 0.4);
+    }
+
+    .filter-chip.active .chip-count {
+      color: var(--teal);
+      opacity: 1;
     }
 
     .card-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
       color: var(--text-dim);
       font-size: 11px;
       letter-spacing: 0.06em;
       white-space: nowrap;
       padding-top: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .card-count.filtered .card-count-text {
+      color: var(--teal);
+    }
+
+    .filter-clear {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      padding: 4px 9px;
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .filter-clear:hover {
+      color: var(--text-hi);
+      border-color: var(--teal);
+      background: rgba(53, 214, 187, 0.10);
+    }
+
+    .filter-clear[hidden] {
+      display: none;
     }
 
     .no-results {
@@ -958,7 +1014,17 @@
     }
 
     html.light .filter-chip.active {
-      background: rgba(26, 171, 148, 0.08);
+      background: rgba(26, 171, 148, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(26, 171, 148, 0.4);
+    }
+
+    html.light .filter-chip:hover {
+      border-color: rgba(26, 171, 148, 0.55);
+      background: rgba(26, 171, 148, 0.06);
+    }
+
+    html.light .search-bar input:focus {
+      box-shadow: 0 0 0 3px rgba(26, 171, 148, 0.18);
     }
 
     html.light .search-kbd {
@@ -1305,13 +1371,16 @@
       <div class="wrap">
         <div class="filter-bar" id="filter-bar">
           <div class="search-bar">
-            <input type="text" id="demo-search" placeholder="Filter demos…" aria-label="Filter demos" />
+            <input type="text" id="demo-search" placeholder="Filter demos… try FROST, noise, or Shor" aria-label="Filter demos" />
             <button class="search-clear" id="search-clear" aria-label="Clear search" hidden>✕</button>
             <kbd class="search-kbd" aria-hidden="true">/</kbd>
           </div>
           <div class="filter-row">
             <div class="filter-chips" id="filter-chips"></div>
-            <div class="card-count" id="card-count"></div>
+            <div class="card-count" id="card-count">
+              <span class="card-count-text"></span>
+              <button class="filter-clear" id="filter-clear" type="button" hidden>Clear</button>
+            </div>
           </div>
         </div>
         <div class="no-results" id="no-results" hidden></div>
@@ -3208,6 +3277,8 @@
     var input = document.getElementById('demo-search');
     var noResults = document.getElementById('no-results');
     var cardCount = document.getElementById('card-count');
+    var cardCountText = cardCount.querySelector('.card-count-text');
+    var filterClearBtn = document.getElementById('filter-clear');
     var chipsEl = document.getElementById('filter-chips');
     var clearBtn = document.getElementById('search-clear');
     var treeEl = document.querySelector('.crypto-tree');
@@ -3387,7 +3458,14 @@
       });
     }
 
-    /* Build filter chips */
+    /* Build filter chips with per-category counts */
+    var categoryCounts = {};
+    cardData.forEach(function (d) {
+      d.categories.forEach(function (c) {
+        categoryCounts[c] = (categoryCounts[c] || 0) + 1;
+      });
+    });
+
     var categoriesWithAll = ['ALL'].concat(CATEGORIES);
     var splitIndex = Math.ceil(categoriesWithAll.length / 2);
     var topRowEl = document.createElement('div');
@@ -3402,7 +3480,14 @@
       var isAll = cat === 'ALL';
       btn.className = 'filter-chip' + (isAll ? ' active' : '');
       btn.setAttribute('data-category', isAll ? '' : cat);
-      btn.textContent = cat;
+      var labelSpan = document.createElement('span');
+      labelSpan.className = 'chip-label';
+      labelSpan.textContent = cat;
+      var countSpan = document.createElement('span');
+      countSpan.className = 'chip-count';
+      countSpan.textContent = isAll ? total : (categoryCounts[cat] || 0);
+      btn.appendChild(labelSpan);
+      btn.appendChild(countSpan);
       if (index < splitIndex) topRowEl.appendChild(btn);
       else bottomRowEl.appendChild(btn);
     });
@@ -3432,9 +3517,29 @@
       noResults.hidden = !empty;
       noResults.style.display = empty ? 'block' : 'none';
       noResults.textContent = empty ? 'No demos found.' : '';
-      cardCount.textContent = 'Showing ' + visible + ' of ' + total;
+      cardCountText.textContent = 'Showing ' + visible + ' of ' + total;
+      var isFiltered = !!(activeCategory || activeSet || input.value);
+      cardCount.classList.toggle('filtered', isFiltered);
+      filterClearBtn.hidden = !isFiltered;
       syncHash();
     }
+
+    function resetFilters() {
+      input.value = '';
+      updateClear();
+      activeCategory = '';
+      activeSet = null;
+      clearTreeActive();
+      Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {
+        c.classList.toggle('active', c.getAttribute('data-category') === '');
+      });
+      filter();
+    }
+
+    filterClearBtn.addEventListener('click', function () {
+      resetFilters();
+      input.focus();
+    });
 
     /* Category clicks */
     chipsEl.addEventListener('click', function (e) {

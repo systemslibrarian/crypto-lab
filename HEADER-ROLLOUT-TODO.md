@@ -1,71 +1,30 @@
-# Shared-header rollout — status & TODO
+# Shared-header rollout — COMPLETE
 
-Tracks the rollout of the **Crypto Lab shared global header** (`shared-header.html`)
-and the duplicate-toggle hide rule across all `crypto-lab-*` demo repos.
+The Crypto Lab shared global header (`shared-header.html`) — accent-aware, single
+banner landmark, AA-contrast, with the duplicate in-page toggle hidden — is live on
+**all 118 web labs** and pushed to `main`. The catalog also ships the 2026
+Cybersecurity Excellence Awards "Gold Winner" banner.
 
-Tooling lives in this repo:
-- `shared-header.html` — the canonical header snippet (source of truth)
-- `reapply-header.py` — strips any old injected block and re-inserts the current snippet
-  (handles root `index.html` and nested `demos/<slug>/index.html`); local edits only
-- `apply-header.sh` — original injector (superseded by the Python script)
+**Skipped (no web page):** `crypto-lab-blind-oracle-api` (Rust backend).
 
----
+## Tooling (kept for future demos)
 
-## Status: header applied LOCALLY to all 118 web labs
+- `shared-header.html` — canonical header snippet (source of truth)
+- `reapply-header.py` — strips any old injected block and re-inserts the current
+  snippet; handles root `index.html` and nested `demos/<slug>/index.html`
 
-All `crypto-lab-*` repos are now cloned (119 local) and carry the accent-aware
-header + hidden in-page toggle. Nothing has been pushed yet.
-
-**Intentionally skipped:** `crypto-lab-blind-oracle-api` (Rust backend, no web page).
-
-### Two push groups
-
-**Group A — 85 original labs** (were already cloned; only the header changed):
-ready to push now, scoped to the header file only.
-
-**Group B — 33 newly cloned labs** (cloned this session): header applied, but
-**HOLD the push** — more changes are planned for these, to be batched together.
+### Applying the header to a NEW demo later
 
 ```
-crypto-lab-aegis-gate          crypto-lab-lll-break
-crypto-lab-ascon               crypto-lab-lms-xmss
-crypto-lab-bb84                crypto-lab-model-breach
-crypto-lab-bulletproofs        crypto-lab-mpcith-sign
-crypto-lab-ckks-lab            crypto-lab-multivariate
-crypto-lab-curve448            crypto-lab-nonce-lattice
-crypto-lab-frodo-vault         crypto-lab-ntru-classic
-crypto-lab-grover              crypto-lab-oram-vault
-crypto-lab-harvest-vault       crypto-lab-paillier-gate
-crypto-lab-hybrid-sign         crypto-lab-pq-rotation
-crypto-lab-ibe-gate            crypto-lab-pq-tls-handshake
-crypto-lab-isogeny-gate        crypto-lab-quantum-vault-kpqc
-crypto-lab-jevil               crypto-lab-scloud-vault
-crypto-lab-j-uniward           crypto-lab-shamir-gate
-crypto-lab-kerberos            crypto-lab-shor
-crypto-lab-lattice-fault       crypto-lab-threshold-mldsa
-                               crypto-lab-vss-gate
+python reapply-header.py crypto-lab-<slug>     # one repo
+python reapply-header.py                        # all crypto-lab-* repos (idempotent)
 ```
 
----
-
-## Push note (scope every commit to the header file ONLY)
-
-Working trees are **not clean** — `node_modules` is tracked in some repos and shows
-platform churn (Linux→Windows binaries), and several repos have unrelated
-pre-existing source edits + untracked build artifacts. So:
+Then commit **scoped to the header file only** (never `git add -A`, because some
+repos track `node_modules` and have unrelated WIP):
 
 ```
-git -C <repo> add index.html        # or demos/<slug>/index.html
-git -C <repo> commit -m "Add shared Crypto Lab header"
-git -C <repo> push
+git -C crypto-lab-<slug> add index.html         # or demos/<slug>/index.html
+git -C crypto-lab-<slug> commit -m "Add shared Crypto Lab header"
+git -C crypto-lab-<slug> push
 ```
-
-Never `git add -A` in these repos — it would sweep in node_modules churn and WIP.
-
----
-
-## Resume prompt (for Group B, once their other changes are done)
-
-> Push the Crypto Lab shared-header change for the Group B repos in
-> `HEADER-ROLLOUT-TODO.md`. Scope each commit to the header file only
-> (`index.html` or `demos/<slug>/index.html`) — never `git add -A`.

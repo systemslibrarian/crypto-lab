@@ -1,6 +1,6 @@
 # Crypto Lab
 
-🥇 **[Crypto Lab](https://crypto-lab.systemslibrarian.dev/)** · [repo](https://github.com/systemslibrarian/crypto-lab) · [2026 Cybersecurity Excellence Awards — Gold Winner](https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/)
+🥇 **[Crypto Lab](https://crypto-lab.systemslibrarian.dev/)** ·[2026 Cybersecurity Excellence Awards — Gold Winner](https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/)
 
 > Browser-based cryptography demos — no backends, no accounts, just the math.
 

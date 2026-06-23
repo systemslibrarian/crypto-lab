@@ -1295,6 +1295,51 @@
     body.menu-open {
       overflow: hidden;
     }
+
+    /* ── 2026 Cybersecurity Excellence Awards — Gold Winner ── */
+    .award-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      max-width: 1180px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .award-banner img {
+      width: 76px;
+      height: 76px;
+      flex: 0 0 auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 10px rgba(255, 184, 77, 0.28));
+    }
+    .award-banner-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+    .award-banner-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 700;
+    }
+    .award-banner-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text-hi);
+    }
+    .award-banner:hover .award-banner-title {
+      color: var(--amber);
+    }
+    @media (max-width: 560px) {
+      .award-banner { gap: 12px; padding: 12px 16px; }
+      .award-banner img { width: 58px; height: 58px; }
+      .award-banner-title { font-size: 0.92rem; }
+    }
     /* ────────────────────────────────────────────────────── */
   </style>
 </head>
@@ -1328,6 +1373,20 @@
       </button>
     </nav>
   </header>
+
+  <a class="award-banner"
+     href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
+     target="_blank"
+     rel="noopener"
+     aria-label="2026 Cybersecurity Excellence Awards — Gold Winner">
+    <img src="https://raw.githubusercontent.com/systemslibrarian/systemslibrarian/main/assets/cybersecurity_awards_2026_gold.png"
+         alt="2026 Cybersecurity Excellence Awards Gold Winner badge"
+         width="76" height="76" loading="lazy" decoding="async" />
+    <span class="award-banner-text">
+      <span class="award-banner-eyebrow">Gold Winner</span>
+      <span class="award-banner-title">2026 Cybersecurity Excellence Awards</span>
+    </span>
+  </a>
 
   <div class="nav-menu-backdrop" id="nav-menu-backdrop" hidden></div>
   <div class="nav-menu" id="nav-menu" aria-hidden="true">

@@ -1341,6 +1341,82 @@
       .award-banner-title { font-size: 0.92rem; }
     }
     /* ────────────────────────────────────────────────────── */
+
+    /* ── Featured "Start Here" strip ───────────────────────── */
+    .featured {
+      position: relative;
+      z-index: 1;
+      padding: 30px 0 6px;
+    }
+    .featured .wrap {
+      width: min(1280px, calc(100% - 40px));
+    }
+    .featured-head {
+      margin-bottom: 16px;
+    }
+    .featured-heading {
+      font-family: var(--serif);
+      font-size: clamp(1.7rem, 3.2vw, 2.1rem);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      color: var(--text-hi);
+    }
+    .featured-sub {
+      margin-top: 8px;
+      max-width: 64ch;
+      color: var(--text-dim);
+      font-size: 12.5px;
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .featured-grid .project-card {
+      animation: fadeUp 0.6s ease both;
+    }
+    .featured-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 3px 8px;
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      border: 1px solid var(--teal);
+      background: rgba(53, 214, 187, 0.10);
+      z-index: 2;
+    }
+    @media (min-width: 761px) and (max-width: 1120px) {
+      .featured-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .featured-grid { grid-template-columns: 1fr; }
+      .featured .wrap { width: min(100% - 24px, 1280px); }
+      .featured { padding-top: 22px; }
+    }
+
+    /* Exception note — Blind Oracle, the lab's one live-server demo */
+    .card-note {
+      margin-top: 12px;
+      padding: 9px 11px;
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--text);
+      border: 1px solid rgba(255, 184, 77, 0.34);
+      background: rgba(255, 184, 77, 0.07);
+    }
+    .card-note-tag {
+      display: inline-block;
+      margin-right: 6px;
+      font-size: 9px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--amber);
+    }
   </style>
 </head>
 <body>
@@ -1426,6 +1502,15 @@
   </div>
 
   <main>
+    <section class="featured" id="featured" aria-label="Featured demos">
+      <div class="wrap">
+        <div class="featured-head">
+          <h2 class="featured-heading">Start Here</h2>
+          <p class="featured-sub">New to the lab? These four are good entry points — start here, then explore the full catalog below.</p>
+        </div>
+        <div class="featured-grid" id="featured-grid"></div>
+      </div>
+    </section>
     <section class="content" id="catalog">
       <div class="wrap">
         <div class="filter-bar" id="filter-bar">
@@ -1657,6 +1742,9 @@
             <div class="card-kicker">Homomorphic Encryption</div>
             <div class="project-title">Blind Oracle</div>
             <div class="project-copy">A server computes on encrypted values without seeing the plaintext. A concise, live introduction to FHE using TFHE-rs.</div>
+            <div class="card-note">
+              <span class="card-note-tag">⚡ The one exception</span>This is the lab's single demo with a live backend — a Rust/TFHE-rs server adds your two encrypted numbers homomorphically and still mathematically cannot read them.
+            </div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">TypeScript</span>
@@ -3174,6 +3262,16 @@
 
   <script>
   (function () {
+    /* Featured demos shown in the "Start Here" strip, by repo slug.
+       Edit this list to change the strip — cards are cloned from the grid
+       below so their title/copy/primitives stay in sync automatically. */
+    var FEATURED_SLUGS = [
+      'crypto-lab-quantum-vault-kpqc',
+      'crypto-lab-corrupted-oracle',
+      'crypto-lab-padding-oracle',
+      'crypto-lab-nonce-lattice'
+    ];
+
     var CATEGORIES = [
       'FOUNDATIONS',
       'ENCRYPTION',
@@ -3415,6 +3513,33 @@
             projectGrid.appendChild(d.el);
           }
         });
+      });
+    }
+
+    /* Build the Featured "Start Here" strip by cloning the matching catalog
+       cards (single source of truth — no retyped content). A feature-card
+       clone is normalized to project-card markup so all four match the grid. */
+    var featuredGrid = document.getElementById('featured-grid');
+    if (featuredGrid) {
+      FEATURED_SLUGS.forEach(function (slug) {
+        var sel = '[href*="/' + slug + '/"]';
+        var orig = document.querySelector('.feature-card' + sel + ', .project-card' + sel);
+        if (!orig) return;
+        var clone = orig.cloneNode(true);
+        var isFeature = clone.classList.contains('feature-card');
+        clone.classList.remove('feature-card', 'secondary');
+        clone.classList.add('project-card');
+        if (isFeature) {
+          ['title', 'copy', 'meta'].forEach(function (part) {
+            var el = clone.querySelector('.feature-' + part);
+            if (el) el.classList.replace('feature-' + part, 'project-' + part);
+          });
+        }
+        var badge = document.createElement('span');
+        badge.className = 'featured-badge';
+        badge.textContent = 'Featured';
+        clone.insertBefore(badge, clone.firstChild);
+        featuredGrid.appendChild(clone);
       });
     }
 

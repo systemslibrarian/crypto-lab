@@ -2,7 +2,9 @@
 
 🥇 **[Crypto Lab](https://crypto-lab.systemslibrarian.dev/)** ·[2026 Cybersecurity Excellence Awards — Gold Winner](https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/)
 
-> Browser-based cryptography demos — no backends, no accounts, just the math.
+> Browser-based cryptography demos — no backends, no accounts, just the math.\*
+
+\* ⚡ One deliberate exception: **[Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/)** runs a live Rust/TFHE-rs server to demonstrate real fully homomorphic encryption — it adds your two encrypted numbers and still mathematically cannot read them.
 
 A curated collection of single-concept cryptography demonstrations. Each one isolates a real primitive or protocol and makes it interactive in the browser. Classic algorithms, post-quantum schemes, zero-knowledge proofs — all grounded in real specifications, not toy reimplementations.
 
@@ -14,8 +16,10 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 
 | Project | Concept | Primitives |
 |---|---|---|
-| [Snow 2](https://systemslibrarian.github.io/snow2/) | Stream Cipher | XChaCha20-Poly1305 · Argon2id · HKDF-SHA-256 · Steganography |
 | [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) | Post-Quantum | AES-256-GCM · Shamir SSS · SMAUG-T · HAETAE |
+| [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) | Backdoored RNG | Dual_EC_DRBG · HMAC-DRBG · ChaCha20-DRBG · P-256 |
+| [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) | CBC Padding Oracle | AES-CBC · PKCS#7 · Vaudenay 2002 · POODLE |
+| [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) | Lattice Attack | ECDSA · Hidden Number Problem · LLL Reduction · secp256k1 |
 
 ---
 
@@ -59,7 +63,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | HD Wallet Mechanics | secp256k1 · BIP-32 · BIP-39 · Bech32 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | High-Security Curves | X448 · Ed448 · RFC 7748 · RFC 8032 |
 | [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | Historical Cipher | Substitution · Transposition · Atbash |
-| [Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) | Homomorphic Encryption | TFHE-rs |
+| [Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) | Homomorphic Encryption | TFHE-rs · Live Rust Server · Homomorphic Addition |
 | [CKKS Lab](https://systemslibrarian.github.io/crypto-lab-ckks-lab/) | Homomorphic Encryption | CKKS · RLWE · Approximate FHE · Encrypted Inference |
 | [FHE Arena](https://systemslibrarian.github.io/crypto-lab-fhe-arena/) | Homomorphic Encryption | BGV/BFV · RLWE · Noise Budget · SIMD Batching |
 | [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) | Hybrid Key Exchange | X25519 · ML-KEM-768 · HKDF-SHA256 · AES-256-GCM |
@@ -124,6 +128,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) | Steganography | J-UNIWARD · DCT · Wavelet Distortion · Adaptive Embedding |
 | [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) | Steganography | LSB · DCT · Adaptive Embedding · Chi-Squared Steganalysis |
 | [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) | Stream Cipher | ChaCha20 · ARX · Nonce Reuse · Keystream |
+| [Snow 2](https://systemslibrarian.github.io/snow2/) | Stream Cipher | XChaCha20-Poly1305 · Argon2id · HKDF-SHA-256 · Steganography |
 | [Model Breach](https://systemslibrarian.github.io/crypto-lab-model-breach/) | Threat Modeling & Cryptanalysis | HiAE · Candidate Enumeration · MITM State Recovery · Guess-and-Determine |
 | [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) | Threshold Decryption | ElGamal · P-256 · NIZK Proofs · t-of-n |
 | [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) | Threshold ECDSA | GG20 · Paillier · secp256k1 · Distributed Key Generation |

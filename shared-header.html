@@ -41,6 +41,18 @@
   }
   .cl-btn svg{width:15px;height:15px}
   .cl-icon{padding:.5rem .6rem;font-size:.95rem}
+  /* Skip-to-content link: first focusable element so keyboard users can bypass
+     this sticky header (WCAG 2.4.1). Hidden until focused. Fixed light-on-dark
+     pair (not --accent, which can be a dark hue on some labs) keeps contrast AA. */
+  .cl-skip-link{
+    position:absolute;left:.5rem;top:-3rem;z-index:1001;
+    padding:.55rem 1rem;border-radius:0 0 10px 10px;
+    background:#eafff8;color:#0b1512;
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-weight:700;font-size:.8rem;letter-spacing:.04em;text-decoration:none;
+    transition:top .15s ease;
+  }
+  .cl-skip-link:focus{top:0;outline:2px solid var(--accent,#35d6bb);outline-offset:2px;}
   /* hide each lab's own in-page theme toggle — the bar's toggle replaces it.
      element stays in the DOM so the lab's theme JS keeps working. */
   body :is(#theme-toggle,#themeToggle,.theme-toggle,.theme-toggle-btn,[data-theme-toggle]):not(#cl-theme-toggle){display:none!important}
@@ -50,6 +62,7 @@
     .cl-btn svg{margin:0}
   }
 </style>
+<a class="cl-skip-link" href="#app">Skip to content</a>
 <header class="cl-topbar" role="banner" aria-label="Crypto Lab">
   <a class="cl-brand" href="https://crypto-lab.systemslibrarian.dev/" aria-label="Crypto Lab home">
     <span class="cl-badge">CL</span>

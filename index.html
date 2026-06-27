@@ -1549,7 +1549,7 @@
           <a class="feature-card secondary" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Post-Quantum</div>
             <div class="feature-title">Quantum Vault KpqC</div>
-            <div class="feature-copy">Threshold file encryption using secret sharing and Korean post-quantum cryptography, compiled to WASM for direct browser use.</div>
+            <div class="feature-copy">Threshold short-secret encryption using secret sharing and Korean post-quantum cryptography, compiled to WASM for direct browser use.</div>
             <div class="feature-meta">
               <div class="stack">
                 <span class="chip">AES-256-GCM</span>
@@ -1608,7 +1608,7 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-bb84/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
-            <div class="card-kicker">Post-Quantum Key Distribution</div>
+            <div class="card-kicker">Quantum Key Distribution</div>
             <div class="project-title">BB84</div>
             <div class="project-copy">Quantum key distribution with photon polarization, basis sifting, QBER eavesdropper detection, and privacy amplification before AES-256-GCM message encryption.</div>
             <div class="project-meta">
@@ -1926,7 +1926,7 @@
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-serpent/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Block Cipher</div>
             <div class="project-title">Iron Serpent</div>
-            <div class="project-copy">The Serpent block cipher — AES finalist with a deeper security margin. Live encryption rounds, S-box visualization, and side-by-side AES comparison.</div>
+            <div class="project-copy">The Serpent block cipher — AES finalist with a deeper security margin. Avalanche analysis, a security-margin (round-count) view, and side-by-side AES comparison.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Serpent</span>
@@ -1969,11 +1969,11 @@
           <a class="project-card" data-category="HISTORICAL" href="https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Historical Cipher</div>
             <div class="project-title">Dead Sea Cipher</div>
-            <div class="project-copy">Ancient substitution and transposition ciphers rooted in historical cryptographic traditions. Encode, decode, and explore classical cryptanalysis techniques.</div>
+            <div class="project-copy">Substitution and polyalphabetic ciphers from Atbash to Vigenère, through to modern AES-256-GCM. Encode, decode, and explore classical cryptanalysis.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Substitution</span>
-                <span class="chip">Transposition</span>
+                <span class="chip">Vigenère</span>
                 <span class="chip">Atbash</span>
               </div>
               <span class="arrow">→</span>
@@ -1990,7 +1990,7 @@
                 <span class="chip">FIPS 205</span>
                 <span class="chip">SPHINCS+</span>
                 <span class="chip">SHA-256</span>
-                <span class="chip">FORS</span>
+                <span class="chip">WOTS+</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -1999,7 +1999,7 @@
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Differential Cryptanalysis</div>
             <div class="project-title">Biham Lens</div>
-            <div class="project-copy">A live differential cryptanalysis attack on a toy SPN cipher — the technique co-invented by Biham and Shamir that broke DES. DDT visualization and last-round key recovery.</div>
+            <div class="project-copy">A live differential cryptanalysis attack on a toy SPN cipher — the technique co-invented by Biham and Shamir that broke reduced-round DES. DDT visualization and last-round key recovery.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Differential Cryptanalysis</span>
@@ -2014,7 +2014,7 @@
           <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-wire/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Hybrid Key Exchange</div>
             <div class="project-title">Hybrid Wire</div>
-            <div class="project-copy">X25519 + ML-KEM-768 hybrid post-quantum key exchange as deployed in Chrome 124+, Cloudflare, and Signal. Six-step handshake visualization and encrypted chat.</div>
+            <div class="project-copy">X25519 + ML-KEM-768 hybrid post-quantum key exchange as deployed in Chrome 124+ and Cloudflare. Six-step handshake visualization and encrypted chat.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">X25519</span>
@@ -2059,7 +2059,7 @@
           <a class="project-card" data-category="ENCRYPTION | SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Public-Key Cryptography</div>
             <div class="project-title">RSA Forge</div>
-            <div class="project-copy">Textbook RSA, OAEP, PSS signatures, and live attacks including small exponent, Bleichenbacher PKCS#1 v1.5 oracle, and padding oracle. Real WebCrypto operations.</div>
+            <div class="project-copy">Textbook RSA, OAEP, PSS signatures, and live attacks including small exponent and Bleichenbacher PKCS#1 v1.5 padding oracle. Real WebCrypto operations.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">RSA</span>
@@ -2149,7 +2149,7 @@
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-format-ward/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Format-Preserving Encryption</div>
             <div class="project-title">Format Ward</div>
-            <div class="project-copy">FF1 and FF3-1 live tokenization of credit cards, SSNs, and phone numbers. Real AES-256 Feistel rounds. PCI-DSS compliant format preservation.</div>
+            <div class="project-copy">FF1 and FF3-1 live tokenization of credit cards, SSNs, and phone numbers. Real AES-256 Feistel rounds per NIST SP 800-38G.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">FF1</span>
@@ -2238,7 +2238,7 @@
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-hqc-vault/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Code-Based KEM</div>
             <div class="project-title">HQC Vault</div>
-            <div class="project-copy">Hamming Quasi-Cyclic post-quantum KEM with perfect correctness, Reed-Muller/Reed-Solomon decoding, and three-way comparison against BIKE and ML-KEM.</div>
+            <div class="project-copy">Hamming Quasi-Cyclic post-quantum KEM with Reed-Muller/Reed-Solomon decoding, and three-way comparison against BIKE and ML-KEM.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">HQC</span>
@@ -2284,7 +2284,7 @@
           <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ed25519-forge/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Digital Signatures</div>
             <div class="project-title">Ed25519 Forge</div>
-            <div class="project-copy">Keypair generation, signing, and signature verification — deterministic nonces, tamper detection, ZIP215 cofactor handling, and 64-byte compact signatures.</div>
+            <div class="project-copy">Keypair generation, signing, and signature verification — deterministic nonces, tamper detection, the ZIP215 cofactor pitfall, and 64-byte compact signatures.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Ed25519</span>
@@ -2360,12 +2360,12 @@
           <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-ot-gate/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Oblivious Transfer</div>
             <div class="project-title">OT Gate</div>
-            <div class="project-copy">1-of-2 Oblivious Transfer using the Simplest OT protocol (Chou-Orlandi 2015) over Curve25519 with real X25519 arithmetic and AES-256-GCM encryption. Foundational primitive for secure MPC.</div>
+            <div class="project-copy">1-of-2 Oblivious Transfer using the Simplest OT protocol (Chou-Orlandi 2015) over Curve25519 with real Edwards25519 group arithmetic and AES-256-GCM encryption. Foundational primitive for secure MPC.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Simplest OT</span>
                 <span class="chip">Chou-Orlandi 2015</span>
-                <span class="chip">X25519</span>
+                <span class="chip">Edwards25519</span>
                 <span class="chip">AES-256-GCM</span>
               </div>
               <span class="arrow">→</span>
@@ -2597,7 +2597,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+          <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Quantum Threat</div>
             <div class="project-title">Harvest Vault</div>
             <div class="project-copy">HNDL pressure, Mosca's theorem, migration windows, and concrete post-quantum planning for the systems being recorded today and decrypted later.</div>
@@ -2615,7 +2615,7 @@
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-gate/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Post-Quantum Isogeny</div>
             <div class="project-title">Isogeny Gate</div>
-            <div class="project-copy">Elliptic-curve isogenies with toy SIDH over GF(71), supersingular graph walks, the Castryck-Decru break, and the surviving branches of the field in CSIDH and SQIsign.</div>
+            <div class="project-copy">Elliptic-curve isogenies with a toy CSIDH over GF(419), supersingular graph walks, the Castryck-Decru break of SIDH, and the surviving branches of the field in SQIsign.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">SIDH</span>
@@ -2675,13 +2675,13 @@
           <a class="project-card" data-category="KEY EXCHANGE | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-opaque-gate/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Password-Authenticated Key Exchange</div>
             <div class="project-title">OPAQUE Gate</div>
-            <div class="project-copy">RFC 9807 OPAQUE aPAKE with live OPRF blind/evaluate/unblind flow, credential envelope sealing, 3DH mutual authentication, and server-breach simulation showing the password never reaches the server.</div>
+            <div class="project-copy">RFC 9807 OPAQUE aPAKE with live OPRF blind/evaluate/unblind flow, credential-envelope handling, 3DH mutual authentication, and server-breach simulation showing the password never reaches the server.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">OPAQUE</span>
                 <span class="chip">OPRF</span>
                 <span class="chip">3DH</span>
-                <span class="chip">AES-256-GCM</span>
+                <span class="chip">HKDF</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -2852,7 +2852,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ibe-gate/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-ibe-gate/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Identity-Based Encryption</div>
             <div class="project-title">IBE Gate</div>
             <div class="project-copy">Boneh-Franklin identity-based encryption on BLS12-381 with setup, private-key extraction, encrypt/decrypt flow, and an honest look at the escrow tradeoff.</div>
@@ -2889,7 +2889,7 @@
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">LMS</span>
-                <span class="chip">XMSS</span>
+                <span class="chip">LM-OTS</span>
                 <span class="chip">HSS</span>
                 <span class="chip">NIST SP 800-208</span>
               </div>
@@ -2975,7 +2975,7 @@
           <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-psi-gate/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Private Set Intersection</div>
             <div class="project-title">PSI Gate</div>
-            <div class="project-copy">Classic DH-PSI over ristretto255 with RFC 9380 hash-to-curve, showing how two parties learn only their overlap and nothing else.</div>
+            <div class="project-copy">Classic DH-PSI over ristretto255 with RFC 9380 hash-to-curve, showing how two parties learn their overlap (and each other's set size) and nothing more.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">DH-PSI</span>
@@ -2989,11 +2989,11 @@
 
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-scloud-vault/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Post-Quantum KEM</div>
-            <div class="project-title">S-Cloud+ Vault</div>
-            <div class="project-copy">China's conservative LWE-based KEM with ternary secrets, BW32 lattice coding, and a faithful browser implementation of the ePrint 2024/1306 design.</div>
+            <div class="project-title">Scloud+ Vault</div>
+            <div class="project-copy">China's conservative LWE-based KEM with ternary secrets, BW32 lattice coding, and a faithful but simplified browser model of the ePrint 2024/1306 design.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">S-Cloud+</span>
+                <span class="chip">Scloud+</span>
                 <span class="chip">LWE KEM</span>
                 <span class="chip">BW32 Coding</span>
                 <span class="chip">Ternary Secrets</span>
@@ -3005,12 +3005,12 @@
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Threshold Signatures</div>
             <div class="project-title">Threshold ML-DSA</div>
-            <div class="project-copy">Distributed post-quantum signing where a k-of-n party set produces ML-DSA signatures without any one signer ever reconstructing the full key.</div>
+            <div class="project-copy">A two-party demo of distributed post-quantum signing that produces real FIPS 204 ML-DSA signatures; key-non-reconstruction is illustrated, not enforced.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Threshold ML-DSA</span>
                 <span class="chip">Distributed Signing</span>
-                <span class="chip">k-of-n</span>
+                <span class="chip">Two-Party</span>
                 <span class="chip">Post-Quantum</span>
               </div>
               <span class="arrow">→</span>
@@ -3140,7 +3140,7 @@
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Post-Quantum Side-Channel</div>
             <div class="project-title">HQC Timing</div>
-            <div class="project-copy">HQC's BCH decoder leaks timing — observe how constant-time mitigations reshape the attack surface against the code-based KEM finalist.</div>
+            <div class="project-copy">HQC's BCH decoder leaks timing — observe how constant-time mitigations reshape the attack surface against the standardized code-based KEM.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">HQC</span>
@@ -3202,13 +3202,13 @@
           <a class="project-card" data-category="PROTOCOLS | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-webauthn/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Passkeys &amp; Authentication</div>
             <div class="project-title">WebAuthn</div>
-            <div class="project-copy">Passwordless authentication via FIDO2 / WebAuthn — attestation, assertion, platform vs cross-platform authenticators, and the journey from passwords to passkeys.</div>
+            <div class="project-copy">Passwordless authentication via FIDO2 / WebAuthn — assertion verification, origin binding, signature counters, and the journey from passwords to passkeys.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">WebAuthn</span>
                 <span class="chip">FIDO2</span>
                 <span class="chip">Passkeys</span>
-                <span class="chip">Attestation</span>
+                <span class="chip">Assertion</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -3229,7 +3229,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">HD Wallet Mechanics</div>
             <div class="project-title">Bitcoin Wallet</div>
             <div class="project-copy">Bitcoin wallet pipeline in the browser — secp256k1 keys to P2PKH and P2WPKH addresses via HASH160, plus BIP-39 mnemonics, PBKDF2 seed stretching, and BIP-32 hardened child derivation.</div>
@@ -3319,10 +3319,10 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-e91/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-e91/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Entanglement-Based QKD</div>
             <div class="project-title">E91</div>
-            <div class="project-copy">Ekert's entanglement-based QKD: measure entangled pairs, run the CHSH Bell test, and derive a key from aligned bases. |S|≈2.83 proves security; an eavesdropper drags it below 2 and is caught.</div>
+            <div class="project-copy">Ekert's entanglement-based QKD: measure entangled pairs, run the CHSH Bell test, and derive a key from aligned bases. |S|≈2.83 proves security; an eavesdropper drags it toward the classical bound, so the key is discarded.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">E91</span>
@@ -3565,7 +3565,7 @@
       'Quantum Vault KpqC': 'post-quantum', 'Kyber Vault': 'post-quantum',
       'McEliece Gate': 'post-quantum', 'Frodo Vault': 'post-quantum',
       'BIKE Vault': 'post-quantum', 'HQC Vault': 'post-quantum',
-      'NTRU Classic': 'post-quantum', 'S-Cloud+ Vault': 'post-quantum',
+      'NTRU Classic': 'post-quantum', 'Scloud+ Vault': 'post-quantum',
       'Isogeny Gate': 'post-quantum', 'Dilithium Seal': 'post-quantum',
       'Falcon Seal': 'post-quantum', 'HAWK': 'post-quantum',
       'Dilithium Reject': 'post-quantum', 'Hybrid Sign': 'post-quantum',

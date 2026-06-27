@@ -55,6 +55,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) | Format-Preserving Encryption | FF1 · FF3-1 · AES-256 · Tokenization |
 | [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) | Forward-Secret Messaging | Double Ratchet · X25519 · HKDF · AES-256-GCM |
 | [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) | Group Messaging Security | MLS (RFC 9420) · TreeKEM · Epoch Key Schedule · Forward Secrecy |
+| [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) | Hash Collisions | MD5 · SHA-1 · SHAttered · Chosen-Prefix Collision |
 | [Babel Hash](https://systemslibrarian.github.io/crypto-lab-babel-hash/) | Hash Functions | SHA-256 · SHA3-256 · BLAKE3 · HMAC |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | Hash Functions | SM3 · Streebog · Kupyna · SHA-256 · SHA-3 |
 | [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | Hash Internals | SHA-256 · SHA3-256 · BLAKE3 · Merkle-Damgård · Sponge |
@@ -63,6 +64,8 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | HD Wallet Mechanics | secp256k1 · BIP-32 · BIP-39 · Bech32 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | High-Security Curves | X448 · Ed448 · RFC 7748 · RFC 8032 |
 | [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | Historical Cipher | Substitution · Transposition · Atbash |
+| [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | Historical Cipher | Enigma · Rotors · Plugboard · Bombe |
+| [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | Historical Cryptanalysis | Vigenère · Kasiski Examination · Index of Coincidence · Frequency Analysis |
 | [Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) | Homomorphic Encryption | TFHE-rs · Live Rust Server · Homomorphic Addition |
 | [CKKS Lab](https://systemslibrarian.github.io/crypto-lab-ckks-lab/) | Homomorphic Encryption | CKKS · RLWE · Approximate FHE · Encrypted Inference |
 | [FHE Arena](https://systemslibrarian.github.io/crypto-lab-fhe-arena/) | Homomorphic Encryption | BGV/BFV · RLWE · Noise Budget · SIMD Batching |
@@ -70,6 +73,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) | Hybrid Post-Quantum | KEM Combiner · X25519 · ML-KEM-768 · X-Wing |
 | [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) | Identity-Based Encryption | Boneh-Franklin · BLS12-381 · Identity-Based Encryption · Key Escrow |
 | [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) | IT-PIR Library Privacy | XOR PIR · Chor et al. 1995 · 2-Server PIR · Privacy Audit |
+| [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) | JWT Security | JWT · JWS · alg:none · HS/RS Key Confusion |
 | [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) | KDF Benchmarks | HKDF · PBKDF2 · scrypt · Argon2id |
 | [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) | Key Derivation | HKDF · PBKDF2 · scrypt · Argon2id |
 | [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) | Key Exchange Overview | Diffie-Hellman · ECDH · X25519 · ML-KEM |
@@ -87,8 +91,11 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) | Passkeys & Authentication | WebAuthn · FIDO2 · Passkeys · Attestation |
 | [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) | Password Hashing | bcrypt · Blowfish · Cost Factor · Timing-Safe Verification |
 | [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) | Password-Authenticated Key Exchange | OPAQUE · OPRF · 3DH · AES-256-GCM |
+| [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | Perfect Secrecy | One-Time Pad · Perfect Secrecy · Two-Time Pad · Crib Dragging |
 | [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) | PKI & Certificates | X.509 · Certificate Transparency · CA Compromise · ML-DSA |
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | Post-Quantum Cryptanalysis | LLL · BKZ · Gram-Schmidt · Toy LWE |
+| [LWE Hints](https://systemslibrarian.github.io/crypto-lab-lwe-hints/) | Post-Quantum Cryptanalysis | LWE · Sparse Ternary Secrets · Approximate Hints · ePrint 2026/1081 |
+| [Syndrome Drain](https://systemslibrarian.github.io/crypto-lab-syndrome-drain/) | Post-Quantum Cryptanalysis | DOOM · BIKE · HQC · Classic McEliece |
 | [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) | Post-Quantum Isogeny | SIDH · CSIDH · SQIsign · Castryck-Decru |
 | [Frodo Vault](https://systemslibrarian.github.io/crypto-lab-frodo-vault/) | Post-Quantum KEM | FrodoKEM · LWE · Lattice · Post-Quantum |
 | [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) | Post-Quantum KEM | ML-KEM · FIPS 203 · CRYSTALS-Kyber · Lattice · AES-256-GCM |
@@ -102,6 +109,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [HQC Timing Break](https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/) | Post-Quantum Side-Channel | HQC · Cache Timing · Reed-Muller · Soft-ISD |
 | [KyberSlash](https://systemslibrarian.github.io/crypto-lab-kyberslash/) | Post-Quantum Side-Channel | ML-KEM · KyberSlash · Timing Attack · Barrett Reduction |
 | [Lattice Fault](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) | Post-Quantum Side-Channel | ML-KEM · ML-DSA · KyberSlash · Fault Injection |
+| [Broken Trust](https://systemslibrarian.github.io/crypto-lab-broken-trust/) | Post-Quantum Side-Channel | ML-DSA · Bit Leakage · Hill-Climbing · Subkey Recovery |
 | [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) | Post-Quantum Signatures | ML-DSA · Rejection Sampling · FIPS 204 · Timing Tradeoffs |
 | [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) | Post-Quantum Signatures | ML-DSA · FIPS 204 · CRYSTALS-Dilithium · Lattice |
 | [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) | Post-Quantum Signatures | Falcon · FN-DSA · NTRU · FFT Sampling · Post-Quantum |
@@ -117,6 +125,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) | Quantum Cryptanalysis | Grover's Algorithm · Amplitude Amplification · Oracle Phase Kickback · AES Key Search |
 | [Shor](https://systemslibrarian.github.io/crypto-lab-shor/) | Quantum Cryptanalysis | Shor's Algorithm · Period Finding · QFT · Continued Fractions |
 | [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) | Quantum Key Distribution | Photon Polarization · Basis Sifting · QBER · Privacy Amplification |
+| [E91](https://systemslibrarian.github.io/crypto-lab-e91/) | Quantum Key Distribution | E91 · Entanglement · CHSH Bell Test · QKD |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | Quantum Threat | HNDL · Mosca's Theorem · Q-Day Timeline · PQC Migration |
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | Ring Signatures | LSAG · Key Image · Group Signatures · Monero |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |

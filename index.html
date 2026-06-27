@@ -1394,6 +1394,8 @@
     }
     @media (max-width: 760px) {
       .featured-grid { grid-template-columns: 1fr; }
+      /* Only the first featured card on mobile — four stacked cards eat too much space. */
+      .featured-grid > *:nth-child(n+2) { display: none; }
       .featured .wrap { width: min(100% - 24px, 1280px); }
       .featured { padding-top: 22px; }
     }
@@ -1506,7 +1508,7 @@
       <div class="wrap">
         <div class="featured-head">
           <h2 class="featured-heading">Start Here</h2>
-          <p class="featured-sub">New to the lab? These four are good entry points — start here, then explore the full catalog below.</p>
+          <p class="featured-sub">New to the lab? These are good entry points — start here, then explore the full catalog below.</p>
         </div>
         <div class="featured-grid" id="featured-grid"></div>
       </div>

@@ -109,6 +109,41 @@ Open `http://localhost:8765/` and confirm:
 
 A self-check script lives at the end of this file — copy it into a `node -e "..."` invocation to verify title coverage.
 
+### 6. Sync the crypto-counsel corpus
+
+The **crypto-counsel** chatbot (sibling repo, `../crypto-counsel-1`) embeds a snapshot
+of every demo card in its `corpus.json` as `demo_crypto_lab_<slug>` entries. That
+snapshot does **not** update itself — a new demo here is invisible to the chatbot
+until its corpus entry is added. So for each new demo:
+
+1. Generate a skeleton seeded from the demo's README:
+
+   ```
+   node tools/corpus-sync.js gen <slug> "<Demo Name>"
+   ```
+
+2. Fill in the `TODO` prose (What It Is, When to Use It, the Live Demo paragraph),
+   grounded in the demo's README — match the house style of existing entries
+   (4-6 sentence "What It Is"; three "Use it to/for …, because …" bullets plus one
+   "Do not use it …, because it is a demo app and does not provide hardened
+   operational controls."; dev-domain `https://crypto-lab.systemslibrarian.dev/<slug>/`
+   Live Demo link).
+
+3. Append the finished `{ "id": …, "text": … }` object to the corpus array in
+   `../crypto-counsel-1/corpus.json` (it is minified, single-line, no trailing
+   newline — preserve that), and bump the counts in that repo's `README.md`
+   (total entries, "N crypto-lab demo cards", and the `Demo slugs (N)` list).
+
+4. Confirm parity:
+
+   ```
+   node tools/corpus-sync.js check
+   ```
+
+   A clean run prints `Missing from corpus (0): []` and `Stale in corpus (0): []`.
+
+Do not append `TODO` placeholder text to the live corpus — refine the prose first.
+
 ---
 
 ## Other maintenance

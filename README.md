@@ -43,11 +43,11 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) | Code-Based KEM | HQC · Reed-Muller · Reed-Solomon · Post-Quantum |
 | [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) | Commitment Schemes | Hash Commitment · Pedersen · Binding & Hiding · Homomorphic Addition |
 | [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) | CSPRNG | HMAC_DRBG · CTR_DRBG · Hash_DRBG · NIST SP 800-90A |
-| [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) | Decentralized Trust | PGP · OpenPGP · Key Signing · Trust Graph |
+| [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) | Decentralized Trust | PGP · OpenPGP · GnuPG · Key Signing · Trust Graph |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | Deniable Encryption | Argon2id · ChaCha20-Poly1305 · SHA-256 |
 | [Biham Lens](https://systemslibrarian.github.io/crypto-lab-biham-lens/) | Differential Cryptanalysis | Differential Cryptanalysis · SPN · DDT · Chosen-Plaintext |
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | Digital Signatures | ECDSA · secp256k1 · RFC 6979 · Nonce Reuse |
-| [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | Digital Signatures | Ed25519 · Deterministic Nonces · ZIP215 · Cofactor |
+| [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | Digital Signatures | Ed25519 · EdDSA · Deterministic Nonces · ZIP215 · Cofactor |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | Elliptic Curves | ECC · Curve25519 · ECDH · P-256 |
 | [Dad Mode Morse](https://systemslibrarian.github.io/dad-mode-morse2/) | Encrypted Morse | AES-256-GCM · Argon2id · HKDF-SHA-256 · Ed25519 |
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
@@ -59,7 +59,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | Hash Functions | SM3 · Streebog · Kupyna · SHA-256 · SHA-3 |
 | [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | Hash Internals | SHA-256 · SHA3-256 · BLAKE3 · Merkle-Damgård · Sponge |
 | [LMS/XMSS](https://systemslibrarian.github.io/crypto-lab-lms-xmss/) | Hash-Based Signatures | LMS · XMSS · HSS · NIST SP 800-208 |
-| [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) | Hash-Based Signatures | SLH-DSA · SPHINCS+ · SHA-256 · FORS |
+| [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) | Hash-Based Signatures | SLH-DSA · FIPS 205 · SPHINCS+ · SHA-256 · FORS |
 | [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | HD Wallet Mechanics | secp256k1 · BIP-32 · BIP-39 · Bech32 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | High-Security Curves | X448 · Ed448 · RFC 7748 · RFC 8032 |
 | [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | Historical Cipher | Substitution · Transposition · Atbash |
@@ -91,7 +91,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | Post-Quantum Cryptanalysis | LLL · BKZ · Gram-Schmidt · Toy LWE |
 | [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) | Post-Quantum Isogeny | SIDH · CSIDH · SQIsign · Castryck-Decru |
 | [Frodo Vault](https://systemslibrarian.github.io/crypto-lab-frodo-vault/) | Post-Quantum KEM | FrodoKEM · LWE · Lattice · Post-Quantum |
-| [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) | Post-Quantum KEM | ML-KEM · CRYSTALS-Kyber · Lattice · AES-256-GCM |
+| [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) | Post-Quantum KEM | ML-KEM · FIPS 203 · CRYSTALS-Kyber · Lattice · AES-256-GCM |
 | [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) | Post-Quantum KEM | Classic McEliece · Goppa Codes · Post-Quantum |
 | [S-Cloud+ Vault](https://systemslibrarian.github.io/crypto-lab-scloud-vault/) | Post-Quantum KEM | S-Cloud+ · LWE KEM · BW32 Coding · Ternary Secrets |
 | [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | Post-Quantum Migration | Mosca Inequality · CRQC Scenarios · Cost of Delay · PQC Migration |
@@ -103,8 +103,8 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [KyberSlash](https://systemslibrarian.github.io/crypto-lab-kyberslash/) | Post-Quantum Side-Channel | ML-KEM · KyberSlash · Timing Attack · Barrett Reduction |
 | [Lattice Fault](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) | Post-Quantum Side-Channel | ML-KEM · ML-DSA · KyberSlash · Fault Injection |
 | [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) | Post-Quantum Signatures | ML-DSA · Rejection Sampling · FIPS 204 · Timing Tradeoffs |
-| [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) | Post-Quantum Signatures | ML-DSA · CRYSTALS-Dilithium · Lattice |
-| [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) | Post-Quantum Signatures | Falcon · NTRU · FFT Sampling · Post-Quantum |
+| [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) | Post-Quantum Signatures | ML-DSA · FIPS 204 · CRYSTALS-Dilithium · Lattice |
+| [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) | Post-Quantum Signatures | Falcon · FN-DSA · NTRU · FFT Sampling · Post-Quantum |
 | [HAWK](https://systemslibrarian.github.io/crypto-lab-hawk/) | Post-Quantum Signatures | HAWK · Lattice Signatures · Gaussian Sampling · NIST Round 2 |
 | [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) | Post-Quantum Signatures | Ed25519 · ML-DSA-65 · Composite Signatures · IETF LAMPS |
 | [MPCitH Sign](https://systemslibrarian.github.io/crypto-lab-mpcith-sign/) | Post-Quantum Signatures | MPC-in-the-Head · Fiat-Shamir · SHA-256 Commitments · Merkle Proofs |

@@ -49,6 +49,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | Digital Signatures | ECDSA · secp256k1 · RFC 6979 · Nonce Reuse |
 | [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | Digital Signatures | Ed25519 · EdDSA · Deterministic Nonces · ZIP215 · Cofactor |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | Elliptic Curves | ECC · Curve25519 · ECDH · P-256 |
+| [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | Elliptic Curves | Group Law · Chord-and-Tangent · Scalar Mult · secp256k1 |
 | [Dad Mode Morse](https://systemslibrarian.github.io/dad-mode-morse2/) | Encrypted Morse | AES-256-GCM · Argon2id · HKDF-SHA-256 · Ed25519 |
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | Few-Time Signatures | Jevil · Hash-Based · Goldilocks Field · Lagrange Interpolation |
@@ -93,6 +94,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) | Password-Authenticated Key Exchange | OPAQUE · OPRF · 3DH · AES-256-GCM |
 | [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | Perfect Secrecy | One-Time Pad · Perfect Secrecy · Two-Time Pad · Crib Dragging |
 | [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) | PKI & Certificates | X.509 · Certificate Transparency · CA Compromise · ML-DSA |
+| [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) | Post-Quantum | AES-256-GCM · Shamir SSS · SMAUG-T · HAETAE |
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | Post-Quantum Cryptanalysis | LLL · BKZ · Gram-Schmidt · Toy LWE |
 | [LWE Hints](https://systemslibrarian.github.io/crypto-lab-lwe-hints/) | Post-Quantum Cryptanalysis | LWE · Sparse Ternary Secrets · Approximate Hints · ePrint 2026/1081 |
 | [Syndrome Drain](https://systemslibrarian.github.io/crypto-lab-syndrome-drain/) | Post-Quantum Cryptanalysis | DOOM · BIKE · HQC · Classic McEliece |
@@ -100,7 +102,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Frodo Vault](https://systemslibrarian.github.io/crypto-lab-frodo-vault/) | Post-Quantum KEM | FrodoKEM · LWE · Lattice · Post-Quantum |
 | [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) | Post-Quantum KEM | ML-KEM · FIPS 203 · CRYSTALS-Kyber · Lattice · AES-256-GCM |
 | [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) | Post-Quantum KEM | Classic McEliece · Goppa Codes · Post-Quantum |
-| [S-Cloud+ Vault](https://systemslibrarian.github.io/crypto-lab-scloud-vault/) | Post-Quantum KEM | S-Cloud+ · LWE KEM · BW32 Coding · Ternary Secrets |
+| [Scloud+ Vault](https://systemslibrarian.github.io/crypto-lab-scloud-vault/) | Post-Quantum KEM | Scloud+ · LWE KEM · BW32 Coding · Ternary Secrets |
 | [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | Post-Quantum Migration | Mosca Inequality · CRQC Scenarios · Cost of Delay · PQC Migration |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | Post-Quantum Migration | Hybrid X.509 · CNSA 2.0 · Key Rotation · Migration Planner |
 | [PQ Families](https://systemslibrarian.github.io/crypto-lab-pq-families/) | Post-Quantum Overview | Lattice · Code-Based · Hash-Based · Multivariate · Isogeny |
@@ -120,6 +122,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) | Post-Quantum TLS | TLS 1.3 · X25519MLKEM768 · Key Schedule · Hybrid PQC |
 | [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) | Private Set Intersection | DH-PSI · ristretto255 · Hash-to-Curve · Contact Discovery |
 | [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) | Protocol Composition | MAC-then-Encrypt · Encrypt-then-MAC · CRIME · TLS 1.3 |
+| [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) | Public-Key Cryptography | RSA · Key Generation · Modular Exponentiation · OAEP |
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | Public-Key Cryptography | RSA · OAEP · PSS · PKCS#1 |
 | [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) | Public-Key Encryption | ElGamal · RFC 3526 Group 14 · Homomorphism · Re-randomization |
 | [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) | Quantum Cryptanalysis | Grover's Algorithm · Amplitude Amplification · Oracle Phase Kickback · AES Key Search |
@@ -129,9 +132,9 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | Quantum Threat | HNDL · Mosca's Theorem · Q-Day Timeline · PQC Migration |
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | Ring Signatures | LSAG · Key Image · Group Signatures · Monero |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |
-| [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | Secure Shell Handshake | X25519 · Ed25519 · TOFU · known_hosts |
 | [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Yao’s Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party Computation |
 | [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | Secure MPC | Shamir SSS · GF(2⁶¹−1) · Lagrange Interpolation · Additive Homomorphism |
+| [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | Secure Shell Handshake | X25519 · Ed25519 · TOFU · known_hosts |
 | [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | Stateful Hash-Based Signatures | LMS · HSS · W-OTS+ · NIST SP 800-208 |
 | [Phantom Vault](https://systemslibrarian.github.io/crypto-lab-phantom-vault/) | Stateless Passwords | PBKDF2-SHA-256 · HMAC-DRBG · Rejection Sampling |
 | [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) | Steganography | J-UNIWARD · DCT · Wavelet Distortion · Adaptive Embedding |

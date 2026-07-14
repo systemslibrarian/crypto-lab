@@ -380,8 +380,49 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .filter-bar-head {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+    }
+
     .search-bar {
       position: relative;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    /* Mobile-only collapse toggle for the sticky filter chips */
+    .filter-toggle {
+      display: none;
+      align-items: center;
+      gap: 7px;
+      padding: 0 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: rgba(8, 17, 24, 0.78);
+      border: 1px solid var(--border-strong);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .filter-toggle .filter-toggle-icon {
+      font-size: 9px;
+      transition: transform 0.2s ease;
+    }
+
+    .filter-bar:not(.collapsed) .filter-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .filter-toggle.filtered {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: rgba(53, 214, 187, 0.12);
     }
 
     .search-bar input {
@@ -895,7 +936,8 @@
       .section-header {
         font-size: 1.3rem;
         margin-top: 18px;
-        scroll-margin-top: 220px;
+        /* Matches the collapsed sticky filter bar (search + Filters button) */
+        scroll-margin-top: 110px;
       }
 
       .section-nav {
@@ -913,6 +955,16 @@
 
       .filter-bar {
         padding: 12px 10px 10px;
+      }
+
+      .filter-toggle {
+        display: inline-flex;
+      }
+
+      /* Collapsed: only the search box + Filters button stay pinned,
+         so the sticky bar doesn't swallow the viewport while scrolling. */
+      .filter-bar.collapsed .filter-row {
+        display: none;
       }
 
       .filter-row {
@@ -1003,6 +1055,14 @@
 
     html.light .filter-bar {
       background: rgba(244, 246, 248, 0.94);
+    }
+
+    html.light .filter-toggle {
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    html.light .filter-toggle.filtered {
+      background: rgba(26, 171, 148, 0.10);
     }
 
     html.light .search-bar input {
@@ -1515,13 +1575,19 @@
     </section>
     <section class="content" id="catalog">
       <div class="wrap">
-        <div class="filter-bar" id="filter-bar">
-          <div class="search-bar">
-            <input type="text" id="demo-search" placeholder="Filter demos…" aria-label="Filter demos" />
-            <button class="search-clear" id="search-clear" aria-label="Clear search" hidden>✕</button>
-            <kbd class="search-kbd" aria-hidden="true">/</kbd>
+        <div class="filter-bar collapsed" id="filter-bar">
+          <div class="filter-bar-head">
+            <div class="search-bar">
+              <input type="text" id="demo-search" placeholder="Filter demos…" aria-label="Filter demos" />
+              <button class="search-clear" id="search-clear" aria-label="Clear search" hidden>✕</button>
+              <kbd class="search-kbd" aria-hidden="true">/</kbd>
+            </div>
+            <button class="filter-toggle" id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-panel">
+              <span class="filter-toggle-label">Filters</span>
+              <span class="filter-toggle-icon" aria-hidden="true">▾</span>
+            </button>
           </div>
-          <div class="filter-row">
+          <div class="filter-row" id="filter-panel">
             <div class="filter-chips" id="filter-chips"></div>
             <div class="card-count" id="card-count">
               <span class="card-count-text"></span>
@@ -3810,6 +3876,23 @@
     var filterClearBtn = document.getElementById('filter-clear');
     var chipsEl = document.getElementById('filter-chips');
     var clearBtn = document.getElementById('search-clear');
+    var filterBar = document.getElementById('filter-bar');
+    var filterToggle = document.getElementById('filter-toggle');
+
+    /* Mobile: the chip panel collapses so the sticky bar stays compact.
+       The toggle is display:none on desktop, where chips are always shown. */
+    function setFilterPanel(open) {
+      filterBar.classList.toggle('collapsed', !open);
+      if (filterToggle) filterToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    function filterPanelIsMobile() {
+      return filterToggle && filterToggle.offsetParent !== null;
+    }
+    if (filterToggle) {
+      filterToggle.addEventListener('click', function () {
+        setFilterPanel(filterBar.classList.contains('collapsed'));
+      });
+    }
     var treeEl = document.querySelector('.crypto-tree');
     var navMenu = document.getElementById('nav-menu');
     var navBackdrop = document.getElementById('nav-menu-backdrop');
@@ -4076,6 +4159,7 @@
       cardCountText.textContent = 'Showing ' + visible + ' of ' + total;
       var isFiltered = !!(activeCategory || activeSet || input.value);
       cardCount.classList.toggle('filtered', isFiltered);
+      if (filterToggle) filterToggle.classList.toggle('filtered', !!(activeCategory || activeSet));
       filterClearBtn.hidden = !isFiltered;
       syncHash();
     }
@@ -4107,6 +4191,8 @@
       Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) { c.classList.remove('active'); });
       btn.classList.add('active');
       filter();
+      /* On mobile, close the panel once a category is picked so the results show */
+      if (filterPanelIsMobile()) setFilterPanel(false);
     });
 
     /* Crypto-tree clicks: data-tree-target activates a chip;
@@ -4246,6 +4332,7 @@
           filter();
         }
         setMenuOpen(false);
+        if (filterPanelIsMobile()) setFilterPanel(false);
         h.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }

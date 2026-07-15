@@ -98,6 +98,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) | Password-Authenticated Key Exchange | OPAQUE · OPRF · 3DH · AES-256-GCM |
 | [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) | Password-Authenticated Key Exchange | SRP-6a · J-PAKE · CPace · Dragonfly |
 | [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | Perfect Secrecy | One-Time Pad · Perfect Secrecy · Two-Time Pad · Crib Dragging |
+| [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) | PKI & Certificates | X.509 · RFC 5280 · ECDSA P-256 · nameConstraints |
 | [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) | PKI & Certificates | X.509 · Certificate Transparency · CA Compromise · ML-DSA |
 | [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) | Post-Quantum | AES-256-GCM · Shamir SSS · SMAUG-T · HAETAE |
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | Post-Quantum Cryptanalysis | LLL · BKZ · Gram-Schmidt · Toy LWE |

@@ -3670,6 +3670,66 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kem-trap/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">KEM Misuse</div>
+            <div class="project-title">KEM Trap</div>
+            <div class="project-copy">Real ML-KEM-768 decapsulation never fails loudly — flip a ciphertext bit and watch a caller that drops the return code or skips key confirmation turn implicit rejection into an oracle.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">ML-KEM-768</span>
+                <span class="chip">FIPS 203</span>
+                <span class="chip">FO Transform</span>
+                <span class="chip">Implicit Rejection</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-time-trust/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Clock-Dependent Security</div>
+            <div class="project-title">Time Trust</div>
+            <div class="project-copy">Real Ed25519, HMAC, and X.509 verification driven by one movable clock — drag NOW and watch certificates, JWTs, TOTP codes, and replay caches change their verdicts about bytes that never change.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Ed25519</span>
+                <span class="chip">X.509</span>
+                <span class="chip">JWT</span>
+                <span class="chip">TOTP</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Nonce Reuse</div>
+            <div class="project-title">Nonce Collision</div>
+            <div class="project-copy">Reuse one nonce under one key across AES-CTR, AES-GCM, ChaCha20-Poly1305, and AES-CBC — crib-drag plaintext out of XOR'd ciphertexts and forge tags the real verifiers accept.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">AES-GCM</span>
+                <span class="chip">ChaCha20-Poly1305</span>
+                <span class="chip">Forbidden Attack</span>
+                <span class="chip">Crib Dragging</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-signed-bytes/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Signature Canonicalization</div>
+            <div class="project-title">Signed Bytes</div>
+            <div class="project-copy">Real Ed25519 over JSON — a signature binds an exact byte string, never the parsed meaning. Break key order, Unicode, and duplicate keys, then watch JCS canonicalization fix some and refuse others.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Ed25519</span>
+                <span class="chip">JCS RFC 8785</span>
+                <span class="chip">Parser Differential</span>
+                <span class="chip">Unicode NFC</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -3750,6 +3810,7 @@
           { title: 'RSA Forge' },
           { title: 'Point Arithmetic' },
           { title: 'Curve Lens' },
+          { title: 'Signed Bytes' },
           { title: 'DH MITM' },
           { title: 'X3DH Wire' },
           { title: 'Noise Pipe' },
@@ -3769,6 +3830,7 @@
           { title: 'Biham Lens' },
           { title: 'Padding Oracle' },
           { title: 'Timing Oracle' },
+          { title: 'Nonce Collision' },
           { title: 'Nonce Lattice' },
           { title: 'KyberSlash' },
           { title: 'HQC Timing' },
@@ -3782,6 +3844,7 @@
         steps: [
           { title: 'PQ Families' },
           { title: 'Kyber Vault' },
+          { title: 'KEM Trap' },
           { title: 'Dilithium Seal' },
           { title: 'Hybrid Wire' },
           { title: 'Hybrid PQC' },
@@ -3865,7 +3928,9 @@
       'Hybrid PQC': 'post-quantum', 'Merkle Proofs': 'foundations',
       'PAKE Gate': 'key-exchange', 'Shamir vs FROST': 'privacy',
       'Time-Lock Puzzle': 'foundations', 'Timing Side-Channel': 'cryptanalysis',
-      'TLS Handshake': 'key-exchange', 'VDF': 'foundations'
+      'TLS Handshake': 'key-exchange', 'VDF': 'foundations',
+      'KEM Trap': 'post-quantum', 'Time Trust': 'cryptanalysis',
+      'Nonce Collision': 'cryptanalysis', 'Signed Bytes': 'public-key'
     };
 
     var FOUNDATIONS_TITLES = [

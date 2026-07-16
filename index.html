@@ -1446,6 +1446,35 @@
       color: var(--teal);
       font-variant-numeric: tabular-nums;
     }
+    /* Headline and award badge sit side by side; the headline's trailing rule
+       fills the gap between them. */
+    .featured-headline-row {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 3vw, 40px);
+    }
+    .featured-headline-row .featured-heading {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .featured-headline-row .award-banner {
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 0;
+      max-width: none;
+      gap: 12px;
+    }
+    .featured-headline-row .award-banner img {
+      width: 60px;
+      height: 60px;
+    }
+    @media (max-width: 760px) {
+      .featured-headline-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+    }
     .featured-sub {
       margin-top: 6px;
       max-width: 96ch;
@@ -1540,20 +1569,6 @@
     </nav>
   </header>
 
-  <a class="award-banner"
-     href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
-     target="_blank"
-     rel="noopener"
-     aria-label="2026 Cybersecurity Excellence Awards — Gold Winner">
-    <img src="https://raw.githubusercontent.com/systemslibrarian/systemslibrarian/main/assets/cybersecurity_awards_2026_gold.png"
-         alt="2026 Cybersecurity Excellence Awards Gold Winner badge"
-         width="76" height="76" loading="lazy" decoding="async" />
-    <span class="award-banner-text">
-      <span class="award-banner-eyebrow">Gold Winner</span>
-      <span class="award-banner-title">2026 Cybersecurity Excellence Awards</span>
-    </span>
-  </a>
-
   <div class="nav-menu-backdrop" id="nav-menu-backdrop" hidden></div>
   <div class="nav-menu" id="nav-menu" aria-hidden="true">
     <div class="nav-menu-inner">
@@ -1595,7 +1610,22 @@
     <section class="featured" id="featured" aria-labelledby="site-intro-title">
       <div class="wrap">
         <div class="featured-head">
-          <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">152</span> interactive cryptography exhibits</span></h1>
+          <div class="featured-headline-row">
+            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">152</span> interactive cryptography exhibits</span></h1>
+            <a class="award-banner"
+               href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
+               target="_blank"
+               rel="noopener"
+               aria-label="2026 Cybersecurity Excellence Awards — Gold Winner">
+              <img src="https://raw.githubusercontent.com/systemslibrarian/systemslibrarian/main/assets/cybersecurity_awards_2026_gold.png"
+                   alt="2026 Cybersecurity Excellence Awards Gold Winner badge"
+                   width="76" height="76" loading="lazy" decoding="async" />
+              <span class="award-banner-text">
+                <span class="award-banner-eyebrow">Gold Winner</span>
+                <span class="award-banner-title">2026 Cybersecurity Excellence Awards</span>
+              </span>
+            </a>
+          </div>
           <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math. New here? Start with the picks below.</p>
         </div>
         <div class="featured-grid" id="featured-grid"></div>

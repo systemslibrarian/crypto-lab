@@ -1414,8 +1414,12 @@
     .featured-head {
       margin-bottom: 14px;
     }
-    /* Headline runs full width across the top; the lede sits directly under it. */
+    /* Headline runs full width across the top: the text sits left and a hairline
+       rule fills the remaining width to the right edge. Lede sits directly under. */
     .featured-heading {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2vw, 26px);
       margin: 0;
       font-family: var(--serif);
       font-size: clamp(1.5rem, 2.8vw, 1.95rem);
@@ -1423,6 +1427,16 @@
       letter-spacing: -0.01em;
       line-height: 1.12;
       color: var(--text-hi);
+    }
+    .featured-heading-text {
+      flex: 0 1 auto;
+    }
+    .featured-heading::after {
+      content: "";
+      flex: 1 1 auto;
+      min-width: 24px;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
     }
     .featured-heading .intro-count {
       color: var(--teal);
@@ -1577,7 +1591,7 @@
     <section class="featured" id="featured" aria-labelledby="site-intro-title">
       <div class="wrap">
         <div class="featured-head">
-          <h1 class="featured-heading" id="site-intro-title">Explore <span class="intro-count" id="exhibit-count">152</span> interactive cryptography exhibits</h1>
+          <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">152</span> interactive cryptography exhibits</span></h1>
           <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math. New here? Start with the picks below.</p>
         </div>
         <div class="featured-grid" id="featured-grid"></div>

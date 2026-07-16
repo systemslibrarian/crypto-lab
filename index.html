@@ -1404,35 +1404,30 @@
 
     /* ── Compact site intro ─────────────────────────────────── */
     .site-intro {
-      padding: 28px 0 4px;
+      padding: 12px 0 2px;
     }
     .site-intro .wrap {
       width: min(1280px, calc(100% - 40px));
     }
     .site-intro-eyebrow {
-      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin: 0 0 10px;
+      display: none;
     }
-    /* Headline and lede sit side by side as one wide band, so the intro
+    /* Headline and lede sit side by side as one slim wide band, so the intro
        spans the screen instead of stacking tall at the top. */
     .site-intro-row {
       display: flex;
       flex-wrap: wrap;
-      align-items: flex-end;
-      gap: 10px clamp(28px, 5vw, 72px);
+      align-items: baseline;
+      gap: 4px clamp(20px, 4vw, 48px);
     }
     .site-intro h1 {
       margin: 0;
-      flex: 1 1 22ch;
+      flex: 1 1 20ch;
       font-family: var(--serif);
-      font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+      font-size: clamp(1.25rem, 2.1vw, 1.6rem);
       font-weight: 500;
-      line-height: 1.08;
-      letter-spacing: -0.015em;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
       color: var(--text-hi);
     }
     .site-intro h1 .intro-count {
@@ -1441,17 +1436,17 @@
     }
     .site-intro-lede {
       margin: 0;
-      flex: 1 1 40ch;
-      max-width: 66ch;
-      font-size: 14.5px;
-      line-height: 1.55;
-      color: var(--text);
+      flex: 2 1 42ch;
+      max-width: 74ch;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-dim);
     }
     @media (max-width: 760px) {
-      .site-intro { padding: 22px 0 2px; }
+      .site-intro { padding: 10px 0 2px; }
       .site-intro .wrap { width: min(100% - 24px, 1280px); }
       .site-intro-row { display: block; }
-      .site-intro-lede { margin-top: 12px; font-size: 14px; }
+      .site-intro-lede { margin-top: 6px; }
     }
 
     /* ── Featured "Start Here" strip ───────────────────────── */

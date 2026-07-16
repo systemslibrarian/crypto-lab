@@ -1402,6 +1402,49 @@
     }
     /* ────────────────────────────────────────────────────── */
 
+    /* ── Compact site intro ─────────────────────────────────── */
+    .site-intro {
+      padding: 34px 0 2px;
+    }
+    .site-intro .wrap {
+      width: min(1280px, calc(100% - 40px));
+    }
+    .site-intro-eyebrow {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin: 0;
+    }
+    .site-intro h1 {
+      margin: 9px 0 0;
+      font-family: var(--serif);
+      font-size: clamp(1.9rem, 4vw, 2.7rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      color: var(--text-hi);
+      max-width: 18ch;
+    }
+    .site-intro h1 .intro-count {
+      color: var(--teal);
+      font-variant-numeric: tabular-nums;
+    }
+    .site-intro-lede {
+      margin: 14px 0 0;
+      max-width: 62ch;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    @media (max-width: 760px) {
+      .site-intro { padding: 22px 0 2px; }
+      .site-intro .wrap { width: min(100% - 24px, 1280px); }
+      .site-intro h1 { max-width: none; }
+      .site-intro-lede { font-size: 14px; }
+    }
+
     /* ── Featured "Start Here" strip ───────────────────────── */
     .featured {
       position: relative;
@@ -1564,6 +1607,14 @@
   </div>
 
   <main>
+    <section class="site-intro" aria-labelledby="site-intro-title">
+      <div class="wrap">
+        <p class="site-intro-eyebrow">Interactive cryptography, in your browser</p>
+        <h1 id="site-intro-title">Explore <span class="intro-count" id="exhibit-count">152</span> interactive cryptography exhibits</h1>
+        <p class="site-intro-lede">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math.</p>
+      </div>
+    </section>
+
     <section class="featured" id="featured" aria-label="Featured demos">
       <div class="wrap">
         <div class="featured-head">
@@ -4164,6 +4215,8 @@
     });
     var cards = Array.from(document.querySelectorAll('.feature-card, .project-card'));
     var total = cards.length;
+    var exhibitCountEl = document.getElementById('exhibit-count');
+    if (exhibitCountEl) exhibitCountEl.textContent = total;
     var activeCategory = '';
     var activeSet = null;
 

@@ -50,9 +50,12 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Biham Lens](https://systemslibrarian.github.io/crypto-lab-biham-lens/) | Differential Cryptanalysis | Differential Cryptanalysis · SPN · DDT · Chosen-Plaintext |
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | Digital Signatures | ECDSA · secp256k1 · RFC 6979 · Nonce Reuse |
 | [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | Digital Signatures | Ed25519 · EdDSA · Deterministic Nonces · ZIP215 · Cofactor |
+| [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) | Downgrade Attack | TLS 1.3 · X25519MLKEM768 · Transcript Binding · Finished MAC |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | Elliptic Curves | ECC · Curve25519 · ECDH · P-256 |
 | [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | Elliptic Curves | Group Law · Chord-and-Tangent · Scalar Mult · secp256k1 |
+| [Blind Hello](https://systemslibrarian.github.io/crypto-lab-blind-hello/) | Encrypted Client Hello | TLS 1.3 · ECH · HPKE · SNI |
 | [Dad Mode Morse](https://systemslibrarian.github.io/dad-mode-morse2/) | Encrypted Morse | AES-256-GCM · Argon2id · HKDF-SHA-256 · Ed25519 |
+| [Entropy Collapse](https://systemslibrarian.github.io/crypto-lab-entropy-collapse/) | Entropy Failure | HMAC_DRBG · Seed Provenance · VM Cloning · Nonce Reuse |
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | Few-Time Signatures | Jevil · Hash-Based · Goldilocks Field · Lagrange Interpolation |
 | [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) | Format-Preserving Encryption | FF1 · FF3-1 · AES-256 · Tokenization |
@@ -75,14 +78,17 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) | Hybrid Cryptography | X25519 · ML-KEM-768 · Ed25519 · ML-DSA-65 |
 | [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) | Hybrid Key Exchange | X25519 · ML-KEM-768 · HKDF-SHA256 · AES-256-GCM |
 | [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) | Hybrid Post-Quantum | KEM Combiner · X25519 · ML-KEM-768 · X-Wing |
+| [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) | Hybrid Public-Key Encryption | DHKEM X25519 · HKDF-SHA256 · AES-GCM · RFC 9180 |
 | [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) | Identity-Based Encryption | Boneh-Franklin · BLS12-381 · Identity-Based Encryption · Key Escrow |
 | [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) | IT-PIR Library Privacy | XOR PIR · Chor et al. 1995 · 2-Server PIR · Privacy Audit |
 | [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) | JWT Security | JWT · JWS · alg:none · HS/RS Key Confusion |
 | [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) | KDF Benchmarks | HKDF · PBKDF2 · scrypt · Argon2id |
 | [KEM Trap](https://systemslibrarian.github.io/crypto-lab-kem-trap/) | KEM Misuse | ML-KEM-768 · FIPS 203 · FO Transform · Implicit Rejection |
+| [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) | Key Commitment | AES-GCM · GHASH · GF(2¹²⁸) · Message Franking |
 | [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) | Key Derivation | HKDF · PBKDF2 · scrypt · Argon2id |
 | [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) | Key Exchange Attack | Diffie-Hellman · Modular Arithmetic · MITM · Key Exchange |
 | [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) | Key Exchange Overview | Diffie-Hellman · ECDH · X25519 · ML-KEM |
+| [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) | Key Transparency | Merkle Tree · VRF · Ed25519 · KEYTRANS |
 | [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) | Lattice Attack | ECDSA · Hidden Number Problem · LLL Reduction · secp256k1 |
 | [NTRU Classic](https://systemslibrarian.github.io/crypto-lab-ntru-classic/) | Lattice Cryptography | NTRU · Polynomial Rings · Lattice · EESS#1 |
 | [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
@@ -94,12 +100,14 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) | Noise Protocol Framework | X25519 · HKDF · WireGuard · Handshake Patterns |
 | [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) | Nonce Misuse Resistance | AES-GCM · AES-GCM-SIV · RFC 8452 · Synthetic IV |
 | [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) | Nonce Reuse | AES-GCM · ChaCha20-Poly1305 · Forbidden Attack · Crib Dragging |
+| [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) | Oblivious HTTP | OHTTP · HPKE · Binary HTTP · RFC 9458 |
 | [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) | Oblivious Transfer | Simplest OT · Chou-Orlandi 2015 · X25519 · AES-256-GCM |
 | [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) | Pairing Cryptography | BLS12-381 · BLS Signatures · Signature Aggregation · Rogue Key Attack |
 | [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) | Passkeys & Authentication | WebAuthn · FIDO2 · Passkeys · Attestation |
 | [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) | Password Hashing | bcrypt · Blowfish · Cost Factor · Timing-Safe Verification |
 | [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) | Password-Authenticated Key Exchange | OPAQUE · OPRF · 3DH · AES-256-GCM |
 | [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) | Password-Authenticated Key Exchange | SRP-6a · J-PAKE · CPace · Dragonfly |
+| [SPAKE Gate](https://systemslibrarian.github.io/crypto-lab-spake-gate/) | Password-Authenticated Key Exchange | SPAKE2 · SPAKE2+ · P-256 · RFC 9382/9383 |
 | [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | Perfect Secrecy | One-Time Pad · Perfect Secrecy · Two-Time Pad · Crib Dragging |
 | [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) | PKI & Certificates | X.509 · RFC 5280 · ECDSA P-256 · nameConstraints |
 | [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) | PKI & Certificates | X.509 · Certificate Transparency · CA Compromise · ML-DSA |
@@ -130,6 +138,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Multivariate UOV](https://systemslibrarian.github.io/crypto-lab-multivariate/) | Post-Quantum Signatures | UOV · GF(256) · MQ Problem · Beullens Attack |
 | [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) | Post-Quantum TLS | TLS 1.3 · X25519MLKEM768 · Key Schedule · Hybrid PQC |
 | [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) | Private Set Intersection | DH-PSI · ristretto255 · Hash-to-Curve · Contact Discovery |
+| [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) | Proactive Secret Sharing | Shamir · Feldman VSS · HJKY 1995 · Mobile Adversary |
 | [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) | Protocol Composition | MAC-then-Encrypt · Encrypt-then-MAC · CRIME · TLS 1.3 |
 | [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) | Public-Key Cryptography | RSA · Key Generation · Modular Exponentiation · OAEP |
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | Public-Key Cryptography | RSA · OAEP · PSS · PKCS#1 |
@@ -164,6 +173,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [VDF](https://systemslibrarian.github.io/crypto-lab-vdf/) | Verifiable Delay Function | VDF · Wesolowski · Modular Squaring · Randomness Beacon |
 | [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) | Verifiable Randomness | ECVRF P-256 · Wesolowski VDF · RANDAO · RFC 9381 |
 | [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) | Verifiable Secret Sharing | Feldman VSS · Pedersen VSS · Commitment Verification · Cheating Detection |
+| [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) | Weak Fiat-Shamir | Fiat-Shamir · Schnorr · ristretto255 · NIZK |
 | [SNARK Arena](https://systemslibrarian.github.io/crypto-lab-snark-arena/) | Zero-Knowledge Proofs | Groth16 · PLONK · Trusted Setup · zk-SNARK |
 | [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) | Zero-Knowledge Proofs | zk-STARK · AIR Constraints · FRI · Post-Quantum |
 | [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) | Zero-Knowledge Proofs | zk-SNARK · zk-STARK · Proof Systems · Comparison |

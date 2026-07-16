@@ -3745,6 +3745,141 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hpke-envelope/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Hybrid Encryption</div>
+            <div class="project-title">HPKE Envelope</div>
+            <div class="project-copy">RFC 9180 with every stage exposed — a KEM, a KDF, and an AEAD composed into one scheme; edit the info string or AAD and watch the real AEAD reject.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">DHKEM X25519</span>
+                <span class="chip">HKDF-SHA256</span>
+                <span class="chip">AES-GCM</span>
+                <span class="chip">RFC 9180</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PROTOCOLS | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-blind-hello/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">TLS Privacy</div>
+            <div class="project-title">Blind Hello</div>
+            <div class="project-copy">TLS 1.3 encrypts everything except the hostname it announces first — seal the ClientHello with real HPKE and see exactly what ECH hides, what it can't, and why it needs encrypted DNS.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">TLS 1.3</span>
+                <span class="chip">ECH</span>
+                <span class="chip">HPKE</span>
+                <span class="chip">SNI</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PRIVACY | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-blind-relay/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Metadata Privacy</div>
+            <div class="project-title">Blind Relay</div>
+            <div class="project-copy">Oblivious HTTP splits knowledge between a relay that sees your address and a gateway that sees your request — flip the collusion toggle and watch the guarantee evaporate.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">OHTTP</span>
+                <span class="chip">HPKE</span>
+                <span class="chip">Binary HTTP</span>
+                <span class="chip">RFC 9458</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PROTOCOLS | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-key-mirror/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Key Transparency</div>
+            <div class="project-title">Key Mirror</div>
+            <div class="project-copy">A key directory that lies to one user and tells the truth to another — then the append-only Merkle log, consistency proofs, and gossip that make the lie detectable.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Merkle Tree</span>
+                <span class="chip">VRF</span>
+                <span class="chip">Ed25519</span>
+                <span class="chip">KEYTRANS</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-spake-gate/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Password-Authenticated KX</div>
+            <div class="project-title">SPAKE Gate</div>
+            <div class="project-copy">SPAKE2 and SPAKE2+ on the same password, side by side — indistinguishable until the server database leaks, then one impersonation costs nothing and the other forces an offline crack.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SPAKE2</span>
+                <span class="chip">SPAKE2+</span>
+                <span class="chip">P-256</span>
+                <span class="chip">PAKE</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-reshare-circle/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Proactive Secret Sharing</div>
+            <div class="project-title">Reshare Circle</div>
+            <div class="project-copy">Refresh threshold shares into a new epoch: every old share becomes garbage, the public key never changes, and the secret is never reconstructed along the way.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Shamir</span>
+                <span class="chip">Feldman VSS</span>
+                <span class="chip">HJKY 1995</span>
+                <span class="chip">Mobile Adversary</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-entropy-collapse/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Randomness Failures</div>
+            <div class="project-title">Entropy Collapse</div>
+            <div class="project-copy">Restore two copies of a VM snapshot and watch an honest, standards-conformant HMAC_DRBG emit identical session keys from both — the seed, not the generator, is the whole game.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">HMAC_DRBG</span>
+                <span class="chip">Seed Provenance</span>
+                <span class="chip">VM Cloning</span>
+                <span class="chip">Nonce Reuse</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-salamander/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Key Commitment</div>
+            <div class="project-title">Salamander</div>
+            <div class="project-copy">Build one AES-GCM ciphertext that decrypts to two different valid plaintexts under two different keys — both tags verify, because AEAD never promised they couldn't.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">AES-GCM</span>
+                <span class="chip">GHASH</span>
+                <span class="chip">GF(2^128)</span>
+                <span class="chip">Message Franking</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ZERO-KNOWLEDGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-frozen-heart/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Proof Forgery</div>
+            <div class="project-title">Frozen Heart</div>
+            <div class="project-copy">Forge a Schnorr zero-knowledge proof the real verifier accepts — because the Fiat-Shamir challenge hash left one transcript field out of its input.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Fiat-Shamir</span>
+                <span class="chip">Schnorr</span>
+                <span class="chip">ristretto255</span>
+                <span class="chip">NIZK</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -3845,8 +3980,11 @@
           { title: 'Biham Lens' },
           { title: 'Padding Oracle' },
           { title: 'Timing Oracle' },
+          { title: 'Salamander' },
           { title: 'Nonce Collision' },
+          { title: 'Entropy Collapse' },
           { title: 'Nonce Lattice' },
+          { title: 'Frozen Heart' },
           { title: 'KyberSlash' },
           { title: 'HQC Timing' },
           { title: 'Lattice Fault' }
@@ -3863,6 +4001,7 @@
           { title: 'Dilithium Seal' },
           { title: 'Hybrid Wire' },
           { title: 'Hybrid PQC' },
+          { title: 'Downgrade Wire' },
           { title: 'PQ TLS Handshake' },
           { title: 'PQ Rotation' },
           { title: 'Harvest Timeline' }
@@ -3945,20 +4084,27 @@
       'Time-Lock Puzzle': 'foundations', 'Timing Side-Channel': 'cryptanalysis',
       'TLS Handshake': 'key-exchange', 'VDF': 'foundations',
       'KEM Trap': 'post-quantum', 'Time Trust': 'cryptanalysis',
-      'Nonce Collision': 'cryptanalysis', 'Signed Bytes': 'public-key'
+      'Nonce Collision': 'cryptanalysis', 'Signed Bytes': 'public-key',
+      'Downgrade Wire': 'cryptanalysis',
+      'HPKE Envelope': 'key-exchange', 'Blind Hello': 'key-exchange',
+      'Blind Relay': 'privacy', 'Key Mirror': 'key-exchange',
+      'SPAKE Gate': 'key-exchange', 'Reshare Circle': 'privacy',
+      'Entropy Collapse': 'cryptanalysis', 'Salamander': 'cryptanalysis',
+      'Frozen Heart': 'cryptanalysis'
     };
 
     var FOUNDATIONS_TITLES = [
       'Phantom Vault','DRBG Arena','Babel Hash','Hash Zoo','World Hashes',
       'MAC Race','Poly1305 MAC','KDF Chain','KDF Arena','Bcrypt Forge',
       'Merkle Vault','Commit Gate','Shamir Gate','VRF Gate','Curve Lens',
-      'Pairing Gate','OTP Vault','VDF'
+      'Pairing Gate','OTP Vault','VDF','HPKE Envelope'
     ];
     var REAL_WORLD_TITLES = [
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',
       'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
       'WebAuthn','Web of Trust','SSH Handshake','Bitcoin Wallet',
-      'Bitcoin Script','TLS Handshake'
+      'Bitcoin Script','TLS Handshake','Blind Hello','Blind Relay',
+      'Key Mirror','SPAKE Gate'
     ];
     var TITLE_TO_EXTRA_CATS = {};
     FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });

@@ -1435,8 +1435,12 @@
       content: "";
       flex: 1 1 auto;
       min-width: 24px;
-      height: 1px;
-      background: linear-gradient(to right, var(--border), transparent);
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(to right,
+        color-mix(in srgb, var(--teal) 60%, transparent),
+        color-mix(in srgb, var(--teal) 18%, transparent) 88%,
+        transparent);
     }
     .featured-heading .intro-count {
       color: var(--teal);

@@ -1402,78 +1402,41 @@
     }
     /* ────────────────────────────────────────────────────── */
 
-    /* ── Compact site intro ─────────────────────────────────── */
-    .site-intro {
-      padding: 12px 0 2px;
-    }
-    .site-intro .wrap {
-      width: min(1280px, calc(100% - 40px));
-    }
-    .site-intro-eyebrow {
-      display: none;
-    }
-    /* Headline and lede sit side by side as one slim wide band, so the intro
-       spans the screen instead of stacking tall at the top. */
-    .site-intro-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 4px clamp(20px, 4vw, 48px);
-    }
-    .site-intro h1 {
-      margin: 0;
-      flex: 1 1 20ch;
-      font-family: var(--serif);
-      font-size: clamp(1.25rem, 2.1vw, 1.6rem);
-      font-weight: 500;
-      line-height: 1.15;
-      letter-spacing: -0.01em;
-      color: var(--text-hi);
-    }
-    .site-intro h1 .intro-count {
-      color: var(--teal);
-      font-variant-numeric: tabular-nums;
-    }
-    .site-intro-lede {
-      margin: 0;
-      flex: 2 1 42ch;
-      max-width: 74ch;
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--text-dim);
-    }
-    @media (max-width: 760px) {
-      .site-intro { padding: 10px 0 2px; }
-      .site-intro .wrap { width: min(100% - 24px, 1280px); }
-      .site-intro-row { display: block; }
-      .site-intro-lede { margin-top: 6px; }
-    }
-
-    /* ── Featured "Start Here" strip ───────────────────────── */
+    /* ── Featured header + folded-in homepage intro ─────────── */
     .featured {
       position: relative;
       z-index: 1;
-      padding: 30px 0 6px;
+      padding: 16px 0 6px;
     }
     .featured .wrap {
       width: min(1280px, calc(100% - 40px));
     }
     .featured-head {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
+    /* Headline runs full width across the top; the lede sits directly under it. */
     .featured-heading {
+      margin: 0;
       font-family: var(--serif);
-      font-size: clamp(1.7rem, 3.2vw, 2.1rem);
+      font-size: clamp(1.5rem, 2.8vw, 1.95rem);
       font-weight: 500;
       letter-spacing: -0.01em;
-      line-height: 1.1;
+      line-height: 1.12;
       color: var(--text-hi);
     }
+    .featured-heading .intro-count {
+      color: var(--teal);
+      font-variant-numeric: tabular-nums;
+    }
     .featured-sub {
-      margin-top: 8px;
-      max-width: 64ch;
+      margin-top: 6px;
+      max-width: 96ch;
       color: var(--text-dim);
-      font-size: 12.5px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    @media (max-width: 760px) {
+      .featured { padding-top: 12px; }
     }
     .featured-grid {
       display: grid;
@@ -1611,21 +1574,11 @@
   </div>
 
   <main>
-    <section class="site-intro" aria-labelledby="site-intro-title">
-      <div class="wrap">
-        <p class="site-intro-eyebrow">Interactive cryptography, in your browser</p>
-        <div class="site-intro-row">
-          <h1 id="site-intro-title">Explore <span class="intro-count" id="exhibit-count">152</span> interactive cryptography exhibits</h1>
-          <p class="site-intro-lede">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="featured" id="featured" aria-label="Featured demos">
+    <section class="featured" id="featured" aria-labelledby="site-intro-title">
       <div class="wrap">
         <div class="featured-head">
-          <h2 class="featured-heading">Start Here</h2>
-          <p class="featured-sub">New to the lab? These are good entry points — start here, then explore the full catalog below.</p>
+          <h1 class="featured-heading" id="site-intro-title">Explore <span class="intro-count" id="exhibit-count">152</span> interactive cryptography exhibits</h1>
+          <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math. New here? Start with the picks below.</p>
         </div>
         <div class="featured-grid" id="featured-grid"></div>
       </div>

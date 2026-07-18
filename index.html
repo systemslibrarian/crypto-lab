@@ -3938,6 +3938,96 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Anonymous Credentials</div>
+            <div class="project-title">Credential Veil</div>
+            <div class="project-copy">BBS+ selective disclosure over BLS12-381 — the issuer signs six fields once; the holder reveals any subset, unlinkably every time, and proves over-18 without a birth date.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">BBS+</span>
+                <span class="chip">Selective Disclosure</span>
+                <span class="chip">Unlinkability</span>
+                <span class="chip">Range Proof</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-power-trace/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Power Side-Channel</div>
+            <div class="project-title">Power Trace</div>
+            <div class="project-copy">Recover an AES-128 key byte from power consumption alone. The cipher is correct and constant-time, yet CPA and DPA walk the key out through the power rail. Simulated traces, real statistics.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">CPA</span>
+                <span class="chip">DPA</span>
+                <span class="chip">AES-128</span>
+                <span class="chip">Hamming Weight</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Symbolic Analysis</div>
+            <div class="project-title">Protocol Checker</div>
+            <div class="project-copy">A Dolev-Yao symbolic model checker that rediscovers Lowe's attack on Needham-Schroeder live — found by searching, not by being told — then closes the seventeen-year-old flaw in one edit.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Dolev-Yao</span>
+                <span class="chip">Symbolic Model</span>
+                <span class="chip">Needham-Schroeder</span>
+                <span class="chip">Unification</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-quantum-entropy/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Quantum RNG</div>
+            <div class="project-title">Quantum Entropy</div>
+            <div class="project-copy">A biased beam-splitter QRNG, Shannon vs min-entropy on the same stream, von Neumann debiasing, and a real Toeplitz extractor with Leftover Hash Lemma accounting and NIST SP 800-90B health tests.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">QRNG</span>
+                <span class="chip">Min-Entropy</span>
+                <span class="chip">Toeplitz Extractor</span>
+                <span class="chip">SP 800-90B</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Malicious-Secure MPC</div>
+            <div class="project-title">SPDZ Forge</div>
+            <div class="project-copy">SPDZ over F_p (2^61−1) — additive shares, Beaver triples, and information-theoretic MACs. Tamper with a share and semi-honest MPC swallows the lie while SPDZ aborts, even with a dishonest majority.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SPDZ</span>
+                <span class="chip">Beaver Triples</span>
+                <span class="chip">SPDZ MACs</span>
+                <span class="chip">Dishonest Majority</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-traitor-trace/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Broadcast Encryption</div>
+            <div class="project-title">Traitor Trace</div>
+            <div class="project-copy">Naor-Naor-Lotspiech subset-cover over a 16-leaf tree — one ciphertext for all subscribers, revoke a member without rekeying anyone, and trace a leaked decoder back to its builder. Real AES-256-GCM.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">NNL Subset-Cover</span>
+                <span class="chip">Broadcast Encryption</span>
+                <span class="chip">Traitor Tracing</span>
+                <span class="chip">AES-256-GCM</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -4038,13 +4128,13 @@
           { title: 'Biham Lens' },
           { title: 'Padding Oracle' },
           { title: 'Timing Oracle' },
+          { title: 'Power Trace' },
           { title: 'Salamander' },
           { title: 'Nonce Collision' },
           { title: 'Entropy Collapse' },
           { title: 'Nonce Lattice' },
           { title: 'Frozen Heart' },
           { title: 'KyberSlash' },
-          { title: 'HQC Timing' },
           { title: 'Lattice Fault' }
         ]
       },
@@ -4148,14 +4238,18 @@
       'Blind Relay': 'privacy', 'Key Mirror': 'key-exchange',
       'SPAKE Gate': 'key-exchange', 'Reshare Circle': 'privacy',
       'Entropy Collapse': 'cryptanalysis', 'Salamander': 'cryptanalysis',
-      'Frozen Heart': 'cryptanalysis'
+      'Frozen Heart': 'cryptanalysis',
+      'Credential Veil': 'privacy',
+      'Power Trace': 'cryptanalysis', 'Protocol Checker': 'cryptanalysis',
+      'Quantum Entropy': 'foundations', 'SPDZ Forge': 'privacy',
+      'Traitor Trace': 'privacy'
     };
 
     var FOUNDATIONS_TITLES = [
       'Phantom Vault','DRBG Arena','Babel Hash','Hash Zoo','World Hashes',
       'MAC Race','Poly1305 MAC','KDF Chain','KDF Arena','Bcrypt Forge',
       'Merkle Vault','Commit Gate','Shamir Gate','VRF Gate','Curve Lens',
-      'Pairing Gate','OTP Vault','VDF','HPKE Envelope'
+      'Pairing Gate','OTP Vault','VDF','HPKE Envelope','Quantum Entropy'
     ];
     var REAL_WORLD_TITLES = [
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',

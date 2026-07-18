@@ -29,6 +29,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 |---|---|---|
 | [ORAM Vault](https://systemslibrarian.github.io/crypto-lab-oram-vault/) | Access-Pattern Privacy | Path ORAM · Position Map · Stash · Access Patterns |
 | [Paillier Gate](https://systemslibrarian.github.io/crypto-lab-paillier-gate/) | Additive Homomorphic Encryption | Paillier · Additive HE · Private Voting · Aggregation |
+| [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) | Anonymous Credentials | BBS+ · BLS12-381 · Selective Disclosure · Unlinkability |
 | [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) | Asymmetric Encryption | ECIES P-256 · RSA-OAEP · AES-256-GCM |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | Asynchronous Key Agreement | X3DH · X25519 · HKDF-SHA-256 · Signal Protocol |
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | Authenticated Encryption | AEGIS-256 · AES Round Function · 6-State Sponge · Test Vectors |
@@ -39,6 +40,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) | Block Cipher | Serpent · AES-256 · SPN |
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | Block Cipher | Camellia · ARIA · SM4 · Kuznyechik |
 | [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) | Block Cipher Modes | AES · AES-GCM · AES-CBC · Authenticated Encryption |
+| [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) | Broadcast Encryption | NNL Subset-Cover · Broadcast Encryption · Traitor Tracing · AES-256-GCM |
 | [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) | CBC Padding Oracle | AES-CBC · PKCS#7 · Vaudenay 2002 · POODLE |
 | [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) | Clock-Dependent Security | Ed25519 · X.509 · JWT · TOTP |
 | [BIKE Vault](https://systemslibrarian.github.io/crypto-lab-bike-vault/) | Code-Based KEM | BIKE · QC-MDPC · Post-Quantum · KEM |
@@ -94,6 +96,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
 | [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) | Lightweight Cryptography | Ascon-AEAD128 · Ascon-Hash256 · Lightweight Crypto · IoT |
 | [Poly1305 MAC](https://systemslibrarian.github.io/crypto-lab-poly1305-mac/) | MAC Primitive | Poly1305 · GF(2¹³⁰−5) · Key-Reuse Attack · Polynomial Stepper |
+| [SPDZ Forge](https://systemslibrarian.github.io/crypto-lab-spdz-forge/) | Malicious-Secure MPC | SPDZ · Beaver Triples · SPDZ MACs · Dishonest Majority |
 | [Merkle Proofs](https://systemslibrarian.github.io/crypto-lab-merkle-proofs/) | Merkle Proofs | SHA-256 · Merkle Proof · RFC 6962 · CVE-2012-2459 |
 | [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) | Merkle Trees | SHA-256 · Merkle Tree · Inclusion Proofs · Certificate Transparency |
 | [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) | Message Authentication | HMAC · CMAC · Poly1305 · GHASH |
@@ -137,6 +140,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [MPCitH Sign](https://systemslibrarian.github.io/crypto-lab-mpcith-sign/) | Post-Quantum Signatures | MPC-in-the-Head · Fiat-Shamir · SHA-256 Commitments · Merkle Proofs |
 | [Multivariate UOV](https://systemslibrarian.github.io/crypto-lab-multivariate/) | Post-Quantum Signatures | UOV · GF(256) · MQ Problem · Beullens Attack |
 | [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) | Post-Quantum TLS | TLS 1.3 · X25519MLKEM768 · Key Schedule · Hybrid PQC |
+| [Power Trace](https://systemslibrarian.github.io/crypto-lab-power-trace/) | Power Side-Channel | CPA · DPA · AES-128 · Hamming Weight |
 | [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) | Private Set Intersection | DH-PSI · ristretto255 · Hash-to-Curve · Contact Discovery |
 | [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) | Proactive Secret Sharing | Shamir · Feldman VSS · HJKY 1995 · Mobile Adversary |
 | [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) | Protocol Composition | MAC-then-Encrypt · Encrypt-then-MAC · CRIME · TLS 1.3 |
@@ -147,6 +151,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Shor](https://systemslibrarian.github.io/crypto-lab-shor/) | Quantum Cryptanalysis | Shor's Algorithm · Period Finding · QFT · Continued Fractions |
 | [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) | Quantum Key Distribution | Photon Polarization · Basis Sifting · QBER · Privacy Amplification |
 | [E91](https://systemslibrarian.github.io/crypto-lab-e91/) | Quantum Key Distribution | E91 · Entanglement · CHSH Bell Test · QKD |
+| [Quantum Entropy](https://systemslibrarian.github.io/crypto-lab-quantum-entropy/) | Quantum RNG | QRNG · Min-Entropy · Toeplitz Extractor · SP 800-90B |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | Quantum Threat | HNDL · Mosca's Theorem · Q-Day Timeline · PQC Migration |
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | Ring Signatures | LSAG · Key Image · Group Signatures · Monero |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |
@@ -160,6 +165,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) | Steganography | LSB · DCT · Adaptive Embedding · Chi-Squared Steganalysis |
 | [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) | Stream Cipher | ChaCha20 · ARX · Nonce Reuse · Keystream |
 | [Snow 2](https://systemslibrarian.github.io/snow2/) | Stream Cipher | XChaCha20-Poly1305 · Argon2id · HKDF-SHA-256 · Steganography |
+| [Protocol Checker](https://systemslibrarian.github.io/crypto-lab-protocol-checker/) | Symbolic Protocol Analysis | Dolev-Yao · Symbolic Model · Needham-Schroeder · Unification |
 | [Model Breach](https://systemslibrarian.github.io/crypto-lab-model-breach/) | Threat Modeling & Cryptanalysis | HiAE · Candidate Enumeration · MITM State Recovery · Guess-and-Determine |
 | [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) | Threshold Cryptography | Shamir SSS · FROST · Ed25519 · GF(256) |
 | [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) | Threshold Decryption | ElGamal · P-256 · NIZK Proofs · t-of-n |

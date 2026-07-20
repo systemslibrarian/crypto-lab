@@ -118,6 +118,7 @@ A curated collection of single-concept cryptography demonstrations. Each one iso
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | Post-Quantum Cryptanalysis | LLL · BKZ · Gram-Schmidt · Toy LWE |
 | [LWE Hints](https://systemslibrarian.github.io/crypto-lab-lwe-hints/) | Post-Quantum Cryptanalysis | LWE · Sparse Ternary Secrets · Approximate Hints · ePrint 2026/1081 |
 | [Syndrome Drain](https://systemslibrarian.github.io/crypto-lab-syndrome-drain/) | Post-Quantum Cryptanalysis | DOOM · BIKE · HQC · Classic McEliece |
+| [Isogeny Atlas](https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/) | Post-Quantum Isogeny | Isogeny Graphs · Modular Polynomials · Endomorphism Rings · CGL Hash |
 | [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) | Post-Quantum Isogeny | SIDH · CSIDH · SQIsign · Castryck-Decru |
 | [Frodo Vault](https://systemslibrarian.github.io/crypto-lab-frodo-vault/) | Post-Quantum KEM | FrodoKEM · LWE · Lattice · Post-Quantum |
 | [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) | Post-Quantum KEM | ML-KEM · FIPS 203 · CRYSTALS-Kyber · Lattice · AES-256-GCM |

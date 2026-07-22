@@ -1,0 +1,27 @@
+✔ modPow: known values (1.6344ms)
+✔ modPow: identity edge cases (0.1248ms)
+✔ modInverse: matches a * a^-1 = 1 mod p (0.3185ms)
+✔ diffieHellman: classic textbook example agrees (0.1312ms)
+✔ diffieHellman: many random instances all agree (0.2906ms)
+✔ discreteLogAttack: recovers known exponent (0.1245ms)
+✔ discreteLogAttack: works across small primes (0.2345ms)
+✔ isOnCurve: demo generator (5, 1) is on the curve (0.1164ms)
+✔ isOnCurve: rejects a non-curve point (0.1037ms)
+✔ isOnCurve: point at infinity is on the curve (0.1426ms)
+✔ ecAdd: doubling the generator matches hand-computed (6, 3) (0.1648ms)
+✔ ecMul: 1·G = G and 0·G = ∞ (0.1426ms)
+✔ ecMul: scalar mult agrees with iterated addition (0.3932ms)
+✔ ecMul: n·G = ∞ (0.1716ms)
+✔ ecdh: both ends agree on demo curve (5.9519ms)
+✔ pointToString: infinity and finite formatting (0.1847ms)
+✔ mlkemEncapsulateDemo: shape, hex length, internal consistency (3.1195ms)
+✔ hybridCombine: deterministic for fixed inputs, 64-hex-char output (6.7137ms)
+✔ hybridCombine: different inputs produce different outputs (0.6213ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 204.9054

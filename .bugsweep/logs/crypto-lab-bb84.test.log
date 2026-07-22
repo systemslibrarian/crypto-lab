@@ -1,0 +1,18 @@
+(node:57468) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ clean channel (no Eve, no noise) yields QBER 0 and is not flagged (20.3462ms)
+✔ sifting keeps ~50% of photons (bases agree half the time) (8.4674ms)
+✔ intercept-resend Eve drives QBER toward 25% and is detected (3.8738ms)
+✔ channel noise alone can be tuned below the detection threshold (4.5651ms)
+✔ privacy amplification returns a deterministic 256-bit key for typical sizes (6.0956ms)
+✔ privacy amplification expands past one digest without repeating blocks (3.1049ms)
+✔ AES-256-GCM round-trips a message under the derived key (22.4648ms)
+✔ GCM authentication rejects a tampered ciphertext (2.4982ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2287.2911

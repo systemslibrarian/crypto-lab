@@ -1,0 +1,12 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/gmcas/repos/crypto-lab-curve-lens[39m
+
+ [32m✓[39m src/curve.test.ts [2m([22m[2m22 tests[22m[2m)[22m[90m 35[2mms[22m[39m
+ [32m✓[39m src/realcurve.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 231[2mms[22m[39m
+ [32m✓[39m src/ui.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 1610[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m50 passed[39m[22m[90m (50)[39m
+[2m   Start at [22m 00:01:30
+[2m   Duration [22m 7.62s[2m (transform 569ms, setup 0ms, collect 1.04s, tests 1.88s, environment 4.67s, prepare 1.01s)[22m
+

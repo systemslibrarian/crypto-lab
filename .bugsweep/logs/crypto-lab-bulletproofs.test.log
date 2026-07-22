@@ -1,0 +1,89 @@
+PASS: honest range proof verifies
+PASS: tampered t_hat is rejected
+PASS: wrong commitment is rejected
+PASS: proveRange refuses v >= 2^64
+PASS: aggregate verifies
+PASS: aggregate tampering is rejected
+PASS: aggregate is position-bound (reorder rejected)
+(node:18864) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS: boundary: v = 0 verifies
+PASS: boundary: v = 1 verifies
+PASS: boundary: v = 2^32 verifies
+PASS: boundary: v = 2^64 - 1 verifies
+PASS: prover rejects v = -1
+PASS: prover rejects v = 18446744073709551616
+PASS: prover rejects v = 18446744073709551617
+PASS: prover rejects v = 1208925819614629174706176
+PASS: mismatched transcript domain is rejected
+PASS: substituting a different commitment is rejected
+PASS: tampered t_hat is rejected
+PASS: tampered tau_x is rejected
+PASS: tampered mu is rejected
+PASS: tampered IPA.a is rejected
+PASS: tampered IPA.b is rejected
+PASS: serialized length matches rangeProofByteLength
+PASS: serialized size for n=64 equals 672 bytes
+
+17 passed, 0 failed
+(node:63116) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS: deserialized proof verifies
+PASS: serialize is deterministic round-trip
+PASS: hex encode lowercase
+PASS: hex decode tolerates 0x prefix and whitespace
+PASS: hex decode rejects odd length
+PASS: hex decode rejects bad characters
+PASS: deserialize rejects mismatched IPA round count
+
+7 passed, 0 failed
+(node:42240) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS: true-aggregate m=1 verifies
+PASS: true-aggregate m=2 verifies
+PASS: true-aggregate m=4 verifies
+PASS: true-aggregate m=8 verifies
+PASS: true-aggregate boundary mix verifies
+PASS: true-aggregate prover refuses out-of-range value
+PASS: true-aggregate prover refuses non-power-of-two m
+PASS: true-aggregate rejects substituted commitment
+PASS: true-aggregate rejects tampered t_hat
+PASS: true-aggregate m=8 size is 864 bytes
+
+10 passed, 0 failed
+(node:24448) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS: reference verifier accepts v=0
+PASS: batch verifier accepts v=0
+PASS: reference verifier accepts v=1
+PASS: batch verifier accepts v=1
+PASS: reference verifier accepts v=999
+PASS: batch verifier accepts v=999
+PASS: reference verifier accepts v=4294967303
+PASS: batch verifier accepts v=4294967303
+PASS: reference verifier accepts v=18446744073709551615
+PASS: batch verifier accepts v=18446744073709551615
+PASS: batch verifier rejects tampered t_hat
+PASS: batch verifier rejects tampered mu
+PASS: batch verifier rejects tampered IPA.a
+PASS: batch verifier rejects substituted commitment
+PASS: verifier equivalence iter 0
+PASS: verifier equivalence iter 1
+PASS: verifier equivalence iter 2
+PASS: verifier equivalence iter 3
+PASS: verifier equivalence iter 4
+
+19 passed, 0 failed
+(node:60780) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS: reference agg verifier accepts m=1
+PASS: batched agg verifier accepts m=1
+PASS: reference agg verifier accepts m=2
+PASS: batched agg verifier accepts m=2
+PASS: reference agg verifier accepts m=4
+PASS: batched agg verifier accepts m=4
+PASS: reference agg verifier accepts m=8
+PASS: batched agg verifier accepts m=8
+PASS: batched agg verifier rejects tampered t_hat
+PASS: batched agg verifier rejects swapped commitments
+PASS: deterministic seed produces identical proof bytes

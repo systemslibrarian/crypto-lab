@@ -1,0 +1,9 @@
+
+ RUN  v4.1.9 C:/Users/gmcas/repos/crypto-lab-dilithium-seal
+
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  00:01:56
+   Duration  1.12s (transform 140ms, setup 0ms, import 352ms, tests 276ms, environment 0ms)
+

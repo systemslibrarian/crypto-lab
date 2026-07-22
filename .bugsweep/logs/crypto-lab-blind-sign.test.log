@@ -1,0 +1,13 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/gmcas/repos/crypto-lab-blind-sign[39m
+
+ [32m✓[39m src/ecblind.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 142[2mms[22m[39m
+ [32m✓[39m src/rfc9474.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 924[2mms[22m[39m
+ [32m✓[39m src/blind.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1179[2mms[22m[39m
+   [33m[2m✓[22m[39m RSA blind signature[2m > [22munblinding inverts blinding: s = (s·r) · r^-1 [33m385[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m27 passed[39m[22m[90m (27)[39m
+[2m   Start at [22m 23:55:04
+[2m   Duration [22m 2.27s[2m (transform 331ms, setup 0ms, collect 764ms, tests 2.24s, environment 1ms, prepare 1.39s)[22m
+

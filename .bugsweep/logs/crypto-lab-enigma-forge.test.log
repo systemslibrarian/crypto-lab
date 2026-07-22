@@ -1,0 +1,19 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/gmcas/repos/crypto-lab-enigma-forge[39m
+
+ [32m✓[39m tests/wirings.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32m✓[39m tests/machine.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 140[2mms[22m[39m
+ [32m✓[39m tests/scenarios.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 2467[2mms[22m[39m
+   [33m[2m✓[22m[39m whole-story: the challenge is breakable end-to-end[2m > [22mfast scope (challenge rotor order) recovers the true settings [33m2454[2mms[22m[39m
+ [32m✓[39m tests/ui.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 886[2mms[22m[39m
+ [32m✓[39m tests/break.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 8949[2mms[22m[39m
+   [33m[2m✓[22m[39m simulated Bombe end-to-end recovery[2m > [22mrecovers the rotor positions + Stecker that produced a ciphertext [33m3144[2mms[22m[39m
+   [33m[2m✓[22m[39m simulated Bombe end-to-end recovery[2m > [22mdoes not recover the true setting from a WRONG crib [33m2592[2mms[22m[39m
+   [33m[2m✓[22m[39m simulated Bombe end-to-end recovery[2m > [22ma short, loopless menu is under-constrained (surfaces multiple stops) [33m1221[2mms[22m[39m
+   [33m[2m✓[22m[39m simulated Bombe end-to-end recovery[2m > [22mpartitions every tested setting into contradiction / crib-reject / stop [33m1935[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[32m60 passed[39m[22m[90m (60)[39m
+[2m   Start at [22m 00:02:22
+[2m   Duration [22m 10.04s[2m (transform 1.13s, setup 0ms, collect 1.57s, tests 12.45s, environment 3.70s, prepare 2.24s)[22m
+

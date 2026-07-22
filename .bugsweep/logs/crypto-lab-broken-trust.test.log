@@ -1,0 +1,10 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/gmcas/repos/crypto-lab-broken-trust[39m
+
+ [32m✓[39m src/model.test.ts [2m([22m[2m41 tests[22m[2m)[22m[33m 1610[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m41 passed[39m[22m[90m (41)[39m
+[2m   Start at [22m 23:55:11
+[2m   Duration [22m 2.79s[2m (transform 164ms, setup 0ms, collect 204ms, tests 1.61s, environment 0ms, prepare 495ms)[22m
+

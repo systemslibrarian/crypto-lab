@@ -1,0 +1,30 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.6 [39m[90mC:/Users/gmcas/repos/crypto-lab-hybrid-pqc[39m
+
+ [32m✓[39m src/ui/anatomy.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m src/ui/viz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m src/ui/content.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/ui/survivalMatrix.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m src/crypto/metrics.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/crypto/kem.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 154[2mms[22m[39m
+ [32m✓[39m src/crypto/sign.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 481[2mms[22m[39m
+ [32m✓[39m src/crypto/compromise.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 477[2mms[22m[39m
+ [32m✓[39m src/ui/urlState.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1620[2mms[22m[39m
+   [33m[2m✓[22m[39m shareable URL state[2m > [22mhydrates threats and step from the query string and populates columns [33m 1612[2mms[22m[39m
+ [32m✓[39m src/ui/stepper.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 3068[2mms[22m[39m
+   [33m[2m✓[22m[39m guided tour[2m > [22mstarts on the intro, then walks through deterministic threat states [33m 1161[2mms[22m[39m
+   [33m[2m✓[22m[39m guided tour[2m > [22mBack is reversible (re-derives the earlier threat state) [33m 1150[2mms[22m[39m
+   [33m[2m✓[22m[39m guided tour[2m > [22mExit returns to the intro [33m 753[2mms[22m[39m
+ [32m✓[39m src/ui/ui.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 3827[2mms[22m[39m
+   [33m[2m✓[22m[39m UI smoke[2m > [22mestablishes all three KEM sessions and shows session keys [33m 468[2mms[22m[39m
+   [33m[2m✓[22m[39m UI smoke[2m > [22mbreaking the classical half: classical broken, hybrid still holds [33m 876[2mms[22m[39m
+   [33m[2m✓[22m[39m UI smoke[2m > [22mbreaking both halves compromises hybrid too [33m 732[2mms[22m[39m
+   [33m[2m✓[22m[39m UI smoke[2m > [22mediting the message invalidates old signatures [33m 454[2mms[22m[39m
+   [33m[2m✓[22m[39m UI smoke[2m > [22mreset clears sessions and unchecks the threat switches [33m 673[2mms[22m[39m
+   [33m[2m✓[22m[39m UI smoke[2m > [22mflipping a switch recolors every column even if only one was established by hand [33m 600[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m11 passed[39m[22m[90m (11)[39m
+[2m      Tests [22m [1m[32m71 passed[39m[22m[90m (71)[39m
+[2m   Start at [22m 00:03:34
+[2m   Duration [22m 11.10s[2m (transform 4.05s, setup 0ms, collect 7.54s, tests 9.69s, environment 30.26s, prepare 4.91s)[22m
+

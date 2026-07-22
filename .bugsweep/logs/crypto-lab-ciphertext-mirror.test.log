@@ -1,0 +1,29 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/gmcas/repos/crypto-lab-ciphertext-mirror[39m
+
+ [32m✓[39m src/lib/mlkem/__tests__/sha3.test.ts [2m([22m[2m9 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32m✓[39m src/lib/mlkem/__tests__/ntt.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 39[2mms[22m[39m
+ [32m✓[39m src/lib/mlkem/__tests__/fips203.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 386[2mms[22m[39m
+ [32m✓[39m src/lib/mlkem/__tests__/kat.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 194[2mms[22m[39m
+ [32m✓[39m src/cards/card-rnr-blinding/__tests__/sim.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 84[2mms[22m[39m
+ [32m✓[39m src/lib/mlkem/__tests__/kem.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1701[2mms[22m[39m
+   [33m[2m✓[22m[39m ML-KEM pedagogical core[2m > [22mround-trip key agreement across parameter sets [33m1670[2mms[22m[39m
+ [32m✓[39m src/cards/card-imperfect-df-oracle/__tests__/sim.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2642[2mms[22m[39m
+   [33m[2m✓[22m[39m imperfect DF-oracle model[2m > [22ma clean oracle fully recovers the key [33m645[2mms[22m[39m
+   [33m[2m✓[22m[39m imperfect DF-oracle model[2m > [22ma cleaner oracle recovers more than a noisy one (same secret) [33m814[2mms[22m[39m
+   [33m[2m✓[22m[39m imperfect DF-oracle model[2m > [22mmore available answers recover at least as much [33m383[2mms[22m[39m
+   [33m[2m✓[22m[39m imperfect DF-oracle model[2m > [22mrecovery is non-trivial and monotone-ish (rises from its start) [33m376[2mms[22m[39m
+ [32m✓[39m src/cards/card-masked-comparison/__tests__/sim.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 4746[2mms[22m[39m
+   [33m[2m✓[22m[39m masked comparison higher-order CPA model[2m > [22mattacker cost rises with masking order (the core lesson) [33m809[2mms[22m[39m
+   [33m[2m✓[22m[39m masked comparison higher-order CPA model[2m > [22mmore noise costs the attacker more traces at every order [33m1235[2mms[22m[39m
+   [33m[2m✓[22m[39m masked comparison higher-order CPA model[2m > [22mthe order-vs-noise gap widens as noise rises [33m1072[2mms[22m[39m
+   [33m[2m✓[22m[39m masked comparison higher-order CPA model[2m > [22mestimates stay within the replay reporting ceiling [33m521[2mms[22m[39m
+   [33m[2m✓[22m[39m masked comparison higher-order CPA model[2m > [22mruns are deterministic for a fixed seed [33m1107[2mms[22m[39m
+ [32m✓[39m src/__tests__/a11y.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 670[2mms[22m[39m
+   [33m[2m✓[22m[39m accessibility (axe-core, structural)[2m > [22mlanding page (header + concept primer + paper grid) has no structural violations [33m310[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m9 passed[39m[22m[90m (9)[39m
+[2m      Tests [22m [1m[32m49 passed[39m[22m[90m (49)[39m
+[2m   Start at [22m 00:00:44
+[2m   Duration [22m 17.98s[2m (transform 5.73s, setup 0ms, collect 8.33s, tests 10.47s, environment 9.91s, prepare 23.17s)[22m
+

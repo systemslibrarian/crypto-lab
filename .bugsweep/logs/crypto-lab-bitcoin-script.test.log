@@ -1,0 +1,18 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/gmcas/repos/crypto-lab-bitcoin-script[39m
+
+ [32m✓[39m tests/inspect.test.ts [2m([22m[2m10 tests[22m[2m)[22m[90m 33[2mms[22m[39m
+ [32m✓[39m tests/engine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 81[2mms[22m[39m
+ [32m✓[39m tests/a11y.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1313[2mms[22m[39m
+   [33m[2m✓[22m[39m axe-core: no serious/critical WCAG violations[2m > [22mpasses axe on the fully-rendered demo [33m725[2mms[22m[39m
+ [32m✓[39m tests/ui.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1545[2mms[22m[39m
+   [33m[2m✓[22m[39m ui mounts and the stepper drives execution[2m > [22mrenders the hero, all six sections, and seven scenario buttons [33m333[2mms[22m[39m
+   [33m[2m✓[22m[39m ui mounts and the stepper drives execution[2m > [22mregenerating keys does not throw and keeps the demo runnable [33m310[2mms[22m[39m
+ [32m✓[39m tests/features.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 2178[2mms[22m[39m
+   [33m[2m✓[22m[39m reversible stepper[2m > [22mBack walks execution backwards and clears the verdict [33m587[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[32m44 passed[39m[22m[90m (44)[39m
+[2m   Start at [22m 23:54:46
+[2m   Duration [22m 10.03s[2m (transform 870ms, setup 0ms, collect 2.32s, tests 5.15s, environment 18.52s, prepare 4.07s)[22m
+

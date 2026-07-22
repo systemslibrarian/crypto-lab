@@ -1,0 +1,23 @@
+✔ Miller–Rabin recognises known primes and composites (6.3088ms)
+✔ Paillier keygen produces a usable, correct keypair (35.9403ms)
+✔ Paillier is additively homomorphic and scalar-multiplicative (33.1968ms)
+✔ MtA yields additive shares of the product over ORDER (813.781ms)
+✔ MtA reuses a precomputed ciphertext correctly (150.8412ms)
+✔ DKG: commitments open correctly and joint key = X₁+X₂ = (x₁+x₂)·G (296.1527ms)
+✔ GG20 signing produces a valid standard ECDSA signature (270.6188ms)
+✔ GG20 internal relations hold (δ=δ₁+δ₂, s=s₁+s₂, r = R_x) (304.0922ms)
+✔ 25 random end-to-end signings all verify (the in-app self-test) (3101.1614ms)
+✔ malicious Party 2 (inconsistent Γ₂) is detected and aborts (347.9652ms)
+✔ ZK range proof: honest in-range value verifies (303.2586ms)
+✔ ZK range proof: out-of-range value (m ≈ N) is REJECTED by the range check (251.6163ms)
+✔ ZK range proof: a tampered proof fails a soundness check (262.2528ms)
+✔ ZK range proof: proof for one ciphertext does not verify against another (203.9186ms)
+✔ the full private key is never reconstructed during signing (383.7935ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7166.2953

@@ -1,0 +1,9 @@
+
+ RUN  v4.1.4 C:/Users/gmcas/repos/crypto-lab-ascon
+
+
+ Test Files  6 passed (6)
+      Tests  20 passed (20)
+   Start at  23:54:05
+   Duration  4.35s (transform 1.33s, setup 0ms, import 1.61s, tests 3.00s, environment 1ms)
+

@@ -1,0 +1,17 @@
+✔ every RFC known-answer vector reproduces byte-for-byte (10.096ms)
+✔ HKDF is deterministic and context-bound (1.8195ms)
+✔ the chain fans one password into independent, domain-separated keys (54.869ms)
+✔ salt demos behave as taught (74.617ms)
+✔ decision tree routes each branch correctly (0.367ms)
+✔ humanDuration formats across magnitudes without artifacts (76.3934ms)
+✔ attacker cost: more work for the defender means more work for the attacker (0.3059ms)
+✔ memory-hard KDFs resist ASICs far better than compute-bound ones (0.1703ms)
+✔ crackSeconds and targets scale as expected (0.5099ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 512.0992

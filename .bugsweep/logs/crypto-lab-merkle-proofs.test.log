@@ -1,0 +1,12 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.6 [39m[90mC:/Users/gmcas/repos/crypto-lab-merkle-proofs[39m
+
+ [32m✓[39m tests/consistency.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 54[2mms[22m[39m
+ [32m✓[39m tests/merkle.test.ts [2m([22m[2m30 tests[22m[2m)[22m[32m 198[2mms[22m[39m
+ [32m✓[39m tests/ui.smoke.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 601[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m55 passed[39m[22m[90m (55)[39m
+[2m   Start at [22m 00:07:38
+[2m   Duration [22m 6.35s[2m (transform 525ms, setup 0ms, collect 267ms, tests 853ms, environment 5.02s, prepare 1.11s)[22m
+

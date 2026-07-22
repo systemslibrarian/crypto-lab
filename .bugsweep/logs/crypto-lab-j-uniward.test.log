@@ -1,0 +1,26 @@
+
+forward DCT / IDCT roundtrip
+  ✓ re-encoding decoded luma reproduces coefficients exactly
+
+cost map semantics (synthetic image)
+  ✓ flat blocks cost far more than textured blocks
+
+embed / extract roundtrip
+  ✓ embed reports changes and salt
+  ✓ extracted message matches original
+  ✓ wrong key is rejected by HMAC
+  ✓ carriers never include the DC term
+
+full JPEG round-trip (encode + COM sideband + re-decode)
+  ✓ sample-grass.jpg: round-trips through a real JPEG
+  ✓ sample-portrait.jpg: round-trips through a real JPEG
+
+steganalysis discrimination
+  ✓ LSB corrupts DC/flat coefficients
+  ✓ F5 and J-UNIWARD never touch DC/flat
+  ✓ J-UNIWARD hides changes better than LSB
+  ✓ LSB is labelled Detectable, J-UNIWARD is not
+  ✓ per-block change map is populated
+
+✓ all 13 passed, 0 failed
+

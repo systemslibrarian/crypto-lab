@@ -1,0 +1,11 @@
+(node:39980) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ RUN  v4.1.9 C:/Users/gmcas/repos/crypto-lab-drbg-arena
+
+
+ Test Files  2 passed (2)
+      Tests  22 passed (22)
+   Start at  00:02:02
+   Duration  844ms (transform 271ms, setup 0ms, import 327ms, tests 61ms, environment 0ms)
+

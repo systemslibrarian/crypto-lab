@@ -1,0 +1,20 @@
+(node:50276) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1m[46m RUN [49m[22m [36mv3.2.6 [39m[90mC:/Users/gmcas/repos/crypto-lab-corrupted-oracle[39m
+
+ [32m✓[39m src/algorithms/chacha20-drbg.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m src/algorithms/hmac-drbg.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m src/stats/nist-tests.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 262[2mms[22m[39m
+ [32m✓[39m src/algorithms/dual-ec-drbg.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 165[2mms[22m[39m
+ [32m✓[39m src/attack/state-recovery.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 176[2mms[22m[39m
+ [32m✓[39m src/ui/panels.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1550[2mms[22m[39m
+   [33m[2m✓[22m[39m UI wiring (smoke test, no attack)[2m > [22mrenders the three algorithm panels and the controls [33m 514[2mms[22m[39m
+   [33m[2m✓[22m[39m UI wiring (smoke test, no attack)[2m > [22mGenerate produces hex output [33m 519[2mms[22m[39m
+   [33m[2m✓[22m[39m UI wiring (smoke test, no attack)[2m > [22mAbout modal verifies the trapdoor (d·Q = P) live [33m 514[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m19 passed[39m[22m[90m (19)[39m
+[2m   Start at [22m 00:01:11
+[2m   Duration [22m 7.90s[2m (transform 873ms, setup 0ms, collect 1.66s, tests 2.20s, environment 4.70s, prepare 4.76s)[22m
+

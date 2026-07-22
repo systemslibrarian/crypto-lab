@@ -1,0 +1,9 @@
+
+ RUN  v4.1.9 C:/Users/gmcas/repos/crypto-lab-elgamal-plain
+
+
+ Test Files  5 passed (5)
+      Tests  32 passed (32)
+   Start at  00:02:18
+   Duration  2.08s (transform 1.11s, setup 0ms, import 1.59s, tests 3.03s, environment 1ms)
+

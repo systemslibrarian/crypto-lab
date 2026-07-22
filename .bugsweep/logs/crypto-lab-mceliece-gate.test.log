@@ -1,0 +1,15 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/gmcas/repos/crypto-lab-mceliece-gate[39m
+
+ [32m✓[39m src/toy/goppa-code.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 71[2mms[22m[39m
+ [32m✓[39m src/toy/toy-kem.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 60[2mms[22m[39m
+ [32m✓[39m src/ui.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1373[2mms[22m[39m
+   [33m[2m✓[22m[39m UI integration (jsdom)[2m > [22mmounts every panel and runs a full encapsulate → decapsulate round-trip [33m637[2mms[22m[39m
+   [33m[2m✓[22m[39m UI integration (jsdom)[2m > [22mlets the learner toggle a ciphertext bit, updating weight and aria-pressed [33m398[2mms[22m[39m
+   [33m[2m✓[22m[39m UI integration (jsdom)[2m > [22mescapes HTML metacharacters in rendered output [33m337[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m19 passed[39m[22m[90m (19)[39m
+[2m   Start at [22m 00:07:26
+[2m   Duration [22m 8.54s[2m (transform 382ms, setup 0ms, collect 356ms, tests 1.50s, environment 6.09s, prepare 1.38s)[22m
+

@@ -1,0 +1,32 @@
+(node:25472) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS: sha256(empty) matches known digest
+PASS: LM-OTS keygen + sign + verify round-trip
+PASS: Tampered signature is rejected
+PASS: Different messages produce different signatures
+PASS: RFC 8554 Appendix F LM-OTS vector check
+Phase 1 gate passed
+(node:71724) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS: lmsKeygen H=5 completed in 2427ms (gate limit: 30s)
+PASS: LMS sign + verify round-trip
+PASS: Second signature increments q and verifies
+PASS: Attempted index reuse throws
+PASS: Tampered LMS signature is rejected
+PASS: RFC 8554 Appendix F LMS vector structure verified (HSS parsing in Phase 3)
+Phase 2 gate passed
+(node:32060) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS: hssKeygen completed in 84.28s
+PASS: HSS sign + verify round-trip
+PASS: 10 consecutive signatures verify
+PASS: Leaf tree exhaustion triggers regeneration
+PASS: Tampered signature fails at hierarchy verification
+Phase 3 gate passed
+(node:7588) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS: 16 honest signatures reuse index 3 and all verify
+PASS: forged a never-signed message after 4 randomizer attempt(s)
+PASS: forged signature is ACCEPTED by the genuine LMS public key
+PASS: honest signatures at fresh indexes remain valid (only reuse is fatal)
+Phase 4 gate passed

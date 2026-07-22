@@ -1,0 +1,9 @@
+
+ RUN  v4.1.4 C:/Users/gmcas/repos/crypto-lab-frodo-vault
+
+
+ Test Files  3 passed (3)
+      Tests  50 passed (50)
+   Start at  00:02:46
+   Duration  2.02s (transform 531ms, setup 0ms, import 1.63s, tests 237ms, environment 0ms)
+

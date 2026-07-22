@@ -1,0 +1,24 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/gmcas/repos/crypto-lab-lattice-fault[39m
+
+ [32m✓[39m tests/keccak.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 52[2mms[22m[39m
+ [32m✓[39m tests/random.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 569[2mms[22m[39m
+ [32m✓[39m tests/timing.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 675[2mms[22m[39m
+   [33m[2m✓[22m[39m timingExperiment[2m > [22mproduces one timing per coefficient and finite class means [33m620[2mms[22m[39m
+ [32m✓[39m tests/ntt.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 2337[2mms[22m[39m
+   [33m[2m✓[22m[39m CPA attack (Attack 1)[2m > [22mrecovers the secret coefficient as the top hypothesis [33m2168[2mms[22m[39m
+ [32m✓[39m tests/rejection.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 6068[2mms[22m[39m
+   [33m[2m✓[22m[39m faulted signing + key recovery (Attack 2)[2m > [22mrecovers the secret far better than random guessing [33m5504[2mms[22m[39m
+(node:29680) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ [32m✓[39m tests/ui.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 7325[2mms[22m[39m
+   [33m[2m✓[22m[39m Attack 1 — CPA button recovers the key into the panel[2m > [22mshows a recovered/best-correlation result after running CPA [33m1367[2mms[22m[39m
+   [33m[2m✓[22m[39m Attack 2 — signing + recovery panels[2m > [22mkey recovery reports a recovery rate [33m4153[2mms[22m[39m
+   [33m[2m✓[22m[39m Attack 3 — timing buttons update the report[2m > [22mrunning the constant-time experiment fills the panel and redraws the chart [33m598[2mms[22m[39m
+   [33m[2m✓[22m[39m accessibility (axe-core regression guard)[2m > [22mthe populated exhibit markup has no structural a11y violations [33m498[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m42 passed[39m[22m[90m (42)[39m
+[2m   Start at [22m 00:04:41
+[2m   Duration [22m 16.17s[2m (transform 694ms, setup 0ms, collect 790ms, tests 17.03s, environment 8.06s, prepare 2.22s)[22m
+

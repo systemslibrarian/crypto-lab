@@ -1,0 +1,16 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.6 [39m[90mC:/Users/gmcas/repos/crypto-lab-kerberos[39m
+
+ [32m✓[39m test/ui.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m test/nfold.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m test/string2key.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m test/cts.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m test/etype.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 53[2mms[22m[39m
+ [32m✓[39m test/protocols.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 858[2mms[22m[39m
+   [33m[2m✓[22m[39m Lowe man-in-the-middle attack (1995)[2m > [22mmakes Bob accept a run he believes is from Alice, who never contacted him [33m 311[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m59 passed[39m[22m[90m (59)[39m
+[2m   Start at [22m 00:04:36
+[2m   Duration [22m 1.81s[2m (transform 615ms, setup 0ms, collect 1.22s, tests 974ms, environment 1ms, prepare 1.75s)[22m
+

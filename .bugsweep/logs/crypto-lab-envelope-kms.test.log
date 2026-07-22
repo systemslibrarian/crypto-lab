@@ -1,0 +1,21 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/gmcas/repos/crypto-lab-envelope-kms[39m
+
+ [32m✓[39m src/kms/kek-store.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32m✓[39m src/crypto/bytes.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32m✓[39m src/crypto/aead.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 41[2mms[22m[39m
+(node:65956) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:31208) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ [32m✓[39m src/kms/audit-log.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 27[2mms[22m[39m
+ [32m✓[39m src/security/properties.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 37[2mms[22m[39m
+ [32m✓[39m src/crypto/key-wrap.test.ts [2m([22m[2m8 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+ [32m✓[39m src/envelope/envelope.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 64[2mms[22m[39m
+ [32m✓[39m src/crypto/kdf.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m8 passed[39m[22m[90m (8)[39m
+[2m      Tests [22m [1m[32m46 passed[39m[22m[90m (46)[39m
+[2m   Start at [22m 00:02:36
+[2m   Duration [22m 2.24s[2m (transform 1.51s, setup 0ms, collect 3.01s, tests 224ms, environment 3ms, prepare 4.94s)[22m
+

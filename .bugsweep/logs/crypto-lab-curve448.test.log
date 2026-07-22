@@ -1,0 +1,9 @@
+
+ RUN  v4.1.4 C:/Users/gmcas/repos/crypto-lab-curve448
+
+
+ Test Files  4 passed (4)
+      Tests  20 passed (20)
+   Start at  00:01:23
+   Duration  4.76s (transform 512ms, setup 0ms, import 908ms, tests 1.04s, environment 3.46s)
+

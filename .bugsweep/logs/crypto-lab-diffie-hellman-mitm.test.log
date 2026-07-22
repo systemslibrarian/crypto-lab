@@ -1,0 +1,29 @@
+✔ modPow: known values and identities (2.6037ms)
+✔ mod: always non-negative (0.1824ms)
+✔ isqrt: floor of square root (0.1419ms)
+✔ isProbablePrime: small primes and composites (0.2639ms)
+✔ diffieHellman: classic textbook example agrees (0.6469ms)
+✔ diffieHellman: many instances all agree (1.0351ms)
+✔ diffieHellman: agrees at 2048-bit production size (0.9684ms)
+✔ babyStepGiantStep: recovers the exponent on a primitive root (0.327ms)
+✔ babyStepGiantStep: recovers on a 20-bit prime and reports work (0.7665ms)
+✔ babyStepGiantStep: refuses 2048-bit, reporting the cap not a hang (1.7181ms)
+✔ discreteLogCost: tiny is feasible, 2048-bit is not (1.2561ms)
+✔ mitm: Alice and Bob end with DIFFERENT keys, each shared with Mallory (0.7656ms)
+✔ mitm: the substituted values are Mallory’s, not the real ones (0.1745ms)
+✔ authenticatedDeliver: clean exchange verifies and is accepted (22.3928ms)
+✔ authenticatedDeliver: a tampered share fails closed (MITM detected) (1.3428ms)
+✔ authenticatedDeliver: transcript binds the PEER share too (anti-misbinding) (2.053ms)
+✔ AES-GCM: round-trips under a key derived from a DH secret (6.0732ms)
+✔ AES-GCM: a different key cannot read the message (GCM tag fails -> null) (0.8725ms)
+✔ interceptMessage: Mallory reads and rewrites; Bob gets the tampered text (1.5502ms)
+✔ interceptMessage: pass-through (no edit) still relays, Bob reads the original (1.259ms)
+✔ PRESETS: every breakable preset uses a real prime; real group is 2048-bit (168.0641ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 618.1838

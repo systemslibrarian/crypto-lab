@@ -1,0 +1,11 @@
+(node:54168) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ RUN  v4.1.2 C:/Users/gmcas/repos/crypto-lab-iron-letter
+
+
+ Test Files  4 passed (4)
+      Tests  50 passed (50)
+   Start at  00:03:54
+   Duration  7.44s (transform 420ms, setup 0ms, import 550ms, tests 6.95s, environment 1ms)
+

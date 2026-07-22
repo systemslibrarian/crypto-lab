@@ -1,0 +1,9 @@
+
+ RUN  v4.1.4 C:/Users/gmcas/repos/crypto-lab-aegis-gate
+
+
+ Test Files  6 passed (6)
+      Tests  47 passed (47)
+   Start at  23:53:03
+   Duration  48.86s (transform 28.83s, setup 0ms, import 34.50s, tests 40.78s, environment 15.68s)
+

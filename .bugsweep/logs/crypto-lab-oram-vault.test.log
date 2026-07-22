@@ -1,0 +1,9 @@
+
+ RUN  v4.1.9 C:/Users/gmcas/repos/crypto-lab-oram-vault
+
+
+ Test Files  3 passed (3)
+      Tests  26 passed (26)
+   Start at  00:08:18
+   Duration  7.62s (transform 365ms, setup 0ms, import 323ms, tests 7.26s, environment 3.67s)
+

@@ -1,0 +1,15 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.4 [39m[90mC:/Users/gmcas/repos/crypto-lab-harvest-timeline[39m
+
+ [32m✓[39m tests/contrast.test.ts [2m([22m[2m24 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/scenarios.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/risk-engine.test.ts [2m([22m[2m32 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/ui.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 382[2mms[22m[39m
+ [32m✓[39m tests/a11y.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 570[2mms[22m[39m
+   [33m[2m✓[22m[39m axe-core accessibility audit[2m > [22mreports no WCAG 2.1 A/AA violations on the mounted app [33m 344[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[32m78 passed[39m[22m[90m (78)[39m
+[2m   Start at [22m 00:03:10
+[2m   Duration [22m 5.32s[2m (transform 469ms, setup 0ms, collect 761ms, tests 1.01s, environment 7.28s, prepare 2.45s)[22m
+

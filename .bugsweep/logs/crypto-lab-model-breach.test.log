@@ -1,0 +1,7 @@
+roundtrip-ok
+(node:29264) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+theorem1-ok attempt=1 checked=256
+attack-ok steps=9 gd=128,160,160,160,64,1
+(node:15960) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)

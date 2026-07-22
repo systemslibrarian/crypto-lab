@@ -1,0 +1,36 @@
+✔ correlation: textbook values (1.5376ms)
+✔ correlation is symmetric in (a-b) (0.188ms)
+✔ expectedS: ideal reaches Tsirelson (0.2554ms)
+✔ expectedS: intercept-resend Eve collapses to sqrt(2) (0.2044ms)
+✔ expectedS: depolarizing channel scales by (1-p) (0.2611ms)
+✔ expectedS: misalignment by delta scales by cos(2 delta) (0.2015ms)
+✔ expectedS: misalignment at delta = pi/4 zeros the violation (0.112ms)
+✔ expectedS: lossy channel does not change the expected value (0.1109ms)
+✔ expectedKeyAgreement: ideal = 1 (0.1752ms)
+✔ expectedKeyAgreement: Eve at pi/8 = 0.75 (0.1889ms)
+✔ expectedKeyAgreement: noisy = 1 - p/2 (0.4785ms)
+✔ expectedCorrelation matches the engine convention (0.2914ms)
+✔ runE91 (ideal, 30k, seed=1): |S| within 0.05 of 2sqrt(2) (7.2326ms)
+✔ runE91 (eve, 30k, seed=1): |S| collapses near sqrt(2), verdict compromised (8.2502ms)
+✔ runE91 (noisy p=0.5, 30k, seed=2): |S| near (1-p)*2sqrt(2) (6.8677ms)
+✔ runE91 (misaligned 30deg, 30k, seed=3): |S| near 2sqrt(2)*cos(60deg) = sqrt(2) (9.5995ms)
+✔ runE91 (ideal, 30k): key agreement is 100% (8.7415ms)
+✔ runE91 (eve): key agreement near 0.75 (5.504ms)
+✔ runE91 (lossy eta=0.5): effectiveRounds ~ rounds * eta^2 (4.8087ms)
+✔ runE91: transcript respects cap and labels buckets (0.5605ms)
+✔ runE91: transcript default is empty (0.1501ms)
+✔ runE91: per-correlation stderr and CI are populated (1.4356ms)
+✔ runE91: S CI brackets the measured value (1.4561ms)
+✔ runE91: tiny sample size yields inconclusive verdict for the borderline case (0.5449ms)
+✔ runE91: legacy `eve: true` selects the eve scenario (2.5063ms)
+✔ runE91: legacy `eve: false` selects the ideal scenario (1.8279ms)
+✔ resolveScenario by id returns the canonical defaults (44.6395ms)
+✔ resolveScenario merges partial overrides into defaults (0.2434ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 451.3355

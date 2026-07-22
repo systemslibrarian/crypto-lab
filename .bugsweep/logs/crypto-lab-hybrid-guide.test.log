@@ -1,0 +1,9 @@
+
+ RUN  v4.1.8 C:/Users/gmcas/repos/crypto-lab-hybrid-guide
+
+
+ Test Files  1 passed (1)
+      Tests  23 passed (23)
+   Start at  00:03:30
+   Duration  636ms (transform 86ms, setup 0ms, import 114ms, tests 19ms, environment 0ms)
+

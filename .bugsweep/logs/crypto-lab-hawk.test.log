@@ -1,0 +1,15 @@
+phase-1 verification passed
+(node:3032) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{"mean":0.0022,"variance":2.0336,"minObserved":-7,"maxObserved":6}
+phase-2 verification passed
+(node:40468) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:58192) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{"generationAttempts":1,"failedAttempts":0,"restartCount":0,"hawkSignMs":3.056,"hawkSignStdev":0.801,"falconSimulationMs":3.158,"mldsaSimulationMs":0.563,"mldsaAvgIterations":4.5,"speedupRatio":1.03}
+phase-3 verification passed
+(node:71280) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{"checks":3558}
+phase-4 verification passed

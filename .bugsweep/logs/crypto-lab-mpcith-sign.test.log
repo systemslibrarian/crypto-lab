@@ -1,0 +1,9 @@
+
+ RUN  v4.1.9 C:/Users/gmcas/repos/crypto-lab-mpcith-sign
+
+
+ Test Files  2 passed (2)
+      Tests  16 passed (16)
+   Start at  00:07:53
+   Duration  6.68s (transform 284ms, setup 0ms, import 234ms, tests 360ms, environment 5.81s)
+

@@ -1,0 +1,17 @@
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90mC:/Users/gmcas/repos/crypto-lab-nonce-lattice[39m
+
+ [32m✓[39m tests/serialization.test.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 5[2mms[22m[39m
+ [32m✓[39m tests/lattice.test.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 4[2mms[22m[39m
+ [32m✓[39m tests/recovery-presets.test.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 6[2mms[22m[39m
+ [32m✓[39m tests/nonce-modes.test.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 4[2mms[22m[39m
+ [32m✓[39m tests/hnp-builder.test.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 6[2mms[22m[39m
+ [32m✓[39m tests/repeated-nonce.test.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32m✓[39m tests/ecdsa.test.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 83[2mms[22m[39m
+ [32m✓[39m tests/modular.test.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m8 passed[39m[22m[90m (8)[39m
+[2m      Tests [22m [1m[32m12 passed[39m[22m[90m (12)[39m
+[2m   Start at [22m 00:08:03
+[2m   Duration [22m 1.69s[2m (transform 1.38s, setup 0ms, collect 3.08s, tests 126ms, environment 2ms, prepare 4.70s)[22m
+

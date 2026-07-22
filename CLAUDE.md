@@ -93,7 +93,7 @@ node tools/readme-sync.js
 
 ### 4. (Optional) Add to a Learning Path
 
-If the demo fits the Developer / Cryptanalyst / Post-Quantum journeys, add `{ title: 'Demo Name' }` at the right step position inside the matching `LEARNING_PATHS` entry. The JS auto-detects WIP from the card class — no separate `wip: true` needed when the card exists.
+If the demo fits the Developer / Cryptanalyst / Post-Quantum / Key Exchange journeys, add `{ title: 'Demo Name' }` at the right step position inside the matching `LEARNING_PATHS` entry. The JS auto-detects WIP from the card class — no separate `wip: true` needed when the card exists. The README's Learning Paths table is generated from this array — rerun `node tools/readme-sync.js` after any path change.
 
 ### 5. Verify
 

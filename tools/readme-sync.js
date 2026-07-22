@@ -1,5 +1,5 @@
-// readme-sync.js — regenerate README.md's Featured and All Demos tables
-// from the cards in index.html, so the cards are the single source of truth.
+// readme-sync.js — regenerate README.md's Featured, Learning Paths, and All
+// Demos tables from index.html, so the site is the single source of truth.
 //   node tools/readme-sync.js        rewrite README.md
 //   node tools/readme-sync.js check  exit 1 if README differs from generated
 const fs = require('fs');
@@ -52,9 +52,21 @@ const featRows = featSlugs.map(s => {
   return row(bySlug[s]);
 }).join(eol);
 
+// Learning Paths: from the LEARNING_PATHS array in the page's JS.
+const pIdx = html.indexOf('var LEARNING_PATHS = [');
+const pEnd = html.indexOf('];', pIdx);
+if (pIdx === -1) { console.error('LEARNING_PATHS not found'); process.exit(1); }
+const paths = eval('(' + html.slice(pIdx + 'var LEARNING_PATHS = '.length, pEnd + 1) + ')');
+const pathRows = paths.map(p =>
+  '| **' + p.label.replace(/ Path$/, '') + '** | ' + p.blurb + ' | ' +
+  p.steps.map(s => s.title).join(' → ') + ' |').join(eol);
+
 let out = md.replace(
   /(## Featured\r?\n\r?\n\|[^\n]*\r?\n\|---\|---\|---\|\r?\n)[\s\S]*?(\r?\n\r?\n---)/,
   (_, head, tail) => head + featRows + tail);
+out = out.replace(
+  /(\| Path \| Focus \| Journey \|\r?\n\|---\|---\|---\|\r?\n)[\s\S]*?(\r?\n\r?\n---)/,
+  (_, head, tail) => head + pathRows + tail);
 out = out.replace(
   /(## All Demos\r?\n\r?\n\|[^\n]*\r?\n\|---\|---\|---\|\r?\n)[\s\S]*?(\r?\n\r?\n---)/,
   (_, head, tail) => head + allRows + tail);
@@ -64,5 +76,5 @@ if (process.argv[2] === 'check') {
   else { console.error('README tables out of sync with index.html cards. Run: node tools/readme-sync.js'); process.exit(1); }
 } else {
   fs.writeFileSync(mdPath, out);
-  console.log('README.md regenerated: ' + cards.length + ' cards, ' + featSlugs.length + ' featured.');
+  console.log('README.md regenerated: ' + cards.length + ' cards, ' + featSlugs.length + ' featured, ' + paths.length + ' learning paths.');
 }

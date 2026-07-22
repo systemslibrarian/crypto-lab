@@ -78,19 +78,18 @@ Do **not** put `FOUNDATIONS` or `REAL-WORLD SYSTEMS` directly in `data-category`
 
 **c.** If the demo is a deployed, named, real-world protocol (TLS, Kerberos, PKI, Signal stack, KMS, WebAuthn, etc.): add the title to `REAL_WORLD_TITLES`. The JS auto-appends `REAL-WORLD SYSTEMS`.
 
-### 3. Add a row to `README.md`'s All Demos table
+### 3. Regenerate `README.md`'s tables
 
-The table is sorted alphabetically by the **Category** column (column 2). Insert in the correct alphabetical position.
-
-```
-| [Demo Name](https://systemslibrarian.github.io/crypto-lab-<slug>/) | Category Label | Primitive A · Primitive B · Primitive C · Primitive D |
-```
-
-For WIP demos, suffix the link with ` *(WIP)*`:
+The Featured and All Demos tables are **generated from the cards** — Category
+mirrors the card kicker, Stack mirrors the chips, sorted by Category then
+title, with the ` *(WIP)*` suffix derived from the card class. Never hand-edit
+the rows; after any card change run:
 
 ```
-| [Demo Name](https://systemslibrarian.github.io/crypto-lab-<slug>/) *(WIP)* | Category Label | ... |
+node tools/readme-sync.js
 ```
+
+`node tools/readme-sync.js check` verifies parity without writing (CI-friendly).
 
 ### 4. (Optional) Add to a Learning Path
 
@@ -105,7 +104,7 @@ python -m http.server 8765
 Open `http://localhost:8765/` and confirm:
 - New card appears in the intended section (search by demo name in the filter input).
 - Each `data-category` chip filters the card in.
-- README table still sorts alphabetically by Category column.
+- `node tools/readme-sync.js check` reports the README tables in sync.
 
 A self-check script lives at the end of this file — copy it into a `node -e "..."` invocation to verify title coverage.
 

@@ -111,7 +111,7 @@ A self-check script lives at the end of this file — copy it into a `node -e ".
 
 ### 6. Sync the crypto-counsel corpus
 
-The **crypto-counsel** chatbot (sibling repo, `../crypto-counsel-1`) embeds a snapshot
+The **crypto-counsel** chatbot (sibling repo, `../crypto-counsel`) embeds a snapshot
 of every demo card in its `corpus.json` as `demo_crypto_lab_<slug>` entries. That
 snapshot does **not** update itself — a new demo here is invisible to the chatbot
 until its corpus entry is added. So for each new demo:
@@ -130,7 +130,7 @@ until its corpus entry is added. So for each new demo:
    Live Demo link).
 
 3. Append the finished `{ "id": …, "text": … }` object to the corpus array in
-   `../crypto-counsel-1/corpus.json` (it is minified, single-line, no trailing
+   `../crypto-counsel/corpus.json` (it is minified, single-line, no trailing
    newline — preserve that), and bump the counts in that repo's `README.md`
    (total entries, "N crypto-lab demo cards", and the `Demo slugs (N)` list).
 

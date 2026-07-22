@@ -80,11 +80,11 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Babel Hash](https://systemslibrarian.github.io/crypto-lab-babel-hash/) | Hash Functions | SHA-256 · SHA3-256 · BLAKE3 · HMAC |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | Hash Functions | SM3 · Streebog · Kupyna · SHA-256 · SHA-3 |
 | [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | Hash Internals | SHA-256 · SHA3-256 · BLAKE3 · Merkle-Damgård · Sponge |
-| [LMS/XMSS](https://systemslibrarian.github.io/crypto-lab-lms-xmss/) | Hash-Based Signatures | LMS · XMSS · HSS · NIST SP 800-208 |
-| [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) | Hash-Based Signatures | SLH-DSA · FIPS 205 · SPHINCS+ · SHA-256 · FORS |
+| [LMS/XMSS](https://systemslibrarian.github.io/crypto-lab-lms-xmss/) | Hash-Based Signatures | LMS · LM-OTS · HSS · NIST SP 800-208 |
+| [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) | Hash-Based Signatures | SLH-DSA · FIPS 205 · SPHINCS+ · SHA-256 · WOTS+ |
 | [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | HD Wallet Mechanics | secp256k1 · BIP-32 · BIP-39 · Bech32 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | High-Security Curves | X448 · Ed448 · RFC 7748 · RFC 8032 |
-| [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | Historical Cipher | Substitution · Transposition · Atbash |
+| [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | Historical Cipher | Substitution · Vigenère · Atbash |
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | Historical Cipher | Enigma · Rotors · Plugboard · Bombe |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | Historical Cryptanalysis | Vigenère · Kasiski Examination · Index of Coincidence · Frequency Analysis |
 | [Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) | Homomorphic Encryption | TFHE-rs · Live Rust Server · Homomorphic Addition |
@@ -117,11 +117,11 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) | Nonce Misuse Resistance | AES-GCM · AES-GCM-SIV · RFC 8452 · Synthetic IV |
 | [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) | Nonce Reuse | AES-GCM · ChaCha20-Poly1305 · Forbidden Attack · Crib Dragging |
 | [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) | Oblivious HTTP | OHTTP · HPKE · Binary HTTP · RFC 9458 |
-| [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) | Oblivious Transfer | Simplest OT · Chou-Orlandi 2015 · X25519 · AES-256-GCM |
+| [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) | Oblivious Transfer | Simplest OT · Chou-Orlandi 2015 · Edwards25519 · AES-256-GCM |
 | [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) | Pairing Cryptography | BLS12-381 · BLS Signatures · Signature Aggregation · Rogue Key Attack |
-| [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) | Passkeys & Authentication | WebAuthn · FIDO2 · Passkeys · Attestation |
+| [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) | Passkeys & Authentication | WebAuthn · FIDO2 · Passkeys · Assertion |
 | [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) | Password Hashing | bcrypt · Blowfish · Cost Factor · Timing-Safe Verification |
-| [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) | Password-Authenticated Key Exchange | OPAQUE · OPRF · 3DH · AES-256-GCM |
+| [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) | Password-Authenticated Key Exchange | OPAQUE · OPRF · 3DH · HKDF |
 | [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) | Password-Authenticated Key Exchange | SRP-6a · J-PAKE · CPace · Dragonfly |
 | [SPAKE Gate](https://systemslibrarian.github.io/crypto-lab-spake-gate/) | Password-Authenticated Key Exchange | SPAKE2 · SPAKE2+ · P-256 · RFC 9382/9383 |
 | [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | Perfect Secrecy | One-Time Pad · Perfect Secrecy · Two-Time Pad · Crib Dragging |
@@ -185,7 +185,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) | Threshold Decryption | ElGamal · P-256 · NIZK Proofs · t-of-n |
 | [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) | Threshold ECDSA | GG20 · Paillier · secp256k1 · Distributed Key Generation |
 | [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) | Threshold Signatures | FROST (RFC 9591) · Ed25519 · Nonce Commitments · VSS Commitments |
-| [Threshold ML-DSA](https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/) | Threshold Signatures | Threshold ML-DSA · Distributed Signing · k-of-n · Post-Quantum |
+| [Threshold ML-DSA](https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/) | Threshold Signatures | Threshold ML-DSA · Distributed Signing · Two-Party · Post-Quantum |
 | [Time-Lock Puzzle](https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/) | Time-Lock Puzzle | RSW · Sequential Squaring · AES-256-GCM · Trapdoor |
 | [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) | Timing Side-Channel | Timing Attack · HMAC · RSA · Cache-Timing |
 | [Timing Side-Channel](https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/) | Timing Side-Channel | Timing Attack · Constant-Time · Side-Channel · Secret Compare |

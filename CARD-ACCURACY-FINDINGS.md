@@ -1,8 +1,8 @@
 # crypto-lab card accuracy findings (README cross-check, analysis only)
-98 / 123 cards accurate. 25 with discrepancies, below.
+99 / 123 cards accurate. 24 with discrepancies, below.
 
 ## MAJOR — card describes a different demo / wrong scheme
-- hqc-timing-break: repo content is actually a **Paillier** demo (page title "Paillier Cryptosystem", src/paillier.ts). Card (HQC decryption timing oracle, Reed-Muller, Soft-ISD) matches nothing in the repo. Either wrong code deployed or card misassigned. NEEDS DECISION.
+- ~~hqc-timing-break: repo content is actually a **Paillier** demo~~ **RESOLVED 2026-07-21**: repo now contains the real HQC demo (title "HQC Cache-Timing Break", Reed-Muller + Soft-ISD engine, rebuilt in commits through 2026-07-12) and the live Pages site serves it. Card is accurate as written.
 - isogeny-gate: card says "toy SIDH over GF(71)"; demo is toy **CSIDH over GF(419)**. Wrong scheme AND wrong field.
 
 ## ACCURACY ERRORS (wrong claim / label / number)

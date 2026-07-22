@@ -68,6 +68,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) | Diffie-Hellman + MITM | Diffie-Hellman · Modular Arithmetic · MITM · Key Exchange |
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | Digital Signatures | ECDSA · secp256k1 · RFC 6979 · Nonce Reuse |
 | [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | Digital Signatures | Ed25519 · EdDSA · Deterministic Nonces · ZIP215 · Cofactor |
+| [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) | Distributed Key Generation | Pedersen DKG · GJKR 1999 · Feldman VSS · ristretto255 |
 | [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) | Downgrade Attacks | TLS 1.3 · Transcript Binding · X25519MLKEM768 · Downgrade |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | Elliptic Curves | ECC · Curve25519 · ECDH · P-256 |
 | [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | Elliptic Curves | Group Law · Chord-and-Tangent · Scalar Mult · secp256k1 |

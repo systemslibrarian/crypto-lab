@@ -1912,21 +1912,6 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/dad-mode-morse2/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
-            <div class="card-kicker">Encrypted Morse</div>
-            <div class="project-title">Dad Mode Morse</div>
-            <div class="project-copy">AES-GCM encrypted messaging delivered as Morse code with audio playback and browser decoding. Intentionally playful, still grounded in real primitives.</div>
-            <div class="project-meta">
-              <div class="stack">
-                <span class="chip">AES-256-GCM</span>
-                <span class="chip">Argon2id</span>
-                <span class="chip">HKDF-SHA-256</span>
-                <span class="chip">Ed25519</span>
-              </div>
-              <span class="arrow">→</span>
-            </div>
-          </a>
-
           <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-patron-shield/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Library Privacy</div>
             <div class="project-title">Patron Shield</div>
@@ -3563,6 +3548,21 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-mayo-seal/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Multivariate Signatures</div>
+            <div class="project-title">MAYO Seal</div>
+            <div class="project-copy">Runs real MAYO keygen, signing, and verification over GF(16), stepping through the moment an oil space too small to invert becomes solvable once k copies of the map are whipped together.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">MAYO</span>
+                <span class="chip">GF(16)</span>
+                <span class="chip">Whipping</span>
+                <span class="chip">NIST On-Ramp</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
           <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lwe-hints/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Lattice Cryptanalysis</div>
             <div class="project-title">LWE Hints</div>
@@ -4073,6 +4073,66 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-syndrome-hints/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Hint-Assisted ISD</div>
+            <div class="project-title">Syndrome Hints</div>
+            <div class="project-copy">A real information-set-decoding attack on syndrome decoding over F₂ — feed it leaked side-channel hints and watch the work factor slide from exponential toward polynomial.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Hint-ISD</span>
+                <span class="chip">Prange</span>
+                <span class="chip">Stern</span>
+                <span class="chip">Syndrome Decoding</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Lattice Foundations</div>
+            <div class="project-title">Lattice Gentle</div>
+            <div class="project-copy">The lattice picture underneath ML-KEM and ML-DSA: drag basis vectors through SVP and CVP, step Gauss and LLL, then run toy Kyber and Dilithium end to end.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SVP &amp; CVP</span>
+                <span class="chip">LLL</span>
+                <span class="chip">LWE &amp; SIS</span>
+                <span class="chip">toy ML-KEM/ML-DSA</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-encrochat/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Endpoint Compromise</div>
+            <div class="project-title">Encrochat</div>
+            <div class="project-copy">A real Double Ratchet exchange with a genuinely opaque wire, then a modelled endpoint implant reads the plaintext anyway. The cryptography held; it did not matter.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Double Ratchet</span>
+                <span class="chip">X25519</span>
+                <span class="chip">AES-256-GCM</span>
+                <span class="chip">Endpoint Implant</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="MPC & THRESHOLD | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-icy-dvrf/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Distributed VRF</div>
+            <div class="project-title">Icy DVRF</div>
+            <div class="project-copy">A t-of-n distributed VRF: partial evaluations proven with Chaum-Pedersen DLEQ under one shared challenge, aggregating to a constant-size 128-byte proof whether three parties contribute or three hundred.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">DVRF</span>
+                <span class="chip">Chaum-Pedersen DLEQ</span>
+                <span class="chip">ristretto255</span>
+                <span class="chip">FROST Nonces</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -4192,6 +4252,7 @@
           { title: 'Kyber Vault' },
           { title: 'KEM Trap' },
           { title: 'Dilithium Seal' },
+          { title: 'MAYO Seal' },
           { title: 'Hybrid Wire' },
           { title: 'Hybrid PQC' },
           { title: 'Downgrade Wire' },
@@ -4233,7 +4294,7 @@
       'World Ciphers': 'symmetric', 'AES Modes': 'symmetric',
       'ChaCha20 Stream': 'symmetric', 'Format Ward': 'symmetric',
       'AEGIS Gate': 'symmetric', 'Ascon': 'symmetric',
-      'Shadow Vault': 'symmetric', 'Dad Mode Morse': 'symmetric',
+      'Shadow Vault': 'symmetric',
       'Iron Letter': 'public-key', 'RSA Forge': 'public-key',
       'Educational RSA': 'public-key',
       'Ed25519 Forge': 'public-key', 'ECDSA Forge': 'public-key', 'Schnorr Forge': 'public-key',
@@ -4289,7 +4350,7 @@
       'JWT Forge': 'cryptanalysis', 'LWE Hints': 'cryptanalysis',
       'Syndrome Drain': 'cryptanalysis', 'Broken Trust': 'cryptanalysis',
       'E91': 'post-quantum', 'Hybrid Guide': 'post-quantum',
-      'Multivariate UOV': 'post-quantum',
+      'Multivariate UOV': 'post-quantum', 'MAYO Seal': 'post-quantum',
       'Bitcoin Script': 'public-key', 'DH MITM': 'key-exchange',
       'Hybrid PQC': 'post-quantum', 'Merkle Proofs': 'foundations',
       'PAKE Gate': 'key-exchange', 'Shamir vs FROST': 'privacy',
@@ -4306,21 +4367,24 @@
       'Credential Veil': 'privacy',
       'Power Trace': 'cryptanalysis', 'Protocol Checker': 'cryptanalysis',
       'Quantum Entropy': 'foundations', 'SPDZ Forge': 'privacy',
-      'Traitor Trace': 'privacy'
+      'Traitor Trace': 'privacy',
+      'Syndrome Hints': 'cryptanalysis', 'Lattice Gentle': 'post-quantum',
+      'Encrochat': 'cryptanalysis', 'Icy DVRF': 'privacy'
     };
 
     var FOUNDATIONS_TITLES = [
       'Phantom Vault','DRBG Arena','Babel Hash','Hash Zoo','World Hashes',
       'MAC Race','Poly1305 MAC','KDF Chain','KDF Arena','Bcrypt Forge',
       'Merkle Vault','Commit Gate','Shamir Gate','VRF Gate','Curve Lens',
-      'Pairing Gate','OTP Vault','VDF','HPKE Envelope','Quantum Entropy'
+      'Pairing Gate','OTP Vault','VDF','HPKE Envelope','Quantum Entropy',
+      'Lattice Gentle'
     ];
     var REAL_WORLD_TITLES = [
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',
       'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
       'WebAuthn','Web of Trust','SSH Handshake','Bitcoin Wallet',
       'Bitcoin Script','TLS Handshake','Blind Hello','Blind Relay',
-      'Key Mirror','SPAKE Gate'
+      'Key Mirror','SPAKE Gate','Encrochat'
     ];
     var TITLE_TO_EXTRA_CATS = {};
     FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });

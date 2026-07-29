@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-> **Trigger phrase: "add new demo"** (also: "add a new demo", "new demo"). When the user says any of these followed by a GitHub repo URL, slug, or description, execute the "Adding a new demo" workflow below end-to-end without further prompting unless required info is missing. Do not commit or push — finish the edits, run the self-check, and report back so the user can review the diff.
+> **Trigger phrase: "add new demo"** (also: "add a new demo", "new demo"). When the user says any of these followed by a GitHub repo URL, slug, or description, execute the "Adding a new demo" workflow below end-to-end without further prompting unless required info is missing. Do not commit or push — finish the edits, run the self-check plus `node tools/readme-sync.js check`, `node tools/corpus-sync.js check`, and `node tools/concept-sync.js check`, and report back so the user can review the diff.
 
 This is the source for **Crypto Lab** (https://crypto-lab.systemslibrarian.dev/) — a single-page static site (`index.html` + `README.md`) deployed via GitHub Pages from `main`.
 
@@ -11,6 +11,17 @@ The catalog has three navigation layers and they all live in `index.html`:
 - **Filter chips**: cross-cutting tags — `CATEGORIES` in the JS IIFE, applied to cards via `data-category`.
 
 Two cross-cutting tags (`FOUNDATIONS`, `REAL-WORLD SYSTEMS`) are applied at runtime via `FOUNDATIONS_TITLES` and `REAL_WORLD_TITLES` arrays, so you don't repeat them in every card's `data-category`.
+
+`index.html` is the single source of truth. Three maintainer-facing files derive from it and
+each has a checker that fails when it drifts:
+
+| File | Holds | Checker |
+|---|---|---|
+| `README.md` | Featured / Learning Paths / All Demos tables | `node tools/readme-sync.js check` |
+| `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
+| `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
+
+`futuredemos.md` is an older gap list, now stale — `concept-coverage.md` supersedes it where the two disagree.
 
 ---
 
@@ -142,6 +153,36 @@ until its corpus entry is added. So for each new demo:
    A clean run prints `Missing from corpus (0): []` and `Stale in corpus (0): []`.
 
 Do not append `TODO` placeholder text to the live corpus — refine the prose first.
+
+### 7. File the demo under its concept in `concept-coverage.md`
+
+`concept-coverage.md` maps the catalog onto the ~40 distinct *ideas* cryptography is built
+from, so "what's left to build?" is a lookup rather than an audit. It is idea-level where the
+card kickers are artifact-level, and it is the file that answers **is anything missing?** A
+demo that ships without being filed there silently invalidates its gap list.
+
+For each new demo:
+
+1. Find the concept it teaches and add the exact card title to that concept's citation line
+   (the `·`-separated run directly under the `**N. Concept — \`STATUS\`**` header). Only that
+   first paragraph is parsed as citations — later paragraphs are commentary.
+2. Re-check the concept's status: a `GAP` or `PARTIAL` may now be `COVERED`. If the demo
+   closes a gap listed in the **Gap summary** table, remove that row.
+3. Bump the version note at the top of the file, saying what changed.
+4. Confirm parity:
+
+   ```
+   node tools/concept-sync.js check
+   ```
+
+   A clean run prints `Cited but no card (0)` and `Carded but unmapped (0)`.
+
+If a demo is built but its card is not landing yet, cite it as
+`*Name (built, uncatalogued)*` — `concept-sync` treats that as known backlog rather than a
+dangling citation. Clear the marker when the card ships.
+
+If nothing in the map fits the demo, say so rather than forcing a placement — that is a real
+signal the taxonomy needs a boundary moved, which is the user's call.
 
 ---
 

@@ -31,7 +31,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 |---|---|---|
 | **Developer** | A builder's journey — from primitives to the protocols you actually ship. | Babel Hash → AES Modes → KDF Chain → Educational RSA → RSA Forge → Point Arithmetic → Curve Lens → Signed Bytes → DH MITM → X3DH Wire → Noise Pipe → OPAQUE Gate → WebAuthn → SSH Handshake → TLS Handshake → PQ TLS Handshake |
 | **Cryptanalyst** | An attacker's lens — classical ciphers to post-quantum side channels. | Dead Sea Cipher → Biham Lens → Padding Oracle → Timing Oracle → Power Trace → Salamander → Nonce Collision → Entropy Collapse → Nonce Lattice → Frozen Heart → KyberSlash → Lattice Fault |
-| **Post-Quantum** | A focused track on PQ KEMs, signatures, hybrids, and migration. | PQ Families → Kyber Vault → KEM Trap → Dilithium Seal → Hybrid Wire → Hybrid PQC → Downgrade Wire → PQ TLS Handshake → PQ Rotation → Harvest Timeline |
+| **Post-Quantum** | A focused track on PQ KEMs, signatures, hybrids, and migration. | PQ Families → Kyber Vault → KEM Trap → Dilithium Seal → MAYO Seal → Hybrid Wire → Hybrid PQC → Downgrade Wire → PQ TLS Handshake → PQ Rotation → Harvest Timeline |
 | **Key Exchange** | How two parties agree on a secret — classical ECDH to hybrid post-quantum handshakes. | Key Exchange → Curve Lens → DH MITM → X3DH Wire → Ratchet Wire → Noise Pipe → OPAQUE Gate → TLS Handshake → Kyber Vault → Hybrid Wire → PQ TLS Handshake |
 
 ---
@@ -70,10 +70,11 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | Digital Signatures | Ed25519 · EdDSA · Deterministic Nonces · ZIP215 · Cofactor |
 | [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) | Digital Signatures | BIP-340 · secp256k1 · Nonce Reuse · Aggregation |
 | [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) | Distributed Key Generation | Pedersen DKG · GJKR 1999 · Feldman VSS · ristretto255 |
+| [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) | Distributed VRF | DVRF · Chaum-Pedersen DLEQ · ristretto255 · FROST Nonces |
 | [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) | Downgrade Attacks | TLS 1.3 · Transcript Binding · X25519MLKEM768 · Downgrade |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | Elliptic Curves | ECC · Curve25519 · ECDH · P-256 |
 | [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | Elliptic Curves | Group Law · Chord-and-Tangent · Scalar Mult · secp256k1 |
-| [Dad Mode Morse](https://systemslibrarian.github.io/dad-mode-morse2/) | Encrypted Morse | AES-256-GCM · Argon2id · HKDF-SHA-256 · Ed25519 |
+| [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) | Endpoint Compromise | Double Ratchet · X25519 · AES-256-GCM · Endpoint Implant |
 | [E91](https://systemslibrarian.github.io/crypto-lab-e91/) | Entanglement-Based QKD | E91 · Entanglement · CHSH Bell Test · QKD |
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | Few-Time Signatures | Jevil · Hash-Based · Goldilocks Field · Lagrange Interpolation |
@@ -88,6 +89,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) | Hash-Based Signatures | SLH-DSA · FIPS 205 · SPHINCS+ · SHA-256 · WOTS+ |
 | [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | HD Wallet Mechanics | secp256k1 · BIP-32 · BIP-39 · Bech32 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | High-Security Curves | X448 · Ed448 · RFC 7748 · RFC 8032 |
+| [Syndrome Hints](https://systemslibrarian.github.io/crypto-lab-syndrome-hints/) | Hint-Assisted ISD | Hint-ISD · Prange · Stern · Syndrome Decoding |
 | [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | Historical Cipher | Substitution · Vigenère · Atbash |
 | [Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) | Homomorphic Encryption | FHE · TFHE-rs · Rust · Encrypted Compute |
 | [CKKS Lab](https://systemslibrarian.github.io/crypto-lab-ckks-lab/) | Homomorphic Encryption | CKKS · RLWE · Approximate FHE · Encrypted Inference |
@@ -107,6 +109,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) | Lattice Attack | ECDSA · Hidden Number Problem · LLL Reduction · secp256k1 |
 | [LWE Hints](https://systemslibrarian.github.io/crypto-lab-lwe-hints/) | Lattice Cryptanalysis | LWE · Sparse Ternary Secrets · Approximate Hints · Lattice |
 | [NTRU Classic](https://systemslibrarian.github.io/crypto-lab-ntru-classic/) | Lattice Cryptography | NTRU · Polynomial Rings · Lattice · EESS#1 |
+| [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) | Lattice Foundations | SVP & CVP · LLL · LWE & SIS · toy ML-KEM/ML-DSA |
 | [Broken Trust](https://systemslibrarian.github.io/crypto-lab-broken-trust/) | Leakage Cryptanalysis | ML-DSA · Bit Leakage · Hill-Climbing · Subkey Recovery |
 | [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
 | [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) | Lightweight Cryptography | Ascon-AEAD128 · Ascon-Hash256 · Lightweight Crypto · IoT |
@@ -120,6 +123,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | Migration Planning | Mosca Inequality · CRQC Scenarios · Cost of Delay · PQC Migration |
 | [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) | ML-DSA Internals | ML-DSA · Rejection Sampling · FIPS 204 · Timing Tradeoffs |
 | [Syndrome Drain](https://systemslibrarian.github.io/crypto-lab-syndrome-drain/) | Multi-Instance Degradation | DOOM · BIKE · HQC · Classic McEliece |
+| [MAYO Seal](https://systemslibrarian.github.io/crypto-lab-mayo-seal/) | Multivariate Signatures | MAYO · GF(16) · Whipping · NIST On-Ramp |
 | [Multivariate UOV](https://systemslibrarian.github.io/crypto-lab-multivariate/) | Multivariate Signatures | UOV · GF(256) · MQ Problem · Beullens Attack |
 | [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) | Noise Protocol Framework | X25519 · HKDF · WireGuard · Handshake Patterns |
 | [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) | Nonce Misuse Resistance | AES-GCM · AES-GCM-SIV · RFC 8452 · Synthetic IV |

@@ -4133,6 +4133,36 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-musig-gate/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">n-of-n Aggregation</div>
+            <div class="project-title">MuSig Gate</div>
+            <div class="project-copy">n signers aggregate their public keys into one key and their nonces into one nonce, yielding a single Schnorr signature indistinguishable from a lone signer's — plus the rogue-key attack BIP-327 defeats.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">MuSig2</span>
+                <span class="chip">BIP-327</span>
+                <span class="chip">secp256k1</span>
+                <span class="chip">Rogue-Key Attack</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PROTOCOLS | ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-ablation-wire/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Layer Ablation</div>
+            <div class="project-title">Ablation Wire</div>
+            <div class="project-copy">The 1942 Navajo code-talker stack rebuilt on modern primitives, with every layer independently switchable — turn one off and discover which was actually load-bearing.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">X-Wing KEM</span>
+                <span class="chip">AES-256-GCM</span>
+                <span class="chip">Transcript Binding</span>
+                <span class="chip">Rust/WASM</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -4369,7 +4399,8 @@
       'Quantum Entropy': 'foundations', 'SPDZ Forge': 'privacy',
       'Traitor Trace': 'privacy',
       'Syndrome Hints': 'cryptanalysis', 'Lattice Gentle': 'post-quantum',
-      'Encrochat': 'cryptanalysis', 'Icy DVRF': 'privacy'
+      'Encrochat': 'cryptanalysis', 'Icy DVRF': 'privacy',
+      'MuSig Gate': 'privacy', 'Ablation Wire': 'cryptanalysis'
     };
 
     var FOUNDATIONS_TITLES = [

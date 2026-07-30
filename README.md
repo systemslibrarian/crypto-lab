@@ -110,6 +110,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [LWE Hints](https://systemslibrarian.github.io/crypto-lab-lwe-hints/) | Lattice Cryptanalysis | LWE · Sparse Ternary Secrets · Approximate Hints · Lattice |
 | [NTRU Classic](https://systemslibrarian.github.io/crypto-lab-ntru-classic/) | Lattice Cryptography | NTRU · Polynomial Rings · Lattice · EESS#1 |
 | [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) | Lattice Foundations | SVP & CVP · LLL · LWE & SIS · toy ML-KEM/ML-DSA |
+| [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) | Layer Ablation | X-Wing KEM · AES-256-GCM · Transcript Binding · Rust/WASM |
 | [Broken Trust](https://systemslibrarian.github.io/crypto-lab-broken-trust/) | Leakage Cryptanalysis | ML-DSA · Bit Leakage · Hill-Climbing · Subkey Recovery |
 | [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
 | [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) | Lightweight Cryptography | Ascon-AEAD128 · Ascon-Hash256 · Lightweight Crypto · IoT |
@@ -125,6 +126,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Syndrome Drain](https://systemslibrarian.github.io/crypto-lab-syndrome-drain/) | Multi-Instance Degradation | DOOM · BIKE · HQC · Classic McEliece |
 | [MAYO Seal](https://systemslibrarian.github.io/crypto-lab-mayo-seal/) | Multivariate Signatures | MAYO · GF(16) · Whipping · NIST On-Ramp |
 | [Multivariate UOV](https://systemslibrarian.github.io/crypto-lab-multivariate/) | Multivariate Signatures | UOV · GF(256) · MQ Problem · Beullens Attack |
+| [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) | n-of-n Aggregation | MuSig2 · BIP-327 · secp256k1 · Rogue-Key Attack |
 | [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) | Noise Protocol Framework | X25519 · HKDF · WireGuard · Handshake Patterns |
 | [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) | Nonce Misuse Resistance | AES-GCM · AES-GCM-SIV · RFC 8452 · Synthetic IV |
 | [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) | Nonce Reuse | AES-GCM · ChaCha20-Poly1305 · Forbidden Attack · Crib Dragging |

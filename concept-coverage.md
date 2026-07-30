@@ -3,8 +3,8 @@
 *Version 4 — v2 corrected the timelock/witness-encryption conflation and demoted NTT; v3
 resolved the card-based ordering on the strength of its Cipher Museum crossover. v4 files the
 eight demos no concept had claimed, cards the four that were built but invisible (clearing the
-hygiene backlog), splits deniability out of §23 as §23b, moves §32 and §12 to `COVERED`, and puts the
-whole map under `concept-sync`.*
+hygiene backlog), splits deniability out of §23 as §23b, moves §32 and §12 to `COVERED`, files MuSig Gate
+and Ablation Wire, and puts the whole map under `concept-sync`.*
 
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
@@ -37,7 +37,7 @@ build it only if you want depth there, not because the suite needs it. If it's `
 | `PARTIAL` | Taught, but an arc is unfinished or a piece is missing. |
 | `GAP` | No demo teaches this concept. |
 
-Catalog basis: the 165 cards in `index.html` as of the MAYO Seal commit.
+Catalog basis: the 167 cards in `index.html` as of the Ablation Wire commit.
 
 **Checked, not trusted.** Run `node tools/concept-sync.js check`. It verifies this file
 against the catalog in both directions: every demo cited below resolves to a real card, and
@@ -178,10 +178,13 @@ Commit Gate.
 
 **19. Secret sharing and distributed trust — `DEEP`**
 Shamir Gate · VSS Gate · DKG Gate · Reshare Circle · FROST Threshold · GG20 Wallet ·
-Threshold Decrypt · Threshold ML-DSA · Shamir vs FROST · Icy DVRF. Generation,
+Threshold Decrypt · Threshold ML-DSA · Shamir vs FROST · Icy DVRF · MuSig Gate. Generation,
 verification, refresh, and use are all taught.
-→ **`musig-gate` in flight** closes n-of-n aggregation, which Schnorr Forge's card already
-promises ("the linearity behind multisig and threshold signing").
+
+MuSig Gate closed the last open piece here in v4: n-of-n aggregation, which Schnorr Forge's
+card had already promised ("the linearity behind multisig and threshold signing"). The
+t-of-n / n-of-n contrast is now explicit on both sides — MuSig Gate's own copy points at
+FROST for quorums, and Shamir vs FROST covers the other direction.
 
 **20. Oblivious transfer and secure computation — `PARTIAL`**
 OT Gate · Garbled Gate · Silent Tally · SPDZ Forge. All *computational*.
@@ -264,7 +267,11 @@ Nonce Collision · Nonce Guard · Nonce Lattice · Entropy Collapse · ECDSA For
 Forge.
 
 **29. Composition and parsing failures — `COVERED`**
-Protocol Compose · Signed Bytes · Salamander · KEM Trap · JWT Forge · Padding Oracle.
+Protocol Compose · Signed Bytes · Salamander · KEM Trap · JWT Forge · Padding Oracle ·
+Ablation Wire. The first six break a composition; Ablation Wire inverts the question and asks
+which layer was carrying the guarantee all along — switch one off and watch what an adversary
+recovers. It also separates hybrid-PQ confidentiality from authentication, which is the
+distinction a single "PQ" badge hides.
 
 **30. Classical cryptanalytic technique — `PARTIAL`**
 Biham Lens (differential) · Vigenère Break · Collision Vault · Model Breach · LLL Break.
@@ -342,7 +349,9 @@ Envelope KMS · PQ Rotation.
 **Not counted as a gap:** NTT as a standalone primitive (§10) — optional depth, an enabling
 computational technique rather than a security concept.
 
-**Landed since v3:** `mayo-seal` closed §12. **Still in flight:** `musig-gate` (§19).
+**Landed since v3:** `mayo-seal` closed §12, `musig-gate` closed the n-of-n piece of §19, and
+`ablation-wire` joined §29. **Nothing in flight** — the six gaps below are the whole remaining
+list.
 
 ### On the ordering
 
@@ -350,7 +359,7 @@ The table is ranked by **curriculum centrality** — how much of the concept spa
 opens. That is the right default.
 
 **Card-based is the deliberate exception, and it moves up.** It ranks fourth by centrality
-but first by distinctiveness: nothing in 165 demos achieves security without a computer.
+but first by distinctiveness: nothing in 167 demos achieves security without a computer.
 Three arguments stack on the distinctiveness side — it is the only non-computational
 security argument available, the most visually memorable build on the list, and the only
 gap with a Cipher Museum crossover (see §20). Since the suite has two goals, being complete
@@ -360,8 +369,7 @@ here, build it **second, after differential privacy**.
 Revised build order: **DP → card-based → linear cryptanalysis → accumulators → beacon
 timelock → Simon.**
 
-**Projected concept-complete total:** ~165 catalogued + 1 in
-flight + 6 gaps ≈ **170–175**. That is the finish line. Not because cryptography runs out —
+**Projected concept-complete total:** ~167 catalogued + 6 gaps ≈ **170–175**. That is the finish line. Not because cryptography runs out —
 it doesn't — but because *the curriculum* does.
 
 ---

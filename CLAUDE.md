@@ -136,8 +136,15 @@ until its corpus entry is added. So for each new demo:
    grounded in the demo's README — match the house style of existing entries
    (4-6 sentence "What It Is"; three "Use it to/for …, because …" bullets plus one
    "Do not use it …, because it is a demo app and does not provide hardened
-   operational controls."; dev-domain `https://crypto-lab.systemslibrarian.dev/<slug>/`
-   Live Demo link).
+   operational controls."; Live Demo link pointing at the demo's own Pages site,
+   `https://systemslibrarian.github.io/crypto-lab-<slug>/`).
+
+   Use that github.io form, **not** `https://crypto-lab.systemslibrarian.dev/<slug>/`.
+   The dev domain serves this catalog page; per-demo subpaths under it 404. Earlier
+   versions of this file specified the dev-domain form, which is how 242 dead Live
+   Demo links accumulated across the corpus before being repointed. A handful of
+   demos are not under the `crypto-lab-` prefix (`snow2`, `crypto-compare`) — take
+   the URL from the demo's card `href` in `index.html` rather than assembling it.
 
 3. Append the finished `{ "id": …, "text": … }` object to the corpus array in
    `../crypto-counsel/corpus.json` (it is minified, single-line, no trailing

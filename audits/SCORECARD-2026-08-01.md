@@ -1,5 +1,20 @@
 # Crypto Lab — pedagogy scorecard, reconstructed 2026-08-01
 
+## Post-remediation recheck — 2026-08-01
+
+Four large recorded regressions were re-investigated against fetched current source. The
+lower scores later in this file remain useful history, but are no longer current:
+
+| Demo | Current | Why it stops there |
+|---|:--:|---|
+| `zk-proof-lab` | **7** | Verdicts and tamper paths are now computed; SNARK setup remains assumed and the page exposes values it calls hidden. |
+| `hawk` | **7** | It honestly demonstrates its public linear model and a real forgery; it still is not production HAWK's secret Gaussian coset sampler. |
+| `tls-handshake` | **8** | MITM, Finished checks, transcript binding, and injected failure paths are computed; several TLS layers remain honestly compressed. |
+| `bcrypt-forge` | **8** | Rainbow construction, dictionary attempts, and cost-scaled work are real and measured; it remains a teaching implementation. |
+
+The earlier drops were valid corrections against then-live defects, not evidence that the
+repositories had newly regressed. Subsequent remediation made those downgraded scores stale.
+
 ## Provenance
 
 Reconstructed on 2026-08-01 from the Claude Code session transcript

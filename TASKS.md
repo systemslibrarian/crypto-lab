@@ -113,6 +113,22 @@ Durable copy of the working task list, written 2026-08-01 so an interrupted sess
 nothing. `RESUME-HERE.md` holds the fleet state and the hard-won environment facts; this
 file holds the work queue. Keep both current.
 
+## Current-session update — 2026-08-01
+
+- Fresh fetch-first fleet scan completed. Six interrupted edits were recovered, fully
+  verified, committed, and pushed to `main`: `blind-hello` (`089dd4c`),
+  `diffie-hellman-mitm` (`34dc9a4`), `ibe-gate` (`ba74aca`), `kdf-arena` (`d4ba2fd`),
+  `timing-oracle` (`675ccca`), and `stark-tower` (`883421a`).
+- Task 5: `shamir-vs-frost` was the one live failure in a seven-repo recheck; fixed and
+  pushed (`35eaaba`). Six other rows were stale and already pass at current origin:
+  pairing-gate, world-ciphers, vrf-gate, nonce-lattice, rsa-forge, and ablation-wire.
+- Task 8: `drbg-arena` and `corrupted-oracle` were verified fixed on current origin.
+  `stark-tower`'s four findings are fixed and pushed.
+- Task 9 current scores after remediation: `zk-proof-lab` 7, `hawk` 7,
+  `tls-handshake` 8, `bcrypt-forge` 8.
+- User authorized direct commits and pushes to `main` for each verified fix; do not create
+  feature branches for this fleet pass.
+
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 
 ---

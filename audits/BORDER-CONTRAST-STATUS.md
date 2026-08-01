@@ -2,6 +2,15 @@
 
 _Measured 2026-08-01 across all 176 `~/repos/crypto-lab-*` working copies. Measurement only — no repo was modified._
 
+## Recheck update — 2026-08-01
+
+The table below is a dated measurement, not current fleet state. A fetch-first recheck
+confirmed pairing-gate, world-ciphers, vrf-gate, nonce-lattice, rsa-forge, and ablation-wire
+already pass on origin (minimum ratios 3.16, 3.29, 3.33, 3.31, 3.26, and 3.31).
+`shamir-vs-frost` was still live and is fixed/pushed at `35eaaba` (dark minimum 3.25,
+light minimum 3.30). Interrupted fixes for blind-hello, diffie-hellman-mitm, ibe-gate,
+kdf-arena, and timing-oracle were also verified and pushed.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

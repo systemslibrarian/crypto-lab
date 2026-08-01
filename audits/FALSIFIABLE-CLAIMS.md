@@ -163,8 +163,9 @@ Repo was in that fix agent’s scope.
 
 ### `corrupted-oracle`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 7 claims below as live.
+**Fix status: verified fixed on current `main` (2026-08-01), commit `49413a53`.** Fresh
+source review confirmed all seven findings are covered. Verification after `npm ci`: 32
+unit tests, production build, and dark/light Playwright accessibility checks all pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -220,9 +221,10 @@ transcript. Treat all 1 claim below as live.
 
 ### `drbg-arena`
 
-**Fix status: MIXED.**
-
-The main-thread CAVP-vector claim is reported fixed. The eight batch-1 drbg-arena claims (#13-#20) had no fix agent dispatched — `adff494cab93626bb` touched a different chi-squared df issue.
+**Fix status: verified fixed on current `main` (2026-08-01), commit `f5c8b839`.** Fresh
+source review confirmed all eight batch-1 findings and the CAVP-vector finding are covered.
+Verification after `npm ci`: 29 unit tests, production build, and seven Playwright
+behavior/accessibility checks all pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -751,8 +753,14 @@ The main-thread collision-resistance claim is reported fixed. The four batch-2 s
 
 ### `stark-tower`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 4 claims below as live.
+**Fix status: fixed and locally committed (2026-08-01), commit `883421a`; not pushed.** The
+leak prose now follows the measured counter; the byte estimate labels its 1,024-row
+reference and distinguishes compact proof material from JSON transport; the security tile
+is explicitly a conjectural FRI-query term and makes no production verdict. The original
+audit's proposed blanket 31-bit cap was not repeated: independent challenges can accumulate
+entropy, while the honest limitation is that this toy omits field-dependent algebraic error
+terms and therefore cannot establish end-to-end security. Tests, DOM behavior checks,
+typecheck, build, both-theme accessibility, and a live screenshot all pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

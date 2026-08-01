@@ -21,7 +21,11 @@ each has a checker that fails when it drifts:
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
 
-`futuredemos.md` is an older gap list, now stale — `concept-coverage.md` supersedes it where the two disagree.
+`concept-coverage.md` is the only gap list. Several older analysis files that used to sit in
+this root — `futuredemos.md`, `CARD-AUDIT.md`, `CARD-ACCURACY-FINDINGS.md`,
+`HEADER-ROLLOUT-TODO.md`, `PROMPT-standardize-parts-A-D.md` — were snapshots that the
+generators and checkers above now supersede, and were deleted rather than left to be mistaken
+for current. They remain in git history if a historical read is needed.
 
 ---
 

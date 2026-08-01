@@ -441,6 +441,7 @@ it catches are the two that rot this file silently: a demo renamed in `index.htm
 dangling citation here, and a demo shipped without ever being filed under a concept. Run it
 without `check` for the same report as a plain read-out (always exit 0).
 
-*Maintained alongside `futuredemos.md`, which is older and now stale — it counts 114 demos
-and lists as "missing" several items since built (Enigma, OTP, collisions, JWT, Vigenère).
-Where the two disagree, this file is current.*
+*This is the sole gap list. It replaced `futuredemos.md`, which counted 114 demos and listed
+as "missing" several items since built (Enigma, OTP, collisions, JWT, Vigenère); that file was
+deleted once it had nothing left to add. Recover it with `git log --diff-filter=D -- futuredemos.md`
+if a historical read is ever needed.*

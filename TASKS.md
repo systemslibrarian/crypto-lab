@@ -1,5 +1,114 @@
 # Task list — crypto-lab fleet
 
+---
+
+# START HERE — prompt for the AI picking this up
+
+Paste everything between the rules into a fresh session, from
+`/Users/gmcas/repos/crypto-lab`.
+
+---
+
+You are continuing maintenance on **Crypto Lab**: a catalog site at
+`/Users/gmcas/repos/crypto-lab` plus **176 sibling demo repos** at
+`/Users/gmcas/repos/crypto-lab-*`. Each demo is a browser-only Vite + TypeScript
+teaching lab that deploys to GitHub Pages. Read `CLAUDE.md` first — it is binding.
+
+**The goal, in one sentence:** every lab should be *claim-complete* — every claim a page
+makes is computed from that run, every verdict states only what the protocol actually
+learned, and every important state is tested rather than merely visited. No lab has yet
+scored 10 out of 10 against that bar.
+
+## Do this first, before trusting anything below
+
+State drifts. Verify it:
+
+```bash
+cd /Users/gmcas/repos
+for x in crypto-lab-*; do
+  git -C "$x" fetch -q origin 2>/dev/null
+  n=$(git -C "$x" status --porcelain | wc -l | tr -d ' ')
+  a=$(git -C "$x" rev-list --count @{u}..HEAD 2>/dev/null || echo 0)
+  [ "$n" != 0 ] || [ "$a" != 0 ] && echo "${x#crypto-lab-}: dirty=$n unpushed=$a"
+done
+```
+
+`git fetch` first is not optional — a stale tracking ref already produced a wrong
+"0 unpushed" once and cost a session's worth of confusion.
+
+## Ground truth lives in `audits/`
+
+| File | What it holds |
+|---|---|
+| `BORDER-CONTRAST-STATUS.md` | Every repo failing WCAG 1.4.11 on control borders, with selector, ratio and file:line |
+| `FALSIFIABLE-CLAIMS.md` | 189 claims across 68 repos; 124 with no fix confirmation |
+| `SCORECARD-2026-08-01.md` | Pedagogy scores, 74 of 174 recovered |
+| `_MASTER-TEMPLATE.md` | The build/teach/look/a11y standard every lab is measured against |
+| `VERIFICATION-2026-08-01.md` | How UI changes were verified by running them |
+| `PRE-PUSH-STATUS.md` | Per-repo test/build results before the last push |
+
+Read the relevant one before starting a task. Do not re-derive what is already measured.
+
+## Nine rules that were learned the expensive way
+
+1. **`npm ci` first, in every repo you touch.** `node_modules/.bin` is empty fleet-wide
+   (symlinks did not survive a Windows-to-Mac copy). Takes about a second from cache.
+   Without it nothing runs and you will misdiagnose it as a broken toolchain.
+2. **`timeout` does not exist on this macOS box.** Do not use it.
+3. **Script names are not uniform.** Read `package.json` every time. Some repos have no
+   `test` script (`vrf-gate` uses `check`). A bare `test` is sometimes vitest WATCH mode
+   and will hang forever — use `test:run`. Some repos are nested: `biham-lens` at
+   `demos/biham-lens/`, `collision-vault` at `demos/collision-vault/`, `ratchet-wire` at
+   `ratchet-wire/`, `quantum-vault-kpqc` at `web-demo/`.
+4. **The a11y gate runs locally and it is the most common CI failure.**
+   `npx playwright install chromium` once, then `npm run test:a11y`. Run it before
+   pushing anything that touches markup or CSS. Some repos also have
+   `npm run check:size`. Neither runs by default, and both fail CI.
+5. **Check `git ls-files --error-unmatch <file>` before deleting anything.** An untracked
+   file looks identical to a tracked one and is gone forever. This already destroyed three
+   audit documents that cannot be recovered.
+6. **The dominant defect is a test that pins behaviour a fix deliberately changed.** Five
+   instances in one day. When triaging a diff, find the semantic change first, then hunt
+   the test still asserting the old semantics.
+7. **Verify UI changes by running the page, not the suite.** Build, `vite preview`, drive
+   with Playwright, screenshot. One repo would have shipped seven empty regions with a
+   fully green test run.
+8. **Treat every audit finding as a claim to verify.** The overwhelming pattern is that
+   findings describe code that has since been fixed. Read the current source first. Do not
+   "fix" working code.
+9. **Never fake a verdict to make a gate pass.** No suppressing axe rules, no deleting
+   tests, no making a check non-blocking. If a budget genuinely must move, move it to a
+   specific number with a comment saying why and what it was — and keep it blocking.
+
+## Working with subagents
+
+Agents are effective here and the work parallelises well, but **seven died mid-run on API
+stalls in one evening**. Therefore:
+
+- **Instruct every agent to commit and push per repo, never batching to the end.** This is
+  what made the deaths cheap.
+- **Give each agent a disjoint repo list.** Two agents in one repo already produced a
+  crossed commit message.
+- **When one dies, check what it landed before resuming** (`git log --oneline --since=...`),
+  and tell it what you found so it does not redo work.
+- Agents have corrected briefs and been right. Verify their corrections; do not dismiss them.
+
+## Pick up here
+
+Tasks 5, 6, 8, 9, 10 below are open, with full context on each. Highest value first:
+
+- **Task 5** (border contrast) is the largest mechanical chunk and is well specified —
+  about 70 repos were fixed today, so re-measure before assuming what remains.
+- **Task 8** matters most for the stated goal, especially the nine repos whose audit batch
+  never reported and for which no fix was ever attempted.
+- **Task 6** is the goal itself, and needs roughly 100 demos re-scored.
+
+Ask before pushing if the user has not already said to. Report honestly: a partial result
+stated plainly is worth far more than an overstated complete one.
+
+---
+
+
 Durable copy of the working task list, written 2026-08-01 so an interrupted session loses
 nothing. `RESUME-HERE.md` holds the fleet state and the hard-won environment facts; this
 file holds the work queue. Keep both current.
@@ -43,12 +152,37 @@ made the deaths cheap.
 Reports already landed in `audits/`: `SCORECARD-2026-08-01.md`, `FALSIFIABLE-CLAIMS.md`,
 `BORDER-CONTRAST-STATUS.md`, `PRE-PUSH-STATUS.md`, `VERIFICATION-2026-08-01.md`.
 
-## Fleet state at last update
+## Fleet state at last update (2026-08-01, end of session)
 
-- **0 demo repos with unpushed commits.** Everything from both sessions is live.
-- All 34 repos pushed in the main batch went CI-green, after four failures were fixed.
-- ~16 repos dirty, which is agents mid-edit plus the 9 audit-doc originals left in place
-  deliberately (they are duplicated in `audits/`).
+- **0 demo repos with unpushed commits.** Everything is live.
+- All 34 repos in the main push went CI-green after four failures were fixed.
+- **About 70 border-contrast commits landed today** before the agents died, against 112
+  repos originally failing. **Re-measure before assuming what is left** — do not trust
+  `BORDER-CONTRAST-STATUS.md`'s counts as current, only its per-repo detail.
+
+**17 dirty repos, and the distinction matters:**
+
+*Six have real uncommitted source edits — agents killed mid-task. Read the diff and either
+finish or discard; do not assume they are correct:*
+
+```
+blind-hello          M src/styles.css
+diffie-hellman-mitm  M src/style.css
+kdf-arena            M src/style.css
+timing-oracle        M styles/main.css
+stark-tower          M index.html, M src/main.ts, M src/stark.ts
+dilithium-reject     (clean now, was mid-edit — verify)
+```
+
+*Eleven hold only an untracked audit document, left in place deliberately. **Do not delete
+these.** They are already duplicated in `audits/`, so the dirty flag is cosmetic:*
+ablation-wire, credential-veil, dkg-gate, harvest-vault, hqc-timing, icy-dvrf,
+iron-serpent, lattice-gentle, protocol-checker, schnorr-forge, spdz-forge.
+
+**Known-red CI, pre-existing and not from this session:**
+`quantum-vault-kpqc` fails the dark-theme axe gate on `#btn-export-vault`, `#btn-reset`,
+`#btn-clear-vault` and the Import vault label. Verified pre-existing by stashing. Its
+Pages deploy is a separate workflow and is green, so the demo does ship.
 
 ---
 
@@ -72,8 +206,12 @@ All 34 repos pushed, all CI-green. Four failed on first push and were fixed:
 
 - `zk-arena` — bundle budget, 24.15 KB gz vs 20 KB. Real savings found first (Vite's
   modulePreload polyfill, dead in a single-entry build, ~1.2 KB); budget then raised to
-  25 KB with the reasoning recorded in the file. **The gate stays blocking.** This is a
-  deliberate relaxation and is the one decision here worth revisiting.
+  25 KB with the reasoning recorded in the file. **The gate stays blocking.**
+  **Decision taken 2026-08-01: keep the 25 KB budget.** The alternative was cutting ~4 KB
+  out of the safe-parameter-set feature, which is itself the fix for the lab demonstrating
+  zero knowledge in a group that leaks ~19 bits of the secret from the public key alone.
+  Teaching correctness beats an arbitrary byte ceiling. Not a precedent for other repos:
+  the next exhibit that wants the space still has to come back and justify it.
 - `gg20-wallet` — axe `scrollable-region-focusable` on the wraparound number line. Fixed
   the pattern (`.wl`, `.math`, `.table-wrap` all made focusable and named), not just the
   one element.

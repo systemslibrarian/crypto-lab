@@ -1,0 +1,54 @@
+# Gold-standard audits
+
+Per-repo audits of individual labs against the 10/10 gold-standard bar, plus the master
+template they are measured against. Collected here on 2026-08-01 from the demo repos,
+where they had been sitting **untracked** in repo roots — invisible to anyone not running
+`git status` in that specific directory, and one `rm` away from gone.
+
+| File | Source repo | Lines | Kind |
+|---|---|---|---|
+| `_MASTER-TEMPLATE.md` | iron-serpent | 373 | Master template — "the single source of truth for how every `crypto-lab-*` demo is built" |
+| `lattice-gentle.md` | lattice-gentle | 426 | Gold-standard audit, 2026-07-20 |
+| `schnorr-forge.md` | schnorr-forge | 415 | Gold-standard roadmap, 2026-07-22 |
+| `icy-dvrf.md` | icy-dvrf | 333 | 10/10 assessment, 2026-07-20 |
+| `ablation-wire.md` | ablation-wire | 263 | 10/10 audit |
+| `harvest-vault.md` | harvest-vault | 223 | Gold-standard suggestions |
+| `dkg-gate.md` | dkg-gate | 220 | Gold-standard roadmap, 2026-07-22 |
+| `credential-veil.md` | credential-veil | 178 | Gold-standard audit |
+| `protocol-checker.md` | protocol-checker | 158 | Gold-standard audit |
+| `spdz-forge.md` | spdz-forge | 23 | **Partial salvage** — ~3% of a lost 292-line audit |
+| `hqc-timing.md` | hqc-timing | 22 | **Partial salvage** — ~5% of a lost 222-line review |
+| `hqc-timing-bugs.md` | hqc-timing | 23 | **Partial salvage** — ~80% of a lost 15-line bug audit |
+
+## The three salvages
+
+On 2026-08-01 I misread three files of this genre as disposable AI chat logs and deleted
+them. They were untracked, so git never held a copy, and they do not appear in any session
+log, `~/.claude/file-history`, `~/.claude/backups` or `~/.claude/paste-cache`. They are
+gone. What sits here was reconstructed from a transcript that had quoted their opening
+sections, and each carries an explicit marker showing where the content stops.
+
+`hqc-timing-bugs.md` is the least damaged and, as it happens, the least costly to lose:
+both of its findings were checked against the current code and are already remediated.
+The other two retain their framing but none of their recommendations.
+
+If the source conversations still exist, re-exporting them restores the originals at
+near-zero cost. That is worth doing before the scoring pass leans on this directory.
+
+## Reading these
+
+Treat every finding as a **claim to verify, not a fact**. The pattern across this fleet is
+that external review documents frequently describe code that has since been fixed — three
+checked so far, three already remediated. Confirm against current source before acting.
+
+Two labs flagged as not teaching what they claimed have both since been fixed:
+
+- **`format-ward`** taught FF3-1 as current practice. FF3-1 was never in a final NIST
+  standard — it was introduced in the 2019 draft as the patch for the FF3 break, and the
+  February 2025 second draft removes FF3 and FF3-1 both. Reframed as a withdrawn-and-broken
+  exhibit in commit `81ed26b`, with the attribution corrected: Durak–Vaudenay broke FF3,
+  Beyne (2021) broke FF3-1.
+- **`zk-arena`** demonstrated zero-knowledge on parameters that leak ~19 bits of the secret
+  from the public key alone, recoverable by Pohlig–Hellman on 200 of 200 keypairs tested.
+  It now ships a safe prime-order parameter set alongside the toy one and demonstrates the
+  leak explicitly rather than hiding it.

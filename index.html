@@ -396,7 +396,11 @@
     .filter-toggle {
       display: none;
       align-items: center;
+      justify-content: center;
       gap: 7px;
+      /* Without a min-height this collapses to the ~13px line box of its own
+         label — far under the 44x44 tap minimum (WCAG 2.5.5). */
+      min-height: 44px;
       padding: 0 14px;
       font-family: var(--mono);
       font-size: 11px;
@@ -427,7 +431,7 @@
 
     .search-bar input {
       width: 100%;
-      padding: 14px 50px 14px 44px;
+      padding: 14px 60px 14px 44px;
       font-family: var(--mono);
       font-size: 13px;
       color: var(--text-hi);
@@ -479,11 +483,13 @@
 
     .search-clear {
       position: absolute;
-      right: 12px;
+      right: 8px;
       top: 50%;
       transform: translateY(-50%);
-      width: 28px;
-      height: 28px;
+      /* 44x44 minimum tap target (WCAG 2.5.5); the input reserves 60px of
+         right padding so the glyph never sits under the button. */
+      width: 44px;
+      height: 44px;
       display: none;
       place-items: center;
       border: 1px solid var(--border-strong);
@@ -740,6 +746,13 @@
       justify-content: space-between;
       gap: 12px;
       outline: none;
+    }
+
+    /* .path-summary clears the UA outline above; restore a visible keyboard
+       focus indicator so the disclosure stays operable by keyboard (WCAG 2.4.7). */
+    .path-summary:focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 3px;
     }
 
     .path-summary::-webkit-details-marker { display: none; }
@@ -1182,6 +1195,11 @@
     }
 
     .cl-nav-btn {
+      /* 44x44 minimum tap target (WCAG 2.5.5). */
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: 6px 14px;
       font-size: 11px;
       font-family: monospace;
@@ -1203,8 +1221,9 @@
     }
 
     .cl-theme-toggle {
-      width: 36px;
-      height: 36px;
+      /* 44x44 minimum tap target (WCAG 2.5.5). */
+      width: 44px;
+      height: 44px;
       background: #162b2a;
       border: 1px solid #2a4a44;
       border-radius: 6px;
@@ -1297,8 +1316,9 @@
     }
 
     .nav-menu-close {
-      width: 36px;
-      height: 36px;
+      /* 44x44 minimum tap target (WCAG 2.5.5). */
+      width: 44px;
+      height: 44px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1535,6 +1555,30 @@
       text-transform: uppercase;
       font-weight: 500;
       color: var(--amber);
+    }
+
+    /* Honour the OS "reduce motion" setting (WCAG 2.3.3). The entry fade-up and
+       the card-flash highlight are decorative; suppress them rather than replay
+       motion at people who asked for none. */
+    @media (prefers-reduced-motion: reduce) {
+      .cl-header,
+      .hero-main,
+      .feature-grid,
+      .project-grid,
+      .footer-quote,
+      .featured-grid .project-card,
+      .project-card.flash,
+      .feature-card.flash {
+        animation: none;
+      }
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>

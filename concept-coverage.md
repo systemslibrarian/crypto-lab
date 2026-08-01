@@ -1,10 +1,12 @@
 # Crypto Lab — Concept Coverage Checklist
 
-*Version 4 — v2 corrected the timelock/witness-encryption conflation and demoted NTT; v3
-resolved the card-based ordering on the strength of its Cipher Museum crossover. v4 files the
-eight demos no concept had claimed, cards the four that were built but invisible (clearing the
-hygiene backlog), splits deniability out of §23 as §23b, moves §32 and §12 to `COVERED`, files MuSig Gate
-and Ablation Wire, and puts the whole map under `concept-sync`.*
+*Version 5 — v2 corrected the timelock/witness-encryption conflation and demoted NTT; v3
+resolved the card-based ordering on the strength of its Cipher Museum crossover. v4 filed the
+eight demos no concept had claimed, carded the four that were built but invisible (clearing the
+hygiene backlog), split deniability out of §23 as §23b, moved §32 and §12 to `COVERED`, filed MuSig Gate
+and Ablation Wire, and put the whole map under `concept-sync`. v5 files Accumulator, which
+closes the cryptographic-accumulator gap and moves §25 from `PARTIAL` to `COVERED`, leaving
+five gaps.*
 
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
@@ -242,13 +244,14 @@ renumbering whenever a concept is added mid-list.
 **24. Anonymity and unlinkability — `COVERED`**
 Ring Sign · Blind Sign · Credential Veil · Traitor Trace.
 
-**25. Trust distribution and transparency — `PARTIAL`**
-PKI Chain · Chain of Trust · Web of Trust · Key Mirror · Merkle Vault · Merkle Proofs.
-→ **GAP: cryptographic accumulators.** Merkle *trees* and *proofs* are covered;
-accumulators as a succinct dynamic-set-membership and **revocation** primitive are not. The
-teaching delta is dynamic add/remove with a constant-size digest and non-membership proofs —
-not a repeat of authenticated-tree mechanics. Sits directly under Credential Veil
-(revoking anonymous credentials) and links to Key Mirror.
+**25. Trust distribution and transparency — `COVERED`**
+PKI Chain · Chain of Trust · Web of Trust · Key Mirror · Merkle Vault · Merkle Proofs ·
+Accumulator.
+Accumulator closes the gap this section carried through v4: dynamic add/remove against a
+constant-size digest, and non-membership proofs, which authenticated trees answer only by
+sorting the set and exhibiting two neighbours. It measures itself against a real RFC 6962
+tree rather than asserting the difference, and it demonstrates the cost — a trusted setup
+whose failure it lets you perform.
 
 **26. Identity and authentication — `COVERED`**
 WebAuthn · Kerberos v5 · JWT Forge · Time Trust.
@@ -341,10 +344,9 @@ Envelope KMS · PQ Rotation.
 |---|---|---|---|
 | 1 | **Differential privacy** | §23 | Whole idea absent. The only technique protecting a published statistic rather than a hidden message or access pattern. Pairs with Silent Tally. |
 | 2 | **Linear cryptanalysis** | §30 | Canonical pair-mate to Biham Lens. Different mathematics (bias, piling-up lemma), cheap build, closes an obvious teaching pair. |
-| 3 | **Cryptographic accumulators** | §25 | Dynamic membership + revocation with constant-size digest. Trees ≠ accumulators. Sits under Credential Veil. |
-| 4 | **Card-based / unplugged** | §20 | Only possible demo where security needs no computer. Most distinctive item on the list. |
-| 5 | **Beacon-based timelock** | §15 | Third release model beside VDF and RSW. IBE-based; composes with IBE Gate. Not witness encryption. |
-| 6 | **Simon's algorithm** | §33 | Completes the quantum-attack triad beside Shor and Grover. |
+| 3 | **Card-based / unplugged** | §20 | Only possible demo where security needs no computer. Most distinctive item on the list. |
+| 4 | **Beacon-based timelock** | §15 | Third release model beside VDF and RSW. IBE-based; composes with IBE Gate. Not witness encryption. |
+| 5 | **Simon's algorithm** | §33 | Completes the quantum-attack triad beside Shor and Grover. |
 
 **Not counted as a gap:** NTT as a standalone primitive (§10) — optional depth, an enabling
 computational technique rather than a security concept.
@@ -366,10 +368,9 @@ gap with a Cipher Museum crossover (see §20). Since the suite has two goals, be
 *and* being worth looking at, and this item serves the second better than anything else
 here, build it **second, after differential privacy**.
 
-Revised build order: **DP → card-based → linear cryptanalysis → accumulators → beacon
-timelock → Simon.**
+Revised build order: **DP → card-based → linear cryptanalysis → beacon timelock → Simon.**
 
-**Projected concept-complete total:** ~167 catalogued + 6 gaps ≈ **170–175**. That is the finish line. Not because cryptography runs out —
+**Projected concept-complete total:** ~168 catalogued + 5 gaps ≈ **170–175**. That is the finish line. Not because cryptography runs out —
 it doesn't — but because *the curriculum* does.
 
 ---

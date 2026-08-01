@@ -113,7 +113,10 @@ function cmdGen(slug, title) {
     '',
     '## Live Demo',
     '',
-    '**[Live Demo](https://crypto-lab.systemslibrarian.dev/' + slug + '/)**',
+    // The dev domain serves the catalog page itself; per-demo subpaths under it
+    // 404. This template previously emitted that form, which is how 242 dead
+    // Live Demo links accumulated across the corpus. Always the github.io form.
+    'https://systemslibrarian.github.io/crypto-lab-' + slug + '/',
     '',
     'TODO: one paragraph on what the demo lets you do interactively.',
     '',

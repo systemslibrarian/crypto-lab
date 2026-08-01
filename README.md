@@ -61,6 +61,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) | Commitment Schemes | Hash Commitment · Pedersen · Binding & Hiding · Homomorphic |
 | [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) | Composite Signatures | Ed25519 · ML-DSA-65 · Composite Signatures · IETF LAMPS |
 | [Model Breach](https://systemslibrarian.github.io/crypto-lab-model-breach/) | Cryptanalysis | Threat Modeling · Candidate Enumeration · MITM Recovery · Guess-and-Determine |
+| [Accumulator](https://systemslibrarian.github.io/crypto-lab-accumulator/) | Cryptographic Accumulators | RSA Accumulator · Non-Membership Proofs · Strong RSA · Certificate Revocation |
 | [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) | CSPRNG | HMAC_DRBG · CTR_DRBG · Hash_DRBG · NIST SP 800-90A |
 | [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) | Decentralized Trust | PGP · OpenPGP · GnuPG · Key Signing · Trust Graph |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | Deniable Encryption | Argon2id · ChaCha20-Poly1305 · SHA-256 |

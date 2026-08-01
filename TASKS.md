@@ -22,15 +22,33 @@ genuinely finished work, no edits needed.
 
 ---
 
-## IN FLIGHT (3 background agents, launched 2026-08-01 ~18:00)
+## IN FLIGHT at last update (2026-08-01 ~20:30)
 
-Results land in `audits/`. If the session died before they reported, the files either
-exist or the work needs redoing — check `audits/` first.
+Five agents were running. **Check what actually landed before redoing anything** — they
+commit and push per repo, so `git log --oneline --since='6 hours ago'` in a repo tells you
+whether it was reached.
 
-- **Scoring + claims recovery** -> `audits/SCORECARD-2026-08-01.md` and
-  `audits/FALSIFIABLE-CLAIMS.md`
-- **Border contrast audit** -> `audits/BORDER-CONTRAST-STATUS.md`
-- **Pre-push verification** -> `audits/PRE-PUSH-STATUS.md`
+| Agent | Repos | Note |
+|---|---|---|
+| Border slice 1 | 36, starting `pairing-gate` + `world-ciphers` | died once on an API error, resumed |
+| Border slice 2 | 36, `protocol-checker` … `gg20-wallet` | |
+| Border slice 3 | 34, `hqc-vault` … `accumulator` | died once on an API error, resumed |
+| Orphaned batch-4 claims | 8 privacy/ZK/MPC repos | died once, resumed; 5 of 8 already pushed |
+| Score regressions | zk-proof-lab, drbg-arena, corrupted-oracle, tls-handshake | |
+
+Three agents died mid-run on API errors in one evening. All were resumable from transcript.
+**Instruct agents to commit and push per repo, never batching to the end** — that is what
+made the deaths cheap.
+
+Reports already landed in `audits/`: `SCORECARD-2026-08-01.md`, `FALSIFIABLE-CLAIMS.md`,
+`BORDER-CONTRAST-STATUS.md`, `PRE-PUSH-STATUS.md`, `VERIFICATION-2026-08-01.md`.
+
+## Fleet state at last update
+
+- **0 demo repos with unpushed commits.** Everything from both sessions is live.
+- All 34 repos pushed in the main batch went CI-green, after four failures were fixed.
+- ~16 repos dirty, which is agents mid-edit plus the 9 audit-doc originals left in place
+  deliberately (they are duplicated in `audits/`).
 
 ---
 
@@ -49,14 +67,21 @@ salvages with explicit loss markers sit at those paths. If the source AI convers
 still exist, re-exporting them is the cheapest repair and is worth doing before task 6
 leans on that directory.
 
-### 4. Push all verified commits to origin — `TODO`
-33 repos hold 1 unpushed commit each, plus `crypto-lab` itself. Blocked on the pre-push
-agent's report; do not push anything it flags. CI runs
-`npm ci && typecheck && test && build && test:a11y` before Pages deploys, so a bad push
-degrades to a no-op — but read the report first anyway.
+### 4. Push all verified commits to origin — `DONE`
+All 34 repos pushed, all CI-green. Four failed on first push and were fixed:
 
-Needs an explicit go-ahead: it is outward-facing, and the standing instruction has been to
-review commits before they ship.
+- `zk-arena` — bundle budget, 24.15 KB gz vs 20 KB. Real savings found first (Vite's
+  modulePreload polyfill, dead in a single-entry build, ~1.2 KB); budget then raised to
+  25 KB with the reasoning recorded in the file. **The gate stays blocking.** This is a
+  deliberate relaxation and is the one decision here worth revisiting.
+- `gg20-wallet` — axe `scrollable-region-focusable` on the wraparound number line. Fixed
+  the pattern (`.wl`, `.math`, `.table-wrap` all made focusable and named), not just the
+  one element.
+- `biham-lens` — axe scanning mid-animation, catching half-drawn text at 1.8:1. Not a
+  palette bug: the same page scanned 2s later was clean in both themes. The scan now
+  settles animations first. Had been failing roughly every other run.
+- `threshold-decrypt` — its e2e test asserted the app shows "rejected" the instant a cheat
+  is injected, which is exactly the behaviour that session's fix removed.
 
 ### 5. Finish the fleet-wide border-token accessibility pass — `TODO, 112 repos remain`
 Last of four accessibility items. The other three are confirmed done: touch targets (170
@@ -116,27 +141,38 @@ every claim the page makes is computed from the run rather than asserted, every 
 states only what the protocol actually learned, and every important browser state is tested
 rather than merely visited.
 
-### 7. Delete the obsolete `HEADER-ROLLOUT-TODO.md` — `TODO`
-Leftover from before the shared-header rollout was deliberately retired (commit `fbe77f4`).
-CLAUDE.md now states each lab owns its header and the tooling is archived in
-`archive/header-rollout/`. This file still reads as pending work and invites someone to
-resurrect it. Skim for anything still true, then remove.
+### 7. Retire the superseded root docs — `DONE`
+Removed `HEADER-ROLLOUT-TODO.md` (it described the shared-header rollout as complete and
+live, the opposite of the decision actually taken), plus `CARD-AUDIT.md`,
+`CARD-ACCURACY-FINDINGS.md` and `futuredemos.md`, all snapshots the three sync tools now
+generate or check continuously. References updated in `CLAUDE.md` and `concept-coverage.md`;
+all three checkers clean.
 
-While there, consider the same for `CARD-AUDIT.md`, `CARD-ACCURACY-FINDINGS.md`,
-`PROMPT-standardize-parts-A-D.md` and `futuredemos.md` — CLAUDE.md already marks the last
-as superseded by `concept-coverage.md`.
+`PROMPT-standardize-parts-A-D.md` was **not** deleted. It turned out to be untracked — the
+same category as three audit docs lost earlier that day — so it moved to
+`audits/_STANDARDIZE-PROMPT.md` with its retired shared-header sections flagged.
+**Check `git ls-files --error-unmatch <file>` before deleting anything in a repo root.**
 
-### 8. Fix the falsifiable claims found but never fixed — `TODO`
-The sweep found ~78 across the fleet, each with file:line, and "the large majority" were
-fixed — so a minority were not, and the remainder was never enumerated. Blocked on
-`audits/FALSIFIABLE-CLAIMS.md`.
+### 8. Fix the falsifiable claims found but never fixed — `IN PROGRESS`
+`audits/FALSIFIABLE-CLAIMS.md` now holds **189 claims across 68 repos** — not the ~78 the
+session summary reported, which counted only two of four batches. **124 have no fix
+confirmation.**
+
+The largest single gap: **an entire audit batch never reported to the main thread.** The
+privacy/ZK/MPC cluster's findings exist only in a subagent transcript, so no fix agent was
+ever dispatched for `snark-arena` (6 claims), `shadow-vault` (7), `patron-shield` (5),
+`stark-tower` (4), `oram-vault` (3), `ring-sign` (3), `credential-veil` (3),
+`oblivious-shelf` (3), `search-vault` (2). An agent is part-way through these; 5 of 8 had
+landed at last check. Also never dispatched: `drbg-arena` (8) and `corrupted-oracle` (7).
 
 Expect a high stale rate when cross-checking: every external review checked so far
 described already-fixed code. The defect class is consistent — a demo asserts something its
 own code does not compute, and the honest computation is usually already written, one
 import away.
 
-### 9. Investigate the three demos whose scores regressed — `TODO`
+### 9. Investigate the demos whose scores regressed — `IN PROGRESS`
+**Ten regressed, not three.** The two largest were never reported at the time:
+`zk-proof-lab` 8->5 and `hawk` 7->5.
 `tls-handshake` 8->7, `bcrypt-forge` 7->6, `drbg-arena` 7->6. Either the demo got worse or
 the earlier score was too generous — determine which, per demo.
 
@@ -178,3 +214,15 @@ CLAUDE.md — two competing standards documents is worse than one.
 - **Verify agent claims, including corrections to your own briefs.** Several have corrected
   a brief rather than following it, and were right. Several external findings were stale.
   Both cases are cheap to check and expensive to get wrong.
+- **Check `git ls-files --error-unmatch <file>` before deleting anything.** An untracked
+  file in a repo root looks identical to a tracked one and is gone forever. This already
+  cost three audit documents.
+- **Tell agents to commit and push per repo, never batching to the end.** Three died on API
+  errors in one evening; the ones that had been pushing incrementally lost almost nothing.
+- **The dominant defect in this fleet is a test that pins behaviour a fix deliberately
+  changed.** Four instances in one day: `web-of-trust`, `hqc-timing`, `threshold-decrypt`'s
+  e2e spec, and `simon-period`. When triaging a diff, look for the semantic change first,
+  then hunt the test still asserting the old semantics.
+- **Verify UI changes by running the page, not the suite.** See
+  `audits/VERIFICATION-2026-08-01.md`. `broken-trust` would have had seven empty regions
+  with a fully green test run.

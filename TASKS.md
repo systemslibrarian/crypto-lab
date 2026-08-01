@@ -156,23 +156,39 @@ Reports already landed in `audits/`: `SCORECARD-2026-08-01.md`, `FALSIFIABLE-CLA
 
 - **0 demo repos with unpushed commits.** Everything is live.
 - All 34 repos in the main push went CI-green after four failures were fixed.
-- **About 70 border-contrast commits landed today** before the agents died, against 112
-  repos originally failing. **Re-measure before assuming what is left** — do not trust
-  `BORDER-CONTRAST-STATUS.md`'s counts as current, only its per-repo detail.
+- **72 border-contrast commits landed today**, against 112 repos originally failing.
+  **Re-measure before assuming what is left** — trust `BORDER-CONTRAST-STATUS.md` for its
+  per-repo detail (selector, ratio, file:line), not for its counts, which are now stale.
+- **Task 9 is 3 of 4 done and pushed**: `tls-handshake` ("Give the Finished checks a
+  reachable fail…"), `corrupted-oracle` ("Compute the attack verdict, the heatmap…") and
+  `drbg-arena` ("Paint the bits that are actually broken…"). Only `zk-proof-lab` remains —
+  the 8->5 drop, the largest regression in the fleet. The agent was starting on its graph
+  exhibit and a snark witness claim when it was stopped.
+- All agents were stopped deliberately at end of session, not lost. Their finished work was
+  pushed per repo, which is why nothing is stranded.
 
 **17 dirty repos, and the distinction matters:**
 
-*Six have real uncommitted source edits — agents killed mid-task. Read the diff and either
-finish or discard; do not assume they are correct:*
+*Six have real uncommitted source edits — agents stopped mid-task. Read each diff and
+either finish or `git checkout --` it; do not assume any of it is correct or complete:*
 
 ```
-blind-hello          M src/styles.css
-diffie-hellman-mitm  M src/style.css
-kdf-arena            M src/style.css
-timing-oracle        M styles/main.css
-stark-tower          M index.html, M src/main.ts, M src/stark.ts
-dilithium-reject     (clean now, was mid-edit — verify)
+blind-hello          M src/styles.css        border-contrast work, partial
+diffie-hellman-mitm  M src/style.css         border-contrast work, partial
+ibe-gate             M src/style.css         border-contrast work, partial — see caution below
+kdf-arena            M src/style.css         border-contrast work, partial
+timing-oracle        M styles/main.css       border-contrast work, partial
+stark-tower          M index.html, M src/main.ts, M src/stark.ts   falsifiable-claims work, partial
 ```
+
+**`ibe-gate` needs care.** It is one of the six repos whose base rule fails on its own and
+is rescued by a later `[data-theme=...]` override — 3.84:1 without it. An agent was
+mid-edit there when stopped, so check the *effective computed* value in both themes before
+trusting or discarding the partial change.
+
+**`stark-tower` is the only non-CSS one** and the only one where a partial edit could
+change behaviour rather than appearance. It also uses a custom `node scripts/test.mjs`
+harness rather than vitest.
 
 *Eleven hold only an untracked audit document, left in place deliberately. **Do not delete
 these.** They are already duplicated in `audits/`, so the dirty flag is cosmetic:*

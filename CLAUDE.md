@@ -201,6 +201,20 @@ signal the taxonomy needs a boundary moved, which is the user's call.
 
 **Add a learning path** — add an entry to `LEARNING_PATHS` with `id`, `label`, `blurb`, `steps`. Keep `steps` ≤ ~12 for readability. CSS auto-collapses to one column under 1120px.
 
+**Lab headers — each lab owns its own.** There is no shared header to sync, and no script
+that pushes one. `reapply-header.py`, `apply-header.sh`, `shared-header.html` and the
+rollout verifiers are **retired** in `archive/header-rollout/` (see its README for why).
+Do not resurrect them.
+
+- Changing one lab's header: edit that lab.
+- New demo: copy a header from any existing lab and adapt it.
+- A change every lab should get: a deliberate reviewed pass across the repos, never an
+  overwrite driven from this one.
+
+The old `<!-- BEGIN/END crypto-lab shared header -->` and `/* BEGIN/END cl-hero standard */`
+markers were removed from all labs. If you see them reappear, something re-ran the retired
+tooling.
+
 ---
 
 ## Conventions

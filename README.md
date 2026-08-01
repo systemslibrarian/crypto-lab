@@ -54,6 +54,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | Block Cipher | Camellia · ARIA · SM4 · Kuznyechik |
 | [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) | Block Cipher Modes | AES · AES-GCM · AES-CBC · Authenticated Encryption |
 | [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) | Broadcast Encryption | NNL Subset-Cover · Broadcast Encryption · Traitor Tracing · AES-256-GCM |
+| [Card Trick](https://systemslibrarian.github.io/crypto-lab-card-trick/) | Card-Based MPC | den Boer 1989 · Five-Card Trick · Information-Theoretic · Two-Party AND |
 | [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) | CBC Padding Oracle | AES-CBC · PKCS#7 · Vaudenay 2002 · POODLE |
 | [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) | Clock-Dependent Security | Ed25519 · X.509 · JWT · TOTP |
 | [BIKE Vault](https://systemslibrarian.github.io/crypto-lab-bike-vault/) | Code-Based KEM | BIKE · QC-MDPC · Post-Quantum · KEM |
@@ -66,6 +67,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) | Decentralized Trust | PGP · OpenPGP · GnuPG · Key Signing · Trust Graph |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | Deniable Encryption | Argon2id · ChaCha20-Poly1305 · SHA-256 |
 | [Biham Lens](https://systemslibrarian.github.io/crypto-lab-biham-lens/) | Differential Cryptanalysis | Differential Cryptanalysis · SPN · DDT · Chosen-Plaintext |
+| [DP Noise](https://systemslibrarian.github.io/crypto-lab-dp-noise/) | Differential Privacy | Laplace Mechanism · Gaussian Mechanism · &#949;-&#948; Budget · Composition |
 | [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) | Diffie-Hellman + MITM | Diffie-Hellman · Modular Arithmetic · MITM · Key Exchange |
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | Digital Signatures | ECDSA · secp256k1 · RFC 6979 · Nonce Reuse |
 | [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | Digital Signatures | Ed25519 · EdDSA · Deterministic Nonces · ZIP215 · Cofactor |
@@ -115,6 +117,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Broken Trust](https://systemslibrarian.github.io/crypto-lab-broken-trust/) | Leakage Cryptanalysis | ML-DSA · Bit Leakage · Hill-Climbing · Subkey Recovery |
 | [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) | Library Privacy | IT-PIR · XOR Secret Sharing · Chor et al. 1995 |
 | [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) | Lightweight Cryptography | Ascon-AEAD128 · Ascon-Hash256 · Lightweight Crypto · IoT |
+| [Matsui Line](https://systemslibrarian.github.io/crypto-lab-matsui-line/) | Linear Cryptanalysis | Linear Cryptanalysis · LAT · Piling-Up Lemma · Known-Plaintext |
 | [Poly1305 MAC](https://systemslibrarian.github.io/crypto-lab-poly1305-mac/) | MAC Primitive | Poly1305 · GF(2¹³⁰−5) · Key-Reuse Attack · Polynomial Stepper |
 | [SPDZ Forge](https://systemslibrarian.github.io/crypto-lab-spdz-forge/) | Malicious-Secure MPC | SPDZ · Beaver Triples · SPDZ MACs · Dishonest Majority |
 | [Merkle Proofs](https://systemslibrarian.github.io/crypto-lab-merkle-proofs/) | Merkle Inclusion Proofs | SHA-256 · Merkle Proof · RFC 6962 · CVE-2012-2459 |
@@ -146,6 +149,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) | Post-Quantum Cryptanalysis | Grover's Algorithm · Amplitude Amplification · Phase Kickback · AES Key Search |
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | Post-Quantum Cryptanalysis | LLL · BKZ · Gram-Schmidt · Toy LWE |
 | [Shor](https://systemslibrarian.github.io/crypto-lab-shor/) | Post-Quantum Cryptanalysis | Shor's Algorithm · Period Finding · QFT · RSA Factorization |
+| [Simon's Period](https://systemslibrarian.github.io/crypto-lab-simon-period/) | Post-Quantum Cryptanalysis | Simon's Algorithm · Period Finding · Even-Mansour · CBC-MAC Forgery |
 | [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) | Post-Quantum Isogeny | SIDH · CSIDH · SQIsign · Castryck-Decru |
 | [Frodo Vault](https://systemslibrarian.github.io/crypto-lab-frodo-vault/) | Post-Quantum KEM | FrodoKEM · LWE · Lattice · Post-Quantum |
 | [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) | Post-Quantum KEM | ML-KEM · FIPS 203 · CRYSTALS-Kyber · Lattice · AES-256-GCM |
@@ -177,17 +181,19 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | Ring Signatures | LSAG · Key Image · Group Signatures · Monero |
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | Rotor Machine | Enigma · Rotors · Plugboard · Bombe |
 | [Time-Lock Puzzle](https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/) | RSW Time-Lock | RSW · Sequential Squaring · AES-256-GCM · Trapdoor |
+| [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) | Searchable Encryption | SSE · HMAC-SHA-256 · AES-256-GCM · Leakage Abuse |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |
 | [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party MPC |
 | [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | Secure MPC | Shamir SSS · GF(2⁶¹−1) · Lagrange Interpolation · Additive Homomorphism |
 | [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | Secure Shell Handshake | X25519 · Ed25519 · TOFU · known_hosts |
 | [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) | Signature Canonicalization | Ed25519 · JCS RFC 8785 · Parser Differential · Unicode NFC |
-| [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | Stateful Hash-Based Signatures | LMS · HSS · W-OTS+ · NIST SP 800-208 |
+| [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | Stateful Hash-Based Signatures | LMS · HSS · LM-OTS · NIST SP 800-208 |
 | [Phantom Vault](https://systemslibrarian.github.io/crypto-lab-phantom-vault/) | Stateless Passwords | PBKDF2-SHA-256 · HMAC-DRBG · Rejection Sampling |
 | [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) | Steganography | J-UNIWARD · DCT · Wavelet Distortion · Adaptive Embedding |
 | [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) | Steganography | LSB · DCT · Adaptive Embedding · Chi-Squared Steganalysis |
 | [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) | Stream Cipher | ChaCha20 · ARX · Nonce Reuse · Keystream |
 | [Snow 2](https://systemslibrarian.github.io/snow2/) | Stream Cipher | XChaCha20-Poly1305 · Argon2id · HKDF-SHA-256 · Steganography |
+| [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) | Streaming AEAD | XChaCha20-Poly1305 · secretstream · SHA-256 Chaining · Truncation Attack |
 | [Isogeny Atlas](https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/) | Supersingular Isogeny Graph | Isogeny Graphs · Modular Polynomials · Endomorphism Rings · CGL Hash |
 | [Protocol Checker](https://systemslibrarian.github.io/crypto-lab-protocol-checker/) | Symbolic Analysis | Dolev-Yao · Symbolic Model · Needham-Schroeder · Unification |
 | [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) | Threshold Crypto Compared | Shamir SSS · FROST · Ed25519 · GF(256) |
@@ -195,6 +201,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) | Threshold ECDSA | GG20 · Paillier · secp256k1 · Distributed Key Generation |
 | [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) | Threshold Signatures | FROST (RFC 9591) · Ed25519 · Nonce Commitments · VSS Commitments |
 | [Threshold ML-DSA](https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/) | Threshold Signatures | Threshold ML-DSA · Distributed Signing · Two-Party · Post-Quantum |
+| [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) | Timelock Encryption | drand quicknet · Boneh-Franklin IBE · BLS12-381 · AES-256-GCM |
 | [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) | Timing Side-Channel | Timing Attack · HMAC · RSA · Cache-Timing |
 | [Timing Side-Channel](https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/) | Timing Side-Channel | Timing Attack · Constant-Time · Side-Channel · Secret Compare |
 | [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) | TLS 1.3 Walkthrough | TLS 1.3 · X25519 · Ed25519 · AES-GCM |

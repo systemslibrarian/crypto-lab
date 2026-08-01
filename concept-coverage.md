@@ -1,12 +1,17 @@
 # Crypto Lab — Concept Coverage Checklist
 
-*Version 5 — v2 corrected the timelock/witness-encryption conflation and demoted NTT; v3
+*Version 6 — v2 corrected the timelock/witness-encryption conflation and demoted NTT; v3
 resolved the card-based ordering on the strength of its Cipher Museum crossover. v4 filed the
 eight demos no concept had claimed, carded the four that were built but invisible (clearing the
 hygiene backlog), split deniability out of §23 as §23b, moved §32 and §12 to `COVERED`, filed MuSig Gate
-and Ablation Wire, and put the whole map under `concept-sync`. v5 files Accumulator, which
-closes the cryptographic-accumulator gap and moves §25 from `PARTIAL` to `COVERED`, leaving
-five gaps.*
+and Ablation Wire, and put the whole map under `concept-sync`. v5 filed Accumulator, which
+closed the cryptographic-accumulator gap and moved §25 from `PARTIAL` to `COVERED`, leaving
+five gaps. **v6 closes all five.** DP Noise (§23), Card Trick (§20), Matsui Line (§30), Beacon
+Lock (§15) and Simon's Period (§33) were each built and left uncatalogued; filing them moves
+every remaining `PARTIAL` to `COVERED` and empties the Gap summary table. Search Vault joins
+§23 and Stream Ward joins §5 as additions rather than gap closures. The catalog is
+concept-complete against this taxonomy — which is an editorial claim about these forty
+boundaries, not a statement that cryptography has been exhausted.*
 
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
@@ -39,7 +44,7 @@ build it only if you want depth there, not because the suite needs it. If it's `
 | `PARTIAL` | Taught, but an arc is unfinished or a piece is missing. |
 | `GAP` | No demo teaches this concept. |
 
-Catalog basis: the 167 cards in `index.html` as of the Ablation Wire commit.
+Catalog basis: the 175 cards in `index.html` as of the v6 catalog pass.
 
 **Checked, not trusted.** Run `node tools/concept-sync.js check`. It verifies this file
 against the catalog in both directions: every demo cited below resolves to a real card, and
@@ -86,8 +91,11 @@ SPN, ARX, sponge, stream, lightweight, and Feistel — the last via format-prese
 encryption, where the round structure is the whole point (SP 800-38G).
 
 **5. Message authentication — `COVERED`**
-MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard. Polynomial MACs, AEAD, and
-misuse-resistant AEAD.
+MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward. Polynomial MACs, AEAD, and
+misuse-resistant AEAD. Stream Ward extends the arc past the single message: chained streaming
+AEAD, where each segment's tag covers a rolling chain state plus its sequence number, so
+reordering or truncating intact valid frames is caught. One-shot AEAD authenticates *content*;
+this authenticates *order and completeness*.
 
 **6. Key derivation and password hashing — `COVERED`**
 KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault.
@@ -133,13 +141,14 @@ problems).
 **14. Hash-based security (no trapdoor) — `COVERED`**
 SPHINCS+ Ledger · LMS/XMSS · LMS Ledger · Jevil.
 
-**15. Delay, sequential work, and release conditions — `PARTIAL`**
-VDF · Time-Lock Puzzle. Both are *self-opening* delay: someone grinds sequential work
-until the secret falls out.
-
-→ **GAP: beacon-based timelock encryption.** A distinct release model — nobody grinds;
-everyone waits for a public randomness beacon to publish a signature on a future round,
-and that signature is what opens the ciphertext.
+**15. Delay, sequential work, and release conditions — `COVERED`**
+VDF · Time-Lock Puzzle · Beacon Lock. VDF and Time-Lock Puzzle are *self-opening* delay:
+someone grinds sequential work until the secret falls out. Beacon Lock supplies the third
+release model — nobody grinds; everyone waits for a public randomness beacon to publish a
+signature on a future round, and that signature is what opens the ciphertext. It is
+Boneh-Franklin IBE where the identity is the round number, byte-compatible with drand's
+tlock, and it makes both non-mathematical assumptions explicit: the beacon must stay live,
+and a threshold of operators must not sign early in private.
 
 **Terminology precision (do not blur these):**
 
@@ -188,12 +197,13 @@ card had already promised ("the linearity behind multisig and threshold signing"
 t-of-n / n-of-n contrast is now explicit on both sides — MuSig Gate's own copy points at
 FROST for quorums, and Shamir vs FROST covers the other direction.
 
-**20. Oblivious transfer and secure computation — `PARTIAL`**
-OT Gate · Garbled Gate · Silent Tally · SPDZ Forge. All *computational*.
-→ **GAP: unplugged / card-based cryptography.** Nothing in the catalog achieves security
-without a computer. The five-card trick computes AND with information-theoretic security
-resting on shuffle indistinguishability. It is the only non-computational security argument
-the suite could hold.
+**20. Oblivious transfer and secure computation — `COVERED`**
+OT Gate · Garbled Gate · Silent Tally · SPDZ Forge · Card Trick. The first four are all
+*computational*. Card Trick supplies the one thing they cannot: den Boer's five-card trick
+computes AND with information-theoretic security resting on shuffle indistinguishability —
+the only non-computational security argument in the suite. The state space is ten rows and
+five cuts, so every probability and total-variation distance on the page is an enumerated
+sum rather than an estimate.
 
 *Cross-project value:* this is the one gap that strengthens **both** properties. A security
 argument built from physical shuffles bridges the mechanical-cipher history Cipher Museum
@@ -209,19 +219,22 @@ MPCitH Sign.
 Blind Oracle (TFHE) · CKKS Lab · FHE Arena (BGV/BFV) · Paillier Gate. Full trilogy plus
 additive.
 
-**23. Obliviousness — access-pattern and metadata privacy — `PARTIAL`**
-ORAM Vault · Oblivious Shelf · Patron Shield · PSI Gate · Blind Relay · Blind Hello.
+**23. Obliviousness — access-pattern and metadata privacy — `COVERED`**
+ORAM Vault · Oblivious Shelf · Patron Shield · PSI Gate · Blind Relay · Blind Hello ·
+DP Noise · Search Vault.
 
-→ **GAP: differential privacy.** No noise mechanism, epsilon budget, or composition
-anywhere in 160+ demos. Every privacy demo in the catalog hides a *message, identity,
-relationship, or access pattern*; DP is the only technique that protects an **aggregate
-statistic** while deliberately publishing it. That is a categorically different guarantee,
-and the one most people meet in the wild (census, telemetry, analytics).
+DP Noise closes what was the largest hole in the map. Every other privacy demo hides a
+*message, identity, relationship, or access pattern*; differential privacy is the only
+technique that protects an **aggregate statistic** while deliberately publishing it — a
+categorically different guarantee, and the one most people meet in the wild (census,
+telemetry, analytics). It pairs with `silent-tally` exactly as predicted: MPC protects the
+**inputs**, DP protects the **output**, and together they teach that hiding the data is not
+the same as making the answer safe to release.
 
-Natural pairing: `silent-tally` already computes a sum without revealing inputs. MPC
-protects the **inputs**; DP protects the **output**. Built together they teach that hiding
-the data is not the same as making the answer safe to release — a genuinely strong two-demo
-arc.
+Search Vault is the complement to ORAM Vault. Searchable symmetric encryption is the
+construction whose access-pattern leakage ORAM exists to hide, and running the count and IKK
+leakage-abuse attacks against a log the learner generated makes "secure relative to a stated
+leakage function" concrete rather than abstract.
 
 *(On classification: some specialists file DP as statistics rather than cryptography. See
 the Scope note above — the catalog's boundary is "checkable mathematical guarantee the
@@ -276,15 +289,17 @@ which layer was carrying the guarantee all along — switch one off and watch wh
 recovers. It also separates hybrid-PQ confidentiality from authentication, which is the
 distinction a single "PQ" badge hides.
 
-**30. Classical cryptanalytic technique — `PARTIAL`**
-Biham Lens (differential) · Vigenère Break · Collision Vault · Model Breach · LLL Break.
+**30. Classical cryptanalytic technique — `COVERED`**
+Biham Lens (differential) · Matsui Line (linear) · Vigenère Break · Collision Vault ·
+Model Breach · LLL Break.
 
-→ **GAP: linear cryptanalysis (Matsui).** Differential and linear are the canonical pair,
-taught together in every treatment of block-cipher cryptanalysis; you have one and not the
-other. It is a genuinely different mathematics — approximation *bias* and the piling-up
-lemma, rather than difference propagation — not an implementation variant. Cheap to build
-beside Biham Lens: same toy SPN, linear approximation table in place of the DDT, bias
-accumulation in place of characteristic probability.
+Matsui Line completes the canonical pair. It is genuinely different mathematics —
+approximation *bias* and the piling-up lemma rather than difference propagation — and it
+was built exactly as this file predicted: the same toy SPN Biham Lens attacks, a linear
+approximation table in place of the DDT, bias accumulation in place of characteristic
+probability, with 96 cross-implementation vectors reproducing Biham Lens's ciphertexts. It
+also earns its place by showing where the lemma *fails*: over three rounds the linear hull
+effect scatters the true bias across keys while the piling-up prediction sits unmoved.
 
 **31. Formal and symbolic analysis — `COVERED`**
 Protocol Checker (Dolev-Yao, rediscovers Lowe's attack by search).
@@ -299,18 +314,19 @@ the most contestable concept boundary in the list; some would fold it into §30.
 
 ## V. Quantum
 
-**33. Quantum attacks — `PARTIAL`**
-Shor (period finding → asymmetric) · Grover (amplitude amplification → symmetric search).
+**33. Quantum attacks — `COVERED`**
+Shor (period finding → asymmetric) · Grover (amplitude amplification → symmetric search) ·
+Simon's Period (query separation → structured symmetric constructions).
 
-→ **GAP: Simon's algorithm.** The third leg — exponential-to-polynomial *query* complexity
-against structured symmetric constructions (Even-Mansour, CBC-MAC, 3-round Feistel).
-Categorically different from Grover's square-root speedup.
-
-*On buildability:* Simon is fully interactive, not an animation. Measurement outcomes form
-a **GF(2) linear system** the learner watches fill up, become solvable, and yield the
-period — real arithmetic with a real solver. The state-vector simulation is genuine math;
-what is simulated is the *quantum hardware*, exactly the honest posture Shor and Grover
-already ship with.
+Simon's Period completes the triad: exponential-to-polynomial *query* complexity against
+Even-Mansour and CBC-MAC, categorically different from Grover's square-root speedup. It was
+built as this file specified — measurement outcomes form a GF(2) linear system the learner
+watches fill up, become solvable, and yield the period, with a real solver and an exact
+statevector simulation rather than sampling from a known output distribution. That choice
+matters: the constructions attacked here do not satisfy Simon's promise exactly, and only an
+amplitude-level simulation reproduces what actually happens to them. The Q2 model assumption
+is stated in-page rather than buried, which is the honest posture Shor and Grover already
+ship with.
 
 **34. Quantum protocols and physical randomness — `COVERED`**
 BB84 · E91 · Quantum Entropy.
@@ -340,38 +356,45 @@ Envelope KMS · PQ Rotation.
 
 ## Gap summary — the actionable list
 
-| # | Gap | Concept | Why it earns a slot |
-|---|---|---|---|
-| 1 | **Differential privacy** | §23 | Whole idea absent. The only technique protecting a published statistic rather than a hidden message or access pattern. Pairs with Silent Tally. |
-| 2 | **Linear cryptanalysis** | §30 | Canonical pair-mate to Biham Lens. Different mathematics (bias, piling-up lemma), cheap build, closes an obvious teaching pair. |
-| 3 | **Card-based / unplugged** | §20 | Only possible demo where security needs no computer. Most distinctive item on the list. |
-| 4 | **Beacon-based timelock** | §15 | Third release model beside VDF and RSW. IBE-based; composes with IBE Gate. Not witness encryption. |
-| 5 | **Simon's algorithm** | §33 | Completes the quantum-attack triad beside Shor and Grover. |
+**Empty. There are no open gaps.**
+
+Every concept in this map is `COVERED` or `DEEP`. The five that stood open at v5 all closed
+in v6:
+
+| Gap | Concept | Closed by |
+|---|---|---|
+| ~~Differential privacy~~ | §23 | **DP Noise** |
+| ~~Linear cryptanalysis~~ | §30 | **Matsui Line** |
+| ~~Card-based / unplugged~~ | §20 | **Card Trick** |
+| ~~Beacon-based timelock~~ | §15 | **Beacon Lock** |
+| ~~Simon's algorithm~~ | §33 | **Simon's Period** |
 
 **Not counted as a gap:** NTT as a standalone primitive (§10) — optional depth, an enabling
-computational technique rather than a security concept.
+computational technique rather than a security concept. It remains the one item that could
+be built without the map calling for it.
 
-**Landed since v3:** `mayo-seal` closed §12, `musig-gate` closed the n-of-n piece of §19, and
-`ablation-wire` joined §29. **Nothing in flight** — the six gaps below are the whole remaining
-list.
+**Landed since v3:** `mayo-seal` closed §12, `musig-gate` closed the n-of-n piece of §19,
+`ablation-wire` joined §29, `accumulator` closed §25, and v6's five closed the rest.
+`search-vault` joined §23 and `stream-ward` joined §5 as depth rather than gap closure.
 
-### On the ordering
+### What "no gaps" does and does not mean
 
-The table is ranked by **curriculum centrality** — how much of the concept space each item
-opens. That is the right default.
+It means: against **these forty concept boundaries**, every distinct idea has at least one
+demo and no arc is left unfinished. Read the taxonomy caveat above before treating that as a
+stronger claim than it is. A different reader could split §23 into three concepts or argue
+§32 is not a concept at all, and the gap list would reopen accordingly. That is the system
+working, not failing.
 
-**Card-based is the deliberate exception, and it moves up.** It ranks fourth by centrality
-but first by distinctiveness: nothing in 167 demos achieves security without a computer.
-Three arguments stack on the distinctiveness side — it is the only non-computational
-security argument available, the most visually memorable build on the list, and the only
-gap with a Cipher Museum crossover (see §20). Since the suite has two goals, being complete
-*and* being worth looking at, and this item serves the second better than anything else
-here, build it **second, after differential privacy**.
+It does **not** mean the catalog is finished. Three things still generate work:
 
-Revised build order: **DP → card-based → linear cryptanalysis → beacon timelock → Simon.**
+1. **Depth.** `DEEP` concepts got there by repetition; `COVERED` ones often rest on a single
+   demo. A concept with one demo is covered, not thoroughly taught.
+2. **Quality.** Coverage is orthogonal to how well a demo teaches. The pedagogy scorecard is
+   the instrument for that, and it disagrees with this file by design.
+3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
+   existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Projected concept-complete total:** ~168 catalogued + 5 gaps ≈ **170–175**. That is the finish line. Not because cryptography runs out —
-it doesn't — but because *the curriculum* does.
+**Catalogued total: 175.** The projection of 170–175 held.
 
 ---
 

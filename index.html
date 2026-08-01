@@ -1655,7 +1655,7 @@
       <div class="wrap">
         <div class="featured-head">
           <div class="featured-headline-row">
-            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">152</span> interactive cryptography exhibits</span></h1>
+            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">175</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -2588,12 +2588,12 @@
           <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-lms-ledger/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Stateful Hash-Based Signatures</div>
             <div class="project-title">LMS Ledger</div>
-            <div class="project-copy">LMS/HSS stateful hash-based signatures (NIST SP 800-208) — W-OTS+ key state grid, one-time key reuse attack with real forgery demo, and CNSA 2.0 firmware signing context.</div>
+            <div class="project-copy">LMS/HSS stateful hash-based signatures (NIST SP 800-208) — LM-OTS key state grid, one-time key reuse attack with real forgery demo, and CNSA 2.0 firmware signing context.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">LMS</span>
                 <span class="chip">HSS</span>
-                <span class="chip">W-OTS+</span>
+                <span class="chip">LM-OTS</span>
                 <span class="chip">NIST SP 800-208</span>
               </div>
               <span class="arrow">→</span>
@@ -4222,6 +4222,111 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="ENCRYPTION | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-beacon-lock/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Timelock Encryption</div>
+            <div class="project-title">Beacon Lock</div>
+            <div class="project-copy">Lock a ciphertext to a future drand round and let the beacon's BLS signature be the decryption key — identity-based encryption with a clock in place of an authority.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">drand quicknet</span>
+                <span class="chip">Boneh-Franklin IBE</span>
+                <span class="chip">BLS12-381</span>
+                <span class="chip">AES-256-GCM</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PROTOCOLS | MPC &amp; THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-card-trick/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Card-Based MPC</div>
+            <div class="project-title">Card Trick</div>
+            <div class="project-copy">den Boer's five-card trick — two players compute the AND of their secret bits from a shuffle alone, with security no amount of computing power can buy through.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">den Boer 1989</span>
+                <span class="chip">Five-Card Trick</span>
+                <span class="chip">Information-Theoretic</span>
+                <span class="chip">Two-Party AND</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-dp-noise/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Differential Privacy</div>
+            <div class="project-title">DP Noise</div>
+            <div class="project-copy">Real Laplace and Gaussian mechanisms over a twelve-person payroll — watch two databases differing by one person become indistinguishable, then watch averaging take the truth back once the budget is spent.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Laplace Mechanism</span>
+                <span class="chip">Gaussian Mechanism</span>
+                <span class="chip">&#949;-&#948; Budget</span>
+                <span class="chip">Composition</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-matsui-line/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Linear Cryptanalysis</div>
+            <div class="project-title">Matsui Line</div>
+            <div class="project-copy">Matsui's Algorithm 2 against the same toy SPN Biham Lens attacks — count the bias in real known-plaintext traffic, watch one subkey candidate separate, then watch the piling-up lemma's prediction miss.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Linear Cryptanalysis</span>
+                <span class="chip">LAT</span>
+                <span class="chip">Piling-Up Lemma</span>
+                <span class="chip">Known-Plaintext</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-search-vault/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Searchable Encryption</div>
+            <div class="project-title">Search Vault</div>
+            <div class="project-copy">An encrypted inverted index the server searches without a key — then the count and IKK leakage-abuse attacks turn the access pattern it observed back into your queries.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SSE</span>
+                <span class="chip">HMAC-SHA-256</span>
+                <span class="chip">AES-256-GCM</span>
+                <span class="chip">Leakage Abuse</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-simon-period/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Post-Quantum Cryptanalysis</div>
+            <div class="project-title">Simon's Period</div>
+            <div class="project-copy">Exact statevector Simon's algorithm recovering a hidden XOR period in O(n) queries, then using it to predict an Even-Mansour ciphertext and forge a CBC-MAC tag.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Simon's Algorithm</span>
+                <span class="chip">Period Finding</span>
+                <span class="chip">Even-Mansour</span>
+                <span class="chip">CBC-MAC Forgery</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-stream-ward/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Streaming AEAD</div>
+            <div class="project-title">Stream Ward</div>
+            <div class="project-copy">Splitting a large file into individually authenticated segments fixes the memory ceiling and breaks ordering — reorder, drop or truncate the frames and every tag still verifies until a chain state binds them.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">XChaCha20-Poly1305</span>
+                <span class="chip">secretstream</span>
+                <span class="chip">SHA-256 Chaining</span>
+                <span class="chip">Truncation Attack</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -4377,7 +4482,10 @@
       'Poly1305 MAC': 'foundations', 'KDF Chain': 'foundations',
       'KDF Arena': 'foundations', 'Bcrypt Forge': 'foundations',
       'Merkle Vault': 'foundations', 'Commit Gate': 'foundations',
-      'Accumulator': 'foundations',
+      'Accumulator': 'foundations', 'Beacon Lock': 'foundations',
+      'Card Trick': 'privacy', 'DP Noise': 'privacy',
+      'Matsui Line': 'cryptanalysis', 'Search Vault': 'privacy',
+      "Simon's Period": 'post-quantum', 'Stream Ward': 'symmetric',
       'Shamir Gate': 'foundations', 'VRF Gate': 'foundations',
       'Curve Lens': 'foundations', 'Point Arithmetic': 'foundations',
       'Snow 2': 'symmetric', 'Iron Serpent': 'symmetric',
@@ -4476,7 +4584,7 @@
       'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
       'WebAuthn','Web of Trust','SSH Handshake','Bitcoin Wallet',
       'Bitcoin Script','TLS Handshake','Blind Hello','Blind Relay',
-      'Key Mirror','SPAKE Gate','Encrochat'
+      'Key Mirror','SPAKE Gate','Encrochat','Beacon Lock'
     ];
     var TITLE_TO_EXTRA_CATS = {};
     FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });

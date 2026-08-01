@@ -11,6 +11,12 @@ already pass on origin (minimum ratios 3.16, 3.29, 3.33, 3.31, 3.26, and 3.31).
 light minimum 3.30). Interrupted fixes for blind-hello, diffie-hellman-mitm, ibe-gate,
 kdf-arena, and timing-oracle were also verified and pushed.
 
+Subsequent live fixes: `hash-zoo`'s missed `#intro-input` now uses its existing strong
+control token (`b785c3c`); `accumulator` now measures at least 3.07:1 against every control
+adjacency in both themes (`b5a6fe4`); and `merkle-vault` now measures at least 3.16:1
+against every relevant surface in both themes (`9c3ea37`). All three passed their full
+local gates and settled live-page screenshot checks.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

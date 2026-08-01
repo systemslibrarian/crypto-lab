@@ -128,6 +128,13 @@ file holds the work queue. Keep both current.
   `tls-handshake` 8, `bcrypt-forge` 8.
 - User authorized direct commits and pushes to `main` for each verified fix; do not create
   feature branches for this fleet pass.
+- Task 5 continued: completed and pushed the known incomplete `hash-zoo` fix (`b785c3c`),
+  raised `accumulator`'s control token above 3:1 in both themes (`b5a6fe4`), and fixed
+  `merkle-vault` text-control borders (`9c3ea37`). Full tests, builds, both-theme a11y, and
+  live screenshots pass; `accumulator` also passes all 12 guided flow tests.
+- Task 9 follow-up: `bcrypt-forge`'s light-theme axe failure was an animation midpoint,
+  not bad endpoint colors. Removed only the simultaneous foreground/background transition;
+  tests, build, both themes, keyboard behavior, and live interaction pass. Pushed `9dd60f3`.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

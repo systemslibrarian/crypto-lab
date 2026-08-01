@@ -58,19 +58,34 @@ degrades to a no-op — but read the report first anyway.
 Needs an explicit go-ahead: it is outward-facing, and the standing instruction has been to
 review commits before they ship.
 
-### 5. Finish the fleet-wide border-token accessibility pass — `TODO`
+### 5. Finish the fleet-wide border-token accessibility pass — `TODO, 112 repos remain`
 Last of four accessibility items. The other three are confirmed done: touch targets (170
 labs), banner-landmark dedupe (170), skip-link contrast (11 real failures fixed of 113
 examined; worst were `key-exchange` and `poly1305-mac` at 2.01:1 in dark).
 
-Border state was unknown at pause; 105 of 176 repos carry a 1.4.11-related commit, so it
-is partly done. The audit agent is measuring what remains.
+Measured 2026-08-01, full report in `audits/BORDER-CONTRAST-STATUS.md`:
 
-Two traps: only LOAD-BEARING borders count (decorative ones were deliberately left alone),
-and six repos — `hybrid-guide`, `ibe-gate`, `model-breach`, `noise-pipe`, `oram-vault`,
-`pairing-gate` — have per-theme overrides that rescue a base rule that fails on its own.
-`ibe-gate` would be 3.84:1 without its override, `noise-pipe` 2.53:1. Anyone "simplifying"
-those base rules reintroduces the failure.
+- **112 of 175 repos still fail**; 106 of those fail in more than one theme.
+- 33 pass (the repos the original pass actually reached), 30 have no bordered text-entry
+  control, 1 unevaluable (`blind-oracle-api`, no HTML/CSS outside build output).
+- Worst: `pairing-gate` and `world-ciphers` tied at **1.23:1** (`--border: #e2e8f0` on
+  `#ffffff`). `world-ciphers` is worse overall — same token fails on `select`, `input` and
+  `textarea` in BOTH themes.
+- `hash-zoo` is a genuine incomplete fix: commit `a8e4d7d` moved `textarea`, `.lext-field
+  input` and `.tab` to `--border-strong` but left `#intro-input` on the old `--border`.
+
+**I earlier reported "105 of 176 already done". That was wrong** — my grep included the
+word `border`, which matched unrelated commits. The strict count is 33-35. The pass
+covered about a fifth of the fleet, not most of it.
+
+Two traps: only LOAD-BEARING borders count (decorative ones were deliberately left alone,
+and buttons/tabs are advisory-only), and six repos — `hybrid-guide`, `ibe-gate`,
+`model-breach`, `noise-pipe`, `oram-vault`, `pairing-gate` — have per-theme overrides that
+rescue a base rule failing on its own. Of those, only `hybrid-guide` actually passes;
+`model-breach` has no bordered control; the other four genuinely fail.
+
+Separately: the shared header's `.cl-btn` theme toggle sits at 2.4-2.5:1 fleet-wide. That
+is one copied snippet and one decision, not 170 defects.
 
 ### 6. Run the gold-standard 10/10 scoring pass — `PARTLY DONE, RECOVERY IN FLIGHT`
 Fable completed this for all 174 demos and **never wrote it to a file**. The scorecard on
@@ -145,9 +160,19 @@ CLAUDE.md — two competing standards documents is worse than one.
 
 ## Operational notes
 
+- **The a11y gate DOES run locally.** `npx playwright install chromium` works on this box,
+  then `npm run test:a11y`. I wrongly assumed it could not and pushed four repos whose only
+  failing stage was one I had declined to run. Run it before pushing anything that touches
+  markup — it is the stage that fails most.
+- **Bundle-size budgets are also local-only-checkable and also not run by default.** Several
+  repos have `npm run check:size`. `zk-arena` blew its budget on a legitimate feature.
 - **Do not run a fleet-wide script while agents are live in the same repos.** Two agents hit
   concurrent writers doing exactly this; nothing was lost, but in `bcrypt-forge` the
   script's commit message landed on an agent's `index.html` edits.
+- **Watch out for loose grep patterns when counting fleet state.** Grepping commit subjects
+  for `border` inflated "repos with the border fix" from 33 to 105 and led me to report a
+  pass as nearly done when it had covered a fifth of the fleet. Match on the specific
+  string, then spot-check.
 - **`git fetch` before trusting any ahead/behind count.** A stale remote-tracking ref
   produced a wrong "0 unpushed" in the previous resume notes.
 - **Verify agent claims, including corrections to your own briefs.** Several have corrected

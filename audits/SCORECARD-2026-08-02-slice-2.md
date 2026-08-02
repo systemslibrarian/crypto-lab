@@ -25,6 +25,8 @@ Repos in this slice (HEAD short hashes at scoring time):
 | ghost-commit | 027350b |
 | grover | c10b613 |
 | harvest-timeline | e617bdd |
+| harvest-vault | 29c9ea8 |
+| hqc-timing | c7d1bec |
 
 ## Scores
 
@@ -57,6 +59,10 @@ Repos in this slice (HEAD short hashes at scoring time):
 | `grover` | c10b613 | **8** | The simulator half is genuinely computed and the overshoot lesson lands empirically: at n=6 I stepped to the optimal k*=6 and Measure ×100 returned 100/100 target against a theoretical 99.7%; stepping to k=12 the same button returned 0/100 against a theoretical 0.0% — sampled from the live state, not printed. The oracle/diffusion decomposition shows the target amplitude going negative (−0.9983) and the mean line the diffusion reflects about, and the honesty box is explicit that no decoherence, gate synthesis, or error correction is modelled. Docked to 8 because the crypto-impact half — the reason the demo exists — is a lookup table: `KEY_DATA` and `QUBIT_COSTS` in `aes-impact.ts` are hardcoded strings and literals (2953 logical qubits, depth exponent 82), so every AES/hash claim is asserted while the simulator beside it computes. 26 unit tests, e2e axe-only. |
 
 | `harvest-timeline` | e617bdd | **7** | The Mosca calculator is genuinely reactive — X=30/Y=5 gives "35 > 7, exposed for 28 years / RISK: CRITICAL", X=2/Y=1 flips to a computed "+4 years margin", and switching to ML-KEM-768 drops it to RISK: NONE with a sourced FIPS 203 note. Sourcing is unusually careful (it corrects the common misreading of the GRI 2024 bands as "share of experts"). But it carries a falsifiable claim: Exhibit 4's standing caption, "Key Insight: Every year of delay increases the exposure window", sits above a table whose exposure columns are **flat across all five delay rows in 4 of the 5 org presets** (Medical 2/3.0 TB/17% unchanged; Bank, Gov, University all pinned at 100%) — only Tech Startup moves. The arithmetic is right; the headline is not what the table shows. Also: no cryptographic mechanism is computed anywhere — every parameter is a literature table — so nothing can fail. 90 vitest tests. |
+
+| `harvest-vault` | 29c9ea8 | **7** | Every verdict is computed and none over-reaches: the three slider states I drove produced CRITICAL / SAFE / MODERATE with the arithmetic shown inline (35 > 10, 5 < 15, 28 > 20) plus derived Q-Day years and "migration needed to start by 2039" deadlines, and the sector matrix reads `m.atRisk` from the same Mosca evaluation rather than a label. The evidence section carries per-claim confidence badges, and the HEAD commit is itself a correction of a fabricated citation attribution — the honesty discipline is real. It stops at 7 for the same structural reason as its sibling: the README states outright this is "the only demo in the suite that does not implement a cryptographic algorithm", so there is no mechanism to show, nothing to break, and the learner's whole verb set is three sliders and a five-question quiz. 19 unit tests; e2e is axe-only. It also overlaps `harvest-timeline` heavily. |
+
+| `hqc-timing` | c7d1bec | **7** | The constant-time verdict is now genuinely measured — HEAD's commit is exactly that fix, and it shows: with CT on the page reported "no measurable timing gap, 15 of 32 bits correct, 47%", a real coin-flip result rather than a flag read. The distinguisher panel computes σ/√N and z live before you run, and the honesty about the abstract timing model is on the page, not just the README. **But two of the four presets carry a falsifiable claim.** "Too noisy — Heavy noise, few trials. Attack fails on its own" recovered 32/32 bits at 100% on 5 of 5 rerolls (weight=5, noise=12, trials=30), and "Borderline — Partial recovery, see what the attacker is up against" did the same on 4 of 4. The demo's own distinguisher called one of those runs z=2.1σ, "below the 4σ bar, consistent with zero" — and the attack beside it still recovered every bit. The advertised failure branch is unreachable. 26 unit tests, e2e axe-only. |
 
 ### dead-sea-cipher — what would raise it
 
@@ -137,3 +143,19 @@ Repos in this slice (HEAD short hashes at scoring time):
 
 - Derive the AES/hash impact figures from the same simulator: compute k* and the effective work factor from `optimalIterationsForN`-style formulas at the stated key size, and cite the Grassl depth numbers as sourced literature rather than mixing them into the same table as computed output.
 - E2e-assert the measure-at-k* vs measure-at-overshoot contrast — it is the demo's best moment and only vitest sees it.
+
+### harvest-timeline — what would raise it
+
+- Replace the static "every year of delay increases the exposure window" caption with one derived from the rendered rows (e.g. "exposure rises from X% to Y% across these five starts", or "already 100% at delay 0 — delay changes nothing here, which is the worse finding"). It is a stronger lesson *and* true.
+- Make at least one panel compute something cryptographic rather than actuarial — e.g. derive the AES/RSA "quantum-vulnerable" classification from key size and algorithm family rather than a lookup string.
+
+### harvest-vault — what would raise it
+
+- Add one concrete mechanism moment: capture a real (toy) key-exchange transcript in-page, then show that a PQC upgrade applied *after* capture leaves the recorded transcript exactly as decryptable — the retroactivity claim demonstrated, not stated.
+- Resolve the overlap with `harvest-timeline` (same theorem, same sources, two catalog cards) or make each one's distinct contribution explicit on the page.
+
+### hqc-timing — what would raise it
+
+- Fix the noise presets so the promised failure actually happens: either widen the noise range until recovery genuinely degrades, or reword "Too noisy"/"Borderline" to describe what the classifier really does. As shipped, the page names two outcomes it cannot produce.
+- Reconcile the distinguisher with the classifier — a run the panel calls "consistent with zero" (z=2.1σ) should not recover 32/32. Either the threshold rule is stronger than the two-bell model admits (say so) or the model is wrong.
+- E2e-assert the CT-on vs CT-off outcomes; only axe runs in the browser.

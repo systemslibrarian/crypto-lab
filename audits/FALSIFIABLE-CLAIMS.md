@@ -820,8 +820,9 @@ The main-thread Kupyna claim is reported fixed. Batch 1 found no display-vs-real
 
 ### `zk-arena`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `882ba0e` discloses the concrete <code>s + 1 mod q</code> guess,
+displays it, and leaves acceptance to the real verifier. All 81 unit tests, build, size
+gate, and end-to-end tests pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

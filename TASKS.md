@@ -259,6 +259,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `stego-suite` field boundaries now measure about 3.86:1
   dark and 3.84:1 light after compositing translucent fills, with a blocking browser
   regression (`927cfb2`). Typecheck, 39 tests, build, and three browser/a11y tests passed.
+- Task 5 delegated completion: `nonce-collision` field boundaries now measure 3.30:1 dark
+  and 4.17:1 light with blocking computed-style regressions (`2bb1691`). All 36 tests,
+  typecheck, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -79,6 +79,10 @@ measures about 3.86:1 dark and 3.84:1 light after compositing the translucent fi
 with a browser regression for the rendered layers. Typecheck, 39 tests, build, and three
 browser/a11y tests pass.
 
+`nonce-collision` was live and is fixed/pushed at `2bb1691`; its dedicated field boundary
+measures 3.30:1 dark and 4.17:1 light against the actual fill, enforced in both themes.
+All 36 tests, typecheck, build, and three browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

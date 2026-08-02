@@ -47,6 +47,16 @@ Repos in this slice (HEAD at scoring time):
 
 | threshold-decrypt | 92f5d3b | 8 | Real P-256 ElGamal with DKG, Feldman shares and Chaum-Pedersen partials, and the standout is the verifier's per-equation attribution: after injecting the cheating partial I watched P1 fail exactly the two equations the prose predicts (challenge and c1^s = a2·d^c) while g^s = a1·y^c still held, with the narrative explaining why d appears in only one. Recovery genuinely re-runs `checkPartialDecryption` over every selected partial and names the rejected ones rather than trusting the earlier badge, and the code comments show the "unverified vs rejected" distinction was made deliberately so no verdict is printed before it is computed. Held at 8: the cheat is a single canned button (the learner picks neither the cheater nor the modification), exhibit 5's compromise panel is a modelled statement rather than a mounted collusion, and 38 tests is thin for a five-exhibit page — the UI tests assert rendering and locking but not the reject-then-refuse-to-combine path. |
 
+| threshold-mldsa | 751ddb5 | 7 | The honesty is best-in-slice and structural rather than footnoted: the sign button returns "Signature is valid — but this build combined the key to make it. Custody achieved; key-non-reconstruction NOT achieved," with two separate verdict cards and a sentence stating both describe the same run. Disabling the phone produces a real single-share attempt the unmodified FIPS 204 verifier really rejects, the additive share combiner operates on live bytes of the genuine ML-DSA-65 key, and tests explicitly guard against regressions ("carries NO fabricated MPC byte counts", "benchmark reports only measured wall-clock time"). It stops at 7 for the reason it states itself: the thing in the title is not implemented. The round walkthrough is choreography on toy mod-97 polynomials that does not produce the emitted signature, so the learner never sees a threshold signature made, only split custody plus a research table. |
+
+| timing-oracle | 675ccca | 8 | The verdict layer is the model other timing demos should copy: every panel computes a relative gap from live `performance.now()` samples and prints either "Leak detected" with the measured percentage or "Signal below noise this run" with why — and in my headless run it did both honestly (string compare 67% leak, HMAC slope leak, RSA and cache both correctly inconclusive rather than claiming a win the timer could not resolve). The deterministic mechanism animations are exact instruction counts, not the clock: 20 vs 25 byte checks with the bail-out named, and 5 multiplies for 5 one-bits with a test asserting the naive multiply count equals the Hamming weight. Caveats about JS not being constant-time at engine level are inline, not footnoted. Held at 8: the learner measures and compares but never mounts the recovery — no panel walks the oracle to extract the secret byte by byte, which is the payoff a timing-oracle demo owes. |
+
+| timing-sidechannel | e6315e2 | 9 | The learner mounts the real recovery and it works: on the operation-count channel the attack extracted a random 12-character secret ("pwquycgxz1m-") the attack code never sees, position by position, printing a computed 6.2σ separation and the byte counts behind it; retargeted at the constant-time comparator the same attack collapses to chance and says so. On the live `performance.now()` channel in headless chromium it honestly returned "Partial recovery — 0/12 ... timer noise derailed the rest this run. The leak is real," which is the correct verdict rather than a claimed win. Two disclosures stand out: that a bare early-exit compare does not leak its last byte and this oracle appends a sentinel to make it do so, and that the timed comparators wrap each byte in a mixing loop to clear the coarse timer. Tests assert full recovery, recovery under sub-signal noise, failure against constant-time, and that full recovery reads as an alarm rather than a success. Off 10 because the headline result is reliably reachable only on the modelled channel. |
+
+| traitor-trace | 6d5b179 | 9 | The strongest demo in this slice. Revoking #7+#12 recomputes a real SD cover (2 wraps vs CS 6 vs naive 14, "0 keys reissued"), all sixteen decoders run genuine AES-GCM against the real ciphertext, and the tracer binary-searches with visible dud/real probe vectors — six probes named #12 and the page then cross-checks its own accusation against ground truth ("CORRECT — you did copy #12's keys"). Crypto result and security verdict are separate everywhere: the pirate box shows "AES-GCM ✓ opened" beside "✗ BREACH". Best of all it demonstrates its own limit rather than describing it — the evasive coalition run blamed 9 different subscribers over 25 seeded traces and reported "FALSE ACCUSATION — 16 of 25 runs blamed a subscriber whose keys are NOT in the box," reproducible from a seed link, with a box's-eye panel showing the entry asymmetry that makes probe detection possible and why a lone box has nothing to compare. e2e specs assert the header numbers, the breach-accuse-die sequence and the histogram's seed reproducibility. Off 10 only because what the full NNL procedure does about the coalition case is told, not run. |
+
+| vdf | fb54d03 | 8 | Everything cryptographic is live and the cost claim is arithmetic on real counters: 2,048 sequential squarings vs 377 mod-N verify operations, printed as "≈ 5× cheaper" — an honest small number at toy T rather than a borrowed asymptotic. Both tamper buttons flip a real bit and the Wesolowski identity genuinely fails ("π^ℓ · x^r ≡ y failed — Rejected"), and the trapdoor path is isolated in its own module, never wired into eval or verify, and produces byte-identical y with no delay, making the unknown-order assumption concrete. Docked to 8 for one exhibit that is exactly the fleet's banned pattern: "Try 4 parallel workers" is four CSS lanes animating to the same width with a hardcoded note that the step count is unchanged — the load-bearing claim (parallelism cannot shorten the chain) is the one thing on the page asserted rather than computed. 11 tests is thin, with no coverage of the tamper or trapdoor UI states. |
+
 ## What would raise it
 
 ### shor
@@ -81,3 +91,31 @@ Repos in this slice (HEAD at scoring time):
 - Execute the approximate/subblock-weight channel too (even at toy size) so the second panel stops being the page's one modelled claim.
 - Offer a non-informative leakage mode (hints on random coordinates, not just support) so the learner can watch the "≈ w hints" bound degrade and see why the ADAPTED badge is there.
 - Push one run to a parameter set large enough that the exponential wall is felt as wall-clock time, not just as a plotted exponent.
+
+### threshold-decrypt
+- Let the learner choose which party cheats and how (alter d, alter s, replay another party's proof) so the three-equation panel becomes an explorable truth table rather than one scripted outcome.
+- Make exhibit 5 mount the collusion it describes: hand t-1 shares to the learner and show the recovered secret still ranging over the whole group.
+- Add a UI test for the path where a rejected partial is selected and recovery refuses by name.
+
+### threshold-mldsa
+- Implement one real never-combine path end to end, even at toy lattice parameters with a custom verifier, so the ideal animation becomes an executed protocol rather than a played sequence.
+- Failing that, make the toy walkthrough emit a toy signature a toy verifier checks — the learner would then have caused an actual threshold signature at some scale.
+- Let the learner corrupt one party's z-share and watch the norm check reject it, adding a break-it path to the choreography.
+
+### timing-oracle
+- Add a "recover the secret" button that drives the vulnerable comparator byte by byte off its own measurements and prints the recovered string — the payoff the four measurement panels currently set up but never deliver.
+- Give the RSA and cache panels a sample-count knob so a learner can push past the inconclusive verdict rather than only reading it.
+
+### timing-sidechannel
+- Make the live-timer channel reach full recovery on a default modern browser (SharedArrayBuffer clock, or batching enough repetitions per candidate), so the marquee result does not depend on the modelled channel.
+- Correct the per-position explanation's "(expected when the target is constant-time)" parenthetical, which fires on low confidence even when the target is the vulnerable comparator and the real cause is timer coarseness.
+- Add an e2e assertion that a full-recovery run renders as an alarm, matching the unit test that already checks it.
+
+### traitor-trace
+- Implement the full NNL tracing procedure (subset-splitting on the failed subset) so the exhibit that ends in false accusations can be followed by the fix actually running.
+- Let the learner set the evasive box's coin bias and watch the false-accusation rate move, turning the histogram from one scripted parameterization into an explorable curve.
+
+### vdf
+- Make the parallelism exhibit real: actually spawn 4 Web Workers, let them try to split the chain, and print their measured wall-clock time next to the single-threaded one. Right now the page's central "no shortcut" claim is the only uncomputed thing on it.
+- Add a T slider large enough that the eval-vs-verify gap is felt, and show the ratio growing with T.
+- Test the tamper-reject and trapdoor-match paths, not just the happy-path proof round-trip.

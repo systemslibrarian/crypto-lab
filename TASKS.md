@@ -199,6 +199,10 @@ file holds the work queue. Keep both current.
 - Task 8 delegated completion: `scloud-vault` replaces arbitrary scrutiny meters with dated
   process facts and consistently describes its implemented B/S values as full n×32 matrices
   (`301a92a`). All 41 tests, build, and four browser/a11y tests passed.
+- Task 8 MIXED-entry resolution: `world-hashes` was already corrected to teach Kupyna as a
+  wide-pipe Merkle–Damgård construction (`b48a176`); direct unit/browser regressions now
+  protect that distinction (`c5e7f01`). All 58 tests, typecheck, build, and three
+  browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -872,9 +872,11 @@ three browser tests including dark/light accessibility scans passed.
 
 ### `world-hashes`
 
-**Fix status: MIXED.**
-
-The main-thread Kupyna claim is reported fixed. Batch 1 found no display-vs-reality defects in this repo.
+**Fix status: FIXED.** The Kupyna claim was already corrected in `b48a176`; `c5e7f01` adds
+direct unit and browser regressions proving the production UI identifies Kupyna as a
+Grøstl-style wide-pipe Merkle–Damgård construction with output transformation and reserves
+the sponge description for SHA-3. All 58 tests, typecheck, production build, and three
+browser tests including dark/light accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

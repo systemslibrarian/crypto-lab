@@ -138,6 +138,11 @@ measures at least 3.23:1 dark and 4.66:1 light, enforced across all relevant fie
 input boundary measures at least 3.47:1 dark and 3.38:1 light, enforced from rendered
 styles. All 20 tests, typecheck, build, and six browser/a11y/behavior tests pass.
 
+`syndrome-hints` is a stale/no-longer-applicable row: the audited number-input selector
+exists only as dead CSS, with zero rendered matches in both themes and no corresponding
+markup or dynamic creation. All 62 tests, typecheck, build, and eight browser/a11y/behavior
+tests pass; the clean repo was unchanged.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

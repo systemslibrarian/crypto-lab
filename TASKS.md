@@ -206,6 +206,10 @@ file holds the work queue. Keep both current.
 - Task 8 continued: `ntru-classic` now records whether LLL actually matched a sign/rotation
   of the private key and reports the non-recovery path instead of defaulting to success
   (`cf52ccb`). All 52 tests, build, and three browser/a11y tests passed.
+- Task 8 MIXED-entry resolution: `hqc-vault` now excludes the zero-flip control from tamper
+  trials and derives FO totals; regressions also pin the already-corrected flip geometry,
+  marker lookup, encryption equation, and nonzero DFR (`6be8c03`). Typecheck, build, and
+  six browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -337,9 +337,12 @@ Agent reported completion with vendored tsc clean and the verify-phase suite run
 
 ### `hqc-vault`
 
-**Fix status: MIXED.**
-
-The two main-thread claims (encryption equation, DFR=0) are reported fixed. A separate agent (`a34f9e99a7d370877`) fixed parameter sizes. The three batch-2 hqc-vault claims (#8, #9, #10) had no fix agent.
+**Fix status: FIXED.** The equation and DFR claims were already corrected in `a762422`,
+parameter sizes were corrected in `0318955`, and the flip-geometry and marker findings were
+already corrected in `420a9cc`. `6be8c03` fixes the remaining live zero-flip contradiction,
+derives rejected/total FO counts, and adds browser regressions for every listed claim.
+Typecheck, the production build, and six browser tests including dark/light accessibility
+scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

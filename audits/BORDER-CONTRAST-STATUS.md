@@ -143,6 +143,10 @@ exists only as dead CSS, with zero rendered matches in both themes and no corres
 markup or dynamic creation. All 62 tests, typecheck, build, and eight browser/a11y/behavior
 tests pass; the clean repo was unchanged.
 
+`world-hashes` was live and is fixed/pushed at `a8eea9f`; its dedicated textarea/text-input/
+select boundary measures at least 4.06:1 dark and 4.49:1 light across opaque control fills.
+All 58 tests, typecheck, build, and four browser/a11y/claim tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

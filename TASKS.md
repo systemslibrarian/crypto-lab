@@ -308,6 +308,9 @@ file holds the work queue. Keep both current.
 - Task 5 recheck: `syndrome-hints` is stale/no longer applicable. The audited number-input
   selector exists only in dead CSS and renders zero matches in both themes. All 62 tests,
   typecheck, build, and eight browser/a11y/behavior tests passed; repo unchanged.
+- Task 5 delegated completion: `world-hashes` text/select boundaries now measure at least
+  4.06:1 dark and 4.49:1 light with minimum-across-controls regressions (`a8eea9f`). All
+  58 tests, typecheck, build, and four browser/a11y/claim tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

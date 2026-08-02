@@ -299,6 +299,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `isogeny-atlas` text/select boundaries now measure at least
   3.43:1 dark and 4.09:1 light with rendered computed-style regressions (`292594b`). All
   58 tests, typecheck, build, and 15 browser/mobile/a11y tests passed.
+- Task 5 continued: `musig-gate` field boundaries now measure at least 3.23:1 dark and
+  4.66:1 light with all-field computed-style regressions (`638c110`). All 261 unit tests,
+  build, and 136 browser/a11y/flow tests passed (two expected mobile skips).
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

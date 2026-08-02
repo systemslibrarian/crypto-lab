@@ -130,6 +130,10 @@ pass.
 boundary measures at least 3.43:1 dark and 4.09:1 light, enforced from rendered styles in
 both themes. All 58 tests, typecheck, build, and 15 browser/mobile/a11y tests pass.
 
+`musig-gate` was live and is fixed/pushed at `638c110`; its dedicated field boundary
+measures at least 3.23:1 dark and 4.66:1 light, enforced across all relevant fields. All
+261 unit tests, build, and 136 browser/a11y/flow tests pass (two expected mobile skips).
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

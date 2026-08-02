@@ -73,8 +73,10 @@ The remainder had no fix agent: `sphincs-ledger` (4), `frodo-vault` (4), `dilith
 
 ### `aegis-gate`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `793d614` counts AES-GCM, AEGIS, and tied wins from the four measured
+rows and explicitly limits the conclusion to this native-Web-Crypto versus TypeScript
+implementation race. It also repairs the Vitest/Playwright test boundary. All 87 unit
+tests, build, and dark/light accessibility tests pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

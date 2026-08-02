@@ -117,6 +117,10 @@ the reported selector survives only as unused CSS. The clean fetched repo was un
 textarea boundary measures at least 3.30:1 dark and 4.07:1 light, enforced across all such
 controls. All 60 tests, typecheck, build, and four browser/a11y tests pass.
 
+`schnorr-forge` was live and is fixed/pushed at `a02b70f`; its dedicated input boundary
+measures at least 3.59:1 dark and 4.60:1 light, enforced across all relevant inputs. All 69
+tests, typecheck, build, size budgets, and 35 cross-browser tests pass (four expected skips).
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

@@ -83,6 +83,10 @@ browser/a11y tests pass.
 measures 3.30:1 dark and 4.17:1 light against the actual fill, enforced in both themes.
 All 36 tests, typecheck, build, and three browser/a11y tests pass.
 
+`falcon-seal` was live and is fixed/pushed at `4226ce6`; its dedicated textarea boundary
+measures 4.69:1 dark and 4.00:1 light against the actual fill, enforced in both themes.
+All 18 tests, build, and both-theme motion-neutralized accessibility scans pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

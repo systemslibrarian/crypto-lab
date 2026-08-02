@@ -26,6 +26,10 @@ gates pass.
 border measures 3.47:1 dark and 3.84:1 light against the actual control surfaces, with a
 computed-style browser ratio gate. All 23 tests, build, and three browser/a11y tests pass.
 
+`harvest-timeline` was live and is fixed/pushed at `e617bdd`; its dedicated select/text
+control border measures 3.77:1 dark and 3.51:1 light against the actual fills, enforced by
+a computed-style browser ratio gate. All 90 tests, build, and three browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

@@ -220,6 +220,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `syndrome-drain` control boundaries now measure 3.47:1 dark
   and 3.84:1 light, enforced by computed-style browser regression (`06d7279`). All 23
   tests, build, and three browser/a11y tests passed.
+- Task 5 delegated completion: `harvest-timeline` controls now use dedicated borders
+  measuring 3.77:1 dark and 3.51:1 light with a blocking computed-style regression
+  (`e617bdd`). All 90 tests, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

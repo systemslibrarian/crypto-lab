@@ -188,6 +188,10 @@ file holds the work queue. Keep both current.
   whole-byte tamper, uses byte-based signature comparisons, updates the scheme-status chip,
   and treats larger-preset timing as measured (`e1113cf`). All 33 tests, build, and four
   browser/a11y tests passed.
+- Task 8 delegated completion: `webauthn` now distinguishes its inspectable simulator from
+  the separate real `navigator.credentials` ceremony and attributes rejection to the
+  relevant RP checks (`8029a42`). All 38 tests, build, 49 virtual-authenticator checks, and
+  three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

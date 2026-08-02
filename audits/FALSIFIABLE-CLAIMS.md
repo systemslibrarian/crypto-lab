@@ -854,8 +854,11 @@ Dispatched with the VDF self-contradiction in the brief.
 
 ### `webauthn`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `8029a42` labels the upper path as an inspectable security-logic
+simulator using real P-256 signatures and simplified JSON encoding, points to the separate
+real `navigator.credentials` ceremony, and attributes attack rejection to the relevant RP
+checks. All 38 tests, the production build, 49 virtual-authenticator browser checks, and
+three browser tests including dark/light accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

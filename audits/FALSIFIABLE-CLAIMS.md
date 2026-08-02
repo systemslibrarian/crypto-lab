@@ -415,8 +415,11 @@ Turned out worse than diagnosed: `open()` returns null on tag failure but every 
 
 ### `kyber-vault`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 3 claims below as live.
+**Fix status: FIXED.** `22b0b9e` converts clean solver residues to centered Z17
+representatives before comparing/displaying them, computes the toy search space from the
+panel's actual n=4 and q=17, and leaves tampering in a neutral pending state until Decrypt
+runs authentication. All 23 tests, typecheck, production build, and six browser tests
+including dark/light static and dynamic-state accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

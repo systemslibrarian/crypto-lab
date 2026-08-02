@@ -180,6 +180,10 @@ file holds the work queue. Keep both current.
   order and labels M/N as loaded, curve-checked RFC points whose shown seeds are not
   recomputed (`bf2d0ce`); the previously reported links already return HTTP 200. All 18
   tests, build, and three browser/a11y tests passed.
+- Task 8 delegated completion: `kyber-vault` now centers recovered Z17 representatives,
+  computes the displayed toy search space from n=4/q=17, and waits for decryption before
+  reporting authentication (`22b0b9e`). All 23 tests, typecheck, build, and six
+  browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

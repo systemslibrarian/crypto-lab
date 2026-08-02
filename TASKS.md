@@ -280,6 +280,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `threshold-decrypt` text-input boundaries now measure at
   least 3.85:1 dark and 3.41:1 light with all-input computed-style regressions (`92f5d3b`).
   All 38 tests, typecheck, build, and four browser/a11y tests passed.
+- Task 5 recheck: `entropy-collapse` is stale/no longer applicable. Current production
+  source renders no select or other bordered text-entry control; only an unused `select`
+  CSS rule remains. The repo was left unchanged after a clean fetch/source verification.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -109,6 +109,10 @@ boundary measures at least 3.85:1 dark and 3.41:1 light against the opaque field
 enforced across every text input. All 38 tests, typecheck, build, and four browser/a11y
 tests pass.
 
+`entropy-collapse` is a stale/no-longer-applicable row: current production source renders
+no `<select>` or dynamically created select and has no other bordered text-entry control;
+the reported selector survives only as unused CSS. The clean fetched repo was unchanged.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

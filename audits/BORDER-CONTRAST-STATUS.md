@@ -66,6 +66,10 @@ All 30 tests, typecheck, build, and three browser/a11y tests pass.
 measures 3.59:1 dark and 4.01:1 light against the code-field fill, enforced in both themes.
 All 22 tests, build, and five browser/a11y tests pass.
 
+`broken-trust` was live and is fixed/pushed at `937fe68`; its trial-select boundary now
+measures 3.47:1 dark and 4.01:1 light against its actual fill, enforced in both themes.
+All 41 tests, build, and four browser/a11y/contrast tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

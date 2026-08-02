@@ -352,6 +352,18 @@ file holds the work queue. Keep both current.
   `--line-strong` token measuring at least 3.43:1 dark and 3.84:1 light against both fill
   and exterior surfaces, with blocking both-theme computed-style regressions (`cf0ff1b`).
   All 35 unit tests, build, and four browser/a11y tests passed.
+- Task 5 slice A complete — all seven repos fixed (none stale), each with a scoped
+  control-border token, blocking both-theme computed-style regressions, full gates green,
+  committed and pushed individually; HEADs verified by the coordinator: `hpke-envelope`
+  (`103b22d`, 3.69+ dark / 3.74+ light), `opaque-gate` (`f6c62a0`, 3.50/4.34),
+  `time-trust` (`047c0e0`, 3.48/4.44), `blind-relay` (`8ba9865`, 3.58/3.98), `fhe-arena`
+  (`97fab8e`, 3.67/3.57), `kerberos` (`ea60d1c`, 4.55/4.33), `time-lock-puzzle`
+  (`c703250`, 3.61/4.31).
+- Task 6/10 fan-out (16:00): five scoring agents cover the 92 unscored demos, four
+  re-verify agents cover 59 of the 74 recovered scores, two triage agents work the nine
+  recovered audit docs, one agent drafts the `_MASTER-TEMPLATE.md` consolidation
+  recommendation. All write incrementally to `audits/` slice files; `SCORES-2026-08-02.md`
+  at the root maps them and holds the merged results.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

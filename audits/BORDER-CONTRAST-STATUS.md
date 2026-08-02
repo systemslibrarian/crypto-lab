@@ -151,6 +151,10 @@ All 58 tests, typecheck, build, and four browser/a11y/claim tests pass.
 select boundary measures at least 4.58:1 dark and 3.62:1 light, enforced in both themes.
 All 50 tests, typecheck, build, and four browser/a11y tests pass.
 
+`envelope-kms` was live and is fixed/pushed at `eba0d26`; its dedicated seal-input boundary
+measures at least 3.57:1 dark and 4.04:1 light after compositing translucent ancestor
+surfaces. Full typecheck, lint, 62 tests, build, and four browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

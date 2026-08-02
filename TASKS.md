@@ -314,6 +314,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `shamir-gate` form-control boundaries now measure at least
   4.58:1 dark and 3.62:1 light with computed-style regressions (`a777192`). All 50 tests,
   typecheck, build, and four browser/a11y tests passed.
+- Task 5 delegated completion: `envelope-kms` seal-input boundaries now measure at least
+  3.57:1 dark and 4.04:1 light after compositing translucent ancestors (`eba0d26`). Full
+  typecheck, lint, 62 tests, build, and four browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

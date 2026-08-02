@@ -149,6 +149,9 @@ file holds the work queue. Keep both current.
   malformed-signature counts from live values, verifies the genuine control, and labels
   deterministic E-power samples honestly (`29d2ea2`). All 142 unit tests, the production
   build, and all 29 browser/a11y tests passed before the fix was pushed to `main`.
+- Task 8 continued: `dilithium-reject` now generates every check example from a fresh real
+  ML-DSA-65 signing trace and distinguishes fixed controls from selected-preset histogram
+  traces (`97ac062`). All 79 unit tests, lint, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -196,8 +196,11 @@ presentations.
 
 ### `dilithium-reject`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 2 claims below as live.
+**Fix status: FIXED.** `97ac062` replaces the fixed/stipulated check examples with values
+from a fresh real instrumented ML-DSA-65 signing trace and explicitly distinguishes the
+fixed ML-DSA-65 Sign/Step controls from separately labelled selected-preset histogram
+traces. The repo passed lint, 79 unit tests, its production build, and three browser tests
+including dark/light accessibility scans.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

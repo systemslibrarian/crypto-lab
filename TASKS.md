@@ -317,6 +317,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `envelope-kms` seal-input boundaries now measure at least
   3.57:1 dark and 4.04:1 light after compositing translucent ancestors (`eba0d26`). Full
   typecheck, lint, 62 tests, build, and four browser/a11y tests passed.
+- Task 5 continued: `card-trick` form-field boundaries now measure at least 3.52:1 dark and
+  4.70:1 light with all-field computed-style regressions (`a37f82f`). All 138 unit tests,
+  build, and 62 desktop/mobile/browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

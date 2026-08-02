@@ -274,8 +274,11 @@ Agent reported completion. Caveat it raised: falcon-seal’s vitest suite could 
 
 ### `frodo-vault`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 4 claims below as live.
+**Fix status: FIXED.** `3113444` distinguishes the default toy error range from the
+learner-controlled slider, describes the failure demo as scalar rather than n=4, centers
+the ciphertext preview on the byte actually changed, and computes the public-key total
+before displaying its checkmark. It also repairs the Vitest/Playwright test boundary. All
+53 unit tests, production build, and dark/light accessibility tests pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

@@ -74,6 +74,11 @@ All 41 tests, build, and four browser/a11y/contrast tests pass.
 now measures 3.58:1 dark and 4.06:1 light against its actual fill, enforced in both themes.
 All 41 tests, build, and five browser/a11y tests pass.
 
+`stego-suite` was live and is fixed/pushed at `927cfb2`; its dedicated field boundary
+measures about 3.86:1 dark and 3.84:1 light after compositing the translucent field fill,
+with a browser regression for the rendered layers. Typecheck, 39 tests, build, and three
+browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

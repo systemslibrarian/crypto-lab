@@ -256,6 +256,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `scloud-vault` parameter-select boundaries now measure
   3.58:1 dark and 4.06:1 light with blocking computed-style regressions (`ff21806`). All
   41 tests, build, and five browser/a11y tests passed.
+- Task 5 delegated completion: `stego-suite` field boundaries now measure about 3.86:1
+  dark and 3.84:1 light after compositing translucent fills, with a blocking browser
+  regression (`927cfb2`). Typecheck, 39 tests, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

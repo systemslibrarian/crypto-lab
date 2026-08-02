@@ -135,6 +135,12 @@ file holds the work queue. Keep both current.
 - Task 9 follow-up: `bcrypt-forge`'s light-theme axe failure was an animation midpoint,
   not bad endpoint colors. Removed only the simultaneous foreground/background transition;
   tests, build, both themes, keyboard behavior, and live interaction pass. Pushed `9dd60f3`.
+- Task 8 continued: completed and pushed claim remediations for `zk-proof-lab` (`4d8b2b4`),
+  `shadow-vault` (`00f6027`), `zk-arena` (`882ba0e`), `frodo-vault` (`3113444`),
+  `garbled-gate` (`fcb4b14`), `kdf-arena` (`21c0d8a`), `kdf-chain` (`1233751`),
+  `mac-race` (`39a2ce4`), `aegis-gate` (`793d614`), and `bulletproofs` (`b40e111`).
+  Each repo's available unit/build/browser/a11y gates passed; exact evidence and any
+  environment limitation are recorded in `audits/FALSIFIABLE-CLAIMS.md`.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

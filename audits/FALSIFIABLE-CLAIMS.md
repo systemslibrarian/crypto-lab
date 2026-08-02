@@ -137,8 +137,10 @@ Main thread reports fixed.
 
 ### `bulletproofs`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `b40e111` corrects the decimal Ristretto255 subgroup-order constant
+in the source comment to match the already-correct hexadecimal value. The complete custom
+test chain (including 47 proof tests and 8 UI accessibility assertions), build, and
+dark/light Playwright accessibility tests pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

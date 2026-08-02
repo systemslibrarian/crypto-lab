@@ -35,6 +35,10 @@ Repos in this slice (HEAD at scoring time):
 
 | signed-bytes | c36ea47 | 9 | The verdict-separation architecture is real: "Signature: VALID" and "Verdict: ALARM" are independently computed (raw noble Ed25519 boolean vs canonical-form meaning comparison across first-wins/last-wins parsers), and I watched the centerpiece produce exactly that pair live from the signed dup-key bytes. The Stage 5 tolerance matrix is 16 genuine sign/verify runs (verified cells flip correctly as the boundary slider moves), the JCS toggle re-runs every stage and the dup-key case is genuinely refused at parse. 132 passing tests assert all three verdict states including 'alarm', plus JCS property tests. No falsifiable claim found in the driven session. Off 10 only because the opening walkthrough is guided rather than learner-authored and meaning-equality is definitionally last-wins rather than surfaced as a choice. |
 
+| simon-period | 9c8413a | 9 | An exact statevector simulation rather than a sampled output distribution, and it uses that honesty: the Even-Mansour verdict derives k₂ from one classical query and checks the predicted block against the real cipher (the panel says the full 32-block sweep is the page checking itself, not part of the attack), and the CBC-MAC target forges a tag on a never-queried message the real MAC accepts. The control target correctly reports "rank reached n, that is a proof, not a timeout," and candidates are verified against f over the whole domain before being reported. The query race prints measured means from 40 real trials per width and the page volunteers that the gap "looks modest here" at n=4-6 — a demo grading its own headline down. 78 tests assert exact amplitude identities, half-cancellation to machine zero, and the extra-collision case. Off 10: two of the four listed breaks (Feistel, slide) are cited only, and the interference grid needs a measurement before it does anything. |
+
+| stego-suite | 927cfb2 | 8 | Unusually honest for a stego demo: the Westfeld-Pfitzmann statistic is real (incomplete-gamma Q, degrees of freedom counted from the pairs the carrier actually populates, with the code commenting on why hard-coding 127 would false-positive a limited-palette cover), the chi plot's dof caption is generated from the dof used, and the adaptive-vs-sequential comparison reads its verdict off the two computed pEmbed values through four branches instead of asserting adaptive wins. The detectability curve is a real measured sweep that shows 10%/50% payloads evading and only 100% detected — the demo publishing its own detector's blind spot. LSB and DCT round-trips both extract correctly on live pixels. Held at 8: exhibits 4 and 5 are self-labelled "inspired"/"educational simplification" rather than F5 or WOW, exhibit 6 is prose, and at 39 tests the UI-level dependency-hint and detection-verdict states are asserted only indirectly. |
+
 ## What would raise it
 
 ### shor
@@ -45,3 +49,13 @@ Repos in this slice (HEAD at scoring time):
 ### signed-bytes
 - Let the learner pick the sandbox's meaning-equality parser policy (first-wins vs last-wins) instead of fixing last-wins, making the parser-differential explorable in the sandbox too.
 - Make the guided walkthrough's gateway re-serialization editable so the learner authors the in-transit mutation.
+
+### simon-period
+- Implement one of the two cited-only breaks (3-round Feistel distinguisher is the cheaper) so the "what this breaks" list is fully live.
+- Let the learner hand-enter a candidate period and watch the whole-domain verifier reject it, making the Las Vegas caveat learner-driven rather than narrated.
+- Pre-populate the interference grid on load so the cancellation exhibit is not gated behind pressing Measure.
+
+### stego-suite
+- Add a second, stronger detector (RS or SPA) so the adaptive-vs-sequential contrast has a test that can actually separate them — right now the page's own verdict is "the crude global test is blind here."
+- Implement quantized-DCT embedding through an actual JPEG re-encode so exhibit 4's "a change JPEG keeps" claim is demonstrated rather than stated.
+- Assert the detection verdict strings and the dependency-hint states in the test suite, not just the numeric statistic.

@@ -228,6 +228,7 @@ tooling.
 - Demos link to their own GitHub Pages site (`https://systemslibrarian.github.io/crypto-lab-<slug>/`), not the source repo. Source lives at `https://github.com/systemslibrarian/crypto-lab-<slug>`.
 - No emojis in markdown or HTML unless the user explicitly asks for them.
 - Featured cards (`.feature-card`) are folded into their curriculum section at runtime, so the catalog always starts with Foundations.
+- Per-demo build/teach/look/a11y standard: see `audits/_MASTER-TEMPLATE.md`. It governs how a demo repo is built; this file governs the catalog.
 
 ---
 

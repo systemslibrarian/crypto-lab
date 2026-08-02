@@ -364,6 +364,15 @@ file holds the work queue. Keep both current.
   recovered audit docs, one agent drafts the `_MASTER-TEMPLATE.md` consolidation
   recommendation. All write incrementally to `audits/` slice files; `SCORES-2026-08-02.md`
   at the root maps them and holds the merged results.
+- Task 10 first item DONE: `_MASTER-TEMPLATE.md` decision taken per
+  `audits/TEMPLATE-DECISION-2026-08-02.md` — kept in `audits/` as the referenced demo-repo
+  build standard (promoting or merging would either recreate the stale-root-snapshot
+  problem or 2.4x CLAUDE.md for an audience that never loads it). Correction pass applied:
+  opening rescoped with a status header, §3.0 rewritten for the retired shared-header
+  reality, `cl-hero` managed-block markers dropped, README closer made count-free,
+  `CRYPTO-LAB-TEMPLATE.md` self-references fixed, favicon/no-emoji tension clarified.
+  `_STANDARDIZE-PROMPT.md` moved to `archive/header-rollout/`. CLAUDE.md gained a
+  one-line pointer under Conventions.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

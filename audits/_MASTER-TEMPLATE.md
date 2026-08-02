@@ -1,6 +1,12 @@
 # Crypto Lab — Master Template & Standard
 
-_The single source of truth for how every `crypto-lab-*` demo is **built**, how it **teaches**, and how it **looks**. Folds together the `BUILD-TEMPLATE`, the `PROMPT-standardize` pass, and the `ADA` WCAG accessibility-gate spec — brought up to date (Actions-based Pages deploy, the CI accessibility gate, the standardized hero, and the pedagogy standard from the fleet teaching review)._
+_The standard for how a `crypto-lab-*` **demo repo** is **built**, how it **teaches**, and how it **looks** (build/teach/look/a11y). Catalog maintenance is governed by the repo root's `CLAUDE.md`, which is binding where the two touch. Folds together the `BUILD-TEMPLATE`, the `PROMPT-standardize` pass, and the `ADA` WCAG accessibility-gate spec — brought up to date (Actions-based Pages deploy, the CI accessibility gate, the standardized hero, and the pedagogy standard from the fleet teaching review)._
+
+> **Status (2026-08-02):** corrected per `audits/TEMPLATE-DECISION-2026-08-02.md`. §3.0 was
+> rewritten for the post-retirement header reality (the shared-header rollout was retired in
+> catalog commit `fbe77f4`; each lab owns its own header), the `cl-hero` managed-block
+> markers were dropped, §5's demo count was made count-free, and stale self-references to a
+> `CRYPTO-LAB-TEMPLATE.md` filename were fixed. Everything else is as recovered.
 
 Lifecycle: **Build → Teach → Look → Accessibility → README → Deploy.**
 
@@ -30,22 +36,23 @@ NEW DEMO BRIEF
 
 ### Step 2 — Give the AI this kickoff prompt
 
-Paste this prompt together with the filled brief. (In Claude Code / any agent that can read files, keep `CRYPTO-LAB-TEMPLATE.md` in the repo so it can read it directly; otherwise paste this file's contents above the prompt.)
+Paste this prompt together with the filled brief. (In Claude Code / any agent that can read files, point it at this file — `audits/_MASTER-TEMPLATE.md` in the catalog repo — or copy it into the demo repo; otherwise paste this file's contents above the prompt.)
 
 ```
 Build a new Crypto Lab browser demo (Vite + TypeScript, static site, no backend).
 
-Read CRYPTO-LAB-TEMPLATE.md in full and treat it as the BINDING spec. Build to
-every standard in it, in this order:
+Read audits/_MASTER-TEMPLATE.md (in the crypto-lab catalog repo) in full and treat it
+as the BINDING spec. Build to every standard in it, in this order:
 
   1. §1 Build — real crypto only (WebCrypto or a named, justified library; hand-roll
      the inspectable teaching parts; NEVER simulate or fake math). Runnable tests that
      actually pass, including spec KATs (state the count). Mount content at id="app";
      define --accent on :root.
-  2. §3 Look — apply the shared top bar and the standardized hero (short-name <h1> +
-     spec subtitle + "Why it matters" box beside it; title size capped at
-     clamp(1.6rem,3.8vw,2.7rem)); theme contract; scripture footer; head/favicon.
-     Do NOT hand-build a header or theme toggle — the shared bar owns those.
+  2. §3 Look — add the standard top bar (copy the header from any existing lab and
+     adapt it) and the standardized hero (short-name <h1> + spec subtitle + "Why it
+     matters" box beside it; title size capped at clamp(1.6rem,3.8vw,2.7rem)); theme
+     contract; scripture footer; head/favicon. Do NOT invent a new header design or a
+     second theme toggle — match the fleet's cl-topbar.
   3. §2 Teach — SHOW the one headline mechanism (animate/step it, never assert it in
      prose or raw hex); add a plain-language "what is this / why it matters" intro and a
      break-it-yourself interaction against the real crypto; no decorative/idle animation;
@@ -64,7 +71,7 @@ DEMO BRIEF:
 
 ### Standardizing an existing demo instead
 
-If the demo already exists and only needs to match the fleet, tell the AI: *"Read CRYPTO-LAB-TEMPLATE.md and apply §3 (Look), §4 (Accessibility), §5 (README), and §6 (Deploy) to this repo. Do not touch the cryptographic logic (§1) or invent new content — chrome, a11y, README, and deploy only."*
+If the demo already exists and only needs to match the fleet, tell the AI: *"Read audits/_MASTER-TEMPLATE.md from the crypto-lab catalog repo and apply §3 (Look), §4 (Accessibility), §5 (README), and §6 (Deploy) to this repo. Do not touch the cryptographic logic (§1) or invent new content — chrome, a11y, README, and deploy only."*
 
 ---
 
@@ -127,11 +134,11 @@ Audience calibration: **college newcomer at the baseline, professional cryptogra
 
 ## 3. Look — the visual standard
 
-### 3.0 Shared top bar (apply FIRST)
+### 3.0 Top bar (apply FIRST)
 
-The top bar is **one canonical snippet shared by every lab** (`shared-header.html` in the catalog repo, applied by `reapply-header.py <repo>` — idempotent; the only per-repo value is `__REPO__` in the GitHub link). **Never hand-build or restyle a header, top bar, nav, or theme toggle** — a competing per-demo bar is the exact mistake this prevents.
+**Each lab owns its own header.** The shared-header rollout (`shared-header.html` applied by `reapply-header.py`) was deliberately retired — catalog commit `fbe77f4`; the tooling survives only as history in `archive/header-rollout/`. Do not resurrect it. To give a new demo its top bar, **copy the header from any existing lab and adapt it** (the per-repo values are the GitHub link and the accent). Changing one lab's header means editing that lab; a change every lab should get is a deliberate reviewed pass across the repos, never an overwrite driven from the catalog.
 
-The bar expects four things from the demo (fix the demo, never the snippet):
+The bar's look and behavior (`cl-topbar`, always-dark, theme toggle) should match the fleet, and it expects four things from the demo:
 1. **Skip-link target** — a content wrapper with `id="app"`.
 2. **Theme contract** — the toggle flips `data-theme` on `<html>` between `dark`/`light` and stores `localStorage['theme']`; page renders correctly for both, **dark default**.
 3. **Brand accent** — `:root` defines `--accent` (set to the demo's catalog accent; the bar silently falls back to teal `#35d6bb` if undefined — a missing `--accent` is why a bar looks wrong).
@@ -174,10 +181,9 @@ Directly below the top bar. The hero carries **three distinct text roles** (keep
 - **Title split:** big title = the concise scheme/primitive/brand name only (`OPAQUE`, `KDF Arena`, `X3DH`, `Paillier`; branded demos like `Iron Letter` keep the brand). Subtitle = the qualifier/spec/expansion, one line, **preserving technical casing** (`aPAKE · RFC 9807`, never `APAKE`). Separator `·`.
 - **Size is capped at `clamp(1.6rem, 3.8vw, 2.7rem)`** — the `crypto-lab-x3dh-wire` scale, the maximum. Do not exceed it. This is what makes verbose and terse names read as siblings.
 
-Standard CSS (under a marked managed block; map colors to the demo's own theme vars so it passes AA in both themes):
+Standard CSS (map colors to the demo's own theme vars so it passes AA in both themes; do not wrap it in `BEGIN/END cl-hero standard` marker comments — those belonged to the retired sync tooling and were removed fleet-wide):
 
 ```css
-/* BEGIN cl-hero standard — managed, keep in sync across fleet */
 .cl-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:clamp(1rem,4vw,3rem);flex-wrap:wrap;margin:clamp(1rem,3vw,2rem) 0 1.5rem;}
 .cl-hero-main{flex:1 1 22rem;min-width:min(100%,20rem);}
 .cl-hero-title{margin:0;font-size:clamp(1.6rem,3.8vw,2.7rem);font-weight:700;line-height:1.1;letter-spacing:.01em;}
@@ -187,7 +193,6 @@ Standard CSS (under a marked managed block; map colors to the demo's own theme v
 .cl-hero-why-label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.14em;}
 .cl-hero-why-text{margin:.35rem 0 0;font-size:.95rem;line-height:1.5;}
 @media (max-width:640px){.cl-hero{flex-direction:column;}.cl-hero-why{flex-basis:auto;width:100%;}}
-/* END cl-hero standard */
 ```
 
 ### 3.2 Theme contract (anti-flash)
@@ -225,6 +230,8 @@ Verbatim, exactly once, visible in both themes, styled only with existing CSS va
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>" />
   ```
   Remove any `href="/favicon.svg"`-style root-absolute favicon. `lang="en"`, `charset`, `viewport` present.
+  (This favicon data-URI is the one sanctioned emoji use in the fleet — it does not relax
+  `CLAUDE.md`'s "no emojis in markdown or HTML" convention for content.)
 
 ---
 
@@ -309,9 +316,9 @@ test('no WCAG A/AA violations — light theme', async ({ page }) => {
 - **Scrollable `overflow:auto` regions:** `tabindex="0"` + `role="region"` (or `group`) + an `aria-label`. (Fails on the Linux CI runner even when it passes local Windows Chromium.)
 - **Live / async outputs:** `role="status"` + `aria-live="polite"` (or `role="log"`).
 - **Lists:** `role="list"` → children `role="listitem"`; don't put a role/`tabindex` on a `role="presentation"` element; don't wrap a native control in a role/`tabindex` element.
-- **The always-dark `.cl-topbar` is self-contained** — scope your base `p{}` / `button{}` rules to `#app`, not globally, so they don't fight the shared bar.
+- **The always-dark `.cl-topbar` is self-contained** — scope your base `p{}` / `button{}` rules to `#app`, not globally, so they don't fight the lab's top bar.
 - **`#cl-theme-toggle`** flips `html[data-theme]`; your CSS keys off `[data-theme="light"]` (not `.light`); any CSP must allow the toggle's inline handler.
-- Every interactive control has an accessible name (visible `<label>` or `aria-label`); text inputs are real `<textarea>`/`<input>`, never `contenteditable`; keyboard-operable with visible focus; layout stacks < 640px; a single banner landmark (the shared bar; the hero is the page content header).
+- Every interactive control has an accessible name (visible `<label>` or `aria-label`); text inputs are real `<textarea>`/`<input>`, never `contenteditable`; keyboard-operable with visible focus; layout stacks < 640px; a single banner landmark (the top bar; the hero is the page content header).
 
 **Acceptance:** `npm run build` clean; zero axe violations in both themes; run `npm run build && npm run test:a11y` locally before every push.
 
@@ -328,7 +335,7 @@ Close every README with:
 ```
 ---
 
-*One of 120+ browser demos in the [Crypto Lab](https://crypto-lab.systemslibrarian.dev/) suite.*
+*One of the browser demos in the [Crypto Lab](https://crypto-lab.systemslibrarian.dev/) suite.*
 
 *"So whether you eat or drink or whatever you do, do it all for the glory of God." — 1 Corinthians 10:31*
 ```
@@ -363,7 +370,7 @@ Also: `vite.config.ts` `base: '/crypto-lab-<demo-name>/'` (read the real repo na
 1. Fill §1's seven sections + the repo metadata (name, one-liner, catalog category, card title, tags, `--accent`, favicon emoji).
 2. Create the GitHub repo (name + About one-liner).
 3. Build the demo (§1) → working crypto + UI + tests, mounted at `#app` with `--accent` defined.
-4. Apply the chrome (§3): shared header, hero, theme contract, footer, head/favicon.
+4. Apply the chrome (§3): header copied from an existing lab, hero, theme contract, footer, head/favicon.
 5. Meet the teaching bar (§2) and the a11y gate (§4).
 6. Write the README (§5); wire the Actions deploy (§6).
 7. Add the catalog card (title, tags, accent) to the `crypto-lab` index; deploy and verify the live URL.

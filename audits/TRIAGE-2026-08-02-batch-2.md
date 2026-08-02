@@ -22,3 +22,26 @@ build clean, 10/10 Playwright (a11y both themes + 8 UI regression tests).
 | 08 Quantify/source the comparison | DONE | `PROOF_BYTES` (128 B) displayed as constant-in-t (src/main.ts:361,439); ladder states synchronous-broadcast comparison basis with sources in construction map (index.html:291-294); citations fixed in `05229b6` | none |
 | 09 UI regression tests + zero-scalar rejection | DONE | 8 Playwright UI tests covering exactly the audit's list; zero scalar rejected and resampled (src/dvrf/group.ts:42-44) | none |
 | 10 Portable/reproducible result | DONE (partial residue) | Envelope carries construction ID/suite; `engines: node>=22` declared; residue: GH Actions pinned by tag not SHA, no full replay-transcript mode / app-commit fingerprint | PROPOSED: pin third-party actions by commit SHA; optional transcript replay mode |
+
+## audits/lattice-gentle.md → crypto-lab-lattice-gentle
+
+Audit dated 2026-07-20. Commits `9f26f74` + `f3c8152` (both 2026-07-20) closed the four
+P0s and the P1s; `ce272c2`..`f3ef9d9` (2026-08-01) added the fleet a11y/layout passes.
+Re-verification on 2026-08-02 found one remaining live defect in the audit's GS-03
+acceptance criterion ("three consecutive clean runs"): a real ~6% flake rooted in the
+toy crypto itself — fixed and pushed as `fca3ad7`.
+
+| Item | Verdict | Evidence | Action |
+| --- | --- | --- | --- |
+| GS-01 Central security story | DONE | "basis quality is intuition; secrets are short vectors" copy (9f26f74); ML-KEM/ML-DSA deployments stated separately; exit-check question "the real ML-KEM secret" | none |
+| GS-02 Toy-to-standard boundary / implicit rejection | DONE | FIPS 203-style implicit rejection with z-derived fallback (src/kyber/toyKyber.ts:9,45,138-217), determinism+separation tests; toy-vs-standard delta tables for both schemes; "only the sizes change" gone | none |
+| GS-03 a11y gate reliability | DONE, then re-broken by residual flake — STILL-APPLICABLE | 120s timeout + state assertions landed in 9f26f74, but observed 1 failure in ~5 runs on 2026-08-02: with 4-bit toy challenges, tampered-message verify accidentally ACCEPTS ~1/16 (challenge space = 16), failing the asserted SIGNATURE REJECTED state | IMPLEMENTED (`fca3ad7`): e2e pins dil-seed 7; three consecutive clean 13-test runs recorded |
+| GS-04 Mobile overflow | DONE | box-sizing + scrollable wrappers (9f26f74), cl-hero fix (ce272c2); 320-768px + 200% zoom overflow test passing | none |
+| GS-05 Experiment before essay / guided shell | DONE | Guided mode with first-viewport prediction experiment, progress rail, deep links, Reference mode (f3c8152) | none |
+| GS-06 Learning loops / exit check | DONE | SVP prediction prompt, solutions behind disclosure, five-question transfer exit check with feedback (f3c8152) | none |
+| GS-07 Reproducible seeded experiments | DONE | visible seed, reroll, ?kseed/?dseed links, eta vs measured error separated (9f26f74) | none |
+| GS-08 Valid control states | DONE | prerequisite/busy/stale-result handling on async controls; verify buttons disabled until signature exists (exhibitSchemes.ts:455-458) | none |
+| GS-09 Beyond axe-only a11y | DONE (2 declared-open manual items) | keyboard-only e2e suite, forced-colors + reduced-motion runs, concise live regions (f3c8152); README documents NVDA pass + learner study as deliberately open | PROPOSED (unchanged): manual NVDA pass; learner outcome study |
+| GS-10 Layered math | DONE | inspect/disclosure pattern ("Inspect the secrets", details elements); solutions collapsed | none |
+| GS-11 Provenance & "spec KATs" wording | DONE | README:76 "32 worked-example KATs (regression tests against the teaching sources, not official FIPS/ACVP vectors)" with exact source revisions; glossary + citations (9f26f74) | none |
+| (new, audit-adjacent) Dishonest tamper caption + flaky unit tests | STILL-APPLICABLE | Caption said the re-derived challenge "must now disagree" — false 1/16; unit tests "rejects a tampered message"/"tampered z" used fresh randomness, flaky at ~6% | IMPLEMENTED (`fca3ad7`): warn-labelled toy-forgery acceptance branch, honest caption, seed-pinned rejection tests, new pinned forgery test (seed 32) proving the collision branch; gates: 58 vitest, build, 13 Playwright x3 |

@@ -453,8 +453,10 @@ transcript. Treat all 3 claims below as live.
 
 ### `mac-race`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 2 claims below as live.
+**Fix status: FIXED.** `39a2ce4` derives the timing conclusion from the measured column
+spreads, preserves the secret-length guess used when the forgery was created, and no longer
+reveals the hidden length after rejection or rotation. All 58 unit tests, build, the live
+guess-history browser test, and dark/light accessibility scans pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

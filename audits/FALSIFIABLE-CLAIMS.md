@@ -209,8 +209,11 @@ including dark/light accessibility scans.
 
 ### `dilithium-seal`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 4 claims below as live.
+**Fix status: FIXED.** `b8c4557` reports whether the toy signer actually accepted or hit
+its safety cap, removes the unrelated real-ML-DSA average, disables repeated XOR tampering
+until a fresh signature is made, and reports browser-specific Ed25519/ML-DSA ratios from
+the benchmark results. All 20 tests, the production build, and four browser tests including
+dark/light accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

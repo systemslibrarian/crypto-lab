@@ -165,6 +165,10 @@ file holds the work queue. Keep both current.
 - Task 8 delegated completion: `dp-noise` replaces its stale copied test count with a link
   to the current deploy workflow and adds a regression against future hard-coded totals
   (`ac25d00`). All 239 tests, build, and nine browser/a11y tests passed.
+- Task 8 continued: `dilithium-seal` now reports safety-cap failures and toy-loop results
+  accurately, makes signature tampering one-way until re-signing, and derives browser
+  performance comparisons from measured ratios (`b8c4557`). All 20 tests, build, and four
+  browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

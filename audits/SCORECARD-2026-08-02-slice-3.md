@@ -29,6 +29,21 @@ Repos in this slice, with the HEAD short hash scored:
 | merkle-proofs | b67c381 |
 | merkle-vault | 9c3ea37 |
 
+Distribution: 7 × 2, 8 × 6, 9 × 11. No 10s. Median 9, mean 8.5 — higher than the
+2026-08-01 recovered set (mean ~7.7), which is a property of this slice rather than
+grade inflation: it is heavy on recently-rebuilt labs (`lattice-fault` Exhibit 4,
+`iron-letter`'s two-party rework, `lattice-gentle`'s guided shell) and on demos whose
+subject is an attack, which forces a computed consequence. Three anchors from the prior
+rubric's 5-cluster appear here — `iron-letter` and `lattice-fault` are now 8, and
+`lattice-gentle` is 9; in each case the criticised artifacts are gone from the source,
+so those 5s are stale rather than wrong at the time.
+
+Read against the recovered scorecard's own reference points: `matsui-line`, `kem-trap`,
+`merkle-proofs` and `jevil` sit with `card-trick` / `spdz-forge` at the top of the 9 band
+(no falsifiable claim found), while `hybrid-guide`, `hybrid-wire` and `hybrid-pqc` sit
+where `patron-shield` does — real crypto with one headline indicator selected by a flag
+rather than computed.
+
 ## Scores
 
 | demo | HEAD | score | justification |
@@ -77,3 +92,93 @@ Repos in this slice, with the HEAD short hash scored:
 - Use real X25519 (WebCrypto) and a real ML-KEM (as sibling demos do) so the component secrets the combiner binds are actual KEM outputs rather than `randomBytes(32)`.
 - Make the break-a-half exhibit compute a consequence: e.g. after "quantum breaks X25519," actually hand the attacker the classical secret and show a brute-force over the remaining space succeed/fail at toy sizes, instead of a checkbox-driven headline.
 - Add behavioral Playwright assertions (attack collision, combiner-switch key change) — currently only the a11y scan drives the page.
+
+### hybrid-pqc
+- Give the signature half the same treatment as the KEM half: when both families are "broken," actually mint a forged composite signature and have the real verifier accept it, instead of printing "a forged signature passes" from the threat flags.
+- Derive the per-column `secure`/`hedge-holding`/`broken` status from `attackerRecoversKey` returning non-null, so one code path produces both the badge and the hex.
+- Add behavioral e2e asserting recovered-key-equals-session-key per column; today only axe drives the page.
+
+### hybrid-sign
+- Let the learner author the forgery: an editable forged message plus a per-component "attacker can forge this one" toggle, so the scenario buttons become learner-mounted rather than three canned presets.
+- Expose the M-prime construction interactively (edit ctx, watch the representative and both component signatures change) rather than only in the README and unit tests.
+- Add a second exhibit — the demo is a single narrow bench, which is what keeps a technically clean lab at 8.
+
+### hybrid-wire
+- Compute the threat tab's verdict the way hybrid-pqc does: attempt the HKDF reconstruction from the attacker's known inputs and show it failing, rather than returning a canned `ResilienceVerdict` from two booleans.
+- Let the learner choose the tampered byte (and try tampering the X25519 half) instead of a fixed `ciphertext[0] ^= 0x01`.
+- Add behavioral e2e for the handshake/tamper/threat states; 18 unit tests currently carry all of it.
+
+### ibe-gate
+- Let the learner mount the escrow: type any identity and have the PKG panel decrypt a ciphertext the learner created in Exhibit 2, closing the loop between the two exhibits.
+- Make the time-limited exhibit's "refuse" branch produce a real failed decryption attempt rather than narrating that no key was issued.
+- Add behavioral e2e (bilinearity byte-equality, wrong-key garbage, escrow recovery) to match the strength of the unit suite.
+
+### icy-dvrf
+- Fix the mixed-cast edge: when a corrupted partial is present, the withholder's "β you already knew" is computed over a cast that could never have verified — either recompute it over the honest subset or label it as not-a-publishable-output.
+- Let the learner tamper the exported envelope in-page (a byte picker) instead of relying on hand-editing before paste.
+- Assert the load-bearing browser states (cheat casts, blame table, workbench accept/reject) in e2e rather than only axe.
+
+### iron-letter
+- Make the MITM key-substitution hazard mountable: let a relay swap Bob's public key in the share-URL/QR flow and show Alice sealing to the attacker.
+- Add a nonce/IV-reuse exhibit — the README names it as the first thing that can go wrong and nothing on the page demonstrates it.
+- Show the RSA-OAEP envelope's internals (wrapped AES key) the way the ECDH convergence panel shows ECIES, so the two tabs teach at the same depth.
+
+### iron-serpent
+- Let the learner pick which byte/bit to flip in the tamper lab, and offer a "MAC skipped" mode so the encrypt-then-MAC ordering lesson can be felt, not just read.
+- Finish the nonce-reuse exhibit: give the learner a crib box and let them peel PT1 and PT2 out of the XOR the page already computes.
+- Add behavioral e2e for round trip, tamper rejection, and the reuse XOR equality.
+
+### j-uniward
+- Run at least one real steganalysis feature set (even a small SPAM/CC-JRM subset) so "Resistant/Detectable" is a detector's output rather than a placement heuristic.
+- Let the learner choose an embedding key and a cover image and then attack their own stego image, rather than comparing three methods the page drives.
+- Add behavioral e2e over the embed/extract/wrong-key paths; the 15-test node suite covers the core but no browser state is asserted.
+
+### jevil
+- Close the loop: after recovery, let the learner sign a new message with the recovered key and have the real verifier accept it — the page says "the recoverer has become the signer" without demonstrating it.
+- Replace the illustrative curve shapes in the cliff plot with real evaluations of the candidate polynomials, so the "many fit, then one" picture is computed like everything else.
+- Add the zk-WHIR-style degree commitment (or a hash-based stand-in) so malicious mode can be shown being stopped, not just being possible.
+
+### kem-trap
+- Exploit the oracle it exposes: even a reduced-parameter chosen-ciphertext loop that recovers a few key bits would turn Exhibit 4 from a surface into an attack.
+- Measure the timing channel (or drive it from a modelled cycle count as kyberslash does) instead of representing it as a code path.
+- Let the learner choose the flipped bit/byte and the corruption shape rather than picking from three preset mutations.
+
+### key-exchange
+- Give the MitM playground a computed consequence — encrypt a message under each half-session and show Mallory reading it — rather than displaying the two shared secrets.
+- Let the learner attack the ECDH toy curve the way they can attack the DH group (a brute-force ECDLP button), so the second generation breaks too.
+- Trim or tab the survey content; the page's best material (DH break, MLWE noise toggle) sits inside a very long scroll.
+
+### kyberslash
+- Support the paper's û-multiplier so the full η1=2 secret range is separated, rather than collapsing to {−1,0,+1}.
+- Let the learner set the probe positions and measurement count and watch the recovery degrade, instead of running a fixed 18,432-query campaign.
+- Assert the recovery/patched states in e2e; the unit suite covers the oracle but no browser state is pinned.
+
+### lattice-fault
+- Bring Exhibit 2 up to Exhibit 4's standard: form c·s₁ as a real product in Z_q[x]/(x²⁵⁶+1) instead of the disclosed fixed-scale shortcut.
+- Let Exhibit 4 run the remaining ℓ=4 polynomials so a full ML-DSA-44 s₁ is recovered rather than one polynomial's worth.
+- Add behavioral e2e for the four exhibits' verdicts, especially the constant-time timing collapse which renders asynchronously.
+
+### lattice-gentle
+- Make the LWE/SIS panels open: let the learner search for a short solution (or run a small BKZ/LLL) instead of choosing among precomputed solution buttons.
+- Add one non-toy anchor — even a single ML-KEM-768 round trip via a library — so the jump from n=4 to the standard is shown rather than tabulated.
+- Extend e2e beyond the guided-shell smoke to assert the KEM implicit-rejection and Dilithium tamper verdicts.
+
+### lwe-hints
+- Instantiate one small concrete LWE instance and actually recover its sparse secret from generated hints, so the O(h log h) claim is demonstrated at least once rather than only estimated.
+- Show the GAA doing work: sample hint vectors and plot the empirical distribution against the Gaussian assumption, making the heuristic badge an observation rather than a disclaimer.
+- Let the learner supply their own leakage trace/rate profile and see the threshold move, instead of three preset scenarios.
+
+### matsui-line
+- Add e2e assertions for the cockpit verdicts and the four presets — the reasoning is impeccable and entirely unguarded at the browser level.
+- Let the learner choose an approximation mask by hand (not just auto/strongest/bad) and see the search agree or disagree with them.
+- Extend Algorithm 2 to a second subkey nibble so the "four bits are now public" ending becomes a full key recovery.
+
+### merkle-vault
+- Make the second-preimage attack mountable (a domain-separation toggle like merkle-proofs has) — the README calls it a real structural vulnerability but the page only describes it.
+- Add a consistency/append-only proof, the one Merkle idea the demo names in "When to Use It" and never shows.
+- Either differentiate it from merkle-proofs or fold it in; as it stands the sibling demo supersedes it on every axis.
+
+### merkle-proofs
+- Fetch and verify the CT log's signed tree head (including the ECDSA signature) rather than pinning it, closing the one gap the page itself names.
+- Let the learner drive the tampering (choose the byte/leaf) in the consistency and CT exhibits, as they can in the inclusion exhibit.
+- Add behavioral e2e over the eight exhibits' verdicts; 69 unit tests currently carry a page with far more reachable states than that.

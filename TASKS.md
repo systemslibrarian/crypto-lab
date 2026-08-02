@@ -192,6 +192,10 @@ file holds the work queue. Keep both current.
   the separate real `navigator.credentials` ceremony and attributes rejection to the
   relevant RP checks (`8029a42`). All 38 tests, build, 49 virtual-authenticator checks, and
   three browser/a11y tests passed.
+- Task 8 delegated completion: `lms-xmss` now rejects invalid q values without state
+  mutation, labels its measured-depth statistic precisely, and burns the live next leaf
+  before staging stale rollback copies (`74ad736`). All four correctness phases, build,
+  and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

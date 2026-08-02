@@ -461,8 +461,11 @@ production build, and three browser tests including dark/light accessibility sca
 
 ### `lms-xmss`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 3 claims below as live.
+**Fix status: FIXED.** `74ad736` rejects empty, negative, fractional, and out-of-range q
+values without mutating signer state; labels the traversal count as positions whose measured
+known depth is at most 127; and burns, persists, and visibly marks the live next q before
+staging stale rollback copies. All four correctness phases, the production build, and three
+browser tests including dark/light accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

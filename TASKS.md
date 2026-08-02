@@ -156,6 +156,9 @@ file holds the work queue. Keep both current.
   over all 256 byte values and labels the run-specific rejected tail as an observation,
   not statistical proof (`61a4752`). Typechecks, 46 tests, build, and three browser/a11y
   tests passed before push.
+- Task 8 delegated completion: `mceliece-gate` now derives named key-size ratios from byte
+  literals and makes the tamper control reach and report t+1 from any learner-edited state
+  (`20763c1`). All 27 tests, build, four browser tests, and mobile/desktop a11y passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

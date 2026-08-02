@@ -487,8 +487,11 @@ production build, and all 29 browser tests including dark/light accessibility sc
 
 ### `mceliece-gate`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 2 claims below as live.
+**Fix status: FIXED.** `20763c1` removes the false average-webpage comparison and derives
+named ML-KEM, RSA, and fixed-photo ratios from byte literals; the tamper control now adds
+the number of fresh errors required to reach t+1 and reports the measured weight and t.
+All 27 tests, the production build, four browser tests, and mobile/desktop accessibility
+audits passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

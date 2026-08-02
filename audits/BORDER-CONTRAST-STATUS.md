@@ -62,6 +62,10 @@ All 18 tests, build, and four browser/a11y/contrast tests pass.
 border measures 3.28:1 dark and 4.03:1 light against actual fills, enforced in both themes.
 All 30 tests, typecheck, build, and three browser/a11y tests pass.
 
+`nonce-guard` was live and is fixed/pushed at `2db23b3`; its dedicated textarea boundary
+measures 3.59:1 dark and 4.01:1 light against the code-field fill, enforced in both themes.
+All 22 tests, build, and five browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

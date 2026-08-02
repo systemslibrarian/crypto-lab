@@ -247,6 +247,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `rsa-educational` form-control boundaries now measure
   3.28:1 dark and 4.03:1 light with blocking computed-style regressions (`261ad16`). All
   30 tests, typecheck, build, and three browser/a11y tests passed.
+- Task 5 delegated completion: `nonce-guard` textarea boundaries now measure 3.59:1 dark
+  and 4.01:1 light with blocking computed-style regressions (`2db23b3`). All 22 tests,
+  build, and five browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

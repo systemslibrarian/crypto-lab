@@ -353,8 +353,11 @@ Landed and pushed, CI green per the main thread. The brief targeted the walk exh
 
 ### `kdf-arena`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 4 claims below as live.
+**Fix status: FIXED.** `72d9fc0` derives the memory captions and ratios from each run.
+`21c0d8a` makes the attacker-rig slider reach both compute- and RAM-bound states and update
+the real Argon2id input used by the next benchmark. The runtime audit proves both branches
+and the input synchronization; 20 tests, build, dark/light axe, screen-reader checks, and
+100 Lighthouse accessibility all pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

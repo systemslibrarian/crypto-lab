@@ -172,6 +172,10 @@ file holds the work queue. Keep both current.
 - Task 8 delegated completion: `opaque-gate` now consistently describes its envelope as
   nonce plus HMAC authentication tag, with no ciphertext or encryption claim (`6933e10`).
   All 12 protocol/vector tests, build, and three browser/a11y tests passed.
+- Task 8 continued: `mls-group` now prominently identifies itself as an RFC 9420 teaching
+  subset and discloses that Ed25519 signatures, authenticated handshake framing, and
+  confirmation-tag checks are omitted (`376277c`). All 19 tests, build, and three
+  browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -507,8 +507,12 @@ audits passed.
 
 ### `mls-group`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 2 claims below as live.
+**Fix status: FIXED.** `376277c` changes the page title and adds an always-visible scope
+panel identifying the lab as an RFC 9420 teaching subset. It explicitly discloses that
+Ed25519 credential signatures, authenticated handshake framing, and confirmation-tag
+construction/verification are omitted and that modelled commits/messages are unsigned.
+All 19 tests, the production build, and three browser tests including dark/light
+accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

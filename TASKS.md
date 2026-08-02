@@ -311,6 +311,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `world-hashes` text/select boundaries now measure at least
   4.06:1 dark and 4.49:1 light with minimum-across-controls regressions (`a8eea9f`). All
   58 tests, typecheck, build, and four browser/a11y/claim tests passed.
+- Task 5 delegated completion: `shamir-gate` form-control boundaries now measure at least
+  4.58:1 dark and 3.62:1 light with computed-style regressions (`a777192`). All 50 tests,
+  typecheck, build, and four browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

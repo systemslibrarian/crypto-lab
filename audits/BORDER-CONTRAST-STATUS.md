@@ -147,6 +147,10 @@ tests pass; the clean repo was unchanged.
 select boundary measures at least 4.06:1 dark and 4.49:1 light across opaque control fills.
 All 58 tests, typecheck, build, and four browser/a11y/claim tests pass.
 
+`shamir-gate` was live and is fixed/pushed at `a777192`; its dedicated text/number/textarea/
+select boundary measures at least 4.58:1 dark and 3.62:1 light, enforced in both themes.
+All 50 tests, typecheck, build, and four browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

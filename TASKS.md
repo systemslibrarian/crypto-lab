@@ -229,6 +229,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `collision-vault` tamper-select boundaries now measure
   3.35:1 dark and 5.23:1 light with desktop/mobile computed-style regressions (`45d3436`).
   All 77 tests, lint, build, and 19 passing browser tests passed (one skipped).
+- Task 5 delegated completion: `iron-serpent` load-bearing field boundaries now measure
+  4.18:1 dark and 4.54:1 light with blocking computed-style regressions (`f2e73d0`). All
+  42 tests, build, and 28 desktop/mobile browser tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

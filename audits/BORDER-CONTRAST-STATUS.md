@@ -38,6 +38,10 @@ computed-style regressions. All 19 tests, build, and five browser/a11y tests pas
 now measures 3.35:1 dark and 5.23:1 light, enforced on desktop and mobile. All 77 tests,
 lint, build, and 19 passing browser tests pass (one intentionally skipped).
 
+`iron-serpent` was live and is fixed/pushed at `f2e73d0`; its dedicated load-bearing field
+border measures 4.18:1 dark and 4.54:1 light against actual fills, with checkbox/range/file
+controls excluded. All 42 tests, build, and 28 desktop/mobile browser tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

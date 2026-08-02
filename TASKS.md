@@ -302,6 +302,9 @@ file holds the work queue. Keep both current.
 - Task 5 continued: `musig-gate` field boundaries now measure at least 3.23:1 dark and
   4.66:1 light with all-field computed-style regressions (`638c110`). All 261 unit tests,
   build, and 136 browser/a11y/flow tests passed (two expected mobile skips).
+- Task 5 delegated completion: `dilithium-seal` textarea/text-input boundaries now measure
+  at least 3.47:1 dark and 3.38:1 light with rendered regressions (`4d8ccf3`). All 20 tests,
+  typecheck, build, and six browser/a11y/behavior tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

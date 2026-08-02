@@ -134,6 +134,10 @@ both themes. All 58 tests, typecheck, build, and 15 browser/mobile/a11y tests pa
 measures at least 3.23:1 dark and 4.66:1 light, enforced across all relevant fields. All
 261 unit tests, build, and 136 browser/a11y/flow tests pass (two expected mobile skips).
 
+`dilithium-seal` was live and is fixed/pushed at `4d8ccf3`; its dedicated textarea/text-
+input boundary measures at least 3.47:1 dark and 3.38:1 light, enforced from rendered
+styles. All 20 tests, typecheck, build, and six browser/a11y/behavior tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

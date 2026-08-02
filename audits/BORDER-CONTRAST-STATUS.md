@@ -99,6 +99,11 @@ All seven tests, typecheck, build, and three browser/a11y tests pass.
 boundary measures at least 3.10:1 dark and 3.62:1 light, enforced across all such controls.
 Typecheck, 132 tests, build, and 12 browser/a11y/behavior tests pass.
 
+`phantom-vault` was live and is fixed/pushed at `9672507`; its dedicated input boundary
+measures at least 4.15:1 dark and 4.18:1 light against the opaque field fills, enforced
+across all inputs. Dual typechecks, 46 tests, uniformity check, build, and four browser/a11y
+tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

@@ -274,6 +274,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `signed-bytes` text-field boundaries now measure at least
   3.10:1 dark and 3.62:1 light with all-controls computed-style regressions (`c36ea47`).
   Typecheck, 132 tests, build, and 12 browser/a11y/behavior tests passed.
+- Task 5 delegated completion: `phantom-vault` input boundaries now measure at least
+  4.15:1 dark and 4.18:1 light with minimum-across-inputs regressions (`9672507`). Dual
+  typechecks, 46 tests, uniformity check, build, and four browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

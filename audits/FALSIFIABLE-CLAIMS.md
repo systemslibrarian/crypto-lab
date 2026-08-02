@@ -772,8 +772,11 @@ previously asserted.
 
 ### `spake-gate`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 2 claims below as live.
+**Fix status: FIXED.** `bf2d0ce` corrects scalar documentation from mod p to the P-256
+group order and labels M/N as loaded and curve-checked RFC compressed points, with the
+derivation seeds shown but not recomputed. The reported dead links were stale: the current
+GitHub Pages links for SPAKE, OPAQUE, and PAKE all returned HTTP 200. All 18 tests, the
+production build, and three browser tests including dark/light accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

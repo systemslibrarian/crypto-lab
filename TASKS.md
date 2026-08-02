@@ -176,6 +176,10 @@ file holds the work queue. Keep both current.
   subset and discloses that Ed25519 signatures, authenticated handshake framing, and
   confirmation-tag checks are omitted (`376277c`). All 19 tests, build, and three
   browser/a11y tests passed.
+- Task 8 delegated completion: `spake-gate` corrects scalar reduction to the P-256 group
+  order and labels M/N as loaded, curve-checked RFC points whose shown seeds are not
+  recomputed (`bf2d0ce`); the previously reported links already return HTTP 200. All 18
+  tests, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

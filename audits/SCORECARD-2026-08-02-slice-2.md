@@ -27,6 +27,7 @@ Repos in this slice (HEAD short hashes at scoring time):
 | harvest-timeline | e617bdd |
 | harvest-vault | 29c9ea8 |
 | hqc-timing | c7d1bec |
+| hqc-timing-break | aec829f |
 
 ## Scores
 
@@ -63,6 +64,8 @@ Repos in this slice (HEAD short hashes at scoring time):
 | `harvest-vault` | 29c9ea8 | **7** | Every verdict is computed and none over-reaches: the three slider states I drove produced CRITICAL / SAFE / MODERATE with the arithmetic shown inline (35 > 10, 5 < 15, 28 > 20) plus derived Q-Day years and "migration needed to start by 2039" deadlines, and the sector matrix reads `m.atRisk` from the same Mosca evaluation rather than a label. The evidence section carries per-claim confidence badges, and the HEAD commit is itself a correction of a fabricated citation attribution — the honesty discipline is real. It stops at 7 for the same structural reason as its sibling: the README states outright this is "the only demo in the suite that does not implement a cryptographic algorithm", so there is no mechanism to show, nothing to break, and the learner's whole verb set is three sliders and a five-question quiz. 19 unit tests; e2e is axe-only. It also overlaps `harvest-timeline` heavily. |
 
 | `hqc-timing` | c7d1bec | **7** | The constant-time verdict is now genuinely measured — HEAD's commit is exactly that fix, and it shows: with CT on the page reported "no measurable timing gap, 15 of 32 bits correct, 47%", a real coin-flip result rather than a flag read. The distinguisher panel computes σ/√N and z live before you run, and the honesty about the abstract timing model is on the page, not just the README. **But two of the four presets carry a falsifiable claim.** "Too noisy — Heavy noise, few trials. Attack fails on its own" recovered 32/32 bits at 100% on 5 of 5 rerolls (weight=5, noise=12, trials=30), and "Borderline — Partial recovery, see what the attacker is up against" did the same on 4 of 4. The demo's own distinguisher called one of those runs z=2.1σ, "below the 4σ bar, consistent with zero" — and the attack beside it still recovered every bit. The advertised failure branch is unreachable. 26 unit tests, e2e axe-only. |
+
+| `hqc-timing-break` | aec829f | **8** | Unlike its sibling, this one's failure branches are genuinely reachable: across rerolls "Noisy co-tenant" gave 8/8, 4/8, 4/8 and "Few probes" gave 7/8, 8/8, 8/8 — the advertised partial-recovery outcomes actually occur. The Soft-ISD trace is the standout: it prints each carrying position's live hit-rate, reliability |p−0.5| and signed LLR, then shows majority voting 2×1 vs 3×0 → wrong while ΣLLR = +0.60 → right, and it is honest when soft *loses* (I saw 5/8 soft vs 6/8 hard displayed without spin). Docked one point for the same defect the sibling repo fixed at its HEAD and this one still carries: `ui.ts:334` selects the verdict from `!params.optimized` — the toggle — so the page printed "Defense held — the channel is silent, recovery is no better than guessing" directly beside its own computed "6/8 · 75% Soft-ISD". 26 unit tests, e2e axe-only. |
 
 ### dead-sea-cipher — what would raise it
 
@@ -159,3 +162,8 @@ Repos in this slice (HEAD short hashes at scoring time):
 - Fix the noise presets so the promised failure actually happens: either widen the noise range until recovery genuinely degrades, or reword "Too noisy"/"Borderline" to describe what the classifier really does. As shipped, the page names two outcomes it cannot produce.
 - Reconcile the distinguisher with the classifier — a run the panel calls "consistent with zero" (z=2.1σ) should not recover 32/32. Either the threshold rule is stronger than the two-bell model admits (say so) or the model is wrong.
 - E2e-assert the CT-on vs CT-off outcomes; only axe runs in the browser.
+
+### hqc-timing-break — what would raise it
+
+- Port the sibling's fix: derive the "channel is silent" verdict from the measured hit-rate spread / recovery accuracy of *that run*, not from `!params.optimized`. As shipped it can and does contradict the number printed next to it.
+- E2e-assert the four preset outcomes and the majority-vs-LLR disagreement case, which is the demo's best teaching moment.

@@ -293,6 +293,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `schnorr-forge` input boundaries now measure at least 3.59:1
   dark and 4.60:1 light with minimum-across-inputs regressions (`a02b70f`). All 69 tests,
   typecheck, build, size budgets, and 35 cross-browser tests passed (four expected skips).
+- Task 5 delegated completion: `chain-of-trust` select boundaries now measure at least
+  3.30:1 dark and 3.68:1 light with all-select computed-style regressions (`d7e02a1`). All
+  78 tests, typecheck, build, and five dark/light/mobile browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

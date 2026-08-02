@@ -42,6 +42,10 @@ lint, build, and 19 passing browser tests pass (one intentionally skipped).
 border measures 4.18:1 dark and 4.54:1 light against actual fills, with checkbox/range/file
 controls excluded. All 42 tests, build, and 28 desktop/mobile browser tests pass.
 
+`noise-pipe` was live and is fixed/pushed at `b696d6e`; its dedicated text-input border
+measures 3.48:1 dark and 4.25:1 light against the actual input fill, enforced in both
+themes. All 70 tests, build, and both browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

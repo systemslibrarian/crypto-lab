@@ -232,6 +232,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `iron-serpent` load-bearing field boundaries now measure
   4.18:1 dark and 4.54:1 light with blocking computed-style regressions (`f2e73d0`). All
   42 tests, build, and 28 desktop/mobile browser tests passed.
+- Task 5 continued: `noise-pipe` text-input boundaries now measure 3.48:1 dark and 4.25:1
+  light with blocking computed-style regressions (`b696d6e`). All 70 tests, build, and
+  both-theme browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

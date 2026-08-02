@@ -1,6 +1,33 @@
-# Resume notes — updated 2026-08-01 (supersedes the earlier pause note)
+# Resume notes — updated 2026-08-02 (supersedes the earlier pause note)
 
 Work is tracked in the session task list; this file is the durable copy.
+
+## Latest checkpoint — 2026-08-02 afternoon
+
+**Task 5 (border contrast) is COMPLETE.** The final 21-repo queue was finished and pushed
+on 2026-08-02: slices A/B/C (20 repos, none stale) plus `ring-sign` done directly. Every
+per-repo commit, measured ratio pair, and gate run is recorded in `TASKS.md`'s
+2026-08-02 session update. All fixes are scoped control-border tokens with blocking
+both-theme composited computed-style regressions.
+
+**Task 10 triage is COMPLETE.** Both batches of the nine recovered audit docs are triaged
+(`audits/TRIAGE-2026-08-02-batch-{1,2}.md`). Most recommendations were already
+implemented; the two live defects found were fixed and pushed (`dkg-gate` `c3e845a`,
+`lattice-gentle` `fca3ad7`). PROPOSED lists await maintainer decisions — notably the
+fleet-wide LICENSE question. The `_MASTER-TEMPLATE.md` decision is executed: kept in
+`audits/` as the referenced demo-build standard, corrected (see
+`audits/TEMPLATE-DECISION-2026-08-02.md`); `_STANDARDIZE-PROMPT.md` archived.
+
+**Task 6 (scoring) is IN FLIGHT.** Five scoring slices (92 unscored demos) and four
+re-verify slices (59 recovered scores) write incrementally to
+`audits/SCORECARD-2026-08-02-*.md`; `SCORES-2026-08-02.md` at the root maps them and
+holds merged results. Remaining after they land: score the 10 repos freed by Task 5's
+completion, re-verify `credential-veil`, merge everything, and fix the known-red
+`quantum-vault-kpqc` dark-theme axe gate.
+
+Deferred cleanup queued: retire spent snapshots in `audits/` (per-repo docs,
+PRE-PUSH-STATUS, VERIFICATION, superseded scorecards) in one deliberate commit AFTER all
+scoring lands — show the user the removal list first.
 
 ## Latest checkpoint — 2026-08-01 final wind-down
 

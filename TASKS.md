@@ -390,6 +390,27 @@ file holds the work queue. Keep both current.
   pixel-verified), `mayo-seal` (`3b87bcc`, 3.84/3.48), `power-trace` (`3a206b5`, 4.13/4.13
   — dark ALSO failed at 2.91 vs the rendered panel gradient despite the audit calling it
   light-only; fixed both), `beacon-lock` (`8a265a0`, 3.66/4.08).
+- Task 5 slice B complete — all six repos fixed (none stale), pushed, HEADs and clean
+  trees verified by coordinator: `pake-gate` (`1c7cf8b`, 3.72 dark / 4.07 light),
+  `spdz-forge` (`67948dd`, 4.13/3.61, preserved chat.md untouched), `lll-break`
+  (`a7382c3`, 3.68/3.56 — also deflaked the pre-existing red `test:ui` axe gate that was
+  scanning mid-fade; killMotion added to the smoke suite, no assertion weakened),
+  `frodo-vault` (`e4daf2b`, 3.76/3.83), `kyber-vault` (`38d08c2`, 4.09/4.13, nested
+  package), `protocol-compose` (`2c2ae74`, 3.80/3.96, regression at both token and
+  rendered level). **TASK 5 IS COMPLETE: 21 of 21 queue repos done.**
+- Task 10 triage batch 2 complete (tables in `audits/TRIAGE-2026-08-02-batch-2.md`):
+  `icy-dvrf` 9/10 done day-of-audit, gates re-verified green (SHA-pinned actions and
+  transcript replay proposed); `schnorr-forge` 15 done 2 partial, gates re-verified;
+  `protocol-checker` machine-derived verdicts landed day-of-audit, four feature-scale
+  items proposed (incl. the fleet-wide LICENSE decision — no repo has one);
+  `spdz-forge` read-only: the three lost P0 blockers were implemented by `7802c6b`,
+  GS-06..08 remain unrecoverable, fresh audit proposed; `lattice-gentle` had one live
+  defect — the toy Dilithium 4-bit challenge accepts tampered messages ~1/16 of the time
+  and the UI called that "SIGNATURE ACCEPTED" with a caption claiming disagreement was
+  guaranteed; now labeled as a reachable toy-scale forgery with pinned seeds for both
+  branches and a deterministic e2e drive (`fca3ad7`, pushed, verified; 58/58 tests, 13
+  Playwright green three consecutive runs). **TASK 10 TRIAGE IS COMPLETE** — remaining
+  output is the PROPOSED lists awaiting maintainer decisions.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 
@@ -515,7 +536,13 @@ All 34 repos pushed, all CI-green. Four failed on first push and were fixed:
 - `threshold-decrypt` — its e2e test asserted the app shows "rejected" the instant a cheat
   is injected, which is exactly the behaviour that session's fix removed.
 
-### 5. Finish the fleet-wide border-token accessibility pass — `TODO, 112 repos remain`
+### 5. Finish the fleet-wide border-token accessibility pass — `DONE 2026-08-02`
+
+The full 21-repo remainder queue was completed and pushed on 2026-08-02 (slices A/B/C plus
+ring-sign; per-repo commits, ratios, and gates in the Current-session update above). Every
+repo in the original 112-repo failing set has now either been fixed with a blocking
+both-theme regression, been verified stale, or been reclassified as rendering no bordered
+text-entry control. The section below is retained as the original task spec.
 Last of four accessibility items. The other three are confirmed done: touch targets (170
 labs), banner-landmark dedupe (170), skip-link contrast (11 real failures fixed of 113
 examined; worst were `key-exchange` and `poly1305-mac` at 2.01:1 in dark).

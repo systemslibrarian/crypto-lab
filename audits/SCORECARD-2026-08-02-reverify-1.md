@@ -15,3 +15,7 @@ drbg-arena, entropy-collapse, envelope-kms, falcon-seal, frozen-heart.
 
 - babel-hash remaining gaps: tab 5 (Portfolio thread) has zero interactive controls — pure prose; comparison tab's property table (length-extension vulnerable/immune) is asserted rather than demonstrated per algorithm. Those two keep it at the bottom of the 9 band, not 10.
 
+| bike-vault | 9d12a49 | 5 | 8 | Prior 5 no longer stands. Commit ef2822e (post-scoring) implements the actual Black-Gray-Flip decoder (Black flips + the two masked Gray correction passes) that the prior review found narrated-but-absent, and makes every headline number runtime-derived via data-param (sim r=587/w=14/t=13 vs spec 12,323/142/134, stated side by side). Verified live: full KEM round-trip with matching secrets; error-weight slider pushed to 40 produces a real non-convergence and an honest "decoding-failure regime, on purpose" verdict; DFR lab measured 2/600 = 0.33% at t=13 vs 588/600 = 98% at t=30 with fresh keypairs — the six contradicted numbers are gone and there is now a real break path. 32/32 tests, zero console errors. |
+
+- bike-vault remaining gaps: c1 is labeled SIMULATED (not the spec hash construction) and keygen is marked ILLUSTRATIVE — honest but still a reduced-parameter simulation; comparison panel remains spec-figure tables. Those hold it at 8 rather than 9.
+

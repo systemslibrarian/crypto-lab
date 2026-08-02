@@ -13,6 +13,8 @@ check whether the prior justification's named defect still exists in current sou
 |---|---|--:|--:|---|
 | noise-pipe | b696d6e | 7 | 8 | 175f67b fixed the named defect: Break-it badges now distinguish held / succeeded / not-applicable / could-not-run instead of rendering every `ok:false` as "Attack succeeded". |
 | nonce-guard | 2db23b3 | 8 | 8 | 4ac4e9c converted the Level 2 misattribution from an implied claim into an explicit disclosure; structure unchanged. |
+| oram-vault | 2dbff17 | 7 | 8 | e16f2e2 closed the named defect: the chi-square verdict is now computed by `analyzePathUniformity()` with three reachable branches, and two other asserted claims (a fabricated stash bound, "three unrelated paths") were replaced with observed counts. |
+| oblivious-shelf | 47b43a0 | 7 | 8 | All three named defects fixed by c9b9fe7 + 47b43a0: the anonymity set is now computed candidate-by-candidate, the target highlight is gone from both server-view panels, the hero says "one bit ... its checked-out flag", and Section A's diagrams track the learner's selection. |
 
 ## Per-demo notes
 
@@ -67,3 +69,35 @@ Remaining gaps (what would raise it):
 - Level 2 still does not act on the learner's own messages.
 - The default Message 1 / Message 2 share a long prefix, so the headline `P₁ ⊕ P₂` renders as
   nearly all `·` — the strongest exhibit on the page opens looking empty.
+
+### oblivious-shelf — 7 -> 8 (HEAD 47b43a0)
+
+Prior justification: "Half the page is static prose; the 'record' it retrieves is one bit already
+on screen; panels labelled 'Server A's view' highlight the exact index the text says a server
+cannot see."
+
+Two commits closed all three. `47b43a0` made `renderXorChain`'s target argument optional and
+omits it for anything drawn as a server's view, and added `consistentTargets()` in `pir.ts`,
+which for each candidate index reconstructs the subset the patron must have drawn, re-runs that
+server's side, and requires the observed view back. `c9b9fe7` made the Step 7 recovery verdict a
+real comparison against `db[i]` (`pirQuery` now returns `directBit` and `correct`), and corrected
+the false PIR-complexity and PATRIOT Act claims in Sections C and D1. Driven live on book #3:
+
+- Step 8 prints "Candidate targets consistent with that view, checked one by one: 16 of 16" for
+  both servers — a computed count, and the tests pin it as falsifiable (an impossible view drops
+  every candidate).
+- Zero `.xor-term--target` / `.set-el--target` highlights in any of the eight walkthrough steps.
+- Step 7 reads "Checked: matches db[3] = 1 read directly from the database", then states that the
+  title, author and call number come from `catalog.ts` in the browser and were never requested.
+- Hero now reads "Fetch one bit of a library catalog record — its checked-out flag".
+- Section A diagrams read "wants book #3" / "Query S△{3}" after selecting #3 (was a hardcoded 9).
+
+24/24 vitest pass, build clean, no page errors.
+
+Remaining gaps (what would raise it):
+- The "half the page is static prose" half of the prior verdict is untouched: 4 interactive
+  controls on the whole page, and the catalog cards plus one Run button are the entire input
+  surface.
+- No failure or adversary path. The learner never makes the protocol break, and cannot collude
+  the two servers to watch the anonymity set collapse to 1 — which is the natural counterpart to
+  the 16-of-16 exhibit the page now computes, and what `patron-shield` has and this does not.

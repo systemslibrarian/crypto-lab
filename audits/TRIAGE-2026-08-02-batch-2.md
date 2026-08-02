@@ -63,3 +63,56 @@ scale and stay PROPOSED.
 | 6 Search-failure pedagogy (frontier explorer) | STILL-APPLICABLE (redesign-scale) | No frontier/state-graph explorer or per-step match diagnostics in src/ui.ts | PROPOSED: frontier explorer, trace minimization, side-by-side compare |
 | Extras: architecture note | DONE | `ARCHITECTURE.md` (63 lines): term algebra, transition system, deduction rules | none |
 | Extras: LICENSE/CONTRIBUTING/CHANGELOG | STILL-APPLICABLE (owner's call) | None present — but no repo in the fleet carries them (checked icy-dvrf, lattice-gentle), so license choice is a fleet-wide maintainer decision | PROPOSED: fleet-wide license decision |
+
+## audits/schnorr-forge.md → crypto-lab-schnorr-forge
+
+Audit dated 2026-07-22. Commits `5f1ed8e` (P0s) and `681dfb6` (P1/P2 roadmap), both
+2026-07-22, implemented the roadmap nearly in full; `b7d940f`/`a02b70f` (2026-08-01)
+strengthened workbench verdicts and input boundaries further. Gates re-verified
+2026-08-02: 69/69 vitest, build clean, size budget OK (27.67/35 kB JS, 3.06/10 kB CSS
+gzip), full Playwright matrix 35 passed / 4 deliberate conditional skips
+(coarse-pointer touch-target test, webkit skip-link quirk). No changes needed.
+
+| Item | Verdict | Evidence | Action |
+| --- | --- | --- | --- |
+| P0-1 Strict fail-closed hex parsing | DONE | `5f1ed8e`: full-string hex validation replacing parseInt prefix-parse; field.test.ts (94 lines) covers 0g/g0/whitespace/boundaries; `a02b70f` strengthened further | none |
+| P0-2 Mobile horizontal overflow | DONE | hero-main min-width:0 + border-box (5f1ed8e); no-overflow geometry asserted in flows.spec.ts:82 across engines incl. mobile, passing | none |
+| P0-3 Landmarks + skip destination | DONE | hero demoted header→div, one banner + one main; #app focusable skip target; skip-link focus-transfer test (flows.spec.ts:70) | none |
+| P0-4 Honest security language | DONE | "cryptographically negligible" replaces absolute nonce claims; README Threat Model & Scope (conformance != audit, secrets on screen, no constant-time guarantees); remaining "never" uses are prescriptive, not probability claims | none |
+| P1-5 Verify Workbench | DONE | New tab: paste external pubkey/sig/message, five-stage pipeline, malformed presets, no private key (681dfb6); preset verdicts computed not hardcoded (b7d940f) | none |
+| P1-6 BIP-340 parity/nonce trace | DONE | Details disclosure with real d0/d, k0/k, aux, 32-byte hash boundaries (681dfb6) | none |
+| P1-7 Messages as bytes | DONE | UTF-8/hex segmented input, live byte count, leading-zero preservation (src/ui/messageInput.ts) | none |
+| P1-8 Vector drill-down | DONE | Rows expand to full artifacts + exact failing stage; "Load in Verify Workbench" hand-off, public data only | none |
+| P1-9 Learner quick checks | DONE | Per-exhibit prediction prompts (681dfb6) | none |
+| P1-10 Expanded assurance | PARTIAL | Differential sweep vs Noble across 40 keys/messages/aux/lengths; staged verify() with named rejection-stage tests; no mutation testing | PROPOSED: mutation testing on range checks/parity/tag domains |
+| P1-11 Explicit browser scenarios | DONE (manual passes open) | flows.spec.ts: sign/tamper/workbench/vector/aggregation/keyboard; no swallowed clicks; manual NVDA/VoiceOver passes not recorded | PROPOSED: record manual NVDA + VoiceOver pass |
+| P1-12 Browser/viewport matrix | DONE | Chromium/Firefox/WebKit/mobile projects, geometry + 44px touch assertions (playwright.config.ts) | none |
+| P1-13 Pre-merge gating | DONE (settings residual) | ci.yml: typecheck/unit/build/size/a11y/flows, no Pages permissions (681dfb6); branch-protection requirement + dependabot are GitHub-settings/owner items | PROPOSED: mark CI required in branch protection; add dependabot.yml |
+| P2-14 Deliberate copy/export | DONE | Copy controls with private-key copy separately marked; export-public-JSON; secrets never serialized | none |
+| P2-15 Reproducible public permalinks | DONE | Shareable #verify permalink, public data only (681dfb6) | none |
+| P2-16 Provenance and scope | DONE | README: vector source, Noble oracle version, hand-written vs library boundary, conformance != audit (5f1ed8e/681dfb6) | none |
+| P2-17 Size budget | DONE | scripts/size-budget.mjs enforced in CI; currently 27.67/35 kB JS, 3.06/10 kB CSS gzip | none |
+
+## audits/spdz-forge.md → crypto-lab-spdz-forge (READ-ONLY — another agent active; nothing modified, no gates run)
+
+Audit dated 2026-07-17; document is a partial salvage (~3%) — only the thesis survives
+("claim-complete evidence": malicious actions must enter the authenticated opening path,
+verdicts must say only what the protocol learned, important browser states must be tested).
+The three named blockers were lost, BUT commit `7802c6b` (2026-07-17, same day) explicitly
+implements "the audit's P0 findings (GS-01..03) plus selected P1/P2 items", recovering the
+lost numbering: the three blockers were GS-01 authenticated openings, GS-02 ordered MAC
+check, GS-03 no abort attribution. Triage is from source reading and git history only —
+npm ci / tests were NOT run to avoid touching the other agent's working tree.
+
+| Item | Verdict | Evidence | Action |
+| --- | --- | --- | --- |
+| GS-01 Authenticated openings (lost blocker 1) | DONE | `openAuthenticated`/`beaverMulChecked` in src/spdz/{sharing,beaver,protocol}.ts; intermediate d/e openings MAC-checked; regression test for the z' = xy + delta*y final-only-check miss; variance circuit uses same path (7802c6b). No raw open() bypasses found in src/ui/ on 2026-08-02 | none (read-only) |
+| GS-02 Commit-then-open ordered MAC check (lost blocker 2) | DONE | src/spdz/transcript.ts (146 lines) + transcript.test.ts; sigma-last cancellation dies against committed ordering; 1/p bound stated as property of the ordered transcript (7802c6b) | none |
+| GS-03 Abort never attributes (lost blocker 3) | DONE | Variance verdict names no hospital; omniscient note is a .lab-note lab control; e2e test enforces the rule (7802c6b) | none |
+| GS-04 Attackable boundaries | PARTIAL (remainder lost) | "opening and check-share boundaries are now attackable" marked partial in 7802c6b; `672eea6` (2026-08-01) added the missing macDelta control so the named alpha·delta MAC-forgery attack is executable | PROPOSED: fresh audit (salvage note's task #6) to re-derive the lost remainder |
+| GS-05 Threat-model matrix | DONE | In-page + README (7802c6b) | none |
+| GS-06..GS-08 | UNKNOWN — text lost | Not referenced by any commit; unrecoverable from history | PROPOSED: fresh audit |
+| GS-09 Browser-state coverage | PARTIAL (remainder lost) | 8 functional browser tests; axe scans ALARM/ABORT states in both themes (7802c6b); marked partial by the implementing commit itself | PROPOSED: extend per fresh audit |
+| GS-10 Provenance | DONE | SPDZ/Beaver/MASCOT/Overdrive/MP-SPDZ references; unsourced deployment claims removed (7802c6b) | none |
+| GS-11 PR CI gate | DONE | .github/workflows/ci.yml full pipeline (7802c6b) | none |
+| (audit-genre continuations, already landed) | DONE | `f194a6d` (2026-08-01): Beaver break-it verdict derived from computation — fixed reachably-false claim at y=0; `672eea6`: MAC attack executable; `67948dd` (2026-08-02): input border contrast | none |

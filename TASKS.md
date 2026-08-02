@@ -253,6 +253,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `broken-trust` trial-select boundaries now measure 3.47:1
   dark and 4.01:1 light with blocking rendered-style regressions (`937fe68`). All 41
   tests, build, and four browser/a11y/contrast tests passed.
+- Task 5 delegated completion: `scloud-vault` parameter-select boundaries now measure
+  3.58:1 dark and 4.06:1 light with blocking computed-style regressions (`ff21806`). All
+  41 tests, build, and five browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

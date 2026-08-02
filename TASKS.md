@@ -296,6 +296,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `chain-of-trust` select boundaries now measure at least
   3.30:1 dark and 3.68:1 light with all-select computed-style regressions (`d7e02a1`). All
   78 tests, typecheck, build, and five dark/light/mobile browser/a11y tests passed.
+- Task 5 delegated completion: `isogeny-atlas` text/select boundaries now measure at least
+  3.43:1 dark and 4.09:1 light with rendered computed-style regressions (`292594b`). All
+  58 tests, typecheck, build, and 15 browser/mobile/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

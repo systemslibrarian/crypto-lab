@@ -126,6 +126,10 @@ measures at least 3.30:1 dark and 3.68:1 light after PKI readiness, enforced acr
 app selects. All 78 tests, typecheck, build, and five dark/light/mobile browser/a11y tests
 pass.
 
+`isogeny-atlas` was live and is fixed/pushed at `292594b`; its dedicated text/select
+boundary measures at least 3.43:1 dark and 4.09:1 light, enforced from rendered styles in
+both themes. All 58 tests, typecheck, build, and 15 browser/mobile/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

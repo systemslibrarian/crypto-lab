@@ -54,6 +54,10 @@ All 31 tests, typecheck, build, and three browser/a11y tests pass.
 4.18:1 dark and 4.83:1 light against the actual fills, enforced in both themes. All 15
 custom tests, typecheck, build, and three browser/a11y tests pass.
 
+`hybrid-wire` was live and is fixed/pushed at `a2482aa`; its boundary measures 3.26:1 dark
+and 4.55:1 light, with a browser regression that composites rendered ancestor backgrounds.
+All 18 tests, build, and four browser/a11y/contrast tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

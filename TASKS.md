@@ -241,6 +241,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `j-uniward` message-field boundaries now measure 4.18:1
   dark and 4.83:1 light with blocking computed-style regressions (`03b91e9`). All 15
   custom tests, typecheck, build, and three browser/a11y tests passed.
+- Task 5 delegated completion: `hybrid-wire` boundaries now measure 3.26:1 dark and 4.55:1
+  light with an ancestor-background-compositing browser regression (`a2482aa`). All 18
+  tests, build, and four browser/a11y/contrast tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -214,6 +214,9 @@ file holds the work queue. Keep both current.
   verifies ledger tampering with the real verifier, labels illustrative hypertree paths,
   and rejects non-signable chain step 16 (`ac6439b`). All 55 tests, build, and four
   browser/a11y tests passed. This resolves the final NO/MIXED status in the claim ledger.
+- Task 5 resumed: `lwe-hints` had a live control-boundary failure; its calculator inputs
+  now measure 3.30:1 dark and 4.00:1 light with a blocking Playwright ratio assertion
+  (`1429cef`). All 49 tests, build, and both-theme accessibility scans passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

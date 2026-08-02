@@ -17,6 +17,11 @@ adjacency in both themes (`b5a6fe4`); and `merkle-vault` now measures at least 3
 against every relevant surface in both themes (`9c3ea37`). All three passed their full
 local gates and settled live-page screenshot checks.
 
+Task 5 resumed: `lwe-hints` was still live and is fixed/pushed at `1429cef`; its calculator
+input boundary now measures 3.30:1 in dark theme and 4.00:1 in light theme against the
+control fill, enforced by a blocking browser regression. Unit, build, and both-theme a11y
+gates pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

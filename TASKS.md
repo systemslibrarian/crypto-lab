@@ -665,6 +665,24 @@ CLAUDE.md — two competing standards documents is worse than one.
 
 ## Operational notes
 
+- **A mutation check that breaks the build proves NOTHING.** Playwright serves `dist/`, and
+  a failed build leaves the last good bundle in place, so the suite passes green against
+  source that no longer compiles. This produced two false "verified" results on 2026-08-02.
+  Two rules follow: always confirm the build actually succeeded during a mutation, and
+  prefer type-safe mutations (invert a comparison, swap an operand) over ones that leave a
+  variable unused — `tsc` rejects those and you get a stale-bundle pass instead of a real
+  failure. Fixed structurally on 2026-08-02 by putting `npm run build &&` in front of every
+  `webServer.command`; see `audits/_MASTER-TEMPLATE.md` §4.1.
+- **A unit test that bypasses the DOM can certify behaviour the page cannot reach.**
+  `hqc-timing`'s 30 tests passed against preset constants while the noise slider's `max`
+  clamped those same values to a third of what the presets asked for, so the page could
+  never do what the suite certified. When a constant drives a control, assert it fits the
+  control's range.
+- **A regression that mirrors the source's own branch logic agrees with the bug.**
+  `harvest-timeline`'s test recomputed the condition it was checking and asserted the
+  headline matched that branch, so it could not catch the branch itself being wrong. Assert
+  the claim against the rendered data instead.
+
 - **The a11y gate DOES run locally.** `npx playwright install chromium` works on this box,
   then `npm run test:a11y`. I wrongly assumed it could not and pushed four repos whose only
   failing stage was one I had declined to run. Run it before pushing anything that touches

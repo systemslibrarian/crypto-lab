@@ -303,6 +303,25 @@ test('no WCAG A/AA violations — light theme', async ({ page }) => {
 
 **`package.json`:** `"test:a11y": "playwright test"`. And **exclude `e2e/` from Vitest** (`vite.config.ts → test: { include: ['src/**/*.test.ts'] }`) so the Playwright specs aren't collected as unit tests.
 
+**`playwright.config.ts` — build before you serve.** The `webServer.command` MUST run the
+build, not just the preview:
+
+```ts
+command: 'npm run build && npm run preview -- --port 4283 --strictPort',
+```
+
+`preview` serves whatever is already in `dist/`. Without the build in front, a run tests a
+stale bundle — and worse, a build that *fails* leaves the previous good bundle in place, so
+the whole suite passes green against source that no longer compiles. That silently
+invalidates mutation checking, which is the only way we prove a test has teeth. It produced
+two false "verified" results in a single session on 2026-08-02 before being caught and
+fixed fleet-wide. With the build in front, a compile error aborts the run instead:
+`Process from config.webServer was not able to start. Exit code: 2`.
+
+Related trap when verifying by hand: `reuseExistingServer: !process.env.CI` means a preview
+server already listening on that port is reused and the command never runs at all. If you
+are mutation-testing locally, make sure no stray preview is holding the port.
+
 **CI:** in `deploy.yml`, before deploy — `npx playwright install --with-deps chromium` then `npm run test:a11y`; a11y violations block the deploy on `main` (see §6).
 
 ### 4.2 Author to these rules from the start (exactly what the gate checks)

@@ -829,9 +829,14 @@ transcript. Treat all 1 claim below as live.
 
 ### `zk-proof-lab`
 
-**Fix status: PARTIAL.** Fix zk-proof-lab vacuous gate (`ac927ea4c188da353`)
+**Fix status: FIXED.** Initial verdict fixes landed in `602412c`; the remaining graph,
+witness-hiding, and setup claims were resolved in `4d8b2b4`.
 
-That agent was dispatched from a *different* finding (the vacuous quality gate and the exposed nonce), not from batch 4’s list. It reports tsc clean, 8/8 smoke tests, 54/54 quality gates. Batch 4’s eight zk-proof-lab claims were never delivered to the main thread, so coverage overlap is unverified.
+The first pass made every verdict computed, removed the exposed Schnorr nonce, and added
+tamper checks. The follow-up made the graph commitment's rejection branch user-reachable
+and browser-tested, relabeled the toy SNARK witness as exposed to its verifier, and changed
+the nonexistent setup visualization to "assumed and narrated; not simulated." Unit tests,
+typecheck, build, browser quality checks, and all 18 dark/light accessibility scans pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

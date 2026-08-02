@@ -182,11 +182,11 @@ Reports already landed in `audits/`: `SCORECARD-2026-08-01.md`, `FALSIFIABLE-CLA
 - **72 border-contrast commits landed today**, against 112 repos originally failing.
   **Re-measure before assuming what is left** — trust `BORDER-CONTRAST-STATUS.md` for its
   per-repo detail (selector, ratio, file:line), not for its counts, which are now stale.
-- **Task 9 is 3 of 4 done and pushed**: `tls-handshake` ("Give the Finished checks a
+- **Task 9 is 4 of 4 done and pushed**: `tls-handshake` ("Give the Finished checks a
   reachable fail…"), `corrupted-oracle` ("Compute the attack verdict, the heatmap…") and
-  `drbg-arena` ("Paint the bits that are actually broken…"). Only `zk-proof-lab` remains —
-  the 8->5 drop, the largest regression in the fleet. The agent was starting on its graph
-  exhibit and a snark witness claim when it was stopped.
+  `drbg-arena` ("Paint the bits that are actually broken…"), and `zk-proof-lab`
+  (`4d8b2b4`). The latter now gives its graph commitment check a reachable, browser-tested
+  rejection path and explicitly says its toy verifier sees the witness and assumes setup.
 - All agents were stopped deliberately at end of session, not lost. Their finished work was
   pushed per repo, which is why nothing is stranded.
 
@@ -347,7 +347,7 @@ described already-fixed code. The defect class is consistent — a demo asserts 
 own code does not compute, and the honest computation is usually already written, one
 import away.
 
-### 9. Investigate the demos whose scores regressed — `IN PROGRESS`
+### 9. Investigate the demos whose scores regressed — `DONE`
 **Ten regressed, not three.** The two largest were never reported at the time:
 `zk-proof-lab` 8->5 and `hawk` 7->5.
 `tls-handshake` 8->7, `bcrypt-forge` 7->6, `drbg-arena` 7->6. Either the demo got worse or

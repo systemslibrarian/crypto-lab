@@ -342,6 +342,17 @@ file holds the work queue. Keep both current.
   dark and 3.16:1 light (`3bec966`). All 78 tests, typecheck/build, and seven
   browser/a11y checks passed. The helper was stopped before beginning `opaque-gate`.
 
+## Current-session update — 2026-08-02
+
+- Task 5 resumed. Fetch-first scan of the 21-repo queue: all clean and synced; the only
+  dirty flag is `spdz-forge`'s preserved untracked `chat.md`. Three helper slices are
+  working the queue in parallel (A: hpke-envelope..time-lock-puzzle, B:
+  pake-gate..protocol-compose, C: encrochat..beacon-lock); `ring-sign` was done directly.
+- Task 5 continued: `ring-sign` text/range/select boundaries now use a scoped
+  `--line-strong` token measuring at least 3.43:1 dark and 3.84:1 light against both fill
+  and exterior surfaces, with blocking both-theme computed-style regressions (`cf0ff1b`).
+  All 35 unit tests, build, and four browser/a11y tests passed.
+
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 
 ---

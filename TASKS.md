@@ -244,6 +244,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `hybrid-wire` boundaries now measure 3.26:1 dark and 4.55:1
   light with an ancestor-background-compositing browser regression (`a2482aa`). All 18
   tests, build, and four browser/a11y/contrast tests passed.
+- Task 5 delegated completion: `rsa-educational` form-control boundaries now measure
+  3.28:1 dark and 4.03:1 light with blocking computed-style regressions (`261ad16`). All
+  30 tests, typecheck, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -58,6 +58,10 @@ custom tests, typecheck, build, and three browser/a11y tests pass.
 and 4.55:1 light, with a browser regression that composites rendered ancestor backgrounds.
 All 18 tests, build, and four browser/a11y/contrast tests pass.
 
+`rsa-educational` was live and is fixed/pushed at `261ad16`; its dedicated form-control
+border measures 3.28:1 dark and 4.03:1 light against actual fills, enforced in both themes.
+All 30 tests, typecheck, build, and three browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

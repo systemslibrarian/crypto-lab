@@ -441,8 +441,10 @@ Main thread reports fixed.
 
 ### `lms-ledger`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 2 claims below as live.
+**Fix status: FIXED.** `9f44751` derives the LMS and full two-level HSS sizes from RFC 8554
+fields, includes and displays the verifier-required 32-byte randomizer C, and runtime-checks
+the live 2,336-byte LMS signature against the active-parameter formula. All 18 tests, the
+production build, and three browser tests including dark/light accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

@@ -159,6 +159,9 @@ file holds the work queue. Keep both current.
 - Task 8 delegated completion: `mceliece-gate` now derives named key-size ratios from byte
   literals and makes the tamper control reach and report t+1 from any learner-edited state
   (`20763c1`). All 27 tests, build, four browser tests, and mobile/desktop a11y passed.
+- Task 8 delegated completion: `lms-ledger` now derives LMS/HSS sizes from RFC 8554 fields,
+  includes the verifier-required 32-byte C, and runtime-checks the live 2,336-byte result
+  (`9f44751`). All 18 tests, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

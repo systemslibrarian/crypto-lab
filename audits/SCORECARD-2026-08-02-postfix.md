@@ -65,3 +65,15 @@ correct and two of them I re-derived independently rather than trusting the comm
 both `isogeny-gate` and `quantum-vault-kpqc` the "axe read colours mid-transition" diagnosis
 holds up: scanning at rest without the motion shim gives zero violations in both repos, so no
 palette problem is being papered over.
+
+## Addendum — `harvest-timeline` moved again during this audit
+
+While I was scoring, a second commit landed on `crypto-lab-harvest-timeline`: **`829b04c`
+"Add Exhibit 6: run the migration instead of projecting it"** (18:02, ~8 minutes after I drove
+`6990470`). The row above is scored at the assigned fix commit `6990470`; this addendum records
+where the demo actually stands at `829b04c`, because the new commit closes the larger of the two
+caps I named.
+
+| demo | HEAD | prior | current | did the fix deliver? | what still caps it |
+|---|---|--:|--:|---|---|
+| harvest-timeline | 829b04c | 7 | **8** | **Yes — `829b04c` closes the "nothing here is cryptographic" cap.** Exhibit 6 is real and I drove both branches. Migrate first, then trigger the CRQC: "3 archived record(s) re-keyed to AES-256-GCM under a key that never touched RSA. The 2 already-captured session(s) were not reachable" → "**CRQC complete: 2 of 5 record(s) read**", with the three archive rows reading NOT READ and — critically — explaining *why* as a measured outcome: "No RSA wrapper left to break. Tried a key derived from the recovered private exponent; **AES-GCM rejected it**." Skip the migration and the same button gives "**CRQC complete: 5 of 5**", every row "Factored the modulus, recovered d, unwrapped the RSA-KEM secret, decrypted." The modulus, the stored ciphertext previews and the read counts all change per run and are labelled "every byte below was produced in this tab". That is a real mechanism, a real learner-caused divergence, and a failure branch that is a rejection rather than an assertion — exactly what the prior score said the demo could not do. 104 vitest (up from 90) and 8 Playwright including three new `rekey.spec.ts` behavioral tests. | The **Exhibit 4 branch-3 falsehood is unchanged at this HEAD** — I re-swept all 20 combinations and Government Intelligence Agency / Ultra-pessimistic still renders 620.0 TB and 100% exposed on all five rows under "no row is exposed and no window opens", as do Small Medical Clinic / Ultra-pessimistic and Tech Startup / Pessimistic; `claims.spec.ts` is still tautological. Exhibits 1–5 remain actuarial lookups. The 64-bit modulus is toy (disclosed in-panel). The overlap with `harvest-vault` is now *worse*, not better, since only this demo has a mechanism. Fixing the Exhibit 4 sentence is the cheap remaining step toward 9. |

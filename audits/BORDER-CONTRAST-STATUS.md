@@ -104,6 +104,11 @@ measures at least 4.15:1 dark and 4.18:1 light against the opaque field fills, e
 across all inputs. Dual typechecks, 46 tests, uniformity check, build, and four browser/a11y
 tests pass.
 
+`threshold-decrypt` was live and is fixed/pushed at `92f5d3b`; its dedicated text-input
+boundary measures at least 3.85:1 dark and 3.41:1 light against the opaque field fill,
+enforced across every text input. All 38 tests, typecheck, build, and four browser/a11y
+tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

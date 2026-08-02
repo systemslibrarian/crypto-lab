@@ -699,8 +699,11 @@ Main thread reports fixed.
 
 ### `scloud-vault`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 2 claims below as live.
+**Fix status: FIXED.** `301a92a` replaces hard-coded scrutiny percentages and the unsupported
+“thousands” count with explicit dated/process facts, and corrects the UI, README, parameter
+docs, and live keygen result to describe B/S as full n×32 matrices while disclosing the
+simplified encoding and message geometry. All 41 tests, the production build, and four
+browser tests including dark/light accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

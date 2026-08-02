@@ -196,6 +196,9 @@ file holds the work queue. Keep both current.
   mutation, labels its measured-depth statistic precisely, and burns the live next leaf
   before staging stale rollback copies (`74ad736`). All four correctness phases, build,
   and three browser/a11y tests passed.
+- Task 8 delegated completion: `scloud-vault` replaces arbitrary scrutiny meters with dated
+  process facts and consistently describes its implemented B/S values as full n×32 matrices
+  (`301a92a`). All 41 tests, build, and four browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

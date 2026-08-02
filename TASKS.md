@@ -268,6 +268,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `psi-gate` textarea boundaries now measure 3.58:1 dark and
   4.29:1 light with blocking computed-style regressions and deterministic theme setup
   (`98b3c5e`). All 40 tests, build, and three browser/a11y tests passed on final rerun.
+- Task 5 delegated completion: `padding-oracle` text/select boundaries now measure at least
+  3.84:1 dark and 3.98:1 light with a minimum-across-controls browser regression
+  (`5f2f536`). All seven tests, typecheck, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

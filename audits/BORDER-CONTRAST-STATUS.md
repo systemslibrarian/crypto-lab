@@ -91,6 +91,10 @@ All 18 tests, build, and both-theme motion-neutralized accessibility scans pass.
 measures 3.58:1 dark and 4.29:1 light against the actual fill, enforced with deterministic
 theme setup. All 40 tests, build, and three browser/a11y tests pass on the final rerun.
 
+`padding-oracle` was live and is fixed/pushed at `5f2f536`; its shared text/select control
+boundary measures at least 3.84:1 dark and 3.98:1 light, enforced across all such controls.
+All seven tests, typecheck, build, and three browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

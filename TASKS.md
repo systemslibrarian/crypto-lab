@@ -145,6 +145,10 @@ file holds the work queue. Keep both current.
   as UNKNOWN (`d76cdd0`), and `nonce-guard` now labels XOR previews and the fixed
   chosen-probe exhibit honestly (`4ac4e9c`). Both were fully tested, built, accessibility
   scanned, pushed to `main`, and recorded in the claim ledger as soon as they completed.
+- Task 8 delegated completion: `mayo-seal` now derives its short-system denominator and
+  malformed-signature counts from live values, verifies the genuine control, and labels
+  deterministic E-power samples honestly (`29d2ea2`). All 142 unit tests, the production
+  build, and all 29 browser/a11y tests passed before the fix was pushed to `main`.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

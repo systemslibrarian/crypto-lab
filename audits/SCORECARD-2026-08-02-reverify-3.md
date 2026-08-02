@@ -22,6 +22,9 @@ check whether the prior justification's named defect still exists in current sou
 | poly1305-mac | 6d24d15 | 9 | 9 | Score stands, but only because 6d24d15 fixed a severe defect that was live when the 9 was assigned: the two-pair recovery returned a wrong `r` for close message pairs up to 99% of the time, then printed "Forgery did not verify". Recovery now enumerates candidates and reports ambiguity instead of guessing. |
 | psi-gate | 98b3c5e | 7 | 9 | 2dc378a fixed five falsifiable claims, including both the prior named ones: `assertValidPoints` now actually runs on every point received (the certificate was for validation nothing called), and the flatness exhibit no longer bins two RFC 9496-constrained bytes that made it routinely print its own failure branch. |
 | quantum-entropy | b4028ad | 8 | 9 | 5f776d7 made the panel headline track the live measurement instead of a hardcoded 99.7%, and b4028ad stopped the README calling the modeled source real quantum. Re-audit found the demo well past its thin prior justification: learner-driven sliders collapse attacker work from 2^234.5 to 2^11.7, and over-extraction produces a computed REJECT. |
+| ratchet-wire | 90367a8 | 8 | 8 | Prior score stands. 90367a8 closed an unnamed defect (the break-in recovery verdict now reads whether the root key actually rotated, and the aria announcement is gated on the same flag) and corrected four wrong Signal-spec section refs. The prior's named gap — the compromise story stops short of a decrypt — is unchanged. |
+| ring-sign | cf0ff1b | 7 | 9 | 7f719ce + 53ed872 fixed six asserted claims including the prior's named one: spend B now has its own signer selector so the "Reuse detected: no" branch is reachable, the chain-closed badge is derived from the recomputed chain AND-ed with verifyLsag(), and the timing exhibit reports a measured OLS fit instead of asserting linearity. |
+| scloud-vault | ff21806 | 8 | 8 | Prior score stands. 301a92a removed three invented percentage meters from the review-scrutiny cards (100/45/18% presented as measurements) and corrected the demo's description of its own KEM — it implements full n×32 matrix LWE, not the "single-vector simplification" the README, params.ts and the keygen callout all claimed. |
 | oblivious-shelf | 47b43a0 | 7 | 8 | All three named defects fixed by c9b9fe7 + 47b43a0: the anonymity set is now computed candidate-by-candidate, the target highlight is gone from both server-view panels, the hero says "one bit ... its checked-out flag", and Section A's diagrams track the learner's selection. |
 
 ## Per-demo notes
@@ -401,3 +404,110 @@ Remaining gaps (what would raise it):
   but no exhibit shows what a genuinely quantum source would change.
 - The five panels are independent controls rather than a single narrative; nothing sequences the
   learner from "spec sheet says 99.8%" to "your key has 11.7 bits" without them finding it.
+
+### ratchet-wire — 8 -> 8 (HEAD 90367a8, nested package at `ratchet-wire/`)
+
+Prior justification: "Real Double Ratchet the learner drives with two learner-parameterized
+failures; the compromise story stops one decrypt() short of a break."
+
+The named gap is unchanged, so the 8 holds. What did land is `90367a8`, which fixed a defect the
+prior score did not name: the break-in recovery panel printed "New root (safe)" and announced
+"the attacker is locked out" purely because the button had been pressed. It now computes
+`rotated = newRoot !== this.recoverySnapshotRoot` and, when false, prints "New root (UNCHANGED —
+no DH ratchet fired) ... but the root key did not move, so nothing was recovered. This is a bug,
+not a lesson." The aria-live announcement is gated on the same flag — worth noting because
+`nonce-guard` has the opposite pattern (computed badge, fixed announcement). The same commit
+corrected four Signal-spec citations that pointed at §3.3 "Initialization" for KDF_RK and
+DHRatchet, with the renumbering history (§5.2 -> §7.2 after the Sparse PQ / Triple Ratchet
+sections were inserted) recorded in the source comments.
+
+Verified live: compromise -> snapshot root `00AFE098…`; Alice sends with a new DH key; Bob
+receives -> new root `C464EFF6…`, "Bob's DH ratchet count: 2", decrypted "Recovered traffic 🔒".
+The MITM demo aborts X3DH with a real signature failure. The forward-secrecy panel genuinely
+derives the exposed message keys from the stolen chain key and prints their hex (MK[3]
+`FACC9420ED97AE46`, MK[4] `DFA2566DDEF2204C`, MK[5] `827CE9822874FA22`) while marking m0–m2
+"safe — cannot derive (one-way KDF, chain key gone)". 60/60 vitest pass.
+
+Remaining gaps (what would raise it):
+- Still one decrypt short. The attacker derives the right message keys and the page shows them,
+  but no ciphertext is ever opened with a stolen key, so the learner reads a hex string where they
+  could be reading a plaintext they were not supposed to see.
+- The break-in recovery is a fixed three-button sequence; the learner cannot choose when Alice
+  ratchets or attempt the recovery from a state where it should fail, so the newly-honest
+  "UNCHANGED" branch is unreachable through the UI.
+
+### ring-sign — 7 -> 9 (HEAD cf0ff1b)
+
+Prior justification: "Real LSAG with a genuine tamper path and animated challenge chain — but the
+linkability exhibit's 'not linked' branch is unreachable code."
+
+`7f719ce` fixed that and two more; `53ed872` fixed three others. All verified live:
+
+- **The named defect.** `runExhibit2` signed both spends with `state.signerIndex`, so
+  `detectKeyImageReuse` could only return true. Spend B now has its own signer selector. Driven:
+  B=M1 against A=M2 -> "Reuse detected: **no** — the two key images differ, so the ledger accepted
+  both (computed by comparing the images above; spend A signed by M2, spend B by M1)"; B=M2 ->
+  "Reuse detected: **yes** — the two key images are equal, so one secret signed both", with the
+  ledger showing "✗ REJECTED double-spend".
+- **Chain-closed badge was set unconditionally** by the animation. Now
+  `chainActuallyCloses(state.ex1Chain) && state.ex1Verified`. Driven: honest run -> "chain closed:
+  cₙ == c0 ✓"; after "Flip one byte of a response" -> "chain broken: cₙ ≠ c0 ✗" with the real
+  differing endpoints (c0=0a9f4f5… vs cₙ=…), and the tamper line "Flipped one byte of s0 →
+  rejected".
+- **Exhibit 3 asserted linearity**, including in its aria-label. Now an OLS fit over the samples:
+  "sign ≈ 0.983 ms per extra ring member (R² = 0.990), verify ≈ 1.17 ms (R² = 0.995) ... The fit
+  above is measured, not assumed", with a "your run was noisy" branch when the fit is weak.
+- **Exhibit 4's "Signer identity to verifier: hidden" was a fixed string** while `group.ts` ships
+  a stable `credentialId` and the member public key in the clear. New `linkageFromWire()` derives
+  the pseudonym from the collected signatures alone. Live after three signings by one member:
+  "3 across 1 distinct signer; 3 of them share this pseudonym, linked by the fields credentialId,
+  issuedPayload, managerSignatureHex, memberPublicJwk, which were byte-identical across every one
+  of them. Any verifier can do that grouping; no manager needed."
+- **The response grid was built from the prover's `LsagSignature`**, including `signerIndex`. New
+  `toVerifierView()` strips it; a test pins that `verifyLsag` succeeds on a view with a falsified
+  `signerIndex` because it never reads one.
+
+35/35 vitest pass.
+
+Remaining gaps (what would raise it):
+- After a tamper, the Exhibit 1 status block reads "chain broken: cₙ ≠ c0 ✗" immediately above
+  "**Verification:** valid ring signature". Both are true of different objects (the tampered chain
+  vs. the original signature) but they share one `aria-live` region with nothing distinguishing
+  them; the tamper's own "rejected" line is further down the page.
+- The tamper buttons rerun a side verification rather than replacing the session's signature, so
+  the learner cannot carry a broken signature forward into Exhibit 2.
+
+### scloud-vault — 8 -> 8 (HEAD ff21806)
+
+Prior justification: "A real hand-rolled Scloud+ and the best on-ramp in the cluster; Exhibit 3's
+correction-radius crossing is a true break-it exhibit."
+
+Both halves confirmed. Exhibit 3 driven across three noise regimes is genuinely measured, not
+staged: σ=100 -> 100/100 and "All decoded correctly — noise is within BW₃₂ correction radius";
+σ=600 -> 99/100; σ=1400 -> 7/100, with the single-trial view showing the message decoding as 10
+(01010) when 13 (01101) was sent and "✗ FAILURE — noise exceeded correction radius".
+
+`301a92a` fixed two claims the prior score did not name:
+
+- The review-scrutiny cards rendered `meter()` bars at hardcoded 100% / 45% / 18% widths under
+  labels like "Years of public analysis" and "Independent cryptanalysis papers" — invented
+  quantities styled as measurements of a research literature. Replaced by six `reviewFact()` rows
+  carrying sourced statements ("NIST PQC: 2016–2024", "3 public rounds + FIPS 203", "published in
+  2024", "individual IETF draft"). Verified live: 0 meter elements, 6 fact rows.
+- The README, `params.ts` and the keygen callout all described the in-browser KEM as a
+  "single-vector simplification". It is not — `B` and `S` are n×32 matrices. All three now say so,
+  and the live callout reads "This demo's public key is 28832 bytes; the real Scloud+-128 public
+  key is 7,200 bytes (paper Table 6) ... it uses a full 600×32 matrix B, a simplified 32-column
+  message geometry, and demo packing/coding" — note the demo key is *larger* than spec, which the
+  old "scaled down" framing would have made incoherent.
+
+41/41 vitest pass; a new `e2e/claims.spec.ts` pins both fixes.
+
+Remaining gaps (what would raise it):
+- `src/exhibits/exhibit3.ts:108-112` — the 100-trial verdict is a three-way branch on 100% / 0% /
+  everything else, so both 99/100 and 7/100 print "⚠ Partial failure — noise is near the boundary
+  of the correction radius." At 7% success the noise is far past the boundary, and the sentence is
+  simply false. This is the one remaining asserted claim I found on the page and the cheapest fix
+  on this list.
+- The FO transform's tamper path (`#encaps-tamper`) is a single scripted button rather than a
+  learner-chosen corruption.

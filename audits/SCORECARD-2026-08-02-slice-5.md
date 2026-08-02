@@ -57,6 +57,12 @@ Repos in this slice (HEAD at scoring time):
 
 | vdf | fb54d03 | 8 | Everything cryptographic is live and the cost claim is arithmetic on real counters: 2,048 sequential squarings vs 377 mod-N verify operations, printed as "≈ 5× cheaper" — an honest small number at toy T rather than a borrowed asymptotic. Both tamper buttons flip a real bit and the Wesolowski identity genuinely fails ("π^ℓ · x^r ≡ y failed — Rejected"), and the trapdoor path is isolated in its own module, never wired into eval or verify, and produces byte-identical y with no delay, making the unknown-order assumption concrete. Docked to 8 for one exhibit that is exactly the fleet's banned pattern: "Try 4 parallel workers" is four CSS lanes animating to the same width with a hardcoded note that the step count is unchanged — the load-bearing claim (parallelism cannot shorten the chain) is the one thing on the page asserted rather than computed. 11 tests is thin, with no coverage of the tamper or trapdoor UI states. |
 
+| vigenere-break | 858b405 | 9 | Every number is measured from the ciphertext in front of you and the failure paths are the best part. The full break recovered LEMON and the Declaration text, with the "Cipher broken" verdict derived from computed English-quality signals (word-hit 57%, bigrams 94%, IoC 0.0747, combined 98%). Forcing the wrong key length L=7 produced NLEKNLU, gibberish plaintext, and an honest "Not English yet — one or more columns are off" at 14% combined; a 12-letter ciphertext produced "No repeated substrings of length ≥ 3 — Kasiski yields nothing here" and "No period produces an English-like IoC ... inconclusive." The Kasiski panel even warns that factors 2 and 3 divide every spacing so they always score highest — a demo arguing against its own strongest-looking evidence. 72 tests. Off 10: the corpus and scoring are English-only by construction, and autokey/running-key variants are named as future work rather than shown to resist this attack. |
+
+| vss-gate | 6fb7754 | 8 | The verification is real and legible at two scales at once: the 2048-bit table prints per-participant LHS `g^y` against RHS `∏C_j^(i^j)` and only P2's row fails when the cheating dealer is on, while the mirrored p=2039 panel shows the same check digit by digit (1998 ≠ 1519, with the prose naming that P2's share was bumped to 27 when the committed curve forces f(2)=26). Pedersen's hiding is demonstrated rather than asserted — one published commitment opened to several different secrets, each with its own r — and the page volunteers that its `h` is derived from `g` so `log_g(h)` may be known. Held at 8 because the interactive surface is narrower than the honesty: three fixed Run buttons, tamper limited to a +1 flip on a chosen participant, and the comparison step is a static table. 30 tests cover the crypto module well but a 1,457-line main.ts has no unit or e2e behavior coverage beyond the a11y sweep. |
+
+| world-ciphers | 1779dc0 | 8 | The page opens by proving itself: 7/7 official vectors (RFC 3713, RFC 5794, GB/T 32907-2016, GOST R 34.12-2015) encrypted live in the browser and byte-compared, re-runnable, and gating `npm test`. Avalanche is genuinely measured and learner-driven across cipher and bit — I got "63 of 128 ciphertext bits changed (49.2%)" with the flipped cells highlighted. The SM4 exhibit animates the real 32-round pipeline over the live state you just encrypted and labels the one non-claim honestly ("the stage highlighting is illustrative timing, not a claim about gate-level latency"), and the ECB penguin is a real client-side image encryption, not a stock picture. Held at 8 because nothing adversarial ever happens: the only failure shown is a mode failure (ECB structure leak), no cipher is attacked or distinguished, the Kuznyechik S-box controversy that motivates the whole comparison is prose and citations, and 15 tests cover the vectors but none of the eight exhibits' states. |
+
 ## What would raise it
 
 ### shor
@@ -119,3 +125,17 @@ Repos in this slice (HEAD at scoring time):
 - Make the parallelism exhibit real: actually spawn 4 Web Workers, let them try to split the chain, and print their measured wall-clock time next to the single-threaded one. Right now the page's central "no shortcut" claim is the only uncomputed thing on it.
 - Add a T slider large enough that the eval-vs-verify gap is felt, and show the ratio growing with T.
 - Test the tamper-reject and trapdoor-match paths, not just the happy-path proof round-trip.
+
+### vigenere-break
+- Add a running-key/autokey mode the same workbench visibly fails against, so the "why a long non-repeating key wins" lesson is demonstrated rather than deferred to the OTP demo.
+- Offer a second plaintext language with its own frequency table, making the "frequency analysis assumes a known language" caveat something the learner can trip.
+
+### vss-gate
+- Turn the demo-integrity note into an exhibit: since `log_g(h)` is knowable here, let the learner use it to forge a Pedersen opening and watch binding actually break. That is a real attack the current build is one function away from.
+- Let the learner type the tampered share value (or tamper a commitment instead of a share) rather than only toggling a fixed flip.
+- Add behavior e2e specs asserting the verified/failed row states — the crypto module is well tested, the page is not.
+
+### world-ciphers
+- Give the learner something to break: a round-reduced variant of one cipher with a mountable distinguisher, so "more rounds = larger security margin" is demonstrated rather than tabulated.
+- Make the Kuznyechik S-box controversy concrete — show the Biryukov-Perrin-Udovenko decomposition acting on the real S-box next to a random one, instead of citing the papers.
+- Assert exhibit states (avalanche percentage bounds, ECB block repetition, SM4 round count) in the test suite.

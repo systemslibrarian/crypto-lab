@@ -21,6 +21,7 @@ Repos in this slice (HEAD short hashes at scoring time):
 | enigma-forge | 2fd6f6f |
 | format-ward | 81ed26b |
 | frost-threshold | d50b1d1 |
+| gg20-wallet | 86fa94c |
 
 ## Scores
 
@@ -45,6 +46,8 @@ Repos in this slice (HEAD short hashes at scoring time):
 | `format-ward` | 81ed26b | **8** | Real FF1/FF3-1 with genuinely computed teaching: the equality-leak panel counts actual repeated ciphertexts in my typed list, the avalanche readout measured 12/16 symbols changed and states the correct 1−1/radix expectation rather than the folk "50%", the domain calculator computes the floor check in BigInt with a comment explaining that `Math.pow` would silently pass anything, and the ZIP option genuinely refuses to run — a rejection that is the exhibit. The standardization framing is scrupulous (it corrects the common Durak-Vaudenay/FF3-1 misattribution). Held to 8 because the demo's own headline — *why FF3-1 broke* — is entirely prose and citation: Beyne's linear attack is never mounted, so FF3-1 is asserted broken while running perfectly on screen. E2e is axe-only; 30 unit tests. |
 
 | `frost-threshold` | d50b1d1 | **8** | Real RFC 9591 FROST in Rust/WASM, and the aggregation panel does something most demos skip: it independently re-sums the three signature shares mod ℓ in the page and compares against the `s` half the aggregator returned, printing "✓ Checked in this page". Lagrange coefficients are recomputed live from the actual signer ids (1,3,5), the under-threshold toggle produces a genuine WASM error ("fewer signature shares than signing commitments") rather than a fake near-miss, and two different subsets I ran produced byte-different signatures that both verify against a byte-identical group key. Held to 8 because both named attacks — nonce reuse and the swapped-commitment/Drijvers case — are prose only (round1.ts:78 asserts "swapped commitment → rejected" and redirects the learner to the *unrelated* under-threshold toggle), and there is no JS test suite at all: `package.json` has no `test` script, only `test:a11y`. |
+
+| `gg20-wallet` | 86fa94c | **9** | The best verdict discipline in the slice. With the cheat toggle on, both Phase-5 identities print their *computed* points next to the expected G and X and read ✗ FAILS, `secp256k1.verify` independently returns false, and the abort banner is derived from the identities rather than the toggle (a node test asserts the Phase-5 verdict and the final verification can never disagree). The ZK range-proof exhibit is exemplary: the malicious prover is rejected by the range bound alone while checks ②–④ *pass*, and the page says so — "the cheater's algebra is valid, which is exactly why the bound has to exist". It also refuses to overclaim: "This is detection, not attribution", with Exhibit 7 listing what is documented rather than implemented. Real Paillier, real MtA with α+β=a·b shown on live numbers, 19 node tests. Off 10 because the browser tests are a11y/contrast only — every state above is asserted in node, not in the page — and the stack is a scaled-down 2-of-2. |
 
 ### dead-sea-cipher — what would raise it
 
@@ -110,3 +113,8 @@ Repos in this slice (HEAD short hashes at scoring time):
 - Make the swapped-commitment rejection a real button: substitute one signer's commitment from a different attempt and let the verifier reject the assembled signature. Today the claim is prose and points the learner at a different failure.
 - Add the nonce-reuse key-recovery exhibit the "What Can Go Wrong" section describes — the two-equations/two-unknowns solve, run live.
 - Add a TS test suite (there is none) and browser assertions for the aggregate/failure verdicts.
+
+### gg20-wallet — what would raise it
+
+- Promote the node assertions (Phase-5 verdict ≡ verification, range-proof accept/reject) into Playwright against the built page, so the states are tested where the learner sees them.
+- Implement one of the Exhibit-7 attribution proofs so the abort becomes identifiable rather than merely detected — the demo already names this as the gap.

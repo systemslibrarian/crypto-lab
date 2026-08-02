@@ -184,6 +184,10 @@ file holds the work queue. Keep both current.
   computes the displayed toy search space from n=4/q=17, and waits for decryption before
   reporting authentication (`22b0b9e`). All 23 tests, typecheck, build, and six
   browser/a11y tests passed.
+- Task 8 continued: `multivariate` now derives its 32-second tour label, performs a true
+  whole-byte tamper, uses byte-based signature comparisons, updates the scheme-status chip,
+  and treats larger-preset timing as measured (`e1113cf`). All 33 tests, build, and four
+  browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

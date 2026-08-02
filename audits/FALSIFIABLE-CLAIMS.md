@@ -524,8 +524,12 @@ accessibility scans passed.
 
 ### `multivariate`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 5 claims below as live.
+**Fix status: FIXED.** `e1113cf` derives the tour label from its 32.4-second step total,
+inverts all eight bits for the claimed byte tamper, replaces contradictory tweet analogies
+with byte counts, updates the scoreboard status from the live scheme event, and asks users
+to compare measured keygen timing instead of promising a visible slowdown. All 33 tests,
+the production build, and four browser tests including dark/light and audience-mode
+accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

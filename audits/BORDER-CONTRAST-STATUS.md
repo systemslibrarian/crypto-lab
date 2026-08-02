@@ -95,6 +95,10 @@ theme setup. All 40 tests, build, and three browser/a11y tests pass on the final
 boundary measures at least 3.84:1 dark and 3.98:1 light, enforced across all such controls.
 All seven tests, typecheck, build, and three browser/a11y tests pass.
 
+`signed-bytes` was live and is fixed/pushed at `c36ea47`; its dedicated textarea/text-input
+boundary measures at least 3.10:1 dark and 3.62:1 light, enforced across all such controls.
+Typecheck, 132 tests, build, and 12 browser/a11y/behavior tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

@@ -271,6 +271,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `padding-oracle` text/select boundaries now measure at least
   3.84:1 dark and 3.98:1 light with a minimum-across-controls browser regression
   (`5f2f536`). All seven tests, typecheck, build, and three browser/a11y tests passed.
+- Task 5 delegated completion: `signed-bytes` text-field boundaries now measure at least
+  3.10:1 dark and 3.62:1 light with all-controls computed-style regressions (`c36ea47`).
+  Typecheck, 132 tests, build, and 12 browser/a11y/behavior tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -169,6 +169,9 @@ file holds the work queue. Keep both current.
   accurately, makes signature tampering one-way until re-signing, and derives browser
   performance comparisons from measured ratios (`b8c4557`). All 20 tests, build, and four
   browser/a11y tests passed.
+- Task 8 delegated completion: `opaque-gate` now consistently describes its envelope as
+  nonce plus HMAC authentication tag, with no ciphertext or encryption claim (`6933e10`).
+  All 12 protocol/vector tests, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -573,8 +573,11 @@ servers are blind.
 
 ### `opaque-gate`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `6933e10` centralizes and consistently renders the implemented
+envelope format as a nonce plus HMAC authentication tag with no ciphertext, and corrects
+the registration, login, breach exercise, glossary, hero, and README language accordingly.
+All 12 protocol/vector tests, the production build, and three browser tests including
+dark/light accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

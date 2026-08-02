@@ -368,8 +368,9 @@ and the input synchronization; 20 tests, build, dark/light axe, screen-reader ch
 
 ### `kdf-chain`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `1233751` makes one grid cell equal exactly 1 MiB, so 4–128 MiB is
+drawn at the stated 32× ratio, and adds a browser test for both endpoints. All 10 protocol
+tests, build, the new scale test, and dark/light accessibility tests pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

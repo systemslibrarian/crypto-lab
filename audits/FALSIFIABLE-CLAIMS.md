@@ -221,8 +221,10 @@ transcript. Treat all 4 claims below as live.
 
 ### `dp-noise`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `ac25d00` removes the stale numeric test total from the UI and README,
+links the evidence card to the current deploy workflow, and adds a browser regression
+against copied “N tests pass” claims. The current suite passed 239 tests across 18 files,
+the production build, and nine browser tests including dark/light full-state WCAG scans.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

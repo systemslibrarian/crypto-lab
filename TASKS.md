@@ -162,6 +162,9 @@ file holds the work queue. Keep both current.
 - Task 8 delegated completion: `lms-ledger` now derives LMS/HSS sizes from RFC 8554 fields,
   includes the verifier-required 32-byte C, and runtime-checks the live 2,336-byte result
   (`9f44751`). All 18 tests, build, and three browser/a11y tests passed.
+- Task 8 delegated completion: `dp-noise` replaces its stale copied test count with a link
+  to the current deploy workflow and adds a regression against future hard-coded totals
+  (`ac25d00`). All 239 tests, build, and nine browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

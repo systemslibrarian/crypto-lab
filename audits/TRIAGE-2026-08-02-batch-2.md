@@ -45,3 +45,21 @@ toy crypto itself — fixed and pushed as `fca3ad7`.
 | GS-10 Layered math | DONE | inspect/disclosure pattern ("Inspect the secrets", details elements); solutions collapsed | none |
 | GS-11 Provenance & "spec KATs" wording | DONE | README:76 "32 worked-example KATs (regression tests against the teaching sources, not official FIPS/ACVP vectors)" with exact source revisions; glossary + citations (9f26f74) | none |
 | (new, audit-adjacent) Dishonest tamper caption + flaky unit tests | STILL-APPLICABLE | Caption said the re-derived challenge "must now disagree" — false 1/16; unit tests "rejects a tampered message"/"tampered z" used fresh randomness, flaky at ~6% | IMPLEMENTED (`fca3ad7`): warn-labelled toy-forgery acceptance branch, honest caption, seed-pinned rejection tests, new pinned forgery test (seed 32) proving the collision branch; gates: 58 vitest, build, 13 Playwright x3 |
+
+## audits/protocol-checker.md → crypto-lab-protocol-checker
+
+Audit verified baseline 2026-07-17; commit `e650cdf` ("Gold-standard pass", 2026-07-17)
+addressed the top-priority items the same day. Gates re-verified 2026-08-02: 52/52 vitest,
+build clean, 2/2 Playwright a11y. No changes needed; remaining items are feature/redesign
+scale and stay PROPOSED.
+
+| Item | Verdict | Evidence | Action |
+| --- | --- | --- | --- |
+| 1 Machine-derived secure explanations | DONE | `src/symbolic/explain.ts` (256 lines) derives the repair diagnostic from the same engine primitives (unify + canSynth); "why the repair holds — derived, not asserted" panel; hand-authored prose demoted to fallback; explain.test.ts | none |
+| 2 Parameterized bounds/scenarios | STILL-APPLICABLE (feature-scale) | `bound: 60000` and `instances` still fixed per protocol (src/symbolic/protocol.ts:51-62); UI honestly distinguishes "space fully exhausted" vs "state cap reached" (src/ui.ts:420-463) but offers no session/bound controls or sweeps | PROPOSED: session-count + bound controls, bound-sweep tables |
+| 3 External cross-validation | PARTIAL — DONE for literature grounding, rest PROPOSED | Literature citations on KATs (Dolev-Yao 1983, Needham-Schroeder 1978, Lowe 1995/96) make "agrees with the published result" explicit (e650cdf); no ProVerif/Tamarin differential corpus | PROPOSED: reference corpus cross-checked against ProVerif/Tamarin |
+| 4 Protocol authoring/DSL | STILL-APPLICABLE (redesign-scale) | `PROTOCOLS` still a static array; no DSL/import-export | PROPOSED: protocol DSL/JSON schema, import/export, diff view |
+| 5 Adversarial test depth | PARTIAL — property layer DONE, infra PROPOSED | `properties.test.ts`: seeded randomized MGU soundness, monotonicity, idempotence, DH commutativity, search determinism, bound-monotonicity (30→52 tests, e650cdf); no mutation testing/coverage thresholds/benchmark gates | PROPOSED: mutation testing on intruder.ts/search.ts, coverage + perf gates |
+| 6 Search-failure pedagogy (frontier explorer) | STILL-APPLICABLE (redesign-scale) | No frontier/state-graph explorer or per-step match diagnostics in src/ui.ts | PROPOSED: frontier explorer, trace minimization, side-by-side compare |
+| Extras: architecture note | DONE | `ARCHITECTURE.md` (63 lines): term algebra, transition system, deduction rules | none |
+| Extras: LICENSE/CONTRIBUTING/CHANGELOG | STILL-APPLICABLE (owner's call) | None present — but no repo in the fleet carries them (checked icy-dvrf, lattice-gentle), so license choice is a fleet-wide maintainer decision | PROPOSED: fleet-wide license decision |

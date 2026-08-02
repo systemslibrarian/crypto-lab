@@ -39,6 +39,10 @@ Repos in this slice (HEAD at scoring time):
 
 | stego-suite | 927cfb2 | 8 | Unusually honest for a stego demo: the Westfeld-Pfitzmann statistic is real (incomplete-gamma Q, degrees of freedom counted from the pairs the carrier actually populates, with the code commenting on why hard-coding 127 would false-positive a limited-palette cover), the chi plot's dof caption is generated from the dof used, and the adaptive-vs-sequential comparison reads its verdict off the two computed pEmbed values through four branches instead of asserting adaptive wins. The detectability curve is a real measured sweep that shows 10%/50% payloads evading and only 100% detected — the demo publishing its own detector's blind spot. LSB and DCT round-trips both extract correctly on live pixels. Held at 8: exhibits 4 and 5 are self-labelled "inspired"/"educational simplification" rather than F5 or WOW, exhibit 6 is prose, and at 39 tests the UI-level dependency-hint and detection-verdict states are asserted only indirectly. |
 
+| stream-ward | 3eec4bc | 9 | Every accept and reject on the page is the genuine hand-written verifier's answer, and I confirmed all six cells: chained rejects truncate/reorder/drop with specific codes (TRUNCATED_STREAM, SEGMENT_AUTH_FAILED with a per-segment explanation naming the sequence number and chain state), naive accepts all three silently and shows the corrupted settlement ledger with the moved and missing lines called out. The scorecard is filled from what the verifier actually reported ("6 of 6 run", nothing pre-written) and the page carries an explicit REAL HERE / MODELLED HERE split. 81 tests, including "rejects a swap of ANY two distinct frames, not just the demo default" and "rejects truncation at EVERY length" — the generalization the demo's single button cannot show. Off 10 for exactly the thing the page admits: exhibit 1's memory ceiling is a model of tracked allocations, not a measured footprint, and the three attacks are fixed presets in the browser. |
+
+| syndrome-drain | 06d7279 | 7 | Exceptionally honest about being a model — "runs no attack, no decoding, no DOOM execution, no random numbers," an inline "idealized √D model" badge on every derived number, and both a computed crossover marker and the paper's full-ISD marker plotted per scheme with an `agree` flag computed rather than asserted. The [7,4] Hamming primer is real GF(2) arithmetic: I flipped bits and the row-by-row H·e parities, the syndrome, and the weight-2 collision partner all recomputed correctly, including the honest "the code says a single flip at position 5" when the true error was weight 2. But the headline exhibit is a curve you drag a slider along; the drain is arithmetic on published constants, nothing is ever decoded, and the √M panel is a deterministic scatter illustrating the bargain rather than measuring it. Only 23 tests for an 803-line UI. |
+
 ## What would raise it
 
 ### shor
@@ -59,3 +63,12 @@ Repos in this slice (HEAD at scoring time):
 - Add a second, stronger detector (RS or SPA) so the adaptive-vs-sequential contrast has a test that can actually separate them — right now the page's own verdict is "the crude global test is blind here."
 - Implement quantized-DCT embedding through an actual JPEG re-encode so exhibit 4's "a change JPEG keeps" claim is demonstrated rather than stated.
 - Assert the detection verdict strings and the dependency-hint states in the test suite, not just the numeric statistic.
+
+### stream-ward
+- Let the learner choose which segments to swap/drop/truncate-at in the browser, so the "ANY two frames" generality the tests prove is reachable from the page.
+- Measure something real for exhibit 1 (e.g. `performance.memory` or an actual large-Blob decrypt) even at a small scale, so the memory story is not the page's one modelled claim.
+
+### syndrome-drain
+- Run an actual toy DOOM: give the learner M syndromes of a small random code, let them run a real list-matching search, and plot measured work against M so the √M discount is measured rather than illustrated.
+- Extend the Hamming primer into a decode-one-out-of-many mini-exhibit — the same seven-bit code with M targets — bridging the concrete half to the asymptotic half.
+- Grow the test suite past the model functions to cover the chart/meter/verdict rendering states.

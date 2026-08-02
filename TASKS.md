@@ -373,6 +373,23 @@ file holds the work queue. Keep both current.
   `CRYPTO-LAB-TEMPLATE.md` self-references fixed, favicon/no-emoji tension clarified.
   `_STANDARDIZE-PROMPT.md` moved to `archive/header-rollout/`. CLAUDE.md gained a
   one-line pointer under Conventions.
+- Task 10 triage batch 1 complete (tables in `audits/TRIAGE-2026-08-02-batch-1.md`):
+  `ablation-wire` 13/13 recommendations already done (1 external-process item proposed);
+  `credential-veil` 8/8 done via `e82cc2b` (2 proposed: differential BBS tests, production
+  track); `harvest-vault` 12/12 done tier by tier; `hqc-timing` both salvaged bug findings
+  verified fixed, the lost ~210 lines remain unrecoverable; `dkg-gate` gained the one still-
+  applicable slice — property-by-property threat model, bias-statistics honesty, and a
+  mobile-reflow e2e gate (`c3e845a`, pushed, verified by coordinator; 96/96 tests, build,
+  5/5 a11y; 7 larger items proposed with rationale). Confirms the stale-audit pattern:
+  33 of 39 non-lost recommendations were already implemented.
+- Task 5 slice C complete — all seven repos fixed (none stale), scoped control tokens,
+  blocking both-theme composited regressions (gradient repos assert every gradient stop),
+  full gates green, pushed individually; HEADs and clean trees verified by coordinator:
+  `encrochat` (`3b38ae5`, 3.56 dark / 3.81 light), `ntru-classic` (`b12e723`, 5.07 both
+  states), `dp-noise` (`e79fb33`, 3.45/4.00), `mpcith-sign` (`6a7c347`, 3.46+ both,
+  pixel-verified), `mayo-seal` (`3b87bcc`, 3.84/3.48), `power-trace` (`3a206b5`, 4.13/4.13
+  — dark ALSO failed at 2.91 vs the rendered panel gradient despite the audit calling it
+  light-only; fixed both), `beacon-lock` (`8a265a0`, 3.66/4.08).
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

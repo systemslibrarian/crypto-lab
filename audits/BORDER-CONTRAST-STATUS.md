@@ -30,6 +30,10 @@ computed-style browser ratio gate. All 23 tests, build, and three browser/a11y t
 control border measures 3.77:1 dark and 3.51:1 light against the actual fills, enforced by
 a computed-style browser ratio gate. All 90 tests, build, and three browser/a11y tests pass.
 
+`mls-group` was live and is fixed/pushed at `9371174`; its text-input boundaries now
+measure 3.18:1 dark and 3.32:1 light against their rendered fills, enforced by both-theme
+computed-style regressions. All 19 tests, build, and five browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

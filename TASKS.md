@@ -223,6 +223,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `harvest-timeline` controls now use dedicated borders
   measuring 3.77:1 dark and 3.51:1 light with a blocking computed-style regression
   (`e617bdd`). All 90 tests, build, and three browser/a11y tests passed.
+- Task 5 delegated completion: `mls-group` text-input boundaries now measure 3.18:1 dark
+  and 3.32:1 light with blocking computed-style regressions (`9371174`). All 19 tests,
+  build, and five browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

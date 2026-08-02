@@ -567,8 +567,11 @@ regressions, and dark/light accessibility scans pass.
 
 ### `ntru-classic`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `cf52ccb` records an explicit `found` result only after a reduced row
+matches every coefficient of a sign/rotation of (p·g ‖ f), and renders a neutral checked
+non-recovery result otherwise instead of retaining default index/rotation values. All 52
+tests, the production build, and three browser tests including dark/light accessibility
+scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

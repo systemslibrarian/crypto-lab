@@ -203,6 +203,9 @@ file holds the work queue. Keep both current.
   wide-pipe Merkle–Damgård construction (`b48a176`); direct unit/browser regressions now
   protect that distinction (`c5e7f01`). All 58 tests, typecheck, build, and three
   browser/a11y tests passed.
+- Task 8 continued: `ntru-classic` now records whether LLL actually matched a sign/rotation
+  of the private key and reports the non-recovery path instead of defaulting to success
+  (`cf52ccb`). All 52 tests, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

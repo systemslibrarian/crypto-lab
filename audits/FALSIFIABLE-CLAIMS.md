@@ -148,8 +148,10 @@ dark/light Playwright accessibility tests pass.
 
 ### `chain-of-trust`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `d76cdd0` adds an UNKNOWN verdict for otherwise-valid imported
+chains whose revocation check was not evaluated, while real failures still take precedence
+as REJECT. All 78 unit tests, build, browser assertions, and dark/light/mobile accessibility
+tests pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -524,8 +526,10 @@ Agent reported completion; tsc clean across all five repos in that batch.
 
 ### `nonce-guard`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 2 claims below as live.
+**Fix status: FIXED.** `4ac4e9c` labels the XOR bytes as an ASCII preview rather than
+plaintext and identifies Level 2 as a separate fixed chosen-probe demonstration rather than
+a result derived from the learner's messages. All 22 unit tests, build, two browser claim
+regressions, and dark/light accessibility scans pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

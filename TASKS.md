@@ -141,6 +141,10 @@ file holds the work queue. Keep both current.
   `mac-race` (`39a2ce4`), `aegis-gate` (`793d614`), and `bulletproofs` (`b40e111`).
   Each repo's available unit/build/browser/a11y gates passed; exact evidence and any
   environment limitation are recorded in `audits/FALSIFIABLE-CLAIMS.md`.
+- Task 8 delegated completions: `chain-of-trust` now distinguishes unevaluated revocation
+  as UNKNOWN (`d76cdd0`), and `nonce-guard` now labels XOR previews and the fixed
+  chosen-probe exhibit honestly (`4ac4e9c`). Both were fully tested, built, accessibility
+  scanned, pushed to `main`, and recorded in the claim ledger as soon as they completed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

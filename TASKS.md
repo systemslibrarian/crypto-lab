@@ -226,6 +226,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `mls-group` text-input boundaries now measure 3.18:1 dark
   and 3.32:1 light with blocking computed-style regressions (`9371174`). All 19 tests,
   build, and five browser/a11y tests passed.
+- Task 5 delegated completion: `collision-vault` tamper-select boundaries now measure
+  3.35:1 dark and 5.23:1 light with desktop/mobile computed-style regressions (`45d3436`).
+  All 77 tests, lint, build, and 19 passing browser tests passed (one skipped).
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

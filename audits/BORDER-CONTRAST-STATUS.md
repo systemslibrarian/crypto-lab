@@ -34,6 +34,10 @@ a computed-style browser ratio gate. All 90 tests, build, and three browser/a11y
 measure 3.18:1 dark and 3.32:1 light against their rendered fills, enforced by both-theme
 computed-style regressions. All 19 tests, build, and five browser/a11y tests pass.
 
+`collision-vault` was live and is fixed/pushed at `45d3436`; its tamper-select boundary
+now measures 3.35:1 dark and 5.23:1 light, enforced on desktop and mobile. All 77 tests,
+lint, build, and 19 passing browser tests pass (one intentionally skipped).
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

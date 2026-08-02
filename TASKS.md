@@ -115,6 +115,10 @@ file holds the work queue. Keep both current.
 
 ## Current-session update — 2026-08-01
 
+- Credit-window checkpoint: durable handoff written to `RESUME-HERE.md`. Task 8 is DONE.
+  Task 5 remains active; its conservative next recheck queue and clean/active repo state
+  are recorded there. Tasks 6 and 10 remain open after Task 5.
+
 - Fresh fetch-first fleet scan completed. Six interrupted edits were recovered, fully
   verified, committed, and pushed to `main`: `blind-hello` (`089dd4c`),
   `diffie-hellman-mitm` (`34dc9a4`), `ibe-gate` (`ba74aca`), `kdf-arena` (`d4ba2fd`),

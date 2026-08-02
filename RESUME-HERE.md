@@ -2,6 +2,38 @@
 
 Work is tracked in the session task list; this file is the durable copy.
 
+## Latest checkpoint — 2026-08-01 ~21:40 EDT
+
+Central `main` is pushed through `12f64ac` (`Record Schnorr Forge border fix`) before this
+checkpoint update. Task 8 is **DONE**: `audits/FALSIFIABLE-CLAIMS.md` has no remaining
+`NO FIX CONFIRMATION` or `MIXED` entry. Every completed repo was committed/pushed and then
+recorded centrally in a separate commit.
+
+Task 5 is active. The resumed pass verified/fixed and pushed these repos after the older
+checkpoint: `lwe-hints`, `syndrome-drain`, `harvest-timeline`, `mls-group`,
+`collision-vault`, `iron-serpent`, `noise-pipe`, `oram-vault`, `j-uniward`, `hybrid-wire`,
+`rsa-educational`, `nonce-guard`, `broken-trust`, `scloud-vault`, `stego-suite`,
+`nonce-collision`, `falcon-seal`, `psi-gate`, `padding-oracle`, `signed-bytes`,
+`phantom-vault`, `threshold-decrypt`, `enigma-forge`, and `schnorr-forge`.
+`entropy-collapse` was reclassified stale: it renders no bordered text-entry/select
+control. Exact commits, ratios, and gates are in `TASKS.md` and
+`audits/BORDER-CONTRAST-STATUS.md`.
+
+Conservative next Task 5 recheck queue (the old table is stale; verify current source):
+`musig-gate`, `syndrome-hints`, `world-hashes`, `babel-hash`, `chain-of-trust`,
+`dilithium-seal`, `envelope-kms`, `isogeny-atlas`, `shamir-gate`, `multivariate`,
+`card-trick`, `hpke-envelope`, `gg20-wallet`, `pq-rotation`, `key-mirror`,
+`lattice-gentle`, `search-vault`, `opaque-gate`, `time-trust`, `blind-relay`, `fhe-arena`,
+`kerberos`, `time-lock-puzzle`, `ring-sign`, `pake-gate`, `spdz-forge`, `lll-break`,
+`frodo-vault`, `kyber-vault`, `protocol-compose`, `encrochat`, `ntru-classic`, `dp-noise`,
+`mpcith-sign`, `mayo-seal`, `power-trace`, and `beacon-lock`. Some will already be fixed;
+fetch and remeasure rather than trusting the dated row.
+
+All three helper-agent slices are complete. Root stopped before editing `musig-gate`;
+`npm ci` ran there but the worktree is clean. `entropy-collapse` is also clean. Preserve
+the known pre-existing untracked `crypto-lab-schnorr-forge/chat.md`. After Task 5, Tasks 6
+(fleet re-scoring) and 10 (audit recommendations) remain open.
+
 ## Corrections to the previous version of this file
 
 - It said **"0 committed-but-unpushed"**. Wrong — 9 repos were holding finished

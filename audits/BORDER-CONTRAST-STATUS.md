@@ -87,6 +87,10 @@ All 36 tests, typecheck, build, and three browser/a11y tests pass.
 measures 4.69:1 dark and 4.00:1 light against the actual fill, enforced in both themes.
 All 18 tests, build, and both-theme motion-neutralized accessibility scans pass.
 
+`psi-gate` was live and is fixed/pushed at `98b3c5e`; its dedicated textarea boundary
+measures 3.58:1 dark and 4.29:1 light against the actual fill, enforced with deterministic
+theme setup. All 40 tests, build, and three browser/a11y tests pass on the final rerun.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

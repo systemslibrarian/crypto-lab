@@ -265,6 +265,9 @@ file holds the work queue. Keep both current.
 - Task 5 continued: `falcon-seal` textarea boundaries now measure 4.69:1 dark and 4.00:1
   light with blocking computed-style regressions (`4226ce6`). All 18 tests, build, and
   both-theme motion-neutralized accessibility scans passed.
+- Task 5 delegated completion: `psi-gate` textarea boundaries now measure 3.58:1 dark and
+  4.29:1 light with blocking computed-style regressions and deterministic theme setup
+  (`98b3c5e`). All 40 tests, build, and three browser/a11y tests passed on final rerun.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

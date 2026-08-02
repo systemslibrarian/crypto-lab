@@ -22,6 +22,10 @@ input boundary now measures 3.30:1 in dark theme and 4.00:1 in light theme again
 control fill, enforced by a blocking browser regression. Unit, build, and both-theme a11y
 gates pass.
 
+`syndrome-drain` was also live and is fixed/pushed at `06d7279`; its dedicated control
+border measures 3.47:1 dark and 3.84:1 light against the actual control surfaces, with a
+computed-style browser ratio gate. All 23 tests, build, and three browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

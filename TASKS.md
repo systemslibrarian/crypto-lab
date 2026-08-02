@@ -217,6 +217,9 @@ file holds the work queue. Keep both current.
 - Task 5 resumed: `lwe-hints` had a live control-boundary failure; its calculator inputs
   now measure 3.30:1 dark and 4.00:1 light with a blocking Playwright ratio assertion
   (`1429cef`). All 49 tests, build, and both-theme accessibility scans passed.
+- Task 5 delegated completion: `syndrome-drain` control boundaries now measure 3.47:1 dark
+  and 3.84:1 light, enforced by computed-style browser regression (`06d7279`). All 23
+  tests, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

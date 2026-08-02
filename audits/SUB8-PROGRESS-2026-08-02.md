@@ -92,3 +92,45 @@ Mosca's inequality. Neither was merged or deleted. After this work they are comp
 recommends keeping both cards and tightening the two `project-copy` lines in `index.html`
 to name that split — deliberately not done, since editing index.html triggers the
 README/corpus/concept regeneration workflow.
+
+## 8 -> 9 pass: hybrid playgrounds and named missing exhibits (2026-08-02)
+
+All eight verified by the coordinator: HEADs match, nothing unpushed, trees clean. The
+hybrid-pqc mutation claim was re-run independently and reproduced exactly (inverting
+`verify()` in `attemptForgery` fails 12 tests).
+
+**The four hybrid-* playgrounds** — every security headline was a truth table over
+checkboxes; each is now the outcome of a real attempt at full parameters.
+- `hybrid-guide` (`16795c3`): the attacker gets only the broken halves' secrets plus the
+  public transcript, derives candidate keys through the real combiner, and the AES-GCM tag
+  is the only oracle. "Secure" now means attempts failed AND there was entropy to guess.
+- `hybrid-pqc` (`789ce9b`): six badges, the forgery line, the anatomy rows and all 12
+  survival-matrix cells were an if-chain over flags. Now 12 real recoveries and 12 real
+  forgeries, each cell carrying its receipts. The old flag logic survives as a *prediction*
+  with a test asserting the computed cells reproduce it.
+- `hybrid-sign` (`cb1023d`): the forged message was a hard-coded constant with an empty
+  context; it now forges over the learner's actual message and context, so the ctx binding
+  is exercised, and re-signs honestly each run to prove a rejection is the forgery failing
+  rather than the harness.
+- `hybrid-wire` (`be3135a`): `evaluateResilience(bool, bool)` was a pure truth table;
+  reconstruction now runs the real combiner and tries to open a record.
+
+**Four named missing exhibits built** — each page named something it never let the learner
+cause.
+- `iron-letter` (`0809a45`): active MITM — Eve substitutes her key, the two 32-byte secrets
+  are byte-compared, her AES-GCM open really recovers the plaintext, and the ECDSA
+  authentication step is computed on unauthenticated runs (labelled as the check Alice
+  skipped) and acted on when enabled, with a control proving the check can pass.
+- `key-exchange` (`694d6ad`): Eve decrypts, rewrites, re-encrypts, and Bob's tag verifies;
+  authenticated variant aborts. Honest scale note: the DH value is sub-5-bit, so Eve's
+  advantage is the substitution, not key size.
+- `nonce-collision` (`9e1d7ed`): the "why" panel was CSS; it now recovers the mask from each
+  tag separately and byte-compares the recomputed relation against this run's values.
+- `model-breach` (`1e23782`): the "the browser never runs this algorithm" column now runs
+  it — real differential over AESL, DDT-solved S-boxes, the paper's Theorem 1 enumeration,
+  and a verified reproduction of beta. The agent honestly flags this as the least certain
+  of the four to clear 9, since two panels remain prose.
+
+Residual honesty item the agent deliberately did NOT paper over: in all four hybrids, the
+*event* of an algorithm being broken is still modelled by handing the attacker the genuine
+secret. Every page says so; what changed is that everything downstream is now run.

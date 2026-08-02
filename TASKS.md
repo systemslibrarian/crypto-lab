@@ -336,11 +336,11 @@ session summary reported, which counted only two of four batches. **124 have no 
 confirmation.**
 
 The largest single gap: **an entire audit batch never reported to the main thread.** The
-privacy/ZK/MPC cluster's findings exist only in a subagent transcript, so no fix agent was
-ever dispatched for `snark-arena` (6 claims), `shadow-vault` (7), `patron-shield` (5),
+  privacy/ZK/MPC cluster's findings originally existed only in a subagent transcript. The
+full orphaned set is now remediated: `snark-arena` (6 claims), `shadow-vault` (7), `patron-shield` (5),
 `stark-tower` (4), `oram-vault` (3), `ring-sign` (3), `credential-veil` (3),
-`oblivious-shelf` (3), `search-vault` (2). An agent is part-way through these; 5 of 8 had
-landed at last check. Also never dispatched: `drbg-arena` (8) and `corrupted-oracle` (7).
+`oblivious-shelf` (3), and `search-vault` (2). Also remediated since the original audit:
+`drbg-arena` (8) and `corrupted-oracle` (7).
 
 Expect a high stale rate when cross-checking: every external review checked so far
 described already-fixed code. The defect class is consistent — a demo asserts something its

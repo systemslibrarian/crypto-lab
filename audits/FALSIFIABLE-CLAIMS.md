@@ -179,8 +179,8 @@ unit tests, production build, and dark/light Playwright accessibility checks all
 
 ### `credential-veil`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 3 claims below as live.
+**Fix status: FIXED.** `d15e4e8` derives unlinkability and revocation verdicts from the
+presentations.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -529,8 +529,8 @@ transcript. Treat all 1 claim below as live.
 
 ### `oblivious-shelf`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 3 claims below as live.
+**Fix status: FIXED.** `47b43a0` computes the anonymity set instead of asserting that the
+servers are blind.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -549,8 +549,7 @@ transcript. Treat all 1 claim below as live.
 
 ### `oram-vault`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 3 claims below as live.
+**Fix status: FIXED.** `e16f2e2` derives the ORAM claims from observed runs.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -572,8 +571,7 @@ Wordlist now fixed and independent of the password; verified `Tr0ub4dor&3-quokka
 
 ### `patron-shield`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 5 claims below as live.
+**Fix status: FIXED.** `db2037f` makes the PIR limits and displays match the live protocol.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -638,8 +636,7 @@ Main thread reports fixed.
 
 ### `ring-sign`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 3 claims below as live.
+**Fix status: FIXED.** `7f719ce` computes what the verifier learns instead of asserting it.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -659,8 +656,8 @@ transcript. Treat all 2 claims below as live.
 
 ### `search-vault`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 2 claims below as live.
+**Fix status: FIXED.** `37b816f` handles unknown queries without breaking leakage attacks
+and corrects the guessing baseline.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -669,8 +666,11 @@ transcript. Treat all 2 claims below as live.
 
 ### `shadow-vault`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 7 claims below as live.
+**Fix status: FIXED.** `00f6027` scopes deniability to contents rather than existence,
+discloses global precomputation and format fingerprints, makes the offset visualization
+honest, strengthens password warnings, and lets decryption reproduce non-default Argon2id
+parameters. Typecheck, build, 12 browser tests, and both-theme a11y pass; Rust tests were
+unavailable because this machine has no `cargo`, and no Rust code changed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -715,8 +715,8 @@ Agent reported completion. Note the fix agent was dispatched from batch 4’s *c
 
 ### `snark-arena`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 6 claims below as live.
+**Fix status: FIXED.** `8f79cf2` computes the verdicts that Exhibits 01, 02, 03, and 05
+previously asserted.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

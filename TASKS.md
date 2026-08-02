@@ -238,6 +238,9 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `oram-vault` number-input boundaries now measure 3.55:1
   dark and 4.11:1 light with blocking computed-style regressions (`2dbff17`). All 31
   tests, typecheck, build, and three browser/a11y tests passed.
+- Task 5 delegated completion: `j-uniward` message-field boundaries now measure 4.18:1
+  dark and 4.83:1 light with blocking computed-style regressions (`03b91e9`). All 15
+  custom tests, typecheck, build, and three browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -50,6 +50,10 @@ themes. All 70 tests, build, and both browser/a11y tests pass.
 measures 3.55:1 dark and 4.11:1 light against the actual fill, enforced in both themes.
 All 31 tests, typecheck, build, and three browser/a11y tests pass.
 
+`j-uniward` was live and is fixed/pushed at `03b91e9`; its message-field boundary measures
+4.18:1 dark and 4.83:1 light against the actual fills, enforced in both themes. All 15
+custom tests, typecheck, build, and three browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

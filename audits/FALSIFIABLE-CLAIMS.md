@@ -289,8 +289,9 @@ before displaying its checkmark. It also repairs the Vitest/Playwright test boun
 
 ### `garbled-gate`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `fcb4b14` labels the live garbled-table byte count as measured and
+the classic four-row Free XOR comparison as a counterfactual estimate based on the run's
+average row size. All 20 unit/UI tests, build, and dark/light accessibility tests pass.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

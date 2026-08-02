@@ -407,10 +407,8 @@ Turned out worse than diagnosed: `open()` returns null on tag failure but every 
 
 ### `kyber-vault`
 
-**Fix status: FIXED.** `29d2ea2` renders the positive 16^70 denominator, derives the
-malformed-signature totals from measured outcomes and verifies the genuine same-message
-control, and labels the E-power samples deterministic. The repo passed 142 unit tests, its
-production build, and all 29 browser tests including dark/light accessibility scans.
+**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
+transcript. Treat all 3 claims below as live.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
@@ -473,8 +471,10 @@ guess-history browser test, and dark/light accessibility scans pass.
 
 ### `mayo-seal`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 3 claims below as live.
+**Fix status: FIXED.** `29d2ea2` renders the positive 16^70 denominator, derives the
+malformed-signature totals from measured outcomes and verifies the genuine same-message
+control, and labels the E-power samples deterministic. The repo passed 142 unit tests, its
+production build, and all 29 browser tests including dark/light accessibility scans.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

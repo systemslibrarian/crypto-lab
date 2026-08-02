@@ -320,6 +320,9 @@ file holds the work queue. Keep both current.
 - Task 5 continued: `card-trick` form-field boundaries now measure at least 3.52:1 dark and
   4.70:1 light with all-field computed-style regressions (`a37f82f`). All 138 unit tests,
   build, and 62 desktop/mobile/browser/a11y tests passed.
+- Task 5 delegated completion: `multivariate` load-bearing select boundaries now measure
+  at least 4.31:1 dark and 5.01:1 light with computed-style regressions (`fddef9c`). All
+  33 tests, typecheck, build, and six browser/a11y/audience tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

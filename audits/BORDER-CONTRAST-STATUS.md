@@ -159,6 +159,10 @@ surfaces. Full typecheck, lint, 62 tests, build, and four browser/a11y tests pas
 measures at least 3.52:1 dark and 4.70:1 light, enforced across all relevant controls. All
 138 unit tests, build, and 62 desktop/mobile/browser/a11y tests pass.
 
+`multivariate` was live and is fixed/pushed at `fddef9c`; its dedicated load-bearing select
+boundary measures at least 4.31:1 dark and 5.01:1 light, enforced in both themes. All 33
+tests, typecheck, build, and six browser/a11y/audience tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

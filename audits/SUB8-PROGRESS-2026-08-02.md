@@ -134,3 +134,57 @@ cause.
 Residual honesty item the agent deliberately did NOT paper over: in all four hybrids, the
 *event* of an algorithm being broken is still modelled by handing the attacker the genuine
 secret. Every page says so; what changed is that everything downstream is now run.
+
+## Slice 7 (the 10 repos an accounting error had skipped) and its two serious findings
+
+Scores: dp-noise 9, frodo-vault 8, kyber-vault 8, ntru-classic 8, pake-gate 7->8,
+protocol-compose 8, spdz-forge 9, time-trust 9, and two new lows the coordinator fixed:
+
+- **`lll-break` 6 -> fixed (`8908211`).** The verdict was
+  `ok && recoverMethod === 'short-vector'` and never consulted the exact-match comparison
+  computed fourteen lines below it. `ok` is a sigma-scaled residual check, so above roughly
+  sigma 5 an arbitrary short vector passes and the page printed "SUCCESS - secret read off a
+  reduced short vector" over a vector unrelated to the secret, then labelled that vector
+  "close". Reproduced in 4 of 4 configurations. The demo's own Challenge 5 steers learners
+  into exactly that regime and promises a FAILED verdict they never saw. The confidence
+  meter compounded it, reading 100% whenever the norm gap was at or under 1 — precisely
+  where an unrelated short vector appears. SUCCESS now requires the byte comparison; the
+  actual secret is printed beside the recovered one; a browser regression sweeps sigma 5, 7,
+  9, 10 and fails if SUCCESS ever appears without EXACT MATCH.
+- **`time-lock-puzzle` 6 -> fixed (`55ee200`).** The calibration loop's accumulated value
+  was dead after the timed loop, so the bundler removed the squarings it existed to measure:
+  14.5 BILLION squarings/sec in the built page against the Solve tab's own 640 thousand, and
+  every t from 1e6 to 1e10 rendering "<1s" — in a demo whose whole subject is elapsed time.
+  A module-level sink was NOT enough (nothing imported it, so tree-shaking removed the
+  writes and the rate stayed at 14.5 billion); a property on globalThis fixed it. Measured
+  in the built page: ~4 million/sec, a 3,600x correction landing in the same range as the
+  Solve counter.
+
+Method note worth keeping: on these repos the browser tests serve `dist/`, so a mutation
+check that breaks `tsc` silently proves nothing — the build fails, the old bundle is served,
+and the tests pass. This bit twice today. Always confirm the build succeeded during a
+mutation, and prefer type-safe mutations.
+
+## Remaining batches (all verified pushed, trees clean)
+
+- **Missing exhibits A** — `aes-modes` (`a969ee1`, GCM forbidden attack: recovers H, forges,
+  and real WebCrypto AES-GCM accepts it), `ed25519-forge` (`13dc870`, live P-256 nonce-reuse
+  key recovery as the missing contrast), `frost-threshold` (`3347689`, both named attacks
+  live, one ending in acceptance and one in real-verifier rejection), `format-ward`
+  (`f277adf`, honest small-domain codebook recovery; the Beyne 2^23 attack is cited and
+  computed as infeasible rather than faked — the agent also verified no cheap exact
+  structural distinguisher exists).
+- **pq-families / merkle-vault / lwe-hints** — `e6a5987`, `39574ba`, `a7f7874`. Found and
+  fixed two real bugs along the way: pq-families' "bad basis" preset had determinant zero (a
+  line, not a lattice) so reduction drove it to the zero vector, which the new trace would
+  have announced as a shortest non-zero vector; and lwe-hints' first KS implementation
+  mishandled ties, inflating D and rejecting good Gaussians 45-85% of the time. Also a
+  counterpart note in `merkle-proofs` (`a422d7c`).
+- **syndrome-drain / threshold-mldsa / world-hashes** — `195caf3`, `b11a309`, `dacc135`.
+  threshold-mldsa is the biggest jump: a real module-SIS threshold signature where the share
+  lives in a closure and the sum is never formed, with a structural test proving it.
+
+**Catalog decisions still awaiting the maintainer:** the harvest-vault/harvest-timeline
+split; the merkle-vault/merkle-proofs overlap (the agent calls it the single highest-value
+consolidation in the portfolio); and a copy pass over the pq-families, merkle-vault and
+lwe-hints cards plus corpus entries, which now understate all three.

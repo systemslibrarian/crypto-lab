@@ -283,6 +283,9 @@ file holds the work queue. Keep both current.
 - Task 5 recheck: `entropy-collapse` is stale/no longer applicable. Current production
   source renders no select or other bordered text-entry control; only an unused `select`
   CSS rule remains. The repo was left unchanged after a clean fetch/source verification.
+- Task 5 delegated completion: `enigma-forge` form-control boundaries now measure at least
+  3.30:1 dark and 4.07:1 light with all-controls computed-style regressions (`2fd6f6f`).
+  All 60 tests, typecheck, build, and four browser/a11y tests passed.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

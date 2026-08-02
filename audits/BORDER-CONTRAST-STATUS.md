@@ -113,6 +113,10 @@ tests pass.
 no `<select>` or dynamically created select and has no other bordered text-entry control;
 the reported selector survives only as unused CSS. The clean fetched repo was unchanged.
 
+`enigma-forge` was live and is fixed/pushed at `2fd6f6f`; its dedicated select/text-input/
+textarea boundary measures at least 3.30:1 dark and 4.07:1 light, enforced across all such
+controls. All 60 tests, typecheck, build, and four browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

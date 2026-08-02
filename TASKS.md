@@ -40,14 +40,20 @@ done
 
 | File | What it holds |
 |---|---|
-| `BORDER-CONTRAST-STATUS.md` | Every repo failing WCAG 1.4.11 on control borders, with selector, ratio and file:line |
-| `FALSIFIABLE-CLAIMS.md` | 189 claims across 68 repos; 124 with no fix confirmation |
-| `SCORECARD-2026-08-01.md` | Pedagogy scores, 74 of 174 recovered |
+| `FALSIFIABLE-CLAIMS.md` | 189 claims across 68 repos; every one now resolved, with per-repo commits inline |
+| `SCORECARD-2026-08-02-*.md` | Current pedagogy scores for the whole fleet, with a "what would raise it" list per demo |
+| `TRIAGE-2026-08-02-batch-{1,2}.md` | The nine recovered per-repo audits, each recommendation classified done / stale / still-applicable / proposed |
 | `_MASTER-TEMPLATE.md` | The build/teach/look/a11y standard every lab is measured against |
-| `VERIFICATION-2026-08-01.md` | How UI changes were verified by running them |
-| `PRE-PUSH-STATUS.md` | Per-repo test/build results before the last push |
+| `TEMPLATE-DECISION-2026-08-02.md` | Why that template stays in `audits/` rather than being promoted or merged |
 
 Read the relevant one before starting a task. Do not re-derive what is already measured.
+
+Retired on 2026-08-02 (in git history if a historical read is needed):
+`BORDER-CONTRAST-STATUS.md` — Task 5 is complete and every listed repo now carries a
+blocking both-theme contrast regression, which enforces continuously what that file
+measured once. `PRE-PUSH-STATUS.md` and `VERIFICATION-2026-08-01.md` — dated snapshots
+superseded by CI and by the per-repo regressions. The nine per-repo audit docs — fully
+triaged into the two `TRIAGE-2026-08-02` files. See `RETIREMENT-PROPOSAL-2026-08-02.md`.
 
 ## Nine rules that were learned the expensive way
 

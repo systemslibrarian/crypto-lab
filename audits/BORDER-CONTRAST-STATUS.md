@@ -46,6 +46,10 @@ controls excluded. All 42 tests, build, and 28 desktop/mobile browser tests pass
 measures 3.48:1 dark and 4.25:1 light against the actual input fill, enforced in both
 themes. All 70 tests, build, and both browser/a11y tests pass.
 
+`oram-vault` was live and is fixed/pushed at `2dbff17`; its dedicated number-input border
+measures 3.55:1 dark and 4.11:1 light against the actual fill, enforced in both themes.
+All 31 tests, typecheck, build, and three browser/a11y tests pass.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

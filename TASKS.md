@@ -323,6 +323,24 @@ file holds the work queue. Keep both current.
 - Task 5 delegated completion: `multivariate` load-bearing select boundaries now measure
   at least 4.31:1 dark and 5.01:1 light with computed-style regressions (`fddef9c`). All
   33 tests, typecheck, build, and six browser/a11y/audience tests passed.
+- Task 5 delegated completion: `babel-hash` form-control boundaries now measure 4.02:1
+  dark and 4.49:1 light with all-control computed-style regressions (`55e5c96`). All 28
+  tests, lint, typecheck/build, and three browser/a11y tests passed.
+- Task 5 delegated completion: `gg20-wallet` text-control boundaries now use scoped tokens
+  and pass both themes (`86fa94c`); all 19 tests, typecheck/build, and four browser/a11y
+  checks passed.
+- Task 5 delegated completion: `pq-rotation` controls now use a scoped opaque border and
+  pass its dark-theme composited regression (`5ffb07b`). All 36 tests, typecheck/build,
+  and two browser/a11y checks passed.
+- Task 5 delegated completion: `key-mirror` text-input boundaries now measure 3.33:1 dark
+  and 3.31:1 light (`e8b2a1e`). All 50 tests, typecheck/build, and four browser/a11y
+  checks passed.
+- Task 5 delegated completion: `lattice-gentle` text/number-input boundaries now measure
+  3.96:1 dark and 3.21:1 light (`f3ef9d9`). All 57 tests, typecheck/build, and 13
+  browser/a11y/mobile checks passed.
+- Task 5 delegated completion: `search-vault` text/select boundaries now measure 3.73:1
+  dark and 3.16:1 light (`3bec966`). All 78 tests, typecheck/build, and seven
+  browser/a11y checks passed. The helper was stopped before beginning `opaque-gate`.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

@@ -163,6 +163,14 @@ measures at least 3.52:1 dark and 4.70:1 light, enforced across all relevant con
 boundary measures at least 4.31:1 dark and 5.01:1 light, enforced in both themes. All 33
 tests, typecheck, build, and six browser/a11y/audience tests pass.
 
+Wind-down checkpoint: `babel-hash` is fixed at `55e5c96` (4.02:1 dark, 4.49:1 light),
+`gg20-wallet` at `86fa94c`, `pq-rotation` at `5ffb07b`, `key-mirror` at `e8b2a1e`
+(3.33:1 dark, 3.31:1 light), `lattice-gentle` at `f3ef9d9` (3.96:1 dark, 3.21:1
+light), and `search-vault` at `3bec966` (3.73:1 dark, 3.16:1 light). Each has a scoped
+control token, a rendered/composited regression appropriate to its UI, and passing unit,
+typecheck/build, browser/accessibility, and diff gates. The helper was stopped before
+starting `opaque-gate`.
+
 ## Verdict
 
 **The border-token pass did not finish. It covered 33 repos; 112 repos still have a load-bearing control border under 3:1.**

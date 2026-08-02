@@ -2,7 +2,27 @@
 
 Work is tracked in the session task list; this file is the durable copy.
 
-## Latest checkpoint — 2026-08-01 ~21:40 EDT
+## Latest checkpoint — 2026-08-01 final wind-down
+
+Work was deliberately stopped at the user's request because credits were low. No agent is
+supposed to remain active and no new repository should be started from this checkpoint.
+Central `main` includes records through `multivariate`; the wind-down commit adds the six
+already-pushed completions listed below.
+
+Latest additionally completed repositories: `babel-hash` (`55e5c96`), `gg20-wallet`
+(`86fa94c`), `pq-rotation` (`5ffb07b`), `key-mirror` (`e8b2a1e`), `lattice-gentle`
+(`f3ef9d9`), and `search-vault` (`3bec966`). All were pushed with green relevant gates.
+The `nonce_guard_claims` helper was interrupted after Search Vault and before it began
+`opaque-gate`.
+
+Remaining conservative Task 5 queue: `hpke-envelope`, `opaque-gate`, `time-trust`,
+`blind-relay`, `fhe-arena`, `kerberos`, `time-lock-puzzle`, `ring-sign`, `pake-gate`,
+`spdz-forge`, `lll-break`, `frodo-vault`, `kyber-vault`, `protocol-compose`, `encrochat`,
+`ntru-classic`, `dp-noise`, `mpcith-sign`, `mayo-seal`, `power-trace`, and `beacon-lock`.
+Fetch and remeasure each: the dated audit can be stale. After Task 5, Tasks 6 (fleet
+rescoring) and 10 (audit recommendations) remain.
+
+## Earlier checkpoint — 2026-08-01 ~21:40 EDT
 
 Central `main` is pushed through `12f64ac` (`Record Schnorr Forge border fix`) before this
 checkpoint update. Task 8 is **DONE**: `audits/FALSIFIABLE-CLAIMS.md` has no remaining

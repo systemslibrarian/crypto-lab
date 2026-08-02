@@ -606,8 +606,11 @@ Wordlist now fixed and independent of the password; verified `Tr0ub4dor&3-quokka
 
 ### `phantom-vault`
 
-**Fix status: NO FIX CONFIRMATION.** No fix agent for these claims appears anywhere in the
-transcript. Treat all 1 claim below as live.
+**Fix status: FIXED.** `61a4752` replaces the noisy small-run comparison with exact
+deterministic tallies over all 256 byte values and labels the current-run rejected-tail
+count as an observation rather than statistical proof. Typechecks, 46 tests, the
+uniformity check, production build, and three browser tests including dark/light
+accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

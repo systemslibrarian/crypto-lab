@@ -152,6 +152,10 @@ file holds the work queue. Keep both current.
 - Task 8 continued: `dilithium-reject` now generates every check example from a fresh real
   ML-DSA-65 signing trace and distinguishes fixed controls from selected-preset histogram
   traces (`97ac062`). All 79 unit tests, lint, build, and three browser/a11y tests passed.
+- Task 8 delegated completion: `phantom-vault` now compares modulo bias with exact tallies
+  over all 256 byte values and labels the run-specific rejected tail as an observation,
+  not statistical proof (`61a4752`). Typechecks, 46 tests, build, and three browser/a11y
+  tests passed before push.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 

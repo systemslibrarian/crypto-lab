@@ -2603,7 +2603,7 @@
           <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-merkle-vault/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Merkle Trees</div>
             <div class="project-title">Merkle Vault</div>
-            <div class="project-copy">Build Merkle trees up to 16 leaves with real SHA-256, generate O(log n) inclusion proofs, tamper any leaf and watch the root change. Git, Bitcoin, and Certificate Transparency walkthroughs.</div>
+            <div class="project-copy">The structural view: draw a tree up to 16 leaves with real SHA-256, walk one proof climb level by level, then mount a second-preimage attack and an append-only consistency check on the tree you built.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">SHA-256</span>
@@ -2813,7 +2813,7 @@
           <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Quantum Threat</div>
             <div class="project-title">Harvest Vault</div>
-            <div class="project-copy">HNDL pressure, Mosca's theorem, migration windows, and concrete post-quantum planning for the systems being recorded today and decrypted later.</div>
+            <div class="project-copy">Why harvested traffic is already lost: capture a real key exchange, upgrade to post-quantum afterwards, and watch the recording stay just as readable. Mosca's theorem applied to what you already sent.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">HNDL</span>
@@ -3023,7 +3023,7 @@
           <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-timeline/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Migration Planning</div>
             <div class="project-title">Harvest Timeline</div>
-            <div class="project-copy">A harvest-now-decrypt-later risk simulator built around the Mosca inequality, CRQC scenarios, organization profiles, and the operational cost of waiting to migrate.</div>
+            <div class="project-copy">The planning half of harvest-now-decrypt-later: which assets in a fleet cross a CRQC, what each year of delay costs, and what a migration actually reaches when you execute one.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Mosca Inequality</span>
@@ -3610,7 +3610,7 @@
           <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lwe-hints/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Lattice Cryptanalysis</div>
             <div class="project-title">LWE Hints</div>
-            <div class="project-copy">Explores approximate-hint LWE secret recovery on sparse ternary secrets — counts how many hints collapse the lattice problem. Computes hint counts; runs no attack. ePrint 2026/1081.</div>
+            <div class="project-copy">Counts how many leakage hints collapse an LWE lattice problem on sparse ternary secrets, then recovers a toy secret from real hints and tests the Gaussian assumption against sampled data. ePrint 2026/1081.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">LWE</span>
@@ -3625,7 +3625,7 @@
           <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-syndrome-drain/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Multi-Instance Degradation</div>
             <div class="project-title">Syndrome Drain</div>
-            <div class="project-copy">How code-based KEMs erode below NIST Level 1 when one public key derives many session keys — DOOM lets an attacker decode one of D syndromes √D faster. Computes effective security and when to rotate keys.</div>
+            <div class="project-copy">How code-based KEMs erode below NIST Level 1 when one public key derives many session keys — run a toy decode-one-of-many search and watch the measured work fall as √D, then compute when to rotate keys.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">DOOM</span>
@@ -3700,7 +3700,7 @@
           <a class="project-card" data-category="HASHING & KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-merkle-proofs/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Merkle Inclusion Proofs</div>
             <div class="project-title">Merkle Proofs</div>
-            <div class="project-copy">Build a tree, generate inclusion proofs, recompute the root hash by hash, then replay the RFC 6962 second-preimage and CVE-2012-2459 duplicate-leaf attacks. Real SHA-256. No backend.</div>
+            <div class="project-copy">The proof-semantics view: what an inclusion proof does and does not establish — RFC 9162 index verification, a pinned real Certificate Transparency entry, and the RFC 6962 and CVE-2012-2459 attacks.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">SHA-256</span>

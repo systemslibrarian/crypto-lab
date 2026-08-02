@@ -804,9 +804,12 @@ production build, and three browser tests including dark/light accessibility sca
 
 ### `sphincs-ledger`
 
-**Fix status: MIXED.**
-
-The main-thread collision-resistance claim is reported fixed. The four batch-2 sphincs-ledger claims (#6, #38, #39, #40) had no fix agent.
+**Fix status: FIXED.** The collision-resistance claim was already corrected; `ac6439b`
+scopes the checksum-free experiment to one-chain exposure rather than a complete WOTS+
+forgery, runs the real verifier before declaring a tampered ledger entry invalid, labels
+hypertree paths as illustrative rather than parsed, and rejects the non-signable step 16.
+All 55 tests, the production build, and four browser tests including fully driven dark/light
+accessibility scans passed.
 
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|

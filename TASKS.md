@@ -210,6 +210,10 @@ file holds the work queue. Keep both current.
   trials and derives FO totals; regressions also pin the already-corrected flip geometry,
   marker lookup, encryption equation, and nonzero DFR (`6be8c03`). Typecheck, build, and
   six browser/a11y tests passed.
+- Task 8 MIXED-entry resolution: `sphincs-ledger` scopes its one-chain exposure honestly,
+  verifies ledger tampering with the real verifier, labels illustrative hypertree paths,
+  and rejects non-signable chain step 16 (`ac6439b`). All 55 tests, build, and four
+  browser/a11y tests passed. This resolves the final NO/MIXED status in the claim ledger.
 
 Status key: `TODO` / `DOING` / `DONE` / `BLOCKED`.
 
@@ -405,7 +409,7 @@ same category as three audit docs lost earlier that day — so it moved to
 `audits/_STANDARDIZE-PROMPT.md` with its retired shared-header sections flagged.
 **Check `git ls-files --error-unmatch <file>` before deleting anything in a repo root.**
 
-### 8. Fix the falsifiable claims found but never fixed — `IN PROGRESS`
+### 8. Fix the falsifiable claims found but never fixed — `DONE`
 `audits/FALSIFIABLE-CLAIMS.md` now holds **189 claims across 68 repos** — not the ~78 the
 session summary reported, which counted only two of four batches. **124 have no fix
 confirmation.**
@@ -421,6 +425,10 @@ Expect a high stale rate when cross-checking: every external review checked so f
 described already-fixed code. The defect class is consistent — a demo asserts something its
 own code does not compute, and the honest computation is usually already written, one
 import away.
+
+Completion update (2026-08-01): every ledger entry formerly marked `NO FIX CONFIRMATION`
+or `MIXED` has now been verified and resolved, with per-repo commits and gate evidence
+recorded inline in `audits/FALSIFIABLE-CLAIMS.md`.
 
 ### 9. Investigate the demos whose scores regressed — `DONE`
 **Ten regressed, not three.** The two largest were never reported at the time:

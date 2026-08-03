@@ -1,22 +1,100 @@
-# Resume notes — updated 2026-08-02 (supersedes the earlier pause note)
+# Resume notes — updated 2026-08-03 (supersedes the earlier pause note)
 
-## PAUSE CHECKPOINT — 2026-08-03 08:05 EDT
+## RESUMED — 2026-08-03 ~11:10 EDT
 
-Work was paused at the user's request for ~3 hours. All twelve agents were stopped
-deliberately, not lost. **Nothing is unpushed anywhere in the fleet.**
+The 3-hour pause ended and both pre-flight checks ran clean:
 
-A one-shot wake-up is scheduled for 11:07 today, but it is SESSION-ONLY — it dies if
-Claude Code is closed. If the session did not survive, just read this file and resume.
+- **Stranded-mutation sweep: zero found.** Every repo with uncommitted source was read
+  diff-by-diff. `jwt-forge` matches a "DELIBERATELY BROKEN" grep but that is its
+  *intentionally* vulnerable verifier, labeled for the learner in an alg-confusion lab —
+  not a stranded mutation. `ckks-lab` reports modified with a zero-byte diff (stale stat
+  flag). The rest are config, spec, or docs only.
+- **Fleet scan: nothing unpushed anywhere.** The fetch-first form timed out at 10 min
+  across 176 repos; the local scan carried the dirty/unpushed picture instead. Remote
+  sync is therefore *unverified by fetch* — re-check before trusting it.
+- **Cleared 9 orphaned processes.** Preview servers from the stopped agents still held
+  ports 4278/4323/4331/4713/4906 — the exact condition that once let one lab's suite
+  scan another lab's page. Killed by port, never a blanket `pkill`.
+
+### Two stranded mutations caught in `time-trust` — the first that could have shipped
+
+The "Coverage: time-trust, vrf-gate, vss-gate" agent died mid-sentence on
+*"All four mutations caught. Restoring and running every gate"* — i.e. during the restore.
+It had restored two and left two:
+
+- `src/ui/totpPanel.ts` — the retire-check's clock comparison replaced by `false ||`, so
+  `resultCtx.counter` was stored and never read.
+- `src/replay/replay.ts` — `seenBefore` had a freshness clause appended, which made the
+  branch it feeds unreachable and printed "authenticator not seen before by this server"
+  about a MAC in that server's own cache.
+
+**Neither trips `tsc`** — one is an object property, the other a live boolean — so unlike
+the earlier stranded mutations these would NOT have been caught by a failing build. Both
+restored, both mutation-checked (revert → build succeeds → bundle hash changes → the test
+fails), all gates green, pushed as `97d52ec`.
+
+Lesson for the briefs: **an agent that dies while restoring is more dangerous than one that
+dies while editing.** Always diff its repos before reassigning, and never assume a green
+suite means the tree is clean — the mutated `time-trust` passed 100 unit tests and 24 of 25
+browser tests.
+
+### SYSTEMIC: a11y gates that scan before the page has finished painting
+
+Found in `bcrypt-forge` (fixed, `2709c0f`) and almost certainly not unique to it.
+
+Exhibit 1 there paints its anatomy row only after a real cost-12 bcrypt resolves
+(~1 s). The a11y spec went straight from `goto` to the axe scan. Sometimes axe won the
+race and scanned an **empty container** — a pass that had checked nothing; sometimes it
+lost and found a real violation. The suite looked "flaky"; it was reporting the race.
+
+Closing the race made it fail 4/4, revealing a genuine AA failure: the anatomy palette is
+drawn on `--color-bg-3` (`#dde5f5`) but its light-theme values were picked against
+**white** — the CSS comments said "darkened for AA contrast on white surfaces". Measured
+in place: cost 3.97:1, salt 3.96:1, hash exactly 4.50:1.
+
+**Two lessons, both general:**
+
+1. **A flaky a11y test is a coverage hole until proven otherwise.** The "phantom contrast
+   failure from mid-transition sampling" story is real and has happened here before — but
+   it is not the only cause, and assuming it hides live bugs. Close the race first, THEN
+   see what the deterministic result is.
+2. **Do not trust axe to enumerate every node.** With two arrows below AA, axe named
+   exactly one. The cost arrow would have kept failing behind a green gate. Where a
+   specific palette matters, measure the ratios directly from computed styles.
+
+**Candidate list: 45 of 169 a11y specs contain no wait of any kind** (no `waitFor`,
+`toHaveCount`, `toBeVisible`, `toContainText`, …) before scanning. That is not 45 bugs —
+it only bites where the page paints asynchronously — but each needs checking. Regenerate
+the list with:
+
+```
+for f in crypto-lab-*/e2e/a11y.spec.ts crypto-lab-*/demos/*/e2e/a11y.spec.ts; do
+  grep -qE "AxeBuilder" "$f" && ! grep -qE "waitFor|toHaveCount|toBeVisible|toContainText|toHaveText|waitForFunction|toBeEnabled" "$f" && echo "$f"
+done
+```
+
+Prefer `test.use({ reducedMotion: 'reduce' })` over injected test-only CSS to settle theme
+transitions — every lab's stylesheet already has a `prefers-reduced-motion` block, so it
+exercises a real user path instead of a fiction.
+
+### AGENT LIMIT — 3-4 at a time
+
+The user set the cap on 2026-08-03: **3-4 agents concurrently**, still
+3 repos each. (It was 8; before that 12, which is what kept stalling.) Do not exceed
+this even when repos are free.
 
 ### Before doing anything on resume
 
 1. **Stranded-mutation sweep.** Agents prove their tests bite by inverting a condition,
    and several were stopped mid-check. Sweep every repo with uncommitted source and read
    the diff: genuine work, or a deliberately broken line never restored? Two have been
-   caught today — `tls-handshake` (MITM verdict inverted) and `credential-veil` (the decoy
+   caught — `tls-handshake` (MITM verdict inverted) and `credential-veil` (the decoy
    control pointed at the real index, making it vacuous). **Both were working-tree only;
    neither reached a commit or origin.** The agents' commit-then-mutate ordering is sound.
+   Run this sweep again after *every* agent death, scoped to that agent's repos.
 2. **Fetch-first fleet scan** for dirty/unpushed repos.
+3. **Check for orphaned preview servers** (`lsof -i` on the 4173/46xx/47xx range) before
+   assigning any repo.
 
 ### Six repos hold genuine, incomplete work (verified NOT mutations)
 
@@ -37,16 +115,20 @@ finished and pushed (`19a7fc5`). phantom-vault's cracker still needs its unit te
 
 ### Where the two workstreams stand
 
-**Functional coverage sweep: 88 of 94 repos done.** Remaining six:
-`beacon-lock`, `blind-hello`, `diffie-hellman-mitm`, `time-trust`, `vrf-gate`, `vss-gate`.
+**Functional coverage sweep: 88 of 94 repos done.** The last six —
+`beacon-lock`, `blind-hello`, `diffie-hellman-mitm`, `time-trust`, `vrf-gate`, `vss-gate` —
+were assigned to two agents on resume and are in flight.
 
 **8-to-9 pass:** the sub-9 queue was 76; 74 have had work land. Nothing has been re-scored
 since, so do NOT claim demos are at 9 — a read-only re-score pass is the honest next step
-once the fleet settles. `dead-sea-cipher` and `sphincs-ledger` were never touched.
+once the fleet settles. `dead-sea-cipher` has since had work land
+(`14b70ca`, five stale verdicts fixed); `sphincs-ledger` is in flight on its WOTS+ chain.
 
-### Rules that earned their place today
+### Rules that earned their place
 
-- **8 agents max, 3 repos each.** Larger batches stall on the 600s watchdog.
+- **3 agents max, 3 repos each** (lowered from 8 on 2026-08-03). Larger batches stall on
+  the 600s watchdog — a 12-agent fleet died repeatedly, and even at 8 one agent stalled
+  before its first edit.
 - **Commit and push per repo, never batched.** Twelve agents died today; that discipline
   made every death cost at most one repo.
 - **A mutation check that breaks the build proves nothing** — Playwright serves `dist/`, and

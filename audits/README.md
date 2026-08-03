@@ -52,3 +52,22 @@ Two labs flagged as not teaching what they claimed have both since been fixed:
   from the public key alone, recoverable by Pohlig–Hellman on 200 of 200 keypairs tested.
   It now ships a safe prime-order parameter set alongside the toy one and demonstrates the
   leak explicitly rather than hiding it.
+
+## Current contents (2026-08-03)
+
+| File | What it holds |
+|---|---|
+| `SCORECARD-2026-08-02.md` | Current pedagogy scores for the fleet, each with a "what would raise it" queue |
+| `SUB8-PROGRESS-2026-08-02.md` | The sub-8 improvement pass, with commits and gate evidence |
+| `FALSIFIABLE-CLAIMS.md` | The 189-claim ledger; every entry resolved, with per-repo commits |
+| `TRIAGE-2026-08-02-batch-{1,2}.md` | The nine recovered per-repo audits, each recommendation classified |
+| `VERIFICATION-INTEGRITY-2026-08-02.md` | The stale-bundle and shared-port bugs in the test harness, and what they hid |
+| `_MASTER-TEMPLATE.md` | The per-demo build/teach/look/a11y standard |
+| `TEMPLATE-DECISION-2026-08-02.md` | Why that template stays here rather than being promoted |
+| `RETIREMENT-PROPOSAL-2026-08-02.md` | What was retired from this directory and why |
+| `hqc-timing.md`, `hqc-timing-bugs.md`, `spdz-forge.md` | Partial salvages of documents destroyed on 2026-08-01; kept until the originals are ruled unrecoverable |
+
+Retired on 2026-08-02/03, recoverable from git history: `BORDER-CONTRAST-STATUS.md`,
+`PRE-PUSH-STATUS.md`, `VERIFICATION-2026-08-01.md`, the nine per-repo audit docs, the
+twelve `SCORECARD-2026-08-02-*` slice files (merged into the single scorecard above), and
+`SCORECARD-2026-08-01.md` (superseded; its provenance note is carried into the merged file).

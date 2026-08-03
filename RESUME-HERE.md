@@ -1,5 +1,69 @@
 # Resume notes — updated 2026-08-02 (supersedes the earlier pause note)
 
+## PAUSE CHECKPOINT — 2026-08-03 08:05 EDT
+
+Work was paused at the user's request for ~3 hours. All twelve agents were stopped
+deliberately, not lost. **Nothing is unpushed anywhere in the fleet.**
+
+A one-shot wake-up is scheduled for 11:07 today, but it is SESSION-ONLY — it dies if
+Claude Code is closed. If the session did not survive, just read this file and resume.
+
+### Before doing anything on resume
+
+1. **Stranded-mutation sweep.** Agents prove their tests bite by inverting a condition,
+   and several were stopped mid-check. Sweep every repo with uncommitted source and read
+   the diff: genuine work, or a deliberately broken line never restored? Two have been
+   caught today — `tls-handshake` (MITM verdict inverted) and `credential-veil` (the decoy
+   control pointed at the real index, making it vacuous). **Both were working-tree only;
+   neither reached a commit or origin.** The agents' commit-then-mutate ordering is sound.
+2. **Fetch-first fleet scan** for dirty/unpushed repos.
+
+### Six repos hold genuine, incomplete work (verified NOT mutations)
+
+Each was mid-edit when stopped. Read, finish or discard deliberately:
+
+- `babel-hash` — wrapping the HMAC length-extension call in try/catch.
+- `bcrypt-forge` — retiring a verdict when either input is edited.
+- `curve448` — passing the exact hashed seed rather than reading it back, so the Ed25519
+  column cannot print a "seed (32 B)" label over bytes that were never hashed.
+- `isogeny-gate` — a learner-supplied secret-exponent picker feeding the real Vélu arithmetic.
+- `pki-chain` — **a real bug fix.** Exhibit 4's signature column read the pristine baseline,
+  so with a tamper applied it printed "signature verifies" for the very link Exhibit 2 was
+  reporting as failed. Two panels, one screen, opposite claims.
+- `rsa-forge` — reworking the factoring panel so each press factors the modulus on screen.
+
+`phantom-vault` and `falcon-seal` both had large in-progress exhibits; falcon-seal was
+finished and pushed (`19a7fc5`). phantom-vault's cracker still needs its unit tests.
+
+### Where the two workstreams stand
+
+**Functional coverage sweep: 88 of 94 repos done.** Remaining six:
+`beacon-lock`, `blind-hello`, `diffie-hellman-mitm`, `time-trust`, `vrf-gate`, `vss-gate`.
+
+**8-to-9 pass:** the sub-9 queue was 76; 74 have had work land. Nothing has been re-scored
+since, so do NOT claim demos are at 9 — a read-only re-score pass is the honest next step
+once the fleet settles. `dead-sea-cipher` and `sphincs-ledger` were never touched.
+
+### Rules that earned their place today
+
+- **8 agents max, 3 repos each.** Larger batches stall on the 600s watchdog.
+- **Commit and push per repo, never batched.** Twelve agents died today; that discipline
+  made every death cost at most one repo.
+- **A mutation check that breaks the build proves nothing** — Playwright serves `dist/`, and
+  a failed build leaves the last good bundle, so the suite passes green against code that no
+  longer compiles. Confirm the build succeeded AND the bundle hash changed.
+- **Check for live processes and uncommitted edits before assigning a repo.** One agent
+  correctly detected another working inside `ntru-classic` and stopped rather than clobber
+  it — its "3 failing tests" were the other agent's mutation cycle, not real bugs.
+
+### Recurring bug classes (add to every brief)
+
+Verdicts that outlive their inputs · two surfaces disagreeing about one run · announcements
+recomputing independently of the render path · the `[hidden]` trap (probe at
+`tools/probes/hidden-attribute.spec.ts`) · permanently dead controls · timing theater
+(dead-code-eliminated benchmarks) · UTF-16 vs UTF-8 byte arithmetic.
+
+
 Work is tracked in the session task list; this file is the durable copy.
 
 ## Latest checkpoint — 2026-08-02 afternoon

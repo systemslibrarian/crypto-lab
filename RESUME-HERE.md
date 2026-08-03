@@ -115,9 +115,18 @@ finished and pushed (`19a7fc5`). phantom-vault's cracker still needs its unit te
 
 ### Where the two workstreams stand
 
-**Functional coverage sweep: 88 of 94 repos done.** The last six —
-`beacon-lock`, `blind-hello`, `diffie-hellman-mitm`, `time-trust`, `vrf-gate`, `vss-gate` —
-were assigned to two agents on resume and are in flight.
+**Functional coverage sweep: 91 of 94 repos done.** `time-trust` (`97d52ec`), `vrf-gate`
+(`08ede30`) and `vss-gate` (`1501b93`) landed on resume and were verified independently —
+commits match, trees clean, gates re-run by hand. The last three, `beacon-lock`,
+`blind-hello` and `diffie-hellman-mitm`, are in flight.
+
+Two findings from that batch worth carrying forward:
+
+- **`vss-gate`'s 30 unit tests were gated in no CI workflow at all** — CI ran `build` and
+  `test:a11y` only. Worth checking fleet-wide: a suite that exists is not a suite that runs.
+- **Mutation testing found dead code, not just weak tests.** In `vrf-gate` a mutation left
+  every test green because the branch was unreachable; the fix was to delete it (`08ede30`).
+  A mutation that changes nothing is evidence about the *source*, not only the tests.
 
 **8-to-9 pass:** the sub-9 queue was 76; 74 have had work land. Nothing has been re-scored
 since, so do NOT claim demos are at 9 — a read-only re-score pass is the honest next step

@@ -661,6 +661,49 @@ Start with `_MASTER-TEMPLATE.md`, which calls itself the single source of truth 
 every lab is built. Decide whether it is promoted to the repo root or merged into
 CLAUDE.md — two competing standards documents is worse than one.
 
+### 11. Triage the external review of 13 demos — `TODO`
+
+The user supplied an outside review (ChatGPT) of 13 demos, filed verbatim in
+`audits/external-review-2026-08-03/`. Roughly 9,400 lines, ~330 numbered recommendations:
+
+| Demo | Recs | Demo | Recs |
+|---|---|---|---|
+| bb84 | 32 | patron-shield | 28 |
+| j-uniward | 32 | pake-gate | 29 |
+| timing-oracle | 33 | bitcoin-wallet | 20 |
+| simon-period | 33 | jevil | 12 |
+| noise-pipe | 31 | falcon-seal | 11 |
+| phantom-vault | 30 | curve-lens | 6 |
+| vdf | 15 | | |
+
+**Do not bulk-apply these.** They are a mix of genuine code defects, fair wording
+corrections, and scope expansions that would violate the house rule of one concept per
+demo. Each needs checking against current repo state before any of it is actioned — several
+of these demos have had work land since the review was written.
+
+**Calibration so far.** The one claim checked end-to-end — patron-shield's "Bit-31
+Collusion-Recovery Bug", which it calls the highest-priority code defect — is **real**:
+`recoverByCollusion()` does `Math.log2(maskS ^ maskSPrime)`, and with bit 31 set the XOR is
+`-2147483648`, the power-of-two guard passes anyway, and `Math.log2` of a negative returns
+`NaN`. The suggested `31 - Math.clz32(diff >>> 0)` fix is correct.
+
+But it is **not reachable today**: `DB_SIZE` is `CATALOG.length` = 8. It is a latent defect,
+and the repo's own test asserts only `DB_SIZE <= 32` — i.e. the test permits exactly the
+range that breaks. Fix the function AND tighten the invariant.
+
+So: accurate on the code, over-ranked on severity because reachability was not checked.
+Expect that pattern throughout — **verify each claim against the repo, and check whether the
+failing state can actually be reached, before scheduling work.**
+
+Suggested triage order — start where a defect is most likely to be both real and reachable:
+`noise-pipe` (transport reset, concurrent-encryption nonce reuse), `timing-oracle`
+(in-flight stale-result race), `bb84` (`bitsToBytes()` collisions, equality boundary,
+computing a key after an abort), `patron-shield` (bit-31 + integer validation).
+
+Several recommendations restate work already done in this fleet (retiring stale verdicts,
+splitting browser test commands, deploy scripts that bypass typecheck). Check before
+re-doing.
+
 ---
 
 ## Operational notes

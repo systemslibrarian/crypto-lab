@@ -73,9 +73,36 @@ for f in crypto-lab-*/e2e/a11y.spec.ts crypto-lab-*/demos/*/e2e/a11y.spec.ts; do
 done
 ```
 
-Prefer `test.use({ reducedMotion: 'reduce' })` over injected test-only CSS to settle theme
-transitions — every lab's stylesheet already has a `prefers-reduced-motion` block, so it
-exercises a real user path instead of a fiction.
+Settle theme transitions through the lab's own `prefers-reduced-motion` block rather than
+injected test-only CSS — every stylesheet has one, so it exercises a real user path.
+
+**But use `page.emulateMedia`, NOT `test.use({ reducedMotion: 'reduce' })`.** An earlier
+version of this note recommended `test.use`; that advice was wrong.
+
+**`test.use({ reducedMotion: 'reduce' })` SILENTLY DOES NOTHING on Playwright 1.61.1** —
+verified at both file level and inside `test.describe`. The page still reports
+`matchMedia('(prefers-reduced-motion: reduce)').matches === false`, so every transition
+runs at full speed while the suite reads as though it settled them. Found by an agent in
+`dead-sea-cipher`, then confirmed independently in `bcrypt-forge` and `dilithium-seal`.
+
+Fleet state: 6 specs used the no-op form. All fixed —
+- `bcrypt-forge` (`373335f`), `dilithium-seal` (`253f359`), `protocol-compose` (`f336435`)
+  were relying on it alone and were genuinely racing their animations. dilithium-seal's
+  Fiat-Shamir test went from grinding through a 650 ms-per-attempt animation to ~290 ms
+  once the emulation actually applied — that speedup is the confirmation it took effect.
+- `dead-sea-cipher`, `merkle-vault`, `model-breach` already had `emulateMedia` alongside
+  it, so they were covered; the leftover `test.use` line there is inert but misleading.
+
+**Always ASSERT the media query matched.** An emulation that quietly no-ops is worse than
+none, because the comment beside it reads as handled.
+
+**Still open — 172 specs inject `transition: none` / `transition-duration: 0`.** While that
+injection is present a suite is structurally unable to see a transition or theme-swap
+defect. Removing it in `dead-sea-cipher` exposed a real ~50% a11y flake: the light palette
+builds on `CanvasText`, which Chromium re-resolves lazily after a `color-scheme` change,
+and `getAnimations()` returns ~516 entries on panel reveal taking ~600 ms to drain — axe
+was reading pairings the page never renders. The fix is polling until nothing is animating,
+not re-adding the injection.
 
 ### AGENT LIMIT — 3-4 at a time
 

@@ -697,6 +697,38 @@ survived: **treat a flaky a11y test as a coverage hole until proven otherwise.**
 
 Regenerate the remaining list with the snippet in `RESUME-HERE.md`. Roughly 3 repos per agent.
 
+### 14a. Remove the `opacity: 1 !important` injection — `TODO` — **57 specs, HIGH PRIORITY**
+
+Found in `broken-trust` (fixed, `feae4ae`) and then measured fleet-wide: **57 a11y specs inject
+`opacity: 1 !important`** along with the motion suppression.
+
+**This is worse than the `transition: none` problem, and worth doing first.** That one *hides*
+defects. This one **fabricates results**. Real pages render text at partial opacity — a hero
+subtitle at 0.85, a disabled control at 0.55, a zero-value bar at 0.4 — and forcing those opaque
+hands axe foreground colours **the page never paints**. Every contrast number the gate then
+reports is fiction in both directions: it can clear a real failure, and it can invent one no
+user could ever see.
+
+So for any lab in the list below, a green contrast gate currently means **nothing**, and a red
+one may be chasing a colour that does not exist.
+
+Fix: delete the `opacity` clause outright. Do not replace it — partial opacity is real rendering
+and is exactly what the gate should be measuring. Then re-run and treat whatever appears as a
+genuine finding.
+
+Affected (57): bike-vault curve448 dead-sea-cipher e91 enigma-forge format-ward harvest-vault
+hash-zoo hawk hqc-timing hqc-vault hybrid-guide hybrid-pqc hybrid-wire ibe-gate j-uniward
+jwt-forge kerberos key-exchange kyber-vault kyberslash lms-ledger lwe-hints mac-race
+merkle-proofs mls-group mpcith-sign nonce-lattice oblivious-shelf opaque-gate oram-vault ot-gate
+otp-vault paillier-gate pairing-gate pki-chain poly1305-mac pq-rotation psi-gate shamir-vs-frost
+shor silent-tally snark-arena sphincs-ledger stego-suite syndrome-drain syndrome-hints
+threshold-decrypt threshold-mldsa time-lock-puzzle tls-handshake vdf vrf-gate vss-gate
+web-of-trust webauthn zk-proof-lab
+
+Regenerate the list by matching `opacity: *1 *!important` on non-comment lines — matching the
+raw string over-counts, because two specs now mention it only in a docblock explaining why it
+was removed.
+
 ### 14. Remove the `transition: none` injection — `TODO`
 
 **162 of 169 specs** inject `transition: none` or `transition-duration: 0` before scanning.

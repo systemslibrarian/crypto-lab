@@ -661,6 +661,80 @@ Start with `_MASTER-TEMPLATE.md`, which calls itself the single source of truth 
 every lab is built. Decide whether it is promoted to the repo root or merged into
 CLAUDE.md — two competing standards documents is worse than one.
 
+### 13. a11y scan-race audit — `TODO` — **HIGHEST YIELD, DO THIS FIRST**
+
+**41 of 169 a11y specs remain.** This is currently the best defect seam known in the fleet:
+**3 repos audited, real bugs found in 2 of them.**
+
+**The bug.** A spec that goes from `page.goto` straight to an axe scan, with no wait, scans
+whatever has painted by then. Where a page builds its UI asynchronously — a slow hash, an FHE
+keygen, a proof, a worker — axe scans an **empty container and passes having checked nothing**.
+The gate reports coverage it does not have. It usually shows up as "flaky", which is why it
+survived: **treat a flaky a11y test as a coverage hole until proven otherwise.**
+
+**What it has already found:**
+
+| Repo | Hidden by the race |
+|---|---|
+| `bcrypt-forge` | 3 palette tokens tuned against white but drawn on a tinted panel — 3.97:1, 3.96:1, and one at exactly 4.50:1 |
+| `bulletproofs` | Two WCAG 2.1.1 keyboard-inaccessible scroll containers, plus every "secondary" control at 4.39:1 dark / **2.66:1** light |
+| `ckks-lab` | Modulus chips at 3.71:1 dark / 4.42:1 light, reachable only by driving exhibit 3 |
+| `bb84` | Nothing — clean negative, honestly reported |
+| `dead-sea-cipher` | An SC 1.4.3 failure at 4.49:1, never seen because the scan only ever visited the untouched page |
+
+**Method — all four parts matter:**
+
+1. **Wait for the real content** before scanning, then see what the deterministic result is.
+2. **Scan states beyond first paint.** A gate that only scans the untouched page cannot see a
+   violation in a result panel, an error state, or a failed verdict. Drive the page there.
+3. **Measure contrast arithmetically** where a palette matters. **axe is not a complete
+   contrast oracle** — it under-reported (named 1 of 2 failing nodes in `bcrypt-forge`) and it
+   **refuses to compute contrast over a background gradient**, dropping those nodes into
+   `incomplete` where a violations-only assertion never sees them (that blind spot hid the
+   `bulletproofs` failures). Copy the `e2e/contrast.ts` helper from `bulletproofs` or `ckks-lab`.
+4. **Settle motion with `page.emulateMedia`, and ASSERT the media query matched.**
+   `test.use({ reducedMotion: 'reduce' })` **silently does nothing** on Playwright 1.61.1.
+
+Regenerate the remaining list with the snippet in `RESUME-HERE.md`. Roughly 3 repos per agent.
+
+### 14. Remove the `transition: none` injection — `TODO`
+
+**162 of 169 specs** inject `transition: none` or `transition-duration: 0` before scanning.
+While that injection is present the suite is **structurally incapable** of observing a
+transition or theme-swap defect: it deletes the thing it is meant to be checking.
+
+Largest by count, lowest by certainty — **not a bulk edit.** Removing it exposes a real
+animation-drain race. In `dead-sea-cipher` the light palette builds on `CanvasText`, which
+Chromium re-resolves lazily after a `color-scheme` change, and `getAnimations()` returned ~516
+entries taking ~600 ms to drain, so axe read colour pairings the page never renders. The fix
+is polling until nothing is animating — **never re-adding the injection.**
+
+Best done as part of task 13 per repo, since both touch the same file.
+
+### 15. Strip the resurrected shared-header markers — `TODO` — small, 5 repos
+
+CLAUDE.md states the `<!-- BEGIN/END crypto-lab shared header -->` and
+`/* BEGIN/END cl-hero standard */` markers "were removed from all labs" and that seeing them
+reappear means "something re-ran the retired tooling."
+
+**They are present in 5 repos:** `dp-noise`, `ghost-commit`, `iron-serpent`, `salamander`,
+`stream-ward`.
+
+These are LIVE markers in `index.html` and `src/style.css`, not prose mentions. `ghost-commit`'s
+reads: *"managed; edit shared-header.html + re-run reapply-header.py"* — pointing a contributor
+straight at tooling that was deliberately retired to `archive/header-rollout/`. A further 24
+files carry benign prose mentions of the old tooling; those are lower priority but worth a pass.
+
+**The fix is to remove the marker comments, not the header.** Each lab owns its own header now,
+so the markup and CSS stay exactly as they are — only the "managed, do not edit, re-run the
+script" framing goes, because it is the instruction that is false and dangerous.
+
+Found while landing the port fix in `traitor-trace`, whose `CONTRIBUTING.md` makes the same
+stale claim in prose. That agent correctly declined to mix the fix into a port commit.
+
+Worth checking whether these five were simply missed by the original strip pass, or whether
+something re-ran the retired tooling in them — the answer changes whether this can recur.
+
 ### 12. Fleet-wide maintainer files — `IN PROGRESS`
 
 Mechanical, identical across repos, and the only remaining tasks that need no per-repo

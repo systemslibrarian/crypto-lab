@@ -104,6 +104,32 @@ and `getAnimations()` returns ~516 entries on panel reveal taking ~600 ms to dra
 was reading pairings the page never renders. The fix is polling until nothing is animating,
 not re-adding the injection.
 
+### axe is NOT a complete contrast oracle — two proven blind spots
+
+1. **It under-reports nodes.** In `bcrypt-forge`, with two elements below AA, axe named
+   exactly ONE. The other would have gone on failing behind a green gate.
+2. **It refuses to compute contrast over a background gradient**, and drops those nodes into
+   `incomplete` — where an assertion that only checks `results.violations` never sees them.
+   Found in `bulletproofs`: that blind spot was hiding two genuine AA failures, including
+   every "secondary" control on the page at 4.39:1 dark / 2.66:1 light.
+
+Where a specific palette matters, **measure the ratio arithmetically from `getComputedStyle`
+and assert it.** `bulletproofs` and `ckks-lab` now carry an `e2e/contrast.ts` helper doing
+exactly this; copy it rather than trusting axe alone.
+
+### Concurrency makes suites look flaky when they are not
+
+`bulletproofs` ran **15.9 min with 5 flaky** while four agents and other Playwright suites
+were competing for CPU. The same suite, run alone with `--retries=0`, was **24 passed in
+17.5 s** — a 50x difference and zero flakes.
+
+Before investigating a flake, **re-run the suite alone**. And note the corollary: a `--retries`
+setting above 0 will silently paper over contention, so a "green" run under load says less
+than it appears to. Do not diagnose flakiness from a run made while agents are working.
+
+(Related self-inflicted trap: piping a Playwright run through `tail -N` discards the failure
+detail, leaving only the summary. Redirect the full log to a file when you intend to diagnose.)
+
 ### AGENT LIMIT — 3-4 at a time
 
 The user set the cap on 2026-08-03: **3-4 agents concurrently**, still

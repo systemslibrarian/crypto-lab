@@ -1,2 +1,9 @@
 # Local-only working doc — kept on disk, not committed
 PROMPT-standardize-parts-A-D.md
+
+# The demo-authoring template. Lives in Google Drive; a working copy sits here
+# while it is being revised, and is carried back out by hand. Deliberately NOT
+# tracked — the catalog is not its home, and committing it would create a second
+# source of truth to drift against the Drive original.
+# The in-repo standard that IS tracked is audits/_MASTER-TEMPLATE.md.
+CRYPTO-LAB-TEMPLATE*.md

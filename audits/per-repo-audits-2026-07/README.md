@@ -25,13 +25,24 @@ derived summaries, and these are the originals they were derived from.
 | `spdz-forge.md` | `crypto-lab-spdz-forge/chat.md` | 2 KB |
 | `_iron-serpent-stray-template.md` | `crypto-lab-iron-serpent/CRYPTO-LAB-TEMPLATE.md` | 373 lines |
 
-## The stray template
+## The stray templates
 
-`_iron-serpent-stray-template.md` was an untracked copy of the demo-authoring template sitting in
-a lab repo. It is **not** identical to `../_MASTER-TEMPLATE.md` (373 lines vs 399) — it is an
-older revision, so it was archived rather than dropped as a duplicate. It is superseded and
-should not be worked from. The live authoring template is kept outside this repo (Google Drive)
-and is gitignored here; the tracked in-repo standard is `../_MASTER-TEMPLATE.md`.
+Copies of the demo-authoring template had drifted into four lab repos. Two distinct revisions
+existed; both are archived here so neither depends on an un-versioned Downloads folder:
+
+| File | Was in | Notes |
+|---|---|---|
+| `_stray-template-373.md` | `iron-serpent` (untracked), `dp-noise` (tracked) | byte-identical in both |
+| `_stray-template-444.md` | `ghost-commit`, `stream-ward` (both tracked) | byte-identical in both |
+
+Neither matches `../_MASTER-TEMPLATE.md` (399 lines) — they are **older revisions**, which is
+why they were archived rather than dropped as duplicates. Both are superseded and should not be
+worked from.
+
+The live authoring template lives outside this repo (Google Drive) and is gitignored here, so a
+copy inside a lab repo is drift with no owner: it looks authoritative, ages silently, and gives
+a second source of truth to disagree with the real one. The tracked in-repo standard is
+`../_MASTER-TEMPLATE.md`.
 
 ## Status
 

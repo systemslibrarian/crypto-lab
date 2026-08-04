@@ -681,6 +681,8 @@ corrections, and scope expansions that would violate the house rule of one conce
 demo. Each needs checking against current repo state before any of it is actioned — several
 of these demos have had work land since the review was written.
 
+**Calibration: see `audits/external-review-2026-08-03/TRIAGE.md` for the full triage.**
+
 **Calibration so far.** The one claim checked end-to-end — patron-shield's "Bit-31
 Collusion-Recovery Bug", which it calls the highest-priority code defect — is **real**:
 `recoverByCollusion()` does `Math.log2(maskS ^ maskSPrime)`, and with bit 31 set the XOR is

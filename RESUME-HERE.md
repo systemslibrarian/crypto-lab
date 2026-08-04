@@ -206,6 +206,38 @@ deleting mattered. `babel-hash` gained the root `.gitignore` it never had.
   untracked — a genuine gap, since the nested `demos/babel-hash/.gitignore` does not cover
   the repo root.
 
+### a11y scan-race audit (task 13) — progress 2026-08-04
+
+**Audited so far: 6 of 47.** `bulletproofs`, `ckks-lab`, `bb84` (earlier), then `aegis-gate`,
+`commit-gate`, `bitcoin-script`. **Real defects in 5 of 6.**
+
+**All three agents in the second wave died on API connection errors** — infrastructure, not the
+work. Each had landed findings first. One (`aegis-gate`) died at *"Now mutation testing"* and
+left a stranded mutation: `--muted` darkened `#b5d2e2` → `#7a95a5`, plus an **unpushed commit**.
+Restored, mutation-check completed (gate caught it, measured **2.85:1** against the 4.5:1 floor),
+pushed `65cbb4a`.
+
+**axe's `incomplete` bucket now confirmed as a blind spot from TWO directions.** The gate asserts
+on `results.violations`; anything axe files under `incomplete` never reaches it:
+- **contrast over a gradient** — axe declines to compute a ratio at all (`bulletproofs`, two real
+  AA failures, one at 2.66:1);
+- **`aria-label` / `aria-labelledby` on a role-less div** — ARIA prohibits a name on a generic
+  role, so the name is silently discarded, and axe reports it as `incomplete`
+  (`commit-gate` `0092826`, two panels; `aegis-gate` `65cbb4a`, badge spans).
+
+So a gate that only reads `violations` is weaker than it looks in at least two distinct ways.
+**Consider asserting on `incomplete` as well**, or at minimum logging it.
+
+**Also confirmed: "no scan race" is a real and common answer.** `aegis-gate` paints synchronously
+— the load-time scan really was looking at a rendered page. What it could not see was every state
+the page reaches *later*: tamper verdict, state hexagon, AES round grids, avalanche heatmap,
+nonce-reuse recovery, conformance tables, benchmark bars — none ever scanned. **The state gap is
+the bigger seam; the race is only one way in.**
+
+**Practical note:** a full axe pass at 380px on a rich state can exceed the 30s default test
+timeout — narrow width reflows tables into scrolling boxes, giving axe far more to walk.
+`test.setTimeout(150_000)` on those tests, rather than narrowing what is scanned.
+
 ### AGENT LIMIT — 3-4 at a time
 
 The user set the cap on 2026-08-03: **3-4 agents concurrently**, still

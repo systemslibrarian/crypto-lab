@@ -711,7 +711,32 @@ is polling until nothing is animating — **never re-adding the injection.**
 
 Best done as part of task 13 per repo, since both touch the same file.
 
-### 15. Strip the resurrected shared-header markers — `TODO` — small, 5 repos
+### 15. Strip the resurrected shared-header markers — `DONE 2026-08-04`
+
+Eight repos fixed, not the five first counted — the initial scans were too narrow twice
+(first only `BEGIN/END` syntax, then only `index.html` + `*.css`). A marker also lived in
+**TypeScript** (`mls-group/src/app.ts` generating the hero markup) and in **prose**
+(`traitor-trace/CONTRIBUTING.md`). Lesson: scan every file type, then classify.
+
+| Repo | What it said | Commit |
+|---|---|---|
+| `ghost-commit` | live `BEGIN/END` in `index.html` + `style.css` | `3b34f05` |
+| `salamander` | same | `72e99ea` |
+| `stream-ward` | same (`styles.css`) | `f1ba2a9` |
+| `mls-group` | `BEGIN/END cl-hero standard markup` in `src/app.ts` | `53f8235` |
+| `traitor-trace` | CONTRIBUTING: "reapplied by `crypto-lab/reapply-header.py`" | `b168a9e` |
+| `card-trick` / `musig-gate` / `schnorr-forge` | "(managed cl-hero standard)" | `24cf583` / `da8f8f8` / `027c7bb` |
+
+Comments only — no markup or style changed; every repo built and passed its suite.
+Three descriptive mentions remain (`blind-oracle`, `kdf-chain`, `zk-arena`) and are fine:
+they reference the standard as a convention, without telling anyone to run anything.
+
+**Still open, related:** three demo repos carry **tracked** stale copies of the authoring
+template — `dp-noise` (373 lines), `ghost-commit` (444), `stream-ward` (444). The live
+template is kept in Google Drive and gitignored in the catalog, so these are drift. Removing
+tracked files is the user's call; flagging rather than deleting.
+
+### 15b. Strip the resurrected shared-header markers — *(original entry)*
 
 CLAUDE.md states the `<!-- BEGIN/END crypto-lab shared header -->` and
 `/* BEGIN/END cl-hero standard */` markers "were removed from all labs" and that seeing them

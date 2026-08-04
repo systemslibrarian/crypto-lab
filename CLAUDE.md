@@ -216,8 +216,20 @@ Do not resurrect them.
   overwrite driven from this one.
 
 The old `<!-- BEGIN/END crypto-lab shared header -->` and `/* BEGIN/END cl-hero standard */`
-markers were removed from all labs. If you see them reappear, something re-ran the retired
-tooling.
+markers were stripped in a fleet-wide pass. **That pass was not complete.** As of 2026-08-04
+five labs still carry live markers in `index.html` and/or `src/style.css`: `dp-noise`,
+`ghost-commit`, `iron-serpent`, `salamander`, `stream-ward`. `ghost-commit`'s reads *"managed;
+edit shared-header.html + re-run reapply-header.py"* — pointing a contributor straight at
+tooling that was deliberately retired.
+
+So: seeing a marker does **not** by itself prove the retired tooling re-ran. Check whether the
+repo is one of those five (a survivor of the incomplete pass) before concluding anything.
+Outside that list, treat a marker as a genuine signal that something re-ran the tooling.
+
+Removing them is TASKS.md task 15. **Remove the marker comments, not the header** — each lab
+owns its markup and CSS now; it is only the "managed, do not edit, re-run the script" framing
+that is false. A further ~24 files mention the retired tooling in prose; those are lower
+priority but carry the same wrong instruction.
 
 ---
 

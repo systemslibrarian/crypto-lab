@@ -130,6 +130,49 @@ than it appears to. Do not diagnose flakiness from a run made while agents are w
 (Related self-inflicted trap: piping a Playwright run through `tail -N` discards the failure
 detail, leaving only the summary. Redirect the full log to a file when you intend to diagnose.)
 
+### DONE — MIT LICENSE fleet-wide (2026-08-04)
+
+**177 of 177 repos now carry a LICENSE.** 157 added and pushed, 20 already had one, 0 failed.
+Verified independently afterwards: no commit touched anything but `LICENSE`, and nothing is
+unpushed. Chosen without needing a decision — all 20 pre-existing licenses were already MIT,
+Copyright 2026 Paul Clark, so precedent settled it.
+
+156 repos had had **no license at all**, which means the default was exclusive copyright: a
+public teaching catalog nobody was permitted to copy or adapt.
+
+The script staged **only** the `LICENSE` path and aborted a repo if anything else appeared in
+the staged set — necessary because 20 repos hold unrelated uncommitted work that `git add -A`
+would have swallowed. Reuse that pattern for any future fleet-wide file drop.
+
+### CORRECTION — port collisions were NOT eliminated
+
+An earlier claim in this session ("port collisions eliminated, 158 repos unique") was **wrong**.
+It described working trees, not what is committed. Five repos have the port fix sitting
+uncommitted, and at origin:
+
+- `salamander`, `signed-bytes`, `spake-gate` — still on **4173**
+- `stream-ward`, `traitor-trace` — still on **4287**
+
+Three repos sharing 4173 is the exact condition that lets one lab's Playwright suite scan
+another lab's page. **Fix these first among the dirty repos.** Verify with
+`git show HEAD:playwright.config.ts`, never with the working tree.
+
+### The 20 repos with uncommitted work — what each actually needs
+
+- **Group A, real fixes never landed (5):** the port work above.
+- **Group B, uncommitted test work (5):** `ntru-classic` (new claims spec + deploy.yml),
+  `tls-handshake` (new claims spec), `simon-period` and `timing-oracle` (modified claims
+  specs), plus `stream-ward`'s `pages.spec.ts` and `traitor-trace`'s README/CONTRIBUTING.
+  Treat like `blind-hello`: read the diff, finish or discard deliberately, mutation-check.
+- **Group C, leftovers (11):** nine untracked `chat.md` files — the original July per-repo
+  "gold-standard roadmap" audits, whose content is **already** triaged into
+  `TRIAGE-2026-08-02-batch-{1,2}.md`. Archive the originals into `audits/` before removing
+  them; this project has already lost three audit docs to exactly this situation.
+  `iron-serpent` holds an untracked copy of `_MASTER-TEMPLATE.md` (redundant).
+  **`babel-hash` has no root `.gitignore`**, so `node_modules/` and `test-results/` show as
+  untracked — a genuine gap, since the nested `demos/babel-hash/.gitignore` does not cover
+  the repo root.
+
 ### AGENT LIMIT — 3-4 at a time
 
 The user set the cap on 2026-08-03: **3-4 agents concurrently**, still

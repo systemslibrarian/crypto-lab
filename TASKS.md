@@ -661,6 +661,33 @@ Start with `_MASTER-TEMPLATE.md`, which calls itself the single source of truth 
 every lab is built. Decide whether it is promoted to the repo root or merged into
 CLAUDE.md — two competing standards documents is worse than one.
 
+### 12. Fleet-wide maintainer files — `IN PROGRESS`
+
+Mechanical, identical across repos, and the only remaining tasks that need no per-repo
+investigation. Do them **one at a time**, verifying each fully before starting the next.
+
+| Item | State |
+|---|---|
+| **MIT LICENSE** | **DONE 2026-08-04** — 177/177. 157 added, 20 already had one, 0 failed. Verified: no commit touched anything but `LICENSE`, nothing unpushed. |
+| **Dependabot** | `TODO` — 174 of 176 repos have no `.github/dependabot.yml`. |
+| **SHA-pinned Actions** | `TODO` — 175 of 176 repos reference actions by tag, not SHA. |
+
+**Dependabot — decide before running.** The config itself is trivial and identical; the real
+question is blast radius. Two ecosystems apply (`npm` and `github-actions`), and across 174
+repos a weekly schedule can open a very large number of PRs at once. Worth choosing
+deliberately: schedule interval, whether to group updates into a single PR per repo
+(`groups:` keeps it to one), and an `open-pull-requests-limit`. Ungrouped weekly npm updates
+across this fleet would be unmanageable.
+
+**SHA-pinning — note the risk.** Unlike LICENSE and Dependabot this one *changes what CI
+runs*. It needs a GitHub API lookup to resolve each action tag to a commit SHA, and it should
+keep the tag in a trailing comment (`uses: actions/checkout@<sha> # v4`) so the version stays
+readable. Do it after Dependabot, and expect it to need spot-checking rather than trust.
+
+**Reuse the LICENSE script's pattern** (`scratchpad/add-license.sh`): stage ONLY the intended
+path and abort that repo if anything else appears in the staged set. Repos in this fleet hold
+unrelated uncommitted work, and `git add -A` would swallow it.
+
 ### 11. Triage the external review of 13 demos — `TODO`
 
 The user supplied an outside review (ChatGPT) of 13 demos, filed verbatim in

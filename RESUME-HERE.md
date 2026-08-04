@@ -157,7 +157,40 @@ Three repos sharing 4173 is the exact condition that lets one lab's Playwright s
 another lab's page. **Fix these first among the dirty repos.** Verify with
 `git show HEAD:playwright.config.ts`, never with the working tree.
 
-### The 20 repos with uncommitted work — what each actually needs
+### DONE 2026-08-04 — Groups A, B and C. **Fleet is 0 dirty, 0 unpushed (177 repos).**
+
+**Group A — the port fix that was never committed (5 repos).** `salamander` 4668,
+`signed-bytes` 4669, `spake-gate` 4670, `stream-ward` 4671, `traitor-trace` 4673.
+Verified in COMMITTED state across `.ts`/`.mjs`/`.js`/`.yml`/`.json`: **zero repos commit a
+shared port anywhere.** `stream-ward` found the port in a 4th place (`pages.spec.ts`) and
+removed the literal entirely by deriving the origin from Playwright's `baseURL` fixture.
+Both agents correctly spotted false-positive port matches inside crypto KAT vectors
+(a ChaCha20 vector containing `e42874d`, a SHA-512 vector containing `cc417349`) — a careless
+find-and-replace would have corrupted a known-answer test.
+
+**Group B — uncommitted test work (4 repos).**
+- `ntru-classic` `4ad3ad1` — 52 unit / 12 browser. Byte-budget stated in 3 places, only the
+  computed ones checked; a decryption verdict never asserted to retract on re-encrypt.
+- `tls-handshake` `db7dba1` — 14 browser. Source confirmed free of the stranded mutation
+  reverted earlier (`handshake.ts:886` reads correctly), re-mutated to prove the test bites.
+- `timing-oracle` `bfdbfd6` — 37 unit / 13 browser. **Page overstated and was fixed**: verdicts
+  claimed "recover the secret one character at a time" and "a forgery oracle" off a single 15%
+  ratio, and the *inconclusive* branch claimed the leak was "statistically still exploitable" —
+  a conclusion from the absence of a measurement. External-review **item 8 (in-flight HMAC
+  stale race) confirmed REAL and reachable, fixed**; item 9 judged real but mostly unreachable
+  and deliberately not fixed.
+- `simon-period` `8891d1e`+`fcc580e` — 78 unit / 19 browser. **Page overstated and was fixed**:
+  `BROKEN` now reads "Broken in the Q2 model only — every query above was a superposition query
+  to the keyed primitive, which no deployed system offers." Also removed dead code and a stale
+  docstring contradicted by the function two above it.
+
+**Group C — leftovers (11 repos).** Nine untracked `chat.md` audits + an untracked older
+template copy archived to `audits/per-repo-audits-2026-07/` (with a README recording provenance)
+**and pushed before** the originals were removed. The iron-serpent template was **not** a
+duplicate — 373 lines vs `_MASTER-TEMPLATE.md`'s 399, an older revision — so checking before
+deleting mattered. `babel-hash` gained the root `.gitignore` it never had.
+
+### Historical — what those 20 repos needed
 
 - **Group A, real fixes never landed (5):** the port work above.
 - **Group B, uncommitted test work (5):** `ntru-classic` (new claims spec + deploy.yml),

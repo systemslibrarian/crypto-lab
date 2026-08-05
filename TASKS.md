@@ -707,9 +707,8 @@ Tasks 13 (scan race) and 14a (opacity injection) are **one sweep, not two**: sam
 every multi-repo agent yesterday died on an API error or the watchdog). Work the queue in order;
 the densest repos are first.
 
-**Order 1 — both defects (14).** `bike-vault` *(in flight)* · curve448 · e91 · enigma-forge ·
-harvest-vault · hqc-timing · hybrid-guide · hybrid-pqc · j-uniward · kyberslash · lms-ledger ·
-lwe-hints · mpcith-sign · nonce-lattice
+**Order 1 — both defects (12).** curve448 · e91 · harvest-vault · hqc-timing · hybrid-guide ·
+hybrid-pqc · j-uniward · kyberslash · lms-ledger · lwe-hints · mpcith-sign · nonce-lattice
 
 **Order 2 — opacity injection only (43).** dead-sea-cipher · format-ward · hash-zoo · hawk ·
 hqc-vault · hybrid-wire · ibe-gate · jwt-forge · kerberos · key-exchange · kyber-vault ·
@@ -724,10 +723,25 @@ diffie-hellman-mitm · ec-point-arithmetic · ecdsa-forge · ed25519-forge · el
 fhe-arena · frodo-vault · frost-threshold · garbled-gate · gg20-wallet · grover ·
 isogeny-gate · jevil · lattice-fault · lms-xmss · nonce-lattice
 
-**Done (11):** bulletproofs · ckks-lab · bb84 *(clean negative)* · aegis-gate · commit-gate ·
-bitcoin-script · blind-sign · broken-trust · envelope-kms · bcrypt-forge · dead-sea-cipher(part)
+**Done (13):** bulletproofs · ckks-lab · bb84 *(clean negative)* · aegis-gate · commit-gate ·
+bitcoin-script · blind-sign · broken-trust · envelope-kms · bcrypt-forge · dead-sea-cipher(part) ·
+bike-vault (`15d8531`) · enigma-forge (`d9fd909`)
 
-**Yield so far: 8 real defects in 9 repos audited.** Two WCAG 2.1.1 keyboard traps, contrast down
+**2026-08-05 evening: enigma-forge's sweep work was found STRANDED UNCOMMITTED** — an agent
+died after finishing but before committing. The work was verified from scratch (61 unit +
+57 browser tests green, the conflict-cell contrast fix mutation-checked red-then-green) and
+landed. It found four real defect classes: crib-window conflict cells at 1.36:1 dark /
+1.38:1 light (the exact letters the self-map lesson turns on), a `.success-banner.failed`
+state with no CSS rule at all (failure text painted in the success palette), three
+aria-labels on role-less divs silently discarded by browsers (axe files this under
+`incomplete`), and four kinds of scrolling container with no keyboard route — three of
+which only overflow at 380px, where a desktop-only gate never looks. NOTE: the final commit
+was made by a CONCURRENT WRITER seconds after this session staged the files — its message
+(`Fix scrolling keyboard accessibility and aria role blindspots`) is not this session's;
+content verified identical to what was tested. Confirm no second writer is live before
+assigning the next repo.
+
+**Yield so far: 12 real defects in 11 repos audited.** Two WCAG 2.1.1 keyboard traps, contrast down
 to 2.66:1, three instances of ARIA-prohibited names being silently discarded.
 
 Regenerate the queue with the node snippet used on 2026-08-05 (match `opacity: *1 *!important` on

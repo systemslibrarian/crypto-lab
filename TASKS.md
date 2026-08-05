@@ -697,6 +697,42 @@ survived: **treat a flaky a11y test as a coverage hole until proven otherwise.**
 
 Regenerate the remaining list with the snippet in `RESUME-HERE.md`. Roughly 3 repos per agent.
 
+### 13+14a MERGED SWEEP — the work queue — `IN PROGRESS`
+
+Tasks 13 (scan race) and 14a (opacity injection) are **one sweep, not two**: same file, same run.
+**78 distinct repos** need a visit; only 14 have both defects, so two separate passes would mean
+92 visits and would re-open the same spec twice.
+
+**Cadence: ONE agent, ONE repo at a time** (user's call, 2026-08-05 — credits are finite and
+every multi-repo agent yesterday died on an API error or the watchdog). Work the queue in order;
+the densest repos are first.
+
+**Order 1 — both defects (14).** `bike-vault` *(in flight)* · curve448 · e91 · enigma-forge ·
+harvest-vault · hqc-timing · hybrid-guide · hybrid-pqc · j-uniward · kyberslash · lms-ledger ·
+lwe-hints · mpcith-sign · nonce-lattice
+
+**Order 2 — opacity injection only (43).** dead-sea-cipher · format-ward · hash-zoo · hawk ·
+hqc-vault · hybrid-wire · ibe-gate · jwt-forge · kerberos · key-exchange · kyber-vault ·
+mac-race · merkle-proofs · mls-group · oblivious-shelf · opaque-gate · oram-vault · ot-gate ·
+otp-vault · paillier-gate · pairing-gate · pki-chain · poly1305-mac · pq-rotation · psi-gate ·
+shamir-vs-frost · shor · silent-tally · snark-arena · sphincs-ledger · stego-suite ·
+syndrome-drain · syndrome-hints · threshold-decrypt · threshold-mldsa · time-lock-puzzle ·
+tls-handshake · vdf · vrf-gate · vss-gate · web-of-trust · webauthn · zk-proof-lab
+
+**Order 3 — scan race only (21).** ascon · babel-hash · biham-lens · blind-oracle · curve-lens ·
+diffie-hellman-mitm · ec-point-arithmetic · ecdsa-forge · ed25519-forge · elgamal-plain ·
+fhe-arena · frodo-vault · frost-threshold · garbled-gate · gg20-wallet · grover ·
+isogeny-gate · jevil · lattice-fault · lms-xmss · nonce-lattice
+
+**Done (11):** bulletproofs · ckks-lab · bb84 *(clean negative)* · aegis-gate · commit-gate ·
+bitcoin-script · blind-sign · broken-trust · envelope-kms · bcrypt-forge · dead-sea-cipher(part)
+
+**Yield so far: 8 real defects in 9 repos audited.** Two WCAG 2.1.1 keyboard traps, contrast down
+to 2.66:1, three instances of ARIA-prohibited names being silently discarded.
+
+Regenerate the queue with the node snippet used on 2026-08-05 (match `opacity: *1 *!important` on
+NON-COMMENT lines — the raw string over-counts, since fixed specs mention it in a docblock).
+
 ### 14a. Remove the `opacity: 1 !important` injection — `TODO` — **57 specs, HIGH PRIORITY**
 
 Found in `broken-trust` (fixed, `feae4ae`) and then measured fleet-wide: **57 a11y specs inject

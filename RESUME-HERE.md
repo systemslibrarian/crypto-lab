@@ -238,6 +238,40 @@ the bigger seam; the race is only one way in.**
 timeout — narrow width reflows tables into scrolling boxes, giving axe far more to walk.
 `test.setTimeout(150_000)` on those tests, rather than narrowing what is scanned.
 
+### DONE 2026-08-05 — the catalog was breaking its own rule about claims
+
+The user noticed several different demo counts across the materials. Measured on disk there were
+four, none derived from any other: **"140 exhibits"** (catalog page and README), **"170+ browser
+demos"** (164 per-demo READMEs), **175 cards**, **176 repos**.
+
+A per-demo page cannot see how many demos exist, so its number was a claim it never computed —
+the exact defect this fleet is audited for everywhere else. "170+" was true only by luck against
+175 cards, as every earlier value had been until it wasn't. **Raising the number would only reset
+the clock**, so the count was dropped: every README now reads "Part of the Crypto Lab suite."
+
+Result: **163 changed and pushed, 12 had no claim, 0 contaminated commits** (each touched only
+`README.md`), **0 repos still claiming a count.**
+
+**Still open:** `"140 exhibits"` in the catalog's `index.html` and `README.md`. It is at least
+about the catalog rather than asserted by a page that cannot see the fleet, but it is hardcoded
+and will drift. The clean finish is to generate it from the card count and add `count-sync.js`
+beside `readme-sync` / `corpus-sync` / `concept-sync`, so it cannot go stale silently.
+
+### CORRECTION — "0 unpushed" was being read off stale tracking refs
+
+`mls-group`'s push was rejected during the above: the **remote held two commits the local clone
+did not** ("Stop the border-contrast gate sampling a mid-transition colour", "Stop #app's grid
+from stranding the hero's aside"). Rebased the one-file commit on top and pushed.
+
+That matters because today's repeated "fleet is 0 dirty / 0 unpushed" checks compared against
+**local** tracking refs — the full fetch had timed out early on and the local fallback was never
+re-qualified. TASKS.md already warns "`git fetch` before trusting any ahead/behind count"; this
+is the second time that has bitten.
+
+A proper fetch-first scan of all 177 repos now reports **behind=0 ahead=0 dirty=0**, so the
+earlier claims were right in substance — but they were reached by a method that could have been
+wrong, and `mls-group` proves the gap was real, not theoretical. **Fetch before claiming.**
+
 ### AGENT LIMIT — 3-4 at a time
 
 The user set the cap on 2026-08-03: **3-4 agents concurrently**, still

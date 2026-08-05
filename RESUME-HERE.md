@@ -252,10 +252,15 @@ the clock**, so the count was dropped: every README now reads "Part of the Crypt
 Result: **163 changed and pushed, 12 had no claim, 0 contaminated commits** (each touched only
 `README.md`), **0 repos still claiming a count.**
 
-**Still open:** `"140 exhibits"` in the catalog's `index.html` and `README.md`. It is at least
-about the catalog rather than asserted by a page that cannot see the fleet, but it is hardcoded
-and will drift. The clean finish is to generate it from the card count and add `count-sync.js`
-beside `readme-sync` / `corpus-sync` / `concept-sync`, so it cannot go stale silently.
+**CLOSED — and a correction to an earlier note here.** I recorded `"140 exhibits"` as a surviving
+catalog self-count needing a `count-sync.js` generator. **That was wrong.** Reading it in context,
+it describes **Cipher Museum** (ciphermuseum.com) — *"Thirteen halls, 140 exhibits"* — a different
+site listed under related projects. Generating it from this catalog's card count would have
+replaced a correct statement about another project with a number from this one.
+
+No Crypto Lab self-count remains anywhere in `index.html` or `README.md`. **No new checker is
+needed**; there is nothing left to keep in sync. The lesson stands on its own: the fix for a
+drifting count was to stop asserting it, not to automate asserting it.
 
 ### CORRECTION — "0 unpushed" was being read off stale tracking refs
 

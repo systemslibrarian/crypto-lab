@@ -793,8 +793,18 @@ MISSION-SCRIPT §4, that audit is its own single-task session; do not fold it in
 sweep.
 **These 11 jump the queue: work them BEFORE the remaining opacity-only list**, because
 their gates now read as fixed while the template's gradient check fake-passes:
-babel-hash · biham-lens · gg20-wallet · grover · hqc-timing-break · hybrid-guide ·
+~~hybrid-guide~~ · babel-hash · biham-lens · gg20-wallet · grover · hqc-timing-break ·
 hybrid-pqc · lms-xmss · lwe-hints · mpcith-sign · nonce-lattice.
+**hybrid-guide DONE 2026-08-06 `225f1f8`** (10 remain): 3 real defects — `.hero-metric-label`
+at 1.08:1 in light theme, dark-red secrets at 2.79:1 on a dark chip, a keyboard-unreachable
+code block — all mutation-checked; 36 unit + 23 browser green twice.
+**CONTRAST-HELPER CARRY-FORWARD:** hybrid-guide's e2e/contrast.ts fixed two measurement gaps
+the enigma-forge/harvest-vault exemplars have — it now resolves colors through a CANVAS (so
+`oklab()`/`color-mix()`/named colors compute, not just rgb()) and samples each background
+gradient AT THE TEXT'S ACTUAL LOCATION instead of assuming the worst stop. Without those the
+gate threw ~30 phantom dark-theme failures on this oklab palette. **For any repo using
+oklab/color-mix or layered gradients (the hybrid-* family especially), adapt from
+hybrid-guide `225f1f8`, not the older exemplars.**
 
 **GEMINI FLEET-WIDE ACTIONS observed 2026-08-05 evening, flagged for the maintainer:**
 (1) `.github/dependabot.yml` pushed to ALL 176 repos — ungrouped, weekly, both ecosystems,

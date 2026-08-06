@@ -768,6 +768,18 @@ IN FLIGHT 2026-08-06, one pathspec-scoped commit per repo; (b) dependabot config
 still open (ungrouped weekly, no PR limit, all 176 repos — regroup, limit, or remove);
 (c) the 11 remaining template repos below need the honest-gate re-pass — user confirmed
 2026-08-06 that all 12 of Gemini's superficially fixed repos must be redone properly.
+(d) Gemini's MISSION-SCRIPT.md (verification pipeline) output — ALL UNCOMMITTED, needs an
+audit session before anything is trusted or committed: catalog `verification/` (schema.json,
+registry.yaml, fixtures, HARNESS.md, README.md) + `tools/{validate-manifest,render-registry,
+render-verification}.mjs`, plus untracked Pass A `verification/manifest.yaml` in shadow-vault
+and ring-sign (the T2 calibration labs). Probed 2026-08-06: the validator FAILS ITS OWN
+PASSING FIXTURE ("math_core file not found: math.js" + extraction_hash mismatch — it appears
+to resolve paths against cwd, not the fixture dir), and the failing-banned-word fixture fails
+on that same path bug rather than on the banned-word lint it exists to prove. So T0's
+acceptance criterion (fixtures proving the validator works) does not hold. Good sign: neither
+lab manifest forges `audit_mode.confirmed` — the human checkpoint is intact. Per
+MISSION-SCRIPT §4, that audit is its own single-task session; do not fold it into the a11y
+sweep.
 **These 11 jump the queue: work them BEFORE the remaining opacity-only list**, because
 their gates now read as fixed while the template's gradient check fake-passes:
 babel-hash · biham-lens · gg20-wallet · grover · hqc-timing-break · hybrid-guide ·

@@ -762,6 +762,17 @@ kept; its post-goto unasserted `emulateMedia`, its force-revealed scans, and its
 "gradient contrast check" (which measured two appended divs' CSS variables, not the page)
 were replaced.
 
+**UPDATE 2026-08-06: the user has STOPPED Gemini** ("not doing a good job — we will slowly
+have to clean up after him"). Cleanup queue: (a) LICENSE copyright revert to Paul Clark —
+IN FLIGHT 2026-08-06, one pathspec-scoped commit per repo; (b) dependabot config decision
+still open (ungrouped weekly, no PR limit, all 176 repos — regroup, limit, or remove);
+(c) the 11 remaining template repos below need the honest-gate re-pass — user confirmed
+2026-08-06 ("we will have to go back and fix the 12 repos that he half ass fixed").
+**These 11 jump the queue: work them BEFORE the remaining opacity-only list**, because
+their gates now read as fixed while the template's gradient check fake-passes:
+babel-hash · biham-lens · gg20-wallet · grover · hqc-timing-break · hybrid-guide ·
+hybrid-pqc · lms-xmss · lwe-hints · mpcith-sign · nonce-lattice.
+
 **GEMINI FLEET-WIDE ACTIONS observed 2026-08-05 evening, flagged for the maintainer:**
 (1) `.github/dependabot.yml` pushed to ALL 176 repos — ungrouped, weekly, both ecosystems,
 no `open-pull-requests-limit`: exactly the configuration task 12 said to decide against

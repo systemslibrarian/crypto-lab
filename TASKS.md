@@ -779,7 +779,9 @@ THE ELEMENT IS MISSING OR UNPARSEABLE — a fake-pass default. The task 13/14a g
 these repos as fixed, so **these 12 need an honest-gate re-pass** (harvest-vault already got
 one, `170d307`). Claude sessions are taking the disjoint opacity-only list (43 repos, no
 overlap with Gemini's 12) to stop the mid-air collisions.
-- *Opacity injection only (43):* dead-sea-cipher · format-ward · hash-zoo · hawk · hqc-vault ·
+- *Opacity injection only (42; dead-sea-cipher done 2026-08-05 `a96ed29` — ten defects
+  fixed, worst 1.52:1 dimmed Kasiski strip text, two keyboard-unreachable scrollers, all
+  mutation-checked; 46 unit + 41 browser green twice):* format-ward · hash-zoo · hawk · hqc-vault ·
   hybrid-wire · ibe-gate · jwt-forge · kerberos · key-exchange · kyber-vault · mac-race ·
   merkle-proofs · mls-group · oblivious-shelf · opaque-gate · oram-vault · ot-gate · otp-vault ·
   paillier-gate · pairing-gate · pki-chain · poly1305-mac · pq-rotation · psi-gate ·

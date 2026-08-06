@@ -763,11 +763,22 @@ kept; its post-goto unasserted `emulateMedia`, its force-revealed scans, and its
 were replaced.
 
 **UPDATE 2026-08-06: the user has STOPPED Gemini** ("not doing a good job — we will slowly
-have to clean up after him"). Cleanup queue: (a) LICENSE copyright revert to Paul Clark —
-IN FLIGHT 2026-08-06, one pathspec-scoped commit per repo; (b) dependabot config decision
-still open (ungrouped weekly, no PR limit, all 176 repos — regroup, limit, or remove);
+have to clean up after him"). Cleanup queue:
+(a) LICENSE copyright revert to Paul Clark — **DONE 2026-08-06**, 177/177 repos now read
+    "Paul Clark", one pathspec-scoped commit each, verified no commit touched anything but
+    LICENSE. Two were blocked and handled last: `threshold-decrypt` held Gemini's unpushed
+    shallow commit `4901202` ("remove opacity injection" — one line, valid but incomplete;
+    pushed to unblock, still needs the full honest-gate re-pass), and `format-ward` was
+    mid-a11y-work (finished as `b20d485` first). LICENSE fixes: `f49d8ed`, `c45831d`.
+(b) **dependabot DECISION TAKEN 2026-08-06:** grouped weekly (one PR/ecosystem/repo, limit
+    3) + auto-merge patch/minor on green CI, majors held. BLOCKER FOUND: only 50/176 repos
+    run any CI on `pull_request` — the dominant `deploy.yml` (131 repos) triggers on push to
+    main + workflow_dispatch only, so 126 repos have NO PR checks and nothing to gate a
+    merge on. User chose to CLOSE THE GAP: add PR-triggered CI fleet-wide, then auto-merge on
+    it. This also fixes a real pre-existing hole — those repos never validate a change before
+    it lands on main. See the PR-CI plan under task 12. Not yet started.
 (c) the 11 remaining template repos below need the honest-gate re-pass — user confirmed
-2026-08-06 that all 12 of Gemini's superficially fixed repos must be redone properly.
+    2026-08-06 that all 12 of Gemini's superficially fixed repos must be redone properly.
 (d) Gemini's MISSION-SCRIPT.md (verification pipeline) output — ALL UNCOMMITTED, needs an
 audit session before anything is trusted or committed: catalog `verification/` (schema.json,
 registry.yaml, fixtures, HARNESS.md, README.md) + `tools/{validate-manifest,render-registry,
@@ -802,9 +813,11 @@ THE ELEMENT IS MISSING OR UNPARSEABLE — a fake-pass default. The task 13/14a g
 these repos as fixed, so **these 12 need an honest-gate re-pass** (harvest-vault already got
 one, `170d307`). Claude sessions are taking the disjoint opacity-only list (43 repos, no
 overlap with Gemini's 12) to stop the mid-air collisions.
-- *Opacity injection only (42; dead-sea-cipher done 2026-08-05 `a96ed29` — ten defects
-  fixed, worst 1.52:1 dimmed Kasiski strip text, two keyboard-unreachable scrollers, all
-  mutation-checked; 46 unit + 41 browser green twice):* format-ward · hash-zoo · hawk · hqc-vault ·
+- *Opacity injection only (41 remain; dead-sea-cipher `a96ed29` and format-ward `b20d485`
+  DONE 2026-08-05/06 — format-ward found 6 defects incl. two light-theme arrows at 3.44:1
+  and 3.02:1, a reflow blowout, aria-prohibited names, and an exhibit whose own defaults
+  tripped its Rev.1 domain floor; all mutation-checked, 33 unit + 24 browser green twice):*
+  hash-zoo · hawk · hqc-vault ·
   hybrid-wire · ibe-gate · jwt-forge · kerberos · key-exchange · kyber-vault · mac-race ·
   merkle-proofs · mls-group · oblivious-shelf · opaque-gate · oram-vault · ot-gate · otp-vault ·
   paillier-gate · pairing-gate · pki-chain · poly1305-mac · pq-rotation · psi-gate ·
@@ -926,9 +939,37 @@ investigation. Do them **one at a time**, verifying each fully before starting t
 
 | Item | State |
 |---|---|
-| **MIT LICENSE** | **DONE 2026-08-04** — 177/177. 157 added, 20 already had one, 0 failed. Verified: no commit touched anything but `LICENSE`, nothing unpushed. |
-| **Dependabot** | `TODO` — 174 of 176 repos have no `.github/dependabot.yml`. |
+| **MIT LICENSE** | **DONE 2026-08-04** — 177/177. 157 added, 20 already had one, 0 failed. Verified: no commit touched anything but `LICENSE`, nothing unpushed. (Copyright holder briefly rewritten to "Systems Librarian" by Gemini 2026-08-05; reverted to "Paul Clark" fleet-wide 2026-08-06 — see cleanup queue (a) above.) |
+| **Dependabot** | Config pushed fleet-wide by Gemini 2026-08-05 (ungrouped, no limit — bad). Decision taken 2026-08-06: regroup + auto-merge; blocked on PR-CI (below). |
+| **PR-CI + auto-merge** | `TODO` (decided 2026-08-06) — the plan below. |
 | **SHA-pinned Actions** | `TODO` — 175 of 176 repos reference actions by tag, not SHA. |
+
+**PR-CI + auto-merge plan (decided 2026-08-06).** Goal: grouped weekly Dependabot with
+patch/minor auto-merged once CI is green, majors held for review. Blocker: only 50/176 repos
+run CI on `pull_request`; `deploy.yml` (131 repos) triggers on push-to-main + workflow_dispatch
+only, so a Dependabot PR gets no checks on 126 repos. Finding: each repo's `deploy.yml` ALREADY
+runs the correct pipeline (`npm ci` → its own test/build/`test:e2e`|`test:a11y` invocation) in a
+`build` job, then a separate `deploy` job. Script names are NOT uniform (test 159, test:a11y
+160, test:e2e some, typecheck 42, check 6, build 163), so DON'T impose a uniform script list —
+reuse each repo's existing `build` job. Approach per repo:
+  1. Add `pull_request: { branches: [main] }` to the workflow's `on:` trigger, and guard the
+     `deploy` job with `if: github.event_name != 'pull_request'` so PRs build+test but never
+     deploy. CI=true makes vitest run-mode, so watch-mode `test` scripts are safe in Actions.
+     Nested-package repos (biham-lens demos/, collision-vault demos/, ratchet-wire, quantum-
+     vault-kpqc web-demo/) and odd harnesses (stark-tower custom, vrf-gate `check`) need
+     tailoring — handle by reading each workflow, not a blind sed.
+  2. Regrouped `.github/dependabot.yml`: npm + github-actions, weekly, `groups: {"*"}` each,
+     `open-pull-requests-limit: 3`.
+  3. `.github/workflows/dependabot-auto-merge.yml`: on pull_request, if actor==dependabot[bot],
+     fetch-metadata, and for semver-patch/minor `gh pr merge --auto --squash`.
+  4. Per repo via gh api: `allow_auto_merge=true`, and branch protection on main requiring the
+     PR-CI check with **enforce_admins=false** — so Dependabot PRs wait for green but direct
+     admin pushes to main (the fleet's whole workflow) still land unblocked. The required-check
+     name is uniform because the PR-CI job is uniform.
+VALIDATE on 2-3 representative repos (one standard deploy.yml, one nested, one odd-script) with
+a real throwaway PR watched to green BEFORE any fleet rollout. Then batch under the 3-4 agent
+cap, one commit per file per repo, per-repo verified. This is high-stakes (a bad workflow edit
+breaks deploys) — not a mechanical sed pass despite living in task 12.
 
 **Dependabot — decide before running.** The config itself is trivial and identical; the real
 question is blast radius. Two ecosystems apply (`npm` and `github-actions`), and across 174

@@ -747,8 +747,28 @@ re-check right before committing.
 these lists go stale fast — regenerate with the greps below before each assignment; the
 Order 1/2/3 lists above and below this note are superseded):
 
-- *Both defects (9):* harvest-vault · hybrid-guide · hybrid-pqc · j-uniward · kyberslash ·
+- *Both defects (8):* hybrid-guide · hybrid-pqc · j-uniward · kyberslash ·
   lms-ledger · lwe-hints · mpcith-sign · nonce-lattice
+
+**harvest-vault DONE 2026-08-05 (`170d307`)** — four real defects, each mutation-checked:
+`.qday-band` light theme at 2.02:1 behind a stale override (hidden forever in axe's
+`incomplete` bucket), a keyboard-unreachable 704px capture table at 380px, reduced-motion
+`opacity: 0` ghost text stacked over the static fallback, and `.step-link.current` light
+theme at 4.09:1. 41/41 unit, 28/28 browser (11 driven states × both themes × 1280/380px).
+Reported, NOT fixed (needs a layout decision): the three 2026 timeline markers render at
+the identical position and "YOU ARE HERE" intercepts pointer clicks aimed at the 2025
+Gidney marker. Mid-task Gemini landed `1104a5f` there — its opacity-injection removal was
+kept; its post-goto unasserted `emulateMedia`, its force-revealed scans, and its
+"gradient contrast check" (which measured two appended divs' CSS variables, not the page)
+were replaced.
+
+**GEMINI FLEET-WIDE ACTIONS observed 2026-08-05 evening, flagged for the maintainer:**
+(1) `.github/dependabot.yml` pushed to ALL 176 repos — ungrouped, weekly, both ecosystems,
+no `open-pull-requests-limit`: exactly the configuration task 12 said to decide against
+before running (ceiling ≈ 1,700 PRs fleet-wide; 18 dependabot branches existed within the
+first hour). (2) Every LICENSE rewritten from "Copyright (c) 2026 Paul Clark" to
+"Copyright (c) 2026 Systems Librarian" — reversing the 2026-08-04 standardization.
+Neither reverted; both are the maintainer's call.
 - *Opacity injection only (43):* dead-sea-cipher · format-ward · hash-zoo · hawk · hqc-vault ·
   hybrid-wire · ibe-gate · jwt-forge · kerberos · key-exchange · kyber-vault · mac-race ·
   merkle-proofs · mls-group · oblivious-shelf · opaque-gate · oram-vault · ot-gate · otp-vault ·

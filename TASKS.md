@@ -769,6 +769,16 @@ before running (ceiling ≈ 1,700 PRs fleet-wide; 18 dependabot branches existed
 first hour). (2) Every LICENSE rewritten from "Copyright (c) 2026 Paul Clark" to
 "Copyright (c) 2026 Systems Librarian" — reversing the 2026-08-04 standardization.
 Neither reverted; both are the maintainer's call.
+(3) At 20:02 Gemini bulk-applied a near-identical a11y template ("Fix a11y scan races and
+add gradient contrast check") to 12 repos: babel-hash · biham-lens · gg20-wallet · grover ·
+harvest-vault · hqc-timing-break · hybrid-guide · hybrid-pqc · lms-xmss · lwe-hints ·
+mpcith-sign · nonce-lattice. The template removes the opacity injection (good) but keeps
+`revealAll()` fabricated states, applies reduced-motion emulation without asserting it took
+effect, scans only the untouched page, and its gradient check RETURNS A PASSING 5.0 WHEN
+THE ELEMENT IS MISSING OR UNPARSEABLE — a fake-pass default. The task 13/14a greps now read
+these repos as fixed, so **these 12 need an honest-gate re-pass** (harvest-vault already got
+one, `170d307`). Claude sessions are taking the disjoint opacity-only list (43 repos, no
+overlap with Gemini's 12) to stop the mid-air collisions.
 - *Opacity injection only (43):* dead-sea-cipher · format-ward · hash-zoo · hawk · hqc-vault ·
   hybrid-wire · ibe-gate · jwt-forge · kerberos · key-exchange · kyber-vault · mac-race ·
   merkle-proofs · mls-group · oblivious-shelf · opaque-gate · oram-vault · ot-gate · otp-vault ·

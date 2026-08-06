@@ -793,8 +793,17 @@ MISSION-SCRIPT §4, that audit is its own single-task session; do not fold it in
 sweep.
 **These 11 jump the queue: work them BEFORE the remaining opacity-only list**, because
 their gates now read as fixed while the template's gradient check fake-passes:
-~~hybrid-guide~~ · babel-hash · biham-lens · gg20-wallet · grover · hqc-timing-break ·
-hybrid-pqc · lms-xmss · lwe-hints · mpcith-sign · nonce-lattice.
+~~hybrid-guide~~ · ~~hybrid-pqc~~ · babel-hash · biham-lens · gg20-wallet · grover ·
+hqc-timing-break · lms-xmss · lwe-hints · mpcith-sign · nonce-lattice.
+**hybrid-pqc DONE 2026-08-06 `37791f1`** (9 remain): honest gate over 6 driven states, NO
+source defects (the sibling's broken selectors don't exist here). Its agent DIED on an API
+error mid-commit ("Committing." was its last word) — HEAD was still baseline, work uncommitted
+(3 e2e files, no source changes). Recovered by verifying from scratch, NOT trusting the dead
+agent: unit 81/81, a11y 19/19 twice, gate integrity confirmed (scan asserts all five oracles),
+and a mutation check (injected #8a8a8a subtitle → light scan red, dark green → reverted) proved
+the gate bites before committing. LESSON: an a11y-gate agent that dies mid-commit leaves no
+stranded mutation in SOURCE (the gate files aren't code-under-test), but its work is unverified
+— run the suite twice + one gate mutation before adopting it.
 **hybrid-guide DONE 2026-08-06 `225f1f8`** (10 remain): 3 real defects — `.hero-metric-label`
 at 1.08:1 in light theme, dark-red secrets at 2.79:1 on a dark chip, a keyboard-unreachable
 code block — all mutation-checked; 36 unit + 23 browser green twice.

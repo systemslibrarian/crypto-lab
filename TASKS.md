@@ -975,29 +975,54 @@ confirm it still installs stable/nightly at runtime; per-action check, not a bli
 **PR-CI + auto-merge plan (decided 2026-08-06).** Goal: grouped weekly Dependabot with
 patch/minor auto-merged once CI is green, majors held for review. Blocker: only 50/176 repos
 run CI on `pull_request`; `deploy.yml` (131 repos) triggers on push-to-main + workflow_dispatch
-only, so a Dependabot PR gets no checks on 126 repos. Finding: each repo's `deploy.yml` ALREADY
-runs the correct pipeline (`npm ci` → its own test/build/`test:e2e`|`test:a11y` invocation) in a
-`build` job, then a separate `deploy` job. Script names are NOT uniform (test 159, test:a11y
-160, test:e2e some, typecheck 42, check 6, build 163), so DON'T impose a uniform script list —
-reuse each repo's existing `build` job. Approach per repo:
-  1. Add `pull_request: { branches: [main] }` to the workflow's `on:` trigger, and guard the
-     `deploy` job with `if: github.event_name != 'pull_request'` so PRs build+test but never
-     deploy. CI=true makes vitest run-mode, so watch-mode `test` scripts are safe in Actions.
-     Nested-package repos (biham-lens demos/, collision-vault demos/, ratchet-wire, quantum-
-     vault-kpqc web-demo/) and odd harnesses (stark-tower custom, vrf-gate `check`) need
-     tailoring — handle by reading each workflow, not a blind sed.
+only, so a Dependabot PR gets no checks on 126 repos. **DESIGN VALIDATED on enigma-forge 2026-08-06 — edit-in-place REJECTED, use a standalone
+`pr-ci.yml`.** The validation proved the concept (PR runs build+test green; deploy job shows
+`skipped` not failed; a real Dependabot PR went green under its read-only token; push-to-main
+still deploys) BUT surfaced a fleet-breaking footgun: `deploy.yml` has a STATIC
+`concurrency: { group: pages, cancel-in-progress: true }` shared by push AND pull_request, so a
+PR run — every Dependabot dep bump — entering that group CANCELS an in-progress production
+deploy (hit twice during validation). So editing deploy.yml in place is out. The enigma-forge
+validation edit was reverted (`d01401d`). Confirmed: 0 repos have a bare-`vitest` test script
+(all run-mode), so `npm test` is CI-safe fleet-wide.
+
+Rollout design (per repo, standalone file — reasons: uniform check name for branch-protection
+automation, `contents: read` only + no Pages steps so it CANNOT cancel a deploy, deploy.yml
+untouched = zero risk to the deploy path):
+  1. Add `.github/workflows/pr-ci.yml`:
+       name: PR CI
+       on: { pull_request: { branches: [main] } }
+       permissions: { contents: read }
+       jobs:
+         pr-build:                         # uniform job name → uniform check "pr-build"
+           runs-on: ubuntu-latest
+           steps:
+             - uses: actions/checkout@v4
+             - uses: actions/setup-node@v4
+               with: { node-version: 20, cache: npm }
+             - run: npm ci
+             - run: npm run typecheck --if-present
+             - run: npm test --if-present
+             - run: npm run build --if-present
+             - run: npx playwright install --with-deps chromium
+             - run: npm run test:a11y --if-present
+             - run: npm run test:e2e --if-present
+     Tailor: nested-package repos (biham-lens demos/biham-lens, collision-vault
+     demos/collision-vault, ratchet-wire, quantum-vault-kpqc web-demo/) need a
+     `defaults.run.working-directory` or `cd`; odd harnesses (stark-tower custom, vrf-gate
+     `check`) need their script added. REFINEMENT: guard the playwright install so the ~16
+     repos with no a11y/e2e script don't download a browser for nothing (`if:` on a
+     playwright-config presence check).
   2. Regrouped `.github/dependabot.yml`: npm + github-actions, weekly, `groups: {"*"}` each,
      `open-pull-requests-limit: 3`.
   3. `.github/workflows/dependabot-auto-merge.yml`: on pull_request, if actor==dependabot[bot],
-     fetch-metadata, and for semver-patch/minor `gh pr merge --auto --squash`.
+     fetch-metadata, and for semver-patch/minor `gh pr merge --auto --squash` (needs
+     `permissions: { contents: write, pull-requests: write }`).
   4. Per repo via gh api: `allow_auto_merge=true`, and branch protection on main requiring the
-     PR-CI check with **enforce_admins=false** — so Dependabot PRs wait for green but direct
-     admin pushes to main (the fleet's whole workflow) still land unblocked. The required-check
-     name is uniform because the PR-CI job is uniform.
-VALIDATE on 2-3 representative repos (one standard deploy.yml, one nested, one odd-script) with
-a real throwaway PR watched to green BEFORE any fleet rollout. Then batch under the 3-4 agent
-cap, one commit per file per repo, per-repo verified. This is high-stakes (a bad workflow edit
-breaks deploys) — not a mechanical sed pass despite living in task 12.
+     `pr-build` check with **enforce_admins=false** — so Dependabot PRs wait for green but
+     direct admin pushes to main (the fleet's whole workflow) still land unblocked.
+NEXT: validate the exact standalone pr-ci.yml on enigma-forge + one nested + one odd-script
+repo with a throwaway PR each, THEN batch under the 3-4 agent cap, one file per commit per
+repo, per-repo verified. High-stakes despite living in task 12 — not a mechanical sed pass.
 
 **Dependabot — decide before running.** The config itself is trivial and identical; the real
 question is blast radius. Two ecosystems apply (`npm` and `github-actions`), and across 174

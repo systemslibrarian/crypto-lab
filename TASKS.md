@@ -942,7 +942,25 @@ investigation. Do them **one at a time**, verifying each fully before starting t
 | **MIT LICENSE** | **DONE 2026-08-04** — 177/177. 157 added, 20 already had one, 0 failed. Verified: no commit touched anything but `LICENSE`, nothing unpushed. (Copyright holder briefly rewritten to "Systems Librarian" by Gemini 2026-08-05; reverted to "Paul Clark" fleet-wide 2026-08-06 — see cleanup queue (a) above.) |
 | **Dependabot** | Config pushed fleet-wide by Gemini 2026-08-05 (ungrouped, no limit — bad). Decision taken 2026-08-06: regroup + auto-merge; blocked on PR-CI (below). |
 | **PR-CI + auto-merge** | `TODO` (decided 2026-08-06) — the plan below. |
-| **SHA-pinned Actions** | `TODO` — 175 of 176 repos reference actions by tag, not SHA. |
+| **SHA-pinned Actions** | `TODO` — DECIDED 2026-08-06: do it, but LAST (after PR-CI + Dependabot auto-merge). Inventory: 907 tag-pinned refs, 41 already SHA-pinned. |
+
+**SHA-pinning plan (decided 2026-08-06).** Rationale: mutable tags (`@v4`) let a compromised
+action run with the deploy workflows' `pages: write` + OIDC `id-token` — the tj-actions/
+changed-files compromise (Mar 2025) is the concrete precedent; only SHA-pinned users were
+safe. Sequence it LAST because (1) it changes what CI runs, and once PR-CI exists each pin
+change validates on a PR before hitting main; (2) the github-actions Dependabot ecosystem we
+are enabling MAINTAINS the pins automatically (bumps SHA, keeps the `# v4` comment) — pinning
+without it rots, pinning with it is the standard secure pattern, so Dependabot must land first.
+Prioritize third-party actions (peaceiris, treosh, jetli, Swatinem, dtolnay, docker/*,
+EmbarkStudios, github/codeql-action) — that is where the supply-chain risk and the tj-actions
+precedent live; several are already partially SHA-pinned, so partly a finish-the-job. Method:
+enumerate every `uses:` across the fleet, resolve tag→SHA via the GitHub API, rewrite as
+`uses: owner/action@<sha> # <tag>` preserving the tag in a trailing comment; spot-check.
+TWO NON-GOALS to avoid overreach: (a) pinning FREEZES each repo's CURRENT action version — it
+does NOT unify the existing version drift (checkout v4/v5/v7, setup-node v4-v7); that is a
+separate normalization grouped Dependabot drives over time. (b) `dtolnay/rust-toolchain@stable`
+/`@nightly` are intentionally-floating toolchain selectors — pin the action CODE to a SHA but
+confirm it still installs stable/nightly at runtime; per-action check, not a blind pin.
 
 **PR-CI + auto-merge plan (decided 2026-08-06).** Goal: grouped weekly Dependabot with
 patch/minor auto-merged once CI is green, majors held for review. Blocker: only 50/176 repos

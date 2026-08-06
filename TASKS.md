@@ -736,12 +736,34 @@ state with no CSS rule at all (failure text painted in the success palette), thr
 aria-labels on role-less divs silently discarded by browsers (axe files this under
 `incomplete`), and four kinds of scrolling container with no keyboard route — three of
 which only overflow at 380px, where a desktop-only gate never looks. NOTE: the final commit
-was made by a CONCURRENT WRITER seconds after this session staged the files — its message
-(`Fix scrolling keyboard accessibility and aria role blindspots`) is not this session's;
-content verified identical to what was tested. Confirm no second writer is live before
-assigning the next repo.
+was made by GEMINI (the user runs it as a concurrent writer in this fleet) seconds after
+this session staged the files — content verified identical to what was tested. Before
+assigning any repo, fetch and check for a dirty tree or fresh commits you did not make;
+re-check right before committing.
 
-**Yield so far: 12 real defects in 11 repos audited.** Two WCAG 2.1.1 keyboard traps, contrast down
+**Yield so far: 12 real defects in 11 repos audited.**
+
+**Queue regenerated on disk 2026-08-05 evening** (Gemini is landing fixes concurrently, so
+these lists go stale fast — regenerate with the greps below before each assignment; the
+Order 1/2/3 lists above and below this note are superseded):
+
+- *Both defects (9):* harvest-vault · hybrid-guide · hybrid-pqc · j-uniward · kyberslash ·
+  lms-ledger · lwe-hints · mpcith-sign · nonce-lattice
+- *Opacity injection only (43):* dead-sea-cipher · format-ward · hash-zoo · hawk · hqc-vault ·
+  hybrid-wire · ibe-gate · jwt-forge · kerberos · key-exchange · kyber-vault · mac-race ·
+  merkle-proofs · mls-group · oblivious-shelf · opaque-gate · oram-vault · ot-gate · otp-vault ·
+  paillier-gate · pairing-gate · pki-chain · poly1305-mac · pq-rotation · psi-gate ·
+  shamir-vs-frost · shor · silent-tally · snark-arena · sphincs-ledger · stego-suite ·
+  syndrome-drain · syndrome-hints · threshold-decrypt · threshold-mldsa · time-lock-puzzle ·
+  tls-handshake · vdf · vrf-gate · vss-gate · web-of-trust · webauthn · zk-proof-lab
+- *Scan race only (10):* babel-hash · biham-lens · gg20-wallet · grover · hqc-timing-break ·
+  isogeny-gate · jevil · lattice-fault · lms-xmss · ratchet-wire
+
+62 repos remain. curve448, e91, enigma-forge and the old Order 3 tail (ascon, blind-oracle,
+curve-lens, diffie-hellman-mitm, ec-point-arithmetic, ecdsa-forge, ed25519-forge,
+elgamal-plain, fhe-arena, frodo-vault, frost-threshold, garbled-gate) now pass both checks.
+Note the scan-race grep is a heuristic — a spec with any wait passes it even if one scan
+still races; treat a pass as "not obviously racing", not "audited". Two WCAG 2.1.1 keyboard traps, contrast down
 to 2.66:1, three instances of ARIA-prohibited names being silently discarded.
 
 Regenerate the queue with the node snippet used on 2026-08-05 (match `opacity: *1 *!important` on

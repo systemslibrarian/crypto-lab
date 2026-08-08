@@ -1379,6 +1379,11 @@ Scanning **all** `e2e/*.spec.ts` finds **17 files across 17 repos** still inject
 > time-lock-puzzle · tls-handshake · vdf · vrf-gate · vss-gate · web-of-trust · webauthn ·
 > zk-proof-lab. All 14 are now plain `e2e/a11y.spec.ts`; the three hidden-filename cases are
 > cleared.
+>
+> **Later on 2026-08-08, four of those fourteen landed** — ibe-gate `6469fe9` (8),
+> j-uniward `8ece1d3` (6+1), oram-vault `f909787` (6), otp-vault `bb5d4d6` (4). **10 remain:**
+> pairing-gate · threshold-mldsa · time-lock-puzzle · tls-handshake · vdf · vrf-gate ·
+> vss-gate · web-of-trust · webauthn · zk-proof-lab.
 
 - `crypto-lab-shor/e2e/claims.spec.ts` — **and shor is already marked DONE.** Its `a11y.spec.ts`
   was correctly replaced, but its CLAIMS spec still forces opacity, so every claim it asserts is
@@ -1540,6 +1545,84 @@ Other carry-forwards:
 - **A theme toggle can be inert.** lms-xmss has a single dark palette, so `data-theme="light"`
   changes nothing and the shared header's toggle does nothing. Not a WCAG failure; a real
   inconsistency. Left alone deliberately.
+
+**FIRST FOUR OF THE INJECTION QUEUE DONE 2026-08-08 — 24 defects, nothing clean.**
+ibe-gate `6469fe9` (8) · j-uniward `8ece1d3` (6, plus a correctness bug) · oram-vault
+`f909787` (6) · otp-vault `bb5d4d6` (4).
+
+**A reduced-motion block that CREATED a contrast failure — new shape, high value.** ibe-gate's
+stylesheet cancelled the spinner's blink and, in the same rule, faded it to `opacity: .6`:
+"⧗ Running…" painted at **2.76:1**, but only for readers who asked not to be flashed at, and
+only while they were waiting on the thing it reported. **An accommodation must not change the
+colour.** No gate that skips reduced-motion emulation or injects opacity can see this — the old
+gate did both. **Grep `@media (prefers-reduced-motion: reduce)` blocks for any declaration that
+is not `animation`/`transition`/`scroll-behavior`.**
+
+**An always-dark panel in a light theme needs an override for EVERY muted token used inside
+it, and it is easy to leave one off.** ibe-gate's `.term` stays `#1a1a28` in both themes and the
+stylesheet carries a light-theme override for every `.lbl-*`, every `.vchip` and the G_T
+inspector — but not `.spinner`, which took `--text-dim` `#4a4a66` and measured **2.01:1**. Grep:
+for each `[data-theme='light'] .<panel> { background }`, enumerate the muted tokens used by
+descendants of `.<panel>` and check each has an override.
+
+**`overflow-y: auto` that never scrolls but always clips.** j-uniward's `.panel-body` had
+`scrollHeight === clientHeight` in every state at both widths — the declaration bought zero
+scrolling and silently ate **94px at 1280 / 115px at 380** off every glossary bubble opened
+inside it, a third of the plain-English jargon text. `expectScrollersReachable` cannot see it
+(the container has focusable children) and no contrast oracle sees it. **Grep `overflow: auto` /
+`overflow-y: auto` on a container with NO `max-height`/`height`, then probe scrollHeight vs
+clientHeight.** Note `overflow-y: auto` with `overflow-x: visible` computes `overflow-x` to
+`auto`, so it clips both axes. j-uniward's `gate.ts` now carries an `expectNotClipped` oracle —
+**port it.** Two follow-ons: removing the clip turns the popover into a *reflow* failure, so the
+fix needs a viewport clamp; and that clamp must run twice (immediately and on the next frame),
+because layout is not final when `focus`/`mouseenter` fires. That raced once.
+
+**An empty `role="list"`.** Any strip/grid/log builder that emits `role="list"` before it has
+items produces `aria-required-children` in `incomplete` — invisible to a violations-only gate.
+otp-vault had three at first paint. Grep DOM builders for `role="list"` and check the zero-item
+path.
+
+**"Dim to de-emphasise" opacity that duplicates a cue already present — four instances in one
+batch** (`.step-item` .35/.6, `.byte__idx` .7, `.byte--unknown` .5, `.reveal-cell--np` .8). Each
+element already carried a border style, a placeholder glyph or a distinct colour saying the same
+thing; the opacity added nothing but an AA failure. **Opacity compounds** — a `.7` inside a `.5`
+is a 0.35 composite no single declaration reveals, which is how otp-vault's byte index reached
+**1.71:1**. Grep `opacity: 0.[1-8]` in rules whose selector also sets `border-style` or
+`background`.
+
+**Fixed hex colours inside a themed SVG**, and **a highlight stroke that does not contrast with
+what it highlights** (`#ffd166` at **1.33:1** against the cells it ringed). `var()` does work in
+SVG presentation attributes in Chromium — verified empirically — so a literal has no excuse.
+Selection indicators are 1.4.11 and no oracle checks them: grep `stroke:`/`border-color:` on
+`.selected`/`.active`/`.focus` modifiers and measure against the modified element's own fill.
+
+**A hidden caption plus a discarded label leaves NOTHING.** oram-vault six times over: a visible
+`.panel-label` marked `aria-hidden="true"` sitting directly above a container carrying an
+`aria-label` that `role=generic` discards — so a screen reader got neither. Grep for that exact
+pairing.
+
+**An 11th invalid-mutation mode: the element owns no text of its own.** Recolouring ibe-gate's
+`.gt-hex-dump` was inert because every byte is wrapped in a span. The computed value moved and
+nothing measured it — so "the computed style changed" is necessary but not sufficient; the
+element must also own a text node.
+
+**A second confirmed case of neither-oracle-alone-is-sufficient, in the other direction:**
+otp-vault's mutation at 4.22:1/4.12:1 was flagged by the arithmetic oracle and NOT by axe's own
+`color-contrast`. Both instances now recorded — axe catches `aria-hidden` text that still paints,
+the arithmetic oracle catches sub-threshold composites axe rounds past.
+
+**`revealAll()` is not a state — third and fourth instances.** ibe-gate forced all five
+tabpanels visible while `aria-selected` named one tab; oram-vault's `revealEverything()` un-hid
+five mutually-exclusive exhibits at once, five h2s and five tabpanels live simultaneously. Both
+gates certified a document no visitor can load, and no state a visitor does. otp-vault's was
+worse in a different way: it "drove" the page by clicking **every visible button in DOM order
+with `.catch(() => {})` around each**, so a control that never became actionable was
+indistinguishable from one that worked.
+
+**Reported, not fixed (j-uniward):** six inputs carry an `aria-label` that overrides a correct
+`<label for>` — a genuine WCAG 2.5.3 *Label in Name* AA failure. axe's
+`label-content-name-mismatch` only applies to roles taking name-from-content, so **no oracle
+sees it**. Worth its own fleet pass; left out to keep the diff scoped.
 
 Regenerate this list with:
 

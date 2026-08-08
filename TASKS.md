@@ -881,7 +881,7 @@ looks pending, because nothing will ever route a session back to it.
 
 | Repo | Shallow commit | Repo | Shallow commit |
 |---|---|---|---|
-| ~~hash-zoo~~ **DONE `9a559b7`** | ~~`0c23df3`~~ | pki-chain | `744e80c` |
+| ~~hash-zoo~~ **DONE `9a559b7`** | ~~`0c23df3`~~ | ~~pki-chain~~ **DONE `d820bd0`** | ~~`744e80c`~~ |
 | ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | poly1305-mac | `3cfb8dc` |
 | ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | pq-rotation | `e7b842b` |
 | ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | psi-gate | `adea0f5` |
@@ -1238,6 +1238,24 @@ Also confirmed twice more that **neither oracle alone is sufficient**: snark-are
 `.bp:hover { opacity: 0.85 }` (which fades the accent fill and its white label together, dropping
 white-on-accent from 5.66:1 to 4.21:1) was caught by axe and MISSED by the arithmetic oracle —
 the mirror image of the gradient blind spot.
+
+**pki-chain DONE 2026-08-08 `d820bd0` (4 remain for this session) — 6 defects.** The headline is
+the second confirmed instance of the unstyled-link class: **no `a` rule existed at all**, so every
+link rendered in the UA default `#0000EE` at 1.5:1 on the dark panels. Also `--fail` at 3.68:1 —
+**the FAIL verdict was the least readable text on the page**, which is the branch a learner most
+needs to read.
+
+**THE HUNG-CLICK PATTERN IS NOW 3 OF 14 REPOS** (jwt-forge `paste-toggle`, ot-gate
+`btn-ddh-reset`, pki-chain `ct-consistency`) and it has the same shape every time: a control that
+is disabled or absent until a prerequisite runs, clicked by a drive that never satisfied it.
+Here `#ct-consistency` needs TWO certificates in the log, because a consistency proof is between
+two log *states* — one submission can never enable it.
+
+**`page.setDefaultTimeout(20_000)` paid for itself on its first use.** Before adopting it this
+repo burned the full 15-minute test timeout and reported nothing; with it the failure named
+`#ct-consistency` in 20 seconds. **I had started diagnosing it as gate slowness — a full scan here
+costs 1.6s, so 23 states is ~35s, and the "15 minutes" was one hung click all along.** Measure
+scan cost before assuming a slow suite is slow.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

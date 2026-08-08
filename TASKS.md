@@ -793,8 +793,9 @@ MISSION-SCRIPT §4, that audit is its own single-task session; do not fold it in
 sweep.
 **These 11 jump the queue: work them BEFORE the remaining opacity-only list**, because
 their gates now read as fixed while the template's gradient check fake-passes:
-~~hybrid-guide~~ · ~~hybrid-pqc~~ · babel-hash · biham-lens · gg20-wallet · grover ·
-hqc-timing-break · lms-xmss · lwe-hints · mpcith-sign · nonce-lattice.
+~~hybrid-guide~~ · ~~hybrid-pqc~~ · ~~babel-hash~~ · ~~biham-lens~~ · ~~gg20-wallet~~ ·
+~~grover~~ · ~~hqc-timing-break~~ · ~~lms-xmss~~ · ~~lwe-hints~~ · ~~mpcith-sign~~ ·
+~~nonce-lattice~~ — **ALL 11 DONE as of 2026-08-08**; see the batch record below.
 **hybrid-pqc DONE 2026-08-06 `37791f1`** (9 remain): honest gate over 6 driven states, NO
 source defects (the sibling's broken selectors don't exist here). Its agent DIED on an API
 error mid-commit ("Committing." was its last word) — HEAD was still baseline, work uncommitted
@@ -1465,6 +1466,64 @@ Three carry-forwards from these two:
 - **Copy `contrast.ts` + `gate.ts` from hqc-vault `4207f50`, the newest version**, which carries
   both of the above. Adapt the header comments to the new lab — they cite specific elements, and
   a stale comment is a false claim about the repo it lands in.
+
+**THE REMAINING SIX GEMINI REPOS DONE 2026-08-08 — THE 9-REPO BATCH IS COMPLETE.**
+Mine: lwe-hints `381f076` (5), mpcith-sign `5eb84ff` (7), nonce-lattice `e2de6ff` (11).
+Delegated: grover `e39f1d0` (4), hqc-timing-break `1806572` (6), lms-xmss `0a078f8` (6).
+**39 defects across the batch's 9 repos; nothing came back clean — 34 repos audited, 34 dirty.**
+
+**The headline finding: a previous "accessibility fix" was the worst defect in the repo.**
+nonce-lattice carried, under the comment `/* Improve color contrast for text */`:
+
+```css
+.cl-title, h1, h2, h3, h4, h5, h6 { color: #fff !important; text-shadow: 0 1px 2px #0008; }
+```
+
+Correct in dark, inverted in light — **every heading 1.04:1 on a near-white page**, with
+`!important` blocking any override. **Add to the precheck: grep for `color: #fff` /
+`color: white` with `!important` and no theme scope.** A single-theme gate cannot see this
+class of fix, and *certifies* it. Same family as key-exchange's `--metric-muted`, which
+hqc-timing-break repeated: an ink token authored for a container (`.hero-metric-card`) that
+**appears zero times in the markup**, so the token's contract was never tested — second fleet
+instance, now worth a grep of its own (token used by exactly one selector whose class is absent
+from the HTML).
+
+New defect shapes (both from lms-xmss, neither findable by any existing grep):
+- **A CSS class-name collision between a container class and a state modifier.** `.reach` named
+  both `#forge-reach` (a panel) and a `chain-cell` state. The panel's `padding: 10px 12px` leaked
+  onto every reachable Winternitz cell; padding does not shrink, so reach cells had a 26px floor
+  against a locked cell's 2px — 628px document at 380px, **and at every width the diagram drew
+  reachable segments ~4× locked ones, misreporting the one proportion the lab exists to show.**
+  A layout bug that made a teaching diagram lie.
+- **A global touch-target `min-width` overflowing a dense grid.** `button { min-width: 44px }`
+  against a 15px grid track: each leaf painted ~29px over its neighbours, and grid items overlap
+  rather than push, so **clicks landed on the wrong leaf.** Surfaced only because Playwright
+  reported the click on leaf 0 intercepted by leaf 1.
+
+**The grid auto-track bug has a flexbox twin — the notes only covered grid.** `flex: 1` leaves
+`min-width: auto`, whose minimum is the sum of the children's minimums. lms-xmss hit it twice
+(`.atn-cells` floored at 468px). Add "flex item with `flex: 1` and no `min-width: 0`" to the
+precheck. Grid auto-track itself is now **12 of ~24 audited**.
+
+Other carry-forwards:
+- **`aria-hidden` + a scroller has no tabindex fix.** Adding one trades
+  `scrollable-region-focusable` for `aria-hidden-focus`. Remove the scroll instead (wrap or
+  shrink) — hqc-timing-break's `.bar-bridge-code` went to `pre-wrap`.
+- **Check for an existing paired ink token before inventing one.** hqc-timing-break had already
+  defined `--warning-fg` for the exact surface its `--accent-2` labels were failing on.
+- **A clipped annotation can become a keyboard-trapped scroll region.** grover's `.bar-mean-tag`
+  hung 1.6px below `.bar-chart`, whose `overflow-x: auto` forces `overflow-y: auto` — the word
+  "mean" became a 242×240 unreachable scroller, on the annotation for the overshoot state the
+  lab exists to teach.
+- **Process win — a "soft gate" collection pass.** Wrap `scan`'s five `expect`s in a try/catch
+  behind an env var, run all four configs once, dump every failure: ~6 fix-run cycles become 1.
+  Decisive where a run costs 2 minutes. Restore the strict gate from a saved copy and diff for
+  residue before committing.
+- **`.cl-hero-sub` opacity+muted lead is now 1 confirmed in ~16 checked** — grover carries the
+  exact failing pairing and measures fine. Weak lead; stop treating it as a queue.
+- **A theme toggle can be inert.** lms-xmss has a single dark palette, so `data-theme="light"`
+  changes nothing and the shared header's toggle does nothing. Not a WCAG failure; a real
+  inconsistency. Left alone deliberately.
 
 Regenerate this list with:
 

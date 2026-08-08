@@ -1374,10 +1374,26 @@ Two notes for anyone repeating this:
 Scanning **all** `e2e/*.spec.ts` finds **17 files across 17 repos** still injecting
 `opacity: 1 !important`, and three of them would never have been found:
 
+> **Re-run 2026-08-08 after shor, mpcith-sign and nonce-lattice: 14 files, 14 repos remain** —
+> ibe-gate · j-uniward · oram-vault · otp-vault · pairing-gate · threshold-mldsa ·
+> time-lock-puzzle · tls-handshake · vdf · vrf-gate · vss-gate · web-of-trust · webauthn ·
+> zk-proof-lab. All 14 are now plain `e2e/a11y.spec.ts`; the three hidden-filename cases are
+> cleared.
+
 - `crypto-lab-shor/e2e/claims.spec.ts` — **and shor is already marked DONE.** Its `a11y.spec.ts`
   was correctly replaced, but its CLAIMS spec still forces opacity, so every claim it asserts is
   measured against a page whose rendering has been modified. Not an a11y fake-pass, but a claims
-  suite testing a page the visitor never sees.
+  suite testing a page the visitor never sees. **FIXED 2026-08-08 `a30e975`.** Replaced with
+  `emulateMedia({reducedMotion:'reduce'})` before `goto` — `renderStep` reads the preference once
+  at module load and then never applies the inline `opacity: 0`, so asking for it the way a reader
+  does removes the fade without overriding anything. **And it exposed a live flake it had been
+  sitting next to, not causing:** this suite fails ~1 run in 4 on untouched HEAD, because the lab
+  paces its step log at 300ms/step over a random number of attempts and `runQuantum`'s retry loop
+  runs past Playwright's **30s default TEST timeout** — not the 30s locator waits. Playwright then
+  reports whichever expect was pending, so it read as "`.result-banner` not found", i.e. an app
+  hang that was never happening. **Generalise: when a Playwright failure names a locator that
+  should obviously exist, check the test timeout before believing the app.** Budget now 300s,
+  matching the 900s the a11y gate already carried for the same runs.
 - `crypto-lab-mpcith-sign/e2e/a11y-interactive.spec.ts` — a SECOND a11y spec beside a clean
   `a11y.spec.ts`, so the repo reads as fixed if you only open the obvious file.
 - `crypto-lab-nonce-lattice/e2e/a11y-states.spec.ts` — same shape.

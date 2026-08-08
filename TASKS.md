@@ -888,7 +888,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | shamir-vs-frost | `c93b42d` |
 | ~~key-exchange~~ **DONE `75ec61c`** | ~~`77ccaf8`~~ | shor | `2e230af` |
 | ~~mac-race~~ **DONE `65119ce`** | ~~`86357a5`~~ | silent-tally | `2254db2` |
-| merkle-proofs | `7e8a489` | snark-arena | `35b43f3` |
+| ~~merkle-proofs~~ **DONE `4bab044`** | ~~`7e8a489`~~ | snark-arena | `35b43f3` |
 | mls-group | `7a8c87c` | stego-suite | `1c1015d` |
 | oblivious-shelf | `e30e8ac` | syndrome-drain | `5dfc70f` |
 | opaque-gate | `86b220a` | syndrome-hints | `073ef30` |
@@ -1051,6 +1051,26 @@ Also worth noting as a *negative* result: this lab applies its entrance animatio
 had no blank-content defect, in contrast to kerberos. **When checking the reduced-motion trap,
 `no-preference`-scoped animations are safe; only a rule that sets `opacity: 0` unconditionally
 and relies on an animation to undo it is dangerous.**
+
+**merkle-proofs DONE 2026-08-08 `4bab044` (17 remain) — 2 defects, the cleanest repo so far.**
+Only the two `aria-label`-on-generic-role sites. Note the fix was `role="group"`, NOT
+`role="list"`: both containers are filled with `<span>` chips rather than list items, so
+`role="list"` would have traded one violation for another. **Check what actually populates a
+container before giving it a list role.**
+
+**This repo is the useful counterexample for the reduced-motion trap.** Its block reduces
+durations to `0.01ms` instead of cancelling animations, and its one infinite animation is scoped
+to `prefers-reduced-motion: no-preference`. Both patterns preserve end states, which is exactly
+what kerberos got wrong. When auditing that trap, these two shapes are safe and only an
+unconditional `opacity: 0` undone by an animation is dangerous.
+
+**METHOD FIX — pick mutation targets by computed style, not by grepping the stylesheet.** Four
+mutations across this sweep have now been inert or invalid, and each cost a full run to
+discover: dead code (`.lext-bad`), aria-hidden decoration (`.mt-chip-warn`, a result glyph),
+and twice a later same-specificity rule silently winning (`.quiz-feedback.good`,
+`.mt-side--right` beating `.mt-step-side`). The reliable procedure is: drive to the state, read
+`getComputedStyle(el).color` in a probe, then mutate whichever rule produces THAT value — and
+re-probe to confirm the computed value moved before believing a green run.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

@@ -891,7 +891,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~merkle-proofs~~ **DONE `4bab044`** | ~~`7e8a489`~~ | snark-arena | `35b43f3` |
 | ~~mls-group~~ **DONE `d268eff`** | ~~`7a8c87c`~~ | stego-suite | `1c1015d` |
 | ~~oblivious-shelf~~ **DONE `ad13e27`** | ~~`e30e8ac`~~ | syndrome-drain | `5dfc70f` |
-| opaque-gate | `86b220a` | syndrome-hints | `073ef30` |
+| ~~opaque-gate~~ **DONE `e633533`** | ~~`86b220a`~~ | syndrome-hints | `073ef30` |
 | ot-gate | `28b1820` | threshold-decrypt | `4901202` |
 | paillier-gate | `e01d77e` | | |
 
@@ -1112,6 +1112,24 @@ self-defeating palette move and both instances needed only a token swap.
 Also confirming the method fix works: picking the mutation target by reading the computed colour
 in the driven state hit a valid, non-inert, late-state target first try (`.sv-note`, caught in
 `query generated`). That is four wasted runs avoided versus grepping the stylesheet.
+
+**opaque-gate DONE 2026-08-08 `e633533` (14 remain) — 0 source defects, the first fully clean
+repo.** Worth recording *why* it is clean, as a positive template: entrance fades live only in
+`@keyframes` (never as an element's own `opacity: 0`), reduced motion collapses them to 0.001ms
+rather than cancelling, no `aria-label` on a generic role, no fixed-minimum grid track.
+
+**But building the gate still found real coverage holes.** Three exhibits had never been driven
+at all: the OPRF runner, the database-breach simulation, and `Analyze breach` — which is what
+actually runs the four attacks. The old spec's `/run the attack/i` matched the *forward-secrecy*
+button instead, so the four attack verdicts were never scanned by anything. **A loose regex
+matching the wrong button is the same class of silent skip as jwt-forge's stale `#aes-btn`
+selector: the gate stays green and an exhibit is simply absent from the audit.** When adapting a
+drive, enumerate `createButton(`/`<button` in the source and check every one is reached.
+
+Also note two buttons here are gated on prior state (`Analyze breach` is disabled until Exhibit 3
+registration; the forward-secrecy button does not exist until the handshake completes). Probes
+that skip prerequisites hang for the full timeout — drive in order, and treat a hang as a missing
+prerequisite rather than a broken locator.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

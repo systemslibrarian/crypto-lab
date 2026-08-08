@@ -884,7 +884,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~hash-zoo~~ **DONE `9a559b7`** | ~~`0c23df3`~~ | pki-chain | `744e80c` |
 | ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | poly1305-mac | `3cfb8dc` |
 | ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | pq-rotation | `e7b842b` |
-| jwt-forge | `1512cdd` | psi-gate | `adea0f5` |
+| ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | psi-gate | `adea0f5` |
 | kerberos | `8e72b87` | shamir-vs-frost | `c93b42d` |
 | key-exchange | `77ccaf8` | shor | `2e230af` |
 | mac-race | `86357a5` | silent-tally | `2254db2` |
@@ -958,6 +958,33 @@ to, so the defect was hidden behind the bigger one.
 - **A wide `<select>` sizes to its longest option and can overflow a phone viewport by itself.**
   `#flip-placement` was 366px in a 380px viewport. Cheap to check anywhere a select carries a
   sentence-length option.
+
+**jwt-forge DONE 2026-08-08 `a38c97c` (21 remain) — 2 defects, and it repeats hqc-vault's grid
+pattern exactly.** `.lab { display: grid }` with a default `auto` track, one unbroken JWT rendered
+`white-space: pre` inside it, and the page grew to 4103px at a 1280px viewport while
+`.raw-token`'s own `overflow-x: auto` never got to scroll. **That is two of four repos so far
+with the same root cause — treat `display: grid` with no `grid-template-columns` as a defect
+candidate on sight**, and check reflow at BOTH widths, since this one blew out at 1280px, not
+just 380px.
+
+Two process lessons from this repo, both of which cost real time:
+
+- **An orphaned preview server invalidated a green run, exactly as this file warns.** A killed
+  run left a `vite preview` listening on 4655; `reuseExistingServer: !CI` meant the next run
+  reused it and served a STALE BUNDLE. The mutation check came back green — not because the gate
+  was blind, but because the page under test predated the mutation. `lsof -nP -iTCP:<port>
+  -sTCP:LISTEN` before trusting any result, and kill by port after any interrupted run. The
+  "4 passed" that preceded it had to be thrown away and redone too.
+- **Verify a selector exists in the state you drive it from.** `[data-action="paste-toggle"]`
+  renders only inside the raw Token view, and the drive had left the view on `diff`, so
+  Playwright waited the full 10-minute test timeout for an element that could never appear. A
+  grep of all `data-action` values tells you what exists somewhere, not what is reachable now.
+
+- **Fix layout before chasing contrast.** While the page was 4103px wide the arithmetic oracle
+  reported `.cl-hero-why-text` at 1.17:1, near-white on near-white. It was real at that moment
+  and vanished with the reflow fix, because `.cl-hero-why` is a near-transparent `color-mix`
+  wash and stretching the hero changed what it composited over. Some contrast failures are
+  downstream of a broken layout; re-measure after fixing reflow before opening a palette.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

@@ -886,7 +886,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | pq-rotation | `e7b842b` |
 | ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | psi-gate | `adea0f5` |
 | ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | shamir-vs-frost | `c93b42d` |
-| key-exchange | `77ccaf8` | shor | `2e230af` |
+| ~~key-exchange~~ **DONE `75ec61c`** | ~~`77ccaf8`~~ | shor | `2e230af` |
 | mac-race | `86357a5` | silent-tally | `2254db2` |
 | merkle-proofs | `7e8a489` | snark-arena | `35b43f3` |
 | mls-group | `7a8c87c` | stego-suite | `1c1015d` |
@@ -1009,6 +1009,28 @@ Two more from this repo:
 - **A fixed track minimum is a floor the container cannot go below.**
   `minmax(220px, 1fr)` overflowed a 380px viewport; `minmax(min(220px, 100%), 1fr)` is the fix.
   Worth grepping for `minmax([0-9]` fleet-wide.
+
+**key-exchange DONE 2026-08-08 `75ec61c` (19 remain) — 5 defects, 31 elements invisible.**
+`.hero-metric-label` took its colour from `--metric-muted`, near-white because it was authored
+for `.hero-metric-card` — **a dark card that appears ZERO times in the markup**. The class
+outlived the card and is now a generic small-caps label on ordinary panels, so in light theme
+31 labels rendered near-white on near-white at 1.09:1. **Worth a general check: a colour token
+whose companion container no longer exists is a live trap, and grepping for the container class
+count is the tell.**
+
+Also: `--accent` and `--accent-2` are fill/border colours being used as text (17 and 5 sites),
+measuring 3.79–4.49:1. Split into `--accent-ink` / `--accent-2-ink` per theme. **That split is
+worth trying anywhere a palette has one token doing both jobs** — it is the same fix as hawk's
+`--magenta-ink` and hash-zoo's `--bit-changed-ink`, now three repos running.
+
+Two method notes:
+- **A randomized exhibit makes a real defect intermittent.** The `--accent-2` failure only
+  renders when MLWE elimination happens to hit s. It passed the first full run and failed a
+  later one. Where output is randomized, run the a11y spec several times before believing green
+  — this repo got three a11y runs plus two full-suite runs.
+- **A mutation that does not fail is not automatically a blind gate.** `#7c7c7c` on an `h3`
+  correctly passed because the oracle applied the 3:1 LARGE-TEXT threshold. A stronger colour
+  then failed at 2.25:1. Check the threshold that applies before concluding anything.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

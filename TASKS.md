@@ -889,7 +889,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~key-exchange~~ **DONE `75ec61c`** | ~~`77ccaf8`~~ | shor | `2e230af` |
 | ~~mac-race~~ **DONE `65119ce`** | ~~`86357a5`~~ | silent-tally | `2254db2` |
 | ~~merkle-proofs~~ **DONE `4bab044`** | ~~`7e8a489`~~ | snark-arena | `35b43f3` |
-| mls-group | `7a8c87c` | stego-suite | `1c1015d` |
+| ~~mls-group~~ **DONE `d268eff`** | ~~`7a8c87c`~~ | stego-suite | `1c1015d` |
 | oblivious-shelf | `e30e8ac` | syndrome-drain | `5dfc70f` |
 | opaque-gate | `86b220a` | syndrome-hints | `073ef30` |
 | ot-gate | `28b1820` | threshold-decrypt | `4901202` |
@@ -1071,6 +1071,32 @@ and twice a later same-specificity rule silently winning (`.quiz-feedback.good`,
 `.mt-side--right` beating `.mt-step-side`). The reliable procedure is: drive to the state, read
 `getComputedStyle(el).color` in a probe, then mutate whichever rule produces THAT value — and
 re-probe to confirm the computed value moved before believing a green run.
+
+**mls-group DONE 2026-08-08 `d268eff` (16 remain) — 3 defects, two of them well past first
+paint.** Its inline glossary was announcing nothing: each term was an `<abbr aria-label="...">`,
+and the code comment claimed the definition was "exposed both visually (title) and to assistive
+tech (aria-label on an abbr)". **`<abbr>` has no ARIA role, so it maps to generic and the name is
+discarded** — the definition reached no screen reader at all, and the comment asserting otherwise
+had been sitting there unchallenged. Fixed with `aria-describedby` (a global attribute, NOT
+prohibited on generic) pointing at an off-screen node.
+
+Two lessons worth carrying:
+
+- **`aria-label` is prohibited on generic roles; `aria-describedby` is not.** Where a label is
+  genuinely wanted on an element that cannot take a name, describedby to an off-screen node is
+  the escape hatch — and it is announced on focus, so it suits an already-focusable gloss.
+- **Assert on axe AND arithmetic contrast; they cover different gaps.** `button.danger:hover`
+  tinted its backdrop 15% toward `--danger`, which is also the label's colour, so the two
+  converged at 4.05:1 — a control that gets harder to read exactly when you point at it. **The
+  arithmetic pass missed it and axe caught it.** Earlier repos had the reverse (gradients axe
+  refuses to measure). Neither oracle alone is sufficient. Also worth checking anywhere a hover
+  tint mixes in the same hue as the text it sits under.
+
+**And a self-inflicted regression worth remembering: the first version of the gloss fix put the
+definition inline as visually-hidden text, which broke `claims.spec.ts`.** That spec asserts on
+the narration's `textContent` character-for-character, and `textContent` includes visually-hidden
+AND `hidden` nodes — it is DOM-based, not render-based. Any a11y fix that injects text into a
+region a claims test reads will break it. Put such text outside the asserted region.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

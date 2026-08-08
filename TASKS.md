@@ -883,7 +883,7 @@ looks pending, because nothing will ever route a session back to it.
 |---|---|---|---|
 | ~~hash-zoo~~ **DONE `9a559b7`** | ~~`0c23df3`~~ | ~~pki-chain~~ **DONE `d820bd0`** | ~~`744e80c`~~ |
 | ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | ~~poly1305-mac~~ **DONE `2df3f6f`** | ~~`3cfb8dc`~~ |
-| ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | pq-rotation | `e7b842b` |
+| ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | ~~pq-rotation~~ **DONE `c76b4eb`** | ~~`e7b842b`~~ |
 | ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | psi-gate | `adea0f5` |
 | ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | shamir-vs-frost | `c93b42d` |
 | ~~key-exchange~~ **DONE `75ec61c`** | ~~`77ccaf8`~~ | ~~shor~~ **DONE `40419c8`** | ~~`2e230af`~~ |
@@ -1282,6 +1282,31 @@ the clipped-fallback diagnostic added in kerberos, so this repo's reflow failure
 "(none identified)" and cost several probe cycles. **Regenerate the template from the newest
 gate before starting a repo**; the current best is pki-chain `d820bd0` (setDefaultTimeout +
 clipped filter + clipped fallback).
+
+**pq-rotation DONE 2026-08-08 `c76b4eb` (2 remain) — 5 defects.** The grid auto-track bug again,
+this time on **`main.dashboard`, the top-level container**, with no `grid-template-columns` at
+all. Note the trap: it carries `width: min(1200px, 96vw)`, which bounds the element and says
+nothing about the track sizing its children — the same false reassurance as stego-suite's
+`.shell`. **The pattern is now 7 of ~16 audited.** Fixing it exposed a `.table-wrap` that had
+`role="region"` and a label but **no `tabindex`** — a named region with no keyboard route, which
+reads as done in a grep.
+
+Also a new surface variant: `.stepper-list a` used `rgba(5, 15, 24, 0.55)`, which composited to a
+mid-grey against whatever sat behind it, and **both** `--ink` and `--muted` failed on it. **A card
+that carries body text should not let its own contrast depend on the backdrop** — the fix is
+opacity, not a colour tweak.
+
+**TWO MORE INVALID-MUTATION MODES, both new:**
+- **The element was not visible at first paint.** `.checklist li` sits in a panel that only
+  renders after a run; the mutation applied but nothing scanned it.
+- **A LATER declaration inside the SAME rule block won.** I inserted `color:` at the top of
+  `.gloss {}` and the rule's own `color: var(--ink)` two lines down overrode it. This is not a
+  specificity problem and not a source-order problem between rules — it is within one block.
+  Mutate the *declaration that computes*, not the first one you find.
+
+That makes six distinct ways a mutation can be silently inert (dead code, aria-hidden decoration,
+later same-specificity rule, large-text threshold, not-visible, later declaration in the same
+block). **The probe-then-verify procedure is not optional overhead; it has caught all six.**
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

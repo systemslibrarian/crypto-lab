@@ -883,7 +883,7 @@ looks pending, because nothing will ever route a session back to it.
 |---|---|---|---|
 | ~~hash-zoo~~ **DONE `9a559b7`** | ~~`0c23df3`~~ | pki-chain | `744e80c` |
 | ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | poly1305-mac | `3cfb8dc` |
-| hqc-vault | `54097a2` | pq-rotation | `e7b842b` |
+| ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | pq-rotation | `e7b842b` |
 | jwt-forge | `1512cdd` | psi-gate | `adea0f5` |
 | kerberos | `8e72b87` | shamir-vs-frost | `c93b42d` |
 | key-exchange | `77ccaf8` | shor | `2e230af` |
@@ -924,17 +924,40 @@ under `incomplete`. And a `.table-scroll` with no keyboard route at 380px, in a 
 other two `.table-scroll` wraps already carry `tabindex="0" role="region" aria-label` — the
 author knew the fix and missed one, and only phone width reveals it.
 
-**Two fleet-wide leads worth acting on, both found by comparing these first two repos:**
-- **`.cl-hero-sub { opacity: .85 }` is shared-header markup, and it is a latent AA failure
-  wherever the hero sits on a gradient.** It was a real 3.67:1 defect in hash-zoo. hawk carries
-  the identical rule; there it passes only because its `--muted` is lighter against a darker
-  panel. Worth a fleet-wide grep — this is one line repeated across ~170 labs, and the labs where
-  it fails are exactly the ones axe cannot see, because a faded foreground over a gradient hits
-  both blind spots at once.
-- **`aria-label` on a role-less div looks like a template habit, not a one-off.** Four instances
-  across two repos so far (hawk ×3, enigma-forge ×3 previously). Grep
-  `<div[^>]*aria-label` filtered to lines without `role=` before starting a repo; it is a
-  30-second check that pre-empts a whole gate iteration.
+**hqc-vault DONE 2026-08-08 `4207f50` (22 remain) — 12 defects, the highest count yet, and the
+weakest gate found so far.** Its gate could have passed over a page where nothing ran: every
+click was `.catch(() => {})` behind an `if (await el.count())` guard, so a stale selector was a
+silent no-op — and one already was (`#aes-btn` does not exist; the AES panel submits a form), so
+that whole exhibit went undriven and unscanned while the gate stayed green. Content was awaited
+with `waitForTimeout(400)` rather than a real signal.
+
+Its headline defect is worth knowing as a pattern: **`.panels` is a grid whose default `auto`
+track takes its minimum from the widest item's min-content**, and one table's `min-width: 980px`
+therefore sized the entire column — every panel rendered 1016px wide in a 380px viewport and the
+document scrolled sideways, while the table's own `overflow-x: auto` wrapper never got to scroll
+because nothing constrained it. `grid-template-columns: minmax(0, 1fr)` fixes it. **Any lab
+laying panels out in a grid with a wide table inside is a candidate — check reflow at 380px
+before assuming the `overflow-x` wrapper is doing its job.** Fixing it then exposed two more
+scroll containers with no keyboard route: while the whole page scrolled, those tables never had
+to, so the defect was hidden behind the bigger one.
+
+**Three fleet-wide leads, all found by comparing repos rather than reading any one of them:**
+- **`aria-label` on a role-less div is a template habit, and it is the highest-yield precheck.**
+  Thirteen instances across three repos now (hqc-vault ×7, hawk ×3, enigma-forge ×3). Grep
+  `<(div|span)[^>]*aria-label` filtered to lines without `role=` BEFORE starting a repo — it
+  costs 30 seconds and pre-empts several gate iterations. Note two of hqc-vault's were best
+  fixed by *deleting* the label, not adding a role: one on a page wrapper, and one whose
+  "Category chip" label would have replaced the visible "Post-Quantum KEM". Read each before
+  reflexively adding `role="group"`.
+- **`.cl-hero-sub { opacity: .85 }` is shared-header markup repeated across ~170 labs, and it
+  fails only in combination with a muted colour.** It was a real 3.67:1 defect in hash-zoo, where
+  the rule also set `color: var(--muted)`. hawk and hqc-vault carry the identical opacity but
+  inherit `--text`, so both pass. So the grep to run is not `opacity:.85` alone — it is that rule
+  *together with* a muted/dimmed colour on the same element. Labs matching both are where a faded
+  foreground over a gradient hits axe's two blind spots at once.
+- **A wide `<select>` sizes to its longest option and can overflow a phone viewport by itself.**
+  `#flip-placement` was 366px in a 380px viewport. Cheap to check anywhere a select carries a
+  sentence-length option.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**
@@ -955,7 +978,14 @@ Three carry-forwards from these two:
 - **The contrast helper now skips non-rendering SVG text** (character data inside `<g>`/shape
   elements, which SVG never paints). hawk hit this via `<g>${dots}</g>` interpolating a string
   ARRAY, which JS joins with commas — invisible on screen, but the old helper measured the
-  commas and reported a phantom 1:1. Copy contrast.ts from hawk `c94a129`, the newest version.
+  commas and reported a phantom 1:1.
+- **The reflow reporter now ignores elements clipped by a scrolling ancestor.** It had been
+  naming hqc-vault's 980px comparison table — which sits inside a scroller and contributes
+  nothing to document scroll width — while the real overflow was 15px of `<select>`. Same class
+  of mistake as the contrast phantom: a big bounding rect is not the same as ink on the page.
+- **Copy `contrast.ts` + `gate.ts` from hqc-vault `4207f50`, the newest version**, which carries
+  both of the above. Adapt the header comments to the new lab — they cite specific elements, and
+  a stale comment is a false claim about the repo it lands in.
 
 Regenerate this list with:
 

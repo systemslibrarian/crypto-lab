@@ -1368,6 +1368,33 @@ Two notes for anyone repeating this:
   carry the older copy; they draw no real SVG figures, so it cannot bite there, but any future
   copy should be taken from one of the seven (or shamir-vs-frost `81d3413`).
 
+**QUEUE CORRECTION 2026-08-08 — the injection also lives in spec files NOT named
+`a11y.spec.ts`.** Every regeneration of this queue, mine included, globbed `a11y*.spec.ts`.
+Scanning **all** `e2e/*.spec.ts` finds **17 files across 17 repos** still injecting
+`opacity: 1 !important`, and three of them would never have been found:
+
+- `crypto-lab-shor/e2e/claims.spec.ts` — **and shor is already marked DONE.** Its `a11y.spec.ts`
+  was correctly replaced, but its CLAIMS spec still forces opacity, so every claim it asserts is
+  measured against a page whose rendering has been modified. Not an a11y fake-pass, but a claims
+  suite testing a page the visitor never sees.
+- `crypto-lab-mpcith-sign/e2e/a11y-interactive.spec.ts` — a SECOND a11y spec beside a clean
+  `a11y.spec.ts`, so the repo reads as fixed if you only open the obvious file.
+- `crypto-lab-nonce-lattice/e2e/a11y-states.spec.ts` — same shape.
+
+**Regenerate with `find . -name "*.spec.ts" -path "*e2e*"`, never a filename pattern.** The
+correct command is:
+
+```
+find . -maxdepth 4 -name "*.spec.ts" -path "*e2e*" -not -path "*/node_modules/*" | while read f; do
+  grep -vE '^\s*(//|\*|/\*)' "$f" | grep -qE 'opacity: *1 *!important' && echo "$f"
+done
+```
+
+This is the same class of error as the one this whole section opens with — **a completion test
+that looks at the wrong thing reports done for work that was never done.** First it was a grep
+that detected the fix rather than the defect; now it is a glob that covered the expected filename
+rather than all of them.
+
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**
   hash-zoo's splits the machinery into `e2e/gate.ts` (boot · settle · five-oracle scan ·

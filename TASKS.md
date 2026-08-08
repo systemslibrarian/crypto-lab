@@ -1201,7 +1201,18 @@ Headlines:
 
 1. **A dark-theme lab with no `a { color }` rule renders every link in the UA default `#0000EE`.**
    Now 3 confirmed (pki-chain 1.5:1, stego-suite 1.47:1, threshold-decrypt 1.83:1). Tailwind labs
-   are immune because preflight sets `a { color: inherit }`. Grep: dark theme + no `a` colour rule.
+   are immune because preflight sets `a { color: inherit }`.
+   **CANDIDATE LIST, generated 2026-08-08** by parsing every CSS rule for one whose selector list
+   contains a bare `a` and whose block sets `color` (a plain grep over-reports badly — many labs
+   style links only via descendant selectors). **25 repos have no such rule:** biham-lens,
+   bitcoin-script, blind-sign, ckks-lab, commit-gate, dead-sea-cipher, e91, fhe-arena,
+   harvest-vault, hybrid-pqc, jwt-forge, kdf-chain, kyber-vault, lms-xmss, mpcith-sign,
+   oram-vault, paillier-gate, poly1305-mac, psi-gate, ring-sign, shamir-vs-frost, ssh-handshake,
+   vdf, vrf-gate, web-of-trust.
+   **Treat this as a candidate list, not a defect list.** The defect only bites where a link
+   actually renders on a surface the default blue fails against — jwt-forge and paillier-gate are
+   on it and both passed their honest gates. The gate catches it empirically; this list only says
+   where to look first.
 2. **Hardcoded palette hexes inside SVG are a whole class of light-theme blindness.** SVG paints
    from `fill`/`stroke`, which a `.text-*` light remap cannot reach. Grep `fill="#` / `stroke="#`
    in any lab with a light theme.

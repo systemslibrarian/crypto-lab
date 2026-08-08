@@ -882,7 +882,7 @@ looks pending, because nothing will ever route a session back to it.
 | Repo | Shallow commit | Repo | Shallow commit |
 |---|---|---|---|
 | ~~hash-zoo~~ **DONE `9a559b7`** | ~~`0c23df3`~~ | pki-chain | `744e80c` |
-| hawk | `9ae8374` | poly1305-mac | `3cfb8dc` |
+| ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | poly1305-mac | `3cfb8dc` |
 | hqc-vault | `54097a2` | pq-rotation | `e7b842b` |
 | jwt-forge | `1512cdd` | psi-gate | `adea0f5` |
 | kerberos | `8e72b87` | shamir-vs-frost | `c93b42d` |
@@ -914,7 +914,29 @@ So the shallow fix's green gate was green for three independent reasons, none of
 is accessible". **Removing the injection does not find defects; scanning driven states with an
 arithmetic oracle does.** Expect a comparable yield from the other 24.
 
-Two carry-forwards from this one:
+**hawk DONE 2026-08-08 `c94a129` (23 remain) — 7 defects, and it widens the pattern.** Its old
+gate was *better* than most (it genuinely drove both expensive exhibits) and still saw none of
+them, because it scanned one accumulated state per theme at desktop width and asserted on
+`violations` alone. Three contrast failures over gradient-composited panels (WITHDRAWN 3.92:1
+dark / 4.40:1 light, its link the same, pass badge 4.30:1 light) — same gradient blind spot as
+hash-zoo. Three `aria-label`s on role-less divs, which browsers discard silently and axe files
+under `incomplete`. And a `.table-scroll` with no keyboard route at 380px, in a repo where the
+other two `.table-scroll` wraps already carry `tabindex="0" role="region" aria-label` — the
+author knew the fix and missed one, and only phone width reveals it.
+
+**Two fleet-wide leads worth acting on, both found by comparing these first two repos:**
+- **`.cl-hero-sub { opacity: .85 }` is shared-header markup, and it is a latent AA failure
+  wherever the hero sits on a gradient.** It was a real 3.67:1 defect in hash-zoo. hawk carries
+  the identical rule; there it passes only because its `--muted` is lighter against a darker
+  panel. Worth a fleet-wide grep — this is one line repeated across ~170 labs, and the labs where
+  it fails are exactly the ones axe cannot see, because a faded foreground over a gradient hits
+  both blind spots at once.
+- **`aria-label` on a role-less div looks like a template habit, not a one-off.** Four instances
+  across two repos so far (hawk ×3, enigma-forge ×3 previously). Grep
+  `<div[^>]*aria-label` filtered to lines without `role=` before starting a repo; it is a
+  30-second check that pre-empts a whole gate iteration.
+
+Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**
   hash-zoo's splits the machinery into `e2e/gate.ts` (boot · settle · five-oracle scan ·
   `driveAllStates`) with `e2e/contrast.ts` beside it, which made the per-state driving readable
@@ -926,7 +948,14 @@ Two carry-forwards from this one:
   proves the gate bites but not that it reaches anything. Only the third (`.hist-axis`, rendered
   solely after the distribution sweep) proved state coverage — it failed in all four
   configurations naming the `distribution` state. A mutation that fires at first paint tells you
-  nothing about whether the driving works.
+  nothing about whether the driving works. **Check the mutation actually took effect before
+  believing a green run**: two attempts in hawk were inert — one hit dead code, the other was
+  overridden on specificity by a two-class rule. An inert mutation and a working gate produce
+  the identical green, so confirm the computed style changed, not just the source.
+- **The contrast helper now skips non-rendering SVG text** (character data inside `<g>`/shape
+  elements, which SVG never paints). hawk hit this via `<g>${dots}</g>` interpolating a string
+  ARRAY, which JS joins with commas — invisible on screen, but the old helper measured the
+  commas and reported a phantom 1:1. Copy contrast.ts from hawk `c94a129`, the newest version.
 
 Regenerate this list with:
 

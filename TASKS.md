@@ -1395,6 +1395,49 @@ that looks at the wrong thing reports done for work that was never done.** First
 that detected the fix rather than the defect; now it is a glob that covered the expected filename
 rather than all of them.
 
+**THREE GEMINI TEMPLATE REPOS DONE BY A PARALLEL AGENT 2026-08-08** — babel-hash `797fd2f` (4),
+biham-lens `9098a8b` (5), gg20-wallet `91c1a19` (3). **12 defects; nothing came back clean.**
+
+**The template's fake-pass default is worse than this file recorded.** In gg20-wallet the
+"gradient contrast check" measured no element at all — it compared `var(--background)` against
+`var(--text)` read off two throwaway divs, so it could only ever fail if the base palette pair
+failed, regardless of what the page rendered. In babel-hash and biham-lens it returned a literal
+`100` on a missing element or unparseable background, and biham-lens only asserted at all when
+the value was not 100. **These gates were structurally incapable of failing on page content.**
+
+New shapes found:
+- **`role="grid"` with `gridcell` children and no `row` layer** — two CRITICAL rule failures at
+  once (`aria-required-children` + `aria-required-parent`), across 272 elements in biham-lens.
+  **Worth a fleet grep for `role="grid"`/`role="gridcell"`** alongside the existing "role on
+  `<ul>`/`<table>`" check. Fixing it exposed a keyboard defect underneath: 256 cells had
+  `tabindex="0"` and a click handler but no button role and no key handler — focusable and
+  unactivatable.
+- **An 8th invalid-mutation mode: the element renders a PLACEHOLDER at first paint.**
+  gg20-wallet's `.pd-val` shows `—` from load, so a late-looking selector fired at first paint.
+  Cheap pre-filter: assert the selector's count is 0 at first paint before trusting it as a
+  late-state target.
+
+**Two earlier conclusions corrected:**
+1. **The unstyled-link candidate list is weaker than I stated.** biham-lens has no `a { color }`
+   rule and its links still PASS — Chromium resolves the UA link colour against `color-scheme`,
+   which that lab sets per theme (7.14:1 dark, 8.65:1 light). **So the 25-repo candidate list is
+   only actionable for labs that do NOT set `color-scheme` per theme.** Check that first.
+2. **The `.cl-hero-sub` grep needs refining again.** gg20-wallet's rule sets **no colour at all** —
+   it inherited `--text-muted` from a blanket `p {}` rule and still measured 4.28:1. So the test
+   is not "`opacity:.85` plus a muted colour on the same element"; it is "`opacity:.85` on an
+   element whose *computed* colour is muted". **Only a computed-style probe finds that one.**
+   Now 3 of ~28 confirmed (hash-zoo, paillier-gate, gg20-wallet).
+
+**A third confirmed instance of neither-oracle-alone-is-sufficient, and a real gap named:** axe's
+`color-contrast` keys off *visual* visibility, so it measures `aria-hidden` text that still
+paints; the arithmetic helper skips `aria-hidden` subtrees by design. biham-lens's
+`.ddt-lane.idle` defect (3.47:1) was visible only to axe. **That boundary is a genuine gap in
+contrast.ts, not just a difference** — recorded in that file's header.
+
+Grid auto-track pattern now **9 of ~21 audited**. Also: babel-hash and biham-lens had
+`webServer.command` with no `npm run build &&`, so a failing build would have served the last
+good bundle — both fixed.
+
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**
   hash-zoo's splits the machinery into `e2e/gate.ts` (boot · settle · five-oracle scan ·

@@ -885,7 +885,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | ~~poly1305-mac~~ **DONE `2df3f6f`** | ~~`3cfb8dc`~~ |
 | ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | ~~pq-rotation~~ **DONE `c76b4eb`** | ~~`e7b842b`~~ |
 | ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | ~~psi-gate~~ **DONE `8bc51c3`** | ~~`adea0f5`~~ |
-| ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | shamir-vs-frost | `c93b42d` |
+| ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | ~~shamir-vs-frost~~ **DONE `81d3413`** | ~~`c93b42d`~~ |
 | ~~key-exchange~~ **DONE `75ec61c`** | ~~`77ccaf8`~~ | ~~shor~~ **DONE `40419c8`** | ~~`2e230af`~~ |
 | ~~mac-race~~ **DONE `65119ce`** | ~~`86357a5`~~ | ~~silent-tally~~ **DONE `2b69a50`** | ~~`2254db2`~~ |
 | ~~merkle-proofs~~ **DONE `4bab044`** | ~~`7e8a489`~~ | ~~snark-arena~~ **DONE `e08b7f8`** | ~~`35b43f3`~~ |
@@ -1326,6 +1326,30 @@ stylesheet and I patched the one that sets no colour. The running list is now: d
 aria-hidden decoration, later same-specificity rule, large-text threshold, element not visible,
 later declaration in the same block, duplicate selector. **Every one was caught by probing the
 computed value first — none would have been caught by reading the CSS.**
+
+**shamir-vs-frost DONE 2026-08-08 `81d3413` — 7 defects. THE 25-REPO QUEUE IS COMPLETE.**
+
+Its own findings, two of them new shapes:
+- **Locked steps faded to `opacity: 0.4` as a whole block**, taking the step label to 2.11:1 and
+  its explanatory prose to 2.16:1. Same family as threshold-decrypt. Fixed by *disabling the
+  controls* instead — which is what actually communicates the state. **And the lock calls ran
+  BEFORE the controls were appended, so they disabled nothing**: an ordering bug the gate exposed
+  only because disabling changed behaviour where dimming had not.
+- **`.fade-in` was omitted from the reduced-motion block**, which names three other classes by
+  hand. A scan inside the ramp read a callout at 1.68:1. **A hand-maintained cancellation list
+  goes stale** — scoping the animation to `no-preference` cannot.
+- The hidden-tooltip bug for the **fourth** time, and this one also overflowed *when shown* at
+  380px regardless of max-width, because it is anchored `left: 0` off the term. Pinned to the
+  viewport at narrow widths.
+
+**GATE FIX WITH FLEET-WIDE REACH — `svgUnderlay` was inventing failures.** SVG's initial `fill`
+is black and `getComputedStyle` reports that for **stroke-only geometry**, so a `<line>` used as
+a grid rule read as an opaque black rectangle covering whatever it crossed. That produced a
+3.82:1 phantom for labels whose real ratio is 6.15:1. The helper now only composites shapes that
+actually paint a fill (`rect`, `circle`, `ellipse`, `polygon`, `path`). **Any repo audited with
+the earlier contrast.ts and containing an SVG with `<line>` grid rules may have had a phantom
+reported or, worse, a real failure masked by a wrong backdrop — silent-tally's SVG findings are
+worth re-checking against the fixed helper.**
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

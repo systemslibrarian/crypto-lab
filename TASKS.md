@@ -882,7 +882,7 @@ looks pending, because nothing will ever route a session back to it.
 | Repo | Shallow commit | Repo | Shallow commit |
 |---|---|---|---|
 | ~~hash-zoo~~ **DONE `9a559b7`** | ~~`0c23df3`~~ | ~~pki-chain~~ **DONE `d820bd0`** | ~~`744e80c`~~ |
-| ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | poly1305-mac | `3cfb8dc` |
+| ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | ~~poly1305-mac~~ **DONE `2df3f6f`** | ~~`3cfb8dc`~~ |
 | ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | pq-rotation | `e7b842b` |
 | ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | psi-gate | `adea0f5` |
 | ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | shamir-vs-frost | `c93b42d` |
@@ -1256,6 +1256,32 @@ repo burned the full 15-minute test timeout and reported nothing; with it the fa
 `#ct-consistency` in 20 seconds. **I had started diagnosing it as gate slowness — a full scan here
 costs 1.6s, so 23 states is ~35s, and the "15 minutes" was one hung click all along.** Measure
 scan cost before assuming a slow suite is slow.
+
+**poly1305-mac DONE 2026-08-08 `2df3f6f` (3 remain) — 6 defects, two of them new variants worth
+adding to the prechecks:**
+
+- **An INLINE `style="color:#35d6bb"` on links.** Theme-blind (1.52:1 in light) and, being
+  inline, **immune to adding an `a` rule** — the fix everyone reaches for first. This is why the
+  unstyled-link candidate list is only a starting point: poly1305-mac was on it, but the actual
+  defect was inline styling, not a missing rule. **Grep `style="[^"]*color` in markup, not just
+  the stylesheet.**
+- **A narrow-viewport collapse to a bare `grid-template-columns: 1fr`.** The desktop rules here
+  already used `minmax(0, 1fr)` correctly — the `@media (max-width: 1024px)` block dropped the
+  floor, at exactly the width where it matters. **The grid auto-track precheck must read the
+  media-query overrides too, not just the base rule.** A repo can look correct at desktop and lose
+  it at phone width. (The 920px table involved already had an `overflow-x: auto` wrapper WITH a
+  keyboard route — good practice that the missing floor defeated entirely.)
+
+Also: **a long number is one unbreakable "word".** `p.math-decimal` prints the 130-bit
+accumulator in decimal; digits carry no wrap opportunities, so it pushed the document 31px
+sideways by itself. `overflow-wrap: anywhere`. Worth checking anywhere a lab prints a big integer
+outside a scroller.
+
+**Gate machinery note:** the shared template in /tmp was stale — gates generated from it lacked
+the clipped-fallback diagnostic added in kerberos, so this repo's reflow failure reported
+"(none identified)" and cost several probe cycles. **Regenerate the template from the newest
+gate before starting a repo**; the current best is pki-chain `d820bd0` (setDefaultTimeout +
+clipped filter + clipped fallback).
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

@@ -884,7 +884,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~hash-zoo~~ **DONE `9a559b7`** | ~~`0c23df3`~~ | ~~pki-chain~~ **DONE `d820bd0`** | ~~`744e80c`~~ |
 | ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | ~~poly1305-mac~~ **DONE `2df3f6f`** | ~~`3cfb8dc`~~ |
 | ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | ~~pq-rotation~~ **DONE `c76b4eb`** | ~~`e7b842b`~~ |
-| ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | psi-gate | `adea0f5` |
+| ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | ~~psi-gate~~ **DONE `8bc51c3`** | ~~`adea0f5`~~ |
 | ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | shamir-vs-frost | `c93b42d` |
 | ~~key-exchange~~ **DONE `75ec61c`** | ~~`77ccaf8`~~ | ~~shor~~ **DONE `40419c8`** | ~~`2e230af`~~ |
 | ~~mac-race~~ **DONE `65119ce`** | ~~`86357a5`~~ | ~~silent-tally~~ **DONE `2b69a50`** | ~~`2254db2`~~ |
@@ -1307,6 +1307,25 @@ opacity, not a colour tweak.
 That makes six distinct ways a mutation can be silently inert (dead code, aria-hidden decoration,
 later same-specificity rule, large-text threshold, not-visible, later declaration in the same
 block). **The probe-then-verify procedure is not optional overhead; it has caught all six.**
+
+**psi-gate DONE 2026-08-08 `8bc51c3` (1 remains) — 4 defects, one of them a new ARIA shape.**
+A `<ul>` carried `role="region"`, which **replaces** its list semantics and orphaned every `<li>`
+inside it — axe's `listitem` rule caught it. **Putting a landmark/region role on a semantic
+element destroys that element's own semantics; the region belongs on a wrapper.** Worth grepping
+for `role="region"` (or any role) applied directly to `<ul>`/`<ol>`/`<table>`/`<nav>`.
+
+Two recurring patterns hit their third instance each:
+- **hidden-tooltip reflow** (hash-zoo `.term-def`, mac-race `.gloss-pop`, psi-gate
+  `.e2-term-def`) — `visibility: hidden` still occupies layout; a 304px popover pushed the
+  document to 542px.
+- **same-hue tint** (mls-group hover, oblivious-shelf chip, psi-gate `.align-row.matched`) — the
+  row tints its background 10% toward `--match` and then paints its text `--match`.
+
+**A SEVENTH invalid-mutation mode: a DUPLICATE selector.** Two `.info-label` rules exist in this
+stylesheet and I patched the one that sets no colour. The running list is now: dead code,
+aria-hidden decoration, later same-specificity rule, large-text threshold, element not visible,
+later declaration in the same block, duplicate selector. **Every one was caught by probing the
+computed value first — none would have been caught by reading the CSS.**
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

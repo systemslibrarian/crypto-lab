@@ -1351,6 +1351,23 @@ the earlier contrast.ts and containing an SVG with `<line>` grid rules may have 
 reported or, worse, a real failure masked by a wrong backdrop — silent-tally's SVG findings are
 worth re-checking against the fixed helper.**
 
+**SVG-HELPER RE-VERIFICATION DONE 2026-08-08 — all six at-risk repos re-checked, all green.**
+After finding that `svgUnderlay` composited stroke-only geometry as an opaque black backdrop, I
+re-ran every audited repo that draws real `<line>` elements, with the corrected helper installed:
+silent-tally (20 lines), hash-zoo (19, `3240919`), hawk (10, `d605b63`), key-exchange (7,
+`1da35dd`), psi-gate (5, `fe46a22`), threshold-decrypt (5, `fafc9bd`), merkle-proofs (4,
+`d532e09`). **Every one is green in all four configurations, so the earlier helper was not
+masking a real failure in any of them** — the bug produced phantoms, not silence. silent-tally's
+seven SVG findings stand as real.
+
+Two notes for anyone repeating this:
+- **The naive grep over-counts badly.** `<line` also matches `<linearGradient`, and every lab
+  shows a baseline of 3 from an `aria-hidden` hamburger icon in `index.html` that the helper
+  already skips. Match `<line[ >/]` and discount the icon.
+- **The corrected `contrast.ts` is now committed in those seven repos only.** The other eighteen
+  carry the older copy; they draw no real SVG figures, so it cannot bite there, but any future
+  copy should be taken from one of the seven (or shamir-vs-frost `81d3413`).
+
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**
   hash-zoo's splits the machinery into `e2e/gate.ts` (boot · settle · five-oracle scan ·

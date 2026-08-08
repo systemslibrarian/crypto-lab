@@ -856,6 +856,96 @@ to 2.66:1, three instances of ARIA-prohibited names being silently discarded.
 Regenerate the queue with the node snippet used on 2026-08-05 (match `opacity: *1 *!important` on
 NON-COMMENT lines — the raw string over-counts, since fixed specs mention it in a docblock).
 
+**2026-08-08 — THE GREP NO LONGER FINDS THE QUEUE. 25 repos are silently mis-marked as done.**
+
+Regenerating the opacity grep on 2026-08-08 returned **17** repos, not the 41 recorded above.
+That drop is **not** progress. 26 repos received a one-line commit
+`fix: remove opacity injection in a11y tests` (2026-08-06, all one file, 1–2 lines) that deletes
+the `opacity` clause and changes **nothing else** — no driven states, no arithmetic contrast
+helper, no asserted `emulateMedia`, and critically **no re-run to see what the now-honest gate
+reports**. Only `format-ward` got a genuine pass afterward (`b20d485`).
+
+This is the same shallow pattern this file already flagged by SHA: `threshold-decrypt`'s
+`4901202` ("one line, valid but incomplete") appears in the list below — so these commits share
+Gemini's provenance even though they carry the maintainer's git identity.
+
+Deleting the clause was step one of three. Step two was re-running, and step three was treating
+whatever appeared as a genuine finding. Steps two and three did not happen. Because step one is
+the only step the grep can see, **these 25 now read as fixed in every automated check while
+never having been audited at all.** Every honest pass so far has averaged about one real defect
+per repo; there is no reason to think these 25 are clean, and nothing has looked.
+
+**Treat this list as queue position #1** — ahead of the 17 grep-positive repos and ahead of
+Gemini's 9 remaining template repos. A repo that looks done is more dangerous than one that
+looks pending, because nothing will ever route a session back to it.
+
+| Repo | Shallow commit | Repo | Shallow commit |
+|---|---|---|---|
+| ~~hash-zoo~~ **DONE `9a559b7`** | ~~`0c23df3`~~ | pki-chain | `744e80c` |
+| hawk | `9ae8374` | poly1305-mac | `3cfb8dc` |
+| hqc-vault | `54097a2` | pq-rotation | `e7b842b` |
+| jwt-forge | `1512cdd` | psi-gate | `adea0f5` |
+| kerberos | `8e72b87` | shamir-vs-frost | `c93b42d` |
+| key-exchange | `77ccaf8` | shor | `2e230af` |
+| mac-race | `86357a5` | silent-tally | `2254db2` |
+| merkle-proofs | `7e8a489` | snark-arena | `35b43f3` |
+| mls-group | `7a8c87c` | stego-suite | `1c1015d` |
+| oblivious-shelf | `e30e8ac` | syndrome-drain | `5dfc70f` |
+| opaque-gate | `86b220a` | syndrome-hints | `073ef30` |
+| ot-gate | `28b1820` | threshold-decrypt | `4901202` |
+| paillier-gate | `e01d77e` | | |
+
+Do NOT revert these commits — removing the clause was correct as far as it went. The work owed
+is the full task-13 method (wait for real content · scan driven states · measure contrast
+arithmetically · assert the motion emulation took effect), then land whatever it finds.
+
+**hash-zoo DONE 2026-08-08 `9a559b7` (24 remain) — and it settles the question this list opens
+with: three real defects, every one invisible to the shallow fix.** The one-line commit removed
+the opacity clause and the gate stayed green, because the gate never looked anywhere the defects
+were. `.cl-hero-sub` faded `--muted` to 85% over `--bg-accent`'s radial wash and sat at 3.67:1 —
+**axe reported nothing, because a radial gradient is exactly the case it files under `incomplete`
+and never surfaces as a violation.** `.ibit-flip` put `#fff` on dark's lighter `--bit-changed`
+under a 0.32-alpha hatch, 3.74:1, same blind spot. And `.term-def` tooltips used
+`visibility: hidden`, which still occupies layout, so a 260px box on a term near the right edge
+pushed the document 23px sideways at **every** viewport width — a WCAG 1.4.10 failure caused by
+an element nobody can see, and one axe has no rule for at all.
+
+So the shallow fix's green gate was green for three independent reasons, none of them "the page
+is accessible". **Removing the injection does not find defects; scanning driven states with an
+arithmetic oracle does.** Expect a comparable yield from the other 24.
+
+Two carry-forwards from this one:
+- **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**
+  hash-zoo's splits the machinery into `e2e/gate.ts` (boot · settle · five-oracle scan ·
+  `driveAllStates`) with `e2e/contrast.ts` beside it, which made the per-state driving readable
+  and is the cleanest base to copy so far.
+- **Mutation-check in a LATE driven state, not at first paint.** The first mutation attempted
+  here (`.lext-bad`) changed nothing because that branch renders only when the forgery fails to
+  verify — unreachable in a correct implementation, so it is evidence about the source, not the
+  gate (the `vrf-gate` lesson again). The second (`.lext-ok`) went red at *first paint*, which
+  proves the gate bites but not that it reaches anything. Only the third (`.hist-axis`, rendered
+  solely after the distribution sweep) proved state coverage — it failed in all four
+  configurations naming the `distribution` state. A mutation that fires at first paint tells you
+  nothing about whether the driving works.
+
+Regenerate this list with:
+
+```
+for r in crypto-lab-*; do
+  c=$(git -C "$r" log --format='%H %s' --since=2026-08-05 | grep -i "remove opacity injection" | head -1 | cut -d' ' -f1)
+  [ -n "$c" ] || continue
+  echo "$r $(git -C "$r" log --oneline "$c"..HEAD -- e2e/ | wc -l) later-e2e-commits"
+done
+```
+
+A repo showing `0 later-e2e-commits` has had no honest pass since the shallow fix.
+
+**LESSON, general.** A grep that detects the *fix* rather than the *defect* can be satisfied by
+a commit that does not fix the defect — and once satisfied, it actively hides the work from
+every future queue regeneration. When a task's completion test is a grep, record the audited
+repos by name as they land (as the Done list above does) and reconcile that roster against the
+grep; never let the grep alone define what remains.
+
 ### 14a. Remove the `opacity: 1 !important` injection — `TODO` — **57 specs, HIGH PRIORITY**
 
 Found in `broken-trust` (fixed, `feae4ae`) and then measured fleet-wide: **57 a11y specs inject

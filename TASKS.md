@@ -892,7 +892,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~mls-group~~ **DONE `d268eff`** | ~~`7a8c87c`~~ | stego-suite | `1c1015d` |
 | ~~oblivious-shelf~~ **DONE `ad13e27`** | ~~`e30e8ac`~~ | syndrome-drain | `5dfc70f` |
 | ~~opaque-gate~~ **DONE `e633533`** | ~~`86b220a`~~ | syndrome-hints | `073ef30` |
-| ot-gate | `28b1820` | threshold-decrypt | `4901202` |
+| ~~ot-gate~~ **DONE `af99a15`** | ~~`28b1820`~~ | threshold-decrypt | `4901202` |
 | paillier-gate | `e01d77e` | | |
 
 Do NOT revert these commits — removing the clause was correct as far as it went. The work owed
@@ -1130,6 +1130,31 @@ Also note two buttons here are gated on prior state (`Analyze breach` is disable
 registration; the forward-secrecy button does not exist until the handshake completes). Probes
 that skip prerequisites hang for the full timeout — drive in order, and treat a hang as a missing
 prerequisite rather than a broken locator.
+
+**ot-gate DONE 2026-08-08 `af99a15` (13 remain) — 1 defect, and it is the first INTERMITTENT one.**
+`.reconcile-meet` ran an unscoped `reconcileMeet` animation ramping `opacity: 0.4 -> 1`. A scan
+landing inside that ramp reads all three of its labels at 40% opacity at once — which is exactly
+what failed runs showed (badge, shared-label and frag failing together), about **one run in
+four**. **Shortening the duration does NOT fix this: under `prefers-reduced-motion` a 0.01ms
+animation still renders one frame of the `from` state.** Scoping the animation to
+`no-preference` removes the frame entirely. Verified over six consecutive runs of the
+previously-failing config.
+
+That refines an earlier note: `animation-duration: 0.01ms` is safe against the *blank-content*
+trap (the end state is reached) but NOT against a *sampled-mid-ramp* contrast flake. Scoping to
+`no-preference` is strictly better and is the pattern to prefer.
+
+Two more skipped-interaction findings, same family as opaque-gate's:
+- Dealing a DDH round only renders the candidate points; the exhibit's claim is only demonstrated
+  once you **guess**, which renders the verdict and reveals the reset control. The guess was never
+  made, so that surface was never scanned.
+- A completed OT transfer disables both sender and receiver controls — the session is one-shot,
+  so the second branch is reachable only by reloading. Without that, a gate scans the same branch
+  twice while appearing to cover both.
+
+**PROCESS: `pkill -f "playwright test"` does NOT kill the vite preview server.** It bit twice in
+this sweep. The second time it invalidated a green run AND made a mutation look inert. After any
+interrupted run: `lsof -nP -iTCP:<port> -sTCP:LISTEN` and kill by PID before running again.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

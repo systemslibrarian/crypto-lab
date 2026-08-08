@@ -890,7 +890,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~mac-race~~ **DONE `65119ce`** | ~~`86357a5`~~ | silent-tally | `2254db2` |
 | ~~merkle-proofs~~ **DONE `4bab044`** | ~~`7e8a489`~~ | snark-arena | `35b43f3` |
 | ~~mls-group~~ **DONE `d268eff`** | ~~`7a8c87c`~~ | stego-suite | `1c1015d` |
-| oblivious-shelf | `e30e8ac` | syndrome-drain | `5dfc70f` |
+| ~~oblivious-shelf~~ **DONE `ad13e27`** | ~~`e30e8ac`~~ | syndrome-drain | `5dfc70f` |
 | opaque-gate | `86b220a` | syndrome-hints | `073ef30` |
 | ot-gate | `28b1820` | threshold-decrypt | `4901202` |
 | paillier-gate | `e01d77e` | | |
@@ -1097,6 +1097,21 @@ definition inline as visually-hidden text, which broke `claims.spec.ts`.** That 
 the narration's `textContent` character-for-character, and `textContent` includes visually-hidden
 AND `hidden` nodes — it is DOM-based, not render-based. Any a11y fix that injects text into a
 region a claims test reads will break it. Put such text outside the asserted region.
+
+**oblivious-shelf DONE 2026-08-08 `ad13e27` (15 remain) — 2 defects.** A bare
+`overflow-x: auto` table wrapper with no keyboard route, and `.set-el--target` painting its digit
+in `--accent-hover` on a 28% `--accent` wash.
+
+**That second one is now a named pattern: a tint that mixes in the same hue as the text sitting
+on it.** mls-group's `button.danger:hover` did exactly this (backdrop tinted toward `--danger`,
+which was also the label colour, converging at 4.05:1) and here the chip background is lightened
+toward the hue the ink already is (3.84:1). **Grep for `color-mix` / tint declarations whose
+mixed-in token is the same one used for `color` on or inside that element** — it is a
+self-defeating palette move and both instances needed only a token swap.
+
+Also confirming the method fix works: picking the mutation target by reading the computed colour
+in the driven state hit a valid, non-inert, late-state target first try (`.sv-note`, caught in
+`query generated`). That is four wasted runs avoided versus grepping the stylesheet.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

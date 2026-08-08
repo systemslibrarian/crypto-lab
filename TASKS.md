@@ -887,7 +887,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | psi-gate | `adea0f5` |
 | ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | shamir-vs-frost | `c93b42d` |
 | ~~key-exchange~~ **DONE `75ec61c`** | ~~`77ccaf8`~~ | shor | `2e230af` |
-| mac-race | `86357a5` | silent-tally | `2254db2` |
+| ~~mac-race~~ **DONE `65119ce`** | ~~`86357a5`~~ | silent-tally | `2254db2` |
 | merkle-proofs | `7e8a489` | snark-arena | `35b43f3` |
 | mls-group | `7a8c87c` | stego-suite | `1c1015d` |
 | oblivious-shelf | `e30e8ac` | syndrome-drain | `5dfc70f` |
@@ -1031,6 +1031,26 @@ Two method notes:
 - **A mutation that does not fail is not automatically a blind gate.** `#7c7c7c` on an `h3`
   correctly passed because the oracle applied the 3:1 LARGE-TEXT threshold. A stronger colour
   then failed at 2.25:1. Check the threshold that applies before concluding anything.
+
+**mac-race DONE 2026-08-08 `65119ce` (18 remain) — 4 defect classes, 19 ARIA sites.** Highest
+prohibited-name count yet. Two lessons specific to it:
+
+- **Fix the ARIA sites by kind, not with a blanket `role="group"`.** Here the right answers were
+  three different things: *remove* the label on the status chips (their visible text already said
+  it, and the label only added the word "Status") and on the layout wrapper; `role="region"` +
+  `tabindex="0"` on the scrolling tables; `role="group"` only on the genuinely meaningful
+  groupings. Also note `<p>` is a generic role too — a div/span-only grep misses it, and two
+  sites here were `<p>`.
+- **The hidden-tooltip reflow bug is now 2 of 7 repos** (hash-zoo `.term-def`, mac-race
+  `.gloss-pop`). Both used `visibility: hidden`, which still occupies layout, on an absolutely
+  positioned popover anchored `left: 0`. Grep for `visibility: hidden` next to `position:
+  absolute` — it is a one-line fix (`display: none`) and a whole-document overflow.
+
+Also worth noting as a *negative* result: this lab applies its entrance animations only inside
+`@media (prefers-reduced-motion: no-preference)`. That is the correct pattern and the reason it
+had no blank-content defect, in contrast to kerberos. **When checking the reduced-motion trap,
+`no-preference`-scoped animations are safe; only a rule that sets `opacity: 0` unconditionally
+and relies on an animation to undo it is dangerous.**
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

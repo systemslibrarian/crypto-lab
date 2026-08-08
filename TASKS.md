@@ -893,7 +893,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~oblivious-shelf~~ **DONE `ad13e27`** | ~~`e30e8ac`~~ | syndrome-drain | `5dfc70f` |
 | ~~opaque-gate~~ **DONE `e633533`** | ~~`86b220a`~~ | syndrome-hints | `073ef30` |
 | ~~ot-gate~~ **DONE `af99a15`** | ~~`28b1820`~~ | threshold-decrypt | `4901202` |
-| paillier-gate | `e01d77e` | | |
+| ~~paillier-gate~~ **DONE `4d56d5c`** | ~~`e01d77e`~~ | | |
 
 Do NOT revert these commits — removing the clause was correct as far as it went. The work owed
 is the full task-13 method (wait for real content · scan driven states · measure contrast
@@ -1155,6 +1155,26 @@ Two more skipped-interaction findings, same family as opaque-gate's:
 **PROCESS: `pkill -f "playwright test"` does NOT kill the vite preview server.** It bit twice in
 this sweep. The second time it invalidated a green run AND made a mutation look inert. After any
 interrupted run: `lsof -nP -iTCP:<port> -sTCP:LISTEN` and kill by PID before running again.
+
+**paillier-gate DONE 2026-08-08 `4d56d5c` (12 remain) — 5 defects, one severe.** In dark theme
+the forged ciphertexts and the "tally is rigged" verdict rendered at **1.26:1** — near-white on a
+light pink box, unreadable exactly where the exhibit wants them read. The cause is worth
+generalising: **`.result-box[data-tone]` is deliberately light in BOTH themes and sets its own
+dark ink, but a nested `.attack-block code` rule re-applied `var(--ink)`**, which in dark theme
+is near-white. **Any container that fixes its own background independent of the theme is a trap
+for nested rules that re-apply a theme token — grep for theme-independent backgrounds and check
+what sets `color` inside them.**
+
+**This is also the first confirmed hit on the fleet-wide `.cl-hero-sub` lead**, and it validates
+the refinement: the rule here carries BOTH `color: var(--muted)` AND `opacity: .85`. Every lab
+carrying the opacity *without* a muted colour has passed. So the fleet grep is the pair, not the
+opacity alone — 1 of 13 repos so far has had the failing combination.
+
+Two token moves, both safe because the tokens are text-only (checked: 0 uses as a fill):
+`--muted` measured 3.77:1 on the page background — a warmer, darker surface than the `--panel` it
+had been tuned against — and `--accent-strong` measured 4.07:1 on the hero card and 4.45:1 on the
+darker stepper panel. **Tuning a token against one surface does not make it safe on another;
+the arithmetic oracle finds these because it measures the surface actually behind the text.**
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

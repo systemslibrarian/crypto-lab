@@ -885,7 +885,7 @@ looks pending, because nothing will ever route a session back to it.
 | ~~hawk~~ **DONE `c94a129`** | ~~`9ae8374`~~ | poly1305-mac | `3cfb8dc` |
 | ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | pq-rotation | `e7b842b` |
 | ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | psi-gate | `adea0f5` |
-| kerberos | `8e72b87` | shamir-vs-frost | `c93b42d` |
+| ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | shamir-vs-frost | `c93b42d` |
 | key-exchange | `77ccaf8` | shor | `2e230af` |
 | mac-race | `86357a5` | silent-tally | `2254db2` |
 | merkle-proofs | `7e8a489` | snark-arena | `35b43f3` |
@@ -985,6 +985,30 @@ Two process lessons from this repo, both of which cost real time:
   and vanished with the reflow fix, because `.cl-hero-why` is a near-transparent `color-mix`
   wash and stretching the hero changed what it composited over. Some contrast failures are
   downstream of a broken layout; re-measure after fixing reflow before opening a palette.
+
+**kerberos DONE 2026-08-08 `a5fd7ff` (20 remain) — 6 defects, including the most serious one
+found so far.** `.swim-step` sets `opacity: 0` in its own rule and relies on an animation to
+reveal it, while the reduced-motion block cancels animations **without restoring their end
+state**. Every visitor with `prefers-reduced-motion: reduce` saw the entire swim-lane protocol
+diagram — the lab's core teaching content — as blank space.
+
+**This is the defect the `opacity: 1 !important` injection existed to hide, and it is the single
+best argument for this whole sweep.** With the injection, the gate painted the content back for
+the scanner alone. The shallow fix removed the injection, but the gate still never emulated
+reduced motion, so it still could not see it. Only doing both — remove the injection AND emulate
+the preference — surfaces it. **Add to the per-repo checklist: grep the stylesheet for
+`prefers-reduced-motion` and check whether the block only cancels (`animation: none`) or also
+restores end states. A rule that sets `opacity: 0` outside the media query and relies on an
+animation to undo it is a blank-content defect.**
+
+Two more from this repo:
+- **The grid pattern is now 3 of 5 repos.** Here it was `.layout > .main`. Note the trap:
+  that rule already had `min-width: 0`, which fixes what the element contributes to ITS parent
+  and does nothing about the track sizing its own children. `min-width: 0` present is not
+  evidence the grid is safe.
+- **A fixed track minimum is a floor the container cannot go below.**
+  `minmax(220px, 1fr)` overflowed a 380px viewport; `minmax(min(220px, 100%), 1fr)` is the fix.
+  Worth grepping for `minmax([0-9]` fleet-wide.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

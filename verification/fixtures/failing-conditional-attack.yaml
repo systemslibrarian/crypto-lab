@@ -1,0 +1,99 @@
+manifest_version: '0.2'
+lab:
+  slug: passing-lab
+  name: Passing Lab
+  claimed_standards: []
+  claim_sources: []
+repository:
+  url: https://github.com/systemslibrarian/passing-lab
+  default_branch: main
+  commit_sha: abcdef123456
+extraction:
+  pass: B
+  model: test-model
+  date: '2026-08-05'
+  extraction_hash: fe9e095ef56a9999b1b76d6c863ccf89e19a55bcaa854ffc83a6f4390d151971
+audit_mode:
+  type: attack_reproduction
+  claimed_boundary: Core algorithms
+  intentionally_omitted: []
+  delegated_components: []
+  confirmed:
+    by: alice
+    date: '2026-08-05'
+scope_map:
+  files:
+    - path: math.js
+      role: math_core
+      note: ''
+  entry_points: []
+  extraction_order: []
+  red_flags: []
+  scope_amendments: []
+coverage:
+  - file: math.js
+    reviewed_symbols:
+      - add
+    excluded_symbols: []
+    unresolved_regions: []
+    note: ''
+parameters: []
+claims:
+  - id: C1
+    type: arithmetic
+    statement: X should equal Y
+    latex: ''
+    computable:
+      language: python
+      relation: equality
+      expression: 1 + 1
+      inputs: {}
+      expected: 2
+      dependencies: []
+    code_anchor:
+      file: math.js
+      symbol: add
+      lines:
+        - 1
+        - 3
+      snippet: |-
+        function add(a, b) {
+          return a + b;
+        }
+    reference_anchor:
+      ref: REF1
+      location: Sec 1
+    verification:
+      method: manual
+      implementation: ''
+      vector_source: ''
+      procedure: test
+      expected_observation: pass
+    implementation_provenance:
+      kind: custom
+      component: ''
+      package: ''
+      version: ''
+      boundary: ''
+    depends_on: []
+    extractor_confidence: high
+    extraction_status: anchored
+    verification_status: untested
+    conformance_status: not_applicable
+    notes: ''
+deviations: []
+open_questions:
+  - id: Q1
+    question: q
+    why_it_matters: w
+    what_would_resolve_it: r
+cryptographer_checklist: []
+reference_pack:
+  - id: REF1
+    type: standard
+    title: spec
+    version: '1'
+    source_url: ''
+    section: ''
+    excerpt_sha256: ''
+    supplied_by: human

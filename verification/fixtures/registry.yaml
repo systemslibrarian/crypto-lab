@@ -1,0 +1,5 @@
+registry_version: "0.2"
+labs:
+  - slug: test-lab
+    display_name: "Test Lab"
+    audit_priority: 1

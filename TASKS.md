@@ -886,13 +886,13 @@ looks pending, because nothing will ever route a session back to it.
 | ~~hqc-vault~~ **DONE `4207f50`** | ~~`54097a2`~~ | pq-rotation | `e7b842b` |
 | ~~jwt-forge~~ **DONE `a38c97c`** | ~~`1512cdd`~~ | psi-gate | `adea0f5` |
 | ~~kerberos~~ **DONE `a5fd7ff`** | ~~`8e72b87`~~ | shamir-vs-frost | `c93b42d` |
-| ~~key-exchange~~ **DONE `75ec61c`** | ~~`77ccaf8`~~ | shor | `2e230af` |
-| ~~mac-race~~ **DONE `65119ce`** | ~~`86357a5`~~ | silent-tally | `2254db2` |
-| ~~merkle-proofs~~ **DONE `4bab044`** | ~~`7e8a489`~~ | snark-arena | `35b43f3` |
-| ~~mls-group~~ **DONE `d268eff`** | ~~`7a8c87c`~~ | stego-suite | `1c1015d` |
-| ~~oblivious-shelf~~ **DONE `ad13e27`** | ~~`e30e8ac`~~ | syndrome-drain | `5dfc70f` |
-| ~~opaque-gate~~ **DONE `e633533`** | ~~`86b220a`~~ | syndrome-hints | `073ef30` |
-| ~~ot-gate~~ **DONE `af99a15`** | ~~`28b1820`~~ | threshold-decrypt | `4901202` |
+| ~~key-exchange~~ **DONE `75ec61c`** | ~~`77ccaf8`~~ | ~~shor~~ **DONE `40419c8`** | ~~`2e230af`~~ |
+| ~~mac-race~~ **DONE `65119ce`** | ~~`86357a5`~~ | ~~silent-tally~~ **DONE `2b69a50`** | ~~`2254db2`~~ |
+| ~~merkle-proofs~~ **DONE `4bab044`** | ~~`7e8a489`~~ | ~~snark-arena~~ **DONE `e08b7f8`** | ~~`35b43f3`~~ |
+| ~~mls-group~~ **DONE `d268eff`** | ~~`7a8c87c`~~ | ~~stego-suite~~ **DONE `333ea79`** | ~~`1c1015d`~~ |
+| ~~oblivious-shelf~~ **DONE `ad13e27`** | ~~`e30e8ac`~~ | ~~syndrome-drain~~ **DONE `29d7831`** | ~~`5dfc70f`~~ |
+| ~~opaque-gate~~ **DONE `e633533`** | ~~`86b220a`~~ | ~~syndrome-hints~~ **DONE `d10cce1`** | ~~`073ef30`~~ |
+| ~~ot-gate~~ **DONE `af99a15`** | ~~`28b1820`~~ | ~~threshold-decrypt~~ **DONE `4d204af`** | ~~`4901202`~~ |
 | ~~paillier-gate~~ **DONE `4d56d5c`** | ~~`e01d77e`~~ | | |
 
 Do NOT revert these commits — removing the clause was correct as far as it went. The work owed
@@ -1175,6 +1175,58 @@ Two token moves, both safe because the tokens are text-only (checked: 0 uses as 
 had been tuned against — and `--accent-strong` measured 4.07:1 on the hero card and 4.45:1 on the
 darker stepper panel. **Tuning a token against one surface does not make it safe on another;
 the arithmetic oracle finds these because it measures the surface actually behind the text.**
+
+**SEVEN REPOS DONE BY A PARALLEL AGENT 2026-08-08** — shor `40419c8`, silent-tally `2b69a50`,
+snark-arena `e08b7f8`, stego-suite `333ea79`, syndrome-drain `29d7831`, syndrome-hints `d10cce1`,
+threshold-decrypt `4d204af`. **Nothing came back clean; every one had at least one real defect.**
+Headlines:
+
+- **silent-tally: every SVG in the lab was dark-theme-only.** All four diagrams hardcode palette
+  hexes in `fill`/`stroke`, which no `html[data-theme='light'] .text-*` remap can reach. Exhibit
+  3's toy-field chart — the lab's central figure — was effectively invisible in light theme
+  (axis labels 2.54:1, share labels 1.52:1, secret marker 1.67:1). Plus 25 prohibited
+  `aria-label`s that would have *replaced* each share value with the words "Share f(N) value".
+- **syndrome-hints: 50 prohibited-name sites, the sweep's highest.** The attacker's-view error
+  vector renders 48 `<span class="bit">` cells each with a discarded `aria-label`, so every cell
+  read as a bare index plus "?" or a padlock emoji.
+- **threshold-decrypt** (the repo whose shallow `4901202` opened this list): 5 defects. Notably
+  `.panel.locked { opacity: 0.72 }` faded locked panels' *prose*, not just their controls —
+  1.4.3's inactive-component exemption does not cover the paragraph explaining the step (4.01:1).
+- **snark-arena's biggest finding was coverage, not a defect:** the old gate never drove the
+  real-proof exhibit at all. Its comment claimed the "Verify proof" buttons "were removed" — true
+  of the two simulated ones, false of `#rp-prove`/`#rp-verify`/`#rp-tamper`, which run genuine
+  snarkjs Groth16. **The lab's headline exhibit was absent from the audit.**
+
+**Four new fleet-wide leads, all worth a grep before the next repo:**
+
+1. **A dark-theme lab with no `a { color }` rule renders every link in the UA default `#0000EE`.**
+   Now 3 confirmed (pki-chain 1.5:1, stego-suite 1.47:1, threshold-decrypt 1.83:1). Tailwind labs
+   are immune because preflight sets `a { color: inherit }`. Grep: dark theme + no `a` colour rule.
+2. **Hardcoded palette hexes inside SVG are a whole class of light-theme blindness.** SVG paints
+   from `fill`/`stroke`, which a `.text-*` light remap cannot reach. Grep `fill="#` / `stroke="#`
+   in any lab with a light theme.
+3. **`display: grid` with no `grid-template-columns` is now 5 of ~12 audited.** Note stego-suite's
+   `.shell` also carries `width: min(1180px, 95vw)` on the same rule and that does **not** prevent
+   the auto-track blowout.
+4. **A `clamp()`ed font-size can cross the large-text threshold between viewports.**
+   syndrome-drain's `.lm-banner-status` resolves to 21.6px on desktop (3:1 applies, passes) and
+   17.6px at 380px (4.5:1 applies, fails at 4.31:1). **The same colour legitimately passes one
+   width and fails the other** — which is an argument for scanning both widths beyond reflow.
+
+**GATE IMPROVEMENT — add `page.setDefaultTimeout(20_000)` to `boot`.** It paid for itself twice in
+the agent's run (silent-tally's victim card, stego-suite's `#lsb-walk-prev` — both disabled-at-first
+controls). Without it a click on a never-actionable control burns the full 900s test timeout and
+reports nothing useful; with it you get a named failure in 20s. **This would have saved the two
+10-minute hangs in jwt-forge and ot-gate.** Adopt fleet-wide.
+
+**PRECHECK CORRECTION: run the aria-label grep against the RIGHT source dir.** The agent's first
+pass used `src/` and found nothing in silent-tally, whose source is `src-ts/`; the gate then found
+25 sites. Use `find`-based discovery, never a hardcoded `src/`.
+
+Also confirmed twice more that **neither oracle alone is sufficient**: snark-arena's
+`.bp:hover { opacity: 0.85 }` (which fades the accent fill and its white label together, dropping
+white-on-accent from 5.66:1 to 4.21:1) was caught by axe and MISSED by the arithmetic oracle —
+the mirror image of the gradient blind spot.
 
 Three carry-forwards from these two:
 - **Adapt the gate from hash-zoo `9a559b7` or hybrid-guide `225f1f8`, not the older exemplars.**

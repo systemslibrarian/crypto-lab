@@ -1878,6 +1878,62 @@ envelope-kms hit came partly from `coverage/` CSS. **My greps have been wrong tw
 theme-key over-count, and this one before it was rewritten to use `find` instead of a glob), so
 each needs measuring in its own pass rather than a fix on inference.
 
+**TASK 14 PROGRESS 2026-08-09 (4) — 3 more repos, 11 defects. 15 of 78 done, 47 defects.**
+dilithium-reject `dedc9ad` (6) · dilithium-seal `fc4876c` (4) · dkg-gate `34e0409` (1).
+
+**The `.sr-only` oracle bug was found INDEPENDENTLY a second time**, by a different agent in a
+different repo (dkg-gate's `mark()` pairs an `aria-hidden` glyph with an `.sr-only` twin, and the
+walk reported 4.39:1 for text nobody can see). Two independent confirmations; it is real. That
+agent's narrower fix — skip elements whose own `clip`/`clip-path` reduces them to **zero area** —
+is the more conservative one and is probably the right shape to backport.
+
+**And the canvas-background bug was hit from the other direction**: once a page overflows its
+root, content outside every ancestor's border box falls through to the white fallback and reports
+invented ratios (three footer links at 1.77:1 that are fine on the real canvas). Same root cause
+as (3) above — the root's background paints beyond its border box and the ancestor walk does not
+model it. Useful corollary: **a reflow failure and a burst of contrast failures in the same state
+are usually ONE defect, not N.** The reflow assertion names the real culprit.
+
+**`[hidden]` defeated by a class-level `display` — a new shape, and a nasty one.** The attribute
+is honoured only by a UA rule, which any author `display` outranks. Two of dilithium-reject's four
+hidden regions were `inline-flex`/`flex`, so the tamper test's two buttons sat on screen from
+first paint — before any signature existed — where both handlers open `if (!state.lastSig) return`.
+Enabled controls that silently did nothing. **Playwright's `el.hidden` property and
+`toBeHidden()` disagree here** — the property reads the attribute, the assertion reads the
+rendering — so a probe using `.hidden` reports the panel closed while it is fully visible. Fix is
+a blanket `[hidden]{display:none!important}`.
+
+**The injection was ACTIVELY DESTRUCTIVE in dkg-gate**, not merely inert. `.chip` ships
+`opacity: 0` and reaches 1 via `chip-in … forwards`; the old `animation: none !important` cancelled
+it with no `opacity` alongside, so every key-assembly chip — the `PK = ΣA₀` sum Exhibit 1 exists to
+show — was painted at zero opacity in the scanned state, and axe skips what is invisible. The
+lab's own reduced-motion block gets it right (`animation: none; opacity: 1`) — precisely what the
+injection bypassed instead of exercising. **This is the concrete case the "motion suppression
+hides a class of defect" argument was predicting.**
+
+More shapes:
+
+- **A flex container holding bare inline prose blockifies every `<strong>`/`<em>` into its own
+  flex item**, inserting the container's `gap` mid-sentence and producing an un-wrappable row
+  (509px at 380px). Both a 1.4.10 failure and a visible typography bug at desktop width. Grep
+  `display: flex` on elements whose children include raw text plus inline emphasis.
+- **`.btn:hover` (0,2,0) silently beats `.btn-secondary` (0,1,0)** — hover repainted the
+  background while keeping the base `color`: **2.02:1 dark / 1.95:1 light** on every secondary
+  button. Only `--danger` escaped, and only because its own `:hover` happened to come later. Grep
+  `\.btn:hover` in any lab with `-secondary`/`-ghost`/`-danger` variants.
+- **A button fill identical to its card is a silent 1.4.11 failure with NO oracle** — measured
+  from real pixels at **1.07:1 dark / 1.01:1 light**, while the stylesheet carried a comment
+  asserting buttons "are filled and self-delineating". The comment was false and nothing could
+  have contradicted it.
+- **"The hue left out" held twice more** — `--reject-text` with no `--accept-text`;
+  `--border-strong` with no `--accent-text`. Now 5 confirmed instances.
+- **A verdict written and hidden in the same tick**: `revealLeakGuess()` closed the panel that
+  contained the element it had just written, so the leak-guessing game never told the reader
+  whether they were right. Not an a11y defect — the exhibit simply did not work.
+- Generated content (`::before` counters, a `▾` dropdown affordance that is the entire cue for
+  five `appearance: none` selects) remains invisible to **both** oracles; those were sampled from
+  real screenshot pixels and the measurements recorded in each repo's `contrast.ts`.
+
 **TASK 14 PROGRESS 2026-08-09 (3) — 3 more repos, 12 defects.** chacha20-stream `0444f81` (4) ·
 chain-of-trust `6ddf0ff` (4) · corrupted-oracle `648be03` (4).
 

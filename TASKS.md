@@ -1878,6 +1878,62 @@ envelope-kms hit came partly from `coverage/` CSS. **My greps have been wrong tw
 theme-key over-count, and this one before it was rewritten to use `find` instead of a glob), so
 each needs measuring in its own pass rather than a fix on inference.
 
+**TASK 14 PROGRESS 2026-08-09 (2) — 3 more repos, 8 defects.** blind-hello `9405c2e` (3) ·
+blind-relay `9d85630` (3 + a teaching fix) · card-trick `3a5b6ce` (1).
+
+**A SECOND BUG IN THE SHARED `contrast.ts`, AND IT IS THE MIRROR OF THE FIRST — CONFIRMED, OPEN.**
+The walk measures `.sr-only` text. The visually-hidden idiom
+(`position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%)`) has a
+non-zero rect and opacity, sits at a real document position, and passes `checkVisibility()` — so
+it looks visible to every test in `isVisible` and gets composited against whatever surface the
+hidden span happens to sit on. axe excludes those nodes; this oracle does not. In card-trick it
+fabricated **1.15:1** for per-card suit names and **1.66:1** for a card-back label.
+
+Where the viewport-space bug HID failures, this one **INVENTS** them. Scope, measured:
+**108 repos use `.sr-only`; 51 of them have an honest gate; exactly 1 (card-trick) excludes it.**
+So **50 gates can currently report a failure for ink that is never laid down.**
+
+The danger is not the red run — it is that a phantom invites a "fix" to a colour nobody sees. I
+find no evidence I acted on one (every contrast fix I made was on visible elements —
+`.diff-mark`, `.status.alarm`, `.arrow-label`, `.memorize-chip`, the palette tokens), but I
+cannot assert none of the 50 would have produced one. **When work resumes: backport
+card-trick's exclusion into the exemplar and all 50, then re-run.** It handles three spellings —
+`clip: rect(0px,0px,0px,0px)`, `clip-path: inset(50%|100%)`, and the 1px-box + `overflow:hidden`
+form.
+
+**A claim I could not confirm, and the grep behind it.** The agent reported that bitcoin-wallet
+still carries the `.cl-hero-why{width:100%}` + no-`box-sizing` overflow and should be re-checked.
+**Measured: it does not.** bitcoin-wallet has a global `box-sizing: border-box` in `style.css`,
+its `.cl-hero-why` never sets `width:100%`, and its gate — which asserts no horizontal overflow
+at 380px — is green. The triage grep looked for `box-sizing` only in the file that contains
+`cl-hero-why` (`extra.css`), and the rule lives in `style.css`. **Fourth grep today that answered
+a different question than the one asked.** The bug was real in blind-hello and blind-relay, where
+both were fixed.
+
+Other findings from these three:
+
+- **Reflow defects MASK one another.** blind-hello had three, and the oracle names only the
+  widest culprit, so each fix revealed the next: a 538px delivery table, then a 400px hero, then
+  a 419px HPKE table. **A green reflow run after one fix is not evidence the page reflows.**
+- **Empty `role="list"`** in 2 of 3 repos, in different shapes — a container rendered before its
+  content, and per-column lists that fill at different steps. `incomplete`-only.
+- **Series colours reused as text.** card-trick's chart labels are 12px/700 painted in tokens the
+  palette had validated at the **3:1 graphics** threshold for line separation; as text they need
+  4.5:1 and measured 4.14 / 4.23:1. And **no oracle could see it**: the chart is one
+  `<svg role="img">` with an aria-label, so axe treats every glyph inside as part of one image.
+  Grep `fill: var(--series-*)` on label-shaped rules, and any `<svg role="img">` containing
+  `<text>`.
+- **A chip label that existed nowhere else** — blind-relay's `.wire` is correctly `aria-hidden`,
+  but its label was the message form (`hdr ‖ enc ‖ ct`), and `.wire{display:none}` under 900px,
+  so it was invisible to assistive tech *and* to every phone visitor. Now printed in the
+  `role="status"` line.
+- **Assert the trap's default:** blind-relay's `#crowd-pad` ships unchecked, and with padding ON
+  the size join returns an anonymity set instead of identifying every client — a gate that
+  pressed that button would scan the passing tone forever. Fifth instance of "assert the
+  defaults".
+- **Stale preview server cost another run** — a manual `vite preview` on the config's own port,
+  and `reuseExistingServer: true` then skipped `npm run build` and served the pre-fix bundle.
+
 **OPEN, REPRODUCED, NOT FIXED — `credential-veil` reflow at 380px.** I built the honest gate
 for this repo, ran it, and reverted the repo to pristine when the sweep was paused, so there is
 no half-finished work in the tree — but the finding is real and reproducible and should not be

@@ -2142,7 +2142,64 @@ light / 10.08:1 dark**. dp-noise's chart axes are under 3:1 deliberately: they a
 rules, not the data, and every figure ships a full data-table alternative, which is the text
 version 1.4.11 exempts a graphic against.
 
-### All three oracle bugs are now fixed and re-verified — 2026-08-09
+**TASK 14 PROGRESS 2026-08-09 (6) — 3 more repos, 6 defects. 21 of 78 done, 63 defects.**
+encrochat `dbdf317` (1) · entropy-collapse `344c2b1` (3) · envelope-kms `6614265` (2).
+
+**A FOURTH ORACLE BUG — the reflow check, and I made it worse before I made it better.**
+`body { overflow-x: hidden }` propagates to the viewport when `html` leaves `overflow: visible`,
+so content wider than the viewport is **CUT OFF rather than scrolled to** — a worse 1.4.10 outcome
+than a scrollbar, and `documentElement.scrollWidth > clientWidth` can never see it. **16 repos have
+that rule; 4 of them have honest gates** (kerberos · hqc-timing-break · psi-gate · envelope-kms),
+where the reflow oracle was permanently green.
+
+Detecting the clip directly fixed that and introduced a second, quieter bug **in the same edit**:
+the "is this inside a real scroller?" ancestor walk ran up to `<html>`, and with the viewport clip
+in place **`<body>` itself answers "hidden"** — so all 83 overflowing elements read as legitimately
+clipped, the escaping set was always empty, and the oracle still reported nothing. That is *worse*
+than the original, which at least fell back to naming the widest clipped box. The walk now stops
+before `<body>`: a viewport-level clip is the DEFECT, and only a genuine scrolling container inside
+the page excuses an overflow.
+
+**I found my own regression only by mutating.** A forced `min-width: 900px` produced silence; the
+probe showed `overCount: 83, escapingCount: 0`. Fixed, it names `main#app @900px right=900` in both
+themes at 380px and goes green on revert. **A fix that looks right and does nothing is the exact
+failure this whole sweep exists to remove — and I shipped one for about ten minutes.** Mutation
+testing is not a formality at the end; it is the only thing that distinguishes the two.
+
+**A gate that reported four tests while running two.** envelope-kms represents dark as the
+*absence* of `data-theme` (`index.html` writes it only for `'light'`), so a `boot` asserting
+`toHaveAttribute('data-theme','dark')` died at boot — **both dark configs were never measured**,
+and it surfaced only because the collection pass produced light-only findings. **3 repos use that
+convention** (envelope-kms · kerberos · nonce-guard); kerberos's gate already handles it explicitly
+and was never at half coverage. Grep before writing a theme assertion.
+
+**`#app p { color: … }` — an ID-scoped ELEMENT selector as a "base" rule.** At (1,0,1) it silently
+beat every class rule on a paragraph in entropy-collapse: `.panel-lede`, `.intro p`, `.not-this`,
+`.throughline p`, `.fork-legend`, and `.byte-tally[data-tone='alarm']` — the fork panel's designed
+danger signal — all resolved to `--text`. Same family as the `#app a` case in dp-noise. Grep
+`#app <element> {`.
+
+**`aria-hidden` swallowing a headline.** entropy-collapse's `.cracked-tag` wrapped
+"🔓 SEED CRACKED" — the headline of Chapter 3 and the only place the phrase appears — in
+`aria-hidden="true"`. The intent was clearly to hide the padlock glyph. Both oracles skip
+`aria-hidden`, so nothing could have caught it.
+
+**`--control-border` applied only to `select`/`input` hit all three repos again** — 5 of the last 6.
+encrochat 1.77:1, entropy-collapse 1.52:1 (and *worse on hover*, 1.28:1), envelope-kms 1.25:1. And
+encrochat's old 1.4.11 check was `TEXT_CONTROLS = ["#custom-msg"]` — **the single element the token
+was already applied to.** Third instance of a check aimed at the one place it cannot fail.
+
+**Your `--accent` candidate for envelope-kms: NOT a finding**, measured and cleared — it only ever
+resolves to `--teal`/`--violet`/`--amber`/`--crimson`, all four of which *are* redefined for light.
+The generated-content rails that carry them measure 4.84:1 at tightest. **That leaves ecdsa-forge
+and frost-threshold as the only remaining candidates**, both still unmeasured.
+
+Worth promoting: **envelope-kms ships a pixel-differencing oracle** (`contrast/measure.mjs`) that is
+immune to all four of the fixed oracle bugs *by construction*. Its one hole is that text painted
+exactly its background colour changes no pixels, so 1.00:1 — the worst possible failure — is
+dropped silently. Pairing it with the arithmetic walk covers both; **neither alone is complete.**
+
+### The first three oracle bugs — fixed and re-verified 2026-08-09
 
 Backported to **70 repos** and pushed. 63 of the current lineage took both fixes; **7 older-lineage
 repos** (bike-vault · curve448 · dead-sea-cipher · e91 · enigma-forge · format-ward ·

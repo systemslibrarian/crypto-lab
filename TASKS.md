@@ -1830,6 +1830,30 @@ every future queue regeneration. When a task's completion test is a grep, record
 repos by name as they land (as the Done list above does) and reconcile that roster against the
 grep; never let the grep alone define what remains.
 
+### Theme persistence — **2 repos, BOTH FIXED 2026-08-09**
+
+`index.html`'s anti-flash script has to read the same localStorage key the *reachable* toggle
+writes. Each lab's own toggle is hidden by the shared header's CSS
+(`body :is(#theme-toggle,…):not(#cl-theme-toggle){display:none!important}`), so the header's is
+the only one a visitor can press, and it writes `'theme'`.
+
+- **bitcoin-wallet** read `'crypto-lab-theme'`, which nothing writes. Fixed in `378495b`.
+- **opaque-gate** read `'cv-theme'` only. Fixed in `9809866`, and measured both ways against the
+  built site: before `{afterToggle: "light", afterReload: "dark", persists: false}`, after
+  `afterReload: "light"`.
+
+**I over-counted this at first and the correction matters more than the finding.** A grep for
+reader keys said six repos were broken. Four were not: ckks-lab, harvest-vault and model-breach
+all read `getItem('theme') || getItem('<legacy>')` — `'theme'` FIRST, with the old key as a
+fallback — and webauthn's header script was customised to write `'crypto-lab-theme'`, matching
+its reader. **A grep that reads one side of a contract cannot tell you the contract is broken.**
+Check the writer, the reader, AND which control is reachable, per repo. Same family as the two
+earlier queue errors: a grep that detected the fix rather than the defect, and a glob that
+covered the expected filename rather than all of them.
+
+Found only because an honest gate sets the theme via `localStorage` instead of by clicking, so a
+key mismatch becomes a hard failure instead of a silent one.
+
 ### 14. Replace the remaining template a11y gates — `TODO` — **79 repos, REGENERATED 2026-08-08**
 
 The list this file carried (~110) was stale. Regenerated from disk by scanning **all**

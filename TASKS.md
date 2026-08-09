@@ -1878,6 +1878,38 @@ envelope-kms hit came partly from `coverage/` CSS. **My greps have been wrong tw
 theme-key over-count, and this one before it was rewritten to use `find` instead of a glob), so
 each needs measuring in its own pass rather than a fix on inference.
 
+**OPEN, REPRODUCED, NOT FIXED — `credential-veil` reflow at 380px.** I built the honest gate
+for this repo, ran it, and reverted the repo to pristine when the sweep was paused, so there is
+no half-finished work in the tree — but the finding is real and reproducible and should not be
+rediscovered from scratch:
+
+- At a 380px viewport the document scrolls sideways: `clientWidth 380, scrollWidth 404`.
+- `#app` is 380 wide with 12px padding each side and `.cl-hero` correctly measures **356**, yet
+  every hero child (`h1.cl-hero-title`, `p.cl-hero-sub`, `p.cl-hero-desc`, `aside.cl-hero-why`)
+  renders **392px wide, right edge 404** — i.e. 36px wider than the container they sit in.
+- **None of the obvious candidates move it.** Setting `min-width: 0` on `.cl-hero-why`,
+  `.cl-hero-main` or `.cl-hero` itself, `max-width: 100%` on `.cl-hero-desc`, or even
+  `display: block` on `.cl-hero`, all leave `scrollWidth` at exactly 404. So it is NOT the hero
+  flex row, despite the hero children being what the reflow reporter names.
+- The lab also has a wide comparison table whose cells run to `right=753`; that one IS inside a
+  scroller and is correctly excluded by the clipped-culprit filter.
+- Also worth knowing before restarting: this repo's `playwright.config.ts` runs **four browser
+  projects** (chromium, firefox, webkit, mobile-chrome) at `workers: 1`, so a four-config gate is
+  16 runs and takes ~4 minutes.
+
+Two other observations from the same pass, both worth keeping:
+
+- **The old spec's injection was INERT here.** It pushed `animation: none; transition: none`, and
+  `src/style.css` declares no `@keyframes`, no `animation` and no `transition` at all. "The
+  injection was inert in this repo" is a different finding from "the injection hid something",
+  and only measuring tells you which one you have — do not assume the queue's marker implies a
+  hidden defect.
+- **It drove FOURTEEN interactions and scanned once, at the end** — the most thorough driving any
+  template gate in this fleet does, and every one of those renderings was discarded unmeasured.
+- `--accent` is declared only in `:root` with no light-theme counterpart, which is the pattern
+  flagged above — but here it is used exactly ONCE, as a 6% `color-mix` wash on the hero aside,
+  never as a control fill. **Not a defect; recorded so the grep hit is not re-chased.**
+
 ### Theme persistence — **2 repos, BOTH FIXED 2026-08-09**
 
 `index.html`'s anti-flash script has to read the same localStorage key the *reachable* toggle

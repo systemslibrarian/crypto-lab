@@ -1830,6 +1830,54 @@ every future queue regeneration. When a task's completion test is a grep, record
 repos by name as they land (as the Done list above does) and reconcile that roster against the
 grep; never let the grep alone define what remains.
 
+**TASK 14 PROGRESS 2026-08-09 — 4 repos done, 16 defects.** bitcoin-wallet `378495b` (5) ·
+accumulator `1eea96c` (3) · aes-modes `500202f` (6) · beacon-lock `c3efa97` (2).
+
+New defect shapes, all worth a fleet grep:
+
+- **A `::before`/`::after` `content:` glyph carrying real meaning has NO ORACLE.** axe's
+  `color-contrast` and the arithmetic walk both operate on *elements*; a pseudo-element is
+  neither. aes-modes' `=` duplicate marker — the 1.4.1 non-colour cue, the entire point of the
+  ECB exhibit — was `--danger` painted onto a JS-chosen fill: **1.45:1 at worst in light and
+  1.00:1 in dark** (`#f87171` on `#0ea5e9`, identical luminance, literally invisible). Grep
+  `content: '` in rules that also set `color:`.
+- **A palette in JavaScript with the ink fixed in CSS.** Reading the stylesheet tells you
+  nothing. aes-modes' white `.block-cell` labels cleared 4.5:1 on **none** of the 15 palette
+  entries (best 4.47:1, worst 2.15:1); the `text-shadow` under them never counted toward 1.4.3.
+  Grep `style.backgroundColor =` / `style.background =` and check the CSS `color` against EVERY
+  entry of the array feeding it.
+- **`transform: rotate()` on a decorative element that stacks into one column.** A transform does
+  not re-flow, so a wide-short box becomes a tall-narrow one lying across its neighbours and
+  eating their clicks. accumulator's `.stage-arrow` intercepted every click through the middle of
+  the stage at phone width. If the element is `aria-hidden` it wants `pointer-events: none`.
+- **`role="button"` on a span whose only behaviour is CSS `:hover`** — announces as activatable,
+  does nothing on Enter/Space (4.1.2). Grep `setAttribute('role', 'button')` with no adjacent
+  key handler.
+- **A lookup guarding an enhancement while the CSS class is applied unconditionally.**
+  aes-modes' `ECB` glossary term had no entry, so `if (!def) return` skipped the tooltip while
+  the markup had already painted the dotted underline and `cursor: help` — for the one term the
+  lab is named after. Grep `if (!x) return` inside a `forEach` that also does `classList.add`.
+- **The scroller that only overflows AFTER a run** (`role="log"`, `max-height` + `overflow:auto`)
+  — now confirmed in a third lab. A pristine-page scan structurally cannot see it. beacon-lock's
+  `.chart-host` produced **106 findings from one missing attribute**.
+- **Timing note for transient-state probes:** a WebCrypto-driven loop can complete ~2,100 async
+  calls without the page painting a frame, so both a post-click `toHaveCount` and a pre-armed
+  `polling: 'raf'` `waitForFunction` miss it. Only a `MutationObserver` (microtask-delivered)
+  catches the class.
+
+**"The light theme never got its own accent" is now 3 of 3 confirmed instances** (key-exchange
+earlier, accumulator, beacon-lock) and it is a **1.4.11 failure NO ORACLE CHECKS** — the
+arithmetic pass covers text (1.4.3), not the 3:1 boundary of a non-text fill. accumulator's
+`#0ea5e9` measured 6.34:1 on its dark surfaces and **2.38–2.77:1** painted unchanged on
+near-white; beacon-lock's `#f59e0b` went 8.25:1 → **1.84–2.15:1**.
+
+A fleet grep for `--accent*` declared outside any light-theme block turns up **3 remaining
+candidates: ecdsa-forge · envelope-kms · frost-threshold.** They are CANDIDATES, not findings —
+ecdsa-forge's is an alias (`--accent: var(--pub)`) that may well be themed through, and the
+envelope-kms hit came partly from `coverage/` CSS. **My greps have been wrong twice today** (the
+theme-key over-count, and this one before it was rewritten to use `find` instead of a glob), so
+each needs measuring in its own pass rather than a fix on inference.
+
 ### Theme persistence — **2 repos, BOTH FIXED 2026-08-09**
 
 `index.html`'s anti-flash script has to read the same localStorage key the *reachable* toggle

@@ -1383,8 +1383,8 @@ Scanning **all** `e2e/*.spec.ts` finds **17 files across 17 repos** still inject
 > **Later on 2026-08-08, eight of those fourteen landed** — ibe-gate `6469fe9` (8),
 > j-uniward `8ece1d3` (6+1), oram-vault `f909787` (6), otp-vault `bb5d4d6` (4),
 > pairing-gate `d4a3515` (2), threshold-mldsa `0c522c1` (8), time-lock-puzzle `525e8ce` (1),
-> tls-handshake `bfb556e` (7). **6 remain:** vdf · vrf-gate · vss-gate · web-of-trust ·
-> webauthn · zk-proof-lab.
+> tls-handshake `bfb556e` (7), vdf `5620344` (5). **5 remain:** vrf-gate · vss-gate ·
+> web-of-trust · webauthn · zk-proof-lab.
 
 - `crypto-lab-shor/e2e/claims.spec.ts` — **and shor is already marked DONE.** Its `a11y.spec.ts`
   was correctly replaced, but its CLAIMS spec still forces opacity, so every claim it asserts is
@@ -1684,6 +1684,31 @@ stops the next reader adding a click that can only hang. Also **`expectNotBlank`
 **Reported, not fixed:** tls-handshake's `.record-grid` has four `<label>`s with no `for` and no
 wrapped control. No oracle reaches them; worth a separate sweep alongside j-uniward's *Label in
 Name* finding.
+
+**vdf DONE 2026-08-08 `5620344`, 5 defects.** Its palette defines `--accent-text`,
+`--ok-text` and `--warn-text`, documents exactly why each exists — and **was missing
+`--alarm-text`**, so `.status.alarm`, `button.danger`, `.field-err`, `table.cmp .no` and the
+"(tampered)" marker all used the raw border/swatch hue as small text (4.11:1 on the alarm pill,
+4.04:1 on a panel, 3.83:1 on the inset). **The absence was invisible because every
+alarm-coloured TEXT state is a tamper state, and no previous gate ever tampered** — of the three
+status flavours this lab paints, only `.status.ok` had ever been scanned. **Generalise the
+precheck: where a palette defines an `-text`/ink variant per semantic hue, enumerate the hues
+and find the one that was left out — then find the state that would have shown it.**
+
+Second instance in two batches of **an ink measured against one surface and then used a surface
+deeper**: `--warn-text` is 5:1 on the warn pill on a panel, 4.48:1 on the same pill inside the
+trapdoor `<details>`.
+
+Also: **a bare `<code>` holding a 617-digit integer inline in prose** pushed the document to
+1538px at desktop *and* at 380px — every other big integer in the lab lives in a `.mono-box`
+scroller, and this one was in running text with nothing to break it.
+
+**Correctness bug the drive exposed:** `aria-invalid="true"` and the "Enter a whole number"
+alert were cleared only inside the Evaluate handler, so typing a correct value left the field
+still announcing itself invalid. A screen-reader user who fixed the field was told it was still
+broken. Same class as "the verdict outliving its input", which the code already guards for the
+*result* — the guard could not carry this because it returns early when there is no result.
+**Grep: `aria-invalid` set in a submit/validate handler and cleared only there.**
 
 Regenerate this list with:
 

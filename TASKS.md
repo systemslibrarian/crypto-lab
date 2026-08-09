@@ -1830,6 +1830,56 @@ every future queue regeneration. When a task's completion test is a grep, record
 repos by name as they land (as the Done list above does) and reconcile that roster against the
 grep; never let the grep alone define what remains.
 
+### 14. Replace the remaining template a11y gates — `TODO` — **79 repos, REGENERATED 2026-08-08**
+
+The list this file carried (~110) was stale. Regenerated from disk by scanning **all**
+`e2e/*.spec.ts` for an `addStyleTag` that suppresses motion:
+
+```
+find . -maxdepth 4 -name "*.spec.ts" -path "*e2e*" -not -path "*/node_modules/*" | while read f; do
+  body=$(grep -vE '^\s*(//|\*|/\*)' "$f")
+  echo "$body" | grep -qE 'addStyleTag' || continue
+  echo "$body" | grep -qE 'transition: *none|transition-duration: *0|animation: *none|animation-duration: *0' && echo "$f"
+done
+```
+
+**83 files across 81 repos**, of which **79 are `a11y.spec.ts` in a repo with no honest gate** —
+i.e. the old template gate, entire. The injection is the *marker*, not the whole defect: these
+specs are also violations-only, single-theme, single-viewport, and most `revealAll()` or scan
+once at the end. The work per repo is the same as the closed queue: replace the spec with an
+honest gate and fix what it finds.
+
+**How motion injection differs from the opacity one.** Opacity FABRICATES contrast results.
+Motion suppression HIDES one specific class of defect — an element whose only route to its
+visible state is an animation, in a stylesheet whose reduced-motion block cancels that animation
+without restoring its end state. `emulateMedia({reducedMotion: 'reduce'})` plus an
+`expectNotBlank` assertion is what catches it; a style tag cannot, because it bypasses the lab's
+own `@media` block instead of exercising it.
+
+The 79:
+
+DeckBook · accumulator · aes-modes · beacon-lock · bitcoin-wallet · blind-hello
+blind-relay · card-trick · chacha20-stream · chain-of-trust · corrupted-oracle
+credential-veil · dilithium-reject · dilithium-seal · dkg-gate · downgrade-wire · dp-noise
+drbg-arena · encrochat · entropy-collapse · falcon-seal · frozen-heart · ghost-commit
+harvest-timeline · hpke-envelope · hybrid-sign · icy-dvrf · iron-letter · isogeny-atlas
+kdf-arena · kdf-chain · kem-trap · key-mirror · lattice-gentle · lll-break · matsui-line
+mayo-seal · mceliece-gate · multivariate · musig-gate · noise-pipe · nonce-collision
+nonce-guard · ntru-classic · padding-oracle · pake-gate · patron-shield · phantom-vault
+power-trace · pq-families · pq-tls-handshake · protocol-checker · protocol-compose
+quantum-entropy · quantum-vault-kpqc/web-demo · ratchet-wire/ratchet-wire · reshare-circle
+ring-sign · rsa-educational · rsa-forge · salamander · schnorr-forge · scloud-vault
+search-vault · shadow-vault · signed-bytes · simon-period · spake-gate · spdz-forge
+stark-tower · stream-ward · time-trust · timing-oracle · timing-sidechannel · traitor-trace
+vigenere-break · world-ciphers · world-hashes · x3dh-wire
+
+**Four non-`a11y` specs also inject** and are a separate, smaller shape — a functional suite
+suppressing animation for flake control. Two are DONE: paillier-gate `e2e/exhibits.spec.ts`
+(`b95131a`) and silent-tally `e2e/claims.spec.ts` (`1a5d28d`), both switched to
+`emulateMedia` + an in-page assertion, which is strictly better because it exercises the lab's
+own reduced-motion block rather than bypassing it, and fails if that block stops working. Still
+open: `matsui-line/e2e/visual.spec.ts` and `simon-period/e2e/claims.spec.ts`.
+
 ### 14a. Remove the `opacity: 1 !important` injection — `TODO` — **57 specs, HIGH PRIORITY**
 
 Found in `broken-trust` (fixed, `feae4ae`) and then measured fleet-wide: **57 a11y specs inject

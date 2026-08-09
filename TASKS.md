@@ -2142,6 +2142,70 @@ light / 10.08:1 dark**. dp-noise's chart axes are under 3:1 deliberately: they a
 rules, not the data, and every figure ships a full data-table alternative, which is the text
 version 1.4.11 exempts a graphic against.
 
+**TASK 14 PROGRESS 2026-08-09 (7) — 6 more repos, 36 defects. 27 of 78 done, 99 defects.**
+ghost-commit `97fd6ed` (4+1) · harvest-timeline `6c7ab12` (10) · hpke-envelope `0528a43` (4) ·
+frost-threshold `100cc03` (8) · frozen-heart `3c0d280` (5) · garbled-gate `5cdc340` (5).
+
+**THE `--control-border` PATTERN IS NOW MEASURED FLEET-WIDE: 35 labs define a component-boundary
+token and 29 of them apply it to ≤2 rules.** That is the shape behind the 578-finding backlog the
+new oracle found — not 578 unrelated bugs but one token decision repeated across 50 labs. Two more
+instances of the lab's OWN 1.4.11 spec querying exactly the elements already using the token
+(harvest-timeline measured a single element, `#e1-algo`; hpke-envelope queried
+`input, textarea, select`, precisely the set the token was applied to). **Fifth and sixth
+instances of a check aimed where it cannot fail.**
+
+**`--accent` candidate RESOLVED — frost-threshold was REAL.** `#06b6d4` declared once in `:root`,
+never restated for light, and `button.secondary` uses it as **both its label and its only
+boundary**: 2.43:1 as ink (needs 4.5) and 2.43:1 as boundary (needs 3). Fixed to 5.36:1 on both
+counts. **That leaves ecdsa-forge as the only unmeasured candidate.**
+
+**ghost-commit is OFF the task-15 list.** Its `BEGIN/END crypto-lab shared header` markers are
+already gone and the prose is corrected — *"THIS LAB OWNS IT … the fleet-wide push was retired"*.
+A full grep finds only those corrected comments. **Four labs remain to check: dp-noise,
+iron-serpent, salamander, stream-ward.**
+
+**The most alarming single defect of the sweep so far is a teaching one.** harvest-timeline's CRQC
+scenario menus in exhibits 1, 2 and 4 opened on **`aggressive`** — CRQC in 7 years — because no
+option carried `selected`. Every other statement of intent in the code says `median`: each
+`update()` falls back to `CRQC_SCENARIOS[1]`, exhibit 5 is hardcoded to it, and Reset sets it by
+name. So **the page opened on the most alarming projection it models, exhibits 1 and 5 contradicted
+each other at first paint, and "Reset to defaults" MOVED the verdict.** Found by asserting the
+shipped default rather than assuming it — seventh instance of that rule paying out.
+
+New shapes, all worth a fleet grep:
+
+- **`background-color` never clears an inherited `background-image`.** frost-threshold's
+  `.participant` set `background-color` while `button { background: linear-gradient(…) }` had set
+  `background-image` — so **every signer card rendered as a primary indigo button, gloss and all**,
+  with its identifier at 1.12:1. Grep for `background-color` on an element whose base rule uses the
+  `background` shorthand with a gradient.
+- **An `#app`-scoped base rule silently eats every unscoped component rule.** frozen-heart's
+  `#app button` (1,0,1) killed five bare `.preset…` rules — **the entire severity colour-coding was
+  dead code**: a 3px stripe rendering at 1px, every tone resolving to `--border`, the pressed state
+  differing only by a 1.56:1 ring. Third sighting of the ID-scoped-base-rule family.
+- **A decorative wash tuned for dark and reused verbatim in light INVERTS.**
+  `color-mix(--accent 22%)` lightens `#0f1117` a little and **darkens near-white to a mid
+  lavender**; garbled-gate's whole hero sat on it.
+- **A lab with NO `box-sizing` reset at all.** The shared `.cl-hero` snippet sets
+  `.cl-hero-why { width: 100%; padding; border }` and is copied into every lab, so it overflows by
+  ~36px wherever border-box is absent — a permanent 1.4.10 failure present at first paint that no
+  amount of driving reveals. Hit hpke-envelope and frozen-heart. **A one-off `box-sizing` on a
+  single selector is the tell that someone already hit it and patched the symptom.**
+- **A translucent overlay parked at `opacity: 0` with no `visibility`/`display`.** Stays in the
+  a11y tree, stays hit-testable, `checkVisibility()` true, and if laid out contributes to document
+  scroll width — harvest-timeline's `.gloss-pop` was **a permanent horizontal scrollbar at 1280**.
+- **Native `input[type=range]` with no `accent-color`** — the UA handle is ~1.9:1 on a white page.
+- **A fix applied to a token but not to its hardcoded twin** (3rd sighting): harvest-timeline
+  lightened `#9d4edd` → `#b178e3` for `--color-crqc` *with a comment explaining why*, while
+  `CURVE_COLORS` kept `#9d4edd` — and the chart is where the hue is actually used, at 9px.
+- **Another fake-pass helper found in the wild.** garbled-gate's own `checkGradientContrast`
+  measured against `getComputedStyle(document.body).backgroundColor` — the flat colour, **not the
+  two radial gradients painted over it**. It returned 5.89:1 and passed; the element actually
+  renders at 3.55:1 dark / 2.87:1 light.
+- **`aria-hidden` text is a blind spot BOTH oracles share** — ghost-commit's `.line-no` gutter at
+  3.95:1 was found only by enumerating every `aria-hidden` element that owns visible text and
+  measuring by hand.
+
 **TASK 14 PROGRESS 2026-08-09 (6) — 3 more repos, 6 defects. 21 of 78 done, 63 defects.**
 encrochat `dbdf317` (1) · entropy-collapse `344c2b1` (3) · envelope-kms `6614265` (2).
 

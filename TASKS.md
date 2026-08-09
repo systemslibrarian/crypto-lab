@@ -1747,7 +1747,7 @@ a token against the DARKEST surface it lands on, not the lightest** — the mirr
 webauthn `6158779`+`e3248e3` (6) · zk-proof-lab `922f436` (9) · web-of-trust `fe2484b` (6)
 finish it.
 
-**A BUG IN THE SHARED `contrast.ts`, PRESENT IN 52 REPOS — the most important finding of the
+**A BUG IN THE SHARED `contrast.ts`, WAS PRESENT IN 52 REPOS — NOW FIXED AND RE-VERIFIED — the most important finding of the
 sweep.** `isVisible` guarded against text parked off-page with
 
 ```
@@ -1766,7 +1766,12 @@ oracle. Fixed to document space in all 52 repos:
 if (r.right + window.scrollX <= 0 || r.bottom + window.scrollY <= 0) return false;
 ```
 
-**and every one of those 52 gates is being re-run against the fixed oracle.** LESSON, general:
+**All 52 were re-run against the fixed oracle: 51 green, 1 real defect surfaced** —
+babel-hash's `.cl-hero-why-label` at **4.47:1**, light theme, phone width only, where the hero
+aside goes full-bleed and its `color-mix(--accent 6%)` wash composites differently. Fixed with an
+`--accent-ink` token (`e6dd1d5`). One genuine defect out of 52 is a *low* yield, and that is the
+honest read: the bug was hiding real failures (two confirmed in zk-proof-lab) but most gates were
+not sitting on one. The fix and the re-run are committed and pushed across all 52. LESSON, general:
 **an oracle needs its own oracle.** Every hard-won measurement fix in that file came from
 disagreeing with something — axe, a hand probe, a mutation. When the helper and a manual check
 disagree, the helper is the suspect.

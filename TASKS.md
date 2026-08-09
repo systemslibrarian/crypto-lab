@@ -1878,6 +1878,64 @@ envelope-kms hit came partly from `coverage/` CSS. **My greps have been wrong tw
 theme-key over-count, and this one before it was rewritten to use `find` instead of a glob), so
 each needs measuring in its own pass rather than a fix on inference.
 
+**TASK 14 PROGRESS 2026-08-09 (3) — 3 more repos, 12 defects.** chacha20-stream `0444f81` (4) ·
+chain-of-trust `6ddf0ff` (4) · corrupted-oracle `648be03` (4).
+
+**A THIRD BUG IN THE SHARED `contrast.ts` — the most serious of the three. CONFIRMED, OPEN.**
+The ancestor walk is geometry-aware, which is right for ordinary boxes and WRONG for the root.
+CSS propagates the root element's background to the canvas and paints it over the whole canvas
+**regardless of the root's own box** (CSS Backgrounds 3, "The Canvas Background"). A lab that
+sets `html, body { height: 100% }` therefore has both boxes exactly one viewport tall while the
+document runs several viewports long — so every element below the fold intersects neither, the
+walk ends transparent, and it **falls through to WHITE**. In the dark theme that reports real
+text against a page that does not exist. **34 of the 38 contrast findings in corrupted-oracle's
+first collection run were this artifact.**
+
+It cuts both ways, and the second direction is the dangerous one: a wrong-direction backdrop can
+also **mask a real failure**.
+
+Scope, measured properly: **12 repos have an honest gate AND a percentage height on `html`/`body`;
+1 (corrupted-oracle) is fixed, 11 are affected** — ckks-lab · curve448 · hawk · kerberos ·
+mac-race · nonce-lattice · pki-chain · pq-rotation · threshold-decrypt · vss-gate, plus a bb84 hit
+that is only in a `playwright-report/` artifact and should be re-checked before being counted.
+**Backport corrupted-oracle's canvas-background compositing and re-run those 11.**
+
+**FIFTH grep failure today, and this one nearly mis-scoped the fix.** My first attempt at that
+scan used a multiline `grep -Ez` and returned **2 repos** — it did not even match
+corrupted-oracle, the known case I had in hand. Only checking the grep against the known answer
+caught it; a properly-parsing script found 12. **When a scan reports a suspiciously small number,
+run it against a case you already know is positive before believing it.**
+
+Other findings from these three:
+
+- **The worst old gate yet.** corrupted-oracle's injected `.typewriter-text { width: auto
+  !important }` — and `@keyframes typewriter` animates `width` from 0 to 100%. The test was
+  **fabricating the layout it then measured**. Its `revealInline` also cleared inline
+  `display:none` on every element on the page, and it never pressed a button.
+- **`role="application"` on `#app`** — switching every screen reader out of browse mode across a
+  document of prose, headings and two data tables, with not one custom keyboard widget.
+- **`display: block` on a `<table>` to make it scroll drops its table role** (1.3.1). Two tables
+  in one repo under the same rule; only one carried a compensating `role="table"`. The asymmetry
+  was the tell. Grep `table` selectors with `display: block`.
+- **A fixed `rgba()` tint reused across themes.** chacha20's XOR row washes were authored against
+  a dark surface and are theme-invariant, so in light they spend all of the ink's headroom at
+  once: three failures at 3.97–4.21:1, all filed by axe under `incomplete`.
+- **The conditional tab stop.** `tabindex` cannot be media-scoped from CSS, so the standard
+  `scrollable-region-focusable` fix trades a 2.1.1 failure for dead desktop tab stops. A
+  ResizeObserver setting tabindex exactly while `scrollWidth > clientWidth`, plus an assertion
+  that `scrolls === tabbable`, fixes both. Shipped in two repos; it generalises.
+- **Containers that only overflow after a long run** — `.output-box` needed a 160-byte message,
+  `.stat-table` needed Run Tests. **A drive that only uses default inputs will not find them.**
+- **The motion injection was a verbatim copy of the lab's own reduced-motion block** in
+  chain-of-trust — it replaced the block with itself. And `renderMechanism` reads
+  `matchMedia(...)` at render time, which a style tag cannot change at all.
+- **Sixth instance of "assert the defaults"**: an assertion of 6 `.node` elements found 5. And
+  chain-of-trust's old gate unchecked Root X "so a REJECT verdict renders there too" — it was
+  already there at first paint, unscanned the whole time.
+- **Stale preview server bit again**, and would have invalidated a mutation check:
+  `reuseExistingServer` reused a server started for a probe, so the mutation ran against the
+  previous `dist` and all four configs passed green.
+
 **TASK 14 PROGRESS 2026-08-09 (2) — 3 more repos, 8 defects.** blind-hello `9405c2e` (3) ·
 blind-relay `9d85630` (3 + a teaching fix) · card-trick `3a5b6ce` (1).
 

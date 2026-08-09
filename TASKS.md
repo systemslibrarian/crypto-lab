@@ -1383,8 +1383,8 @@ Scanning **all** `e2e/*.spec.ts` finds **17 files across 17 repos** still inject
 > **Later on 2026-08-08, eight of those fourteen landed** — ibe-gate `6469fe9` (8),
 > j-uniward `8ece1d3` (6+1), oram-vault `f909787` (6), otp-vault `bb5d4d6` (4),
 > pairing-gate `d4a3515` (2), threshold-mldsa `0c522c1` (8), time-lock-puzzle `525e8ce` (1),
-> tls-handshake `bfb556e` (7), vdf `5620344` (5). **5 remain:** vrf-gate · vss-gate ·
-> web-of-trust · webauthn · zk-proof-lab.
+> tls-handshake `bfb556e` (7), vdf `5620344` (5), vrf-gate `9701f5e` (4+), vss-gate
+> `4ac296b` (7). **3 remain:** web-of-trust · webauthn · zk-proof-lab.
 
 - `crypto-lab-shor/e2e/claims.spec.ts` — **and shor is already marked DONE.** Its `a11y.spec.ts`
   was correctly replaced, but its CLAIMS spec still forces opacity, so every claim it asserts is
@@ -1709,6 +1709,37 @@ still announcing itself invalid. A screen-reader user who fixed the field was to
 broken. Same class as "the verdict outliving its input", which the code already guards for the
 *result* — the guard could not carry this because it returns early when there is no result.
 **Grep: `aria-invalid` set in a submit/validate handler and cleared only there.**
+
+**vrf-gate `9701f5e` (delegated) and vss-gate `4ac296b` (7) DONE 2026-08-08.**
+
+**The agent that did vrf-gate died on a session limit immediately afterwards, so its work was
+re-verified from scratch rather than trusted** — suite green twice, and a fresh mutation
+(`.beacon-log p` recoloured) went red in all four configurations naming `beacon round complete,
+malicious validator withheld`, ~23 states deep. Its gate also carries a **better soft-collection
+design than the throwaway harness used elsewhere**: `softExpect` is strict unless
+`A11Y_COLLECT` is set, and `reportCollected()` fails the test if the collecting run recorded
+anything — so a collection run cannot end green and be mistaken for a passing gate. **Adopt that
+shape instead of a hand-patched try/catch.**
+
+**vss-gate: a gate that scans one configuration scans one HALF, and which half depends on the
+lab's defaults.** This lab ships DISHONEST — `cheatEnabled: true`, `shamirCheatEnabled: true`,
+`deterministicMode: true` — so the old gate's single scan saw the FAILING tones and never
+measured the honest ones (`.badge.pass` across a fully verified table, `.result-ok`). My first
+draft of the drive asserted the opposite and failed on `#cheat-enabled` not being checked.
+**Third time this session that writing an assertion about the app's initial state caught my own
+wrong assumption — keep asserting defaults rather than assuming them.**
+
+vss-gate's light theme was set to "the dark hue, darkened a bit" rather than measured:
+`--accent` 2.81:1, `--warn` 2.71:1, `--brand` 4.01:1, `--brand-dark` 4.32:1 (as a fill under
+`--paper` text), `--ok` 4.47:1. Plus **an inline `opacity: 0.7` on the whole `<footer>`** in
+`index.html` — around already-muted text and links, which is how it became the one block failing
+in BOTH themes (3.06:1 light, 3.96:1 dark). **Grep `<footer style=` and any inline `opacity:` in
+index.html across the fleet.**
+
+**And a token can need a second pass:** `--accent` at 36% lightness cleared 4.5:1 on near-white
+but only reached 4.32:1 on the hero aside, where the page's cyan radial shows through. **Measure
+a token against the DARKEST surface it lands on, not the lightest** — the mirror of the
+"measured one surface, used a surface deeper" rule.
 
 Regenerate this list with:
 

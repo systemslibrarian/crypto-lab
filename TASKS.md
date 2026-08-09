@@ -1937,7 +1937,7 @@ More shapes:
 **TASK 14 PROGRESS 2026-08-09 (3) — 3 more repos, 12 defects.** chacha20-stream `0444f81` (4) ·
 chain-of-trust `6ddf0ff` (4) · corrupted-oracle `648be03` (4).
 
-**A THIRD BUG IN THE SHARED `contrast.ts` — the most serious of the three. CONFIRMED, OPEN.**
+**A THIRD BUG IN THE SHARED `contrast.ts` — the most serious of the three. FIXED FLEET-WIDE 2026-08-09.**
 The ancestor walk is geometry-aware, which is right for ordinary boxes and WRONG for the root.
 CSS propagates the root element's background to the canvas and paints it over the whole canvas
 **regardless of the root's own box** (CSS Backgrounds 3, "The Canvas Background"). A lab that
@@ -1995,7 +1995,7 @@ Other findings from these three:
 **TASK 14 PROGRESS 2026-08-09 (2) — 3 more repos, 8 defects.** blind-hello `9405c2e` (3) ·
 blind-relay `9d85630` (3 + a teaching fix) · card-trick `3a5b6ce` (1).
 
-**A SECOND BUG IN THE SHARED `contrast.ts`, AND IT IS THE MIRROR OF THE FIRST — CONFIRMED, OPEN.**
+**A SECOND BUG IN THE SHARED `contrast.ts`, AND IT IS THE MIRROR OF THE FIRST — FIXED FLEET-WIDE 2026-08-09.**
 The walk measures `.sr-only` text. The visually-hidden idiom
 (`position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%)`) has a
 non-zero rect and opacity, sits at a real document position, and passes `checkVisibility()` — so
@@ -2079,6 +2079,39 @@ Two other observations from the same pass, both worth keeping:
 - `--accent` is declared only in `:root` with no light-theme counterpart, which is the pattern
   flagged above — but here it is used exactly ONCE, as a 6% `color-mix` wash on the hero aside,
   never as a control fill. **Not a defect; recorded so the grep hit is not re-chased.**
+
+### All three oracle bugs are now fixed and re-verified — 2026-08-09
+
+Backported to **70 repos** and pushed. 63 of the current lineage took both fixes; **7 older-lineage
+repos** (bike-vault · curve448 · dead-sea-cipher · e91 · enigma-forge · format-ward ·
+harvest-vault) have a 190–291-line `contrast.ts` predating the `paintAt`/canvas machinery, so they
+took the `.sr-only` fix only — applied **independently rather than all-or-nothing**, so they got
+the fix that applies to them instead of neither. 8 repos have a `contrast.ts` with no gate; they
+are in the task-14 queue and get replaced wholesale.
+
+Chose the **narrower** `.sr-only` fix of the two offered: skip only elements whose own
+`clip`/`clip-path` reduces them to ZERO area, so a genuine partial clip is still measured.
+
+**Re-verified: 68 gates green.** The 3 that did not run were not gate failures — my patch had a
+strict-mode type error (`const [top,right,bottom,left] = nums` on a `number[]` yields
+`number | undefined` under `noUncheckedIndexedAccess`), and in the repos whose build typechecks
+the e2e tree the `npm run build &&` in `webServer.command` **correctly refused to serve a stale
+bundle**. That guard, added earlier in this sweep for exactly this reason, did its job. Tuple-typed
+and re-swept: every patched repo that typechecks now compiles clean.
+
+**A SIXTH tooling error, and the most instructive one.** The first re-verification run reported
+**70 of 70 failing**. That is not a finding, it is a signature — a 100% failure rate means the
+harness, not the subject. `timeout` does not exist on macOS, so every invocation died before
+Playwright started and was recorded as FAIL. One repo run by hand passed in 19.6s and named the
+cause immediately.
+
+**The rule this sweep has now earned six times over: validate the instrument against a known
+answer before believing its output.** It has caught a mis-scoped oracle fix (a grep said 2 repos,
+the truth was 12), an over-counted theme bug (6 vs 2), a queue defined by a glob that matched the
+expected filename rather than all filenames, a grep that detected the fix rather than the defect,
+a `box-sizing` claim from a grep that searched the wrong file, and now a phantom 70-repo
+regression. Every one was caught by checking the tool against a case whose answer was already
+known — never by reading the tool's code.
 
 ### Theme persistence — **2 repos, BOTH FIXED 2026-08-09**
 

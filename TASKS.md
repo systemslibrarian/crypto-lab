@@ -1844,6 +1844,10 @@ done
 ```
 
 **83 files across 81 repos**, of which **79 are `a11y.spec.ts` in a repo with no honest gate** —
+one of those 79 is **`DeckBook`, which is NOT a crypto-lab repo** — it is a separate project that
+the filesystem scan swept in. It carries the same template gate and the same defect, but it is
+outside this fleet's scope; **flagged for the maintainer, not worked here. The crypto-lab queue
+is therefore 78.** —
 i.e. the old template gate, entire. The injection is the *marker*, not the whole defect: these
 specs are also violations-only, single-theme, single-viewport, and most `revealAll()` or scan
 once at the end. The work per repo is the same as the closed queue: replace the spec with an
@@ -1858,7 +1862,7 @@ own `@media` block instead of exercising it.
 
 The 79:
 
-DeckBook · accumulator · aes-modes · beacon-lock · bitcoin-wallet · blind-hello
+ accumulator · aes-modes · beacon-lock · bitcoin-wallet · blind-hello
 blind-relay · card-trick · chacha20-stream · chain-of-trust · corrupted-oracle
 credential-veil · dilithium-reject · dilithium-seal · dkg-gate · downgrade-wire · dp-noise
 drbg-arena · encrochat · entropy-collapse · falcon-seal · frozen-heart · ghost-commit

@@ -2080,6 +2080,68 @@ Two other observations from the same pass, both worth keeping:
   flagged above — but here it is used exactly ONCE, as a 6% `color-mix` wash on the hero aside,
   never as a control fill. **Not a defect; recorded so the grep hit is not re-chased.**
 
+**TASK 14 PROGRESS 2026-08-09 (5) — 3 more repos, 10 defects. 18 of 78 done, 57 defects.**
+downgrade-wire `f57e014` (3) · dp-noise `a3c1909` (3) · drbg-arena `152d1c8` (4).
+
+**A FLEET-WIDE 1.4.11 FAILURE IN THE SHARED HEADER — REPORTED, NOT FIXED. MAINTAINER'S CALL.**
+`.cl-btn`'s border is `color-mix(in srgb, var(--accent) 38%, transparent)` over the bar's fixed
+`#0b1512`. In any lab whose `--accent` is a dark hue that measures **1.68:1 dark / 1.23:1 light**
+— well under the 3:1 a control boundary owes. **It reproduces in every repo with a dark accent.**
+Per CLAUDE.md a change every lab should get is "a deliberate reviewed pass across the repos, never
+an overwrite driven from this one", so it is recorded here rather than fixed from a single repo.
+The per-repo control-boundary oracle is now scoped to `#app` with the exclusion written into the
+helper, so it is a stated decision rather than an oversight.
+
+**Two 1.4.11 findings that NO ORACLE can reach, both found by sampling real screenshot pixels:**
+
+- downgrade-wire's secondary `.btn` fill is visually identical to its panel — fill **1.09:1 dark /
+  1.20:1 light** — so the border is the only thing saying "button", and that border measured
+  **1.41:1 / 1.62:1**. `.btn-primary` was **2.30:1** in dark. **The stylesheet's own header
+  asserted "UI components >= 3:1" the whole time.** Second instance of a comment asserting the
+  opposite of the measurement; the comment is not evidence.
+- dp-noise defines a documented `--control-border` token and applies it **only to `select` and
+  text fields** — every button-shaped control drew its boundary from `--border-strong`, a *surface*
+  divider, at **1.75–1.85:1**. Ratio of uses was 1:13. And **the old gate's own 1.4.11 check
+  queried exactly the three controls where the rule was already kept** — a check aimed at the one
+  place it could not fail.
+
+**A fix that was written, discarded by the cascade, and changed nothing.** dp-noise's link fix
+used `.verdict a` (0,1,1), which loses silently to `#app a` (1,0,1). The declaration was in the
+file, the ratio did not move at all. **When a contrast fix does not move the measured number, the
+cascade ate it** — re-measure after every fix rather than assuming the edit took. Grep `#app a` for
+any scoped link override that silently loses.
+
+More:
+
+- **Three teaching bugs**, none of them a11y. downgrade-wire's shipped default rendered *"deleted
+  0 bytes … plus its **-6-byte** X25519MLKEM768 key_share"* — a negative length, a deletion that
+  never happened, and the wrong group named. dp-noise's Exhibit 4b asserted a record was "above
+  your declared bound" unconditionally, contradicting the `Records clipped: 0 of 13` stat directly
+  above it.
+- **`openEverything()` at the top of EVERY scan.** dp-noise's old gate stripped `[hidden]` before
+  each scan, and the guided route's entire mechanism *is* `hidden` — so it never once scanned the
+  route the page ships on, and scanned a hybrid document with both routes' content on screen
+  instead. drbg-arena's cleared the inline `display:none` from all **eleven** output panels while
+  clicking one exhibit, revealing ten of them empty; its header comment claimed the lab "has no
+  `<details>`" — it has seven.
+- **A defect that only exists in a state the drive has to build.** drbg-arena's five `role="log"`
+  regions do not overflow at the shipped 32 bytes; the 2.1.1 failure appears only once the byte
+  slider is moved to maximum. **A gate that does not move the length control cannot see it.**
+- **`aria-label` on the root `#app` div** — prohibited, silently discarded, `incomplete`-only.
+  Grep `grep -n 'aria-label' index.html | grep 'div id="app"'` across the fleet.
+- **An ink whose comment names the surface it was measured against** — twice more. The comment was
+  true and the token was used a surface deeper (`rgba(0,0,0,0.06)` insets, verdict tints).
+- Reported not fixed: drbg-arena's `<select>` chevron is a data-URI SVG with a hardcoded
+  `#8b949e`, so it cannot follow the theme (**2.59:1** light, 6.11:1 dark); and all three of its
+  copy buttons call `navigator.clipboard.writeText` with **no `.catch()`**, so a denied permission
+  rejects unhandled and nothing changes on screen.
+
+**Cleared with measurements, so they are not re-chased:** downgrade-wire's `.byte-changed` stroke
+is 2.76:1 against its own fill but 1.4.11 asks it against the surrounding byteblock — **3.94:1
+light / 10.08:1 dark**. dp-noise's chart axes are under 3:1 deliberately: they are reference
+rules, not the data, and every figure ships a full data-table alternative, which is the text
+version 1.4.11 exempts a graphic against.
+
 ### All three oracle bugs are now fixed and re-verified — 2026-08-09
 
 Backported to **70 repos** and pushed. 63 of the current lineage took both fixes; **7 older-lineage

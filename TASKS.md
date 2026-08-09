@@ -1380,10 +1380,11 @@ Scanning **all** `e2e/*.spec.ts` finds **17 files across 17 repos** still inject
 > zk-proof-lab. All 14 are now plain `e2e/a11y.spec.ts`; the three hidden-filename cases are
 > cleared.
 >
-> **Later on 2026-08-08, four of those fourteen landed** — ibe-gate `6469fe9` (8),
-> j-uniward `8ece1d3` (6+1), oram-vault `f909787` (6), otp-vault `bb5d4d6` (4). **10 remain:**
-> pairing-gate · threshold-mldsa · time-lock-puzzle · tls-handshake · vdf · vrf-gate ·
-> vss-gate · web-of-trust · webauthn · zk-proof-lab.
+> **Later on 2026-08-08, eight of those fourteen landed** — ibe-gate `6469fe9` (8),
+> j-uniward `8ece1d3` (6+1), oram-vault `f909787` (6), otp-vault `bb5d4d6` (4),
+> pairing-gate `d4a3515` (2), threshold-mldsa `0c522c1` (8), time-lock-puzzle `525e8ce` (1),
+> tls-handshake `bfb556e` (7). **6 remain:** vdf · vrf-gate · vss-gate · web-of-trust ·
+> webauthn · zk-proof-lab.
 
 - `crypto-lab-shor/e2e/claims.spec.ts` — **and shor is already marked DONE.** Its `a11y.spec.ts`
   was correctly replaced, but its CLAIMS spec still forces opacity, so every claim it asserts is
@@ -1623,6 +1624,66 @@ indistinguishable from one that worked.
 `<label for>` — a genuine WCAG 2.5.3 *Label in Name* AA failure. axe's
 `label-content-name-mismatch` only applies to roles taking name-from-content, so **no oracle
 sees it**. Worth its own fleet pass; left out to keep the diff scoped.
+
+**FOUR MORE OF THE INJECTION QUEUE DONE 2026-08-08 — 18 defects; 8 of 14 now landed, 42
+defects total.** pairing-gate `d4a3515` (2) · threshold-mldsa `0c522c1` (8) ·
+time-lock-puzzle `525e8ce` (1) · tls-handshake `bfb556e` (7).
+
+**A gate can drive the whole lab and still measure nothing.** pairing-gate's old gate drove all
+four sections correctly — and then scanned ONCE, at the very end. Every intermediate state it
+built (the passing verdict before the tamper, the four-signer grid before the aggregate, the
+accepted forgery before the defence) was constructed and thrown away unmeasured. **Driving
+without scanning buys nothing** — a distinct failure from the usual "never drove anything".
+
+**`overflow-x: auto` zeroes a min-content floor ONLY when the scroller IS the grid/flex item.**
+This resolves an apparent contradiction between two repos in the same batch. time-lock-puzzle's
+`.mono-box` is the grid item, so its bare `1fr` track was genuinely clean at 380px in all 20
+states. threshold-mldsa's `.table-wrap` is a *block in normal flow inside* a grid item, so its
+439px min-content propagated up two levels into `.shell`. **Grep for `overflow-x: auto` on a
+block WRAPPER rather than on the flex/grid item itself.** Corollary found alongside it: **a
+single-column `display: grid` with no `grid-template-columns` is an implicit `auto` track** and
+takes a min-content minimum from the widest child anywhere on the page.
+
+**`aria-hidden` on an element carrying real live output — a blind spot BOTH oracles share.**
+time-lock-puzzle's `#chain` holds the running chain value `xₙ = …`, output no other element
+shows, and it was `aria-hidden="true"`. axe's `color-contrast` skips `aria-hidden` text and so
+does the arithmetic oracle (by design), so a **2.77:1** value hid behind it — and the attribute
+was also removing real information from screen-reader users. **Grep `aria-hidden="true"` on
+elements written by `innerHTML`/`textContent` at runtime, not just on glyphs.**
+
+**A transient class shorter than an axe pass makes a whole-page scan non-deterministic.**
+tls-handshake's `.flash` lives 500ms. The fix that worked: give `auditContrast` an optional
+subtree selector, measure scoped (~2ms), and assert the class is present *both before and
+after* the measurement, so an expired state fails loudly instead of passing vacuously. Grep for
+`setTimeout` that adds/removes a class carrying colour.
+
+**An ink token measured against white or the base panel, then used three recessed surfaces
+deep.** threshold-mldsa hit this twice (`--muted`, `--green-ink`). For each
+`background: var(--inset)` nested inside another `var(--inset)`, re-measure every token used
+below it. Same family as the always-dark-panel rule above.
+
+**A third confirmed case of the arithmetic oracle catching what axe does not:** pairing-gate's
+`.diff-mark`, white on the *bright* `--error` (#f87171) at **2.77:1** — the single highlighted
+nibble that proves two G_T values differ, i.e. the least readable thing in the section was the
+thing the section exists to show. axe reported nothing.
+
+**`.cl-hero-sub` opacity pairing is now 6 of ~28 confirmed** (hash-zoo, paillier-gate,
+gg20-wallet, pairing-gate, threshold-mldsa, tls-handshake). It is no longer a weak lead — three
+of the last five repos carried it. **Add it to the standard precheck.**
+
+**`revealAll()` is not a state — fifth and sixth instances.** time-lock-puzzle's set
+`data-active='true'` on all six tab panels at once plus `display:block` on two outputs.
+
+**Two source facts recorded rather than worked around (tls-handshake):** `mc-bad` and the
+`⚠ ATTACK SUCCEEDED` banner are unreachable — all three MITM moves fail one leg of
+`attackBlocked`, which is the lab's point — and `.btn:disabled` is dead CSS. Recording these
+stops the next reader adding a click that can only hang. Also **`expectNotBlank` needs an
+`aria-hidden` skip in any lab with an animation-only token** (`.packet` is declared
+`opacity: 0` and only visible mid-keyframe), or it reports every state.
+
+**Reported, not fixed:** tls-handshake's `.record-grid` has four `<label>`s with no `for` and no
+wrapped control. No oracle reaches them; worth a separate sweep alongside j-uniward's *Label in
+Name* finding.
 
 Regenerate this list with:
 

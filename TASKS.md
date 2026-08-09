@@ -1384,7 +1384,8 @@ Scanning **all** `e2e/*.spec.ts` finds **17 files across 17 repos** still inject
 > j-uniward `8ece1d3` (6+1), oram-vault `f909787` (6), otp-vault `bb5d4d6` (4),
 > pairing-gate `d4a3515` (2), threshold-mldsa `0c522c1` (8), time-lock-puzzle `525e8ce` (1),
 > tls-handshake `bfb556e` (7), vdf `5620344` (5), vrf-gate `9701f5e` (4+), vss-gate
-> `4ac296b` (7). **3 remain:** web-of-trust · webauthn · zk-proof-lab.
+> `4ac296b` (7), webauthn `6158779`+`e3248e3` (6), zk-proof-lab `922f436` (9),
+> web-of-trust `fe2484b` (6). **ALL 14 DONE 2026-08-08 — the injection queue is closed.**
 
 - `crypto-lab-shor/e2e/claims.spec.ts` — **and shor is already marked DONE.** Its `a11y.spec.ts`
   was correctly replaced, but its CLAIMS spec still forces opacity, so every claim it asserts is
@@ -1740,6 +1741,71 @@ index.html across the fleet.**
 but only reached 4.32:1 on the hero aside, where the page's cyan radial shows through. **Measure
 a token against the DARKEST surface it lands on, not the lightest** — the mirror of the
 "measured one surface, used a surface deeper" rule.
+
+### THE INJECTION QUEUE IS CLOSED — 14 repos, 71 defects, nothing came back clean
+
+webauthn `6158779`+`e3248e3` (6) · zk-proof-lab `922f436` (9) · web-of-trust `fe2484b` (6)
+finish it.
+
+**A BUG IN THE SHARED `contrast.ts`, PRESENT IN 52 REPOS — the most important finding of the
+sweep.** `isVisible` guarded against text parked off-page with
+
+```
+if (r.right <= 0 || r.bottom <= 0) return false;   // getBoundingClientRect() = VIEWPORT space
+```
+
+`getBoundingClientRect()` is viewport-relative, so **once Playwright scrolls a control into view,
+every element above the viewport is silently dropped from the contrast walk.** Measured on vdf at
+the end of its drive: `scrollY` 960 in a 3324px document, and **27 of 105 text-owning elements —
+26% of the page — were not being measured at all.** Any green contrast run on a page taller than
+the viewport was worth less than it looked. It is how two real defects in zk-proof-lab hid (SVG
+diagram text at 1.91–2.21:1), and it was only caught because a hand-probe disagreed with the
+oracle. Fixed to document space in all 52 repos:
+
+```
+if (r.right + window.scrollX <= 0 || r.bottom + window.scrollY <= 0) return false;
+```
+
+**and every one of those 52 gates is being re-run against the fixed oracle.** LESSON, general:
+**an oracle needs its own oracle.** Every hard-won measurement fix in that file came from
+disagreeing with something — axe, a hand probe, a mutation. When the helper and a manual check
+disagree, the helper is the suspect.
+
+New defect shapes from these three:
+
+- **A class lifted out of the card it was written for.** web-of-trust's footer reuses
+  `.hero-metric-label`, whose ink `--metric-muted` is a near-white at 78% *because it was
+  authored for `.hero-metric-card`'s near-black gradient*. In the footer there is no such
+  background: rgb(249,244,238) on rgb(255,255,254), **1.09:1**. This is the fourth instance of
+  the hero-metric trap and the sharpest: the token is right, the *reuse* is wrong. **Grep: a
+  class whose name references a container, used outside that container.**
+- **`opacity` on an SVG `<g>` fades the label with the shape, and a child cannot opt out.**
+  web-of-trust dimmed off-path node GROUPS to `.25` while tracing, taking each key's name to
+  1.74:1. Dimming the shape alone gives the identical affordance. **Grep `opacity` on a selector
+  matching a group/wrapper that contains text.**
+- **A re-entrancy guard placed inside the step instead of on the click.** zk-proof-lab's
+  `graphAuto` set `gState.auto` and then called `graphRound`/`graphChallenge`, both of which open
+  with `if (gState.auto) return` — so "Run 10" did nothing at all, and every `?auto=1` preset link
+  into that exhibit was dead. Symptom is a silent no-op button, invisible both to a gate that
+  clicks without scanning and to one that scans only at the end. **Grep `if (state.auto` /
+  `if (busy` at the head of a step a `…Auto`/`…All`/`run10` loop also calls.**
+- **A W3C-spec correctness bug in webauthn:** `verifyAssertion` advanced the RP's stored
+  signCount whenever the counter check passed, *regardless of the verdict*, so one forged
+  assertion carrying 999 poisons the counter and the genuine authenticator is refused as a clone
+  forever — DoS via a signature that did not verify. §7.2 updates it as the last step. The drive
+  walked straight into it: after the tamper section, the section below could never log in again.
+- **Path C had never been measured at all** because it calls real `navigator.credentials`; it is
+  now driven against a Chromium CDP **virtual authenticator**, with both capability branches
+  scanned. Worth knowing for any other browser-API lab in the fleet.
+- **`role="log"` scrollers are a systematic 2.1.1 miss** — they only overflow after a long run,
+  which no previous gate ever produced. Grep `max-height` + `overflow-y: auto` + no `tabindex`.
+- **A two-class rule beating a one-class media-query override** is now confirmed twice as a
+  source of phone-width grid failures.
+
+Cleared by measurement, worth recording so it is not re-chased: **`.cl-hero-sub`'s `opacity: .85`
+is harmless wherever the inherited colour is the PRIMARY text token** — webauthn 12.60:1,
+zk-proof-lab 12.6:1, vdf clean. It only bites when the colour underneath is already muted. The
+count of genuine instances stays at 6 of ~28.
 
 Regenerate this list with:
 

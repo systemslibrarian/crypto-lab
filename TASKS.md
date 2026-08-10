@@ -2048,7 +2048,7 @@ Other findings from these three:
 - **Stale preview server cost another run** — a manual `vite preview` on the config's own port,
   and `reuseExistingServer: true` then skipped `npm run build` and served the pre-fix bundle.
 
-**OPEN, REPRODUCED, NOT FIXED — `credential-veil` reflow at 380px.** I built the honest gate
+**SOLVED 2026-08-10 (`credential-veil` and 3 others) — see the box-sizing entry above. Original write-up kept because the diagnosis is the useful part.** ~~OPEN, REPRODUCED, NOT FIXED — `credential-veil` reflow at 380px.~~ I built the honest gate
 for this repo, ran it, and reverted the repo to pristine when the sweep was paused, so there is
 no half-finished work in the tree — but the finding is real and reproducible and should not be
 rediscovered from scratch:
@@ -2325,6 +2325,49 @@ More:
 - **Playwright's `click()` can time out INSIDE the click**, not the assertion after it, when the
   handler is multi-second in-page crypto — which reads exactly like a broken selector. Heavy labs
   need the timeout on the *action*.
+
+**TASK 14 PROGRESS 2026-08-10 (10) — 3 more repos, 17 defects. 39 of 78 done, 183 defects.**
+kdf-chain `843d51e` (8) · kem-trap `c326d58` (5) · key-mirror `3ef9d0e` (4).
+
+**THE OPEN `credential-veil` REFLOW DEFECT IS SOLVED, and it was a fleet pattern.** The cause is a
+missing `box-sizing: border-box` reset: the shared `.cl-hero` block — copied into every lab —
+gives `.cl-hero-why` `width: 100%` below 640px on top of ~35.6px of padding and border, so under
+the default `content-box` it is WIDER than its column. 356 + 35.6 = 391.6, which is exactly the
+392px measured when the defect was first recorded. **The five fixes tried then (min-width on three
+elements, max-width, display:block) all left `scrollWidth` at 404 because none of them was
+box-sizing.** Present at first paint, in every state — no amount of driving reveals it.
+
+**A grep named 7 labs; measurement cut it to 4.** Fixed and measured before/after against the
+built site: credential-veil 404→380, spdz-forge 403→380, time-trust 401→380, reshare-circle
+400→380. **shadow-vault and silent-tally measured 380/380 and are NOT defects** despite matching
+the grep; iron-letter was already fixed by its own pass. Suites green in all four.
+
+**Two measurement errors of my own, both caught by a number looking wrong:**
+- I built and previewed three repos **in parallel** and read one against a stale bundle.
+- I measured at `waitUntil: 'load'` rather than after layout settled, which made time-trust read
+  388 when it is actually 380. **Measure reflow after `networkidle`, not at `load`.**
+
+From the three repos themselves:
+- **`hkdfExpand` wrote its block counter into a `Uint8Array`**, so past 255 blocks it wrapped mod
+  256 and returned **silently wrong OKM** — RFC 5869 §2.3 caps L at 255×HashLen precisely because
+  that counter is one octet. In a demo whose own panel recomputes the RFC's test vectors.
+- **Every panel reported failure into `.sr-only` alone**, so a sighted user pressing Derive saw
+  nothing at all (3.3.1).
+- **The denominator problem again, twice:** kdf-chain's `.cost-track` is 96% of the bar for
+  PBKDF2-100k and measured 1.42:1; `#mem-grid` cells are 73% of the graphic's area and were
+  invisible until filled. **Every one of the corresponding FILLS passed** (3.73–7.48:1) — it is
+  only ever the extent that fails.
+- **An animated state that only fails mid-pulse.** `.mem-stall.mem-busy` computes 3.82:1 from the
+  mix and measures 1.78–1.91:1 once the running animation is composited. **Arithmetic alone would
+  have cleared it.**
+- **The same semantic role at two different mix percentages** — kem-trap's accept-side border was
+  45% in one rule and 55% in two others; 45% failed and 55% landed on *exactly* 3.00:1.
+- **`accent-color` set to a fixed hex** rather than a themed token: 6.40:1 in the theme it was
+  picked for, 2.70:1 in the other.
+- **key-mirror's old gate's FIRST action was `evil.check()`** — the honest default state, what
+  every visitor loads, was never scanned once. And its `border-contrast.spec.ts` queried exactly
+  one selector, `#app input[type="text"]`, **the only rule in the stylesheet using
+  `--control-border`** — a ninth check aimed where it cannot fail.
 
 **TASK 14 PROGRESS 2026-08-09 (9) — 3 more repos, 26 defects. 36 of 78 done, 166 defects.**
 ibe-gate `1da9695` (9, a focused 1.4.11 re-pass on an already-gated repo) · iron-letter `c358d12`

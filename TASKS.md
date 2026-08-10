@@ -2326,6 +2326,59 @@ More:
   handler is multi-second in-page crypto — which reads exactly like a broken selector. Heavy labs
   need the timeout on the *action*.
 
+**TASK 14 PROGRESS 2026-08-09 (9) — 3 more repos, 26 defects. 36 of 78 done, 166 defects.**
+ibe-gate `1da9695` (9, a focused 1.4.11 re-pass on an already-gated repo) · iron-letter `c358d12`
+(12) · isogeny-atlas `4e0bfc5` (5).
+
+**A FIFTH BUG IN MY NON-TEXT ORACLE, found by an agent: it never judged a LINK styled as a
+button.** The `CONTROL` selector list had no `a`, and the shared header's own Menu and GitHub
+controls are `<a class="cl-btn">`. Across the fleet that was hiding **96 findings**. Now covers
+`a[role=button]`, `a[class*=btn]`, `a[class*=button]` — deliberately not every anchor, because a
+prose link identifies itself by its text and is not a 1.4.11 case. Recaptured and re-verified:
+**70 of 70 green.**
+
+**⚠️ THE SHARED HEADER IS NOW DIVERGENT — MAINTAINER DECISION NEEDED.** I flagged `.cl-btn`'s
+border earlier and left it alone per CLAUDE.md. Agents have since fixed it in **three labs, two
+different ways**:
+  - ibe-gate `1da9695`, iron-letter `c358d12` — bumped the accent mix **38% → 52%**
+  - isogeny-atlas `4e0bfc5` — switched to mixing **`--cl-ink` at 70%**
+
+**The second is the only one that generalises.** isogeny-atlas's accent is a violet close in
+luminance to the always-dark bar, so *no percentage of `--accent` can ever clear 3:1* — at 100% it
+is still ~2.2:1 in the light theme. Mixing `--cl-ink` (the accent already carried toward `#eafff8`
+so the bar's TEXT stays readable) clears 3:1 for every accent tested: 6.58 (`#35d6bb` default),
+3.42–4.87 (dark accents). **160 labs still carry the original 38% form.** Recommendation:
+normalise the fleet on `--cl-ink 70%` in one reviewed pass; do not leave three shapes in the
+field.
+
+**Second instance of my rollout clobbering an agent's work mid-flight.** ibe-gate's agent emptied
+its baseline by fixing all six findings, and my central regeneration wrote the stale six back. No
+damage — HEAD was correct and the agent restored the worktree — but the hazard is now confirmed
+twice. **Do not regenerate baselines while agents hold repos.**
+
+More from these three:
+- **A hover state that fails while rest passes.** iron-letter's seal button is 5.36:1 at rest and
+  **3.65:1 under the pointer**, because `hover:bg-emerald-600` lightens the fill. Visible only
+  because an honest drive scans with the mouse still resting on the control it just clicked. The
+  fix needed a *window*, not a swap: 1.4.3 wants ≥4.5:1 for the label and 1.4.11 ≥3:1 for the fill
+  on both panels, leaving fill luminance ∈ [0.190, 0.263].
+- **Every button, input and textarea in iron-letter had lost its light-theme FOCUS RING**
+  (1.57–2.45:1). The neighbouring `.text-*` and `.border-*` rules had been carried to the darker
+  `-700` variants; **`outline-color` was the one property nobody carried with them.**
+- **`duplicate-id-aria` ×152** — a glossary emitting a fixed-id description span, so repeated
+  terms collide. `incomplete`-only, invisible to a violations gate.
+- **A lab source bug found by the fix's own unit test:** ibe-gate's `hue = b/255*360` maps `0x00`
+  and `0xff` to the *same* hue. Survivable while lightness alone separated them; once both were
+  lifted to the luminance floor the two bytes rendered as one colour. `byteColor` now has a test
+  asserting the 3:1 floor over all 256 values **plus injectivity** — the only ratchet that class of
+  defect can have.
+- **A correctness bug:** iron-letter's "QR Code" threw and did nothing for RSA-4096 — the encoder
+  tops out at 669 bytes and a 550-byte SPKI key is ~734 chars. It now says so, which is the lab's
+  own argument for elliptic curves in its most concrete form. **Asserting only `#qr-container svg`
+  is how the throw stayed hidden.**
+- **`border-contrast.spec.ts` in isogeny-atlas measured one element against its OWN background**
+  rather than the surround — an eighth check that could not fail.
+
 ### RECOMMENDATION 1 DELIVERED — an oracle for the two classes that had none (2026-08-09)
 
 **WCAG 1.4.11 (non-text contrast) and generated content were invisible to every gate in this

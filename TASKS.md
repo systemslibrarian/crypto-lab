@@ -2263,6 +2263,69 @@ immune to all four of the fixed oracle bugs *by construction*. Its one hole is t
 exactly its background colour changes no pixels, so 1.00:1 — the worst possible failure — is
 dropped silently. Pairing it with the arithmetic walk covers both; **neither alone is complete.**
 
+**TASK 14 PROGRESS 2026-08-09 (8) — 6 more repos, 41 defects. 33 of 78 done, 140 defects.**
+hybrid-sign `908095f` (8) · hybrid-wire `dbe88f3` (6) · icy-dvrf `630c518` (3) ·
+isogeny-gate `932b683` (6) · jevil `8a45b75` (9) · kdf-arena `0867b70` (9).
+
+**THE SINGLE HIGHEST-YIELD SIGNAL IN THIS FLEET, and the token's own comment is the tell.**
+`--border-strong` (or `--control-border`/`--line-control`/`--ctl-border`) carrying a long comment
+asserting *"Control boundaries only (WCAG 2.1 SC 1.4.11)"* — while applied to **one rule**. jevil
+**1:28**, kdf-arena **1:21**, hybrid-sign **1:34**, icy-dvrf **3:13**. And in every case the rules
+it *did* cover were `select`/`input` — exactly what the token was written for. The comment is a
+claim nobody checked, and the check that should have caught it was aimed at the same place.
+
+```
+for r in ~/repos/crypto-lab-*; do
+  echo "$r $(grep -c 'var(--border-strong)' $r/src/style.css) / $(grep -c 'var(--border)' $r/src/style.css)"
+done
+```
+**Ratio ≤ 3 almost certainly means failing buttons, meters and chart axes.**
+
+**A LIMIT OF EVERY ARITHMETIC ORACLE, INCLUDING THE NEW ONE — antialiasing.** isogeny-gate's
+domain/codomain box outline was *authored* at 2.25:1 and **rendered at 1.43:1**: a 1px canvas/SVG
+stroke on integer coordinates straddles two device columns at half strength. **The stylesheet
+value is not the screen value, and no token audit can see this — only pixels can.** Grep
+`strokeRect(` / `lineWidth = 1` and check for half-integer alignment.
+
+**A "track / grid / lanes" whose FILL passes but whose EXTENT does not** — hit in all three of the
+last repos. The graphic's meaning is a *ratio* and **the denominator is invisible**: isogeny's
+key-space grid (the grid the prose points at did not render until a cell lit), jevil's
+`role="progressbar"` track, kdf-arena's bar tracks and its memory grid — the denominator of "drawn
+to scale". Grep `role="progressbar"`, `role="meter"`, `.track`, `.grid`, `.lanes` and measure the
+**unfilled** state against its container.
+
+**`:hover` compliant, resting state broken.** kdf-arena's `.preset-btn:hover` used `--warn-fg`
+(fine) while the resting border used `--warn-border` (2.05:1) — **so any check that measured a
+hovered control passed.** Grep `:hover { border-color` where the base rule uses a different token.
+
+**Seventh instance of a check aimed where it cannot fail:** isogeny-gate's own `contrast.test.ts`
+header claimed to cover "UI elements" while **every pair in it was text/background**. A false
+coverage claim in the file whose job is coverage. It now carries a 1.4.11 block plus an assertion
+that the two boundary tokens stay distinct — so "fixing" it by aliasing one to the other cannot
+pass.
+
+More:
+- **The border-box trap confirmed twice more** (kdf-arena's `--warn-border`/`--accent-border` are
+  `rgba()` on elements that also set their own fill), which makes borders look **~2× better than
+  they are**. This is the bug I had in the new oracle; it is also live in the labs. Grep
+  `border.*rgba` cross-checked against a `background-color` on the same rule.
+- **A state change that removes a boundary — 3rd and 4th sightings:** jevil's
+  `.btn:disabled:hover` reset the border to `--border`; kdf-arena's `.preset-btn.is-weak` swapped
+  to a translucent border that made the pressed edge *worse*.
+- **An `aria-label` on a tooltip REPLACES its text content**, so isogeny-gate's glossary definition
+  was never readable by a screen reader — and nothing referenced the popover either. Opening a
+  second term also left the first at `aria-expanded="true"` forever.
+- **A source fix in kdf-arena:** `#argon2-memory` advertises `min="8"`, but RFC 9106 requires
+  m ≥ 8·p and the field ships at p=4 — **the form's own minimum is a value the run cannot
+  accept**, surfacing as a library error naming neither field and quoting the wrong unit.
+- **Dead initial-state markup no visitor ever sees** (jevil): "Generate a key to begin.", "No
+  signatures yet." and an unreachable `flash("Generate a key first.")`, all overwritten before
+  first paint by `boot()`'s trailing `generate()`. **A gate written from the markup would fail
+  against a correct page.** Eighth instance of "assert the defaults".
+- **Playwright's `click()` can time out INSIDE the click**, not the assertion after it, when the
+  handler is multi-second in-page crypto — which reads exactly like a broken selector. Heavy labs
+  need the timeout on the *action*.
+
 ### RECOMMENDATION 1 DELIVERED — an oracle for the two classes that had none (2026-08-09)
 
 **WCAG 1.4.11 (non-text contrast) and generated content were invisible to every gate in this

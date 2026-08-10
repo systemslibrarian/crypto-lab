@@ -2672,6 +2672,35 @@ Real coverage is **34 repos measured, 3 defects**. A follow-up pass should re-ru
 after driving each lab's states, since an element hidden only after an interaction is exactly
 as likely to collide.
 
+**FULL-FLEET RE-RUN — the stage-1 filter was unsound, and it cost one repo.**
+`[hidden]` has specificity **(0,1,0) — identical to a class**. So excluding repos that had
+*any* `[hidden]` CSS rule was wrong: an author rule without `!important` still loses to any
+class rule that comes later, and a reset placed at the top of a file loses to everything
+below it. (A first attempt to re-filter statically also failed — `grep … | head -3` reported
+repos I had already fixed as unfixed, because the `!important` was on the fourth matching
+line. Truncated greps answer a different question.)
+
+So I stopped inferring and **measured all 163 labs that have an index.html and Playwright.
+163/163 completed, zero errors.** One new defect, in a repo the original filter had excluded:
+
+**`zk-arena` `c900c8d`** — six per-class patches (`.warning-banner[hidden]`,
+`.back-to-top[hidden]`, `.quiz-result[hidden]`, `.viz-truncation[hidden]`,
+`.kbd-overlay[hidden]`, `.proto-verdict[hidden]`), each added after a specific panel was
+caught showing through, and a seventh element that never got one: a 184x56 **"Copy share
+link" button offering to share a quiz result nobody had produced.** The clearest possible
+argument for fixing the root instead of the collision.
+
+**And it exposed a live instance of the stale-`dist` hazard.** zk-arena's
+`webServer.command` was `npm run preview` with no `npm run build &&`, so the suite tested the
+last successful build — the `[hidden]` fix was in the stylesheet and the new test failed
+anyway. Re-checked all 163 configs: **160 already had `build &&`**; `zk-arena`, `bike-vault`
+and `x3dh-wire` did not (all three now fixed); `lll-break` runs `npm run dev`, which compiles
+from source and is unaffected. My first count of this said "159 missing" — `grep -A 3` was
+too narrow a window to reach the `command:` line. Checked before reporting.
+
+Fleet-wide, the class is now **4 defects across 163 labs measured at first paint**, with the
+driven-state gap still open.
+
 ### The two repos left mid-edit by agents that died — finished and verified
 
 Both were picked up cold, with the standing rule that a dead agent's uncommitted work is a

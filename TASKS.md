@@ -2568,6 +2568,50 @@ does **not** disable, so `getBoundingClientRect` returned the *previous* n's wid
 Any test measuring geometry after a state change must wait for the laid-out width to agree
 with the inline target width. Reduced-motion emulation is not transition suppression.
 
+**hash-zoo — 4 defects, `6357fb8`** (32 unit + 46 Playwright pass).
+1. *"This flips **every** input bit in turn"*, under a button reading "Run every-bit sweep" —
+   the engine caps at 4096 flips and samples above it. Measured: 512 B → 100% of bits,
+   **513 B → 50.00%**, 4 kB → 12.50%, a 12 kB paste → **4.17%**, 20 kB → 2.50%.
+2. *"Parallelizable, SIMD-friendly, fastest of the three"* — stated flat, **twice**, two
+   sections above a timing panel measuring the opposite. Over 35 timed runs at 7 sizes
+   SHA-256 was fastest in **34**, and BLAKE3 measured **3–4x slower** at every size ≥ 1 kB
+   (1 MB: 3.1 ms vs 10.7 ms). The repo's README already explained why a JS build inverts the
+   ranking; the page did not.
+3. Two panels written and never cleared — clearing the message left the histogram reporting
+   statistics for a message that was gone; editing the secret left the forgery panel
+   publishing SHA-256 of the **old** secret under "all you legitimately hold".
+4. Landed a half-finished fix a dead agent left in the working tree with `tsc` broken: the
+   input strip drew the first 512 bits whatever the slider said — 288 of 800 positions on a
+   100-byte message showed no highlight under a caption promising one.
+
+**paillier-gate — 6 defects, `33f0e4f`** (62 unit + 18 Playwright pass).
+1. *"It is below the honest 6"* printed unconditionally, one clause after printing the two
+   numbers that contradict it. Encrypt-then-MAC drops the rewritten ballot, so the tally
+   loses that voter's own vote — and votes are 0 or 1. **False for 4 of the 10 selectable
+   targets.**
+2. **`hidden` did not hide.** `.ledger { display: grid }` and `.handoff { display: flex }`
+   outrank the UA `[hidden] { display: none }` rule, so from first paint — before any keypair
+   existed — the page rendered a **542x361** ledger of an operation that had not happened,
+   every value slot empty, plus a **542x84** hand-off button for a ciphertext that did not
+   exist. Every reset path called `.hidden = true` and silently did nothing.
+3. `#aggregation-table` was the one panel a fresh keypair did not retire; the factor panel's
+   "≈ N steps for a K-bit prime" had two halves that disagreed (87 of 200 keygens produce a
+   modulus one bit short, making `floor(bits/2)` wrong); two more verdicts outlived the
+   controls they describe.
+
+Cleared with numbers: 64-bit factors 25/25 in 3–9 ms; 96-bit gives up 23/25 as the copy says;
+the re-randomize failure branch fired 0/300. The `ms === 0` rate fallback is **unreachable**
+(0 of 50 runs, min 3 ms) — reported as unreachable, not counted as a defect or "fixed".
+
+**Both repos' existing suites had encoded the defects' own assumptions**, which is now the
+single most reliable pattern in this sweep. hash-zoo's strip test ran **only bit 0** — the one
+position where a fixed prefix is correct — and passed straight through the windowing mutation.
+paillier's `exhibits.spec.ts` **and** `tests/ballots.test.ts` each deliberately targeted the
+ballot at index 2 *because* dropping it costs the tally nothing, then asserted the unchanged
+number, while never reading the sentence beside it that said otherwise. Same shape as grover,
+whose suite asserted the buggy invariant over the input range where it happens to hold.
+**When auditing a claim, read the test that covers it and ask what it avoids.**
+
 **A fourth detector, generalised from grover — and it confirms the pattern.** grover's defect
 had a structural signature worth chasing: *a display dimension that is floored or clamped,
 next to prose asserting the dimension is to scale.* Two stages, because the candidate is
@@ -2596,6 +2640,37 @@ to `cleared >= 3 and 1 <= missed <= 3` leaves **exactly one** candidate fleet-wi
 a **false positive**: `resetStats()` hides `#reveal` with `display:none` and `showReveal()`
 always rewrites its text, so stale content cannot reach the screen. `solveParams` is rebuilt
 in `loadPuzzle`. Real result: **1 candidate, 0 defects.**
+
+**A sixth detector — and the first one that found things: `hidden` that does not hide.**
+Generalised from paillier-gate. The UA rule is `[hidden] { display: none }`, an **attribute
+selector**, which any class rule setting `display` outranks — so a panel the markup declares
+hidden paints anyway, and every `el.hidden = true` in the codebase silently does nothing.
+
+Unlike the static detectors this one **measures**: `scratchpad/hiddencheck.mjs` starts each
+lab's own vite dev server, loads the page, and asks the browser whether any element carrying
+`hidden` computes to a display other than `none`. Validated both directions against
+paillier-gate — **2 of 6 painted before its fix, 0 after**.
+
+Stage 1 (uses `hidden`, no `[hidden]` CSS override): **72 of 112 repos**. Measured all 72.
+
+| repo | painted | what was showing |
+|---|---|---|
+| `aegis-gate` `4d347df` | 1086x264 | Exhibit 3's nonce-reuse output, every slot empty, including the row "B recovered from C_A, C_B, and known A" — **the answer to the Predict prompt directly above it** |
+| `enigma-forge` `f498f82` | 926x140 + 1280x151 | an import dialog, and a full-width presenter overlay with focusable ✕ / Prev / Next |
+| `mac-race` | 1105x161 | the length-extension forged-message layout, captioned "What the server actually hashes — SHA-256(secret ∥ forged bytes)", before the attack was run |
+
+Fixed at the root in each (`[hidden] { display: none !important }`), not by renaming the
+colliding class — the `!important` is load-bearing, since otherwise any future `display` on a
+hideable class wins again, which is exactly how all four shipped. Each has a regression test
+asserting the property for **every** element carrying `hidden`, with a count assertion so it
+cannot pass vacuously, and each was mutation-verified with `display: revert`.
+
+**What this sweep does NOT cover, stated plainly: 38 of the 72 repos had no `[hidden]`
+elements at first paint at all**, so the check is *silent* about them, not clean — they
+matched stage 1 on `.hidden = true` applied later, or on `aria-hidden`/`overflow: hidden`.
+Real coverage is **34 repos measured, 3 defects**. A follow-up pass should re-run the check
+after driving each lab's states, since an element hidden only after an interaction is exactly
+as likely to collide.
 
 ### The empirical result of recommendation 2
 

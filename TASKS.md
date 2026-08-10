@@ -2698,8 +2698,43 @@ and `x3dh-wire` did not (all three now fixed); `lll-break` runs `npm run dev`, w
 from source and is unaffected. My first count of this said "159 missing" — `grep -A 3` was
 too narrow a window to reach the `command:` line. Checked before reporting.
 
-Fleet-wide, the class is now **4 defects across 163 labs measured at first paint**, with the
-driven-state gap still open.
+**DRIVEN-STATE GAP CLOSED — and it was closed by asking a better question, not by driving.**
+This is a **cascade** property, not a state property: if a rule gives an element a `display`
+that outranks `[hidden]`, that element paints whenever the code hides it — at first paint,
+after an interaction, whenever. So instead of driving every lab's states, probe directly:
+**for every id the source sets `hidden` on, set the attribute in the browser, read the
+computed display, restore.** `scratchpad/hideids.py` extracts the targets (var→element
+binding plus inline and markup forms); `scratchpad/hidetargets.mjs` probes them.
+
+Validated both directions on zk-arena: 0 with its fix, 24 with the fix reverted, including
+the known `#quiz-share`. **All 163 labs swept, 0 errors. Two more defects, neither visible to
+the first-paint sweep:**
+
+- **`hqc-vault` `ded4a8e`** — *"Hide step-by-step" did not hide the step-by-step.*
+  `#kem-steps` is governed by `stepContainer.hidden = !stepMode` and filled with the
+  FO-transform walkthrough by the same render pass; `.kem-steps { display: grid }` outranked
+  the attribute. The first-paint sweep called this repo clean because the container **carries
+  `hidden` from the start but is empty until a run fills it** — no box, no visible defect.
+  The defect exists exactly when a visitor would meet it.
+- **`multivariate` `b72232e`** — `#audience-toggle` is a hide target and `.ghost-button
+  { display: flex }` outranks the attribute, so hiding that control would have left a
+  clickable button on screen. Invisible at first paint because **it is not hidden then.**
+
+An intermediate instrument was discarded after failing validation: enumerating classes from
+`document.styleSheets` reported **0 classes checked** on a repo with a known defect, because
+under vite's dev server the CSSOM exposed 4 rules in total. Probing elements directly needs
+no CSSOM and also covers `display` set by id, tag or inline style.
+
+Fleet-wide the class now stands at **6 defects** — `paillier-gate`, `aegis-gate`,
+`enigma-forge`, `mac-race`, `zk-arena`, `hqc-vault`, `multivariate` (7 labs; paillier-gate
+was found by the claims audit, the rest by sweeps) — across **163 labs measured twice**, at
+first paint and against every hide target. The residue is elements created dynamically that
+never exist in the DOM at load.
+
+**hqc-vault's test also shows the vacuous-pass trap in miniature:** the first version toggled
+step mode without running the KEM, so it asserted against an **empty container** and passed
+while proving nothing. It now drives a real keygen and encap first. Same failure mode as the
+count assertions added elsewhere in this sweep — *a test that cannot fail is not evidence.*
 
 ### The two repos left mid-edit by agents that died — finished and verified
 

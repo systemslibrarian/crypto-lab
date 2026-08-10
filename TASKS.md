@@ -2263,6 +2263,66 @@ immune to all four of the fixed oracle bugs *by construction*. Its one hole is t
 exactly its background colour changes no pixels, so 1.00:1 — the worst possible failure — is
 dropped silently. Pairing it with the arithmetic walk covers both; **neither alone is complete.**
 
+### RECOMMENDATION 1 DELIVERED — an oracle for the two classes that had none (2026-08-09)
+
+**WCAG 1.4.11 (non-text contrast) and generated content were invisible to every gate in this
+fleet.** axe has no rule for either, and the arithmetic walk in `contrast.ts` measures *text
+nodes* — so a control's boundary is out of scope, and a `::before` glyph is not an element and
+owns no text node. Both were being caught by hand-sampling screenshots, which does not
+regress-test. `e2e/nontext.ts` now measures both, wired into `scan()` in **68 repos** (2 more held
+back while agents own them).
+
+**It is a RATCHET, not a report.** A check that logs and never fails is not a gate, and this
+sweep has spent its whole length deleting exactly those. Three rules:
+  1. a finding NOT in the baseline fails — a regression cannot land;
+  2. a baselined finding that gets WORSE fails — the list cannot rot;
+  3. **a baselined finding that no longer appears ALSO fails** — a fixed entry must be deleted.
+Rule 3 is what stops an allowlist becoming a permanent exemption: the file can only shrink.
+**517 findings baselined; 7 repos already clean.** Green in 69 of 69, and it bites — an injected
+control whose fill and border both match its panel is caught at 1.08:1.
+
+**FOUR BUGS WERE FOUND IN THE ORACLE BEFORE IT LANDED**, and the pattern is the lesson:
+
+| # | Bug | Caught by |
+|---|---|---|
+| 1 | judged the browser's own unstyled widgets (1.4.11 exempts UA-determined appearance) | a "fixed" repo still reporting 6 findings |
+| 2 | read `background-color` only, ignoring gradients — composited onto WHITE | a ratio **identical in both themes**; a number that cannot depend on the theme is not measuring it |
+| 3 | baseline generated from first paint while the check runs in every driven state | 10 of the first 20 repos reporting NEW on run one |
+| 4 | a translucent border composited over the SURROUND, not the element's own fill (`background-clip` defaults to `border-box`; an *outline* is the opposite) | an agent, hand-measuring a gold button whose edge should read `rgb(115,97,0)` |
+
+**Not one was found by reading the code.** Each came from a number that did not make sense,
+checked against something already known. Validated in both directions throughout against
+encrochat, whose 1.4.11 defect had been hand-measured: the oracle reproduces **2.01:1 / 1.91:1**
+with the fix reverted and reports clean with it in place — unchanged across all four rebuilds.
+
+**Two harness failures worth keeping**, both the same shape as the defects being hunted:
+- **A survey that silently lost 16 repos.** A repo whose `webServer` failed to start produced no
+  output and was read as "no findings" — 13 were about to be wired with EMPTY baselines,
+  permanently ratcheted at zero against measurements that never happened. The harness now records
+  `RUNFAIL`; it caught two more port-blocked repos on the final pass, which turned out to hold 968
+  and 308 findings between them.
+- **`nontext.ts` did not typecheck under stricter configs**, and because `webServer.command` runs
+  `npm run build`, a type error in a TEST HELPER takes the whole gate down. Fixed structurally
+  rather than by patching types: the file is now **generated per repo, splicing that repo's own
+  `contrast.ts` paint core**, which by construction already compiles there.
+
+**Known limits, stated rather than hidden:**
+- `aria-hidden` spans inside a control — switch tracks and thumbs, custom checkbox glyphs — are
+  unreachable by this oracle *and* by axe. Still hand-measurement only. One lab had a white thumb
+  on a 1.82:1 track on a white button: the entire switch graphic invisible.
+- Absolutely-positioned pseudo-elements are marked `unverified: true`; they can paint outside
+  their host and the oracle measures against the host's backdrop, so those ratios are not
+  trustworthy.
+
+### Task 15 — CLOSED, and it was already done (2026-08-09)
+
+The record said five labs still carried live `BEGIN/END crypto-lab shared header` markers, one
+pointing contributors at retired tooling. **A fleet grep for the actual harmful framing — the
+markers themselves, and any "managed / do not edit / re-run reapply-header" instruction — returns
+nothing.** The surviving mentions in salamander and stream-ward are the *corrected* prose
+("THIS LAB OWNS IT … the fleet-wide push was retired"), which names the tooling only to say it is
+gone. 14 files reference it in that same corrected sense. Closed by checking rather than by doing.
+
 ### The first three oracle bugs — fixed and re-verified 2026-08-09
 
 Backported to **70 repos** and pushed. 63 of the current lineage took both fixes; **7 older-lineage

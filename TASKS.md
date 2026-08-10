@@ -2672,6 +2672,47 @@ Real coverage is **34 repos measured, 3 defects**. A follow-up pass should re-ru
 after driving each lab's states, since an element hidden only after an interaction is exactly
 as likely to collide.
 
+### The two repos left mid-edit by agents that died — finished and verified
+
+Both were picked up cold, with the standing rule that a dead agent's uncommitted work is a
+*claim*, not a result. Both claims held up, and both repos had something still wrong.
+
+**lattice-gentle `2e1cbb2` — 4 defects, all confirmed by mutation rather than by reading the
+comments.** `aria-label` on a bare `<p>` (prohibited on role `paragraph`, so the label was
+discarded and axe files it under `incomplete` only); a redundant `role="list"` on an `<ol>`
+that triggered `aria-required-children` **whenever the log is empty — which is first paint and
+after every Reset**, so the page shipped an ARIA violation in its default state; the 3:1
+control boundary applied to exactly two selectors; and a light theme that overrode
+`--accent-ink` but not `--accent`.
+
+Reverting the border token fails naming `button boundary vs its own fill`; removing the
+reflow cap fails with `{"clientWidth": 380, "scrollWidth": 421, "widest": "div.reduce-panel
+@392px right=421"}` in exactly the "big numbers — one step" state — **independently
+reproducing the dead agent's measurement to the pixel.**
+
+**falcon-seal — the gate found two defects the previous pass had not.**
+1. A **reflow failure at first paint**: `.hero` laid out 730px in a 380px viewport, document
+   744px. The hero was the *symptom*. Measuring min-content per grid item found the cause:
+   `#panel-4`'s comparison tables give it a min-content of **730px**, and with `.page`'s
+   implicit `auto` track that single panel sized the one column for the whole page. Fixed
+   with `grid-template-columns: minmax(0, 1fr)`. The `overflow-x: auto` on `.table-wrap`
+   could never have helped while the item was free to grow.
+2. **The reflow bug was masking a keyboard defect.** With the fix in, axe immediately flagged
+   `scrollable-region-focusable` on `#real-falcon-info > .table-wrap` — a dynamically
+   rendered scroller with no `tabindex`. It was not a violation before *because the panel was
+   730px wide and the region never had to scroll.* Fixing 1.4.10 exposed 2.1.1.
+3. The previous pass also added `tabindex="0"` to seven regions **without a focus style** —
+   the rule covered only `button`, `a`, `textarea`. Focusable with no visible focus indicator
+   is a 2.4.7 failure introduced by the fix. Added, with `outline-offset: 0` since these sit
+   flush inside grid panels.
+
+**Two "findings" from dead agents dissolved under isolation**, and both were contention, not
+defects: lattice-gentle's reported *"light @380 takes 5.7 minutes while the others take 14s"*
+(the whole suite runs in **56s** alone), and mac-race's two failures at 17.5 minutes (**15.6s**
+alone). Concurrent work on this box distorts timing badly enough to invent findings. The
+recorded parallel-repo hazard has a second form: not just stale bundles, but **timeouts that
+read as defects**.
+
 ### The empirical result of recommendation 2
 
 Five detectors, each validated against a known answer, each returning ~zero across the fleet:

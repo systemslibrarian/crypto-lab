@@ -2473,6 +2473,166 @@ with the fix reverted and reports clean with it in place — unchanged across al
   their host and the oracle measures against the host's backdrop, so those ratios are not
   trustworthy.
 
+### RECOMMENDATION 2 — the teaching-correctness sweep (started 2026-08-10)
+
+**Thesis:** for a site whose purpose is teaching cryptography correctly, a demo that lies is
+worse than one with a contrast failure. So: for every claim the page renders, **is this
+sentence true in the state it is being shown in?**
+
+**Instrument first, and the instrument reported its own limit.** I wrote
+`scratchpad/teaching-classes.md` from ~13 known answers found incidentally by the a11y work,
+then built three mechanical detectors and validated each against a defect somebody had
+already found:
+
+| detector | validation | fleet result |
+|---|---|---|
+| shipped default contradicts the code's own fallback | 3 hits pre-fix, 0 post-fix | **0** — `harvest-timeline` was the only one |
+| batch runner disabled by its own re-entrancy guard | names both dead callees, clean post-fix | **0** — `zk-proof-lab` was the only one |
+| printed difference that can go negative | fires on pre-fix source | 11 candidates, **0 real** |
+
+The first two are genuine negative results worth having: those defects were serious but
+**singular**. The third is the lesson — its 11 candidates were `Math.abs`-guarded, already
+fixed, or matched no subtraction at all. Getting the first detector right took **three**
+attempts (a literal `<select>` span found nothing in the repo that defined the class;
+file-wide `selected` was defeated by `selectedIndex`; any-template/any-fallback over-fired on
+fixed source). Each failure was visible only because a known answer existed to check against.
+
+**Conclusion: these defects are semantic.** A sentence asserting something the code does not
+do — a regex cannot see the relationship between a claim and its computation. The audit is
+therefore done by driving the lab and reading what it says. Brief:
+`scratchpad/claims-audit-brief.md`.
+
+**shor — 5 defects, committed `195537f`.** The strongest single result of either
+recommendation so far:
+1. `✓ Stage 3 — recovered the period r` appended after EVERY continued-fractions step,
+   `step.success` or not — so the banner sat one line below the step's own *"the period was
+   not recovered, so this base is discarded"*. **53 of 720 engine runs** take that branch.
+2. The convergents caption promised a highlighted row in that same failed state, where
+   nothing is crowned.
+3. `#live-callout` was written and never cleared: Reset returned three panels to placeholders
+   and left this one asserting *"This demo factored N = 143 → 11 × 13"*; running a prime next
+   put *"there is nothing to factor"* and *"this demo factored N = 143"* on screen together.
+4. `parseInt('15.5') === 15` — typing a fraction factored a different number from the one in
+   the field, while the error copy promised "a whole number".
+5. A per-run outcome stated as a property of the input (*"N was resolved classically … for
+   this input"*, when a third of runs on that N do not).
+
+Four claims were **cleared with numbers** (0/720 counterexamples on the p×q identity and on
+the crowned convergent being the true minimal order; the resource estimates checked against
+the RSA table). A negative result stated with its sample size is worth more than an
+unrefuted one.
+
+**grover — 5 defects, all in one panel, and a test that encoded the same error.**
+The race panel renders an explicit invariant: *"Both bars share one timeline: equal width =
+equal number of oracle queries."* The bar was scaled by `groverQueryCount` = **2k*+1**, the
+*reflection* count. Diffusion is not an oracle call, and the lab's own glossary defines query
+complexity as "number of oracle calls", so:
+
+1. The quantum bar was drawn **~2x too wide at every n**, against a caption asserting width
+   *is* the query count.
+2. At **n = 2 and n = 3** the inflated count (3, 5) exceeds the classical figure (2, 4), so
+   `Math.min(1, …)` pinned both bars to **100% — a dead heat** — directly beneath a caption
+   promising *"Grover reaches the target … while the classical search is still scanning"*,
+   and beside status lines reading **1 query against 2**. Three rendered things, three
+   different answers. Both settings are one slider drag from the default.
+3. A 1.5% visibility floor silently inflated the bar a further **1.22x (n=16) to 4.89x
+   (n=20)** — breaking the stated invariant exactly where the speedup is most dramatic.
+4. The **speedup table one row below disagrees with the race panel by π/2**: it is N/√N where
+   the race is (N/2)/k*. At n=16 the table says **256x** while the panel above it says
+   32,768 / 201 = **163x**. Neither stated its basis.
+5. Two dead branches printed nothing: `n <= 20 ? '' : …` and `n === 128 ? … : ''` — the
+   slider maxes at 20, so *"~317 years"* and *"~10^15 years"* were unreachable.
+
+Fixed: a new `groverOracleQueries` (= k*) scales the bar; the reflection count is still shown
+but never called a query; a floored bar is hatched and states its true share ("to scale it
+would be 0.15% of the classical timeline"); both speedup figures now name the quantities they
+compare. Also tightened the hero's *"halving the effective bits of AES and hashes"* to say
+**preimage** resistance — the exact conflation the lab's own glossary warns about.
+
+**The suite had encoded the bug.** `claims.spec.ts` asserted `2k*+1 < N/2` — false at n = 2
+and n = 3 — and ran only `n ∈ {4, 10, 16}`, skipping precisely the range that would have
+exposed it. This is the fleet's dominant defect class arriving from the other direction: not
+a test pinning behaviour a fix changed, but a test **built around the defect's own
+assumption** and scoped to avoid its counterexample.
+
+Regression: the new tests measure the *laid-out* bar widths and assert `width == k*/(N/2)` at
+**every n from 2 to 20**, or that a floored bar says so and states its true share. Verified by
+mutation — reverting to `2k*+1` fails all three, and they fail at **n = 2**, the setting the
+old test skipped. First mutation attempt was invalid (removing the call left an unused import,
+`noUnusedLocals` broke the build, Playwright's webServer never started — the recorded
+"a mutation that breaks the build proves nothing" hazard, hit live).
+
+**One methodological note:** my first version of the new test read 0.375 where it expected
+0.5 — `.race-bar` carries `transition: width .15s linear`, which `emulateMedia({reducedMotion})`
+does **not** disable, so `getBoundingClientRect` returned the *previous* n's width mid-animation.
+Any test measuring geometry after a state change must wait for the laid-out width to agree
+with the inline target width. Reduced-motion emulation is not transition suppression.
+
+**A fourth detector, generalised from grover — and it confirms the pattern.** grover's defect
+had a structural signature worth chasing: *a display dimension that is floored or clamped,
+next to prose asserting the dimension is to scale.* Two stages, because the candidate is
+mechanical but the verdict is semantic:
+
+- Stage 1 (floored/clamped display dimensions): **25+ repos**, floors from 0.4% to 7%, plus
+  `Math.min(100, …)` clamps that pin a bar at full width while the value exceeds its max.
+- Stage 2 (a proximate to-scale claim in rendered prose): **1 hit fleet-wide**, and it is
+  about bcrypt cost, not a bar.
+
+Validated against pre-fix grover, where stage 2 fires on the rendered caption. So the floors
+are almost all honest visibility minimums with nothing claiming otherwise — **grover was the
+only lab that promised its bars were to scale and then floored them.**
+
+**A fifth detector — written-but-never-cleared panels** (`scratchpad/staleclaim.py`), the
+class behind shor's `#live-callout`. Static: bind element ids to their cached variables, find
+`.innerHTML`/`.textContent` writes, find the reset scope (named `reset*`/`clear*` function,
+arrow, or `resetBtn.addEventListener('click', …)`), and diff. Validated **both** directions —
+it names `live-callout` on pre-fix shor and goes quiet on post-fix.
+
+Raw fleet output is noise: **45 files** have uncleared panels, because a lab whose `render()`
+repaints everything has a reset that clears nothing (grover: 26 "uncleared", all fine). The
+signal is the *shor shape* — a reset that clears most panels and misses one or two. Filtering
+to `cleared >= 3 and 1 <= missed <= 3` leaves **exactly one** candidate fleet-wide,
+`time-lock-puzzle/src/ui/solve.ts` (misses `reveal`, `solveParams`) — and on inspection it is
+a **false positive**: `resetStats()` hides `#reveal` with `display:none` and `showReveal()`
+always rewrites its text, so stale content cannot reach the screen. `solveParams` is rebuilt
+in `loadPuzzle`. Real result: **1 candidate, 0 defects.**
+
+### The empirical result of recommendation 2
+
+Five detectors, each validated against a known answer, each returning ~zero across the fleet:
+
+| detector | fleet candidates | real |
+|---|---|---|
+| shipped default contradicts the code's own fallback | 0 | 0 |
+| batch runner disabled by its own re-entrancy guard | 0 | 0 |
+| printed difference that can go negative | 11 | 0 |
+| floored/clamped display dimension + a to-scale claim | 25+ → 1 | 1 (grover) |
+| verdict panel written but never cleared on reset | 45 → 1 | 0 |
+
+**Mechanical detection does not scale for this defect class.** Both real hauls — shor's five
+and grover's five — came from reading a lab and driving it, not from a grep. That is the
+finding, and it sets the shape of the rest of the sweep: audit labs one at a time, and treat
+detectors as a way to *clear* ground cheaply rather than to find defects.
+
+Three greps in this stretch answered the wrong question, all in the same way — **a silent
+failure reads exactly like a clean result**:
+- `--include=*.ts` unquoted, so zsh globbed it before grep saw it → empty sweep.
+- `xargs -a file` does not exist on BSD/macOS xargs; the run failed and `2>/dev/null`
+  swallowed the error → "0 findings". Same failure mode as the survey that silently lost 16
+  repos. **Do not silence stderr on a diagnostic run.**
+- The first stale-panel regex required the element lookup and the write in one expression;
+  the fleet's dominant idiom caches the element in a `const`, so it found nothing on the
+  known answer. Always run a new detector against a known positive *first*.
+
+**Four techniques carried forward into the brief** — they are what did the work:
+- Quantify how often the bad branch is taken by running the lab's own engine headless in
+  node. "53 of 720" is a shipped defect; "theoretically reachable" is an argument.
+- Pin `crypto.getRandomValues` to zeros to make a rare state deterministic and testable.
+- Assert an **invariant between two rendered things** (count of success banners == count of
+  crowned rows), not a string. It survives copy edits and catches the whole class.
+- Drive **transitions** — Reset, then a second run with different input — not just states.
+  That is where the written-but-never-cleared class hides, and it is invisible otherwise.
+
 ### Task 15 — CLOSED, and it was already done (2026-08-09)
 
 The record said five labs still carried live `BEGIN/END crypto-lab shared header` markers, one

@@ -96,7 +96,17 @@ Two distinct raw keys hashing to one final key, in the panel that teaches privac
 amplification. Fix: pack exactly, domain-separate, include the bit length, reject empty.
 This is the most under-ranked item in the whole review set.
 
-### patron-shield: bit-31 collusion recovery — **OPEN, latent**
+### patron-shield: bit-31 collusion recovery — **FIXED, `3b1d77b`**
+
+Measured before fixing: **200/200 trials at bit 31 returned `NaN`; 6200/6200 at bits 0–30 were
+correct.** Fixed with `31 - Math.clz32(diff >>> 0)`, and the `DB_SIZE <= 32` invariant is now
+exercised by running the whole protocol on a synthetic 32-record database including index 31.
+
+**Mutation-testing note:** `>>> 0` and `clz32` are *each independently sufficient*, so
+reverting one half does not reproduce the bug. Only reverting both does. A single-token
+mutation would have "proved" the test bites when it does not.
+
+### patron-shield (original entry, superseded above)
 
 `Math.log2(maskS ^ maskSPrime)` returns `NaN` when bit 31 is set (the XOR is negative and the
 power-of-two guard passes anyway). Correct fix is `31 - Math.clz32(diff >>> 0)`.

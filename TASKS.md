@@ -2934,6 +2934,56 @@ a one-line fix when those repos are next touched; not worth a pass of its own.
 commands" — would have read as 12 defects. Checking what the command actually ran turned it
 into zero defects and one trap.)
 
+**jevil `0e7845d` — a lab's security claim broken by its own engine.** The page said *"Even
+unlimited computing power can't tell which is `f`"* — while the public key publishes a
+256-bit binding fingerprint of the coefficients, derived deterministically from a seed. **With
+zero signatures issued and zero points revealed, a brute-force over the seed space recovered
+the exact key from the fingerprint alone.** And the seed was **8 bytes** — a 2^64 key space,
+on a page whose hero advertised *"~124-bit-safe"*. Both fixed: 32-byte seed, and the claim
+scoped to the evaluation equations, which is where it is actually true.
+
+Also in jevil:
+- *"Infinitely many polynomials fit"* is **false in a finite field** — with m distinct points
+  exactly `|F|^(D+1−m)` fit. The page now computes and prints it (2^704 → 1 at default
+  params), which is a better lesson than the wrong word.
+- **The transcript verifier accepted almost everything: 10 of 11 tampered fields still
+  verified** (`ood`, `version`, `field`, `rootHint` and every parameter identity ignored; an
+  unknown `field` fell through to the base field). Worse, **a transcript exported from a
+  completely different key verified "ok"**, because the fingerprint being checked lives in
+  the same file. Now split into `OK_INTERNALLY_CONSISTENT` vs `OK_ANCHORED`.
+- `deriveOOD` never enforced out-of-domain: **0 of 1000 keys collided** (expected ~1.3e-18),
+  so it has never fired — an expectation rather than an invariant. Now rejection-sampled,
+  with the rejection branch tested via an **injected draw source** rather than waited for.
+
+**patron-shield `3b1d77b` — the calibration held exactly, and 7 more confirmed.** The briefed
+bit-31 defect measured **200/200 `NaN` at bit 31, 6200/6200 correct at bits 0–30**; fixed, and
+the `DB_SIZE <= 32` invariant is now exercised by running the whole protocol on a synthetic
+32-record database including index 31. *Note for future mutation testing:* `>>> 0` and
+`clz32` are **each independently sufficient**, so reverting either half alone does not
+reproduce the bug — only reverting both does.
+- **√N scaling used `Math.round`**, so **2 of 6 slider positions** printed a column-mask width
+  too small to address the catalog: N=100,000 showed 316, and 316² = 99,856 — **144 records
+  with no cell at all.** **The claims test recomputed the same `Math.round` formula**, so it
+  agreed with the bug. Seventh instance of the pattern.
+- *"you transfer one record's worth of data"* — contradicted by an exhibit two panels down
+  that displays **two** record-sized responses.
+- `generateQuery` accepted non-integers, worse than the review said: `NaN` produced a
+  structurally valid query targeting record 0 while reporting `differingBit: NaN`.
+- **A skip link pointing at `#app`, which does not exist** — and axe never caught it, because
+  its skip-link rule is best-practice, not WCAG A/AA. A reminder that a green a11y suite is
+  scoped to what it checks.
+
+**35 mutations across the two repos, all confirmed to bite with green builds** — and the agent
+**rewrote two of its own tests that turned out to be blind**: jevil's params-identity cases
+each violated more than one identity, so a later check masked the earlier one, and a
+point-count flood was caught by the duplicate check rather than the size cap it was meant to
+exercise. Self-auditing the test, not just the code.
+
+**Declined and reported rather than silently changed:** jevil's modulo bias is **real and
+measured** (`q0 mod T = 1` for every offered T, a 2^-59…2^-56 relative bias against a 2^-124
+target), but fixing it changes every derived position — a derivation-contract change, so it
+went into `KNOWN-GAPS.md` instead.
+
 ### The empirical result of recommendation 2
 
 Five detectors, each validated against a known answer, each returning ~zero across the fleet:

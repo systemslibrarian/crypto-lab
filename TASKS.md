@@ -2869,6 +2869,71 @@ shifts, and serializing the benchmarks changed completion timing enough to expos
 quiesced and confirmed stable over two consecutive full runs, but **it compares canvas pixel
 hashes, which is inherently brittle and deserves a different assertion later.**
 
+**phantom-vault `9780a0c`, `b82a2cc` — the worst teaching defect of the sweep: the page
+certified passphrases its own panel cracks.** `Strength:` was `min(format ceiling,
+composition ceiling)` — two *upper bounds* — printed as a verdict. Over the shipped
+`DEFAULT_WORDLIST`, **5 of 8 entries score better than "Weak"**:
+- `"correct horse battery staple"` → **"Very Strong, about 129 bits"**, cracked at guess 4.
+- `password123` → **"Fair, 57 bits"**, cracked at guess 5 in 249 ms — and that is exactly
+  what the lab's own **"Try a weak passphrase" button types in.**
+
+A lab whose subject is passphrase strength told visitors a passphrase was strong and then
+broke it on the same screen. Only the "Weak" band is a verdict now; above it reads "at
+most …" on the label, `aria-valuetext` and live region. Compounding it, the "Not capped"
+branch actively **endorsed** the passphrase ("not what's holding you back") — firing for
+`password123` at length 8 and for `correct horse battery staple` across lengths 8–25.
+
+Also: the entropy-cap panel kept describing the passphrase after `clearSensitive()` wiped it
+(no `input` event — **100% of derivations**); the attack panel called a search that compared
+**0 of 8** candidates a clean "exhaustion"; "94-symbol charset" (it is 89); and the collision
+margin used `alphabet^length` rather than the reachable space. Per TRIAGE Tier 2, "MASTER
+PASSPHRASE RECOVERED" is now "CREDENTIAL-CONSISTENT PASSPHRASE FOUND", with evidence strength
+computed — 37.6 bits at the minimum shipped format, against the panel's own "billions of
+entries" (2^30), implying ~0.5% collision odds.
+
+**simon-period `8c365cd` — 6 teaching defects, all on the control path.** The pattern is
+striking: nearly every one is a claim that is true of the *periodic* target and printed for
+the *injective* one, whose entire job is to show the algorithm finding nothing.
+- The arithmetic panel asserted f "collided by accident on top of its period", "a union of
+  s-cosets", and "kills every y with y·s = 1" — three false claims, on **480/480** control
+  rounds at each of n=4,5,6, where an injective f leaves exactly one input.
+- *"0 of 32 outcomes cancelled to exactly zero — they are impossible"*: an impossibility
+  asserted about the **empty set**, 480/480 control rounds.
+- The rank meter printed **"5 / 4 needed"** and announced it to screen readers; 100/100
+  control runs at every width end above the stated requirement.
+- The race labelled the control's classical bar "birthday (classical)" and quoted "birthday
+  bound 2^(n/2) ≈ 8.0" beside a measured 64.0 — a permutation never collides (**0 of 40**
+  trials found a period at each width).
+- The honesty panel asserted Even-Mansour never satisfies Simon's promise while the target
+  card can print the opposite: a complete census found **2 of the 15 possible k₁ at n=4** are
+  exactly 2-to-1, so **13.3% of "New secret" presses put two exhibits in flat contradiction.**
+
+**Cleared by complete census, not sampling:** simon-period's EM period uniqueness — all 109
+k₁ values at n=4,5,6, **0** with a second period, so the "stalled forever" failure is
+unreachable (the test was still tightened, since the invariant permitted it). phantom-vault's
+modulo-bias panel is never vacuous — all 15 charset combinations give sizes none of which
+divides 256.
+
+**Stale recommendations found again:** two of simon-period's were already fixed. Across the
+four repos triaged so far, roughly a third of the review is already done — which is the
+strongest argument for verifying before scheduling.
+
+**A CI-integrity finding, checked fleet-wide before being believed.** In both repos
+`test:a11y` and `test:e2e` were **the same command**, so splitting them naively would have
+silently dropped the claims suite from CI; the agent moved deployment to `test:e2e` so the
+split kept full coverage.
+
+Fleet check: **31 repos define both scripts, and in 12 the two commands are identical.** But
+every one of those 12 is the unfiltered `playwright test`, and **none filters to a subset** —
+so *coverage is complete today in all of them*. This is a **latent naming trap, not a live
+gap**: the two names imply a split that does not exist, so anyone who later narrows
+`test:a11y` to the a11y spec silently drops the claims suite from whatever invokes it. Worth
+a one-line fix when those repos are next touched; not worth a pass of its own.
+
+(Recording the distinction deliberately. The first count — "12 repos with identical
+commands" — would have read as 12 defects. Checking what the command actually ran turned it
+into zero defects and one trap.)
+
 ### The empirical result of recommendation 2
 
 Five detectors, each validated against a known answer, each returning ~zero across the fleet:

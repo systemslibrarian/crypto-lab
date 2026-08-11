@@ -2984,6 +2984,42 @@ measured** (`q0 mod T = 1` for every offered T, a 2^-59…2^-56 relative bias ag
 target), but fixing it changes every derived position — a derivation-contract change, so it
 went into `KNOWN-GAPS.md` instead.
 
+**Task 14 batch — lll-break `13a9058`, matsui-line `943a216`, mayo-seal `6b5ba1c`.** Three
+more honest gates; **13 defects**. What makes this batch worth recording is how precisely the
+commit messages document *how the old gates faked passing*:
+
+- **lll-break's** old spec injected `animation:none!important`, forced every `<details>` open
+  from script, guarded every drive step with `if (await btn.count())` — so a missing control
+  silently skipped instead of failing — then scanned **once**, in two themes, at one
+  viewport. Exhibits 1 and 5 were never touched, no slider ever moved, 380px never scanned.
+  Its one 1.4.11 check queried `input, select, textarea` — **exactly the three selectors the
+  correct token was already applied to.** (The same shape as lattice-gentle. That token
+  check has now been found self-confirming in three separate repos.)
+  Found 6: every button dissolved into its panel; 629px of content in a 380px viewport; seven
+  `tabindex="0"` regions with no focus indicator; **the focus ring itself invisible in the
+  light theme**; footer links with no colour rule at all; and a meaningful-graphic failure
+  measured from screenshot pixels.
+- **matsui-line's** old spec was worse: it stripped `hidden` from every `[hidden]` element and
+  added `active is-active open` to each, producing **a document no visitor can reach** — the
+  custom-mask inputs and a Cancel button for a measurement that was not running, on screen
+  together. It then scanned four times, always *after* the whole drive, so every state
+  `driveDemos()` built was overwritten before anything measured it. The narrow test drove at
+  380px, scanned, toggled the theme and scanned again **without re-driving**.
+  Found 3, including `.btn-primary` painting its border the same colour as its fill.
+- **mayo-seal** — 35 states per configuration, and it folded in the `hidden`-attribute check
+  from the standing brief. Found 3, the sharpest being a zero inside a failing matrix cell:
+  `--text-muted` was chosen against the *page* surfaces, but a `.cell--bad` composites the
+  alarm tint to `rgb(229, 190, 175)`, a surface those numbers never described, and the ink
+  measured **3.95:1**. Scoped to `.cell--zero.cell--bad` only, because the same oracle
+  measured `.cell--ok` and `.cell--oilblock` in every driven state and neither fails.
+
+I finished mayo-seal after its agent stalled, and **verified the mutation myself rather than
+trusting the diff**: reverting the cell colour fails both light configurations with
+`3.95:1 (needs 4.5:1) … fg rgb(85, 96, 58) on rgb(229, 190, 175) — "0"`, reproducing the
+agent's measurement exactly — and it fails in a **late driven state** ("the whipping
+walkthrough run at TOY parameters"), not at first paint. A gate that only sees the default
+state could not have found any of the three.
+
 ### The empirical result of recommendation 2
 
 Five detectors, each validated against a known answer, each returning ~zero across the fleet:

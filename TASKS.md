@@ -2777,6 +2777,43 @@ alone). Concurrent work on this box distorts timing badly enough to invent findi
 recorded parallel-repo hazard has a second form: not just stale bundles, but **timeouts that
 read as defects**.
 
+### Task 11 and recommendation 2, merged — verifying the external review pays
+
+The external review's labs overlap what a claims audit would examine anyway, so they are now
+worked together: verify each recommendation against current code, **measure reachability**,
+then fix.
+
+**bb84 `0671c36` — 2 confirmed, 1 verified-and-declined.**
+
+1. **The threshold boundary.** `eveDetected` was `qber > safeThreshold`, so a run landing
+   exactly on the threshold took the *clean* branch and the page said the QBER was "below"
+   the threshold, "under" the threshold, and "no eavesdropper detectable" — all false at
+   equality. Measured over **19,200 engine runs** (5 thresholds × 4 photon counts × Eve
+   on/off × 4 noise rates): equality occurs in **59 runs (0.31%), and 49 of those 59 have
+   Eve present.** The boundary is overwhelmingly the run where BB84's entire teaching point
+   gets an on-screen denial with the eavesdropper on the line, and it concentrates at
+   threshold 20% / 64 photons — both one slider drag from the defaults. Now `>=`, which is
+   also the fail-closed reading; the wording moved from "exceeds" to "is at or above".
+2. **Privacy amplification did not bind the raw-key length.** `bitsToBytes` fills its 16-byte
+   minimum by repeating the bit sequence cyclically, so a 16-bit key, its 32-bit double and
+   its 64-bit quadruple all derived **byte-for-byte identical** final keys. Fixed by putting
+   a 4-byte bit length beside the counter in the hash input. Reported as **structural, not
+   reachable** — random raw keys are not exact repetitions of one another.
+3. **Declined, with the reason.** `privacyAmplification` still runs on aborted transcripts:
+   `runBB84` derives both keys before anything reads `eveDetected`. The UI refuses to expose
+   them so nothing reaches the visitor, and making the core fail-closed means restructuring
+   the return type into a discriminated union — a decision about the module's contract, not a
+   defect fix. Left for a deliberate call.
+
+**The existing e2e test had encoded the strict boundary** — it asserted the detected QBER
+`toBeGreaterThan` its own threshold, which the corrected code violates at equality. That is
+the **sixth** instance of this pattern in the sweep.
+
+**The calibration in the task-11 notes held**: accurate on the code, silent on reachability.
+Both confirmed findings were real; both needed measurement before their severity was
+knowable, and the measurement changed the verdict in opposite directions — the boundary case
+turned out far more serious than its 0.31% rate suggests, and the collision far less.
+
 ### The empirical result of recommendation 2
 
 Five detectors, each validated against a known answer, each returning ~zero across the fleet:

@@ -29,6 +29,30 @@ So: **do not work the lists in the order given.** Check reachability first, and 
 
 ## Tier 1 — verified real defects
 
+### noise-pipe: concurrent sends reused a nonce — **FIXED, `f5f6a6c`**
+
+`encryptWithAd` read `this.n`, awaited WebCrypto, then incremented. **200 of 200** concurrent
+pairs reused nonce 0 with byte-identical keystream prefixes, and a **double-click on the
+shipped send button** put 2 records out under 1 GCM IV in a real browser. Post-fix 0 of 200.
+The most serious confirmed item in the review set so far, because it is reachable by an
+ordinary user gesture rather than by a contrived input.
+
+Its sibling races were measured rather than assumed: the pattern-selection race is 300/300 in
+one tick but **0/200 at a realistic 16 ms click gap**, and the stale break-it window is
+**0–8.6 ms** — both fixed anyway because the guards are a few lines each, but neither is the
+emergency the ranking implied.
+
+### timing-oracle: two panels overstated what the code did — **FIXED, `b499288`/`d93466a`**
+
+Neither was in the review's priority list. Panel 1 counted characters the comparator never
+examined — it returns on a length mismatch *before* the loop, so **98 of a 124-guess corpus**
+were overstated, under a caption reading "exact every run". Panel 3's "uniform" ladder tally
+moved with the secret, because `bitsOf()` strips leading zeros: **1027 of 2000** draws
+rendered fewer than 10 positions while the caption said "no matter the bit values".
+
+Both are the recommendation-2 shape — a sentence asserting something the code does not do —
+and both outrank most of what the review did prioritise for this repo.
+
 ### noise-pipe: Reset reused a (key, nonce) pair — **FIXED, `7ee1e0a`**
 
 `resetTransport()` called `setNonce(0)` on the same `CipherState` objects. send → Reset →

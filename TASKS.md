@@ -2814,6 +2814,61 @@ Both confirmed findings were real; both needed measurement before their severity
 knowable, and the measurement changed the verdict in opposite directions — the boundary case
 turned out far more serious than its 0.31% rate suggests, and the collision far less.
 
+**noise-pipe `f5f6a6c` — 5 confirmed, plus a teaching defect the review never ranked.**
+- **Concurrent-encryption nonce reuse.** `encryptWithAd` read `this.n`, awaited WebCrypto, then
+  incremented. Not a rare race: **200 of 200** concurrent pairs reused nonce 0 with
+  byte-identical keystream prefixes, and in a real browser a **double-click on the shipped
+  send button** put 2 records out under 1 distinct GCM IV. Fixed by serializing every
+  `CipherState` op and reserving the counter before the first await. Post-fix **0 of 200**.
+- Pattern-selection race: a *slower* pattern started first always settles last — **300/300**
+  in one tick, **0/200** at a realistic 16 ms gap. Latent but unbounded; guarded.
+- Stale break-it results: window measured at **0–8.6 ms**, so not hand-reachable — fixed
+  anyway because the guard is four lines and the browser test reproduces "IK accepted the
+  forged responder static key" under the NN heading.
+- **The teaching defect, which the review did not rank at all: the forward-secrecy verdict
+  was printed, not computed.** All 13 patterns claimed *"Stealing both static private keys …
+  AEAD rejects the static-only key"*, while **4 of 13 (NN, NK, KN, IN) ran no decryption at
+  all**, **3 of 13 own exactly one static key**, and NN contradicted itself inside a single
+  sentence. Now it enumerates every DH the attacker can actually form from the keys that
+  pattern owns, tries each, and reports the count. **The one e2e test covering this ran only
+  NN — the single pattern where the wrong key count was masked.**
+
+**timing-oracle `b499288`, `d93466a` — 5 confirmed.**
+- **Panel 1 counted characters the loop never ran.** The comparator returns on
+  `a.length !== b.length` *before* the loop, so a wrong-length guess executes **zero**
+  comparisons. Across a 124-guess corpus reachable from the shipped defaults, **98 differed
+  in length and every one was overstated** — guessing the secret minus its last character
+  reported "only 25 byte checks ran" for a comparator that ran none, under a caption reading
+  "exact every run". Now modelled as a length gate, and it teaches what that gate leaks: the
+  secret's **length**, before a single character is probed.
+- **Panel 3's "uniform" ladder tally moved with the secret.** `bitsOf()` strips leading
+  zeros, so the rendered width was a function of the top bit: **1027 of 2000** draws rendered
+  fewer than 10 positions, and the on-screen tally ranged over all ten values 1–10 while the
+  caption said *"no matter the bit values"*. Padded to a fixed 10-bit window.
+- Benchmark serialization confirmed **empirically, not structurally**: with the page in view,
+  **three panels were in the Running state at the same instant** while each verdict claimed
+  "measured on this machine".
+- UTF-16 code units labelled "bytes" (`🔑🔑🔑` = 6 units, 12 bytes) — fixed in panel 1, left
+  alone in the HMAC panel, which really does compare bytes.
+
+**The dominant pattern held four more times, and it is now unmistakable.** timing-oracle's
+`operations` assertions all used **equal-length pairs** (unequal lengths appeared only in the
+boolean test); its ladder test picked `0b10000000` and `0b11111111`, **both with the top bit
+set — the only case where the width survives**; its panel-1 e2e used equal-length strings.
+noise-pipe's forward-secrecy test ran only NN. That is **ten instances** across the sweep.
+
+**Cleared, and worth recording as cleared:** noise-pipe's transport reset (already fixed in
+`7ee1e0a`); timing-oracle's in-flight HMAC race (already fixed *more thoroughly* than the
+review proposed — generation guard **and** an `inFlight` flag, with a browser test) and its
+verdict-overreach class (already done in `bfdbfd6`). Roughly a third of what the review
+raised for these two repos was already done.
+
+**A caveat the agent flagged rather than buried:** timing-oracle's modeled-overlay e2e test
+had latent flakiness — a debounced resize redraw re-renders canvases when document height
+shifts, and serializing the benchmarks changed completion timing enough to expose it. It was
+quiesced and confirmed stable over two consecutive full runs, but **it compares canvas pixel
+hashes, which is inherently brittle and deserves a different assertion later.**
+
 ### The empirical result of recommendation 2
 
 Five detectors, each validated against a known answer, each returning ~zero across the fleet:

@@ -39,7 +39,26 @@ The lab teaches this exact catastrophe three panels up. **The e2e test required 
 "Reset must return the counters to zero AND leave the controls usable" pinned the rewind.
 Reset is now "New session" and re-runs the handshake; counters reset because the keys changed.
 
-### bb84: `bitsToBytes()` collides, and empty input yields a fixed key — **OPEN**
+### bb84: `bitsToBytes()` collides, and the QBER threshold boundary — **FIXED, `0671c36`**
+
+Both confirmed and fixed. The collision was real — a 16-bit key, its 32-bit double and its
+64-bit quadruple all derived byte-for-byte identical final keys — and is now separated by a
+4-byte raw-key bit length in the hash input. But it is **structural, not reachable**: random
+raw keys do not arise as exact repetitions of one another, so "the most under-ranked item in
+the whole review set" (below) was itself over-ranked.
+
+**The genuinely under-ranked item in bb84 was the threshold boundary**, which the review
+filed as a wording nit. `eveDetected` was `qber > threshold`, so a run landing exactly on the
+threshold took the *clean* branch and the page said "below the threshold" and "no
+eavesdropper detectable". Measured over **19,200 engine runs: equality occurs in 59 (0.31%),
+and 49 of those 59 have Eve present.** A 0.31% path that is 83% concentrated on the one case
+where the lab denies the thing it exists to teach. Now `>=`.
+
+Lesson for the rest of this triage: **rank by what the failing state MEANS, not by how exotic
+the mechanism sounds.** A cyclic-repetition collision reads alarming and cannot happen; an
+off-by-one comparison reads trivial and lands squarely on the teaching point.
+
+### bb84 (original entry, superseded above)
 
 `idx = (i * 8 + j) % bits.length` cycles the raw key to fill 16 bytes. Verified:
 
@@ -60,6 +79,30 @@ power-of-two guard passes anyway). Correct fix is `31 - Math.clz32(diff >>> 0)`.
 
 Not reachable today — `DB_SIZE` is `CATALOG.length` = 8 — but the repo's own test asserts only
 `DB_SIZE <= 32`, so the invariant permits the range that breaks. Fix both.
+
+### pake-gate: Dragonfly counter wrap — **PARTLY ALREADY DONE, remainder unreachable**
+
+Checked statically against current code, not scheduled. The review asks to enforce
+`1 <= counter <= 255` because the counter is serialized as one octet
+(`Uint8Array.of(counter & 0xff)`) while the loop may run to 4,000, so candidates would repeat.
+
+- The **fixed-work** path already has `maxCounter = 255` (`src/pake/dragonfly.ts:151`), so that
+  half of the recommendation has landed since the review was written.
+- The **legacy hunt-and-peck** path still bounds at 4,000 (`dragonfly.ts:137`). Reaching
+  counter 256 needs ~255 consecutive misses, each with probability ~1/2 — about **2^-255**.
+  Real in the code, unreachable in this universe.
+
+Worth a one-line bound for tidiness; not worth an agent-hour. **This is the "several of these
+demos have had work land since the review was written" caveat biting for real** — half of a
+top-priority recommendation was already implemented.
+
+### pake-gate: export session keys only after confirmation — **VERIFIED, DECLINED**
+
+Same class as bb84's aborted-transcript key derivation. The engine exposes `sessionKeyBytes`
+once candidate material exists; the review wants `exportSessionKey()` to throw before the
+confirmed phase. The review itself notes **the UI already displays an unconfirmed flag**, so
+nothing misleading reaches the visitor. Making the boundary structural is a decision about
+the module's contract, not a defect fix — left for a deliberate call rather than guessed at.
 
 ---
 

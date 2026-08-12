@@ -3227,6 +3227,27 @@ readable on that bar. Now applied and measured in `dilithium-reject` (2.45 → 3
 CLAUDE.md the shared markup is a deliberate reviewed fleet pass — **this is the evidence for
 that pass, and the recommendation is the `--cl-ink` form.**
 
+### Audit of the auditors — three more checks, all clean
+
+After finding two dead oracles in the reference gate, I swept the other ways a gate can fail
+to measure. All three come back clean across the **102 honest gates**, which is worth
+recording so the next person does not re-derive them:
+
+| check | result |
+|---|---|
+| gates that audit far fewer states than they drive (the "scan once, after the drive" antipattern) | **0** |
+| gates with no per-state audit function at all | **0** |
+| gates that assert `violations` but ignore axe's `incomplete` bucket | **0 of 102** |
+
+The one candidate for the first check was a false positive I verified before reporting:
+`musig-gate`'s `analyzeAll()` is called once, but it is a helper *inside* `scan()`, and `scan()`
+runs 52 times. **The "scan only after the drive" antipattern exists only in the old template
+gates still in the task-14 queue** — not in any honest gate written by this sweep.
+
+That `incomplete` result matters: it is the bucket where `aria-prohibited-attr` and
+`aria-required-children` are reported, and a violations-only gate is blind to the single most
+common ARIA defect in this fleet.
+
 ### Other patterns from the same batch, worth a fleet grep
 
 - **A base component block placed BELOW its same-specificity modifiers silently kills them.**

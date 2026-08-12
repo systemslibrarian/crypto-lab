@@ -3135,10 +3135,35 @@ copied from a reference is only as good as the reference, and nothing in this sw
 checking the reference itself.* Every "honest gate" commit in those repos overstated its
 coverage in good faith.
 
-**Repair progress.** `mayo-seal` `10c4b65`, `lll-break` `c3828b4`, `matsui-line` `a86d7fe`
-(mine); `downgrade-wire` `34912ab`, `dp-noise` `f3b246a`, `entropy-collapse` `209a9e8`; the
-ratchet trio `dilithium-reject` `837055c`, `dilithium-seal` `233b0e7`, `vrf-gate` `25e562c`.
-Remaining: `drbg-arena`, `dkg-gate`, `encrochat`, `envelope-kms` (both bugs each).
+**REPAIR COMPLETE — all 13 repos.** `mayo-seal` `10c4b65`, `lll-break` `c3828b4`,
+`matsui-line` `a86d7fe` (mine); `downgrade-wire` `34912ab`, `dp-noise` `f3b246a`,
+`entropy-collapse` `209a9e8`; `dilithium-reject` `837055c`, `dilithium-seal` `233b0e7`,
+`vrf-gate` `25e562c` (mine); `drbg-arena` `2606580`, `dkg-gate` `a1b6dec`, `encrochat`
+`1c07899`, `envelope-kms` `ca23ff2`.
+
+**Verified closed by re-running both detectors fleet-wide:** zero live chained builders remain;
+every `expectNoNewNonTextFailures` now runs from `scan()` (via a soft wrapper whose call site
+I confirmed individually, since the wrapper made my own detector report a false positive).
+
+**The precise scope of the blindness, measured:** `withTags(TAGS)` selects **69 of axe-core
+4.12's 105 rule definitions**; the chained form ran **4**.
+
+**The liveness proof was designed not to be vacuous.** The agent deliberately did *not* use a
+second `role="main"` — `landmark-one-main` was one of the four rules the broken form already
+ran, so it would have proved nothing. It used `<html lang="en">` → `<html>` instead, and the
+control experiment is unambiguous: identical page, identical drive, **old form 1 passed / new
+form 1 failed on `html-has-lang`**, in all four repos. Separately, all four late-state colour
+mutations were caught by axe's own `color-contrast` — itself WCAG-tagged — which is a second
+independent proof the WCAG set is live.
+
+**`dkg-gate` had no 1.4.11 coverage whatsoever**: it has no `auditControlBoundaries`, so
+`nontext.ts` was its only non-text oracle, and that oracle never executed.
+
+**Baselines recaptured** (they were empty because nothing had ever looked). Every one of these
+repos now finds **exactly two findings, both in the shared top bar, and nothing else** —
+everything inside `<main>`, the hero and the footer audit clean with no exemptions. Where the
+two themes differ the **worse** figure is recorded, because the ratchet fires on
+`ratio < baseline - 0.01`, so recording the dark number would fail every light run.
 
 **The measurement was reproduced independently through the gate's own path:**
 ```
@@ -3173,6 +3198,34 @@ any of them.
   later declaration in the same rule.
 - **Check the built bundle, not the source.** One `sed` hit the wrong line and silently
   no-oped; a `grep` on `dist/assets/*.css` caught it.
+
+### The `.cl-btn` question is now settled — by measurement, across 6 labs
+
+This sat open for weeks as "160 labs on the original 38% form, 2 fixed one way, 1 fixed the
+only form that generalises". The repaired 1.4.11 ratchets answered it, because every repo
+where the oracle came alive found the same control failing at a **different** ratio:
+
+| lab | `.cl-btn` / `#cl-theme-toggle` | why it differs |
+|---|---|---|
+| `drbg-arena` | 2.45:1 both themes | no `--accent`; fleet-teal fallback |
+| `dilithium-reject` | 2.45:1 | same |
+| `vrf-gate` | 2.45:1 | same |
+| `envelope-kms` | 2.45:1 | `--accent` set on `.cl-hero`, never reaches the bar |
+| `dilithium-seal` | 1.85:1 | `--accent: #9182f3` |
+| `dkg-gate` | 1.93 dark / **1.59** light | `--accent` at `:root` |
+| `encrochat` | 1.73 dark / **1.52** light | `--accent` at `:root` |
+
+**The defect is the design, not the value.** `color-mix(in srgb, var(--accent) 38%, transparent)`
+makes the ratio a function of each lab's accent against a bar that is always `#0b1512`. No
+single percentage can fix it fleet-wide — which is exactly why the earlier "38% → 52%" patch
+worked in the lab it was measured in and left every other lab broken.
+
+**The form that generalises is `color-mix(in srgb, var(--cl-ink) 70%, transparent)`** —
+accent-independent, because `--cl-ink` is the header's own ink and is already required to be
+readable on that bar. Now applied and measured in `dilithium-reject` (2.45 → 3.84:1),
+`dilithium-seal` and `vrf-gate`. The remaining labs are ratcheted rather than fixed, and per
+CLAUDE.md the shared markup is a deliberate reviewed fleet pass — **this is the evidence for
+that pass, and the recommendation is the `--cl-ink` form.**
 
 ### Other patterns from the same batch, worth a fleet grep
 

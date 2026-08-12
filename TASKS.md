@@ -3089,6 +3089,81 @@ carried the full payload with the 4 where it did not.
 4. An account-type selector (`44'/49'/84'/86'`) is the honest fix for the derivation-path
    claim; a reference table was added instead, since the selector is a feature.
 
+### THE GATE'S OWN AXE ORACLE WAS DEAD — 10 repos (2026-08-12)
+
+**Found independently by two agents in the same batch, and confirmed by measurement.**
+
+`AxeBuilder.withTags()` and `AxeBuilder.withRules()` both write `options.runOnly`, so
+**chaining them keeps only the last** — the plugin's docblock says *"Cannot be used with
+`AxeBuilder#withTags`"*. The reference gate in `drbg-arena/e2e/gate.ts`, the file the standing
+brief names as the copy source, is written as:
+
+```ts
+await new AxeBuilder({ page }).withTags(TAGS).withRules([...4 landmark rules]).analyze()
+```
+
+so axe ran **four best-practice rules and not one WCAG rule**, while a green result read as a
+full A/AA pass.
+
+**Measured, not argued:** on drbg-arena the chained form executes **4 rules**; `withTags`
+alone executes **63**. One agent proved it a second way — it emptied an SVG's `aria-label`, an
+unmistakable `svg-img-alt` failure, and **the gate stayed green**.
+
+**Affected (live chained form, comments excluded): 10 repos** — `dkg-gate`, `downgrade-wire`,
+`dp-noise`, `drbg-arena`, `encrochat`, `entropy-collapse`, `envelope-kms`, plus `lll-break`,
+`matsui-line` and `mayo-seal`, **which I certified earlier the same day**. The three are now
+fixed (`c3828b4`, `a86d7fe`, `10c4b65`) and all pass under the full 63-rule set, so the
+defects found in them stand — **but the gate that certified them was far narrower than its own
+commit message claimed, and saying so is the point.** The other seven still need it.
+
+The fix is two runs merged, never one chain — the landmark rules are still wanted precisely
+because they are best-practice rather than WCAG-tagged, so `withTags` alone cannot reach them.
+
+### A second dead oracle in the same file — 7 repos
+
+`expectNoNewNonTextFailures` is called **only from inside `expectScrollersReachableSoft()`**,
+which returns early when it is not collecting — so the 1.4.11 ratchet never executes in a
+strict run. That is why drbg-arena's non-text baseline is empty.
+
+Checked by locating the enclosing function of the call, not by counting call sites (the naive
+count flags every repo, since one call site is normal). In a correct gate — `grover` — the
+call is inside `scan()` and runs at every state. **Affected: `dilithium-reject`,
+`dilithium-seal`, `dkg-gate`, `drbg-arena`, `encrochat`, `envelope-kms`, `vrf-gate`.**
+
+**Union needing repair: 10 repos.** Both bugs share a cause worth stating plainly: *a gate
+copied from a reference is only as good as the reference, and nothing in this sweep was
+checking the reference itself.* Every "honest gate" commit in those repos overstated its
+coverage in good faith.
+
+### Other patterns from the same batch, worth a fleet grep
+
+- **A base component block placed BELOW its same-specificity modifiers silently kills them.**
+  Five dead rules in `musig-gate`, one of which meant the selected prediction rendered
+  identically to the unselected ones — with no ARIA state either.
+- **A bare single-column `display: grid`** is an implicit `auto` track with a min-content
+  floor. It cost two repos a reflow failure, and **in both the checker named the wrong
+  element** — `ntru-classic` scrolled to **1903px at a 1280px viewport** while the checker
+  pointed at `header.cl-hero`, merely the widest thing in a track something else stretched.
+- **`flex: 0 0 auto` with an `auto` basis is max-content that refuses to shrink.**
+- **All three labs in one batch put their control edge on the surface-divider token while
+  defining a correct control-border token and applying it only to text inputs** — and in all
+  three the old 1.4.11 check queried exactly those inputs. That is now **six** repos.
+- **A scripted `el.focus()` cannot measure 2.4.7.** Chromium applies `:focus-visible` styling
+  only for keyboard-originated focus, while `Element.matches(':focus-visible')` returns true
+  regardless — so a programmatic probe reports "no focus indicator" for elements that have
+  one. Any gate checking focus rings must press Tab.
+- **`label-content-name-mismatch` is `experimental`**, so a default axe run never executes
+  SC 2.5.3 at all.
+- **A `::before` with `content: ''` *and a background* is a drawn graphic** under 1.4.11 that
+  the standard generated-content check skips as "empty" — that is how a toggle knob hid.
+- **`ntru-classic` has no light theme at all** — `style.css` has no `[data-theme]` selector,
+  so `data-theme` is written by the shared bar and read by nothing, and the toggle is a dead
+  control. The gate previously scanned the same rendering twice under two names. `boot()` now
+  asserts the single palette so the day a light theme lands the gate fails until measured.
+  **Needs a decision: implementing it means re-picking ~40 hex values plus canvas colours.**
+- **Never revert a mutation with `git checkout -- <file>`** — one agent's mutation script
+  silently reverted all of a repo's real CSS fixes. Use file copies.
+
 ### The empirical result of recommendation 2
 
 Five detectors, each validated against a known answer, each returning ~zero across the fleet:

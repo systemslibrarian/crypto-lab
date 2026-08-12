@@ -3020,6 +3020,75 @@ agent's measurement exactly — and it fails in a **late driven state** ("the wh
 walkthrough run at TOY parameters"), not at first paint. A gate that only sees the default
 state could not have found any of the three.
 
+**j-uniward `a611c7d`, `75a52a2`, `ed7740c` — the lab's central teaching claim is false in its
+own shipped default state.** The blurb said *"At low payloads its exposure is the lowest of
+the three"*; the README went further — *"no rigged comparison: at the recommended payloads
+J-UNIWARD genuinely wins."* Measured with the lab's own modules over its own bundled covers:
+**F5's per-change mean exposure is LOWER than J-UNIWARD's in 13 of the 15 (cover, rate)
+states**, including the shipped 0.10 bpnzac default on `sample-grass.jpg` — **J-UNIWARD 7.1%,
+F5 4.5%, with F5 winning 12 of 12 keyed runs at every rate 0.10–0.50.** LSB also beats it at
+≥0.20 on grass.
+
+The cause is structural and is now taught rather than hidden: F5 only edits non-zero ACs,
+which are already the cheap textured ones, while J-UNIWARD's pool is *every* AC and its
+trellis restarts every 12 message bits. The panel now names the ordering it measured, and
+prints summed distortion too — the objective J-UNIWARD actually minimises, which it wins at
+0.10 on both textured covers and loses at 0.40.
+
+**And its headline safety metric could not fail.** *"DC / flat coefficients hit: 0 — structure
+preserved"* counted ACs costing ≥ 1e7, but **the maximum AC cost across all covers is 1.1e5 —
+0 of 64,512 ACs per cover can reach the threshold.** The number was pinned at 0 by
+construction for any DCT-domain method, and `scripts/test.ts` asserted the same tautology.
+Meanwhile J-UNIWARD *does* hit flat coefficients: worst placement at the **96.2nd percentile**
+at 0.50 bpnzac. Replaced with a costliest-decile counter that fires in **6 of 12** keyed runs
+at 0.50 and 0 of 12 at ≤0.40 — and the test now fails if it never fires.
+
+Also: F5 was compared at a payload it never carried (**163 of 216–520 requested bits** on the
+smooth cover — 75%→31%) while its bar sat under "the same payload across all three methods";
+"Carriers used: 3,510 / 3,501 NZAC" printed a numerator exceeding its own denominator; and the
+lab's own *"Smooth (sunset gradient)"* cover was badged **"Rich texture — ideal for adaptive
+embedding"** (a gradient sweeps the full luma range, variance 498) while simultaneously
+showing "13 bytes / Safe" in the table and **"(-7 bytes at current rate)"** in the banner.
+
+**bitcoin-wallet `6102b03`, `2b1a65f` — a false claim, with the lab's own exhibit built to
+agree with it.** *"Typing one wrong word makes the whole phrase fail to validate."* Enumerated
+with the repo's own validator: **61,141 of 982,560 single-word substitutions across 40 phrases
+still validate — 6.22%, about 1 in 16** — flat across all twelve positions (~128 of the other
+2,047 words at every one). The last word is not special: 7 entropy bits + 4 checksum bits.
+
+**The exhibit was scoped to confirm the falsehood.** "Mangle the last word" searches for a
+corruption the checksum *catches*, and `engine.test.ts` backed the sentence with a single
+substitution (`about`→`zoo`) that happens to fail. A counterweight now exists — **"Find a
+change the checksum misses"** — with badge, an independent SHA-256 oracle and the validator
+all agreeing it stays valid. That is the **eighth** instance of the pattern, and the first
+where the *user-facing exhibit*, not just the test, was shaped around the defect.
+
+Also: *"xpub can watch, only the seed can spend"*, contradicted three panels down by the same
+page printing the derived child's `priv hex` and WIF; and *"Wallets call `.getNextAddress()`
+exactly this way"* over a table deriving `bc1` addresses from `m/44'/0'/0'/0/i` — right
+arithmetic, wrong wallet practice, which the page's own path gloss already contradicted.
+
+**Two new verification notes, both worth remembering.** In j-uniward and bitcoin-wallet, one
+mutation each makes the tests **hang rather than fail** — a synchronous infinite loop
+(`readBits` on an exhausted segment; an unbounded CKDpriv retry), uninterruptible by any
+timeout. Both are recorded in the test files, because a hanging mutation looks like a stuck
+agent rather than a proof. And the agent **corrected an imprecision of its own** in a
+follow-up commit (`ed7740c`): "13 of 15 comparable" had conflated the 11 states where F5
+carried the full payload with the 4 where it did not.
+
+**Judgement calls reported rather than guessed — these are yours:**
+1. **j-uniward's exposure metric.** Mean per-change percentile is blind to change count, which
+   is *why* F5 wins it; switching to summed distortion would flip the ordering back. The
+   sentences are now computed and both quantities printed, but whether the bars should show
+   distortion instead is a teaching decision.
+2. **j-uniward's carrier-density band edges** (3% / 7%) are calibrated on the three bundled
+   covers; the driving number is printed beside the badge, but the thresholds are the agent's.
+3. **bitcoin-wallet defaults to mainnet and auto-generates a real key on page load**, before
+   any click — verified factual, warning present and honest, nothing rendered is false. But
+   defaulting to testnet/signet and removing auto-generate are safety decisions.
+4. An account-type selector (`44'/49'/84'/86'`) is the honest fix for the derivation-path
+   claim; a reference table was added instead, since the selector is a feature.
+
 ### The empirical result of recommendation 2
 
 Five detectors, each validated against a known answer, each returning ~zero across the fleet:

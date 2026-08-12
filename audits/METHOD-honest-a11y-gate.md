@@ -157,3 +157,61 @@ anomaly in isolation before reporting it.
    a competing declaration later in the same rule, a more specific selector elsewhere
    ((0,2,1) beating (0,1,0)), and a `sed` that hit the wrong line and silently no-oped.
    **Probe the live page for the computed value, and grep `dist/`, not `src/`.**
+
+
+---
+
+## READ THIS BEFORE WRITING ANY GATE: two oracles that were dead fleet-wide
+
+Both bugs came from the reference gate every other gate was copied from, and nothing was
+checking the reference. Thirteen repos certified themselves clean while running almost nothing.
+
+### 1. `.withTags(...).withRules(...)` runs FOUR rules, not the WCAG set
+
+`AxeBuilder.withTags()` and `AxeBuilder.withRules()` both write `options.runOnly`, so the
+second call silently replaces the first. The plugin's own docblock says *"Cannot be used with
+`AxeBuilder#withTags`"*.
+
+Measured: `withTags(TAGS)` selects **69 of axe-core 4.12's 105 rule definitions**; the chained
+form executes **4** — the landmark best-practice rules — and **zero WCAG rules**, while a green
+result reads as a full A/AA pass.
+
+**Never write this:**
+
+    await new AxeBuilder({ page }).withTags(TAGS).withRules([...]).analyze()   // WRONG
+
+**Write two runs and merge:**
+
+    const wcag = await new AxeBuilder({ page }).withTags(TAGS).analyze();
+    const landmarks = await new AxeBuilder({ page }).withRules([...]).analyze();
+    const results = {
+      violations: [...wcag.violations, ...landmarks.violations],
+      incomplete: [...wcag.incomplete, ...landmarks.incomplete],
+    };
+
+The landmark rules are still wanted: they are best-practice rather than WCAG-tagged, so
+`withTags` alone cannot reach them.
+
+**Prove your axe run is live, and pick a proof that cannot be vacuous.** Do NOT use a second
+`role="main"` — `landmark-one-main` is one of the four rules the broken form already ran, so it
+proves nothing. Use `<html lang="en">` → `<html>` and expect `html-has-lang`, or empty a link's
+accessible name and expect `link-name`.
+
+### 2. The 1.4.11 ratchet that never ran
+
+`expectNoNewNonTextFailures` was called from inside `expectScrollersReachableSoft()`, **after**
+that function's `if (!COLLECTING) return`. So in a strict run it never executed, `nontext.ts`
+was dead code, and every "no new non-text failures" claim was vacuous — with a baseline
+captured while nothing had ever looked.
+
+**Call it from `scan()`**, so it runs at every driven state, and **recapture the baseline**.
+
+Repairing this in seven repos immediately surfaced eight real control-boundary failures,
+including a `button:hover` that composites to **1.00:1 in the light theme** — the state a
+visitor is in immediately after clicking anything.
+
+### What this means for you
+
+A gate is a measuring instrument. **Before trusting a null result from one, make it fail on
+purpose.** Every "clean" in this sweep that was not accompanied by a deliberate failure turned
+out to be worth nothing.

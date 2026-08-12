@@ -3135,6 +3135,45 @@ copied from a reference is only as good as the reference, and nothing in this sw
 checking the reference itself.* Every "honest gate" commit in those repos overstated its
 coverage in good faith.
 
+**Repair progress.** `mayo-seal` `10c4b65`, `lll-break` `c3828b4`, `matsui-line` `a86d7fe`
+(mine); `downgrade-wire` `34912ab`, `dp-noise` `f3b246a`, `entropy-collapse` `209a9e8`; the
+ratchet trio `dilithium-reject` `837055c`, `dilithium-seal` `233b0e7`, `vrf-gate` `25e562c`.
+Remaining: `drbg-arena`, `dkg-gate`, `encrochat`, `envelope-kms` (both bugs each).
+
+**The measurement was reproduced independently through the gate's own path:**
+```
+CHAINED withTags().withRules()  ->  4 rules
+withTags() alone                -> 63 rules
+withRules() alone               ->  4 rules
+```
+across ~26 / 48 / 32 scanned states per configuration × 4 configurations in those three repos.
+
+**A negative result worth as much as the positives.** With 63 rules live, `downgrade-wire`,
+`dp-noise` and `entropy-collapse` are **clean** — violations and `incomplete` both empty, both
+themes, both widths. That is credible rather than suspicious: each had a prior honest-gate
+pass that fixed its defects using the oracles that were **not** dead — the arithmetic contrast
+walk, the non-text audit, reflow, scroller reachability. Only axe's WCAG ruleset was blind,
+and it turns out to add nothing there. Checked explicitly: no `aria-label` on a role-less
+container (dp-noise's `dl.stat-row` was the obvious candidate; axe does not flag it), no
+`aria-required-children` on an empty list, and the control-border pattern already fixed in all
+three.
+
+**The proof of liveness was designed so it could not be faked**: each mutation triggered a rule
+that is **not one of the four landmark rules** — `link-name` on an icon-only topbar link
+(failing in exactly the 2 of 4 configurations where the text span is `display:none`, as the
+CSS predicts) and `label` on two fields. The old chained form provably could not have seen
+any of them.
+
+**Two process notes worth carrying into every future mutation:**
+- **The CSS specificity trap mimics a dead gate.** A `.exit__revisit { color: … }` mutation at
+  (0,1,0) was beaten by `.verdict__body p` at (0,2,1); the element kept its original computed
+  colour and the gate correctly stayed green. **Probing the live page for the computed value
+  is what distinguishes "the oracle is blind" from "the mutation never applied."** I hit the
+  same class myself in padding-oracle, where an added `position: static` was overridden by a
+  later declaration in the same rule.
+- **Check the built bundle, not the source.** One `sed` hit the wrong line and silently
+  no-oped; a `grep` on `dist/assets/*.css` caught it.
+
 ### Other patterns from the same batch, worth a fleet grep
 
 - **A base component block placed BELOW its same-specificity modifiers silently kills them.**

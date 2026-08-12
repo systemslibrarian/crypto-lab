@@ -215,3 +215,30 @@ visitor is in immediately after clicking anything.
 A gate is a measuring instrument. **Before trusting a null result from one, make it fail on
 purpose.** Every "clean" in this sweep that was not accompanied by a deliberate failure turned
 out to be worth nothing.
+
+
+### A one-line runtime check worth adding to every gate
+
+Two defect classes found this week are invisible to a source grep, because the role is
+assigned as a **JS property** in an element-creation helper rather than as an HTML attribute —
+`role: 'region'` sitting next to nothing that says `<ul>`. A markup regex structurally cannot
+see it, and a looser grep returns ~40 unusable candidates.
+
+Your gate already has the page open. Ask the DOM instead:
+
+```ts
+// An explicit role on a list REPLACES its implicit `list` role, orphaning every <li>.
+// In one repo this made axe's `listitem` fire 60 times — on all of that lab's evidence.
+const brokenLists = await page.$$eval('ul[role], ol[role]', els =>
+  els.map(e => `${e.tagName.toLowerCase()}[role=${e.getAttribute('role')}] with ${e.children.length} children`));
+expect(brokenLists, 'an explicit role on a list deletes its list semantics').toEqual([]);
+```
+
+`role="list"` is the one benign case (redundant but harmless) — though see the empty-list note
+above: a redundant `role="list"` makes axe apply `aria-required-children`, which fails whenever
+the list is empty, and lists are usually empty at first paint and after every Reset.
+
+The same reasoning applies to `aria-label` on role-less elements: grep found **0** fleet-wide
+for the `<abbr aria-label>` form (validated against a known pre-fix positive, so the zero is
+real), but the general class is only reliably caught by running axe with the `incomplete`
+bucket asserted — which is why that requirement is non-negotiable.

@@ -136,3 +136,24 @@ Two "defects" reported this week were pure resource contention: a suite reported
 minutes runs in **15.6s** alone, and a "5.7-minute test configuration" was part of a suite
 that runs in **56s** alone. Never run two repos' suites at once, and re-measure any timing
 anomaly in isolation before reporting it.
+
+
+### Waiting for a background run — two idioms that do not work
+
+- **`until ! pgrep -f "playwright test"; do sleep 5; done` never exits.** The waiter's own
+  command line contains the search string, so `pgrep` matches the waiter itself, forever.
+  Poll the log file instead.
+- **Do not block the foreground on a long run at all.** Redirect to a file, background it, and
+  poll — a watchdog kills an agent after 10 minutes with no output, and several agents in this
+  sweep died exactly that way with a full repo of uncommitted work.
+
+### Reverting a mutation — three ways to lose your own fix
+
+1. `git checkout -- <file>` reverts *everything*, including the real fixes you just made. One
+   agent silently wiped a repo's CSS work this way.
+2. A file copy taken **before** you made the fix restores the pre-fix state. I did this myself
+   and had to re-apply.
+3. A mutation that never applied looks exactly like a dead gate. Three separate causes seen:
+   a competing declaration later in the same rule, a more specific selector elsewhere
+   ((0,2,1) beating (0,1,0)), and a `sed` that hit the wrong line and silently no-oped.
+   **Probe the live page for the computed value, and grep `dist/`, not `src/`.**

@@ -18,6 +18,26 @@ where they had been sitting **untracked** in repo roots — invisible to anyone 
 | `protocol-checker.md` | protocol-checker | 158 | Gold-standard audit |
 | `spdz-forge.md` | spdz-forge | 23 | **Partial salvage** — ~3% of a lost 292-line audit |
 | `hqc-timing.md` | hqc-timing | 22 | **Partial salvage** — ~5% of a lost 222-line review |
+
+## Method documents (2026-08-11)
+
+The per-repo audits above say *what* was wrong with one lab. These say *how* to find it, and
+were written from the sweep that has now covered ~30 repos. They are the standing briefs
+handed to every agent doing this work, kept here rather than in a session scratchpad because
+each one is the distilled result of a run that cost real time to learn.
+
+| File | What it is |
+|---|---|
+| `METHOD-honest-a11y-gate.md` | Replacing a template a11y gate with one that actually drives the lab. Includes the catalogue of ways old gates fake passing — silent `if (await btn.count())` guards, documents assembled that no visitor can reach, scanning only after the drive overwrote every state — and the mutation-testing traps that certify nothing. |
+| `METHOD-claims-audit.md` | The teaching-correctness audit: *for every sentence the page renders, is this claim true in the state it is shown in?* Includes the seven confirmed cases where a repo's own test was **shaped around** its defect, and why reachability must be measured before severity is ranked. |
+| `METHOD-hidden-attribute.md` | The `hidden`-that-does-not-hide class: why `[hidden]`'s (0,1,0) specificity loses to any class rule, why static detection of it is unsound, and the browser probe that settles it. Seven labs were affected. |
+
+**Why the method docs matter more than they look.** Three separate mechanical detectors in
+this sweep returned near-zero fleet-wide after being validated against known answers — the
+defects that matter are semantic, so the yield comes from method, not from greps. And two
+counts that looked like fleet-wide findings ("12 repos with identical test scripts", "159
+repos with a stale-dist gate") collapsed to zero and three respectively once the command was
+actually read. Both documents say so explicitly.
 | `hqc-timing-bugs.md` | hqc-timing | 23 | **Partial salvage** — ~80% of a lost 15-line bug audit |
 
 ## The three salvages

@@ -3325,6 +3325,35 @@ repo this session is on `main`. Both repos were fast-forwarded onto `main` (the 
 was a descendant, so no file changed) and the a11y agent's six in-flight files were left
 untouched.
 
+### The control-token pattern, quantified — 74 candidates (NOT 74 defects)
+
+Three agents in a row reported the same shape independently: *a token defined "for control
+boundaries", with a comment saying so, applied to exactly one control* — usually the text
+inputs, which is also exactly what the repo's own 1.4.11 spec queried.
+
+Measured across the fleet: **116 labs define such a token** (`--border-strong`,
+`--control-border`, `--line-control`, `--line-strong`); in **74** of them the token is used
+**≤3 times** while the surface-divider token is used **≥6 times**.
+
+**That is a candidate list, not a defect count, and the distinction matters.** One usage can
+legitimately cover every control if it sits on a base `button, input, select, textarea` rule.
+I spot-checked three before reporting:
+
+| lab | its single usage | verdict |
+|---|---|---|
+| `vdf` | `input[type="text"], input[type="number"]` | **the exact pattern** — text inputs only |
+| `quantum-entropy` | `#app button.secondary` | recently fixed by other means; count is misleading |
+| `pq-tls-handshake` | `.chip` | same — fixed in this sweep, low count regardless |
+
+So the metric cannot distinguish "narrow and broken" from "fixed a different way". Use it to
+**prioritise** the remaining task-14 repos — a lab with a one-selector control token is worth
+opening first — and measure per repo rather than trusting the count.
+
+Confirmed instances so far, each measured: `lattice-gentle`, `lll-break`, `matsui-line`,
+`musig-gate`, `nonce-collision`, `ntru-classic`, `dilithium-seal`, `vrf-gate`,
+`mceliece-gate`, `pq-families`, `protocol-checker` — **eleven**, and every one of them also
+had a border-contrast spec that queried precisely the selectors the token was already on.
+
 ### Audit of the auditors — three more checks, all clean
 
 After finding two dead oracles in the reference gate, I swept the other ways a gate can fail

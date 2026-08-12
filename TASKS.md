@@ -3199,7 +3199,45 @@ any of them.
 - **Check the built bundle, not the source.** One `sed` hit the wrong line and silently
   no-oped; a `grep` on `dist/assets/*.css` caught it.
 
-### The `.cl-btn` question is now settled — by measurement, across 6 labs
+### THE `.cl-btn` DECISION — settled fleet-wide, with the full distribution (2026-08-12)
+
+**Measured across every lab using the shipped `38%` mix: 156 labs, and ALL 156 fail 3:1.**
+Median **2.34:1**, best **2.91:1**, worst **1.20:1** (`downgrade-wire`, accent `#9f1239`).
+Zero labs pass. The sweep had been baselining 2.45:1 from the teal-fallback labs; labs that
+define a dark `--accent` at `:root` are **materially worse** — `blind-hello` 1.27,
+`spake-gate` 1.29, `blind-relay` 1.29, `frozen-heart` 1.29, `nonce-collision` 1.29.
+
+**And no percentage can fix it.** The border is
+`color-mix(in srgb, var(--accent) 38%, transparent)` over a bar that is always `#0b1512`:
+
+| | |
+|---|---|
+| ceiling of the shipped design (pure white as the accent, 38%) | **3.57:1** |
+| mix needed with pure white | 34% |
+| mix needed with the fleet teal `#35d6bb` | 46% |
+| mix needed with indigo `#4338ca` | **impossible at any percentage** |
+| mix needed with crimson `#9f1239` | **impossible at any percentage** |
+
+For the dark accents, *even 100% of the accent* does not reach 3:1 against the bar — the
+accent itself is too dark. **So the earlier "38% → 52%" patch could not have worked fleet-wide
+no matter what number was chosen.** That is the whole argument in one line: the parameter was
+never the problem.
+
+**`--cl-ink` at 70% is the fix, and it works because `--cl-ink` is the accent already mixed
+toward the header's near-white ink** — it inherits the lab's hue while being guaranteed
+readable on the bar:
+
+| | measured on the bar |
+|---|---|
+| teal-derived `--cl-ink` at 70% | **6.92:1** |
+| indigo-derived `--cl-ink` at 70% | **3.57:1** |
+
+Applied and verified in `dilithium-reject` (2.45 → 3.84:1), `dilithium-seal` and `vrf-gate`.
+**Recommendation for the deliberate fleet pass CLAUDE.md requires: replace the `--accent` mix
+with `color-mix(in srgb, var(--cl-ink) 70%, transparent)` in all 156.** The remaining labs are
+ratcheted at their current values, so none can silently get worse in the meantime.
+
+#### Supporting detail — the six labs where the repaired ratchet first exposed it
 
 This sat open for weeks as "160 labs on the original 38% form, 2 fixed one way, 1 fixed the
 only form that generalises". The repaired 1.4.11 ratchets answered it, because every repo

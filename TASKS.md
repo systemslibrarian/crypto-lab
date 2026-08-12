@@ -3227,6 +3227,66 @@ readable on that bar. Now applied and measured in `dilithium-reject` (2.45 → 3
 CLAUDE.md the shared markup is a deliberate reviewed fleet pass — **this is the evidence for
 that pass, and the recommendation is the `--cl-ink` form.**
 
+**pake-gate `b65e1c1` — 5 defects.**
+- **The breach panel asserted a property of the empty set.** "Server breach" is reachable in
+  **two clicks from first paint, without running a handshake** — the scan then reads **0 wire
+  fields** while printing `candidates tested: 10`, ten *"not present on the wire — no offline
+  test exists"* rows, and the verdict *"Nothing resolved offline"*. Its left column also
+  called an SRP transcript *"A captured balanced-PAKE transcript"*. **The existing test ran
+  `Honest run` first and only checked the scan came back clean — so it met neither state.**
+- ***"at billions of candidates per GPU-day"* traced to nothing.** Measured on the lab's own
+  engine: one candidate is a 4096-bit modexp with a 256-bit exponent at **3.4 ms — 291/sec,
+  2.5×10⁷/day.** Roughly five orders of magnitude out. The verdict now reports the rate
+  measured from the grind that just ran.
+- ***"The fixed-work variant is flat" could not fail.*** `fixedWork()` never ran a fixed-work
+  loop — it called the early-exit counter and returned `modeledIterations: cap` as a literal,
+  so **the panel line, the unit test and the browser test all compared a constant with
+  itself.**
+- Three wire captions named the wrong construction (SRP's `M1` is a hash, not a MAC; CPace's
+  tag covers that party's own `Y‖AD`, not the transcript; J-PAKE's tag is keyed, not computed
+  over the key), and `dragonfly.ts` advertised *"the ACCURATE RFC 7664 derivation"* while its
+  own inline comment recorded a deviation.
+
+**mceliece-gate `66bdf67` — 6 defects, the headline one established by complete census.**
+- **The over-radius decapsulation output asserted four false things** — and this is the
+  panel's headline lesson. Census of **all 143,360** `(codeword, weight-3)` states the
+  "Exceed correction radius" button can produce: **57.1% (81,920) do not decode at all**, yet
+  the page called the result a *"Corrected codeword"* and a *"Recovered message"*; the other
+  **42.9% (61,440) do decode — onto a different codeword** — where the badge said *"Decoding
+  failed"*. Both branches now read `trace.success`, **which the code already computed and
+  threw away.** Nothing tested it: the e2e and jsdom tests both stop at the weight readout
+  without pressing Decapsulate.
+- **A documented failure message that was unreachable**: census over all **2^16 = 65,536**
+  received vectors — `pattersonDecode` throws **0** times.
+- ***"An attacker cannot"*** — refuted by step 3 of the same panel, where the brute-force
+  attacker wins **30,720 of 30,720** distance-2 ciphertexts.
+- **The key-size bars announced their drawing floor as their measurement.** 5 of 6 KEM bars
+  are under 1% (0.306%–0.861%) and all five announced an identical *"2% of maximum"* —
+  ML-KEM-512 (800 B) and HQC-128 (2,249 B) claiming the same size **in the chart whose only
+  job is relative scale**; RSA-2048's 0.113% was overstated **17.7×**.
+
+That last one is **the grover class recurring**: a visibility floor printed as if it were the
+measurement. In grover the floored bar contradicted a caption promising the axis was to
+scale; here the floor is *spoken aloud* as a percentage. Worth watching for wherever a chart
+has a minimum bar size.
+
+**Cleared by complete census, not sampling:** mceliece-gate's security boundary holds
+absolutely — **0 of 143,360** weight-(t+1) states decode back to the sent codeword, true
+minimum distance 5, and Patterson corrects all **35,072** within-radius vectors with 0
+failures. pake-gate's Dragonblood candidates genuinely vary (a random 6-list would look that
+uniform only 34/2000 of the time).
+
+**The agent caught its own blind test**: its first regression for the fixed-work defect
+**did not bite** — it re-ran the scan instead of observing `fixedWork`'s output, so reverting
+both halves cancelled out. It surfaced `iterationsPerformed` and re-verified. That is the
+"two independently sufficient halves" trap in a new form.
+
+**Two coordination errors of mine, both corrected:** I **double-assigned mceliece-gate** to
+this audit and to a running a11y agent, and the agent committed to a branch while every other
+repo this session is on `main`. Both repos were fast-forwarded onto `main` (the claims commit
+was a descendant, so no file changed) and the a11y agent's six in-flight files were left
+untouched.
+
 ### Audit of the auditors — three more checks, all clean
 
 After finding two dead oracles in the reference gate, I swept the other ways a gate can fail

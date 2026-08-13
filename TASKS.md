@@ -3397,6 +3397,31 @@ against rounded option text, an OTP-boundary IoC bound of 0.058 receiving 0.0641
 `renderCounters` preferring "too short" over "mostly non-letters". Left alone rather than
 guessed.
 
+### A third oracle bug — fabricated, not merely blind (2026-08-12)
+
+`auditControlBoundaries` reads only `backgroundColor`. On a gradient-filled control that
+property is transparent, so the check **reported a flat 1:1 for every gradient button and
+resolved every backdrop to WHITE** — fabricating measurements rather than missing them.
+
+**Scope, checked before alarm: 17 repos contain it, and ZERO rely on it alone.** Every one
+also runs `nontext.ts`, whose paint core samples gradients properly and covers the same
+control set. So the flawed check is redundant rather than load-bearing, and nothing was hidden
+by it. Its one good idea — *a border must clear 3:1 against the control's own fill, not just
+against the surround* — was merged into `nontext.ts` where the paint core is correct.
+
+That is now **three distinct oracle defects** found in this sweep, and they fail in three
+different directions:
+| oracle | failure | consequence |
+|---|---|---|
+| axe chained `withTags().withRules()` | ran 4 rules, not 63 | **under-measured** — green meant nothing |
+| `expectNoNewNonTextFailures` behind an early return | never executed | **under-measured** — baseline captured blind |
+| `auditControlBoundaries` on gradients | flat 1:1, backdrop white | **fabricated** — right answer by accident, or wrong |
+| (plus) contrast oracle judging gradients at their worst stop | invented backdrops | **over-measured** — would drive fixes to text that was fine |
+
+**The lesson is not "oracles are unreliable" but "an oracle is a claim, and claims get
+checked."** Every one of these was found by making the oracle fail on purpose, and every one
+had been quietly shaping conclusions before that.
+
 ### The control-token pattern, quantified — 74 candidates (NOT 74 defects)
 
 Three agents in a row reported the same shape independently: *a token defined "for control

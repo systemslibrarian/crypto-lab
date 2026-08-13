@@ -3422,6 +3422,36 @@ different directions:
 checked."** Every one of these was found by making the oracle fail on purpose, and every one
 had been quietly shaping conclusions before that.
 
+### NEW CLASS — an id-scoped type selector silently killing class rules
+
+`salamander` had `#app p { color: var(--text) }`. Specificity **(1,0,1)**, which beats *any*
+class rule on a `<p>` — so **eleven declarations were dead**, including both verdict inks
+(`--alarm-text`, `--ok-text`) and the whole muted hierarchy. Rules written `#app .foo` (1,1,0)
+survived, which is exactly what hid the damage. The rule was also redundant, since `body`
+already set the same colour. Deleted; the eleven declarations came alive; a re-run of the full
+four-configuration collection then found **zero** further findings.
+
+**Why no oracle catches this: it fails SAFE.** Every affected element renders in the
+high-contrast default colour, so a contrast walk sees nothing wrong. Only a computed-value
+probe — "is the colour this rule specifies actually the colour being painted?" — can see it.
+That makes it the first defect class in this sweep that is invisible to *both* axe and the
+arithmetic oracle by construction, rather than by an oracle bug.
+
+A sharp detail from the same repo: the agent's mutation target for proving the gate bites
+**only existed because of this defect** — before the specificity fix that declaration was dead,
+so mutating it would have proved nothing.
+
+**Fleet scan: 55 id-scoped type selectors setting `color`, across 41 repos.** Most are
+`#app a`, a deliberate uniform link colour, and harmless unless a class rule is fighting it.
+**The subset worth opening is the non-link cases**, where the same shape as salamander is
+possible: `#app p` in `frozen-heart`, `quantum-entropy`, `spake-gate`; `#app h5` in
+`blind-hello`; `#app h4` in `reshare-circle`; `#app h1..h4` in `icy-dvrf`; `#qr-step-table th`
+in `chacha20-stream`. **Not investigated — this is a scoped follow-up, not a finding.**
+
+Also from that batch: **`salamander` has no retired header markers** — `index.html` and
+`style.css` both already say in prose that the lab owns its header and that the
+`reapply-header.py` push was retired. Task 15's list of five can drop it.
+
 ### The control-token pattern, quantified — 74 candidates (NOT 74 defects)
 
 Three agents in a row reported the same shape independently: *a token defined "for control

@@ -3422,6 +3422,47 @@ different directions:
 checked."** Every one of these was found by making the oracle fail on purpose, and every one
 had been quietly shaping conclusions before that.
 
+### Final task-14 batch — pake-gate, salamander, scloud-vault, stark-tower, stream-ward
+
+`pake-gate` `52b870e` (11) · `salamander` `6b21577` (2) · `scloud-vault` `0e155e5` (7) ·
+`stark-tower` `4cf8511` (6) · `stream-ward` `cb11701` (6).
+
+**pake-gate is the 18th repo with the self-confirming 1.4.11 spec** — its check queried
+`input.field__input`, the *one* selector in the whole stylesheet using `--control-line`, the
+token written for exactly that job. It measured 4.06:1 and always had, while every button and
+tab drew its edge from surface dividers at 1.0–1.8:1 and had never been measured once.
+
+**Defects worth remembering:**
+- **A `visibility: hidden` popup still LAYS OUT.** stark-tower's `.term-def` (448px,
+  `position: absolute; left: 0`) started past its column and scrolled the document sideways
+  **in every state, from first paint** — 1486px against a 1280px viewport. Unfalsifiable by any
+  gate that only scans after hovering the term.
+- **`opacity: 0` + `pointer-events: none` is not hiding.** scloud-vault's `#back-to-top` kept
+  `visibility: visible` and `tabIndex: 0`, and `document.activeElement` really did land on it.
+  Probe with `el.focus()`, do not read the CSS.
+- **A skip link pointing at `#app` in a lab whose main is `#main-content`** — the page's first
+  focusable element skipped nowhere, and axe's skip-link rule is best-practice rather than
+  WCAG-tagged, so `withTags` never ran it. `boot()` now fails on any dangling in-page href.
+- **A keyboard-only functional bug**: scloud-vault's glossary `scroll` listener called `hide()`
+  unconditionally, and *focusing a term scrolls it into view* — so a keyboard user could never
+  read a definition for any term not already on screen, while a mouse user always could.
+- Fixing 2.1.1 introduced 2.4.7 (new tab stops with no focus ring), caught in the same run.
+
+**`:hover` persists after `page.click()`** — so hover composites are a driven state a gate
+reaches for free, and it is the state a real reader occupies right after clicking. Three
+separate defects this session were visible *only* there.
+
+### A FIFTH oracle defect — `nontext.ts` mis-detects one-sided borders
+
+The reference `nontext.ts` computes `hasBorder` from `borderTopStyle`/`borderTopColor` while
+testing all four widths. **A control whose only edge is `border-bottom` is therefore judged as
+having no border and scored on its fill alone.** Not exploited in the repos where it was found
+(both had four-sided borders), but it is a latent **false-positive** source fleet-wide — the
+same over-claiming direction as the gradient-worst-stop bug.
+
+That brings the oracle-defect tally to five, in four directions: two under-measured, one
+fabricated, two over-measure.
+
 ### NEW CLASS — an id-scoped type selector silently killing class rules
 
 `salamander` had `#app p { color: var(--text) }`. Specificity **(1,0,1)**, which beats *any*

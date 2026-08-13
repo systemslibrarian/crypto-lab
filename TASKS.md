@@ -3325,6 +3325,78 @@ repo this session is on `main`. Both repos were fast-forwarded onto `main` (the 
 was a descendant, so no file changed) and the a11y agent's six in-flight files were left
 untouched.
 
+### Task 14 batches 2026-08-12 — 12 repos, ~40 defects
+
+`world-ciphers` `ca0a0a3` · `world-hashes` `4df6879` · `signed-bytes` `b5d19e4` ·
+`vigenere-break` `be9c0c8` · `search-vault` `2ed380c` · `ring-sign` `2e5cc27` ·
+`spdz-forge` `0bdfd0a` · `time-trust` `a0b3fd0` · `traitor-trace` `5eca986` ·
+`hybrid-wire` `b913b27` · plus `mceliece-gate` `6fcdaa0`, `pq-families` `b4520a3`,
+`protocol-checker` `9b509ab`, `protocol-compose` `ede1a85`, `quantum-entropy` `ec95c1c`,
+`pq-tls-handshake` `8ff994e`.
+
+**The self-confirming 1.4.11 spec is now 14 for 14** — every repo whose old border-contrast
+check queried a narrow selector had that selector be exactly the set the correct token was
+already applied to. `traitor-trace` is the sharpest: its `style.css` **states the defect in a
+comment** ("--border measured 1.70:1 at best") and then scopes the fix to 2 of 23 uses.
+
+**Defects worth remembering from this run:**
+- A toggle whose segments had `border: none` and a fill identical to the card — **1.00:1**,
+  i.e. no boundary at all (`vigenere-break`).
+- `#app button:hover { filter: brightness(1.12) }` repainted the fill and dropped its own
+  white ink to **4.13:1**. **A CSS filter is applied after every property axe and the
+  arithmetic walk read, so no oracle sees it** — measured from screenshot pixels (`spdz-forge`).
+- `ring-sign` scrolled to 441px at 380px. The checker named `header.cl-hero` (433px) whose
+  **min-content is 136px**; the real cause was a `white-space: nowrap` status line three
+  panels down giving a bare `auto` track a 405px floor. **Fifth time the checker named the
+  wrong element.**
+- `time-trust`'s overflow was **intermittent**: a 40-hex TOTP secret is random per load, so
+  the overflow ranged 0–10px and a once-at-one-width gate could pass on a narrow draw.
+- `traitor-trace` never received the `box-sizing` reset its siblings have — 403px at 380px,
+  every state. `signed-bytes` had the same gap (401px), its only `border-box` being inside a
+  textarea rule.
+- `search-vault`'s light theme overrode ten tokens and left `--accent` at the dark value:
+  **2.49:1 on white**. Fixed with a separate `--accent-solid` rather than by darkening
+  `--accent`, **because the shared top bar reads `--accent`** — darkening it would have taken
+  the bar's own edge from 2.09 to 1.48. Same trap avoided in `traitor-trace` and
+  `pq-families`.
+
+**A false positive an agent caused, caught, and killed** — worth more than several fixes:
+Chromium applies `:focus-visible` **styling** only after a keyboard interaction, while
+`Element.matches(':focus-visible')` returns true regardless. So an unprimed programmatic
+`focus()` reports "no focus indicator" for elements that have one — **one phantom defect per
+focusable region, in every repo of this sweep**. The agent primed with a real Tab, verified
+against 43 actual key presses, and fixed its oracle. I swept the fleet afterwards: exactly one
+file uses `matches(':focus-visible')` and it primes correctly, so nothing shipped on a
+phantom. (That answer took three rounds of tightening my detector — it first matched comments,
+then matched `outlineWidth` in the non-text oracle, which measures a ring's contrast rather
+than probing focus.)
+
+**Two more process traps recorded:**
+- A **stale detached `vite preview` produced a false RED**: post-revert, a suite ran against a
+  `dist` still containing the mutation because `reuseExistingServer` reused it. Check `lsof`
+  before trusting a post-mutation result *either way*.
+- **Copied helper docblocks carry stale claims two levels deep** — one repo's `contrast.ts`
+  header described `filter: brightness(1.12)` and `--accent-hover`, CSS that repo does not
+  have, inherited from the lab it was copied from. When copying `contrast.ts`/`nontext.ts`
+  forward, grep the destination for the *source* lab's selectors.
+
+**An oracle can also over-claim.** Twice in `traitor-trace` the graphics check demanded 3:1
+where the design carries the cue another way (a tinted cover-subset under an outline; probe
+cells distinguished by glyph and border style). Both were corrected to measure the cue that
+exists, with the reasoning recorded in `gate.ts` rather than the check silently dropped. The
+same instinct fixed `hybrid-wire`, where the contrast oracle judged every gradient at its
+worst *stop* — inventing a backdrop the footer text never sits on (accent links read 3.56:1
+where they render ~4.9:1). Gradients are now sampled at the text's real position. **A gate
+that cries wolf gets ignored, which is its own failure mode.**
+
+**Open, needs your judgement:** `vigenere-break/e2e/claims.spec.ts` has **8 failures on
+pristine `main`**, proven pre-existing in a HEAD worktree. Five are unambiguous test bugs (an
+unscoped `.strip .cell`; a `[role="status"]` strict-mode collision; `/^.?Score/` where the
+emoji is a surrogate **pair**). Three need cryptanalytic judgement: a χ²-argmin compared
+against rounded option text, an OTP-boundary IoC bound of 0.058 receiving 0.0641, and
+`renderCounters` preferring "too short" over "mostly non-letters". Left alone rather than
+guessed.
+
 ### The control-token pattern, quantified — 74 candidates (NOT 74 defects)
 
 Three agents in a row reported the same shape independently: *a token defined "for control

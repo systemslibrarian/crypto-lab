@@ -1,0 +1,427 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Crypto Lab Verification Manifest Schema v0.2",
+  "type": "object",
+  "required": [
+    "manifest_version",
+    "lab",
+    "repository",
+    "extraction",
+    "audit_mode",
+    "scope_map",
+    "coverage",
+    "parameters",
+    "claims",
+    "deviations",
+    "open_questions",
+    "cryptographer_checklist"
+  ],
+  "properties": {
+    "manifest_version": {
+      "type": "string",
+      "const": "0.2"
+    },
+    "lab": {
+      "type": "object",
+      "required": ["slug", "name", "claimed_standards", "claim_sources"],
+      "properties": {
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "claimed_standards": { "type": "array", "items": { "type": "string" } },
+        "claim_sources": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "repository": {
+      "type": "object",
+      "required": ["url", "default_branch", "commit_sha"],
+      "properties": {
+        "url": { "type": "string" },
+        "default_branch": { "type": "string" },
+        "commit_sha": { "type": "string" }
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "required": ["pass", "model", "date", "extraction_hash"],
+      "properties": {
+        "pass": { "type": "string", "enum": ["B", "C"] },
+        "model": { "type": "string" },
+        "date": { "type": "string" },
+        "extraction_hash": { "type": "string" }
+      }
+    },
+    "audit_mode": {
+      "type": "object",
+      "required": ["type", "claimed_boundary", "intentionally_omitted", "delegated_components"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "standards_conformance",
+            "reference_algorithm",
+            "attack_reproduction",
+            "pedagogical_model",
+            "protocol_walkthrough",
+            "delegated_implementation"
+          ]
+        },
+        "claimed_boundary": { "type": "string" },
+        "intentionally_omitted": { "type": "array", "items": { "type": "string" } },
+        "delegated_components": { "type": "array", "items": { "type": "string" } },
+        "confirmed": {
+          "type": "object",
+          "required": ["by", "date"],
+          "properties": {
+            "by": { "type": "string" },
+            "date": { "type": "string" }
+          }
+        }
+      }
+    },
+    "reference_pack": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "title", "version", "source_url", "section", "excerpt_sha256", "supplied_by"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "rfc",
+              "paper",
+              "test_vector",
+              "library_documentation",
+              "repo_claim"
+            ]
+          },
+          "title": { "type": "string" },
+          "version": { "type": "string" },
+          "source_url": { "type": "string" },
+          "section": { "type": "string" },
+          "excerpt_sha256": { "type": "string" },
+          "supplied_by": { "type": "string" }
+        }
+      }
+    },
+    "scope_map": {
+      "type": "object",
+      "required": ["files", "entry_points", "extraction_order", "red_flags", "scope_amendments"],
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "role"],
+            "properties": {
+              "path": { "type": "string" },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "math_core",
+                  "protocol_glue",
+                  "ui",
+                  "test",
+                  "vendored",
+                  "data"
+                ]
+              },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "entry_points": { "type": "array", "items": { "type": "string" } },
+        "extraction_order": { "type": "array", "items": { "type": "string" } },
+        "red_flags": { "type": "array", "items": { "type": "string" } },
+        "scope_amendments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["file", "reason", "pass"],
+            "properties": {
+              "file": { "type": "string" },
+              "reason": { "type": "string" },
+              "pass": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "reviewed_symbols", "excluded_symbols", "unresolved_regions"],
+        "properties": {
+          "file": { "type": "string" },
+          "reviewed_symbols": { "type": "array", "items": { "type": "string" } },
+          "excluded_symbols": { "type": "array", "items": { "type": "string" } },
+          "unresolved_regions": { "type": "array", "items": { "type": "string" } },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "value_in_code", "match"],
+        "properties": {
+          "name": { "type": "string" },
+          "value_in_code": {},
+          "expected_value": {},
+          "reference_anchor": {
+            "type": "object",
+            "required": ["ref", "location"],
+            "properties": {
+              "ref": { "type": "string" },
+              "location": { "type": "string" }
+            }
+          },
+          "reference_quote": { "type": "string" },
+          "code_anchor": {
+            "type": "object",
+            "required": ["file", "symbol", "lines", "snippet"],
+            "properties": {
+              "file": { "type": "string" },
+              "symbol": { "type": "string" },
+              "lines": {
+                "type": "array",
+                "items": { "type": "integer" },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "snippet": { "type": "string" }
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": ["yes", "no", "unknown"]
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "statement",
+          "code_anchor",
+          "extractor_confidence",
+          "extraction_status",
+          "verification_status",
+          "conformance_status"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": [
+              "arithmetic",
+              "invariant",
+              "security_behavior",
+              "constant",
+              "encoding",
+              "distribution",
+              "protocol_step",
+              "intentional_deviation"
+            ]
+          },
+          "statement": { "type": "string" },
+          "latex": { "type": "string" },
+          "computable": {
+            "type": "object",
+            "required": ["language", "relation", "expression", "inputs", "expected", "dependencies"],
+            "properties": {
+              "language": {
+                "type": "string",
+                "enum": ["python", "sage", "javascript"]
+              },
+              "relation": {
+                "type": "string",
+                "enum": ["equality", "inequality", "round_trip", "distribution_test"]
+              },
+              "expression": { "type": "string" },
+              "inputs": { "type": "object" },
+              "expected": {},
+              "dependencies": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "code_anchor": {
+            "type": "object",
+            "required": ["file", "symbol", "lines", "snippet"],
+            "properties": {
+              "file": { "type": "string" },
+              "symbol": { "type": "string" },
+              "lines": {
+                "type": "array",
+                "items": { "type": "integer" },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "snippet": { "type": "string" }
+            }
+          },
+          "reference_anchor": {
+            "type": "object",
+            "required": ["ref", "location"],
+            "properties": {
+              "ref": { "type": "string" },
+              "location": { "type": "string" }
+            }
+          },
+          "verification": {
+            "type": "object",
+            "required": ["method", "implementation", "vector_source", "procedure", "expected_observation"],
+            "properties": {
+              "method": {
+                "type": "string",
+                "enum": [
+                  "official_vectors",
+                  "differential",
+                  "algebraic",
+                  "metamorphic",
+                  "statistical",
+                  "manual"
+                ]
+              },
+              "implementation": { "type": "string" },
+              "vector_source": { "type": "string" },
+              "procedure": { "type": "string" },
+              "expected_observation": { "type": "string" }
+            }
+          },
+          "implementation_provenance": {
+            "type": "object",
+            "required": ["kind", "component", "package", "version", "boundary"],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["custom", "delegated", "adapted", "illustrative"]
+              },
+              "component": { "type": "string" },
+              "package": { "type": "string" },
+              "version": { "type": "string" },
+              "boundary": { "type": "string" }
+            }
+          },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "extractor_confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"]
+          },
+          "extraction_status": {
+            "type": "string",
+            "enum": ["anchored", "ambiguous"]
+          },
+          "verification_status": {
+            "type": "string",
+            "enum": ["untested", "independently_tested", "human_reviewed"]
+          },
+          "conformance_status": {
+            "type": "string",
+            "enum": ["matches_reference", "deviates", "not_applicable", "unresolved"]
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "deviations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "classification",
+          "disclosed",
+          "reference_anchor",
+          "code_anchor"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "description": { "type": "string" },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "intentional_disclosed",
+              "intentional_undisclosed",
+              "reference_mismatch",
+              "unexplained",
+              "insufficient_reference"
+            ]
+          },
+          "disclosed": { "type": "string" },
+          "reference_anchor": {
+            "type": "object",
+            "required": ["ref", "location"],
+            "properties": {
+              "ref": { "type": "string" },
+              "location": { "type": "string" }
+            }
+          },
+          "reference_quote": { "type": "string" },
+          "code_anchor": {
+            "type": "object",
+            "required": ["file", "symbol", "lines", "snippet"],
+            "properties": {
+              "file": { "type": "string" },
+              "symbol": { "type": "string" },
+              "lines": {
+                "type": "array",
+                "items": { "type": "integer" },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "snippet": { "type": "string" }
+            }
+          },
+          "severity_note": { "type": "string" }
+        }
+      }
+    },
+    "attack_model": {
+      "type": "object",
+      "required": [
+        "attacker_capabilities",
+        "required_oracle",
+        "required_samples",
+        "success_condition",
+        "intentionally_vulnerable_behavior",
+        "real_world_limitations"
+      ],
+      "properties": {
+        "attacker_capabilities": { "type": "array", "items": { "type": "string" } },
+        "required_oracle": { "type": "string" },
+        "required_samples": { "type": "string" },
+        "success_condition": { "type": "string" },
+        "intentionally_vulnerable_behavior": { "type": "string" },
+        "real_world_limitations": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "why_it_matters", "what_would_resolve_it"],
+        "properties": {
+          "id": { "type": "string" },
+          "question": { "type": "string" },
+          "why_it_matters": { "type": "string" },
+          "what_would_resolve_it": { "type": "string" }
+        }
+      }
+    },
+    "cryptographer_checklist": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

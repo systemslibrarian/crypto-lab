@@ -1,0 +1,3141 @@
+registry_version: '0.2'
+labs:
+  - slug: crypto-lab-ablation-wire
+    display_name: Ablation Wire
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ablation-wire
+    live_url: https://systemslibrarian.github.io/crypto-lab-ablation-wire/
+    categories:
+      - PROTOCOLS
+      - ATTACKS
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - X-Wing KEM
+      - AES-256-GCM
+      - Transcript Binding
+      - Rust/WASM
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-accumulator
+    display_name: Accumulator
+    repo_url: https://github.com/systemslibrarian/crypto-lab-accumulator
+    live_url: https://systemslibrarian.github.io/crypto-lab-accumulator/
+    categories:
+      - PROTOCOLS
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - RSA Accumulator
+      - Non-Membership Proofs
+      - Strong RSA
+      - Certificate Revocation
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-aegis-gate
+    display_name: AEGIS Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-aegis-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-aegis-gate/
+    categories:
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - AEGIS-256
+      - AES Round Function
+      - 6-State Sponge
+      - Test Vectors
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-aes-modes
+    display_name: AES Modes
+    repo_url: https://github.com/systemslibrarian/crypto-lab-aes-modes
+    live_url: https://systemslibrarian.github.io/crypto-lab-aes-modes/
+    categories:
+      - ENCRYPTION
+    learning_paths:
+      - Developer
+    catalog_claims:
+      - AES
+      - AES-GCM
+      - AES-CBC
+      - Authenticated Encryption
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-ascon
+    display_name: Ascon
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ascon
+    live_url: https://systemslibrarian.github.io/crypto-lab-ascon/
+    categories:
+      - ENCRYPTION
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - Ascon-AEAD128
+      - Ascon-Hash256
+      - Lightweight Crypto
+      - IoT
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-babel-hash
+    display_name: Babel Hash
+    repo_url: https://github.com/systemslibrarian/crypto-lab-babel-hash
+    live_url: https://systemslibrarian.github.io/crypto-lab-babel-hash/
+    categories:
+      - HASHING & KDFS
+    learning_paths:
+      - Developer
+    catalog_claims:
+      - SHA-256
+      - SHA3-256
+      - BLAKE3
+      - HMAC
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-bb84
+    display_name: BB84
+    repo_url: https://github.com/systemslibrarian/crypto-lab-bb84
+    live_url: https://systemslibrarian.github.io/crypto-lab-bb84/
+    categories:
+      - POST-QUANTUM
+      - KEY EXCHANGE
+    learning_paths: []
+    catalog_claims:
+      - Photon Polarization
+      - Basis Sifting
+      - QBER
+      - Privacy Amplification
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-bcrypt-forge
+    display_name: Bcrypt Forge
+    repo_url: https://github.com/systemslibrarian/crypto-lab-bcrypt-forge
+    live_url: https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/
+    categories:
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - bcrypt
+      - Blowfish
+      - Cost Factor
+      - Timing-Safe
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-beacon-lock
+    display_name: Beacon Lock
+    repo_url: https://github.com/systemslibrarian/crypto-lab-beacon-lock
+    live_url: https://systemslibrarian.github.io/crypto-lab-beacon-lock/
+    categories:
+      - ENCRYPTION
+      - RANDOMNESS
+    learning_paths: []
+    catalog_claims:
+      - drand quicknet
+      - Boneh-Franklin IBE
+      - BLS12-381
+      - AES-256-GCM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-biham-lens
+    display_name: Biham Lens
+    repo_url: https://github.com/systemslibrarian/crypto-lab-biham-lens
+    live_url: https://systemslibrarian.github.io/crypto-lab-biham-lens/
+    categories:
+      - ATTACKS
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - Differential Cryptanalysis
+      - SPN
+      - DDT
+      - Chosen-Plaintext
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-bike-vault
+    display_name: BIKE Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-bike-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-bike-vault/
+    categories:
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - BIKE
+      - QC-MDPC
+      - Post-Quantum
+      - KEM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-bitcoin-script
+    display_name: Bitcoin Script
+    repo_url: https://github.com/systemslibrarian/crypto-lab-bitcoin-script
+    live_url: https://systemslibrarian.github.io/crypto-lab-bitcoin-script/
+    categories:
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - secp256k1
+      - P2PKH
+      - ECDSA
+      - Stack Machine
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-bitcoin-wallet
+    display_name: Bitcoin Wallet
+    repo_url: https://github.com/systemslibrarian/crypto-lab-bitcoin-wallet
+    live_url: https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/
+    categories:
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - secp256k1
+      - BIP-32
+      - BIP-39
+      - Bech32
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-blind-hello
+    display_name: Blind Hello
+    repo_url: https://github.com/systemslibrarian/crypto-lab-blind-hello
+    live_url: https://systemslibrarian.github.io/crypto-lab-blind-hello/
+    categories:
+      - PROTOCOLS
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - TLS 1.3
+      - ECH
+      - HPKE
+      - SNI
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-blind-oracle
+    display_name: Blind Oracle
+    repo_url: https://github.com/systemslibrarian/crypto-lab-blind-oracle
+    live_url: https://systemslibrarian.github.io/crypto-lab-blind-oracle/
+    categories:
+      - HOMOMORPHIC
+    learning_paths: []
+    catalog_claims:
+      - FHE
+      - TFHE-rs
+      - Rust
+      - Encrypted Compute
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-blind-relay
+    display_name: Blind Relay
+    repo_url: https://github.com/systemslibrarian/crypto-lab-blind-relay
+    live_url: https://systemslibrarian.github.io/crypto-lab-blind-relay/
+    categories:
+      - PRIVACY
+      - PROTOCOLS
+    learning_paths: []
+    catalog_claims:
+      - OHTTP
+      - HPKE
+      - Binary HTTP
+      - RFC 9458
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-blind-sign
+    display_name: Blind Sign
+    repo_url: https://github.com/systemslibrarian/crypto-lab-blind-sign
+    live_url: https://systemslibrarian.github.io/crypto-lab-blind-sign/
+    categories:
+      - SIGNATURES
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - Chaum RSA
+      - Schnorr EC
+      - e-Cash
+      - Unlinkability
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-broken-trust
+    display_name: Broken Trust
+    repo_url: https://github.com/systemslibrarian/crypto-lab-broken-trust
+    live_url: https://systemslibrarian.github.io/crypto-lab-broken-trust/
+    categories:
+      - ATTACKS
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - ML-DSA
+      - Bit Leakage
+      - Hill-Climbing
+      - Subkey Recovery
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-bulletproofs
+    display_name: Bulletproofs
+    repo_url: https://github.com/systemslibrarian/crypto-lab-bulletproofs
+    live_url: https://systemslibrarian.github.io/crypto-lab-bulletproofs/
+    categories:
+      - ZERO-KNOWLEDGE
+    learning_paths: []
+    catalog_claims:
+      - Bulletproofs
+      - ristretto255
+      - Range Proofs
+      - Inner-Product Argument
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 6
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-card-trick
+    display_name: Card Trick
+    repo_url: https://github.com/systemslibrarian/crypto-lab-card-trick
+    live_url: https://systemslibrarian.github.io/crypto-lab-card-trick/
+    categories:
+      - PROTOCOLS
+      - MPC &amp; THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - den Boer 1989
+      - Five-Card Trick
+      - Information-Theoretic
+      - Two-Party AND
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-chacha20-stream
+    display_name: ChaCha20 Stream
+    repo_url: https://github.com/systemslibrarian/crypto-lab-chacha20-stream
+    live_url: https://systemslibrarian.github.io/crypto-lab-chacha20-stream/
+    categories:
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - ChaCha20
+      - ARX
+      - Nonce Reuse
+      - Keystream
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-chain-of-trust
+    display_name: Chain of Trust
+    repo_url: https://github.com/systemslibrarian/crypto-lab-chain-of-trust
+    live_url: https://systemslibrarian.github.io/crypto-lab-chain-of-trust/
+    categories:
+      - SIGNATURES
+      - PROTOCOLS
+    learning_paths: []
+    catalog_claims:
+      - X.509
+      - RFC 5280
+      - ECDSA P-256
+      - nameConstraints
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-ciphertext-mirror
+    display_name: Ciphertext Mirror
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror
+    live_url: https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - ML-KEM
+      - FO Transform
+      - LDPC Decoder
+      - NTT Blinding
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-ckks-lab
+    display_name: CKKS Lab
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ckks-lab
+    live_url: https://systemslibrarian.github.io/crypto-lab-ckks-lab/
+    categories:
+      - HOMOMORPHIC
+    learning_paths: []
+    catalog_claims:
+      - CKKS
+      - RLWE
+      - Approximate FHE
+      - Encrypted Inference
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-collision-vault
+    display_name: Collision Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-collision-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-collision-vault/
+    categories:
+      - HASHING & KDFS
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - MD5
+      - SHA-1
+      - SHAttered
+      - Chosen-Prefix Collision
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-commit-gate
+    display_name: Commit Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-commit-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-commit-gate/
+    categories:
+      - PROTOCOLS
+      - ZERO-KNOWLEDGE
+    learning_paths: []
+    catalog_claims:
+      - Hash Commitment
+      - Pedersen
+      - Binding &amp; Hiding
+      - Homomorphic
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 6
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-corrupted-oracle
+    display_name: Corrupted Oracle
+    repo_url: https://github.com/systemslibrarian/crypto-lab-corrupted-oracle
+    live_url: https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/
+    categories:
+      - ATTACKS
+      - RANDOMNESS
+    learning_paths: []
+    catalog_claims:
+      - Dual_EC_DRBG
+      - HMAC-DRBG
+      - ChaCha20-DRBG
+      - P-256
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-credential-veil
+    display_name: Credential Veil
+    repo_url: https://github.com/systemslibrarian/crypto-lab-credential-veil
+    live_url: https://systemslibrarian.github.io/crypto-lab-credential-veil/
+    categories:
+      - SIGNATURES
+      - PRIVACY
+      - ZERO-KNOWLEDGE
+    learning_paths: []
+    catalog_claims:
+      - BBS+
+      - Selective Disclosure
+      - Unlinkability
+      - Range Proof
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-curve-lens
+    display_name: Curve Lens
+    repo_url: https://github.com/systemslibrarian/crypto-lab-curve-lens
+    live_url: https://systemslibrarian.github.io/crypto-lab-curve-lens/
+    categories:
+      - KEY EXCHANGE
+    learning_paths:
+      - Developer
+      - Key Exchange
+    catalog_claims:
+      - ECC
+      - Curve25519
+      - ECDH
+      - P-256
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-curve448
+    display_name: Curve448
+    repo_url: https://github.com/systemslibrarian/crypto-lab-curve448
+    live_url: https://systemslibrarian.github.io/crypto-lab-curve448/
+    categories:
+      - KEY EXCHANGE
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - X448
+      - Ed448
+      - RFC 7748
+      - RFC 8032
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-dead-sea-cipher
+    display_name: Dead Sea Cipher
+    repo_url: https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher
+    live_url: https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/
+    categories:
+      - HISTORICAL
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - Substitution
+      - Vigenère
+      - Atbash
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 6
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-diffie-hellman-mitm
+    display_name: DH MITM
+    repo_url: https://github.com/systemslibrarian/crypto-lab-diffie-hellman-mitm
+    live_url: https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/
+    categories:
+      - KEY EXCHANGE
+      - ATTACKS
+    learning_paths:
+      - Developer
+      - Key Exchange
+    catalog_claims:
+      - Diffie-Hellman
+      - Modular Arithmetic
+      - MITM
+      - Key Exchange
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-dilithium-reject
+    display_name: Dilithium Reject
+    repo_url: https://github.com/systemslibrarian/crypto-lab-dilithium-reject
+    live_url: https://systemslibrarian.github.io/crypto-lab-dilithium-reject/
+    categories:
+      - POST-QUANTUM
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - ML-DSA
+      - Rejection Sampling
+      - FIPS 204
+      - Timing Tradeoffs
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-dilithium-seal
+    display_name: Dilithium Seal
+    repo_url: https://github.com/systemslibrarian/crypto-lab-dilithium-seal
+    live_url: https://systemslibrarian.github.io/crypto-lab-dilithium-seal/
+    categories:
+      - POST-QUANTUM
+      - SIGNATURES
+    learning_paths:
+      - Post-Quantum
+    catalog_claims:
+      - ML-DSA
+      - FIPS 204
+      - CRYSTALS-Dilithium
+      - Lattice
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-dkg-gate
+    display_name: DKG Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-dkg-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-dkg-gate/
+    categories:
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Pedersen DKG
+      - GJKR 1999
+      - Feldman VSS
+      - ristretto255
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-downgrade-wire
+    display_name: Downgrade Wire
+    repo_url: https://github.com/systemslibrarian/crypto-lab-downgrade-wire
+    live_url: https://systemslibrarian.github.io/crypto-lab-downgrade-wire/
+    categories:
+      - POST-QUANTUM
+      - KEY EXCHANGE
+      - ATTACKS
+    learning_paths:
+      - Post-Quantum
+    catalog_claims:
+      - TLS 1.3
+      - Transcript Binding
+      - X25519MLKEM768
+      - Downgrade
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-dp-noise
+    display_name: DP Noise
+    repo_url: https://github.com/systemslibrarian/crypto-lab-dp-noise
+    live_url: https://systemslibrarian.github.io/crypto-lab-dp-noise/
+    categories:
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - Laplace Mechanism
+      - Gaussian Mechanism
+      - '&#949;-&#948; Budget'
+      - Composition
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-drbg-arena
+    display_name: DRBG Arena
+    repo_url: https://github.com/systemslibrarian/crypto-lab-drbg-arena
+    live_url: https://systemslibrarian.github.io/crypto-lab-drbg-arena/
+    categories:
+      - RANDOMNESS
+    learning_paths: []
+    catalog_claims:
+      - HMAC_DRBG
+      - CTR_DRBG
+      - Hash_DRBG
+      - NIST SP 800-90A
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-e91
+    display_name: E91
+    repo_url: https://github.com/systemslibrarian/crypto-lab-e91
+    live_url: https://systemslibrarian.github.io/crypto-lab-e91/
+    categories:
+      - KEY EXCHANGE
+    learning_paths: []
+    catalog_claims:
+      - E91
+      - Entanglement
+      - CHSH Bell Test
+      - QKD
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-ec-point-arithmetic
+    display_name: Point Arithmetic
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ec-point-arithmetic
+    live_url: https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/
+    categories:
+      - KEY EXCHANGE
+      - SIGNATURES
+    learning_paths:
+      - Developer
+    catalog_claims:
+      - Group Law
+      - Chord-and-Tangent
+      - Scalar Mult
+      - secp256k1
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-ecdsa-forge
+    display_name: ECDSA Forge
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ecdsa-forge
+    live_url: https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/
+    categories:
+      - SIGNATURES
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - ECDSA
+      - secp256k1
+      - RFC 6979
+      - Nonce Reuse
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-ed25519-forge
+    display_name: Ed25519 Forge
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ed25519-forge
+    live_url: https://systemslibrarian.github.io/crypto-lab-ed25519-forge/
+    categories:
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - Ed25519
+      - EdDSA
+      - Deterministic Nonces
+      - ZIP215
+      - Cofactor
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-elgamal-plain
+    display_name: ElGamal Plain
+    repo_url: https://github.com/systemslibrarian/crypto-lab-elgamal-plain
+    live_url: https://systemslibrarian.github.io/crypto-lab-elgamal-plain/
+    categories:
+      - ENCRYPTION
+      - HOMOMORPHIC
+    learning_paths: []
+    catalog_claims:
+      - ElGamal
+      - RFC 3526 Group 14
+      - Homomorphism
+      - Re-randomization
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-encrochat
+    display_name: Encrochat
+    repo_url: https://github.com/systemslibrarian/crypto-lab-encrochat
+    live_url: https://systemslibrarian.github.io/crypto-lab-encrochat/
+    categories:
+      - ATTACKS
+      - PROTOCOLS
+    learning_paths: []
+    catalog_claims:
+      - Double Ratchet
+      - X25519
+      - AES-256-GCM
+      - Endpoint Implant
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-enigma-forge
+    display_name: Enigma Forge
+    repo_url: https://github.com/systemslibrarian/crypto-lab-enigma-forge
+    live_url: https://systemslibrarian.github.io/crypto-lab-enigma-forge/
+    categories:
+      - HISTORICAL
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - Enigma
+      - Rotors
+      - Plugboard
+      - Bombe
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-entropy-collapse
+    display_name: Entropy Collapse
+    repo_url: https://github.com/systemslibrarian/crypto-lab-entropy-collapse
+    live_url: https://systemslibrarian.github.io/crypto-lab-entropy-collapse/
+    categories:
+      - RANDOMNESS
+      - ATTACKS
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - HMAC_DRBG
+      - Seed Provenance
+      - VM Cloning
+      - Nonce Reuse
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-envelope-kms
+    display_name: Envelope KMS
+    repo_url: https://github.com/systemslibrarian/crypto-lab-envelope-kms
+    live_url: https://systemslibrarian.github.io/crypto-lab-envelope-kms/
+    categories:
+      - ENCRYPTION
+      - KEY EXCHANGE
+      - PROTOCOLS
+    learning_paths: []
+    catalog_claims:
+      - RFC 3394
+      - AES Key Wrap
+      - DEK/KEK
+      - Key Rotation
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-falcon-seal
+    display_name: Falcon Seal
+    repo_url: https://github.com/systemslibrarian/crypto-lab-falcon-seal
+    live_url: https://systemslibrarian.github.io/crypto-lab-falcon-seal/
+    categories:
+      - POST-QUANTUM
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - Falcon
+      - FN-DSA
+      - NTRU
+      - FFT Sampling
+      - Post-Quantum
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-fhe-arena
+    display_name: FHE Arena
+    repo_url: https://github.com/systemslibrarian/crypto-lab-fhe-arena
+    live_url: https://systemslibrarian.github.io/crypto-lab-fhe-arena/
+    categories:
+      - HOMOMORPHIC
+    learning_paths: []
+    catalog_claims:
+      - BGV/BFV
+      - RLWE
+      - Noise Budget
+      - SIMD Batching
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-format-ward
+    display_name: Format Ward
+    repo_url: https://github.com/systemslibrarian/crypto-lab-format-ward
+    live_url: https://systemslibrarian.github.io/crypto-lab-format-ward/
+    categories:
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - FF1
+      - FF3-1
+      - AES-256
+      - Tokenization
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-frodo-vault
+    display_name: Frodo Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-frodo-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-frodo-vault/
+    categories:
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - FrodoKEM
+      - LWE
+      - Lattice
+      - Post-Quantum
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-frost-threshold
+    display_name: FROST Threshold
+    repo_url: https://github.com/systemslibrarian/crypto-lab-frost-threshold
+    live_url: https://systemslibrarian.github.io/crypto-lab-frost-threshold/
+    categories:
+      - SIGNATURES
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - FROST (RFC 9591)
+      - Ed25519
+      - Nonce Commitments
+      - VSS Commitments
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-frozen-heart
+    display_name: Frozen Heart
+    repo_url: https://github.com/systemslibrarian/crypto-lab-frozen-heart
+    live_url: https://systemslibrarian.github.io/crypto-lab-frozen-heart/
+    categories:
+      - ZERO-KNOWLEDGE
+      - ATTACKS
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - Fiat-Shamir
+      - Schnorr
+      - ristretto255
+      - NIZK
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-garbled-gate
+    display_name: Garbled Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-garbled-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-garbled-gate/
+    categories:
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Garbled Circuits
+      - Oblivious Transfer
+      - Free XOR
+      - Two-Party MPC
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-gg20-wallet
+    display_name: GG20 Wallet
+    repo_url: https://github.com/systemslibrarian/crypto-lab-gg20-wallet
+    live_url: https://systemslibrarian.github.io/crypto-lab-gg20-wallet/
+    categories:
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - GG20
+      - Paillier
+      - secp256k1
+      - Distributed Key Generation
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-grover
+    display_name: Grover
+    repo_url: https://github.com/systemslibrarian/crypto-lab-grover
+    live_url: https://systemslibrarian.github.io/crypto-lab-grover/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - Grover's Algorithm
+      - Amplitude Amplification
+      - Phase Kickback
+      - AES Key Search
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-harvest-timeline
+    display_name: Harvest Timeline
+    repo_url: https://github.com/systemslibrarian/crypto-lab-harvest-timeline
+    live_url: https://systemslibrarian.github.io/crypto-lab-harvest-timeline/
+    categories:
+      - POST-QUANTUM
+      - PRIVACY
+    learning_paths:
+      - Post-Quantum
+    catalog_claims:
+      - Mosca Inequality
+      - CRQC Scenarios
+      - Cost of Delay
+      - PQC Migration
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-harvest-vault
+    display_name: Harvest Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-harvest-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-harvest-vault/
+    categories:
+      - POST-QUANTUM
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - HNDL
+      - Mosca's Theorem
+      - Q-Day Timeline
+      - PQC Migration
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-hash-zoo
+    display_name: Hash Zoo
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hash-zoo
+    live_url: https://systemslibrarian.github.io/crypto-lab-hash-zoo/
+    categories:
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - SHA-256
+      - SHA3-256
+      - BLAKE3
+      - Merkle-Damgård
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-hawk
+    display_name: HAWK
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hawk
+    live_url: https://systemslibrarian.github.io/crypto-lab-hawk/
+    categories:
+      - POST-QUANTUM
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - HAWK
+      - Lattice Signatures
+      - Gaussian Sampling
+      - NIST Round 2
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-hpke-envelope
+    display_name: HPKE Envelope
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hpke-envelope
+    live_url: https://systemslibrarian.github.io/crypto-lab-hpke-envelope/
+    categories:
+      - ENCRYPTION
+      - KEY EXCHANGE
+    learning_paths: []
+    catalog_claims:
+      - DHKEM X25519
+      - HKDF-SHA256
+      - AES-GCM
+      - RFC 9180
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-hqc-timing
+    display_name: HQC Timing
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hqc-timing
+    live_url: https://systemslibrarian.github.io/crypto-lab-hqc-timing/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - HQC
+      - BCH Decoder
+      - Timing Oracle
+      - Constant-Time
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-hqc-timing-break
+    display_name: HQC Timing Break
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hqc-timing-break
+    live_url: https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - HQC
+      - Cache Timing
+      - Reed-Muller
+      - Soft-ISD
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-hqc-vault
+    display_name: HQC Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hqc-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-hqc-vault/
+    categories:
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - HQC
+      - Reed-Muller
+      - Reed-Solomon
+      - Post-Quantum
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-hybrid-guide
+    display_name: Hybrid Guide
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hybrid-guide
+    live_url: https://systemslibrarian.github.io/crypto-lab-hybrid-guide/
+    categories:
+      - POST-QUANTUM
+      - KEY EXCHANGE
+    learning_paths: []
+    catalog_claims:
+      - KEM Combiner
+      - X25519
+      - ML-KEM-768
+      - X-Wing
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-hybrid-pqc
+    display_name: Hybrid PQC
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hybrid-pqc
+    live_url: https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/
+    categories:
+      - POST-QUANTUM
+      - KEY EXCHANGE
+    learning_paths:
+      - Post-Quantum
+    catalog_claims:
+      - X25519
+      - ML-KEM-768
+      - Ed25519
+      - ML-DSA-65
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-hybrid-sign
+    display_name: Hybrid Sign
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hybrid-sign
+    live_url: https://systemslibrarian.github.io/crypto-lab-hybrid-sign/
+    categories:
+      - POST-QUANTUM
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - Ed25519
+      - ML-DSA-65
+      - Composite Signatures
+      - IETF LAMPS
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-hybrid-wire
+    display_name: Hybrid Wire
+    repo_url: https://github.com/systemslibrarian/crypto-lab-hybrid-wire
+    live_url: https://systemslibrarian.github.io/crypto-lab-hybrid-wire/
+    categories:
+      - KEY EXCHANGE
+    learning_paths:
+      - Post-Quantum
+      - Key Exchange
+    catalog_claims:
+      - X25519
+      - ML-KEM-768
+      - HKDF-SHA256
+      - AES-256-GCM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-ibe-gate
+    display_name: IBE Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ibe-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-ibe-gate/
+    categories:
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - Boneh-Franklin
+      - BLS12-381
+      - Identity-Based Encryption
+      - Key Escrow
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-icy-dvrf
+    display_name: Icy DVRF
+    repo_url: https://github.com/systemslibrarian/crypto-lab-icy-dvrf
+    live_url: https://systemslibrarian.github.io/crypto-lab-icy-dvrf/
+    categories:
+      - MPC & THRESHOLD
+      - RANDOMNESS
+    learning_paths: []
+    catalog_claims:
+      - DVRF
+      - Chaum-Pedersen DLEQ
+      - ristretto255
+      - FROST Nonces
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-iron-letter
+    display_name: Iron Letter
+    repo_url: https://github.com/systemslibrarian/crypto-lab-iron-letter
+    live_url: https://systemslibrarian.github.io/crypto-lab-iron-letter/
+    categories:
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - ECIES P-256
+      - RSA-OAEP
+      - AES-256-GCM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-iron-serpent
+    display_name: Iron Serpent
+    repo_url: https://github.com/systemslibrarian/crypto-lab-iron-serpent
+    live_url: https://systemslibrarian.github.io/crypto-lab-iron-serpent/
+    categories:
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - Serpent
+      - AES-256
+      - SPN
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-isogeny-atlas
+    display_name: Isogeny Atlas
+    repo_url: https://github.com/systemslibrarian/crypto-lab-isogeny-atlas
+    live_url: https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/
+    categories:
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - Isogeny Graphs
+      - Modular Polynomials
+      - Endomorphism Rings
+      - CGL Hash
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-isogeny-gate
+    display_name: Isogeny Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-isogeny-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-isogeny-gate/
+    categories:
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - SIDH
+      - CSIDH
+      - SQIsign
+      - Castryck-Decru
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-j-uniward
+    display_name: J-UNIWARD
+    repo_url: https://github.com/systemslibrarian/crypto-lab-j-uniward
+    live_url: https://systemslibrarian.github.io/crypto-lab-j-uniward/
+    categories:
+      - STEGANOGRAPHY
+    learning_paths: []
+    catalog_claims:
+      - J-UNIWARD
+      - DCT
+      - Wavelet Distortion
+      - Adaptive Embedding
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-jevil
+    display_name: Jevil
+    repo_url: https://github.com/systemslibrarian/crypto-lab-jevil
+    live_url: https://systemslibrarian.github.io/crypto-lab-jevil/
+    categories:
+      - SIGNATURES
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - Jevil
+      - Hash-Based
+      - Goldilocks Field
+      - Lagrange Interpolation
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-jwt-forge
+    display_name: JWT Forge
+    repo_url: https://github.com/systemslibrarian/crypto-lab-jwt-forge
+    live_url: https://systemslibrarian.github.io/crypto-lab-jwt-forge/
+    categories:
+      - ATTACKS
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - JWT
+      - JWS
+      - alg:none
+      - HS/RS Key Confusion
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-kdf-arena
+    display_name: KDF Arena
+    repo_url: https://github.com/systemslibrarian/crypto-lab-kdf-arena
+    live_url: https://systemslibrarian.github.io/crypto-lab-kdf-arena/
+    categories:
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - HKDF
+      - PBKDF2
+      - scrypt
+      - Argon2id
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-kdf-chain
+    display_name: KDF Chain
+    repo_url: https://github.com/systemslibrarian/crypto-lab-kdf-chain
+    live_url: https://systemslibrarian.github.io/crypto-lab-kdf-chain/
+    categories:
+      - HASHING & KDFS
+    learning_paths:
+      - Developer
+    catalog_claims:
+      - HKDF
+      - PBKDF2
+      - scrypt
+      - Argon2id
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-kem-trap
+    display_name: KEM Trap
+    repo_url: https://github.com/systemslibrarian/crypto-lab-kem-trap
+    live_url: https://systemslibrarian.github.io/crypto-lab-kem-trap/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths:
+      - Post-Quantum
+    catalog_claims:
+      - ML-KEM-768
+      - FIPS 203
+      - FO Transform
+      - Implicit Rejection
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-kerberos
+    display_name: Kerberos v5
+    repo_url: https://github.com/systemslibrarian/crypto-lab-kerberos
+    live_url: https://systemslibrarian.github.io/crypto-lab-kerberos/
+    categories:
+      - PROTOCOLS
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - RFC 4120
+      - Needham-Schroeder
+      - Lowe Attack
+      - AES-256-CTS
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-key-exchange
+    display_name: Key Exchange
+    repo_url: https://github.com/systemslibrarian/crypto-lab-key-exchange
+    live_url: https://systemslibrarian.github.io/crypto-lab-key-exchange/
+    categories:
+      - KEY EXCHANGE
+    learning_paths:
+      - Key Exchange
+    catalog_claims:
+      - Diffie-Hellman
+      - ECDH
+      - X25519
+      - ML-KEM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-key-mirror
+    display_name: Key Mirror
+    repo_url: https://github.com/systemslibrarian/crypto-lab-key-mirror
+    live_url: https://systemslibrarian.github.io/crypto-lab-key-mirror/
+    categories:
+      - PROTOCOLS
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - Merkle Tree
+      - VRF
+      - Ed25519
+      - KEYTRANS
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-kyber-vault
+    display_name: Kyber Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-kyber-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-kyber-vault/
+    categories:
+      - POST-QUANTUM
+      - KEY EXCHANGE
+    learning_paths:
+      - Post-Quantum
+      - Key Exchange
+    catalog_claims:
+      - ML-KEM
+      - FIPS 203
+      - CRYSTALS-Kyber
+      - Lattice
+      - AES-256-GCM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-kyberslash
+    display_name: KyberSlash
+    repo_url: https://github.com/systemslibrarian/crypto-lab-kyberslash
+    live_url: https://systemslibrarian.github.io/crypto-lab-kyberslash/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - ML-KEM
+      - KyberSlash
+      - Timing Attack
+      - Barrett Reduction
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-lattice-fault
+    display_name: Lattice Fault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-lattice-fault
+    live_url: https://systemslibrarian.github.io/crypto-lab-lattice-fault/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - ML-KEM
+      - ML-DSA
+      - KyberSlash
+      - Fault Injection
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-lattice-gentle
+    display_name: Lattice Gentle
+    repo_url: https://github.com/systemslibrarian/crypto-lab-lattice-gentle
+    live_url: https://systemslibrarian.github.io/crypto-lab-lattice-gentle/
+    categories:
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - SVP &amp; CVP
+      - LLL
+      - LWE &amp; SIS
+      - toy ML-KEM/ML-DSA
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-lll-break
+    display_name: LLL Break
+    repo_url: https://github.com/systemslibrarian/crypto-lab-lll-break
+    live_url: https://systemslibrarian.github.io/crypto-lab-lll-break/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - LLL
+      - BKZ
+      - Gram-Schmidt
+      - Toy LWE
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-lms-ledger
+    display_name: LMS Ledger
+    repo_url: https://github.com/systemslibrarian/crypto-lab-lms-ledger
+    live_url: https://systemslibrarian.github.io/crypto-lab-lms-ledger/
+    categories:
+      - SIGNATURES
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - LMS
+      - HSS
+      - LM-OTS
+      - NIST SP 800-208
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-lms-xmss
+    display_name: LMS/XMSS
+    repo_url: https://github.com/systemslibrarian/crypto-lab-lms-xmss
+    live_url: https://systemslibrarian.github.io/crypto-lab-lms-xmss/
+    categories:
+      - SIGNATURES
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - LMS
+      - LM-OTS
+      - HSS
+      - NIST SP 800-208
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-lwe-hints
+    display_name: LWE Hints
+    repo_url: https://github.com/systemslibrarian/crypto-lab-lwe-hints
+    live_url: https://systemslibrarian.github.io/crypto-lab-lwe-hints/
+    categories:
+      - ATTACKS
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - LWE
+      - Sparse Ternary Secrets
+      - Approximate Hints
+      - Lattice
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-mac-race
+    display_name: MAC Race
+    repo_url: https://github.com/systemslibrarian/crypto-lab-mac-race
+    live_url: https://systemslibrarian.github.io/crypto-lab-mac-race/
+    categories:
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - HMAC
+      - CMAC
+      - Poly1305
+      - GHASH
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-matsui-line
+    display_name: Matsui Line
+    repo_url: https://github.com/systemslibrarian/crypto-lab-matsui-line
+    live_url: https://systemslibrarian.github.io/crypto-lab-matsui-line/
+    categories:
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - Linear Cryptanalysis
+      - LAT
+      - Piling-Up Lemma
+      - Known-Plaintext
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-mayo-seal
+    display_name: MAYO Seal
+    repo_url: https://github.com/systemslibrarian/crypto-lab-mayo-seal
+    live_url: https://systemslibrarian.github.io/crypto-lab-mayo-seal/
+    categories:
+      - POST-QUANTUM
+      - SIGNATURES
+    learning_paths:
+      - Post-Quantum
+    catalog_claims:
+      - MAYO
+      - GF(16)
+      - Whipping
+      - NIST On-Ramp
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-mceliece-gate
+    display_name: McEliece Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-mceliece-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-mceliece-gate/
+    categories:
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - Classic McEliece
+      - Goppa Codes
+      - Post-Quantum
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-merkle-proofs
+    display_name: Merkle Proofs
+    repo_url: https://github.com/systemslibrarian/crypto-lab-merkle-proofs
+    live_url: https://systemslibrarian.github.io/crypto-lab-merkle-proofs/
+    categories:
+      - HASHING & KDFS
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - SHA-256
+      - Merkle Proof
+      - RFC 6962
+      - CVE-2012-2459
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-merkle-vault
+    display_name: Merkle Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-merkle-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-merkle-vault/
+    categories:
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - SHA-256
+      - Merkle Tree
+      - Inclusion Proofs
+      - Certificate Transparency
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-mls-group
+    display_name: MLS Group
+    repo_url: https://github.com/systemslibrarian/crypto-lab-mls-group
+    live_url: https://systemslibrarian.github.io/crypto-lab-mls-group/
+    categories:
+      - PROTOCOLS
+      - KEY EXCHANGE
+    learning_paths: []
+    catalog_claims:
+      - MLS (RFC 9420)
+      - TreeKEM
+      - Epoch Key Schedule
+      - Forward Secrecy
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-model-breach
+    display_name: Model Breach
+    repo_url: https://github.com/systemslibrarian/crypto-lab-model-breach
+    live_url: https://systemslibrarian.github.io/crypto-lab-model-breach/
+    categories:
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - Threat Modeling
+      - Candidate Enumeration
+      - MITM Recovery
+      - Guess-and-Determine
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-mpcith-sign
+    display_name: MPCitH Sign
+    repo_url: https://github.com/systemslibrarian/crypto-lab-mpcith-sign
+    live_url: https://systemslibrarian.github.io/crypto-lab-mpcith-sign/
+    categories:
+      - POST-QUANTUM
+      - SIGNATURES
+      - ZERO-KNOWLEDGE
+    learning_paths: []
+    catalog_claims:
+      - MPC-in-the-Head
+      - Fiat-Shamir
+      - SHA-256 Commitments
+      - Merkle Proofs
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-multivariate
+    display_name: Multivariate UOV
+    repo_url: https://github.com/systemslibrarian/crypto-lab-multivariate
+    live_url: https://systemslibrarian.github.io/crypto-lab-multivariate/
+    categories:
+      - POST-QUANTUM
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - UOV
+      - GF(256)
+      - MQ Problem
+      - Beullens Attack
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-musig-gate
+    display_name: MuSig Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-musig-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-musig-gate/
+    categories:
+      - SIGNATURES
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - MuSig2
+      - BIP-327
+      - secp256k1
+      - Wagner &amp; ROS
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-noise-pipe
+    display_name: Noise Pipe
+    repo_url: https://github.com/systemslibrarian/crypto-lab-noise-pipe
+    live_url: https://systemslibrarian.github.io/crypto-lab-noise-pipe/
+    categories:
+      - KEY EXCHANGE
+      - PROTOCOLS
+    learning_paths:
+      - Developer
+      - Key Exchange
+    catalog_claims:
+      - X25519
+      - HKDF
+      - WireGuard
+      - Handshake Patterns
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-nonce-collision
+    display_name: Nonce Collision
+    repo_url: https://github.com/systemslibrarian/crypto-lab-nonce-collision
+    live_url: https://systemslibrarian.github.io/crypto-lab-nonce-collision/
+    categories:
+      - ATTACKS
+      - ENCRYPTION
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - AES-GCM
+      - ChaCha20-Poly1305
+      - Forbidden Attack
+      - Crib Dragging
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-nonce-guard
+    display_name: Nonce Guard
+    repo_url: https://github.com/systemslibrarian/crypto-lab-nonce-guard
+    live_url: https://systemslibrarian.github.io/crypto-lab-nonce-guard/
+    categories:
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - AES-GCM
+      - AES-GCM-SIV
+      - RFC 8452
+      - Synthetic IV
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-nonce-lattice
+    display_name: Nonce Lattice
+    repo_url: https://github.com/systemslibrarian/crypto-lab-nonce-lattice
+    live_url: https://systemslibrarian.github.io/crypto-lab-nonce-lattice/
+    categories:
+      - ATTACKS
+      - SIGNATURES
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - ECDSA
+      - Hidden Number Problem
+      - LLL Reduction
+      - secp256k1
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-ntru-classic
+    display_name: NTRU Classic
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ntru-classic
+    live_url: https://systemslibrarian.github.io/crypto-lab-ntru-classic/
+    categories:
+      - POST-QUANTUM
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - NTRU
+      - Polynomial Rings
+      - Lattice
+      - EESS#1
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-oblivious-shelf
+    display_name: Oblivious Shelf
+    repo_url: https://github.com/systemslibrarian/crypto-lab-oblivious-shelf
+    live_url: https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/
+    categories:
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - XOR PIR
+      - Chor et al. 1995
+      - 2-Server PIR
+      - Privacy Audit
+    implementation_locus: server_backed
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-opaque-gate
+    display_name: OPAQUE Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-opaque-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-opaque-gate/
+    categories:
+      - KEY EXCHANGE
+      - PRIVACY
+    learning_paths:
+      - Developer
+      - Key Exchange
+    catalog_claims:
+      - OPAQUE
+      - OPRF
+      - 3DH
+      - HKDF
+    implementation_locus: server_backed
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-oram-vault
+    display_name: ORAM Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-oram-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-oram-vault/
+    categories:
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - Path ORAM
+      - Position Map
+      - Stash
+      - Access Patterns
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-ot-gate
+    display_name: OT Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ot-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-ot-gate/
+    categories:
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Simplest OT
+      - Chou-Orlandi 2015
+      - Edwards25519
+      - AES-256-GCM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-otp-vault
+    display_name: OTP Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-otp-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-otp-vault/
+    categories:
+      - ENCRYPTION
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - One-Time Pad
+      - Perfect Secrecy
+      - Two-Time Pad
+      - Crib Dragging
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-padding-oracle
+    display_name: Padding Oracle
+    repo_url: https://github.com/systemslibrarian/crypto-lab-padding-oracle
+    live_url: https://systemslibrarian.github.io/crypto-lab-padding-oracle/
+    categories:
+      - ATTACKS
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - AES-CBC
+      - PKCS#7
+      - Vaudenay 2002
+      - POODLE
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-paillier-gate
+    display_name: Paillier Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-paillier-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-paillier-gate/
+    categories:
+      - HOMOMORPHIC
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Paillier
+      - Additive HE
+      - Private Voting
+      - Aggregation
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-pairing-gate
+    display_name: Pairing Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-pairing-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-pairing-gate/
+    categories:
+      - SIGNATURES
+    learning_paths: []
+    catalog_claims:
+      - BLS12-381
+      - BLS Signatures
+      - Signature Aggregation
+      - Rogue Key Attack
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-pake-gate
+    display_name: PAKE Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-pake-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-pake-gate/
+    categories:
+      - KEY EXCHANGE
+      - PROTOCOLS
+    learning_paths: []
+    catalog_claims:
+      - SRP-6a
+      - J-PAKE
+      - CPace
+      - Dragonfly
+    implementation_locus: server_backed
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-patron-shield
+    display_name: Patron Shield
+    repo_url: https://github.com/systemslibrarian/crypto-lab-patron-shield
+    live_url: https://systemslibrarian.github.io/crypto-lab-patron-shield/
+    categories:
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - IT-PIR
+      - XOR Secret Sharing
+      - Chor et al. 1995
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-phantom-vault
+    display_name: Phantom Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-phantom-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-phantom-vault/
+    categories:
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - PBKDF2-SHA-256
+      - HMAC-DRBG
+      - Rejection Sampling
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-pki-chain
+    display_name: PKI Chain
+    repo_url: https://github.com/systemslibrarian/crypto-lab-pki-chain
+    live_url: https://systemslibrarian.github.io/crypto-lab-pki-chain/
+    categories:
+      - SIGNATURES
+      - PROTOCOLS
+    learning_paths: []
+    catalog_claims:
+      - X.509
+      - Certificate Transparency
+      - CA Compromise
+      - ML-DSA
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-poly1305-mac
+    display_name: Poly1305 MAC
+    repo_url: https://github.com/systemslibrarian/crypto-lab-poly1305-mac
+    live_url: https://systemslibrarian.github.io/crypto-lab-poly1305-mac/
+    categories:
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - Poly1305
+      - GF(2¹³⁰−5)
+      - Key-Reuse Attack
+      - Polynomial Stepper
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-power-trace
+    display_name: Power Trace
+    repo_url: https://github.com/systemslibrarian/crypto-lab-power-trace
+    live_url: https://systemslibrarian.github.io/crypto-lab-power-trace/
+    categories:
+      - ATTACKS
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - CPA
+      - DPA
+      - AES-128
+      - Hamming Weight
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-pq-families
+    display_name: PQ Families
+    repo_url: https://github.com/systemslibrarian/crypto-lab-pq-families
+    live_url: https://systemslibrarian.github.io/crypto-lab-pq-families/
+    categories:
+      - POST-QUANTUM
+    learning_paths:
+      - Post-Quantum
+    catalog_claims:
+      - Lattice
+      - Code-Based
+      - Hash-Based
+      - Multivariate
+      - Isogeny
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-pq-rotation
+    display_name: PQ Rotation
+    repo_url: https://github.com/systemslibrarian/crypto-lab-pq-rotation
+    live_url: https://systemslibrarian.github.io/crypto-lab-pq-rotation/
+    categories:
+      - POST-QUANTUM
+      - PRIVACY
+    learning_paths:
+      - Post-Quantum
+    catalog_claims:
+      - Hybrid X.509
+      - CNSA 2.0
+      - Key Rotation
+      - Migration Planner
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-pq-tls-handshake
+    display_name: PQ TLS Handshake
+    repo_url: https://github.com/systemslibrarian/crypto-lab-pq-tls-handshake
+    live_url: https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/
+    categories:
+      - POST-QUANTUM
+      - KEY EXCHANGE
+      - PROTOCOLS
+    learning_paths:
+      - Developer
+      - Post-Quantum
+      - Key Exchange
+    catalog_claims:
+      - TLS 1.3
+      - X25519MLKEM768
+      - Key Schedule
+      - Hybrid PQC
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-protocol-checker
+    display_name: Protocol Checker
+    repo_url: https://github.com/systemslibrarian/crypto-lab-protocol-checker
+    live_url: https://systemslibrarian.github.io/crypto-lab-protocol-checker/
+    categories:
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - Dolev-Yao
+      - Symbolic Model
+      - Needham-Schroeder
+      - Unification
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-protocol-compose
+    display_name: Protocol Compose
+    repo_url: https://github.com/systemslibrarian/crypto-lab-protocol-compose
+    live_url: https://systemslibrarian.github.io/crypto-lab-protocol-compose/
+    categories:
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - MAC-then-Encrypt
+      - Encrypt-then-MAC
+      - CRIME
+      - TLS 1.3
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-psi-gate
+    display_name: PSI Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-psi-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-psi-gate/
+    categories:
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - DH-PSI
+      - ristretto255
+      - Hash-to-Curve
+      - Contact Discovery
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-quantum-entropy
+    display_name: Quantum Entropy
+    repo_url: https://github.com/systemslibrarian/crypto-lab-quantum-entropy
+    live_url: https://systemslibrarian.github.io/crypto-lab-quantum-entropy/
+    categories:
+      - RANDOMNESS
+    learning_paths: []
+    catalog_claims:
+      - QRNG
+      - Min-Entropy
+      - Toeplitz Extractor
+      - SP 800-90B
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-quantum-vault-kpqc
+    display_name: Quantum Vault KpqC
+    repo_url: https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc
+    live_url: https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/
+    categories:
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - AES-256-GCM
+      - Shamir SSS
+      - SMAUG-T
+      - HAETAE
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-ratchet-wire
+    display_name: Ratchet Wire
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ratchet-wire
+    live_url: https://systemslibrarian.github.io/crypto-lab-ratchet-wire/
+    categories:
+      - KEY EXCHANGE
+      - PROTOCOLS
+    learning_paths:
+      - Key Exchange
+    catalog_claims:
+      - Double Ratchet
+      - X25519
+      - HKDF
+      - AES-256-GCM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-reshare-circle
+    display_name: Reshare Circle
+    repo_url: https://github.com/systemslibrarian/crypto-lab-reshare-circle
+    live_url: https://systemslibrarian.github.io/crypto-lab-reshare-circle/
+    categories:
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Shamir
+      - Feldman VSS
+      - HJKY 1995
+      - Mobile Adversary
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-ring-sign
+    display_name: Ring Sign
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ring-sign
+    live_url: https://systemslibrarian.github.io/crypto-lab-ring-sign/
+    categories:
+      - SIGNATURES
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - LSAG
+      - Key Image
+      - Group Signatures
+      - Monero
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-rsa-educational
+    display_name: Educational RSA
+    repo_url: https://github.com/systemslibrarian/crypto-lab-rsa-educational
+    live_url: https://systemslibrarian.github.io/crypto-lab-rsa-educational/
+    categories:
+      - ENCRYPTION
+      - SIGNATURES
+    learning_paths:
+      - Developer
+    catalog_claims:
+      - RSA
+      - Key Generation
+      - Modular Exponentiation
+      - OAEP
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-rsa-forge
+    display_name: RSA Forge
+    repo_url: https://github.com/systemslibrarian/crypto-lab-rsa-forge
+    live_url: https://systemslibrarian.github.io/crypto-lab-rsa-forge/
+    categories:
+      - ENCRYPTION
+      - SIGNATURES
+      - ATTACKS
+    learning_paths:
+      - Developer
+    catalog_claims:
+      - RSA
+      - OAEP
+      - PSS
+      - PKCS#1
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-salamander
+    display_name: Salamander
+    repo_url: https://github.com/systemslibrarian/crypto-lab-salamander
+    live_url: https://systemslibrarian.github.io/crypto-lab-salamander/
+    categories:
+      - ENCRYPTION
+      - ATTACKS
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - AES-GCM
+      - GHASH
+      - GF(2¹²⁸)
+      - Message Franking
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-schnorr-forge
+    display_name: Schnorr Forge
+    repo_url: https://github.com/systemslibrarian/crypto-lab-schnorr-forge
+    live_url: https://systemslibrarian.github.io/crypto-lab-schnorr-forge/
+    categories:
+      - SIGNATURES
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - BIP-340
+      - secp256k1
+      - Nonce Reuse
+      - Aggregation
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-scloud-vault
+    display_name: Scloud+ Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-scloud-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-scloud-vault/
+    categories:
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - Scloud+
+      - LWE KEM
+      - BW32 Coding
+      - Ternary Secrets
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-search-vault
+    display_name: Search Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-search-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-search-vault/
+    categories:
+      - PRIVACY
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - SSE
+      - HMAC-SHA-256
+      - AES-256-GCM
+      - Leakage Abuse
+    implementation_locus: server_backed
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-shadow-vault
+    display_name: Shadow Vault
+    repo_url: https://github.com/systemslibrarian/crypto-lab-shadow-vault
+    live_url: https://systemslibrarian.github.io/crypto-lab-shadow-vault/
+    categories:
+      - ENCRYPTION
+      - PRIVACY
+    learning_paths: []
+    catalog_claims:
+      - Argon2id
+      - ChaCha20-Poly1305
+      - SHA-256
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-shamir-gate
+    display_name: Shamir Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-shamir-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-shamir-gate/
+    categories:
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Shamir SSS
+      - Lagrange Interpolation
+      - GF(p)
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-shamir-vs-frost
+    display_name: Shamir vs FROST
+    repo_url: https://github.com/systemslibrarian/crypto-lab-shamir-vs-frost
+    live_url: https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/
+    categories:
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Shamir SSS
+      - FROST
+      - Ed25519
+      - GF(256)
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-shor
+    display_name: Shor
+    repo_url: https://github.com/systemslibrarian/crypto-lab-shor
+    live_url: https://systemslibrarian.github.io/crypto-lab-shor/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - Shor's Algorithm
+      - Period Finding
+      - QFT
+      - RSA Factorization
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-signed-bytes
+    display_name: Signed Bytes
+    repo_url: https://github.com/systemslibrarian/crypto-lab-signed-bytes
+    live_url: https://systemslibrarian.github.io/crypto-lab-signed-bytes/
+    categories:
+      - SIGNATURES
+      - ATTACKS
+    learning_paths:
+      - Developer
+    catalog_claims:
+      - Ed25519
+      - JCS RFC 8785
+      - Parser Differential
+      - Unicode NFC
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-silent-tally
+    display_name: Silent Tally
+    repo_url: https://github.com/systemslibrarian/crypto-lab-silent-tally
+    live_url: https://systemslibrarian.github.io/crypto-lab-silent-tally/
+    categories:
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Shamir SSS
+      - GF(2⁶¹−1)
+      - Lagrange Interpolation
+      - Additive Homomorphism
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-simon-period
+    display_name: Simon's Period
+    repo_url: https://github.com/systemslibrarian/crypto-lab-simon-period
+    live_url: https://systemslibrarian.github.io/crypto-lab-simon-period/
+    categories:
+      - POST-QUANTUM
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - Simon's Algorithm
+      - Period Finding
+      - Even-Mansour
+      - CBC-MAC Forgery
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-snark-arena
+    display_name: SNARK Arena
+    repo_url: https://github.com/systemslibrarian/crypto-lab-snark-arena
+    live_url: https://systemslibrarian.github.io/crypto-lab-snark-arena/
+    categories:
+      - ZERO-KNOWLEDGE
+    learning_paths: []
+    catalog_claims:
+      - Groth16
+      - PLONK
+      - Trusted Setup
+      - zk-SNARK
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 6
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-spake-gate
+    display_name: SPAKE Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-spake-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-spake-gate/
+    categories:
+      - KEY EXCHANGE
+    learning_paths: []
+    catalog_claims:
+      - SPAKE2
+      - SPAKE2+
+      - P-256
+      - PAKE
+    implementation_locus: server_backed
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-spdz-forge
+    display_name: SPDZ Forge
+    repo_url: https://github.com/systemslibrarian/crypto-lab-spdz-forge
+    live_url: https://systemslibrarian.github.io/crypto-lab-spdz-forge/
+    categories:
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - SPDZ
+      - Beaver Triples
+      - SPDZ MACs
+      - Dishonest Majority
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-sphincs-ledger
+    display_name: SPHINCS+ Ledger
+    repo_url: https://github.com/systemslibrarian/crypto-lab-sphincs-ledger
+    live_url: https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/
+    categories:
+      - SIGNATURES
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - SLH-DSA
+      - FIPS 205
+      - SPHINCS+
+      - SHA-256
+      - WOTS+
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-ssh-handshake
+    display_name: SSH Handshake
+    repo_url: https://github.com/systemslibrarian/crypto-lab-ssh-handshake
+    live_url: https://systemslibrarian.github.io/crypto-lab-ssh-handshake/
+    categories:
+      - KEY EXCHANGE
+      - PROTOCOLS
+      - SIGNATURES
+    learning_paths:
+      - Developer
+    catalog_claims:
+      - X25519
+      - Ed25519
+      - TOFU
+      - known_hosts
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-stark-tower
+    display_name: STARK Tower
+    repo_url: https://github.com/systemslibrarian/crypto-lab-stark-tower
+    live_url: https://systemslibrarian.github.io/crypto-lab-stark-tower/
+    categories:
+      - ZERO-KNOWLEDGE
+    learning_paths: []
+    catalog_claims:
+      - zk-STARK
+      - AIR Constraints
+      - FRI
+      - Post-Quantum
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 6
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-stego-suite
+    display_name: Stego Suite
+    repo_url: https://github.com/systemslibrarian/crypto-lab-stego-suite
+    live_url: https://systemslibrarian.github.io/crypto-lab-stego-suite/
+    categories:
+      - STEGANOGRAPHY
+    learning_paths: []
+    catalog_claims:
+      - LSB
+      - DCT
+      - Adaptive Embedding
+      - Chi-Squared Steganalysis
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-stream-ward
+    display_name: Stream Ward
+    repo_url: https://github.com/systemslibrarian/crypto-lab-stream-ward
+    live_url: https://systemslibrarian.github.io/crypto-lab-stream-ward/
+    categories:
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - XChaCha20-Poly1305
+      - secretstream
+      - SHA-256 Chaining
+      - Truncation Attack
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-syndrome-drain
+    display_name: Syndrome Drain
+    repo_url: https://github.com/systemslibrarian/crypto-lab-syndrome-drain
+    live_url: https://systemslibrarian.github.io/crypto-lab-syndrome-drain/
+    categories:
+      - ATTACKS
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - DOOM
+      - BIKE
+      - HQC
+      - Classic McEliece
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-syndrome-hints
+    display_name: Syndrome Hints
+    repo_url: https://github.com/systemslibrarian/crypto-lab-syndrome-hints
+    live_url: https://systemslibrarian.github.io/crypto-lab-syndrome-hints/
+    categories:
+      - ATTACKS
+      - POST-QUANTUM
+    learning_paths: []
+    catalog_claims:
+      - Hint-ISD
+      - Prange
+      - Stern
+      - Syndrome Decoding
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-threshold-decrypt
+    display_name: Threshold Decrypt
+    repo_url: https://github.com/systemslibrarian/crypto-lab-threshold-decrypt
+    live_url: https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/
+    categories:
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - ElGamal
+      - P-256
+      - NIZK Proofs
+      - t-of-n
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-threshold-mldsa
+    display_name: Threshold ML-DSA
+    repo_url: https://github.com/systemslibrarian/crypto-lab-threshold-mldsa
+    live_url: https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/
+    categories:
+      - POST-QUANTUM
+      - SIGNATURES
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Threshold ML-DSA
+      - Distributed Signing
+      - Two-Party
+      - Post-Quantum
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-time-lock-puzzle
+    display_name: Time-Lock Puzzle
+    repo_url: https://github.com/systemslibrarian/crypto-lab-time-lock-puzzle
+    live_url: https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/
+    categories:
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - RSW
+      - Sequential Squaring
+      - AES-256-GCM
+      - Trapdoor
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-time-trust
+    display_name: Time Trust
+    repo_url: https://github.com/systemslibrarian/crypto-lab-time-trust
+    live_url: https://systemslibrarian.github.io/crypto-lab-time-trust/
+    categories:
+      - ATTACKS
+      - PROTOCOLS
+    learning_paths: []
+    catalog_claims:
+      - Ed25519
+      - X.509
+      - JWT
+      - TOTP
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-timing-oracle
+    display_name: Timing Oracle
+    repo_url: https://github.com/systemslibrarian/crypto-lab-timing-oracle
+    live_url: https://systemslibrarian.github.io/crypto-lab-timing-oracle/
+    categories:
+      - ATTACKS
+    learning_paths:
+      - Cryptanalyst
+    catalog_claims:
+      - Timing Attack
+      - HMAC
+      - RSA
+      - Cache-Timing
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-timing-sidechannel
+    display_name: Timing Side-Channel
+    repo_url: https://github.com/systemslibrarian/crypto-lab-timing-sidechannel
+    live_url: https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/
+    categories:
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - Timing Attack
+      - Constant-Time
+      - Side-Channel
+      - Secret Compare
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-tls-handshake
+    display_name: TLS Handshake
+    repo_url: https://github.com/systemslibrarian/crypto-lab-tls-handshake
+    live_url: https://systemslibrarian.github.io/crypto-lab-tls-handshake/
+    categories:
+      - KEY EXCHANGE
+      - PROTOCOLS
+    learning_paths:
+      - Developer
+      - Key Exchange
+    catalog_claims:
+      - TLS 1.3
+      - X25519
+      - Ed25519
+      - AES-GCM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-traitor-trace
+    display_name: Traitor Trace
+    repo_url: https://github.com/systemslibrarian/crypto-lab-traitor-trace
+    live_url: https://systemslibrarian.github.io/crypto-lab-traitor-trace/
+    categories:
+      - ENCRYPTION
+      - PROTOCOLS
+    learning_paths: []
+    catalog_claims:
+      - NNL Subset-Cover
+      - Broadcast Encryption
+      - Traitor Tracing
+      - AES-256-GCM
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-vdf
+    display_name: VDF
+    repo_url: https://github.com/systemslibrarian/crypto-lab-vdf
+    live_url: https://systemslibrarian.github.io/crypto-lab-vdf/
+    categories:
+      - RANDOMNESS
+    learning_paths: []
+    catalog_claims:
+      - VDF
+      - Wesolowski
+      - Modular Squaring
+      - Randomness Beacon
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-vigenere-break
+    display_name: Vigenère Break
+    repo_url: https://github.com/systemslibrarian/crypto-lab-vigenere-break
+    live_url: https://systemslibrarian.github.io/crypto-lab-vigenere-break/
+    categories:
+      - HISTORICAL
+      - ATTACKS
+    learning_paths: []
+    catalog_claims:
+      - Vigenère
+      - Kasiski Examination
+      - Index of Coincidence
+      - Frequency Analysis
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 4
+    audit_mode_guess: attack_reproduction
+    notes: ''
+  - slug: crypto-lab-vrf-gate
+    display_name: VRF Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-vrf-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-vrf-gate/
+    categories:
+      - RANDOMNESS
+    learning_paths: []
+    catalog_claims:
+      - ECVRF P-256
+      - Wesolowski VDF
+      - RANDAO
+      - RFC 9381
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-vss-gate
+    display_name: VSS Gate
+    repo_url: https://github.com/systemslibrarian/crypto-lab-vss-gate
+    live_url: https://systemslibrarian.github.io/crypto-lab-vss-gate/
+    categories:
+      - PROTOCOLS
+      - MPC & THRESHOLD
+    learning_paths: []
+    catalog_claims:
+      - Feldman VSS
+      - Pedersen VSS
+      - Commitment Verification
+      - Cheating Detection
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-web-of-trust
+    display_name: Web of Trust
+    repo_url: https://github.com/systemslibrarian/crypto-lab-web-of-trust
+    live_url: https://systemslibrarian.github.io/crypto-lab-web-of-trust/
+    categories:
+      - SIGNATURES
+      - KEY EXCHANGE
+      - PROTOCOLS
+    learning_paths: []
+    catalog_claims:
+      - PGP
+      - OpenPGP
+      - GnuPG
+      - Key Signing
+      - Trust Graph
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-webauthn
+    display_name: WebAuthn
+    repo_url: https://github.com/systemslibrarian/crypto-lab-webauthn
+    live_url: https://systemslibrarian.github.io/crypto-lab-webauthn/
+    categories:
+      - PROTOCOLS
+      - KEY EXCHANGE
+    learning_paths:
+      - Developer
+    catalog_claims:
+      - WebAuthn
+      - FIDO2
+      - Passkeys
+      - Assertion
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-world-ciphers
+    display_name: World Ciphers
+    repo_url: https://github.com/systemslibrarian/crypto-lab-world-ciphers
+    live_url: https://systemslibrarian.github.io/crypto-lab-world-ciphers/
+    categories:
+      - ENCRYPTION
+    learning_paths: []
+    catalog_claims:
+      - Camellia
+      - ARIA
+      - SM4
+      - Kuznyechik
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-world-hashes
+    display_name: World Hashes
+    repo_url: https://github.com/systemslibrarian/crypto-lab-world-hashes
+    live_url: https://systemslibrarian.github.io/crypto-lab-world-hashes/
+    categories:
+      - HASHING & KDFS
+    learning_paths: []
+    catalog_claims:
+      - SM3
+      - Streebog
+      - Kupyna
+      - SHA-256
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-x3dh-wire
+    display_name: X3DH Wire
+    repo_url: https://github.com/systemslibrarian/crypto-lab-x3dh-wire
+    live_url: https://systemslibrarian.github.io/crypto-lab-x3dh-wire/
+    categories:
+      - KEY EXCHANGE
+      - PROTOCOLS
+    learning_paths:
+      - Developer
+      - Key Exchange
+    catalog_claims:
+      - X3DH
+      - X25519
+      - HKDF-SHA-256
+      - Signal Protocol
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 3
+    audit_mode_guess: protocol_walkthrough
+    notes: ''
+  - slug: crypto-lab-zk-arena
+    display_name: ZK Arena
+    repo_url: https://github.com/systemslibrarian/crypto-lab-zk-arena
+    live_url: https://systemslibrarian.github.io/crypto-lab-zk-arena/
+    categories:
+      - ZERO-KNOWLEDGE
+    learning_paths: []
+    catalog_claims:
+      - zk-SNARK
+      - zk-STARK
+      - Proof Systems
+      - Comparison
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 6
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: crypto-lab-zk-proof-lab
+    display_name: ZK Proof Lab
+    repo_url: https://github.com/systemslibrarian/crypto-lab-zk-proof-lab
+    live_url: https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/
+    categories:
+      - ZERO-KNOWLEDGE
+    learning_paths: []
+    catalog_claims:
+      - Schnorr
+      - SHA-256 Commitments
+      - Fiat-Shamir
+      - zk-SNARK
+    implementation_locus: local
+    commit_sha: ''
+    audit_priority: 6
+    audit_mode_guess: pedagogical_model
+    notes: ''
+  - slug: snow2
+    display_name: Snow 2
+    repo_url: https://github.com/systemslibrarian/snow2
+    live_url: https://systemslibrarian.github.io/snow2/
+    categories:
+      - ENCRYPTION
+      - STEGANOGRAPHY
+    learning_paths: []
+    catalog_claims:
+      - XChaCha20-Poly1305
+      - Argon2id
+      - HKDF-SHA-256
+      - Steganography
+    implementation_locus: wasm_backed
+    commit_sha: ''
+    audit_priority: 2
+    audit_mode_guess: pedagogical_model
+    notes: ''

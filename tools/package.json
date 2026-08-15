@@ -1,0 +1,17 @@
+{
+  "name": "tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "concept-sync.js",
+  "scripts": {
+    "test": "node validate-manifest.mjs --check-fixtures"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "js-yaml": "^5.2.3"
+  }
+}

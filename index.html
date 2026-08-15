@@ -10,9 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:opsz,wght,SOFT@9..144,400,50;9..144,500,50&display=swap" rel="stylesheet" />
   <script>
+    // Dark is the only theme. Overwrite any 'light' a visitor stored back when
+    // the header carried a theme toggle, so a past click cannot pin them to it.
     (function(){
-      if(localStorage.getItem('theme')==='light')
-        document.documentElement.classList.add('light');
+      try { localStorage.setItem('theme', 'dark'); } catch (e) {}
     })();
   </script>
   <style>
@@ -1220,28 +1221,6 @@
       border-color: #4dcfb0;
     }
 
-    .cl-theme-toggle {
-      /* 44x44 minimum tap target (WCAG 2.5.5). */
-      width: 44px;
-      height: 44px;
-      background: #162b2a;
-      border: 1px solid #2a4a44;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      cursor: pointer;
-      color: #4dcfb0;
-      transition: background 0.15s, border-color 0.15s;
-      line-height: 1;
-    }
-
-    .cl-theme-toggle:hover {
-      background: #1e3c3a;
-      border-color: #4dcfb0;
-    }
-
     .cl-menu-btn {
       display: inline-flex;
       align-items: center;
@@ -1607,9 +1586,6 @@
          rel="noopener">
         GitHub
       </a>
-      <button class="cl-theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        ☀
-      </button>
     </nav>
   </header>
 
@@ -5065,35 +5041,6 @@
     if (!location.hash || location.hash === '#') filter();
   })();
 
-  /* Theme toggle */
-  (function () {
-    var html = document.documentElement;
-    var btn = document.getElementById('themeToggle');
-    if (!btn) return;
-    var stored = localStorage.getItem('theme');
-
-    function apply(theme) {
-      if (theme === 'light') {
-        html.classList.add('light');
-        btn.textContent = '\u263E';
-        btn.setAttribute('aria-label', 'Switch to dark mode');
-      } else {
-        html.classList.remove('light');
-        btn.textContent = '\u2600';
-        btn.setAttribute('aria-label', 'Switch to light mode');
-      }
-    }
-
-    if (stored) {
-      apply(stored);
-    }
-
-    btn.addEventListener('click', function () {
-      var next = html.classList.contains('light') ? 'dark' : 'light';
-      localStorage.setItem('theme', next);
-      apply(next);
-    });
-  })();
   </script>
 
   <footer class="footer">

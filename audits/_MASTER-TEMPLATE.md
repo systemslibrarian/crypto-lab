@@ -219,10 +219,18 @@ Also put `data-theme="dark"` on the `<html>` tag itself, so the theme holds with
 
 **Dark is the only theme.** **Never use `prefers-color-scheme`,** and never add a theme
 toggle — the fleet had one and it was removed, because the light palettes read badly and
-a single past click pinned a returning visitor to light forever. The stylesheet defines
-its full palette under `:root` (dark). Existing `:root[data-theme="light"]` blocks are
-dead code: harmless, never applied, and not worth a fleet-wide CSS rewrite to delete.
-Don't build a toggle or theme-flipping logic in `src/main.ts`.
+a single past click pinned a returning visitor to light forever.
+
+*One deliberate exception:* `quantum-vault-kpqc` pins **light**, not dark. Its warm hanji
+(한지) paper palette with Korean-flag accents is the intended look for a demo of Korean
+post-quantum cryptography, and it is also the palette that passes its a11y gate. It has
+the same shape as every other lab — one theme, stamped before first paint, no toggle —
+just the other one. A fleet-wide dark sweep must skip it.
+
+The stylesheet defines its full palette under `:root` (dark). Existing
+`:root[data-theme="light"]` blocks are dead code: harmless, never applied, and not worth
+a fleet-wide CSS rewrite to delete. Don't build a toggle or theme-flipping logic in
+`src/main.ts`.
 
 ### 3.3 Scripture footer (last visible element)
 

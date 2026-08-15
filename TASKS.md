@@ -500,17 +500,17 @@ these.** They are already duplicated in `audits/`, so the dirty flag is cosmetic
 ablation-wire, credential-veil, dkg-gate, harvest-vault, hqc-timing, icy-dvrf,
 iron-serpent, lattice-gentle, protocol-checker, schnorr-forge, spdz-forge.
 
-**Known-red CI, pre-existing and not from this session:**
-`quantum-vault-kpqc` fails the dark-theme axe gate on `#btn-export-vault`, `#btn-reset`,
-`#btn-clear-vault` and the Import vault label. Verified pre-existing by stashing. Its
-Pages deploy is a separate workflow and is green, so the demo does ship.
+**Formerly known-red, now green:** `quantum-vault-kpqc` used to fail the dark-theme axe
+gate on `#btn-export-vault`, `#btn-reset`, `#btn-clear-vault` and the Import vault label.
+It no longer runs a dark scan at all.
 
-**This got worse when light theme was removed fleet-wide.** That lab deliberately
-defaulted to *light* — the warm hanji (한지) paper palette with Korean-flag navy/red
-accents was the intended, culturally-aware look, and it was also the palette that passed.
-Pinning every lab to dark means the four controls above now fail on the page visitors
-actually land on. Two ways out, and the choice is the maintainer's: fix the dark palette
-for those controls, or make this one lab the exception and let it keep its hanji look.
+**That lab is the fleet's one light exception, deliberately.** The warm hanji (한지) paper
+palette with Korean-flag navy/red accents is the intended, culturally-aware look for a
+demo of Korean post-quantum cryptography — and it was also the palette that passed. When
+the light theme was removed everywhere else, pinning this lab to dark would have put
+visitors on the four failing controls, so it pins **light** instead. Same shape as the
+rest of the fleet — one theme, stamped before first paint, no toggle — just the other
+one. Its a11y gate scans light and is green. **Do not fold it back into a dark sweep.**
 
 ---
 

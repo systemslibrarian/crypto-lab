@@ -505,6 +505,13 @@ iron-serpent, lattice-gentle, protocol-checker, schnorr-forge, spdz-forge.
 `#btn-clear-vault` and the Import vault label. Verified pre-existing by stashing. Its
 Pages deploy is a separate workflow and is green, so the demo does ship.
 
+**This got worse when light theme was removed fleet-wide.** That lab deliberately
+defaulted to *light* — the warm hanji (한지) paper palette with Korean-flag navy/red
+accents was the intended, culturally-aware look, and it was also the palette that passed.
+Pinning every lab to dark means the four controls above now fail on the page visitors
+actually land on. Two ways out, and the choice is the maintainer's: fix the dark palette
+for those controls, or make this one lab the exception and let it keep its hanji look.
+
 ---
 
 ## TODO — ordered by what unblocks what
@@ -697,7 +704,13 @@ survived: **treat a flaky a11y test as a coverage hole until proven otherwise.**
 
 Regenerate the remaining list with the snippet in `RESUME-HERE.md`. Roughly 3 repos per agent.
 
-### 13+14a MERGED SWEEP — the work queue — `IN PROGRESS`
+### 13+14a MERGED SWEEP — the work queue — `CLOSED 2026-08-14`
+
+Closed 2026-08-14: both regeneration greps return zero crypto-lab files (opacity injection and
+motion injection alike), and the last 9 template gates were replaced the same day (see task 14's
+closure note above for repos, SHAs, and findings). Historical queue follows.
+
+*(original entry)* — `IN PROGRESS`
 
 Tasks 13 (scan race) and 14a (opacity injection) are **one sweep, not two**: same file, same run.
 **78 distinct repos** need a visit; only 14 have both defects, so two separate passes would mean
@@ -3674,7 +3687,25 @@ covered the expected filename rather than all of them.
 Found only because an honest gate sets the theme via `localStorage` instead of by clicking, so a
 key mismatch becomes a hard failure instead of a silent one.
 
-### 14. Replace the remaining template a11y gates — `TODO` — **79 repos, REGENERATED 2026-08-08**
+### 14. Replace the remaining template a11y gates — `DONE 2026-08-14` (fleet); DeckBook flagged, out of scope
+
+Closed 2026-08-14. The disk-regenerated queue had shrunk to 9 crypto-lab repos (concurrent
+work had drained the rest); all 9 were finished in one sweep — full honest-gate adoptions in
+noise-pipe `f5383f5` · patron-shield `8ea615c` · schnorr-forge `268dcbb` · shadow-vault
+`5910f10` · timing-sidechannel `bd5923f` · x3dh-wire `d95ef28`, and injection removal from the
+last three non-a11y/residual specs: simon-period claims `276ca7b` · matsui-line visual
+`520e315` · phantom-vault a11y `e4c6c8d`. Every gate mutation-checked; every finding fixed
+rather than baselined except the fleet-shared top-bar borders (ratcheted baseline entries in
+noise-pipe and timing-sidechannel — a fleet-header pass deletes them). Real defects found in
+6 of 9 (clean: simon-period, phantom-vault, matsui-line — all had prior passes). Notable:
+patron-shield's old injection meant both query masks were scanned invisible in every run;
+x3dh-wire's resting glossary popovers broke 1.4.10 reflow at 380px; timing-sidechannel's
+reduced-motion JS branch had never been scanned (style injection can't reach matchMedia).
+The regeneration grep now returns only `DeckBook/e2e/a11y.spec.ts` — NOT a crypto-lab repo,
+flagged for its maintainer, not worked here. shadow-vault's `verification/` dir and crypto
+internals (calibration finding) were untouched. Original entry follows.
+
+*(original entry)* — **79 repos, REGENERATED 2026-08-08**
 
 The list this file carried (~110) was stale. Regenerated from disk by scanning **all**
 `e2e/*.spec.ts` for an `addStyleTag` that suppresses motion:
@@ -3728,7 +3759,12 @@ suppressing animation for flake control. Two are DONE: paillier-gate `e2e/exhibi
 own reduced-motion block rather than bypassing it, and fails if that block stops working. Still
 open: `matsui-line/e2e/visual.spec.ts` and `simon-period/e2e/claims.spec.ts`.
 
-### 14a. Remove the `opacity: 1 !important` injection — `TODO` — **57 specs, HIGH PRIORITY**
+### 14a. Remove the `opacity: 1 !important` injection — `DONE by 2026-08-14` — verified zero on disk
+
+Verified 2026-08-14: the task's own regeneration grep (non-comment `opacity: *1 *!important`
+over all e2e specs) returns zero files fleet-wide. Closed by checking. Original entry follows.
+
+*(original entry)* — **57 specs, HIGH PRIORITY**
 
 Found in `broken-trust` (fixed, `feae4ae`) and then measured fleet-wide: **57 a11y specs inject
 `opacity: 1 !important`** along with the motion suppression.
@@ -3760,7 +3796,13 @@ Regenerate the list by matching `opacity: *1 *!important` on non-comment lines �
 raw string over-counts, because two specs now mention it only in a docblock explaining why it
 was removed.
 
-### 14. Remove the `transition: none` injection — `TODO`
+### 14. Remove the `transition: none` injection — `DONE by 2026-08-14` — verified zero on disk
+
+Verified 2026-08-14: no crypto-lab e2e spec injects `transition: none` / motion suppression via
+`addStyleTag` any more (regeneration grep returns only out-of-scope DeckBook). Closed in the
+per-repo honest-gate work, as this entry predicted. Original entry follows.
+
+*(original entry)*
 
 **162 of 169 specs** inject `transition: none` or `transition-duration: 0` before scanning.
 While that injection is present the suite is **structurally incapable** of observing a
@@ -3921,7 +3963,25 @@ readable. Do it after Dependabot, and expect it to need spot-checking rather tha
 path and abort that repo if anything else appears in the staged set. Repos in this fleet hold
 unrelated uncommitted work, and `git add -A` would swallow it.
 
-### 11. Triage the external review of 13 demos — `TODO`
+### 11. Triage the external review of 13 demos — `DONE 2026-08-13`
+
+All 13 repos worked, gated, and pushed on 2026-08-13, one agent per repo. Every
+recommendation was verified against current code and reachability before action; scope
+expansions were rejected per one-concept-per-demo (several routed to concept-coverage.md
+as future-demo ideas). Every repo ran the full local gate (build, unit, Playwright claims
++ a11y, size where present) and mutation-checked its main fix before pushing. Pushed
+heads: patron-shield `6e4db62` · noise-pipe `2a12813` · jevil `1bd4df4` · curve-lens
+`dffec15` · bb84 `752966e` · bitcoin-wallet `03206f4` · falcon-seal `8cfc8a5` · vdf
+`48b56e2` · simon-period `a8a02ec` · j-uniward `64c778f` · timing-oracle `5147c69` ·
+pake-gate `d4faa50` · phantom-vault `ace2f15`. Notable real defects closed: vdf's verify()
+ignored the transmitted ℓ (tampered proofs verified); pake-gate's scalar sampling was
+modulo-biased / mislabeled uniform; bb84 derived keys after an abort and blamed a
+nonexistent Eve on noise-only aborts; bitcoin-wallet emitted Bech32-checksummed v1+
+addresses and non-spec QR codes; j-uniward's Huffman re-encode failed open; timing-oracle's
+verdict fabricated a constant-time baseline it never received. The stranded a11y-backport
+trees in timing-oracle, simon-period, and phantom-vault were finished and committed, not
+discarded; the pushes also published ~15 older fix commits that were sitting unpushed
+across the fleet. Original task text follows for reference.
 
 The user supplied an outside review (ChatGPT) of 13 demos, filed verbatim in
 `audits/external-review-2026-08-03/`. Roughly 9,400 lines, ~330 numbered recommendations:
@@ -3969,6 +4029,55 @@ re-doing.
 ---
 
 ## Operational notes
+
+- **A gate's own documentation is not evidence the fix landed.** Two failure modes, both cost
+  real time on 2026-08-14. (1) Every repo REPAIRED for a dead-oracle bug carries a docblock
+  quoting the defective code verbatim, so any grep for the defect matches the fixes and reports
+  them as broken — two fleet counts (51, then 55 repos) were produced this way and both were
+  entirely false; a runtime mutation check on all 15 verified candidates found 15/15 already
+  fixed. (2) Worse, `ratchet-wire`'s stranded `gate.ts` documented six control-boundary fixes
+  "fixed in src/style.css" that were NEVER MADE — the token it named did not exist — and claimed
+  a reflow blinder had been removed while `body { overflow-x: hidden }` was still in place.
+  **Rule: static analysis and prose generate candidates; only running the gate against a
+  deliberate mutation decides.** And verify the mutation actually applied — a `lang` mutation
+  that silently no-op'd on `<html lang="en" data-theme="dark">` produced a false negative.
+- **`softExpect` throws in strict mode**, so an earlier failing assertion aborts `scan()` before
+  later oracles run. Test mutations for different oracles SEPARATELY or the second is masked.
+- **`reducedMotion: 'reduce'` in `playwright.config.ts` is a measured no-op on 1.61.0**, exactly
+  like `test.use({reducedMotion})`. `matchMedia('(prefers-reduced-motion: reduce)')` reads false
+  with the config set and true only after an explicit `page.emulateMedia()` call. A repo relying
+  on the config setting alone is not exercising its reduced-motion block at all.
+- **Dead oracles are their own defect class, distinct from wrong ones.** Found so far: the axe
+  ruleset silently discarded by chaining `.withTags().withRules()` (4 best-practice rules ran,
+  0 WCAG, reading as a full A/AA pass); `expectNoNewNonTextFailures` stranded behind an
+  `if (!COLLECTING) return`; and `expectBaselineNotStale` defined, exported, and never imported
+  (bike-vault `0451d39`, dilithium-seal `55e47e9`) — which silently converted the 1.4.11 ratchet
+  into a permanent allowlist that could only grow. A never-called oracle sweep (declared
+  `expect*`/`audit*` with zero call sites) is cheap and finds these; a regex does not.
+- **The `[hidden]` cascade trap.** A class/id rule setting `display: flex|grid|block` outranks the
+  UA `[hidden]` attribute rule, so the element PAINTS while the code believes it is hidden. Four
+  confirmed on 2026-08-14 alone — zk-arena `c900c8d` (a share button offering a quiz result that
+  did not exist yet), hqc-vault `99a1ccd` ("Hide step-by-step" did not hide), enigma-forge
+  `f498f82` (import dialog + presenter overlay with focusable controls painted at first paint),
+  paillier-gate `33f0e4f` (stale ledger surviving keygen). Fix is one root
+  `[hidden] { display: none !important }` replacing accumulated per-class patches, plus a test
+  asserting the property for EVERY `[hidden]` element with a non-zero count so it cannot pass
+  vacuously. **DO NOT hunt this class with a static scan — measured hit rate 0 of 19 candidates
+  across two rounds (2026-08-14).** Every real instance was found by driving a browser; every
+  static candidate was a false positive, for four reasons a regex cannot see: a sibling
+  `[hidden]`-qualified patch already exists at higher specificity (`.warning-banner[hidden]`);
+  the shared header ships a fleet-wide `!important` neutralizer covering every `theme-toggle`
+  variant; a type-qualified rule (`section.exhibit`) sets `none` itself while `.active` and the
+  attribute are toggled in lockstep so they never co-occur; and the scan matches the English word
+  "hidden" inside `aria-label` prose. The working method is a polling `addInitScript` recorder
+  that samples every `[hidden]` element's computed style through the lab's own full-state drive,
+  keeping a roster of elements actually observed carrying the attribute as the non-vacuity guard.
+  Two caveats it must handle: an element inside a `display:none` panel measures 0x0 and reports
+  clean, so drive to the panel first; and a `display` rule inside a `@media` block would tie on
+  specificity and win on order, so check for narrow-viewport-only variants (none exist today).
+- **These a11y sweeps crash browser processes under default Playwright parallelism on this box**
+  ("Channel closed" mid-run, which reads like a failure but is not one). Re-run with
+  `--workers=1` before believing a red result.
 
 - **A mutation check that breaks the build proves NOTHING.** Playwright serves `dist/`, and
   a failed build leaves the last good bundle in place, so the suite passes green against

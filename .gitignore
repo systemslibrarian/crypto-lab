@@ -7,3 +7,6 @@ PROMPT-standardize-parts-A-D.md
 # source of truth to drift against the Drive original.
 # The in-repo standard that IS tracked is audits/_MASTER-TEMPLATE.md.
 CRYPTO-LAB-TEMPLATE*.md
+
+# Installed by tools/package.json for the verification renderers.
+tools/node_modules/

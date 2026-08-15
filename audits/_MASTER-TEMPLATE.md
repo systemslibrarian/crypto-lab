@@ -51,14 +51,14 @@ as the BINDING spec. Build to every standard in it, in this order:
   2. §3 Look — add the standard top bar (copy the header from any existing lab and
      adapt it) and the standardized hero (short-name <h1> + spec subtitle + "Why it
      matters" box beside it; title size capped at clamp(1.6rem,3.8vw,2.7rem)); theme
-     contract; scripture footer; head/favicon. Do NOT invent a new header design or a
-     second theme toggle — match the fleet's cl-topbar.
+     contract; scripture footer; head/favicon. Do NOT invent a new header design and do
+     NOT add a theme toggle — match the fleet's cl-topbar.
   3. §2 Teach — SHOW the one headline mechanism (animate/step it, never assert it in
      prose or raw hex); add a plain-language "what is this / why it matters" intro and a
      break-it-yourself interaction against the real crypto; no decorative/idle animation;
      pitch to a college newcomer while rewarding an expert (progressive disclosure).
   4. §4 Accessibility — wire the WCAG 2.1 AA gate and author to its checklist.
-     `npm run build` then `npm run test:a11y` MUST pass with zero violations in BOTH themes.
+     `npm run build` then `npm run test:a11y` MUST pass with zero violations.
   5. §5 README (the standard sections) and §6 Deploy (Actions-based Pages, a11y-gated).
 
 Hard rules: do NOT dumb down the crypto to make a visual simpler; honest scoping in-page
@@ -80,7 +80,7 @@ If the demo already exists and only needs to match the fleet, tell the AI: *"Rea
 1. **Real crypto only.** Use WebCrypto (`SubtleCrypto`) or a named, justified library for the actual operations. Never simulate or fake math. For the primitive that *is* the teaching subject, hand-roll the inspectable internals rather than hiding them in a library — transparency is the point. Known-answer tests (KATs) from the spec must pass.
 2. **Honest scoping.** Every demo says, in-page and in the README: what's real vs simulated, what it does **NOT** prove, and "not production crypto — a teaching demo." No marketing language.
 3. **Teach the college baseline; reward the expert.** Plain-language on-ramp for a motivated newcomer, with depth/rigor/caveats available on demand (progressive disclosure). **Never dumb down the crypto to reach the beginner** — simplify the *explanation*, never the math.
-4. **Accessible.** WCAG 2.1 AA, in **both** themes, **gated in CI**. Non-negotiable.
+4. **Accessible.** WCAG 2.1 AA, **gated in CI**. Non-negotiable.
 5. **Consistent chrome fleet-wide.** Shared top bar + standardized hero + scripture footer, identical everywhere.
 6. **No backend.** Everything runs in the browser; any key/secret material is per-session in memory, never persisted. Ships as a static site to GitHub Pages.
 
@@ -90,7 +90,7 @@ If the demo already exists and only needs to match the fleet, tell the AI: *"Rea
 
 Vite + TypeScript, static to GitHub Pages, no backend. This pass produces the demo's **cryptographic logic, UI, and in-page content only** — the chrome (§3), README (§5), and deploy (§6) are applied afterward. Two demo-side prerequisites the later passes need:
 - Mount app content at `id="app"`.
-- Define `--accent` on `:root` (in both palettes if light/dark exist).
+- Define `--accent` on `:root`.
 
 Fill these seven sections for the specific demo, then build:
 
@@ -138,11 +138,11 @@ Audience calibration: **college newcomer at the baseline, professional cryptogra
 
 **Each lab owns its own header.** The shared-header rollout (`shared-header.html` applied by `reapply-header.py`) was deliberately retired — catalog commit `fbe77f4`; the tooling survives only as history in `archive/header-rollout/`. Do not resurrect it. To give a new demo its top bar, **copy the header from any existing lab and adapt it** (the per-repo values are the GitHub link and the accent). Changing one lab's header means editing that lab; a change every lab should get is a deliberate reviewed pass across the repos, never an overwrite driven from the catalog.
 
-The bar's look and behavior (`cl-topbar`, always-dark, theme toggle) should match the fleet, and it expects four things from the demo:
+The bar's look and behavior (`cl-topbar`, always-dark) should match the fleet, and it expects four things from the demo:
 1. **Skip-link target** — a content wrapper with `id="app"`.
-2. **Theme contract** — the toggle flips `data-theme` on `<html>` between `dark`/`light` and stores `localStorage['theme']`; page renders correctly for both, **dark default**.
+2. **Theme contract** — `data-theme="dark"` on `<html>`, pinned before first paint. Dark is the only theme; the bar carries no toggle.
 3. **Brand accent** — `:root` defines `--accent` (set to the demo's catalog accent; the bar silently falls back to teal `#35d6bb` if undefined — a missing `--accent` is why a bar looks wrong).
-4. **Single banner** — the header JS auto-demotes any other `role="banner"`/top-level `<header>` and hides the lab's own toggle; leave the lab's element, don't delete it.
+4. **Single banner** — the header JS auto-demotes any other `role="banner"`/top-level `<header>`, and the bar's CSS hides any theme toggle a lab still ships; leave the lab's element, don't delete it.
 
 ### 3.1 The hero (standardized — the recognizable name, one size fleet-wide)
 
@@ -181,7 +181,7 @@ Directly below the top bar. The hero carries **three distinct text roles** (keep
 - **Title split:** big title = the concise scheme/primitive/brand name only (`OPAQUE`, `KDF Arena`, `X3DH`, `Paillier`; branded demos like `Iron Letter` keep the brand). Subtitle = the qualifier/spec/expansion, one line, **preserving technical casing** (`aPAKE · RFC 9807`, never `APAKE`). Separator `·`.
 - **Size is capped at `clamp(1.6rem, 3.8vw, 2.7rem)`** — the `crypto-lab-x3dh-wire` scale, the maximum. Do not exceed it. This is what makes verbose and terse names read as siblings.
 
-Standard CSS (map colors to the demo's own theme vars so it passes AA in both themes; do not wrap it in `BEGIN/END cl-hero standard` marker comments — those belonged to the retired sync tooling and were removed fleet-wide):
+Standard CSS (map colors to the demo's own theme vars so it passes AA; do not wrap it in `BEGIN/END cl-hero standard` marker comments — those belonged to the retired sync tooling and were removed fleet-wide):
 
 ```css
 .cl-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:clamp(1rem,4vw,3rem);flex-wrap:wrap;margin:clamp(1rem,3vw,2rem) 0 1.5rem;}
@@ -201,14 +201,28 @@ In `<head>`, **before** any `<link>`/`<style>`:
 
 ```html
 <script>
+  // Dark is the only theme. Pin it before first paint, and overwrite any
+  // 'light' a visitor stored back when the header carried a theme toggle.
   (function () {
-    const saved = localStorage.getItem('theme');
-    document.documentElement.setAttribute('data-theme', saved ?? 'dark');
+    try {
+      localStorage.setItem('theme', 'dark');
+      localStorage.setItem('cv-theme', 'dark');
+      localStorage.setItem('cl-theme', 'dark');
+      localStorage.setItem('crypto-lab-theme', 'dark');
+    } catch (e) {}
+    document.documentElement.setAttribute('data-theme', 'dark');
   })();
 </script>
 ```
 
-Dark default. **Never use `prefers-color-scheme`.** The stylesheet defines its full palette under `:root` (dark) with overrides under `:root[data-theme="light"]`. Don't build a second toggle or duplicate the header's flip/persist logic in `src/main.ts`.
+Also put `data-theme="dark"` on the `<html>` tag itself, so the theme holds with JS off.
+
+**Dark is the only theme.** **Never use `prefers-color-scheme`,** and never add a theme
+toggle — the fleet had one and it was removed, because the light palettes read badly and
+a single past click pinned a returning visitor to light forever. The stylesheet defines
+its full palette under `:root` (dark). Existing `:root[data-theme="light"]` blocks are
+dead code: harmless, never applied, and not worth a fleet-wide CSS rewrite to delete.
+Don't build a toggle or theme-flipping logic in `src/main.ts`.
 
 ### 3.3 Scripture footer (last visible element)
 
@@ -218,7 +232,7 @@ Dark default. **Never use `prefers-color-scheme`.** The stylesheet defines its f
 </footer>
 ```
 
-Verbatim, exactly once, visible in both themes, styled only with existing CSS vars (`--border`, `--text-dim`/`--text-muted`). Matches the README's closing line.
+Verbatim, exactly once, styled only with existing CSS vars (`--border`, `--text-dim`/`--text-muted`). Matches the README's closing line.
 
 ### 3.4 Page `<head>` & favicon
 
@@ -237,7 +251,7 @@ Verbatim, exactly once, visible in both themes, styled only with existing CSS va
 
 ## 4. Accessibility (WCAG 2.1 AA — gated in CI)
 
-Accessibility is **enforced, not aspirational**: `@axe-core/playwright` scans the *production build* for zero WCAG 2.1 A/AA violations in **both** themes, and the GitHub Pages deploy is blocked if it fails. This is the `ADA` gate spec.
+Accessibility is **enforced, not aspirational**: `@axe-core/playwright` scans the *production build* for zero WCAG 2.1 A/AA violations, and the GitHub Pages deploy is blocked if it fails. This is the `ADA` gate spec.
 
 ### 4.1 Wiring the gate
 
@@ -254,54 +268,100 @@ export default defineConfig({
   reporter: 'list',
   use: {
     baseURL: 'http://localhost:4173/<REPO-BASE>/', // if vite base is "./", use http://localhost:4173/
-    colorScheme: 'dark',                            // scan the real dark default; the toggle reaches light
+    colorScheme: 'dark',                            // dark is the only theme
   },
   webServer: {
-    command: 'npm run preview -- --port 4173 --strictPort',
+    command: 'npm run build && npm run preview -- --port 4173 --strictPort',  // build FIRST — see §4.1
     url: 'http://localhost:4173/<REPO-BASE>/',
     reuseExistingServer: !process.env.CI,
   },
 })
 ```
 
-**`e2e/a11y.spec.ts`** — reveal collapsed/animated/injected content and drive the live demo so dynamic result regions get scanned, then assert zero violations in both themes:
+**`e2e/a11y.spec.ts` — do NOT hand-write this from scratch, and do NOT copy the old template
+gate.** Copy a current honest gate (`e2e/gate.ts` + `contrast.ts` + `nontext.ts` +
+`nontext-baseline.ts` + `a11y.spec.ts`) from **`crypto-lab-schnorr-forge`** — as of 2026-08-14
+it is the only lab verified clean on every known oracle defect — then rewrite every
+lab-specific passage for what YOUR lab paints.
+
+> **Do not copy the gate from an arbitrary "recent" lab.** 129 of 131 `nontext.ts` files in the
+> fleet still compute `hasBorder` from `borderTopStyle` while testing all four border widths, so
+> a control bordered on one side only is mis-measured (the "fifth oracle defect"). Latent rather
+> than exploited so far, but copying it propagates it. `schnorr-forge/e2e/nontext.ts` carries the
+> per-side `paintedSides` fix. Earlier revisions of this section named `timing-oracle` and
+> `simon-period`, and `METHOD-honest-a11y-gate.md` named `drbg-arena` — all three carry the bug,
+> and `drbg-arena` additionally still has `auditControlBoundaries`, the oracle that FABRICATED
+> 1:1 findings on gradient controls. Leaving
+another lab's documentation in those files has repeatedly produced gates whose prose describes
+a repo that does not exist.
+
+**The template gate this section used to print was removed on 2026-08-14 after it was replaced
+fleet-wide.** It is recorded here only so it is recognizable on sight, because ~80 labs shipped
+it and its failure modes are subtle. Every line of it was wrong in a way that made the gate
+report coverage it did not have:
 
 ```ts
-import AxeBuilder from '@axe-core/playwright'
-import { expect, test, type Page } from '@playwright/test'
-const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']
-
-async function prepare(page: Page): Promise<void> {
-  await page.addStyleTag({ content: `*,*::before,*::after{animation:none!important;transition:none!important}` })
-  await page.evaluate(() => {
-    document.querySelectorAll('details').forEach((d) => ((d as HTMLDetailsElement).open = true))
-    document.querySelectorAll<HTMLElement>('[hidden],[role="tabpanel"]').forEach((el) => {
-      el.removeAttribute('hidden'); el.style.display = ''; el.classList.add('active', 'is-active', 'open')
-    })
-  })
-  for (const b of await page.locator('button').all()) {
-    const label = ((await b.textContent()) || '').toLowerCase()
-    if (/run|compute|sign|verify|encrypt|simulate|start/.test(label)) await b.click().catch(() => {})
-  }
-  await page.waitForTimeout(400)
-}
-async function scan(page: Page): Promise<void> {
-  const { violations } = await new AxeBuilder({ page }).withTags(TAGS).analyze()
-  expect(
-    violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.map((n) => n.target.join(' ')).slice(0, 5) })),
-  ).toEqual([])
-}
-test('no WCAG A/AA violations — dark theme', async ({ page }) => {
-  await page.goto('.'); await prepare(page); await scan(page)
+// ANTI-PATTERN — do not copy. This is what the retired template gate did.
+await page.addStyleTag({ content: `*{animation:none!important;transition:none!important}` })
+document.querySelectorAll('[hidden],[role="tabpanel"]').forEach((el) => {
+  el.removeAttribute('hidden'); el.style.display = ''; el.classList.add('active')
 })
-test('no WCAG A/AA violations — light theme', async ({ page }) => {
-  await page.goto('.'); await page.locator('#cl-theme-toggle').click()
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
-  await prepare(page); await scan(page)
-})
+for (const b of await page.locator('button').all()) { /* click by label regex */ }
+await page.waitForTimeout(400)
+const { violations } = await new AxeBuilder({ page }).withTags(TAGS).analyze()
 ```
 
+- **`addStyleTag` motion suppression bypasses the lab's own `@media (prefers-reduced-motion)`
+  block instead of exercising it**, so a block that cancels an animation without restoring its
+  end state can never be observed. Worse, where a page parks content at inline `opacity: 0` and
+  reveals it via an animation's `forwards` fill, the injection kills the reveal and the content
+  is **scanned invisible** (patron-shield scanned both its query masks that way in every run).
+  Use `page.emulateMedia({ reducedMotion: 'reduce' })` BEFORE navigation, and assert in-page
+  that `matchMedia('(prefers-reduced-motion: reduce)').matches` is true — both
+  `test.use({reducedMotion})` AND the `reducedMotion` key in `playwright.config.ts` are
+  **measured no-ops on Playwright 1.61.x**.
+- **Force-revealing `[hidden]` and tab panels from script scans states the page never renders**
+  and simultaneously destroys the ability to catch the `[hidden]` cascade trap (a class rule
+  setting `display` outranks the UA `[hidden]` rule, so the element paints while the code
+  believes it is hidden — four live instances found on 2026-08-14 alone). Drive the real
+  controls instead.
+- **`waitForTimeout(400)` is the scan race.** Where a page builds asynchronously, axe scans an
+  empty container and passes having checked nothing. Wait on real content; assert the shipped
+  defaults before scanning so an empty render cannot pass.
+- **`violations`-only ignores axe's `incomplete` bucket**, where every contrast decision axe
+  declined to make ends up — it refuses to compute contrast over a gradient or an unresolved
+  `color-mix()`, and it silently discards `aria-label` on role-less elements. Assert
+  `incomplete` too, and compute contrast arithmetically alongside it.
+- **Never chain `.withTags(...).withRules(...)`** — both write `options.runOnly`, so the second
+  SILENTLY REPLACES the first. Chained, axe ran 4 best-practice rules and *zero* WCAG rules
+  while reading as a full A/AA pass. Run the two sets as separate `analyze()` calls and merge.
+
+A gate is only worth what a mutation proves: degrade a token the oracle owns, confirm the gate
+fails **naming** the finding, and confirm the build still succeeded during the mutation — a
+failed build serves the previous bundle and passes green, which proves nothing.
+
 **`package.json`:** `"test:a11y": "playwright test"`. And **exclude `e2e/` from Vitest** (`vite.config.ts → test: { include: ['src/**/*.test.ts'] }`) so the Playwright specs aren't collected as unit tests.
+
+**Port:** pick one **no sibling lab already uses**, in the **4600–4700** range, and it must be
+unique **in committed state** — a port fix living only in a working tree is not a fix. Grep every
+sibling before choosing:
+
+```
+grep -rhoE "localhost:[0-9]+" ../crypto-lab-*/playwright.config.ts | sort -u
+```
+
+**Never the Vite default 4173.** With 170+ labs side by side, a shared port means
+`reuseExistingServer` silently scans a *different lab's* preview — that has really happened here
+(`bb84` reported `kdf-chain`'s violations). As of 2026-08-14 three duplicate pairs and one 4173
+default remain: 4220 (`hybrid-pqc`/`j-uniward`), 4221 (`hybrid-sign`/`bitcoin-script`), 4223
+(`harvest-vault`/`ibe-gate`), and `blind-relay` on 4173.
+
+**Ship a `LICENSE` file** — MIT, `Copyright (c) <year> Paul Clark`, at the repo root. This was
+missed on 156 of 176 repos, which meant the default applied: exclusive copyright, i.e. a public
+teaching demo nobody was permitted to copy or adapt. (Closed fleet-wide 2026-08-05, 176/176.)
+Also ensure the repo root has a `.gitignore` covering `node_modules/`, `dist/`, `test-results/`
+and `playwright-report/` — in a **nested** lab (`demos/<slug>/`) a `.gitignore` in the subfolder
+does **not** cover the repo root.
 
 **`playwright.config.ts` — build before you serve.** The `webServer.command` MUST run the
 build, not just the preview:
@@ -322,7 +382,69 @@ Related trap when verifying by hand: `reuseExistingServer: !process.env.CI` mean
 server already listening on that port is reused and the command never runs at all. If you
 are mutation-testing locally, make sure no stray preview is holding the port.
 
-**CI:** in `deploy.yml`, before deploy — `npx playwright install --with-deps chromium` then `npm run test:a11y`; a11y violations block the deploy on `main` (see §6).
+**CI:** in `deploy.yml`, before deploy — `npm test` (the unit/correctness suite), then
+`npx playwright install --with-deps chromium`, then `npm run test:a11y`; any of them failing
+blocks the deploy on `main` (see §6 for the full job).
+
+**Gate on the WHOLE suite, not just the a11y half.** A 2026-08-14 sweep found **29 repos whose
+deploy job runs `test:a11y` alone**, so the unit and algorithmic suites never blocked a publish —
+in `bulletproofs` that skipped nine correctness suites (IPA, proof, batch-verify, serialization,
+boundaries); in `jevil` and `aegis-gate` it skipped the entire core suite. Those repos could
+publish a build whose cryptography was broken so long as the browser specs passed. Note also
+that `"test:a11y": "playwright test"` runs **every** Playwright spec despite its name, so a repo
+naming that script in CI may be running more than the name suggests — and a repo whose functional
+tests are NOT Playwright specs (a `tsx` or `node` script) is running none of them.
+
+### 4.1b `e2e/claims.spec.ts` — the claims suite (REQUIRED)
+
+Alongside `a11y.spec.ts`, every lab needs a suite that checks the page tells the truth. This is
+what separates a demo that is *correct* from one that is *trustworthy*.
+
+**The rule that makes these tests worth anything: compare two values the page itself printed,
+rather than asserting against a hardcoded string.** A test that re-derives the same expression
+the source uses will happily agree with a bug — that has happened here: a fix was "verified" by
+a test that recomputed the identical faulty branch condition.
+
+**But internal consistency is not enough — a page can be consistently wrong.** A test that only
+checks the page agrees with itself passes a mutation that corrupts the underlying maths, because
+the corrupted value is reported consistently everywhere. Real example: flipping the rotation
+direction in a lattice-attack recovery matcher left the "page reports only its checked outcome"
+test green; only an **independent re-derivation** caught it. So aim for a mix:
+
+- *cross-checks* — two surfaces that must agree (a counter vs the rows it counts; hand-authored
+  prose vs the computed value vs a `maxlength` attribute);
+- *independent re-derivations* — recompute the claim from the page's raw inputs by a different
+  route than the source takes, and assert the page's answer matches;
+- *parts-sum-to-whole* — where the maths offers one (lift + margin = q/2).
+
+Cover at minimum: the headline claim recomputed from values on screen (e.g. parse `p` and `q`
+out of the verdict and assert `p * q` equals the displayed modulus); each **failure** path, and
+that the page names the actual cause; **retirement** — change an input, assert the stale verdict
+is gone *and* that the page says it was retired; the `[hidden]` probe from §4.1; and a **no-op
+guard** — re-selecting the same value must NOT retire a fresh verdict.
+
+### 4.1c Prove the tests bite — mutation discipline (REQUIRED)
+
+A green suite is not evidence until you have watched it fail. Before trusting any test:
+
+1. **Invert a condition in the SOURCE** (not the test).
+2. Confirm **the build SUCCEEDS**. A mutation that breaks `tsc` proves *nothing* — the suite runs
+   against the last good bundle and passes.
+3. Confirm the **bundle hash CHANGES** (`md5 dist/assets/*.js`) — proof it reached the browser.
+4. Confirm **the owning test FAILS**, naming the finding.
+5. **Restore**, and confirm the hash returns to its pre-mutation value.
+
+Rules learned the hard way:
+- **Commit the real work BEFORE mutating.** A session that dies mid-check otherwise strands an
+  inverted condition in the tree. Four were caught in one day here; two did not break `tsc` and
+  would have shipped.
+- **One mutation at a time, restored immediately.**
+- Do **not** `git checkout -- <file>` to undo a mutation if that file also holds real work; use a
+  surgical string-level revert.
+- **If a mutation leaves every test green, the branch may be UNREACHABLE.** That is evidence about
+  the *source*, not the tests — the right fix may be deleting dead code.
+- Verify the mutation actually APPLIED before trusting a negative result. A `lang` mutation that
+  silently no-op'd on `<html lang="en" data-theme="dark">` produced a false "oracle is dead".
 
 ### 4.2 Author to these rules from the start (exactly what the gate checks)
 
@@ -336,10 +458,10 @@ are mutation-testing locally, make sure no stray preview is holding the port.
 - **Live / async outputs:** `role="status"` + `aria-live="polite"` (or `role="log"`).
 - **Lists:** `role="list"` → children `role="listitem"`; don't put a role/`tabindex` on a `role="presentation"` element; don't wrap a native control in a role/`tabindex` element.
 - **The always-dark `.cl-topbar` is self-contained** — scope your base `p{}` / `button{}` rules to `#app`, not globally, so they don't fight the lab's top bar.
-- **`#cl-theme-toggle`** flips `html[data-theme]`; your CSS keys off `[data-theme="light"]` (not `.light`); any CSP must allow the toggle's inline handler.
+- **`data-theme="dark"`** is pinned on `<html>` and there is no toggle; any CSP must allow the head's inline anti-flash script.
 - Every interactive control has an accessible name (visible `<label>` or `aria-label`); text inputs are real `<textarea>`/`<input>`, never `contenteditable`; keyboard-operable with visible focus; layout stacks < 640px; a single banner landmark (the top bar; the hero is the page content header).
 
-**Acceptance:** `npm run build` clean; zero axe violations in both themes; run `npm run build && npm run test:a11y` locally before every push.
+**Acceptance:** `npm run build` clean; zero axe violations; run `npm run build && npm run test:a11y` locally before every push.
 
 ---
 

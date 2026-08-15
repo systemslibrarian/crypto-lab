@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-> **Trigger phrase: "add new demo"** (also: "add a new demo", "new demo"). When the user says any of these followed by a GitHub repo URL, slug, or description, execute the "Adding a new demo" workflow below end-to-end without further prompting unless required info is missing. Do not commit or push — finish the edits, run the self-check plus `node tools/readme-sync.js check`, `node tools/corpus-sync.js check`, and `node tools/concept-sync.js check`, and report back so the user can review the diff.
+> **Trigger phrase: "add new demo"** (also: "add a new demo", "new demo"). When the user says any of these followed by a GitHub repo URL, slug, or description, execute the "Adding a new demo" workflow below end-to-end without further prompting unless required info is missing. Do not commit or push — finish the edits, run the self-check plus `node tools/readme-sync.js check`, `node tools/corpus-sync.js check`, `node tools/concept-sync.js check`, and `node tools/theme-sync.js check`, and report back so the user can review the diff.
 
 This is the source for **Crypto Lab** (https://crypto-lab.systemslibrarian.dev/) — a single-page static site (`index.html` + `README.md`) deployed via GitHub Pages from `main`.
 
@@ -20,6 +20,13 @@ each has a checker that fails when it drifts:
 | `README.md` | Featured / Learning Paths / All Demos tables | `node tools/readme-sync.js check` |
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
+
+A fourth checker guards the sibling demo repos rather than a file derived from
+`index.html`:
+
+| Invariant | Checker |
+|---|---|
+| every lab pins exactly one theme, and none ships a toggle | `node tools/theme-sync.js check` |
 
 `concept-coverage.md` is the only gap list. Several older analysis files that used to sit in
 this root — `futuredemos.md`, `CARD-AUDIT.md`, `CARD-ACCURACY-FINDINGS.md`,
@@ -120,6 +127,7 @@ Open `http://localhost:8765/` and confirm:
 - New card appears in the intended section (search by demo name in the filter input).
 - Each `data-category` chip filters the card in.
 - `node tools/readme-sync.js check` reports the README tables in sync.
+- `node tools/theme-sync.js check` reports the new lab pinning one theme with no toggle.
 
 A self-check script lives at the end of this file — copy it into a `node -e "..."` invocation to verify title coverage.
 
@@ -204,6 +212,38 @@ signal the taxonomy needs a boundary moved, which is the user's call.
 **Add a curriculum section** — add an entry to `SECTIONS`, a matching `<a href="#section-<id>" data-target="<id>">Label</a>` in `<nav class="section-nav">`, and update all card titles' `TITLE_TO_SECTION` entries to the new id where appropriate.
 
 **Add a learning path** — add an entry to `LEARNING_PATHS` with `id`, `label`, `blurb`, `steps`. Keep `steps` ≤ ~12 for readability. CSS auto-collapses to one column under 1120px.
+
+**Themes — one per lab, pinned, no toggle.** Dark everywhere, except
+`quantum-vault-kpqc`, which is light on purpose.
+
+The fleet used to ship a light palette and a header toggle. The toggle persisted
+its choice, so one past click pinned a returning visitor to light forever, and the
+light palettes read badly. Both were removed: each lab stamps `data-theme` on
+`<html>` and pins it before first paint with a literal, overwriting any stored
+preference rather than reading one.
+
+`quantum-vault-kpqc` pins **light**. Its warm hanji (한지) paper palette with
+Korean-flag navy/red accents is the intended, culturally-aware look for a demo of
+Korean post-quantum cryptography, and it is also the palette that passes its axe
+gate — the dark one has known failures on four controls. **A fleet-wide dark sweep
+must skip it.** This is not a straggler to clean up; it was flattened once already
+by a sweep that looked locally correct in all 175 repos at once.
+
+Two checks defend this, and they catch different things:
+
+- `node tools/theme-sync.js check` reads every lab's `index.html` from here. It
+  catches a wrong pinned theme, a missing `data-theme`, a boot script that reads a
+  stored preference again, and a returning `#cl-theme-toggle`. Run it after any
+  cross-repo pass. Its expected-theme map is the source of truth for the exception.
+- Each lab's own `e2e/theme.spec.ts` asserts the *resolved* theme and that no theme
+  control renders. That one runs in CI and blocks the deploy, but it cannot see an
+  `<html data-theme>` that disagrees with the boot script — only the source check can.
+
+`[data-theme="light"]` blocks survive in most stylesheets as dead code. Nothing
+selects them; deleting them fleet-wide was judged not worth the risk. Don't treat
+their presence as evidence a lab still has a light theme.
+
+The full contract, with the anti-flash snippet to copy, is `audits/_MASTER-TEMPLATE.md` §3.2.
 
 **Lab headers — each lab owns its own.** There is no shared header to sync, and no script
 that pushes one. `reapply-header.py`, `apply-header.sh`, `shared-header.html` and the

@@ -206,9 +206,6 @@ In `<head>`, **before** any `<link>`/`<style>`:
   (function () {
     try {
       localStorage.setItem('theme', 'dark');
-      localStorage.setItem('cv-theme', 'dark');
-      localStorage.setItem('cl-theme', 'dark');
-      localStorage.setItem('crypto-lab-theme', 'dark');
     } catch (e) {}
     document.documentElement.setAttribute('data-theme', 'dark');
   })();
@@ -216,6 +213,11 @@ In `<head>`, **before** any `<link>`/`<style>`:
 ```
 
 Also put `data-theme="dark"` on the `<html>` tag itself, so the theme holds with JS off.
+
+Write **only** the `theme` key. An earlier version of this pass also stamped `cv-theme`,
+`cl-theme` and `crypto-lab-theme`, on the theory that some lab might read one of those
+instead — exactly one does, and it reads `theme` first anyway. The extra keys broke labs
+whose tests claim nothing but the theme is persisted.
 
 **Dark is the only theme.** **Never use `prefers-color-scheme`,** and never add a theme
 toggle — the fleet had one and it was removed, because the light palettes read badly and

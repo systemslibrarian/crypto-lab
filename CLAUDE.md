@@ -233,8 +233,13 @@ Two checks defend this, and they catch different things:
 
 - `node tools/theme-sync.js check` reads every lab's `index.html` from here. It
   catches a wrong pinned theme, a missing `data-theme`, a boot script that reads a
-  stored preference again, and a returning `#cl-theme-toggle`. Run it after any
-  cross-repo pass. Its expected-theme map is the source of truth for the exception.
+  stored preference again, and a returning `#cl-theme-toggle`. It then sweeps each
+  repo's source for code that still *drives* a toggle — clicking it, or asserting
+  the page reaches light. That second sweep exists because the removal pass
+  rewrote `e2e/` but never walked `scripts/` or `contrast/`, where six labs keep
+  custom CI runners; their Playwright suites were green while their deploys were
+  red. Run it after any cross-repo pass. Its expected-theme map is the source of
+  truth for the exception.
 - Each lab's own `e2e/theme.spec.ts` asserts the *resolved* theme and that no theme
   control renders. That one runs in CI and blocks the deploy, but it cannot see an
   `<html data-theme>` that disagrees with the boot script — only the source check can.

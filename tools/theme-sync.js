@@ -18,6 +18,13 @@
  *   2. the head pins that theme with a literal, rather than reading a stored one
  *   3. no #cl-theme-toggle survives anywhere in the file
  *
+ * It then sweeps the whole repo for code that still DRIVES a toggle — clicks it,
+ * hovers it, waits for it, or asserts the page reaches light. The first version
+ * of this script read only index.html, and that is exactly how a second round of
+ * breakage got through: the pass that removed the toggle rewrote `e2e/` but never
+ * walked `scripts/` or `contrast/`, where six labs keep custom CI runners that
+ * clicked the button. Their suites were green; their deploys were red.
+ *
  * Usage (run from the crypto-lab repo root):
  *   node tools/theme-sync.js          Report; exit 0 always.
  *   node tools/theme-sync.js check    Same report; exit 1 on any violation.
@@ -101,6 +108,53 @@ function inspect(repo, file) {
   return problems;
 }
 
+// Code that only makes sense when a toggle exists. Comments are ignored: plenty
+// of gate.ts files mention the old button in prose, and rewriting prose is not
+// what keeps CI green.
+const DRIVES_TOGGLE = [
+  // Interacting with a button that is not there — these throw or time out.
+  /\.click\(\s*['"]#cl-theme-toggle['"]/,
+  /#cl-theme-toggle['"]\s*\)\s*\.\s*(click|hover|waitFor|focus)\b/,
+  // Asserting the removed button is present.
+  /#cl-theme-toggle['"]\s*\)\s*\)\s*\.\s*toBeVisible/,
+  /#cl-theme-toggle['"]\s*\)\s*\)\s*\.\s*toHaveCount\(\s*1\s*\)/,
+  // Asserting the page reaches a theme that no longer exists.
+  /toHaveAttribute\(\s*['"]data-theme['"]\s*,\s*['"]light['"]/,
+  /waitForFunction\([^)]*data-theme[^)]*['"]light['"]/,
+];
+// Deliberately NOT flagged: a lab reading `getAttribute('data-theme') === 'light'`
+// in its own src. That is dead but harmless — the branch never runs — and
+// rewriting 30 labs' internals to delete it is the CSS-rewrite risk all over
+// again. This checker is about what BREAKS, not what is merely unreachable.
+const CODE_EXT = ['.ts', '.js', '.mjs', '.cjs', '.tsx'];
+
+function stripComments(src) {
+  return src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/[^\n]*/g, '$1');
+}
+
+function toggleDrivers(repo, wantLight) {
+  const skip = new Set(['node_modules', 'dist', '.git', 'playwright-report',
+    'test-results', 'target', 'coverage', 'build', 'original', 'archive', '.tmp-checks']);
+  const found = [];
+  (function walk(dir) {
+    let entries;
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) { if (!skip.has(e.name)) walk(full); continue; }
+      if (!CODE_EXT.includes(path.extname(e.name))) continue;
+      let src;
+      try { src = stripComments(fs.readFileSync(full, 'utf8')); } catch { continue; }
+      for (const re of DRIVES_TOGGLE) {
+        // The light lab legitimately asserts it reaches light.
+        if (wantLight && String(re).includes('light')) continue;
+        if (re.test(src)) { found.push(path.relative(FLEET_ROOT, full)); break; }
+      }
+    }
+  })(path.join(FLEET_ROOT, repo));
+  return found;
+}
+
 function main() {
   const check = process.argv[2] === 'check';
   const pages = labPages();
@@ -108,6 +162,8 @@ function main() {
 
   for (const { repo, file } of pages) {
     const problems = inspect(repo, file);
+    const drivers = toggleDrivers(repo, (EXCEPTIONS[repo] || DEFAULT_THEME) === 'light');
+    for (const d of drivers) problems.push(`${d} still drives a theme toggle`);
     if (problems.length) bad.push({ repo, file, problems });
   }
 

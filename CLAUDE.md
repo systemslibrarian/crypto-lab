@@ -231,7 +231,13 @@ by a sweep that looked locally correct in all 175 repos at once.
 
 Two checks defend this, and they catch different things:
 
-- `node tools/theme-sync.js check` reads every lab's `index.html` from here. It
+- `node tools/theme-sync.js check` reads **every visitable page** in every lab from here —
+  not just the repo-root `index.html`. It used to read only the first one it found, and
+  that is precisely what hid `zk-proof-lab`: its lobby pinned dark while its eight
+  `exhibits/*.html` pages carried no `data-theme` and booted from
+  `localStorage.getItem('theme') ?? prefers-color-scheme`, so a deep-linked visitor on a
+  light-preferring OS got the light palette. 404 pages, OG-card templates and timing
+  harnesses are excluded on purpose — they are not demo pages. It
   catches a wrong pinned theme, a missing `data-theme`, a boot script that reads a
   stored preference again, and a returning `#cl-theme-toggle`. It then sweeps each
   repo's source for code that still *drives* a toggle — clicking it, or asserting

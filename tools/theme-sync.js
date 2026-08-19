@@ -68,9 +68,27 @@ const EXCEPTIONS = { 'crypto-lab-quantum-vault-kpqc': 'light' };
 
 // Labs whose page is not at the repo root. Taken from where index.html is,
 // not assembled from the slug.
+/*
+ * EVERY visitable page, not just the first index.html.
+ *
+ * This used to return `found[0]` — one page per repo — and zk-proof-lab is what
+ * that missed. Its lobby pinned dark correctly while its eight pages under
+ * exhibits/ carried no data-theme at all and booted from
+ * `localStorage.getItem('theme') ?? prefers-color-scheme`. Reached through the
+ * lobby they looked fine, because the lobby writes 'theme' first and the exhibit
+ * reads it back. Deep-linked — which is what a shared or bookmarked exhibit link
+ * is — a light-preferring visitor got the light palette on all eight, and no
+ * check in the fleet could see it.
+ *
+ * Excluded, deliberately: 404 pages, OG-card templates and timing/test harnesses.
+ * They are not demo pages, several are intentionally unstyled, and failing the
+ * fleet over them would train people to ignore this checker.
+ */
+const NON_DEMO_PAGE = /(^|\/)(404\.html|og-card\.html|.*-harness\.html|quality-gates\.html|logic-smoke\.html)$/;
+
 function labPages() {
   const skip = new Set(['node_modules', 'dist', '.git', 'playwright-report',
-    'test-results', 'target', 'coverage', 'build', 'original']);
+    'test-results', 'target', 'coverage', 'build', 'original', 'archive', '.tmp-checks']);
   const pages = [];
   for (const repo of fs.readdirSync(FLEET_ROOT).sort()) {
     if (!repo.startsWith('crypto-lab-')) continue;
@@ -78,17 +96,20 @@ function labPages() {
     if (!fs.statSync(root).isDirectory()) continue;
     const found = [];
     (function walk(dir, depth) {
-      if (depth > 3) return;
+      if (depth > 4) return;
       for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
         if (entry.isDirectory()) {
           if (!skip.has(entry.name)) walk(path.join(dir, entry.name), depth + 1);
-        } else if (entry.name === 'index.html') {
-          found.push(path.join(dir, entry.name));
+        } else if (entry.name.endsWith('.html')) {
+          const full = path.join(dir, entry.name);
+          if (!NON_DEMO_PAGE.test(full.replace(/\\/g, '/'))) found.push(full);
         }
       }
     })(root, 0);
     // A repo with no page at all (an API service) is not a lab; skip it.
-    if (found.length) pages.push({ repo, file: found[0] });
+    // Sort so the repo-root index.html reports first; the rest are its subpages.
+    found.sort((a, b) => a.split(path.sep).length - b.split(path.sep).length || a.localeCompare(b));
+    for (const file of found) pages.push({ repo, file });
   }
   return pages;
 }

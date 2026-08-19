@@ -25,6 +25,23 @@
  * walked `scripts/` or `contrast/`, where six labs keep custom CI runners that
  * clicked the button. Their suites were green; their deploys were red.
  *
+ * Finally it asserts the SUPPRESSION RULE. The toggle removal deleted the
+ * `#cl-theme-toggle` header button, but 82 labs still build an older
+ * `#theme-toggle` of their own, and in 35 of them that button is fully wired —
+ * the click handler flips the theme and writes it to localStorage. None of them
+ * render it, for exactly one reason: an inline rule in each page,
+ *
+ *     body :is(#theme-toggle,#themeToggle,.theme-toggle,...){display:none!important}
+ *
+ * That single line is the only thing standing between this fleet and 35 working
+ * toggles that persist a light choice — the precise failure the removal was for.
+ * Nothing checked it until now, so a pass that tidied those inline <style> blocks
+ * would have brought the toggles back silently and looked correct in every repo.
+ * So: any lab that can PRODUCE a legacy toggle must also suppress it, and that is
+ * a hard failure. The wired-but-hidden ones are reported as debt rather than
+ * failures, because they are genuinely inert today and failing 35 labs' CI is not
+ * this script's call to make. See "Legacy toggle debt" in the output.
+ *
  * Usage (run from the crypto-lab repo root):
  *   node tools/theme-sync.js          Report; exit 0 always.
  *   node tools/theme-sync.js check    Same report; exit 1 on any violation.
@@ -75,6 +92,20 @@ function labPages() {
   }
   return pages;
 }
+
+/*
+ * A legacy toggle this lab builds itself, predating the shared #cl-theme-toggle.
+ * RENDERS_TOGGLE matches markup that creates the element; FLIPS_THEME matches a
+ * click handler that actually changes the theme, which is what separates a dead
+ * stub from a live control wearing a display:none.
+ */
+const LEGACY_IDS = ['#theme-toggle', '#themeToggle', '.theme-toggle', '[data-theme-toggle]'];
+const RENDERS_TOGGLE =
+  /id\s*=\s*["']theme-toggle["']|id\s*=\s*["']themeToggle["']|createElement\([^)]*\)[\s\S]{0,120}theme-toggle/;
+const FLIPS_THEME =
+  /addEventListener\(\s*['"]click['"][\s\S]{0,300}?(setTheme|setAttribute\(\s*['"]data-theme['"]|localStorage\.setItem\(\s*['"][^'"]*theme)/;
+// The rule that keeps every one of those off the page.
+const SUPPRESSES_TOGGLE = /#theme-toggle[^}]*display\s*:\s*none/i;
 
 function inspect(repo, file) {
   const html = fs.readFileSync(file, 'utf8');
@@ -155,15 +186,62 @@ function toggleDrivers(repo, wantLight) {
   return found;
 }
 
+// Where this lab still builds a legacy toggle of its own, and whether that
+// toggle is wired to change the theme. Includes the page itself: a few labs
+// write the button straight into index.html.
+function legacyToggles(repo, page) {
+  const skip = new Set(['node_modules', 'dist', '.git', 'playwright-report',
+    'test-results', 'target', 'coverage', 'build', 'original', 'archive', '.tmp-checks']);
+  const renders = [];
+  const live = [];
+  const consider = (full, src) => {
+    if (!RENDERS_TOGGLE.test(src)) return;
+    renders.push(path.relative(FLEET_ROOT, full));
+    if (FLIPS_THEME.test(src)) live.push(path.relative(FLEET_ROOT, full));
+  };
+  try { consider(page, fs.readFileSync(page, 'utf8')); } catch { /* page unreadable */ }
+  (function walk(dir) {
+    let entries;
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) { if (!skip.has(e.name)) walk(full); continue; }
+      if (!CODE_EXT.includes(path.extname(e.name))) continue;
+      let src;
+      try { src = fs.readFileSync(full, 'utf8'); } catch { continue; }
+      consider(full, src);
+    }
+  })(path.join(FLEET_ROOT, repo));
+  return { renders, live };
+}
+
 function main() {
   const check = process.argv[2] === 'check';
   const pages = labPages();
   const bad = [];
+  const debt = [];
 
   for (const { repo, file } of pages) {
     const problems = inspect(repo, file);
     const drivers = toggleDrivers(repo, (EXCEPTIONS[repo] || DEFAULT_THEME) === 'light');
     for (const d of drivers) problems.push(`${d} still drives a theme toggle`);
+
+    // A lab that can still build a legacy toggle must still hide it. This is the
+    // one line holding 35 wired toggles off the page; losing it is a regression
+    // no per-lab test would catch, because the markup looks the same either way.
+    const legacy = legacyToggles(repo, file);
+    if (legacy.renders.length) {
+      const html = fs.readFileSync(file, 'utf8');
+      if (!SUPPRESSES_TOGGLE.test(html)) {
+        problems.push(
+          `builds a legacy toggle (${legacy.renders[0]}) but the page no longer ` +
+          `suppresses it — restore the ` +
+          `body :is(${LEGACY_IDS.join(',')}){display:none!important} rule`);
+      } else if (legacy.live.length) {
+        debt.push({ repo, live: legacy.live });
+      }
+    }
+
     if (problems.length) bad.push({ repo, file, problems });
   }
 
@@ -171,8 +249,19 @@ function main() {
   console.log(`Lab pages checked: ${pages.length} ` +
     `(${pages.length - light} dark, ${light} deliberately light)`);
 
+  // Not a failure: these are inert today. But they are inert because of one CSS
+  // rule per page, so anyone editing those inline <style> blocks needs to know.
+  if (debt.length) {
+    console.log(`\nLegacy toggle debt (${debt.length}): wired to change the theme, ` +
+      'held off the page only by the suppression rule above.');
+    for (const { repo, live } of debt) {
+      console.log(`  ${repo}  ${live.join(', ')}`);
+    }
+    console.log('  Removing the code is the real fix; until then the rule is load-bearing.');
+  }
+
   if (!bad.length) {
-    console.log('Every lab pins one theme, and none ships a toggle.');
+    console.log('\nEvery lab pins one theme, and none ships a toggle.');
     return 0;
   }
 

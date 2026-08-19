@@ -243,6 +243,27 @@ Two checks defend this, and they catch different things:
 - Each lab's own `e2e/theme.spec.ts` asserts the *resolved* theme and that no theme
   control renders. That one runs in CI and blocks the deploy, but it cannot see an
   `<html data-theme>` that disagrees with the boot script — only the source check can.
+  **It is not fleet-wide coverage: only 20 of 176 repos have one** (verified
+  2026-08-19). For the other ~155 labs `theme-sync.js` is the *only* thing defending
+  the theme contract, so do not treat a green lab CI as evidence the theme is checked.
+
+**The suppression rule is load-bearing.** Removing `#cl-theme-toggle` did not remove
+every toggle. 82 labs still build an older `#theme-toggle` of their own, and in **35 of
+them the button is fully wired** — the click handler flips the theme and writes it to
+`localStorage`. Not one of them renders it, for exactly one reason: an inline rule in
+each page,
+
+```css
+body :is(#theme-toggle,#themeToggle,.theme-toggle,.theme-toggle-btn,[data-theme-toggle]){display:none!important}
+```
+
+Delete that line and the lab has a working, persisting toggle again — the precise
+failure the removal existed to end. Nothing checked it until 2026-08-19; a pass that
+tidied those inline `<style>` blocks would have resurrected 35 toggles silently and
+looked correct in every repo. `theme-sync.js` now **fails** if a lab can build a legacy
+toggle but no longer suppresses it, and lists the 35 wired ones under *"Legacy toggle
+debt"* as a non-failing warning. Deleting the dead toggle code is the real fix and is
+still outstanding; until then, do not touch those `<style>` blocks casually.
 
 `[data-theme="light"]` blocks survive in most stylesheets as dead code. Nothing
 selects them; deleting them fleet-wide was judged not worth the risk. Don't treat
@@ -261,20 +282,23 @@ Do not resurrect them.
   overwrite driven from this one.
 
 The old `<!-- BEGIN/END crypto-lab shared header -->` and `/* BEGIN/END cl-hero standard */`
-markers were stripped in a fleet-wide pass. **That pass was not complete.** As of 2026-08-04
-five labs still carry live markers in `index.html` and/or `src/style.css`: `dp-noise`,
-`ghost-commit`, `iron-serpent`, `salamander`, `stream-ward`. `ghost-commit`'s reads *"managed;
-edit shared-header.html + re-run reapply-header.py"* — pointing a contributor straight at
-tooling that was deliberately retired.
+markers were stripped in a fleet-wide pass. **That pass is now complete** — as of 2026-08-19
+there are zero live markers anywhere in the fleet, so TASKS.md task 15 is done. The earlier
+note here named five survivors (`dp-noise`, `ghost-commit`, `iron-serpent`, `salamander`,
+`stream-ward`); that list is retired, and `dp-noise` and `iron-serpent` are clean.
 
-So: seeing a marker does **not** by itself prove the retired tooling re-ran. Check whether the
-repo is one of those five (a survivor of the incomplete pass) before concluding anything.
-Outside that list, treat a marker as a genuine signal that something re-ran the tooling.
+Because no marker should exist now, seeing one **is** a genuine signal that something re-ran
+the retired tooling. Treat it as such.
 
-Removing them is TASKS.md task 15. **Remove the marker comments, not the header** — each lab
-owns its markup and CSS now; it is only the "managed, do not edit, re-run the script" framing
-that is false. A further ~24 files mention the retired tooling in prose; those are lower
-priority but carry the same wrong instruction.
+Four `index.html` files still mention the tooling in prose, and three of them are *correct* to:
+`ghost-commit`, `salamander` and `stream-ward` say "THIS LAB OWNS IT … the fleet-wide push
+(shared-header.html + reapply-header.py) was retired … Edit this copy directly." Leave those.
+
+The one that is still wrong is **`otp-vault`** (`index.html:144`), which reads *"Part 0
+(canonical shared header) is applied here once the catalog shared-header.html snippet is
+provided; do not hand-build one"* — pointing a contributor at retired tooling and telling them
+not to build the thing each lab is now supposed to own. That comment should be replaced with
+the ghost-commit wording. It is the last instance.
 
 ---
 

@@ -294,11 +294,11 @@ Four `index.html` files still mention the tooling in prose, and three of them ar
 `ghost-commit`, `salamander` and `stream-ward` say "THIS LAB OWNS IT … the fleet-wide push
 (shared-header.html + reapply-header.py) was retired … Edit this copy directly." Leave those.
 
-The one that is still wrong is **`otp-vault`** (`index.html:144`), which reads *"Part 0
-(canonical shared header) is applied here once the catalog shared-header.html snippet is
-provided; do not hand-build one"* — pointing a contributor at retired tooling and telling them
-not to build the thing each lab is now supposed to own. That comment should be replaced with
-the ghost-commit wording. It is the last instance.
+`otp-vault` was the last one still giving the wrong instruction — *"Part 0 (canonical shared
+header) is applied here once the catalog shared-header.html snippet is provided; do not
+hand-build one"* — which pointed a contributor at retired tooling and told them not to build
+the thing each lab now owns. Fixed 2026-08-19 to the ghost-commit wording. **No lab carries
+that instruction any more**, so grep for "do not hand-build one" should stay empty.
 
 ---
 

@@ -116,8 +116,15 @@ stated plainly is worth far more than an overstated complete one.
 
 
 Durable copy of the working task list, written 2026-08-01 so an interrupted session loses
-nothing. `RESUME-HERE.md` holds the fleet state and the hard-won environment facts; this
-file holds the work queue. Keep both current.
+nothing. This file holds the work queue.
+
+`RESUME-HERE.md` used to sit alongside it holding fleet state and environment facts, and
+`SCORES-2026-08-02.md` held the in-flight scoring data. Both were session scaffolding for
+passes that finished; they were deleted 2026-08-20 and remain in git history if a
+historical read is ever needed. References to them further down this file are inside
+closed sections and are left as written. The scoring *results* they fed are not lost —
+they live in `audits/SCORECARD-2026-08-02.md`, which is current and indexed in
+`audits/README.md`.
 
 ## Current-session update — 2026-08-01
 

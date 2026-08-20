@@ -128,6 +128,24 @@ Open `http://localhost:8765/` and confirm:
 - Each `data-category` chip filters the card in.
 - `node tools/readme-sync.js check` reports the README tables in sync.
 - `node tools/theme-sync.js check` reports the new lab pinning one theme with no toggle.
+  It reads **every** page in the lab, not just the root `index.html` — a sub-page that boots
+  from `localStorage` or `prefers-color-scheme` instead of pinning a literal will fail it.
+
+Then check the demo repo itself carries its dependency automation, because a lab without it
+opens **one pull request per dependency, forever** — ungrouped, this fleet reached 1,461 open
+PRs across 176 repos:
+
+```
+test -f ../crypto-lab-<slug>/.github/dependabot.yml && grep -q npm-minor-and-patch ../crypto-lab-<slug>/.github/dependabot.yml && echo "grouping OK"
+grep -rq 'dependabot/fetch-metadata' ../crypto-lab-<slug>/.github/workflows/ && echo "auto-merge OK"
+grep -rq 'pull_request' ../crypto-lab-<slug>/.github/workflows/ && echo "PR gate OK"
+grep -rq 'workflow_dispatch' ../crypto-lab-<slug>/.github/workflows/ && echo "dispatch OK"
+```
+
+All four are required and all four are specified in `audits/_MASTER-TEMPLATE.md` §6.1–6.2.
+The last one is not optional bookkeeping: a merge made with `secrets.GITHUB_TOKEN` raises no
+push event, so without an explicit dispatch the bump lands on `main` and the live site keeps
+serving the old build with nothing going red to say so.
 
 A self-check script lives at the end of this file — copy it into a `node -e "..."` invocation to verify title coverage.
 

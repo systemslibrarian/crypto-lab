@@ -500,6 +500,17 @@ When adding/altering exhibits, **update `What It Is` and the numbered `Exhibits`
 Actions-based deploy (not the legacy `gh-pages` branch). `.github/workflows/deploy.yml` builds, runs unit tests, installs the Playwright browser, **runs the axe a11y gate, and only then deploys** — so a broken build or an accessibility regression never ships:
 
 ```yaml
+on:
+  push:
+    branches: [main]
+  pull_request:            # the gate must judge PRs too — see §6.1
+    branches: [main]
+  workflow_dispatch:       # so a deploy can be re-run by hand — see §6.2
+
+concurrency:
+  group: pages-${{ github.ref }}   # NOT a bare `pages`: with cancel-in-progress
+  cancel-in-progress: true         # a PR run would cancel a live main deploy
+
 # build job, after `npm run build`:
 - run: npm test
 - run: npm run build
@@ -507,12 +518,94 @@ Actions-based deploy (not the legacy `gh-pages` branch). `.github/workflows/depl
   run: npx playwright install --with-deps chromium
 - name: Accessibility gate (axe-core, WCAG A/AA)
   run: npm run test:a11y
-- uses: actions/upload-pages-artifact@v3
+- uses: actions/upload-pages-artifact@v5
   with: { path: dist }
-# deploy job: actions/deploy-pages@v4
+
+# deploy job: actions/deploy-pages@v5
+  if: github.event_name == 'push'   # a PR is tested, never published
 ```
 
+Current pinned action versions fleet-wide (verified green across 176 repos on
+2026-08-18): `actions/checkout@v7`, `actions/setup-node@v7`,
+`actions/configure-pages@v6`, `actions/upload-pages-artifact@v5`,
+`actions/deploy-pages@v5`.
+
 Also: `vite.config.ts` `base: '/crypto-lab-<demo-name>/'` (read the real repo name, don't guess); **no root-absolute asset paths** (`/foo` 404s under the project subpath — use `./foo`, a Vite-imported asset, or a `data:` URI); pin `@playwright/test` to a current build to avoid the corrupt-cache install loop. Verify the live URL loads with no 404s after deploy.
+
+### 6.1 Dependabot — grouped, gated, self-merging (REQUIRED)
+
+Without this a new lab opens **one pull request per dependency**. Ungrouped, this
+fleet reached **1,461 open PRs across 176 repos**, none of which had any CI signal
+because the only workflow fired on push to `main`. Ship `.github/dependabot.yml`
+with the lab:
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]   # majors stay individual, on purpose
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns: ["*"]
+```
+
+Majors are deliberately **not** grouped. When the 2026-08-18 backlog was landed,
+109 bumps had to be held back and they were overwhelmingly majors — a breaking
+major inside the grouped PR makes the whole thing unmergeable, which is the
+hand-unpicking this exists to prevent.
+
+Then add an auto-merge job to the workflow that runs the gate on `pull_request`:
+
+```yaml
+  dependabot-auto-merge:
+    needs: build            # every gate job — this is what makes it safe
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions: { contents: write, pull-requests: write }
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v2
+      - name: Merge any bump whose gate went green
+        run: |
+          for attempt in 1 2 3; do
+            gh pr merge --squash --delete-branch "$PR_URL" && merged=1 && break
+            sleep 15          # a sibling PR merging first moves main under us
+          done
+          [ -n "$merged" ] || { echo "::warning::gate passed, merge did not land"; exit 0; }
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main   # see §6.2
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+`needs:` is the whole safety argument — the gate decides, not the version number.
+A major that breaks the lab fails the gate and the PR stays open for a human.
+
+**If this lab's gate lives in a reusable workflow** (one that `deploy.yml` calls
+via `uses: ./.github/workflows/test.yml`), the job must NOT go there: a called
+workflow may not request more permission than its caller grants, and the whole
+deploy dies at startup saying only *"workflow file issue"*. Put it in its own file
+triggered on `workflow_run` of that workflow instead.
+
+### 6.2 Deploy after an auto-merge — GitHub will not do it for you
+
+A merge performed with `secrets.GITHUB_TOKEN` raises **no push event**; GitHub
+suppresses them so workflows cannot retrigger themselves. So `deploy.yml`
+(`on: push`) never runs after an auto-merge: the bump lands on `main` and the live
+site keeps serving the previous build, with no red run anywhere to say so. Nine
+repos were found drifting this way. The merge step must therefore dispatch the
+deploy explicitly — a `workflow_dispatch` through the API is not suppressed —
+which is why `workflow_dispatch:` is required in the trigger block above.
 
 ---
 
@@ -523,8 +616,16 @@ Also: `vite.config.ts` `base: '/crypto-lab-<demo-name>/'` (read the real repo na
 3. Build the demo (§1) → working crypto + UI + tests, mounted at `#app` with `--accent` defined.
 4. Apply the chrome (§3): header copied from an existing lab, hero, theme contract, footer, head/favicon.
 5. Meet the teaching bar (§2) and the a11y gate (§4).
-6. Write the README (§5); wire the Actions deploy (§6).
+6. Write the README (§5); wire the Actions deploy (§6), **including `.github/dependabot.yml`
+   and the auto-merge job (§6.1) and the post-merge deploy dispatch (§6.2)**. Skipping these
+   is how a lab starts opening one pull request per dependency, forever.
 7. Add the catalog card (title, tags, accent) to the `crypto-lab` index; deploy and verify the live URL.
+8. Run the catalog's checkers from `crypto-lab/`: `node tools/readme-sync.js check`,
+   `node tools/corpus-sync.js check`, `node tools/concept-sync.js check`, and
+   `node tools/theme-sync.js check`. The last one reads **every** page in the new lab, not
+   just its root `index.html` — a sub-page that boots from `localStorage` or
+   `prefers-color-scheme` instead of pinning a literal will fail it, which is exactly the
+   defect it was widened to catch.
 
 ---
 

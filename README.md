@@ -61,6 +61,8 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) | Code-Based KEM | HQC · Reed-Muller · Reed-Solomon · Post-Quantum |
 | [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) | Commitment Schemes | Hash Commitment · Pedersen · Binding & Hiding · Homomorphic |
 | [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) | Composite Signatures | Ed25519 · ML-DSA-65 · Composite Signatures · IETF LAMPS |
+| [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) | Content Provenance | SynthID-Text · Tournament Sampling · ECDSA P-256 · C2PA Manifest |
+| [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) | Context Injection | SHA-256 Chain · HMAC-SHA-256 · HKDF · Ed25519 |
 | [Model Breach](https://systemslibrarian.github.io/crypto-lab-model-breach/) | Cryptanalysis | Threat Modeling · Candidate Enumeration · MITM Recovery · Guess-and-Determine |
 | [Accumulator](https://systemslibrarian.github.io/crypto-lab-accumulator/) | Cryptographic Accumulators | RSA Accumulator · Non-Membership Proofs · Strong RSA · Certificate Revocation |
 | [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) | CSPRNG | HMAC_DRBG · CTR_DRBG · Hash_DRBG · NIST SP 800-90A |
@@ -82,6 +84,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | Few-Time Signatures | Jevil · Hash-Based · Goldilocks Field · Lagrange Interpolation |
 | [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) | Format-Preserving Encryption | FF1 · FF3-1 · AES-256 · Tokenization |
+| [Regex Veil](https://systemslibrarian.github.io/crypto-lab-fte/) | Format-Transforming Encryption | FF1 · DFA Ranking · Cycle Walking · AES-256-CTR |
 | [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) | Forward-Secret Messaging | Double Ratchet · X25519 · HKDF · AES-256-GCM |
 | [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) | Group Messaging Security | MLS (RFC 9420) · TreeKEM · Epoch Key Schedule · Forward Secrecy |
 | [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) | Hash Collisions | MD5 · SHA-1 · SHAttered · Chosen-Prefix Collision |
@@ -109,6 +112,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) | Key Derivation | HKDF · PBKDF2 · scrypt · Argon2id |
 | [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) | Key Exchange Overview | Diffie-Hellman · ECDH · X25519 · ML-KEM |
 | [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) | Key Transparency | Merkle Tree · VRF · Ed25519 · KEYTRANS |
+| [KMAC Gate](https://systemslibrarian.github.io/crypto-lab-kmac-gate/) | Keyed Sponge MAC | Keccak-f[1600] · SHAKE128/256 · cSHAKE128/256 · KMAC128/256 |
 | [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) | Lattice Attack | ECDSA · Hidden Number Problem · LLL Reduction · secp256k1 |
 | [LWE Hints](https://systemslibrarian.github.io/crypto-lab-lwe-hints/) | Lattice Cryptanalysis | LWE · Sparse Ternary Secrets · Approximate Hints · Lattice |
 | [NTRU Classic](https://systemslibrarian.github.io/crypto-lab-ntru-classic/) | Lattice Cryptography | NTRU · Polynomial Rings · Lattice · EESS#1 |

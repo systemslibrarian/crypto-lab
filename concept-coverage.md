@@ -13,6 +13,19 @@ every remaining `PARTIAL` to `COVERED` and empties the Gap summary table. Search
 concept-complete against this taxonomy — which is an editorial claim about these forty
 boundaries, not a statement that cryptography has been exhausted.*
 
+*Version 7 — files the four labs that were built and live but had no card, so no checker
+could see them: KMAC Gate joins §5 (the keyed sponge beside the polynomial MACs), Regex Veil
+joins §37 (the covert-channel form of hiding, against a DPI adversary rather than in pixels),
+and Token Tell and Context Ward both join §32. Those two extend §32 in different directions:
+Token Tell because a keyed detector's statistical evidence is only as good as possession of
+the key while a signature binds bytes rather than authorship, and Context Ward because every
+check can pass honestly and the system still be owned — integrity and provenance are
+orthogonal to whether content should be obeyed. All four are additions to concepts already
+`COVERED`, so no status changes and the Gap summary stays empty. Worth recording why they
+were invisible: `concept-sync`, `readme-sync` and `corpus-sync` all reported clean throughout,
+because each verifies consistency among carded demos and none can detect a demo that was never
+carded at all.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -91,7 +104,7 @@ SPN, ARX, sponge, stream, lightweight, and Feistel — the last via format-prese
 encryption, where the round structure is the whole point (SP 800-38G).
 
 **5. Message authentication — `COVERED`**
-MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward. Polynomial MACs, AEAD, and
+MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward · KMAC Gate. Polynomial MACs, AEAD, and
 misuse-resistant AEAD. Stream Ward extends the arc past the single message: chained streaming
 AEAD, where each segment's tag covers a rolling chain state plus its sequence number, so
 reordering or truncating intact valid frames is caught. One-shot AEAD authenticates *content*;
@@ -306,7 +319,10 @@ Protocol Checker (Dolev-Yao, rediscovers Lowe's attack by search).
 
 **32. The limits of cryptography — `COVERED`**
 Model Breach (assumptions drifting from deployment) · Encrochat (endpoint compromise defeats
-sound E2EE). Was `PARTIAL` in v1–v3 only because Encrochat had no card; carding it finishes
+sound E2EE) · Token Tell (a keyed detector's evidence is only as good as the key, and a
+signature binds bytes rather than authorship) · Context Ward (every check passes honestly
+and the agent is compromised anyway, because integrity is orthogonal to whether content
+should be obeyed). Was `PARTIAL` in v1–v3 only because Encrochat had no card; carding it finishes
 the arc — the assumption breaks, then the deployment breaks around an intact primitive. Still
 the most contestable concept boundary in the list; some would fold it into §30.
 
@@ -344,7 +360,7 @@ Dead Sea Cipher · Enigma Forge · Vigenère Break. (Cipher Museum carries this 
 a sibling project — do not expand here.)
 
 **37. Steganography — `COVERED`**
-Stego Suite · J-UNIWARD.
+Stego Suite · J-UNIWARD · Regex Veil.
 
 **38. Blockchain and wallet mechanics — `COVERED`**
 Bitcoin Script · Bitcoin Wallet.

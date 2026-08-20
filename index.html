@@ -4303,6 +4303,66 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-kmac-gate/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Keyed Sponge MAC</div>
+            <div class="project-title">KMAC Gate</div>
+            <div class="project-copy">SHA3-256, SHAKE, cSHAKE and KMAC driven by one hand-rolled Keccak-f[1600] permutation — step the sponge block by block, then tamper with a signed message and watch the real verifier reject it.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Keccak-f[1600]</span>
+                <span class="chip">SHAKE128/256</span>
+                <span class="chip">cSHAKE128/256</span>
+                <span class="chip">KMAC128/256</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="SIGNATURES | STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-token-tell/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Content Provenance</div>
+            <div class="project-title">Token Tell</div>
+            <div class="project-copy">Runs the real SynthID-Text keyed detector over watermarked text, then signs the same words with ECDSA P-256: change only the key and the statistical evidence vanishes; change one byte and verification fails outright.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SynthID-Text</span>
+                <span class="chip">Tournament Sampling</span>
+                <span class="chip">ECDSA P-256</span>
+                <span class="chip">C2PA Manifest</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-context-ward/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Context Injection</div>
+            <div class="project-title">Context Ward</div>
+            <div class="project-copy">Seals an agent's context window into a SHA-256 hash chain with role-separated HMAC seals and Ed25519 tool attestations, then shows injected content passing every check while the agent is compromised anyway.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SHA-256 Chain</span>
+                <span class="chip">HMAC-SHA-256</span>
+                <span class="chip">HKDF</span>
+                <span class="chip">Ed25519</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="STEGANOGRAPHY | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-fte/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Format-Transforming Encryption</div>
+            <div class="project-title">Regex Veil</div>
+            <div class="project-copy">Compiles a regex to a minimal DFA, counts its length-n language exactly, and enciphers real AES-CTR bytes into that slice with FF1 — output a DPI rule accepts, plus the substitution attack proving nothing is authenticated.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">FF1</span>
+                <span class="chip">DFA Ranking</span>
+                <span class="chip">Cycle Walking</span>
+                <span class="chip">AES-256-CTR</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -4544,7 +4604,9 @@
       'Traitor Trace': 'privacy',
       'Syndrome Hints': 'cryptanalysis', 'Lattice Gentle': 'post-quantum',
       'Encrochat': 'cryptanalysis', 'Icy DVRF': 'privacy',
-      'MuSig Gate': 'privacy', 'Ablation Wire': 'cryptanalysis'
+      'MuSig Gate': 'privacy', 'Ablation Wire': 'cryptanalysis',
+      'KMAC Gate': 'foundations', 'Token Tell': 'public-key',
+      'Context Ward': 'cryptanalysis', 'Regex Veil': 'historical'
     };
 
     var FOUNDATIONS_TITLES = [
@@ -4553,14 +4615,14 @@
       'Merkle Vault','Commit Gate','Shamir Gate','VRF Gate','Curve Lens',
       'Accumulator',
       'Pairing Gate','OTP Vault','VDF','HPKE Envelope','Quantum Entropy',
-      'Lattice Gentle'
+      'Lattice Gentle','KMAC Gate'
     ];
     var REAL_WORLD_TITLES = [
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',
       'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
       'WebAuthn','Web of Trust','SSH Handshake','Bitcoin Wallet',
       'Bitcoin Script','TLS Handshake','Blind Hello','Blind Relay',
-      'Key Mirror','SPAKE Gate','Encrochat','Beacon Lock'
+      'Key Mirror','SPAKE Gate','Encrochat','Beacon Lock','Token Tell'
     ];
     var TITLE_TO_EXTRA_CATS = {};
     FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });

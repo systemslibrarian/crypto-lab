@@ -64,7 +64,7 @@ as the BINDING spec. Build to every standard in it, in this order:
      .github/dependabot.yml with the grouped config, add the dependabot-auto-merge job
      to whichever workflow runs the gate on pull_request, and have that job dispatch the
      deploy after it merges. Also: the workflow must trigger on pull_request as well as
-     push, the deploy job must be gated to `github.event_name == 'push'`, the concurrency
+     push, the deploy job must be gated to `github.event_name != 'pull_request'`, the concurrency
      group must include ${{ github.ref }}, and the deploy workflow must accept
      workflow_dispatch. Omitting any of these is how a lab starts opening one pull request
      per dependency with no CI signal on any of them.
@@ -534,7 +534,10 @@ concurrency:
   with: { path: dist }
 
 # deploy job: actions/deploy-pages@v5
-  if: github.event_name == 'push'   # a PR is tested, never published
+  if: github.event_name != 'pull_request'   # a PR is tested, never published
+  # NOT `== 'push'`. That also skips workflow_dispatch, which is the one trigger
+  # §6.2 depends on: the dispatched run would build, pass the gate, and skip the
+  # deploy job, so the site still never updates.
 ```
 
 Current pinned action versions fleet-wide (verified green across 176 repos on
@@ -583,7 +586,10 @@ Then add an auto-merge job to the workflow that runs the gate on `pull_request`:
     needs: build            # every gate job — this is what makes it safe
     if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
-    permissions: { contents: write, pull-requests: write }
+    permissions: { contents: write, pull-requests: write, actions: write }
+    # actions: write is required for the deploy dispatch below. Without it
+    # `gh workflow run` returns HTTP 403 "Resource not accessible by integration",
+    # the merged bump never deploys, and a `|| echo` fallback hides it.
     steps:
       - id: meta
         uses: dependabot/fetch-metadata@v2

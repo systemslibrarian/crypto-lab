@@ -60,10 +60,22 @@ as the BINDING spec. Build to every standard in it, in this order:
   4. §4 Accessibility — wire the WCAG 2.1 AA gate and author to its checklist.
      `npm run build` then `npm run test:a11y` MUST pass with zero violations.
   5. §5 README (the standard sections) and §6 Deploy (Actions-based Pages, a11y-gated).
+  6. §6.1 + §6.2 Dependency automation — REQUIRED, not optional. Ship
+     .github/dependabot.yml with the grouped config, add the dependabot-auto-merge job
+     to whichever workflow runs the gate on pull_request, and have that job dispatch the
+     deploy after it merges. Also: the workflow must trigger on pull_request as well as
+     push, the deploy job must be gated to `github.event_name == 'push'`, the concurrency
+     group must include ${{ github.ref }}, and the deploy workflow must accept
+     workflow_dispatch. Omitting any of these is how a lab starts opening one pull request
+     per dependency with no CI signal on any of them.
 
 Hard rules: do NOT dumb down the crypto to make a visual simpler; honest scoping in-page
 and in the README ("not production", what's real vs simulated, what it does NOT prove).
-When done, report a one-line summary with the test count.
+Do NOT weaken a gate to get a green run — no skipped tests, no lowered coverage threshold,
+no disabled lint rule, no re-recorded a11y baseline, no continue-on-error. If a bump or a
+change cannot pass honestly, leave it failing and say so.
+When done, report a one-line summary with the test count, and confirm all four of
+grouping / auto-merge / PR gate / workflow_dispatch are present.
 
 DEMO BRIEF:
 [paste the filled NEW DEMO BRIEF block here]

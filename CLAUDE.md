@@ -21,12 +21,29 @@ each has a checker that fails when it drifts:
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
 
-A fourth checker guards the sibling demo repos rather than a file derived from
+Two more checkers guard the sibling demo repos rather than a file derived from
 `index.html`:
 
 | Invariant | Checker |
 |---|---|
 | every lab pins exactly one theme, and none ships a toggle | `node tools/theme-sync.js check` |
+| every lab's live site is built from the sha on its `main` | `node tools/deploy-sync.js check` |
+
+`deploy-sync` is the only checker here that needs the network and `gh`; it takes
+about 30 seconds for the whole fleet, so it is not part of the fast loop. **Run it
+after any cross-repo pass, and after anything that touches a workflow.**
+
+It exists because this fleet's real failure mode is not a file disagreeing with
+another file — it is `main` disagreeing with what is actually served, and that
+never turns anything red. On 2026-08-20 nine labs were serving a build older than
+their `main` with every checker green. Four separate bugs produced that, each
+invisible: a merge made with `GITHUB_TOKEN` raises no push event so `deploy.yml`
+never ran; the explicit dispatch that fixed it lacked `actions: write` and 403'd
+into a `|| echo "::warning::"`; the deploy job was gated `== 'push'` which also
+skips `workflow_dispatch`; and in labs where build and deploy are one job, gating
+that job off for pull requests silently disabled the gate itself. A run that is
+`cancelled`, or `success` with its deploy job `skipped`, does not count as shipped
+— those are precisely the shapes that hid all four.
 
 `concept-coverage.md` is the only gap list. Several older analysis files that used to sit in
 this root — `futuredemos.md`, `CARD-AUDIT.md`, `CARD-ACCURACY-FINDINGS.md`,

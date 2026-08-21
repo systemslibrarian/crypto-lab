@@ -75,8 +75,16 @@ function deployingLabs() {
   return out;
 }
 
-async function inspect({ repo }) {
+async function inspect({ repo, workflow }) {
   const dir = path.join(FLEET_ROOT, repo);
+  // `name:` at the top of the deploying workflow is what shows up as run.name.
+  let deployName = null;
+  try {
+    const wf = fs.readFileSync(path.join(dir, '.github', 'workflows', workflow), 'utf8');
+    const m = /^name:\s*(.+)$/m.exec(wf);
+    deployName = m ? m[1].trim().replace(/^['"]|['"]$/g, '') : null;
+  } catch { /* fall through */ }
+  if (!deployName) return { repo, verdict: 'NO-WORKFLOW-NAME' };
   await sh('git', ['fetch', '-q', 'origin'], dir);
   const head = await sh('git', ['rev-parse', 'origin/main'], dir);
   if (!head) return { repo, verdict: 'NO-MAIN' };
@@ -89,7 +97,10 @@ async function inspect({ repo }) {
   try { runs = JSON.parse(raw); } catch { return { repo, verdict: 'API-ERROR' }; }
   // `dynamic` runs are Dependabot's own bookkeeping; they always succeed and
   // carry main's sha, so they look convincing and mean nothing here.
-  const real = runs.filter((r) => r.event !== 'dynamic' && /deploy|pages/i.test(r.name));
+  // Match on the workflow NAME the deploying file declares, not on a guess like
+  // /deploy|pages/. ablation-wire deploys from a workflow called "ci", so the
+  // guess reported it as never-deployed while its runs were green all along.
+  const real = runs.filter((r) => r.event !== 'dynamic' && r.name === deployName);
   const shipped = real.filter((r) => r.status === 'completed' && r.conclusion === 'success');
 
   if (shipped.some((r) => r.headSha === head)) return { repo, verdict: 'CURRENT', head };

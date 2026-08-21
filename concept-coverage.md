@@ -14,8 +14,9 @@ concept-complete against this taxonomy — which is an editorial claim about the
 boundaries, not a statement that cryptography has been exhausted.*
 
 *Version 7 — files the four labs that were built and live but had no card, so no checker
-could see them: KMAC Gate joins §5 (the keyed sponge beside the polynomial MACs), Regex Veil
-joins §37 (the covert-channel form of hiding, against a DPI adversary rather than in pixels),
+could see them: KMAC Gate joins §5 (the keyed sponge beside the polynomial MACs), Regex Veil —
+FTE joins §37 (the covert-channel form of hiding, against a DPI adversary rather than in
+pixels),
 and Token Tell and Context Ward both join §32. Those two extend §32 in different directions:
 Token Tell because a keyed detector's statistical evidence is only as good as possession of
 the key while a signature binds bytes rather than authorship, and Context Ward because every
@@ -360,7 +361,7 @@ Dead Sea Cipher · Enigma Forge · Vigenère Break. (Cipher Museum carries this 
 a sibling project — do not expand here.)
 
 **37. Steganography — `COVERED`**
-Stego Suite · J-UNIWARD · Regex Veil.
+Stego Suite · J-UNIWARD · Regex Veil — FTE.
 
 **38. Blockchain and wallet mechanics — `COVERED`**
 Bitcoin Script · Bitcoin Wallet.

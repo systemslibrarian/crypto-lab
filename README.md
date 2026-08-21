@@ -84,7 +84,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | Few-Time Signatures | Jevil · Hash-Based · Goldilocks Field · Lagrange Interpolation |
 | [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) | Format-Preserving Encryption | FF1 · FF3-1 · AES-256 · Tokenization |
-| [Regex Veil](https://systemslibrarian.github.io/crypto-lab-fte/) | Format-Transforming Encryption | FF1 · DFA Ranking · Cycle Walking · AES-256-CTR |
+| [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) | Format-Transforming Encryption | FF1 · DFA Ranking · Cycle Walking · AES-256-CTR |
 | [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) | Forward-Secret Messaging | Double Ratchet · X25519 · HKDF · AES-256-GCM |
 | [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) | Group Messaging Security | MLS (RFC 9420) · TreeKEM · Epoch Key Schedule · Forward Secrecy |
 | [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) | Hash Collisions | MD5 · SHA-1 · SHAttered · Chosen-Prefix Collision |

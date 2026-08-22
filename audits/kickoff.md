@@ -79,7 +79,8 @@ Hard rules:
   THREAT-MODEL.md, MATH.md and verify.py appeared in ZERO of the ~180 labs and nowhere in the
   template when this was last checked (2026-08-22) — re-check rather than trusting the count. Do not invent a format — land the brief's substance in the structures
   that already exist:
-    NEG-n / negative claims -> assertions in e2e/claims.spec.ts (§4.1b, REQUIRED)
+    NEG-n / negative claims -> assertions in e2e/claims.spec.ts (§4.1d, REQUIRED — the
+                               negative-claim fixture pattern; read it, it is new)
     failure codes           -> exported constants surfaced in the UI, each wired to a
                                claims-suite assertion. §4.1b already requires covering every
                                failure path and that the page names the actual cause.

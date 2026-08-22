@@ -87,8 +87,13 @@ const EXCEPTIONS = { 'crypto-lab-quantum-vault-kpqc': 'light' };
 const NON_DEMO_PAGE = /(^|\/)(404\.html|og-card\.html|.*-harness\.html|quality-gates\.html|logic-smoke\.html)$/;
 
 function labPages() {
-  const skip = new Set(['node_modules', 'dist', '.git', 'playwright-report',
-    'test-results', 'target', 'coverage', 'build', 'original', 'archive', '.tmp-checks']);
+  const skip = new Set(['node_modules', 'dist', 'playwright-report',
+    'test-results', 'target', 'coverage', 'build', 'original', 'archive']);
+  // Any dot-directory is scratch/tooling, never a visitable page. This generalises the
+  // old explicit '.git' and '.tmp-checks' entries: a lab mid-build had a coding agent's
+  // '.scratch/topbar.html' fail the fleet on 2026-08-22. GitHub Pages does not serve
+  // dot-directories, and Vite builds to dist/, so nothing under one can reach a visitor.
+  const isScratchDir = (name) => name.startsWith('.');
   const pages = [];
   for (const repo of fs.readdirSync(FLEET_ROOT).sort()) {
     if (!repo.startsWith('crypto-lab-')) continue;
@@ -99,7 +104,7 @@ function labPages() {
       if (depth > 4) return;
       for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
         if (entry.isDirectory()) {
-          if (!skip.has(entry.name)) walk(path.join(dir, entry.name), depth + 1);
+          if (!skip.has(entry.name) && !isScratchDir(entry.name)) walk(path.join(dir, entry.name), depth + 1);
         } else if (entry.name.endsWith('.html')) {
           const full = path.join(dir, entry.name);
           if (!NON_DEMO_PAGE.test(full.replace(/\\/g, '/'))) found.push(full);

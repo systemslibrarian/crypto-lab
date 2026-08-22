@@ -472,6 +472,43 @@ Rules learned the hard way:
 - Verify the mutation actually APPLIED before trusting a negative result. A `lang` mutation that
   silently no-op'd on `<html lang="en" data-theme="dark">` produced a false "oracle is dead".
 
+### 4.1d Negative claims — test what the cryptography does NOT buy (REQUIRED)
+
+§1 and §2 require every demo to state what it does **not** prove. Nothing tests that, which
+makes it the only honesty rule in this document with no enforcement — in a document that has
+§4.1c specifically to prove tests bite. Prose nothing checks is prose that drifts.
+
+Every lab declares at least one **negative claim**: one sentence naming a security property
+the construction does not provide. Scope it to the construction on the page, never to the
+field. "XTS does not detect modification or rollback" is right; "full-disk encryption does
+not detect modification" is false, and contradicted by dm-integrity and T10 PI.
+
+Each negative claim needs an **evidence fixture**: a reachable state in which every check the
+page performs reports success *and* the named property is violated anyway. The fixture is
+what makes the claim a result rather than a disclaimer.
+
+Assert three things in `e2e/claims.spec.ts`:
+
+1. **Reach the fixture.** Drive the page into that state through the UI.
+2. **Everything is green.** Every verdict the page renders in that state reports success —
+   asserted against the rendered verdicts, not a flag the test sets. If any check fails, the
+   fixture is wrong: it is demonstrating the mechanism working, not its limit.
+3. **The limitation is on screen in that state.** Visible, not in the README, not behind a
+   disclosure the user has to open. Assert the negative-claim text is present and tied to
+   that fixture.
+
+The shape to aim for is a verdict that reads as success and failure at once — `ATTESTED —
+AND COMPROMISED`, `DECRYPTED — AND MODIFIED`. Where the construction has no failure code to
+raise, say so on the page: the absence of a code is the exhibit, and a lab that invents one
+to look thorough has taught the opposite of the lesson.
+
+Per §4.1c the test must bite. Delete the negative-claim text and assertion 3 must fail; break
+a check inside the fixture and assertion 2 must fail. A negative-claim test that survives
+both is decorative.
+
+This goes in the existing claims suite. Do not add a `CLAIMS.yaml`, a `THREAT-MODEL.md`, or a
+second verifier in another language — see §4.1b for why the suite is the enforceable home.
+
 ### 4.2 Author to these rules from the start (exactly what the gate checks)
 
 - **Contrast** ≥ 4.5:1 body text, ≥ 3:1 large text / UI components. Never convey state by **color alone** (icon + text + color).

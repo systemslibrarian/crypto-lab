@@ -36,6 +36,10 @@ NEW DEMO BRIEF
 
 ### Step 2 — Give the AI this kickoff prompt
 
+**If the agent will run inside the lab repo, use `audits/kickoff.md` instead** — it is the
+same standard worded for that case (reads `./brief.md` and the repo name itself, keeps the
+agent out of the shared catalog files, and records why each non-obvious line is there).
+
 Paste this prompt together with the filled brief. (In Claude Code / any agent that can read files, point it at this file — `audits/_MASTER-TEMPLATE.md` in the catalog repo — or copy it into the demo repo; otherwise paste this file's contents above the prompt.)
 
 ```

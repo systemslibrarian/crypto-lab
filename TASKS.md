@@ -4035,6 +4035,62 @@ re-doing.
 
 ---
 
+### 16. Reshape three of the ten new demos before carding them — `TODO`
+
+Blocked until the ten labs finish building (user will say when). Nothing here needs to reach
+their agents mid-build; all three are catalog-side or act-ordering, not rebuilds.
+
+Found 2026-08-22 by reviewing the ten briefs against the 179-card catalog. All three are
+cases where a brief argued from a false premise about the fleet and landed on a weaker demo
+than the true premise supports.
+
+**Masked Core — cut acts 1-2, lead on what Power Trace declined to build.**
+`power-trace/src/ui/ui.ts` Exhibit 6 already ships a countermeasure selector
+(none/hiding/shuffling/masking) running first-order CPA at 4000 traces, with the masking
+branch reading "Each trace splits the intermediate as s XOR m with a fresh random mask m, so
+no single sample correlates with HW(SBox(p XOR k)). First-order CPA finds nothing." That is
+masked-core's acts 1 and 2 verbatim in substance. But the same file says second-order is
+"out of scope by design ... named, not built", and "Masking here is shown to kill first-order
+CPA only; it does not prove second-order security."
+
+So: collapse acts 1-2 into a recap linking to Power Trace Exhibit 6, and make the lab the
+second-order centered-product climax plus the frozen-mask randomness failure. Card it as the
+attack Power Trace names but does not build, and add the forward link from Power Trace, which
+it currently lacks. This also clears the §27 `DEEP` bar ("judge as variants unless they teach
+a new leakage **mechanism**") — first-order exploits single-sample leakage, second-order
+exploits joint leakage across two samples, which is a different mechanism. The brief argued
+instead from "no lab teaches a defense", which is false, and a review pass called the whole
+demo a duplicate on the strength of acts 1-2 without noticing the out-of-scope note.
+
+**Polynomial Forge — its climax act is already carded twice.** SNARK Arena's card copy reads
+"trusted setup ceremonies ... the toxic waste problem" and STARK Tower's reads "FRI polynomial
+commitments". So the powers-of-tau/toxic-waste act and one of its three schemes are already
+in the catalog. Lead on the **degree-bound omission attack** instead — nothing teaches it, and
+the distinction it turns on (evaluation binding stays intact; the protocol's low-degree claim
+is what breaks) is genuinely untaught. Make the coverage argument the brief never made: §18
+Commitment cites exactly one demo (Commit Gate), and concept-coverage.md's own rule is that
+"a concept with one demo is covered, not thoroughly taught."
+
+**Feistel Forge — thesis holds, add the cross-links.** A review pass called the thesis
+("Feistel gets none") false. It is not: Camellia and SM4 sit on **World Ciphers** (a national-
+cipher comparison) and Blowfish on **Bcrypt Forge** (password hashing), so Feistel *ciphers*
+appear but the Feistel *construction* is taught nowhere — no lab steps a round or shows that
+F need not be invertible. Fix is card copy plus a README paragraph: cross-link World Ciphers
+and Bcrypt Forge, and add the LIONESS link Sphinx Mix's brief requested (LIONESS is an
+unbalanced four-round Feistel; Sphinx's payload protection and DES are the same construction
+doing different jobs). Feistel Forge's own brief does not know that request exists.
+
+**Also at correction time:** none of the ten closes a gap — concept-coverage.md v7 says
+"Empty. There are no open gaps." All ten are depth, so card copy should read as deepening,
+not completing. And Rekey Relay / Attribute Gate are the one duplicate-risk pair: same curve,
+same §9, same `public-key` section beside IBE Gate, same escrow subplot, mirror-image
+collusion climaxes. Card them as a declared pair and let only one lead on "collusion".
+
+Full review output: `tasks/wm27nsjft.output` under the session scratch, and the per-agent
+journal at `subagents/workflows/wf_c28150dc-b81/journal.jsonl`.
+
+---
+
 ## Operational notes
 
 - **A gate's own documentation is not evidence the fix landed.** Two failure modes, both cost

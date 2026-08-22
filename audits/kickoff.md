@@ -6,7 +6,9 @@ demo brief from `./brief.md`, so nothing needs editing per repo.
 
 It assumes two files are already in the repo:
 
-- `./brief.md` — the filled demo brief (see `_MASTER-TEMPLATE.md` §"Step 1")
+- `./brief.md` — the filled demo brief (see `_MASTER-TEMPLATE.md` §"Step 1"). Name it exactly
+  that: in the 2026-08-22 batch three arrived as `bief.md`, `brief` and `brief`, while the
+  prompt says to read `./brief.md`.
 - `./CRYPTO-LAB-TEMPLATE.md` — a **local, gitignored** copy of `_MASTER-TEMPLATE.md`
 
 On that second file: it is deliberately untracked. A committed copy of the template
@@ -72,6 +74,24 @@ Hard rules:
   it belongs under. The cards get added to the catalog in one pass afterwards.
 - CRYPTO-LAB-TEMPLATE.md is a local, gitignored working copy. Do not commit it, and do not
   edit it — if it disagrees with ../crypto-lab/audits/_MASTER-TEMPLATE.md, that one wins.
+- Your brief may specify supporting files that are NOT conventions in this fleet. Before
+  creating any new top-level file, verify it exists elsewhere. CLAIMS.yaml, PRIOR-ART.md,
+  THREAT-MODEL.md, MATH.md and verify.py appeared in ZERO of the ~180 labs and nowhere in the
+  template when this was last checked (2026-08-22) — re-check rather than trusting the count. Do not invent a format — land the brief's substance in the structures
+  that already exist:
+    NEG-n / negative claims -> assertions in e2e/claims.spec.ts (§4.1b, REQUIRED)
+    failure codes           -> exported constants surfaced in the UI, each wired to a
+                               claims-suite assertion. §4.1b already requires covering every
+                               failure path and that the page names the actual cause.
+    THREAT-MODEL.md         -> README "What Can Go Wrong" (§5)
+    PRIOR-ART.md            -> README "What It Is" + "Related Demos" (§5)
+    MATH.md                 -> README "What It Is", or an in-page progressive-disclosure
+                               panel where the derivation is genuinely long
+    verify.py               -> a vitest test. This fleet is TypeScript.
+    "Full lab depth"        -> progressive disclosure inside the page, not a mode to gate
+                               content behind
+  The brief's substance wins; its file layout does not. If something truly has no home, say
+  so in your final report rather than creating a file only your lab has.
 
 When done: one-line summary with the test count, confirmation that grouping / auto-merge /
 PR gate / workflow_dispatch are all present, and the catalog data block.
@@ -96,6 +116,14 @@ Every one of these was paid for once already.
 - **Never `--with-deps`** — that apt step wedged 547 CI runs in one afternoon.
 - **Do not touch the catalog** — `index.html`, `concept-coverage.md` and `corpus.json`
   are shared; parallel agents collide on them. Collect card data, apply once.
+- **Supporting files the brief names may not exist** — on 2026-08-22 every one of ten briefs
+  in a new batch was written in a house vocabulary (`CLAIMS.yaml`, `PRIOR-ART.md`,
+  `THREAT-MODEL.md`, `MATH.md`, `verify.py`, "Full lab depth", "NEG-1") that appeared in none
+  of the ~180 labs and nowhere in `_MASTER-TEMPLATE.md`. Ten agents were each about to invent
+  an incompatible format for the same six things. The briefs were not wrong to want them —
+  they are more rigorous than the template on substance — but a convention that lives in one
+  lab is drift, not a convention. The mapping in the prompt keeps the rigour and drops the
+  divergence.
 - **Never weaken a gate** — these labs teach that a claim is measured. A faked green
   corrupts the thing the lab exists to demonstrate. A failing bump left honestly failing
   is a good outcome.

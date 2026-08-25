@@ -45,6 +45,8 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) | Anonymous Credentials | BBS+ · Selective Disclosure · Unlinkability · Range Proof |
 | [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) | Asymmetric Encryption | ECIES P-256 · RSA-OAEP · AES-256-GCM |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | Asynchronous Key Agreement | X3DH · X25519 · HKDF-SHA-256 · Signal Protocol |
+| [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) | Attribute-Based Encryption | FAME CP-ABE · BLS12-381 · Access Policy · Collusion Resistance |
+| [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) | Authenticated Denial | DNSSEC · NSEC3 · RRSIG · Zone Walking |
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | Authenticated Encryption | AEGIS-256 · AES Round Function · 6-State Sponge · Test Vectors |
 | [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) | Authentication Protocol | RFC 4120 · Needham-Schroeder · Lowe Attack · AES-256-CTS |
 | [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) | Backdoored RNG | Dual_EC_DRBG · HMAC-DRBG · ChaCha20-DRBG · P-256 |
@@ -74,6 +76,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | Digital Signatures | ECDSA · secp256k1 · RFC 6979 · Nonce Reuse |
 | [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | Digital Signatures | Ed25519 · EdDSA · Deterministic Nonces · ZIP215 · Cofactor |
 | [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) | Digital Signatures | BIP-340 · secp256k1 · Nonce Reuse · Aggregation |
+| [Sector Vault](https://systemslibrarian.github.io/crypto-lab-sector-vault/) | Disk Encryption | XTS-AES · GF(2^128) · Ciphertext Stealing · AES-GCM |
 | [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) | Distributed Key Generation | Pedersen DKG · GJKR 1999 · Feldman VSS · ristretto255 |
 | [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) | Distributed VRF | DVRF · Chaum-Pedersen DLEQ · ristretto255 · FROST Nonces |
 | [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) | Downgrade Attacks | TLS 1.3 · Transcript Binding · X25519MLKEM768 · Downgrade |
@@ -82,6 +85,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) | Endpoint Compromise | Double Ratchet · X25519 · AES-256-GCM · Endpoint Implant |
 | [E91](https://systemslibrarian.github.io/crypto-lab-e91/) | Entanglement-Based QKD | E91 · Entanglement · CHSH Bell Test · QKD |
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
+| [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) | Feistel Networks | DES · Feistel Network · Meet-in-the-Middle · Sweet32 |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | Few-Time Signatures | Jevil · Hash-Based · Goldilocks Field · Lagrange Interpolation |
 | [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) | Format-Preserving Encryption | FF1 · FF3-1 · AES-256 · Tokenization |
 | [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) | Format-Transforming Encryption | FF1 · DFA Ranking · Cycle Walking · AES-256-CTR |
@@ -130,6 +134,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) | Metadata Privacy | OHTTP · HPKE · Binary HTTP · RFC 9458 |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | Migration Operations | Hybrid X.509 · CNSA 2.0 · Key Rotation · Migration Planner |
 | [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | Migration Planning | Mosca Inequality · CRQC Scenarios · Cost of Delay · PQC Migration |
+| [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) | Mix Networks | Sphinx · ristretto255 · LIONESS · Traffic Analysis |
 | [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) | ML-DSA Internals | ML-DSA · Rejection Sampling · FIPS 204 · Timing Tradeoffs |
 | [Syndrome Drain](https://systemslibrarian.github.io/crypto-lab-syndrome-drain/) | Multi-Instance Degradation | DOOM · BIKE · HQC · Classic McEliece |
 | [MAYO Seal](https://systemslibrarian.github.io/crypto-lab-mayo-seal/) | Multivariate Signatures | MAYO · GF(16) · Whipping · NIST On-Ramp |
@@ -149,6 +154,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) | PKI & Certificates | X.509 · RFC 5280 · ECDSA P-256 · nameConstraints |
 | [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) | PKI & Certificates | X.509 · Certificate Transparency · CA Compromise · ML-DSA |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | Polyalphabetic Cipher | Vigenère · Kasiski Examination · Index of Coincidence · Frequency Analysis |
+| [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) | Polynomial Commitments | KZG · IPA · FRI · Degree Bound |
 | [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) | Post-Quantum | AES-256-GCM · Shamir SSS · SMAUG-T · HAETAE |
 | [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) | Post-Quantum Cryptanalysis | Grover's Algorithm · Amplitude Amplification · Phase Kickback · AES Key Search |
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | Post-Quantum Cryptanalysis | LLL · BKZ · Gram-Schmidt · Toy LWE |
@@ -175,6 +181,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) | Proactive Secret Sharing | Shamir · Feldman VSS · HJKY 1995 · Mobile Adversary |
 | [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) | Proof Forgery | Fiat-Shamir · Schnorr · ristretto255 · NIZK |
 | [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) | Protocol Composition | MAC-then-Encrypt · Encrypt-then-MAC · CRIME · TLS 1.3 |
+| [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) | Proxy Re-Encryption | BBS98 · AFGH · BLS12-381 · Re-Encryption Key |
 | [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) | Public-Key Cryptography | RSA · Key Generation · Modular Exponentiation · OAEP |
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | Public-Key Cryptography | RSA · OAEP · PSS · PKCS#1 |
 | [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) | Public-Key Encryption | ElGamal · RFC 3526 Group 14 · Homomorphism · Re-randomization |
@@ -182,15 +189,18 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Quantum Entropy](https://systemslibrarian.github.io/crypto-lab-quantum-entropy/) | Quantum RNG | QRNG · Min-Entropy · Toeplitz Extractor · SP 800-90B |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | Quantum Threat | HNDL · Mosca's Theorem · Q-Day Timeline · PQC Migration |
 | [Entropy Collapse](https://systemslibrarian.github.io/crypto-lab-entropy-collapse/) | Randomness Failures | HMAC_DRBG · Seed Provenance · VM Cloning · Nonce Reuse |
+| [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | Remote Attestation | TPM 2.0 · TPMS_ATTEST · RATS · Measured Boot |
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | Ring Signatures | LSAG · Key Image · Group Signatures · Monero |
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | Rotor Machine | Enigma · Rotors · Plugboard · Bombe |
 | [Time-Lock Puzzle](https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/) | RSW Time-Lock | RSW · Sequential Squaring · AES-256-GCM · Trapdoor |
 | [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) | Searchable Encryption | SSE · HMAC-SHA-256 · AES-256-GCM · Leakage Abuse |
+| [Masked Core](https://systemslibrarian.github.io/crypto-lab-masked-core/) | Second-Order CPA | Boolean Masking · Second-Order CPA · AES-128 · Centered Product |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |
 | [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party MPC |
 | [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | Secure MPC | Shamir SSS · GF(2⁶¹−1) · Lagrange Interpolation · Additive Homomorphism |
 | [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | Secure Shell Handshake | X25519 · Ed25519 · TOFU · known_hosts |
 | [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) | Signature Canonicalization | Ed25519 · JCS RFC 8785 · Parser Differential · Unicode NFC |
+| [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) | Single-Server PIR | BFV · RLWE · Single-Server PIR · Noise Budget |
 | [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | Stateful Hash-Based Signatures | LMS · HSS · LM-OTS · NIST SP 800-208 |
 | [Phantom Vault](https://systemslibrarian.github.io/crypto-lab-phantom-vault/) | Stateless Passwords | PBKDF2-SHA-256 · HMAC-DRBG · Rejection Sampling |
 | [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) | Steganography | J-UNIWARD · DCT · Wavelet Distortion · Adaptive Embedding |

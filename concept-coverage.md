@@ -27,6 +27,25 @@ were invisible: `concept-sync`, `readme-sync` and `corpus-sync` all reported cle
 because each verifies consistency among carded demos and none can detect a demo that was never
 carded at all.*
 
+*Version 8 — files the ten labs built in the 2026-08 batch, all at once. **None of them
+closes a gap**; the Gap summary was already empty at v7 and stays empty. Every one is depth
+inside a concept that was already `COVERED` or `DEEP`, which is the shape this file predicted
+the catalog would take once the concept space was full — so their card copy reads as
+deepening, not completing. Placements: Shelf Oracle §23, Feistel Forge and Sector Vault §4,
+Rekey Relay and Attribute Gate §9, Polynomial Forge §18, DNSSEC Chain §25, Masked Core §27,
+Sphinx Mix §24, Attestation Gate §26. Two status changes follow: **§9 moves `COVERED` →
+`DEEP`** (five demos, and pairings now carry delegation and access control as well as
+identity), and §18 stays `COVERED` at two demos but is no longer a one-demo concept, which
+this file's own rule says is "covered, not thoroughly taught."*
+
+*Three of the ten were reshaped before carding, because their briefs argued from false
+premises about the fleet — the reasoning is recorded under each concept: Masked Core leads on
+**second-order** CPA (Power Trace already ships first-order masking and names second-order as
+out of scope), Polynomial Forge leads on the **degree-bound omission** (its ceremony act is
+carded on SNARK Arena and FRI on STARK Tower), and Feistel Forge keeps its thesis but gains
+cross-links to World Ciphers and Bcrypt Forge. Rekey Relay and Attribute Gate are filed as a
+**declared pair** with only one of them leading on collusion.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -58,7 +77,7 @@ build it only if you want depth there, not because the suite needs it. If it's `
 | `PARTIAL` | Taught, but an arc is unfinished or a piece is missing. |
 | `GAP` | No demo teaches this concept. |
 
-Catalog basis: the 175 cards in `index.html` as of the v6 catalog pass.
+Catalog basis: the 189 cards in `index.html` as of the v8 catalog pass.
 
 **Checked, not trusted.** Run `node tools/concept-sync.js check`. It verifies this file
 against the catalog in both directions: every demo cited below resolves to a real card, and
@@ -100,9 +119,19 @@ Babel Hash · Hash Zoo · World Hashes · Collision Vault. Construction, compari
 sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
-Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Snow 2 · Format Ward.
-SPN, ARX, sponge, stream, lightweight, and Feistel — the last via format-preserving
-encryption, where the round structure is the whole point (SP 800-38G).
+Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Snow 2 · Format Ward ·
+Feistel Forge · Sector Vault.
+SPN, ARX, sponge, stream, lightweight, and Feistel.
+
+Feistel Forge makes the *construction* the subject rather than a cipher that happens to use
+one. Camellia and SM4 sit on World Ciphers as national ciphers and Blowfish on Bcrypt Forge
+as a password KDF, and Format Ward reaches Feistel through SP 800-38G — so Feistel ciphers
+appeared in three places while nobody stepped a round or showed the property that makes the
+structure work: the round function is evaluated forwards in both directions, so it need not
+be invertible, and DES's is not.
+
+Sector Vault covers the tweakable-mode axis none of the others reach — XTS-AES, the XEX
+sandwich over GF(2^128), and ciphertext stealing.
 
 **5. Message authentication — `COVERED`**
 MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward · KMAC Gate. Polynomial MACs, AEAD, and
@@ -125,8 +154,16 @@ measured against an elliptic-curve alternative.
 **8. Discrete logarithm — `COVERED`**
 Curve Lens · Point Arithmetic · ElGamal Plain · DH MITM · Curve448 · Ed25519 Forge.
 
-**9. Pairings / bilinear maps — `COVERED`**
-Pairing Gate · IBE Gate · Credential Veil.
+**9. Pairings / bilinear maps — `DEEP`**
+Pairing Gate · IBE Gate · Credential Veil · Rekey Relay · Attribute Gate.
+
+Rekey Relay and Attribute Gate are a **declared pair** — same curve, same section, both with
+an escrow subplot — and they are kept distinct by which question each leads on. Attribute
+Gate leads on **collusion resistance**: FAME CP-ABE, two real keys spliced into one, and the
+term that refuses to cancel. Rekey Relay leads on **delegation**: BBS98 against AFGH, where
+the older scheme's re-encryption key is `b·a⁻¹`, so the relay and the delegatee together
+recover the delegator's private key in one modular division. Read either as the other's
+mirror and the point of both is lost.
 
 **10. Lattices (LWE / SIS / NTRU) — `DEEP`**
 Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · Dilithium Seal · Dilithium
@@ -199,7 +236,16 @@ Envelope. The classical → KEM → hybrid arc is complete.
 OPAQUE Gate · PAKE Gate · SPAKE Gate.
 
 **18. Commitment — `COVERED`**
-Commit Gate.
+Commit Gate · Polynomial Forge.
+
+Commit Gate teaches binding and hiding on scalars. Polynomial Forge commits to a *function*
+— KZG, IPA and FRI over the same polynomial — which is the form every modern proof system
+actually uses, and it is why swapping the commitment scheme yields a different proof system
+with the same logic. Its distinctive failure is the **degree-bound omission**: evaluation
+binding stays intact and every cryptographic check passes, while the low-degree claim the
+protocol rests on is simply not being made. Note the overlap boundary — the powers-of-tau
+ceremony is already carded on SNARK Arena ("trusted setup ceremonies … the toxic waste
+problem") and FRI on STARK Tower, so those are depth here, not the lead.
 
 **19. Secret sharing and distributed trust — `DEEP`**
 Shamir Gate · VSS Gate · DKG Gate · Reshare Circle · FROST Threshold · GG20 Wallet ·
@@ -235,7 +281,14 @@ additive.
 
 **23. Obliviousness — access-pattern and metadata privacy — `COVERED`**
 ORAM Vault · Oblivious Shelf · Patron Shield · PSI Gate · Blind Relay · Blind Hello ·
-DP Noise · Search Vault.
+DP Noise · Search Vault · Shelf Oracle.
+
+Shelf Oracle completes the PIR axis. Oblivious Shelf and Patron Shield are
+information-theoretic and buy that guarantee with a second server that must never collude;
+Shelf Oracle removes the second server and pays in the other currency — RLWE, a
+*computational* assumption, and a noise budget that visibly falls as the server folds in
+every record because it cannot tell which one was asked for. The two-server and one-server
+columns run over the same shelf, so the trade is measured rather than described.
 
 DP Noise closes what was the largest hole in the map. Every other privacy demo hides a
 *message, identity, relationship, or access pattern*; differential privacy is the only
@@ -269,11 +322,24 @@ concept in the right place without invalidating every one of those references. P
 renumbering whenever a concept is added mid-list.
 
 **24. Anonymity and unlinkability — `COVERED`**
-Ring Sign · Blind Sign · Credential Veil · Traitor Trace.
+Ring Sign · Blind Sign · Credential Veil · Traitor Trace · Sphinx Mix.
+
+Sphinx Mix adds the network layer the other four do not touch: they unlink a *signature* or a
+*credential* from its holder, while Sphinx unlinks a *packet* from its sender across three
+hops. It also carries the distinction that most explanations of anonymity systems blur —
+bitwise unlinkability is a property of the packet format, anonymity is a property of the
+traffic, and the first does not produce the second. One sender on a quiet network is traced
+end to end with every cryptographic check green.
 
 **25. Trust distribution and transparency — `COVERED`**
 PKI Chain · Chain of Trust · Web of Trust · Key Mirror · Merkle Vault · Merkle Proofs ·
-Accumulator.
+Accumulator · DNSSEC Chain.
+
+DNSSEC Chain adds the second trust hierarchy — one that shares no keys, no CAs and no
+revocation machinery with the X.509 world the other PKI demos teach — and the mechanism that
+makes it unlike any other: it has to sign statements about names that **do not exist**. The
+denial proofs are the lesson, because NSEC hands an enumerator the whole zone and NSEC3 only
+raises the price of the dictionary.
 Accumulator closes the gap this section carried through v4: dynamic add/remove against a
 constant-size digest, and non-membership proofs, which authenticated trees answer only by
 sorting the set and exhibiting two neighbours. It measures itself against a real RFC 6962
@@ -281,7 +347,13 @@ tree rather than asserting the difference, and it demonstrates the cost — a tr
 whose failure it lets you perform.
 
 **26. Identity and authentication — `COVERED`**
-WebAuthn · Kerberos v5 · JWT Forge · Time Trust.
+WebAuthn · Kerberos v5 · JWT Forge · Time Trust · Attestation Gate.
+
+The first four authenticate a *person* or a *claim*. Attestation Gate authenticates a
+*platform state* — measured boot into PCRs, a real TPMS_ATTEST quote, RATS roles and an EAT
+— and then spends its climax on the limit of that guarantee, which belongs as much to §32:
+execute something outside the measured set after the final boot measurement and every check
+still passes. A boot quote proves what was measured, not what is running.
 
 ---
 
@@ -289,8 +361,17 @@ WebAuthn · Kerberos v5 · JWT Forge · Time Trust.
 
 **27. Side channels — timing, power, fault — `DEEP`**
 Timing Oracle · Timing Side-Channel · Power Trace · KyberSlash · HQC Timing · HQC Timing
-Break · Lattice Fault · Ciphertext Mirror · Broken Trust. Saturated; new side-channel
-papers should be judged as *variants* unless they teach a new leakage **mechanism**.
+Break · Lattice Fault · Ciphertext Mirror · Broken Trust · Masked Core. Saturated; new
+side-channel papers should be judged as *variants* unless they teach a new leakage
+**mechanism**.
+
+Masked Core clears that bar rather than sitting beside Power Trace. First-order CPA exploits
+leakage in a **single** sample; second-order exploits **joint** leakage across two, combined
+by a centred product — a different mechanism, not a stronger version of the same one. It is
+also the only demo here that makes the *countermeasure* the object under measurement.
+Power Trace already ships first-order masking in its Exhibit 6 countermeasure selector and
+names second-order as out of scope by design, so this lab starts where that one stops; the
+two cross-link.
 
 **28. Nonce and randomness misuse — `COVERED`**
 Nonce Collision · Nonce Guard · Nonce Lattice · Entropy Collapse · ECDSA Forge · Schnorr
@@ -298,10 +379,16 @@ Forge.
 
 **29. Composition and parsing failures — `COVERED`**
 Protocol Compose · Signed Bytes · Salamander · KEM Trap · JWT Forge · Padding Oracle ·
-Ablation Wire. The first six break a composition; Ablation Wire inverts the question and asks
-which layer was carrying the guarantee all along — switch one off and watch what an adversary
-recovers. It also separates hybrid-PQ confidentiality from authentication, which is the
-distinction a single "PQ" badge hides.
+Ablation Wire · Sector Vault. The first six break a composition; Ablation Wire inverts the
+question and asks which layer was carrying the guarantee all along — switch one off and watch
+what an adversary recovers. It also separates hybrid-PQ confidentiality from authentication,
+which is the distinction a single "PQ" badge hides.
+
+Sector Vault is the same inversion against a mode that is behaving exactly as specified. XTS
+-AES has no integrity to offer, so a bit flip, a block copy and a sector rollback all return
+plaintext and raise nothing — and then real AES-GCM is switched on and stops two of those
+three, with the third needing a monotonic version bound as associated data. The absent
+guarantee is the lesson; the mode is not broken.
 
 **30. Classical cryptanalytic technique — `COVERED`**
 Biham Lens (differential) · Matsui Line (linear) · Vigenère Break · Collision Vault ·

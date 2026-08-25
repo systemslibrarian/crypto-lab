@@ -4363,6 +4363,156 @@
             </div>
           </a>
 
+
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-shelf-oracle/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Single-Server PIR</div>
+            <div class="project-title">Shelf Oracle</div>
+            <div class="project-copy">Classic PIR needs two servers that never collude. This needs one, under RLWE. Watch the noise budget fall as the server folds in every record — it cannot see which one you asked for.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">BFV</span>
+                <span class="chip">RLWE</span>
+                <span class="chip">Single-Server PIR</span>
+                <span class="chip">Noise Budget</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-feistel-forge/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Feistel Networks</div>
+            <div class="project-title">Feistel Forge</div>
+            <div class="project-copy">Real DES stepped round by round, where the round function need not be invertible — and DES&#39;s is not. Then double DES falls to meet-in-the-middle, and a 64-bit block collides at the birthday bound.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">DES</span>
+                <span class="chip">Feistel Network</span>
+                <span class="chip">Meet-in-the-Middle</span>
+                <span class="chip">Sweet32</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-rekey-relay/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Proxy Re-Encryption</div>
+            <div class="project-title">Rekey Relay</div>
+            <div class="project-copy">A semi-trusted relay turns Alice&#39;s ciphertext into Bob&#39;s without ever holding the plaintext. In BBS98, the scheme everyone starts with, the relay and Bob recover Alice&#39;s private key in one modular division.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">BBS98</span>
+                <span class="chip">AFGH</span>
+                <span class="chip">BLS12-381</span>
+                <span class="chip">Re-Encryption Key</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-polynomial-forge/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Polynomial Commitments</div>
+            <div class="project-title">Polynomial Forge</div>
+            <div class="project-copy">One polynomial committed three ways — KZG, IPA, FRI — then the failure nothing else teaches: omit the degree bound and every cryptographic check still passes while the low-degree claim is gone.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">KZG</span>
+                <span class="chip">IPA</span>
+                <span class="chip">FRI</span>
+                <span class="chip">Degree Bound</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-dnssec-chain/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Authenticated Denial</div>
+            <div class="project-title">DNSSEC Chain</div>
+            <div class="project-copy">The PKI that has to sign statements about names which do not exist. Validate a real captured chain from the IANA anchor, then walk an NSEC3 zone the denial proofs gave away.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">DNSSEC</span>
+                <span class="chip">NSEC3</span>
+                <span class="chip">RRSIG</span>
+                <span class="chip">Zone Walking</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-masked-core/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Second-Order CPA</div>
+            <div class="project-title">Masked Core</div>
+            <div class="project-copy">First-order Boolean masking flattens the CPA that Power Trace runs — so combine two samples instead of one and the key byte comes back. Masking is a price, not a wall, and this measures it.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Boolean Masking</span>
+                <span class="chip">Second-Order CPA</span>
+                <span class="chip">AES-128</span>
+                <span class="chip">Centered Product</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sector-vault/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Disk Encryption</div>
+            <div class="project-title">Sector Vault</div>
+            <div class="project-copy">XTS-AES is what full-disk encryption actually uses. Flip a bit, copy a block, restore yesterday&#39;s sector — every read returns plaintext and raises nothing, because the mode has nothing to raise it with.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">XTS-AES</span>
+                <span class="chip">GF(2^128)</span>
+                <span class="chip">Ciphertext Stealing</span>
+                <span class="chip">AES-GCM</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-attribute-gate/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Attribute-Based Encryption</div>
+            <div class="project-title">Attribute Gate</div>
+            <div class="project-copy">Encrypt to a policy instead of to a person. Then splice two real keys whose attributes only jointly satisfy that policy, run the genuine decryption, and watch the term that refuses to cancel.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">FAME CP-ABE</span>
+                <span class="chip">BLS12-381</span>
+                <span class="chip">Access Policy</span>
+                <span class="chip">Collusion Resistance</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-sphinx-mix/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Mix Networks</div>
+            <div class="project-title">Sphinx Mix</div>
+            <div class="project-copy">Peel a real Sphinx packet across three mixes — per-hop blinding, a header that never changes length. Then trace one sender end to end on a quiet network with every cryptographic check green.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Sphinx</span>
+                <span class="chip">ristretto255</span>
+                <span class="chip">LIONESS</span>
+                <span class="chip">Traffic Analysis</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-attestation-gate/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Remote Attestation</div>
+            <div class="project-title">Attestation Gate</div>
+            <div class="project-copy">Measured boot into PCRs, a real TPMS_ATTEST quote, a verifier with reference values — then run something outside the measured set after the last measurement and watch every check pass.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">TPM 2.0</span>
+                <span class="chip">TPMS_ATTEST</span>
+                <span class="chip">RATS</span>
+                <span class="chip">Measured Boot</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
         </div>
       </div>
     </section>
@@ -4606,7 +4756,13 @@
       'Encrochat': 'cryptanalysis', 'Icy DVRF': 'privacy',
       'MuSig Gate': 'privacy', 'Ablation Wire': 'cryptanalysis',
       'KMAC Gate': 'foundations', 'Token Tell': 'public-key',
-      'Context Ward': 'cryptanalysis', 'Regex Veil — FTE': 'historical'
+      'Context Ward': 'cryptanalysis', 'Regex Veil — FTE': 'historical',
+      'Shelf Oracle': 'privacy', 'Sphinx Mix': 'privacy',
+      'Polynomial Forge': 'privacy',
+      'Feistel Forge': 'symmetric', 'Sector Vault': 'symmetric',
+      'Rekey Relay': 'public-key', 'Attribute Gate': 'public-key',
+      'DNSSEC Chain': 'key-exchange', 'Attestation Gate': 'key-exchange',
+      'Masked Core': 'cryptanalysis'
     };
 
     var FOUNDATIONS_TITLES = [
@@ -4615,14 +4771,15 @@
       'Merkle Vault','Commit Gate','Shamir Gate','VRF Gate','Curve Lens',
       'Accumulator',
       'Pairing Gate','OTP Vault','VDF','HPKE Envelope','Quantum Entropy',
-      'Lattice Gentle','KMAC Gate'
+      'Lattice Gentle','KMAC Gate','Feistel Forge','Polynomial Forge'
     ];
     var REAL_WORLD_TITLES = [
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',
       'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
       'WebAuthn','Web of Trust','SSH Handshake','Bitcoin Wallet',
       'Bitcoin Script','TLS Handshake','Blind Hello','Blind Relay',
-      'Key Mirror','SPAKE Gate','Encrochat','Beacon Lock','Token Tell'
+      'Key Mirror','SPAKE Gate','Encrochat','Beacon Lock','Token Tell',
+      'DNSSEC Chain','Attestation Gate'
     ];
     var TITLE_TO_EXTRA_CATS = {};
     FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });

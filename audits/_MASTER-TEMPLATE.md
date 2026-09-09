@@ -728,15 +728,37 @@ not one, so fix it with a per-test timeout carrying the measurement, never by
 shrinking what the test does.
 
 **And the reciprocal, for labs on `node --test`:** it has no default timeout at
-all — `--test-timeout` defaults to `Infinity`. So where vitest 2 *could not*
-enforce a budget and vitest 4 *can*, a `node --test` lab never had one. A hung
-test does not fail at five seconds; it runs until the GitHub Actions job limit,
-with nothing red for six hours. The tell is a job that looks **stuck** rather than
-a failure with a suspicious duration, which is the harder signal to read — a stuck
-job invites a re-run rather than an investigation. Pass `--test-timeout` in the
-script. Four labs were found running `node --test` with no timeout; all four now
-carry `--test-timeout=60000`, far above their measured suite times and far below
-anything mistakable for progress.
+all — `--test-timeout` defaults to `Infinity`, so a hung test runs until the
+GitHub Actions job limit with nothing red for six hours. The tell is a job that
+looks **stuck** rather than a failure with a suspicious duration, which is the
+harder signal to read: a stuck job invites a re-run rather than an investigation.
+
+Pass `--test-timeout` — but know exactly what it buys, because it is **less than
+it looks**. It only fires for a test that yields to the macrotask queue. Measured
+directly, under a 100ms budget:
+
+| test shape | caught? | measured |
+|---|---|---|
+| synchronous busy-loop | **no** | ran 2000ms, reported `ok` |
+| `async`, awaits a real `setTimeout` | yes | failed at 102ms |
+| `async`, awaits only already-resolved promises | **no** | ran 2000ms, reported `ok` |
+
+So `node --test --test-timeout` is *vitest 2's* mechanism, not vitest 4's: it
+races a timer that a non-yielding test never lets run — and the third row is the
+starvation shape described above, exactly. Keep the flag, because it does cover
+real async hangs (a `fetch`, a timer, I/O), and say in the CI file what it does
+not cover.
+
+**Prove it with a synchronous busy-loop, never with a small `--test-timeout`.**
+Running a suite at `--test-timeout=1` fails every test that yields at all, which
+looks like proof and is not: it reports the same result for a suite the flag
+protects and one it does not. That distinction matters more than the flag, because
+a check that closes the question while measuring nothing is worse than no check.
+
+**The backstop that catches every shape is `timeout-minutes` on the job.** GitHub's
+default is 360 minutes, which is where the six hours comes from. Set it per job at
+several times the measured run — the labs audited here run 35–132s, so 15 is
+generous. Only 6 of 194 labs set it at all.
 
 **Two adaptations for labs with no dependencies.** A lab with a bare `package.json`
 and no lockfile cannot run `npm ci` or `cache: npm`; both fail the run outright, so

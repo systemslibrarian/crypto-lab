@@ -691,6 +691,29 @@ repos were found drifting this way. The merge step must therefore dispatch the
 deploy explicitly — a `workflow_dispatch` through the API is not suppressed —
 which is why `workflow_dispatch:` is required in the trigger block above.
 
+**Dispatch the file this lab actually has.** The dispatch line names a workflow
+file, and the fleet is not consistent about that name: most labs have
+`deploy.yml`, some have `deploy-pages.yml`. Copy a reference lab verbatim and you
+get `gh workflow run deploy.yml` in a repo where that file does not exist. It 404s
+**only on the auto-merge path, and only after the merge has already landed** — the
+push-triggered deploy keeps working, so the lab looks healthy until a Dependabot PR
+merges and the site quietly stops updating. That is the same silent non-deploy this
+whole section exists to prevent, reintroduced by the fix for it. Check the filename
+after copying.
+
+**Gate the deploy on `!= 'pull_request'`, never on `== 'push'`.** They read as
+equivalent and are not: `== 'push'` also skips `workflow_dispatch`, which disables
+the dispatch above. And if build and deploy are one job, split them before gating —
+gating the single job off for pull requests disables the PR gate itself, so the PR
+runs nothing and reports nothing.
+
+**Two adaptations for labs with no dependencies.** A lab with a bare `package.json`
+and no lockfile cannot run `npm ci` or `cache: npm`; both fail the run outright, so
+use `npm install` or drop the step. Keep the npm Dependabot block anyway even while
+it is dormant: the group name is the contract, and it should already be right on the
+day someone adds a first dependency. In those labs `github-actions` is the ecosystem
+that actually opens PRs.
+
 ---
 
 ## Pipeline for a new demo
@@ -705,8 +728,11 @@ which is why `workflow_dispatch:` is required in the trigger block above.
    is how a lab starts opening one pull request per dependency, forever.
 7. Add the catalog card (title, tags, accent) to the `crypto-lab` index; deploy and verify the live URL.
 8. Run the catalog's checkers from `crypto-lab/`: `node tools/readme-sync.js check`,
-   `node tools/corpus-sync.js check`, `node tools/concept-sync.js check`, and
-   `node tools/theme-sync.js check`. The last one reads **every** page in the new lab, not
+   `node tools/corpus-sync.js check`, `node tools/concept-sync.js check`,
+   `node tools/theme-sync.js check`, and — because step 7 is the one most often
+   skipped — `node tools/fleet-sync.js check`, which asks GitHub whether any live lab
+   has no card. The other four all read the cards, so a lab that never got one is
+   invisible to every one of them at once. The last one reads **every** page in the new lab, not
    just its root `index.html` — a sub-page that boots from `localStorage` or
    `prefers-color-scheme` instead of pinning a literal will fail it, which is exactly the
    defect it was widened to catch.

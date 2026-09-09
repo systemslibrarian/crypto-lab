@@ -4513,6 +4513,66 @@
               <span class="arrow">→</span>
             </div>
           </a>
+
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ggh-trapdoor/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Post-Quantum Cryptanalysis</div>
+            <div class="project-title">GGH Trapdoor</div>
+            <div class="project-copy">A lattice trapdoor is just a good basis: one lattice, two bases, and only the short one decrypts. Then two attacks read the secret off the shape of GGH&#39;s own randomness.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">GGH</span>
+                <span class="chip">Babai Round-Off</span>
+                <span class="chip">LLL</span>
+                <span class="chip">Nguyen-Regev</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-factor-forge/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Integer Factorization</div>
+            <div class="project-title">Factor Forge</div>
+            <div class="project-copy">Seven classical factoring methods on a real BigInt N, each waiting for a different mistake in key generation. Obey every RSA rule and rho and ECM still finish; only size stops them.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Pollard Rho</span>
+                <span class="chip">Lenstra ECM</span>
+                <span class="chip">Quadratic Sieve</span>
+                <span class="chip">Fermat</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+<a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-builder/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Shortest Vector Problem</div>
+            <div class="project-title">Lattice Builder</div>
+            <div class="project-copy">Two dials straighten a scrambled lattice until its shortest vector is readable by eye. Then guess seven of a real Module-LWE key&#39;s eight coefficients and the error left over is no smaller than guessing none.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SVP</span>
+                <span class="chip">Module-LWE</span>
+                <span class="chip">ML-KEM (FIPS 203)</span>
+                <span class="chip">Babai Rounding</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="STEGANOGRAPHY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-covert-channel-studio/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Covert Channels</div>
+            <div class="project-title">Covert Channel Studio</div>
+            <div class="project-copy">The same bits moved eleven ways — DNS labels, ICMP echoes, inter-arrival gaps, packet order, cache lines — each scored by a cited detector. Then a warden closes several channels while their anomaly score falls, leaving no record.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Storage &amp; Timing</span>
+                <span class="chip">Protocol Hopping</span>
+                <span class="chip">Flush+Reload</span>
+                <span class="chip">Active Warden</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
         </div>
       </div>
     </section>
@@ -4762,7 +4822,9 @@
       'Feistel Forge': 'symmetric', 'Sector Vault': 'symmetric',
       'Rekey Relay': 'public-key', 'Attribute Gate': 'public-key',
       'DNSSEC Chain': 'key-exchange', 'Attestation Gate': 'key-exchange',
-      'Masked Core': 'cryptanalysis'
+      'Masked Core': 'cryptanalysis',
+      'GGH Trapdoor': 'cryptanalysis', 'Factor Forge': 'cryptanalysis',
+      'Lattice Builder': 'post-quantum', 'Covert Channel Studio': 'historical'
     };
 
     var FOUNDATIONS_TITLES = [

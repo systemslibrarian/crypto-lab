@@ -65,6 +65,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) | Composite Signatures | Ed25519 · ML-DSA-65 · Composite Signatures · IETF LAMPS |
 | [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) | Content Provenance | SynthID-Text · Tournament Sampling · ECDSA P-256 · C2PA Manifest |
 | [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) | Context Injection | SHA-256 Chain · HMAC-SHA-256 · HKDF · Ed25519 |
+| [Covert Channel Studio](https://systemslibrarian.github.io/crypto-lab-covert-channel-studio/) | Covert Channels | Storage & Timing · Protocol Hopping · Flush+Reload · Active Warden |
 | [Model Breach](https://systemslibrarian.github.io/crypto-lab-model-breach/) | Cryptanalysis | Threat Modeling · Candidate Enumeration · MITM Recovery · Guess-and-Determine |
 | [Accumulator](https://systemslibrarian.github.io/crypto-lab-accumulator/) | Cryptographic Accumulators | RSA Accumulator · Non-Membership Proofs · Strong RSA · Certificate Revocation |
 | [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) | CSPRNG | HMAC_DRBG · CTR_DRBG · Hash_DRBG · NIST SP 800-90A |
@@ -109,6 +110,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) | Hybrid Key Exchange & Signatures | X25519 · ML-KEM-768 · Ed25519 · ML-DSA-65 |
 | [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) | Hybrid PQC | KEM Combiner · X25519 · ML-KEM-768 · X-Wing |
 | [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) | Identity-Based Encryption | Boneh-Franklin · BLS12-381 · Identity-Based Encryption · Key Escrow |
+| [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) | Integer Factorization | Pollard Rho · Lenstra ECM · Quadratic Sieve · Fermat |
 | [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) | IT-PIR | XOR PIR · Chor et al. 1995 · 2-Server PIR · Privacy Audit |
 | [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) | KDF Benchmarks | HKDF · PBKDF2 · scrypt · Argon2id |
 | [KEM Trap](https://systemslibrarian.github.io/crypto-lab-kem-trap/) | KEM Misuse | ML-KEM-768 · FIPS 203 · FO Transform · Implicit Rejection |
@@ -156,6 +158,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | Polyalphabetic Cipher | Vigenère · Kasiski Examination · Index of Coincidence · Frequency Analysis |
 | [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) | Polynomial Commitments | KZG · IPA · FRI · Degree Bound |
 | [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) | Post-Quantum | AES-256-GCM · Shamir SSS · SMAUG-T · HAETAE |
+| [GGH Trapdoor](https://systemslibrarian.github.io/crypto-lab-ggh-trapdoor/) | Post-Quantum Cryptanalysis | GGH · Babai Round-Off · LLL · Nguyen-Regev |
 | [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) | Post-Quantum Cryptanalysis | Grover's Algorithm · Amplitude Amplification · Phase Kickback · AES Key Search |
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | Post-Quantum Cryptanalysis | LLL · BKZ · Gram-Schmidt · Toy LWE |
 | [Shor](https://systemslibrarian.github.io/crypto-lab-shor/) | Post-Quantum Cryptanalysis | Shor's Algorithm · Period Finding · QFT · RSA Factorization |
@@ -199,6 +202,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party MPC |
 | [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | Secure MPC | Shamir SSS · GF(2⁶¹−1) · Lagrange Interpolation · Additive Homomorphism |
 | [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | Secure Shell Handshake | X25519 · Ed25519 · TOFU · known_hosts |
+| [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/) | Shortest Vector Problem | SVP · Module-LWE · ML-KEM (FIPS 203) · Babai Rounding |
 | [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) | Signature Canonicalization | Ed25519 · JCS RFC 8785 · Parser Differential · Unicode NFC |
 | [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) | Single-Server PIR | BFV · RLWE · Single-Server PIR · Noise Budget |
 | [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | Stateful Hash-Based Signatures | LMS · HSS · LM-OTS · NIST SP 800-208 |

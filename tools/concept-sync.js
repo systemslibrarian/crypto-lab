@@ -114,7 +114,11 @@ function parseGaps(md) {
 }
 
 function version(md) {
-  const v = /^\*Version (\S+?)\s/m.exec(md);
+  // The file accumulates one note per revision, oldest first, so the CURRENT
+  // version is the LAST match — not the first. Reading the first silently
+  // reported v6 from v7 onward.
+  const all = [...md.matchAll(/^\*Version (\S+?)\s/gm)];
+  const v = all.length ? all[all.length - 1] : null;
   return v ? 'v' + v[1] : 'unversioned';
 }
 

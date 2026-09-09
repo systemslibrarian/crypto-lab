@@ -46,6 +46,40 @@ carded on SNARK Arena and FRI on STARK Tower), and Feistel Forge keeps its thesi
 cross-links to World Ciphers and Bcrypt Forge. Rekey Relay and Attribute Gate are filed as a
 **declared pair** with only one of them leading on collusion.*
 
+*Version 9 — files the four labs in the 2026-09 catalog pass, two of them built and live but
+never carded until now. **None closes a gap**; the Gap summary was empty at v6 and stays empty.
+Placements: **GGH Trapdoor** §10, **Factor Forge** §7, **Lattice Builder** §10 and **Covert
+Channel Studio** §37. **No status changes anywhere** — §10 was already `DEEP`, and §7 and §37
+each stay `COVERED` at four demos for reasons recorded under them.*
+
+*GGH Trapdoor and Factor Forge are the same shape as each other — a hardness assumption
+examined from the attack side rather than the scheme side. GGH Trapdoor is the only demo in
+§10 where the lattice scheme is broken, and broken by the shape of its own randomness rather
+than by lattice hardness, which is the argument Falcon's sampler and ML-KEM's centered
+binomial exist to answer. Factor Forge is the first demo in §7 to attack the modulus rather
+than the scheme — its other three teach the trapdoor, the padding, and an elliptic-curve
+comparison — so it finishes an arc rather than repeating one, and it is not promoted to `DEEP`
+because the factoring side is not covered several times over: the number field sieve is a
+labelled cost formula on that page, not an implementation. Both lead on a negative result,
+which is why neither reads as a completion. GGH Trapdoor opens by showing that plain LLL on
+the public basis already recovers a good basis at its own dimensions, and Factor Forge's
+thesis is that obeying every key-generation rule removes the methods that need an accidental
+structural weakness without making `N` hard.*
+
+*Lattice Builder is a third negative result and the most unusual of them: it is the only demo
+in §10 staged to show the assumption **holding**, by letting the learner discover that seven
+correct coefficients out of eight leave a residual no smaller than zero correct ones. Filing
+it in §10 rather than under §35 is deliberate — its category is post-quantum but its concept
+is the lattice problem, and nothing in it is about migration. Covert Channel Studio is the one
+placement in this pass that required a judgment rather than a lookup. It sits in §37, on the
+precedent v7 set when it filed Regex Veil — FTE there as the covert-channel form of hiding;
+the concept's operative content is hiding that a message exists, whatever the carrier, which
+is broader than the word "Steganography" in its title. **That title is now the live boundary
+question in this map** — widen it to name covert channels, or split them out as §37b on the
+§23b precedent. Recorded under the concept rather than acted on, because renaming a concept
+is a boundary move and those are not made from inside a filing pass. §27 and §32 were
+considered for it and declined, with the reasoning kept there so it is not relitigated.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -77,7 +111,7 @@ build it only if you want depth there, not because the suite needs it. If it's `
 | `PARTIAL` | Taught, but an arc is unfinished or a piece is missing. |
 | `GAP` | No demo teaches this concept. |
 
-Catalog basis: the 189 cards in `index.html` as of the v8 catalog pass.
+Catalog basis: the 193 cards in `index.html` as of the v9 catalog pass.
 
 **Checked, not trusted.** Run `node tools/concept-sync.js check`. It verifies this file
 against the catalog in both directions: every demo cited below resolves to a real card, and
@@ -148,8 +182,27 @@ KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault.
 ## II. Hardness assumptions (the trapdoor families)
 
 **7. Factoring — `COVERED`**
-Educational RSA · RSA Forge · Iron Letter. Trapdoor, padding (OAEP/PSS), and RSA-OAEP
-measured against an elliptic-curve alternative.
+Educational RSA · RSA Forge · Iron Letter · Factor Forge. Trapdoor, padding (OAEP/PSS), and
+RSA-OAEP measured against an elliptic-curve alternative.
+
+Factor Forge is the first demo here to attack the assumption instead of the scheme. Seven
+real algorithms over a BigInt `N` — trial division, Fermat, Pollard rho (Brent), Pollard
+p−1, Williams p+1, Lenstra ECM and the quadratic sieve — each keyed to the key-generation
+rule that closes it, with a verifier that imports no algorithm module and multiplies every
+claimed factor back before a result is shown. That turns RSA keygen from a list of
+requirements into a list of doors, and it makes the useful fact visible: ECM's cost tracks
+the *smallest factor*, not the size of `N`.
+
+Its lead is a negative claim rather than a break, and the distinction it draws is the part
+worth keeping. Obeying every rule removes the methods that need an accidental structural
+weakness — a small factor, a narrow `|p − q|`, a smooth `p ± 1` — and the modulus still falls
+to rho and ECM at teaching sizes, because only size defeats those. The sieves are the
+exception that sets up §33: the quadratic sieve needs no accidental weakness either, which is
+why the only rule that touches it is "make `N` bigger". Shor shares that and nothing else —
+the multiplicative order of `a` mod `N` is a property *every* modulus has, so there is nothing
+to generate your way out of, and unlike the sieves the cost stays polynomial. The page
+cross-links Shor rather than simulating it, and the number field sieve appears only as the
+`L_N[1/3, 1.923]` cost formula, labelled as a formula.
 
 **8. Discrete logarithm — `COVERED`**
 Curve Lens · Point Arithmetic · ElGamal Plain · DH MITM · Curve448 · Ed25519 Forge.
@@ -166,9 +219,51 @@ recover the delegator's private key in one modular division. Read either as the 
 mirror and the point of both is lost.
 
 **10. Lattices (LWE / SIS / NTRU) — `DEEP`**
-Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · Dilithium Seal · Dilithium
-Reject · Falcon Seal · HAWK · LLL Break · LWE Hints · Quantum Vault KpqC · Lattice Gentle.
-Lattice Gentle is the entry point — SVP/CVP and LLL by hand before any named scheme appears.
+Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · GGH Trapdoor · Dilithium Seal ·
+Dilithium Reject · Falcon Seal · HAWK · LLL Break · LWE Hints · Quantum Vault KpqC ·
+Lattice Gentle · Lattice Builder.
+Lattice Gentle is the entry point by hand — SVP/CVP and LLL worked through before any named
+scheme appears — and Lattice Builder is the entry point by eye, two dials straightening a
+scrambled field until the shortest vector is readable.
+
+Lattice Builder earns a second citation beside Kyber Vault rather than duplicating it, on the
+strength of one exercise: it is the only demo in this section staged to show the assumption
+**holding**. On a hand-sized Module-LWE instance (n=4, k=2, q=29, 6,561 possible keys) the
+learner guesses `s` and watches `t − A·s`; getting seven of eight coefficients right leaves a
+residual no smaller than getting none right — 13.4 against 13.0, against 1.0 for the true key.
+There is no gradient to descend, which is *why* exhaustive search is the only method and why
+the difficulty scales as it does. Every other lattice demo here either builds a scheme or
+breaks one; this one makes the absence of a shortcut something you can fail to find. Its
+ML-KEM is real rather than an analogy — FIPS 203 from scratch including its own Keccak,
+because Web Crypto has no SHAKE, checked against all 54 NIST ACVP vectors across
+ML-KEM-512/768/1024 — and the page is explicit that the board is SVP while ML-KEM rests on
+Module-LWE, cousins rather than the same problem.
+
+Read Lattice Builder's expert mode and GGH Trapdoor together: both stage one lattice under two
+descriptions and run Babai rounding through each (400/400 under the short basis against
+134/400 under the long one, in Lattice Builder's measurement). Lattice Builder stops at the
+observation; GGH Trapdoor is that observation built into a cryptosystem, and then broken.
+
+GGH Trapdoor is the only lattice scheme in the catalog that is dead, and it is filed here for
+what its death teaches rather than as another construction. It makes the trapdoor itself the
+subject: two bases for the *identical* lattice — proved identical in exact integer arithmetic,
+not asserted — where Babai round-off decrypts under the short one and fails under the long
+one, so "trapdoor" resolves to a measurable property, orthogonality defect, instead of a
+metaphor. Micciancio's HNF public key (CaLC 2001) sits alongside it, with the honest measured
+saving of 1.1–1.3× rather than the asymptotic factor of `n`.
+
+The two breaks are why it belongs beside Falcon Seal and Kyber Vault rather than only beside
+NTRU Classic. Neither solves a hard lattice problem: Nguyen's mod-2σ reduction (CRYPTO 1999)
+works because every error coordinate is `±σ` and so congruent mod `2σ`, and the Nguyen–Regev
+fourth-moment descent (EUROCRYPT 2006) works because a deterministic round-off signature is a
+uniform sample from the secret basis's parallelepiped — it took NTRUSign with it. Both attack
+the *shape of the scheme's own randomness*, which is the reason Falcon samples a discrete
+Gaussian instead of rounding and the reason ML-KEM's centered binomial admits no analogue of
+the mod-2σ observation. The lab leads with a caveat rather than burying it: at its own
+dimensions (n = 8–60) plain LLL on the public basis already recovers a basis as good as the
+private one, so nothing on the page is evidence that GGH was hard at these sizes — it was
+proposed at n = 200–400 for exactly that reason. That makes it a companion to LLL Break and
+Lattice Gentle, not a competitor to them.
 
 *Optional depth, not a gap:* the NTT appears **inside** Lattice Fault, KyberSlash, and
 Ciphertext Mirror but never as the transform itself. It is an enabling computational
@@ -448,7 +543,51 @@ Dead Sea Cipher · Enigma Forge · Vigenère Break. (Cipher Museum carries this 
 a sibling project — do not expand here.)
 
 **37. Steganography — `COVERED`**
-Stego Suite · J-UNIWARD · Regex Veil — FTE.
+Stego Suite · J-UNIWARD · Regex Veil — FTE · Covert Channel Studio.
+
+Covert Channel Studio adds the carrier survey the other three do not attempt: the same bits
+moved eleven ways — DNS labels, ICMP echoes, inter-arrival gaps, IP/TCP field values, packet
+ordering, HTTP header permutation, protocol hopping, image LSB, circulation metadata, an
+optical air gap, and cache lines via Flush+Reload — each scored by a named, cited detector
+with a known-answer test. Its defender's half is the part that makes it more than a catalog:
+a blind scored detection challenge with false-positive traps, and a validation lab that runs
+every detector over hundreds of deterministic cases and reports ROC curves, AUC and confusion
+matrices, so detector quality is measured rather than asserted. Its sharpest result is the
+active warden — several channels are closed while their anomaly score *falls*, because
+normalisation is disruption rather than detection and leaves no record that anyone tried;
+the timing channel, meanwhile, does not die at all, retaining residual Shannon capacity under
+shaping. Everything is simulated client-side; no packet is ever crafted or sent, and the cache
+and optical carriers are explicitly modelled rather than measured.
+
+*Boundary note — this concept's title is now narrower than its contents, and that is the
+user's call to settle, not this file's.* The lab's own thesis refuses the equation: image LSB
+is **one** of its five categories, sitting beside storage channels, timing channels,
+protocol-shaped tunneling, and ordinary encrypted tunnels — which it argues are usually *not*
+covert channels, since hiding content is not the same as hiding the existence or purpose of
+communication. What unites §37 in practice is that second thing: hiding *that* a message
+exists, whatever the carrier. v7 already stretched the concept this way once, filing Regex
+Veil — FTE here as "the covert-channel form of hiding, against a DPI adversary rather than in
+pixels," so this is the same stretch a second time rather than a new one. Two ways to settle
+it if it stops feeling right: widen the title to name covert channels alongside steganography,
+or split them out as **§37b** the way deniability was split from §23 — the letter-suffix
+convention exists for exactly this. Left alone here because renaming a concept is a boundary
+move.
+
+*Two placements considered and declined, recorded so they are not relitigated.* Not §27: the
+Shared-Cache Channel is Flush+Reload with Prime+Probe as its inverted variant, but a covert
+channel is not a side channel — two colluding parties signalling on purpose, against one party
+leaking by accident — and the lab stages that distinction deliberately, with a case study of a
+side channel repurposed as a covert one. §27's own rule also demands a new leakage
+*mechanism*, and this cache is modelled rather than measured, which would sit badly beside
+Power Trace and KyberSlash. Not §32: the encrypted-tunnel row is a real limits-of-cryptography
+point and a good cross-link to Encrochat, but it is definitional scaffolding for what a covert
+channel is *not*, rather than the lab's own climax.
+
+The text and linguistic family is out of scope here by the same logic §36 applies to Cipher
+Museum: the sibling exhibit Ghost-Ink covers it in depth, and this lab links out rather than
+duplicating. Status stays `COVERED` rather than moving to `DEEP` — three of the four hide
+inside a medium or a message format and the fourth surveys carriers, so the space is not yet
+covered several times over.
 
 **38. Blockchain and wallet mechanics — `COVERED`**
 Bitcoin Script · Bitcoin Wallet.
@@ -498,7 +637,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 175.** The projection of 170–175 held.
+**Catalogued total: 193.**
 
 ---
 

@@ -21,20 +21,41 @@ each has a checker that fails when it drifts:
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
 
-Two more checkers guard the sibling demo repos rather than a file derived from
-`index.html`:
+Three more checkers guard the sibling demo repos, and the fleet itself, rather than
+a file derived from `index.html`:
 
 | Invariant | Checker |
 |---|---|
 | every lab pins exactly one theme, and none ships a toggle | `node tools/theme-sync.js check` |
 | every lab's live site is built from the sha on its `main` | `node tools/deploy-sync.js check` |
+| every lab that exists on GitHub has a card here | `node tools/fleet-sync.js check` |
 
-`deploy-sync` is the only checker here that needs the network and `gh`; it takes
-about 30 seconds for the whole fleet, so it is not part of the fast loop. **Run it
-after any cross-repo pass, and after anything that touches a workflow.**
+`deploy-sync` and `fleet-sync` are the two checkers here that need the network and
+`gh`; each takes about 30 seconds for the whole fleet, so neither is part of the
+fast loop. **Run them after any cross-repo pass, after anything that touches a
+workflow, and after building a lab.**
 
-It exists because this fleet's real failure mode is not a file disagreeing with
-another file — it is `main` disagreeing with what is actually served, and that
+`fleet-sync` exists because every other checker in this repo compares the catalog
+to something derived FROM the catalog. `readme-sync`, `corpus-sync` and
+`concept-sync` all read the cards, so a lab with no card is missing from all three
+*consistently* and every one of them stays green — the catalog cannot notice a demo
+it was never told about. On 2026-09-09 four labs were live with no card, no corpus
+entry and no concept-coverage line: `lattice-builder` (live since 2026-08-25),
+`covert-channel-studio` (2026-09-06), `ggh-trapdoor` and `factor-forge`. Every
+checker was green throughout, and `concept-coverage.md` — the file whose entire job
+is answering "is anything missing?" — was answering it wrongly. `fleet-sync` asks
+GitHub instead, and it also reports labs with no repo description, which drift the
+same silent way.
+
+It treats a repo as a demo when its default branch has an `index.html` anywhere in
+the tree (the root in most labs, `demos/<slug>/index.html` in the older ones), which
+is what exempts `crypto-lab-blind-oracle-api` — a headless Rust backend, not a
+browser demo — without a hand-maintained list. **It currently reports one open item:
+`crypto-lab-ghost-commit` is live and has never been carded, in any pass. That is a
+scope decision, not an oversight to sweep in.**
+
+`deploy-sync` exists because this fleet's real failure mode is not a file disagreeing
+with another file — it is `main` disagreeing with what is actually served, and that
 never turns anything red. On 2026-08-20 nine labs were serving a build older than
 their `main` with every checker green. Four separate bugs produced that, each
 invisible: a merge made with `GITHUB_TOKEN` raises no push event so `deploy.yml`

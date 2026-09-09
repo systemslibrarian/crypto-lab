@@ -250,6 +250,31 @@ The stylesheet defines its full palette under `:root` (dark). Existing
 a fleet-wide CSS rewrite to delete. Don't build a toggle or theme-flipping logic in
 `src/main.ts`.
 
+**If the lab ships a strict CSP, the pin needs a hash — and the hash needs a test.**
+Several labs carry a `<meta http-equiv="Content-Security-Policy">` with `script-src 'self'`
+and no `'unsafe-inline'`. The snippet above is an inline script, so under that policy the
+browser refuses to run it: the page loads, `theme-sync check` passes (it verifies the script
+is *present*, not that it is *permitted*), and the pin is quietly dead. Do **not** answer that
+by adding `'unsafe-inline'`. Add the script's own hash instead:
+
+```
+script-src 'self' 'sha256-<base64 of sha256 over the exact bytes between <script> and </script>>';
+```
+
+That closes the policy hole and opens a quieter one. Change **one byte** of the script — a
+reindent, a reworded comment, a trailing space — and the hash no longer matches, the browser
+silently refuses the script again, and every test still passes. So a lab that allows its pin
+by hash must also carry a test that **recomputes the hash from the file's own bytes** on every
+run, asserts every inline `<script>` has a matching declared hash, and fails on any inline
+`on*=` handler (a hash cannot authorise one). `crypto-lab-covert-channel-studio/test/csp.test.js`
+is the reference implementation — Node's built-in `node:test` and `node:crypto`, so it needs no
+new dependency. Wire it into CI; a guard CI never runs is decoration. Prove it bites by
+injecting one space into the script and watching it fail.
+
+One adaptation when copying it: that lab asserts the CSP contains no `'unsafe-inline'` at all,
+which is right there but wrong in a lab whose `style-src` legitimately carries it. Scope that
+assertion to `script-src`.
+
 ### 3.3 Scripture footer (last visible element)
 
 ```html

@@ -707,6 +707,26 @@ the dispatch above. And if build and deploy are one job, split them before gatin
 gating the single job off for pull requests disables the PR gate itself, so the PR
 runs nothing and reports nothing.
 
+**The gate a bump auto-merges against must be the gate the deploy runs.** If
+auto-merge is gated on a lighter CI workflow than the deploy is, a bump that breaks
+the heavier gate merges cleanly and then the deploy fails — so `main` silently stops
+shipping with nothing red in between. `crypto-lab-e91` drifted exactly that way: its
+auto-merge ran build plus engine tests, its deploy ran the browser gate, and a
+grouped minor bump floated a deliberately pinned `@playwright/test` version back up,
+un-deferring a WCAG defect that only the browser gate could see.
+
+**A major that lands is a claim about behaviour, not just a version string.** Two
+worth knowing, both hit today. `typescript` 5 → 7 stops tolerating an undeclared
+side-effect import, so a Vite lab missing `src/vite-env.d.ts` fails with `TS2882` on
+`import "./styles.css"`. And `vitest` 2 → 4 does not make tests slower — it makes
+them *timeout-enforceable*. Vitest 2 raced a `setTimeout` against the test, so a body
+that is `async` but only ever awaits already-resolved promises starves the macrotask
+queue and the timer never fires: a 12.6s test passes a 5s budget. Vitest 4 measures
+elapsed time and fails afterwards. The tell is a failure reporting a duration far
+above the timeout it supposedly exceeded. It reads as a performance regression and is
+not one, so fix it with a per-test timeout carrying the measurement, never by
+shrinking what the test does.
+
 **Two adaptations for labs with no dependencies.** A lab with a bare `package.json`
 and no lockfile cannot run `npm ci` or `cache: npm`; both fail the run outright, so
 use `npm install` or drop the step. Keep the npm Dependabot block anyway even while

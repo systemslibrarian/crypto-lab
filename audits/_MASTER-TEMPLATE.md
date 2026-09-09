@@ -727,6 +727,17 @@ above the timeout it supposedly exceeded. It reads as a performance regression a
 not one, so fix it with a per-test timeout carrying the measurement, never by
 shrinking what the test does.
 
+**And the reciprocal, for labs on `node --test`:** it has no default timeout at
+all — `--test-timeout` defaults to `Infinity`. So where vitest 2 *could not*
+enforce a budget and vitest 4 *can*, a `node --test` lab never had one. A hung
+test does not fail at five seconds; it runs until the GitHub Actions job limit,
+with nothing red for six hours. The tell is a job that looks **stuck** rather than
+a failure with a suspicious duration, which is the harder signal to read — a stuck
+job invites a re-run rather than an investigation. Pass `--test-timeout` in the
+script. Four labs were found running `node --test` with no timeout; all four now
+carry `--test-timeout=60000`, far above their measured suite times and far below
+anything mistakable for progress.
+
 **Two adaptations for labs with no dependencies.** A lab with a bare `package.json`
 and no lockfile cannot run `npm ci` or `cache: npm`; both fail the run outright, so
 use `npm install` or drop the step. Keep the npm Dependabot block anyway even while

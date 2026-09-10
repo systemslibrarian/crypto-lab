@@ -145,24 +145,36 @@ only thing in the file that answers *"why dispatch, when there is an `on: push`
 deploy right above?"* — and the answer is that a `GITHUB_TOKEN` merge raises no push
 event, so that dispatch is the only thing that ships the bump. Deleting the
 paragraph and deleting the line it defends are the same edit six months apart. On
-2026-09-10 the fleet carried **35 wordings** of it; that was not agent drift, it
+2026-09-10 the fleet carried **36 wordings** of it; that was not agent drift, it
 pre-dated the auto-merge rewrite and had accumulated over months of one-lab-at-a-time
 edits, with nothing comparing any copy to any other. The generator now writes one
-canonical text into all 194 sites and `check` fails on any that differs, so a 29th
+canonical text into all 195 sites and `check` fails on any that differs, so the next
 variant turns something red instead of waiting to be noticed.
+
+It reads **two shapes**, because the fleet has two: 194 labs put the dispatch inside
+the merge step's own run script with the rationale directly above that line, and
+`crypto-lab-attribute-gate` uses the cross-step shape `dispatch-sync` also accepts —
+flag exported to `$GITHUB_ENV`, a separate step guarding on `if: env.merged` with a
+one-line `run:` — where the rationale sits above that step's `- name:`, outside any
+block scalar. Reading only the first shape covered 194 of 195 and said nothing about
+the 195th. It also matches the dispatch **as a command, never as text**: 178 files in
+this fleet carry `actions: write   # … without it gh workflow run 403s`, and a loose
+match finds that line first, in the permissions block, far above the real dispatch.
 
 It normalises **one paragraph** and nothing else. Per-repo comment paragraphs are
 preserved verbatim — the dispatch-filename note (the fleet dispatches `deploy.yml`,
 `pages.yml`, `deploy-pages.yml` *and* `ci.yml`, so that note is true of one repo and
 false of the next) and the flag-mechanism note six labs carry above the rationale. A
 comment block where zero or two paragraphs make the no-push-event argument is
-**refused, not guessed at**, and still fails `check`. An absent block **fails and is
+**refused, not guessed at**, and still fails `check`. So is a block whose closing
+claim is buried mid-line with prose after it, because the split that keeps that prose
+is line-granular and would otherwise drop it. An absent block **fails and is
 restored**: treating absence as clean would make the checker silent about exactly
-the state that precedes the failure. After the first pass 35 distinct blocks became
-18 — one shared by 171 labs, one shared by the six that also explain the flag, and
-16 one-offs that differ only in their per-repo filename note. All 18 contain the
-identical canonical paragraph, and no executable line changed (13 distinct
-executable bodies before and after).
+the state that precedes the failure. After the first pass 36 distinct blocks became
+**19** — one shared by 171 labs, one by the six that also explain the flag, one by
+two labs, and 16 one-offs. All 19 contain the identical canonical paragraph; the
+residue is entirely per-repo paragraphs kept on purpose. No executable line changed:
+the 13 distinct executable bodies hash identically before and after.
 
 Two more files under `tools/` are not checkers and are not run in the loop:
 

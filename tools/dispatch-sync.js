@@ -79,14 +79,14 @@
  * PROSE above the dispatch unguarded — the paragraph that explains why the
  * `gh workflow run` line is not redundant beside an `on: push` deploy. Deleting
  * that paragraph, and later deleting the line it defends, are the same edit six
- * months apart, and the fleet had drifted to 35 wordings of it with nothing
+ * months apart, and the fleet had drifted to 36 wordings of it with nothing
  * comparing them.
  *
  * So this file also fails when that paragraph is not the canonical one — by
  * calling tools/dispatch-comment-sync.js in check mode. The canonical text is
  * NOT copied here: dispatch-comment-sync.js is its single source of truth, this
- * file only reports its verdict. A second copy would be a 29th variant waiting
- * to happen, which is the thing being fixed.
+ * file only reports its verdict. A second copy here would be one more variant
+ * waiting to happen, which is the thing being fixed.
  *
  * A job with a merge and no `gh workflow run` at all fails too, as NO-DISPATCH:
  * a merge made with secrets.GITHUB_TOKEN raises no push event, so nothing else

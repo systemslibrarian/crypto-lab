@@ -19,11 +19,11 @@
  * The 2026-08-20 incident — nine labs serving a build older than their main with
  * every checker green — is what that deletion looks like from outside.
  *
- * When this was written the fleet carried 35 distinct wordings of that
+ * When this was written the fleet carried 36 distinct wordings of that
  * paragraph. None of it was agent drift: the wordings pre-date the 2026-09-10
  * auto-merge rewrite (transform.mjs preserved each repo's existing comment
  * faithfully) and had accumulated over months of one-lab-at-a-time edits.
- * 35 wordings is 35 chances for one of them to be subtly wrong and for nobody
+ * 36 wordings is 36 chances for one of them to be subtly wrong and for nobody
  * to notice, because nothing compared them.
  *
  * ---------------------------------------------------------------------------
@@ -45,7 +45,7 @@
  *     (ablation-wire, ckks-lab, dilithium-reject, elgamal-plain, hybrid-sign,
  *     shor). Those six were the last to be moved onto the flag idiom and their
  *     comment explains the flag as well as the dispatch. That paragraph says
- *     something the other 188 do not, so it stays and they keep their own
+ *     something the other 189 do not, so it stays and they keep their own
  *     block hash. Forcing them onto one hash would delete a true explanation to
  *     make a number smaller.
  *
@@ -54,6 +54,15 @@
  * (crypto-lab-sector-vault omits it on purpose: a dispatch that fails there
  * should fail the run), not the retry count, not the `env:` mapping.
  *
+ * ---------------------------------------------------------------------------
+ * TWO SHAPES ARE SCANNED, because the fleet has two. 194 labs put the dispatch
+ * inside the merge step's own run script with the rationale directly above that
+ * line. crypto-lab-attribute-gate uses the cross-step shape dispatch-sync also
+ * accepts -- the merge step exports its flag to $GITHUB_ENV, a separate step
+ * guards on `if: env.merged` with a one-line `run:` -- and its rationale sits
+ * above that step's `- name:`, outside any block scalar. Reading only the first
+ * shape covered 194 of 195 sites and said nothing about the 195th. See sites().
+
  * ---------------------------------------------------------------------------
  * The last sentence is a claim about every repo this is written into
  *
@@ -267,28 +276,77 @@ function normaliseBlock(block, pad) {
 
 /* ------------------------------------------------------------------- sites */
 
-/* Every place in the fleet where this paragraph belongs: the comment run
- * directly above the first `gh workflow run` inside a Dependabot auto-merge
- * job's merge run-script. */
+/* Every place in the fleet where this paragraph belongs: the comment run above
+ * the `gh workflow run` in a Dependabot auto-merge job.
+ *
+ * TWO SHAPES, because the fleet has two. In 194 labs the dispatch is a line
+ * inside the merge step's own run script and the rationale sits directly above
+ * that line. crypto-lab-attribute-gate uses the cross-step shape dispatch-sync
+ * also accepts — the merge step exports its flag to $GITHUB_ENV and a separate
+ * step guards on `if: env.merged == '1'` with a one-line `run:` — and there the
+ * rationale sits above the step's `- name:`, outside any block scalar.
+ *
+ * Scanning only the first shape found 194 of 195 sites and said nothing about
+ * the 195th, which is how a checker quietly stops covering a lab. Both shapes
+ * are read, and each site keeps its own indentation. */
 function sites(repo) {
   const out = [];
+  const STEP_KEY = /^\s*(-\s+)?(name|id|if|uses|run|shell|env|with|timeout-minutes|continue-on-error|working-directory):/;
   for (const file of workflowFiles(path.join(FLEET_ROOT, repo))) {
     let lines;
     try { lines = fs.readFileSync(file, 'utf8').split('\n'); } catch { continue; }
     for (const job of jobBlocks(lines)) {
       const body = lines.slice(job.start, job.end).join('\n');
       if (!isAutoMergeJob(job.name, body)) continue;
-      for (const rb of runBlocks(lines, job.start, job.end)) {
-        let disp = -1;
-        for (let i = rb.start; i < rb.end; i++) {
-          if (/^\s*gh workflow run\s/.test(lines[i])) { disp = i; break; }
-        }
-        if (disp < 0) continue;
-        let k = disp - 1;
-        while (k >= rb.start && /^\s*#/.test(lines[k])) k--;
-        out.push({ repo, file, job: job.name, disp,
-          blockStart: k + 1, block: lines.slice(k + 1, disp), pad: ' '.repeat(indentOf(lines[disp])) });
+
+      /* First dispatch line in the job, whatever it is nested in.
+       *
+       * A COMMENT MENTIONING THE COMMAND IS NOT THE COMMAND. 178 files in this
+       * fleet carry `actions: write   # ... without it gh workflow run 403s`,
+       * and a loose match finds that line first, in the permissions block, far
+       * above the real dispatch. Match only where the command actually starts a
+       * command: at the start of the line, after a `run:` key, or after a shell
+       * separator — and never on a whole-line comment. */
+      let disp = -1;
+      for (let i = job.start; i < job.end; i++) {
+        const l = lines[i];
+        if (/^\s*#/.test(l)) continue;
+        const code = l.replace(/\s#.*$/, '');
+        if (/(^\s*|run:\s*|[;&|]\s*|\bthen\s+)gh workflow run\s/.test(code)) { disp = i; break; }
       }
+      if (disp < 0) continue;
+
+      /* Shape 1: comments sit immediately above the dispatch line. */
+      if (disp - 1 >= job.start && /^\s*#/.test(lines[disp - 1])) {
+        let k = disp - 1;
+        while (k > job.start && /^\s*#/.test(lines[k - 1])) k--;
+        out.push({ repo, file, job: job.name, disp, shape: 'in-run-script',
+          blockStart: k, block: lines.slice(k, disp), pad: ' '.repeat(indentOf(lines[k])) });
+        continue;
+      }
+
+      /* Shape 2: walk up over the enclosing step's own keys to the comment run
+       * above its `- ` marker. Bounded, and only over keys a step may carry, so
+       * this cannot wander into an unrelated comment. */
+      let i = disp;
+      let steps = 0;
+      while (i > job.start && steps < 12 && (lines[i].trim() === '' || STEP_KEY.test(lines[i]))) {
+        const isMarker = /^\s*-\s+\S/.test(lines[i]);
+        i--; steps++;
+        if (isMarker) break;
+      }
+      if (i > job.start && /^\s*#/.test(lines[i])) {
+        let k = i;
+        while (k > job.start && /^\s*#/.test(lines[k - 1])) k--;
+        out.push({ repo, file, job: job.name, disp, shape: 'above-step',
+          blockStart: k, block: lines.slice(k, i + 1), pad: ' '.repeat(indentOf(lines[k])) });
+        continue;
+      }
+
+      /* No comment run in either place: restore one directly above the
+       * dispatch, at the dispatch's own indentation. */
+      out.push({ repo, file, job: job.name, disp, shape: 'in-run-script',
+        blockStart: disp, block: [], pad: ' '.repeat(indentOf(lines[disp])) });
     }
   }
   return out;

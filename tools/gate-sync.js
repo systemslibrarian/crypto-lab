@@ -910,10 +910,18 @@ function siblingLabs() {
  * never opened, and nothing anywhere in this output said so.
  *
  * The reasons are distinct and worth telling apart: an uncloned lab is a machine
- * fact, a lab cloned under a name outside LAB_DIR_RE is a naming fact (snow2 and
- * crypto-compare are carded without the crypto-lab- prefix), and a clone with no
- * .github/workflows is a repo fact. All three end the same way — every rule above
- * is silent about that lab — so all three are counted here. */
+ * fact, a lab cloned under a name outside LAB_DIR_RE is a naming fact, and a
+ * clone with no .github/workflows is a repo fact. All three end the same way —
+ * every rule above is silent about that lab — so all three are counted here.
+ *
+ * Reason (b) has no instance today and the example that used to sit here was
+ * wrong. Two carded slugs lack the crypto-lab- prefix, snow2 and crypto-compare,
+ * but crypto-compare IS inside LAB_DIR_RE (/^crypto-(lab|compare|counsel)/) and
+ * is judged like any other lab. snow2 is the only carded slug the regex excludes
+ * and it has no clone here at all, so it hits reason (a) first and reason (b)
+ * never fires. The branch stays because the naming fact is real and a future
+ * clone would land in it — but it is empty, and naming a lab it does not
+ * describe made it look occupied. */
 function unseenCarded(carded, repos) {
   const seen = new Set(repos);
   const out = [];
@@ -1050,11 +1058,23 @@ function main() {
 
   const failed = failing.size + unparsed.length;
   if (!failed) {
-    /* Qualified by the count above rather than stated flat, because "every
-     * auto-merge" is exactly the sentence the fourth condition makes false. */
-    console.log(`\nEvery auto-merge clears the same gate its deploy depends on — across the ${rows.length}`);
-    console.log(`labs cloned under ${FLEET_ROOT}. ${unseen.length} carded lab${unseen.length === 1 ? ' was' : 's were'} `
-      + 'not opened at all (above).');
+    /* Qualified by the counts above rather than stated flat, because "every
+     * auto-merge" is exactly the sentence the fourth condition makes false.
+     *
+     * `rows.length` is NOT the number of labs judged clean: it is the number
+     * that carry BOTH a Pages deploy and an auto-merge job, which is the only
+     * population any rule above applies to. Printing it beside "every
+     * auto-merge" read as coverage of every lab cloned here, and the labs
+     * skipped for having one half or neither were counted into a sentence that
+     * never looked at them. Both numbers are printed now, and the gap between
+     * them is named. */
+    const judged = rows.length;
+    const cloned = repos.length;
+    console.log(`\nEvery auto-merge clears the same gate its deploy depends on — across the ${cloned}`);
+    console.log(`labs cloned under ${FLEET_ROOT}, of which ${judged} carry both a deploy`);
+    console.log(`and an auto-merge; the other ${cloned - judged} `
+      + `${cloned - judged === 1 ? 'is' : 'are'} named above and ${cloned - judged === 1 ? 'was' : 'were'} not judged.`);
+    console.log(`${unseen.length} carded lab${unseen.length === 1 ? ' was' : 's were'} not opened at all (above).`);
   } else {
     console.log('\nFix by giving each lab ONE workflow with ONE gate job that both `deploy` and');
     console.log('`dependabot-auto-merge` name in `needs:`. crypto-lab-e91/.github/workflows/deploy.yml');

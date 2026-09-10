@@ -21,7 +21,7 @@ each has a checker that fails when it drifts:
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
 
-Three more checkers guard the sibling demo repos, and the fleet itself, rather than
+Four more checkers guard the sibling demo repos, and the fleet itself, rather than
 a file derived from `index.html`:
 
 | Invariant | Checker |
@@ -29,6 +29,7 @@ a file derived from `index.html`:
 | every lab pins exactly one theme, and none ships a toggle | `node tools/theme-sync.js check` |
 | every lab's live site is built from the sha on its `main` | `node tools/deploy-sync.js check` |
 | every lab that exists on GitHub has a card here | `node tools/fleet-sync.js check` |
+| the gate a Dependabot bump merges against is the gate the deploy runs | `node tools/gate-sync.js check` |
 
 `deploy-sync` and `fleet-sync` are the two checkers here that need the network and
 `gh`; each takes about 30 seconds for the whole fleet, so neither is part of the
@@ -65,6 +66,32 @@ skips `workflow_dispatch`; and in labs where build and deploy are one job, gatin
 that job off for pull requests silently disabled the gate itself. A run that is
 `cancelled`, or `success` with its deploy job `skipped`, does not count as shipped
 — those are precisely the shapes that hid all four.
+
+`gate-sync` asks `deploy-sync`'s question one step earlier: not whether the live site
+matches `main`, but whether anything could land on `main` that `main`'s own deploy
+would refuse to ship. A lab can be perfectly current today and still be shaped so the
+next grouped bump stops it shipping. The shape is auto-merge in one workflow and the
+Pages deploy in another, where only the deploy's workflow runs the browser gate — so
+a bump clears the lighter of the two, merges itself, and the heavier one fails
+afterwards on the merge commit, where no pull request is watching. `crypto-lab-e91`
+drifted exactly that way and was found stale on 2026-09-08; nineteen labs had the
+same shape. It also catches the four silent non-deploys `deploy-sync` can only see
+after the fact — `== 'push'` gating, a fused build-and-deploy gated off for pull
+requests, a dispatch that 403s without `actions: write`, and a `gh workflow run`
+naming a file this repo does not have. **The contract it encodes is
+`audits/_MASTER-TEMPLATE.md` §6.1–6.2, not this file**; the fix is always one
+workflow with one gate job that both `deploy` and `dependabot-auto-merge` name in
+`needs:`, since `needs:` cannot cross files.
+
+It is local-only and fast, so unlike `deploy-sync` and `fleet-sync` it belongs in the
+fast loop. It reads workflows structurally rather than by grep, because 178 files in
+this fleet carry the comment *"without it gh workflow run 403s"* and grep finds a
+dispatch in repos whose only dispatch is a sentence about one. A workflow it cannot
+parse is reported as **unparsed and fails** — never skipped, because a checker that
+cannot read a file must not call it clean. Failures are the invariant itself and
+anything that has already disabled a gate; warnings are shapes that still ship today
+but are one edit from failing (two equal gates in separate files, an unscoped
+`cancel-in-progress` group on a workflow that has no `pull_request` trigger *yet*).
 
 `concept-coverage.md` is the only gap list. Several older analysis files that used to sit in
 this root — `futuredemos.md`, `CARD-AUDIT.md`, `CARD-ACCURACY-FINDINGS.md`,
@@ -184,6 +211,13 @@ All four are required and all four are specified in `audits/_MASTER-TEMPLATE.md`
 The last one is not optional bookkeeping: a merge made with `secrets.GITHUB_TOKEN` raises no
 push event, so without an explicit dispatch the bump lands on `main` and the live site keeps
 serving the old build with nothing going red to say so.
+
+Those greps only prove the pieces are present, not that they are wired to each other, so
+finish with `node tools/gate-sync.js` and confirm the new lab is not named in the report.
+Grep says `workflow_dispatch` is somewhere in the repo; `gate-sync` says the auto-merge
+actually dispatches a file that exists, with the permission to do it, after clearing the
+same gate the deploy depends on. **Read the report rather than the exit code while the
+fleet-wide fix is still landing** — `check` exits 1 on any lab, not just yours.
 
 A self-check script lives at the end of this file — copy it into a `node -e "..."` invocation to verify title coverage.
 

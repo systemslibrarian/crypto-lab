@@ -88,6 +88,24 @@
  * file only reports its verdict. A second copy here would be one more variant
  * waiting to happen, which is the thing being fixed.
  *
+ * ---------------------------------------------------------------------------
+ * TWO MORE VERDICTS THIS FILE REPORTS, AND WHY NEITHER IS OPTIONAL
+ *
+ * Is the paragraph TRUE? Drift only asks whether ~195 repos agree with
+ * CANONICAL. On 2026-09-10 an audit inverted one clause of CANONICAL to
+ * something false: dispatch-proof passed clean, this file went red purely
+ * because the repos still held the old text, and the remedy line said to run the
+ * writer — which would have propagated the false sentence and turned everything
+ * green. tools/dispatch-claims.js re-derives each clause from the fleet's own
+ * YAML and is reported below; the writer refuses to run while a clause is false.
+ *
+ * Is anyone MISSING? Every number this file prints is a count of labs it managed
+ * to recognise. Change a lab's merge command to `gh api ... /merge`, or indent
+ * its job map four spaces, and the lab is not unsound — it is absent, and the
+ * total is one smaller with exit 0. tools/dispatch-census.json pins who is
+ * supposed to be here, and dispatch-census.js names anything missing or
+ * unclassifiable instead of subtracting it.
+ *
  * A job with a merge and no `gh workflow run` at all fails too, as NO-DISPATCH:
  * a merge made with secrets.GITHUB_TOKEN raises no push event, so nothing else
  * will ship it. gate-sync reaches the same labs from the workflow-topology side;
@@ -98,12 +116,17 @@
  * Usage (from the crypto-lab repo root):
  *   node tools/dispatch-sync.js          Report; exit 0 always.
  *   node tools/dispatch-sync.js check    Same report; exit 1 if any lab's
- *                                        dispatch can be skipped in silence.
+ *                                        dispatch can be skipped in silence, if
+ *                                        the rationale has drifted, if a clause
+ *                                        of it has become false, or if a pinned
+ *                                        lab has gone missing or unreadable.
  */
 'use strict';
 const fs = require('fs');
 const path = require('path');
 const comments = require('./dispatch-comment-sync.js');
+const claims = require('./dispatch-claims.js');
+const census = require('./dispatch-census.js');
 
 const FLEET_ROOT = path.join(__dirname, '..', '..');
 
@@ -393,6 +416,21 @@ function main() {
     for (const r of group) console.log(`  ${r.repo}  ${r.workflow} [${r.job}]`);
   }
 
+  /* The denominator, pinned. Every number printed above is a count of labs this
+   * file managed to RECOGNISE, and a lab that stops being recognisable used to
+   * leave the report with the total quietly one smaller. dispatch-census.json
+   * declares who is supposed to be here; anything missing or unclassifiable is
+   * named below instead of subtracted. */
+  const c = census.verify();
+  console.log(`\nCensus: ${c.observed.labs} labs, ${c.observed.autoMergeJobs} auto-merge jobs, `
+    + `${c.observed.dispatchSites} dispatch sites (pinned ${c.expected.totals.labs}/`
+    + `${c.expected.totals.autoMergeJobs}/${c.expected.totals.dispatchSites}, tools/dispatch-census.json)`);
+  for (const kind of [...new Set(c.fails.map((f) => f.kind))]) {
+    const g = c.fails.filter((f) => f.kind === kind);
+    console.log(`  ${kind} (${g.length}):`);
+    for (const f of g) console.log(`    ${f.repo}  — ${f.why}`);
+  }
+
   /* The literal half, delegated. dispatch-comment-sync owns the text; this file
    * owns nothing about it but the verdict, so the two cannot drift apart. */
   const blocks = comments.scan();
@@ -409,12 +447,35 @@ function main() {
         console.log(`    ${r.repo}  ${path.basename(r.file)} [${r.job}]${r.why ? `  — ${r.why}` : ''}`);
       }
     }
+    /* THE REMEDY LINE IS THE PLACE THE FALSE-SENTENCE PATH IS ENTERED, so it
+     * says what the writer DOES rather than only naming it. Someone who has
+     * just edited CANONICAL sees drift in 195 repos, reads a bare "fix with",
+     * runs it, and the edit — true or false — is now the fleet's wording. */
     console.log('  Fix with: node tools/dispatch-comment-sync.js');
+    console.log('    That writer PROPAGATES tools/dispatch-comment-sync.js\'s CANONICAL paragraph into every');
+    console.log(`    drifted site — ~${blocks.length} repos, one edit. It is not a tidy-up. If you changed CANONICAL,`);
+    console.log('    run `node tools/dispatch-claims.js check` FIRST: it binds each clause to the fleet\'s own');
+    console.log('    YAML, and a clause that has become false must not be propagated.');
   }
 
-  if (!broken.length && !drift.length) {
+  /* The clauses of that paragraph, against the fleet it is written into. The
+   * drift check above only asks whether 195 repos agree with CANONICAL; this
+   * asks whether CANONICAL is TRUE. Inverting one clause makes the first check
+   * red and the second silent, which is precisely how a false sentence gets
+   * propagated on the strength of a remedy line. */
+  const cl = claims.verify();
+  console.log(`\nCANONICAL clauses: ${cl.rows.length} bound to re-derived evidence, `
+    + `${cl.rows.length - cl.failures.length} true of the fleet `
+    + '(tools/dispatch-claims.js owns the binding; some clauses are deliberately unbound — see its header)');
+  for (const f of cl.failures) {
+    console.log(`  ${f.status}  ${f.id} — ${f.why || ''}`);
+    for (const d of (f.detail || []).slice(0, 6)) console.log(`    ${d}`);
+  }
+
+  if (!broken.length && !drift.length && !c.fails.length && !cl.failures.length) {
     console.log('\nEvery auto-merge job sets its flag from the merge\'s own exit status and reads it before dispatching,');
-    console.log('above the one canonical paragraph saying why the dispatch is there.');
+    console.log('above the one canonical paragraph saying why the dispatch is there — and every clause of that');
+    console.log('paragraph is still true of the fleet it is written into.');
     return 0;
   }
   if (!broken.length) return check ? 1 : 0;

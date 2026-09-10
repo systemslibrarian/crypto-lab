@@ -21,7 +21,7 @@ each has a checker that fails when it drifts:
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
 
-Six more checkers guard the sibling demo repos, and the fleet itself, rather than
+Eight more checkers guard the sibling demo repos, and the fleet itself, rather than
 a file derived from `index.html`:
 
 | Invariant | Checker |
@@ -32,6 +32,12 @@ a file derived from `index.html`:
 | the gate a Dependabot bump merges against is the gate the deploy runs | `node tools/gate-sync.js check` |
 | once a bump has merged itself, the deploy dispatch cannot be skipped in silence | `node tools/dispatch-sync.js check` |
 | the paragraph saying why that dispatch exists is one text fleet-wide | `node tools/dispatch-comment-sync.js check` |
+| every clause of that paragraph is still TRUE of the fleet it is written into | `node tools/dispatch-claims.js check` |
+| every lab that owes a dispatch is still present, and still classifiable | `node tools/dispatch-census.js check` |
+
+The last two are also folded into `dispatch-sync check`, so the fast loop does not
+grow a command. Run them directly when the answer matters on its own — after editing
+`CANONICAL`, or after cloning or removing a lab.
 
 `deploy-sync` and `fleet-sync` are the two checkers here that need the network and
 `gh`; each takes about 30 seconds for the whole fleet, so neither is part of the
@@ -176,12 +182,74 @@ two labs, and 16 one-offs. All 19 contain the identical canonical paragraph; the
 residue is entirely per-repo paragraphs kept on purpose. No executable line changed:
 the 13 distinct executable bodies hash identically before and after.
 
-Two more files under `tools/` are not checkers and are not run in the loop:
+**One wording fleet-wide is a bigger lever than 36 wrong ones, and it needed a
+second guard.** Normalising that paragraph traded 36 small wrongnesses for one
+wording with a 195-repo blast radius, and nothing bound the wording to the facts it
+asserts. On 2026-09-10 an audit inverted its load-bearing clause — *"a
+workflow_dispatch through the API is not suppressed"* → *"is suppressed too"*, which
+is false and destroys the reasoning the whole mechanism rests on — and watched what
+happened: `dispatch-proof.js` printed **"37 passed, 0 failed", exit 0**.
+`dispatch-sync check` went red, but only because the 195 repos still held the OLD
+text, and its remedy line said `Fix with: node tools/dispatch-comment-sync.js`.
+Following that instruction writes the false sentence into ~195 repos, after which
+every gate is green and the fleet documents the opposite of how it works.
+
+`dispatch-claims.js` closes that. It reads `CANONICAL`, extracts each factual clause
+as a **proposition with a polarity**, re-derives the same proposition from the
+fleet's own YAML, and fails when the two disagree. The distinction that matters: it
+fails on a clause that becomes **false**, not one that changes **wording**. Reword
+*"is not suppressed"* to *"is honoured"* and it stays green; invert it and it fails,
+naming the clause and the evidence against it. A check that pinned the literal would
+be the frozen-prose failure one layer up — it would force the sentence to stay the
+same rather than stay true. It is deliberately honest about its own reach: whether
+GitHub really suppresses the push event of a `GITHUB_TOKEN` merge is platform
+behaviour, is **not** derivable from this fleet, and is printed as UNBOUND on every
+run rather than counted as checked. What *is* derived for that clause is its
+corollary — that no dispatch target has another trigger that would ship the merge
+anyway — and its polarity, by coherence with that derivation.
+
+The gate re-derivation behind *"the same gate-then-deploy pipeline"* **follows
+reusable-workflow calls**. `crypto-lab-pake-gate`'s deploy job needs `build`, and
+`build` is nothing but `uses: ./.github/workflows/browser-gate.yml`; a walk that
+stopped at the calling job would find no commands there, call that lab ungated, and
+report a **true** sentence false — inviting someone to "fix" it. 195/195 targets gate
+before they publish: 186 through `needs:`, 8 by fused step order, 1 through that
+reusable call.
+
+The writer is guarded at the point of use as well: `node tools/dispatch-comment-sync.js`
+now **refuses to write** while any clause is false, and its remedy line in
+`dispatch-sync` says what the writer *does* — propagates `CANONICAL` into ~195 repos —
+because a bare "fix with" is the exact place the false-sentence path is entered.
+
+**A lab can also leave in silence, and that is the same defect one layer down.**
+Every count these checkers print is a count of labs they managed to **recognise**.
+An adversarial audit found three ways a lab drops out with exit 0: the auto-merge
+merging with `gh api -X PUT repos/.../merge` instead of `gh pr merge` (the job stops
+being an auto-merge job); the workflow's job map indented **four** spaces — valid
+YAML, jobs intact, GitHub runs it, and `jobBlocks` requires exactly two; and the
+`gh workflow run` line deleted while the paragraph defending it stays, taking the
+site count 195 → 194. This is the third instance of one defect in this fleet — a
+checker that cannot see, reporting clean. `gate-sync` missed `peaceiris` publishers;
+`gate-sync` never opened uncloned labs; now this. The shared shape is a denominator
+that is **discovered** rather than declared.
+
+`tools/dispatch-census.json` declares it: every lab, and what each one owes. A lab
+that stops matching its pinned row is a NAMED failure — `MISSING-JOB`,
+`MISSING-SITE`, `NOT-CLONED`, `UNPINNED-LAB`, `COUNT` — and a lab holding a
+Dependabot merge the checker cannot judge is `UNRECOGNISED`, by kind
+(`MERGE-NOT-RECOGNISED`, `JOB-MAP-UNREADABLE`, `RATIONALE-WITHOUT-DISPATCH`). **A
+drop in the denominator is now as loud as a drift in the numerator.** Adding or
+removing a lab therefore requires re-pinning: `node tools/dispatch-census.js write`,
+then read the diff — that file is the only thing that remembers a lab used to be
+here.
+
+Three more files under `tools/` are not checkers and are not run in the loop:
 
 | File | What it is |
 |---|---|
 | `tools/transform.mjs` | the rewriter that moved ~179 labs onto the flag idiom. Kept because it is the only precise statement of what was done to them. It **refuses rather than guesses** on any job that does not match the old construct exactly. |
-| `tools/dispatch-proof.js` | the evidence for both of the above, re-runnable: the validator passes the nine reference labs, fails the old construct, the transform turns one into the other and is idempotent, the injected `gh pr view` fault ships nothing under the old shape and ships under the new, and the canonical paragraph's closing claim is re-derived over all 195 live dispatch sites. |
+| `tools/dispatch-proof.js` | the evidence for both of the above, re-runnable: the validator passes the nine reference labs, fails the old construct, the transform turns one into the other and is idempotent, the injected `gh pr view` fault ships nothing under the old shape and ships under the new, the paragraph's claims are re-derived over all 195 live dispatch sites (A5) and **bound to that derivation clause by clause** (A7), and the permanent mutation set is replayed (M). 65 checks. |
+| `tools/dispatch-mutations.js` | the permanent mutation set, replayed on every proof run. Eight edits that MUST be caught and named: three that make a clause of `CANONICAL` false, three that make a lab vanish from the checkers, **M7, a rewording that stays true and must stay green** — the control that stops the clause binding from degenerating into a wording pin — and **M8, the derivation itself going blind**, because every clause is supported by the *absence* of counter-evidence and a walk that saw nothing would report all three true over nothing. Fixtures live in `tools/fixtures/dispatch/mutations/`. Each mutation also asserts the unmutated baseline is clean, so a mutation that fails on both sides is reported as proving nothing rather than counted. |
 
 `transform.mjs` and `dispatch-comment-sync.js` had a real conflict, and the split is
 worth knowing: **transform.mjs owns the executable lines and each repo's own
@@ -315,6 +383,11 @@ serving the old build with nothing going red to say so.
 
 Those greps only prove the pieces are present, not that they are wired to each other, so
 finish with `node tools/gate-sync.js` and confirm the new lab is not named in the report.
+
+A newly cloned lab also has to be **pinned**, or `dispatch-sync check` fails it as
+`UNPINNED-LAB` — deliberately, because the same silence that hides a new lab hides a
+departed one. Run `node tools/dispatch-census.js write` and read the diff: one added row
+is right, a removed row is a lab that stopped being seen.
 Grep says `workflow_dispatch` is somewhere in the repo; `gate-sync` says the auto-merge
 actually dispatches a file that exists, with the permission to do it, after clearing the
 same gate the deploy depends on. **Read the report rather than the exit code while the

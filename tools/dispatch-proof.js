@@ -22,6 +22,30 @@
  * workflow file, which is probably why it was not counted. The fixture set is
  * nine because nine is what passes.
  *
+ * ---------------------------------------------------------------------------
+ * WHAT THIS FILE USED TO PROVE, AND WHAT IT MISSED
+ *
+ * Until 2026-09-10 every check here compared the FLEET against CANONICAL and
+ * none compared CANONICAL against the fleet. So inverting the load-bearing
+ * clause — "a workflow_dispatch through the API is not suppressed" -> "is
+ * suppressed too", which is false — left this file printing "37 passed, 0
+ * failed", exit 0. The only thing that went red was the drift checker, because
+ * the repos still held the OLD text, and its remedy line pointed at the writer
+ * that would have made the false sentence fleet-wide.
+ *
+ * A5 now runs ONE derivation (tools/dispatch-claims.js) over the live fleet, and
+ * A7 binds each factual clause of CANONICAL to it by POLARITY: reword the
+ * paragraph freely and A7 stays green, invert a claim and it fails, naming the
+ * clause and the evidence that contradicts it.
+ *
+ * A7 does not claim every sentence is checked. Two are not derivable from this
+ * fleet's YAML and are printed as UNBOUND on every run rather than being counted
+ * as verified — chiefly whether GitHub really suppresses the push event of a
+ * GITHUB_TOKEN merge, which is platform behaviour.
+ *
+ * M replays tools/dispatch-mutations.js — the permanent mutation set, including
+ * that inversion, so it can never be a passing run again.
+ *
  * Usage:
  *   node tools/dispatch-proof.js          run every check, exit 1 on any failure
  *   node tools/dispatch-proof.js -v       also print each check's detail
@@ -38,6 +62,8 @@ const REF = path.join(FIX, 'reference');
 
 const dispatchSync = require('./dispatch-sync.js');
 const comments = require('./dispatch-comment-sync.js');
+const claims = require('./dispatch-claims.js');
+const mutations = require('./dispatch-mutations.js');
 
 let pass = 0;
 let fail = 0;
@@ -168,38 +194,42 @@ echo "new step exit=$? stdout=[$out]"
   check('NEW: the dispatch fires under the same fault',
     newStep && /DISPATCH FIRED/.test(newStep[2]), newStep && newStep[2]);
 
-  /* ----------------------------------------------------------------- A5 */
+  /* ----------------------------------------------------------------- A5
+   *
+   * The derivation itself now lives in tools/dispatch-claims.js, for one
+   * reason: A5 used to derive the evidence HERE and compare it to nothing, so
+   * the paragraph and the fleet were never actually put side by side. One
+   * derivation, used by the proof, by dispatch-sync and by the writer's own
+   * guard, is what makes A7 below possible at all.
+   *
+   * The gate walk is also stricter than the one this replaced. The old test
+   * accepted ANY `needs:` as a gate — a publisher needing an empty job would
+   * have passed — and required a literal npm command for the fused case, which
+   * would have called every cargo lab ungated had one ever taken that shape. */
   console.log('\nA5  the canonical paragraph\'s closing claim, re-derived over the live fleet');
-  const PUBLISH = /actions\/deploy-pages|peaceiris\/actions-gh-pages/;
   const root = comments.FLEET_ROOT;
-  let sites = 0; const missing = []; const ungated = [];
-  for (const repo of comments.siblingLabs()) {
-    const dir = path.join(root, repo, '.github', 'workflows');
-    const files = fs.readdirSync(dir).filter((f) => /\.ya?ml$/.test(f));
-    for (const f of files) {
-      const text = fs.readFileSync(path.join(dir, f), 'utf8');
-      if (!/dependabot/i.test(text)) continue;
-      const m = /gh workflow run\s+(\S+\.ya?ml)/.exec(text);
-      if (!m) continue;
-      sites++;
-      if (!files.includes(m[1])) { missing.push(`${repo} → ${m[1]}`); continue; }
-      const tl = fs.readFileSync(path.join(dir, m[1]), 'utf8').split('\n');
-      const pub = dispatchSync.jobBlocks(tl).filter((j) => PUBLISH.test(tl.slice(j.start, j.end).join('\n')));
-      if (!pub.length) { ungated.push(`${repo} → ${m[1]} (no publisher job found)`); continue; }
-      for (const j of pub) {
-        const body = tl.slice(j.start, j.end);
-        const needs = body.some((l) => /^\s*needs:/.test(l));
-        /* A fused build-and-deploy job is gated by step order instead: the
-         * publish step sits after the test/build steps in the same job. */
-        const pubAt = body.findIndex((l) => PUBLISH.test(l));
-        const testBefore = body.slice(0, pubAt).some((l) => /run:.*(npm (test|run (build|type-check))|test:a11y|test:e2e)/.test(l));
-        if (!needs && !testBefore) ungated.push(`${repo} → ${m[1]} [${j.name}]`);
-      }
-    }
+  const evidence = claims.derive(root);
+  const t = evidence.totals;
+  check(`every dispatch target exists (${t.sites} sites)`, t.targetsMissing.length === 0, t.targetsMissing.join('\n'));
+  check('every dispatch target has a Pages publisher to gate', t.noPublisher.length === 0, t.noPublisher.join('\n'));
+  check('every dispatch target gates before it publishes', t.ungated.length === 0, t.ungated.join('\n'));
+  check('the gate walk follows reusable workflows (crypto-lab-pake-gate reaches its gate through one)',
+    evidence.sites.some((s) => (s.gates || []).some((g) => /reusable/.test(g.via))),
+    'no site was gated through a `uses: ./.github/workflows/*.yml` call — either the walk stopped '
+    + 'following them, or pake-gate changed shape');
+  console.log(`          (${t.sites} dispatch sites re-derived under ${root}: `
+    + `${Object.entries(t.gateVia).map(([k, n]) => `${n} ${k}`).join(', ')})`);
+
+  /* ----------------------------------------------------------------- A7 */
+  console.log('\nA7  CANONICAL\'s factual clauses, bound to that derivation');
+  const bound = claims.verify({ evidence, extra: { dispatchFiresUnderFault: !!(newStep && /DISPATCH FIRED/.test(newStep[2])) } });
+  for (const r of bound.rows) {
+    check(`${r.id} — ${r.ok ? 'asserted polarity matches the fleet' : r.status}`, r.ok,
+      `clause:   ${r.sentence || '(not located in CANONICAL)'}\nasserted: ${r.why || ''}\nderived:  ${r.evidence || ''}`
+      + `${(r.detail || []).length ? `\n${r.detail.slice(0, 8).join('\n')}` : ''}`);
   }
-  check(`every dispatch target exists (${sites} sites)`, missing.length === 0, missing.join('\n'));
-  check('every dispatch target gates before it publishes', ungated.length === 0, ungated.join('\n'));
-  console.log(`          (${sites} dispatch sites re-derived under ${root})`);
+  console.log('          NOT bound, and not counted as checked:');
+  for (const [what, why] of claims.UNBOUND_NOTES) console.log(`            ${what} — ${why}`);
 
   /* ----------------------------------------------------------------- A6 */
   console.log('\nA6  normaliseBlock: what it rewrites, keeps, and refuses');
@@ -250,6 +280,11 @@ echo "new step exit=$? stdout=[$out]"
   r = comments.normaliseBlock(buriedBlock, P);
   check('closing claim buried mid-line → UNRECOGNISED rather than dropping the prose after it',
     r.status === 'UNRECOGNISED' && hash(r.lines) === hash(buriedBlock), `${r.status}: ${r.why}`);
+
+  /* ----------------------------------------------------------------- M */
+  console.log('\nM   the permanent mutation set (tools/dispatch-mutations.js)');
+  const mut = mutations.run({ evidence, verbose });
+  pass += mut.pass; fail += mut.fail;
 
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);

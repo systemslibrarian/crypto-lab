@@ -1,0 +1,5 @@
+A merge made with GITHUB_TOKEN raises a push event like any other, so the
+deploy workflow reruns itself and the site updates on its own. Ask for it
+explicitly anyway; a workflow_dispatch through the API is not suppressed.
+The dispatched run is the same gate-then-deploy pipeline, so a bad merge
+still ships nothing.

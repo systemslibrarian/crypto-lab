@@ -69,15 +69,21 @@
  * "The dispatched run is the same gate-then-deploy pipeline, so a bad merge
  * still ships nothing." Re-derived 2026-09-10 over all 195 dispatch sites: the
  * named target workflow exists in that repo in 195/195, and in every one of them
- * the publishing job is gated — 188 by a `needs:` on the job that runs
- * actions/deploy-pages or peaceiris/actions-gh-pages, and 7 by the publish step
- * sitting after the test/build/a11y steps in one fused job (bcrypt-forge,
- * dilithium-reject, elgamal-plain, iron-letter, isogeny-gate, scloud-vault,
- * world-ciphers). There is no site where the dispatch reaches a publisher that
- * no gate precedes, so the sentence is true everywhere it is written.
+ * the publishing job is gated — 186 by a `needs:` on a job that runs this
+ * project's toolchain, 8 by the publish step sitting after those commands in one
+ * fused job (ablation-wire, bcrypt-forge, dilithium-reject, elgamal-plain,
+ * iron-letter, isogeny-gate, scloud-vault, world-ciphers), and 1 through a
+ * REUSABLE WORKFLOW: crypto-lab-pake-gate's deploy job needs `build`, and
+ * `build` is nothing but `uses: ./.github/workflows/browser-gate.yml`. A walk
+ * that stopped at the calling job would find no commands there, call that lab
+ * ungated, and report this true sentence false. There is no site where the
+ * dispatch reaches a publisher that no gate precedes, so the sentence is true
+ * everywhere it is written.
  *
  * If that re-derivation ever stops holding, this file is writing a false
- * statement into ~190 repos at once. tools/dispatch-proof.js re-runs it.
+ * statement into ~195 repos at once. tools/dispatch-claims.js re-derives it on
+ * every run of this writer, of dispatch-sync and of dispatch-proof, and binds
+ * this sentence's POLARITY to the result: assert the opposite and it fails.
  *
  * ---------------------------------------------------------------------------
  * Ownership, against transform.mjs
@@ -92,9 +98,30 @@
  * normaliseBlock() below for that block instead, so the two cannot disagree.
  *
  * ---------------------------------------------------------------------------
+ * THIS FILE IS A FLEET-WIDE WRITER, AND ITS WRITE PATH IS GUARDED
+ *
+ * Running it with no argument does not tidy one repo. It propagates CANONICAL
+ * into every drifted site — ~195 repos, one command. Nothing else in this repo
+ * has that reach.
+ *
+ * Which is why, on 2026-09-10, inverting one clause of CANONICAL to something
+ * false was a two-step path to a fleet-wide lie: dispatch-proof passed clean,
+ * the drift check went red because the repos still held the OLD text, and its
+ * remedy line said to run this writer. So before writing anything, main() asks
+ * tools/dispatch-claims.js whether each clause of CANONICAL is still TRUE of the
+ * fleet it is about to be written into, and REFUSES if it is not.
+ *
+ * The site total is pinned too, in tools/dispatch-census.json: "195 sites, all
+ * canonical" was previously indistinguishable from "194 sites, all canonical,
+ * and one lab quietly stopped being recognisable".
+ *
  * Usage (from the crypto-lab repo root):
- *   node tools/dispatch-comment-sync.js          rewrite every drifted block
- *   node tools/dispatch-comment-sync.js check    report; exit 1 if any would change
+ *   node tools/dispatch-comment-sync.js          PROPAGATE CANONICAL into every
+ *                                                drifted site (~195 repos).
+ *                                                Refuses if a clause is false.
+ *   node tools/dispatch-comment-sync.js check    report; exit 1 if any block
+ *                                                would change, a clause is
+ *                                                false, or a lab is missing
  *   node tools/dispatch-comment-sync.js --dry-run   report + diff, write nothing
  *
  * Purely local — no network, no `gh`.
@@ -106,7 +133,13 @@ const path = require('path');
 /* The canonical rationale, WITHOUT the leading `# ` and without indentation —
  * both are supplied per site so each repo keeps its own. This array is the
  * single source of truth; dispatch-sync.js and transform.mjs import it from
- * here rather than carrying a copy. */
+ * here rather than carrying a copy.
+ *
+ * EDITING THIS ARRAY EDITS ~195 REPOS. Every factual clause below is bound to
+ * evidence re-derived from the fleet's own YAML by tools/dispatch-claims.js,
+ * which fails when a clause becomes FALSE (not when it changes wording — reword
+ * freely). Run `node tools/dispatch-claims.js check` after any edit here; the
+ * writer below will refuse to propagate a clause that no longer holds. */
 const CANONICAL = [
   'A merge made with GITHUB_TOKEN raises no push event -- GitHub suppresses',
   'them so workflows cannot retrigger themselves -- so deploy would never run',
@@ -135,10 +168,16 @@ const LAB_DIR_RE = /^crypto-(lab|compare|counsel)/;
 
 const indentOf = (l) => l.length - l.trimStart().length;
 
-function siblingLabs() {
-  return fs.readdirSync(FLEET_ROOT).sort()
+/* `root` is a parameter, not a constant, for one reason: tools/dispatch-
+ * mutations.js has to run this scanner over a synthetic mini-fleet in a temp
+ * directory. A checker that can only ever be pointed at the real fleet cannot
+ * be mutation-tested, and an untested checker is the thing this whole file
+ * exists to stop being. It defaults to FLEET_ROOT, so every caller that does
+ * not care is unchanged. */
+function siblingLabs(root = FLEET_ROOT) {
+  return fs.readdirSync(root).sort()
     .filter((d) => LAB_DIR_RE.test(d))
-    .filter((d) => fs.existsSync(path.join(FLEET_ROOT, d, '.github', 'workflows')));
+    .filter((d) => fs.existsSync(path.join(root, d, '.github', 'workflows')));
 }
 
 function workflowFiles(repoDir) {
@@ -276,6 +315,29 @@ function normaliseBlock(block, pad) {
 
 /* ------------------------------------------------------------------- sites */
 
+/* The dispatch command line inside a job, or -1.
+ *
+ * A COMMENT MENTIONING THE COMMAND IS NOT THE COMMAND. 178 files in this fleet
+ * carry `actions: write   # ... without it gh workflow run 403s`, and a loose
+ * match finds that line first, in the permissions block, far above the real
+ * dispatch. Match only where the command actually starts a command: at the
+ * start of the line, after a `run:` key, or after a shell separator — and never
+ * on a whole-line comment.
+ *
+ * Exported because tools/dispatch-census.js asks the same question from the
+ * other side ("this job carries the rationale paragraph — does it still carry
+ * the line the paragraph defends?"), and two copies of this matcher would be
+ * two chances to disagree about what a dispatch is. */
+function findDispatchLine(lines, from, to) {
+  for (let i = from; i < to; i++) {
+    const l = lines[i];
+    if (/^\s*#/.test(l)) continue;
+    const code = l.replace(/\s#.*$/, '');
+    if (/(^\s*|run:\s*|[;&|]\s*|\bthen\s+)gh workflow run\s/.test(code)) return i;
+  }
+  return -1;
+}
+
 /* Every place in the fleet where this paragraph belongs: the comment run above
  * the `gh workflow run` in a Dependabot auto-merge job.
  *
@@ -289,31 +351,19 @@ function normaliseBlock(block, pad) {
  * Scanning only the first shape found 194 of 195 sites and said nothing about
  * the 195th, which is how a checker quietly stops covering a lab. Both shapes
  * are read, and each site keeps its own indentation. */
-function sites(repo) {
+function sites(repo, root = FLEET_ROOT) {
   const out = [];
   const STEP_KEY = /^\s*(-\s+)?(name|id|if|uses|run|shell|env|with|timeout-minutes|continue-on-error|working-directory):/;
-  for (const file of workflowFiles(path.join(FLEET_ROOT, repo))) {
+  for (const file of workflowFiles(path.join(root, repo))) {
     let lines;
     try { lines = fs.readFileSync(file, 'utf8').split('\n'); } catch { continue; }
     for (const job of jobBlocks(lines)) {
       const body = lines.slice(job.start, job.end).join('\n');
       if (!isAutoMergeJob(job.name, body)) continue;
 
-      /* First dispatch line in the job, whatever it is nested in.
-       *
-       * A COMMENT MENTIONING THE COMMAND IS NOT THE COMMAND. 178 files in this
-       * fleet carry `actions: write   # ... without it gh workflow run 403s`,
-       * and a loose match finds that line first, in the permissions block, far
-       * above the real dispatch. Match only where the command actually starts a
-       * command: at the start of the line, after a `run:` key, or after a shell
-       * separator — and never on a whole-line comment. */
-      let disp = -1;
-      for (let i = job.start; i < job.end; i++) {
-        const l = lines[i];
-        if (/^\s*#/.test(l)) continue;
-        const code = l.replace(/\s#.*$/, '');
-        if (/(^\s*|run:\s*|[;&|]\s*|\bthen\s+)gh workflow run\s/.test(code)) { disp = i; break; }
-      }
+      /* First dispatch line in the job, whatever it is nested in — see
+       * findDispatchLine above for why the match is that narrow. */
+      const disp = findDispatchLine(lines, job.start, job.end);
       if (disp < 0) continue;
 
       /* Shape 1: comments sit immediately above the dispatch line. */
@@ -382,8 +432,8 @@ function evaluate(site) {
   return { ...site, ...r };
 }
 
-function scan() {
-  return siblingLabs().flatMap((repo) => sites(repo)).map(evaluate);
+function scan(root = FLEET_ROOT) {
+  return siblingLabs(root).flatMap((repo) => sites(repo, root)).map(evaluate);
 }
 
 /* Apply every pending rewrite, grouped by file and spliced high-index-first so
@@ -442,8 +492,46 @@ function main() {
   const arg = process.argv[2];
   const check = arg === 'check';
   const dry = arg === '--dry-run';
+  const write = !check && !dry;
+
+  /* Required lazily, and deliberately: dispatch-claims and dispatch-census both
+   * read this module's exports, so a top-level require here would be a cycle
+   * that hands one of them a half-built object. By the time main() runs, this
+   * module is complete. */
+  const claims = require('./dispatch-claims.js');
+  const census = require('./dispatch-census.js');
+
+  /* THE GUARD ON THE WRITE PATH.
+   *
+   * This is the one command in the fleet that takes a sentence and puts it in
+   * ~195 repos. On 2026-09-10 an audit inverted one clause of CANONICAL to
+   * something false, and the only thing that went red was the DRIFT check —
+   * whose remedy line said to run this writer, which would have made the false
+   * sentence fleet-wide and every gate green. So the writer now asks whether
+   * the paragraph is TRUE of the fleet before it propagates it, and refuses if
+   * it is not. `check` and `--dry-run` report the same verdict and write
+   * nothing either way. */
+  const cl = claims.verify();
+  if (cl.failures.length) {
+    console.log(`${cl.failures.length} clause(s) of CANONICAL are NOT true of the fleet they would be written into:\n`);
+    for (const f of cl.failures) {
+      console.log(`  ${f.status}  ${f.id}`);
+      if (f.sentence) console.log(`      clause:   ${f.sentence}`);
+      if (f.why) console.log(`      asserted: ${f.why}`);
+      if (f.evidence) console.log(`      derived:  ${f.evidence}`);
+      for (const d of (f.detail || []).slice(0, 6)) console.log(`      ${d}`);
+    }
+    console.log('\nSee node tools/dispatch-claims.js for the full derivation.');
+    if (write) {
+      console.log('\nREFUSING TO WRITE. This writer propagates CANONICAL into every drifted site — one edit,');
+      console.log('~195 repos — and that is exactly how a false sentence becomes the fleet\'s documentation.');
+      console.log('Fix the paragraph, or fix the labs that make it false, then run this again.');
+      return 1;
+    }
+  }
+
   const rows = scan();
-  const dirty = report(rows, { write: !check && !dry });
+  const dirty = report(rows, { write });
   if (dry) {
     for (const r of rows.filter((x) => x.status === 'DRIFTED' || x.status === 'ABSENT')) {
       console.log(`\n--- ${r.repo}/${path.basename(r.file)}`);
@@ -452,9 +540,19 @@ function main() {
     }
   }
   if (!dirty) console.log('\nEvery dispatch rationale is the canonical paragraph.');
-  return check && dirty ? 1 : 0;
+
+  /* The count above is a count of sites this file could FIND. Pin it, or a lab
+   * that stops being recognisable leaves quietly and the total is simply one
+   * smaller — the exact shape of (a), (b) and (c) in dispatch-census.js. */
+  const c = census.verify();
+  console.log(`Census: ${c.observed.dispatchSites} dispatch sites across ${c.observed.labs} labs `
+    + `(pinned ${c.expected.totals.dispatchSites}/${c.expected.totals.labs}, tools/dispatch-census.json)`);
+  for (const f of c.fails) console.log(`  ${f.kind}  ${f.repo} — ${f.why}`);
+
+  return check && (dirty || c.fails.length || cl.failures.length) ? 1 : 0;
 }
 
-module.exports = { CANONICAL, RATIONALE_RE, normaliseBlock, scan, sites, siblingLabs, DIRTY, FLEET_ROOT };
+module.exports = { CANONICAL, RATIONALE_RE, normaliseBlock, scan, sites, siblingLabs, DIRTY, FLEET_ROOT,
+  workflowFiles, jobBlocks, isAutoMergeJob, findDispatchLine, indentOf };
 
 if (require.main === module) process.exit(main());

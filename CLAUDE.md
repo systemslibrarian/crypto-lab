@@ -93,6 +93,31 @@ anything that has already disabled a gate; warnings are shapes that still ship t
 but are one edit from failing (two equal gates in separate files, an unscoped
 `cancel-in-progress` group on a workflow that has no `pull_request` trigger *yet*).
 
+**It finds a lab's deploy job by the publisher action that job uses**, and until
+2026-09-10 the only publisher it knew was the literal `actions/deploy-pages`.
+`crypto-lab-dilithium-reject` and `crypto-lab-elgamal-plain` publish with
+`peaceiris/actions-gh-pages@v4`, so they had no deploy job as far as the checker was
+concerned — not exempt from one rule, invisible to all of them, counted in the
+placid-looking *"3 with no Pages deploy"* line. Behind that skip both were already
+broken: each auto-merges with `gh pr merge --squash` and dispatches nothing, so the
+`GITHUB_TOKEN` merge raises no push event and `on: push` never fires, and each still
+carries the `actions: write   # required by the deploy dispatch` comment naming a
+dispatch that was never written. Making them visible moved the fleet from 193 judged
+labs / 15 failing to 195 / 17, with no other lab's output changing by a byte.
+
+The publisher set is now `PAGES_PUBLISHERS` in that file. Only two of its five
+entries are in use here — `actions/deploy-pages` in 193 workflow files,
+`peaceiris/actions-gh-pages` in two, surveyed across all 248 on 2026-09-10; the other
+three are there so a lab adopting one gets judged rather than skipped. A publisher
+outside that set is still not recognised, so one further rule closes the loop:
+**DEPLOY-UNRECOGNISED** fails a lab that auto-merges, has no publisher the checker
+knows, *and* whose repo slug a card in `index.html` links to as a live github.io page
+— the card being the evidence that a deploy exists to be judged. It is keyed on the
+card because a lab genuinely can publish nothing: `crypto-lab-blind-oracle-api` is a
+Rust service with no page and no card, and remains a fair skip. The rule matches no
+lab today; it exists so the next new publisher cannot arrive unseen. The skipped labs
+are now listed by name too — the bare count is what hid these two.
+
 `concept-coverage.md` is the only gap list. Several older analysis files that used to sit in
 this root — `futuredemos.md`, `CARD-AUDIT.md`, `CARD-ACCURACY-FINDINGS.md`,
 `HEADER-ROLLOUT-TODO.md`, `PROMPT-standardize-parts-A-D.md` — were snapshots that the

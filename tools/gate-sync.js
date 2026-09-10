@@ -32,8 +32,21 @@
  * ---------------------------------------------------------------------------
  * The invariant, as encoded
  *
- *   Every check the deploy path runs before actions/deploy-pages must also run
- *   on the path a Dependabot bump has to clear before it can merge itself.
+ *   Every check the deploy path runs before it publishes the Pages site must
+ *   also run on the path a Dependabot bump has to clear before it can merge
+ *   itself.
+ *
+ * A deploy job is one that uses a publisher in PAGES_PUBLISHERS below. Until
+ * 2026-09-10 that meant the single literal `actions/deploy-pages`, and the two
+ * labs that publish with `peaceiris/actions-gh-pages` — dilithium-reject and
+ * elgamal-plain — had no deploy job as far as this file was concerned. They were
+ * not merely exempt from the dispatch rule; they were counted in the "N with no
+ * Pages deploy" line and every rule here skipped them in silence, which is the
+ * exact failure this tool exists to end. Both were real defects behind that skip:
+ * both auto-merge with `gh pr merge --squash` and dispatch nothing at all, so the
+ * GITHUB_TOKEN merge raises no push event and the deploy never runs, while both
+ * carry the vestigial `actions: write   # required by the deploy dispatch`
+ * comment naming a dispatch that is not there.
  *
  * Both paths are computed as a transitive `needs:` closure over jobs, WITHIN one
  * workflow file, because `needs:` cannot cross files. Two things widen that
@@ -50,8 +63,8 @@
  * through the lab's own package.json, recursively, so `npm run test:a11y`,
  * `npm run test:e2e` and a bare `playwright test` compare as the same check
  * rather than as three different ones. Setup and plumbing — checkout, setup-node,
- * npm ci, playwright install, the Pages upload/deploy actions, fetch-metadata —
- * are dropped from both sides; everything else counts, the build included, since
+ * npm ci, playwright install, the Pages upload action, every publisher in
+ * PAGES_PUBLISHERS, fetch-metadata — are dropped from both sides; everything else counts, the build included, since
  * a bump that breaks the build must not be able to merge either. The failure is
  * the set difference: what the deploy path runs and the auto-merge path does not.
  *
@@ -69,6 +82,17 @@
  * over.
  *
  * FAILS
+ *   DEPLOY-UNRECOGNISED
+ *                    a lab with an auto-merge job, whose repo slug a catalog card
+ *                    links to as a live github.io page, in which no job uses any
+ *                    publisher in PAGES_PUBLISHERS. Every rule below is skipped
+ *                    for such a lab, so the skip itself is the finding. It is
+ *                    keyed on the card rather than on "has no publisher" because
+ *                    a lab really can publish nothing — crypto-lab-blind-oracle-api
+ *                    is a Rust service with no page and no card, and it is a fair
+ *                    skip. As of 2026-09-10 this rule matches no lab; it is the
+ *                    guard against the next publisher arriving unnoticed, and it
+ *                    can only fire on a lab this file could otherwise not judge.
  *   GATE-WEAKER      the invariant itself: checks on the deploy path that the
  *                    auto-merge path does not run.
  *   PUSH-GATED       a deploy job gated `if: github.event_name == 'push'`. It
@@ -437,6 +461,26 @@ const INFRA_USES = new Set([
   'actions/attest-build-provenance',
 ]);
 
+/* Every action in the fleet that publishes a GitHub Pages site, and the ones a
+ * lab is most likely to reach for next. Surveyed across all 248 workflow files
+ * on 2026-09-10: only two are actually in use — actions/deploy-pages in 193
+ * files, peaceiris/actions-gh-pages in two (dilithium-reject, elgamal-plain).
+ * The other three are here so that a lab adopting one gets judged by every rule
+ * below rather than by DEPLOY-UNRECOGNISED alone.
+ *
+ * This set does two jobs at once, and both matter. It is what isDeployJob looks
+ * for, and it is also plumbing on the check side: a publisher counted as a check
+ * token would appear on the deploy path and never on the auto-merge path, which
+ * would read as GATE-WEAKER in every lab that used it. */
+const PAGES_PUBLISHERS = new Set([
+  'actions/deploy-pages',
+  'peaceiris/actions-gh-pages',
+  'JamesIves/github-pages-deploy-action',
+  'crazy-max/ghaction-github-pages',
+  'Cecilapp/GitHub-Pages-deploy',
+]);
+for (const p of PAGES_PUBLISHERS) INFRA_USES.add(p);
+
 // Shell built-ins, control flow and the merge machinery itself.
 const IGNORED_BINS = new Set([
   'echo', 'printf', 'sleep', 'exit', 'cd', 'set', 'export', 'source', '.', 'true', 'false',
@@ -650,7 +694,7 @@ function findJobs(lab, predicate) {
 
 function isDeployJob(job) {
   return stepsOf(job).some((s) => typeof s.uses === 'string'
-    && s.uses.split('@')[0].trim() === 'actions/deploy-pages');
+    && PAGES_PUBLISHERS.has(s.uses.split('@')[0].trim()));
 }
 
 function isMergeJob(job) {
@@ -791,19 +835,37 @@ function analyse(repo, lab) {
  * 6. Report.
  * ------------------------------------------------------------------ */
 
+/* Every repo slug a catalog card links to. Read for one purpose only: to tell a
+ * lab that publishes nothing (crypto-lab-blind-oracle-api is a Rust service with
+ * no page and no card) from a lab the catalog says has a live page whose
+ * publisher this checker did not recognise. The first is a fair skip; the second
+ * is the tool going blind, and that is a failure.
+ *
+ * Missing or unreadable index.html is a hard error rather than an empty set,
+ * because an empty set silently switches DEPLOY-UNRECOGNISED off. */
+function cardedSlugs() {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const re = /https:\/\/systemslibrarian\.github\.io\/([A-Za-z0-9._-]+)\//g;
+  const slugs = new Set();
+  let m;
+  while ((m = re.exec(html)) !== null) slugs.add(m[1]);
+  return slugs;
+}
+
 function siblingLabs() {
   return fs.readdirSync(FLEET_ROOT).sort()
     .filter((d) => /^crypto-(lab|compare|counsel)/.test(d))
     .filter((d) => fs.existsSync(path.join(FLEET_ROOT, d, '.github', 'workflows')));
 }
 
-const ORDER = ['GATE-WEAKER', 'PUSH-GATED', 'FUSED-GATE-OFF', 'NO-PR-GATE', 'DISPATCH-MISSING',
+const ORDER = ['DEPLOY-UNRECOGNISED', 'GATE-WEAKER', 'PUSH-GATED', 'FUSED-GATE-OFF', 'NO-PR-GATE', 'DISPATCH-MISSING',
   'DISPATCH-404', 'DISPATCH-INERT', 'DISPATCH-403', 'CONCURRENCY-PR',
   'SPLIT-GATE', 'CONCURRENCY-BARE', 'DISPATCH-ELSEWHERE'];
 
 function main() {
   const check = process.argv[2] === 'check';
   const repos = siblingLabs();
+  const carded = cardedSlugs();
 
   const rows = [];
   const unparsed = [];
@@ -814,6 +876,14 @@ function main() {
     if (!lab) { skipped.neither.push(repo); continue; }
     if (lab.unparsed) { unparsed.push({ repo, detail: lab.unparsed }); continue; }
     const r = analyse(repo, lab);
+    if (r.skip === 'no-deploy' && carded.has(repo)) {
+      rows.push({ repo, findings: [{ level: 'fail', code: 'DEPLOY-UNRECOGNISED',
+        detail: `the catalog cards a live page at https://systemslibrarian.github.io/${repo}/ `
+          + 'and this lab auto-merges, but no job uses a publisher this checker knows '
+          + `(${[...PAGES_PUBLISHERS].join(', ')}) — so every rule above is skipped for it` }],
+      swallowed: false });
+      continue;
+    }
     if (r.skip) { skipped[r.skip].push(repo); continue; }
     rows.push(r);
   }
@@ -835,10 +905,16 @@ function main() {
     + `${warning.size} warning only`);
   console.log(`Skipped, not violations: ${skipped['no-automerge'].length} with no auto-merge job, `
     + `${skipped['no-deploy'].length} with no Pages deploy, ${skipped.neither.length} with neither`);
+  /* Name them. The count on its own is where this checker hid two labs it could
+   * not see: "3 with no Pages deploy" reads as a clean line either way. */
+  for (const [why, list] of Object.entries(skipped)) {
+    if (list.length) console.log(`  ${why}: ${list.join(', ')}`);
+  }
   if (unparsed.length) console.log(`Unparsed: ${unparsed.length}`);
 
   const codes = [...byCode.keys()].sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b));
   const headline = {
+    'DEPLOY-UNRECOGNISED': 'A CARDED LAB WHOSE PAGES PUBLISHER THIS CHECKER CANNOT SEE',
     'GATE-WEAKER': 'THE GATE A BUMP MERGES AGAINST IS NOT THE GATE THE DEPLOY RUNS',
     'PUSH-GATED': 'DEPLOY GATED ON == \'push\', WHICH ALSO SKIPS workflow_dispatch',
     'FUSED-GATE-OFF': 'FUSED BUILD-AND-DEPLOY GATED OFF FOR PULL REQUESTS — THE GATE IS THE CASUALTY',

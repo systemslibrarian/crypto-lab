@@ -201,6 +201,56 @@ echo "new step exit=$? stdout=[$out]"
   check('every dispatch target gates before it publishes', ungated.length === 0, ungated.join('\n'));
   console.log(`          (${sites} dispatch sites re-derived under ${root})`);
 
+  /* ----------------------------------------------------------------- A6 */
+  console.log('\nA6  normaliseBlock: what it rewrites, keeps, and refuses');
+  const P = '          ';
+  const hash = (a) => a.join('\n');
+  const canonBlock = comments.CANONICAL.map((s) => `${P}# ${s}`);
+
+  let r = comments.normaliseBlock([], P);
+  check('empty block → ABSENT, canonical inserted',
+    r.status === 'ABSENT' && hash(r.lines) === hash(canonBlock), r.status);
+
+  r = comments.normaliseBlock(canonBlock, P);
+  check('canonical block → CANONICAL, byte-identical out',
+    r.status === 'CANONICAL' && hash(r.lines) === hash(canonBlock), r.status);
+
+  const keptNote = [`${P}# The filename below is deploy-pages.yml here, not deploy.yml.`];
+  r = comments.normaliseBlock([...canonBlock, `${P}#`, ...keptNote], P);
+  check('per-repo paragraph after the rationale is preserved verbatim',
+    r.status === 'CANONICAL' && hash(r.lines) === hash([...canonBlock, `${P}#`, ...keptNote]), r.status);
+
+  /* The four labs whose filename note is inside the rationale paragraph. */
+  r = comments.normaliseBlock([...canonBlock, ...keptNote], P);
+  check('a note appended to the rationale paragraph is split off, not dropped',
+    r.status === 'DRIFTED' && hash(r.lines) === hash([...canonBlock, `${P}#`, ...keptNote]),
+    `${r.status}\n${r.lines.join('\n')}`);
+
+  const flagNote = [`${P}# \`merged\` is set by the merge command's own exit status.`];
+  r = comments.normaliseBlock([...flagNote, `${P}#`, `${P}# A merge with GITHUB_TOKEN raises no push event, so ask explicitly.`], P);
+  check('a paragraph BEFORE the rationale is preserved, rationale replaced',
+    r.status === 'DRIFTED' && hash(r.lines) === hash([...flagNote, `${P}#`, ...canonBlock]),
+    `${r.status}\n${r.lines.join('\n')}`);
+
+  const twoBlock = [...canonBlock, `${P}#`, `${P}# Also: a GITHUB_TOKEN merge raises no push event.`];
+  r = comments.normaliseBlock(twoBlock, P);
+  check('two rationale paragraphs → UNRECOGNISED, input returned unchanged',
+    r.status === 'UNRECOGNISED' && hash(r.lines) === hash(twoBlock), r.status);
+
+  const noneBlock = [`${P}# Retry three times, then give up.`];
+  r = comments.normaliseBlock(noneBlock, P);
+  check('no rationale paragraph → UNRECOGNISED, input returned unchanged',
+    r.status === 'UNRECOGNISED' && hash(r.lines) === hash(noneBlock), r.status);
+
+  const buriedBlock = [
+    `${P}# A merge made with GITHUB_TOKEN raises no push event, so ask explicitly.`,
+    `${P}# The dispatched run is the same pipeline, so a bad merge still ships nothing. It is`,
+    `${P}# pages.yml here, not deploy.yml.`,
+  ];
+  r = comments.normaliseBlock(buriedBlock, P);
+  check('closing claim buried mid-line → UNRECOGNISED rather than dropping the prose after it',
+    r.status === 'UNRECOGNISED' && hash(r.lines) === hash(buriedBlock), `${r.status}: ${r.why}`);
+
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
 })();

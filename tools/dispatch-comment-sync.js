@@ -211,11 +211,11 @@ const paragraphs = (block) => {
  * Returns { status, lines, why }. `lines` is the replacement block, indented,
  * `#`-prefixed and ready to splice; on a refusal it is the input unchanged.
  *
- *   CANONICAL     already exact; lines === block
+ *   CANONICAL     `lines` came out byte-equal to `block`
  *   DRIFTED       rewritten
  *   ABSENT        block was empty; CANONICAL inserted (see restoreAbsent below)
- *   UNRECOGNISED  refused — zero or several rationale paragraphs, or a
- *                 terminal-claim line with text after it on the same line
+ *   UNRECOGNISED  refused — zero or several rationale paragraphs, or the closing
+ *                 claim buried mid-line with prose after it
  */
 function normaliseBlock(block, pad) {
   const emit = (paras) => paras
@@ -238,9 +238,22 @@ function normaliseBlock(block, pad) {
   const rationale = hits[0];
   const at = paras.indexOf(rationale);
 
-  /* Split a same-paragraph filename note off the end of the rationale. */
+  /* Split a same-paragraph filename note off the end of the rationale.
+   *
+   * The split is line-granular, which is safe only while the closing claim ends
+   * its line. If some copy has wrapped it mid-line with prose after it, the
+   * whole rest of the paragraph would be swallowed into the replacement and
+   * silently lost — so that shape is refused instead. Nothing in the fleet is
+   * shaped that way today; this is here so it cannot arrive unnoticed. */
+  const text = (l) => l.trim().replace(/^#\s?/, '');
+  const buried = rationale.findIndex((l) => /\bships nothing\./.test(text(l)) && !TERMINAL_RE.test(text(l)));
+  if (buried >= 0) {
+    return { status: 'UNRECOGNISED', lines: block,
+      why: 'the closing claim is buried mid-line with prose after it; splitting the paragraph '
+        + 'there would silently drop that prose' };
+  }
   let tail = [];
-  const termIdx = rationale.findIndex((l) => TERMINAL_RE.test(l.trim().replace(/^#\s?/, '')));
+  const termIdx = rationale.findIndex((l) => TERMINAL_RE.test(text(l)));
   if (termIdx >= 0 && termIdx < rationale.length - 1) tail = rationale.slice(termIdx + 1);
 
   const before = paras.slice(0, at);
@@ -273,7 +286,7 @@ function sites(repo) {
         if (disp < 0) continue;
         let k = disp - 1;
         while (k >= rb.start && /^\s*#/.test(lines[k])) k--;
-        out.push({ repo, file, job: job.name, lines, disp,
+        out.push({ repo, file, job: job.name, disp,
           blockStart: k + 1, block: lines.slice(k + 1, disp), pad: ' '.repeat(indentOf(lines[disp])) });
       }
     }

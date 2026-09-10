@@ -105,7 +105,8 @@
  *                    readdirSync sees, not from what the catalog claims. That is
  *                    unfixable inside a local-files-only checker, so it is
  *                    counted and printed on every run instead; see the
- *                    "Carded labs this checker never opened" line in the summary.
+ *                    "Carded labs this checker never opened" line in the summary,
+ *                    which counts distinct github.io slugs linked from index.html.
  *                    As of 2026-09-10 this rule matches no lab, and one carded
  *                    lab (snow2) is uncloned and therefore outside it.
  *
@@ -989,7 +990,8 @@ function main() {
    * signal; that only reads as rising if the zero is printed too. */
   const unseen = unseenCarded(carded, repos);
   console.log(`Carded labs this checker never opened: ${unseen.length} of ${carded.size} `
-    + `(reported, never failed — every rule below is silent about each one)`);
+    + 'github.io slugs linked from index.html');
+  console.log('  (reported, never failed — every rule below is silent about each one named here)');
   for (const u of unseen) console.log(`  ${u.slug}  —  ${u.why}`);
 
   if (unparsed.length) console.log(`Unparsed: ${unparsed.length}`);

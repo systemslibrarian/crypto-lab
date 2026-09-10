@@ -1,0 +1,212 @@
+name: Deploy to GitHub Pages
+
+# One workflow, three triggers, and each one matters:
+#   push          — the normal path to production.
+#   pull_request  — so the gate JUDGES pull requests. Without it a Dependabot
+#                   bump has no CI signal at all (this fleet reached 1,461 open
+#                   PRs that way), and the auto-merge job below would have
+#                   nothing safe to depend on.
+#   workflow_dispatch — a merge made with GITHUB_TOKEN raises no push event, so
+#                   the auto-merge job has to ask for the deploy explicitly.
+#                   Without this trigger that dispatch has nowhere to land and
+#                   the live site silently keeps serving the previous build.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# LEAST PRIVILEGE, and the reason it is not at workflow level any more.
+#
+# `pages: write` and `id-token: write` used to sit here, which handed them to
+# every job in the workflow — including `build`, which runs `npm ci` and so
+# executes third-party install scripts, and including every pull_request run
+# from a fork's branch. A compromised transitive devDependency could therefore
+# mint a Pages OIDC token and publish to the live site without ever going near
+# the gate. The deployment scopes now live on the `deploy` job alone, which is
+# the only job that needs them; every other job gets `contents: read`.
+permissions:
+  contents: read
+
+concurrency:
+  # NOT a bare `pages`: with cancel-in-progress a pull-request run would cancel
+  # a live main deploy.
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+# Every `uses:` below is pinned to a full commit SHA with the tag in a trailing
+# comment. A tag is a MOVEABLE pointer: whoever controls the action repository
+# can repoint `v7` at new code, and that code would run here with this
+# workflow's token. A SHA cannot be repointed.
+#
+# Pinning does not mean going stale. `.github/dependabot.yml` configures the
+# `github-actions` ecosystem, and Dependabot rewrites SHA pins in place —
+# bumping the SHA and the trailing tag comment together — so these stay current
+# through the same gated, auto-merged pull requests as everything else.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # The e2e suite builds the site, then drives the whole claims suite across
+    # every configured browser project plus the a11y scans at two widths. The
+    # count is deliberately not written here: it changed the day a claim was
+    # added, and a stale number in a comment is the same defect this lab fixed
+    # on its own pages.
+    timeout-minutes: 90
+    # Stated explicitly, not merely inherited. This job runs `npm ci` and a
+    # browser suite, which is every line of third-party code in the toolchain;
+    # writing the scope down here is what makes it obvious in review if anyone
+    # ever adds a deployment scope back to a job that executes install scripts.
+    permissions:
+      contents: read
+      # `actions/configure-pages` calls GET /repos/{owner}/{repo}/pages with the
+      # job token and RETHROWS on failure when `enablement` is false, so without
+      # this the build job 403s and the artifact is never uploaded -- the deploy
+      # then has nothing to publish. Read, not write: publishing needs
+      # pages: write, and that lives on the deploy job alone, which runs no
+      # checkout and no `npm ci`.
+      pages: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The whole argument for moving the Pages scopes off this job is that
+          # the token must never share a job with third-party install scripts.
+          # `npm ci` runs those a few lines below, and checkout's default writes
+          # GITHUB_TOKEN into .git/config. This job pushes nothing, so it does
+          # not need the credential at all.
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          # Read from .nvmrc rather than repeated here, so the version CI uses,
+          # the version `nvm use` picks locally, and the `engines` range in
+          # package.json cannot drift apart into three different answers.
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+
+      # The WHOLE suite gates the deploy, not just the a11y half. A sweep of
+      # this fleet found 29 repos running `test:a11y` alone, so their
+      # cryptographic suites never blocked a publish.
+      - name: Unit tests (Vitest — algorithms, verifier, generator)
+        run: npm test
+
+      - name: Build (typecheck gates the build)
+        run: npm run build
+
+      # All three engines, because the claims suite now runs on all three. If
+      # this line and the project list in playwright.config.ts fall out of step
+      # the run does not skip quietly — Playwright fails on the missing browser
+      # executable — but keep them together anyway.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      # ONE step, running EVERY configured project, and that is the point. This
+      # was two steps calling `npm run test:claims` and `npm run test:a11y`,
+      # where `test:claims` was `playwright test --project=claims` — an exact
+      # name match that excluded the `claims-mobile` project entirely. CI
+      # enforced 22 executions while the README advertised 42, and nothing in
+      # the run said so. `test:e2e:all` takes no project filter at all, so a
+      # project cannot be added to the config and silently escape the gate.
+      - name: E2E gate (claims on four projects, a11y on Chromium)
+        run: npm run test:e2e:all
+
+      # Only on failure, and only useful because playwright.config.ts now emits
+      # the HTML report in CI as well as locally. While the reporter was
+      # `process.env.CI ? 'list' : [...]` this step would have uploaded an
+      # empty directory and looked like it was doing its job.
+      - name: Upload Playwright report (failures only)
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: playwright-report-${{ github.run_id }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+          if-no-files-found: warn
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    # NOT `== 'push'`. That also skips workflow_dispatch, which is the one
+    # trigger the post-auto-merge deploy depends on: the dispatched run would
+    # build, pass the gate, and skip this job, so the site never updates.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    # 15, not 10: `actions/deploy-pages` carries its own 10-minute internal
+    # timeout, so a job cap of 10 races it and the runner kills the job with a
+    # bare "cancelled" instead of letting the action print its own diagnostic.
+    timeout-minutes: 15
+    # The deployment scopes live here and nowhere else. actions/deploy-pages
+    # exchanges the job's OIDC token for a Pages deployment, so it needs both:
+    # `id-token: write` to mint the token and `pages: write` to publish. This
+    # job runs no project code — it has no checkout and no `npm ci` — so the
+    # token is never in the same job as a third-party install script.
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  # Dependabot only. `needs: build` is the whole safety argument — the gate
+  # decides, not the version number. A major that breaks this lab fails the
+  # gate and the PR stays open for a human.
+  dependabot-auto-merge:
+    needs: build
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    # Three merge attempts with a 15-second wait between them, plus a dispatch.
+    # Anything past 15 minutes here is a hang, not a slow API.
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+      # Required by the deploy dispatch below. Without it `gh workflow run`
+      # returns HTTP 403 "Resource not accessible by integration", the merged
+      # bump never deploys, and a `|| echo` fallback hides it.
+      actions: write
+    steps:
+      - id: meta
+        # Dependabot's own bump took this to the v3 floating tag; the SHA pin
+        # is the same release, and pinning is the point.
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+
+      - name: Merge any bump whose gate went green
+        # Retry: a sibling PR merging first moves main underneath us and GitHub
+        # rejects with "Base branch was modified". That is benign, so try again
+        # rather than failing the run over a race.
+        run: |
+          merged=""
+          for attempt in 1 2 3; do
+            if gh pr merge --squash --delete-branch "$PR_URL"; then
+              merged=1
+              break
+            fi
+            echo "merge attempt $attempt failed; base branch may have moved - retrying"
+            sleep 15
+          done
+          if [ -z "$merged" ]; then
+            echo "::warning::gate passed but the merge did not land after 3 attempts;"
+            echo "::warning::leaving this PR open - Dependabot will rebase and retry."
+            exit 0
+          fi
+          # A merge made with GITHUB_TOKEN raises no push event -- GitHub
+          # suppresses them so workflows cannot retrigger themselves -- so this
+          # asks for the deploy explicitly. A workflow_dispatch through the API
+          # is not suppressed, and the dispatched run is the same
+          # gate-then-deploy pipeline, so a bad merge still ships nothing.
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main \
+            || echo "::warning::deploy dispatch failed; run deploy.yml by hand"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

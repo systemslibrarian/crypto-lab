@@ -1,0 +1,128 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # The gate must judge pull requests too, or a Dependabot bump lands with no CI
+  # signal at all -- and the auto-merge job below has nothing to depend on.
+  pull_request:
+    branches: [main]
+  # Required by the post-merge deploy dispatch. A merge made with
+  # secrets.GITHUB_TOKEN raises no push event, so without this trigger the
+  # merged bump would never deploy and the live site would quietly serve the
+  # previous build with no red run anywhere to say so.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  # NOT a bare `pages`: with cancel-in-progress, a PR run would cancel a live
+  # main deploy.
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The CSP guard. index.html allows its inline theme pin by sha256 hash
+      # rather than by relaxing script-src, so one stray byte in that script
+      # kills the pin with nothing going red: the page still loads, the build
+      # still passes, and only a console violation nobody watches says so. This
+      # step recomputes the hash from the file's own bytes. It has to run here,
+      # in the job the deploy depends on, or it is decoration.
+      - name: CSP hash guard (the inline theme pin still matches its hash)
+        run: npm test
+
+      - name: Build site
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    # A pull request is tested, never published. NOT `== 'push'`: that would
+    # also skip workflow_dispatch, which is the one trigger the post-merge
+    # dispatch depends on -- the dispatched run would build, pass the gate, and
+    # skip this job, so the site would still never update.
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  # Dependabot only. `needs: build` is the whole safety argument: a bump can only
+  # merge itself once this lab's own CSP guard, typecheck and build have gone
+  # green on the PR. The gate decides, not the version number -- a bump that
+  # actually breaks this lab fails it and the PR stays open for a human.
+  dependabot-auto-merge:
+    needs: build
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+      # Required by the deploy dispatch below. Without it `gh workflow run`
+      # returns HTTP 403 "Resource not accessible by integration", the merged
+      # bump never deploys, and a `|| echo` fallback hides it.
+      actions: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+
+      - name: Merge any bump whose gate went green
+        # Retry: a sibling PR merging first moves main underneath us and GitHub
+        # rejects with "Base branch was modified". That is benign, so try again
+        # rather than failing the run over a race.
+        run: |
+          for attempt in 1 2 3; do
+            if gh pr merge --squash --delete-branch "$PR_URL"; then
+              merged=1
+              break
+            fi
+            echo "merge attempt $attempt failed; base branch may have moved - retrying"
+            sleep 15
+          done
+          if [ -z "$merged" ]; then
+            echo "::warning::gate passed but the merge did not land after 3 attempts;"
+            echo "::warning::leaving this PR open - Dependabot will rebase and retry."
+            exit 0
+          fi
+          # A merge made with GITHUB_TOKEN raises no push event -- GitHub
+          # suppresses them so workflows cannot retrigger themselves -- so deploy
+          # would never run and the site would keep serving the previous build.
+          # Ask for it explicitly; a workflow_dispatch through the API is not
+          # suppressed. The dispatched run is the same gate-then-deploy pipeline,
+          # so a bad merge still ships nothing.
+          gh workflow run deploy-pages.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,127 @@
+name: Deploy to GitHub Pages
+
+# This project is a static site with no build step, so the whole repository is
+# published as-is. The deterministic test suite gates every publish.
+
+on:
+  push:
+    branches: [main]
+  # The gate must judge pull requests too, or Dependabot opens bumps with no CI
+  # signal on any of them. This is also what the auto-merge job below hangs off.
+  pull_request:
+    branches: [main]
+  # Required by the post-auto-merge dispatch: a merge made with GITHUB_TOKEN
+  # raises no push event, so without this trigger a merged bump would never
+  # deploy and the live site would keep serving the previous build.
+  workflow_dispatch:
+
+# Allow the workflow to publish to Pages via the deployment API.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  # NOT a bare `pages`: now that pull requests run this workflow, a PR run
+  # sharing one group with main would queue behind — or cancel — a live deploy.
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    # The only cap that holds whatever shape a hang takes. --test-timeout misses a
+    # synchronous or non-yielding one entirely (measured: 2034ms under a 100ms
+    # budget, uncaught), and GitHub's default job limit is 360 minutes — so without
+    # this a wedged run burns six hours with nothing going red. Longest recent run
+    # here is 86s.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          # Deliberately no `cache: npm` and no `npm ci`. This lab has no
+          # dependencies and no lockfile; both would fail the run outright.
+      # `npm test` carries --test-timeout=60000. Read that as partial cover, not a
+      # hang guard: node's test timeout only fires for a test that YIELDS to the
+      # macrotask queue. Measured here — a synchronous busy-loop ran 2034ms under a
+      # 100ms budget without tripping, and so did an async test that only ever
+      # awaited already-resolved promises. It does catch a genuinely async hang,
+      # which is the shape the opt-in CSP_CHECK_URL fetch could take.
+      - name: Run the simulation test suite
+        run: npm test
+
+  deploy:
+    timeout-minutes: 15
+    # A pull request is tested, never published. NOT `== 'push'` — that would
+    # also skip workflow_dispatch, which is the one trigger the auto-merge
+    # deploy depends on: the dispatched run would build, pass the gate, and skip
+    # this job, so the site would still never update.
+    if: github.event_name != 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  # Dependabot only. `needs: test` is the whole safety argument — the gate
+  # decides, not the version number. A bump that breaks this lab fails the gate
+  # and the PR stays open for a human.
+  dependabot-auto-merge:
+    timeout-minutes: 15
+    needs: test
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      # Required by the deploy dispatch below. Without it `gh workflow run`
+      # returns HTTP 403 "Resource not accessible by integration", the merged
+      # bump never deploys, and the failure is easy to miss.
+      actions: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+
+      - name: Merge any bump whose gate went green
+        # Retry: a sibling PR merging first moves main underneath us and GitHub
+        # rejects with "Base branch was modified". That is benign, so try again
+        # rather than failing the run over a race.
+        run: |
+          for attempt in 1 2 3; do
+            if gh pr merge --squash --delete-branch "$PR_URL"; then
+              merged=1
+              break
+            fi
+            echo "merge attempt $attempt failed; base branch may have moved - retrying"
+            sleep 15
+          done
+          if [ -z "$merged" ]; then
+            echo "::warning::gate passed but the merge did not land after 3 attempts;"
+            echo "::warning::leaving this PR open - Dependabot will rebase and retry."
+            exit 0
+          fi
+          # A merge made with GITHUB_TOKEN raises no push event — GitHub
+          # suppresses them so workflows cannot retrigger themselves — so deploy
+          # would never run and the site would keep serving the previous build.
+          # Ask for it explicitly; a workflow_dispatch through the API is not
+          # suppressed. The dispatched run is the same gate-then-deploy pipeline,
+          # so a bad merge still ships nothing.
+          gh workflow run deploy-pages.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

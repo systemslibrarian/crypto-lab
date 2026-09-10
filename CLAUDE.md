@@ -21,7 +21,7 @@ each has a checker that fails when it drifts:
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
 
-Four more checkers guard the sibling demo repos, and the fleet itself, rather than
+Six more checkers guard the sibling demo repos, and the fleet itself, rather than
 a file derived from `index.html`:
 
 | Invariant | Checker |
@@ -30,6 +30,8 @@ a file derived from `index.html`:
 | every lab's live site is built from the sha on its `main` | `node tools/deploy-sync.js check` |
 | every lab that exists on GitHub has a card here | `node tools/fleet-sync.js check` |
 | the gate a Dependabot bump merges against is the gate the deploy runs | `node tools/gate-sync.js check` |
+| once a bump has merged itself, the deploy dispatch cannot be skipped in silence | `node tools/dispatch-sync.js check` |
+| the paragraph saying why that dispatch exists is one text fleet-wide | `node tools/dispatch-comment-sync.js check` |
 
 `deploy-sync` and `fleet-sync` are the two checkers here that need the network and
 `gh`; each takes about 30 seconds for the whole fleet, so neither is part of the
@@ -117,6 +119,68 @@ card because a lab genuinely can publish nothing: `crypto-lab-blind-oracle-api` 
 Rust service with no page and no card, and remains a fair skip. The rule matches no
 lab today; it exists so the next new publisher cannot arrive unseen. The skipped labs
 are now listed by name too — the bare count is what hid these two.
+
+`dispatch-sync` asks the one question `gate-sync` cannot reach: not whether the
+gate is wired right, but whether — once a bump **has** merged itself — the
+`gh workflow run` that ships it can fail without saying so. The construct it exists
+to end asked the API a second time (`gh pr view "$PR_URL" ... | grep -q MERGED`)
+about a merge that had already happened in the previous step. Any failure of that
+question — a rate limit, a 5xx, a token that lost scope, the PR object not yet
+consistent — produces no output, `grep -q` matches nothing, the `if` takes the else
+branch, and the step exits 0 having printed **nothing**: not even the
+`|| echo "::warning::"`, because the `gh workflow run` it guards was never reached.
+Adding `shell: bash` does not fix it and is worse than doing nothing because it
+looks like one — inside an `if` condition a failing pipeline takes the else branch
+with or without `pipefail`, and `set -e` is exempt there by POSIX. Measured a no-op
+in 183 of 183 steps. The fix is to stop asking: the merge command's own exit status
+sets a shell flag and the dispatch reads the flag.
+
+It asserts that **shape**, never a literal, because the labs that shipped the idiom
+first each wrote it differently and all of them are correct. Local-only and fast, so
+it belongs in the fast loop.
+
+`dispatch-comment-sync` owns the one thing `dispatch-sync` deliberately cannot
+judge: the paragraph above that dispatch explaining why the line is there. It is the
+only thing in the file that answers *"why dispatch, when there is an `on: push`
+deploy right above?"* — and the answer is that a `GITHUB_TOKEN` merge raises no push
+event, so that dispatch is the only thing that ships the bump. Deleting the
+paragraph and deleting the line it defends are the same edit six months apart. On
+2026-09-10 the fleet carried **35 wordings** of it; that was not agent drift, it
+pre-dated the auto-merge rewrite and had accumulated over months of one-lab-at-a-time
+edits, with nothing comparing any copy to any other. The generator now writes one
+canonical text into all 194 sites and `check` fails on any that differs, so a 29th
+variant turns something red instead of waiting to be noticed.
+
+It normalises **one paragraph** and nothing else. Per-repo comment paragraphs are
+preserved verbatim — the dispatch-filename note (the fleet dispatches `deploy.yml`,
+`pages.yml`, `deploy-pages.yml` *and* `ci.yml`, so that note is true of one repo and
+false of the next) and the flag-mechanism note six labs carry above the rationale. A
+comment block where zero or two paragraphs make the no-push-event argument is
+**refused, not guessed at**, and still fails `check`. An absent block **fails and is
+restored**: treating absence as clean would make the checker silent about exactly
+the state that precedes the failure. After the first pass 35 distinct blocks became
+18 — one shared by 171 labs, one shared by the six that also explain the flag, and
+16 one-offs that differ only in their per-repo filename note. All 18 contain the
+identical canonical paragraph, and no executable line changed (13 distinct
+executable bodies before and after).
+
+Two more files under `tools/` are not checkers and are not run in the loop:
+
+| File | What it is |
+|---|---|
+| `tools/transform.mjs` | the rewriter that moved ~179 labs onto the flag idiom. Kept because it is the only precise statement of what was done to them. It **refuses rather than guesses** on any job that does not match the old construct exactly. |
+| `tools/dispatch-proof.js` | the evidence for both of the above, re-runnable: the validator passes the nine reference labs, fails the old construct, the transform turns one into the other and is idempotent, the injected `gh pr view` fault ships nothing under the old shape and ships under the new, and the canonical paragraph's closing claim is re-derived over all 195 live dispatch sites. |
+
+`transform.mjs` and `dispatch-comment-sync.js` had a real conflict, and the split is
+worth knowing: **transform.mjs owns the executable lines and each repo's own
+specifics** (dispatch filename, `|| echo` suffix, retry count, `env:`, indentation);
+**dispatch-comment-sync.js owns the rationale paragraph's text.** transform.mjs used
+to re-home every comment line verbatim, the rationale included, which would
+re-scatter on the next repo it touched exactly what the normaliser had just unified —
+arriving as drift that looked like a legitimate transform. It now calls
+`normaliseBlock()` from dispatch-comment-sync for that block, so the two emit the
+paragraph from one definition and cannot disagree. `dispatch-proof.js` A3b fails if
+that narrowing is ever undone.
 
 `concept-coverage.md` is the only gap list. Several older analysis files that used to sit in
 this root — `futuredemos.md`, `CARD-AUDIT.md`, `CARD-ACCURACY-FINDINGS.md`,
@@ -243,6 +307,14 @@ Grep says `workflow_dispatch` is somewhere in the repo; `gate-sync` says the aut
 actually dispatches a file that exists, with the permission to do it, after clearing the
 same gate the deploy depends on. **Read the report rather than the exit code while the
 fleet-wide fix is still landing** — `check` exits 1 on any lab, not just yours.
+
+Then `node tools/dispatch-sync.js check`, which judges the auto-merge step from the
+inside: the new lab must set a flag from the merge's own exit status and read it
+before dispatching, never re-query with `gh pr view`. That run also reports whether
+the new lab's dispatch carries the canonical rationale paragraph; if it does not,
+`node tools/dispatch-comment-sync.js` writes it. Copy the merge step from
+`crypto-lab-attestation-gate` and change only the dispatched filename to the one the
+new lab actually has.
 
 A self-check script lives at the end of this file — copy it into a `node -e "..."` invocation to verify title coverage.
 

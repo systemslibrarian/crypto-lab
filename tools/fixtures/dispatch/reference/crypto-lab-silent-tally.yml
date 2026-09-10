@@ -1,0 +1,75 @@
+name: Dependabot auto-merge
+
+# This lab is shaped differently from its siblings: test.yml is a REUSABLE
+# workflow (`workflow_call`) that deploy.yml invokes before publishing. The
+# auto-merge job cannot live in there, because a called workflow may not request
+# more permission than its caller grants -- deploy.yml grants `contents: read`,
+# the merge needs `contents: write`, and the whole deploy run dies at startup
+# with "workflow file issue" rather than anything that names the real cause.
+#
+# So it waits for the Test workflow to finish instead. `workflow_run` fires after
+# a completed run and is evaluated against main, and it carries that run's
+# conclusion -- which is what lets this gate on a genuinely green suite rather
+# than on a version number.
+on:
+  workflow_run:
+    workflows: ['Test']
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+  # Required by the `gh workflow run deploy.yml` at the end of the merge step.
+  # Without it that call returns HTTP 403 "Resource not accessible by
+  # integration", and because the call ends in `|| echo "::warning::..."` the
+  # job still goes green while the site quietly never rebuilds.
+  actions: write
+
+jobs:
+  merge:
+    # Only a Dependabot pull request whose Test run actually passed.
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.actor.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find the pull request this run belongs to
+        id: pr
+        run: |
+          n=$(gh api "repos/$GITHUB_REPOSITORY/commits/$SHA/pulls" \
+                --jq '[.[] | select(.state=="open")][0].number')
+          if [ -z "$n" ] || [ "$n" = "null" ]; then
+            echo "::notice::no open PR for $SHA; nothing to merge"
+            echo "number=" >> "$GITHUB_OUTPUT"
+          else
+            echo "number=$n" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          SHA: ${{ github.event.workflow_run.head_sha }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Majors included on purpose: the Test run above is a better judge of
+      # whether a bump is safe than its version number is. One that breaks this
+      # lab fails that run, and this job never starts.
+      - name: Merge it
+        if: steps.pr.outputs.number != ''
+        run: |
+          for attempt in 1 2 3; do
+            if gh pr merge "$N" --repo "$GITHUB_REPOSITORY" --squash --delete-branch; then
+              merged=1; break
+            fi
+            echo "merge attempt $attempt failed; base branch may have moved - retrying"
+            sleep 15
+          done
+          if [ -z "$merged" ]; then
+            echo "::warning::gate passed but the merge did not land; leaving the PR open"
+            exit 0
+          fi
+          # A merge made with GITHUB_TOKEN raises no push event, so deploy.yml
+          # would never run and the live site would keep serving the old build.
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main \
+            || echo "::warning::deploy dispatch failed; run deploy.yml by hand"
+        env:
+          N: ${{ steps.pr.outputs.number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

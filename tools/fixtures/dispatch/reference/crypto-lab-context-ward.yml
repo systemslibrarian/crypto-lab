@@ -1,0 +1,115 @@
+name: Build, gate and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  # NOT a bare `pages`: with cancel-in-progress, a PR run would cancel a live
+  # main deploy.
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/configure-pages@v6
+
+      - run: npm ci
+
+      # Vendor integrity, CLAIMS.yaml anchors, and the unit suite.
+      - name: Unit and correctness suite
+        run: npm test
+
+      - run: npm run build
+
+      # A source edit that silently moves a hash without anyone updating the
+      # fixtures shows up here rather than in a stale committed artefact.
+      - name: Fixtures regenerate to a no-op
+        run: npm run check:fixtures
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Independent verifier (verify.py)
+        run: |
+          python3 -m pip install -r verification/requirements.txt
+          python3 verification/verify.py fixtures
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      # Runs BOTH e2e suites: the accessibility gate and the claims suite.
+      - name: Accessibility gate and claims suite
+        run: npm run test:a11y
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    # A pull request is tested, never published.
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+  dependabot-auto-merge:
+    # `needs: build` is the whole safety argument: the gate decides, not the
+    # version number. A major that breaks the lab fails the gate and the PR
+    # stays open for a human.
+    needs: build
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      # `actions: write` is required for the deploy dispatch below. A job-level
+      # `permissions:` block REPLACES the default token scopes rather than adding
+      # to them, so without this line `actions` is `none` and the dispatch fails
+      # with `HTTP 403: Resource not accessible by integration` -- after the merge
+      # has already landed. That is precisely the drift §6.2 exists to prevent:
+      # the bump reaches main and the live site keeps serving the previous build.
+      actions: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+
+      - name: Merge any bump whose gate went green
+        run: |
+          for attempt in 1 2 3; do
+            gh pr merge --squash --delete-branch "$PR_URL" && merged=1 && break
+            sleep 15   # a sibling PR merging first moves main under us
+          done
+          [ -n "$merged" ] || { echo "::warning::gate passed, merge did not land"; exit 0; }
+          # A merge performed with GITHUB_TOKEN raises no push event -- GitHub
+          # suppresses them so workflows cannot retrigger themselves -- so the
+          # deploy must be dispatched explicitly or the bump lands on main and
+          # the live site keeps serving the previous build.
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

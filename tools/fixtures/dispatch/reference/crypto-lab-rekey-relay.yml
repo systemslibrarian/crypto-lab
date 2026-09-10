@@ -1,0 +1,111 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # The gate has to judge pull requests too, or Dependabot opens bumps with
+    # no CI signal on any of them.
+    branches: [main]
+  workflow_dispatch:
+    # A merge performed with secrets.GITHUB_TOKEN raises no push event, so the
+    # auto-merge job below dispatches this workflow explicitly. Without this
+    # trigger a merged bump would never deploy and nothing would go red.
+
+concurrency:
+  # NOT a bare `pages`: with cancel-in-progress, a pull-request run would
+  # cancel a live deploy of main.
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # The WHOLE suite gates the deploy, not just the accessibility half.
+      # A repo that runs only `test:a11y` can publish a build whose
+      # cryptography is broken so long as the browser specs pass.
+      - name: Unit and correctness suite (KATs, both schemes, the proxy)
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright browser
+        # Never --with-deps. That apt step wedged 547 CI runs across this fleet.
+        run: npx playwright install chromium
+
+      - name: Accessibility gate (axe-core, WCAG 2.1 A/AA)
+        run: npm run test:a11y
+
+      - name: Claims suite (does the page tell the truth?)
+        run: npm run test:e2e
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    # A pull request is tested, never published. NOT `== 'push'`: that would
+    # also skip workflow_dispatch, which is the one trigger the post-merge
+    # deploy depends on — the dispatched run would build, pass the gate, and
+    # skip this job, so the site would still never update.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+  dependabot-auto-merge:
+    # `needs: build` is the whole safety argument: the gate decides, not the
+    # version number. A major that breaks the lab fails the gate and the pull
+    # request stays open for a human.
+    needs: build
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      # actions: write is required for the deploy dispatch below. Without it
+      # `gh workflow run` returns HTTP 403 "Resource not accessible by
+      # integration", the merged bump never deploys, and a `|| echo` fallback
+      # would hide it.
+      actions: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+
+      - name: Merge any bump whose gate went green, then dispatch the deploy
+        run: |
+          for attempt in 1 2 3; do
+            gh pr merge --squash --delete-branch "$PR_URL" && merged=1 && break
+            sleep 15          # a sibling pull request merging first moves main under us
+          done
+          [ -n "$merged" ] || { echo "::warning::gate passed, merge did not land"; exit 0; }
+          # GitHub suppresses push events for merges made with GITHUB_TOKEN, so
+          # deploy.yml's `on: push` never fires. A workflow_dispatch through the
+          # API is not suppressed.
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

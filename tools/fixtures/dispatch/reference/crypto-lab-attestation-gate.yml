@@ -1,0 +1,124 @@
+name: Deploy to GitHub Pages
+
+# One workflow, three triggers, and each one is load-bearing:
+#   push          - ship main.
+#   pull_request  - the gate has to judge PRs too, or Dependabot opens bumps
+#                   with no CI signal on any of them.
+#   workflow_dispatch - a merge performed with GITHUB_TOKEN raises no push
+#                   event (GitHub suppresses them so workflows cannot
+#                   retrigger themselves), so an auto-merged bump would land on
+#                   main and the live site would keep serving the previous
+#                   build with no red run anywhere to say so. The auto-merge
+#                   job dispatches this workflow explicitly; a dispatch through
+#                   the API is not suppressed.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  # NOT a bare `pages`: with cancel-in-progress, a PR run would cancel a live
+  # main deploy.
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # The WHOLE suite gates the deploy, not just the a11y half. A 2026-08-14
+      # sweep found 29 repos running `test:a11y` alone, so their cryptographic
+      # suites never blocked a publish.
+      - name: Unit and known-answer tests (Vitest)
+        run: npm test
+
+      - name: Build (typecheck gates the build)
+        run: npm run build
+
+      # NEVER --with-deps. That apt step wedged 547 CI runs across this fleet.
+      - name: Install Playwright browser
+        run: npx playwright install chromium
+
+      - name: Accessibility gate (axe-core, WCAG 2.1 A/AA)
+        run: npm run test:a11y
+
+      - name: Claims suite (does the page tell the truth)
+        run: npm run test:e2e
+
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    # NOT `== 'push'`. That would also skip workflow_dispatch, which is the one
+    # trigger the post-auto-merge deploy depends on: the dispatched run would
+    # build, pass the gate, and skip this job, so the site would still never
+    # update.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+  # Dependabot only. `needs: build` is the whole safety argument -- a bump can
+  # merge itself only once this lab's entire PR gate went green, so the gate
+  # decides rather than the version number. A major that actually breaks the
+  # lab fails the gate and the PR stays open for a human.
+  dependabot-auto-merge:
+    needs: build
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      # actions: write is required by the deploy dispatch below. Without it
+      # `gh workflow run` returns HTTP 403 "Resource not accessible by
+      # integration", the merged bump never deploys, and a `|| echo` fallback
+      # hides it.
+      actions: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+
+      - name: Merge any bump whose gate went green
+        # Retry: a sibling PR merging first moves main underneath us and GitHub
+        # rejects with "Base branch was modified". That is benign, so try again
+        # rather than failing the run over a race.
+        run: |
+          merged=""
+          for attempt in 1 2 3; do
+            if gh pr merge --squash --delete-branch "$PR_URL"; then
+              merged=1
+              break
+            fi
+            echo "merge attempt $attempt failed; base branch may have moved - retrying"
+            sleep 15
+          done
+          if [ -z "$merged" ]; then
+            echo "::warning::gate passed but the merge did not land after 3 attempts;"
+            echo "::warning::leaving this PR open - Dependabot will rebase and retry."
+            exit 0
+          fi
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

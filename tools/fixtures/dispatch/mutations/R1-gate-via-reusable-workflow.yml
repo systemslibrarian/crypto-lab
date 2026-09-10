@@ -1,0 +1,71 @@
+# Fixture: a lab whose gate is reached ONLY through a reusable workflow.
+#
+# crypto-lab-pake-gate is the fleet's single instance of this shape, and the
+# "every dispatch target is gated" derivation is true only because gateBehind()
+# follows `uses: ./.github/workflows/*.yml`. A walk that stopped at the calling
+# job would report this lab UNGATED, conclude CANONICAL's gate-then-deploy
+# clause was false, and send someone to correct a true sentence -- into ~195
+# repos, through the writer.
+#
+# Single-instance paths are the ones a rewrite drops silently. This makes the
+# drop a test failure rather than a discovery.
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  build:
+    # The gate lives in a reusable workflow so the auto-merge job can require
+    # the very same definition -- `needs:` cannot cross workflow files.
+    uses: ./.github/workflows/browser-gate.yml
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/deploy-pages@v5
+  dependabot-auto-merge:
+    needs: build
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+      - name: Merge any bump whose gate went green
+        run: |
+          merged=""
+          for attempt in 1 2 3; do
+            if gh pr merge --squash --delete-branch "$PR_URL"; then
+              merged=1
+              break
+            fi
+            echo "merge attempt $attempt failed; base branch may have moved - retrying"
+            sleep 15
+          done
+          if [ -z "$merged" ]; then
+            echo "::warning::gate passed but the merge did not land after 3 attempts;"
+            echo "::warning::leaving this PR open - Dependabot will rebase and retry."
+            exit 0
+          fi
+          # A merge made with GITHUB_TOKEN raises no push event -- GitHub suppresses
+          # them so workflows cannot retrigger themselves -- so deploy would never run
+          # and the site would keep serving the previous build. Ask for it explicitly;
+          # a workflow_dispatch through the API is not suppressed. The dispatched run
+          # is the same gate-then-deploy pipeline, so a bad merge still ships nothing.
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

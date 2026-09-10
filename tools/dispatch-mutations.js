@@ -19,6 +19,8 @@
  *   M5  the job map is indented four spaces                   -> dispatch-census
  *   M6  the dispatch line is deleted, the paragraph stays     -> dispatch-census
  *   M7  CANONICAL reworded, same meaning — MUST NOT fail      -> dispatch-claims
+ *   M9  CANONICAL reworded OUTSIDE the polarity vocabulary       -> dispatch-claims
+ *   R1  a lab gated only through a reusable workflow             -> dispatch-claims
  *   M8  the derivation goes blind and sees 0 sites            -> dispatch-claims
  *
  * M1 is the one the 2026-09-10 audit reproduced by hand: with it in place,
@@ -31,6 +33,27 @@
  * ANY change to the paragraph would be the frozen-prose failure one layer up:
  * it would pin the wording rather than the truth. M7 rewrites every clause and
  * must stay green.
+ *
+ * M9 is M7's other half, and it is why "reword freely" is NOT what this checker
+ * offers. The polarity read is a vocabulary, not a comprehension: it recognises a
+ * set of predicates and negation markers. M7 rewords to "is honoured" -- a positive
+ * predicate it knows -- and stays green. M9 rewords the same clause to "is exempt
+ * from that suppression", which means exactly the same thing and FAILS, because the
+ * predicate `suppress` appears with a negation marker the vocabulary does not carry.
+ *
+ * That direction is deliberate and it is the safe one: an unrecognised rewording
+ * fails CLOSED. The proof goes red and dispatch-comment-sync refuses to write, so a
+ * true-but-unparsed sentence never reaches a repo. The cost is that a maintainer who
+ * rewords legitimately is told the clause is false, and the tempting fix is to
+ * restore the exact literal -- which re-freezes the prose this binding exists to
+ * unfreeze. If that happens, widen the vocabulary; do not revert the sentence.
+ *
+ * R1 pins the reusable-workflow route. crypto-lab-pake-gate is the fleet's only lab
+ * whose gate is reached through `uses: ./.github/workflows/*.yml`, and the
+ * "every dispatch target is gated" derivation is true only because the walk follows
+ * that call. A walk that stopped at the calling job would report a TRUE clause false
+ * and send someone to correct a correct sentence. Single-instance paths are exactly
+ * the ones a future rewrite drops, so this makes the drop a failure, not a discovery.
  *
  * M7 is scoped to the CLAUSE BINDING, and the scope is worth stating: it does
  * NOT claim the paragraph can be reworded with no other consequence.
@@ -128,6 +151,20 @@ function textMutations(evidence) {
     reworded.failures.length === 0,
     reworded.failures.map((f) => `${f.id}: ${f.status} — ${f.why || ''}`).join('\n'));
 
+  /* M7's other half. Without a rewording that FAILS, "binds the claim, not the
+   * wording" is unfalsifiable: a checker that went red on every edit would pass
+   * M7's sibling test too. M9 fixes where the boundary actually is. */
+  console.log('\n  M9  one clause reworded OUTSIDE the polarity vocabulary — MUST fail, and fail CLOSED');
+  const outside = claims.verify({ canonical: canonicalOf('M9-reword-outside-vocabulary.txt'), evidence });
+  const m9row = outside.rows.find((r) => r.id === 'dispatch-honoured');
+  check('M9 fails: the polarity read is a vocabulary, not a comprehension',
+    !!m9row && !m9row.ok,
+    m9row ? `${m9row.status} — "is exempt from that suppression" means what "is not suppressed" means, and is not recognised`
+      : 'clause dispatch-honoured was not evaluated');
+  check('M9 fails CLOSED (a true-but-unparsed sentence must never reach a repo)',
+    outside.failures.length > 0,
+    'a false-clause verdict is what makes dispatch-comment-sync refuse to write');
+
   /* The mutation against THIS FIX. Every clause is supported by the ABSENCE of
    * counter-evidence, so a derivation that stopped seeing the fleet would
    * report all three true over nothing — the same defect one layer up,
@@ -161,6 +198,49 @@ function miniFleet(fixture) {
   fs.mkdirSync(wf, { recursive: true });
   fs.copyFileSync(fixture, path.join(wf, 'deploy.yml'));
   return root;
+}
+
+/* R1 — the positive fixture, and the only one here that is not a mutation.
+ *
+ * crypto-lab-pake-gate is the fleet's single lab whose gate is reached solely
+ * through `uses: ./.github/workflows/*.yml`. The "195/195 dispatch targets are
+ * gated" derivation is true only because gateBehind() follows that call. A walk
+ * that stopped at the calling job would report this lab UNGATED, conclude
+ * CANONICAL's gate-then-deploy clause was FALSE, and send someone to correct a
+ * sentence that was right -- and the correction propagates to ~195 repos.
+ *
+ * Single-instance paths are the ones a rewrite drops silently, so this asserts
+ * the route directly rather than trusting that the real pake-gate keeps it. */
+function reusableWorkflowRoute() {
+  console.log('\n  R1  a lab gated ONLY through `uses: ./.github/workflows/*.yml`');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dispatch-reusable-'));
+  const wf = path.join(root, LAB, '.github', 'workflows');
+  fs.mkdirSync(wf, { recursive: true });
+  fs.copyFileSync(path.join(DIR, 'R1-gate-via-reusable-workflow.yml'), path.join(wf, 'deploy.yml'));
+  fs.writeFileSync(path.join(wf, 'browser-gate.yml'), [
+    'name: Browser gate',
+    'on:',
+    '  workflow_call:',
+    'jobs:',
+    '  gate:',
+    '    runs-on: ubuntu-latest',
+    '    steps:',
+    '      - run: npm ci',
+    '      - run: npm run build',
+    '      - run: npm run test:a11y',
+    '',
+  ].join('\n'));
+
+  const ev = claims.derive(root);
+  const site = ev.sites[0];
+  check('R1: the walk follows the reusable call, so no publisher is left ungated',
+    !!site && Array.isArray(site.ungated) && site.ungated.length === 0,
+    site ? `ungated=${JSON.stringify(site.ungated)} publishers=${JSON.stringify(site.publishers)}`
+      : 'no dispatch site was derived from the fixture at all');
+  check('R1: the gate is reached THROUGH the reusable workflow, not from the caller',
+    !!site && (site.gates || []).some((g) => /reusable-workflow/.test(g.via || '')),
+    site ? JSON.stringify(site.gates) : '(no site)');
+  fs.rmSync(root, { recursive: true, force: true });
 }
 
 const FLEET_MUTATIONS = [
@@ -218,6 +298,7 @@ function run({ evidence, verbose: v = false } = {}) {
   const ev = evidence || claims.derive();
   textMutations(ev);
   fleetMutations();
+  reusableWorkflowRoute();
   return { pass: pass - before.pass, fail: fail - before.fail };
 }
 

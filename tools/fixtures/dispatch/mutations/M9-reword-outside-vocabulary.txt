@@ -1,0 +1,5 @@
+A merge made with GITHUB_TOKEN raises no push event -- GitHub suppresses
+them so workflows cannot retrigger themselves -- so deploy would never run
+and the site would keep serving the previous build. Ask for it explicitly;
+an API workflow_dispatch is exempt from that suppression. The dispatched run
+is the same gate-then-deploy pipeline, so a bad merge still ships nothing.

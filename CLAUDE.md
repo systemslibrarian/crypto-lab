@@ -578,6 +578,21 @@ hand-build one"* — which pointed a contributor at retired tooling and told the
 the thing each lab now owns. Fixed 2026-08-19 to the ghost-commit wording. **No lab carries
 that instruction any more**, so grep for "do not hand-build one" should stay empty.
 
+
+**Single-instance divergences are load-bearing until proven otherwise** —
+`quantum-vault-kpqc` (light theme, the only one), `blind-oracle-api` (auto-merges but
+publishes no page), `snow2` (carded but never cloned). A sweep that flattens one is a
+regression, not a cleanup. **Before any fleet-wide edit, re-derive the exception list
+(`theme-sync`, `dispatch-sync`, `gate-sync`) rather than citing this one** — these three
+were verified on 2026-09-10 and the count is the thing most likely to be stale.
+
+The cost of not re-deriving is on record. Lane 3a wrote that `sector-vault` was the only
+lab with `cancel-in-progress: false`; the value belongs to `syndrome-drain` and nineteen
+repos carry it. That was true *within that sweep's nineteen labs* and lost its scope on
+the way into the record — see `audits/LANE-3A-DISPATCH-EXCEPTIONS-2026-09-10.md`. "The
+only lab with X" is exactly the claim that earns an exception permanent protection, and
+exactly the one most likely to be inherited without checking.
+
 ---
 
 ## Conventions

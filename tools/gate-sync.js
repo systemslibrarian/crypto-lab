@@ -83,16 +83,35 @@
  *
  * FAILS
  *   DEPLOY-UNRECOGNISED
- *                    a lab with an auto-merge job, whose repo slug a catalog card
- *                    links to as a live github.io page, in which no job uses any
- *                    publisher in PAGES_PUBLISHERS. Every rule below is skipped
- *                    for such a lab, so the skip itself is the finding. It is
- *                    keyed on the card rather than on "has no publisher" because
- *                    a lab really can publish nothing — crypto-lab-blind-oracle-api
- *                    is a Rust service with no page and no card, and it is a fair
- *                    skip. As of 2026-09-10 this rule matches no lab; it is the
- *                    guard against the next publisher arriving unnoticed, and it
- *                    can only fire on a lab this file could otherwise not judge.
+ *                    FOUR conditions, all of which must hold. The lab is (1) a
+ *                    directory sitting directly under the fleet root — the parent
+ *                    of this repo — whose NAME matches /^crypto-(lab|compare|
+ *                    counsel)/ and which contains a .github/workflows directory
+ *                    (that is the whole set siblingLabs() returns, and the whole
+ *                    set every rule in this file ranges over); (2) it has an
+ *                    auto-merge job; (3) its directory name is one a catalog card
+ *                    links to as a live github.io page; and (4) no job in it uses
+ *                    any publisher in PAGES_PUBLISHERS. Every rule below is
+ *                    skipped for such a lab, so the skip itself is the finding.
+ *                    It is keyed on the card rather than on "has no publisher"
+ *                    because a lab really can publish nothing —
+ *                    crypto-lab-blind-oracle-api is a Rust service with no page
+ *                    and no card, and it is a fair skip.
+ *
+ *                    Condition (1) is the one that used to go unsaid, and it is
+ *                    the widest. A carded lab that is not cloned on this machine
+ *                    is not judged by this rule or by any other rule here — it is
+ *                    not looked at at all, because the scan starts from what
+ *                    readdirSync sees, not from what the catalog claims. That is
+ *                    unfixable inside a local-files-only checker, so it is
+ *                    counted and printed on every run instead; see the
+ *                    "Carded labs this checker never opened" line in the summary.
+ *                    As of 2026-09-10 this rule matches no lab, and one carded
+ *                    lab (snow2) is uncloned and therefore outside it.
+ *
+ *                    Publisher names are compared case-insensitively, as GitHub
+ *                    resolves owner/repo, so `Actions/Deploy-Pages` is recognised
+ *                    as the deploy it is rather than degraded into this rule.
  *   GATE-WEAKER      the invariant itself: checks on the deploy path that the
  *                    auto-merge path does not run.
  *   PUSH-GATED       a deploy job gated `if: github.event_name == 'push'`. It
@@ -447,13 +466,15 @@ function stepsOf(job) {
  * ------------------------------------------------------------------ */
 
 // Plumbing, not a gate. Present on both paths or on neither, and never the
-// thing a bump breaks.
+// thing a bump breaks. Keys are lowercase: membership is tested through
+// actionName() below, which lowercases, because GitHub resolves owner/repo
+// case-insensitively.
 const INFRA_USES = new Set([
   'actions/checkout', 'actions/setup-node', 'actions/setup-python', 'actions/setup-java',
   'actions/setup-go', 'actions/cache', 'actions/configure-pages',
   'actions/upload-pages-artifact', 'actions/deploy-pages', 'actions/upload-artifact',
   'actions/download-artifact', 'dependabot/fetch-metadata', 'dtolnay/rust-toolchain',
-  'Swatinem/rust-cache', 'jetli/wasm-pack-action', 'pnpm/action-setup',
+  'swatinem/rust-cache', 'jetli/wasm-pack-action', 'pnpm/action-setup',
   'denoland/setup-deno', 'oven-sh/setup-bun', 'ruby/setup-ruby',
   // Publishing plumbing, like the Pages actions above: it signs what is being
   // shipped, so it has nothing to say on a pull request and its absence from the
@@ -475,11 +496,25 @@ const INFRA_USES = new Set([
 const PAGES_PUBLISHERS = new Set([
   'actions/deploy-pages',
   'peaceiris/actions-gh-pages',
-  'JamesIves/github-pages-deploy-action',
+  'jamesives/github-pages-deploy-action',
   'crazy-max/ghaction-github-pages',
-  'Cecilapp/GitHub-Pages-deploy',
+  'cecilapp/github-pages-deploy',
 ]);
 for (const p of PAGES_PUBLISHERS) INFRA_USES.add(p);
+
+/* `uses: Owner/Repo@v1` down to `owner/repo`. Lowercased because GitHub resolves
+ * owner/repo case-insensitively — `Actions/Deploy-Pages` is the same action as
+ * `actions/deploy-pages` and must be recognised as the publisher it is, not
+ * degraded into DEPLOY-UNRECOGNISED. Every set in this file that is keyed on an
+ * action name (INFRA_USES, PAGES_PUBLISHERS) holds lowercase keys for the same
+ * reason, and the `uses:` check token is emitted lowercased so that two spellings
+ * of one action compare equal across the deploy and auto-merge paths instead of
+ * reading as a missing check. Surveyed 2026-09-10: all 21 distinct action names
+ * in the fleet's 248 workflow files are already in canonical case, so this
+ * changes no current verdict. */
+function actionName(uses) {
+  return String(uses).split('@')[0].trim().toLowerCase();
+}
 
 // Shell built-ins, control flow and the merge machinery itself.
 const IGNORED_BINS = new Set([
@@ -579,7 +614,7 @@ function commandTokens(cmd, scripts, depth, seen) {
 function stepTokens(step, scripts) {
   const out = [];
   if (typeof step.uses === 'string') {
-    const name = step.uses.split('@')[0].trim();
+    const name = actionName(step.uses);
     if (name && !name.startsWith('./') && !INFRA_USES.has(name)) out.push(`uses:${name}`);
   }
   if (typeof step.run === 'string') {
@@ -694,12 +729,12 @@ function findJobs(lab, predicate) {
 
 function isDeployJob(job) {
   return stepsOf(job).some((s) => typeof s.uses === 'string'
-    && PAGES_PUBLISHERS.has(s.uses.split('@')[0].trim()));
+    && PAGES_PUBLISHERS.has(actionName(s.uses)));
 }
 
 function isMergeJob(job) {
   return stepsOf(job).some((s) => (typeof s.uses === 'string'
-      && s.uses.split('@')[0].trim() === 'dependabot/fetch-metadata')
+      && actionName(s.uses) === 'dependabot/fetch-metadata')
     || (typeof s.run === 'string' && /\bgh pr merge\b/.test(s.run)));
 }
 
@@ -852,10 +887,45 @@ function cardedSlugs() {
   return slugs;
 }
 
+/* The one name filter every rule in this file inherits. It is a filter over
+ * DIRECTORY NAMES under FLEET_ROOT, not over the catalog: a lab is examined only
+ * if someone has cloned it here, under a directory whose name starts
+ * crypto-lab / crypto-compare / crypto-counsel, containing .github/workflows.
+ * unseenCarded() below is the accounting for everything that misses. */
+const LAB_DIR_RE = /^crypto-(lab|compare|counsel)/;
+
 function siblingLabs() {
   return fs.readdirSync(FLEET_ROOT).sort()
-    .filter((d) => /^crypto-(lab|compare|counsel)/.test(d))
+    .filter((d) => LAB_DIR_RE.test(d))
     .filter((d) => fs.existsSync(path.join(FLEET_ROOT, d, '.github', 'workflows')));
+}
+
+/* Carded labs that siblingLabs() never returned, with the reason each one missed.
+ *
+ * This is the fourth, unstated condition on DEPLOY-UNRECOGNISED made countable.
+ * That rule reads as "a carded lab whose publisher I cannot see", and it is not:
+ * it is "a carded lab whose publisher I cannot see, AMONG THE ONES CLONED HERE".
+ * A carded lab with no clone is not judged clean and not judged dirty — it is
+ * never opened, and nothing anywhere in this output said so.
+ *
+ * The reasons are distinct and worth telling apart: an uncloned lab is a machine
+ * fact, a lab cloned under a name outside LAB_DIR_RE is a naming fact (snow2 and
+ * crypto-compare are carded without the crypto-lab- prefix), and a clone with no
+ * .github/workflows is a repo fact. All three end the same way — every rule above
+ * is silent about that lab — so all three are counted here. */
+function unseenCarded(carded, repos) {
+  const seen = new Set(repos);
+  const out = [];
+  for (const slug of [...carded].sort()) {
+    if (seen.has(slug)) continue;
+    const dir = path.join(FLEET_ROOT, slug);
+    let why;
+    if (!fs.existsSync(dir)) why = `no clone at ${dir}`;
+    else if (!LAB_DIR_RE.test(slug)) why = `cloned at ${dir}, but the name is outside ${LAB_DIR_RE}`;
+    else why = `cloned at ${dir}, but it has no .github/workflows directory`;
+    out.push({ slug, why });
+  }
+  return out;
 }
 
 const ORDER = ['DEPLOY-UNRECOGNISED', 'GATE-WEAKER', 'PUSH-GATED', 'FUSED-GATE-OFF', 'NO-PR-GATE', 'DISPATCH-MISSING',
@@ -880,7 +950,8 @@ function main() {
       rows.push({ repo, findings: [{ level: 'fail', code: 'DEPLOY-UNRECOGNISED',
         detail: `the catalog cards a live page at https://systemslibrarian.github.io/${repo}/ `
           + 'and this lab auto-merges, but no job uses a publisher this checker knows '
-          + `(${[...PAGES_PUBLISHERS].join(', ')}) — so every rule above is skipped for it` }],
+          + `(case-insensitively: ${[...PAGES_PUBLISHERS].join(', ')}) `
+          + '— so every rule above is skipped for it' }],
       swallowed: false });
       continue;
     }
@@ -910,6 +981,17 @@ function main() {
   for (const [why, list] of Object.entries(skipped)) {
     if (list.length) console.log(`  ${why}: ${list.join(', ')}`);
   }
+
+  /* Printed on every run, zero or not, and never abbreviated away. Reported
+   * rather than failed: this counts what is absent from THIS machine, so failing
+   * on it would turn a catalog-only checkout — or a CI job that clones one repo —
+   * into 194 red lines about nothing the commit did. A rising number is the
+   * signal; that only reads as rising if the zero is printed too. */
+  const unseen = unseenCarded(carded, repos);
+  console.log(`Carded labs this checker never opened: ${unseen.length} of ${carded.size} `
+    + `(reported, never failed — every rule below is silent about each one)`);
+  for (const u of unseen) console.log(`  ${u.slug}  —  ${u.why}`);
+
   if (unparsed.length) console.log(`Unparsed: ${unparsed.length}`);
 
   const codes = [...byCode.keys()].sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b));
@@ -966,7 +1048,11 @@ function main() {
 
   const failed = failing.size + unparsed.length;
   if (!failed) {
-    console.log('\nEvery auto-merge clears the same gate its deploy depends on.');
+    /* Qualified by the count above rather than stated flat, because "every
+     * auto-merge" is exactly the sentence the fourth condition makes false. */
+    console.log(`\nEvery auto-merge clears the same gate its deploy depends on — across the ${rows.length}`);
+    console.log(`labs cloned under ${FLEET_ROOT}. ${unseen.length} carded lab${unseen.length === 1 ? ' was' : 's were'} `
+      + 'not opened at all (above).');
   } else {
     console.log('\nFix by giving each lab ONE workflow with ONE gate job that both `deploy` and');
     console.log('`dependabot-auto-merge` name in `needs:`. crypto-lab-e91/.github/workflows/deploy.yml');

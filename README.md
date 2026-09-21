@@ -43,6 +43,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [ORAM Vault](https://systemslibrarian.github.io/crypto-lab-oram-vault/) | Access-Pattern Privacy | Path ORAM · Position Map · Stash · Access Patterns |
 | [Paillier Gate](https://systemslibrarian.github.io/crypto-lab-paillier-gate/) | Additive Homomorphic Encryption | Paillier · Additive HE · Private Voting · Aggregation |
 | [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) | Anonymous Credentials | BBS+ · Selective Disclosure · Unlinkability · Range Proof |
+| [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) | Anonymous Tokens | VOPRF P-384 · DLEQ Proof · RFC 9578 · Hash-to-Curve |
 | [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) | Asymmetric Encryption | ECIES P-256 · RSA-OAEP · AES-256-GCM |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | Asynchronous Key Agreement | X3DH · X25519 · HKDF-SHA-256 · Signal Protocol |
 | [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) | Attribute-Based Encryption | FAME CP-ABE · BLS12-381 · Access Policy · Collusion Resistance |
@@ -88,9 +89,11 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | Envelope Encryption | RFC 3394 · AES Key Wrap · DEK/KEK · Key Rotation |
 | [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) | Feistel Networks | DES · Feistel Network · Meet-in-the-Middle · Sweet32 |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | Few-Time Signatures | Jevil · Hash-Based · Goldilocks Field · Lagrange Interpolation |
+| [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) | Folding Schemes | Nova NIFS · Relaxed R1CS · Pedersen Commitment · ristretto255 |
 | [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) | Format-Preserving Encryption | FF1 · FF3-1 · AES-256 · Tokenization |
 | [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) | Format-Transforming Encryption | FF1 · DFA Ranking · Cycle Walking · AES-256-CTR |
 | [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) | Forward-Secret Messaging | Double Ratchet · X25519 · HKDF · AES-256-GCM |
+| [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) | Function Secret Sharing | DPF · 2-Server PIR · AES-128-CTR · FSS |
 | [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) | Group Messaging Security | MLS (RFC 9420) · TreeKEM · Epoch Key Schedule · Forward Secrecy |
 | [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) | Hash Collisions | MD5 · SHA-1 · SHAttered · Chosen-Prefix Collision |
 | [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | Hash Construction | SHA-256 · SHA3-256 · BLAKE3 · Merkle-Damgård |
@@ -168,6 +171,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) | Post-Quantum KEM | ML-KEM · FIPS 203 · CRYSTALS-Kyber · Lattice · AES-256-GCM |
 | [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) | Post-Quantum KEM | Classic McEliece · Goppa Codes · Post-Quantum |
 | [Scloud+ Vault](https://systemslibrarian.github.io/crypto-lab-scloud-vault/) | Post-Quantum KEM | Scloud+ · LWE KEM · BW32 Coding · Ternary Secrets |
+| [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) | Post-Quantum Key Agreement | X25519 · ML-KEM-1024 · HKDF-SHA-512 · Ed25519 |
 | [PQ Families](https://systemslibrarian.github.io/crypto-lab-pq-families/) | Post-Quantum Overview | Lattice · Code-Based · Hash-Based · Multivariate · Isogeny |
 | [Ciphertext Mirror](https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/) | Post-Quantum Side-Channel | ML-KEM · FO Transform · LDPC Decoder · NTT Blinding |
 | [HQC Timing](https://systemslibrarian.github.io/crypto-lab-hqc-timing/) | Post-Quantum Side-Channel | HQC · BCH Decoder · Timing Oracle · Constant-Time |
@@ -183,6 +187,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) | Private Set Intersection | DH-PSI · ristretto255 · Hash-to-Curve · Contact Discovery |
 | [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) | Proactive Secret Sharing | Shamir · Feldman VSS · HJKY 1995 · Mobile Adversary |
 | [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) | Proof Forgery | Fiat-Shamir · Schnorr · ristretto255 · NIZK |
+| [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) | Property-Preserving Encryption | AES-GCM-SIV · BCLO OPE · CLWW ORE · Inference Attacks |
 | [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) | Protocol Composition | MAC-then-Encrypt · Encrypt-then-MAC · CRIME · TLS 1.3 |
 | [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) | Proxy Re-Encryption | BBS98 · AFGH · BLS12-381 · Re-Encryption Key |
 | [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) | Public-Key Cryptography | RSA · Key Generation · Modular Exponentiation · OAEP |
@@ -196,12 +201,14 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | Ring Signatures | LSAG · Key Image · Group Signatures · Monero |
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | Rotor Machine | Enigma · Rotors · Plugboard · Bombe |
 | [Time-Lock Puzzle](https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/) | RSW Time-Lock | RSW · Sequential Squaring · AES-256-GCM · Trapdoor |
+| [Sleeve Check](https://systemslibrarian.github.io/crypto-lab-sleeve-check/) | S-Box Provenance | Kuznyechik · Streebog · TKlog · AES S-Box |
 | [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) | Searchable Encryption | SSE · HMAC-SHA-256 · AES-256-GCM · Leakage Abuse |
 | [Masked Core](https://systemslibrarian.github.io/crypto-lab-masked-core/) | Second-Order CPA | Boolean Masking · Second-Order CPA · AES-128 · Centered Product |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |
 | [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party MPC |
 | [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | Secure MPC | Shamir SSS · GF(2⁶¹−1) · Lagrange Interpolation · Additive Homomorphism |
 | [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | Secure Shell Handshake | X25519 · Ed25519 · TOFU · known_hosts |
+| [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) | Security Games | IND-CPA · EUF-CMA · PRP/PRF Switching · DDH Reduction |
 | [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/) | Shortest Vector Problem | SVP · Module-LWE · ML-KEM (FIPS 203) · Babai Rounding |
 | [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) | Signature Canonicalization | Ed25519 · JCS RFC 8785 · Parser Differential · Unicode NFC |
 | [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) | Single-Server PIR | BFV · RLWE · Single-Server PIR · Noise Budget |
@@ -225,6 +232,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) | TLS 1.3 Walkthrough | TLS 1.3 · X25519 · Ed25519 · AES-GCM |
 | [Blind Hello](https://systemslibrarian.github.io/crypto-lab-blind-hello/) | TLS Privacy | TLS 1.3 · ECH · HPKE · SNI |
 | [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) | Token Forgery | JWT · JWS · alg:none · HS/RS Key Confusion |
+| [Proof Tally](https://systemslibrarian.github.io/crypto-lab-proof-tally/) | Verifiable Aggregation | Prio3 · Fully Linear PCP · Field64 · TurboSHAKE128 |
 | [VDF](https://systemslibrarian.github.io/crypto-lab-vdf/) | Verifiable Delay Function | VDF · Wesolowski · Modular Squaring · Randomness Beacon |
 | [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) | Verifiable Randomness | ECVRF P-256 · Wesolowski VDF · RANDAO · RFC 9381 |
 | [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) | Verifiable Secret Sharing | Feldman VSS · Pedersen VSS · Commitment Verification · Cheating Detection |

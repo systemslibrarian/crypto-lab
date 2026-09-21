@@ -80,6 +80,51 @@ question in this map** — widen it to name covert channels, or split them out a
 is a boundary move and those are not made from inside a filing pass. §27 and §32 were
 considered for it and declined, with the reasoning kept there so it is not relitigated.*
 
+*Version 10 — files the eight labs carded in the 2026-09 batch. **None closes a gap**; the Gap
+summary has been empty since v6 and stays empty. **No status changes anywhere** — every concept
+touched was already `COVERED` or `DEEP`, and the two that could have been argued upward (§20,
+§24) are held where they are for a reason recorded under each. Placements: **Sleeve Check** §4,
+**PQXDH Wire** §16, **Split Point** §19 and §23, **Proof Tally** §20 and §21, **Fold Gate** §21,
+**Order Leak** §23, **Privacy Pass** §24, **Hidden Bit** §31.*
+
+*Three of the eight needed a judgment rather than a lookup, and in two of them the concept
+diverges from the catalog section — which is the divergence this file exists to allow. **Split
+Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
+privacy concept here. Split Point's subject is that you can secret-share a **function** rather
+than a value: every demo in §19 splits a key, and the point-function share is the strict
+generalisation none of them reaches, so §19 leads and §23 takes the second citation for the PIR
+application. §20 was considered for it and declined — that concept's title is secure
+*computation*, and a DPF-based retrieval computes nothing. **Proof Tally** leads in §20 for the
+mirrored reason: §20's four computational demos assume honest inputs, and SPDZ Forge's malicious
+security is about a **party** tampering with a share, while Prio3's is about a **client**
+submitting a malformed report neither aggregator can read. §21 takes its second citation for the
+fully linear PCP itself.*
+
+*Fold Gate is filed in §21 and is the first demo there that is not a proof system. Its own README
+refuses both properties — this NIFS is "neither zero-knowledge nor a succinct final proof" —
+because a folding scheme is the composition substrate under recursive proving rather than an
+argument about a witness. That makes **recursive proof composition and IVC** a live candidate for
+a §21b split on the §23b precedent, and it should be taken the moment a second folding demo lands
+(HyperNova, ProtoStar, an accumulation scheme). One demo does not justify moving a boundary, and
+boundary moves are not made from inside a filing pass.*
+
+*Hidden Bit is the placement worth arguing with, and it was nearly "nothing fits." It teaches no
+primitive: it teaches the **definitional framework** every other card's security claim is stated
+in — IND-CPA, IND-CCA2, EUF-CMA, the PRP/PRF switching lemma, and a reduction that wraps a live
+IND-CPA adversary inside a DDH distinguisher. No concept here was built for provable security,
+because this map covers primitives and constructions rather than the argument around them. §31
+does fit, on its first word rather than its second: game-based security is the **computational**
+half of formal security analysis and Protocol Checker is the **symbolic** half, which is the
+canonical pair — the two ways a security claim is made formal, by searching an idealised algebra
+for an attack and by bounding an adversary's advantage against a hardness assumption. It also
+answers the "one demo is covered, not thoroughly taught" critique this file's own closing section
+levels at concepts shaped like §31 was.*
+
+*That leaves §31's title narrower than its contents, exactly as §37's already is. The honest
+options are the same two: widen it to name the computational model alongside the symbolic one, or
+split provable security out as **§31b** on the §23b precedent. Recorded, not acted on —
+renaming a concept is a boundary move and is the user's call.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -111,7 +156,7 @@ build it only if you want depth there, not because the suite needs it. If it's `
 | `PARTIAL` | Taught, but an arc is unfinished or a piece is missing. |
 | `GAP` | No demo teaches this concept. |
 
-Catalog basis: the 193 cards in `index.html` as of the v9 catalog pass.
+Catalog basis: the 201 cards in `index.html` as of the v10 catalog pass.
 
 **Checked, not trusted.** Run `node tools/concept-sync.js check`. It verifies this file
 against the catalog in both directions: every demo cited below resolves to a real card, and
@@ -154,7 +199,7 @@ sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
 Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Snow 2 · Format Ward ·
-Feistel Forge · Sector Vault.
+Feistel Forge · Sector Vault · Sleeve Check.
 SPN, ARX, sponge, stream, lightweight, and Feistel.
 
 Feistel Forge makes the *construction* the subject rather than a cipher that happens to use
@@ -166,6 +211,23 @@ be invertible, and DES's is not.
 
 Sector Vault covers the tweakable-mode axis none of the others reach — XTS-AES, the XEX
 sandwich over GF(2^128), and ciphertext stealing.
+
+Sleeve Check is the only demo here that asks where a cipher's structure **came from**. The other
+nine teach what a construction does — how an SPN diffuses, how a Feistel round function need not
+be invertible, what a tweak buys. Sleeve Check takes the confusion layer as published — π, the
+256-byte table GOST released as a bare list for both Kuznyechik and Streebog with no account of
+its origin — and rebuilds all 256 bytes from four small constants and field arithmetic (Perrin's
+TKlog, ToSC 2019), in a module that never reads the published table. "Nothing up my sleeve" stops
+being a slogan and becomes a measurement: the 17 multiplicative cosets of F₁₆ land on 2 distinct
+spaces under π and 17 under the AES S-box, and only the first is a partition. The lab also ships
+the cipher it is arguing about, gated on the RFC 7801 §5 vectors before any other exhibit unlocks.
+
+It is filed here rather than under §30 or §2 deliberately. It is not cryptanalysis — no key is
+recovered and no distinguisher is built, and the lab says so in its own copy and attributes the
+no-attack finding to Perrin. The neighbour it belongs beside is Corrupted Oracle in §2: an
+unexplained constant that turned out to be exploitable, against an unexplained constant that turns
+out to be structured and, so far as anyone has shown, harmless. Provenance is checkable in both
+cases; the verdict is not the same, and that is the point.
 
 **5. Message authentication — `COVERED`**
 MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward · KMAC Gate. Polynomial MACs, AEAD, and
@@ -325,7 +387,17 @@ neighbour to cross-link, not a component to import.
 **16. Key exchange and forward secrecy — `DEEP`**
 Key Exchange · Curve Lens · DH MITM · X3DH Wire · Ratchet Wire · Noise Pipe · MLS Group ·
 SSH Handshake · TLS Handshake · Hybrid Wire · PQ TLS Handshake · Downgrade Wire · HPKE
-Envelope. The classical → KEM → hybrid arc is complete.
+Envelope · PQXDH Wire. The classical → KEM → hybrid arc is complete.
+
+PQXDH Wire extends that arc past confidentiality. Every other hybrid here treats "hybrid" as a
+property of the whole handshake; PQXDH is hybrid in one half only, and the lab is built around the
+asymmetry. One ML-KEM-1024 secret added to the `F ‖ DH1‖DH2‖DH3‖DH4 ‖ SS` transcript is what
+survives a modelled curve break, while the Ed25519 prekey signature that authenticates the bundle
+and the classical ratchet that follows are untouched — so an adversary who cannot read the first
+message can still impersonate Bob with every check green. That is the distinction a single "PQ"
+badge hides, and it is the one Ablation Wire (§29) draws from the other side by switching layers
+off. Read it beside X3DH Wire: the payoff is the exact 32-byte KDF addition and 1,568-byte
+initial-message addition between the two.
 
 **17. Password-authenticated key exchange — `COVERED`**
 OPAQUE Gate · PAKE Gate · SPAKE Gate.
@@ -344,8 +416,23 @@ problem") and FRI on STARK Tower, so those are depth here, not the lead.
 
 **19. Secret sharing and distributed trust — `DEEP`**
 Shamir Gate · VSS Gate · DKG Gate · Reshare Circle · FROST Threshold · GG20 Wallet ·
-Threshold Decrypt · Threshold ML-DSA · Shamir vs FROST · Icy DVRF · MuSig Gate. Generation,
-verification, refresh, and use are all taught.
+Threshold Decrypt · Threshold ML-DSA · Shamir vs FROST · Icy DVRF · MuSig Gate · Split Point.
+Generation, verification, refresh, and use are all taught, and Split Point changes the object
+being split.
+
+Split Point is the generalisation the other eleven do not reach. Every one of them splits a
+**value** — a secret, a signing key, a nonce share. A distributed point function splits a
+**function**: two keys that each look random evaluate to shares of "1 at α, 0 everywhere else,"
+so the share grows as log N rather than N (290 bytes against 8,192 at N = 65,536 in its own
+measurement). Boyle–Gilboa–Ishai's tree construction is stepped level by level with a real
+AES-128-CTR PRG, and the collusion fixture is the same lesson §19 teaches everywhere: either key
+alone hides α, both together reconstruct the point function and reveal it.
+
+Filed here rather than in §20 because §20's title is secure *computation* and a DPF-based
+retrieval computes nothing; its second citation is §23, where the two-server PIR application sits
+beside the other private-retrieval demos. Note also what this construction does not provide and
+§19's verification demos do: a tampered server answer returns the wrong record with every privacy
+condition still passing. This is query privacy, not answer integrity.
 
 MuSig Gate closed the last open piece here in v4: n-of-n aggregation, which Schnorr Forge's
 card had already promised ("the linearity behind multisig and threshold signing"). The
@@ -353,7 +440,7 @@ t-of-n / n-of-n contrast is now explicit on both sides — MuSig Gate's own copy
 FROST for quorums, and Shamir vs FROST covers the other direction.
 
 **20. Oblivious transfer and secure computation — `COVERED`**
-OT Gate · Garbled Gate · Silent Tally · SPDZ Forge · Card Trick. The first four are all
+OT Gate · Garbled Gate · Silent Tally · SPDZ Forge · Card Trick · Proof Tally. The first four are all
 *computational*. Card Trick supplies the one thing they cannot: den Boer's five-card trick
 computes AND with information-theoretic security resting on shuffle indistinguishability —
 the only non-computational security argument in the suite. The state space is ten rows and
@@ -366,9 +453,44 @@ already covers and the modern MPC cluster here — the same tactile reasoning as
 cipher wheel, but with an information-theoretic guarantee instead of a mechanical one. No
 other item on the gap list has a sibling-project payoff.
 
+Proof Tally supplies what the computational four assume away: that the inputs are honest. SPDZ
+Forge already teaches malicious security, but against a **party** — a corrupt aggregator tampering
+with a share, caught by an information-theoretic MAC. Prio3's problem is the other one, a
+**client** submitting a malformed measurement that neither aggregator can read and therefore
+neither can inspect. Carrying a fully linear proof in the same shares is what lets them reject it
+without either one seeing the value, which is validity and privacy out of a single split. The lab
+is careful about what that does not buy, and the negative claim is the sharper half: a correctly
+proven salary of zero, when the sealed truth is nonzero, passes every Prio3 check and poisons the
+aggregate, because the proof constrains structure rather than truth. A second exhibit makes the
+companion point that a one-report aggregate discloses that report — which is §23's DP Noise
+pairing stated from the MPC side, inputs protected and output not.
+
+Status stays `COVERED` at six demos rather than moving to `DEEP`, on the test the legend implies:
+would another MPC demo dilute? It would not. Honest-majority protocols, GMW against Yao,
+preprocessing, and MPC over a real dataset are all still unbuilt, and none would repeat what is
+here.
+
 **21. Zero knowledge — `DEEP`**
 ZK Proof Lab · SNARK Arena · STARK Tower · ZK Arena · Bulletproofs · Frozen Heart ·
-MPCitH Sign.
+MPCitH Sign · Fold Gate · Proof Tally.
+
+Fold Gate is the first demo here that is not a proof system, and it refuses both properties in its
+own copy: this NIFS is "neither zero-knowledge nor a succinct final proof." What it isolates is
+the mechanism underneath recursive proving. A random linear combination of two satisfying R1CS
+instances is not itself satisfying, the leftover is exactly a computable cross term `T`, and
+relaxing the system with a slack scalar `u` and an error vector `E` — `E' = E₁ + rT + r²E₂` —
+absorbs it, so one folded instance stands in for all of them while the verifier's per-fold work
+stays fixed at five group operations over 2 to 64 real steps. Its three attack modes are the
+algebra's own boundary conditions rather than decoration: tampering with `W'` after folding,
+tampering with `Com(T)` after deriving `r`, and the forgery that *succeeds* when a broken verifier
+reveals `r` before `T` is committed — which is the reason the transcript orders commitment first.
+See the version note: recursive composition and IVC are a live candidate for a §21b split, left
+unmoved on one demo.
+
+Proof Tally's second citation sits here for the fully linear PCP. It is the one proof system in
+this section whose **verifier is split**: neither aggregator can check the proof, and the check
+exists only in the sum of their verifier shares. Every other demo here has a verifier that holds
+the whole proof. Its lead concept is §20.
 
 **22. Homomorphic computation — `COVERED`**
 Blind Oracle (TFHE) · CKKS Lab · FHE Arena (BGV/BFV) · Paillier Gate. Full trilogy plus
@@ -376,7 +498,7 @@ additive.
 
 **23. Obliviousness — access-pattern and metadata privacy — `COVERED`**
 ORAM Vault · Oblivious Shelf · Patron Shield · PSI Gate · Blind Relay · Blind Hello ·
-DP Noise · Search Vault · Shelf Oracle.
+DP Noise · Search Vault · Shelf Oracle · Order Leak · Split Point.
 
 Shelf Oracle completes the PIR axis. Oblivious Shelf and Patron Shield are
 information-theoretic and buy that guarantee with a second server that must never collude;
@@ -398,9 +520,36 @@ construction whose access-pattern leakage ORAM exists to hide, and running the c
 leakage-abuse attacks against a log the learner generated makes "secure relative to a stated
 leakage function" concrete rather than abstract.
 
+Order Leak is the leakage that needs no access pattern at all, which stretches this concept in a
+direction worth naming. Everything else here leaks as a consequence of being **used** — ORAM hides
+which record was touched, SSE leaks what its queries matched, PIR hides the index. Property-
+preserving encryption leaks before a single query is run: deterministic AES-GCM-SIV publishes
+equality, BCLO OPE and CLWW ORE publish order, and a ciphertext column sitting at rest already
+carries the shape of its answers. The attacks are run against separately generated public data —
+frequency matching, sorting, NKW cumulative matching, pairwise MSDB-tree recovery — and scored
+cell by cell against truth the attacker never sees, with a randomized AES-GCM control that
+recovers nothing and cannot answer the query either. It is Search Vault's exact complement: SSE's
+leakage has a hider and this one does not, so the only defence is an explicit leakage budget.
+The lab is also precise about what authentication is not: every AES-GCM-SIV tag verifies while the
+equality leakage is entirely intact.
+
+Split Point's second citation is the PIR axis, where it moves the trade-off the other three do not
+touch. Oblivious Shelf and Patron Shield buy information-theoretic privacy with a full-length
+query; Shelf Oracle removes the second server and pays in RLWE. Split Point keeps the two servers
+and attacks the **communication** — one serialized DPF key against the Chor XOR baseline over the
+same 65,536-record shelf — while being explicit that server work does not shrink with it: both
+servers still evaluate the entire domain. Its lead concept is §19, on the function-sharing idea
+rather than the retrieval.
+
 *(On classification: some specialists file DP as statistics rather than cryptography. See
 the Scope note above — the catalog's boundary is "checkable mathematical guarantee the
 learner can break," which DP satisfies cleanly.)*
+
+Status stays `COVERED` at eleven demos, which is not an oversight. This concept is a bundle of
+thin axes — access pattern, set intersection, metadata, aggregate release, searchable index,
+property-preserving leakage — most of them taught once, so the count is high while no single axis
+is covered several times over. A reader who split it into three concepts, as the taxonomy note
+invites, would find three `COVERED` entries rather than one `DEEP` one.
 
 **23b. Deniability — `COVERED`**
 Shadow Vault. One container, two passphrases, two plaintexts, and no way to prove a second
@@ -417,7 +566,7 @@ concept in the right place without invalidating every one of those references. P
 renumbering whenever a concept is added mid-list.
 
 **24. Anonymity and unlinkability — `COVERED`**
-Ring Sign · Blind Sign · Credential Veil · Traitor Trace · Sphinx Mix.
+Ring Sign · Blind Sign · Credential Veil · Traitor Trace · Sphinx Mix · Privacy Pass.
 
 Sphinx Mix adds the network layer the other four do not touch: they unlink a *signature* or a
 *credential* from its holder, while Sphinx unlinks a *packet* from its sender across three
@@ -425,6 +574,26 @@ hops. It also carries the distinction that most explanations of anonymity system
 bitwise unlinkability is a property of the packet format, anonymity is a property of the
 traffic, and the first does not produce the second. One sender on a quiet network is traced
 end to end with every cryptographic check green.
+
+Privacy Pass unlinks a **token**, which is the sixth distinct object in this concept: Ring Sign
+unlinks a signature from its member, Blind Sign a signature from its issuance, Credential Veil an
+attribute from its holder, Sphinx Mix a packet from its sender, and Traitor Trace runs the whole
+thing backwards. This one is the deployed anonymous-authorization case — RFC 9578 token type
+`0x0001`, VOPRF over P-384 with RFC 9380 hash-to-curve, and a DLEQ proof the client verifies
+before it will finalize. Its sharpest exhibit is negative: removing the client's blind changes
+nothing on the wire, and the issuer and origin can then pool their ledgers and match on the input
+point. The guarantee lives in the blind, not in the token.
+
+Two limits it is honest about, and both are the interesting part. A DLEQ proof valid for one
+client does not prove the issuer used that key for **every** client, so an issuer publishing
+per-client keys partitions redemptions by key id with both proofs verifying and both tokens
+redeeming — key consistency is a separate protocol and deliberately absent. And anonymity here is
+a property of the token population a deployment actually has, not of the construction; Sphinx
+Mix's traffic-versus-format distinction is the same observation one layer down.
+
+Status stays `COVERED` at six demos rather than moving to `DEEP`, on the same test applied to §20:
+six objects unlinked, none of them taught twice, and mix networks beyond Sphinx, DC-nets, and
+anonymous e-cash would each still add an axis rather than repeat one.
 
 **25. Trust distribution and transparency — `COVERED`**
 PKI Chain · Chain of Trust · Web of Trust · Key Mirror · Merkle Vault · Merkle Proofs ·
@@ -498,7 +667,30 @@ also earns its place by showing where the lemma *fails*: over three rounds the l
 effect scatters the true bias across keys while the piling-up prediction sits unmoved.
 
 **31. Formal and symbolic analysis — `COVERED`**
-Protocol Checker (Dolev-Yao, rediscovers Lowe's attack by search).
+Protocol Checker (Dolev-Yao, rediscovers Lowe's attack by search) · Hidden Bit.
+
+Hidden Bit is the **computational** half of this concept; Protocol Checker was the **symbolic**
+half standing alone until now. Those two are the canonical pair — the two ways a security claim is
+made formal. Symbolic analysis searches an idealised algebra for an attack and finds Lowe's;
+game-based provable security bounds a measured adversary advantage and hands the bound to a
+reduction. Hidden Bit makes the definitions runnable rather than quoted: a challenger seals one
+bit, a named adversary guesses, and `Adv(A) = 2·wins/trials − 1` is plotted with a Wilson 95%
+interval over real AES modes, RSA-2048, ristretto255 ElGamal, secp256k1 and Ed25519, with a
+lazily-sampled ideal permutation and ideal function behind the PRP/PRF switching game.
+
+Its negative claim is the whole lesson and it is asymmetric: a rising advantage proves a scheme
+broken, while a flat one proves only that **these** adversaries failed. The chained-IV CBC fixture
+stages both halves at once — random guessing and re-encryption both flatten while all three KATs
+pass, and the BEAST-style IV predictor still reaches advantage one. Which is why the fifth exhibit
+is a reduction rather than another histogram: an IND-CPA adversary wrapped inside a live DDH
+distinguisher, checked against the `Adv(B) = Adv(A)/2` convention.
+
+This was the one placement in v10 that nearly went unfiled. Provable security is the framework the
+rest of this map's claims are **stated in**, not a peer of the primitives it files, so no concept
+was built for it. §31 takes it on the strength of its first word — but that leaves this title
+naming only one of the two demos under it. See the version note: widen the title, or split
+**§31b**. Not settled here. Status stays `COVERED`; what changes is that §31 is no longer a
+one-demo concept, which this file's own closing section calls "covered, not thoroughly taught."
 
 **32. The limits of cryptography — `COVERED`**
 Model Breach (assumptions drifting from deployment) · Encrochat (endpoint compromise defeats
@@ -637,7 +829,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 193.**
+**Catalogued total: 201.**
 
 ---
 

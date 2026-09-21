@@ -4574,7 +4574,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-split-point/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-split-point/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Function Secret Sharing</div>
             <div class="project-title">Split Point</div>
             <div class="project-copy">Secret-share a function, not a value: two DPF keys each evaluate to shares of one-at-α, zero everywhere else. Two non-colluding servers fold 65,536 records and neither learns which one you read.</div>
@@ -4589,7 +4589,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-proof-tally/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+          <a class="project-card" data-category="MPC & THRESHOLD | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-proof-tally/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Verifiable Aggregation</div>
             <div class="project-title">Proof Tally</div>
             <div class="project-copy">Secret sharing hides a measurement and will happily add a lie to the total. A fully linear proof carried in the same shares lets two aggregators reject a malformed report neither of them can read.</div>
@@ -4945,7 +4945,7 @@
       'Masked Core': 'cryptanalysis',
       'GGH Trapdoor': 'cryptanalysis', 'Factor Forge': 'cryptanalysis',
       'Lattice Builder': 'post-quantum', 'Covert Channel Studio': 'historical',
-      'Privacy Pass': 'privacy', 'Order Leak': 'privacy', 'Split Point': 'privacy',
+      'Privacy Pass': 'privacy', 'Order Leak': 'privacy', 'Split Point': 'foundations',
       'Proof Tally': 'privacy', 'Fold Gate': 'privacy', 'Hidden Bit': 'foundations',
       'PQXDH Wire': 'key-exchange', 'Sleeve Check': 'symmetric'
     };
@@ -4957,6 +4957,8 @@
       'Accumulator',
       'Pairing Gate','OTP Vault','VDF','HPKE Envelope','Quantum Entropy',
       'Lattice Gentle','KMAC Gate','Feistel Forge','Polynomial Forge'
+    ,
+      'Split Point'
     ];
     var REAL_WORLD_TITLES = [
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',
@@ -4966,7 +4968,7 @@
       'Key Mirror','SPAKE Gate','Encrochat','Beacon Lock','Token Tell',
       'DNSSEC Chain','Attestation Gate'
     ,
-      'Privacy Pass','PQXDH Wire'
+      'Privacy Pass','PQXDH Wire','Proof Tally'
     ];
     var TITLE_TO_EXTRA_CATS = {};
     FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });

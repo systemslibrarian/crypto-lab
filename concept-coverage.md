@@ -666,8 +666,16 @@ probability, with 96 cross-implementation vectors reproducing Biham Lens's ciphe
 also earns its place by showing where the lemma *fails*: over three rounds the linear hull
 effect scatters the true bias across keys while the piling-up prediction sits unmoved.
 
-**31. Formal and symbolic analysis — `COVERED`**
+**31. Formal security analysis: symbolic and computational — `COVERED`**
 Protocol Checker (Dolev-Yao, rediscovers Lowe's attack by search) · Hidden Bit.
+
+*Title widened 2026-09-21, and the alternative declined on the record.* The old title,
+"Formal and symbolic analysis", named only half of what the concept holds — it read as though
+symbolic methods were the whole of formality. Splitting provable security out as §31b was the other
+option and was rejected: it would have left two one-demo concepts and undone the very thing filing
+Hidden Bit here fixed, since §31 had been a single-demo concept and this file's own closing section
+calls that "covered, not thoroughly taught". Widening keeps the canonical pair together, which is
+the honest shape — they are two ways of making one claim formal, not two subjects.
 
 Hidden Bit is the **computational** half of this concept; Protocol Checker was the **symbolic**
 half standing alone until now. Those two are the canonical pair — the two ways a security claim is

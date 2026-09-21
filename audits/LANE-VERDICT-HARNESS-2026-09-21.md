@@ -1,4 +1,4 @@
-# Lane brief — three harness fixes for the eight verdict-gated labs
+# Lane brief — six harness fixes for the eight verdict-gated labs
 
 _Written 2026-09-21 after the first independent audit of `crypto-lab-fold-gate`
 at `9dac554`. Committed here rather than sent as a message, because the last
@@ -35,8 +35,11 @@ green, which is the precondition for reading any kill at all.
   matching real job names at `deploy.yml:20` and `:44`, force-push and deletions
   disabled.
 
-**What did not:** three gaps, all of them the same shape — the harness scores a
-claim it has not actually checked.
+**What did not:** six items. Fixes 1-3 and 6 are all the same shape — the
+harness scores a claim it has not actually checked. Fix 4 is the inverse and is
+recorded because it matters just as much: a suspected code defect that testing
+DISPROVED, leaving a real but different gap in the spec's oracle. Fix 5 is a
+standing constraint rather than a defect.
 
 ---
 
@@ -169,6 +172,49 @@ silently disable the gate those labs' audits were conducted against.
 
 If a lab's fixes need a pull request because it is protected, open one. That is
 the whole accommodation required.
+
+## Fix 6 — exercise the chain at a non-default step count
+
+Fix 4 established that the fold count comes from `perFoldOps.length` rather than
+a literal. **That is only ever demonstrated at one value.** The UI offers six
+step counts — `2, 4, 8, 16, 32, 64` in the `#step-count` select — and
+`verdicts.spec.ts` drives exactly one of them. Every chain interaction in the
+file, in `driveEveryState` and in all four chain tests, is
+`getByRole('button', { name: 'Fold 8 steps' })`.
+
+So 7 is both the expected value and the only value, and three different things
+hide in that coincidence:
+
+1. **A literal fold count in the page would pass.** Nothing distinguishes
+   `perFoldOps.length` from a hard-coded `7` when the only run has seven folds.
+   The whole point of Fix 4's finding is unfalsifiable at a single count.
+2. **The spec's own literals are correct by luck**, not by derivation —
+   `toContainText('measured across 7 folds')` and `toBe(String(counted * 7))`.
+   Fix 4 asks for the oracle to derive them; this is what proves the derivation
+   actually happened.
+3. **`driveEveryState`'s denominator misses whatever only renders elsewhere.**
+   That function is what the marker-coverage test and the outside-marker test
+   both enumerate over, so a marker — or an unmarked number — that appears only
+   at 2 steps or only at 64 is outside the set those tests judge. It is the
+   discovered-rather-than-declared denominator again, and it is the most
+   expensive of the three, because it silently shrinks the coverage rule that
+   the rest of this brief is built on.
+
+**Run the chain claims at the default and at one non-default count.** 64 is the
+better second choice: it is the largest, it is where a constant-per-fold claim
+carries the most weight, and it is furthest from the default in every literal
+that could be hiding. If runtime is a problem, 2 is the cheap alternative and
+still breaks every literal.
+
+One practical trap for whoever implements it: **the button's label is dynamic.**
+`src/ui/app.ts:456` sets `runChain.textContent = \`Fold ${next} steps\`` when the
+select changes, and `:511` sets `Fold ${count} steps again` after a run. So
+`getByRole('button', { name: 'Fold 8 steps' })` stops matching as soon as the
+select moves. Select first, then locate the button by `#run-chain` or by the
+label the count implies — do not assume the 8-step name survives.
+
+This applies to every lab in the set that renders a claim over a variable-sized
+run, not only fold-gate.
 
 ---
 

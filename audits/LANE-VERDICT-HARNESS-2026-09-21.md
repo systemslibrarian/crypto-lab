@@ -256,9 +256,13 @@ from the API on 2026-09-21, not assumed:
 | `split-point` | `build`, `verdict-coverage` |
 | `hidden-bit`, `pqxdh-wire`, `privacy-pass`, `proof-tally`, `sleeve-check` | none (404) |
 
-fold-gate additionally carries `enforce_admins: true`, so a direct push is
-rejected outright — the builder demonstrated it with
-`GH006: Protected branch update failed`.
+**Only `fold-gate` carries `enforce_admins: true`.** `order-leak` and
+`split-point` both have it `false`, so protection there does not bind a repo
+admin and a direct push by one is not rejected. Re-derived 2026-09-21 after the
+lane's order-leak agent flagged it. "The three protected labs" are not
+identically protected, and treating them as one class is how the exception rule
+gets misapplied — which is the second correction this document has had to make
+about its own protected-lab claim.
 
 This table is itself a correction. The first draft of this document asserted
 that fold-gate was the only protected lab, on the strength of having audited

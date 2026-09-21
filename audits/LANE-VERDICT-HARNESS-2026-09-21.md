@@ -200,11 +200,37 @@ hide in that coincidence:
    expensive of the three, because it silently shrinks the coverage rule that
    the rest of this brief is built on.
 
-**Run the chain claims at the default and at one non-default count.** 64 is the
-better second choice: it is the largest, it is where a constant-per-fold claim
-carries the most weight, and it is furthest from the default in every literal
-that could be hiding. If runtime is a problem, 2 is the cheap alternative and
-still breaks every literal.
+**Two different requirements, and they do not have the same answer.**
+
+*For the chain-claim oracle* — the tests that assert what the cost verdict says
+— the default plus **64** is enough. 64 is the largest, it is where a
+constant-per-fold claim carries the most weight, and it is furthest from the
+default in every literal that could be hiding. Two runs break every literal;
+running all six there buys little for the runtime.
+
+*For `driveEveryState`* — enough is **all six**. It is not a test, it is the
+DENOMINATOR that the marker-coverage test and the outside-marker test both
+enumerate over. Anything that renders only at 2, 4, 16 or 32 is outside the set
+those tests judge, and stays outside no matter how carefully the rules
+themselves are written. A coverage rule applied to a set that was never fully
+walked is the defect this whole brief exists to close, one level up from where
+it was found.
+
+### The rule, for all eight labs
+
+> **`driveEveryState` visits every option of every control that changes what
+> renders — each control on its own, not the full cross-product.**
+
+Per-control, not combinatorial, is the whole point of it being affordable. Six
+step counts plus four attack buttons is ten visits, not forty. The cross-product
+would buy interaction coverage, which is a different question and not one the
+marker rules ask. What the marker rules need is simply that no renderable state
+is unreachable by the walk.
+
+Every lab in the set has its own controls — selects, mode toggles, parameter
+inputs, attack buttons. Enumerate them per lab rather than copying fold-gate's
+list. A control that does not change what renders can be skipped, but say so in
+the commit rather than leaving it to be inferred.
 
 One practical trap for whoever implements it: **the button's label is dynamic.**
 `src/ui/app.ts:456` sets `runChain.textContent = \`Fold ${next} steps\`` when the

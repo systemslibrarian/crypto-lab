@@ -97,6 +97,79 @@ Extend that test: in result regions, any leaf text matching digit-plus-unit
 bare integer in a stats grid) must sit inside a marker. Same failure message
 shape as the verdict-word case.
 
+## Fix 4 — the chain total: the code is right, the ORACLE is weak
+
+This was raised as a suspected code defect: that `chain-total-ops` derives the
+total from a single per-fold count, so *"measured across 7 folds"* and
+*"PER-FOLD VERIFIER COST CONSTANT AT 6"* would be claims the run does not
+support, and a mutation changing one fold only would survive.
+
+**Tested rather than reasoned about. It does not survive.** `src/ui/app.ts:79`
+was mutated so the first fold alone tallies one less, the suite was run with
+`CI=1`, and the verbatim failure was:
+
+```
+Error: expect(locator).toContainText(expected) failed
+  Locator: locator('[data-verdict="chain-cost"]')
+  Expected substring: "PER-FOLD VERIFIER COST CONSTANT AT"
+  Received string:    "PER-FOLD VERIFIER COST VARIED OVER 5, 6 · measured across 7 folds ·
+                       41 group operations in total, plus one final check"
+```
+
+Baseline 7/7 passing in the same session; 1 failed / 6 passed under the
+mutation, on that marker's own assertion. Three things are proven by the
+received string alone: the total is **41**, so the page really does sum seven
+tallies rather than multiplying one out; `constant` really does compare every
+fold, since it flipped to `VARIED OVER 5, 6`; and the fold count comes from
+`perFoldOps.length`, not a literal. The source agrees —
+`total: perFold.reduce((sum, ops) => sum + ops, 0)`, and `verifierGroupOps` is
+called inside the loop, once per fold.
+
+So the page may say "measured". It is measured. **What is weak is the spec's
+oracle**, and that is a real gap worth closing:
+
+```ts
+expect(await page.locator('[data-claim="chain-total-ops"]').getAttribute('data-value'),
+  'seven folds of measured cost, summed').toBe(String(counted * 7))
+```
+
+The page sums; the oracle multiplies one count by a literal `7`. It happens to
+agree today. It is structurally the wrong shape — it cannot distinguish "summed
+seven measurements" from "multiplied one measurement", which is precisely the
+distinction the sentence beside it claims. The literal also breaks silently the
+moment anyone exercises the 2/4/16/32/64-step buttons the UI already offers, and
+`await expect(cost).toContainText('measured across 7 folds')` has the same
+literal built in.
+
+Two changes, both in the spec:
+
+1. Have the oracle build its own per-fold array by running the stand-in counter
+   once per fold, sum that, and derive the expected fold count from the chain
+   length under test. Then the test verifies the *shape* of the claim, not just
+   its current value.
+2. **Record the one-fold mutation above in `VERDICT_MUTATIONS`.** It is a real
+   kill with verbatim evidence and it belongs in the record. It is also the only
+   mutation in the set that distinguishes a summed total from a multiplied one,
+   which no existing mutation does — every other one moves all folds at once.
+
+## Fix 5 — nobody touches branch protection
+
+**No lane agent changes branch protection on any lab, in either direction.**
+
+The three protected labs — `fold-gate`, `order-leak`, `split-point` — stay as
+pilots. The other five stay unprotected. Whether that spreads is the
+maintainer's decision and is not delegated to the lane.
+
+This matters more than it looks. Branch protection changes who can land what,
+and it arrived in these three because individual builders turned it on
+mid-lane rather than through any decision recorded anywhere. An agent adding it
+to the remaining five would be making a fleet-wide access-control change as a
+side effect of a test-harness fix. An agent removing it from the three would
+silently disable the gate those labs' audits were conducted against.
+
+If a lab's fixes need a pull request because it is protected, open one. That is
+the whole accommodation required.
+
 ---
 
 ## Landing it

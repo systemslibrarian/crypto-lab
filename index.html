@@ -1631,7 +1631,7 @@
       <div class="wrap">
         <div class="featured-head">
           <div class="featured-headline-row">
-            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">201</span> interactive cryptography exhibits</span></h1>
+            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">202</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -4574,7 +4574,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-split-point/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-split-point/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Function Secret Sharing</div>
             <div class="project-title">Split Point</div>
             <div class="project-copy">Secret-share a function, not a value: two DPF keys each evaluate to shares of one-at-α, zero everywhere else. Two non-colluding servers fold 65,536 records and neither learns which one you read.</div>
@@ -4604,10 +4604,10 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-fold-gate/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+          <a class="project-card" data-category="PROTOCOLS | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-fold-gate/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Folding Schemes</div>
             <div class="project-title">Fold Gate</div>
-            <div class="project-copy">Combining two satisfying R1CS instances leaves a computable cross term. Relax the system with a slack scalar and an error vector to absorb it, and one folded instance stands in for all of them.</div>
+            <div class="project-copy">Combining two satisfying R1CS instances leaves a computable cross term; relax the system to absorb it and one folded instance stands in for all of them. This NIFS alone is neither zero-knowledge nor a succinct proof.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Nova NIFS</span>
@@ -4659,6 +4659,21 @@
                 <span class="chip">Streebog</span>
                 <span class="chip">TKlog</span>
                 <span class="chip">AES S-Box</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-ghost-commit/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Secret Leakage</div>
+            <div class="project-title">Ghost Commit</div>
+            <div class="project-copy">Commit an API key, delete it two commits later, and it keeps its name and its contents forever — git adds objects, it never edits them. Then an entropy scanner finds it in seconds.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Git Object Model</span>
+                <span class="chip">SHA-1 / SHA-256</span>
+                <span class="chip">Shannon Entropy</span>
+                <span class="chip">Secret Scanning</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -4946,8 +4961,9 @@
       'GGH Trapdoor': 'cryptanalysis', 'Factor Forge': 'cryptanalysis',
       'Lattice Builder': 'post-quantum', 'Covert Channel Studio': 'historical',
       'Privacy Pass': 'privacy', 'Order Leak': 'privacy', 'Split Point': 'foundations',
-      'Proof Tally': 'privacy', 'Fold Gate': 'privacy', 'Hidden Bit': 'foundations',
-      'PQXDH Wire': 'key-exchange', 'Sleeve Check': 'symmetric'
+      'Proof Tally': 'privacy', 'Fold Gate': 'foundations', 'Hidden Bit': 'foundations',
+      'PQXDH Wire': 'key-exchange', 'Sleeve Check': 'symmetric',
+      'Ghost Commit': 'key-exchange'
     };
 
     var FOUNDATIONS_TITLES = [
@@ -4959,6 +4975,8 @@
       'Lattice Gentle','KMAC Gate','Feistel Forge','Polynomial Forge'
     ,
       'Split Point'
+    ,
+      'Fold Gate'
     ];
     var REAL_WORLD_TITLES = [
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',

@@ -204,6 +204,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [Sleeve Check](https://systemslibrarian.github.io/crypto-lab-sleeve-check/) | S-Box Provenance | Kuznyechik · Streebog · TKlog · AES S-Box |
 | [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) | Searchable Encryption | SSE · HMAC-SHA-256 · AES-256-GCM · Leakage Abuse |
 | [Masked Core](https://systemslibrarian.github.io/crypto-lab-masked-core/) | Second-Order CPA | Boolean Masking · Second-Order CPA · AES-128 · Centered Product |
+| [Ghost Commit](https://systemslibrarian.github.io/crypto-lab-ghost-commit/) | Secret Leakage | Git Object Model · SHA-1 / SHA-256 · Shannon Entropy · Secret Scanning |
 | [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) | Secret Sharing | Shamir SSS · Lagrange Interpolation · GF(p) |
 | [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) | Secure MPC | Garbled Circuits · Oblivious Transfer · Free XOR · Two-Party MPC |
 | [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | Secure MPC | Shamir SSS · GF(2⁶¹−1) · Lagrange Interpolation · Additive Homomorphism |

@@ -87,6 +87,11 @@ touched was already `COVERED` or `DEEP`, and the two that could have been argued
 **PQXDH Wire** §16, **Split Point** §19 and §23, **Proof Tally** §20 and §21, **Fold Gate** §21,
 **Order Leak** §23, **Privacy Pass** §24, **Hidden Bit** §31.*
 
+*Version 11 — files Ghost Commit under §39, closing the last uncatalogued live lab. It had been
+built and serving since 2026-07-31 and was never carded in any pass, including the v7 pass that
+existed to card exactly that class; `tools/fleet-sync.js` is what kept surfacing it. No status
+change: §39 was already `COVERED` and gains its failure case beside the two safe paths.*
+
 *Three of the eight needed a judgment rather than a lookup, and in two of them the concept
 diverges from the catalog section — which is the divergence this file exists to allow. **Split
 Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
@@ -156,7 +161,7 @@ build it only if you want depth there, not because the suite needs it. If it's `
 | `PARTIAL` | Taught, but an arc is unfinished or a piece is missing. |
 | `GAP` | No demo teaches this concept. |
 
-Catalog basis: the 201 cards in `index.html` as of the v10 catalog pass.
+Catalog basis: the 202 cards in `index.html` as of the v10 catalog pass.
 
 **Checked, not trusted.** Run `node tools/concept-sync.js check`. It verifies this file
 against the catalog in both directions: every demo cited below resolves to a real card, and
@@ -793,7 +798,21 @@ covered several times over.
 Bitcoin Script · Bitcoin Wallet.
 
 **39. Operational key management — `COVERED`**
-Envelope KMS · PQ Rotation.
+Envelope KMS · PQ Rotation · Ghost Commit.
+
+Ghost Commit is the failure case the other two only imply. Envelope KMS shows the safe path —
+a DEK/KEK hierarchy, rotation, re-wrap without plaintext exposure — and PQ Rotation shows
+migrating one. Neither shows what happens when the key never reached a manager at all. Ghost
+Commit does: a credential committed to git keeps its blob name and its contents forever, because
+removing it writes a *new* blob and leaves the old one reachable from the commit that introduced
+it. Both operations feel like removal and are additions.
+
+It earns the citation on a property rather than a primitive, and the property is durability of a
+content-addressed store rather than confidentiality — the demo says plainly that there is no
+security model to break on that page. The operational consequence is the lesson: once a credential
+is pushed, the only action that changes an attacker's position is revoking it at the issuer. The
+entropy scanner beside it is the other half — how a detector decides a string looks like a
+credential, which is what makes the leak findable by someone who is not looking for it.
 
 ---
 
@@ -837,7 +856,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 201.**
+**Catalogued total: 202.**
 
 ---
 

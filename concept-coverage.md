@@ -92,6 +92,17 @@ built and serving since 2026-07-31 and was never carded in any pass, including t
 existed to card exactly that class; `tools/fleet-sync.js` is what kept surfacing it. No status
 change: §39 was already `COVERED` and gains its failure case beside the two safe paths.*
 
+*Version 12 — no filing and no status change: one NUMBER corrected. §21's Fold Gate paragraph
+said the NIFS verifier's per-fold work "stays fixed at five group operations". It is six, and
+the lab now measures it — `src/nifs/cost.ts` tallies every operation the real `foldPublic`
+performs over instrumented points, and `src/nifs/cost.test.ts` cross-checks that tally against
+a count taken from the function's own source, so changing `foldPublic` moves both numbers
+instead of leaving a constant quietly right. The lab repaired its own README when the
+measurement landed; this file was the surviving echo, and it was found by the lab's agent
+sweeping for echoes of a changed number rather than by any checker here. Worth recording as a
+gap in this file's own coverage: `concept-sync` verifies that every card is cited and every
+citation has a card, and is structurally blind to a factual claim inside the commentary.*
+
 *Three of the eight needed a judgment rather than a lookup, and in two of them the concept
 diverges from the catalog section — which is the divergence this file exists to allow. **Split
 Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
@@ -485,7 +496,11 @@ the mechanism underneath recursive proving. A random linear combination of two s
 instances is not itself satisfying, the leftover is exactly a computable cross term `T`, and
 relaxing the system with a slack scalar `u` and an error vector `E` — `E' = E₁ + rT + r²E₂` —
 absorbs it, so one folded instance stands in for all of them while the verifier's per-fold work
-stays fixed at five group operations over 2 to 64 real steps. Its three attack modes are the
+stays fixed over 2 to 64 real steps — six ristretto255 group operations, three scalar
+multiplications and three point additions, which the lab now MEASURES by running the real
+`foldPublic` over instrumented points rather than asserting with a constant. This line said
+*five* until 2026-09-21; that figure was hard-coded, was wrong, and outlived the page that
+carried it. Its three attack modes are the
 algebra's own boundary conditions rather than decoration: tampering with `W'` after folding,
 tampering with `Com(T)` after deriving `r`, and the forgery that *succeeds* when a broken verifier
 reveals `r` before `T` is committed — which is the reason the transcript orders commitment first.

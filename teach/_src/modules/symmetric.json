@@ -3,7 +3,7 @@
   "position": 10,
   "title": "Security & symmetric encryption",
   "audience": "Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal.",
-  "course_fit": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of about 75 minutes each (Hidden Bit, OTP Vault and AES Modes, then Padding Oracle and Nonce Collision); with shorter meetings, set the worksheets’ Predict questions before class.",
+  "course_fit": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.",
   "prerequisites": [
     "XOR on bits and bytes",
     "Reading hexadecimal byte strings",
@@ -22,7 +22,7 @@
     {
       "name": "hidden-bit",
       "role": "intro",
-      "minutes": 20,
+      "minutes": 15,
       "students_do": "In Exhibit 01, pick an AES scheme (GCM, CTR, chained-IV CBC or ECB) and an adversary (random guess, re-encrypt and compare, or the BEAST-style IV predictor), run or step real trials, and read the measured advantage, Wilson interval and verdict.",
       "source_commit": "00705ccbf695",
       "worksheet": "hidden-bit",
@@ -68,7 +68,7 @@
     {
       "name": "otp-vault",
       "role": "break-it",
-      "minutes": 25,
+      "minutes": 20,
       "students_do": "Encrypt a message under a fresh random pad, type any same-length plaintext to derive a key that maps the fixed ciphertext to it, then switch on key reuse and crib-drag C1 ⊕ C2 to peel both messages apart, including a built-in challenge.",
       "source_commit": "6b2bb1c14f73",
       "worksheet": "otp-vault",
@@ -114,7 +114,7 @@
     {
       "name": "aes-modes",
       "role": "fix",
-      "minutes": 20,
+      "minutes": 15,
       "students_do": "Encrypt your own plaintext under ECB, CBC, CTR, GCM and CCM, inspect the key, IV or nonce, ciphertext and tag, and run the ECB pattern-leak, CBC bit-flip and GCM tamper-detection demos to see which modes accept a modified ciphertext.",
       "source_commit": "cbfb1b4dfa2c",
       "worksheet": "aes-modes",
@@ -194,7 +194,8 @@
             "result": "fails three worksheet steps",
             "notes": "WebCrypto in this engine accepts a final 0x00 byte as valid PKCS#7 padding, which Chromium and Firefox reject, and three worksheet steps rest on that check: the forced 0x00 row in Do step 3 reads \"The oracle answered: Valid\", against the page's own explanation that 0x00 claims zero padding bytes; Full Block printed \"Attack stopped.\" in 6 of 10 runs, after 329 to 495 oracle queries and with no console error, where Chromium 153 and Firefox 155 recovered the block in 10 of 10 (1,745 to 2,605 queries); and the leaky server in the Panel 6 bench failed in 3 of 6 runs. Otherwise: 24 anchors present; 20 anchored controls take keyboard focus and have accessible names (5 of them once the step before them has run); no console errors; no horizontal scrolling; no animation left running with reduced motion requested; about 34 KB transferred on load."
           }
-        ]
+        ],
+        "headline": "three of its worksheet steps fail in WebKit, which accepts a padding byte the other engines reject. Run this one in a Chromium- or Firefox-based browser."
       },
       "run_specific_values": {
         "checked": "2026-09-22",

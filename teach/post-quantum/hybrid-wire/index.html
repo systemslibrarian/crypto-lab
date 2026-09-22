@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Hybrid Wire — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Hybrid Wire exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/hybrid-wire/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Hybrid Wire">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/hybrid-wire/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Hybrid Wire">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/hybrid-wire/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Post-quantum transition</a></li><li><span aria-current="page">Hybrid Wire</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Post-quantum transition</a></p>
+  <h1>Worksheet: Hybrid Wire</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-hybrid-wire/">Hybrid Wire</a></dd></div>
+  <div><dt>Time</dt><dd>About 15 minutes of class time; Predict is pre-class reading</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>5b7ae68ae3bc</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to trace an ML-KEM key establishment through KeyGen, Encaps and Decaps, and distinguish what a KEM provides from message encryption and from peer authentication.</li><li>Students will be able to predict and then verify the outcome of an X25519 + ML-KEM-768 hybrid session when one or both key-establishment wires are broken, and explain why a hybrid is a hedge rather than a doubling of security.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/post-quantum/hybrid-wire.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/post-quantum/hybrid-wire.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>This exhibit derives one session key from two 32-byte secrets: <code>session_key = HKDF-SHA-256(x25519_secret || mlkem_secret)</code>. In the exhibit, a wire being &quot;broken&quot; means an attacker has recovered that wire's 32-byte secret, not that the wire stopped carrying bytes. For each of the four rows in the first table under Record — both wires secure, X25519 broken, ML-KEM-768 broken, both broken — predict whether an attacker who is handed the broken wire's real secret, and who must guess anything still hidden, can re-derive the session key and open a record encrypted under it. Write your predictions in that table's prediction column.</li><li>Someone says a hybrid handshake is &quot;twice as strong&quot; because it runs two key exchanges. Write down what that phrase would have to mean to be true, and one sentence saying what you would claim instead.</li><li>One byte of the ML-KEM ciphertext is flipped in transit to Bob, who then decapsulates it. Predict what Bob ends up with — the same 32-byte post-quantum secret Alice encapsulated, or a different one — and what that does to the session key each side derives. Then predict whether a message Alice encrypted before the flip still decrypts for Bob afterwards.</li><li>The attacker in this exhibit gets a small, fixed number of tries: each try runs the real combiner over whatever the broken wires leaked plus a fresh random guess for whatever is still hidden, then tries the intercepted record with the key that comes out. If every try fails, write down what that does show and what it does not show.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. It opens on the <strong>Live handshake</strong> tab, and its six phases have already run in your browser — the stepper reveals them one at a time, each with the time it took. Press <strong>Next</strong> until you reach step 6, reading each phase title as it becomes current. Between step 4 and step 5, watch the <em>Bob shared secret</em> line on the card headed <em>Purple wire — ML-KEM-768</em> change from <code>pending</code> to bytes: that is Bob decapsulating the ciphertext Alice encapsulated.</li><li>At step 6 the outcome cards, the combiner strip and the secure chat appear. Record <em>Total measured handshake time</em>, the heading of the card directly above the combiner strip (leave its icon out of what you write), and the first four hex characters shown under <em>Session key · 32 B</em>. Read the strip left to right first: <em>X25519 secret · 32 B</em>, then <em>ML-KEM secret · 32 B</em>, then the session key.</li><li>In the panel headed <em>Secure chat</em>, record the first four characters of <em>Alice fingerprint</em> and of <em>Bob fingerprint</em>, and what <em>Session state</em> reads. Leave the sender menu on Alice, type a short message into the message box, and press the send button beside it. On the message card that appears, press its decrypt button, then record the status pill on that card and what <em>Recipient view</em> shows.</li><li>In the same panel's button row, press the control that tampers with the session. Record the status line that appears at the foot of the page, and record <em>Alice fingerprint</em>, <em>Bob fingerprint</em> and <em>Session state</em> again.</li><li>Press the decrypt button on that same message card a second time. The message itself has not changed — only the session has. Record the status pill now, the <em>Verification note</em> on the card, and the status line at the foot of the page.</li><li>Open the <strong>Threat model</strong> tab and read the note headed <em>What &quot;broken&quot; means</em>. Leave both switches as they are and fill the first row of the first table: the verdict headline, which of the two input cells reads <em>known to attacker</em>, and the line beneath the verdict that begins <em>Measured this run</em>.</li><li>Use the first of the two switches, the one for the X25519 wire, to set that wire to broken, and fill that row the same way. Switch it back to secure, set the ML-KEM-768 wire to broken with the second switch, and fill that row. Finally set both to broken and fill the last row, including the plaintext the page prints for the record it opened.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Wire state, My prediction, Verdict headline, Input cell marked known to attacker, Measured this run">
+<table>
+<thead><tr><th scope="col">Wire state</th><th scope="col">My prediction</th><th scope="col">Verdict headline</th><th scope="col">Input cell marked known to attacker</th><th scope="col">Measured this run</th></tr></thead>
+<tbody>
+<tr><th scope="row">Both wires secure</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">X25519 broken</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">ML-KEM-768 broken</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Both broken</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<aside class="ws-note"><p>For the both-broken row, also write down the plaintext the page prints for the record it opened. For the <em>Measured this run</em> column, the phrase after &quot;attacker:&quot; is enough.</p></aside>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Handshake outcome at step 6, My run">
+<table>
+<thead><tr><th scope="col">Handshake outcome at step 6</th><th scope="col">My run</th></tr></thead>
+<tbody>
+<tr><th scope="row">Total measured handshake time</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Heading of the card above the combiner strip, without its icon</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Session key, first four hex characters</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Moment, Alice fingerprint, first four, Bob fingerprint, first four, Session state, Status pill on the message">
+<table>
+<thead><tr><th scope="col">Moment</th><th scope="col">Alice fingerprint, first four</th><th scope="col">Bob fingerprint, first four</th><th scope="col">Session state</th><th scope="col">Status pill on the message</th></tr></thead>
+<tbody>
+<tr><th scope="row">After the handshake, before tampering</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After tampering and the second decrypt</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Line, What it said">
+<table>
+<thead><tr><th scope="col">Line</th><th scope="col">What it said</th></tr></thead>
+<tbody>
+<tr><th scope="row">Status line at the foot of the page, after you tampered</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verification note on the message, after the second decrypt</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Status line at the foot of the page, after the second decrypt</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Look at your two single-break rows. In each one the attacker held one wire's real 32-byte secret and ran the same combiner the handshake ran. Using the note printed under the two input cells on the <strong>Threat model</strong> tab, and the measured line you recorded, explain why the key that came out did not open the record, and say how much of the combiner's input the attacker was still missing.</li><li>Your single-break rows report a number of derivations and that none of them opened the record; your both-broken row reports that the record decrypted and the key matched 32 of 32 bytes. Say what the page actually tested in each case. Then say what a run of failed derivations shows about that run, and what it does not show about X25519 or ML-KEM-768 themselves.</li><li>The compromised verdict ends with the sentence &quot;Hybrid buys safety against either break alone.&quot; Using your four rows, say what that sentence claims and what it does not claim. Compare it with what you wrote for Predict 2: would you now describe this hybrid as twice as strong, and why?</li><li>The byte that was flipped was in the ML-KEM ciphertext, and nothing about the message you had already sent changed between your two decrypts. Using your fingerprints and <em>Session state</em>, say which side's session key moved and which did not, and explain why a key derived from both wires changed when one wire's secret did. Your <em>Verification note</em> blames the message's metadata; the status line blames the session keys. Which of the two does your own table support, and what in your record decides it?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> An engineer proposes dropping one wire to save the extra handshake bytes: one version keeps X25519 only, the other keeps ML-KEM-768 only. Using your own four rows, say what each version gives up and against which attacker in the table headed <em>Full threat matrix</em>, then state your recommendation in the form the exhibit's own verdicts use. At the foot of the page the exhibit says &quot;Not production crypto — a teaching demo.&quot; Say what that note means for how far your recommendation can go.</li><li><strong>Fix.</strong> Open the <strong>Two wires</strong> tab and read the HKDF combiner formula, then read the section &quot;A Note on the Combiner&quot; in the <a href="https://github.com/systemslibrarian/crypto-lab-hybrid-wire/blob/main/demos/hybrid-wire/README.md">demo's README</a>. Say what the combiner's inputs do tie the derived key to and what they do not, name where the README says that missing binding comes from in TLS 1.3, and write out the change the README prescribes for a protocol that has no outer transcript.</li><li><strong>Extend.</strong> On the <strong>Two wires</strong> tab, open the aside headed &quot;New to PQ crypto?&quot; and use it to write, in two sentences, why the purple wire sends a packet back and the blue wire does not. Then press the benchmark control on that tab and record the ops/s reported for X25519, for ML-KEM-768 and for the hybrid, and the hybrid's overhead percentage. Compare that percentage with the byte figure the same tab gives for the overhead against pure X25519, and say which of the two a network engineer would care about more.</li><li><strong>Extend.</strong> Open the <strong>Why hybrid</strong> tab and read the card headed &quot;Twice as strong?&quot; — No. Write its two-column comparison in your own words. Then name which of your four Record rows is the evidence for the model the card calls right, and say what a row would have had to show for the model it calls wrong to be the better description.</li><li><strong>Extend.</strong> Back on the <strong>Live handshake</strong> tab, press <strong>Reset</strong>, step to 6 again and send nothing. Which values in your second Record table came out the same and which changed? For each, say what part of the handshake fixes it or lets it vary.</li><li><strong>Extend.</strong> Open the <strong>Deployed today</strong> tab and pick two cards. For each, write its scheme line and where it says the hybrid is used. Then say which points in the &quot;When to Use It&quot; section of the repository <a href="https://github.com/systemslibrarian/crypto-lab-hybrid-wire">README</a> your two cards illustrate, and which point in that section the cards on the tab do not illustrate.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <p class="t-foot-licence">Teaching materials: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You may copy, adapt, print and redistribute these materials, including commercially, as long as you give credit. When you adapt one, keep this line on it: <span class="t-attrib">Crypto Lab teaching materials by Paul A. Clark, CC BY 4.0 — https://crypto-lab.systemslibrarian.dev/teach/</span></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

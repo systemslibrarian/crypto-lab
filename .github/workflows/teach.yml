@@ -34,6 +34,28 @@ jobs:
       - name: Teach pages match their sources, and the count lint passes
         run: node tools/teach-build.js check
 
+  layout:
+    # Line length is a property of the rendered page, so it is measured in a browser.
+    # A module page once published its check results in a column about 85px wide, and
+    # every file-to-file checker stayed green while it did.
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+      - run: npm ci
+        working-directory: tools
+      # No --with-deps: that apt step has wedged CI across this fleet (audits/kickoff.md).
+      - run: npx playwright install chromium
+        working-directory: tools
+      - name: No page scrolls sideways, overflows its container, or crushes prose
+        run: node tools/teach-layout.js
+
   drift:
     # Opens each worksheet's live exhibit and confirms every control it names is still
     # there. A missing one fails this job and opens an issue naming the worksheet. It

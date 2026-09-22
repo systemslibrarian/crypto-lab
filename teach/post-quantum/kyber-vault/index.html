@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Kyber Vault — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Kyber Vault exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/kyber-vault/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Kyber Vault">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/kyber-vault/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Kyber Vault">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/kyber-vault/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Post-quantum transition</a></li><li><span aria-current="page">Kyber Vault</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Post-quantum transition</a></p>
+  <h1>Worksheet: Kyber Vault</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/">Kyber Vault</a></dd></div>
+  <div><dt>Time</dt><dd>About 15 minutes of class time; Predict is pre-class reading</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>3f80e2eaa9c9</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to trace an ML-KEM key establishment through KeyGen, Encaps and Decaps, and distinguish what a KEM provides from message encryption and from peer authentication.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/post-quantum/kyber-vault.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/post-quantum/kyber-vault.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>In this exhibit Bob runs KeyGen, Alice runs Encaps, and Bob runs Decaps. Of Bob's private key, Bob's public key, the ciphertext and the shared secret, predict which one has to cross the wire for both sides to end up holding the same bytes, and which one never crosses it at all.</li><li>The exhibit calls this a key encapsulation mechanism rather than public-key encryption. Predict whether you will get to choose the secret Alice sends, and say what you think would have to be added before a sentence of your own could be sent.</li><li>A button labelled <strong>Tamper with ML-KEM ciphertext</strong> flips part of the ciphertext before Bob decapsulates. Predict what Bob's decapsulation does: report an error, hand Bob a different secret, or hand Bob the same secret. Then predict what happens when the message is decrypted.</li><li>Two people run the exhibit side by side and choose the same parameter set. Predict which of the values you are about to record will match theirs exactly and which will differ: the artifact sizes in bytes, the hex of the keys and secrets, the verdict sentence at the end of the run.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. It opens on the <strong>Encapsulate / Decapsulate</strong> tab. Read <strong>What is a KEM?</strong> and the diagram beside it, which shows what travels across the wire and what does not.</li><li>In the row of parameter-set buttons below that card, press the one you want to run: <strong>ML-KEM-512</strong>, <strong>ML-KEM-768</strong> or <strong>ML-KEM-1024</strong>. Read the <strong>Selected parameter set</strong> card and fill in the first table under Record.</li><li>Press <strong>Next</strong> and record the status line printed under the stepper. Press <strong>Next</strong> again and record it. Press <strong>Next</strong> a third time and record it.</li><li>The run is now finished. In the <strong>Artifacts</strong> list, record the first eight hex digits shown for Public key, Private key, Ciphertext, Alice secret and Bob secret. Then find the card that has appeared under the stepper showing the two secrets byte by byte, and copy its verdict sentence and the caption printed below that verdict.</li><li>Scroll to <strong>Full hybrid encryption (ML-KEM + AES-256-GCM)</strong> and read its first sentence. Type a short sentence of your own into <strong>Message to encrypt</strong>, press <strong>Encrypt message</strong>, and record the status line together with the first eight characters shown for <strong>ML-KEM ciphertext</strong>.</li><li>Press <strong>Decrypt message</strong>. Record the status line and the line that begins <strong>Decrypted plaintext</strong>.</li><li>Press <strong>Tamper with ML-KEM ciphertext</strong>. Record the status line and the first eight characters of <strong>ML-KEM ciphertext</strong> again. Then press <strong>Decrypt message</strong> a second time and record the status line and the one-line message the page prints directly below it.</li><li>Open the <strong>Parameter sets</strong> tab and read the limits listed under <strong>What exactly runs here</strong>. Then open the <strong>How LWE works</strong> tab and, under <strong>Jargon, unpacked</strong>, expand <strong>Fujisaki-Okamoto (FO) transform</strong>.</li></ol>
+<aside class="ws-note"><p>Choose your parameter set before step 3. Pressing a different one later clears the run: the status line asks for a fresh session and the artifacts go back to reading as not generated. Use <strong>Prev</strong> if you want to step back without changing the parameter set.</p></aside>
+<aside class="ws-note"><p>After the third press in step 3 the button no longer reads <strong>Next</strong>. Pressing it again starts a new run and replaces the values you recorded in step 4.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything here comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Parameter set I chose, NIST category, Public key (B), Private key (B), Ciphertext (B), Shared secret (B)">
+<table>
+<thead><tr><th scope="col">Parameter set I chose</th><th scope="col">NIST category</th><th scope="col">Public key (B)</th><th scope="col">Private key (B)</th><th scope="col">Ciphertext (B)</th><th scope="col">Shared secret (B)</th></tr></thead>
+<tbody>
+<tr><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Press, What the status line said">
+<table>
+<thead><tr><th scope="col">Press</th><th scope="col">What the status line said</th></tr></thead>
+<tbody>
+<tr><th scope="row">First <strong>Next</strong></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second <strong>Next</strong></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Third <strong>Next</strong></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: From the finished run, What the page showed">
+<table>
+<thead><tr><th scope="col">From the finished run</th><th scope="col">What the page showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Public key, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Private key, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ciphertext, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Alice secret, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Bob secret, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verdict sentence under the two byte rows</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Caption below that verdict</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Button pressed, Status line, ML-KEM ciphertext, first eight characters, Other line the page showed">
+<table>
+<thead><tr><th scope="col">Button pressed</th><th scope="col">Status line</th><th scope="col">ML-KEM ciphertext, first eight characters</th><th scope="col">Other line the page showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Encrypt message</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Decrypt message</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Tamper with ML-KEM ciphertext</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Decrypt message, second time</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Your two secret rows hold the same bytes, and the caption you copied says what did and did not travel. Using the diagram on this tab, name what each side held that the other never received, and name the one artifact that crossed the wire. According to the card above the diagram, what does an eavesdropper who copies that artifact still need in order to obtain the secret?</li><li>The stepper never asked you for a message; the hybrid card did. Using that card's first sentence and the sizes in your first table, say what ML-KEM established, what encrypted the sentence you typed, and why the page says a KEM on its own does not encrypt data.</li><li>In step 7 the page reported a failure only after you pressed <strong>Decrypt message</strong>, and not at the moment you tampered. Using the <strong>Fujisaki-Okamoto (FO) transform</strong> entry you expanded, say what the page tells you decapsulation returns when its own check fails, and say which part of the flow — the KEM step or the AES-256-GCM step — produced the message you recorded.</li><li>Find the limit about peer authentication under <strong>What exactly runs here</strong>. Using it, and the KEM card's description of what Encaps takes as its input, say what your run did establish between the two sides and what it did not, and what that limit says a real protocol has to add.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You are reviewing a design that copies this flow as it stands to protect one message to a server, taking the server's ML-KEM public key from a link in an email. Using the limits under <strong>What exactly runs here</strong> on the <strong>Parameter sets</strong> tab and the hybrid card's description of the flow, say which of those limits the design trips, what the page says has to be added, and which of three things — establishing a key, encrypting a message, authenticating the other party — the design would still be missing.</li><li><strong>Extend.</strong> Back on the <strong>Encapsulate / Decapsulate</strong> tab, press each of the two parameter-set buttons you did not run — <strong>ML-KEM-512</strong>, <strong>ML-KEM-768</strong> or <strong>ML-KEM-1024</strong> — and for each one write down the NIST category and the public key, private key, ciphertext and shared-secret sizes from the <strong>Selected parameter set</strong> card. Then open the <strong>Parameter sets</strong> tab, read the three profile cards and the card headed <strong>Category is a requirement, not a scoreboard</strong>, and say which of those numbers grow with the category, which does not, and what the page says should decide the choice.</li><li><strong>Extend.</strong> Open the <strong>Lattice visualizer</strong> tab and read the <strong>Model boundary</strong> card first: it says which part of this exhibit runs the published standard and which parts are small concept models. Then, under <strong>Learning With Errors: the noise is the whole point</strong>, press <strong>Solve A·s = b₀ (clean)</strong> and write down the vector the page recovers and the sentence it prints about it; press <strong>Solve A·s = b (published noisy)</strong> and write down the same two things. Press <strong>New random instance</strong> and repeat both solves twice more. Using the secret printed above those buttons, say what the noise did to exact elimination, and quote the panel's own sentence on what this does and does not show. If a solve reports that the random matrix was singular, press <strong>New random instance</strong> and try that solve again.</li><li><strong>Extend.</strong> Open the <strong>vs X25519 / RSA</strong> tab. From <strong>Fresh key-establishment wire cost</strong>, write down the total key material for X25519 ephemeral ECDH, for the parameter set you ran, and for X25519 + ML-KEM-768, and note what the caption underneath says those totals leave out. Then press <strong>Run benchmark</strong> and write down the median times reported for your parameter set's KeyGen, Encaps and Decaps. Using the note printed under the benchmark, say what the page tells you those numbers do and do not support.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <p class="t-foot-licence">Teaching materials: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You may copy, adapt, print and redistribute these materials, including commercially, as long as you give credit. When you adapt one, keep this line on it: <span class="t-attrib">Crypto Lab teaching materials by Paul A. Clark, CC BY 4.0 — https://crypto-lab.systemslibrarian.dev/teach/</span></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

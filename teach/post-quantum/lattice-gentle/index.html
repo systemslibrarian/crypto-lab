@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Lattice Gentle — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Lattice Gentle exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/lattice-gentle/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Lattice Gentle">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/lattice-gentle/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Lattice Gentle">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/lattice-gentle/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Post-quantum transition</a></li><li><span aria-current="page">Lattice Gentle</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Post-quantum transition</a></p>
+  <h1>Worksheet: Lattice Gentle</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/">Lattice Gentle</a></dd></div>
+  <div><dt>Time</dt><dd>About 30 minutes of class time; Predict is pre-class reading</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>893db9f6f046</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to demonstrate, using the toy LWE and toy-Kyber exhibits, how added noise defeats exact linear algebra and how noise past the decryption threshold makes decryption fail.</li><li>Students will be able to trace an ML-KEM key establishment through KeyGen, Encaps and Decaps, and distinguish what a KEM provides from message encryption and from peer authentication.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/post-quantum/lattice-gentle.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/post-quantum/lattice-gentle.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>One grid of dots can be described by more than one pair of arrows. Basis B has short arrows, basis B′ has long ones, and both describe the same dots. Decoding a target point means writing it in the current arrows' coordinates and rounding those coordinates to whole numbers. Predict which description decodes the target closer, or whether the two must tie because the dots are the same, and give your reason in one sentence.</li><li>Now think about the shortest arrow you could draw from one dot of that grid to another. If the short-arrow description is swapped for the long-arrow one, predict whether that shortest vector changes, and predict whether it becomes harder to find. Those are two separate questions — answer both.</li><li>One exhibit hands you a system b = A·s + e (mod 47) in which every entry of the error e lies between −2 and 2, and lets you compute A·s for any candidate s you type. Predict how you would recognise the right s, and predict what b − A·s looks like when s is wrong by only a little.</li><li>The toy-Kyber panel runs at q = 137 and decrypts correctly while its decryption error stays under q/4. Predict what you will see as that error grows past the ceiling: a warning first, some message bits flipping, or an error message in place of a plaintext.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>Steps 1 and 2 are in the page header and the progress rail. Every step after that names the rail button that opens it, so you always know which guided step you are in.</p>
+<ol><li>Open the exhibit. The experiment in the header asks which of two descriptions of one grid decodes the target t = (9, 2) closer. Press the button that matches your answer to Predict 1: <strong>B decodes closer</strong>, <strong>B′ decodes closer</strong>, or <strong>Same dots — they must tie</strong>. Fill in the first Record table from the sentence the page then computes.</li><li>Check that <strong>Guided</strong> is the selected reading mode, then press <strong>1 · Basis</strong> on the progress rail.</li><li>In Exhibit 1, press <strong>Good basis B (Ex 2.24)</strong>. Record its row of the second table: the status line under the picture (same lattice, or different), the point the rounding lands on, the error, and the badge at the end of the decoding line.</li><li>Press <strong>Bad basis B′ (Ex 2.24)</strong> and record that row the same way. The two presets decode the same target, so what changed between your two rows is the description.</li><li>Press <strong>Good basis B (Ex 2.24)</strong> again. Now set <strong>target x</strong> to 9 and <strong>target y</strong> to 2, typing each value and pressing Tab to commit it. Record that row — this is the target the header experiment used.</li><li>Leave the target where it is and set <strong>b₁ x</strong> to 4. Record what the status line says now and what appears among the dots. Then press <strong>Good basis B (Ex 2.24)</strong> to put both the basis and the target back.</li><li>Press <strong>2 · SVP/CVP</strong>. The panel asks its own prediction first: press <strong>Predict: yes, it changes</strong> or <strong>Predict: no, it stays</strong> to match your answer to Predict 2, and read the reply. Then press <strong>Good basis B₂ = (2,0), (0,1)</strong> and <strong>Bad basis B₃ = (−2,−2), (4,3)</strong> in turn, recording a row of the third table for each.</li><li>Press <strong>3 · Reduce</strong>. Press <strong>Gauss — Ex 9.11</strong>, then press <strong>Step</strong> twice, recording ‖v‖² from each line as it appears. Press <strong>Run to end</strong> and record the last line and the count in the status line.</li><li>Press <strong>4 · LWE &amp; SIS</strong> and stay in the first panel, LWE. Record the row the panel already shows for the candidate it opens with. Then open the LWE panel's <strong>Stuck? Reveal the known solutions</strong> disclosure, press <strong>A wrong guess: s = (1, 2, 3)</strong>, and record that row.</li><li>Still in the LWE panel, press <strong>Solution 1: s = (2, 15, 12)</strong> and record its row, including how many of the five table rows report a small error. Then change <strong>s3</strong> to one more than the value that button set, press Tab, and record the last row.</li><li>Press <strong>5 · Schemes</strong> and stay in the first panel, toy-Kyber, with <strong>Worked example from the slides</strong> selected. Fill in the worked-example column of the fifth table from the decryption panel: the message bits, the decoded bits, the measured error, the ceiling the page prints, and the badge on that line. Record the <strong>Experiment seed</strong> value as well.</li><li>Focus the error-bound slider in that same decryption panel — its label begins <em>Error bound η for the sampled e₁, e₂</em> — and press the Right arrow key one step at a time, watching the measured-error line after each press. Stop at the first setting where the badge reports the error is over the ceiling, and fill in the second column of the fifth table, including which of the toy-Kyber panel's two mode buttons — <strong>Worked example from the slides</strong> or <strong>Fresh seeded keys</strong> — is now shown as selected. If the badge has not changed by the time the slider stops moving, press <strong>Reroll seed</strong> in the toy-Kyber panel and work up from the bottom again.</li><li>Open the disclosure headed <strong>The KEM layer: Fujisaki–Okamoto with implicit rejection, live</strong> at the foot of the toy-Kyber panel. Press <strong>Run KEM: encapsulate → decapsulate</strong> and record its row of the last table, then press <strong>Tamper with the ciphertext, then decapsulate</strong> and record that row.</li></ol>
+<aside class="ws-note"><p>In step 6 the typed arrows describe a different set of dots from the ones drawn — the status line says which dots they generate. Read that row's decoding cells as what the page reports, not as a decoding of the grid in front of you.</p></aside>
+<aside class="ws-note"><p>The values in steps 11 to 13 come from the seed shown in the panel, so a classmate with a different seed sees different numbers. <strong>Copy experiment link</strong> puts your seeds in a URL if you want someone else to reproduce your exact run.</p></aside>
+<aside class="ws-note"><p>Guided mode shows one exhibit at a time. If you would rather have the whole page at once, <strong>Reference</strong> switches to that view, and the rail still moves you between exhibits.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value here comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Header experiment, What the page computed">
+<table>
+<thead><tr><th scope="col">Header experiment</th><th scope="col">What the page computed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Where rounding in B lands</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">B's error</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Where rounding in B′ lands</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">B′'s error</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">How much bigger the page says B′'s miss is</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Exhibit 1 row, Status line: same lattice or different, Rounded decode, Error, Badge on the decoding line">
+<table>
+<thead><tr><th scope="col">Exhibit 1 row</th><th scope="col">Status line: same lattice or different</th><th scope="col">Rounded decode</th><th scope="col">Error</th><th scope="col">Badge on the decoding line</th></tr></thead>
+<tbody>
+<tr><th scope="row">Good basis B, target as the preset sets it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Bad basis B′, target as the preset sets it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Good basis B, target (9, 2)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">b₁ x set to 4, target (9, 2)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Exhibit 2 basis, Shortest vector reported, Its length, ‖b₁‖, ‖b₂‖, What the badge says">
+<table>
+<thead><tr><th scope="col">Exhibit 2 basis</th><th scope="col">Shortest vector reported</th><th scope="col">Its length</th><th scope="col">‖b₁‖</th><th scope="col">‖b₂‖</th><th scope="col">What the badge says</th></tr></thead>
+<tbody>
+<tr><th scope="row">Good basis B₂</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Bad basis B₃</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Exhibit 3, Gauss on Example 9.11, Value">
+<table>
+<thead><tr><th scope="col">Exhibit 3, Gauss on Example 9.11</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">‖v‖² in the first line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">‖v‖² in the second line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The reduced basis in the last line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the last line says the first vector attains</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recorded steps counted in the status line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: LWE candidate s, Error size ‖e‖∞ reported, Accepted or rejected, Rows reporting a small error">
+<table>
+<thead><tr><th scope="col">LWE candidate s</th><th scope="col">Error size ‖e‖∞ reported</th><th scope="col">Accepted or rejected</th><th scope="col">Rows reporting a small error</th></tr></thead>
+<tbody>
+<tr><th scope="row">The candidate the panel opens with</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">(1, 2, 3)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Solution 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Solution 1 with s3 raised by one</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: toy-Kyber reading, Worked example from the slides, At the first setting over the ceiling">
+<table>
+<thead><tr><th scope="col">toy-Kyber reading</th><th scope="col">Worked example from the slides</th><th scope="col">At the first setting over the ceiling</th></tr></thead>
+<tbody>
+<tr><th scope="row">Message bits sent</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Decoded bits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Measured error ‖E‖∞</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ceiling the page prints</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Badge on the measured-error line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Experiment seed</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Error-bound setting</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Mode button shown as selected</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: KEM action, Do the two keys agree?, What the teaching view says happened">
+<table>
+<thead><tr><th scope="col">KEM action</th><th scope="col">Do the two keys agree?</th><th scope="col">What the teaching view says happened</th></tr></thead>
+<tbody>
+<tr><th scope="row">Run KEM: encapsulate → decapsulate</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Tamper with the ciphertext, then decapsulate</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Your first two Exhibit 1 rows decode the same target, and the status line said the same thing about the dots in both. Using the decoding line the page prints — the target written as c₁·b₁ + c₂·b₂, then each coefficient rounded — explain why the rounded point moved when only the description changed, and why the error grew.</li><li>Look at the badge column of the second table. Did rounding land on the point the page calls the true closest in every row? Using the page's own description of this decoding as the Closest Vector Problem solved the naive way, say what rounding gives you and what it does not, and which of your rows is the evidence.</li><li>In the third table the shortest vector reported did not move when you switched bases, but the two badges disagreed about the basis. Explain what that says about which facts belong to the grid of dots and which belong to the description, and say what the page means when it still calls one of the two bases good.</li><li>In the LWE panel, checking a candidate took one press and the page showed both sides of every equation. Using the panel's own note that the same system without the error term is solved instantly by Gaussian elimination, and the panel's disclosure on where the lattice in LWE is, explain why checking a candidate is easy while finding one is not, and name the exhibit you already did that the disclosure points back to.</li><li>Use your last two tables together. First, say what actually crossed what when the decoded bits stopped matching the message, quoting the two numbers on the measured-error line rather than the slider setting — the slider's label says which of the two decides. Then say what the receiver did with the tampered ciphertext, and why the page describes that as specified behaviour rather than a failure.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A colleague's slide says: &quot;ML-KEM's private key is a secret good basis, and the receiver decodes the ciphertext with it.&quot; Using the opening card's paragraph on holding the basis intuition loosely, the key-generation note in the toy-Kyber panel, and the page's closing section on what is real here, say what is wrong with that sentence, what the secret actually is, and which part of the geometry you worked through is intuition rather than mechanism.</li><li><strong>Extend.</strong> Press <strong>4 · LWE &amp; SIS</strong> and go to the second panel, SIS. Open its <strong>Stuck? Reveal the known solutions</strong> disclosure and press <strong>The cheat: z = 0</strong>; record which of the three conditions the panel reports pass and which fail. Press <strong>Solution 1: z = (2, -2, 0, 3, 0)</strong> and record the three again. Then set <strong>z1</strong> to 1, press Tab, and record which condition flips. Finally, read the two disclosures headed with the question of where the lattice is, one in each panel, and write one sentence saying which of the shortest-vector and closest-vector problems each panel is.</li><li><strong>Extend.</strong> Press <strong>3 · Reduce</strong> and press <strong>LLL — Ex 9.21 (4-dimensional)</strong>. Press <strong>Step</strong> through the whole run, writing down each Lovász line as holding or violated and noting where a swap follows one. Press <strong>Run to end</strong> and record the reduced basis and the number of swaps the last line reports. Then press <strong>Gauss — Ex 9.12 (big numbers)</strong> and <strong>Run to end</strong>, and record ‖v‖² in the first line and in the last, and how many iterations the run took compared with the number the panel's introduction states.</li><li><strong>Extend.</strong> Press <strong>5 · Schemes</strong> and go to the second panel, toy-Dilithium. Press <strong>Replay the slides’ worked example</strong>, then <strong>Verify</strong>, and record the two check lines and the verdict. Press <strong>Tamper with z, then verify</strong> and record what changed. Then type a short message of your own into <strong>Message to sign:</strong>, press <strong>Sign (live, with rejection sampling)</strong>, and record how many attempts the page lists and how many of them were aborted and why. Press <strong>Verify</strong>, then <strong>Verify against a tampered message</strong>, and record both verdicts together with what the page says about how often a tampered message can still be accepted at this toy size.</li><li><strong>Extend.</strong> Press <strong>6 · Check</strong> and answer all five questions, choosing before you read any explanation. Record your first-try score, and for each question you missed write one line saying what the page's explanation gave you that your answer did not.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <p class="t-foot-licence">Teaching materials: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You may copy, adapt, print and redistribute these materials, including commercially, as long as you give credit. When you adapt one, keep this line on it: <span class="t-attrib">Crypto Lab teaching materials by Paul A. Clark, CC BY 4.0 — https://crypto-lab.systemslibrarian.dev/teach/</span></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

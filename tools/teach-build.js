@@ -198,6 +198,12 @@ function readModules(cards) {
         if (!Array.isArray(s.results) || !s.results.every((r) => r.engine && r.viewport && r.result)) {
           fail(`${w}.support: results must be a list of {engine, viewport, result, notes}`);
         }
+        /* The module page publishes a summary, not the log. Anything that is not a clean pass
+           therefore needs one instructor-facing line saying what to do about it; the per-engine
+           detail stays in this file, which the page links to. */
+        if ((s.results || []).some((r) => r.result !== 'pass') && !s.headline) {
+          fail(`${w}.support: a result that is not "pass" needs a one-line "headline" for the module page`);
+        }
       });
       checkDated(x.run_specific_values, `${w}.run_specific_values`, (r) => {
         if (!['yes', 'partly', 'no'].includes(r.value)) fail(`${w}.run_specific_values.value must be yes, partly or no`);
@@ -273,9 +279,15 @@ function readWorksheets(modules) {
       if (!ex) { fail(`${where}: ${name} is not an exhibit of module ${modId}`); continue; }
       if (ex.worksheet !== name) fail(`teach/_src/modules/${modId}.json: exhibit ${name} has a worksheet; set "worksheet": "${name}"`);
       if (!Number.isInteger(meta.minutes) || meta.minutes <= 0) fail(`${where}: minutes must be a positive integer`);
-      if (!Array.isArray(meta.outcomes) || !meta.outcomes.length ||
+      /* An empty list is allowed and means what it says: this worksheet's class sequence
+         serves none of the module's outcomes. The module data then has to say what it does
+         instead, so the gap is recorded rather than implied. */
+      if (!Array.isArray(meta.outcomes) ||
           !meta.outcomes.every((n) => Number.isInteger(n) && n >= 1 && n <= mod.outcomes.length)) {
-        fail(`${where}: outcomes must list module outcome numbers (1 to ${mod.outcomes.length})`);
+        fail(`${where}: outcomes must list module outcome numbers (1 to ${mod.outcomes.length}), or be empty`);
+      }
+      if (Array.isArray(meta.outcomes) && !meta.outcomes.length && !(ex && ex.outcome_note)) {
+        fail(`teach/_src/modules/${modId}.json: ${name} serves no outcome, so its exhibit entry needs an "outcome_note" saying what it does in class`);
       }
       if (!/^[0-9a-f]{7,40}$/.test(String(meta.source_commit || ''))) fail(`${where}: source_commit must be the lab commit the worksheet was checked against`);
       if (!DATE_RE.test(String(meta.checked || ''))) fail(`${where}: checked must be YYYY-MM-DD`);
@@ -400,6 +412,14 @@ function renderWorksheetBody(md, where) {
     WORKSHEET_SECTIONS.every((s, k) => found[k] === s) && LAST_SECTION.includes(found[4]);
   if (!okOrder) fail(`${where}: sections must be exactly ${want} (found: ${found.join(' → ') || 'none'})`);
   return out.join('\n');
+}
+
+/* Minutes are class time. Predict is answered before the exhibit is opened, so it is
+   reading rather than lab time, and every page says so in the same words. */
+const PREDICT_NOTE = 'Predict is pre-class reading';
+
+function classTime(minutes) {
+  return `About ${minutes} minutes of class time; ${PREDICT_NOTE}`;
 }
 
 /* The line a faculty member keeps on an adapted worksheet. */
@@ -527,29 +547,45 @@ function notChecked() {
   return '<span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span>';
 }
 
-function supportCell(x) {
-  if (!x.support) return notChecked();
-  const rows = x.support.results.map((r) => `<li>${esc(r.engine)}, ${esc(r.viewport)}: ${esc(r.result)}${r.notes ? ` — ${esc(r.notes)}` : ''}</li>`).join('');
-  return `<ul class="t-tight">${rows}</ul><span class="t-dated">Checked ${esc(x.support.checked)}</span>`;
+/* What an instructor acts on: which engines were checked, whether it holds at phone
+   width, the date, and anything that is not a clean pass — one short line each. The
+   per-engine detail, the transfer sizes and the source lines behind every verdict stay
+   in the module's data file, which this block links to. */
+function checksBlock(m, site) {
+  const checked = m.exhibits.filter((x) => x.support);
+  const dates = [...new Set(checked.map((x) => x.support.checked))].sort();
+  const engines = [...new Set(checked.flatMap((x) => x.support.results.map((r) => r.engine.split(' ')[0])))];
+  const supportExceptions = checked.filter((x) => x.support.results.some((r) => r.result !== 'pass'));
+  const privacyChecked = m.exhibits.filter((x) => x.privacy);
+  const privacyExceptions = privacyChecked.filter((x) => x.privacy.other_origins.length || x.privacy.cookies.length || x.privacy.headline);
+  const dataUrl = `https://github.com/${site.repo}/blob/${site.branch}/teach/_src/modules/${m.id}.json`;
+  const list2 = (items) => `<ul>${items.map((s) => `<li>${s}</li>`).join('')}</ul>`;
+
+  if (!checked.length && !privacyChecked.length) {
+    return `<p>${notChecked()}</p>\n<p>The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>`;
+  }
+  const support = checked.length
+    ? `<p><strong>Browser support.</strong> Every exhibit in this module, and every step of its worksheet, was run in `
+      + `${listSentence(engines)} at a desktop width and at a phone width (1280 by 720 and 390 by 720), `
+      + `checked ${dates.join(' and ')}.`
+      + (supportExceptions.length ? ` ${supportExceptions.length === 1 ? 'One exhibit needs a word of warning' : 'Some exhibits need a word of warning'}:` : ' No exhibit had a problem at either width.')
+      + `</p>`
+      + (supportExceptions.length ? list2(supportExceptions.map((x) => `<strong>${esc(x.card.title)}</strong> — ${esc(x.support.headline)}`)) : '')
+    : '';
+  const privacy = privacyChecked.length
+    ? `<p><strong>Privacy.</strong> Opening these exhibits sends nothing to anyone but the site they are served from: `
+      + `no exhibit sets a cookie, and none stores anything beyond the setting that pins its dark theme.`
+      + (privacyExceptions.length ? ` The exception${privacyExceptions.length === 1 ? '' : 's'}:` : '')
+      + `</p>`
+      + (privacyExceptions.length ? list2(privacyExceptions.map((x) => `<strong>${esc(x.card.title)}</strong> — ${esc(x.privacy.headline || ('loads a web font from ' + x.privacy.other_origins.join(' and ')))}`)) : '')
+    : '';
+  return `${support}\n${privacy}\n<p><a href="${dataUrl}">Detailed check results</a> — engine versions, every step run, transfer sizes, and the source line behind each run-specific verdict. The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>`;
 }
 
-function privacyCell(x) {
-  if (!x.privacy) return notChecked();
-  const p = x.privacy;
-  const origins = p.other_origins.length ? p.other_origins.map(esc).join(', ') : 'none observed';
-  return `<ul class="t-tight"><li>Other origins contacted: ${origins}</li>`
-    + `<li>Browser storage: ${p.storage.length ? p.storage.map(esc).join(', ') : 'none observed'}</li>`
-    + `<li>Cookies: ${p.cookies.length ? p.cookies.map(esc).join(', ') : 'none observed'}</li>`
-    + (p.notes ? `<li>${esc(p.notes)}</li>` : '')
-    + `</ul><span class="t-dated">Observed ${esc(p.checked)}</span>`;
-}
-
-function runCell(x) {
-  if (!x.run_specific_values) return notChecked();
-  const r = x.run_specific_values;
-  const say = { yes: 'Yes — your values will differ from your classmates’.', partly: 'Partly.', no: 'No.' }[r.value];
-  return `${esc(say)}${r.source ? ` <span class="t-src">(${esc(r.source)})</span>` : ''}${r.notes ? ` ${esc(r.notes)}` : ''}`
-    + `<span class="t-dated">Checked ${esc(r.checked)}</span>`;
+/* "a, b and c" */
+function listSentence(items) {
+  if (items.length < 2) return esc(items[0] || '');
+  return esc(items.slice(0, -1).join(', ')) + ' and ' + esc(items[items.length - 1]);
 }
 
 function modulePage(m, cff, site, worksheets) {
@@ -558,11 +594,13 @@ function modulePage(m, cff, site, worksheets) {
   const ext = minutesOf(m, false);
   const rows = m.exhibits.map((x) => {
     const ws = worksheets.find((w) => w.module === m && w.name === x.name);
-    return `<tr><th scope="row"><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></th>`
-      + `<td>${ROLE_LABEL[x.role]}</td><td>${x.minutes}</td><td>${esc(x.students_do)}</td>`
-      + `<td>${ws ? `<a href="${x.name}/">Worksheet<span class="visually-hidden"> for ${esc(x.card.title)}</span></a>` : '<span class="t-pending">Not yet written</span>'}</td></tr>`;
+    /* What students do is a sentence, not a field: it gets its own full-width row rather
+       than a column that squeezes it to a few words a line. */
+    return `<tr><th scope="row" rowspan="2"><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></th>`
+      + `<td>${ROLE_LABEL[x.role]}</td><td>${x.minutes} min</td>`
+      + `<td>${ws ? `<a href="${x.name}/">Worksheet<span class="visually-hidden"> for ${esc(x.card.title)}</span></a>` : '<span class="t-pending">Not yet written</span>'}</td></tr>`
+      + `\n<tr class="t-row-note"><td colspan="3">${esc(x.students_do)}</td></tr>`;
   }).join('\n');
-  const checks = m.exhibits.map((x) => `<tr><th scope="row">${esc(x.card.title)}</th><td>${supportCell(x)}</td><td>${privacyCell(x)}</td><td>${runCell(x)}</td></tr>`).join('\n');
   const differ = m.exhibits.filter((x) => x.run_specific_values && x.run_specific_values.value === 'yes');
   const cites = m.exhibits.map((x) => `<li><p class="t-cite">${apaExhibit(cff, x.card)}</p></li>`).join('\n');
   const bibs = m.exhibits.map((x) => bibExhibit(cff, x.card)).join('\n\n');
@@ -596,8 +634,8 @@ function modulePage(m, cff, site, worksheets) {
 </header>
 
 <dl class="t-facts">
-  <div><dt>Audience</dt><dd>${esc(m.audience)}</dd></div>
-  <div><dt>Class time</dt><dd>About ${core} minutes for the core sequence${ext ? `, plus about ${ext} minutes of extension` : ''}</dd></div>
+  <div${m.audience.length > 80 ? ' class="t-fact-wide"' : ''}><dt>Audience</dt><dd>${esc(m.audience)}</dd></div>
+  <div><dt>Class time</dt><dd>About ${core} minutes of class time for the core sequence${ext ? `, plus about ${ext} minutes of extension` : ''}. ${esc(PREDICT_NOTE.charAt(0).toUpperCase() + PREDICT_NOTE.slice(1))}.${m.time_note ? ` ${esc(m.time_note)}` : ''}</dd></div>
   <div><dt>Last checked</dt><dd>${esc(m.last_checked)}</dd></div>
 </dl>
 
@@ -607,10 +645,11 @@ function modulePage(m, cff, site, worksheets) {
 <ol>${m.outcomes.map((o) => `<li>${esc(o)}</li>`).join('')}</ol></section>
 
 <section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
+${m.exhibits.filter((x) => x.outcome_note).map((x) => `<p class="t-outcome-note"><strong>${esc(x.card.title)}:</strong> ${esc(x.outcome_note)}</p>`).join('\n')}
 <p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
 <div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
 <table>
-<thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
+<thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Time</th><th scope="col">Worksheet</th></tr></thead>
 <tbody>
 ${rows}
 </tbody>
@@ -629,17 +668,8 @@ ${trimmed}
 <h3>Conceptual answers</h3>${list(m.instructor_notes.conceptual_answers)}
 </section>
 
-<section aria-labelledby="readiness"><h2 id="readiness">Browser support, privacy and run-specific values</h2>
-<p>Recorded per exhibit, with the date each observation was made. Engines are named; no device was tested unless it is named here.</p>
-<div class="t-table" role="region" tabindex="0" aria-label="Browser support, privacy and run-specific values per exhibit">
-<table>
-<thead><tr><th scope="col">Exhibit</th><th scope="col">Browser support</th><th scope="col">Privacy notes</th><th scope="col">Values differ per run?</th></tr></thead>
-<tbody>
-${checks}
-</tbody>
-</table>
-</div>
-<p>The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>
+<section aria-labelledby="readiness"><h2 id="readiness">Checks</h2>
+${checksBlock(m, site)}
 </section>
 
 <section aria-labelledby="syllabus"><h2 id="syllabus">For your syllabus</h2>
@@ -689,11 +719,13 @@ function worksheetPage(w, cff, site) {
 
 <dl class="t-facts">
   <div><dt>Exhibit</dt><dd><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></dd></div>
-  <div><dt>Time</dt><dd>About ${w.meta.minutes} minutes</dd></div>
+  <div><dt>Time</dt><dd>${esc(classTime(w.meta.minutes))}</dd></div>
   <div><dt>Checked against</dt><dd>Lab commit <code>${esc(w.meta.source_commit)}</code> on ${esc(w.meta.checked)}</dd></div>
 </dl>
 
-<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul>${served}</ul></section>
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2>${served
+    ? `<ul>${served}</ul>`
+    : `<p>None of this module's outcomes are served by this worksheet's class sequence.${x.outcome_note ? ` ${esc(x.outcome_note)}` : ''}</p>`}</section>
 
 <div class="t-actions no-print">
   <button type="button" class="t-btn" data-print>Print this worksheet</button>

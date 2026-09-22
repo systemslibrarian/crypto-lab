@@ -1,0 +1,30 @@
+# README catalog: README.md's generated tables (Featured, Learning Paths, All Demos)
+# and index.html's hero count must match what tools/readme-sync.js produces from the
+# cards. No dependencies: the generator is plain Node.
+name: README catalog
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: readme-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: README.md matches the generator's output
+        run: node tools/readme-sync.js check

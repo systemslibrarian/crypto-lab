@@ -80,9 +80,9 @@ same silent way.
 It treats a repo as a demo when its default branch has an `index.html` anywhere in
 the tree (the root in most labs, `demos/<slug>/index.html` in the older ones), which
 is what exempts `crypto-lab-blind-oracle-api` — a headless Rust backend, not a
-browser demo — without a hand-maintained list. **It currently reports one open item:
-`crypto-lab-ghost-commit` is live and has never been carded, in any pass. That is a
-scope decision, not an oversight to sweep in.**
+browser demo — without a hand-maintained list. **Run on 2026-09-22 it reported no open
+items:** every live lab has a card (`crypto-lab-ghost-commit`, long the one exception,
+is now carded) and every card has a live repo.
 
 `deploy-sync` exists because this fleet's real failure mode is not a file disagreeing
 with another file — it is `main` disagreeing with what is actually served, and that
@@ -357,16 +357,19 @@ Do **not** put `FOUNDATIONS` or `REAL-WORLD SYSTEMS` directly in `data-category`
 
 ### 3. Regenerate `README.md`'s tables
 
-The Featured and All Demos tables are **generated from the cards** — Category
-mirrors the card kicker, Stack mirrors the chips, sorted by Category then
-title, with the ` *(WIP)*` suffix derived from the card class. Never hand-edit
-the rows; after any card change run:
+The Featured and All Demos tables are **generated from the cards**, with the
+` *(WIP)*` suffix derived from the card class. Featured keeps the demos and order
+already in its table (Category mirrors the kicker, Stack the chips). All Demos
+mirrors the live catalog: one table per `SECTIONS` entry, in the page's own order,
+each row carrying the card's description, its live demo, its source repo and its
+chips, between the `readme-sync:all-demos` markers. A card missing from
+`TITLE_TO_SECTION` fails the run. Never hand-edit the rows; after any card change run:
 
 ```
 node tools/readme-sync.js
 ```
 
-`node tools/readme-sync.js check` verifies parity without writing (CI-friendly).
+`node tools/readme-sync.js check` verifies parity without writing; `.github/workflows/readme-sync.yml` runs it in CI.
 
 ### 4. (Optional) Add to a Learning Path
 

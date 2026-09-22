@@ -189,6 +189,12 @@ function readModules(cards) {
     const seen = new Set();
     m.exhibits.forEach((x, i) => {
       const w = `${where} exhibits[${i}]`;
+      /* Optional, and checked when present: the date of the commit named just above it.
+         An exhibit with a date is cited with its year; one without is cited with no year
+         field at all, never "(n.d.)". */
+      if (x.source_commit_date !== undefined && !DATE_RE.test(x.source_commit_date)) {
+        fail(`${w}: source_commit_date must be YYYY-MM-DD`);
+      }
       if (typeof x.name !== 'string' || !x.name) { fail(`${w}: name is required`); return; }
       if (seen.has(x.name)) fail(`${w}: ${x.name} is listed twice`);
       seen.add(x.name);
@@ -537,17 +543,30 @@ function bibCollection(cff) {
   ].join('\n'));
 }
 
-function apaExhibit(cff, card) {
-  return `${cff.family}, ${cff.initials} (n.d.). <em>${esc(card.title)}</em> [Interactive teaching demonstration]. ${esc(cff.title)}. `
+/* No year field, and deliberately not "(n.d.)".
+   "(n.d.)" is a claim: it says no date exists for this work. One does - each exhibit is
+   a living page with a history - this collection just does not publish a per-exhibit
+   publication date that would be true of the build a reader is looking at. Asserting
+   the absence of something that exists is worse than omitting a field, so the field is
+   omitted and the retrieval date carries the "which version" job, which is the job it
+   is for. */
+/* An exhibit's year is the year of the lab commit the worksheet was checked against -
+   the build a reader is actually looking at - and nothing else. An exhibit whose commit
+   date is not recorded gets no year rather than a guess or an "(n.d.)". */
+const exhibitYear = (x) => (x.source_commit_date ? x.source_commit_date.slice(0, 4) : '');
+
+function apaExhibit(cff, card, year) {
+  return `${cff.family}, ${cff.initials} ${year ? `(${esc(year)}). ` : ''}<em>${esc(card.title)}</em> [Interactive teaching demonstration]. ${esc(cff.title)}. `
     + `Retrieved <span data-accessed="apa">[date accessed]</span>, from ${esc(card.url)}`;
 }
 
-function bibExhibit(cff, card) {
+function bibExhibit(cff, card, year) {
   const key = `${cff.family.toLowerCase()}_${card.slug.replace(/^crypto-lab-/, '').replace(/[^a-z0-9]+/g, '_')}`;
   return bibHtml([
     `@misc{${key},`,
     `  author       = {${bibText(cff.family)}, ${bibText(cff.given)}},`,
     `  title        = {${bibText(card.title)}},`,
+    ...(year ? [`  year         = {${bibText(year)}},`] : []),
     `  howpublished = {\\url{${card.url}}},`,
     `  note         = {${bibText(cff.title)}. Accessed ${ACCESSED}}`,
     '}',
@@ -618,11 +637,15 @@ function modulePage(m, cff, site, worksheets) {
     return `<tr><th scope="row" rowspan="2"><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></th>`
       + `<td>${ROLE_LABEL[x.role]}</td><td>${x.minutes} min</td>`
       + `<td>${ws ? `<a href="${x.name}/">Worksheet<span class="visually-hidden"> for ${esc(x.card.title)}</span></a>` : '<span class="t-pending">Not yet written</span>'}</td></tr>`
-      + `\n<tr class="t-row-note"><td colspan="3">${esc(x.students_do)}</td></tr>`;
+      + `\n<tr class="t-row-note"><td colspan="3">${esc(x.students_do)}</td></tr>`
+      /* The citation sits beside the exhibit it cites, rather than in a list further
+         down that a reader has to match back up by title. */
+      + `\n<tr class="t-row-cite" id="cite-${esc(x.card.slug)}"><td colspan="3">`
+      + `<span class="t-cite-label">Cite this exhibit:</span> <span class="t-cite">${apaExhibit(cff, x.card, exhibitYear(x))}</span>`
+      + `</td></tr>`;
   }).join('\n');
   const differ = m.exhibits.filter((x) => x.run_specific_values && x.run_specific_values.value === 'yes');
-  const cites = m.exhibits.map((x) => `<li><p class="t-cite">${apaExhibit(cff, x.card)}</p></li>`).join('\n');
-  const bibs = m.exhibits.map((x) => bibExhibit(cff, x.card)).join('\n\n');
+  const bibs = m.exhibits.map((x) => bibExhibit(cff, x.card, exhibitYear(x))).join('\n\n');
   const trimmed = m.trimmed.length
     ? `<section aria-labelledby="trimmed"><h2 id="trimmed">Left out of this sequence</h2>${list(m.trimmed.map((t) => `${t.name}: ${t.reason}`))}</section>`
     : '';
@@ -702,7 +725,7 @@ ${syllabusBlock(site, 'module-syllabus')}
 </section>
 
 <section aria-labelledby="cite"><h2 id="cite">How to cite this module’s exhibits</h2>
-<ol class="t-cites">${cites}</ol>
+<p>Each exhibit's citation is in the Sequence table above, in that exhibit's own row. Exhibits change as they are improved, so the retrieval date is what says which version you used; it is filled in from your device's clock when the page loads.</p>
 <details><summary>BibTeX</summary><pre class="t-pre">${bibs}</pre></details>
 <p>To cite the whole collection, see <a href="../#cite">How to cite</a>.</p>
 </section>
@@ -821,9 +844,29 @@ function landingPage(modules, worksheets, cards, cff, site, evidence) {
     },
     'cite-collection': () => `<p class="t-cite">${apaCollection(cff)}</p>
 <pre class="t-pre">${bibCollection(cff)}</pre>`,
+    /* A picker, not a list, and it uses <details> rather than script: one flat run of
+       every exhibit in the catalog is a wall to scroll past, and a reader wants one
+       citation. Grouped by the initial of the title because that is a property of the
+       exhibit itself - a taxonomy would need maintaining, and would go stale. */
     'cite-exhibits': () => {
+      /* The year, where one is recorded, comes from the module that pins the exhibit's
+         commit. An exhibit no module pins has no commit recorded here, so no year. */
+      const years = new Map();
+      for (const m of modules) for (const x of m.exhibits) {
+        const y = exhibitYear(x);
+        if (y) years.set(x.card.slug, y);
+      }
       const all = [...cards.values()].sort(byKey((c) => c.title));
-      return `<ul class="t-cites t-cites--all">${all.map((c) => `<li><p class="t-cite">${apaExhibit(cff, c)}</p></li>`).join('\n')}</ul>`;
+      const groups = new Map();
+      for (const c of all) {
+        const key = /^[a-z]/i.test(c.title) ? c.title[0].toUpperCase() : '#';
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(c);
+      }
+      return [...groups].map(([key, items]) => `<details class="t-details t-pick">`
+        + `<summary>Titles beginning ${esc(key)}</summary>`
+        + `<ul class="t-cites">${items.map((c) => `<li><p class="t-cite">${apaExhibit(cff, c, years.get(c.slug))}</p></li>`).join('\n')}</ul>`
+        + `</details>`).join('\n');
     },
     'licence-terms': () => {
       if (!cff.licenseInfo) { fail('CITATION.cff: no license, so the reuse terms cannot be stated'); return ''; }

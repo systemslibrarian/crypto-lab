@@ -25,6 +25,7 @@
       "minutes": 19,
       "students_do": "Run a Diffie–Hellman exchange on the parameter presets, press Break it to recover Alice's secret exponent by baby-step giant-step, run Mallory's man-in-the-middle to leave Alice and Bob with two different keys, then run the ECDSA-signed exchange honest and tampered to watch it fail closed.",
       "source_commit": "8d69dbc7ae4f",
+      "source_commit_date": "2026-09-17",
       "worksheet": "diffie-hellman-mitm",
       "privacy": {
         "checked": "2026-09-22",

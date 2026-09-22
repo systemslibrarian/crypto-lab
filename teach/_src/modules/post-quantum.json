@@ -71,6 +71,7 @@
       "minutes": 26,
       "students_do": "Set the qubit count, step Grover iterations with the oracle + diffusion sub-steps and prediction mode on, watch the state vector rotate toward and then past the target, sample with Measure ×100, and compare AES key sizes in the impact panels.",
       "source_commit": "873e40d8f891",
+      "source_commit_date": "2026-09-17",
       "worksheet": "grover",
       "privacy": {
         "checked": "2026-09-22",
@@ -253,6 +254,7 @@
       "minutes": 21,
       "students_do": "In the Prove it panel, send a message over the toy handshake, deploy the PQC upgrade, send again and run Q-Day to compare the recorded sessions, then work the Mosca X + Y > Z calculator with sector presets and Q-Day scenarios.",
       "source_commit": "1c8241953291",
+      "source_commit_date": "2026-09-17",
       "worksheet": "harvest-vault",
       "privacy": {
         "checked": "2026-09-22",

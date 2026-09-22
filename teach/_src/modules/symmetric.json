@@ -25,6 +25,7 @@
       "minutes": 15,
       "students_do": "In Exhibit 01, pick an AES scheme (GCM, CTR, chained-IV CBC or ECB) and an adversary (random guess, re-encrypt and compare, or the BEAST-style IV predictor), run or step real trials, and read the measured advantage, Wilson interval and verdict.",
       "source_commit": "00705ccbf695",
+      "source_commit_date": "2026-09-21",
       "worksheet": "hidden-bit",
       "privacy": {
         "checked": "2026-09-22",
@@ -117,6 +118,7 @@
       "minutes": 14,
       "students_do": "Encrypt your own plaintext under ECB, CBC, CTR, GCM and CCM, inspect the key, IV or nonce, ciphertext and tag, and run the ECB pattern-leak, CBC bit-flip and GCM tamper-detection demos to see which modes accept a modified ciphertext.",
       "source_commit": "cbfb1b4dfa2c",
+      "source_commit_date": "2026-09-17",
       "worksheet": "aes-modes",
       "privacy": {
         "checked": "2026-09-22",
@@ -210,6 +212,7 @@
       "minutes": 15,
       "students_do": "Encrypt two messages under one AES-CTR key and nonce and crib-drag the second out of C1 ⊕ C2, then switch each construction to a reused nonce (or press \"Run all four — one reused nonce\") and read each card's cryptographic result beside its security verdict.",
       "source_commit": "d23b6ec02c35",
+      "source_commit_date": "2026-09-17",
       "worksheet": "nonce-collision",
       "privacy": {
         "checked": "2026-09-22",

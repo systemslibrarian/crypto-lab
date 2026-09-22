@@ -73,6 +73,7 @@
       "minutes": 32,
       "students_do": "On the Small Exponent Attack and Bleichenbacher Oracle tabs, pick a config and run the Håstad broadcast attack (CRT plus cube root on three e = 3 ciphertexts), then set up the 128-bit key, query the padding oracle, show Enc(a)·Enc(b) = Enc(a·b), and run the Bleichenbacher attack both automatically and in You Are the Oracle mode.",
       "source_commit": "2152e7023198",
+      "source_commit_date": "2026-09-17",
       "worksheet": "rsa-forge",
       "privacy": {
         "checked": "2026-09-22",
@@ -119,6 +120,7 @@
       "minutes": 17,
       "students_do": "Drag P and Q along a real curve (or use the menus and arrow keys) to watch the chord or tangent, reflection and λ, x₃, y₃ update, flip Over ℝ / Over 𝔽ₚ to run the same addition on a point lattice, step k·P by repeated addition and by double-and-add, and walk a small subgroup until it lands on the target point.",
       "source_commit": "ce6c3d3eb0c2",
+      "source_commit_date": "2026-09-17",
       "worksheet": "ec-point-arithmetic",
       "privacy": {
         "checked": "2026-09-22",
@@ -164,6 +166,7 @@
       "minutes": 29,
       "students_do": "Generate a secp256k1 or P-256 key, sign and verify, move the toy-curve sliders to watch two same-nonce signatures give up d, run the nonce-reuse compromise on real 256-bit keys with its recovered-equals-victim proof, then compare random and RFC 6979 signatures and try the attack against RFC 6979.",
       "source_commit": "1de890f5e9f9",
+      "source_commit_date": "2026-09-17",
       "worksheet": "ecdsa-forge",
       "privacy": {
         "checked": "2026-09-22",
@@ -229,6 +232,7 @@
       "minutes": 30,
       "students_do": "Choose a scenario preset or set curve, leak mode, leak size and signature count, read the feasibility gauge, run the HNP/LLL attack and step through Sign, Build HNP, Reduce and Extract to the byte-for-byte key grid, then press Measure this column to test where recovery starts failing.",
       "source_commit": "6b023a9e821b",
+      "source_commit_date": "2026-09-17",
       "worksheet": "nonce-lattice",
       "privacy": {
         "checked": "2026-09-22",

@@ -165,7 +165,8 @@
         "value": "partly",
         "source": "src/ui/random.ts:39-45 with src/ui/leak.ts:84 and src/ui/budget.ts:311 at abca4df106c0: the noisy answers are drawn from crypto.getRandomValues unless classroom mode is on",
         "notes": "The differencing attack's noisy runs and the averaging attack's running average and error differ on every machine. The exact-mode attack, the declared-bound figures, the three out-of-range decisions and the ledger's refusal point are identical everywhere. Classroom mode makes the noisy half repeatable and is off by default."
-      }
+      },
+      "outcome_note": "Outcome 4's declared-cap clause is met in the worksheet's Fix / Extend items, not in the class sequence: at this budget the cap can be described in class but not demonstrated."
     },
     {
       "name": "shelf-oracle",

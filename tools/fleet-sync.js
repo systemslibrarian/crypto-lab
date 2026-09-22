@@ -113,9 +113,10 @@ async function main() {
   const undescribed = demos.filter((r) => !r.description || !r.description.trim());
 
   /* The other direction: a card pointing at a repo that is gone, renamed or
-   * private. Only crypto-lab-* slugs are checked — the catalog also cards a few
-   * demos that live outside the prefix (snow2, crypto-compare), and the repo
-   * listing above deliberately does not cover those. */
+   * private. Only crypto-lab-* slugs are checked — the page also links two
+   * github.io projects outside the prefix from Related Projects (snow2,
+   * crypto-compare), and the repo listing above deliberately does not cover
+   * those. */
   const live = new Set(repos.map((r) => r.name));
   const dangling = [...carded].filter((s) => /^crypto-lab-/.test(s) && !live.has(s));
 

@@ -103,6 +103,11 @@ sweeping for echoes of a changed number rather than by any checker here. Worth r
 gap in this file's own coverage: `concept-sync` verifies that every card is cited and every
 citation has a card, and is structurally blind to a factual claim inside the commentary.*
 
+*Version 13 — no status change: Snow 2 leaves §4. It is a related project rather than a
+Crypto Lab exhibit, so its card moved to Related Projects on the hub and in the README, and a
+concept this file maps is no longer cited by it. §4 stays `DEEP` on the exhibits that remain,
+with ChaCha20 Stream still carrying the stream-cipher construction.*
+
 *Three of the eight needed a judgment rather than a lookup, and in two of them the concept
 diverges from the catalog section — which is the divergence this file exists to allow. **Split
 Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
@@ -172,7 +177,8 @@ build it only if you want depth there, not because the suite needs it. If it's `
 | `PARTIAL` | Taught, but an arc is unfinished or a piece is missing. |
 | `GAP` | No demo teaches this concept. |
 
-Catalog basis: the 202 cards in `index.html` as of the v10 catalog pass.
+Catalog basis: the cards in `index.html`. The total at the end of this file is checked against them
+by `concept-sync`, so it cannot drift silently.
 
 **Checked, not trusted.** Run `node tools/concept-sync.js check`. It verifies this file
 against the catalog in both directions: every demo cited below resolves to a real card, and
@@ -214,7 +220,7 @@ Babel Hash · Hash Zoo · World Hashes · Collision Vault. Construction, compari
 sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
-Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Snow 2 · Format Ward ·
+Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Format Ward ·
 Feistel Forge · Sector Vault · Sleeve Check.
 SPN, ARX, sponge, stream, lightweight, and Feistel.
 
@@ -871,7 +877,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 202.**
+**Catalogued total: 201.**
 
 ---
 

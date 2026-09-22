@@ -25,10 +25,10 @@
     "external_scripts": []
   },
   "teach": {
-    "label": "These teaching pages (/teach/)",
+    "label": "These teaching pages (crypto-lab.systemslibrarian.dev/teach/)",
     "observed": "2026-09-22",
     "engine": "Chromium, driven by Playwright",
-    "method": "Loaded a local copy of the generated pages before publication (the landing page, module pages and a worksheet), waited for the network to go quiet, and recorded every request, cookie and web-storage key.",
+    "method": "Loaded the live pages with tools/teach-observe.js (the landing page, the symmetric and library-privacy module pages and the Padding Oracle worksheet), scrolled to the end, waited for the network to go quiet, and recorded every request, cookie and web-storage key.",
     "other_origins": [],
     "cookies": [],
     "storage": [],

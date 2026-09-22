@@ -1537,18 +1537,20 @@
     }
 
     /* ── For educators: links into /teach/ ── */
-    .featured-cta { margin-top: 14px; }
-    .teach-cta { text-transform: none; letter-spacing: 0.02em; font-size: 12.5px; }
-    .teach-cta, .teach-band .cl-nav-btn { gap: 6px; }
+    /* "Teaching with Crypto Lab" band under the hero. One spacing unit (--band-gap)
+       sets the column gap, the space above the actions and the module grid's gaps,
+       so everything in the band lines up on the same rhythm. */
     .teach-band {
+      --band-gap: 14px;
       margin: 0 0 22px;
-      padding: 18px 22px;
+      padding: 20px 22px;
       border: 1px solid var(--border-strong);
       background: linear-gradient(135deg, rgba(53, 214, 187, 0.08), rgba(8, 17, 24, 0.9) 60%);
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 14px 28px;
-      align-items: center;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: calc(var(--band-gap) * 2);
+      row-gap: var(--band-gap);
+      align-items: start;
     }
     .teach-band-title {
       font-family: var(--serif);
@@ -1558,30 +1560,58 @@
       color: var(--text-hi);
     }
     .teach-band-copy { margin-top: 6px; color: var(--text); font-size: 13px; line-height: 1.6; max-width: 62ch; }
-    .teach-band-actions { margin-top: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
-    .teach-band-address { font-size: 12px; color: var(--text); }
-    .teach-band-address-label { color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10.5px; margin-right: 6px; }
-    .teach-band-url { color: var(--text-hi); user-select: all; -webkit-user-select: all; white-space: nowrap; }
-    .teach-band-modules { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
-    .teach-band-modules a {
-      display: inline-flex;
+    .teach-band-actions {
+      margin-top: var(--band-gap);
+      display: flex;
       align-items: center;
-      min-height: 32px;
-      padding: 5px 10px;
-      border: 1px solid rgba(53, 214, 187, 0.45);
+      gap: var(--band-gap);
+    }
+    .teach-band-btn { gap: 6px; flex: 0 0 auto; }
+    .teach-band-address { display: grid; gap: 2px; font-size: 12px; color: var(--text); min-width: 0; }
+    .teach-band-address-label { color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10.5px; }
+    .teach-band-url { color: var(--text-hi); user-select: all; -webkit-user-select: all; white-space: nowrap; }
+    /* Module links: an equal-width grid, every link filling its cell at one height,
+       whatever the number of modules. Styled on the hub's filter chips. */
+    .teach-band-modules {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: 1fr;
+      gap: var(--band-gap);
+    }
+    .teach-band-modules li { display: flex; }
+    .teach-band-modules a {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      min-height: 44px;
+      padding: 6px 12px;
+      border: 1px solid var(--border-strong);
       background: rgba(8, 17, 24, 0.78);
       color: var(--teal);
-      font-size: 11.5px;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
     }
-    .teach-band-modules a:hover { border-color: var(--teal); color: var(--text-hi); }
-    .teach-band a:focus-visible, .teach-cta:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+    .teach-band-modules a:hover {
+      border-color: rgba(53, 214, 187, 0.45);
+      color: var(--text-hi);
+      background: rgba(53, 214, 187, 0.04);
+    }
+    .teach-band a:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
     @media (max-width: 900px) {
-      .teach-band { grid-template-columns: 1fr; }
+      .teach-band { grid-template-columns: minmax(0, 1fr); }
     }
     @media (max-width: 760px) {
       .teach-band { padding: 16px; }
+      .teach-band-actions { flex-direction: column; align-items: stretch; }
+      .teach-band-btn { width: 100%; }
+      .teach-band-modules { grid-template-columns: minmax(0, 1fr); }
     }
     .nav-menu-educators {
       display: grid;
@@ -1766,7 +1796,7 @@
       <div class="wrap">
         <div class="featured-head">
           <div class="featured-headline-row">
-            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">202</span> interactive cryptography exhibits</span></h1>
+            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">201</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -1782,14 +1812,13 @@
             </a>
           </div>
           <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math. New here? Start with the picks below.</p>
-          <p class="featured-cta"><a class="cl-nav-btn teach-cta" href="teach/">Teaching a course? Course modules <span aria-hidden="true">&rarr;</span></a></p>
         </div>
         <section class="teach-band" aria-labelledby="teach-band-title">
           <div class="teach-band-main">
             <h2 class="teach-band-title" id="teach-band-title">Teaching with Crypto Lab</h2>
             <p class="teach-band-copy">Course modules for instructors: learning outcomes, ordered exhibits, discussion questions and instructor notes.</p>
             <div class="teach-band-actions">
-              <a class="cl-nav-btn" href="teach/">Open the course modules <span aria-hidden="true">&rarr;</span></a>
+              <a class="cl-nav-btn teach-band-btn" href="teach/">Open the course modules <span aria-hidden="true">&rarr;</span></a>
               <p class="teach-band-address"><span class="teach-band-address-label">Address to share</span> <span class="teach-band-url">crypto-lab.systemslibrarian.dev/teach</span></p>
             </div>
           </div>
@@ -1830,20 +1859,6 @@
         </div>
         <div class="no-results" id="no-results" hidden></div>
         <div class="feature-grid">
-          <a class="feature-card secondary" data-category="ENCRYPTION | STEGANOGRAPHY" href="https://systemslibrarian.github.io/snow2/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
-            <div class="card-kicker">Stream Cipher</div>
-            <div class="feature-title">Snow 2</div>
-            <div class="feature-copy">A modern Rust reimplementation of SNOW with AEAD support, Argon2id-derived keys, and steganographic output options.</div>
-            <div class="feature-meta">
-              <div class="stack">
-                <span class="chip">XChaCha20-Poly1305</span>
-                <span class="chip">Argon2id</span>
-                <span class="chip">HKDF-SHA-256</span>
-                <span class="chip">Steganography</span>
-              </div>
-              <span class="arrow">→</span>
-            </div>
-          </a>
 
           <a class="feature-card secondary" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Post-Quantum</div>
@@ -4884,6 +4899,10 @@
           <a href="https://www.meowdecoder.com/" target="_blank" rel="noopener" style="color: var(--amber);">Meow Decoder</a>
           — Secure optical air-gap file transfer via QR-code GIFs. AES-256-GCM + Argon2id + ML-KEM-1024 + fountain codes. Python + Rust.
         </p>
+        <p style="color: var(--text); font-size: 13px; line-height: 1.8; max-width: 72ch; margin-top: 8px;">
+          <a href="https://systemslibrarian.github.io/snow2/" target="_blank" rel="noopener" style="color: var(--amber);">Snow 2</a>
+          — A modern Rust reimplementation of SNOW with AEAD support, Argon2id-derived keys, and steganographic output options.
+        </p>
       </div>
     </div>
   </section>
@@ -5024,7 +5043,7 @@
       "Simon's Period": 'post-quantum', 'Stream Ward': 'symmetric',
       'Shamir Gate': 'foundations', 'VRF Gate': 'foundations',
       'Curve Lens': 'foundations', 'Point Arithmetic': 'foundations',
-      'Snow 2': 'symmetric', 'Iron Serpent': 'symmetric',
+      'Iron Serpent': 'symmetric',
       'World Ciphers': 'symmetric', 'AES Modes': 'symmetric',
       'ChaCha20 Stream': 'symmetric', 'Format Ward': 'symmetric',
       'AEGIS Gate': 'symmetric', 'Ascon': 'symmetric',

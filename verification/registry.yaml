@@ -3121,21 +3121,3 @@ labs:
     audit_priority: 6
     audit_mode_guess: pedagogical_model
     notes: ''
-  - slug: snow2
-    display_name: Snow 2
-    repo_url: https://github.com/systemslibrarian/snow2
-    live_url: https://systemslibrarian.github.io/snow2/
-    categories:
-      - ENCRYPTION
-      - STEGANOGRAPHY
-    learning_paths: []
-    catalog_claims:
-      - XChaCha20-Poly1305
-      - Argon2id
-      - HKDF-SHA-256
-      - Steganography
-    implementation_locus: wasm_backed
-    commit_sha: ''
-    audit_priority: 2
-    audit_mode_guess: pedagogical_model
-    notes: ''

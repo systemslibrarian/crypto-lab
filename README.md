@@ -80,7 +80,6 @@ Grouped the way the [live catalog](https://crypto-lab.systemslibrarian.dev/) gro
 
 | Demo | Description | Source | Primitives |
 |---|---|---|---|
-| [Snow 2](https://systemslibrarian.github.io/snow2/) | A modern Rust reimplementation of SNOW with AEAD support, Argon2id-derived keys, and steganographic output options. | [snow2](https://github.com/systemslibrarian/snow2) | XChaCha20-Poly1305 · Argon2id · HKDF-SHA-256 · Steganography |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | One container, two passphrases, two messages. A practical demonstration of plausible deniability, forensic ambiguity, and browser-first UX around serious primitives. | [crypto-lab-shadow-vault](https://github.com/systemslibrarian/crypto-lab-shadow-vault) | Argon2id · ChaCha20-Poly1305 · SHA-256 |
 | [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) | The Serpent block cipher — AES finalist with a deeper security margin. Avalanche analysis, a security-margin (round-count) view, and side-by-side AES comparison. | [crypto-lab-iron-serpent](https://github.com/systemslibrarian/crypto-lab-iron-serpent) | Serpent · AES-256 · SPN |
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | Camellia (Japan), ARIA (South Korea), SM4 (China), and Kuznyechik (Russia) side by side with AES. Encrypt/decrypt playgrounds, S-box analysis, and geopolitical compliance context. | [crypto-lab-world-ciphers](https://github.com/systemslibrarian/crypto-lab-world-ciphers) | Camellia · ARIA · SM4 · Kuznyechik |
@@ -295,6 +294,7 @@ These sit outside the browser-demo scope of Crypto Lab but belong to the same co
 - **[Crypto Compare](https://systemslibrarian.github.io/crypto-compare/)** — Algorithm reference covering NIST and PQ-Safe standards.
 - **[Cipher Museum](https://ciphermuseum.com)** — An interactive museum spanning 3,900 years of cryptographic history. Thirteen halls, 140 exhibits, live encryption demos, and cryptanalysis labs.
 - **[Meow Decoder](https://www.meowdecoder.com/)** — Secure optical air-gap file transfer via QR-code GIFs. AES-256-GCM + Argon2id + ML-KEM-1024 + fountain codes. Python + Rust.
+- **[Snow 2](https://systemslibrarian.github.io/snow2/)** — A modern Rust reimplementation of SNOW with AEAD support, Argon2id-derived keys, and steganographic output options.
 
 ---
 

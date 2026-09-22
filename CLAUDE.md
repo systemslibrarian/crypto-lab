@@ -450,9 +450,11 @@ until its corpus entry is added. So for each new demo:
    Use that github.io form, **not** `https://crypto-lab.systemslibrarian.dev/<slug>/`.
    The dev domain serves this catalog page; per-demo subpaths under it 404. Earlier
    versions of this file specified the dev-domain form, which is how 242 dead Live
-   Demo links accumulated across the corpus before being repointed. A handful of
-   demos are not under the `crypto-lab-` prefix (`snow2`, `crypto-compare`) — take
-   the URL from the demo's card `href` in `index.html` rather than assembling it.
+   Demo links accumulated across the corpus before being repointed. Every card's slug
+   is under the `crypto-lab-` prefix; the two github.io projects outside it, `snow2`
+   and `crypto-compare`, are linked from Related Projects rather than carded (Snow 2
+   moved there on 2026-09-22). Still take the URL from the card's `href` in
+   `index.html` rather than assembling it.
 
 3. Append the finished `{ "id": …, "text": … }` object to the corpus array in
    `../crypto-counsel/corpus.json` (it is minified, single-line, no trailing
@@ -483,7 +485,9 @@ For each new demo:
    first paragraph is parsed as citations — later paragraphs are commentary.
 2. Re-check the concept's status: a `GAP` or `PARTIAL` may now be `COVERED`. If the demo
    closes a gap listed in the **Gap summary** table, remove that row.
-3. Bump the version note at the top of the file, saying what changed.
+3. Bump the version note at the top of the file, saying what changed, and update the
+   "**Catalogued total: N.**" line near the end: `concept-sync check` fails when it
+   disagrees with the number of cards.
 4. Confirm parity:
 
    ```
@@ -605,10 +609,12 @@ that instruction any more**, so grep for "do not hand-build one" should stay emp
 
 **Single-instance divergences are load-bearing until proven otherwise** —
 `quantum-vault-kpqc` (light theme, the only one), `blind-oracle-api` (auto-merges but
-publishes no page), `snow2` (carded but never cloned). A sweep that flattens one is a
-regression, not a cleanup. **Before any fleet-wide edit, re-derive the exception list
-(`theme-sync`, `dispatch-sync`, `gate-sync`) rather than citing this one** — these three
-were verified on 2026-09-10 and the count is the thing most likely to be stale.
+publishes no page). A sweep that flattens one is a regression, not a cleanup. `snow2`
+was listed here as "carded but never cloned" until 2026-09-22, when it moved from a card
+to Related Projects: it is a related project, not an exhibit, so it is no longer a
+catalog divergence. **Before any fleet-wide edit, re-derive the exception list
+(`theme-sync`, `dispatch-sync`, `gate-sync`) rather than citing this one** — these were
+verified on 2026-09-10 and the count is the thing most likely to be stale.
 
 The cost of not re-deriving is on record. Lane 3a wrote that `sector-vault` was the only
 lab with `cancel-in-progress: false`; the value belongs to `syndrome-drain` and nineteen

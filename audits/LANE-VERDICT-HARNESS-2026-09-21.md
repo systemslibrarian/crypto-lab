@@ -606,3 +606,120 @@ catalog could not notice a demo it was never told about. `gate-sync` was blind t
 Now: a protection census blind to rulesets. The shape is always a denominator taken
 from the source that happens to be convenient rather than from the question being
 asked.
+
+---
+
+## The runtime-pairs round, 2026-09-22
+
+Eight builders, one per lab, implementing D6 and — in the four labs whose audit
+failed it — Fix 4. All eight pushed to their existing PR branch. Nothing merged,
+nothing under `.github/` touched in any lab, and the protection census is
+byte-identical before and after: 1 ruleset, 3 classic, 4 none, 0 UNREAD.
+
+**Under D5 every verdict in this document is now void.** The new heads:
+
+| PR | Was | Now |
+|---|---|---|
+| `fold-gate#11` | `ee829a1719e0` | `2d475d0ec00d` |
+| `hidden-bit#7` | `d5e07a4c5204` | `3f81e16ade4a` |
+| `order-leak#5` | `c7b7eccff0ec` | `cf358d725296` |
+| `pqxdh-wire#4` | `fec199b67372` | `e41d1dad59dc` |
+| `privacy-pass#6` | `272f47322a7c` | `f63cc1ed5e60` |
+| `proof-tally#8` | `eae5824ad84e` | `d8a11319dd06` |
+| `sleeve-check#2` | `c788d966bd8b` | `878ca1f76705` |
+| `split-point#5` | `521d03dae22d` | `8f39f7cde807` |
+
+### A correction to D6
+
+D6 generalised the FILE-granular escape to all eight labs. That was my inference
+from three, not a measured fact about eight, and two builders disproved it:
+`privacy-pass` and `hidden-bit` were already **body**-granular — their old rule
+sliced the killing test's body rather than the whole file — so "an unrelated call
+elsewhere in the file" did not defeat them on its own. Both demonstrated the
+runtime rule against a harder compound form instead. D6's conclusion is unchanged,
+because the COMMENT and the TAUTOLOGY defeated every lab; only the reach of the
+third escape was overstated.
+
+### What the round proved, beyond the fix
+
+**Two labs' required CI check could not see part of what it claimed to judge.**
+`proof-tally`'s `test:verdicts` ran only `verdicts.spec.ts`, so the new sink would
+have had no observations and the runtime rule would have passed by having nothing
+to check. `sleeve-check`'s ran only the `verdicts` project while `standing-verdict`'s
+kill lives in `claims`, so that marker was never judgeable by the required check.
+Both were found by building ON the gate rather than trusting it, which is the only
+way this class is ever found. **A third, `privacy-pass`, is pinned by a workflow
+line no lane agent may edit** — `npx playwright test e2e/verdicts.spec.ts` — and it
+established empirically that Playwright applies a CLI file filter to top-level
+projects but NOT to dependency projects, so the dependency still runs and the sink
+is not empty.
+
+**One measurement was unfalsifiable by its own rendered tolerance.** `hidden-bit`'s
+switching curve ran 200 trials, where the rendered tolerance is 0.381 — WIDER than
+the entire 0.004–0.380 spread the curve covers at n = 8. Every row sat inside every
+other row's tolerance, so a replicated curve was indistinguishable by construction
+and no oracle written against that config could have caught it. At 2,000 trials the
+tolerance is 0.121 against ~0.022 sampling noise. The exhibit's own parameters, not
+its oracle, were the reason the claim could not be checked; costs 2.1s.
+
+### Four divergences the round created, which no single lab can settle
+
+1. **When the pair is recorded.** `fold-gate`, `proof-tally` and `privacy-pass`
+   record at helper ENTRY — "the call was reached". `order-leak`, `pqxdh-wire` and
+   `hidden-bit` record AFTER the assertions pass — "the check held". They agree on
+   a green run, which is when the rule is evaluated, so both work today.
+2. **Teardown or dependent project.** `proof-tally` and `pqxdh-wire` throw from
+   `globalTeardown`, explicitly because **a dependent project is SKIPPED when its
+   dependency fails** — the run where a mutation is applied is exactly the run where
+   the answer matters. The other six use a project with `dependencies:`;
+   `fold-gate` independently identified the same skip behaviour and documented it
+   in its config rather than changing approach. The gate holds either way — that run
+   is red regardless — so the cost is diagnostic, not strength.
+3. **How much the record pins, and therefore how strong the rule is.** From weakest
+   to strongest: a bare `(spec, test, marker)` triple (`privacy-pass`, which MEASURED
+   the consequence — a decoy call on the same marker in the same test satisfies it,
+   17 passed, exit 0); plus a healthy-state pin (`proof-tally`); plus a declared
+   status and verbatim fragment (`split-point`); the ledger's own finding sentence
+   (`sleeve-check`); ORDERED `(text, state)` pairs (`hidden-bit`, ordered rather than
+   membership because a two-branch test under a branch-swapping mutation returns the
+   same pairs reversed); and the full pinned claim as the record's own key
+   (`pqxdh-wire`, where the keys ARE the covered set so two lists cannot disagree).
+4. **How the tautology is caught at all.** Five mechanisms: static one-hop taint
+   (`fold-gate`), healthy-state pin (`proof-tally`), prior declaration
+   (`split-point`), runtime taint of read helpers (`order-leak`), and wrapping
+   Playwright's value-extraction methods to flag a raw read of a ledger marker
+   (`sleeve-check`). `privacy-pass` does provenance to a fixed point over the
+   expectation's identifiers.
+
+### The one thing all eight agree on
+
+**Runtime observation cannot see a tautology.** `pqxdh-wire` put it plainest: on an
+unmutated page a tautological argument is byte-identical to a correct one, so no
+rule reading a green run can separate them. Every lab closes it by some form of
+PRIOR DECLARATION or by tainting the read — never by observation.
+
+And the residual that follows is unanimous: **a measurement has no honest thing to
+pin.** Its expectation is recomputed from the run on purpose (a Wilson interval, an
+exact collision probability, a derived total), and pinning its value would restore
+the literal that Fix 4 exists to remove. So a tautological `expectClaim` is
+invisible to every rule in this round, in all eight labs, and is caught only by the
+mutation sweep reporting a survivor. Three builders wrote this into their README
+unprompted; `split-point` stated the general form: closing it needs something the
+record can decide in advance ABOUT A MEASUREMENT, which is a design question, not a
+harness one.
+
+### Playwright facts this round established, each probed rather than assumed
+
+- `test-results/` is wiped BEFORE `globalSetup`, so a sink written there must be
+  created lazily by the first append, or live outside `outputDir`.
+- A throwing `globalTeardown` exits 1 and runs after every test.
+- A dependent project is skipped when its dependency fails.
+- `config.grep` stays `/.*/` on Playwright 1.63 when `--grep` is passed at the CLI;
+  the filter is applied there and is visible in `config.argv`. Reading `config.grep`
+  made `hidden-bit`'s rule fire on all nineteen records a filtered run never asked
+  for. Its fallback when argv is unavailable is "not filtered" — the strict side —
+  so a future Playwright makes mutation runs go red rather than making the rule
+  vacuous.
+- `globalSetup` must be an absolute `fileURLToPath(...)` path: a relative one
+  resolves against the resolver's idea of the config dir and breaks in exactly the
+  archived-tree-with-symlinked-`node_modules` isolation this lane mandates.

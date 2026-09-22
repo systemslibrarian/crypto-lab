@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Public-key &amp; signatures — Crypto Lab</title>
-<meta name="description" content="Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course, as about 150 minutes of lab time: RSA first (Educational RSA, RSA Forge), then elliptic curves (EC Point Arithmetic, ECDSA Forge), which fits two meetings of about 75 minutes with the Predict and Explain sections set outside class, or three meetings of about 50. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.">
+<meta name="description" content="Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.">
 <link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/public-key/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="../teach.css">
@@ -25,7 +25,7 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Public-key & signatures",
-  "description": "Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course, as about 150 minutes of lab time: RSA first (Educational RSA, RSA Forge), then elliptic curves (EC Point Arithmetic, ECDSA Forge), which fits two meetings of about 75 minutes with the Predict and Explain sections set outside class, or three meetings of about 50. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.",
+  "description": "Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.",
   "url": "https://crypto-lab.systemslibrarian.dev/teach/public-key/",
   "inLanguage": "en",
   "learningResourceType": "Course module",
@@ -50,7 +50,7 @@
     "Students will be able to perform elliptic-curve point addition and scalar multiplication over the reals and over a finite field, and compare double-and-add with repeated addition to explain why reversing k·P (the ECDLP) is hard.",
     "Students will be able to derive an ECDSA private key from two signatures that reuse a nonce, and justify how RFC 6979 deterministic nonces block that recovery."
   ],
-  "timeRequired": "PT150M",
+  "timeRequired": "PT96M",
   "isAccessibleForFree": true,
   "author": {
     "@type": "Person",
@@ -108,12 +108,12 @@
 <header class="t-hero">
   <p class="t-eyebrow">Course module</p>
   <h1>Public-key &amp; signatures</h1>
-  <p class="t-lede">Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course, as about 150 minutes of lab time: RSA first (Educational RSA, RSA Forge), then elliptic curves (EC Point Arithmetic, ECDSA Forge), which fits two meetings of about 75 minutes with the Predict and Explain sections set outside class, or three meetings of about 50. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.</p>
+  <p class="t-lede">Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.</p>
 </header>
 
 <dl class="t-facts">
   <div><dt>Audience</dt><dd>Upper-division undergraduate CS and security students, and motivated newcomers, meeting public-key encryption and digital signatures with the math worked on small numbers before real key sizes appear.</dd></div>
-  <div><dt>Class time</dt><dd>About 150 minutes for the core sequence, plus about 40 minutes of extension</dd></div>
+  <div><dt>Class time</dt><dd>About 96 minutes of class time for the core sequence, plus about 25 minutes of extension. Predict is pre-class reading. These figures are class time only. Each worksheet's own accounting counted its Predict questions inside the total, and Predict is answered before the exhibit is opened, so every figure here is five minutes lower than the draft's.</dd></div>
   <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
 </dl>
 
@@ -123,16 +123,17 @@
 <ol><li>Students will be able to compute an RSA keypair (n, φ(n), e, d) from two small primes and explain why d is taken as the inverse of e modulo φ(n).</li><li>Students will be able to demonstrate that textbook RSA is deterministic and malleable, and contrast it with randomized RSA-OAEP encryption of the same plaintext.</li><li>Students will be able to trace how Håstad's broadcast attack and Bleichenbacher's padding-oracle attack recover plaintext without the private key, and identify the exponent or padding choice each attack exploits.</li><li>Students will be able to perform elliptic-curve point addition and scalar multiplication over the reals and over a finite field, and compare double-and-add with repeated addition to explain why reversing k·P (the ECDLP) is hard.</li><li>Students will be able to derive an ECDSA private key from two signatures that reuse a nonce, and justify how RFC 6979 deterministic nonces block that recovery.</li></ol></section>
 
 <section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
+
 <p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
 <div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
 <table>
 <thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
 <tbody>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/">Educational RSA</a></th><td>Intro</td><td>35</td><td>Build an RSA key from two small primes (or random ones) and follow n, φ(n), e and d, encrypt and decrypt a short message with the square-and-multiply trace, sign and verify with the tamper toggle, factor the weak key, and compare textbook ciphertext with WebCrypto RSA-OAEP and the live Enc(a)·Enc(b) malleability forgery.</td><td><a href="rsa-educational/">Worksheet<span class="visually-hidden"> for Educational RSA</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/">RSA Forge</a></th><td>Break it</td><td>40</td><td>On the Small Exponent Attack and Bleichenbacher Oracle tabs, pick a config and run the Håstad broadcast attack (CRT plus cube root on three e = 3 ciphertexts), then set up the 128-bit key, query the padding oracle, show Enc(a)·Enc(b) = Enc(a·b), and run the Bleichenbacher attack both automatically and in You Are the Oracle mode.</td><td><a href="rsa-forge/">Worksheet<span class="visually-hidden"> for RSA Forge</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/">Point Arithmetic</a></th><td>Intro</td><td>30</td><td>Drag P and Q along a real curve (or use the menus and arrow keys) to watch the chord or tangent, reflection and λ, x₃, y₃ update, flip Over ℝ / Over 𝔽ₚ to run the same addition on a point lattice, step k·P by repeated addition and by double-and-add, and walk a small subgroup until it lands on the target point.</td><td><a href="ec-point-arithmetic/">Worksheet<span class="visually-hidden"> for Point Arithmetic</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/">ECDSA Forge</a></th><td>Break it</td><td>45</td><td>Generate a secp256k1 or P-256 key, sign and verify, move the toy-curve sliders to watch two same-nonce signatures give up d, run the nonce-reuse compromise on real 256-bit keys with its recovered-equals-victim proof, then compare random and RFC 6979 signatures and try the attack against RFC 6979.</td><td><a href="ecdsa-forge/">Worksheet<span class="visually-hidden"> for ECDSA Forge</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-nonce-lattice/">Nonce Lattice</a></th><td>Extension</td><td>40</td><td>Choose a scenario preset or set curve, leak mode, leak size and signature count, read the feasibility gauge, run the HNP/LLL attack and step through Sign, Build HNP, Reduce and Extract to the byte-for-byte key grid, then press Measure this column to test where recovery starts failing.</td><td><a href="nonce-lattice/">Worksheet<span class="visually-hidden"> for Nonce Lattice</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/">Educational RSA</a></th><td>Intro</td><td>20</td><td>Build an RSA key from two small primes (or random ones) and follow n, φ(n), e and d, encrypt and decrypt a short message with the square-and-multiply trace, sign and verify with the tamper toggle, factor the weak key, and compare textbook ciphertext with WebCrypto RSA-OAEP and the live Enc(a)·Enc(b) malleability forgery.</td><td><a href="rsa-educational/">Worksheet<span class="visually-hidden"> for Educational RSA</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/">RSA Forge</a></th><td>Break it</td><td>35</td><td>On the Small Exponent Attack and Bleichenbacher Oracle tabs, pick a config and run the Håstad broadcast attack (CRT plus cube root on three e = 3 ciphertexts), then set up the 128-bit key, query the padding oracle, show Enc(a)·Enc(b) = Enc(a·b), and run the Bleichenbacher attack both automatically and in You Are the Oracle mode.</td><td><a href="rsa-forge/">Worksheet<span class="visually-hidden"> for RSA Forge</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/">Point Arithmetic</a></th><td>Intro</td><td>15</td><td>Drag P and Q along a real curve (or use the menus and arrow keys) to watch the chord or tangent, reflection and λ, x₃, y₃ update, flip Over ℝ / Over 𝔽ₚ to run the same addition on a point lattice, step k·P by repeated addition and by double-and-add, and walk a small subgroup until it lands on the target point.</td><td><a href="ec-point-arithmetic/">Worksheet<span class="visually-hidden"> for Point Arithmetic</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/">ECDSA Forge</a></th><td>Break it</td><td>26</td><td>Generate a secp256k1 or P-256 key, sign and verify, move the toy-curve sliders to watch two same-nonce signatures give up d, run the nonce-reuse compromise on real 256-bit keys with its recovered-equals-victim proof, then compare random and RFC 6979 signatures and try the attack against RFC 6979.</td><td><a href="ecdsa-forge/">Worksheet<span class="visually-hidden"> for ECDSA Forge</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-nonce-lattice/">Nonce Lattice</a></th><td>Extension</td><td>25</td><td>Choose a scenario preset or set curve, leak mode, leak size and signature count, read the feasibility gauge, run the HNP/LLL attack and step through Sign, Build HNP, Reduce and Extract to the byte-for-byte key grid, then press Measure this column to test where recovery starts failing.</td><td><a href="nonce-lattice/">Worksheet<span class="visually-hidden"> for Nonce Lattice</span></a></td></tr>
 </tbody>
 </table>
 </div>

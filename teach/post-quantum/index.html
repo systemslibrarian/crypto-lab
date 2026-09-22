@@ -118,7 +118,7 @@
 
 <dl class="t-facts">
   <div><dt>Audience</dt><dd>Upper-division undergraduate or graduate security students, including motivated newcomers to quantum algorithms and lattice-based cryptography.</dd></div>
-  <div><dt>Class time</dt><dd>About 95 minutes for the core sequence, plus about 20 minutes of extension</dd></div>
+  <div><dt>Class time</dt><dd>About 95 minutes of class time for the core sequence, plus about 20 minutes of extension. Predict is pre-class reading.</dd></div>
   <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
 </dl>
 
@@ -128,6 +128,7 @@
 <ol><li>Students will be able to explain how Shor's algorithm turns factoring into period finding, and show from a lab run how a recovered even period r yields the factors through gcd(a^(r/2) ± 1, N).</li><li>Students will be able to contrast the impact of Shor's and Grover's algorithms on public-key and symmetric primitives, and justify why symmetric primitives mostly need larger parameters while RSA, ECC and Diffie-Hellman need replacement.</li><li>Students will be able to demonstrate, using the toy LWE and toy-Kyber exhibits, how added noise defeats exact linear algebra and how noise past the decryption threshold makes decryption fail.</li><li>Students will be able to trace an ML-KEM key establishment through KeyGen, Encaps and Decaps, and distinguish what a KEM provides from message encryption and from peer authentication.</li><li>Students will be able to predict and then verify the outcome of an X25519 + ML-KEM-768 hybrid session when one or both key-establishment wires are broken, and explain why a hybrid is a hedge rather than a doubling of security.</li></ol></section>
 
 <section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
+
 <p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
 <div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
 <table>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Security &amp; symmetric encryption — Crypto Lab</title>
-<meta name="description" content="Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of about 75 minutes each (Hidden Bit, OTP Vault and AES Modes, then Padding Oracle and Nonce Collision); with shorter meetings, set the worksheets’ Predict questions before class.">
+<meta name="description" content="Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.">
 <link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/symmetric/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="../teach.css">
@@ -25,7 +25,7 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Security & symmetric encryption",
-  "description": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of about 75 minutes each (Hidden Bit, OTP Vault and AES Modes, then Padding Oracle and Nonce Collision); with shorter meetings, set the worksheets’ Predict questions before class.",
+  "description": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.",
   "url": "https://crypto-lab.systemslibrarian.dev/teach/symmetric/",
   "inLanguage": "en",
   "learningResourceType": "Course module",
@@ -49,7 +49,7 @@
     "Students will be able to trace how a padding-validity oracle lets an attacker recover AES-CBC plaintext byte by byte without the key, and explain why verifying a MAC before decryption stops the same attack.",
     "Students will be able to distinguish the consequences of nonce reuse for AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC, including which key material the attacker recovers and which it does not."
   ],
-  "timeRequired": "PT115M",
+  "timeRequired": "PT100M",
   "isAccessibleForFree": true,
   "author": {
     "@type": "Person",
@@ -107,12 +107,12 @@
 <header class="t-hero">
   <p class="t-eyebrow">Course module</p>
   <h1>Security &amp; symmetric encryption</h1>
-  <p class="t-lede">Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of about 75 minutes each (Hidden Bit, OTP Vault and AES Modes, then Padding Oracle and Nonce Collision); with shorter meetings, set the worksheets’ Predict questions before class.</p>
+  <p class="t-lede">Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.</p>
 </header>
 
 <dl class="t-facts">
   <div><dt>Audience</dt><dd>Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal.</dd></div>
-  <div><dt>Class time</dt><dd>About 115 minutes for the core sequence</dd></div>
+  <div><dt>Class time</dt><dd>About 100 minutes of class time for the core sequence. Predict is pre-class reading.</dd></div>
   <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
 </dl>
 
@@ -122,14 +122,15 @@
 <ol><li>Students will be able to explain, using the hidden-bit IND-CPA game, why deterministic AES-ECB and CBC with a predictable chained IV let a named adversary tell which of two messages was encrypted.</li><li>Students will be able to demonstrate that reusing a one-time-pad key or a stream-cipher keystream reduces two ciphertexts to the XOR of their plaintexts, and recover plaintext from that XOR by crib-dragging.</li><li>Students will be able to compare ECB, CBC, CTR, GCM and CCM by whether each provides confidentiality alone or authenticated encryption, and predict how each responds when a ciphertext bit is flipped.</li><li>Students will be able to trace how a padding-validity oracle lets an attacker recover AES-CBC plaintext byte by byte without the key, and explain why verifying a MAC before decryption stops the same attack.</li><li>Students will be able to distinguish the consequences of nonce reuse for AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC, including which key material the attacker recovers and which it does not.</li></ol></section>
 
 <section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
+
 <p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
 <div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
 <table>
 <thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
 <tbody>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a></th><td>Intro</td><td>20</td><td>In Exhibit 01, pick an AES scheme (GCM, CTR, chained-IV CBC or ECB) and an adversary (random guess, re-encrypt and compare, or the BEAST-style IV predictor), run or step real trials, and read the measured advantage, Wilson interval and verdict.</td><td><a href="hidden-bit/">Worksheet<span class="visually-hidden"> for Hidden Bit</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-otp-vault/">OTP Vault</a></th><td>Break it</td><td>25</td><td>Encrypt a message under a fresh random pad, type any same-length plaintext to derive a key that maps the fixed ciphertext to it, then switch on key reuse and crib-drag C1 ⊕ C2 to peel both messages apart, including a built-in challenge.</td><td><a href="otp-vault/">Worksheet<span class="visually-hidden"> for OTP Vault</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a></th><td>Fix</td><td>20</td><td>Encrypt your own plaintext under ECB, CBC, CTR, GCM and CCM, inspect the key, IV or nonce, ciphertext and tag, and run the ECB pattern-leak, CBC bit-flip and GCM tamper-detection demos to see which modes accept a modified ciphertext.</td><td><a href="aes-modes/">Worksheet<span class="visually-hidden"> for AES Modes</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a></th><td>Intro</td><td>15</td><td>In Exhibit 01, pick an AES scheme (GCM, CTR, chained-IV CBC or ECB) and an adversary (random guess, re-encrypt and compare, or the BEAST-style IV predictor), run or step real trials, and read the measured advantage, Wilson interval and verdict.</td><td><a href="hidden-bit/">Worksheet<span class="visually-hidden"> for Hidden Bit</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-otp-vault/">OTP Vault</a></th><td>Break it</td><td>20</td><td>Encrypt a message under a fresh random pad, type any same-length plaintext to derive a key that maps the fixed ciphertext to it, then switch on key reuse and crib-drag C1 ⊕ C2 to peel both messages apart, including a built-in challenge.</td><td><a href="otp-vault/">Worksheet<span class="visually-hidden"> for OTP Vault</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a></th><td>Fix</td><td>15</td><td>Encrypt your own plaintext under ECB, CBC, CTR, GCM and CCM, inspect the key, IV or nonce, ciphertext and tag, and run the ECB pattern-leak, CBC bit-flip and GCM tamper-detection demos to see which modes accept a modified ciphertext.</td><td><a href="aes-modes/">Worksheet<span class="visually-hidden"> for AES Modes</span></a></td></tr>
 <tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/">Padding Oracle</a></th><td>Break it</td><td>35</td><td>Predict whether a crafted final padding byte passes the real oracle, run the byte-by-byte attack on a block you type, then run the identical attack against leaky, silent and Encrypt-then-MAC servers and tamper with an AES-GCM ciphertext.</td><td><a href="padding-oracle/">Worksheet<span class="visually-hidden"> for Padding Oracle</span></a></td></tr>
 <tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/">Nonce Collision</a></th><td>Break it</td><td>15</td><td>Encrypt two messages under one AES-CTR key and nonce and crib-drag the second out of C1 ⊕ C2, then switch each construction to a reused nonce (or press &quot;Run all four — one reused nonce&quot;) and read each card's cryptographic result beside its security verdict.</td><td><a href="nonce-collision/">Worksheet<span class="visually-hidden"> for Nonce Collision</span></a></td></tr>
 </tbody>

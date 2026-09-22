@@ -1,7 +1,7 @@
 ---
 exhibit: rsa-forge
 module: public-key
-minutes: 40
+minutes: 35
 outcomes: [3]
 source_commit: 2152e7023198
 checked: 2026-09-22

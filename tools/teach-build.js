@@ -260,9 +260,15 @@ function readWorksheets(modules) {
       if (!ex) { fail(`${where}: ${name} is not an exhibit of module ${modId}`); continue; }
       if (ex.worksheet !== name) fail(`teach/_src/modules/${modId}.json: exhibit ${name} has a worksheet; set "worksheet": "${name}"`);
       if (!Number.isInteger(meta.minutes) || meta.minutes <= 0) fail(`${where}: minutes must be a positive integer`);
-      if (!Array.isArray(meta.outcomes) || !meta.outcomes.length ||
+      /* An empty list is allowed and means what it says: this worksheet's class sequence
+         serves none of the module's outcomes. The module data then has to say what it does
+         instead, so the gap is recorded rather than implied. */
+      if (!Array.isArray(meta.outcomes) ||
           !meta.outcomes.every((n) => Number.isInteger(n) && n >= 1 && n <= mod.outcomes.length)) {
-        fail(`${where}: outcomes must list module outcome numbers (1 to ${mod.outcomes.length})`);
+        fail(`${where}: outcomes must list module outcome numbers (1 to ${mod.outcomes.length}), or be empty`);
+      }
+      if (Array.isArray(meta.outcomes) && !meta.outcomes.length && !(ex && ex.outcome_note)) {
+        fail(`teach/_src/modules/${modId}.json: ${name} serves no outcome, so its exhibit entry needs an "outcome_note" saying what it does in class`);
       }
       if (!/^[0-9a-f]{7,40}$/.test(String(meta.source_commit || ''))) fail(`${where}: source_commit must be the lab commit the worksheet was checked against`);
       if (!DATE_RE.test(String(meta.checked || ''))) fail(`${where}: checked must be YYYY-MM-DD`);
@@ -387,6 +393,14 @@ function renderWorksheetBody(md, where) {
     WORKSHEET_SECTIONS.every((s, k) => found[k] === s) && LAST_SECTION.includes(found[4]);
   if (!okOrder) fail(`${where}: sections must be exactly ${want} (found: ${found.join(' → ') || 'none'})`);
   return out.join('\n');
+}
+
+/* Minutes are class time. Predict is answered before the exhibit is opened, so it is
+   reading rather than lab time, and every page says so in the same words. */
+const PREDICT_NOTE = 'Predict is pre-class reading';
+
+function classTime(minutes) {
+  return `About ${minutes} minutes of class time; ${PREDICT_NOTE}`;
 }
 
 /* ---------- page chrome ---------- */
@@ -571,7 +585,7 @@ function modulePage(m, cff, site, worksheets) {
 
 <dl class="t-facts">
   <div><dt>Audience</dt><dd>${esc(m.audience)}</dd></div>
-  <div><dt>Class time</dt><dd>About ${core} minutes for the core sequence${ext ? `, plus about ${ext} minutes of extension` : ''}</dd></div>
+  <div><dt>Class time</dt><dd>About ${core} minutes of class time for the core sequence${ext ? `, plus about ${ext} minutes of extension` : ''}. ${esc(PREDICT_NOTE.charAt(0).toUpperCase() + PREDICT_NOTE.slice(1))}.${m.time_note ? ` ${esc(m.time_note)}` : ''}</dd></div>
   <div><dt>Last checked</dt><dd>${esc(m.last_checked)}</dd></div>
 </dl>
 
@@ -581,6 +595,7 @@ function modulePage(m, cff, site, worksheets) {
 <ol>${m.outcomes.map((o) => `<li>${esc(o)}</li>`).join('')}</ol></section>
 
 <section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
+${m.exhibits.filter((x) => x.outcome_note).map((x) => `<p class="t-outcome-note"><strong>${esc(x.card.title)}:</strong> ${esc(x.outcome_note)}</p>`).join('\n')}
 <p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
 <div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
 <table>
@@ -662,11 +677,13 @@ function worksheetPage(w, cff, site) {
 
 <dl class="t-facts">
   <div><dt>Exhibit</dt><dd><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></dd></div>
-  <div><dt>Time</dt><dd>About ${w.meta.minutes} minutes</dd></div>
+  <div><dt>Time</dt><dd>${esc(classTime(w.meta.minutes))}</dd></div>
   <div><dt>Checked against</dt><dd>Lab commit <code>${esc(w.meta.source_commit)}</code> on ${esc(w.meta.checked)}</dd></div>
 </dl>
 
-<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul>${served}</ul></section>
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2>${served
+    ? `<ul>${served}</ul>`
+    : `<p>None of this module's outcomes are served by this worksheet's class sequence.${x.outcome_note ? ` ${esc(x.outcome_note)}` : ''}</p>`}</section>
 
 <div class="t-actions no-print">
   <button type="button" class="t-btn" data-print>Print this worksheet</button>

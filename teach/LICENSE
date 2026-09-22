@@ -1,0 +1,7 @@
+LICENSE PLACEHOLDER — teaching materials under teach/
+
+TODO(Paul): choose the license for the teaching materials in this folder (module
+pages, worksheets, instructor notes and their sources under teach/_src/), then
+replace this file with its text and add a matching `license:` line to CITATION.cff.
+
+This file is a placeholder. It grants no permissions by itself.

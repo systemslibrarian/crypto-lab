@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Library privacy, for iSchools — Crypto Lab</title>
+<meta name="description" content="Fits an undergraduate or graduate LIS course on information ethics, privacy, or library systems and technology, as a one- or two-meeting unit. The shelf-oracle extension suits students who also take a technical or information-security elective.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Library privacy, for iSchools">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Library privacy, for iSchools">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Library privacy, for iSchools",
+  "description": "Fits an undergraduate or graduate LIS course on information ethics, privacy, or library systems and technology, as a one- or two-meeting unit. The shelf-oracle extension suits students who also take a technical or information-security elective.",
+  "url": "https://crypto-lab.systemslibrarian.dev/teach/library-privacy/",
+  "inLanguage": "en",
+  "learningResourceType": "Course module",
+  "educationalUse": "Classroom instruction",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "audienceType": "Library and information science students in an iSchool, with no mathematics or cryptography background, who need to reason about who can learn what about a patron from a catalog search, a request log, or a published statistic."
+  },
+  "competencyRequired": [
+    "No mathematics background assumed; the shelf-oracle extension is the exception.",
+    "No cryptography or programming background assumed.",
+    "Basic familiarity with searching a library catalog.",
+    "Reading a simple chart: DP Noise shows two probability curves side by side, and students need only compare how spread out they are."
+  ],
+  "teaches": [
+    "Students will be able to identify, for a catalog search, which party learns the requested title and which learns who asked, under a plain search, two-server private retrieval (patron-shield), and a relay-plus-gateway split (blind-relay).",
+    "Students will be able to predict what two cooperating operators can reconstruct by combining what each already holds, and explain why the patron cannot confirm from their own device that the operators are staying apart.",
+    "Students will be able to distinguish what these designs conceal (which record was requested; the link between a patron's address and their request) from what they leave visible (that a query happened, when, how often, and its size or timing).",
+    "Students will be able to demonstrate how two published totals can reveal one person's value, and describe how calibrated noise, a declared cap on one person's contribution, and a finite query budget limit what published statistics reveal about an individual while leaving group-level conclusions visible.",
+    "Students will be able to evaluate a vendor's or institution's privacy claim by naming the assumption it rests on (operators not combining their records, a trusted holder of the raw data, a budget that is enforced) and the party who must be trusted for it to hold."
+  ],
+  "timeRequired": "PT60M",
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Person",
+    "name": "Paul A. Clark"
+  },
+  "dateModified": "2026-09-22",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Crypto Lab",
+    "url": "https://crypto-lab.systemslibrarian.dev/"
+  },
+  "hasPart": [
+    {
+      "@type": "LearningResource",
+      "name": "Patron Shield",
+      "url": "https://systemslibrarian.github.io/crypto-lab-patron-shield/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Blind Relay",
+      "url": "https://systemslibrarian.github.io/crypto-lab-blind-relay/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "DP Noise",
+      "url": "https://systemslibrarian.github.io/crypto-lab-dp-noise/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Shelf Oracle",
+      "url": "https://systemslibrarian.github.io/crypto-lab-shelf-oracle/",
+      "learningResourceType": "Interactive demonstration"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Crypto Lab</a></li><li><a href="../">Teach</a></li><li><span aria-current="page">Library privacy, for iSchools</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Course module</p>
+  <h1>Library privacy, for iSchools</h1>
+  <p class="t-lede">Fits an undergraduate or graduate LIS course on information ethics, privacy, or library systems and technology, as a one- or two-meeting unit. The shelf-oracle extension suits students who also take a technical or information-security elective.</p>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Audience</dt><dd>Library and information science students in an iSchool, with no mathematics or cryptography background, who need to reason about who can learn what about a patron from a catalog search, a request log, or a published statistic.</dd></div>
+  <div><dt>Class time</dt><dd>About 60 minutes for the core sequence, plus about 30 minutes of extension</dd></div>
+  <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="prereq"><h2 id="prereq">Prerequisites</h2><ul><li>No mathematics background assumed; the shelf-oracle extension is the exception.</li><li>No cryptography or programming background assumed.</li><li>Basic familiarity with searching a library catalog.</li><li>Reading a simple chart: DP Noise shows two probability curves side by side, and students need only compare how spread out they are.</li></ul></section>
+
+<section aria-labelledby="outcomes"><h2 id="outcomes">Learning outcomes</h2>
+<ol><li>Students will be able to identify, for a catalog search, which party learns the requested title and which learns who asked, under a plain search, two-server private retrieval (patron-shield), and a relay-plus-gateway split (blind-relay).</li><li>Students will be able to predict what two cooperating operators can reconstruct by combining what each already holds, and explain why the patron cannot confirm from their own device that the operators are staying apart.</li><li>Students will be able to distinguish what these designs conceal (which record was requested; the link between a patron's address and their request) from what they leave visible (that a query happened, when, how often, and its size or timing).</li><li>Students will be able to demonstrate how two published totals can reveal one person's value, and describe how calibrated noise, a declared cap on one person's contribution, and a finite query budget limit what published statistics reveal about an individual while leaving group-level conclusions visible.</li><li>Students will be able to evaluate a vendor's or institution's privacy claim by naming the assumption it rests on (operators not combining their records, a trusted holder of the raw data, a budget that is enforced) and the party who must be trusted for it to hold.</li></ol></section>
+
+<section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
+<p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
+<div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
+<table>
+<thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
+<tbody>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-patron-shield/">Patron Shield</a></th><td>Intro</td><td>15</td><td>Choose a book, run a private query and watch each of two simulated servers receive its own random request, read what each server saw, press the collusion button to see the two requests combined into the book's name, and switch between the naive and PIR views to compare what a server logs.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-blind-relay/">Blind Relay</a></th><td>Break it</td><td>20</td><td>Type a search query, run the exchange and step it from client through relay and gateway to see which party holds your address and which holds your request, flip the switch that lets relay and gateway compare notes, then simulate several clients at once and join the relay's and gateway's logs on size and on timing, with padding off and then on.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-dp-noise/">DP Noise</a></th><td>Fix</td><td>25</td><td>On the guided route, run the differencing attack to recover one employee's exact salary from two totals and re-run it with noise added, move the privacy setting ε and watch the with-Alice and without-Alice results slide together, declare a salary cap and decide what happens to a new hire above it, then average many noisy answers to recover the payroll and spend a query budget until the page refuses to answer.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-shelf-oracle/">Shelf Oracle</a></th><td>Extension</td><td>30</td><td>Pick a book from the shelf, try to guess which encrypted entry hides your choice before and after deliberately breaking the encryption's randomness, fold the records into the answer step by step while the measured noise budget falls, run one-server and two-server retrieval head to head and make the two servers compare notes, then shrink the modulus until the answer decrypts to garbage and watch what a network observer still logs.</td><td><span class="t-pending">Not yet written</span></td></tr>
+</tbody>
+</table>
+</div>
+
+</section>
+
+<section aria-labelledby="discuss"><h2 id="discuss">Discussion questions</h2>
+<ol><li>Patron Shield and Blind Relay each protect a patron as long as two organizations keep what they hold apart. If a library contracted two vendors to play those roles, what would you want to know about their ownership, contracts and jurisdiction, and what could the library actually verify?</li><li>Blind Relay's correlation exhibit joins a relay's log with a gateway's log without the two operators cooperating, the way a court order, a breach or an acquisition might. What does that suggest about which request logs a library or its vendors should keep, for how long, and in whose custody?</li><li>Patron Shield hides which book was requested but not that a patron searched, when, or how often. For a patron researching a medical or political topic, which of those remaining facts matters most, and what policy or practice outside the protocol could reduce it?</li><li>DP Noise recovers one person's salary by subtracting two published totals. How could the same subtraction apply to circulation or program statistics a library publishes, and how would a privacy budget change how many reports the library could release?</li><li>Differential privacy, as DP Noise demonstrates it, protects what is published while a curator still holds the raw records. Which library records would that help with, and which would still depend on retention and access policy?</li></ol></section>
+
+<section aria-labelledby="notes"><h2 id="notes">Instructor notes</h2>
+<p>These notes are public, and they are conceptual on purpose: they describe what students should notice and why, never the specific values a run produces.</p>
+<h3>Expected observations</h3><ul><li>patron-shield: after a query runs, the privacy analysis lists the catalog slots each server received as two different random subsets and says neither server alone saw the query; the retrieved title appears with a correctness badge driven by the page's own byte-for-byte check.</li><li>patron-shield: pressing 'Simulate the servers colluding' combines the two requests and names the book that was requested; the naive view shows the exact title in a plain search request, while the PIR view shows a random mask.</li><li>blind-relay: the page prompts for 'a query you would rather not have attached to your name'. Have students type an invented query rather than a real one; the exhibit is a teaching demonstration, not a place for real searches.</li><li>blind-relay: stepping the exchange fills each party's card at the step where it acquires a fact; the relay's card lists the client address and a ciphertext it cannot open, and the gateway's lists the decrypted request with the relay, not the client, as its connection source.</li><li>blind-relay: turning on 'Relay and gateway compare notes' changes the privacy verdict to BROKEN while the separate cryptographic-result indicator still reports that the encryption verified.</li><li>blind-relay: without padding, joining the two logs on size links clients to their requests; with padding on, the size join collapses into one anonymity set, but the timing join still links clients to requests.</li><li>dp-noise: in exact mode the differencing attack recovers the target's salary exactly; in the differential-privacy mode repeated runs return different values that miss it, and the panel notes what the attack itself cost in privacy budget.</li><li>dp-noise: the core-path navigator marks a step Established after the learner runs that step's interaction, not by scrolling past it or by a linked ε arriving from another exhibit.</li><li>dp-noise: at a fixed ε, switching the dial's question from the headcount to the total payroll changes the noise by a very large factor, because one person can move a payroll total far more than a headcount.</li><li>dp-noise: in the sensitivity exercise, the option to raise the bound so the new hire fits is refused, with the reason given on the page.</li><li>dp-noise: the averaging attack's error shrinks as more answers are averaged until the true payroll is recovered, and the ledger refuses a query that would overdraw the budget.</li><li>dp-noise: noisy results differ from run to run unless Classroom mode (seeded sampling) is switched on, and seeded panels say so on screen.</li><li>shelf-oracle (extension): with fresh randomness the distinguisher's measured accuracy is set against a coin-flip baseline; with the reuse switch on, the same crude attack succeeds reliably. Until the chosen record is folded in, the accumulator decrypts to zero, and the two-server column's collusion button recovers the index in a single operation.</li></ul>
+<h3>Common misconceptions</h3><ul><li>Encrypting a search keeps it private. Blind Relay shows encryption stops a party reading a request but not knowing that someone asked; the collusion join recovers who asked what without decrypting anything.</li><li>Private retrieval hides that a patron searched. Patron Shield hides which record was requested, not that a query happened, who asked, when, how often, or the response size.</li><li>If each server behaves on its own terms, the patron is protected. Both labs' privacy depends on the operators not pooling what they hold, and Blind Relay's client card states that non-collusion is an assumption the client cannot verify cryptographically.</li><li>Keeping the servers apart also means the right book comes back. Patron Shield separates the two: one dishonest server learns nothing alone, but a single malicious server can return a corrupted record with nothing in the protocol to flag it.</li><li>Padding solves traffic analysis. In Blind Relay, padding defeats the size join but not the timing join; the page names batching or mixing, which OHTTP does not provide, as the remaining countermeasure.</li><li>If each published answer is noisy, publishing many is harmless. DP Noise's averaging attack recovers the true payroll from many individually private answers, which is why its ledger refuses further queries once the budget is spent.</li><li>Differential privacy anonymizes the dataset or protects the raw records. DP Noise states that it protects the output of a computation, not its inputs, and is not anonymization of a released table; the model it demonstrates trusts a curator who holds the raw data.</li><li>A strong privacy setting means nothing can be learned. DP Noise bounds what can be learned about one person; conclusions about a group are what a release is for, and differential privacy does not prevent them.</li><li>Differential privacy repairs the relay and gateway problems seen in Blind Relay. It addresses a different release, published statistics; Blind Relay names batching or mixing as the countermeasure for timing correlation.</li></ul>
+<h3>Conceptual answers</h3><ul><li>On vendor roles: the protection rests on an organizational promise rather than on cryptography. The patron's device cannot confirm the operators are separate, and common ownership, a legal demand reaching both, or one party handing its key to the other produces the same result as open collusion. The questions a library can ask are therefore about the arrangement (who operates each role, under what contract and jurisdiction) rather than about the cryptography.</li><li>On log retention: separately kept logs can be joined later by whoever obtains both, with no decryption, because request size and arrival time can link them when traffic is sparse. Padding removes the size link but not the timing link, so what is logged, and who can obtain both sets, matters alongside the encryption.</li><li>On what remains visible: Patron Shield scopes its protection to which record was requested; occurrence, identity, timing, frequency and response size are transport and identity problems it does not address. A split like Blind Relay's separates identity from the party reading the request, but neither lab hides timing without further mechanisms such as batching or mixing.</li><li>On published statistics: two aggregates that differ by one person subtract to that person. Calibrated noise makes each answer imprecise about any one individual, but many noisy answers averaged together converge on the truth, so repeated releases have to be counted against a finite budget and refused once it is spent. Conclusions about a group remain visible by design.</li><li>On raw records: in the model DP Noise demonstrates, a trusted curator holds the raw data and randomizes what it publishes. Differential privacy protects the output of a computation, not its inputs, and is not anonymization of a released table, so the raw records remain a matter of who holds them and under what policy.</li></ul>
+</section>
+
+<section aria-labelledby="readiness"><h2 id="readiness">Browser support, privacy and run-specific values</h2>
+<p>Recorded per exhibit, with the date each observation was made. Engines are named; no device was tested unless it is named here.</p>
+<div class="t-table" role="region" tabindex="0" aria-label="Browser support, privacy and run-specific values per exhibit">
+<table>
+<thead><tr><th scope="col">Exhibit</th><th scope="col">Browser support</th><th scope="col">Privacy notes</th><th scope="col">Values differ per run?</th></tr></thead>
+<tbody>
+<tr><th scope="row">Patron Shield</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">Blind Relay</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">DP Noise</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">Shelf Oracle</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+</tbody>
+</table>
+</div>
+<p>The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>
+</section>
+
+<section aria-labelledby="syllabus"><h2 id="syllabus">For your syllabus</h2>
+<div class="t-syllabus">
+<p id="module-syllabus" class="t-syllabus-line">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+<button type="button" class="t-btn" data-copy="module-syllabus">Copy syllabus line</button>
+<span class="t-copy-status" role="status" aria-live="polite"></span>
+</div>
+</section>
+
+<section aria-labelledby="cite"><h2 id="cite">How to cite this module’s exhibits</h2>
+<ol class="t-cites"><li><p class="t-cite">Clark, P. A. (n.d.). <em>Patron Shield</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-patron-shield/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Blind Relay</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-blind-relay/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>DP Noise</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-dp-noise/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Shelf Oracle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-shelf-oracle/</p></li></ol>
+<details><summary>BibTeX</summary><pre class="t-pre">@misc{clark_patron_shield,
+  author       = {Clark, Paul A.},
+  title        = {Patron Shield},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-patron-shield/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_blind_relay,
+  author       = {Clark, Paul A.},
+  title        = {Blind Relay},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-blind-relay/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_dp_noise,
+  author       = {Clark, Paul A.},
+  title        = {DP Noise},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-dp-noise/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_shelf_oracle,
+  author       = {Clark, Paul A.},
+  title        = {Shelf Oracle},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-shelf-oracle/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}</pre></details>
+<p>To cite the whole collection, see <a href="../#cite">How to cite</a>.</p>
+</section>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../">Crypto Lab catalog</a> · <a href="../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../teach.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+{
+  "id": "post-quantum",
+  "position": 40,
+  "title": "Post-quantum transition",
+  "audience": "Upper-division undergraduate or graduate security students, including motivated newcomers to quantum algorithms and lattice-based cryptography.",
+  "course_fit": "Upper-division undergraduate or graduate courses in computer security, applied cryptography or network security, as a two-meeting unit on the quantum threat to public-key cryptography and the move to ML-KEM and hybrid key exchange.",
+  "prerequisites": [
+    "Modular arithmetic and the Euclidean gcd",
+    "How RSA and Diffie-Hellman / ECDH key agreement work at a high level",
+    "Symmetric authenticated encryption (AES-GCM) and key derivation (HKDF) at a user level",
+    "Vectors, matrices and solving linear systems by Gaussian elimination",
+    "Basic probability: outcomes of repeated random trials"
+  ],
+  "outcomes": [
+    "Students will be able to explain how Shor's algorithm turns factoring into period finding, and show from a lab run how a recovered even period r yields the factors through gcd(a^(r/2) ± 1, N).",
+    "Students will be able to contrast the impact of Shor's and Grover's algorithms on public-key and symmetric primitives, and justify why symmetric primitives mostly need larger parameters while RSA, ECC and Diffie-Hellman need replacement.",
+    "Students will be able to demonstrate, using the toy LWE and toy-Kyber exhibits, how added noise defeats exact linear algebra and how noise past the decryption threshold makes decryption fail.",
+    "Students will be able to trace an ML-KEM key establishment through KeyGen, Encaps and Decaps, and distinguish what a KEM provides from message encryption and from peer authentication.",
+    "Students will be able to predict and then verify the outcome of an X25519 + ML-KEM-768 hybrid session when one or both key-establishment wires are broken, and explain why a hybrid is a hedge rather than a doubling of security."
+  ],
+  "exhibits": [
+    {
+      "name": "shor",
+      "role": "break-it",
+      "minutes": 15,
+      "students_do": "Enter a composite N or pick a preset, press Run Shor's Algorithm several times, and follow the step log, period chart, QFT distribution with retunable phasor wheels, and continued-fraction table to the gcd step that recovers the factors.",
+      "source_commit": "3925ae976fbc",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "grover",
+      "role": "break-it",
+      "minutes": 20,
+      "students_do": "Set the qubit count, step Grover iterations with the oracle + diffusion sub-steps and prediction mode on, watch the state vector rotate toward and then past the target, sample with Measure ×100, and compare AES key sizes in the impact panels.",
+      "source_commit": "873e40d8f891",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "lattice-gentle",
+      "role": "intro",
+      "minutes": 30,
+      "students_do": "Work through Guided mode: drag a 2D basis and decode a target by rounding, compare a good and a bad basis for the shortest vector, step Gauss and LLL, type LWE and SIS candidates, push toy-Kyber's noise past q/4 and tamper with toy-KEM ciphertexts and toy-Dilithium signatures, then answer the exit check.",
+      "source_commit": "a6f00624315a",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "kyber-vault",
+      "role": "fix",
+      "minutes": 15,
+      "students_do": "Pick an ML-KEM parameter set and step KeyGen, Encaps and Decaps until both secrets match, encrypt a message through the ML-KEM + AES-256-GCM hybrid and tamper with the ML-KEM ciphertext, then solve the toy LWE system clean versus noisy.",
+      "source_commit": "8ec68bacd292",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "hybrid-wire",
+      "role": "fix",
+      "minutes": 15,
+      "students_do": "Step the X25519 + ML-KEM-768 handshake to the HKDF combiner, send encrypted chat messages and tamper with the session, then toggle either or both wires to broken in the Threat model tab and read the measured verdict.",
+      "source_commit": "5c4c61ba323d",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "harvest-vault",
+      "role": "extension",
+      "minutes": 20,
+      "students_do": "In the Prove it panel, send a message over the toy handshake, deploy the PQC upgrade, send again and run Q-Day to compare the recorded sessions, then work the Mosca X + Y > Z calculator with sector presets and Q-Day scenarios.",
+      "source_commit": "1c8241953291",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    }
+  ],
+  "discussion_questions": [
+    "In Shor's algorithm the quantum computer's job is finding the period r; the rest is ordinary arithmetic. Which cryptosystems does that expose, which does it leave alone, and why?",
+    "Grover's algorithm also speeds up key search. Why is the usual response to Grover to choose larger symmetric parameters, while the response to Shor is to replace RSA, ECC and Diffie-Hellman outright?",
+    "The lattice exhibits start from a picture of good and bad bases, then warn that ML-KEM never gives honest users a secret good basis. What is the secret in ML-KEM, where does the hardness it relies on actually live, and why do the 2D demonstrations not show that hardness?",
+    "The ML-KEM lab stresses that a KEM establishes a key but neither encrypts a chosen message nor authenticates the peer. If its flow were copied unchanged into a real protocol, what could an active attacker do, and what would the protocol have to add?",
+    "A hybrid session is claimed to survive as long as either wire holds. What does the hybrid cost, which failures can still sink it, and why does the way the two secrets are combined matter?"
+  ],
+  "instructor_notes": {
+    "expected_observations": [
+      "shor: runs are randomized. Across repeated runs of the same N the base a, the period r and the retry path change; some attempts are discarded (odd period, a trivial square root, or no convergent passing a^r ≡ 1 mod N), and some runs obtain a factor from gcd(a, N) before any order finding, in which case no QFT chart is drawn. When the quantum path runs, the QFT bars peak at multiples of Q/r and the phasor hands add at an on-peak frequency and cancel off-peak.",
+      "grover: success probability climbs toward a maximum near k* and then falls if stepping continues (overshoot), visible on the probability curve and as the state vector rotating past the target axis. With sub-steps on, the oracle turns the target amplitude negative and diffusion reflects the amplitudes about the mean. Measure ×100 samples the current state, so success shows up as a frequency tracking the state's probability rather than as a certainty.",
+      "lattice-gentle: switching to the bad basis leaves the lattice points and the shortest vector unchanged while the rounding decode lands farther from the target. Raising the toy-Kyber error past the q/4 ceiling makes decrypted bits flip; a tampered KEM ciphertext silently yields the fallback key instead of an error; toy-Dilithium signing shows rejection sampling, and the tamper buttons are refused by the verifier.",
+      "kyber-vault: at the end of the stepper both parties hold byte-identical shared secrets although the ciphertext is what crossed the wire. After tampering with the ML-KEM ciphertext, AES-256-GCM authenticated decryption fails. In the scalar LWE primer, elimination recovers s from the clean system but not from the published noisy one (the page notes that an occasional noisy draw survives; a new instance fixes it).",
+      "hybrid-wire: breaking one wire leaves the lab's verdict at still safe, because the attacker's reconstruction attempts fail to open the intercepted record; breaking both lets the reconstruction open the record and the recovered plaintext is printed. Tampering with the ML-KEM ciphertext in the chat makes later decryptions fail authentication.",
+      "harvest-vault (extension): a session sent before the PQC upgrade is recovered byte-identical at Q-Day; a session sent after the upgrade is not, even though the attacker solves the same discrete log, because the lattice half of the key never crossed the wire."
+    ],
+    "misconceptions": [
+      "Watching Shor run in the browser means a quantum computer factored N. The lab labels its quantum steps as classically simulated, and because it tracks the full state classically it is limited to small N.",
+      "Shor also breaks AES and hash functions. Shor targets factoring and discrete logarithms (RSA, ECC, classical Diffie-Hellman); symmetric ciphers and hashes face Grover's quadratic speedup instead.",
+      "Grover makes AES-128 practically breakable because the idealized cost halves the key length. The per-iteration oracle is a full AES circuit and Grover is inherently sequential, so the real cost is far higher.",
+      "Running more Grover iterations always helps. Past k* the state rotates past the target and success probability falls.",
+      "Quantum search checks all keys at once and reads out the winner. The oracle marks the target with a phase; measurement collapses the state to a single outcome rather than reading off amplitudes.",
+      "ML-KEM's secret key is a good basis of a lattice. The secret is a short vector hidden inside noisy modular equations; the good/bad basis picture is an intuition, not the mechanism.",
+      "The 2D lattice exhibits show that lattice problems are hard. They are easy by design; the lab shows why the assumption has its shape, not that it holds.",
+      "A KEM encrypts the message. ML-KEM establishes a shared key; the lab's hybrid path hands that key to AES-256-GCM to encrypt data.",
+      "NIST security categories are exact bit strengths. The lab treats them as comparison targets, not exact classical or quantum bit-strength measurements.",
+      "Final ML-KEM and pre-standard CRYSTALS-Kyber are interchangeable. Details changed during standardization, so keys, ciphertexts and encodings should not be assumed byte-compatible.",
+      "A hybrid is twice as strong as either wire. It is a hedge: it survives a break of either wire, but strengths do not add.",
+      "Any way of combining the two shared secrets is fine. XOR-ing or truncating raw secrets can void the security argument; they must flow through a sound KDF that binds both wires.",
+      "Deploying PQC today protects traffic already harvested. Stored bytes are not re-encrypted by a later upgrade."
+    ],
+    "conceptual_answers": [
+      "Shor: once the period is known, the difference-of-squares step and the two gcds are classical arithmetic, so the quantum part of the attack is order finding. Systems whose security rests on factoring or discrete logarithms (RSA, ECC, classical Diffie-Hellman) are exposed; symmetric ciphers and hash functions are not broken by Shor and face Grover's quadratic speedup instead.",
+      "Grover vs Shor: Grover's speedup for unstructured search is quadratic and provably optimal, and each iteration runs a full cipher circuit sequentially, so enlarging keys restores the margin; symmetric primitives mostly need larger parameters. Shor solves the underlying factoring and discrete-log problems in polynomial time, so larger RSA or ECC keys do not help, and public-key cryptography moves to post-quantum schemes instead.",
+      "Lattices: the ML-KEM secret is a short vector hidden inside noisy module-LWE equations, not a good basis. The conjectured hardness lives in short-vector problems in high dimension, connected to MLWE and MSIS by security reductions; in two dimensions reduction algorithms solve the problems outright, so the small exhibits show the shape of the assumption rather than its truth.",
+      "KEM limits: nothing in the demo authenticates Bob's public key or Alice's identity, so an active attacker could substitute a public key. A real protocol must bind keys to identities and to the handshake context, and would need a record protocol (replay handling, sequencing, rekeying, nonce strategy) for more than a single in-memory message.",
+      "Hybrid: the cost is the extra ML-KEM public key and ciphertext on the wire, which can push a handshake past one packet, plus implementation complexity. The session can still fail through an unsound combiner, a flaw in either implementation, or peers that disagree on parameters or transcript binding. The secrets must pass through a sound KDF that binds both wires; the lab's own combiner leaves transcript binding to an outer protocol such as TLS 1.3."
+    ]
+  },
+  "trimmed": [],
+  "last_checked": "2026-09-22"
+}

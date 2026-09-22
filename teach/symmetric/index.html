@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security &amp; symmetric encryption — Crypto Lab</title>
+<meta name="description" content="Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/symmetric/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Security &amp; symmetric encryption">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Security &amp; symmetric encryption">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Security & symmetric encryption",
+  "description": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.",
+  "url": "https://crypto-lab.systemslibrarian.dev/teach/symmetric/",
+  "inLanguage": "en",
+  "learningResourceType": "Course module",
+  "educationalUse": "Classroom instruction",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "audienceType": "Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal."
+  },
+  "competencyRequired": [
+    "XOR on bits and bytes",
+    "Reading hexadecimal byte strings",
+    "AES as a block cipher: a keyed function on 16-byte blocks",
+    "Basic probability: a blind guess of a fair coin is right half the time",
+    "A current desktop browser"
+  ],
+  "teaches": [
+    "Students will be able to explain, using the hidden-bit IND-CPA game, why deterministic AES-ECB and CBC with a predictable chained IV let a named adversary tell which of two messages was encrypted.",
+    "Students will be able to demonstrate that reusing a one-time-pad key or a stream-cipher keystream reduces two ciphertexts to the XOR of their plaintexts, and recover plaintext from that XOR by crib-dragging.",
+    "Students will be able to compare ECB, CBC, CTR, GCM and CCM by whether each provides confidentiality alone or authenticated encryption, and predict how each responds when a ciphertext bit is flipped.",
+    "Students will be able to trace how a padding-validity oracle lets an attacker recover AES-CBC plaintext byte by byte without the key, and explain why verifying a MAC before decryption stops the same attack.",
+    "Students will be able to distinguish the consequences of nonce reuse for AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC, including which key material the attacker recovers and which it does not."
+  ],
+  "timeRequired": "PT100M",
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Person",
+    "name": "Paul A. Clark"
+  },
+  "dateModified": "2026-09-22",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Crypto Lab",
+    "url": "https://crypto-lab.systemslibrarian.dev/"
+  },
+  "hasPart": [
+    {
+      "@type": "LearningResource",
+      "name": "Hidden Bit",
+      "url": "https://systemslibrarian.github.io/crypto-lab-hidden-bit/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "OTP Vault",
+      "url": "https://systemslibrarian.github.io/crypto-lab-otp-vault/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "AES Modes",
+      "url": "https://systemslibrarian.github.io/crypto-lab-aes-modes/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Padding Oracle",
+      "url": "https://systemslibrarian.github.io/crypto-lab-padding-oracle/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Nonce Collision",
+      "url": "https://systemslibrarian.github.io/crypto-lab-nonce-collision/",
+      "learningResourceType": "Interactive demonstration"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Crypto Lab</a></li><li><a href="../">Teach</a></li><li><span aria-current="page">Security &amp; symmetric encryption</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Course module</p>
+  <h1>Security &amp; symmetric encryption</h1>
+  <p class="t-lede">Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.</p>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Audience</dt><dd>Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal.</dd></div>
+  <div><dt>Class time</dt><dd>About 100 minutes for the core sequence</dd></div>
+  <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="prereq"><h2 id="prereq">Prerequisites</h2><ul><li>XOR on bits and bytes</li><li>Reading hexadecimal byte strings</li><li>AES as a block cipher: a keyed function on 16-byte blocks</li><li>Basic probability: a blind guess of a fair coin is right half the time</li><li>A current desktop browser</li></ul></section>
+
+<section aria-labelledby="outcomes"><h2 id="outcomes">Learning outcomes</h2>
+<ol><li>Students will be able to explain, using the hidden-bit IND-CPA game, why deterministic AES-ECB and CBC with a predictable chained IV let a named adversary tell which of two messages was encrypted.</li><li>Students will be able to demonstrate that reusing a one-time-pad key or a stream-cipher keystream reduces two ciphertexts to the XOR of their plaintexts, and recover plaintext from that XOR by crib-dragging.</li><li>Students will be able to compare ECB, CBC, CTR, GCM and CCM by whether each provides confidentiality alone or authenticated encryption, and predict how each responds when a ciphertext bit is flipped.</li><li>Students will be able to trace how a padding-validity oracle lets an attacker recover AES-CBC plaintext byte by byte without the key, and explain why verifying a MAC before decryption stops the same attack.</li><li>Students will be able to distinguish the consequences of nonce reuse for AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC, including which key material the attacker recovers and which it does not.</li></ol></section>
+
+<section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
+<p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
+<div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
+<table>
+<thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
+<tbody>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a></th><td>Intro</td><td>15</td><td>In Exhibit 01, pick an AES scheme (GCM, CTR, chained-IV CBC or ECB) and an adversary (random guess, re-encrypt and compare, or the BEAST-style IV predictor), run or step real trials, and read the measured advantage, Wilson interval and verdict.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-otp-vault/">OTP Vault</a></th><td>Break it</td><td>20</td><td>Encrypt a message under a fresh random pad, type any same-length plaintext to derive a key that maps the fixed ciphertext to it, then switch on key reuse and crib-drag C1 ⊕ C2 to peel both messages apart, including a built-in challenge.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a></th><td>Fix</td><td>15</td><td>Encrypt your own plaintext under ECB, CBC, CTR, GCM and CCM, inspect the key, IV or nonce, ciphertext and tag, and run the ECB pattern-leak, CBC bit-flip and GCM tamper-detection demos to see which modes accept a modified ciphertext.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/">Padding Oracle</a></th><td>Break it</td><td>35</td><td>Predict whether a crafted final padding byte passes the real oracle, run the byte-by-byte attack on a block you type, then run the identical attack against leaky, silent and Encrypt-then-MAC servers and tamper with an AES-GCM ciphertext.</td><td><a href="padding-oracle/">Worksheet<span class="visually-hidden"> for Padding Oracle</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/">Nonce Collision</a></th><td>Break it</td><td>15</td><td>Encrypt two messages under one AES-CTR key and nonce and crib-drag the second out of C1 ⊕ C2, then switch each construction to a reused nonce (or press &quot;Run all four — one reused nonce&quot;) and read each card's cryptographic result beside its security verdict.</td><td><span class="t-pending">Not yet written</span></td></tr>
+</tbody>
+</table>
+</div>
+
+</section>
+
+<section aria-labelledby="discuss"><h2 id="discuss">Discussion questions</h2>
+<ol><li>In Hidden Bit, random guessing and re-encryption both flatten against chained-IV CBC, yet the BEAST-style predictor breaks it. What does a flat measurement tell you about a scheme, and what does it not tell you?</li><li>Why does XORing two ciphertexts made with the same one-time pad, or the same CTR nonce, remove the key entirely, and why does that undo what OTP Vault's Panel 2 shows about a single ciphertext?</li><li>AES-CBC with a random IV hides repeated messages, yet Padding Oracle recovers its plaintext without the key. What is CBC missing, and why does the lab call the silent server's protection fragile while Encrypt-then-MAC stops the attack before decryption?</li><li>One reused nonce produces different outcomes across Nonce Collision's cards. Why does AES-GCM lose integrity while AES-CBC leaks a shared prefix, and why is recovering the GHASH subkey H not the same as recovering the AES key?</li><li>Where do repeated nonces come from in real systems, and which remedy the lab names (a persistent counter with a single encryptor, limiting how many random-nonce messages one key encrypts, or a misuse-resistant AEAD such as AES-GCM-SIV) addresses which cause?</li></ol></section>
+
+<section aria-labelledby="notes"><h2 id="notes">Instructor notes</h2>
+<p>These notes are public, and they are conceptual on purpose: they describe what students should notice and why, never the specific values a run produces.</p>
+<h3>Expected observations</h3><ul><li>Hidden Bit: AES-ECB with re-encrypt-and-compare, and chained-IV CBC with the BEAST-style predictor, earn a BROKEN verdict whose interval excludes zero; AES-GCM and AES-CTR under random guessing or re-encryption report NO ADVANTAGE FOUND BY THESE ADVERSARIES. The lab notes that finite samples fluctuate, so reruns differ slightly.</li><li>Hidden Bit: choosing AES-CBC, chained IV reveals the 'A flat line is not a verdict' panel; once random guessing and re-encryption have both flattened, its heading changes to say no advantage was found and the scheme is broken. Exhibit 01 renders after an RSA-2048 key is generated, so allow a moment on first load.</li><li>OTP Vault: Panel 2 produces a valid key for any target of the ciphertext's byte length and refuses other lengths. In Panel 3 the default crib 'the ' exposes stretches of both messages with key reuse on and noise with it off; with reuse on, re-rolling the session keys changes the ciphertexts but not C1 ⊕ C2. The Control challenge in Panel 5 uses independent keystreams and does not yield readable text.</li><li>AES Modes: in the Compare tab, repeated 16-byte input blocks appear as repeated ciphertext blocks under ECB and not under the other modes. Tampered ECB, CBC and CTR ciphertexts still decrypt (CTR flips the same plaintext bit; CBC garbles one block and flips the matching bit in the next), while GCM and CCM reject the tampered ciphertext and release no plaintext. With a short plaintext the CBC tamper can instead fail the padding check, and the page labels that error a padding oracle, which sets up the next exhibit. The targeted bit-flip demo turns admin=0 into admin=1 without the key.</li><li>Padding Oracle: Panels 3 and 4 print a byte-for-byte match badge against the plaintext the session encrypted, beside a running oracle-query count. In the Panel 6 bench the leaky server gives up its block, the silent and Encrypt-then-MAC servers exhaust the probes for a byte and stop, and the MAC-rejections column shows Encrypt-then-MAC queries rejected before decryption. Tampering with the AES-GCM ciphertext fails authentication with no plaintext shown.</li><li>Nonce Collision: with a reused nonce, the CTR card reports lost confidentiality, the GCM and ChaCha20-Poly1305 cards report a forged tag accepted by the real verifier with the recovered authentication subkey or one-time key checked against ground truth, and the CBC card reports prefix equality; the GCM and ChaCha20-Poly1305 cards state the encryption key was not recovered. Pressing a cancellation button again prints new numbers, because each press uses a fresh key.</li></ul>
+<h3>Common misconceptions</h3><ul><li>A near-zero measured advantage shows a scheme is IND-CPA secure. Hidden Bit says it means the named adversaries failed, and its chained-IV CBC fixture flattens under two adversaries while falling to a third.</li><li>Re-rolling the key hides key reuse. In OTP Vault, with reuse on, the key cancels, so C1 ⊕ C2 does not change when the session keys are re-rolled.</li><li>ECB is acceptable because each block is still AES-encrypted. AES Modes' threat model notes the attacker cannot decrypt a single block but can see which blocks repeat and can splice or reorder blocks undetected.</li><li>The padding oracle attack breaks AES or recovers the key. Padding Oracle describes it as exploiting CBC together with observable padding validation, and AES Modes lists key recovery among what the attacker cannot do.</li><li>Returning one uniform error response is as good as authenticating. Padding Oracle's silent server still runs the padding check, and the lab warns that real deployments can leak the same bit through timing or downstream behaviour, as Lucky Thirteen did; the Encrypt-then-MAC server rejects modified ciphertexts before decryption.</li><li>Nonce reuse in GCM or ChaCha20-Poly1305 hands over the encryption key. Nonce Collision recovers the GHASH authentication subkey or the Poly1305 one-time key, which enables forgery, and states the AES or ChaCha20 key is not learned.</li><li>Nonce Collision shows these ciphers are weak. The lab says it demonstrates that violating the unique-nonce rule fails, construction by construction, not that the ciphers are weak when used as specified.</li></ul>
+<h3>Conceptual answers</h3><ul><li>A measured advantage estimates how one named strategy performs over a finite number of trials. An interval that excludes zero is evidence of a break; an interval that crosses zero means those strategies found no pattern. The chained-IV CBC fixture shows a scheme can flatten for weak adversaries and still fall to a better one, which is why the lab says a flat histogram is not a proof and points to reductions in its later exhibit.</li><li>Each ciphertext is the plaintext XOR the same pad, so XORing the two ciphertexts cancels the pad and leaves P1 ⊕ P2. For a single ciphertext, any plaintext of the right length has a key that produces it, so the ciphertext reveals nothing beyond length. A second message under the same pad removes that freedom: a correct guess about part of one plaintext exposes the matching bytes of the other, which is crib-dragging. A reused CTR or ChaCha20 nonce repeats the keystream and reduces to the same situation.</li><li>CBC provides confidentiality without integrity, so an attacker can submit modified ciphertexts and learn whether the padding check passed. The silent server still performs that check but answers identically, and the lab warns the same bit can leak through timing, logs or downstream behaviour. Encrypt-then-MAC verifies a MAC over the ciphertext first, so modified ciphertexts are rejected before AES-CBC decryption and the padding check is not reached. AEAD modes such as GCM check the authentication tag before releasing plaintext.</li><li>In GCM the tag is a GHASH value keyed by H with a per-nonce mask XORed on top. Under one reused nonce, XORing two tags cancels the mask and leaves an equation in H; solving it lets the attacker compute valid tags for forged ciphertexts under that nonce, and the keystream reuse also exposes P1 ⊕ P2. H is derived from the AES key but is not the AES key, so the attacker does not gain decryption under fresh nonces. CBC with a repeated IV becomes deterministic, so equal leading plaintext blocks give equal leading ciphertext blocks: an equality leak rather than a keystream collapse.</li><li>Random nonces collide by the birthday bound, far sooner than the size of the nonce space suggests, which is why SP 800-38D limits how many messages one key may encrypt with random IVs. Counters repeat when state rewinds, for example after a VM snapshot, a process fork or a container rollback. A persistent counter with a single encryptor addresses uniqueness; a misuse-resistant AEAD such as AES-GCM-SIV limits the damage of a repeat to revealing whether two plaintexts were identical, which the lab describes but does not run.</li></ul>
+</section>
+
+<section aria-labelledby="readiness"><h2 id="readiness">Browser support, privacy and run-specific values</h2>
+<p>Recorded per exhibit, with the date each observation was made. Engines are named; no device was tested unless it is named here.</p>
+<div class="t-table" role="region" tabindex="0" aria-label="Browser support, privacy and run-specific values per exhibit">
+<table>
+<thead><tr><th scope="col">Exhibit</th><th scope="col">Browser support</th><th scope="col">Privacy notes</th><th scope="col">Values differ per run?</th></tr></thead>
+<tbody>
+<tr><th scope="row">Hidden Bit</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">OTP Vault</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">AES Modes</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">Padding Oracle</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td>Partly. <span class="t-src">(src/oracle.ts:96-102 at e57bb57259b8: a fresh random AES-128 key and IV for every session)</span> Oracle query counts in Full Block and for the leaky server differ from run to run; the forced-byte answers and the recovered plaintext do not.<span class="t-dated">Checked 2026-09-22</span></td></tr>
+<tr><th scope="row">Nonce Collision</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+</tbody>
+</table>
+</div>
+<p>The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>
+</section>
+
+<section aria-labelledby="syllabus"><h2 id="syllabus">For your syllabus</h2>
+<div class="t-syllabus">
+<p id="module-syllabus" class="t-syllabus-line">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+<button type="button" class="t-btn" data-copy="module-syllabus">Copy syllabus line</button>
+<span class="t-copy-status" role="status" aria-live="polite"></span>
+</div>
+</section>
+
+<section aria-labelledby="cite"><h2 id="cite">How to cite this module’s exhibits</h2>
+<ol class="t-cites"><li><p class="t-cite">Clark, P. A. (n.d.). <em>Hidden Bit</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hidden-bit/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>OTP Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-otp-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>AES Modes</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-aes-modes/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Padding Oracle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-padding-oracle/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Nonce Collision</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-nonce-collision/</p></li></ol>
+<details><summary>BibTeX</summary><pre class="t-pre">@misc{clark_hidden_bit,
+  author       = {Clark, Paul A.},
+  title        = {Hidden Bit},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-hidden-bit/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_otp_vault,
+  author       = {Clark, Paul A.},
+  title        = {OTP Vault},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-otp-vault/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_aes_modes,
+  author       = {Clark, Paul A.},
+  title        = {AES Modes},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-aes-modes/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_padding_oracle,
+  author       = {Clark, Paul A.},
+  title        = {Padding Oracle},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-padding-oracle/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_nonce_collision,
+  author       = {Clark, Paul A.},
+  title        = {Nonce Collision},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-nonce-collision/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}</pre></details>
+<p>To cite the whole collection, see <a href="../#cite">How to cite</a>.</p>
+</section>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../">Crypto Lab catalog</a> · <a href="../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../teach.js"></script>
+</body>
+</html>

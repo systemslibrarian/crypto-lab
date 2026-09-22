@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Public-key &amp; signatures — Crypto Lab</title>
+<meta name="description" content="Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/public-key/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Public-key &amp; signatures">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Public-key &amp; signatures">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Public-key & signatures",
+  "description": "Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.",
+  "url": "https://crypto-lab.systemslibrarian.dev/teach/public-key/",
+  "inLanguage": "en",
+  "learningResourceType": "Course module",
+  "educationalUse": "Classroom instruction",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "audienceType": "Upper-division undergraduate CS and security students, and motivated newcomers, meeting public-key encryption and digital signatures with the math worked on small numbers before real key sizes appear."
+  },
+  "competencyRequired": [
+    "Modular arithmetic: reduction, modular inverses, and modular exponentiation",
+    "Primes, factoring, and the greatest common divisor",
+    "Cryptographic hash functions as fixed-length message digests",
+    "The difference between encryption and digital signatures, at a conceptual level",
+    "Slope of the line through two points (for the chord-and-tangent rule)",
+    "For the extension: vectors, a basis, and the idea of a short lattice vector"
+  ],
+  "teaches": [
+    "Students will be able to compute an RSA keypair (n, φ(n), e, d) from two small primes and explain why d is taken as the inverse of e modulo φ(n).",
+    "Students will be able to demonstrate that textbook RSA is deterministic and malleable, and contrast it with randomized RSA-OAEP encryption of the same plaintext.",
+    "Students will be able to trace how Håstad's broadcast attack and Bleichenbacher's padding-oracle attack recover plaintext without the private key, and identify the exponent or padding choice each attack exploits.",
+    "Students will be able to perform elliptic-curve point addition and scalar multiplication over the reals and over a finite field, and compare double-and-add with repeated addition to explain why reversing k·P (the ECDLP) is hard.",
+    "Students will be able to derive an ECDSA private key from two signatures that reuse a nonce, and justify how RFC 6979 deterministic nonces block that recovery."
+  ],
+  "timeRequired": "PT110M",
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Person",
+    "name": "Paul A. Clark"
+  },
+  "dateModified": "2026-09-22",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Crypto Lab",
+    "url": "https://crypto-lab.systemslibrarian.dev/"
+  },
+  "hasPart": [
+    {
+      "@type": "LearningResource",
+      "name": "Educational RSA",
+      "url": "https://systemslibrarian.github.io/crypto-lab-rsa-educational/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "RSA Forge",
+      "url": "https://systemslibrarian.github.io/crypto-lab-rsa-forge/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Point Arithmetic",
+      "url": "https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "ECDSA Forge",
+      "url": "https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/",
+      "learningResourceType": "Interactive demonstration"
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Nonce Lattice",
+      "url": "https://systemslibrarian.github.io/crypto-lab-nonce-lattice/",
+      "learningResourceType": "Interactive demonstration"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Crypto Lab</a></li><li><a href="../">Teach</a></li><li><span aria-current="page">Public-key &amp; signatures</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Course module</p>
+  <h1>Public-key &amp; signatures</h1>
+  <p class="t-lede">Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.</p>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Audience</dt><dd>Upper-division undergraduate CS and security students, and motivated newcomers, meeting public-key encryption and digital signatures with the math worked on small numbers before real key sizes appear.</dd></div>
+  <div><dt>Class time</dt><dd>About 110 minutes for the core sequence, plus about 30 minutes of extension</dd></div>
+  <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="prereq"><h2 id="prereq">Prerequisites</h2><ul><li>Modular arithmetic: reduction, modular inverses, and modular exponentiation</li><li>Primes, factoring, and the greatest common divisor</li><li>Cryptographic hash functions as fixed-length message digests</li><li>The difference between encryption and digital signatures, at a conceptual level</li><li>Slope of the line through two points (for the chord-and-tangent rule)</li><li>For the extension: vectors, a basis, and the idea of a short lattice vector</li></ul></section>
+
+<section aria-labelledby="outcomes"><h2 id="outcomes">Learning outcomes</h2>
+<ol><li>Students will be able to compute an RSA keypair (n, φ(n), e, d) from two small primes and explain why d is taken as the inverse of e modulo φ(n).</li><li>Students will be able to demonstrate that textbook RSA is deterministic and malleable, and contrast it with randomized RSA-OAEP encryption of the same plaintext.</li><li>Students will be able to trace how Håstad's broadcast attack and Bleichenbacher's padding-oracle attack recover plaintext without the private key, and identify the exponent or padding choice each attack exploits.</li><li>Students will be able to perform elliptic-curve point addition and scalar multiplication over the reals and over a finite field, and compare double-and-add with repeated addition to explain why reversing k·P (the ECDLP) is hard.</li><li>Students will be able to derive an ECDSA private key from two signatures that reuse a nonce, and justify how RFC 6979 deterministic nonces block that recovery.</li></ol></section>
+
+<section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
+<p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
+<div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
+<table>
+<thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
+<tbody>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/">Educational RSA</a></th><td>Intro</td><td>25</td><td>Build an RSA key from two small primes (or random ones) and follow n, φ(n), e and d, encrypt and decrypt a short message with the square-and-multiply trace, sign and verify with the tamper toggle, factor the weak key, and compare textbook ciphertext with WebCrypto RSA-OAEP and the live Enc(a)·Enc(b) malleability forgery.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/">RSA Forge</a></th><td>Break it</td><td>35</td><td>On the Small Exponent Attack and Bleichenbacher Oracle tabs, pick a config and run the Håstad broadcast attack (CRT plus cube root on three e = 3 ciphertexts), then set up the 128-bit key, query the padding oracle, show Enc(a)·Enc(b) = Enc(a·b), and run the Bleichenbacher attack both automatically and in You Are the Oracle mode.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/">Point Arithmetic</a></th><td>Intro</td><td>20</td><td>Drag P and Q along a real curve (or use the menus and arrow keys) to watch the chord or tangent, reflection and λ, x₃, y₃ update, flip Over ℝ / Over 𝔽ₚ to run the same addition on a point lattice, step k·P by repeated addition and by double-and-add, and walk a small subgroup until it lands on the target point.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/">ECDSA Forge</a></th><td>Break it</td><td>30</td><td>Generate a secp256k1 or P-256 key, sign and verify, move the toy-curve sliders to watch two same-nonce signatures give up d, run the nonce-reuse compromise on real 256-bit keys with its recovered-equals-victim proof, then compare random and RFC 6979 signatures and try the attack against RFC 6979.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-nonce-lattice/">Nonce Lattice</a></th><td>Extension</td><td>30</td><td>Choose a scenario preset or set curve, leak mode, leak size and signature count, read the feasibility gauge, run the HNP/LLL attack and step through Sign, Build HNP, Reduce and Extract to the byte-for-byte key grid, then press Measure this column to test where recovery starts failing.</td><td><span class="t-pending">Not yet written</span></td></tr>
+</tbody>
+</table>
+</div>
+
+</section>
+
+<section aria-labelledby="discuss"><h2 id="discuss">Discussion questions</h2>
+<ol><li>Textbook RSA and RSA-OAEP both compute m^e mod n. What does OAEP's randomized padding change about what an eavesdropper or attacker learns, and which of the attacks you ran in Educational RSA and RSA Forge would it stop?</li><li>The weak RSA key, the factoring wall and the subgroup walk each fall quickly on toy parameters. Why does an attack that works on small numbers not show that RSA or elliptic-curve cryptography is broken, and what decides how long the same attack takes at real sizes?</li><li>Bleichenbacher's oracle answers only 'conformant' or 'not conformant'. Why is one bit per query enough to recover the plaintext, and what does that imply for how a server should handle decryption errors?</li><li>ECDSA nonce reuse and (in the extension) the nonce-lattice attack both recover d from public signatures. What does each attacker need, which failure does RFC 6979 remove from the trust path, and what does it leave to the implementation?</li><li>Given the trade-offs the labs present (key and signature size, padding pitfalls, nonce fragility, deterministic signing), when would you choose RSA-PSS, ECDSA with RFC 6979, or Ed25519 for a new signing system?</li></ol></section>
+
+<section aria-labelledby="notes"><h2 id="notes">Instructor notes</h2>
+<p>These notes are public, and they are conceptual on purpose: they describe what students should notice and why, never the specific values a run produces.</p>
+<h3>Expected observations</h3><ul><li>Educational RSA: Generate lists p, q, n, φ(n), e and d as a trace; the mod-n clock shows e·d written as a multiple of φ plus one; ticking the tamper checkbox flips the signature verdict from VALID to INVALID.</li><li>Educational RSA: 'Factor it!' breaks the small key and shows the recovered primes, the reconstructed d and a decryption made with it, while the 2048-bit card's button stays disabled and its cost is labeled a projection that is never run. Encrypting the same text twice with textbook RSA repeats the ciphertext, the OAEP comparison does not, and the malleability rows show a ciphertext product decrypting to a·b.</li><li>RSA Forge: in Pick Your Config, the e = 3 / no-padding choice has its message recovered, while the e = 65537 / OAEP choice runs the same CRT and cube-root steps and does not recover it; the manual Håstad flow shows N, M = m³ and the recovered message.</li><li>RSA Forge: during the Bleichenbacher run the interval bar narrows and plaintext bytes light up left to right, and the result is checked by re-encryption; in You Are the Oracle mode a wrong answer can steer the attack to a value the page flags as not verified.</li><li>EC Point Arithmetic: the construction and the λ, x₃, y₃ readout update together as P and Q move; the 𝔽ₚ view applies the same law to a lattice of points; double-and-add reaches the same k·G as repeated addition with far fewer operations, and repeated addition declines a large k while saying how cheap double-and-add would be; walking the toy subgroup eventually lands on Q and reports the step count.</li><li>ECDSA Forge: in the toy attack both signatures show the same r, the recovered d matches the real key, and a new signature minted with it verifies; equal message hashes or a degenerate nonce produce an explanation instead of a result. Run Full Compromise reveals the victim key; RFC 6979 repeats r when the same message is signed again, and the attack against RFC 6979 reports that it is blocked.</li><li>Nonce Lattice (extension): the page starts a run as soon as it loads, using the configuration last saved in that browser or the default MSB setting; bit-leak presets end with a byte-for-byte key match, the Defender (RFC 6979) preset fails and explains why, and settings below the information floor fail with a diagnostic.</li></ul>
+<h3>Common misconceptions</h3><ul><li>A textbook RSA round trip that decrypts correctly is not a scheme fit for real use: the labs show textbook RSA is deterministic and malleable, and real systems add OAEP for encryption and PSS for signatures.</li><li>Educational RSA hashes with a 64-bit FNV-1a toy hash, not SHA-256, and labels those signatures forgeable; its VALID verdict demonstrates the verify equation, not a production-grade signature.</li><li>A larger modulus does not stop Håstad or Bleichenbacher: they exploit a small exponent without padding and a PKCS#1 v1.5 padding oracle, and RSA Forge states that the mathematics are identical at real key sizes and only scale differs.</li><li>Toy-size breaks do not mean the underlying problems are easy: small moduli and small subgroups fall because they are small, and the labs set them beside 2048-bit RSA and secp256k1 to show the gap.</li><li>The smooth curve is the picture, not the cryptosystem: real elliptic-curve cryptography runs the same group law over a finite field, where the curve becomes a scatter of points.</li><li>RFC 6979 nonces do repeat r when the same message is signed twice; the protection is that different messages get different nonces, and ECDSA Forge notes this rests on HMAC-SHA-256 behaving as a pseudorandom function, so a collision is negligibly unlikely rather than impossible.</li><li>Extension: the lattice attack does not break a correct signer; Nonce Lattice's signer deliberately hands the attacker known nonce bits.</li></ul>
+<h3>Conceptual answers</h3><ul><li>OAEP mixes a fresh random seed into the message before exponentiation, so equal plaintexts stop producing equal ciphertexts, and a product of ciphertexts decrypts to padding that fails the integrity check instead of to a related message. That removes the equality leak, the multiplicative forgery, and the common m that Håstad's CRT step relies on.</li><li>Each break shown is a search whose size is set by the parameters: trial division up to the square root of n, or walking a subgroup whose size is the group order. The mechanism is the same at real sizes; what changes is the cost, which the labs show growing beyond any feasible computation (a GNFS projection for RSA, and roughly the square root of the group order for generic discrete-log attacks).</li><li>RSA is multiplicatively homomorphic, so the attacker can turn the hidden plaintext m into m·s for a chosen s without the key. Each 'conformant' answer proves m·s landed in the valid-padding window, narrowing the interval that contains m until one value remains. Any observable difference between padding failures and other decryption failures recreates the oracle.</li><li>Nonce reuse needs two signatures made with the same nonce, visible as a repeated r, and yields d with two lines of algebra; the lattice attack needs a few known or biased nonce bits across many signatures and stacks them into a Hidden Number Problem. RFC 6979 derives k from the key and the message, which takes the random number generator out of the trust path; leaks of nonce bits through timing or other side channels remain an implementation concern.</li><li>A good answer weighs RSA's larger keys and padding pitfalls, ECDSA's dependence on nonce discipline and its signature malleability unless low-S is enforced, and Ed25519's deterministic-by-design nonces, against interoperability requirements such as TLS certificates, JWT algorithms or existing wallet ecosystems.</li></ul>
+</section>
+
+<section aria-labelledby="readiness"><h2 id="readiness">Browser support, privacy and run-specific values</h2>
+<p>Recorded per exhibit, with the date each observation was made. Engines are named; no device was tested unless it is named here.</p>
+<div class="t-table" role="region" tabindex="0" aria-label="Browser support, privacy and run-specific values per exhibit">
+<table>
+<thead><tr><th scope="col">Exhibit</th><th scope="col">Browser support</th><th scope="col">Privacy notes</th><th scope="col">Values differ per run?</th></tr></thead>
+<tbody>
+<tr><th scope="row">Educational RSA</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">RSA Forge</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">Point Arithmetic</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">ECDSA Forge</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+<tr><th scope="row">Nonce Lattice</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
+</tbody>
+</table>
+</div>
+<p>The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>
+</section>
+
+<section aria-labelledby="syllabus"><h2 id="syllabus">For your syllabus</h2>
+<div class="t-syllabus">
+<p id="module-syllabus" class="t-syllabus-line">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+<button type="button" class="t-btn" data-copy="module-syllabus">Copy syllabus line</button>
+<span class="t-copy-status" role="status" aria-live="polite"></span>
+</div>
+</section>
+
+<section aria-labelledby="cite"><h2 id="cite">How to cite this module’s exhibits</h2>
+<ol class="t-cites"><li><p class="t-cite">Clark, P. A. (n.d.). <em>Educational RSA</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-rsa-educational/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>RSA Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-rsa-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Point Arithmetic</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>ECDSA Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Nonce Lattice</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-nonce-lattice/</p></li></ol>
+<details><summary>BibTeX</summary><pre class="t-pre">@misc{clark_rsa_educational,
+  author       = {Clark, Paul A.},
+  title        = {Educational RSA},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-rsa-educational/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_rsa_forge,
+  author       = {Clark, Paul A.},
+  title        = {RSA Forge},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-rsa-forge/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_ec_point_arithmetic,
+  author       = {Clark, Paul A.},
+  title        = {Point Arithmetic},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_ecdsa_forge,
+  author       = {Clark, Paul A.},
+  title        = {ECDSA Forge},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}
+
+@misc{clark_nonce_lattice,
+  author       = {Clark, Paul A.},
+  title        = {Nonce Lattice},
+  howpublished = {\url{https://systemslibrarian.github.io/crypto-lab-nonce-lattice/}},
+  note         = {Crypto Lab. Accessed <span data-accessed="iso">[date accessed]</span>}
+}</pre></details>
+<p>To cite the whole collection, see <a href="../#cite">How to cite</a>.</p>
+</section>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../">Crypto Lab catalog</a> · <a href="../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../teach.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Padding Oracle — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Padding Oracle exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/symmetric/padding-oracle/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Padding Oracle">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/padding-oracle/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Padding Oracle">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/padding-oracle/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Security &amp; symmetric encryption</a></li><li><span aria-current="page">Padding Oracle</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Security &amp; symmetric encryption</a></p>
+  <h1>Worksheet: Padding Oracle</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/">Padding Oracle</a></dd></div>
+  <div><dt>Time</dt><dd>About 35 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>e57bb57259b8</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to compare ECB, CBC, CTR, GCM and CCM by whether each provides confidentiality alone or authenticated encryption, and predict how each responds when a ciphertext bit is flipped.</li><li>Students will be able to trace how a padding-validity oracle lets an attacker recover AES-CBC plaintext byte by byte without the key, and explain why verifying a MAC before decryption stops the same attack.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/symmetric/padding-oracle.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/symmetric/padding-oracle.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>A receiver decrypts a block that reads <code>0x10</code> sixteen times, which is a full block of PKCS#7 padding. An attacker can change only the <strong>last</strong> decrypted byte. For each value below, predict whether the receiver will still call the padding valid. Write your predictions in the first table under Record.</li><li>Suppose a server answers only &quot;padding valid&quot; or &quot;padding invalid&quot; and never shows the decrypted text. Can an attacker who never learns the key still recover the plaintext? Say what you think the attacker would have to change between one question and the next.</li><li>Roughly how many questions (&quot;oracle queries&quot;) do you expect it to take to recover one 16-byte block: fewer than a hundred, hundreds, a few thousand, or millions? Explain your guess.</li><li>Three servers receive the same attack. One reports padding errors, one gives the same response whatever its padding check found, and one checks a MAC before it decrypts anything. Predict which of them will give up the plaintext.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and stay on the <strong>CBC &amp; Padding</strong> tab. Read the CBC decryption rule at the top of the tab.</li><li>Scroll to <strong>Your Turn: Craft the Last Padding Byte</strong> and press <strong>Set Up Practice Ciphertext</strong>.</li><li>Choose a value in <strong>Force last decrypted byte to</strong>, then press <strong>Predict: Valid</strong> or <strong>Predict: Invalid</strong> to match your prediction from question 1. Read the oracle's answer and the page's explanation, and record the answer. Repeat for every value in the list.</li><li>Open the <strong>Full Block</strong> tab. Type your own text of about 16 characters into <strong>Target plaintext</strong>. Set <strong>Animation speed</strong> to Slow if you want to watch the first bytes recover one at a time.</li><li>Press <strong>Encrypt Target Block</strong>, then <strong>Run Full Block</strong>. When it finishes, record the result, the byte-for-byte badge and the number of oracle queries used.</li><li>Without changing your text, press <strong>Encrypt Target Block</strong> and <strong>Run Full Block</strong> again. Record the second run.</li><li>Open the <strong>Defenses</strong> tab. Under <strong>Same Attack, Three Servers</strong>, leave or change <strong>Plaintext to attack</strong>, then press <strong>Run Attack Against All Three</strong>. Record each row of the table.</li><li>Under <strong>AES-GCM Live Demo: Tampering Rejected</strong>, press <strong>Encrypt with AES-GCM</strong>, then <strong>Tamper Ciphertext</strong>. Record what the page reports.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Values you record in the second and third tables come from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Forced last byte, My prediction, Oracle's answer">
+<table>
+<thead><tr><th scope="col">Forced last byte</th><th scope="col">My prediction</th><th scope="col">Oracle's answer</th></tr></thead>
+<tbody>
+<tr><th scope="row">0x00</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x01</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x02</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x03</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x0f</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x10</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x41</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Full Block run, Target plaintext, Badge (match or mismatch), Oracle queries used">
+<table>
+<thead><tr><th scope="col">Full Block run</th><th scope="col">Target plaintext</th><th scope="col">Badge (match or mismatch)</th><th scope="col">Oracle queries used</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Server, Outcome, Oracle queries, Padding checks reached, MAC rejections">
+<table>
+<thead><tr><th scope="col">Server</th><th scope="col">Outcome</th><th scope="col">Oracle queries</th><th scope="col">Padding checks reached</th><th scope="col">MAC rejections</th></tr></thead>
+<tbody>
+<tr><th scope="row">Leaky CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Silent CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Encrypt-then-MAC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: AES-GCM tamper, What the page reported, in your own words">
+<table>
+<thead><tr><th scope="col">AES-GCM tamper</th><th scope="col">What the page reported, in your own words</th></tr></thead>
+<tbody>
+<tr><th scope="row">After Tamper Ciphertext</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Which forced values did the oracle accept? Using the rule that the last byte of a block says how many padding bytes there are, explain why those values pass and the others fail.</li><li>The attacker never sees the key. Using the decryption rule on the CBC &amp; Padding tab, explain how changing one byte of the previous ciphertext block, and watching only valid or invalid, lets the attacker learn one byte of plaintext.</li><li>Your two Full Block runs used the same text. Why did the number of oracle queries change, and why is your count different from a classmate's? What stayed the same?</li><li>The silent server still ran a padding check on every query. Why did the attack fail against it, and why does the page call this the fragile defense?</li><li>Against Encrypt-then-MAC, the attack's queries never reached the padding check. What stopped them first?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You maintain a service that decrypts AES-CBC messages and returns one error for bad padding and a different one for bad data. Rank the three defenses on the Defenses tab (uniform errors, Encrypt-then-MAC, authenticated encryption) and justify the ranking by what an attacker can still observe under each.</li><li><strong>Extend.</strong> Open the <strong>Hall of Fame</strong> tab and pick one real exploit. Identify what played the part of the oracle in that system: an error code, a protocol alert or a timing difference.</li><li><strong>Extend.</strong> Open the <strong>Full Decryption</strong> tab, type a message several blocks long into <strong>Plaintext to encrypt and decrypt</strong>, press <strong>Generate Ciphertext</strong>, then <strong>Run Full Attack</strong>. Describe how the query count grows with the number of blocks and compare it with the complexity the tab states.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

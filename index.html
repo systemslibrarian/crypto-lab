@@ -1536,6 +1536,97 @@
       color: var(--amber);
     }
 
+    /* ── For educators: links into /teach/ ── */
+    .teach-link {
+      color: var(--teal);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      white-space: nowrap;
+    }
+    .teach-link:hover { color: var(--text-hi); }
+    .nav-menu-educators {
+      display: grid;
+      gap: 2px;
+      padding: 12px 16px;
+      border: 1px solid var(--border-strong);
+      background: rgba(53, 214, 187, 0.06);
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-menu-educators:hover { border-color: var(--teal); }
+    .nav-menu-educators-label {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 12px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .nav-menu-educators-sub { color: var(--text); font-size: 12.5px; }
+    .learning-paths-note {
+      grid-column: 1 / -1;
+      margin: -6px 0 0;
+      color: var(--text);
+      font-size: 12.5px;
+    }
+    .learning-paths-note a { color: var(--teal); text-underline-offset: 2px; }
+    .footer-links { margin-top: 14px; font-size: 13px; }
+    .footer-links a { color: var(--teal); text-underline-offset: 2px; }
+    /* A card in a course module sits in a cell with its "Course module" link. The link
+       is the card's sibling, not its child — a link inside the card's own <a> would be
+       a link nested in a link — and it is drawn inside the card's frame, in padding
+       reserved for it. */
+    .card-cell {
+      position: relative;
+      display: flex;
+    }
+    .card-cell > .project-card,
+    .card-cell > .feature-card {
+      flex: 1 1 auto;
+      /* --module-links-h is the measured height of the link block (set from JS);
+         the fallback allows two wrapped lines per module. */
+      padding-bottom: calc(var(--module-links-h, calc(var(--module-count, 1) * 48px)) + 30px);
+    }
+    .card-cell:hover > .project-card,
+    .card-cell:hover > .feature-card {
+      transform: translateY(-3px);
+      border-color: rgba(242, 248, 251, 0.24);
+      background: rgba(12, 23, 31, 0.98);
+    }
+    .module-links {
+      position: absolute;
+      left: 27px;
+      right: 27px;
+      bottom: 16px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      transition: transform 0.24s ease;
+    }
+    .card-cell:hover > .module-links { transform: translateY(-3px); }
+    .module-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border: 1px solid rgba(53, 214, 187, 0.55);
+      background: rgba(8, 17, 24, 0.92);
+      color: var(--teal);
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: border-color 0.2s ease;
+    }
+    .module-chip:hover { border-color: var(--teal); color: var(--text-hi); }
+    .module-chip:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+    @media (max-width: 760px) {
+      .module-links { left: 23px; right: 23px; }
+    }
+
     /* Honour the OS "reduce motion" setting (WCAG 2.3.3). The entry fade-up and
        the card-flash highlight are decorative; suppress them rather than replay
        motion at people who asked for none. */
@@ -1596,6 +1687,10 @@
         <span class="nav-menu-title">Navigate</span>
         <button class="nav-menu-close" id="menuClose" aria-label="Close menu">&times;</button>
       </div>
+      <a class="nav-menu-educators" href="teach/">
+        <span class="nav-menu-educators-label">For educators</span>
+        <span class="nav-menu-educators-sub">Course modules, worksheets, citation and privacy notes <span aria-hidden="true">&rarr;</span></span>
+      </a>
       <div class="crypto-tree-wrap" id="crypto-tree-wrap">
         <span class="crypto-tree-label">The cryptography map &middot; click a branch</span>
 <pre class="crypto-tree" aria-label="Cryptography map"><span class="crypto-tree-root">Cryptography</span>
@@ -1611,6 +1706,7 @@
       </div>
       <div class="learning-paths" id="learning-paths" aria-label="Learning paths">
         <p class="learning-paths-label">Learning Paths · pick a journey</p>
+        <p class="learning-paths-note">Paths are for learning on your own. Teaching a course? Use the <a href="teach/">course modules</a> instead.</p>
       </div>
       <nav class="section-nav" id="section-nav" aria-label="Jump to section">
         <span class="section-nav-label">Jump to</span>
@@ -1646,7 +1742,7 @@
               </span>
             </a>
           </div>
-          <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math. New here? Start with the picks below.</p>
+          <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math. New here? Start with the picks below. <a class="teach-link" href="teach/">Teaching a course? Course modules <span aria-hidden="true">&rarr;</span></a></p>
         </div>
         <div class="featured-grid" id="featured-grid"></div>
       </div>
@@ -4992,6 +5088,19 @@
     FOUNDATIONS_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('FOUNDATIONS'); });
     REAL_WORLD_TITLES.forEach(function (t) { (TITLE_TO_EXTRA_CATS[t] = TITLE_TO_EXTRA_CATS[t] || []).push('REAL-WORLD SYSTEMS'); });
 
+    /* Course modules, for the "Course module" link under each module's cards.
+       GENERATED by tools/teach-build.js from teach/_src/modules/*.json: edit those
+       files and rerun it; never edit between the markers by hand. */
+    /* teach-build:begin */
+    var COURSE_MODULES = [
+      { id: "symmetric", title: "Security & symmetric encryption", slugs: ["crypto-lab-hidden-bit", "crypto-lab-otp-vault", "crypto-lab-aes-modes", "crypto-lab-padding-oracle", "crypto-lab-nonce-collision"] },
+      { id: "public-key", title: "Public-key & signatures", slugs: ["crypto-lab-rsa-educational", "crypto-lab-rsa-forge", "crypto-lab-ec-point-arithmetic", "crypto-lab-ecdsa-forge", "crypto-lab-nonce-lattice"] },
+      { id: "key-exchange", title: "Key exchange & secure channels", slugs: ["crypto-lab-diffie-hellman-mitm", "crypto-lab-tls-handshake", "crypto-lab-downgrade-wire", "crypto-lab-protocol-checker"] },
+      { id: "post-quantum", title: "Post-quantum transition", slugs: ["crypto-lab-shor", "crypto-lab-grover", "crypto-lab-lattice-gentle", "crypto-lab-kyber-vault", "crypto-lab-hybrid-wire", "crypto-lab-harvest-vault"] },
+      { id: "library-privacy", title: "Library privacy, for iSchools", slugs: ["crypto-lab-patron-shield", "crypto-lab-blind-relay", "crypto-lab-dp-noise", "crypto-lab-shelf-oracle"] }
+    ];
+    /* teach-build:end */
+
     var input = document.getElementById('demo-search');
     var noResults = document.getElementById('no-results');
     var cardCount = document.getElementById('card-count');
@@ -5069,6 +5178,41 @@
       return { el: card, title: title, haystack: haystack, categories: cats, section: section };
     });
 
+    /* Wrap each course-module card in a cell with its "Course module" link(s). The
+       cell, not the card, is what the grid places and the filter hides. */
+    var slugToModules = {};
+    var linksResize = window.ResizeObserver ? new ResizeObserver(function (entries) {
+      entries.forEach(function (e) {
+        e.target.parentNode.style.setProperty('--module-links-h', Math.ceil(e.target.offsetHeight) + 'px');
+      });
+    }) : null;
+    COURSE_MODULES.forEach(function (m) {
+      m.slugs.forEach(function (s) { (slugToModules[s] = slugToModules[s] || []).push(m); });
+    });
+    function attachModuleLinks(card) {
+      var hit = /github\.io\/([^\/]+)\//.exec(card.getAttribute('href') || '');
+      var mods = hit && slugToModules[hit[1]];
+      if (!mods) return null;
+      var cell = document.createElement('div');
+      cell.className = 'card-cell';
+      cell.style.setProperty('--module-count', mods.length);
+      card.parentNode.insertBefore(cell, card);
+      cell.appendChild(card);
+      var links = document.createElement('div');
+      links.className = 'module-links';
+      mods.forEach(function (m) {
+        var a = document.createElement('a');
+        a.className = 'module-chip';
+        a.href = 'teach/' + m.id + '/';
+        a.textContent = 'Course module: ' + m.title;
+        links.appendChild(a);
+      });
+      cell.appendChild(links);
+      if (linksResize) linksResize.observe(links);
+      return cell;
+    }
+    cardData.forEach(function (d) { d.cell = attachModuleLinks(d.el); });
+
     function clearTreeActive() {
       if (!treeEl) return;
       Array.from(treeEl.querySelectorAll('a')).forEach(function (a) { a.classList.remove('active'); });
@@ -5090,7 +5234,7 @@
         sectionHeaderEls[s.id] = h2;
         cardData.forEach(function (d) {
           if (d.section === s.id) {
-            projectGrid.appendChild(d.el);
+            projectGrid.appendChild(d.cell || d.el);
           }
         });
       });
@@ -5120,6 +5264,7 @@
         badge.textContent = 'Featured';
         clone.insertBefore(badge, clone.firstChild);
         featuredGrid.appendChild(clone);
+        attachModuleLinks(clone);
       });
     }
 
@@ -5266,11 +5411,11 @@
         var matchCat = !activeCategory || d.categories.includes(activeCategory);
         var matchText = !q || d.haystack.indexOf(q) !== -1;
         if (matchSet && matchCat && matchText) {
-          d.el.style.display = '';
+          (d.cell || d.el).style.display = '';
           visible++;
           if (d.section) sectionCounts[d.section] = (sectionCounts[d.section] || 0) + 1;
         } else {
-          d.el.style.display = 'none';
+          (d.cell || d.el).style.display = 'none';
         }
       });
       SECTIONS.forEach(function (s) {
@@ -5475,6 +5620,7 @@
         <blockquote>So whether you eat or drink or whatever you do, do it all for the glory of God.</blockquote>
         <cite>1 Corinthians 10:31</cite>
       </div>
+      <p class="footer-links"><a href="teach/">Teach with Crypto Lab</a></p>
     </div>
   </footer>
 </body>

@@ -1,0 +1,62 @@
+# Teach pages: the /teach/ layer and its daily worksheet drift check.
+# This is the first workflow in this repository; the site itself is still published by
+# GitHub Pages' own build from main, which this workflow does not touch.
+name: Teach pages
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 6 * * *'   # daily, for the worksheet drift check
+  workflow_dispatch:       # run the drift check by hand
+
+permissions:
+  contents: read
+
+concurrency:
+  group: teach-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    # Generated pages must match their sources, and teach/ must carry no hardcoded
+    # catalog counts. No dependencies: the generator is plain Node.
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Teach pages match their sources, and the count lint passes
+        run: node tools/teach-build.js check
+
+  drift:
+    # Opens each worksheet's live exhibit and confirms every control it names is still
+    # there. A missing one fails this job and opens an issue naming the worksheet. It
+    # reports drift after a lab has published; it cannot block the lab's deploy.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+      - run: npm ci
+        working-directory: tools
+      # No --with-deps: that apt step has wedged CI across this fleet (audits/kickoff.md).
+      - run: npx playwright install chromium
+        working-directory: tools
+      - name: Every control a worksheet names is still on its live exhibit
+        run: node tools/teach-drift.js --open-issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

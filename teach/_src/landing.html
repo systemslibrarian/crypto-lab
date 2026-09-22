@@ -1,0 +1,99 @@
+<header class="t-hero">
+  <p class="t-eyebrow">For educators</p>
+  <h1>Teach with Crypto Lab</h1>
+  <p class="t-lede">Course modules, worksheets and citation details for instructors who want to use Crypto Lab exhibits in class. Nothing here needs an account.</p>
+</header>
+
+<nav class="t-toc" aria-label="On this page">
+  <ul>
+    <li><a href="#who">Who this is for</a></li>
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#syllabus">For your syllabus</a></li>
+    <li><a href="#checks">How exhibits are checked</a></li>
+    <li><a href="#accessibility">Accessibility</a></li>
+    <li><a href="#privacy">Privacy and data</a></li>
+    <li><a href="#cite">How to cite</a></li>
+    <li><a href="#contact">Tell us, or ask for a module</a></li>
+  </ul>
+</nav>
+
+<section aria-labelledby="who">
+<h2 id="who">Who this is for</h2>
+<p>Instructors in computer science, security and information science who want students to see a cryptographic mechanism work, and fail, rather than read about it. Each exhibit isolates one idea and runs in the browser; the modules below group a few of them into a sequence that fits one or two class meetings.</p>
+<p>If you are learning on your own, the <a href="../">catalog’s learning paths</a> are built for you. Modules are built for a course: each one states its audience, prerequisites and outcomes, and gives discussion questions and public instructor notes.</p>
+</section>
+
+<section aria-labelledby="modules">
+<h2 id="modules">Modules</h2>
+<p>This is a menu, not a curriculum. Take one module, take one exhibit from a module, or reorder them to fit your course. Class times are estimates for the core sequence; extensions are optional.</p>
+<ul class="t-modules">
+<!-- teach:modules -->
+</ul>
+</section>
+
+<section aria-labelledby="syllabus">
+<h2 id="syllabus">For your syllabus</h2>
+<p>A line you can paste into a syllabus or an assignment:</p>
+<!-- teach:syllabus -->
+</section>
+
+<section aria-labelledby="checks">
+<h2 id="checks">How exhibits are checked</h2>
+<p>Each exhibit is its own repository and its own site, built and published by its own GitHub Actions workflow. The <a href="https://github.com/systemslibrarian/crypto-lab/blob/main/audits/_MASTER-TEMPLATE.md">lab standard</a> asks that a lab’s publish step wait for its unit tests, including known-answer tests from the specification it implements, and for a browser test suite, run through Playwright, that includes an automated accessibility scan (axe-core, WCAG 2.1 A and AA rules) of the built site. It also asks for a “claims” suite that checks what a page says against what the page computes.</p>
+<p>Practice varies from lab to lab. Reading the workflow files that publish the labs on 2026-09-22, we found that most run both a unit suite and a browser suite, while some run only one of the two. Most test in Chromium only; a few also test in Firefox and WebKit, the engine behind Safari. Many labs have a claims suite and some do not. A green build therefore means different things for different labs.</p>
+<p>What these checks do not establish: that an explanation teaches well, that a lab behaves the same in browsers its tests do not run, how it works with a screen reader or keyboard alone, or that its cryptography is free of mistakes its tests do not cover.</p>
+<h3>The worksheet drift check</h3>
+<p>Once a day, a scheduled job opens the live exhibit behind each worksheet and looks for every control the worksheet names. If one is missing, it opens an issue in this repository naming the worksheet, so a missing control is usually reported within a day of the change going live. It cannot stop a lab from publishing the change, and it cannot confirm that the lab still behaves the way the worksheet describes; it only confirms that the named controls are still on the page.</p>
+<p>The pages under /teach/ are generated from data files in this repository, and a check in this repository’s CI fails when a generated page no longer matches its sources.</p>
+</section>
+
+<section aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<h3>What is tested automatically</h3>
+<ul>
+<li>In labs whose workflows include the browser suite, axe-core checks WCAG 2.1 A and AA rules against the built site before it is published, usually in Chromium only. Some labs add their own contrast and non-text checks.</li>
+<li>The catalog page was scanned with axe-core by hand on 2026-09-22, before and after the links to these pages were added; axe reported no violations either time. The catalog page has no automated accessibility check in CI.</li>
+<li>These teaching pages were scanned with axe-core by hand on 2026-09-22 before publication; axe reported no violations. They have no automated accessibility check in CI.</li>
+</ul>
+<h3>What is not tested automatically</h3>
+<p>A full keyboard-only walk through an exhibit, use with a screen reader, zoom and reflow, legibility on a classroom projector, motion and timing in animations, and cognitive load. These need a person.</p>
+<p>Passing axe is not conformance. Automated rules find some kinds of barriers and cannot judge many others, so nothing on this site claims conformance with WCAG.</p>
+<h3>Reporting a barrier</h3>
+<p>Open a <a href="https://github.com/systemslibrarian/crypto-lab/issues/new?template=teaching-material-problem.yml">teaching material problem</a> report and choose “Accessibility barrier”. Say which page or exhibit, which browser, which assistive technology if any, and what got in the way. If a student cannot use GitHub, an instructor can file the report for them.</p>
+</section>
+
+<section aria-labelledby="privacy">
+<h2 id="privacy">Privacy and data</h2>
+<p>Nothing here requires an account, and there are no class rosters, no grade passback and no hosted answer keys. What follows records what the catalog and these pages actually contacted when they were observed, with the date.</p>
+<h3>What these pages contact</h3>
+<!-- teach:hub-observed -->
+<!-- teach:teach-observed -->
+<h3>What the exhibits contact</h3>
+<p>Each exhibit is a separate site on systemslibrarian.github.io and makes its own requests. Some labs load web fonts from Google Fonts. The lab standard has a lab write one localStorage key, <code>theme</code>, to keep its single dark theme, and some labs also store settings of their own, such as the last configuration used. Each module page lists what was observed for its exhibits, with the date, once they have been checked.</p>
+<!-- teach:exception -->
+<h3>Hosting</h3>
+<p>The catalog, these pages and the exhibits are served by GitHub Pages. For what GitHub records about visitors to Pages sites, see GitHub’s own documentation: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">GitHub Pages data collection</a>.</p>
+</section>
+
+<section aria-labelledby="cite">
+<h2 id="cite">How to cite</h2>
+<h3>The collection</h3>
+<p>APA:</p>
+<!-- teach:cite-collection -->
+<p>Reference managers can also read the <!-- teach:citation-file --> file in the repository, and these pages carry Dublin Core and <code>citation_*</code> metadata.</p>
+<h3>A single exhibit</h3>
+<p>Exhibits change as they are improved, so cite them with the date you used them. The date below is filled in from your device’s clock when the page loads.</p>
+<details class="t-details">
+<summary>Exhibit citations (APA)</summary>
+<!-- teach:cite-exhibits -->
+</details>
+</section>
+
+<section aria-labelledby="contact">
+<h2 id="contact">Tell us, or ask for a module</h2>
+<ul>
+<li><a href="https://github.com/systemslibrarian/crypto-lab/issues/new?template=course-use.yml">Using Crypto Lab in a course</a>: tell us where and how. You choose whether it may be listed publicly.</li>
+<li><a href="https://github.com/systemslibrarian/crypto-lab/issues/new?template=teaching-material-problem.yml">Teaching material problem</a>: a worksheet step that no longer matches its exhibit, an error, or an accessibility barrier.</li>
+<li><a href="https://github.com/systemslibrarian/crypto-lab/issues/new?template=request-a-module.yml">Request a module</a>: the course, the level and the topics you need.</li>
+</ul>
+</section>

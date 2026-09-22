@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Public-key &amp; signatures: worksheets — Crypto Lab</title>
+<meta name="description" content="Every worksheet in the Public-key &amp; signatures module, in sequence order, for printing as one hand-out.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/public-key/print/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Public-key &amp; signatures: worksheets">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/print/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Public-key &amp; signatures: worksheets">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/print/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Public-key &amp; signatures</a></li><li><span aria-current="page">Hand-out</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Hand-out · <a href="../">Public-key &amp; signatures</a></p>
+  <h1>Public-key &amp; signatures: worksheets</h1>
+  <p class="t-lede">Every worksheet in this module, in the order the sequence runs them. Each one starts on its own page when printed.</p>
+</header>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print / save as PDF</button>
+  <a class="t-btn t-btn--ghost" href="../">Back to the module</a>
+</div>
+
+
+<article class="ws-handout" aria-labelledby="h-rsa-educational">
+  <h2 id="h-rsa-educational">Educational RSA</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/">Educational RSA</a></dd></div>
+    <div><dt>Time</dt><dd>About 29 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>ad0235d64da7</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>You are about to build an RSA key from p = 257 and q = 263 with public exponent e = 17. Work out n and φ(n) on paper now and write both into the prediction column of the first table under Record. Then write down the equation the private exponent d has to satisfy. You are not expected to solve it yet.</li><li>Predict how many multiplications it takes to compute m^17 mod n if you simply multiply m by itself over and over. Then predict how many steps a method that repeatedly <em>squares</em> would need for e = 17, and how many it would need for e = 65537. Write all four numbers into the square-and-multiply table.</li><li>The same short message is encrypted twice to the same public key, with no padding. Predict whether the two ciphertexts come out equal, and say what someone watching the wire learns either way. Then: an attacker with no private key takes two ciphertexts, multiplies them together modulo n, and hands the product to the key's owner. Predict what the owner's decryption produces.</li><li>A key is published whose modulus n fits in 17 bits. Predict how long a browser tab needs to recover p and q from it, and say what the attacker can compute once it has them.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>The exhibit is one page of numbered sections, not tabs. Work top to bottom.</p>
+<ol><li>Open the exhibit and go to <strong>2 · Generate a key, step by step</strong>. The page has already built a key before you touch anything. Check that <strong>Prime p</strong> reads 257, <strong>Prime q</strong> reads 263 and <strong>Exponent e</strong> reads 17; if any of them differs, type the two primes first, choose <strong>Exponent e</strong> last, and press <strong>Generate</strong>. Record the seven rows of the derivation, and the note printed beside each one, in the first table.</li><li>Check that Section 2's status line reads the valid-keypair message before going on — the sections below are built from the key generated here.</li><li>Go to <strong>3 · Encrypt &amp; decrypt</strong> and leave <strong>Message (short)</strong> reading <code>Hi</code>. Record the three value rows, the two character codes shown under the sentence beginning &quot;How text becomes a number&quot;, and the warning line under the heading.</li><li>Add one character to the end of <strong>Message (short)</strong> so the box reads <code>Hii</code>. Record what the status line says. Then delete that character so the box reads <code>Hi</code> again.</li><li>Now open <strong>Show the encryption math (square-and-multiply)</strong>. Record the &quot;squarings + multiplies&quot; line while <strong>Tiny exponent (e = 3)</strong> is the selected button, then press <strong>Real key exponent (e = 17)</strong> and record that line as well. The number printed in that button is the e your own key uses.</li><li>Go to <strong>3½ · The round trip, in one picture</strong>. Record the five boxes across the flow — their small top labels read <code>text</code>, <code>encode</code>, <code>ciphertext</code>, <code>recovered</code> and <code>decode</code> — and then the two equation lines beside the clock. Press <strong>Replay the round trip</strong>; the legend beside the ring names the two hops, so note which of them is drawn first, or note that both appear at once.</li><li>Go to <strong>4 · Sign &amp; verify</strong> and leave <strong>Message to sign</strong> as it is. Record the four rows and the verdict line in the &quot;tamper off&quot; column of the sign-and-verify table. Now tick <strong>Tamper with the message after signing</strong> and record the same four rows and the verdict in the &quot;tamper on&quot; column. Untick it again.</li><li>Go to <strong>5 · What breaks at scale</strong>. Read the line under the &quot;Your key&quot; heading and record the bit length it reports. Press <strong>Factor it!</strong> and record the time in the alarm line, the recovered primes, the reconstructed d, the &quot;Anyone can now decrypt&quot; row, and the strategy-and-iterations sentence. On the other card, record the state of <strong>Factor it (infeasible)</strong> and what that card's last sentence says about where its cost figure comes from.</li><li>Go to <strong>6 · Why real RSA adds padding</strong>. Record the two textbook ciphertext rows and the verdict under them. Press <strong>Run the real OAEP comparison</strong> — it builds a 2048-bit key first, so give it a few seconds — and record the first eight characters of each of its two rows, plus its verdict. Finally record the four rows under <strong>A second reason: textbook RSA is malleable</strong> and the verdict beneath them.</li></ol>
+<aside class="ws-note"><p>Editing <strong>Prime p</strong> or <strong>Prime q</strong> rebuilds the <strong>Exponent e</strong> list, so choose e last. While p and q are not two different primes, that list is empty.</p></aside>
+<aside class="ws-note"><p>Everything below Section 2 is rebuilt when you press <strong>Generate</strong> or <strong>Roll random primes</strong>, and the math disclosure in Section 3 closes again whenever you edit <strong>Message (short)</strong>. Open it after you have finished typing, as step 5 does.</p></aside>
+<aside class="ws-note"><p>If Section 2 shows a warning instead of the valid-keypair message, no new derivation is on screen. Set two different primes, choose an exponent, and press <strong>Generate</strong> before continuing.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything here comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Derivation row in Section 2, My prediction (Predict 1), Value the page showed, Note printed beside it">
+<table>
+<thead><tr><th scope="col">Derivation row in Section 2</th><th scope="col">My prediction (Predict 1)</th><th scope="col">Value the page showed</th><th scope="col">Note printed beside it</th></tr></thead>
+<tbody>
+<tr><th scope="row">p (prime)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">q (prime)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">n = p · q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">φ(n) = (p − 1)(q − 1)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">e (public exponent)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">d = e⁻¹ mod φ</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">check: e · d mod φ</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Section 3, What I recorded">
+<table>
+<thead><tr><th scope="col">Section 3</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row">Message → integer m</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The two character codes shown for <code>H</code> and <code>i</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ciphertext c = m^e mod n</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Decrypted c^d mod n</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Warning line under the heading</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Status line when the box read <code>Hii</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<p>The first row below has no value from the page; it is your own estimate from Predict 2. Fill the last row in Fix / Extend 6.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Square-and-multiply trace, My prediction: number of steps, The line the page printed">
+<table>
+<thead><tr><th scope="col">Square-and-multiply trace</th><th scope="col">My prediction: number of steps</th><th scope="col">The line the page printed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Repeated multiplication, no squaring, e = 17</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Tiny exponent (e = 3)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Real key exponent (e = 17)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Real key exponent after Roll random primes</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Section 3½, What I recorded">
+<table>
+<thead><tr><th scope="col">Section 3½</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row"><code>text</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>encode</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>ciphertext</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>recovered</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>decode</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The e · d line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The line writing that product as a multiple of φ</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Which hop was drawn first</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Section 4 row, Tamper off, Tamper on">
+<table>
+<thead><tr><th scope="col">Section 4 row</th><th scope="col">Tamper off</th><th scope="col">Tamper on</th></tr></thead>
+<tbody>
+<tr><th scope="row">H(message) signed</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Signature s</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Delivered message verifier sees</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered s^e mod n vs fresh H(m)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Section 5, What I recorded">
+<table>
+<thead><tr><th scope="col">Section 5</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row">Bit length the card reports for my key</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Time in the alarm line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered primes p, q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reconstructed private d</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Anyone can now decrypt</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Strategy and iterations</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Does that d match the d in the first table?</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">State of Factor it (infeasible)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the card says about where its cost figure comes from</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: Section 6, What I recorded">
+<table>
+<thead><tr><th scope="col">Section 6</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row">Textbook: encrypt once</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Textbook: encrypt again</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Textbook verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">OAEP: encrypt once, first eight characters</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">OAEP: encrypt again, first eight characters</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">OAEP verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">a, and Enc(a)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">b, and Enc(b)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Enc(a)·Enc(b) mod n</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">That decrypts to</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Look at your <code>d = e⁻¹ mod φ</code> and <code>check: e · d mod φ</code> rows, and at the aside headed <strong>WHAT IS φ?</strong>. In its wording, say what φ(n) counts, why (p − 1)(q − 1) is that count when n = p · q, and why d is inverted modulo φ rather than modulo n. Then say which of your seven rows someone holding only n and e cannot fill in.</li><li>Copy your two equation lines from the Section 3½ table and check the arithmetic yourself. Using the paragraph printed beside them, explain why raising to d undoes raising to e. That paragraph closes with a smaller note about gcd(m, n) = 1: say what it states is needed to cover every m below n, and which two named results it says do that work.</li><li>Section 5 reconstructed a private exponent without being given one. Using your strategy-and-iterations sentence, say what that attack had to search through, and compare its reconstructed d with the d in your first table. Then, using the two panels in <strong>1 · The big idea: a trapdoor</strong> and the last sentence on the 2048-bit card, say what the page claims is different about a 2048-bit modulus, and what it says it did <em>not</em> do to arrive at that figure.</li><li>The signature row did not change when you ticked the tamper box, but the verdict did. Using the &quot;Recovered s^e mod n vs fresh H(m)&quot; row, say which of those two values changed and why, and what the verifier had to know in order to compute each of them. Then quote the reason the warning under the Section 4 heading gives for calling these signatures forgeable.</li><li>Name the two properties of textbook RSA that Section 6 demonstrates, and point to the recorded row that is your evidence for each. Compare the textbook ciphertext you recorded in Section 6 with the one you recorded in Section 3: are they the same number, and why? Then say what changed in the OAEP rows, and what the sentence under the malleability rows claims OAEP's padding does to a product of ciphertexts.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A service generates RSA keys by drawing p and q from a short list of small primes, much like the values suggested in <strong>Prime p</strong> and <strong>Prime q</strong> here. Using your Section 5 row — the time, the iteration count and the recovered primes — and the two cards in that section, name the change the page supports, and say which of your recorded Section 5 values would read differently afterwards, and why.</li><li><strong>Fix.</strong> A product encrypts short, fixed-format tokens with textbook RSA and stores the ciphertexts. Using your Section 6 rows, say what someone who sees only the stored ciphertexts can work out. The closing line of Section 6 names one padding scheme for encryption and another for signatures: name both, and say which of your Section 6 rows would read differently under the encryption one.</li><li><strong>Extend.</strong> In <strong>3 · Encrypt &amp; decrypt</strong>, open <strong>Show the encryption math (square-and-multiply)</strong> again, and put the two lines you recorded in the square-and-multiply table beside each other. For each line, is the total the page prints smaller or larger than the number it prints after &quot;not&quot;? Use the per-bit rows under each trace — one row per exponent bit, each marked as a multiply or a skip — to say where every multiply came from, and what has to be true of an exponent before this method saves work.</li><li><strong>Extend.</strong> In <strong>2 · Generate a key, step by step</strong>, press <strong>Roll random primes</strong>. The page draws two fresh primes and rebuilds the derivation from them, so write down the <strong>Prime p</strong>, <strong>Prime q</strong> and <strong>Exponent e</strong> it now shows, together with the trace rows for n, φ(n) and d. Those numbers are yours alone: they will not match your neighbour's. Then put the class key back: type 257 into <strong>Prime p</strong> and 263 into <strong>Prime q</strong>, choose 17 in <strong>Exponent e</strong>, and press <strong>Generate</strong>.</li><li><strong>Extend.</strong> Still in Section 2, press <strong>Try a too-small / repeated prime</strong>. Write down what the status line says and where the link inside it points. Then type 9 into <strong>Prime p</strong>, press <strong>Generate</strong>, and write down that message too; note that no derivation is left on screen either time. Put the class key back when you are done — 257 in <strong>Prime p</strong>, 263 in <strong>Prime q</strong>, 17 in <strong>Exponent e</strong>, then <strong>Generate</strong>.</li><li><strong>Extend.</strong> Press <strong>Roll random primes</strong> again. In Section 3, open <strong>Show the encryption math (square-and-multiply)</strong> and press the second of the two exponent buttons — the one that read <strong>Real key exponent (e = 17)</strong> on the class key, and that now carries your new key's exponent instead. Record that line in the last row of the square-and-multiply table and compare it with the other two. Then press <strong>Factor it!</strong> again and compare the time, the iteration count and the bit length the card now reports with your first run.</li><li><strong>Extend.</strong> In Section 2 set <strong>Prime p</strong> to 11 and <strong>Prime q</strong> to 13, take whichever value <strong>Exponent e</strong> offers first, and press <strong>Generate</strong>. Record what Section 3's status line now says, what the <code>text</code> and <code>decode</code> boxes of the Section 3½ flow show, and — after pressing <strong>Run the real OAEP comparison</strong> again — what each of the two blocks in Section 6 says it encrypted. Say which message each part of the page fell back to, and whether the two halves of the Section 6 comparison are still encrypting the same thing. Put the class key back when you are done.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-rsa-forge">
+  <h2 id="h-rsa-forge">RSA Forge</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/">RSA Forge</a></dd></div>
+    <div><dt>Time</dt><dd>About 32 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>2152e7023198</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>The same short message, with no padding, is encrypted to three different recipients whose public keys all use e = 3. An attacker intercepts all three ciphertexts and knows all three public moduli, and never sees a private key. Predict whether the message can be recovered, and name the two things the attacker would have to compute. Write your prediction in the first table under Record.</li><li>Now the same message goes to three recipients using e = 65537 and OAEP padding instead. Predict whether the same attack recovers it, and say which change you think does the work — the larger exponent, or the padding.</li><li>A service answers exactly one question about any ciphertext you hand it: is the decryption PKCS#1 v1.5 conformant, yes or no. It never returns plaintext and never says anything else. Predict roughly how many questions it takes to recover one short plaintext under a 16-byte modulus — tens, thousands, tens of thousands, or more — and explain your guess.</li><li>An attacker who cannot decrypt anything multiplies an intercepted ciphertext c by sᵉ mod n, for a multiplier s of their own choosing. Predict what happens to the plaintext hidden inside that ciphertext, and say whether the attacker gets to see the result.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>Steps 1 to 6 are on the <strong>Small Exponent Attack</strong> tab; steps 7 to 12 are on the <strong>Bleichenbacher Oracle</strong> tab. Press the buttons in the order given: each panel reveals its next card only once the previous step has run.</p>
+<ol><li>Open the exhibit and choose the <strong>Small Exponent Attack</strong> tab. Read the description under the panel title, then the card <strong>Pick Your Config — Will Your Message Survive?</strong>.</li><li>Press the configuration card <strong>Faster boot, simpler code</strong>, the one marked <code>e = 3 · padding = none (textbook)</code>. Record the headline the result box shows and what its text says happened to the message.</li><li>Press the other card, <strong>NIST-recommended defaults</strong>, marked <code>e = 65537 · padding = OAEP-SHA256</code>. This one builds three full-size RSA keys before it runs, so give it a few seconds. Record its headline and the recovered value its text reports.</li><li>Scroll to <strong>Setup — Three Recipients, e=3 (Manual)</strong> and press <strong>Generate 3 Recipient Keys (e=3)</strong>. Three recipient cards appear. Record the first eight hex digits of <strong>n₁ (modulus)</strong>, <strong>n₂ (modulus)</strong> and <strong>n₃ (modulus)</strong>.</li><li>In <strong>Message (max 6 chars for demo)</strong>, replace the suggested text with up to six ordinary letters or digits of your own, then press <strong>Broadcast to 3 Recipients</strong>. Record the first eight hex digits of <strong>c₁ = m³ mod n₁</strong>, <strong>c₂ = m³ mod n₂</strong> and <strong>c₃ = m³ mod n₃</strong>.</li><li>Press <strong>Execute CRT + Cube Root Attack</strong>. Record the line under <strong>Message Recovered Without Private Key</strong> and whether it matches what you typed, then read the <strong>What just happened</strong> sentence below it.</li><li>Open the <strong>Bleichenbacher Oracle</strong> tab. Read <strong>PKCS#1 v1.5 Encryption Padding Structure</strong> and write down, in the fourth table, what the page says &quot;conformant&quot; means.</li><li>Press <strong>Generate Demo Key + Conformant Ciphertext</strong>. Record the first eight hex digits of <strong>Modulus n (128-bit)</strong>, the value shown under <strong>e (public exponent)</strong>, and the <strong>Target message</strong>.</li><li>Go to the card <strong>The Padding Oracle</strong>. The box under <strong>Test ciphertext (hex) — try any value:</strong> is already filled with the intercepted ciphertext. Press <strong>Query Oracle</strong> and record the answer the log shows. Then replace the contents of that box with <code>01</code>, press <strong>Query Oracle</strong> again, and record that answer.</li><li>In <strong>Execute Bleichenbacher Attack</strong>, press <strong>Show Enc(a) × Enc(b) = Enc(a × b)</strong>. Record what the page prints for <strong>Enc(a) × Enc(b) mod n</strong> and for <strong>Enc(a × b) directly</strong>, and the verdict line beneath them.</li><li>Press <strong>Run Attack (Auto)</strong>. Watch the interval bar and the cells under <strong>Plaintext recovery — bytes that are uniquely determined by the current interval [a, b]</strong>. When the run stops, record <strong>Oracle queries</strong>, <strong>Iterations</strong>, <strong>Interval bits remaining</strong>, the recovered plaintext line, and the last line of the attack log.</li><li>Press <strong>You Are the Oracle (step through)</strong>. For each of the first five queries, read the two bytes the panel shows you, answer <strong>CONFORMANT</strong> or <strong>NOT CONFORMANT</strong> truthfully, and record the two bytes, your answer and the feedback line. Then read <strong>Total queries</strong>, press <strong>Let the machine finish</strong>, and record the recovered plaintext line for this second run.</li></ol>
+<aside class="ws-note"><p>If a button appears to do nothing, check the order. The manual Håstad cards appear one at a time, and every control on the Bleichenbacher tab needs <strong>Generate Demo Key + Conformant Ciphertext</strong> to have been pressed first. The page reports an out-of-order press only to a screen reader, so there is nothing on screen to see.</p></aside>
+<aside class="ws-note"><p>Keep your step 5 message to ordinary letters and digits. The panel caps the box at six characters, and accented or non-Latin characters take more than one byte each.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything in these tables comes from your own run. Where a value is long hex, the first eight digits are enough.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Configuration you picked, My prediction: recovered, or not?, Headline the result box showed, What its text reported about the message">
+<table>
+<thead><tr><th scope="col">Configuration you picked</th><th scope="col">My prediction: recovered, or not?</th><th scope="col">Headline the result box showed</th><th scope="col">What its text reported about the message</th></tr></thead>
+<tbody>
+<tr><th scope="row">Faster boot, simpler code</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">NIST-recommended defaults</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Recipient, Modulus nᵢ, first 8 hex digits, Ciphertext cᵢ, first 8 hex digits">
+<table>
+<thead><tr><th scope="col">Recipient</th><th scope="col">Modulus nᵢ, first 8 hex digits</th><th scope="col">Ciphertext cᵢ, first 8 hex digits</th></tr></thead>
+<tbody>
+<tr><th scope="row">1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Håstad run, What I recorded">
+<table>
+<thead><tr><th scope="col">Håstad run</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row">Message I typed</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered message line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Does it match what I typed?</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Bleichenbacher setup, What I recorded">
+<table>
+<thead><tr><th scope="col">Bleichenbacher setup</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row">What the page says &quot;conformant&quot; means</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Modulus n, first 8 hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">e (public exponent)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Target message</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Oracle query, Value I sent, Oracle's answer">
+<table>
+<thead><tr><th scope="col">Oracle query</th><th scope="col">Value I sent</th><th scope="col">Oracle's answer</th></tr></thead>
+<tbody>
+<tr><th scope="row">Pre-filled ciphertext</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>01</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Homomorphism demo, What the page printed">
+<table>
+<thead><tr><th scope="col">Homomorphism demo</th><th scope="col">What the page printed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Enc(a) × Enc(b) mod n</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Enc(a × b) directly</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: Attack run, Oracle queries, Iterations, Interval bits remaining, Recovered plaintext line">
+<table>
+<thead><tr><th scope="col">Attack run</th><th scope="col">Oracle queries</th><th scope="col">Iterations</th><th scope="col">Interval bits remaining</th><th scope="col">Recovered plaintext line</th></tr></thead>
+<tbody>
+<tr><th scope="row">Run Attack (Auto)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">You Are the Oracle, then Let the machine finish</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 8: Hand-answered query, First byte, Second byte, My answer, Feedback line">
+<table>
+<thead><tr><th scope="col">Hand-answered query</th><th scope="col">First byte</th><th scope="col">Second byte</th><th scope="col">My answer</th><th scope="col">Feedback line</th></tr></thead>
+<tbody>
+<tr><th scope="row">1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">4</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">5</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Total queries after five decisions</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>The card <strong>Attack — CRT Reconstruction + Cube Root</strong> states that m³ is smaller than n₁·n₂·n₃, so the Chinese Remainder Theorem gives exactly M = m³. Using your own three moduli and three ciphertexts, explain why three intercepted ciphertexts were enough, and point out where a private key would have been needed in that argument and was not.</li><li>Your two configuration runs disagreed. Using the card <strong>Why OAEP Destroys This Attack</strong>, say which of its bullets breaks the CRT step and which breaks the cube-root step. Then quote what the safe run reported as the recovered value, and explain why that is what a failed attack looks like on this panel.</li><li>Your two oracle queries in step 9 came back differently. Using the page's own definition of conformant — <code>EM[0] == 0x00</code> and <code>EM[1] == 0x02</code>, equivalently m in [2B, 3B−1] — say precisely what the attacker learns from each of the two answers, and why &quot;not conformant&quot; is still worth a query.</li><li>Using your homomorphism row and the paragraph above the attack buttons, explain how multiplying c by sᵉ moves the hidden plaintext to m × s without anything being decrypted, and why a conformant answer to that modified ciphertext narrows the interval [a, b] around m.</li><li>Compare <strong>Total queries</strong> after your five hand-answered decisions with <strong>Oracle queries</strong> from the automatic run. What does that comparison tell you about a human acting as the oracle, and about a server that answers this question quickly? Then name, for each of the two attacks you ran today, the configuration choice that made it possible, and what the page gives as the fix for it.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You maintain a service that decrypts PKCS#1 v1.5 ciphertexts and returns a distinct error when the padding is wrong. Using the card <strong>Why TLS 1.3 Removed RSA Key Exchange Entirely</strong>, list the changes that card supports, and say for each one which part of your step 11 run it takes away: the one-bit answer, the key exchange itself, or the padding scheme.</li><li><strong>Fix.</strong> An internal service broadcasts the same unpadded status message to three regional endpoints, each with its own RSA key and e = 3. Using the bullets on <strong>Why OAEP Destroys This Attack</strong>, name a change that card supports that would stop your step 6 attack, say which of your recorded values would look different afterwards, and say why you chose that change over the others it lists.</li><li><strong>Extend.</strong> Press <strong>You Are the Oracle (step through)</strong> again, and on one query answer <strong>CONFORMANT</strong> when the two bytes shown are not <code>00</code> and <code>02</code>. Record the feedback line, then press <strong>Let the machine finish</strong> and record what the attack finally reports. Explain why the page re-encrypts its candidate before it calls anything recovered. If the run does not stop on its own, press <strong>Abort</strong> and record the last line of the log instead.</li><li><strong>Extend.</strong> Press <strong>Generate 3 Recipient Keys (e=3)</strong> again, broadcast the same message you used in step 5, and run the attack again. Record whether c₁, c₂ and c₃ changed, and whether the recovered message changed. Using the card's own description of what that button does, say which part of the run supplied the new values.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-ec-point-arithmetic">
+  <h2 id="h-ec-point-arithmetic">Point Arithmetic</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/">Point Arithmetic</a></dd></div>
+    <div><dt>Time</dt><dd>About 17 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>ce6c3d3eb0c2</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>The exhibit adds two points P and Q on a curve <code>y² = x³ + ax + b</code> by this rule: draw the line through P and Q, find where it meets the curve a third time, and reflect that point across the x-axis. Sketch a curve, put two points on it, and predict where P + Q lands relative to the third intersection. Then predict what the rule can return when the line through P and Q is vertical.</li><li>The exhibit runs the same formulas a second time with every coordinate reduced modulo a prime, the smallest being <code>p = 17</code>. Predict what the set of points looks like once you do that, and whether the slope of a &quot;line&quot; still makes sense. Predict what kind of numbers the slope and the resulting coordinates will be.</li><li><code>k · G</code> means adding G to itself k times. For <code>k = 9</code>, predict how many point additions the definition needs. Then, given that doubling a point counts as one operation and that 9 is <code>1001</code> in binary, predict the fewest operations a doubling-based method could need. Write both numbers in the fourth table under Record.</li><li>One curve in the exhibit has a subgroup of 99 points; the other named curve has about 2 to the 256th. Suppose that recovering k from G and <code>k · G</code> could be done no other way than by trying every multiple of G in turn. Predict the worst-case number of tries on each. Then say whether a method needing about the square root of that number would change your answer for the larger curve.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and scroll to the panel headed <strong>2 · Point addition: the chord-and-tangent rule</strong>. The <strong>Over ℝ (geometry)</strong> tab is the one open when the page loads. Leave the curve menu on <code>y² = x³ − x + 1</code>. Read the text readout under the controls on the right and record, in the first table, the P line, the Q line, which λ row is shown and the value after its <code>=</code>, and the x₃ and y₃ values. Check that the <code>P + Q</code> line at the foot of the readout repeats the x₃ and y₃ you just wrote down.</li><li>Still on <strong>Over ℝ (geometry)</strong>: put keyboard focus on the curve picture by pressing Tab twice from the <strong>Over ℝ (geometry)</strong> tab button, or by clicking the picture once without moving the mouse. Press the right-arrow key five times, then record the same readings. Press the up-arrow key once and record them again.</li><li>Still on <strong>Over ℝ (geometry)</strong>: tick <strong>Show −P (the reflection)</strong> and note what the picture adds. Then press <strong>Tangent (P = Q)</strong> in the row of examples under the controls, and record the readings again. One of the rows you have been copying is no longer printed; leave that cell empty.</li><li>Still on <strong>Over ℝ (geometry)</strong>: press <strong>P + (−P) = O</strong>, then press <strong>2P = O (y = 0)</strong>. For each, record in the third table what the result line says and the sentence printed underneath it.</li><li>Choose the <strong>Over 𝔽ₚ (real crypto)</strong> tab of the same panel. Leave the curve menu on <code>y² = x³ + 2x + 2 mod 17</code>. Read which point is already selected in <strong>Point P</strong>, then open <strong>Point Q</strong> and choose <code>(6, 3)</code>. Record the same readings in the second table, and again check the result line at the foot of the readout against your x₃ and y₃.</li><li>Still on <strong>Over 𝔽ₚ (real crypto)</strong>: press <strong>Doubling (P = Q)</strong> in the row of examples and record the readings. Then press <strong>P + O = P</strong> and record, in the third table, the line the readout prints and the sentence underneath it.</li><li>Scroll to the panel headed <strong>3 · Scalar multiplication: k · P</strong>. Leave <strong>Curve</strong>, leave <strong>Method</strong> on <strong>Double-and-add (efficient)</strong> and leave <strong>Scalar k</strong> at 9. Copy the cost each of the two cards below the examples prints into the fourth table. Press <strong>Step</strong> three times, recording the trace row and the accumulator line after each press in the fifth table. Note the row of bits labelled <code>k in binary:</code> above the buttons. Then press <strong>Show all</strong> and record the live counter on the selected card, the number of trace rows and the final line.</li></ol>
+<aside class="ws-note"><p>The keyboard hint under the picture in step 2 reads: &quot;Drag P or Q along the curve. Keyboard: focus the canvas, ← → move P (Shift for Q), ↑↓ flip branch.&quot; If an arrow press changes nothing, P has reached an end of the drawn stretch of curve; press the other arrow instead.</p></aside>
+<aside class="ws-note"><p>Step 3 measures the tangent at wherever your arrow presses left P, so your numbers there depend on step 2 having been done exactly as written. If you have moved P further, say so beside the row.</p></aside>
+<aside class="ws-note"><p>Do not press the randomize button in step 2. Every value in this worksheet is reproducible from the page's own starting state, and that control replaces it.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Reading, Over ℝ, P, Q, λ: which row, and its value, x₃, y₃">
+<table>
+<thead><tr><th scope="col">Reading, Over ℝ</th><th scope="col">P</th><th scope="col">Q</th><th scope="col">λ: which row, and its value</th><th scope="col">x₃</th><th scope="col">y₃</th></tr></thead>
+<tbody>
+<tr><th scope="row">Opening state</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After five right-arrow presses</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After one up-arrow press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After Tangent (P = Q)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Reading, Over 𝔽ₚ, P, Q, λ: which row, and its value, x₃, y₃">
+<table>
+<thead><tr><th scope="col">Reading, Over 𝔽ₚ</th><th scope="col">P</th><th scope="col">Q</th><th scope="col">λ: which row, and its value</th><th scope="col">x₃</th><th scope="col">y₃</th></tr></thead>
+<tbody>
+<tr><th scope="row">Point Q set to (6, 3)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After Doubling (P = Q)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Example, Tab, The line the readout printed, The sentence printed under it">
+<table>
+<thead><tr><th scope="col">Example</th><th scope="col">Tab</th><th scope="col">The line the readout printed</th><th scope="col">The sentence printed under it</th></tr></thead>
+<tbody>
+<tr><th scope="row">P + (−P) = O</th><td>Over ℝ</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">2P = O (y = 0)</th><td>Over ℝ</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">P + O = P</th><td>Over 𝔽ₚ</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: For k = 9, Repeated addition, Double-and-add">
+<table>
+<thead><tr><th scope="col">For k = 9</th><th scope="col">Repeated addition</th><th scope="col">Double-and-add</th></tr></thead>
+<tbody>
+<tr><th scope="row">My prediction from Predict 3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The cost its card prints</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Live counter on the card after Show all</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Trace rows I counted after Show all</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The final line in the result card</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Step press, The trace row as printed, The accumulator line">
+<table>
+<thead><tr><th scope="col">Step press</th><th scope="col">The trace row as printed</th><th scope="col">The accumulator line</th></tr></thead>
+<tbody>
+<tr><th scope="row">First</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Third</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Your first three rows in the first table describe one rule with different numbers. The panel's opening sentence says: &quot;To add P and Q: draw the line through them, find where it meets the curve a third time, and reflect that point across the x-axis.&quot; On the picture the third intersection is labelled <code>−(P+Q)</code> and the sum is labelled <code>P + Q</code>. Using your recorded x₃ and y₃, say what the reflection does to each of the two coordinates, and which of the two printed formulas is the one that carries it out.</li><li>In the fourth row of the first table the λ row changed its name and one of your columns went empty. The panel says: &quot;When P = Q, the 'line' is the tangent.&quot; Explain what the tangent has replaced, and why the readout stopped printing that row even though its result line still reads <code>P + Q = …</code>.</li><li>Both examples you recorded on the <strong>Over ℝ</strong> rows of the third table ended at the same result. Quote the sentence the page printed under each, and explain from the picture why a vertical line leaves the rule with nothing to reflect. Panel 1 says the curve's points form a group &quot;together with one extra point <code>O</code> — the 'point at infinity'&quot;. Using your third table, say what that extra point is there for.</li><li>Put your first table beside your second. The two λ rows print different formulas: over ℝ the readout divides, and over 𝔽ₚ it multiplies by a quantity written with <code>⁻¹ mod 17</code>. The note beside the lattice says: &quot;Same group law — but every coordinate is reduced mod p, so the smooth curve becomes a scatter of points and the 'line' wraps around. The algebra below is identical to the ℝ case.&quot; Using both tables, say which parts of the two calculations are the same, which differ, and what has taken the place of division.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A classmate writes in their report: &quot;I recovered the secret k from G and k·G in the exhibit, so I solved an elliptic-curve discrete logarithm.&quot; Using the line panel 4 printed when <strong>Walk the subgroup</strong> stopped, and the sentence beginning &quot;What this isn’t&quot; at the foot of that panel, say what the exhibit actually did. Then rewrite the claim so that it says no more than your own run supports.</li><li><strong>Extend.</strong> Open the exhibit at the panel headed <strong>3 · Scalar multiplication: k · P</strong>, leaving <strong>Curve</strong> as it loads and <strong>Scalar k</strong> at 9 so that this run matches the one you made in step 7. Open <strong>Method</strong>, choose <strong>Repeated addition (definition)</strong>, and press <strong>Show all</strong>. Record the live counter on the repeated-addition card, the number of trace rows and the final line in the result card; those three complete the repeated-addition column of the fourth table under Record.</li><li><strong>Extend.</strong> Scroll to the panel headed <strong>4 · Why you can’t go backwards (ECDLP)</strong>. Press <strong>Walk the subgroup</strong> and let it run until it stops on its own. Write down the line it printed when it stopped, then copy both rows of the table of curves in that panel: for the toy curve and for secp256k1, the order n and the best generic attack the table gives for each. Do not press the new-secret button beside the walk; the line the walk prints is reproducible from the page's own starting state, and that control replaces it.</li><li><strong>Extend.</strong> Your two columns in the fourth table reached the same <code>k · G</code>. State each method's cost in terms of k, using the cards' own wording and your two trace-row counts, and say how the number of doublings relates to the row of bits labelled <code>k in binary:</code> above the buttons on panel 3. Then use the line the walk printed and the two curve rows beside it to explain why computing <code>k · G</code> forward is cheap while recovering k from G and <code>k · G</code> is not, and say what the secp256k1 row adds that the toy row does not.</li><li><strong>Extend.</strong> On panel 3, choose <strong>Repeated addition (definition)</strong> in <strong>Method</strong>, type <code>5000</code> into <strong>Scalar k</strong> and press Enter. The page prints a message in place of a trace. Record it, including the number it gives for double-and-add, and check that number against the cost card beside it. Say what the refusal is demonstrating and why the page treats it as part of the lesson rather than an error.</li><li><strong>Extend.</strong> On panel 2's <strong>Over 𝔽ₚ (real crypto)</strong> tab, open <strong>Finite-field curve</strong> and choose <code>secp256k1 (y² = x³ + 7)</code>. The lattice is replaced by a note; record what the note says and how many decimal digits the x coordinate of P has. Then on panel 3 choose the same curve in <strong>Curve</strong>, press <strong>k = order → O</strong>, and press <strong>Show all</strong>. Record both cost cards, and compare the number on the repeated-addition card with the secp256k1 subgroup order you copied from panel 4's table of curves.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-ecdsa-forge">
+  <h2 id="h-ecdsa-forge">ECDSA Forge</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/">ECDSA Forge</a></dd></div>
+    <div><dt>Time</dt><dd>About 29 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>1de890f5e9f9</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>An ECDSA signer holds a secret scalar <code>d</code> and publishes <code>Q = d·G</code>. To sign a message hash <code>e</code> the signer picks a nonce <code>k</code>, computes <code>r</code> as the x-coordinate of <code>k·G</code> reduced mod <code>n</code>, and <code>s = k⁻¹(e + r·d) mod n</code>. The signer now signs two <em>different</em> messages with the same <code>d</code> and the same <code>k</code>. Predict which of <code>r</code>, <code>s</code> and <code>e</code> come out the same across the two signatures and which come out different. Give your reason for each.</li><li>Write the two signing equations from question 1 side by side, one per message. Treating <code>d</code> and <code>k</code> as the unknowns and <code>r</code>, <code>s₁</code>, <code>s₂</code>, <code>e₁</code>, <code>e₂</code> as known, count the equations and count the unknowns. Predict whether someone who never sees the private key can solve for <code>d</code>, and say what the first step of that solution would be.</li><li>An attacker instead has only the public key <code>Q</code> and the generator <code>G</code>, and no signatures at all. Predict whether <code>d</code> can be recovered from those two points, and say what makes this case different from question 2.</li><li>RFC 6979 computes the nonce from the private key and the message with HMAC-SHA-256 instead of drawing it from a random number generator. Predict what happens to the signature when the <em>same</em> message is signed twice this way, and what happens to the nonce when two <em>different</em> messages are signed. Then say what each answer does to the attack you described in question 2.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and stay in <strong>What Is ECDSA?</strong>. Leave <strong>Curve</strong> on its starting option and press <strong>Generate Keypair</strong>. Record what <strong>Public key Q (compressed)</strong> now shows, what the line beginning <strong>Private key</strong> shows, and the status line at the bottom of the message panel.</li><li>In the same section's right-hand panel, leave the text in <strong>Message</strong> as you found it. Press <strong>Sign Random</strong> and record <strong>Signature (r, s)</strong>. Press <strong>Verify</strong> and record the status line. Press <strong>Sign Random</strong> a second time and record the new <strong>Signature (r, s)</strong>, then press <strong>Verify</strong> again.</li><li>Scroll to <strong>The Nonce-Reuse Attack</strong> and read <strong>Why it works: two equations, two unknowns</strong>. Then move to <strong>Try it yourself on the toy curve</strong>, leave all four sliders at the values they load with, and read the four cards the panel prints below them. Record <code>r</code> from Signature 1, <code>r</code> from Signature 2, both <code>s</code> values, the recovered <code>k</code>, the recovered <code>d</code>, and what the last card reports about the freshly forged signature.</li><li>Still in the toy panel, make these changes one at a time and record what the panel says after each. Move <strong>Private key d</strong> to any other value. Move <strong>Reused nonce k</strong> to 7, then to 12, then back to the value it loaded with. Finally drag <strong>Message hash e₁</strong> until it equals <strong>Message hash e₂</strong>, then put it back.</li><li>Scroll to <strong>Now on real 256-bit keys</strong>. Before pressing anything, note what the <strong>VICTIM</strong> box shows in place of Alice's private key. Press <strong>Run Full Compromise</strong>. Read the five timeline steps, then expand <strong>Show the full 256-bit values</strong> and record the values listed in the Record table. Note what the <strong>VICTIM</strong> box shows now.</li><li>Press <strong>Run Full Compromise</strong> a second time and record the same values from the second run.</li><li>Scroll to <strong>RFC 6979 Deterministic Nonces</strong> and press <strong>Reset Samples</strong> first, so both lists start empty. Leaving <strong>Message for comparison</strong> as you found it, press <strong>Sign Random</strong> in this panel twice, then press <strong>Sign RFC 6979</strong> twice. Record the rows that appear under <strong>Random nonce output</strong> and under <strong>RFC 6979 output</strong>.</li><li>Change <strong>Message for comparison</strong> — add a word — and press <strong>Sign RFC 6979</strong> once more. Record the new row. Then press <strong>Try the nonce-reuse attack against RFC 6979</strong> and record the status line beneath it.</li></ol>
+<aside class="ws-note"><p>If the toy panel answers with a degenerate nonce or asks you for two different hashes, that is one of its answers and not a mistake on your part. Record what it said and carry on with the step.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run. The 256-bit numbers are far too long to copy out: for those, write the first six and the last six digits, which is enough to tell two runs apart.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: From the first panel, What it showed">
+<table>
+<thead><tr><th scope="col">From the first panel</th><th scope="col">What it showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Public key Q (compressed)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The line beginning Private key</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Press, Signature (r, s) shown, Status line">
+<table>
+<thead><tr><th scope="col">Press</th><th scope="col">Signature (r, s) shown</th><th scope="col">Status line</th></tr></thead>
+<tbody>
+<tr><th scope="row">Sign Random, first press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verify, after the first Sign Random</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Sign Random, second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verify, after the second Sign Random</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Toy panel, sliders as loaded, Value">
+<table>
+<thead><tr><th scope="col">Toy panel, sliders as loaded</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">r in Signature 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">r in Signature 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">s₁</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">s₂</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered k</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered d</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the forgery card reports</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Change I made in the toy panel, What the panel reported">
+<table>
+<thead><tr><th scope="col">Change I made in the toy panel</th><th scope="col">What the panel reported</th></tr></thead>
+<tbody>
+<tr><th scope="row">Private key d moved to</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reused nonce k = 7</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reused nonce k = 12</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">e₁ set equal to e₂</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: From **Show the full 256-bit values**, Run 1, Run 2">
+<table>
+<thead><tr><th scope="col">From <strong>Show the full 256-bit values</strong></th><th scope="col">Run 1</th><th scope="col">Run 2</th></tr></thead>
+<tbody>
+<tr><th scope="row"><code>n (order)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>e1 = H(&quot;Transfer $10 to Bob&quot;)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>e2 = H(&quot;Transfer $20 to Charlie&quot;)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>r  (shared)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>s1</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>s2</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>recovered k</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>recovered d</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>victim's real d</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">the <code>match</code> line, in my own words</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Alice's private key, as the VICTIM box shows it after the run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Timeline step, What it reported, in my own words">
+<table>
+<thead><tr><th scope="col">Timeline step</th><th scope="col">What it reported, in my own words</th></tr></thead>
+<tbody>
+<tr><th scope="row">Step 2 · Spot the reused nonce</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Step 5 · Forge a new signature</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: RFC 6979 panel, row by row, k, where the row shows one, r">
+<table>
+<thead><tr><th scope="col">RFC 6979 panel, row by row</th><th scope="col">k, where the row shows one</th><th scope="col">r</th></tr></thead>
+<tbody>
+<tr><th scope="row">Random nonce output, first press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Random nonce output, second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">RFC 6979 output, first press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">RFC 6979 output, second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">RFC 6979 output, after changing the message</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 8: Status line under Try the nonce-reuse attack against RFC 6979">
+<table>
+<thead><tr><th scope="col">Status line under Try the nonce-reuse attack against RFC 6979</th></tr></thead>
+<tbody>
+<tr><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Your two toy signatures printed the same <code>r</code>, and the panel marks that as the tell. Using the signing rule the page prints — <code>r</code> is the x-coordinate of <code>k·G</code> reduced mod <code>n</code> — explain why reusing <code>k</code> forces <code>r</code> to repeat. Then explain why the two <code>s</code> values still came out different.</li><li>Take the five numbers the toy panel's recovery works from — <code>r</code>, <code>s₁</code>, <code>s₂</code> and the two message hashes on the sliders — and list which of them a signer publishes and which the signer is supposed to keep.</li><li>Compare your two <strong>Run Full Compromise</strong> runs. Say which recorded values changed between the runs and which did not. For each value that did <em>not</em> change, point to the line the page prints that explains why it could not.</li><li>The note under the finite-field plot, in <strong>The Math You Can See</strong>, says that multiplying <code>G</code> is easy and that finding <code>k</code> from the highlighted point is the hard problem ECDSA relies on. Alice's public key was on the page from the start, and it did not give up her private key. The compromise recovered that same private key in one press. Say precisely what the attacker had in the second case that she did not have in the first.</li><li>Your two <strong>Sign RFC 6979</strong> presses on one message, and the third press after you changed the message, gave three rows. Say what each comparison shows about the nonce. Then read the paragraph at the top of <strong>RFC 6979 Deterministic Nonces</strong> and the status line you recorded, and state both what the page says blocks the attack and what the page says that block rests on.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A hardware wallet signs with a nonce from a random number generator that occasionally restarts from the same seed. Say what an attacker watching that wallet's published signatures would look for, name which of the two signing buttons on this page corresponds to the fix, and state — from the page's own wording — what that fix still depends on.</li><li><strong>Fix.</strong> You are reviewing a signing service that avoids repeats by taking its nonce from a counter: <code>k = 1</code> for the first signature, <code>k = 2</code> for the second, and so on. No nonce is ever reused. Look at the second line of the recovery the toy panel prints, <code>d = (s₁·k − e₁)·r⁻¹</code>, and say what an attacker who can guess <code>k</code> needs in order to run that line, and how many signatures it would take. Say whether the tell you identified in Explain 1 would appear here.</li><li><strong>Extend.</strong> Open <strong>What Is ECDSA?</strong>, press <strong>Generate Keypair</strong>, and press <strong>Sign Random</strong> once so that a signature exists. Now edit <strong>Message</strong> — add a word to it — and press <strong>Verify</strong> <em>without</em> signing again. Write down the status line. Restore the original wording, press <strong>Verify</strong> once more, and write down the status line again. Say whether the signature had to be made a second time for the restored message to pass.</li><li><strong>Extend.</strong> Still in <strong>What Is ECDSA?</strong>, with a keypair generated and <strong>Message</strong> as you found it, press <strong>Sign Deterministic (RFC 6979)</strong> twice in a row and write down <strong>Signature (r, s)</strong> after each press. Say whether the two presses agree, and compare them with the two <strong>Sign Random</strong> signatures in your Record table.</li><li><strong>Extend.</strong> Work the toy panel's recovery by hand. In <strong>Try it yourself on the toy curve</strong>, leave the four sliders at the values they load with and take <code>r</code>, <code>s₁</code>, <code>s₂</code> and the two message hashes from the cards and the slider labels. Then, mod 19, compute <code>k = (e₁ − e₂)·(s₁ − s₂)⁻¹</code> and <code>d = (s₁·k − e₁)·r⁻¹</code>, working both modular inverses out by hand. Check your <code>k</code> and <code>d</code> against the recovered values the panel prints, and your <code>d</code> against the <strong>Private key d</strong> slider.</li><li><strong>Extend.</strong> Scroll to <strong>The Math You Can See</strong> and work in the right-hand panel, <strong>The real thing: a finite field</strong>. Move the <strong>Walk k·G</strong> slider and read the line under the plot. Write down the point the page reports for <code>k = 5</code>, for <code>k = 7</code>, and for one more value of your choosing, then read the note printed below that line.</li><li><strong>Extend.</strong> Move the <strong>Walk k·G</strong> slider through each value from 1 to 18 and write down the point for each. Count how many <em>distinct</em> x-coordinates appear. The panel builds <code>r</code> from that x-coordinate, so say how many different <code>r</code> values this toy curve can produce, and what that means for two signatures that happen to share an <code>r</code>.</li><li><strong>Extend.</strong> Setting <strong>Reused nonce k</strong> to 7 in the toy panel stops the attack, and the panel names the reason; set it there again if you need the wording in front of you. Now move the <strong>Walk k·G</strong> slider to 7, read the point the page reports, and work out what <code>r</code> would be for that nonce. Then substitute that <code>r</code> into <code>s = k⁻¹(e + r·d) mod n</code> and say what <code>s</code> reduces to. Does refusing that nonce protect the private key, or does it prevent a different problem?</li><li><strong>Extend.</strong> Change <strong>Curve</strong> to the other option and press <strong>Run Full Compromise</strong> again. Compare <code>n (order)</code>, <code>e1</code> and <code>e2</code> with the runs you already recorded, and say which of the three the curve choice changed. Note what the status line in the first panel now asks you to do, and why.</li><li><strong>Extend.</strong> Open <strong>ECDSA vs Ed25519</strong> and read the rows <em>Deterministic by default</em>, <em>Nonce reuse catastrophic</em> and <em>Malleable signatures</em>. Say which row the RFC 6979 panel is demonstrating, and name a property the table still records differently for the two schemes once RFC 6979 is in use.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-nonce-lattice">
+  <h2 id="h-nonce-lattice">Nonce Lattice</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-nonce-lattice/">Nonce Lattice</a></dd></div>
+    <div><dt>Time</dt><dd>About 30 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>6b023a9e821b</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>Every ECDSA signature satisfies <code>s = k⁻¹(h + r·d) mod n</code>, which rearranges to the linear congruence <code>r·d − s·k + h ≡ 0 (mod n)</code>. Here <code>d</code> is the private key and <code>k</code> is the one-time nonce, and both are unknown; <code>r</code>, <code>s</code> and <code>h</code> are public. One signature is therefore one equation in two unknowns. Now suppose a signer produces two signatures over two <em>different</em> messages using the <em>same</em> <code>k</code>. Write down what an observer would see in the two public signatures that gives the reuse away, then say whether two such equations are enough to solve for <code>d</code>, and why.</li><li>To pin down a 256-bit secret, the leakage an attacker collects has to exceed the secret's entropy: leaked bits per signature multiplied by the number of signatures must clear 256. This lab's controls stop at 32 leaked bits per signature and 32 signatures. Predict the smallest number of signatures at which 24 known bits each could be enough, and predict what the lab should say about 24 bits across 4 signatures.</li><li>RFC 6979 derives the nonce deterministically from the private key and the message instead of drawing it from a random source. Predict what this attack should report for a batch of RFC 6979 signatures, and predict whether the attacker is left with a lattice that merely fails to give up the key, or with no lattice to reduce at all.</li><li>Later you will hold the signature count fixed and vary the leak size until recovery stops working. Predict whether that will be a sharp line — every run above it succeeds, every run below it fails — or a band. Say what you would expect to see from three runs of the same configuration sitting right at the edge.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. It runs a configuration by itself on load, so wait until the line under the pipeline strip stops reading <em>Running lattice analysis</em>. Read the always-visible panel <strong>The one equation everything hangs on</strong> and note the rearranged congruence it prints.</li><li>In the <strong>Configuration</strong> panel, set <strong>Curve</strong> to <em>secp256k1 (Bitcoin)</em>, <strong>Leak Mode</strong> to <em>MSB leak — top bits known</em>, <strong>Leak Size (bits)</strong> to <code>24</code> and <strong>Signature Count</strong> to <code>12</code>. Press <strong>Generate Attack</strong>, the submit button at the foot of that form, and wait for the run to finish.</li><li>In the panel headed <strong>Can this configuration recover the key?</strong>, record the badge beside that heading and the coloured sentence printed under the plot. Then read the closing paragraph of that panel, which begins <em>Reading the axes honestly</em>, and record the curve it names and the bits-per-signature figure it quotes from the classic Hidden Number Problem result.</li><li>Four walkthrough steps appear above the analysis panels once a run finishes, in the same order as the pipeline strip. Every new run reopens the first of them. Open the first step and, from the <strong>Signature Log</strong> table, record for signatures 1 and 2: the <em>leaked_bits</em> entry and the leading digits shown in the <em>r</em>, <em>s</em>, <em>h</em> and <em>SHA-256</em> columns.</li><li>Open the fourth walkthrough step. Record the banner text at the top of the panel, the two lines on the <em>Validation</em> card, and whether any byte in the two-row key grid is marked as not matching. Then scroll to <strong>Execution details</strong> at the foot of the page and record <em>Signatures</em> and <em>Worker runtime</em>.</li><li>Set <strong>Leak Mode</strong> to <em>Reused nonce — PS3-style</em> and <strong>Signature Count</strong> to <code>2</code>, leaving <strong>Leak Size (bits)</strong> at <code>24</code>. Press <strong>Generate Attack</strong>. Record the scenario line under the pipeline strip, the feasibility badge, the two <em>r</em> values in the <strong>Signature Log</strong>, the banner in the fourth step, and what the third step's <strong>Lattice View</strong> and <strong>Basis View</strong> say in place of matrices.</li><li>Staying on that run, read the panel headed <strong>Two signatures, no lattice needed</strong> in the fourth step. Record the two formulas it prints, one for <code>k</code> and one for <code>d</code>, and the value it gives for <code>k</code>.</li><li>Set <strong>Leak Mode</strong> to <em>RFC 6979 — deterministic (secure)</em> and <strong>Signature Count</strong> to <code>12</code>, leaving <strong>Leak Size (bits)</strong> at <code>24</code>. Press <strong>Generate Attack</strong>. Record the scenario line, the summary line, the feasibility badge and the sentence under the plot, the banner, the <em>Recovered Key</em> card, the diagnostic sentence printed in the second walkthrough step, and the single line listed under <em>Diagnostics</em> in the fourth.</li><li>Still in RFC 6979 mode, press <strong>Measure this column</strong> and record the reason the panel gives for declining.</li><li>Set <strong>Leak Mode</strong> back to <em>MSB leak — top bits known</em> and <strong>Signature Count</strong> to <code>12</code>, then press <strong>Measure this column</strong>. This runs the real attack several times over at each of several leak sizes, so it takes a while; while it works, the panel says which rung it is on and shows the rungs it has not reached yet as <em>queued</em>. Leave the form alone until it finishes, then record every row of the table it fills in and the verdict paragraph below the table.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Run, Feasibility badge, Scenario line under the pipeline strip, Summary line, Banner in the fourth step">
+<table>
+<thead><tr><th scope="col">Run</th><th scope="col">Feasibility badge</th><th scope="col">Scenario line under the pipeline strip</th><th scope="col">Summary line</th><th scope="col">Banner in the fourth step</th></tr></thead>
+<tbody>
+<tr><th scope="row">MSB, 24 bits, 12 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reused nonce, 2 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">RFC 6979, 12 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Signature Log (MSB run), leaked_bits, r, s, h, SHA-256">
+<table>
+<thead><tr><th scope="col">Signature Log (MSB run)</th><th scope="col">leaked_bits</th><th scope="col">r</th><th scope="col">s</th><th scope="col">h</th><th scope="col">SHA-256</th></tr></thead>
+<tbody>
+<tr><th scope="row">Signature 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Signature 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Recovery (MSB run), Value">
+<table>
+<thead><tr><th scope="col">Recovery (MSB run)</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Validation card, first line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Validation card, second line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Execution details: Signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Execution details: Worker runtime</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Reading, Reused-nonce run, RFC 6979 run">
+<table>
+<thead><tr><th scope="col">Reading</th><th scope="col">Reused-nonce run</th><th scope="col">RFC 6979 run</th></tr></thead>
+<tbody>
+<tr><th scope="row">Are the r values in the log equal?</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the Lattice View shows in place of matrices</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the Basis View shows in place of rows</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered Key card</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Diagnostic in the second walkthrough step</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Configuration offered to Measure this column, Reason it gave for declining">
+<table>
+<thead><tr><th scope="col">Configuration offered to Measure this column</th><th scope="col">Reason it gave for declining</th></tr></thead>
+<tbody>
+<tr><th scope="row">RFC 6979, 12 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Measured column: MSB, 12 signatures, leak bits, recovered, rate, outcome, and milliseconds">
+<table>
+<thead><tr><th scope="col">Measured column: MSB, 12 signatures</th><th scope="col">leak bits</th><th scope="col">recovered</th><th scope="col">rate</th><th scope="col">outcome, and milliseconds</th></tr></thead>
+<tbody>
+<tr><th scope="row">Rung 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 4</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 5</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 6</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: Verdict paragraph, Value">
+<table>
+<thead><tr><th scope="col">Verdict paragraph</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Measured boundary, in bits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Information floor it prints</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Drawn practical curve it prints</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rungs it names as recovering sometimes</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>In your reused-nonce run the two signatures shared one <code>r</code>. Using the two formulas the derivation panel prints, explain why sharing <code>k</code> makes <code>r</code> repeat, and how the pair of equations then yields first <code>k</code> and then <code>d</code>. Reading the formula for <code>k</code>, say what would have to be true of the two signatures for that arithmetic to break down, and why signing two different messages makes that unlikely.</li><li>The RFC 6979 run recovered nothing, and the third walkthrough step had no matrix in it at all rather than a matrix that failed. Using the diagnostic the page printed in the second step and the <em>Why this works</em> paragraph in the fourth, say what RFC 6979 removes from the signing path, and where the page says the security question moves to instead. Then say which of the two failures you reproduced in this exhibit — the reused nonce and the leaked nonce bits — that change addresses, and which one the closing paragraph of the same panel says is left as a separate question.</li><li>Compare the feasibility badge you recorded for the reused-nonce run and for the RFC 6979 run against what those two runs actually did. Using the note printed under the plot, say which configurations the gauge is about and which it is not. Write one sentence you would add to that panel to stop a reader drawing the wrong conclusion from the badge alone.</li><li>Look at your measured column. Which rungs recovered on some runs and not on others, and what does the verdict paragraph say decides the outcome at those rungs? Compare the measured boundary with the information floor and with the drawn practical curve that the same paragraph prints. Finally, using <em>Reading the axes honestly</em>, explain why your measurement is a statement about this page rather than about secp256k1, and what that paragraph gives as the real reason ordinary keys are safe.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> At the foot of the page there is a collapsed section whose summary ends <em>Real-world case studies, timeline, and related labs</em>. Open it and read the Android wallet entry from 2013 and the Minerva entry from 2019. The second walkthrough step lists an Attack Path and a Defense Path side by side. For each of those two incidents, name the Defense Path items that address it, and say which rung of the Attack Path each incident supplied for free. Then say which of the two the RFC 6979 mode you ran demonstrates a fix for, and which it leaves open.</li><li><strong>Extend.</strong> Run the MSB configuration twice and compare the logs. Set <strong>Curve</strong> to <em>secp256k1 (Bitcoin)</em>, <strong>Leak Mode</strong> to <em>MSB leak — top bits known</em>, <strong>Leak Size (bits)</strong> to <code>24</code> and <strong>Signature Count</strong> to <code>12</code>, press <strong>Generate Attack</strong>, and wait for the run to finish. Open the first walkthrough step and, from the <strong>Signature Log</strong> table, record for signatures 1 and 2 the <em>leaked_bits</em> entry and the leading digits shown in the <em>r</em>, <em>s</em>, <em>h</em> and <em>SHA-256</em> columns. Then press <strong>Generate Attack</strong> again without changing anything, open the first walkthrough step again, and record the same five values for signatures 1 and 2 a second time.</li><li><strong>Extend.</strong> Compare the two MSB runs from the item above. Which of the five recorded columns changed between them and which did not? The <em>leaked_bits</em> entry names both how many bits the attacker is given and what value those bits take — what is that value, and what does it tell you about how this demo produces a leak? What does an unchanged <em>SHA-256</em> column tell you about the messages the two runs signed, and why does that matter when you are deciding which of your recorded numbers a classmate could be expected to match?</li><li><strong>Extend.</strong> Read the lattice itself. Set <strong>Curve</strong> to <em>secp256k1 (Bitcoin)</em>, <strong>Leak Mode</strong> to <em>MSB leak — top bits known</em>, <strong>Leak Size (bits)</strong> to <code>24</code> and <strong>Signature Count</strong> to <code>12</code>, press <strong>Generate Attack</strong>, and wait for the run to finish. Open the third walkthrough step and read <em>How one signature becomes one lattice row</em>, then record from the <strong>Basis View</strong> table how many rows it has and the <em>before</em> and <em>after</em> values on row 1. If the run recovered the key, the key bridge below the two matrices prints a line labelled <em>secretCoordinate / B (mod n)</em>; record the hex value on it.</li><li><strong>Extend.</strong> Collect the other two refusals. With <strong>Leak Mode</strong> on <em>MSB leak — top bits known</em> and <strong>Leak Size (bits)</strong> at <code>24</code>, set <strong>Signature Count</strong> to <code>4</code>, press <strong>Measure this column</strong>, and record the reason the panel gives for declining. Then set <strong>Signature Count</strong> to <code>32</code>, press it again, and record that reason. Say how the two reasons differ, and which of the two the panel itself describes as a limit of this page rather than a property of the attack.</li><li><strong>Extend.</strong> Measure a second column. Leave <strong>Leak Mode</strong> on <em>MSB leak — top bits known</em>, set <strong>Signature Count</strong> to <code>10</code>, and press <strong>Measure this column</strong> again. Two measured points are now drawn over the modelled curves. Compare the two measured boundaries with each other, and each with the drawn practical curve at its own signature count. What does the pair suggest about whether the drawn curve is optimistic, pessimistic, or about right over this range?</li><li><strong>Extend.</strong> Set <strong>Curve</strong> to <em>P-256 (NIST)</em> and press <strong>Generate Attack</strong> with the same leak mode, leak size and signature count as your first run. Record what changes in the closing <em>Reading the axes honestly</em> paragraph and in <strong>Execution details</strong>, and what does not change in the bits-per-signature figure it quotes. Explain what that figure depends on, and why two different standardised curves can share it.</li></ol>
+</section>
+  </div>
+</article>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <p class="t-foot-licence">Teaching materials: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You may copy, adapt, print and redistribute these materials, including commercially, as long as you give credit. When you adapt one, keep this line on it: <span class="t-attrib">Crypto Lab teaching materials by Paul A. Clark, CC BY 4.0 — https://crypto-lab.systemslibrarian.dev/teach/</span></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

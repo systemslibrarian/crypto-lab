@@ -699,6 +699,7 @@ ${rows}
 </table>
 </div>
 ${differ.length ? `<p class="t-callout">In ${differ.map((x) => esc(x.card.title)).join(', ')}, keys or inputs are generated fresh for each run, so your values will differ from your classmates’.</p>` : ''}
+<p class="no-print"><a class="t-btn t-btn--ghost" href="print/">Hand-out: every worksheet in this module, in sequence order</a></p>
 </section>
 
 <section aria-labelledby="assess"><h2 id="assess">What students hand in</h2>
@@ -776,9 +777,10 @@ function worksheetPage(w, cff, site) {
     : `<p>None of this module's outcomes are served by this worksheet's class sequence.${x.outcome_note ? ` ${esc(x.outcome_note)}` : ''}</p>`}</section>
 
 <div class="t-actions no-print">
-  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <button type="button" class="t-btn" data-print>Print / save as PDF</button>
   <a class="t-btn t-btn--ghost" href="${raw}">Raw Markdown to edit</a>
   <a class="t-btn t-btn--ghost" href="${blob}">View source on GitHub</a>
+  <a class="t-btn t-btn--ghost" href="../print/">Hand-out for the whole module</a>
 </div>
 
 <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
@@ -793,6 +795,54 @@ ${w.body}
     depth: 2, title, description: `A Predict, Do, Record, Explain worksheet for the ${x.card.title} exhibit.`,
     canonical, date: w.meta.checked, author: authorName(cff),
     crumbs: [{ label: 'Crypto Lab', href: '../../../' }, { label: 'Teach', href: '../../' }, { label: m.title, href: '../' }, { label: x.card.title }],
+    main,
+    licence: licenceFoot(cff, site),
+  });
+}
+
+/* The module hand-out: every worksheet of a module on one page, in the order the
+   sequence runs them, so an instructor prints once instead of once per worksheet.
+   It carries no new writing - each worksheet's body is the same body its own page
+   renders, from the same source - so there is nothing here to drift away from them. */
+function modulePrintPage(m, cff, site, worksheets) {
+  const canonical = `${site.hub_url}teach/${m.id}/print/`;
+  const ordered = m.exhibits
+    .map((x) => ({ x, w: worksheets.find((w) => w.module === m && w.name === x.name) }))
+    .filter((e) => e.w);
+  const items = ordered.map(({ x, w }) => `
+<article class="ws-handout" aria-labelledby="h-${esc(w.name)}">
+  <h2 id="h-${esc(w.name)}">${esc(x.card.title)}</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></dd></div>
+    <div><dt>Time</dt><dd>${esc(classTime(w.meta.minutes))}</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>${esc(w.meta.source_commit)}</code> on ${esc(w.meta.checked)}</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+${w.body}
+  </div>
+</article>`).join('\n');
+  const main = `
+<header class="t-hero">
+  <p class="t-eyebrow">Hand-out · <a href="../">${esc(m.title)}</a></p>
+  <h1>${esc(m.title)}: worksheets</h1>
+  <p class="t-lede">Every worksheet in this module, in the order the sequence runs them. Each one starts on its own page when printed.</p>
+</header>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print / save as PDF</button>
+  <a class="t-btn t-btn--ghost" href="../">Back to the module</a>
+</div>
+
+${items}
+
+<p class="t-disclaimer">${esc(site.syllabus_line)}</p>
+`;
+  return page({
+    depth: 2, title: `${m.title}: worksheets`,
+    description: `Every worksheet in the ${m.title} module, in sequence order, for printing as one hand-out.`,
+    canonical, date: m.last_checked, author: authorName(cff),
+    crumbs: [{ label: 'Crypto Lab', href: '../../../' }, { label: 'Teach', href: '../../' }, { label: m.title, href: '../' }, { label: 'Hand-out' }],
     main,
     licence: licenceFoot(cff, site),
   });
@@ -1139,6 +1189,7 @@ function build() {
   files.set(path.join(TEACH, 'index.html'), landingPage(modules, worksheets, cards, cff, site, evidence));
   for (const m of modules) {
     files.set(path.join(TEACH, m.id, 'index.html'), modulePage(m, cff, site, worksheets));
+    files.set(path.join(TEACH, m.id, 'print', 'index.html'), modulePrintPage(m, cff, site, worksheets));
     files.set(path.join(TEACH, m.id, 'anchors.json'), anchorsManifest(m, worksheets, site));
   }
   for (const w of worksheets) files.set(path.join(TEACH, w.module.id, w.name, 'index.html'), worksheetPage(w, cff, site));

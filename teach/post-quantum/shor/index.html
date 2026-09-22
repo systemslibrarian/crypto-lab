@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Shor — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Shor exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/shor/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Shor">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/shor/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Shor">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/shor/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Post-quantum transition</a></li><li><span aria-current="page">Shor</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Post-quantum transition</a></p>
+  <h1>Worksheet: Shor</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-shor/">Shor</a></dd></div>
+  <div><dt>Time</dt><dd>About 15 minutes of class time; Predict is pre-class reading</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>66c0e3109427</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to explain how Shor's algorithm turns factoring into period finding, and show from a lab run how a recovered even period r yields the factors through gcd(a^(r/2) ± 1, N).</li><li>Students will be able to contrast the impact of Shor's and Grover's algorithms on public-key and symmetric primitives, and justify why symmetric primitives mostly need larger parameters while RSA, ECC and Diffie-Hellman need replacement.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/post-quantum/shor.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/post-quantum/shor.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>You are going to run the same N three times. For each of these, predict whether it stays the same across your three runs or changes: the base <em>a</em>, the period <em>r</em>, the register size <em>Q</em>, and the two factors printed on the result line. Write your predictions in the first column of the first table under Record.</li><li>The page's first explainer turns <code>a^r ≡ 1 (mod N)</code> into <code>(a^(r/2) − 1)(a^(r/2) + 1) ≡ 0 (mod N)</code> and then takes a gcd of each half with N. That chain needs the period <em>r</em> to be <strong>even</strong>. Predict what a run should do when the period it recovers is odd: stop and report failure, print a factor anyway, or something else.</li><li>Each attempt picks a base <em>a</em> at random from 2 to N−1. Predict what should happen when that base happens to share a factor with N, before any quantum step runs. Would you call that outcome a success or a failure of the run?</li><li>The quantum measurement is a sample from a probability distribution, not a lookup. Predict whether two attempts using the same base <em>a</em>, and therefore the same period <em>r</em>, could still measure different frequencies <em>m</em> — and whether both could still end with the same <em>r</em>.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<aside class="ws-note"><p>A run that retries, or that ends without ever showing a period, is one of this algorithm's own outcomes. Record it as a result. Do not clear it and hunt for a tidier run.</p></aside>
+<ol><li>Open the exhibit. Before pressing anything, read the note under the controls: it says Shor is <em>randomized</em>, that each run picks a fresh base <em>a</em>, and that a run can fail and retry. Then read the first explainer, <em>Why does the period r let you factor N?</em>, which stays open at the top of the page.</li><li>In the <strong>Presets</strong> row, press <strong>91</strong>. A preset fills the <strong>Factor N</strong> field and starts the run by itself — you do not also press <strong>Run Shor's Algorithm</strong>. Watch the <strong>ALGORITHM STEPS</strong> log fill from the top.</li><li>When the run stops, find the <em>Resource estimate</em> line near the top of the log and copy the register size <em>Q</em> and the logical qubit count it states into the second table. You read this line once; later runs of N = 91 restate it.</li><li>Fill the first row of the third table from this run: the base <em>a</em> and the period <em>r</em> from the <em>This run:</em> line inside the first explainer; <em>Attempts</em> and the two factors from the RESULT line at the foot of the log; and, in the last column, every line that begins <em>↺ Retrying:</em> together with the reason it names.</li><li>Press <strong>Run Shor's Algorithm</strong> and record a second run the same way, then a third. Record each run before you start the next one — a new run clears the log and the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel.</li><li>Some runs end differently, and each of those is a row to fill in rather than a mistake. If the <em>This run:</em> line keeps its italic placeholder and the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel says the run drew a base that already shared a factor with N, write &quot;lucky gcd, no period&quot; in the last column and copy the factor the log's <em>Lucky GCD</em> line reports. If the log prints one or more <em>↺ Retrying:</em> lines and then carries on, record every reason it names. If a stage banner reads <em>Stage 3 — no convergent denominator satisfied a^r ≡ 1, so the period was NOT recovered</em>, record that alongside the retry reason.</li><li>Pick one of your runs that did reach a period, and copy its <em>This run:</em> chain into the fourth table, number by number: the base, the period, <code>a^(r/2) mod N</code>, both gcds, and the check it prints at the end.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value in the second, third and fourth tables comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Value, Same across runs, or changes? (predicted), What my three runs showed">
+<table>
+<thead><tr><th scope="col">Value</th><th scope="col">Same across runs, or changes? (predicted)</th><th scope="col">What my three runs showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Base a</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Period r</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Register size Q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The two factors on the RESULT line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: From the *Resource estimate* line, for N = 91, Value">
+<table>
+<thead><tr><th scope="col">From the <em>Resource estimate</em> line, for N = 91</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Register size Q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Logical qubits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Run, Base a, Period r, Attempts, Factors on the RESULT line, Retry reasons, or how else the run ended">
+<table>
+<thead><tr><th scope="col">Run</th><th scope="col">Base a</th><th scope="col">Period r</th><th scope="col">Attempts</th><th scope="col">Factors on the RESULT line</th><th scope="col">Retry reasons, or how else the run ended</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Third run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: From the *This run:* line of one run that reached a period, Value">
+<table>
+<thead><tr><th scope="col">From the <em>This run:</em> line of one run that reached a period</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Base a</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Period r</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>a^(r/2) mod N</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>gcd(a^(r/2) − 1, N)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>gcd(a^(r/2) + 1, N)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The check it prints</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Match your fourth table line by line to the four numbered steps of the first explainer, <em>Why does the period r let you factor N?</em> Why does that chain need <em>r</em> to be even, and what does the demo do with an attempt whose period is odd — answer from your own log if one of your runs showed it, otherwise from the third step of the explainer's chain. What do your two gcds multiply to, and what does the <em>Verification</em> clause of the log's <em>Factors found</em> line check?</li><li>Compare your three rows. Which values changed from run to run and which did not? The <em>Resource estimate</em> line states how <em>Q</em> is built — use its wording to say what <em>Q</em> depends on, and why the base <em>a</em> and the period <em>r</em> do not behave the same way across runs.</li><li>Take one run that retried, that needed more than one attempt, or that ended with no period at all. Using the reason the log names, say what that attempt had drawn or measured, and why drawing a fresh base is part of the method rather than an error. If the retry pushed the <em>Attempts</em> count up, say what else appeared in the log at that moment; if the count did not move, say what that tells you about where in the attempt the retry happened. If none of your runs did any of this, use a classmate's.</li><li>The explainer closes by saying the quantum computer's only job is finding <em>r</em>, and that everything else in the chain is ordinary arithmetic. Using your own log, name one step of your run that a quantum computer would perform and one that it would not, and say which words on the page told you which was which.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A service establishes its keys with RSA-2048 and encrypts the data itself with AES-256. Using the <em>QUANTUM-RESISTANT AFTER SHOR</em> list and the <em>RESOURCE REQUIREMENTS</em> table in the <strong>RSA IMPACT</strong> panel, say which of those two the page puts on its broken list and which it leaves usable, what that table gives as the logical-qubit estimate for the broken one, and which of the replacements named on the page you would put in its place. The call-out at the foot of that panel links one of them.</li><li><strong>Extend.</strong> After a run that reached a QFT visualization, scroll the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel to the block headed <em>Phasor wheels — why the peaks form (classically simulated)</em>. Its frequency buttons are built by the run, so their labels carry your own run's numbers: press the one whose label begins <em>off-peak</em> and record the Σ value under the summed wheel and whether the page calls it add or cancel; then press the one whose label begins <em>on-peak</em> and record the same two. Using the second explainer, <em>Why does the QFT concentrate at multiples of Q/r?</em>, explain why one frequency gives a long resultant and the other a short one, and what that has to do with the tall bars in the distribution chart above it.</li><li><strong>Extend.</strong> Press <strong>Reset</strong>, then the preset <strong>15</strong>, and let three runs go by. Record the register size <em>Q</em> and the logical qubit count from the <em>Resource estimate</em> line for N = 15 and compare them with the pair you wrote down for N = 91. How many of your three runs reached a QFT visualization at all, and what did the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel say for the ones that did not?</li><li><strong>Extend.</strong> Type 97 into the <strong>Factor N</strong> field and press <strong>Run Shor's Algorithm</strong>, then do the same with an even number such as 100. Record the banner each one produces and what the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel says. Using the <em>Pre-check</em> line that N = 91 printed, list what the demo tests about N before it would draw a base at all, and say which test each of your two inputs failed.</li><li><strong>Extend.</strong> In the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel, find the <em>Continued Fraction Extraction</em> section for one attempt and read its caption and its table. Which row is marked <em>← the period r</em>, and what test does the third column apply to each denominator? Using the caption, explain why the demo tests the denominators rather than trusting the first one it computes.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

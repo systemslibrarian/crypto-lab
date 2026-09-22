@@ -82,7 +82,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) | Distributed Key Generation | Pedersen DKG · GJKR 1999 · Feldman VSS · ristretto255 |
 | [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) | Distributed VRF | DVRF · Chaum-Pedersen DLEQ · ristretto255 · FROST Nonces |
 | [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) | Downgrade Attacks | TLS 1.3 · Transcript Binding · X25519MLKEM768 · Downgrade |
-| [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | Elliptic Curves | ECC · Curve25519 · ECDH · P-256 |
+| [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | Elliptic Curves | brainpoolP256r1 · Curve25519 · ECDH · P-256 |
 | [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | Elliptic Curves | Group Law · Chord-and-Tangent · Scalar Mult · secp256k1 |
 | [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) | Endpoint Compromise | Double Ratchet · X25519 · AES-256-GCM · Endpoint Implant |
 | [E91](https://systemslibrarian.github.io/crypto-lab-e91/) | Entanglement-Based QKD | E91 · Entanglement · CHSH Bell Test · QKD |

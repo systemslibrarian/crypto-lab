@@ -212,7 +212,8 @@
             "result": "issues",
             "notes": "The page is about 287px wider than the viewport, so it scrolls sideways. Otherwise every worksheet step ran and every anchor was present."
           }
-        ]
+        ],
+        "headline": "the page does not reflow at phone width: it stays about 288px wider than the screen, so it scrolls sideways. Use it on a laptop or a projector."
       },
       "run_specific_values": {
         "checked": "2026-09-22",
@@ -239,7 +240,8 @@
           "localStorage: nonce-lattice-config"
         ],
         "cookies": [],
-        "notes": "Observed with Playwright in Chromium, Firefox and WebKit at 1280x720 and 390x720, through page load and every worksheet step: no request went to any origin but the exhibit’s own."
+        "notes": "Observed with Playwright in Chromium, Firefox and WebKit at 1280x720 and 390x720, through page load and every worksheet step: no request went to any origin but the exhibit’s own.",
+        "headline": "loads its web font from Google Fonts, so opening it sends a request to that service."
       },
       "support": {
         "checked": "2026-09-22",

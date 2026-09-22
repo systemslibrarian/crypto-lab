@@ -211,7 +211,8 @@
         "checked": "2026-09-22",
         "value": "no",
         "notes": "No free-form input and no randomness: a protocol picker and one checkbox drive a deterministic breadth-first search, and the lab tests that determinism twice. Only the animated state counter's intermediate values vary, and nothing records them. Checked at 24c7e9c2dd01."
-      }
+      },
+      "outcome_note": "Its class sequence is a demonstration of symbolic protocol analysis rather than one of this module's outcomes: the Diffie-Hellman arc that served outcome 1 moved into Fix / Extend when the worksheet was cut to its budget."
     }
   ],
   "discussion_questions": [
@@ -254,5 +255,6 @@
     ]
   },
   "trimmed": [],
-  "last_checked": "2026-09-22"
+  "last_checked": "2026-09-22",
+  "time_note": "The core sequence is two minutes over the 75 this module plans for, in TLS Handshake, after every cut its worksheet named: what remains would cost the question that asks which check stopped which attacker move."
 }

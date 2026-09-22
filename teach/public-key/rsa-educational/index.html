@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Educational RSA — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Educational RSA exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/public-key/rsa-educational/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Educational RSA">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/rsa-educational/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Educational RSA">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/rsa-educational/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Public-key &amp; signatures</a></li><li><span aria-current="page">Educational RSA</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Public-key &amp; signatures</a></p>
+  <h1>Worksheet: Educational RSA</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/">Educational RSA</a></dd></div>
+  <div><dt>Time</dt><dd>About 35 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>ad0235d64da7</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to compute an RSA keypair (n, φ(n), e, d) from two small primes and explain why d is taken as the inverse of e modulo φ(n).</li><li>Students will be able to demonstrate that textbook RSA is deterministic and malleable, and contrast it with randomized RSA-OAEP encryption of the same plaintext.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/public-key/rsa-educational.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/public-key/rsa-educational.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>You are about to build an RSA key from p = 257 and q = 263 with public exponent e = 17. Work out n and φ(n) on paper now and write both into the prediction column of the first table under Record. Then write down the equation the private exponent d has to satisfy. You are not expected to solve it yet.</li><li>Predict how many multiplications it takes to compute m^17 mod n if you simply multiply m by itself over and over. Then predict how many steps a method that repeatedly <em>squares</em> would need for e = 17, and how many it would need for e = 65537. Write all four numbers into the square-and-multiply table.</li><li>The same short message is encrypted twice to the same public key, with no padding. Predict whether the two ciphertexts come out equal, and say what someone watching the wire learns either way. Then: an attacker with no private key takes two ciphertexts, multiplies them together modulo n, and hands the product to the key's owner. Predict what the owner's decryption produces.</li><li>A key is published whose modulus n fits in 17 bits. Predict how long a browser tab needs to recover p and q from it, and say what the attacker can compute once it has them.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>The exhibit is one page of numbered sections, not tabs. Work top to bottom.</p>
+<ol><li>Open the exhibit and go to <strong>2 · Generate a key, step by step</strong>. The page has already built a key before you touch anything. Check that <strong>Prime p</strong> reads 257, <strong>Prime q</strong> reads 263 and <strong>Exponent e</strong> reads 17; if any of them differs, type the two primes first, choose <strong>Exponent e</strong> last, and press <strong>Generate</strong>. Record the seven rows of the derivation, and the note printed beside each one, in the first table.</li><li>Press <strong>Roll random primes</strong> and record your own key in the second table: <strong>Prime p</strong>, <strong>Prime q</strong>, <strong>Exponent e</strong>, and the rows for n, φ(n) and d. Your numbers will not match your neighbour's.</li><li>Press <strong>Try a too-small / repeated prime</strong>. Record what the status line says and where the link inside it points. Then type 9 into <strong>Prime p</strong>, press <strong>Generate</strong>, and record that message too.</li><li>Put the class key back: type 257 into <strong>Prime p</strong> and 263 into <strong>Prime q</strong>, choose 17 in <strong>Exponent e</strong>, and press <strong>Generate</strong>. Check that the status line is back to the valid-keypair message before going on — the sections below are built from the key generated here.</li><li>Go to <strong>3 · Encrypt &amp; decrypt</strong> and leave <strong>Message (short)</strong> reading <code>Hi</code>. Record the three value rows, the two character codes shown under the sentence beginning &quot;How text becomes a number&quot;, and the warning line under the heading.</li><li>Add one character to the end of <strong>Message (short)</strong> so the box reads <code>Hii</code>. Record what the status line says. Then delete that character so the box reads <code>Hi</code> again.</li><li>Now open <strong>Show the encryption math (square-and-multiply)</strong>. Record the &quot;squarings + multiplies&quot; line while <strong>Tiny exponent (e = 3)</strong> is the selected button, then press <strong>Real key exponent (e = 17)</strong> and record that line as well. The number printed in that button is the e your own key uses.</li><li>Go to <strong>3½ · The round trip, in one picture</strong>. Record the five boxes across the flow — their small top labels read <code>text</code>, <code>encode</code>, <code>ciphertext</code>, <code>recovered</code> and <code>decode</code> — and then the two equation lines beside the clock. Press <strong>Replay the round trip</strong>; the legend beside the ring names the two hops, so note which of them is drawn first, or note that both appear at once.</li><li>Go to <strong>4 · Sign &amp; verify</strong> and leave <strong>Message to sign</strong> as it is. Record the four rows and the verdict line in the &quot;tamper off&quot; column of the sign-and-verify table. Now tick <strong>Tamper with the message after signing</strong> and record the same four rows and the verdict in the &quot;tamper on&quot; column. Untick it again.</li><li>Go to <strong>5 · What breaks at scale</strong>. Read the line under the &quot;Your key&quot; heading and record the bit length it reports. Press <strong>Factor it!</strong> and record the time in the alarm line, the recovered primes, the reconstructed d, the &quot;Anyone can now decrypt&quot; row, and the strategy-and-iterations sentence. On the other card, record the state of <strong>Factor it (infeasible)</strong> and what that card's last sentence says about where its cost figure comes from.</li><li>Go to <strong>6 · Why real RSA adds padding</strong>. Record the two textbook ciphertext rows and the verdict under them. Press <strong>Run the real OAEP comparison</strong> — it builds a 2048-bit key first, so give it a few seconds — and record the first eight characters of each of its two rows, plus its verdict. Finally record the four rows under <strong>A second reason: textbook RSA is malleable</strong> and the verdict beneath them.</li></ol>
+<aside class="ws-note"><p>Editing <strong>Prime p</strong> or <strong>Prime q</strong> rebuilds the <strong>Exponent e</strong> list, so choose e last. While p and q are not two different primes, that list is empty.</p></aside>
+<aside class="ws-note"><p>Everything below Section 2 is rebuilt when you press <strong>Generate</strong> or <strong>Roll random primes</strong>, and the math disclosure in Section 3 closes again whenever you edit <strong>Message (short)</strong>. Open it after you have finished typing, as step 7 does.</p></aside>
+<aside class="ws-note"><p>If Section 2 shows a warning instead of the valid-keypair message, no new derivation is on screen. Set two different primes, choose an exponent, and press <strong>Generate</strong> before continuing.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything here comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Derivation row in Section 2, My prediction (Predict 1), Value the page showed, Note printed beside it">
+<table>
+<thead><tr><th scope="col">Derivation row in Section 2</th><th scope="col">My prediction (Predict 1)</th><th scope="col">Value the page showed</th><th scope="col">Note printed beside it</th></tr></thead>
+<tbody>
+<tr><th scope="row">p (prime)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">q (prime)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">n = p · q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">φ(n) = (p − 1)(q − 1)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">e (public exponent)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">d = e⁻¹ mod φ</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">check: e · d mod φ</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: My own key, from Roll random primes, What I got">
+<table>
+<thead><tr><th scope="col">My own key, from Roll random primes</th><th scope="col">What I got</th></tr></thead>
+<tbody>
+<tr><th scope="row">Prime p</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Prime q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Exponent e</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">n = p · q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">φ(n) = (p − 1)(q − 1)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">d = e⁻¹ mod φ</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: What I did in Section 2, What the status line said, Anything else it showed">
+<table>
+<thead><tr><th scope="col">What I did in Section 2</th><th scope="col">What the status line said</th><th scope="col">Anything else it showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Generate with 257, 263 and 17</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Try a too-small / repeated prime</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Generate with Prime p set to 9</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Section 3, What I recorded">
+<table>
+<thead><tr><th scope="col">Section 3</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row">Message → integer m</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The two character codes shown for <code>H</code> and <code>i</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ciphertext c = m^e mod n</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Decrypted c^d mod n</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Warning line under the heading</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Status line when the box read <code>Hii</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<p>The first row below has no value from the page; it is your own estimate from Predict 2. Fill the last row in Fix / Extend 3.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Square-and-multiply trace, My prediction: number of steps, The line the page printed">
+<table>
+<thead><tr><th scope="col">Square-and-multiply trace</th><th scope="col">My prediction: number of steps</th><th scope="col">The line the page printed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Repeated multiplication, no squaring, e = 17</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Tiny exponent (e = 3)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Real key exponent (e = 17)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Real key exponent after Roll random primes</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Section 3½, What I recorded">
+<table>
+<thead><tr><th scope="col">Section 3½</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row"><code>text</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>encode</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>ciphertext</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>recovered</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>decode</code> box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The e · d line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The line writing that product as a multiple of φ</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Which hop was drawn first</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: Section 4 row, Tamper off, Tamper on">
+<table>
+<thead><tr><th scope="col">Section 4 row</th><th scope="col">Tamper off</th><th scope="col">Tamper on</th></tr></thead>
+<tbody>
+<tr><th scope="row">H(message) signed</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Signature s</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Delivered message verifier sees</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered s^e mod n vs fresh H(m)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 8: Section 5, What I recorded">
+<table>
+<thead><tr><th scope="col">Section 5</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row">Bit length the card reports for my key</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Time in the alarm line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered primes p, q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reconstructed private d</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Anyone can now decrypt</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Strategy and iterations</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Does that d match the d in the first table?</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">State of Factor it (infeasible)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the card says about where its cost figure comes from</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 9: Section 6, What I recorded">
+<table>
+<thead><tr><th scope="col">Section 6</th><th scope="col">What I recorded</th></tr></thead>
+<tbody>
+<tr><th scope="row">Textbook: encrypt once</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Textbook: encrypt again</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Textbook verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">OAEP: encrypt once, first eight characters</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">OAEP: encrypt again, first eight characters</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">OAEP verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">a, and Enc(a)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">b, and Enc(b)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Enc(a)·Enc(b) mod n</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">That decrypts to</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Look at your <code>d = e⁻¹ mod φ</code> and <code>check: e · d mod φ</code> rows, and at the aside headed <strong>WHAT IS φ?</strong>. In its wording, say what φ(n) counts, why (p − 1)(q − 1) is that count when n = p · q, and why d is inverted modulo φ rather than modulo n. Then say which of your seven rows someone holding only n and e cannot fill in.</li><li>Copy your two equation lines from the Section 3½ table and check the arithmetic yourself. Using the paragraph printed beside them, explain why raising to d undoes raising to e. That paragraph closes with a smaller note about gcd(m, n) = 1: say what it states is needed to cover every m below n, and which two named results it says do that work.</li><li>Compare the two lines you recorded for the square-and-multiply trace. For each line, is the total the page prints smaller or larger than the number it prints after &quot;not&quot;? Use the per-bit rows under each trace — one row per exponent bit, each marked as a multiply or a skip — to say where every multiply came from, and what has to be true of an exponent before this method saves work.</li><li>Section 5 reconstructed a private exponent without being given one. Using your strategy-and-iterations sentence, say what that attack had to search through, and compare its reconstructed d with the d in your first table. Then, using the two panels in <strong>1 · The big idea: a trapdoor</strong> and the last sentence on the 2048-bit card, say what the page claims is different about a 2048-bit modulus, and what it says it did <em>not</em> do to arrive at that figure.</li><li>The signature row did not change when you ticked the tamper box, but the verdict did. Using the &quot;Recovered s^e mod n vs fresh H(m)&quot; row, say which of those two values changed and why, and what the verifier had to know in order to compute each of them. Then quote the reason the warning under the Section 4 heading gives for calling these signatures forgeable.</li><li>Name the two properties of textbook RSA that Section 6 demonstrates, and point to the recorded row that is your evidence for each. Compare the textbook ciphertext you recorded in Section 6 with the one you recorded in Section 3: are they the same number, and why? Then say what changed in the OAEP rows, and what the sentence under the malleability rows claims OAEP's padding does to a product of ciphertexts.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A service generates RSA keys by drawing p and q from a short list of small primes, much like the values suggested in <strong>Prime p</strong> and <strong>Prime q</strong> here. Using your Section 5 row — the time, the iteration count and the recovered primes — and the two cards in that section, name the change the page supports, and say which of your recorded Section 5 values would read differently afterwards, and why.</li><li><strong>Fix.</strong> A product encrypts short, fixed-format tokens with textbook RSA and stores the ciphertexts. Using your Section 6 rows, say what someone who sees only the stored ciphertexts can work out. The closing line of Section 6 names one padding scheme for encryption and another for signatures: name both, and say which of your Section 6 rows would read differently under the encryption one.</li><li><strong>Extend.</strong> Press <strong>Roll random primes</strong> again. In Section 3, open <strong>Show the encryption math (square-and-multiply)</strong> and press the second of the two exponent buttons — the one that read <strong>Real key exponent (e = 17)</strong> on the class key, and that now carries your new key's exponent instead. Record that line in the last row of the square-and-multiply table and compare it with the other two. Then press <strong>Factor it!</strong> again and compare the time, the iteration count and the bit length the card now reports with your first run.</li><li><strong>Extend.</strong> In Section 2 set <strong>Prime p</strong> to 11 and <strong>Prime q</strong> to 13, take whichever value <strong>Exponent e</strong> offers first, and press <strong>Generate</strong>. Record what Section 3's status line now says, what the <code>text</code> and <code>decode</code> boxes of the Section 3½ flow show, and — after pressing <strong>Run the real OAEP comparison</strong> again — what each of the two blocks in Section 6 says it encrypted. Say which message each part of the page fell back to, and whether the two halves of the Section 6 comparison are still encrypting the same thing. Put the class key back when you are done.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

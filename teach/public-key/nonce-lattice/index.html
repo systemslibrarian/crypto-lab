@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Nonce Lattice — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Nonce Lattice exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/public-key/nonce-lattice/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Nonce Lattice">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/nonce-lattice/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Nonce Lattice">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/nonce-lattice/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Public-key &amp; signatures</a></li><li><span aria-current="page">Nonce Lattice</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Public-key &amp; signatures</a></p>
+  <h1>Worksheet: Nonce Lattice</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-nonce-lattice/">Nonce Lattice</a></dd></div>
+  <div><dt>Time</dt><dd>About 40 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>6b023a9e821b</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to derive an ECDSA private key from two signatures that reuse a nonce, and justify how RFC 6979 deterministic nonces block that recovery.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/public-key/nonce-lattice.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/public-key/nonce-lattice.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>Every ECDSA signature satisfies <code>s = k⁻¹(h + r·d) mod n</code>, which rearranges to the linear congruence <code>r·d − s·k + h ≡ 0 (mod n)</code>. Here <code>d</code> is the private key and <code>k</code> is the one-time nonce, and both are unknown; <code>r</code>, <code>s</code> and <code>h</code> are public. One signature is therefore one equation in two unknowns. Now suppose a signer produces two signatures over two <em>different</em> messages using the <em>same</em> <code>k</code>. Write down what an observer would see in the two public signatures that gives the reuse away, then say whether two such equations are enough to solve for <code>d</code>, and why.</li><li>To pin down a 256-bit secret, the leakage an attacker collects has to exceed the secret's entropy: leaked bits per signature multiplied by the number of signatures must clear 256. This lab's controls stop at 32 leaked bits per signature and 32 signatures. Predict the smallest number of signatures at which 24 known bits each could be enough, and predict what the lab should say about 24 bits across 4 signatures.</li><li>RFC 6979 derives the nonce deterministically from the private key and the message instead of drawing it from a random source. Predict what this attack should report for a batch of RFC 6979 signatures, and predict whether the attacker is left with a lattice that merely fails to give up the key, or with no lattice to reduce at all.</li><li>Later you will hold the signature count fixed and vary the leak size until recovery stops working. Predict whether that will be a sharp line — every run above it succeeds, every run below it fails — or a band. Say what you would expect to see from three runs of the same configuration sitting right at the edge.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. It runs a configuration by itself on load, so wait until the line under the pipeline strip stops reading <em>Running lattice analysis</em>. Read the always-visible panel <strong>The one equation everything hangs on</strong> and note the rearranged congruence it prints.</li><li>In the <strong>Configuration</strong> panel, set <strong>Curve</strong> to <em>secp256k1 (Bitcoin)</em>, <strong>Leak Mode</strong> to <em>MSB leak — top bits known</em>, <strong>Leak Size (bits)</strong> to <code>24</code> and <strong>Signature Count</strong> to <code>12</code>. Press <strong>Generate Attack</strong>, the submit button at the foot of that form, and wait for the run to finish.</li><li>In the panel headed <strong>Can this configuration recover the key?</strong>, record the badge beside that heading and the coloured sentence printed under the plot. Then read the closing paragraph of that panel, which begins <em>Reading the axes honestly</em>, and record the curve it names and the bits-per-signature figure it quotes from the classic Hidden Number Problem result.</li><li>Four walkthrough steps appear above the analysis panels once a run finishes, in the same order as the pipeline strip. Every new run reopens the first of them. Open the first step and, from the <strong>Signature Log</strong> table, record for signatures 1 and 2: the <em>leaked_bits</em> entry and the leading digits shown in the <em>r</em>, <em>s</em>, <em>h</em> and <em>SHA-256</em> columns.</li><li>Press <strong>Generate Attack</strong> again without changing anything, open the first walkthrough step again, and record the same five values for signatures 1 and 2 a second time.</li><li>Open the third walkthrough step. Read <em>How one signature becomes one lattice row</em>, then record from the <strong>Basis View</strong> table how many rows it has and the <em>before</em> and <em>after</em> values on row 1. If the run recovered the key, the key bridge below the two matrices prints a line labelled <em>secretCoordinate / B (mod n)</em>; record the hex value on it.</li><li>Open the fourth walkthrough step. Record the banner text at the top of the panel, the two lines on the <em>Validation</em> card, and whether any byte in the two-row key grid is marked as not matching. Then scroll to <strong>Execution details</strong> at the foot of the page and record <em>Signatures</em> and <em>Worker runtime</em>.</li><li>Set <strong>Leak Mode</strong> to <em>Reused nonce — PS3-style</em> and <strong>Signature Count</strong> to <code>2</code>, leaving <strong>Leak Size (bits)</strong> at <code>24</code>. Press <strong>Generate Attack</strong>. Record the scenario line under the pipeline strip, the feasibility badge, the two <em>r</em> values in the <strong>Signature Log</strong>, the banner in the fourth step, and what the third step's <strong>Lattice View</strong> and <strong>Basis View</strong> say in place of matrices.</li><li>Staying on that run, read the panel headed <strong>Two signatures, no lattice needed</strong> in the fourth step. Record the two formulas it prints, one for <code>k</code> and one for <code>d</code>, and the value it gives for <code>k</code>.</li><li>Set <strong>Leak Mode</strong> to <em>RFC 6979 — deterministic (secure)</em> and <strong>Signature Count</strong> to <code>12</code>, leaving <strong>Leak Size (bits)</strong> at <code>24</code>. Press <strong>Generate Attack</strong>. Record the scenario line, the summary line, the feasibility badge and the sentence under the plot, the banner, the <em>Recovered Key</em> card, the diagnostic sentence printed in the second walkthrough step, and the single line listed under <em>Diagnostics</em> in the fourth.</li><li>Still in RFC 6979 mode, press <strong>Measure this column</strong> and record the reason the panel gives for declining. Then set <strong>Leak Mode</strong> back to <em>MSB leak — top bits known</em> and <strong>Signature Count</strong> to <code>4</code>, press <strong>Measure this column</strong>, and record that reason. Then set <strong>Signature Count</strong> to <code>32</code>, press it again, and record that reason.</li><li>Set <strong>Signature Count</strong> to <code>12</code> and press <strong>Measure this column</strong>. This runs the real attack several times over at each of several leak sizes, so it takes a while; while it works, the panel says which rung it is on and shows the rungs it has not reached yet as <em>queued</em>. Leave the form alone until it finishes, then record every row of the table it fills in and the verdict paragraph below the table.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Run, Feasibility badge, Scenario line under the pipeline strip, Summary line, Banner in the fourth step">
+<table>
+<thead><tr><th scope="col">Run</th><th scope="col">Feasibility badge</th><th scope="col">Scenario line under the pipeline strip</th><th scope="col">Summary line</th><th scope="col">Banner in the fourth step</th></tr></thead>
+<tbody>
+<tr><th scope="row">MSB, 24 bits, 12 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reused nonce, 2 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">RFC 6979, 12 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Signature Log (MSB runs), leaked_bits, r, s, h, SHA-256">
+<table>
+<thead><tr><th scope="col">Signature Log (MSB runs)</th><th scope="col">leaked_bits</th><th scope="col">r</th><th scope="col">s</th><th scope="col">h</th><th scope="col">SHA-256</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run, signature 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">First run, signature 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run, signature 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run, signature 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Lattice and recovery (MSB run), Value">
+<table>
+<thead><tr><th scope="col">Lattice and recovery (MSB run)</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Rows in the Basis View table</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Row 1, before</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Row 1, after</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">secretCoordinate / B (mod n)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Validation card, first line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Validation card, second line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Execution details: Signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Execution details: Worker runtime</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Reading, Reused-nonce run, RFC 6979 run">
+<table>
+<thead><tr><th scope="col">Reading</th><th scope="col">Reused-nonce run</th><th scope="col">RFC 6979 run</th></tr></thead>
+<tbody>
+<tr><th scope="row">Are the r values in the log equal?</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the Lattice View shows in place of matrices</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the Basis View shows in place of rows</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered Key card</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Diagnostic in the second walkthrough step</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Configuration offered to Measure this column, Reason it gave for declining">
+<table>
+<thead><tr><th scope="col">Configuration offered to Measure this column</th><th scope="col">Reason it gave for declining</th></tr></thead>
+<tbody>
+<tr><th scope="row">RFC 6979, 12 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">MSB, 4 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">MSB, 32 signatures</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Measured column: MSB, 12 signatures, leak bits, recovered, rate, outcome, and milliseconds">
+<table>
+<thead><tr><th scope="col">Measured column: MSB, 12 signatures</th><th scope="col">leak bits</th><th scope="col">recovered</th><th scope="col">rate</th><th scope="col">outcome, and milliseconds</th></tr></thead>
+<tbody>
+<tr><th scope="row">Rung 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 4</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 5</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rung 6</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: Verdict paragraph, Value">
+<table>
+<thead><tr><th scope="col">Verdict paragraph</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Measured boundary, in bits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Information floor it prints</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Drawn practical curve it prints</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Rungs it names as recovering sometimes</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Compare your two MSB runs. Which of the five recorded columns changed between them and which did not? The <em>leaked_bits</em> entry names both how many bits the attacker is given and what value those bits take — what is that value, and what does it tell you about how this demo produces a leak? What does an unchanged <em>SHA-256</em> column tell you about the messages the two runs signed, and why does that matter when you are deciding which of your recorded numbers a classmate could be expected to match?</li><li>In your reused-nonce run the two signatures shared one <code>r</code>. Using the two formulas the derivation panel prints, explain why sharing <code>k</code> makes <code>r</code> repeat, and how the pair of equations then yields first <code>k</code> and then <code>d</code>. Reading the formula for <code>k</code>, say what would have to be true of the two signatures for that arithmetic to break down, and why signing two different messages makes that unlikely.</li><li>The RFC 6979 run recovered nothing, and the third walkthrough step had no matrix in it at all rather than a matrix that failed. Using the diagnostic the page printed in the second step and the <em>Why this works</em> paragraph in the fourth, say what RFC 6979 removes from the signing path, and where the page says the security question moves to instead. Then say which of the two failures you reproduced in this exhibit — the reused nonce and the leaked nonce bits — that change addresses, and which one the closing paragraph of the same panel says is left as a separate question.</li><li>Compare the feasibility badge you recorded for the reused-nonce run and for the RFC 6979 run against what those two runs actually did. Using the note printed under the plot, say which configurations the gauge is about and which it is not. Write one sentence you would add to that panel to stop a reader drawing the wrong conclusion from the badge alone.</li><li>Look at your measured column. Which rungs recovered on some runs and not on others, and what does the verdict paragraph say decides the outcome at those rungs? Compare the measured boundary with the information floor and with the drawn practical curve that the same paragraph prints. Finally, using <em>Reading the axes honestly</em>, explain why your measurement is a statement about this page rather than about secp256k1, and what that paragraph gives as the real reason ordinary keys are safe.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> At the foot of the page there is a collapsed section whose summary ends <em>Real-world case studies, timeline, and related labs</em>. Open it and read the Android wallet entry from 2013 and the Minerva entry from 2019. The second walkthrough step lists an Attack Path and a Defense Path side by side. For each of those two incidents, name the Defense Path items that address it, and say which rung of the Attack Path each incident supplied for free. Then say which of the two the RFC 6979 mode you ran demonstrates a fix for, and which it leaves open.</li><li><strong>Extend.</strong> Measure a second column. Leave <strong>Leak Mode</strong> on <em>MSB leak — top bits known</em>, set <strong>Signature Count</strong> to <code>10</code>, and press <strong>Measure this column</strong> again. Two measured points are now drawn over the modelled curves. Compare the two measured boundaries with each other, and each with the drawn practical curve at its own signature count. What does the pair suggest about whether the drawn curve is optimistic, pessimistic, or about right over this range?</li><li><strong>Extend.</strong> Set <strong>Curve</strong> to <em>P-256 (NIST)</em> and press <strong>Generate Attack</strong> with the same leak mode, leak size and signature count as your first run. Record what changes in the closing <em>Reading the axes honestly</em> paragraph and in <strong>Execution details</strong>, and what does not change in the bits-per-signature figure it quotes. Explain what that figure depends on, and why two different standardised curves can share it.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

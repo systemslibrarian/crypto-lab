@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: ECDSA Forge — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the ECDSA Forge exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/public-key/ecdsa-forge/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: ECDSA Forge">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/ecdsa-forge/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: ECDSA Forge">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/public-key/ecdsa-forge/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Public-key &amp; signatures</a></li><li><span aria-current="page">ECDSA Forge</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Public-key &amp; signatures</a></p>
+  <h1>Worksheet: ECDSA Forge</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/">ECDSA Forge</a></dd></div>
+  <div><dt>Time</dt><dd>About 45 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>1de890f5e9f9</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to derive an ECDSA private key from two signatures that reuse a nonce, and justify how RFC 6979 deterministic nonces block that recovery.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/public-key/ecdsa-forge.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/public-key/ecdsa-forge.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>An ECDSA signer holds a secret scalar <code>d</code> and publishes <code>Q = d·G</code>. To sign a message hash <code>e</code> the signer picks a nonce <code>k</code>, computes <code>r</code> as the x-coordinate of <code>k·G</code> reduced mod <code>n</code>, and <code>s = k⁻¹(e + r·d) mod n</code>. The signer now signs two <em>different</em> messages with the same <code>d</code> and the same <code>k</code>. Predict which of <code>r</code>, <code>s</code> and <code>e</code> come out the same across the two signatures and which come out different. Give your reason for each.</li><li>Write the two signing equations from question 1 side by side, one per message. Treating <code>d</code> and <code>k</code> as the unknowns and <code>r</code>, <code>s₁</code>, <code>s₂</code>, <code>e₁</code>, <code>e₂</code> as known, count the equations and count the unknowns. Predict whether someone who never sees the private key can solve for <code>d</code>, and say what the first step of that solution would be.</li><li>An attacker instead has only the public key <code>Q</code> and the generator <code>G</code>, and no signatures at all. Predict whether <code>d</code> can be recovered from those two points, and say what makes this case different from question 2.</li><li>RFC 6979 computes the nonce from the private key and the message with HMAC-SHA-256 instead of drawing it from a random number generator. Predict what happens to the signature when the <em>same</em> message is signed twice this way, and what happens to the nonce when two <em>different</em> messages are signed. Then say what each answer does to the attack you described in question 2.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and stay in <strong>What Is ECDSA?</strong>. Leave <strong>Curve</strong> on its starting option and press <strong>Generate Keypair</strong>. Record what <strong>Public key Q (compressed)</strong> now shows, what the line beginning <strong>Private key</strong> shows, and the status line at the bottom of the message panel.</li><li>In the same section's right-hand panel, leave the text in <strong>Message</strong> as you found it. Press <strong>Sign Random</strong> and record <strong>Signature (r, s)</strong>. Press <strong>Verify</strong> and record the status line. Press <strong>Sign Random</strong> a second time and record the new <strong>Signature (r, s)</strong>, then press <strong>Verify</strong> again.</li><li>Edit <strong>Message</strong> — add a word to it — and press <strong>Verify</strong> <em>without</em> signing again. Record the status line. Restore the original wording, press <strong>Verify</strong> once more, and record the status line again.</li><li>Press <strong>Sign Deterministic (RFC 6979)</strong> twice in a row, leaving <strong>Message</strong> untouched, and record <strong>Signature (r, s)</strong> after each press.</li><li>Scroll to <strong>The Math You Can See</strong> and work in the right-hand panel, <strong>The real thing: a finite field</strong>. Move the <strong>Walk k·G</strong> slider and read the line under the plot. Record the point the page reports for <code>k = 5</code>, for <code>k = 7</code>, and for one more value of your choosing. Read the note printed below that line.</li><li>Scroll to <strong>The Nonce-Reuse Attack</strong> and read <strong>Why it works: two equations, two unknowns</strong>. Then move to <strong>Try it yourself on the toy curve</strong>, leave all four sliders at the values they load with, and read the four cards the panel prints below them. Record <code>r</code> from Signature 1, <code>r</code> from Signature 2, both <code>s</code> values, the recovered <code>k</code>, the recovered <code>d</code>, and what the last card reports about the freshly forged signature.</li><li>Still in the toy panel, make these changes one at a time and record what the panel says after each. Move <strong>Private key d</strong> to any other value. Move <strong>Reused nonce k</strong> to 7, then to 12, then back to the value it loaded with. Finally drag <strong>Message hash e₁</strong> until it equals <strong>Message hash e₂</strong>, then put it back.</li><li>Scroll to <strong>Now on real 256-bit keys</strong>. Before pressing anything, note what the <strong>VICTIM</strong> box shows in place of Alice's private key. Press <strong>Run Full Compromise</strong>. Read the five timeline steps, then expand <strong>Show the full 256-bit values</strong> and record the values listed in the Record table. Note what the <strong>VICTIM</strong> box shows now.</li><li>Press <strong>Run Full Compromise</strong> a second time and record the same values from the second run.</li><li>Scroll to <strong>RFC 6979 Deterministic Nonces</strong> and press <strong>Reset Samples</strong> first, so both lists start empty. Leaving <strong>Message for comparison</strong> as you found it, press <strong>Sign Random</strong> in this panel twice, then press <strong>Sign RFC 6979</strong> twice. Record the rows that appear under <strong>Random nonce output</strong> and under <strong>RFC 6979 output</strong>.</li><li>Change <strong>Message for comparison</strong> — add a word — and press <strong>Sign RFC 6979</strong> once more. Record the new row. Then press <strong>Try the nonce-reuse attack against RFC 6979</strong> and record the status line beneath it.</li></ol>
+<aside class="ws-note"><p>If the toy panel answers with a degenerate nonce or asks you for two different hashes, that is one of its answers and not a mistake on your part. Record what it said and carry on with the step.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run. The 256-bit numbers are far too long to copy out: for those, write the first six and the last six digits, which is enough to tell two runs apart.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: From the first panel, What it showed">
+<table>
+<thead><tr><th scope="col">From the first panel</th><th scope="col">What it showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Public key Q (compressed)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The line beginning Private key</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Press, Signature (r, s) shown, Status line">
+<table>
+<thead><tr><th scope="col">Press</th><th scope="col">Signature (r, s) shown</th><th scope="col">Status line</th></tr></thead>
+<tbody>
+<tr><th scope="row">Sign Random, first press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verify, after the first Sign Random</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Sign Random, second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verify, after the second Sign Random</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verify after editing Message</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verify after restoring Message</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Sign Deterministic (RFC 6979), first press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Sign Deterministic (RFC 6979), second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Walk k·G, Point the page reports">
+<table>
+<thead><tr><th scope="col">Walk k·G</th><th scope="col">Point the page reports</th></tr></thead>
+<tbody>
+<tr><th scope="row">k = 5</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k = 7</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k =</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Toy panel, sliders as loaded, Value">
+<table>
+<thead><tr><th scope="col">Toy panel, sliders as loaded</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">r in Signature 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">r in Signature 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">s₁</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">s₂</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered k</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recovered d</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the forgery card reports</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Change I made in the toy panel, What the panel reported">
+<table>
+<thead><tr><th scope="col">Change I made in the toy panel</th><th scope="col">What the panel reported</th></tr></thead>
+<tbody>
+<tr><th scope="row">Private key d moved to</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reused nonce k = 7</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reused nonce k = 12</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">e₁ set equal to e₂</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: From **Show the full 256-bit values**, Run 1, Run 2">
+<table>
+<thead><tr><th scope="col">From <strong>Show the full 256-bit values</strong></th><th scope="col">Run 1</th><th scope="col">Run 2</th></tr></thead>
+<tbody>
+<tr><th scope="row"><code>n (order)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>e1 = H(&quot;Transfer $10 to Bob&quot;)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>e2 = H(&quot;Transfer $20 to Charlie&quot;)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>r  (shared)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>s1</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>s2</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>recovered k</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>recovered d</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>victim's real d</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">the <code>match</code> line, in my own words</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Alice's private key, as the VICTIM box shows it after the run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: Timeline step, What it reported, in my own words">
+<table>
+<thead><tr><th scope="col">Timeline step</th><th scope="col">What it reported, in my own words</th></tr></thead>
+<tbody>
+<tr><th scope="row">Step 2 · Spot the reused nonce</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Step 5 · Forge a new signature</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 8: RFC 6979 panel, row by row, k, where the row shows one, r">
+<table>
+<thead><tr><th scope="col">RFC 6979 panel, row by row</th><th scope="col">k, where the row shows one</th><th scope="col">r</th></tr></thead>
+<tbody>
+<tr><th scope="row">Random nonce output, first press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Random nonce output, second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">RFC 6979 output, first press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">RFC 6979 output, second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">RFC 6979 output, after changing the message</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 9: Status line under Try the nonce-reuse attack against RFC 6979">
+<table>
+<thead><tr><th scope="col">Status line under Try the nonce-reuse attack against RFC 6979</th></tr></thead>
+<tbody>
+<tr><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Your two toy signatures printed the same <code>r</code>, and the panel marks that as the tell. Using the signing rule the page prints — <code>r</code> is the x-coordinate of <code>k·G</code> reduced mod <code>n</code> — explain why reusing <code>k</code> forces <code>r</code> to repeat. Then explain why the two <code>s</code> values still came out different.</li><li>Take the five numbers you recorded from the toy panel — <code>r</code>, <code>s₁</code>, <code>s₂</code> and the two message hashes on the sliders — and work the panel's two lines by hand, mod 19: first <code>k = (e₁ − e₂)·(s₁ − s₂)⁻¹</code>, then <code>d = (s₁·k − e₁)·r⁻¹</code>. Check your <code>d</code> against the <strong>Private key d</strong> slider. Then list which of the five numbers a signer publishes and which the signer is supposed to keep.</li><li>Compare your two <strong>Run Full Compromise</strong> runs. Say which recorded values changed between the runs and which did not. For each value that did <em>not</em> change, point to the line the page prints that explains why it could not.</li><li>The note under the finite-field plot says that multiplying <code>G</code> is easy and that finding <code>k</code> from the highlighted point is the hard problem ECDSA relies on. Alice's public key was on the page from the start, and it did not give up her private key. The compromise recovered that same private key in one press. Say precisely what the attacker had in the second case that she did not have in the first.</li><li>Setting <strong>Reused nonce k</strong> to 7 stopped the toy attack, and the panel named the reason. Using the point you recorded for <code>k = 7</code> on the <strong>Walk k·G</strong> slider, work out what <code>r</code> would be for that nonce. Then substitute that <code>r</code> into <code>s = k⁻¹(e + r·d) mod n</code> and say what <code>s</code> reduces to. Does refusing that nonce protect the private key, or does it prevent a different problem?</li><li>Your two <strong>Sign RFC 6979</strong> presses on one message, and the third press after you changed the message, gave three rows. Say what each comparison shows about the nonce. Then read the paragraph at the top of <strong>RFC 6979 Deterministic Nonces</strong> and the status line you recorded, and state both what the page says blocks the attack and what the page says that block rests on.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A hardware wallet signs with a nonce from a random number generator that occasionally restarts from the same seed. Say what an attacker watching that wallet's published signatures would look for, name which of the two signing buttons on this page corresponds to the fix, and state — from the page's own wording — what that fix still depends on.</li><li><strong>Fix.</strong> You are reviewing a signing service that avoids repeats by taking its nonce from a counter: <code>k = 1</code> for the first signature, <code>k = 2</code> for the second, and so on. No nonce is ever reused. Look at the second line of the recovery the toy panel prints, <code>d = (s₁·k − e₁)·r⁻¹</code>, and say what an attacker who can guess <code>k</code> needs in order to run that line, and how many signatures it would take. Say whether the tell you identified in Explain 1 would appear here.</li><li><strong>Extend.</strong> Move the <strong>Walk k·G</strong> slider through each value from 1 to 18 and write down the point for each. Count how many <em>distinct</em> x-coordinates appear. The panel builds <code>r</code> from that x-coordinate, so say how many different <code>r</code> values this toy curve can produce, and what that means for two signatures that happen to share an <code>r</code>.</li><li><strong>Extend.</strong> Change <strong>Curve</strong> to the other option and press <strong>Run Full Compromise</strong> again. Compare <code>n (order)</code>, <code>e1</code> and <code>e2</code> with the runs you already recorded, and say which of the three the curve choice changed. Note what the status line in the first panel now asks you to do, and why.</li><li><strong>Extend.</strong> Open <strong>ECDSA vs Ed25519</strong> and read the rows <em>Deterministic by default</em>, <em>Nonce reuse catastrophic</em> and <em>Malleable signatures</em>. Say which row the RFC 6979 panel is demonstrating, and name a property the table still records differently for the two schemes once RFC 6979 is in use.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

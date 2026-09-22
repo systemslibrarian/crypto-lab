@@ -537,8 +537,15 @@ function bibCollection(cff) {
   ].join('\n'));
 }
 
+/* No year field, and deliberately not "(n.d.)".
+   "(n.d.)" is a claim: it says no date exists for this work. One does - each exhibit is
+   a living page with a history - this collection just does not publish a per-exhibit
+   publication date that would be true of the build a reader is looking at. Asserting
+   the absence of something that exists is worse than omitting a field, so the field is
+   omitted and the retrieval date carries the "which version" job, which is the job it
+   is for. */
 function apaExhibit(cff, card) {
-  return `${cff.family}, ${cff.initials} (n.d.). <em>${esc(card.title)}</em> [Interactive teaching demonstration]. ${esc(cff.title)}. `
+  return `${cff.family}, ${cff.initials} <em>${esc(card.title)}</em> [Interactive teaching demonstration]. ${esc(cff.title)}. `
     + `Retrieved <span data-accessed="apa">[date accessed]</span>, from ${esc(card.url)}`;
 }
 
@@ -618,10 +625,14 @@ function modulePage(m, cff, site, worksheets) {
     return `<tr><th scope="row" rowspan="2"><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></th>`
       + `<td>${ROLE_LABEL[x.role]}</td><td>${x.minutes} min</td>`
       + `<td>${ws ? `<a href="${x.name}/">Worksheet<span class="visually-hidden"> for ${esc(x.card.title)}</span></a>` : '<span class="t-pending">Not yet written</span>'}</td></tr>`
-      + `\n<tr class="t-row-note"><td colspan="3">${esc(x.students_do)}</td></tr>`;
+      + `\n<tr class="t-row-note"><td colspan="3">${esc(x.students_do)}</td></tr>`
+      /* The citation sits beside the exhibit it cites, rather than in a list further
+         down that a reader has to match back up by title. */
+      + `\n<tr class="t-row-cite" id="cite-${esc(x.card.slug)}"><td colspan="3">`
+      + `<span class="t-cite-label">Cite this exhibit:</span> <span class="t-cite">${apaExhibit(cff, x.card)}</span>`
+      + `</td></tr>`;
   }).join('\n');
   const differ = m.exhibits.filter((x) => x.run_specific_values && x.run_specific_values.value === 'yes');
-  const cites = m.exhibits.map((x) => `<li><p class="t-cite">${apaExhibit(cff, x.card)}</p></li>`).join('\n');
   const bibs = m.exhibits.map((x) => bibExhibit(cff, x.card)).join('\n\n');
   const trimmed = m.trimmed.length
     ? `<section aria-labelledby="trimmed"><h2 id="trimmed">Left out of this sequence</h2>${list(m.trimmed.map((t) => `${t.name}: ${t.reason}`))}</section>`
@@ -702,7 +713,7 @@ ${syllabusBlock(site, 'module-syllabus')}
 </section>
 
 <section aria-labelledby="cite"><h2 id="cite">How to cite this module’s exhibits</h2>
-<ol class="t-cites">${cites}</ol>
+<p>Each exhibit's citation is in the Sequence table above, in that exhibit's own row. Exhibits change as they are improved, so the retrieval date is what says which version you used; it is filled in from your device's clock when the page loads.</p>
 <details><summary>BibTeX</summary><pre class="t-pre">${bibs}</pre></details>
 <p>To cite the whole collection, see <a href="../#cite">How to cite</a>.</p>
 </section>
@@ -821,9 +832,22 @@ function landingPage(modules, worksheets, cards, cff, site, evidence) {
     },
     'cite-collection': () => `<p class="t-cite">${apaCollection(cff)}</p>
 <pre class="t-pre">${bibCollection(cff)}</pre>`,
+    /* A picker, not a list, and it uses <details> rather than script: one flat run of
+       every exhibit in the catalog is a wall to scroll past, and a reader wants one
+       citation. Grouped by the initial of the title because that is a property of the
+       exhibit itself - a taxonomy would need maintaining, and would go stale. */
     'cite-exhibits': () => {
       const all = [...cards.values()].sort(byKey((c) => c.title));
-      return `<ul class="t-cites t-cites--all">${all.map((c) => `<li><p class="t-cite">${apaExhibit(cff, c)}</p></li>`).join('\n')}</ul>`;
+      const groups = new Map();
+      for (const c of all) {
+        const key = /^[a-z]/i.test(c.title) ? c.title[0].toUpperCase() : '#';
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(c);
+      }
+      return [...groups].map(([key, items]) => `<details class="t-details t-pick">`
+        + `<summary>Titles beginning ${esc(key)}</summary>`
+        + `<ul class="t-cites">${items.map((c) => `<li><p class="t-cite">${apaExhibit(cff, c)}</p></li>`).join('\n')}</ul>`
+        + `</details>`).join('\n');
     },
     'licence-terms': () => {
       if (!cff.licenseInfo) { fail('CITATION.cff: no license, so the reuse terms cannot be stated'); return ''; }

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: DP Noise — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the DP Noise exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/dp-noise/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: DP Noise">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/dp-noise/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: DP Noise">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/dp-noise/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Library privacy, for iSchools</a></li><li><span aria-current="page">DP Noise</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Library privacy, for iSchools</a></p>
+  <h1>Worksheet: DP Noise</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-dp-noise/">DP Noise</a></dd></div>
+  <div><dt>Time</dt><dd>About 25 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>abca4df106c0</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to demonstrate how two published totals can reveal one person's value, and describe how calibrated noise, a declared cap on one person's contribution, and a finite query budget limit what published statistics reveal about an individual while leaving group-level conclusions visible.</li><li>Students will be able to evaluate a vendor's or institution's privacy claim by naming the assumption it rests on (operators not combining their records, a trusted holder of the raw data, a budget that is enforced) and the party who must be trusted for it to hold.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/library-privacy/dp-noise.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/library-privacy/dp-noise.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see. Nothing here needs arithmetic beyond an average.</p>
+<ol class="ws-answer"><li>A payroll office promises it will publish only totals, never one person's pay. In the same week it publishes two of them: the total payroll, and the total payroll for everyone except one named employee. Write down what a reader who sees both can work out about that employee, and say whether the reader needs to know anything about the other people on the payroll in order to do it.</li><li>Now the office adds a random amount to each total before publishing it, and says so. Predict whether subtracting the two published totals still gives that employee's pay exactly, roughly, or not usefully at all. Then say what you would look for on screen to tell which of the three you are seeing — you will be able to run the same subtraction several times over.</li><li>Before a total can be published this way, somebody has to declare in advance the most that any one person's salary will be allowed to count for. Predict what happens to the published total if that declared cap is set lower than what the best-paid people actually earn, and what happens to the size of the random amount if the cap is set very high.</li><li>A reader is allowed to ask for the noisy total as often as they like, and averages all the answers they get back. Predict how that average compares with any single answer, and say what that would mean for the promise the randomness was added to keep.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. It opens on the guided route: in the navigator headed <strong>The core path</strong>, check that <strong>Guided lesson</strong> is the route shown as selected. Leave <strong>Classroom mode — reproducible, seeded sampling</strong>, at the foot of the opening section, unticked, so the numbers you record are your own. Do not move any ε control anywhere on the page while you work — every reading below assumes the value the page starts with.</li><li>Go to the section headed <strong>Two harmless totals, one person's salary</strong>. Under <strong>Predict first</strong>, press the option that matches your answer to Predict question 1 and read the explanation the page gives for the option you chose. Then, in the card headed <strong>The database</strong>, find the row tagged <strong>the target</strong> and copy her name and her salary into the first table under Record.</li><li>In the card headed <strong>The differencing attack</strong>, leave <strong>How the two totals are answered</strong> on <strong>Exactly — no noise, the broken mode</strong> and press <strong>Run the attack</strong>. Record the two totals the page lists, the difference it reports underneath them, and the headline of the verdict. Then open the disclosure inside that verdict and read its two paragraphs on what would not have helped.</li><li>Change <strong>How the two totals are answered</strong> to <strong>With differential privacy at ε = 1</strong>. The attack re-runs on its own. Record the new headline, the noise scale named in the verdict's second paragraph, and the five values in the chips labelled <code>run 1</code> to <code>run 5</code>.</li><li>Press <strong>Run the attack</strong> again without changing anything else, and record the second headline and the second set of five values. Note whether the verdict says any run landed close to the true salary, and what it says about that.</li><li>Go to the section headed <strong>Composition: ε is a budget, not a setting</strong>. Under <strong>Predict first</strong>, press the option that matches your answer to Predict question 4 and read the explanation. On this route the attack comes before the defence, so the card below it is <strong>The averaging attack — what happens with no budget at all</strong>.</li><li>Leave <strong>Number of times to ask, at ε = 0.5 each</strong> where it starts and press <strong>Run the averaging attack</strong>. It is finished when that button becomes pressable again. Record <strong>Queries asked</strong>, <strong>Running average</strong>, <strong>Error</strong> and <strong>ε spent</strong> from the row of figures, and the headline beneath them.</li><li>In the card below it, <strong>The ledger</strong>, leave <strong>Total ε budget for this session</strong> on its opening setting. Press <strong>Ask: total payroll (ε = 0.5)</strong> and keep pressing it until the page stops answering. After each press record whether an answer came back and the <strong>Charged</strong> and <strong>Remaining</strong> figures. Read the verdict that appears when it refuses.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: From the printed database, What it says">
+<table>
+<thead><tr><th scope="col">From the printed database</th><th scope="col">What it says</th></tr></thead>
+<tbody>
+<tr><th scope="row">The name in the row tagged &quot;the target&quot;</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Her salary, as the table prints it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: How the two totals were answered, Total payroll, Total payroll excluding her, The difference, Headline of the verdict">
+<table>
+<thead><tr><th scope="col">How the two totals were answered</th><th scope="col">Total payroll</th><th scope="col">Total payroll excluding her</th><th scope="col">The difference</th><th scope="col">Headline of the verdict</th></tr></thead>
+<tbody>
+<tr><th scope="row">Exactly — no noise</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">With differential privacy, first press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">With differential privacy, second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: With differential privacy, First press, Second press">
+<table>
+<thead><tr><th scope="col">With differential privacy</th><th scope="col">First press</th><th scope="col">Second press</th></tr></thead>
+<tbody>
+<tr><th scope="row">run 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">run 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">run 3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">run 4</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">run 5</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Noise scale named in the verdict</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: The averaging attack, What the page reported">
+<table>
+<thead><tr><th scope="col">The averaging attack</th><th scope="col">What the page reported</th></tr></thead>
+<tbody>
+<tr><th scope="row">Queries asked</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Running average</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Error</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">ε spent</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Headline</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Press of Ask: total payroll (ε = 0.5), Did an answer come back?, Charged, Remaining">
+<table>
+<thead><tr><th scope="col">Press of Ask: total payroll (ε = 0.5)</th><th scope="col">Did an answer come back?</th><th scope="col">Charged</th><th scope="col">Remaining</th></tr></thead>
+<tbody>
+<tr><th scope="row">First</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Third</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Fourth</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<aside class="ws-note"><p>Some of the figures above are the same on every machine and some are not. Explain question 2 asks you to work out which, using the page's own note about where its randomness comes from.</p></aside>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Compare the difference your exact run produced with the salary you copied from the printed table. Both queries the attacker asked were ones the system was built to answer. Say what the two had in common and what they differed in, and why that difference is one person. Then use the disclosure you opened in step 3 to say why a rule that only approved queries about large groups would not have stopped it.</li><li>Your runs with noise gave a spread of values rather than one. Using the noise scale the verdict names and the salary you copied down, say what a reader who saw only those five numbers could honestly claim about her pay. The verdict may report that a run landed close; the page says why that is not something an attacker can use, so put its reason in your own words. Then compare your values with a classmate's and, using the page's own note about where its randomness comes from, say why those five differ — and name one figure you recorded that was the same for both of you.</li><li>Every answer in the averaging attack was, on its own, a correctly private release, and the page says so. Using your row from that table and the verdict the ledger gave when it refused, say what the reader walked away with, where the page locates the failure, and why refusing to answer is treated as the right behaviour rather than a breakdown. Then read the recap card headed <strong>One thing the pictures can mislead you about</strong> and name one conclusion about the people in this payroll that stays available to a reader even when each of them individually is protected.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A library consortium publishes each month the total fines owed across all its member libraries, and the total fines owed by every member except one named branch. Using your records from Exhibit 1, say what a reader of a single month's figures can work out. Then name the three changes this exhibit makes to a published total so that they cannot, and for each one say who has to decide it and whether that decision happens before or after anybody looks at the data. Extend 3 and 4 below work through one of the three on the page; do those first if you have not already.</li><li><strong>Fix.</strong> A vendor tells your library that its reading-history analytics are &quot;differentially private at ε = 1, so no individual can be identified&quot;. Using the section headed <strong>What this demo does and does not prove</strong> and the verdict the ledger gave when it refused, write two questions you would need answered before you could evaluate that claim, and for each one name the party who has to be trusted for the answer to hold. Then open <strong>Jargon, unpacked</strong> in the opening section, read the entry for ε, and say why the vendor's sentence as written claims something ε does not measure.</li><li><strong>Extend.</strong> Open the exhibit on the guided route — <strong>Guided lesson</strong>, in the navigator headed <strong>The core path</strong> — and leave every ε control where the page starts it. Go to the section headed <strong>Where does Δ come from? You have to answer</strong> and work <strong>Declared upper bound on one person's salary</strong> through all four of its settings, noting for each one <strong>Sensitivity Δ</strong>, <strong>Noise scale b = Δ/ε</strong>, <strong>Records clipped</strong> and <strong>Clipping bias</strong> from the row of figures below the menu. Describe which way each of the two costs — the noise scale, and the clipping bias — moves as the bound rises, and say which of the two would still be there after a reader had averaged a great many published totals. Then find the note under that row of figures which says where the bound may <em>not</em> come from, and give the reason the page gives for it. Compare all of it with what you predicted in Predict question 3.</li><li><strong>Extend.</strong> Still on the guided route, in the section headed <strong>Where does Δ come from? You have to answer</strong>, set <strong>Declared upper bound on one person's salary</strong> to <strong>$250,000 — declared in advance</strong> and read the line about the thirteenth person to join the payroll. Press <strong>Clip her to the declared bound</strong>, then <strong>Drop her record from this release</strong>, then <strong>Raise the bound so it fits her</strong>, noting the headline each one produces and, where the page reports them, <strong>Δ used</strong>, <strong>Systematic bias</strong> and <strong>Still ε-differentially private</strong> — one of the three is refused and reports none of those figures. Using the page's stated reason for that refusal, say what the refused option would make the size of the noise depend on, and why that is a problem even though that option introduces no bias at all. Then say which of the other two you would choose for a payroll figure your library published, and what you would have to publish alongside the number for it to mean what a reader would take it to mean.</li><li><strong>Extend.</strong> In <strong>The ledger</strong>, change <strong>Total ε budget for this session</strong> to <strong>3</strong>, which starts the session's accounting again, then press <strong>Ask: total payroll (ε = 0.5)</strong> until it refuses once more. Say how many answers you got this time, and what changing that setting changed about the promise being made to the people in the database rather than about the mechanism. Open the refusal's disclosure and quote the sentence that says so.</li><li><strong>Extend.</strong> Below the averaging-attack chart there is a disclosure holding the plotted numbers as a table. Open it and read the error column and the ε column together, from the top of the table to the bottom. Say what each column does as the number of queries rises, and which of the two ever stops on its own.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

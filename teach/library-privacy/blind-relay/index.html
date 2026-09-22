@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Blind Relay — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Blind Relay exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/blind-relay/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Blind Relay">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/blind-relay/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Blind Relay">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/blind-relay/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Library privacy, for iSchools</a></li><li><span aria-current="page">Blind Relay</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Library privacy, for iSchools</a></p>
+  <h1>Worksheet: Blind Relay</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-blind-relay/">Blind Relay</a></dd></div>
+  <div><dt>Time</dt><dd>About 20 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>9de776c3565d</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to identify, for a catalog search, which party learns the requested title and which learns who asked, under a plain search, two-server private retrieval (patron-shield), and a relay-plus-gateway split (blind-relay).</li><li>Students will be able to predict what two cooperating operators can reconstruct by combining what each already holds, and explain why the patron cannot confirm from their own device that the operators are staying apart.</li><li>Students will be able to distinguish what these designs conceal (which record was requested; the link between a patron's address and their request) from what they leave visible (that a query happened, when, how often, and its size or timing).</li><li>Students will be able to evaluate a vendor's or institution's privacy claim by naming the assumption it rests on (operators not combining their records, a trusted holder of the raw data, a budget that is enforced) and the party who must be trusted for it to hold.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/library-privacy/blind-relay.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/library-privacy/blind-relay.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before class, before you open the exhibit. This section is reading and writing you do away from the lab; the lab time on this sheet starts at <strong>Do</strong>. There are no penalties for wrong predictions; the point is to compare them with what you see. No mathematics is needed for any question on this sheet.</p>
+<ol class="ws-answer"><li>A patron searches through a service run by two operators: a <strong>relay</strong>, which receives the request from the patron's computer and passes it on, and a <strong>gateway</strong>, which opens the request and asks the catalog. For each operator, predict which of these it learns — the patron's network address, the words of the search, both, or neither. Write one line for the relay and one for the gateway.</li><li>Each operator keeps the ordinary records its job produces: the relay a list of addresses and arrival times, the gateway a list of searches and arrival times. Predict what the two could work out together that neither could work out alone, and whether they would have to break any encryption to do it.</li><li>Four patrons search at almost the same moment through that same pair of operators. Nobody decrypts anything, and the two operators never speak to each other — someone simply obtains both sets of records later. Predict whether that person could tell which patron sent which search, and name what in the records they would use.</li><li>A vendor tells your library: &quot;patron searches are encrypted end to end, so we cannot see who searched for what.&quot; Predict what has to be true — about organizations, not about mathematics — for that sentence to hold, and say whether a patron's own computer could check it.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>In the panel <strong>The knowledge split, live</strong>, the box labelled <strong>Your sensitive input (query, or note body for POST)</strong> already holds a query. Replace it with a query you invent for this exercise. Do not type a real search of your own, a real name, or anything else about yourself: the panel asks you to make one up, and whatever you type is displayed in full further down the page and printed again in the collusion step below. Leave the two menus beside the box as they are, and press <strong>Run the exchange</strong>.</li><li>Press <strong>Jump to end</strong>, which fills every card at once. (Walking the exchange one step at a time, with the status line under those buttons, is an Extend item in the last section; you do not need it to fill the tables below.) Then read the four party cards — Client, Relay, Gateway, Target — and fill in the first Record table in the page's own words. Copy the Client card's &quot;cannot know&quot; line and the reason under it exactly; you will need it twice — in Explain question 3, and again in Fix / Extend. Finally, copy the value the Relay card shows beside <code>timing + sizes</code> into the second table.</li><li>Go to the panel <strong>The collusion toggle</strong> and read the paragraph under the heading before you touch anything. Record what the <strong>Cryptographic result</strong> box and the <strong>Privacy verdict</strong> box say now. Press <strong>Relay and gateway compare notes</strong>, and record both boxes again, plus the three lines of the joined log (<strong>WHO</strong>, <strong>WHAT</strong>, <strong>JOINED ON</strong>). Press the same control a second time to switch it back, and record both boxes once more.</li><li>Go to the panel <strong>Correlation without collusion</strong>. Leave <strong>Pad every request to 256 bytes (RFC 9292 §3.8)</strong> unticked and press <strong>Simulate 4 clients at once</strong>. Read the two logs side by side before you join anything — one is headed &quot;Relay's access log (knows WHO)&quot;, the other &quot;Gateway's log (knows WHAT, sorted by size)&quot; — and note from those headings which of the two facts each log holds and which it lacks. Press <strong>Join the logs on size</strong> and record the result; then press <strong>Join the logs on timing</strong> and record that too.</li><li>Now tick <strong>Pad every request to 256 bytes (RFC 9292 §3.8)</strong>. The page clears the result and asks for a fresh run, so press <strong>Simulate 4 clients at once</strong> again, then <strong>Join the logs on size</strong> and <strong>Join the logs on timing</strong> once more, recording both. Finish this panel by opening <strong>What padding does and does not fix</strong> and reading it.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run. Write phrases from the page rather than summaries, so you can quote them in the Explain section and in Fix / Extend.</p>
+<aside class="ws-note"><p>The joined log prints your invented query in full. Use wording you are willing to hand in.</p></aside>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Party card, A fact listed after &quot;knows&quot;, A fact listed after &quot;cannot know&quot;, and the reason the page gives">
+<table>
+<thead><tr><th scope="col">Party card</th><th scope="col">A fact listed after &quot;knows&quot;</th><th scope="col">A fact listed after &quot;cannot know&quot;, and the reason the page gives</th></tr></thead>
+<tbody>
+<tr><th scope="row">Client</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Relay</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Gateway</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Target</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: From the Relay card, What it reads">
+<table>
+<thead><tr><th scope="col">From the Relay card</th><th scope="col">What it reads</th></tr></thead>
+<tbody>
+<tr><th scope="row">The value beside <code>timing + sizes</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: The collusion toggle, Cryptographic result, in the page's words, Privacy verdict, in the page's words">
+<table>
+<thead><tr><th scope="col">The collusion toggle</th><th scope="col">Cryptographic result, in the page's words</th><th scope="col">Privacy verdict, in the page's words</th></tr></thead>
+<tbody>
+<tr><th scope="row">Before you press it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After one press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After a second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Joined log line, What it read">
+<table>
+<thead><tr><th scope="col">Joined log line</th><th scope="col">What it read</th></tr></thead>
+<tbody>
+<tr><th scope="row">WHO</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">WHAT</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">JOINED ON</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Padding, Join, Privacy verdict, in the page's words, How many of the clients the verdict names">
+<table>
+<thead><tr><th scope="col">Padding</th><th scope="col">Join</th><th scope="col">Privacy verdict, in the page's words</th><th scope="col">How many of the clients the verdict names</th></tr></thead>
+<tbody>
+<tr><th scope="row">Unticked</th><td>on size</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Unticked</th><td>on timing</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ticked</th><td>on size</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ticked</th><td>on timing</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Using your first table, name the party in this run that held the patron's address, the party that held the words of the search, and any party that held neither. Then finish this sentence for a colleague who will not see the exhibit: while the two operators stay apart, what the patron is relying on is not encryption but ____.</li><li>When you pressed the toggle, the <strong>Cryptographic result</strong> box and the <strong>Privacy verdict</strong> box said opposite-sounding things at the same time. Explain how both can be true together, and use the <strong>JOINED ON</strong> line you recorded to say what the two operators actually combined — and whether anything had to be decrypted for it.</li><li>The Client card names one thing the client cannot know, with a reason. Quote the reason, then say what a patron, or a library acting for its patrons, would have to do instead of checking that thing on the patron's own computer. Name one item a library could actually ask a vendor for.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A vendor brochure says patron searches are protected because they are encrypted in transit and the vendor's own servers never see a patron's address. Using your record tables and the row headed &quot;What you must assume&quot; in the panel <strong>Where this sits: OHTTP vs VPN vs Tor vs IT-PIR</strong>, name the assumption that claim actually rests on and the party who has to keep it. Then write one question the library should ask before signing. Claim no more than the exhibit showed you.</li><li><strong>Fix.</strong> Suppose your library keeps a web-proxy log and a discovery vendor keeps a search log, and neither is shared with the other today. Using your correlation rows, say what could be recovered if one party later obtained both sets, and propose one change to what is logged, how long it is kept, or who holds it, that would reduce it. Say which half of the problem padding would cover and which half it would not.</li><li><strong>Extend.</strong> Return to <strong>The knowledge split, live</strong> and watch the exchange one step at a time instead of jumping to the end. If the page still holds the query you invented in class, leave it; on a freshly loaded page the box is back to the lab's own example, so put an invented query in its place. Either way, do not type a real search of your own, a real name, or anything else about yourself. Press <strong>Run the exchange</strong>, then press <strong>Next step</strong> repeatedly until it stops advancing, reading the status line under those buttons after each press: it names the step and says what is travelling at that moment. Write down, in the page's own words, what the status line says is on the wire at the step where the relay hands the request on, and at the step where the gateway opens it, and compare those two lines with what you recorded on the Relay and Gateway cards. Note that re-running clears the results from the earlier panels.</li><li><strong>Extend.</strong> Compare the four padding rows in your Record table — unticked and ticked, each joined on size and on timing. Say what ticking <strong>Pad every request to 256 bytes (RFC 9292 §3.8)</strong> changed and what it left unchanged, then open <strong>What padding does and does not fix</strong> in the panel <strong>Correlation without collusion</strong> again and use the page's own explanation to say what the person reading both logs used in each case. What does that suggest about a request log described as &quot;encrypted&quot;?</li><li><strong>Extend.</strong> Go to the panel <strong>Break it yourself</strong> and press <strong>3 · Decrypt with the gateway's leaked key</strong>; the attack buttons stay disabled until an exchange has been run, so run one first if the page has been reloaded. Read the paragraph above the boxes, then write down what the <strong>Cryptographic result</strong> box and the <strong>Privacy verdict</strong> box each say. This is the case where a decryption that <em>works</em> is the bad news: explain why success is the bad outcome here, and say which single party ended up holding both facts that the design had been keeping apart. Connect your answer to the Client card &quot;cannot know&quot; line you quoted in Explain question 3.</li><li><strong>Extend.</strong> Return to <strong>The knowledge split, live</strong>, set <strong>Request shape</strong> to the POST option, type a different invented note into the input box, and press <strong>Run the exchange</strong> again, then <strong>Jump to end</strong>. Compare the Gateway card with the one you recorded. Say what the card shows and what it does not show, then use the step description that says the gateway &quot;reads your request in full&quot; to decide whether your note was hidden from the gateway or merely not displayed. Note that re-running clears the results from the earlier panels.</li><li><strong>Extend.</strong> In <strong>Break it yourself</strong>, press <strong>1 · Decrypt with a key you generate</strong> and then <strong>2 · Flip one byte, then forward it</strong>, and read what each reports. Using the page's own paragraph under each result, say what a dishonest relay can still do to a patron's request even though it cannot read it, and what that would look like to the patron.</li><li><strong>Extend.</strong> Read the panel <strong>Honest scoping — what this lab does and does not show</strong>, together with the footnote under the two logs about the arrival clock. List which of the things you recorded were real cryptographic values and which were simulated, and say how that changes what you would be willing to claim about this exhibit in a class presentation.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

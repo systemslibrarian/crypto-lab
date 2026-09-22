@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Patron Shield — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Patron Shield exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/patron-shield/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Patron Shield">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/patron-shield/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Patron Shield">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/patron-shield/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Library privacy, for iSchools</a></li><li><span aria-current="page">Patron Shield</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Library privacy, for iSchools</a></p>
+  <h1>Worksheet: Patron Shield</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-patron-shield/">Patron Shield</a></dd></div>
+  <div><dt>Time</dt><dd>About 15 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>93f3f7226fe7</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to identify, for a catalog search, which party learns the requested title and which learns who asked, under a plain search, two-server private retrieval (patron-shield), and a relay-plus-gateway split (blind-relay).</li><li>Students will be able to predict what two cooperating operators can reconstruct by combining what each already holds, and explain why the patron cannot confirm from their own device that the operators are staying apart.</li><li>Students will be able to distinguish what these designs conceal (which record was requested; the link between a patron's address and their request) from what they leave visible (that a query happened, when, how often, and its size or timing).</li><li>Students will be able to evaluate a vendor's or institution's privacy claim by naming the assumption it rests on (operators not combining their records, a trusted holder of the raw data, a budget that is enforced) and the party who must be trusted for it to hold.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/library-privacy/patron-shield.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/library-privacy/patron-shield.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see. No mathematics is needed for any of them.</p>
+<ol class="ws-answer"><li>A patron searches an ordinary library catalog for one title. For each of these four facts, say whether the operator of that catalog ends up holding it: the title requested, who asked, when they asked, how often that patron asks.</li><li>Now the same lookup is handled by two services run by two different organisations. Each service is sent a list of catalog positions, combines the records sitting at those positions into a single reply, and sends that reply back; the patron's own device puts the two replies together to get the book. Predict what one of those services, reading only the list it received, could say about which book the patron wanted.</li><li>Predict what those two organisations could work out about that patron if they laid the two lists they received side by side. Which of the four facts in question 1 would they hold between them?</li><li>Name one fact about a patron's catalog use that an arrangement like this cannot hide, and say why a librarian might still care about it.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. Before choosing anything, scroll to <strong>Naive vs. Private Query</strong>. The <strong>Naive query</strong> view is the one showing. Record its request line, exactly as it reads now, in the first row of the first table.</li><li>Scroll up to <strong>Library Catalog</strong>. Four of the eight books are shown, and <strong>Showing 4 of 8 — show all</strong> opens the rest. Click one of the four cards already showing — these steps use <strong>The Midnight Library</strong> — and read the line that appears under the catalog. Record the title and the index it names in the fourth table.</li><li>Go back to <strong>Naive vs. Private Query</strong> and record the <strong>Naive query</strong> request line again. Then press <strong>PIR query</strong> and record the line that view shows, before any query has run.</li><li>Scroll to <strong>Protocol Visualizer</strong> and read the note headed <strong>Teaching simulation</strong> at the top of that section. You will need it for Explain 5.</li><li>Back in <strong>Library Catalog</strong>, press <strong>Query Privately</strong>. Four steps run in a few seconds. When the last one finishes, scroll back up to the panel headed <strong>Client generates query pair</strong> and look at the two grids of eight squares, one under <strong>Server 1 receives</strong> and one under <strong>Server 2 receives</strong>: each square stands for one catalog slot, and each server was sent its own grid.</li><li>Scroll down to <strong>What each server knew</strong> and record, in the second and third tables: the slots listed under <strong>Server 1 saw:</strong> and the count beneath them, the same two values for <strong>Server 2 saw:</strong>, the title under <strong>Retrieved title:</strong>, and the line that appears under that title.</li><li>Press <strong>Run again</strong> and record those same six values for a second run of the same book.</li><li>Press <strong>Simulate the servers colluding</strong>, near the end of the privacy analysis. Record in the fourth table the position the page names, the book it names, and how that button reads once you have pressed it.</li><li>Return to <strong>Naive vs. Private Query</strong>, press <strong>PIR query</strong>, and record that line as it reads now. Put it beside the <strong>Naive query</strong> line you recorded in step 3.</li></ol>
+<aside class="ws-note"><p>Your first run opens the rest of the catalog by itself, so all eight books show from then on. That is the page working, not a mistake.</p></aside>
+<aside class="ws-note"><p>If you click a different book card, the finished run clears and the panels reset. Choose again and press <strong>Query Privately</strong> to start a fresh run.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Moment, The request line, exactly as the page shows it">
+<table>
+<thead><tr><th scope="col">Moment</th><th scope="col">The request line, exactly as the page shows it</th></tr></thead>
+<tbody>
+<tr><th scope="row"><strong>Naive query</strong>, before a book is chosen</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><strong>Naive query</strong>, after you chose your book</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><strong>PIR query</strong>, before any query has run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><strong>PIR query</strong>, after your second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Run, Server 1 saw (slots), Count under Server 1, Server 2 saw (slots), Count under Server 2">
+<table>
+<thead><tr><th scope="col">Run</th><th scope="col">Server 1 saw (slots)</th><th scope="col">Count under Server 1</th><th scope="col">Server 2 saw (slots)</th><th scope="col">Count under Server 2</th></tr></thead>
+<tbody>
+<tr><th scope="row">First, after Query Privately</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second, after Run again</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Run, Retrieved title, The line under the retrieved title">
+<table>
+<thead><tr><th scope="col">Run</th><th scope="col">Retrieved title</th><th scope="col">The line under the retrieved title</th></tr></thead>
+<tbody>
+<tr><th scope="row">First</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: What the page showed, Value">
+<table>
+<thead><tr><th scope="col">What the page showed</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">The book you chose, and the index in the line under the catalog</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The position named after the servers colluded</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The book named after the servers colluded</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">How the collusion button reads after you pressed it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Put two of your recorded request lines side by side: the <strong>Naive query</strong> line after you chose a book, and the <strong>PIR query</strong> line after your second run. For each, say what the operator receiving it could write in its log about the title requested, and what a librarian could honestly tell a patron about what that operator holds.</li><li>Compare <strong>Server 1 saw:</strong> with <strong>Server 2 saw:</strong> in your first run, then compare your first run with your second. Did the same book produce the same lists twice? The note beneath the two grids calls each square a bit, and says that neither server &quot;can determine which bit differs — or which book you want. Only a party holding <em>both</em> can see it.&quot; Using your own recorded lists, say what that sentence means for a log kept by one operator over a term of student searches.</li><li>In your run, neither list on its own named your book, and the page named it exactly once the two were put together. Using what appeared after you pressed the collusion button, explain in your own words what &quot;the servers must not collude&quot; is asking of two organisations, and say which of your recorded values one operator would have had to obtain from the other to do this alone.</li><li>Find the paragraph in the privacy analysis that begins &quot;Scoped precisely&quot;. List the facts it says this design does not hide. For each one, name the party in a real library deployment who would be in a position to learn it, and say which of your Predict 1 answers it matches.</li><li>The note headed <strong>Teaching simulation</strong> says what this page actually is, and what a real deployment would need instead. Using that note and the paragraph beginning &quot;The two masks are not independent&quot;, name the assumption the page's privacy claim rests on and every party who has to be trusted for it to hold. Then say what, if anything, a patron at a catalog terminal could check for themselves.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A vendor tells your library that its catalog search is private because &quot;neither of our two servers can tell which book a patron looked up&quot;. Using the paragraph beginning &quot;The two masks are not independent&quot; and the note headed <strong>Teaching simulation</strong>, write two questions you would put to that vendor before the library repeats the claim to patrons. For each question, name the recorded value or the page sentence that prompted it.</li><li><strong>Fix.</strong> A library plans to run both servers itself, on one set of machines, under one administrator's account. The page says the threat model requires the servers to be operated by &quot;independent, non-colluding parties&quot;. Say what that plan gives up, which of your recorded values demonstrates it, and how you would word the residual risk in a privacy impact assessment.</li><li><strong>Extend.</strong> Press <strong>Query a different book</strong>, choose a card for a different title, press <strong>Query Privately</strong>, then press <strong>Simulate the servers colluding</strong> again. Did the page name the new book? Compare the two <strong>Server 1 saw:</strong> lists from your two different books and say what an operator holding both lists, and nothing else, could conclude about the two requests.</li><li><strong>Extend.</strong> Scroll to <strong>How PIR scales — the √N trick</strong> and move the <strong>Catalog size</strong> slider to two of its positions, recording <strong>1-D query (this demo)</strong> and <strong>√N matrix query</strong> at each. The note under those figures says they count &quot;query bits only&quot;. Say what it tells you still has to travel back from each server, and why a library with a large catalog would want to know that before costing such a service.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

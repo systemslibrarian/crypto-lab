@@ -351,3 +351,39 @@ it just merged, so a failure of that call prints nothing, exits 0, and ships
 nothing. It is a real defect and it is unrelated to the six fixes. Folding it in
 would mean the thing that merges is no longer the thing that was audited, which is
 the one property D1 exists to protect.
+
+**D5 — a verdict names one tree, and merges only that tree.** Each auditor
+records the PR head SHA it audited. **A PR merges only while its head is still
+that exact SHA.** Anything that lands on the branch afterwards — a reword, a
+follow-up fix, an update-branch merge from `main` — voids the verdict and the PR
+is re-audited before it can merge.
+
+This closes the gap that was already open in this document. The fold-gate audit
+that produced the six fixes was conducted at `9dac554`; PR #11 is `ee829a17`,
+the commit that *implements* those fixes. The audit and the PR were one commit
+apart and it would have been easy to read the first as covering the second.
+D1 says green checks are the builder's side; D5 says the auditor's side has to
+name which bytes it was about, or it is not evidence about what merges either.
+
+The SHA set these audits were commissioned against, re-derived from the API on
+2026-09-21 and matching each local checkout exactly:
+
+| PR | Head SHA |
+|---|---|
+| `fold-gate#11` | `ee829a1719e0` |
+| `hidden-bit#7` | `d5e07a4c5204` |
+| `order-leak#5` | `c7b7eccff0ec` |
+| `pqxdh-wire#4` | `fec199b67372` |
+| `privacy-pass#6` | `272f47322a7c` |
+| `proof-tally#8` | `eae5824ad84e` |
+| `sleeve-check#2` | `c788d966bd8b` |
+| `split-point#5` | `521d03dae22d` |
+
+Two of those already carry work that post-dates the original build: `proof-tally`
+the D2 reword, `sleeve-check` the D2 reword plus the commit that cites
+`LOG2_LOTTERY` and moves its oracle onto the citation rather than the page. That
+is exactly why the head is recorded rather than the PR number.
+
+Note the interaction with D1's other half: updating a branch that has fallen
+behind `main` is itself a new head, so it voids the verdict. Where both apply,
+update first and audit the result — never audit, then update, then merge.

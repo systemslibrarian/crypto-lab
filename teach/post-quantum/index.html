@@ -152,6 +152,11 @@
 
 </section>
 
+<section aria-labelledby="assess"><h2 id="assess">What students hand in</h2>
+<p><strong>Migration memo.</strong> A memo to a service owner saying which of the systems the student ran are broken outright by Shor and which are only weakened by Grover, what the student would put in their place, and what the recorded resource estimate for the broken one was. It has to distinguish a system's key establishment from the cipher protecting its data.</p>
+<p>It is drawn from what the worksheets already produce, so it adds no new task. Values differ from run to run, so there is no key to mark against: what a marker is reading is whether each claim is tied to something the student recorded, and whether the reasoning from it holds.</p>
+</section>
+
 <section aria-labelledby="discuss"><h2 id="discuss">Discussion questions</h2>
 <ol><li>In Shor's algorithm the quantum computer's job is finding the period r; the rest is ordinary arithmetic. Which cryptosystems does that expose, which does it leave alone, and why?</li><li>Grover's algorithm also speeds up key search. Why is the usual response to Grover to choose larger symmetric parameters, while the response to Shor is to replace RSA, ECC and Diffie-Hellman outright?</li><li>The lattice exhibits start from a picture of good and bad bases, then warn that ML-KEM never gives honest users a secret good basis. What is the secret in ML-KEM, where does the hardness it relies on actually live, and why do the 2D demonstrations not show that hardness?</li><li>The ML-KEM lab stresses that a KEM establishes a key but neither encrypts a chosen message nor authenticates the peer. If its flow were copied unchanged into a real protocol, what could an active attacker do, and what would the protocol have to add?</li><li>A hybrid session is claimed to survive as long as either wire holds. What does the hybrid cost, which failures can still sink it, and why does the way the two secrets are combined matter?</li></ol></section>
 

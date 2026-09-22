@@ -145,6 +145,11 @@
 
 </section>
 
+<section aria-labelledby="assess"><h2 id="assess">What students hand in</h2>
+<p><strong>Recovery account.</strong> A short account of one private value the student recovered during the sequence, tracing it back through the recorded intermediate values to the two runs or signatures that made the recovery possible. It has to say which step supplied the information the key's owner did not intend to give away.</p>
+<p>It is drawn from what the worksheets already produce, so it adds no new task. Values differ from run to run, so there is no key to mark against: what a marker is reading is whether each claim is tied to something the student recorded, and whether the reasoning from it holds.</p>
+</section>
+
 <section aria-labelledby="discuss"><h2 id="discuss">Discussion questions</h2>
 <ol><li>Textbook RSA and RSA-OAEP both compute m^e mod n. What does OAEP's randomized padding change about what an eavesdropper or attacker learns, and which of the attacks you ran in Educational RSA and RSA Forge would it stop?</li><li>The weak RSA key, the factoring wall and the subgroup walk each fall quickly on toy parameters. Why does an attack that works on small numbers not show that RSA or elliptic-curve cryptography is broken, and what decides how long the same attack takes at real sizes?</li><li>Bleichenbacher's oracle answers only 'conformant' or 'not conformant'. Why is one bit per query enough to recover the plaintext, and what does that imply for how a server should handle decryption errors?</li><li>ECDSA nonce reuse and (in the extension) the nonce-lattice attack both recover d from public signatures. What does each attacker need, which failure does RFC 6979 remove from the trust path, and what does it leave to the implementation?</li><li>Given the trade-offs the labs present (key and signature size, padding pitfalls, nonce fragility, deterministic signing), when would you choose RSA-PSS, ECDSA with RFC 6979, or Ed25519 for a new signing system?</li></ol></section>
 

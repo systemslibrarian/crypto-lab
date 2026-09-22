@@ -334,5 +334,9 @@
     ]
   },
   "trimmed": [],
+  "assessment": {
+    "name": "Migration memo",
+    "description": "A memo to a service owner saying which of the systems the student ran are broken outright by Shor and which are only weakened by Grover, what the student would put in their place, and what the recorded resource estimate for the broken one was. It has to distinguish a system's key establishment from the cipher protecting its data."
+  },
   "last_checked": "2026-09-22"
 }

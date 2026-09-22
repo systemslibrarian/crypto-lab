@@ -268,7 +268,20 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
   .t-table th, .t-table td, .ws-table th, .ws-table td { border: 1px solid #000; }
   .ws-blank { height: 2.2rem; }
   .ws-answer > li::after { height: 4.5rem; border-bottom: 1px solid #000; }
+  /* A worksheet's sections are what a student works through in order, so each one
+     starts at the top of a page rather than wherever the previous one happened to end.
+     The first keeps the heading block company on page one. */
   .ws-sec { break-inside: avoid-page; }
+  .ws-body .ws-sec + .ws-sec { break-before: page; }
+  /* Every worksheet in a module hand-out starts on its own page. */
+  .ws-handout + .ws-handout { break-before: page; }
+  /* On paper a link cannot be followed, so it has to say where it goes. Only real
+     destinations: an in-page jump would print its own fragment and say nothing. */
+  .ws-body a[href^="http"]::after, .t-facts a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    word-break: break-all;
+  }
   .ws-student { gap: 3rem; margin: 0 0 1rem; }
   .ws-student span { flex: 1; border-bottom: 1px solid #000; padding-bottom: 1.2rem; }
 }

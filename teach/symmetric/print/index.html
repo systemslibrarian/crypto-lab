@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security &amp; symmetric encryption: worksheets — Crypto Lab</title>
+<meta name="description" content="Every worksheet in the Security &amp; symmetric encryption module, in sequence order, for printing as one hand-out.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/symmetric/print/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Security &amp; symmetric encryption: worksheets">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/print/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Security &amp; symmetric encryption: worksheets">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/print/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Security &amp; symmetric encryption</a></li><li><span aria-current="page">Hand-out</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Hand-out · <a href="../">Security &amp; symmetric encryption</a></p>
+  <h1>Security &amp; symmetric encryption: worksheets</h1>
+  <p class="t-lede">Every worksheet in this module, in the order the sequence runs them. Each one starts on its own page when printed.</p>
+</header>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print / save as PDF</button>
+  <a class="t-btn t-btn--ghost" href="../">Back to the module</a>
+</div>
+
+
+<article class="ws-handout" aria-labelledby="h-hidden-bit">
+  <h2 id="h-hidden-bit">Hidden Bit</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a></dd></div>
+    <div><dt>Time</dt><dd>About 15 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>00705ccbf695</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>In this game a challenger samples a hidden bit (the coin) and uses it to pick which of two equal-length messages to encrypt; an adversary then tries to name the coin. How often would a blind guess be right? The page scores an adversary with <code>2 · wins / trials - 1</code>. Predict the score of a blind guesser, and of an adversary that is never wrong.</li><li>Suppose one key encrypts the same message twice. Predict whether the two ciphertexts will be identical under AES-ECB, and under AES-GCM, which the page describes as using &quot;a fresh 96-bit nonce&quot;.</li><li>The adversary Re-encrypt and compare sees both messages, the challenge ciphertext and a public encryption oracle that encrypts messages of its choosing. Fill in the prediction column of the second table under Record: for each row, will that adversary beat a blind guess (&quot;edge&quot;) or not (&quot;no edge&quot;)?</li><li>The page describes AES-CBC, chained IV as CBC &quot;whose next IV is the previous ciphertext tail&quot;. If a blind guess and Re-encrypt and compare both show no edge against it, would you conclude that it hides which message was encrypted? What could a third adversary, the BEAST-style IV predictor, do with an IV it can see coming?</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and stay on the <strong>Hidden-bit game</strong> tab. The page generates an RSA key before its controls appear, so allow a moment. This worksheet uses only the AES choices in <strong>Scheme</strong>.</li><li>In <strong>Scheme</strong>, choose <strong>AES-ECB (BROKEN)</strong> and read the hint under the menu. Set <strong>Adversary</strong> to <strong>Random guess</strong>. Press <strong>Step one</strong> four times. After each press, record the coin shown under <strong>Seal the coin</strong> and the last eight hex characters of the <strong>Ciphertext begins</strong> line, just before the dots. If all four coins match, keep pressing until the coin changes and record that press as the fourth.</li><li>Choose <strong>AES-GCM</strong> in <strong>Scheme</strong>, read its hint, and repeat step 2 in the AES-GCM columns.</li><li>Leave <strong>Trials</strong> at 200. For each of the first four rows of the second table, choose that <strong>Scheme</strong> and <strong>Adversary</strong>, press <strong>Run</strong>, and wait until the note under the controls begins &quot;Fresh result&quot;. Record <strong>Wins</strong>, <strong>MEASURED ADVANTAGE</strong>, the <strong>Wilson 95% interval</strong> and the first words of the verdict under the advantage bar.</li><li>Choose <strong>AES-CBC, chained IV (BROKEN)</strong>. A panel headed <strong>A flat line is not a verdict</strong> appears below the ledger. Run and record the <strong>Random guess</strong> and <strong>Re-encrypt and compare</strong> rows the same way, then record that panel's heading as it now reads.</li><li>Open <strong>Adversary</strong> again: with this scheme it also lists <strong>BEAST-style IV predictor</strong>. Choose it, press <strong>Run</strong>, and record the last row.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Values in every table come from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Step one press, AES-ECB coin, AES-ECB ciphertext, last eight hex, AES-GCM coin, AES-GCM ciphertext, last eight hex">
+<table>
+<thead><tr><th scope="col">Step one press</th><th scope="col">AES-ECB coin</th><th scope="col">AES-ECB ciphertext, last eight hex</th><th scope="col">AES-GCM coin</th><th scope="col">AES-GCM ciphertext, last eight hex</th></tr></thead>
+<tbody>
+<tr><th scope="row">First</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Third</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Fourth</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Scheme, Adversary, My prediction, Wins, Measured advantage, Wilson 95% interval, Verdict, first words">
+<table>
+<thead><tr><th scope="col">Scheme</th><th scope="col">Adversary</th><th scope="col">My prediction</th><th scope="col">Wins</th><th scope="col">Measured advantage</th><th scope="col">Wilson 95% interval</th><th scope="col">Verdict, first words</th></tr></thead>
+<tbody>
+<tr><th scope="row">AES-GCM</th><td>Re-encrypt and compare</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CTR</th><td>Re-encrypt and compare</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-ECB (BROKEN)</th><td>Random guess</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-ECB (BROKEN)</th><td>Re-encrypt and compare</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CBC, chained IV (BROKEN)</th><td>Random guess</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CBC, chained IV (BROKEN)</th><td>Re-encrypt and compare</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CBC, chained IV (BROKEN)</th><td>BEAST-style IV predictor</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Chained-IV panel, Heading as it reads">
+<table>
+<thead><tr><th scope="col">Chained-IV panel</th><th scope="col">Heading as it reads</th></tr></thead>
+<tbody>
+<tr><th scope="row">After the Random guess and Re-encrypt and compare runs</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Compare the two halves of your first table. Under AES-ECB, what did presses with the same coin have in common, and was that also true under AES-GCM? The lab's <a href="https://github.com/systemslibrarian/crypto-lab-hidden-bit">README</a> lists &quot;Deterministic encryption leaks equality&quot; under What Can Go Wrong. Explain that sentence using your AES-ECB records.</li><li>Re-encrypt and compare sees both messages, the challenge ciphertext and the public encryption oracle. Describe how a strategy with that name could identify the coin against AES-ECB, then explain why your AES-GCM and AES-CTR rows came out as they did. Use the hint the page shows under <strong>Scheme</strong> for each.</li><li>The same README says: &quot;Chaining the previous ciphertext tail into the next IV gives the BEAST-style adversary a chosen-plaintext equality test.&quot; Using CBC encryption as you learned it in class, explain how an adversary that knows the IV its next oracle query will use can choose that query's message so the answer tests which message the challenge contains. Which part of the two ciphertexts would it compare?</li><li>Look at your three chained-IV rows and the panel heading you recorded. Using the panel's own sentence and the verdict text under the advantage bar, say what a measured advantage near zero tells you about a scheme and what it does not.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> One service encrypts short records with AES-ECB; another encrypts a stream of messages with AES-CBC, taking each IV from the end of the previous ciphertext. For each, name the adversary in your table that did best against it, say what the scheme would have to change so that repeating a message, or knowing the next IV, no longer helps that adversary, and say which of the page's AES schemes you would test in its place. Word your conclusion so it claims no more than the verdict that scheme earned in your run.</li><li><strong>Extend.</strong> Choose <strong>AES-GCM</strong> and <strong>Random guess</strong>. Set <strong>Trials</strong> to 10 and press <strong>Run</strong>, then set it to 2000 and run again, recording the <strong>Wilson 95% interval</strong> each time. How does the interval's width change? Use that to explain why the page refuses fewer than ten trials for <strong>Run</strong> and says that &quot;a sample is not a proof&quot;.</li><li><strong>Extend.</strong> Compare your second table with a classmate's. Which rows match exactly and which differ? Using the README's note that &quot;Finite samples fluctuate&quot;, explain why.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-otp-vault">
+  <h2 id="h-otp-vault">OTP Vault</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-otp-vault/">OTP Vault</a></dd></div>
+    <div><dt>Time</dt><dd>About 19 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>6b2bb1c14f73</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>An attacker holds one 14-byte one-time-pad ciphertext and nothing else. You pick any 14-byte message. Predict whether some key turns that ciphertext into your message: for every message you could pick, for only some, or only for the message that was really sent. What would your answer mean for what the attacker can learn?</li><li>Two messages are encrypted with the same key: C1 = P1 ⊕ K and C2 = P2 ⊕ K. Write C1 ⊕ C2 and simplify it. Do the same when the second message has its own key, C2 = P2 ⊕ K₂. Which of your two results still contains a key?</li><li>One key is reused for both messages. A new random key is drawn and both messages are encrypted again with it. Predict which of C1, C2 and C1 ⊕ C2 will change. Then predict the same when each message has its own key and both keys are redrawn.</li><li>You guess that P1 contains the word &quot;the &quot; and slide that guess along C1 ⊕ C2, XORing it with the bytes underneath at each position. Predict what you will see where the guess is in the right place, and where it is not. How will you tell the two apart?</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and scroll to panel <strong>2 · Perfect secrecy — every plaintext is possible</strong>. Replace the text in <strong>Target plaintext (must be 14 bytes)</strong> with a 14-character message of your own, using only unaccented letters, digits and spaces. Record what the page shows. Then type a message of a different length and record what the page says.</li><li>Scroll to panel <strong>3 · Two-time pad — the catastrophic key-reuse attack</strong>. The key-reuse switch at the top of the panel starts switched on; leave it on and read the status line under the two ciphertexts. This panel shows both messages in <strong>Message P1</strong> and <strong>Message P2</strong>, so you can check every step. Record the first four hex bytes of <strong>C1 = P1 ⊕ K</strong> and of the combined strip <strong>C1 ⊕ C2 (= P1 ⊕ P2 when key reused)</strong>. Press <strong>Re-roll session keys</strong> and record which of the two changed, rather than copying the new digits.</li><li>Below the strip, the box under <strong>Crib (guessed word — try &quot; the &quot;)</strong> holds the crib &quot;the &quot;, the menu beside it reads <strong>crib is a guess for P1</strong>, and the strip's readout says offset 0. Read the line below the controls that says what P2 reads at this offset, then press <strong>Pin crib here</strong>. Record the pin and the count of bytes recovered under <strong>Both plaintexts emerge together</strong>.</li><li>Type a crib of your own into the crib box: a word or short phrase you expect in either message. Set the menu beside the box to <strong>crib is a guess for P2</strong>. Move the crib along the strip with the arrow buttons beside the crib box, one byte at a time, or drag the crib marker above the strip. At each offset, read what the other message would say there. When the revealed bytes read as real language, press <strong>Pin crib here</strong>. If you pin a guess that turns out wrong, press <strong>Undo pin</strong> and keep moving. When part of a word appears, you can type the whole word you think it belongs to as your next crib.</li><li>Turn the key-reuse switch off. Read the new status line, and look at <strong>Reconstructed P2</strong> where you pinned the first crib. Record what it shows now. Then record the first four bytes of <strong>C1 = P1 ⊕ K</strong> and of the combined strip, press <strong>Re-roll session keys</strong>, and record which of the two changed.</li><li>Scroll to panel <strong>4 · Keystream reuse in real ciphers — the same break</strong>. Record the first four bytes of <strong>C1 = P1 ⊕ S</strong> and of the combined strip. Press <strong>New (still-reused) keystream</strong> and record which of the two changed.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Panel 2 target, Text I typed, What the page showed">
+<table>
+<thead><tr><th scope="col">Panel 2 target</th><th scope="col">Text I typed</th><th scope="col">What the page showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Same length as the ciphertext</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">A different length</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Moment, First four bytes of C1 (hex), First four bytes of C1 ⊕ C2 (hex), Which of the two changed when new key material was drawn">
+<table>
+<thead><tr><th scope="col">Moment</th><th scope="col">First four bytes of C1 (hex)</th><th scope="col">First four bytes of C1 ⊕ C2 (hex)</th><th scope="col">Which of the two changed when new key material was drawn</th></tr></thead>
+<tbody>
+<tr><th scope="row">Panel 3, key-reuse switch on</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Panel 3, key-reuse switch off</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Panel 4, keystream reused</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Panel 3 pin (switch on), Crib, exactly as typed, Guess for P1 or P2, Offset, What the other message read there, Bytes recovered, as the page counts them">
+<table>
+<thead><tr><th scope="col">Panel 3 pin (switch on)</th><th scope="col">Crib, exactly as typed</th><th scope="col">Guess for P1 or P2</th><th scope="col">Offset</th><th scope="col">What the other message read there</th><th scope="col">Bytes recovered, as the page counts them</th></tr></thead>
+<tbody>
+<tr><th scope="row">First (the page's own crib)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second (a crib of your own)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Case, Crib and offset, What the other message read there, Reads as language?, Matches the real message?">
+<table>
+<thead><tr><th scope="col">Case</th><th scope="col">Crib and offset</th><th scope="col">What the other message read there</th><th scope="col">Reads as language?</th><th scope="col">Matches the real message?</th></tr></thead>
+<tbody>
+<tr><th scope="row">Panel 3, switch off: your first pin, as it reads now</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<aside class="ws-note"><p>The real messages are in <strong>Message P1</strong> and <strong>Message P2</strong>, so you can check every pin against them.</p></aside>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Panel 2 found a key for your own 14-byte message. Using the page's explanation under the target box, say what a single one-time-pad ciphertext tells an attacker and what it does not. Why did the page refuse your other message?</li><li>Use the second table. With the switch on, which values changed when you re-rolled the keys, and which stayed the same? With the switch off, what changed? Explain both with the equations in the two status lines you read in panel 3.</li><li>One pin filled bytes in both <strong>Reconstructed P1</strong> and <strong>Reconstructed P2</strong>. Starting from C1 ⊕ C2 = P1 ⊕ P2, explain why knowing a stretch of one message gives you the same stretch of the other. What does the page say this means for key reuse?</li><li>The page calls an offset where every revealed byte is printable &quot;a plausible hit&quot;. How many of the plausible hits you saw were right, and what made you decide an offset was the right one? Then explain why a crib you knew was right revealed nothing readable once you turned the switch off.</li><li>Panel 4 says its keystream S is a stand-in, not a ChaCha20 or AES implementation. Using the panel's own description of where a keystream comes from, explain how a repeated nonce leads to the same break as panel 3, and which part of that argument does not depend on how S was made. What did your panel 4 row in the second table show?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> One team encrypts every message to a partner with the same one-time pad to save key material. Another encrypts with a stream cipher under one key and a fixed nonce. Using the README's rules for the one-time pad and panel 4's status line, state the rule each team breaks and what each must change.</li><li><strong>Fix.</strong> Even when every key is used only once, the README names a property the one-time pad does not provide, and what an attacker who knows part of the plaintext can do as a result. Name both, and say what the README recommends instead for general-purpose encryption.</li><li><strong>Extend.</strong> Open the exhibit at panel <strong>3 · Two-time pad — the catastrophic key-reuse attack</strong> and leave the key-reuse switch on. Pin two more cribs of your own, beyond the one you pinned in class: type each into the crib box, move it with the arrow buttons beside the box or by dragging the crib marker above the strip, and press <strong>Pin crib here</strong> when the revealed bytes read as real language. Set the menu beside the crib box to <strong>crib is a guess for P1</strong> for one of them and <strong>crib is a guess for P2</strong> for the other. For each, write down the crib exactly as you typed it, which message you guessed it for, the offset the strip's readout gives, what the other message read there, and the count under <strong>Both plaintexts emerge together</strong>. Then say whether that count rose by the length of each crib, and if it did not, what else it is counting.</li><li><strong>Extend.</strong> Under Record you wrote only which of the two strips changed when new key material was drawn. Go back and take the digits. In panel <strong>3</strong>, with the key-reuse switch on, write the first four bytes of <strong>C1 = P1 ⊕ K</strong> and of the combined strip <strong>C1 ⊕ C2 (= P1 ⊕ P2 when key reused)</strong>, press <strong>Re-roll session keys</strong>, and write both again. Repeat with the switch off. Then do the same in panel <strong>4 · Keystream reuse in real ciphers — the same break</strong>, using <strong>C1 = P1 ⊕ S</strong> and pressing <strong>New (still-reused) keystream</strong>. Compare the before and after digits byte by byte at each of the three moments. Say which comparison comes out identical byte for byte, which does not, and what that tells you about which of the two strips carries key material.</li><li><strong>Extend.</strong> Open the exhibit at panel <strong>5 · Import two ciphertexts — cryptanalysis playground</strong> and press <strong>Easy · common words</strong> under <strong>Or load a challenge:</strong>. Read the hint. Both messages are hidden here, so you cannot read a crib off the page first: this is the panel 3 attack without the answer key beside it. Type a crib into this panel's crib box, use the menu beside it to say whether the crib guesses for P1 or P2, and move it with this panel's arrow buttons, watching the offset readout and the bytes the other message would show at each position. Press <strong>Pin crib here</strong> when they read as language, and pin at least two cribs this way. For each pin write down the crib and its offset, what the other message read there, and whether you judged it real language. Then tick <strong>Reveal original P1 &amp; P2 (instructor aid)</strong> and add, for each pin, whether it matched the real message. Note also how many offsets the page called a plausible hit before you reached one that was.</li><li><strong>Extend.</strong> Straight after the Easy challenge, untick <strong>Reveal original P1 &amp; P2 (instructor aid)</strong> and press <strong>Control · NO key reuse</strong>. Check that this panel's crib box and offset readout still hold a crib that worked on Easy, and set them again if loading the challenge cleared them. Press <strong>Pin crib here</strong>, and write down the crib and offset, what the other message reads there, and whether it reads as language. Tick the reveal box again and compare these originals with the ones you revealed on Easy. Then say why a crib that was right a minute earlier recovers nothing here, naming what the two challenges do differently.</li><li><strong>Extend.</strong> In panel 5, load <strong>Medium · military-style</strong> and then <strong>Hard · unusual vocabulary</strong>. Record which cribs each hint suggests and which ones worked. What made the hard challenge harder?</li><li><strong>Extend.</strong> In panel 3, with the switch on, delete a few words from the end of <strong>Message P1</strong> so it is shorter than <strong>Message P2</strong>. Read the status line that appears, and explain which bytes of the longer message the attack can still reach.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-aes-modes">
+  <h2 id="h-aes-modes">AES Modes</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a></dd></div>
+    <div><dt>Time</dt><dd>About 14 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>cbfb1b4dfa2c</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>You encrypt one 16-character block repeated four times under ECB, CBC, CTR, GCM and CCM, with a fresh random key for each mode. For each mode, predict whether any two ciphertext blocks will be identical. Write your predictions in the first table under Record.</li><li>An attacker changes one bit, or one byte, at the start of a ciphertext, and the receiver decrypts it with the correct key. For each of the five modes, predict whether the receiver gets plaintext back and, if so, how much of it changes. Write your predictions in the second table.</li><li>A message that decrypts to <code>userdata=guest--;admin=0;-------</code> was encrypted with AES-CBC and nothing else. Could someone who never learns the key make it decrypt with <code>admin=1</code> instead? Say which part of the ciphertext you think they would change, and what you expect to happen to the rest of the message.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and choose the <strong>Compare</strong> tab. In <strong>Plaintext</strong>, type one block of exactly 16 characters, spaces included, four times in a row with nothing between the copies; the box suggests <code>YELLOW SUBMARINE</code>. Press <strong>Encrypt under all 5 modes</strong>. For each card, record whether it warns about duplicate blocks and what its note says about integrity or authentication.</li><li>Write a test message of at least 40 characters using ordinary letters, digits and spaces, and copy it. You will paste it into each mode's tab so that every mode encrypts the same text.</li><li>Open the <strong>ECB</strong> tab. Paste your test message into <strong>Plaintext</strong> and press <strong>Encrypt with ECB</strong>. Note which hex fields the tab fills in, then press <strong>Decrypt (after flipping 1 ciphertext block)</strong>. Record what the page says it changed and what came back.</li><li>Open the <strong>CBC</strong> tab. Paste your test message into <strong>Plaintext</strong>, press <strong>Encrypt with CBC</strong> and note the hex fields, then press <strong>Demo: Bit-Flip</strong>. Record what the page says it changed and compare the original plaintext with the text after the bit flip.</li><li>Open the <strong>CTR</strong> tab. Paste your test message into <strong>Plaintext Message 1</strong>, press <strong>Encrypt with CTR</strong> and note the hex fields, then press <strong>Decrypt (1-bit ciphertext flip)</strong>. Record the result.</li><li>Open the <strong>GCM</strong> tab. Paste your test message into <strong>Plaintext</strong> and leave the other fields as they are. Press <strong>Encrypt with GCM</strong> and note the hex fields, then press <strong>Demo: Tamper Detection</strong>. Record what the page reports.</li><li>Open the <strong>CCM</strong> tab. Paste your test message into <strong>Plaintext</strong>, press <strong>Encrypt with CCM</strong> and note the hex fields, then press <strong>Demo: Tamper Detection</strong>. Record what the page reports.</li></ol>
+<aside class="ws-note"><p>If no card in step 1 warns about duplicates, count your block again: it must be exactly 16 ordinary characters, with no line break or space between the copies.</p></aside>
+<aside class="ws-note"><p>If the CBC result in step 4 says decryption failed, check that your test message is at least 40 characters, then press <strong>Encrypt with CBC</strong> and <strong>Demo: Bit-Flip</strong> again.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything you record comes from your own run. Leave the hex itself out: the tables ask what the page showed and said.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Compare card, My prediction: any identical blocks?, Duplicate warning on the card, What the card's note says about integrity or authentication">
+<table>
+<thead><tr><th scope="col">Compare card</th><th scope="col">My prediction: any identical blocks?</th><th scope="col">Duplicate warning on the card</th><th scope="col">What the card's note says about integrity or authentication</th></tr></thead>
+<tbody>
+<tr><th scope="row">ECB</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CTR</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">GCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Mode tab, Hex fields the tab fills in, My prediction for a changed ciphertext, What the page says it changed, What came back, or what the page reported">
+<table>
+<thead><tr><th scope="col">Mode tab</th><th scope="col">Hex fields the tab fills in</th><th scope="col">My prediction for a changed ciphertext</th><th scope="col">What the page says it changed</th><th scope="col">What came back, or what the page reported</th></tr></thead>
+<tbody>
+<tr><th scope="row">ECB</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CTR</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">GCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>The <strong>CBC</strong> tab's <strong>CBC Vulnerabilities</strong> notes say that flipping bit <em>i</em> of ciphertext block <em>n</em> flips bit <em>i</em> of plaintext block <em>n+1</em>. Use that rule to explain your CBC <strong>Demo: Bit-Flip</strong> result: what happened to plaintext block 0, what happened to plaintext block 1, and why.</li><li>Explain the GCM and CCM results you recorded. According to the page, what does each mode check before it releases plaintext, and what does that check cover?</li><li>Sort ECB, CBC, CTR, GCM and CCM into &quot;confidentiality only&quot; and &quot;authenticated encryption&quot;, citing one entry from your tables for each mode. Did any mode in the first group also leak something in your Compare run, without anyone changing the ciphertext?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You maintain a service that keeps <code>admin=0</code> inside an AES-CBC ciphertext with no MAC, as in the targeted bit-flip demo in item 4. Using the page's <strong>Which mode should I use?</strong> list and the threat model on the <strong>CBC</strong> tab, name two changes the page supports. For each one, say how the CBC row of your second table would read afterwards, and why.</li><li><strong>Extend.</strong> On the <strong>CBC</strong> tab, replace your test message with one shorter than 16 characters. Press <strong>Encrypt with CBC</strong>, then <strong>Demo: Bit-Flip</strong>, then <strong>Decrypt (tampered ciphertext)</strong>, and record what the page reports each time. Using which block your change landed in, explain why a one-block message behaves differently from your longer one. If the page reports an error, note what it calls that error; the next exhibit in this module builds on it.</li><li><strong>Extend.</strong> On the <strong>Compare</strong> tab, change one character in just one copy of your repeated block and press <strong>Encrypt under all 5 modes</strong> again. Which ECB blocks still match each other? Using the threat model on the <strong>ECB</strong> tab, say what an attacker who sees only that ciphertext learns about your message.</li><li><strong>Extend.</strong> On the <strong>CBC</strong> tab, press <strong>Demo: Targeted Bit-Flip (admin=0 → admin=1)</strong>. This demo encrypts its own fixed message under a new key, so nothing you typed earlier affects it. Write down the three lines the panel shows: the original decrypt, the text after the flip, and the verdict line. The panel also prints the block layout it used and the rule <code>P₁[i] = AES⁻¹(C₁)[i] ⊕ C₀[i]</code>; using both, explain why changing a byte of C₀ changed <code>admin=0</code> in P₁, and what the same change did to the block before it. This is the scenario you predicted in Predict question 3.</li><li><strong>Extend.</strong> On the <strong>Compare</strong> tab, use the run from Do step 1 — four copies of one 16-character block under <strong>Encrypt under all 5 modes</strong>, retyped and re-encrypted if you have closed the exhibit. Using the duplicate-warning column of your first table, those cards' notes and the tab's <strong>What to look for</strong> section, explain why repeated 16-character input blocks came out as repeated ciphertext blocks on the cards that warned and not under the other modes.</li><li><strong>Extend.</strong> The <strong>CTR</strong> tab describes encryption as XORing the plaintext with a keystream made from counter values. Using that description and the CTR row of your second table, explain the change <strong>Decrypt (1-bit ciphertext flip)</strong> produced, and how that result compares with the CBC row of the same table.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-padding-oracle">
+  <h2 id="h-padding-oracle">Padding Oracle</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/">Padding Oracle</a></dd></div>
+    <div><dt>Time</dt><dd>About 24 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>3a7e02e6daeb</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>A receiver decrypts a block that reads <code>0x10</code> sixteen times, which is a full block of PKCS#7 padding. An attacker can change only the <strong>last</strong> decrypted byte. For each value below, predict whether the receiver will still call the padding valid. Write your predictions in the first table under Record.</li><li>Suppose a server answers only &quot;padding valid&quot; or &quot;padding invalid&quot; and never shows the decrypted text. Can an attacker who never learns the key still recover the plaintext? Say what you think the attacker would have to change between one question and the next.</li><li>Roughly how many questions (&quot;oracle queries&quot;) do you expect it to take to recover one 16-byte block: fewer than a hundred, hundreds, a few thousand, or millions? Explain your guess.</li><li>Three servers receive the same attack. One reports padding errors, one gives the same response whatever its padding check found, and one checks a MAC before it decrypts anything. Predict which of them will give up the plaintext.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and stay on the <strong>CBC &amp; Padding</strong> tab. Read the CBC decryption rule at the top of the tab.</li><li>Scroll to <strong>Your Turn: Craft the Last Padding Byte</strong> and press <strong>Set Up Practice Ciphertext</strong>.</li><li>Choose a value in <strong>Force last decrypted byte to</strong>, then press <strong>Predict: Valid</strong> or <strong>Predict: Invalid</strong> to match your prediction from question 1. Read the oracle's answer and the page's explanation, and record the answer. Repeat for every value in the list.</li><li>Open the <strong>Full Block</strong> tab. Type your own text of about 16 characters into <strong>Target plaintext</strong>. Set <strong>Animation speed</strong> to Slow if you want to watch the first bytes recover one at a time.</li><li>Press <strong>Encrypt Target Block</strong>, then <strong>Run Full Block</strong>. When it finishes, record the result, the byte-for-byte badge and the number of oracle queries used.</li><li>Without changing your text, press <strong>Encrypt Target Block</strong> and <strong>Run Full Block</strong> again. Record the second run.</li><li>Open the <strong>Defenses</strong> tab. Under <strong>Same Attack, Three Servers</strong>, leave or change <strong>Plaintext to attack</strong>, then press <strong>Run Attack Against All Three</strong>. Record each row of the table.</li><li>Under <strong>AES-GCM Live Demo: Tampering Rejected</strong>, press <strong>Encrypt with AES-GCM</strong>, then <strong>Tamper Ciphertext</strong>. Record what the page reports.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Values you record in the second and third tables come from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Forced last byte, My prediction, Oracle's answer">
+<table>
+<thead><tr><th scope="col">Forced last byte</th><th scope="col">My prediction</th><th scope="col">Oracle's answer</th></tr></thead>
+<tbody>
+<tr><th scope="row">0x00</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x01</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x02</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x03</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x0f</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x10</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">0x41</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Full Block run, Target plaintext, Badge (match or mismatch), Oracle queries used">
+<table>
+<thead><tr><th scope="col">Full Block run</th><th scope="col">Target plaintext</th><th scope="col">Badge (match or mismatch)</th><th scope="col">Oracle queries used</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Server, Outcome, Oracle queries, Padding checks reached, MAC rejections">
+<table>
+<thead><tr><th scope="col">Server</th><th scope="col">Outcome</th><th scope="col">Oracle queries</th><th scope="col">Padding checks reached</th><th scope="col">MAC rejections</th></tr></thead>
+<tbody>
+<tr><th scope="row">Leaky CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Silent CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Encrypt-then-MAC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: AES-GCM tamper, What the page reported, in your own words">
+<table>
+<thead><tr><th scope="col">AES-GCM tamper</th><th scope="col">What the page reported, in your own words</th></tr></thead>
+<tbody>
+<tr><th scope="row">After Tamper Ciphertext</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Which forced values did the oracle accept? Using the rule that the last byte of a block says how many padding bytes there are, explain why those values pass and the others fail.</li><li>The attacker never sees the key. Using the decryption rule on the CBC &amp; Padding tab, explain how changing one byte of the previous ciphertext block, and watching only valid or invalid, lets the attacker learn one byte of plaintext.</li><li>Your two Full Block runs used the same text. Why did the number of oracle queries change, and why is your count different from a classmate's? What stayed the same?</li><li>The silent server still ran a padding check on every query. Why did the attack fail against it, and why does the page call this the fragile defense?</li><li>Against Encrypt-then-MAC, the attack's queries never reached the padding check. What stopped them first?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You maintain a service that decrypts AES-CBC messages and returns one error for bad padding and a different one for bad data. Rank the three defenses on the Defenses tab (uniform errors, Encrypt-then-MAC, authenticated encryption) and justify the ranking by what an attacker can still observe under each.</li><li><strong>Extend.</strong> Open the <strong>Hall of Fame</strong> tab and pick one real exploit. Identify what played the part of the oracle in that system: an error code, a protocol alert or a timing difference.</li><li><strong>Extend.</strong> Open the <strong>Full Decryption</strong> tab, type a message several blocks long into <strong>Plaintext to encrypt and decrypt</strong>, press <strong>Generate Ciphertext</strong>, then <strong>Run Full Attack</strong>. Describe how the query count grows with the number of blocks and compare it with the complexity the tab states.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-nonce-collision">
+  <h2 id="h-nonce-collision">Nonce Collision</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/">Nonce Collision</a></dd></div>
+    <div><dt>Time</dt><dd>About 15 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>d23b6ec02c35</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>One key, one nonce, two messages. For each of AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC (where the nonce is called an IV), predict what an attacker who sees only the ciphertexts, and the tags where there are tags, can gain: the plaintext, the ability to forge a tag, the fact that the two messages begin the same way, or the encryption key. Write your predictions in the first table under Record.</li><li>AES-CTR encrypts by XORing the plaintext with a keystream that depends only on the key and the nonce. Predict what C₁ ⊕ C₂ looks like when each message gets its own nonce, and when both share one. If you repeated the shared-nonce case with a brand-new key and a brand-new nonce, would C₁ ⊕ C₂ change?</li><li>Suppose nonce reuse lets an attacker recover the secret an AEAD tag is computed with, but not the key used to encrypt. Predict what that attacker can do to a message sent under the reused nonce, and to a message sent under a fresh one.</li><li>Two messages begin with the same text and are encrypted with AES-CBC. Predict whether any of their ciphertext blocks will be identical when each gets its own random IV, and when they share one IV.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and scroll to <strong>Same mistake, four outcomes</strong>. Read the note on the two indicators: the cryptographic result is what the primitive returned, and the security verdict is whether the guarantee still holds.</li><li>On the <strong>AES-CTR</strong> card, make sure <strong>Reuse the nonce</strong> is off and press <strong>Run</strong>. The card encrypts two messages under fresh nonces and prints C₁ ⊕ C₂ as a lane of hex bytes. Record the first four bytes. Press <strong>Run</strong> again and record the first four bytes again.</li><li>On the <strong>AES-CBC</strong> card, make sure <strong>Reuse the IV</strong> is off and press <strong>Run</strong>. Record the number after <em>Shared leading ciphertext blocks</em>. Press <strong>Run</strong> again and record it again.</li><li>Press <strong>Run all four — one reused nonce</strong>. Every card switches to a reused nonce and runs.</li><li>On the <strong>AES-GCM</strong> card, record the cryptographic result, whether the recovered H <em>matches ground truth</em>, and the first eight hex digits of <em>recovered H</em>. On the <strong>ChaCha20-Poly1305</strong> card, record the cryptographic result, whether the one-time key <em>matches ground truth</em>, and the first eight hex digits of <em>recovered r</em>.</li><li>On the <strong>ChaCha20-Poly1305</strong> card, find the lane of hex bytes labelled C₁ ⊕ C₂ = P₁ ⊕ P₂. Count how many bytes at its start are 00, and note the first byte that is not. On the <strong>AES-CTR</strong> card, record the <em>as text</em> line: message 2, recovered by XORing message 1 back in. On the <strong>AES-CBC</strong> card, count the ciphertext block rows marked <em>identical</em>.</li><li>Press <strong>Run all four — one reused nonce</strong> a second time and record the same values again.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Values you record in the second, third and fourth tables come from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Construction, My prediction, What the card computed, in your own words">
+<table>
+<thead><tr><th scope="col">Construction</th><th scope="col">My prediction</th><th scope="col">What the card computed, in your own words</th></tr></thead>
+<tbody>
+<tr><th scope="row">AES-CTR</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-GCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">ChaCha20-Poly1305</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Fresh-nonce run, AES-CTR: first four bytes of C₁ ⊕ C₂, AES-CBC: shared leading ciphertext blocks">
+<table>
+<thead><tr><th scope="col">Fresh-nonce run</th><th scope="col">AES-CTR: first four bytes of C₁ ⊕ C₂</th><th scope="col">AES-CBC: shared leading ciphertext blocks</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Reused-nonce run, Card, Cryptographic result, Matches ground truth, Recovered value, first eight hex digits">
+<table>
+<thead><tr><th scope="col">Reused-nonce run</th><th scope="col">Card</th><th scope="col">Cryptographic result</th><th scope="col">Matches ground truth</th><th scope="col">Recovered value, first eight hex digits</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td>AES-GCM</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">First run</th><td>ChaCha20-Poly1305</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td>AES-GCM</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td>ChaCha20-Poly1305</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Reused-nonce run, AES-CTR: message 2 as recovered, ChaCha20-Poly1305: leading 00 bytes, then the first other byte, AES-CBC: block rows marked identical">
+<table>
+<thead><tr><th scope="col">Reused-nonce run</th><th scope="col">AES-CTR: message 2 as recovered</th><th scope="col">ChaCha20-Poly1305: leading 00 bytes, then the first other byte</th><th scope="col">AES-CBC: block rows marked identical</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Did your recovered H and recovered r change between your two reused runs? The page says H is fixed by the key, and the one-time key (r, s) by the key and the nonce. What does your answer tell you about the key each run used? Now compare how the fresh AES-CTR lane and the reused ChaCha20-Poly1305 lane behaved across two runs (the consequence table lists keystream reuse for both), and explain the difference using C₁ ⊕ C₂ = P₁ ⊕ P₂. What do the 00 bytes at the start of the reused lane say about the two messages at those positions?</li><li>The AES-GCM and ChaCha20-Poly1305 verifiers both accepted a tag the attacker computed. Why does the page treat a VALID result here as an alarm rather than a success?</li><li>Name the secret each authenticated card recovered and the key the page says it did not recover. Using <strong>Why the forgeries work — one cancellation, twice</strong> and the consequence table, say what an attacker holding the recovered value can do under the reused nonce, and what the page says it cannot do to a message sent under a fresh nonce.</li><li>AES-CTR gave up message 2 but has no tag to forge. Using your AES-CBC block counts, explain what an attacker learns from identical leading CBC blocks and what the card says the attacker does not learn. Why does the page call CBC's failure weaker?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A service encrypts with AES-GCM under one long-lived key. One engineer proposes random 96-bit nonces; another proposes a counter kept on a virtual machine that is sometimes restored from a snapshot. Using <strong>Where a nonce actually repeats</strong>, explain how each proposal could still repeat a nonce. Using <strong>Fixes, and what this lab is not</strong>, say which remedy the page offers against each risk, and what the page says AES-GCM-SIV would still leak if a nonce did repeat.</li><li><strong>Extend.</strong> Under <strong>Why the forgeries work — one cancellation, twice</strong>, expand the AES-GCM derivation and press <strong>Run it on real bytes and cancel</strong>. Record whether each check line under the computed values passed. Press the button again (it now reads <strong>Run it again with new keys</strong>) and compare tag₁ and the recovered H with your first press. Which values changed, and which checks still held?</li><li><strong>Extend.</strong> Under <strong>Random 96-bit nonces and the birthday bound</strong>, choose <strong>32-bit</strong> and move <strong>Messages encrypted (log scale)</strong> until the collision probability passes one half. Then choose <strong>96-bit (GCM)</strong> and read where the page puts a 50% chance. Compare that with the random-IV limit stated in the note below the readouts, and explain why the limit sits so far below the 50% point.</li></ol>
+</section>
+  </div>
+</article>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <p class="t-foot-licence">Teaching materials: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You may copy, adapt, print and redistribute these materials, including commercially, as long as you give credit. When you adapt one, keep this line on it: <span class="t-attrib">Crypto Lab teaching materials by Paul A. Clark, CC BY 4.0 — https://crypto-lab.systemslibrarian.dev/teach/</span></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

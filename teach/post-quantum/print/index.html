@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Post-quantum transition: worksheets — Crypto Lab</title>
+<meta name="description" content="Every worksheet in the Post-quantum transition module, in sequence order, for printing as one hand-out.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/print/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Post-quantum transition: worksheets">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/print/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Post-quantum transition: worksheets">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/print/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Post-quantum transition</a></li><li><span aria-current="page">Hand-out</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Hand-out · <a href="../">Post-quantum transition</a></p>
+  <h1>Post-quantum transition: worksheets</h1>
+  <p class="t-lede">Every worksheet in this module, in the order the sequence runs them. Each one starts on its own page when printed.</p>
+</header>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print / save as PDF</button>
+  <a class="t-btn t-btn--ghost" href="../">Back to the module</a>
+</div>
+
+
+<article class="ws-handout" aria-labelledby="h-shor">
+  <h2 id="h-shor">Shor</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-shor/">Shor</a></dd></div>
+    <div><dt>Time</dt><dd>About 18 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>66c0e3109427</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>You are going to run the same N three times. For each of these, predict whether it stays the same across your three runs or changes: the base <em>a</em>, the period <em>r</em>, the register size <em>Q</em>, and the two factors printed on the result line. Write your predictions in the first column of the first table under Record.</li><li>The page's first explainer turns <code>a^r ≡ 1 (mod N)</code> into <code>(a^(r/2) − 1)(a^(r/2) + 1) ≡ 0 (mod N)</code> and then takes a gcd of each half with N. That chain needs the period <em>r</em> to be <strong>even</strong>. Predict what a run should do when the period it recovers is odd: stop and report failure, print a factor anyway, or something else.</li><li>Each attempt picks a base <em>a</em> at random from 2 to N−1. Predict what should happen when that base happens to share a factor with N, before any quantum step runs. Would you call that outcome a success or a failure of the run?</li><li>The quantum measurement is a sample from a probability distribution, not a lookup. Predict whether two attempts using the same base <em>a</em>, and therefore the same period <em>r</em>, could still measure different frequencies <em>m</em> — and whether both could still end with the same <em>r</em>.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<aside class="ws-note"><p>A run that retries, or that ends without ever showing a period, is one of this algorithm's own outcomes. Record it as a result. Do not clear it and hunt for a tidier run.</p></aside>
+<ol><li>Open the exhibit. Before pressing anything, read the note under the controls: it says Shor is <em>randomized</em>, that each run picks a fresh base <em>a</em>, and that a run can fail and retry. Then read the first explainer, <em>Why does the period r let you factor N?</em>, which stays open at the top of the page.</li><li>In the <strong>Presets</strong> row, press <strong>91</strong>. A preset fills the <strong>Factor N</strong> field and starts the run by itself — you do not also press <strong>Run Shor's Algorithm</strong>. Watch the <strong>ALGORITHM STEPS</strong> log fill from the top.</li><li>When the run stops, find the <em>Resource estimate</em> line near the top of the log and copy the register size <em>Q</em> and the logical qubit count it states into the second table. You read this line once; later runs of N = 91 restate it.</li><li>Fill the first row of the third table from this run: the base <em>a</em> and the period <em>r</em> from the <em>This run:</em> line inside the first explainer; <em>Attempts</em> and the two factors from the RESULT line at the foot of the log; and, in the last column, every line that begins <em>↺ Retrying:</em> together with the reason it names.</li><li>Press <strong>Run Shor's Algorithm</strong> and record a second run the same way, then a third. Record each run before you start the next one — a new run clears the log and the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel.</li><li>Some runs end differently, and each of those is a row to fill in rather than a mistake. If the <em>This run:</em> line keeps its italic placeholder and the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel says the run drew a base that already shared a factor with N, write &quot;lucky gcd, no period&quot; in the last column and copy the factor the log's <em>Lucky GCD</em> line reports. If the log prints one or more <em>↺ Retrying:</em> lines and then carries on, record every reason it names. If a stage banner reads <em>Stage 3 — no convergent denominator satisfied a^r ≡ 1, so the period was NOT recovered</em>, record that alongside the retry reason.</li><li>Pick one of your runs that did reach a period, and copy its <em>This run:</em> chain into the fourth table, number by number: the base, the period, <code>a^(r/2) mod N</code>, both gcds, and the check it prints at the end.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value in the second, third and fourth tables comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Value, Same across runs, or changes? (predicted), What my three runs showed">
+<table>
+<thead><tr><th scope="col">Value</th><th scope="col">Same across runs, or changes? (predicted)</th><th scope="col">What my three runs showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Base a</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Period r</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Register size Q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The two factors on the RESULT line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: From the *Resource estimate* line, for N = 91, Value">
+<table>
+<thead><tr><th scope="col">From the <em>Resource estimate</em> line, for N = 91</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Register size Q</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Logical qubits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Run, Base a, Period r, Attempts, Factors on the RESULT line, Retry reasons, or how else the run ended">
+<table>
+<thead><tr><th scope="col">Run</th><th scope="col">Base a</th><th scope="col">Period r</th><th scope="col">Attempts</th><th scope="col">Factors on the RESULT line</th><th scope="col">Retry reasons, or how else the run ended</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Third run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: From the *This run:* line of one run that reached a period, Value">
+<table>
+<thead><tr><th scope="col">From the <em>This run:</em> line of one run that reached a period</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Base a</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Period r</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>a^(r/2) mod N</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>gcd(a^(r/2) − 1, N)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>gcd(a^(r/2) + 1, N)</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The check it prints</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Match your fourth table line by line to the four numbered steps of the first explainer, <em>Why does the period r let you factor N?</em> Why does that chain need <em>r</em> to be even, and what does the demo do with an attempt whose period is odd — answer from your own log if one of your runs showed it, otherwise from the third step of the explainer's chain. What do your two gcds multiply to, and what does the <em>Verification</em> clause of the log's <em>Factors found</em> line check?</li><li>Compare your three rows. Which values changed from run to run and which did not? The <em>Resource estimate</em> line states how <em>Q</em> is built — use its wording to say what <em>Q</em> depends on, and why the base <em>a</em> and the period <em>r</em> do not behave the same way across runs.</li><li>Take one run that retried, that needed more than one attempt, or that ended with no period at all. Using the reason the log names, say what that attempt had drawn or measured, and why drawing a fresh base is part of the method rather than an error. If the retry pushed the <em>Attempts</em> count up, say what else appeared in the log at that moment; if the count did not move, say what that tells you about where in the attempt the retry happened. If none of your runs did any of this, use a classmate's.</li><li>The explainer closes by saying the quantum computer's only job is finding <em>r</em>, and that everything else in the chain is ordinary arithmetic. Using your own log, name one step of your run that a quantum computer would perform and one that it would not, and say which words on the page told you which was which.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A service establishes its keys with RSA-2048 and encrypts the data itself with AES-256. Using the <em>QUANTUM-RESISTANT AFTER SHOR</em> list and the <em>RESOURCE REQUIREMENTS</em> table in the <strong>RSA IMPACT</strong> panel, say which of those two the page puts on its broken list and which it leaves usable, what that table gives as the logical-qubit estimate for the broken one, and which of the replacements named on the page you would put in its place. The call-out at the foot of that panel links one of them.</li><li><strong>Extend.</strong> After a run that reached a QFT visualization, scroll the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel to the block headed <em>Phasor wheels — why the peaks form (classically simulated)</em>. Its frequency buttons are built by the run, so their labels carry your own run's numbers: press the one whose label begins <em>off-peak</em> and record the Σ value under the summed wheel and whether the page calls it add or cancel; then press the one whose label begins <em>on-peak</em> and record the same two. Using the second explainer, <em>Why does the QFT concentrate at multiples of Q/r?</em>, explain why one frequency gives a long resultant and the other a short one, and what that has to do with the tall bars in the distribution chart above it.</li><li><strong>Extend.</strong> Press <strong>Reset</strong>, then the preset <strong>15</strong>, and let three runs go by. Record the register size <em>Q</em> and the logical qubit count from the <em>Resource estimate</em> line for N = 15 and compare them with the pair you wrote down for N = 91. How many of your three runs reached a QFT visualization at all, and what did the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel say for the ones that did not?</li><li><strong>Extend.</strong> Type 97 into the <strong>Factor N</strong> field and press <strong>Run Shor's Algorithm</strong>, then do the same with an even number such as 100. Record the banner each one produces and what the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel says. Using the <em>Pre-check</em> line that N = 91 printed, list what the demo tests about N before it would draw a base at all, and say which test each of your two inputs failed.</li><li><strong>Extend.</strong> In the <strong>PERIOD TABLE / QFT VISUALIZATION</strong> panel, find the <em>Continued Fraction Extraction</em> section for one attempt and read its caption and its table. Which row is marked <em>← the period r</em>, and what test does the third column apply to each denominator? Using the caption, explain why the demo tests the denominators rather than trusting the first one it computes.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-grover">
+  <h2 id="h-grover">Grover</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-grover/">Grover</a></dd></div>
+    <div><dt>Time</dt><dd>About 26 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>873e40d8f891</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>A search space holds 16 keys and exactly one of them is correct. Classically, how many keys would you expect to try before you hit it? Grover's search needs roughly the square root of the space instead. Write down the number of Grover iterations you expect, and say which of the two numbers you are more confident about.</li><li>Grover's oracle recognises the correct key and flips the sign of its amplitude — it turns a positive number negative. Predict what that does to the <em>probability</em> of measuring the correct key at that instant: raises it, lowers it, or leaves it alone. Give a reason before you look.</li><li>You keep pressing Step long after the amplitude has climbed. Predict what the success probability does: keeps rising, levels off at some ceiling, or falls again. Sketch the shape you expect on a graph of probability against iteration count.</li><li>Grover is usually summarised as &quot;it halves your effective key length&quot;. Predict what AES-128 and AES-256 become under that rule, and predict whether a halved key length is the same thing as a broken cipher. Then predict which of AES-256 and RSA-2048 the page will say needs a bigger parameter and which needs a different algorithm.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>The exhibit is one long page of panels, not tabs. Each step names the panel heading to scroll to.</p>
+<ol><li>In the <strong>Grover's Algorithm — Amplitude Amplification</strong> panel, leave <strong>Search space n qubits</strong> at 4. Record the N readout beside the slider, the index and binary label on the target line, and the two numbers on the iteration line, which reads <code>Iteration: k = 0 / k* = 3</code>. Scroll to <strong>Classical vs Quantum Search</strong> and record the three numbers in the two strategy blocks: the classical expected queries, the Grover oracle queries, and the reflections applied. Fill in the first table.</li><li>Back in <strong>Grover's Algorithm — Amplitude Amplification</strong>, check <strong>Show oracle + diffusion sub-steps</strong>. A sub-step line appears under the iteration line reading <code>State — equal-ish superposition after the last iteration</code>. Record the target amplitude and the probability from the amplitude readout beside the bar chart, and whether the target's bar sits above or below the centre line.</li><li>Press <strong>Step</strong> once. The sub-step line now reads <code>Oracle — flip the target’s phase</code>. Record the same three things again. Press <strong>Step</strong> a second time; the line reads <code>Diffusion — invert all amplitudes about the mean</code>. Record the same three things a third time. Fill in the second table.</li><li>Press <strong>Reset</strong>, uncheck <strong>Show oracle + diffusion sub-steps</strong>, and check <strong>Prediction mode</strong>. Press <strong>Step</strong>: instead of advancing, the page asks you to commit a guess and offers three answers. Write your guess in the third table, then choose the matching answer. Read the verdict line and record what the page says actually happened, with the two percentages it prints. After each commit, glance at the probability curve below the charts and find the moving dot. Repeat until the gold banner appears reporting that the optimal k* has been reached.</li><li>Press <strong>Measure ×100</strong> and record the hit count, the empirical success and the theoretical figure in the fourth table.</li><li>Press <strong>Step</strong> once more. The prompt now says you are at or past k*; commit a guess and record the verdict in the last row of the third table. The banner should change. Press <strong>Measure ×100</strong> again and record the second row of the fourth table.</li><li>Scroll to <strong>Why Grover Still Doesn't Break AES Instantly</strong>. Set <strong>Key size</strong> to AES-128 and record the classical and Grover figures; set it to AES-256 and record the same two. Fill in the fifth table.</li><li>Scroll to <strong>The Real Cost of One Oracle Call</strong>. This panel has its own <strong>Key size</strong> control, and it does not follow the one in the panel above. Set it to AES-128 and record the iterations, the cost per oracle call, the total circuit depth and the practical threat; then set it to AES-256 and record the same four. Fill in the sixth table.</li></ol>
+<aside class="ws-note"><p>If pressing <strong>Step</strong> appears to do nothing, check whether <strong>Prediction mode</strong> is on. With it on, <strong>Step</strong> only opens the question — the walk advances when you commit to one of the three answers.</p></aside>
+<aside class="ws-note"><p>The measurement grid clears itself whenever the state changes, so read your hit count before you press <strong>Step</strong> again.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything here comes from your own run. Only the target line in the first table and the hit counts in the fourth are yours alone; every other cell should match your neighbour's, and Explain 3 asks you to check that.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Reading, My value">
+<table>
+<thead><tr><th scope="col">Reading</th><th scope="col">My value</th></tr></thead>
+<tbody>
+<tr><th scope="row">N</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Target index, and its binary label</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Optimal iterations k*</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Classical expected queries</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Grover oracle queries</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reflections applied</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Sub-step, Target amplitude, Success probability, Target bar above or below the centre line">
+<table>
+<thead><tr><th scope="col">Sub-step</th><th scope="col">Target amplitude</th><th scope="col">Success probability</th><th scope="col">Target bar above or below the centre line</th></tr></thead>
+<tbody>
+<tr><th scope="row">State, before the oracle</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Oracle</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Diffusion</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Step, My prediction, What the page reported, Probability before and after">
+<table>
+<thead><tr><th scope="col">Step</th><th scope="col">My prediction</th><th scope="col">What the page reported</th><th scope="col">Probability before and after</th></tr></thead>
+<tbody>
+<tr><th scope="row">k = 0 to k = 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k = 1 to k = 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k = 2 to k = 3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k = 3 to k = 4</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Measured at, Target hits out of 100, Empirical success, Theoretical">
+<table>
+<thead><tr><th scope="col">Measured at</th><th scope="col">Target hits out of 100</th><th scope="col">Empirical success</th><th scope="col">Theoretical</th></tr></thead>
+<tbody>
+<tr><th scope="row">k = k*</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k = k* + 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Key size, Classical brute force, Grover (idealized)">
+<table>
+<thead><tr><th scope="col">Key size</th><th scope="col">Classical brute force</th><th scope="col">Grover (idealized)</th></tr></thead>
+<tbody>
+<tr><th scope="row">AES-128</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-256</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Key size, Grover iterations, Cost per oracle call, Total circuit depth, Practical threat">
+<table>
+<thead><tr><th scope="col">Key size</th><th scope="col">Grover iterations</th><th scope="col">Cost per oracle call</th><th scope="col">Total circuit depth</th><th scope="col">Practical threat</th></tr></thead>
+<tbody>
+<tr><th scope="row">AES-128</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-256</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>In your second table, the oracle changed the sign of the target amplitude. Did your probability column change across that row? Using the <strong>Reality</strong> line the Myth and Reality panel shows during the oracle sub-step, and the relationship the amplitude readout prints between an amplitude and a probability, explain what the oracle did and what it did not do. Then say what the diffusion row changed that the oracle row did not.</li><li>Describe in one sentence how the probability moved across the four rows of your third table. The rotation view's caption says the state is a unit vector, that each iteration rotates it by 2θ toward the target axis, and that success probability is the squared height. Use that to explain why your last step lowered the probability rather than raising it.</li><li>Your two measurement rows were taken from two different states. Compare each empirical success against the theoretical figure printed beside it, and compare your figures with a classmate's. Using the caption beside the <strong>Measure ×100</strong> button, explain why running Grover to k* is not the same as knowing the key, and why your hit count is not your classmate's.</li><li>Both key sizes in your sixth table have their iteration count set at half the key length, yet the page calls one of them weakened and the other strong. Look at which of the three cost figures changes between your two rows and which stays the same. Use that to explain both the halving and the difference in verdict. Then read <strong>The Mitigation</strong> in the <strong>Impact on Symmetric Cryptography</strong> panel: what does it say fixes the symmetric case, and what does it say public-key systems need instead? Say which of those two claims you saw evidence for in this exhibit and which one the page only asserts.</li><li>The <strong>About This Demo</strong> panel lists, under <strong>This demo is not</strong>, several things the simulation leaves out. Name the item on that list that most limits what your sixth table can tell you about a real attack, and say why.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You run a service that encrypts stored records with AES-128 and authenticates them with HMAC-SHA-256, and you are asked what to change for a post-quantum threat model. Using <strong>The Mitigation</strong> list in the <strong>Impact on Symmetric Cryptography</strong> panel and the hash table above it, name the parameter changes the page supports and say, from your own sixth table, what each one buys. Then use the note printed under the hash table to say which hash property the halving rule applies to and which one it does not.</li><li><strong>Extend.</strong> In the <strong>Grover's Algorithm — Amplitude Amplification</strong> panel, move <strong>Search space n qubits</strong> to 8 and record N and k<em> from the readouts; then move it to 12 and record them again. Above 8 qubits the bar chart is replaced by a note saying the space is too large to draw individual bars; the rotation view and the probability curve keep working. Alongside each pair write the square root of N. Compare how k</em> grows against how N grows, and say whether the growth you recorded looks like N or like the square root of N.</li><li><strong>Extend.</strong> With the slider back at 4, press <strong>Reset</strong>, then press <strong>Random target</strong> several times and watch the target line, the iteration line and the amplitude readout. Record which of those three change and which do not. The math layer under the two charts prints the equations for θ and for the success probability with the current numbers substituted; use them to explain what the probability depends on.</li><li><strong>Extend.</strong> In the <strong>Impact on Symmetric Cryptography</strong> panel, open the disclosure <strong>Grover vs Shor — The Two Quantum Threats</strong> and read its seven rows. For each row, mark whether this exhibit showed you evidence for it or only stated it. Keep the marked table: the companion Shor exhibit covers the rows this one only states.</li><li><strong>Extend.</strong> Work the <strong>Challenge Mode</strong> panel as an exit ticket. Answer all of its questions, read each explanation, and note any question whose explanation disagrees with what you recorded above.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-lattice-gentle">
+  <h2 id="h-lattice-gentle">Lattice Gentle</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/">Lattice Gentle</a></dd></div>
+    <div><dt>Time</dt><dd>About 33 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>893db9f6f046</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>One grid of dots can be described by more than one pair of arrows. Basis B has short arrows, basis B′ has long ones, and both describe the same dots. Decoding a target point means writing it in the current arrows' coordinates and rounding those coordinates to whole numbers. Predict which description decodes the target closer, or whether the two must tie because the dots are the same, and give your reason in one sentence.</li><li>Now think about the shortest arrow you could draw from one dot of that grid to another. If the short-arrow description is swapped for the long-arrow one, predict whether that shortest vector changes, and predict whether it becomes harder to find. Those are two separate questions — answer both.</li><li>One exhibit hands you a system b = A·s + e (mod 47) in which every entry of the error e lies between −2 and 2, and lets you compute A·s for any candidate s you type. Predict how you would recognise the right s, and predict what b − A·s looks like when s is wrong by only a little.</li><li>The toy-Kyber panel runs at q = 137 and decrypts correctly while its decryption error stays under q/4. Predict what you will see as that error grows past the ceiling: a warning first, some message bits flipping, or an error message in place of a plaintext.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>Steps 1 and 2 are in the page header and the progress rail. Every step after that names the rail button that opens it, so you always know which guided step you are in.</p>
+<ol><li>Open the exhibit. The experiment in the header asks which of two descriptions of one grid decodes the target t = (9, 2) closer. Press the button that matches your answer to Predict 1: <strong>B decodes closer</strong>, <strong>B′ decodes closer</strong>, or <strong>Same dots — they must tie</strong>. Fill in the first Record table from the sentence the page then computes.</li><li>Check that <strong>Guided</strong> is the selected reading mode, then press <strong>1 · Basis</strong> on the progress rail.</li><li>In Exhibit 1, press <strong>Good basis B (Ex 2.24)</strong>. Record its row of the second table: the status line under the picture (same lattice, or different), the point the rounding lands on, the error, and the badge at the end of the decoding line.</li><li>Press <strong>Bad basis B′ (Ex 2.24)</strong> and record that row the same way. The two presets decode the same target, so what changed between your two rows is the description.</li><li>Press <strong>Good basis B (Ex 2.24)</strong> again. Now set <strong>target x</strong> to 9 and <strong>target y</strong> to 2, typing each value and pressing Tab to commit it. Record that row — this is the target the header experiment used.</li><li>Leave the target where it is and set <strong>b₁ x</strong> to 4. Record what the status line says now and what appears among the dots. Then press <strong>Good basis B (Ex 2.24)</strong> to put both the basis and the target back.</li><li>Press <strong>2 · SVP/CVP</strong>. The panel asks its own prediction first: press <strong>Predict: yes, it changes</strong> or <strong>Predict: no, it stays</strong> to match your answer to Predict 2, and read the reply. Then press <strong>Good basis B₂ = (2,0), (0,1)</strong> and <strong>Bad basis B₃ = (−2,−2), (4,3)</strong> in turn, recording a row of the third table for each.</li><li>Press <strong>3 · Reduce</strong>. Press <strong>Gauss — Ex 9.11</strong>, then press <strong>Step</strong> twice, recording ‖v‖² from each line as it appears. Press <strong>Run to end</strong> and record the last line and the count in the status line.</li><li>Press <strong>4 · LWE &amp; SIS</strong> and stay in the first panel, LWE. Record the row the panel already shows for the candidate it opens with. Then open the LWE panel's <strong>Stuck? Reveal the known solutions</strong> disclosure, press <strong>A wrong guess: s = (1, 2, 3)</strong>, and record that row.</li><li>Still in the LWE panel, press <strong>Solution 1: s = (2, 15, 12)</strong> and record its row, including how many of the five table rows report a small error. Then change <strong>s3</strong> to one more than the value that button set, press Tab, and record the last row.</li><li>Press <strong>5 · Schemes</strong> and stay in the first panel, toy-Kyber, with <strong>Worked example from the slides</strong> selected. Fill in the worked-example column of the fifth table from the decryption panel: the message bits, the decoded bits, the measured error, the ceiling the page prints, and the badge on that line. Record the <strong>Experiment seed</strong> value as well.</li><li>Focus the error-bound slider in that same decryption panel — its label begins <em>Error bound η for the sampled e₁, e₂</em> — and press the Right arrow key one step at a time, watching the measured-error line after each press. Stop at the first setting where the badge reports the error is over the ceiling, and fill in the second column of the fifth table, including which of the toy-Kyber panel's two mode buttons — <strong>Worked example from the slides</strong> or <strong>Fresh seeded keys</strong> — is now shown as selected. If the badge has not changed by the time the slider stops moving, press <strong>Reroll seed</strong> in the toy-Kyber panel and work up from the bottom again.</li><li>Open the disclosure headed <strong>The KEM layer: Fujisaki–Okamoto with implicit rejection, live</strong> at the foot of the toy-Kyber panel. Press <strong>Run KEM: encapsulate → decapsulate</strong> and record its row of the last table, then press <strong>Tamper with the ciphertext, then decapsulate</strong> and record that row.</li></ol>
+<aside class="ws-note"><p>In step 6 the typed arrows describe a different set of dots from the ones drawn — the status line says which dots they generate. Read that row's decoding cells as what the page reports, not as a decoding of the grid in front of you.</p></aside>
+<aside class="ws-note"><p>The values in steps 11 to 13 come from the seed shown in the panel, so a classmate with a different seed sees different numbers. <strong>Copy experiment link</strong> puts your seeds in a URL if you want someone else to reproduce your exact run.</p></aside>
+<aside class="ws-note"><p>Guided mode shows one exhibit at a time. If you would rather have the whole page at once, <strong>Reference</strong> switches to that view, and the rail still moves you between exhibits.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value here comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Header experiment, What the page computed">
+<table>
+<thead><tr><th scope="col">Header experiment</th><th scope="col">What the page computed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Where rounding in B lands</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">B's error</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Where rounding in B′ lands</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">B′'s error</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">How much bigger the page says B′'s miss is</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Exhibit 1 row, Status line: same lattice or different, Rounded decode, Error, Badge on the decoding line">
+<table>
+<thead><tr><th scope="col">Exhibit 1 row</th><th scope="col">Status line: same lattice or different</th><th scope="col">Rounded decode</th><th scope="col">Error</th><th scope="col">Badge on the decoding line</th></tr></thead>
+<tbody>
+<tr><th scope="row">Good basis B, target as the preset sets it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Bad basis B′, target as the preset sets it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Good basis B, target (9, 2)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">b₁ x set to 4, target (9, 2)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Exhibit 2 basis, Shortest vector reported, Its length, ‖b₁‖, ‖b₂‖, What the badge says">
+<table>
+<thead><tr><th scope="col">Exhibit 2 basis</th><th scope="col">Shortest vector reported</th><th scope="col">Its length</th><th scope="col">‖b₁‖</th><th scope="col">‖b₂‖</th><th scope="col">What the badge says</th></tr></thead>
+<tbody>
+<tr><th scope="row">Good basis B₂</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Bad basis B₃</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Exhibit 3, Gauss on Example 9.11, Value">
+<table>
+<thead><tr><th scope="col">Exhibit 3, Gauss on Example 9.11</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">‖v‖² in the first line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">‖v‖² in the second line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The reduced basis in the last line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What the last line says the first vector attains</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Recorded steps counted in the status line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: LWE candidate s, Error size ‖e‖∞ reported, Accepted or rejected, Rows reporting a small error">
+<table>
+<thead><tr><th scope="col">LWE candidate s</th><th scope="col">Error size ‖e‖∞ reported</th><th scope="col">Accepted or rejected</th><th scope="col">Rows reporting a small error</th></tr></thead>
+<tbody>
+<tr><th scope="row">The candidate the panel opens with</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">(1, 2, 3)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Solution 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Solution 1 with s3 raised by one</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: toy-Kyber reading, Worked example from the slides, At the first setting over the ceiling">
+<table>
+<thead><tr><th scope="col">toy-Kyber reading</th><th scope="col">Worked example from the slides</th><th scope="col">At the first setting over the ceiling</th></tr></thead>
+<tbody>
+<tr><th scope="row">Message bits sent</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Decoded bits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Measured error ‖E‖∞</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ceiling the page prints</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Badge on the measured-error line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Experiment seed</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Error-bound setting</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Mode button shown as selected</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: KEM action, Do the two keys agree?, What the teaching view says happened">
+<table>
+<thead><tr><th scope="col">KEM action</th><th scope="col">Do the two keys agree?</th><th scope="col">What the teaching view says happened</th></tr></thead>
+<tbody>
+<tr><th scope="row">Run KEM: encapsulate → decapsulate</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Tamper with the ciphertext, then decapsulate</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Your first two Exhibit 1 rows decode the same target, and the status line said the same thing about the dots in both. Using the decoding line the page prints — the target written as c₁·b₁ + c₂·b₂, then each coefficient rounded — explain why the rounded point moved when only the description changed, and why the error grew.</li><li>Look at the badge column of the second table. Did rounding land on the point the page calls the true closest in every row? Using the page's own description of this decoding as the Closest Vector Problem solved the naive way, say what rounding gives you and what it does not, and which of your rows is the evidence.</li><li>In the third table the shortest vector reported did not move when you switched bases, but the two badges disagreed about the basis. Explain what that says about which facts belong to the grid of dots and which belong to the description, and say what the page means when it still calls one of the two bases good.</li><li>In the LWE panel, checking a candidate took one press and the page showed both sides of every equation. Using the panel's own note that the same system without the error term is solved instantly by Gaussian elimination, and the panel's disclosure on where the lattice in LWE is, explain why checking a candidate is easy while finding one is not, and name the exhibit you already did that the disclosure points back to.</li><li>Use your last two tables together. First, say what actually crossed what when the decoded bits stopped matching the message, quoting the two numbers on the measured-error line rather than the slider setting — the slider's label says which of the two decides. Then say what the receiver did with the tampered ciphertext, and why the page describes that as specified behaviour rather than a failure.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A colleague's slide says: &quot;ML-KEM's private key is a secret good basis, and the receiver decodes the ciphertext with it.&quot; Using the opening card's paragraph on holding the basis intuition loosely, the key-generation note in the toy-Kyber panel, and the page's closing section on what is real here, say what is wrong with that sentence, what the secret actually is, and which part of the geometry you worked through is intuition rather than mechanism.</li><li><strong>Extend.</strong> Press <strong>4 · LWE &amp; SIS</strong> and go to the second panel, SIS. Open its <strong>Stuck? Reveal the known solutions</strong> disclosure and press <strong>The cheat: z = 0</strong>; record which of the three conditions the panel reports pass and which fail. Press <strong>Solution 1: z = (2, -2, 0, 3, 0)</strong> and record the three again. Then set <strong>z1</strong> to 1, press Tab, and record which condition flips. Finally, read the two disclosures headed with the question of where the lattice is, one in each panel, and write one sentence saying which of the shortest-vector and closest-vector problems each panel is.</li><li><strong>Extend.</strong> Press <strong>3 · Reduce</strong> and press <strong>LLL — Ex 9.21 (4-dimensional)</strong>. Press <strong>Step</strong> through the whole run, writing down each Lovász line as holding or violated and noting where a swap follows one. Press <strong>Run to end</strong> and record the reduced basis and the number of swaps the last line reports. Then press <strong>Gauss — Ex 9.12 (big numbers)</strong> and <strong>Run to end</strong>, and record ‖v‖² in the first line and in the last, and how many iterations the run took compared with the number the panel's introduction states.</li><li><strong>Extend.</strong> Press <strong>5 · Schemes</strong> and go to the second panel, toy-Dilithium. Press <strong>Replay the slides’ worked example</strong>, then <strong>Verify</strong>, and record the two check lines and the verdict. Press <strong>Tamper with z, then verify</strong> and record what changed. Then type a short message of your own into <strong>Message to sign:</strong>, press <strong>Sign (live, with rejection sampling)</strong>, and record how many attempts the page lists and how many of them were aborted and why. Press <strong>Verify</strong>, then <strong>Verify against a tampered message</strong>, and record both verdicts together with what the page says about how often a tampered message can still be accepted at this toy size.</li><li><strong>Extend.</strong> Press <strong>6 · Check</strong> and answer all five questions, choosing before you read any explanation. Record your first-try score, and for each question you missed write one line saying what the page's explanation gave you that your answer did not.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-kyber-vault">
+  <h2 id="h-kyber-vault">Kyber Vault</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/">Kyber Vault</a></dd></div>
+    <div><dt>Time</dt><dd>About 20 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>3f80e2eaa9c9</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>In this exhibit Bob runs KeyGen, Alice runs Encaps, and Bob runs Decaps. Of Bob's private key, Bob's public key, the ciphertext and the shared secret, predict which one has to cross the wire for both sides to end up holding the same bytes, and which one never crosses it at all.</li><li>The exhibit calls this a key encapsulation mechanism rather than public-key encryption. Predict whether you will get to choose the secret Alice sends, and say what you think would have to be added before a sentence of your own could be sent.</li><li>A button labelled <strong>Tamper with ML-KEM ciphertext</strong> flips part of the ciphertext before Bob decapsulates. Predict what Bob's decapsulation does: report an error, hand Bob a different secret, or hand Bob the same secret. Then predict what happens when the message is decrypted.</li><li>Two people run the exhibit side by side and choose the same parameter set. Predict which of the values you are about to record will match theirs exactly and which will differ: the artifact sizes in bytes, the hex of the keys and secrets, the verdict sentence at the end of the run.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. It opens on the <strong>Encapsulate / Decapsulate</strong> tab. Read <strong>What is a KEM?</strong> and the diagram beside it, which shows what travels across the wire and what does not.</li><li>In the row of parameter-set buttons below that card, press the one you want to run: <strong>ML-KEM-512</strong>, <strong>ML-KEM-768</strong> or <strong>ML-KEM-1024</strong>. Read the <strong>Selected parameter set</strong> card and fill in the first table under Record.</li><li>Press <strong>Next</strong> and record the status line printed under the stepper. Press <strong>Next</strong> again and record it. Press <strong>Next</strong> a third time and record it.</li><li>The run is now finished. In the <strong>Artifacts</strong> list, record the first eight hex digits shown for Public key, Private key, Ciphertext, Alice secret and Bob secret. Then find the card that has appeared under the stepper showing the two secrets byte by byte, and copy its verdict sentence and the caption printed below that verdict.</li><li>Scroll to <strong>Full hybrid encryption (ML-KEM + AES-256-GCM)</strong> and read its first sentence. Type a short sentence of your own into <strong>Message to encrypt</strong>, press <strong>Encrypt message</strong>, and record the status line together with the first eight characters shown for <strong>ML-KEM ciphertext</strong>.</li><li>Press <strong>Decrypt message</strong>. Record the status line and the line that begins <strong>Decrypted plaintext</strong>.</li><li>Press <strong>Tamper with ML-KEM ciphertext</strong>. Record the status line and the first eight characters of <strong>ML-KEM ciphertext</strong> again. Then press <strong>Decrypt message</strong> a second time and record the status line and the one-line message the page prints directly below it.</li><li>Open the <strong>Parameter sets</strong> tab and read the limits listed under <strong>What exactly runs here</strong>. Then open the <strong>How LWE works</strong> tab and, under <strong>Jargon, unpacked</strong>, expand <strong>Fujisaki-Okamoto (FO) transform</strong>.</li></ol>
+<aside class="ws-note"><p>Choose your parameter set before step 3. Pressing a different one later clears the run: the status line asks for a fresh session and the artifacts go back to reading as not generated. Use <strong>Prev</strong> if you want to step back without changing the parameter set.</p></aside>
+<aside class="ws-note"><p>After the third press in step 3 the button no longer reads <strong>Next</strong>. Pressing it again starts a new run and replaces the values you recorded in step 4.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything here comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Parameter set I chose, NIST category, Public key (B), Private key (B), Ciphertext (B), Shared secret (B)">
+<table>
+<thead><tr><th scope="col">Parameter set I chose</th><th scope="col">NIST category</th><th scope="col">Public key (B)</th><th scope="col">Private key (B)</th><th scope="col">Ciphertext (B)</th><th scope="col">Shared secret (B)</th></tr></thead>
+<tbody>
+<tr><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Press, What the status line said">
+<table>
+<thead><tr><th scope="col">Press</th><th scope="col">What the status line said</th></tr></thead>
+<tbody>
+<tr><th scope="row">First <strong>Next</strong></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second <strong>Next</strong></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Third <strong>Next</strong></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: From the finished run, What the page showed">
+<table>
+<thead><tr><th scope="col">From the finished run</th><th scope="col">What the page showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Public key, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Private key, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ciphertext, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Alice secret, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Bob secret, first eight hex digits</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verdict sentence under the two byte rows</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Caption below that verdict</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Button pressed, Status line, ML-KEM ciphertext, first eight characters, Other line the page showed">
+<table>
+<thead><tr><th scope="col">Button pressed</th><th scope="col">Status line</th><th scope="col">ML-KEM ciphertext, first eight characters</th><th scope="col">Other line the page showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Encrypt message</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Decrypt message</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Tamper with ML-KEM ciphertext</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Decrypt message, second time</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Your two secret rows hold the same bytes, and the caption you copied says what did and did not travel. Using the diagram on this tab, name what each side held that the other never received, and name the one artifact that crossed the wire. According to the card above the diagram, what does an eavesdropper who copies that artifact still need in order to obtain the secret?</li><li>The stepper never asked you for a message; the hybrid card did. Using that card's first sentence and the sizes in your first table, say what ML-KEM established, what encrypted the sentence you typed, and why the page says a KEM on its own does not encrypt data.</li><li>In step 7 the page reported a failure only after you pressed <strong>Decrypt message</strong>, and not at the moment you tampered. Using the <strong>Fujisaki-Okamoto (FO) transform</strong> entry you expanded, say what the page tells you decapsulation returns when its own check fails, and say which part of the flow — the KEM step or the AES-256-GCM step — produced the message you recorded.</li><li>Find the limit about peer authentication under <strong>What exactly runs here</strong>. Using it, and the KEM card's description of what Encaps takes as its input, say what your run did establish between the two sides and what it did not, and what that limit says a real protocol has to add.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You are reviewing a design that copies this flow as it stands to protect one message to a server, taking the server's ML-KEM public key from a link in an email. Using the limits under <strong>What exactly runs here</strong> on the <strong>Parameter sets</strong> tab and the hybrid card's description of the flow, say which of those limits the design trips, what the page says has to be added, and which of three things — establishing a key, encrypting a message, authenticating the other party — the design would still be missing.</li><li><strong>Extend.</strong> Back on the <strong>Encapsulate / Decapsulate</strong> tab, press each of the two parameter-set buttons you did not run — <strong>ML-KEM-512</strong>, <strong>ML-KEM-768</strong> or <strong>ML-KEM-1024</strong> — and for each one write down the NIST category and the public key, private key, ciphertext and shared-secret sizes from the <strong>Selected parameter set</strong> card. Then open the <strong>Parameter sets</strong> tab, read the three profile cards and the card headed <strong>Category is a requirement, not a scoreboard</strong>, and say which of those numbers grow with the category, which does not, and what the page says should decide the choice.</li><li><strong>Extend.</strong> Open the <strong>Lattice visualizer</strong> tab and read the <strong>Model boundary</strong> card first: it says which part of this exhibit runs the published standard and which parts are small concept models. Then, under <strong>Learning With Errors: the noise is the whole point</strong>, press <strong>Solve A·s = b₀ (clean)</strong> and write down the vector the page recovers and the sentence it prints about it; press <strong>Solve A·s = b (published noisy)</strong> and write down the same two things. Press <strong>New random instance</strong> and repeat both solves twice more. Using the secret printed above those buttons, say what the noise did to exact elimination, and quote the panel's own sentence on what this does and does not show. If a solve reports that the random matrix was singular, press <strong>New random instance</strong> and try that solve again.</li><li><strong>Extend.</strong> Open the <strong>vs X25519 / RSA</strong> tab. From <strong>Fresh key-establishment wire cost</strong>, write down the total key material for X25519 ephemeral ECDH, for the parameter set you ran, and for X25519 + ML-KEM-768, and note what the caption underneath says those totals leave out. Then press <strong>Run benchmark</strong> and write down the median times reported for your parameter set's KeyGen, Encaps and Decaps. Using the note printed under the benchmark, say what the page tells you those numbers do and do not support.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-hybrid-wire">
+  <h2 id="h-hybrid-wire">Hybrid Wire</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-hybrid-wire/">Hybrid Wire</a></dd></div>
+    <div><dt>Time</dt><dd>About 20 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>5b7ae68ae3bc</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>This exhibit derives one session key from two 32-byte secrets: <code>session_key = HKDF-SHA-256(x25519_secret || mlkem_secret)</code>. In the exhibit, a wire being &quot;broken&quot; means an attacker has recovered that wire's 32-byte secret, not that the wire stopped carrying bytes. For each of the four rows in the first table under Record — both wires secure, X25519 broken, ML-KEM-768 broken, both broken — predict whether an attacker who is handed the broken wire's real secret, and who must guess anything still hidden, can re-derive the session key and open a record encrypted under it. Write your predictions in that table's prediction column.</li><li>Someone says a hybrid handshake is &quot;twice as strong&quot; because it runs two key exchanges. Write down what that phrase would have to mean to be true, and one sentence saying what you would claim instead.</li><li>One byte of the ML-KEM ciphertext is flipped in transit to Bob, who then decapsulates it. Predict what Bob ends up with — the same 32-byte post-quantum secret Alice encapsulated, or a different one — and what that does to the session key each side derives. Then predict whether a message Alice encrypted before the flip still decrypts for Bob afterwards.</li><li>The attacker in this exhibit gets a small, fixed number of tries: each try runs the real combiner over whatever the broken wires leaked plus a fresh random guess for whatever is still hidden, then tries the intercepted record with the key that comes out. If every try fails, write down what that does show and what it does not show.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. It opens on the <strong>Live handshake</strong> tab, and its six phases have already run in your browser — the stepper reveals them one at a time, each with the time it took. Press <strong>Next</strong> until you reach step 6, reading each phase title as it becomes current. Between step 4 and step 5, watch the <em>Bob shared secret</em> line on the card headed <em>Purple wire — ML-KEM-768</em> change from <code>pending</code> to bytes: that is Bob decapsulating the ciphertext Alice encapsulated.</li><li>At step 6 the outcome cards, the combiner strip and the secure chat appear. Record <em>Total measured handshake time</em>, the heading of the card directly above the combiner strip (leave its icon out of what you write), and the first four hex characters shown under <em>Session key · 32 B</em>. Read the strip left to right first: <em>X25519 secret · 32 B</em>, then <em>ML-KEM secret · 32 B</em>, then the session key.</li><li>In the panel headed <em>Secure chat</em>, record the first four characters of <em>Alice fingerprint</em> and of <em>Bob fingerprint</em>, and what <em>Session state</em> reads. Leave the sender menu on Alice, type a short message into the message box, and press the send button beside it. On the message card that appears, press its decrypt button, then record the status pill on that card and what <em>Recipient view</em> shows.</li><li>In the same panel's button row, press the control that tampers with the session. Record the status line that appears at the foot of the page, and record <em>Alice fingerprint</em>, <em>Bob fingerprint</em> and <em>Session state</em> again.</li><li>Press the decrypt button on that same message card a second time. The message itself has not changed — only the session has. Record the status pill now, the <em>Verification note</em> on the card, and the status line at the foot of the page.</li><li>Open the <strong>Threat model</strong> tab and read the note headed <em>What &quot;broken&quot; means</em>. Leave both switches as they are and fill the first row of the first table: the verdict headline, which of the two input cells reads <em>known to attacker</em>, and the line beneath the verdict that begins <em>Measured this run</em>.</li><li>Use the first of the two switches, the one for the X25519 wire, to set that wire to broken, and fill that row the same way. Switch it back to secure, set the ML-KEM-768 wire to broken with the second switch, and fill that row. Finally set both to broken and fill the last row, including the plaintext the page prints for the record it opened.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Wire state, My prediction, Verdict headline, Input cell marked known to attacker, Measured this run">
+<table>
+<thead><tr><th scope="col">Wire state</th><th scope="col">My prediction</th><th scope="col">Verdict headline</th><th scope="col">Input cell marked known to attacker</th><th scope="col">Measured this run</th></tr></thead>
+<tbody>
+<tr><th scope="row">Both wires secure</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">X25519 broken</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">ML-KEM-768 broken</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Both broken</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<aside class="ws-note"><p>For the both-broken row, also write down the plaintext the page prints for the record it opened. For the <em>Measured this run</em> column, the phrase after &quot;attacker:&quot; is enough.</p></aside>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Handshake outcome at step 6, My run">
+<table>
+<thead><tr><th scope="col">Handshake outcome at step 6</th><th scope="col">My run</th></tr></thead>
+<tbody>
+<tr><th scope="row">Total measured handshake time</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Heading of the card above the combiner strip, without its icon</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Session key, first four hex characters</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Moment, Alice fingerprint, first four, Bob fingerprint, first four, Session state, Status pill on the message">
+<table>
+<thead><tr><th scope="col">Moment</th><th scope="col">Alice fingerprint, first four</th><th scope="col">Bob fingerprint, first four</th><th scope="col">Session state</th><th scope="col">Status pill on the message</th></tr></thead>
+<tbody>
+<tr><th scope="row">After the handshake, before tampering</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After tampering and the second decrypt</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Line, What it said">
+<table>
+<thead><tr><th scope="col">Line</th><th scope="col">What it said</th></tr></thead>
+<tbody>
+<tr><th scope="row">Status line at the foot of the page, after you tampered</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verification note on the message, after the second decrypt</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Status line at the foot of the page, after the second decrypt</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Look at your two single-break rows. In each one the attacker held one wire's real 32-byte secret and ran the same combiner the handshake ran. Using the note printed under the two input cells on the <strong>Threat model</strong> tab, and the measured line you recorded, explain why the key that came out did not open the record, and say how much of the combiner's input the attacker was still missing.</li><li>Your single-break rows report a number of derivations and that none of them opened the record; your both-broken row reports that the record decrypted and the key matched 32 of 32 bytes. Say what the page actually tested in each case. Then say what a run of failed derivations shows about that run, and what it does not show about X25519 or ML-KEM-768 themselves.</li><li>The compromised verdict ends with the sentence &quot;Hybrid buys safety against either break alone.&quot; Using your four rows, say what that sentence claims and what it does not claim. Compare it with what you wrote for Predict 2: would you now describe this hybrid as twice as strong, and why?</li><li>The byte that was flipped was in the ML-KEM ciphertext, and nothing about the message you had already sent changed between your two decrypts. Using your fingerprints and <em>Session state</em>, say which side's session key moved and which did not, and explain why a key derived from both wires changed when one wire's secret did. Your <em>Verification note</em> blames the message's metadata; the status line blames the session keys. Which of the two does your own table support, and what in your record decides it?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> An engineer proposes dropping one wire to save the extra handshake bytes: one version keeps X25519 only, the other keeps ML-KEM-768 only. Using your own four rows, say what each version gives up and against which attacker in the table headed <em>Full threat matrix</em>, then state your recommendation in the form the exhibit's own verdicts use. At the foot of the page the exhibit says &quot;Not production crypto — a teaching demo.&quot; Say what that note means for how far your recommendation can go.</li><li><strong>Fix.</strong> Open the <strong>Two wires</strong> tab and read the HKDF combiner formula, then read the section &quot;A Note on the Combiner&quot; in the <a href="https://github.com/systemslibrarian/crypto-lab-hybrid-wire/blob/main/demos/hybrid-wire/README.md">demo's README</a>. Say what the combiner's inputs do tie the derived key to and what they do not, name where the README says that missing binding comes from in TLS 1.3, and write out the change the README prescribes for a protocol that has no outer transcript.</li><li><strong>Extend.</strong> On the <strong>Two wires</strong> tab, open the aside headed &quot;New to PQ crypto?&quot; and use it to write, in two sentences, why the purple wire sends a packet back and the blue wire does not. Then press the benchmark control on that tab and record the ops/s reported for X25519, for ML-KEM-768 and for the hybrid, and the hybrid's overhead percentage. Compare that percentage with the byte figure the same tab gives for the overhead against pure X25519, and say which of the two a network engineer would care about more.</li><li><strong>Extend.</strong> Open the <strong>Why hybrid</strong> tab and read the card headed &quot;Twice as strong?&quot; — No. Write its two-column comparison in your own words. Then name which of your four Record rows is the evidence for the model the card calls right, and say what a row would have had to show for the model it calls wrong to be the better description.</li><li><strong>Extend.</strong> Back on the <strong>Live handshake</strong> tab, press <strong>Reset</strong>, step to 6 again and send nothing. Which values in your second Record table came out the same and which changed? For each, say what part of the handshake fixes it or lets it vary.</li><li><strong>Extend.</strong> Open the <strong>Deployed today</strong> tab and pick two cards. For each, write its scheme line and where it says the hybrid is used. Then say which points in the &quot;When to Use It&quot; section of the repository <a href="https://github.com/systemslibrarian/crypto-lab-hybrid-wire">README</a> your two cards illustrate, and which point in that section the cards on the tab do not illustrate.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-harvest-vault">
+  <h2 id="h-harvest-vault">Harvest Vault</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/">Harvest Vault</a></dd></div>
+    <div><dt>Time</dt><dd>About 21 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>1c8241953291</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>This is an extension worksheet: you work it on your own, and nothing here needs an instructor standing over it. Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>The exhibit keeps a copy of each session you send, as bytes: the panel says the two public keys, the nonce and the ciphertext are copied, that this is what a passive wiretap sees and nothing more, and that your plaintext is never in the copy. After the attack runs, the panel reports for each stored record whether the stored bytes are unchanged since capture. Predict what it will report for a record that was captured <em>before</em> you press <strong>Deploy the PQC upgrade</strong>, and say why.</li><li>You will send one message before deploying the upgrade and one after it. Predict which of the two the attack recovers. For the one you expect it to miss, predict whether the reason is that the attacker failed at the same hard problem it solved for the other message, or something else — and say what that something else would be.</li><li>The classical handshake is Diffie-Hellman in a small group, and the attacker searches every candidate private exponent in turn. The panel reports how many exponents it tried and how many were possible. Predict roughly what fraction of the possible exponents the search will get through before it stops, and predict whether two captured sessions will cost the same amount of work.</li><li>The calculator on the same page asks whether X + Y &gt; Z, where X is the number of years the data must stay secret, Y is the number of years migration takes and Z is the number of years until Q-Day. Predict whether a profile whose data must stay secret for decades can be moved out of &quot;at risk&quot; by changing Z alone, and say which of the three numbers an organization actually controls.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>Work straight down the page. Everything in this section is in two panels.</p>
+<ol><li>Open the exhibit. In the step nav that follows you down the page, press <strong>4 · Prove it</strong> to reach the panel headed <strong>PROVE IT: CAPTURE A HANDSHAKE, THEN UPGRADE</strong>. Read the note that begins <strong>Toy scale, stated plainly.</strong> and keep it in view: the rest of this worksheet leans on it.</li><li>In <strong>Message to send</strong>, replace the text with a short line of your own — something you would not want read aloud. Press <strong>Send over the classical handshake</strong> and wait for the line under the buttons to say the session was captured. Record the new row's <strong>Captured</strong> time, its <strong>Handshake</strong> value, and the start of its <strong>Stored bytes</strong> cell (the hex run and the SHA-256 that follows it) in the first table.</li><li>Press <strong>Deploy the PQC upgrade</strong>. Read the line under the buttons and record what it says about the records that are already in the store. Notice that the first button has changed its wording.</li><li>In <strong>Message to send</strong>, type a second, different line. Press <strong>Send over the hybrid handshake</strong> — the same button as before, now relabelled. Record row two in the first table the same way.</li><li>Press <strong>Run Q-Day</strong> and wait until the line under the buttons says Q-Day is complete. For each row, record the <strong>At Q-Day</strong> cell in the second table: the verdict, the recovered text or the failure line, whether it is byte-identical to what was sent, what it says about the stored bytes since capture, and the exponents-tried figure with its timing.</li><li>Read the block headed <strong>What this run showed</strong> below the table and fill in the third table from it.</li><li>Press <strong>5 · Your risk</strong> in the step nav to reach the panel headed <strong>MOSCA'S THEOREM: X + Y &gt; Z</strong>. Without touching the sliders, record the sector name shown as selected, the three slider values, the year printed next to Z, and the verdict line, in the fourth table. Then press the <strong>Library</strong> sector button and record the same row again.</li><li>Scroll to the block headed <strong>Across the plausible Q-Day range</strong> in the same panel and record its three chips in the fifth table.</li></ol>
+<aside class="ws-note"><p>If you lose your place, <strong>Reset exhibit</strong> empties the store and re-arms the upgrade, and you can start again from step 2.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value in these tables comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Session, Captured, Handshake, Stored bytes: hex run and SHA-256">
+<table>
+<thead><tr><th scope="col">Session</th><th scope="col">Captured</th><th scope="col">Handshake</th><th scope="col">Stored bytes: hex run and SHA-256</th></tr></thead>
+<tbody>
+<tr><th scope="row">One, sent before the upgrade</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Two, sent after the upgrade</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Session, Verdict, Recovered text, or the failure line, Byte-identical to what was sent?, Stored bytes since capture, Exponents tried, and how long">
+<table>
+<thead><tr><th scope="col">Session</th><th scope="col">Verdict</th><th scope="col">Recovered text, or the failure line</th><th scope="col">Byte-identical to what was sent?</th><th scope="col">Stored bytes since capture</th><th scope="col">Exponents tried, and how long</th></tr></thead>
+<tbody>
+<tr><th scope="row">One</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Two</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: What this run showed, The sentence, in your own words, with its numbers">
+<table>
+<thead><tr><th scope="col">What this run showed</th><th scope="col">The sentence, in your own words, with its numbers</th></tr></thead>
+<tbody>
+<tr><th scope="row">Sessions captured before the upgrade, and how many were recovered</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Sessions captured after the upgrade, and how many were recovered</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Stored records hashing to what they hashed at capture time</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Attacker effort: exponents, time, and out of how many possible</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Sector shown as selected, X, Y, Z, Year next to Z, Verdict line as printed">
+<table>
+<thead><tr><th scope="col">Sector shown as selected</th><th scope="col">X</th><th scope="col">Y</th><th scope="col">Z</th><th scope="col">Year next to Z</th><th scope="col">Verdict line as printed</th></tr></thead>
+<tbody>
+<tr><th scope="row">As the page loaded</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Library</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Chip, Verdict, The X+Y and Z comparison as printed">
+<table>
+<thead><tr><th scope="col">Chip</th><th scope="col">Verdict</th><th scope="col">The X+Y and Z comparison as printed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Aggressive</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Center</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Conservative</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Row one came back as readable text and row two did not. Both messages were protected the same way — the lab's <a href="https://github.com/systemslibrarian/crypto-lab-harvest-vault">README</a> describes the panel as running HKDF-SHA-256 and AES-256-GCM — and the failure line you recorded for row two names AES-GCM. Using your two rows, say what the attacker had to break in order to read row one, and whether AES-GCM failed there. Then say, for row two, what the attacker did get and what it did not.</li><li>Compare the exponents-tried figures in your two rows with each other, and with the &quot;out of&quot; figure in the <strong>What this run showed</strong> block. Why did the two rows cost different amounts of work, and why will a classmate's figures differ from yours? Using the <strong>Toy scale, stated plainly.</strong> note, say why this same search would not be the attack at a real Diffie-Hellman size, and what the note says breaks those instead.</li><li>Write down the count of stored records that hash to what they hashed at capture time, and the sentence the panel prints after it. Using only that, explain why pressing <strong>Deploy the PQC upgrade</strong> could not change the outcome for your first message. What would have had to be different about the order of your presses for that message to have survived?</li><li>For each of your two rows in the fourth table, write out the X + Y &gt; Z comparison the page printed. Which of the three numbers could an organization in that sector actually change, and which is not theirs to change? Then use your three chips and the page's own note under <strong>Across the plausible Q-Day range</strong> — &quot;The lesson isn't the exact date — it's whether you survive the whole range&quot; — to say what the page is claiming by showing three Q-Day dates at once rather than one, and what would have to be true of a profile for its three chips to disagree with each other.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> Your service runs TLS 1.3 with ECDHE today, and a hybrid key exchange is on the roadmap three years out. Using your two Q-Day rows, write two sentences for a manager: one saying what the upgrade will do for traffic sent after it lands, and one saying what it will not do for traffic sent before. Then name the recorded values you would put in front of them as evidence — and, using the <strong>Toy scale, stated plainly.</strong> note, say why the exponent count is not one of them.</li><li><strong>Fix.</strong> The <strong>Library</strong> profile you recorded printed a verdict at the Z the page had loaded. Using the three numbers in that row, state what would have to change, and by how much, for the same profile to print the other verdict at that same Z. Say which of those levers a library could actually pull, and what the page's context block for that profile — headed <strong>LIBRARY PATRON PRIVACY CONTEXT</strong> at the foot of the same panel — says about how quickly it could pull it.</li><li><strong>Extend.</strong> Press <strong>2 · What breaks</strong> in the step nav to reach the panel headed <strong>WHAT QUANTUM BREAKS — AND WHAT IT DOESN'T</strong>. Read both columns, the note underneath them, and the collapsed check below that note. Write down which primitives the page puts in each column, and what it says Grover's algorithm does to AES-256. Then reconcile that with your row one, where a message protected with AES-256-GCM came back in plaintext: name the thing that was broken, and say why the page argues that &quot;we use AES-256&quot; is not an answer to this threat.</li><li><strong>Extend.</strong> Press <strong>6 · Mitigate</strong> to reach the panel headed <strong>SECTOR RISK MATRIX + MITIGATIONS</strong>. Move focus onto each dot in turn — without activating one, which loads that sector into the calculator — and read what appears in the box below the matrix; write down two sectors that the box puts in different risk states. The legend under the matrix tells you to move the Z slider above to watch dots cross between states. Try that, then try the row of buttons labelled <strong>Q-Day assumption:</strong> above the matrix, and write down which of the two actually moves the dots — and which sectors change state when it does.</li><li><strong>Extend.</strong> Back in the calculator panel, set <strong>X - Data sensitivity lifetime (years data must remain secret)</strong>, <strong>Y - Migration time (years to complete PQC transition)</strong> and <strong>Z - Q-Day estimate (years until cryptographically relevant quantum computer)</strong> to numbers that match a system you actually use. Read the brief in the box under <strong>YOUR RISK BRIEF</strong> (<strong>Copy brief</strong> puts the same text on your clipboard) and write down its verdict line and its &quot;latest year to start&quot; line. The brief prints a name for your sector: compare it with the name on the selector button you pressed, and note any difference between the two.</li></ol>
+</section>
+  </div>
+</article>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <p class="t-foot-licence">Teaching materials: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You may copy, adapt, print and redistribute these materials, including commercially, as long as you give credit. When you adapt one, keep this line on it: <span class="t-attrib">Crypto Lab teaching materials by Paul A. Clark, CC BY 4.0 — https://crypto-lab.systemslibrarian.dev/teach/</span></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

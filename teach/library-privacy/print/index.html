@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Library privacy, for iSchools: worksheets — Crypto Lab</title>
+<meta name="description" content="Every worksheet in the Library privacy, for iSchools module, in sequence order, for printing as one hand-out.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/print/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Library privacy, for iSchools: worksheets">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/print/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Library privacy, for iSchools: worksheets">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/library-privacy/print/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Library privacy, for iSchools</a></li><li><span aria-current="page">Hand-out</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Hand-out · <a href="../">Library privacy, for iSchools</a></p>
+  <h1>Library privacy, for iSchools: worksheets</h1>
+  <p class="t-lede">Every worksheet in this module, in the order the sequence runs them. Each one starts on its own page when printed.</p>
+</header>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print / save as PDF</button>
+  <a class="t-btn t-btn--ghost" href="../">Back to the module</a>
+</div>
+
+
+<article class="ws-handout" aria-labelledby="h-patron-shield">
+  <h2 id="h-patron-shield">Patron Shield</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-patron-shield/">Patron Shield</a></dd></div>
+    <div><dt>Time</dt><dd>About 22 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>93f3f7226fe7</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see. No mathematics is needed for any of them.</p>
+<ol class="ws-answer"><li>A patron searches an ordinary library catalog for one title. For each of these four facts, say whether the operator of that catalog ends up holding it: the title requested, who asked, when they asked, how often that patron asks.</li><li>Now the same lookup is handled by two services run by two different organisations. Each service is sent a list of catalog positions, combines the records sitting at those positions into a single reply, and sends that reply back; the patron's own device puts the two replies together to get the book. Predict what one of those services, reading only the list it received, could say about which book the patron wanted.</li><li>Predict what those two organisations could work out about that patron if they laid the two lists they received side by side. Which of the four facts in question 1 would they hold between them?</li><li>Name one fact about a patron's catalog use that an arrangement like this cannot hide, and say why a librarian might still care about it.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. Before choosing anything, scroll to <strong>Naive vs. Private Query</strong>. The <strong>Naive query</strong> view is the one showing. Record its request line, exactly as it reads now, in the first row of the first table.</li><li>Scroll up to <strong>Library Catalog</strong>. Four of the eight books are shown, and <strong>Showing 4 of 8 — show all</strong> opens the rest. Click one of the four cards already showing — these steps use <strong>The Midnight Library</strong> — and read the line that appears under the catalog. Record the title and the index it names in the fourth table.</li><li>Go back to <strong>Naive vs. Private Query</strong> and record the <strong>Naive query</strong> request line again. Then press <strong>PIR query</strong> and record the line that view shows, before any query has run.</li><li>Scroll to <strong>Protocol Visualizer</strong> and read the note headed <strong>Teaching simulation</strong> at the top of that section. You will need it for Explain 5.</li><li>Back in <strong>Library Catalog</strong>, press <strong>Query Privately</strong>. Four steps run in a few seconds. When the last one finishes, scroll back up to the panel headed <strong>Client generates query pair</strong> and look at the two grids of eight squares, one under <strong>Server 1 receives</strong> and one under <strong>Server 2 receives</strong>: each square stands for one catalog slot, and each server was sent its own grid.</li><li>Scroll down to <strong>What each server knew</strong> and record, in the second and third tables: the slots listed under <strong>Server 1 saw:</strong> and the count beneath them, the same two values for <strong>Server 2 saw:</strong>, the title under <strong>Retrieved title:</strong>, and the line that appears under that title.</li><li>Press <strong>Run again</strong> and record those same six values for a second run of the same book.</li><li>Press <strong>Simulate the servers colluding</strong>, near the end of the privacy analysis. Record in the fourth table the position the page names, the book it names, and how that button reads once you have pressed it.</li><li>Return to <strong>Naive vs. Private Query</strong>, press <strong>PIR query</strong>, and record that line as it reads now. Put it beside the <strong>Naive query</strong> line you recorded in step 3.</li></ol>
+<aside class="ws-note"><p>Your first run opens the rest of the catalog by itself, so all eight books show from then on. That is the page working, not a mistake.</p></aside>
+<aside class="ws-note"><p>If you click a different book card, the finished run clears and the panels reset. Choose again and press <strong>Query Privately</strong> to start a fresh run.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Moment, The request line, exactly as the page shows it">
+<table>
+<thead><tr><th scope="col">Moment</th><th scope="col">The request line, exactly as the page shows it</th></tr></thead>
+<tbody>
+<tr><th scope="row"><strong>Naive query</strong>, before a book is chosen</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><strong>Naive query</strong>, after you chose your book</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><strong>PIR query</strong>, before any query has run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><strong>PIR query</strong>, after your second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Run, Server 1 saw (slots), Count under Server 1, Server 2 saw (slots), Count under Server 2">
+<table>
+<thead><tr><th scope="col">Run</th><th scope="col">Server 1 saw (slots)</th><th scope="col">Count under Server 1</th><th scope="col">Server 2 saw (slots)</th><th scope="col">Count under Server 2</th></tr></thead>
+<tbody>
+<tr><th scope="row">First, after Query Privately</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second, after Run again</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Run, Retrieved title, The line under the retrieved title">
+<table>
+<thead><tr><th scope="col">Run</th><th scope="col">Retrieved title</th><th scope="col">The line under the retrieved title</th></tr></thead>
+<tbody>
+<tr><th scope="row">First</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: What the page showed, Value">
+<table>
+<thead><tr><th scope="col">What the page showed</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">The book you chose, and the index in the line under the catalog</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The position named after the servers colluded</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The book named after the servers colluded</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">How the collusion button reads after you pressed it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Put two of your recorded request lines side by side: the <strong>Naive query</strong> line after you chose a book, and the <strong>PIR query</strong> line after your second run. For each, say what the operator receiving it could write in its log about the title requested, and what a librarian could honestly tell a patron about what that operator holds.</li><li>Compare <strong>Server 1 saw:</strong> with <strong>Server 2 saw:</strong> in your first run, then compare your first run with your second. Did the same book produce the same lists twice? The note beneath the two grids calls each square a bit, and says that neither server &quot;can determine which bit differs — or which book you want. Only a party holding <em>both</em> can see it.&quot; Using your own recorded lists, say what that sentence means for a log kept by one operator over a term of student searches.</li><li>In your run, neither list on its own named your book, and the page named it exactly once the two were put together. Using what appeared after you pressed the collusion button, explain in your own words what &quot;the servers must not collude&quot; is asking of two organisations, and say which of your recorded values one operator would have had to obtain from the other to do this alone.</li><li>Find the paragraph in the privacy analysis that begins &quot;Scoped precisely&quot;. List the facts it says this design does not hide. For each one, name the party in a real library deployment who would be in a position to learn it, and say which of your Predict 1 answers it matches.</li><li>The note headed <strong>Teaching simulation</strong> says what this page actually is, and what a real deployment would need instead. Using that note and the paragraph beginning &quot;The two masks are not independent&quot;, name the assumption the page's privacy claim rests on and every party who has to be trusted for it to hold. Then say what, if anything, a patron at a catalog terminal could check for themselves.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A vendor tells your library that its catalog search is private because &quot;neither of our two servers can tell which book a patron looked up&quot;. Using the paragraph beginning &quot;The two masks are not independent&quot; and the note headed <strong>Teaching simulation</strong>, write two questions you would put to that vendor before the library repeats the claim to patrons. For each question, name the recorded value or the page sentence that prompted it.</li><li><strong>Fix.</strong> A library plans to run both servers itself, on one set of machines, under one administrator's account. The page says the threat model requires the servers to be operated by &quot;independent, non-colluding parties&quot;. Say what that plan gives up, which of your recorded values demonstrates it, and how you would word the residual risk in a privacy impact assessment.</li><li><strong>Extend.</strong> Press <strong>Query a different book</strong>, choose a card for a different title, press <strong>Query Privately</strong>, then press <strong>Simulate the servers colluding</strong> again. Did the page name the new book? Compare the two <strong>Server 1 saw:</strong> lists from your two different books and say what an operator holding both lists, and nothing else, could conclude about the two requests.</li><li><strong>Extend.</strong> Scroll to <strong>How PIR scales — the √N trick</strong> and move the <strong>Catalog size</strong> slider to two of its positions, recording <strong>1-D query (this demo)</strong> and <strong>√N matrix query</strong> at each. The note under those figures says they count &quot;query bits only&quot;. Say what it tells you still has to travel back from each server, and why a library with a large catalog would want to know that before costing such a service.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-blind-relay">
+  <h2 id="h-blind-relay">Blind Relay</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-blind-relay/">Blind Relay</a></dd></div>
+    <div><dt>Time</dt><dd>About 23 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>9de776c3565d</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before class, before you open the exhibit. This section is reading and writing you do away from the lab; the lab time on this sheet starts at <strong>Do</strong>. There are no penalties for wrong predictions; the point is to compare them with what you see. No mathematics is needed for any question on this sheet.</p>
+<ol class="ws-answer"><li>A patron searches through a service run by two operators: a <strong>relay</strong>, which receives the request from the patron's computer and passes it on, and a <strong>gateway</strong>, which opens the request and asks the catalog. For each operator, predict which of these it learns — the patron's network address, the words of the search, both, or neither. Write one line for the relay and one for the gateway.</li><li>Each operator keeps the ordinary records its job produces: the relay a list of addresses and arrival times, the gateway a list of searches and arrival times. Predict what the two could work out together that neither could work out alone, and whether they would have to break any encryption to do it.</li><li>Four patrons search at almost the same moment through that same pair of operators. Nobody decrypts anything, and the two operators never speak to each other — someone simply obtains both sets of records later. Predict whether that person could tell which patron sent which search, and name what in the records they would use.</li><li>A vendor tells your library: &quot;patron searches are encrypted end to end, so we cannot see who searched for what.&quot; Predict what has to be true — about organizations, not about mathematics — for that sentence to hold, and say whether a patron's own computer could check it.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>In the panel <strong>The knowledge split, live</strong>, the box labelled <strong>Your sensitive input (query, or note body for POST)</strong> already holds a query. Replace it with a query you invent for this exercise. Do not type a real search of your own, a real name, or anything else about yourself: the panel asks you to make one up, and whatever you type is displayed in full further down the page and printed again in the collusion step below. Leave the two menus beside the box as they are, and press <strong>Run the exchange</strong>.</li><li>Press <strong>Jump to end</strong>, which fills every card at once. (Walking the exchange one step at a time, with the status line under those buttons, is an Extend item in the last section; you do not need it to fill the tables below.) Then read the four party cards — Client, Relay, Gateway, Target — and fill in the first Record table in the page's own words. Copy the Client card's &quot;cannot know&quot; line and the reason under it exactly; you will need it twice — in Explain question 3, and again in Fix / Extend. Finally, copy the value the Relay card shows beside <code>timing + sizes</code> into the second table.</li><li>Go to the panel <strong>The collusion toggle</strong> and read the paragraph under the heading before you touch anything. Record what the <strong>Cryptographic result</strong> box and the <strong>Privacy verdict</strong> box say now. Press <strong>Relay and gateway compare notes</strong>, and record both boxes again, plus the three lines of the joined log (<strong>WHO</strong>, <strong>WHAT</strong>, <strong>JOINED ON</strong>). Press the same control a second time to switch it back, and record both boxes once more.</li><li>Go to the panel <strong>Correlation without collusion</strong>. Leave <strong>Pad every request to 256 bytes (RFC 9292 §3.8)</strong> unticked and press <strong>Simulate 4 clients at once</strong>. Read the two logs side by side before you join anything — one is headed &quot;Relay's access log (knows WHO)&quot;, the other &quot;Gateway's log (knows WHAT, sorted by size)&quot; — and note from those headings which of the two facts each log holds and which it lacks. Press <strong>Join the logs on size</strong> and record the result; then press <strong>Join the logs on timing</strong> and record that too.</li><li>Now tick <strong>Pad every request to 256 bytes (RFC 9292 §3.8)</strong>. The page clears the result and asks for a fresh run, so press <strong>Simulate 4 clients at once</strong> again, then <strong>Join the logs on size</strong> and <strong>Join the logs on timing</strong> once more, recording both. Finish this panel by opening <strong>What padding does and does not fix</strong> and reading it.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run. Write phrases from the page rather than summaries, so you can quote them in the Explain section and in Fix / Extend.</p>
+<aside class="ws-note"><p>The joined log prints your invented query in full. Use wording you are willing to hand in.</p></aside>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Party card, A fact listed after &quot;knows&quot;, A fact listed after &quot;cannot know&quot;, and the reason the page gives">
+<table>
+<thead><tr><th scope="col">Party card</th><th scope="col">A fact listed after &quot;knows&quot;</th><th scope="col">A fact listed after &quot;cannot know&quot;, and the reason the page gives</th></tr></thead>
+<tbody>
+<tr><th scope="row">Client</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Relay</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Gateway</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Target</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: From the Relay card, What it reads">
+<table>
+<thead><tr><th scope="col">From the Relay card</th><th scope="col">What it reads</th></tr></thead>
+<tbody>
+<tr><th scope="row">The value beside <code>timing + sizes</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: The collusion toggle, Cryptographic result, in the page's words, Privacy verdict, in the page's words">
+<table>
+<thead><tr><th scope="col">The collusion toggle</th><th scope="col">Cryptographic result, in the page's words</th><th scope="col">Privacy verdict, in the page's words</th></tr></thead>
+<tbody>
+<tr><th scope="row">Before you press it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After one press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">After a second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Joined log line, What it read">
+<table>
+<thead><tr><th scope="col">Joined log line</th><th scope="col">What it read</th></tr></thead>
+<tbody>
+<tr><th scope="row">WHO</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">WHAT</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">JOINED ON</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Padding, Join, Privacy verdict, in the page's words, How many of the clients the verdict names">
+<table>
+<thead><tr><th scope="col">Padding</th><th scope="col">Join</th><th scope="col">Privacy verdict, in the page's words</th><th scope="col">How many of the clients the verdict names</th></tr></thead>
+<tbody>
+<tr><th scope="row">Unticked</th><td>on size</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Unticked</th><td>on timing</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ticked</th><td>on size</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Ticked</th><td>on timing</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Using your first table, name the party in this run that held the patron's address, the party that held the words of the search, and any party that held neither. Then finish this sentence for a colleague who will not see the exhibit: while the two operators stay apart, what the patron is relying on is not encryption but ____.</li><li>When you pressed the toggle, the <strong>Cryptographic result</strong> box and the <strong>Privacy verdict</strong> box said opposite-sounding things at the same time. Explain how both can be true together, and use the <strong>JOINED ON</strong> line you recorded to say what the two operators actually combined — and whether anything had to be decrypted for it.</li><li>The Client card names one thing the client cannot know, with a reason. Quote the reason, then say what a patron, or a library acting for its patrons, would have to do instead of checking that thing on the patron's own computer. Name one item a library could actually ask a vendor for.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A vendor brochure says patron searches are protected because they are encrypted in transit and the vendor's own servers never see a patron's address. Using your record tables and the row headed &quot;What you must assume&quot; in the panel <strong>Where this sits: OHTTP vs VPN vs Tor vs IT-PIR</strong>, name the assumption that claim actually rests on and the party who has to keep it. Then write one question the library should ask before signing. Claim no more than the exhibit showed you.</li><li><strong>Fix.</strong> Suppose your library keeps a web-proxy log and a discovery vendor keeps a search log, and neither is shared with the other today. Using your correlation rows, say what could be recovered if one party later obtained both sets, and propose one change to what is logged, how long it is kept, or who holds it, that would reduce it. Say which half of the problem padding would cover and which half it would not.</li><li><strong>Extend.</strong> Return to <strong>The knowledge split, live</strong> and watch the exchange one step at a time instead of jumping to the end. If the page still holds the query you invented in class, leave it; on a freshly loaded page the box is back to the lab's own example, so put an invented query in its place. Either way, do not type a real search of your own, a real name, or anything else about yourself. Press <strong>Run the exchange</strong>, then press <strong>Next step</strong> repeatedly until it stops advancing, reading the status line under those buttons after each press: it names the step and says what is travelling at that moment. Write down, in the page's own words, what the status line says is on the wire at the step where the relay hands the request on, and at the step where the gateway opens it, and compare those two lines with what you recorded on the Relay and Gateway cards. Note that re-running clears the results from the earlier panels.</li><li><strong>Extend.</strong> Compare the four padding rows in your Record table — unticked and ticked, each joined on size and on timing. Say what ticking <strong>Pad every request to 256 bytes (RFC 9292 §3.8)</strong> changed and what it left unchanged, then open <strong>What padding does and does not fix</strong> in the panel <strong>Correlation without collusion</strong> again and use the page's own explanation to say what the person reading both logs used in each case. What does that suggest about a request log described as &quot;encrypted&quot;?</li><li><strong>Extend.</strong> Go to the panel <strong>Break it yourself</strong> and press <strong>3 · Decrypt with the gateway's leaked key</strong>; the attack buttons stay disabled until an exchange has been run, so run one first if the page has been reloaded. Read the paragraph above the boxes, then write down what the <strong>Cryptographic result</strong> box and the <strong>Privacy verdict</strong> box each say. This is the case where a decryption that <em>works</em> is the bad news: explain why success is the bad outcome here, and say which single party ended up holding both facts that the design had been keeping apart. Connect your answer to the Client card &quot;cannot know&quot; line you quoted in Explain question 3.</li><li><strong>Extend.</strong> Return to <strong>The knowledge split, live</strong>, set <strong>Request shape</strong> to the POST option, type a different invented note into the input box, and press <strong>Run the exchange</strong> again, then <strong>Jump to end</strong>. Compare the Gateway card with the one you recorded. Say what the card shows and what it does not show, then use the step description that says the gateway &quot;reads your request in full&quot; to decide whether your note was hidden from the gateway or merely not displayed. Note that re-running clears the results from the earlier panels.</li><li><strong>Extend.</strong> In <strong>Break it yourself</strong>, press <strong>1 · Decrypt with a key you generate</strong> and then <strong>2 · Flip one byte, then forward it</strong>, and read what each reports. Using the page's own paragraph under each result, say what a dishonest relay can still do to a patron's request even though it cannot read it, and what that would look like to the patron.</li><li><strong>Extend.</strong> Read the panel <strong>Honest scoping — what this lab does and does not show</strong>, together with the footnote under the two logs about the arrival clock. List which of the things you recorded were real cryptographic values and which were simulated, and say how that changes what you would be willing to claim about this exhibit in a class presentation.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-dp-noise">
+  <h2 id="h-dp-noise">DP Noise</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-dp-noise/">DP Noise</a></dd></div>
+    <div><dt>Time</dt><dd>About 24 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>abca4df106c0</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see. Nothing here needs arithmetic beyond an average.</p>
+<ol class="ws-answer"><li>A payroll office promises it will publish only totals, never one person's pay. In the same week it publishes two of them: the total payroll, and the total payroll for everyone except one named employee. Write down what a reader who sees both can work out about that employee, and say whether the reader needs to know anything about the other people on the payroll in order to do it.</li><li>Now the office adds a random amount to each total before publishing it, and says so. Predict whether subtracting the two published totals still gives that employee's pay exactly, roughly, or not usefully at all. Then say what you would look for on screen to tell which of the three you are seeing — you will be able to run the same subtraction several times over.</li><li>Before a total can be published this way, somebody has to declare in advance the most that any one person's salary will be allowed to count for. Predict what happens to the published total if that declared cap is set lower than what the best-paid people actually earn, and what happens to the size of the random amount if the cap is set very high.</li><li>A reader is allowed to ask for the noisy total as often as they like, and averages all the answers they get back. Predict how that average compares with any single answer, and say what that would mean for the promise the randomness was added to keep.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit. It opens on the guided route: in the navigator headed <strong>The core path</strong>, check that <strong>Guided lesson</strong> is the route shown as selected. Leave <strong>Classroom mode — reproducible, seeded sampling</strong>, at the foot of the opening section, unticked, so the numbers you record are your own. Do not move any ε control anywhere on the page while you work — every reading below assumes the value the page starts with.</li><li>Go to the section headed <strong>Two harmless totals, one person's salary</strong>. Under <strong>Predict first</strong>, press the option that matches your answer to Predict question 1 and read the explanation the page gives for the option you chose. Then, in the card headed <strong>The database</strong>, find the row tagged <strong>the target</strong> and copy her name and her salary into the first table under Record.</li><li>In the card headed <strong>The differencing attack</strong>, leave <strong>How the two totals are answered</strong> on <strong>Exactly — no noise, the broken mode</strong> and press <strong>Run the attack</strong>. Record the two totals the page lists, the difference it reports underneath them, and the headline of the verdict. Then open the disclosure inside that verdict and read its two paragraphs on what would not have helped.</li><li>Change <strong>How the two totals are answered</strong> to <strong>With differential privacy at ε = 1</strong>. The attack re-runs on its own. Record the new headline, the noise scale named in the verdict's second paragraph, and the five values in the chips labelled <code>run 1</code> to <code>run 5</code>.</li><li>Press <strong>Run the attack</strong> again without changing anything else, and record the second headline and the second set of five values. Note whether the verdict says any run landed close to the true salary, and what it says about that.</li><li>Go to the section headed <strong>Composition: ε is a budget, not a setting</strong>. Under <strong>Predict first</strong>, press the option that matches your answer to Predict question 4 and read the explanation. On this route the attack comes before the defence, so the card below it is <strong>The averaging attack — what happens with no budget at all</strong>.</li><li>Leave <strong>Number of times to ask, at ε = 0.5 each</strong> where it starts and press <strong>Run the averaging attack</strong>. It is finished when that button becomes pressable again. Record <strong>Queries asked</strong>, <strong>Running average</strong>, <strong>Error</strong> and <strong>ε spent</strong> from the row of figures, and the headline beneath them.</li><li>In the card below it, <strong>The ledger</strong>, leave <strong>Total ε budget for this session</strong> on its opening setting. Press <strong>Ask: total payroll (ε = 0.5)</strong> and keep pressing it until the page stops answering. After each press record whether an answer came back and the <strong>Charged</strong> and <strong>Remaining</strong> figures. Read the verdict that appears when it refuses.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: From the printed database, What it says">
+<table>
+<thead><tr><th scope="col">From the printed database</th><th scope="col">What it says</th></tr></thead>
+<tbody>
+<tr><th scope="row">The name in the row tagged &quot;the target&quot;</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Her salary, as the table prints it</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: How the two totals were answered, Total payroll, Total payroll excluding her, The difference, Headline of the verdict">
+<table>
+<thead><tr><th scope="col">How the two totals were answered</th><th scope="col">Total payroll</th><th scope="col">Total payroll excluding her</th><th scope="col">The difference</th><th scope="col">Headline of the verdict</th></tr></thead>
+<tbody>
+<tr><th scope="row">Exactly — no noise</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">With differential privacy, first press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">With differential privacy, second press</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: With differential privacy, First press, Second press">
+<table>
+<thead><tr><th scope="col">With differential privacy</th><th scope="col">First press</th><th scope="col">Second press</th></tr></thead>
+<tbody>
+<tr><th scope="row">run 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">run 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">run 3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">run 4</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">run 5</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Noise scale named in the verdict</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: The averaging attack, What the page reported">
+<table>
+<thead><tr><th scope="col">The averaging attack</th><th scope="col">What the page reported</th></tr></thead>
+<tbody>
+<tr><th scope="row">Queries asked</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Running average</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Error</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">ε spent</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Headline</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Press of Ask: total payroll (ε = 0.5), Did an answer come back?, Charged, Remaining">
+<table>
+<thead><tr><th scope="col">Press of Ask: total payroll (ε = 0.5)</th><th scope="col">Did an answer come back?</th><th scope="col">Charged</th><th scope="col">Remaining</th></tr></thead>
+<tbody>
+<tr><th scope="row">First</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Third</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Fourth</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<aside class="ws-note"><p>Some of the figures above are the same on every machine and some are not. Explain question 2 asks you to work out which, using the page's own note about where its randomness comes from.</p></aside>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Compare the difference your exact run produced with the salary you copied from the printed table. Both queries the attacker asked were ones the system was built to answer. Say what the two had in common and what they differed in, and why that difference is one person. Then use the disclosure you opened in step 3 to say why a rule that only approved queries about large groups would not have stopped it.</li><li>Your runs with noise gave a spread of values rather than one. Using the noise scale the verdict names and the salary you copied down, say what a reader who saw only those five numbers could honestly claim about her pay. The verdict may report that a run landed close; the page says why that is not something an attacker can use, so put its reason in your own words. Then compare your values with a classmate's and, using the page's own note about where its randomness comes from, say why those five differ — and name one figure you recorded that was the same for both of you.</li><li>Every answer in the averaging attack was, on its own, a correctly private release, and the page says so. Using your row from that table and the verdict the ledger gave when it refused, say what the reader walked away with, where the page locates the failure, and why refusing to answer is treated as the right behaviour rather than a breakdown. Then read the recap card headed <strong>One thing the pictures can mislead you about</strong> and name one conclusion about the people in this payroll that stays available to a reader even when each of them individually is protected.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A library consortium publishes each month the total fines owed across all its member libraries, and the total fines owed by every member except one named branch. Using your records from Exhibit 1, say what a reader of a single month's figures can work out. Then name the three changes this exhibit makes to a published total so that they cannot, and for each one say who has to decide it and whether that decision happens before or after anybody looks at the data. Extend 3 and 4 below work through one of the three on the page; do those first if you have not already.</li><li><strong>Fix.</strong> A vendor tells your library that its reading-history analytics are &quot;differentially private at ε = 1, so no individual can be identified&quot;. Using the section headed <strong>What this demo does and does not prove</strong> and the verdict the ledger gave when it refused, write two questions you would need answered before you could evaluate that claim, and for each one name the party who has to be trusted for the answer to hold. Then open <strong>Jargon, unpacked</strong> in the opening section, read the entry for ε, and say why the vendor's sentence as written claims something ε does not measure.</li><li><strong>Extend.</strong> Open the exhibit on the guided route — <strong>Guided lesson</strong>, in the navigator headed <strong>The core path</strong> — and leave every ε control where the page starts it. Go to the section headed <strong>Where does Δ come from? You have to answer</strong> and work <strong>Declared upper bound on one person's salary</strong> through all four of its settings, noting for each one <strong>Sensitivity Δ</strong>, <strong>Noise scale b = Δ/ε</strong>, <strong>Records clipped</strong> and <strong>Clipping bias</strong> from the row of figures below the menu. Describe which way each of the two costs — the noise scale, and the clipping bias — moves as the bound rises, and say which of the two would still be there after a reader had averaged a great many published totals. Then find the note under that row of figures which says where the bound may <em>not</em> come from, and give the reason the page gives for it. Compare all of it with what you predicted in Predict question 3.</li><li><strong>Extend.</strong> Still on the guided route, in the section headed <strong>Where does Δ come from? You have to answer</strong>, set <strong>Declared upper bound on one person's salary</strong> to <strong>$250,000 — declared in advance</strong> and read the line about the thirteenth person to join the payroll. Press <strong>Clip her to the declared bound</strong>, then <strong>Drop her record from this release</strong>, then <strong>Raise the bound so it fits her</strong>, noting the headline each one produces and, where the page reports them, <strong>Δ used</strong>, <strong>Systematic bias</strong> and <strong>Still ε-differentially private</strong> — one of the three is refused and reports none of those figures. Using the page's stated reason for that refusal, say what the refused option would make the size of the noise depend on, and why that is a problem even though that option introduces no bias at all. Then say which of the other two you would choose for a payroll figure your library published, and what you would have to publish alongside the number for it to mean what a reader would take it to mean.</li><li><strong>Extend.</strong> In <strong>The ledger</strong>, change <strong>Total ε budget for this session</strong> to <strong>3</strong>, which starts the session's accounting again, then press <strong>Ask: total payroll (ε = 0.5)</strong> until it refuses once more. Say how many answers you got this time, and what changing that setting changed about the promise being made to the people in the database rather than about the mechanism. Open the refusal's disclosure and quote the sentence that says so.</li><li><strong>Extend.</strong> Below the averaging-attack chart there is a disclosure holding the plotted numbers as a table. Open it and read the error column and the ε column together, from the top of the table to the bottom. Say what each column does as the number of queries rises, and which of the two ever stops on its own.</li></ol>
+</section>
+  </div>
+</article>
+
+<article class="ws-handout" aria-labelledby="h-shelf-oracle">
+  <h2 id="h-shelf-oracle">Shelf Oracle</h2>
+  <dl class="t-facts">
+    <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-shelf-oracle/">Shelf Oracle</a></dd></div>
+    <div><dt>Time</dt><dd>About 25 minutes of class time; Predict is pre-class reading and Explain is a spoken debrief</dd></div>
+    <div><dt>Checked against</dt><dd>Lab commit <code>66c860a4a312</code> on 2026-09-22</dd></div>
+  </dl>
+  <div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+  <div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>In this design the catalog holds 64 records, and a patron's request is a list of 64 numbers: a 1 at the position of the book they want and a 0 at every other position. Each of the 64 numbers is encrypted separately before it is sent, so the catalog server receives 64 encrypted numbers and no position. If you were shown those 64 encrypted entries and told that exactly one of them hides the 1, how often would a guess be right? Write the fraction, and say whether you think staring at the encrypted bytes could beat it.</li><li>Encryption normally draws fresh random values for every single thing it encrypts. Predict what happens to those 64 encryptions if every one of them is made with the <em>same</em> random values instead: would the encryptions of 0 still look different from each other, and would the one encryption of 1 stand out?</li><li>Two ways to build a catalog that does not learn which book you asked for. One needs two separate operators who never compare notes. The other needs one operator and a hard mathematical problem. Predict which is cheaper to run — fewer bytes sent, less time spent — and which asks less of the people running it. Say which of the two assumptions you would rather a library depend on, and why.</li><li>Suppose the catalog genuinely never learns which book was requested. List three things that someone watching the network between the patron and the catalog could still write down.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<aside class="ws-note"><p>Pick your book first and then leave the settings alone. Choosing a different book, or changing <strong>Record size</strong> or <strong>Shelf length</strong>, throws away every measurement on the other tabs. The page does say which change did it, but you will have to run everything again.</p></aside>
+<aside class="ws-note"><p>A tab you have not opened yet is empty until you open it, and opening one can take a moment. A single click on this page can be 64 encryptions.</p></aside>
+<ol><li>Open the exhibit. It opens on <strong>The Shelf</strong>. Leave <strong>Record size</strong> at 512 bytes and <strong>Shelf length</strong> at 64 records for the whole worksheet.</li><li>Under <em>Pick a book</em>, press the button for one book on the shelf. Do this once, now. Write down the position number and the title. Then read the card headed <em>The record the protocol will return</em> and note that what comes back is the record itself, not a yes-or-no answer.</li><li>Open <strong>The Server's View</strong>. Under <em>What you send</em> the page draws your list of 64 numbers in the clear, then a grid of opaque tiles below it, one tile per shelf position, and a line reading &quot;Pick a tile. Which one encrypts the 1?&quot;. Press the tile you think hides the 1. Record your guess, and what the page said, in the first row of the first table under Record.</li><li>Move to the card headed <em>Break it yourself</em>. It holds one switch, and directly under it a red panel that begins &quot;Deliberately broken.&quot; Turn that switch on. The tiles above are redrawn. Look along their hex and record, in the second row of the first table, how many of them now look alike. Pick the odd one out, press it, and record that guess too.</li><li>Turn that switch back off, so the encryption goes back to the way the protocol actually works.</li><li>Still under <em>Break it yourself</em>, press the filled button whose label says how many trials it will run. It runs one crude attack twice over: once against encryptions made with fresh randomness and once against encryptions that reuse it. Wait for the two result boxes and fill in the second table from them, including the chance figure the page prints beside the first box. Then open the disclosure at the foot of that card and read its three paragraphs; you will need them in Explain.</li><li>Open <strong>One Server vs Two</strong>. In the card headed <em>Run both protocols over the same shelf</em>, press the filled button that runs both of them. Fill in the third table from the comparison table that appears, including which cell in each row carries the word &quot;better&quot;.</li><li>In the same card, the page now says &quot;The two-server scheme rests on one assumption. Press the red button to spend it.&quot; Press it. Record, in the fourth table, the shelf position it names beside the position you chose in step 2.</li><li>Open <strong>What It Does Not Hide</strong>. Under <em>What a network observer sees</em> the page says &quot;The observer has seen nothing yet. Run a few queries — try different books.&quot; Do that: press the filled button — the one that queries a random book — three times. Record the three rows of the observer's log in the fifth table, and read the two boxes underneath it.</li><li>Still on that tab, read the table under <em>What is hidden, and by what</em> and copy the status and the &quot;Where that comes from&quot; cell for the four properties listed in the sixth table.</li></ol>
+<aside class="ws-note"><p>In step 6 the trial button runs both columns whichever way the switch from step 4 is set. That switch changes only the tiles above it, which is why step 5 turns it off before the trials rather than after.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value in these tables comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Encryption, Tile I picked, Right or wrong, Position the page said held the 1, How many tiles looked alike">
+<table>
+<thead><tr><th scope="col">Encryption</th><th scope="col">Tile I picked</th><th scope="col">Right or wrong</th><th scope="col">Position the page said held the 1</th><th scope="col">How many tiles looked alike</th></tr></thead>
+<tbody>
+<tr><th scope="row">Fresh randomness, switch off</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Randomness reused, switch on</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Reading from the trial boxes, Value">
+<table>
+<thead><tr><th scope="col">Reading from the trial boxes</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Trials run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Fresh randomness, number correct</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Fresh randomness, percent</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reused randomness, number correct</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reused randomness, percent</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The chance figure printed beside the fresh box</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Row on the comparison table, One server, RLWE, Two servers, XOR, Which cell is marked &quot;better&quot;">
+<table>
+<thead><tr><th scope="col">Row on the comparison table</th><th scope="col">One server, RLWE</th><th scope="col">Two servers, XOR</th><th scope="col">Which cell is marked &quot;better&quot;</th></tr></thead>
+<tbody>
+<tr><th scope="row">Servers required</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Trust assumption</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Privacy</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Upload per query</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Download per query</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Records touched</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Can the answer be wrong?</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Reading, Value">
+<table>
+<thead><tr><th scope="col">Reading</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><th scope="row">Shelf position I chose in step 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Position the two servers named after comparing notes</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Query, At (ms), Uploaded, Downloaded, Book (not observable)">
+<table>
+<thead><tr><th scope="col">Query</th><th scope="col">At (ms)</th><th scope="col">Uploaded</th><th scope="col">Downloaded</th><th scope="col">Book (not observable)</th></tr></thead>
+<tbody>
+<tr><th scope="row">1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Property, as the page names it, Status, Where the page says that comes from">
+<table>
+<thead><tr><th scope="col">Property, as the page names it</th><th scope="col">Status</th><th scope="col">Where the page says that comes from</th></tr></thead>
+<tbody>
+<tr><th scope="row">Which record was requested</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">That a query happened</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">When it happened</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Who is asking</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<p>The lab's own <a href="https://github.com/systemslibrarian/crypto-lab-shelf-oracle">README</a> states the threat model these questions work inside: an honest-but-curious server that follows the protocol and tries to learn the position from what it receives, and a passive network observer that sees traffic but no plaintext.</p>
+<ol class="ws-answer"><li>Your guess in step 3 was one tile out of 64, and the page told you straight away whether it was right. A single result like that cannot settle whether the encryption is doing its job, in either direction. Using the two counts in your second table, say what the repeated trials establish that one guess cannot, and say what the chance figure you recorded is the chance <em>of</em>.</li><li>Between your two guesses nothing about the attack changed: the same eyes, the same tiles, the same question. Using what you recorded in the first table and the three paragraphs in the disclosure you opened in step 6, explain what reusing one set of random values does to 64 encryptions of 0, and why that makes the single encryption of 1 findable by someone who has no key at all.</li><li>Look at your third table. The two-server column wins every row that is a cost. Name the two rows where it does not win, say in your own words why the page calls those two rows the same fact said twice, and say what the red button in step 8 did to the two-server column's advantage.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A vendor offers your library a private catalog search and says the search service never learns which title a patron looked up. Using your third table and the card headed <em>Honest scope</em> on <strong>What It Does Not Hide</strong>, write the two questions you would put to that vendor before believing the sentence: one naming the assumption the claim rests on, and one naming the party who has to be trusted for it to hold. For each, say what answer would satisfy you and what answer would not, and say which of the two designs in your third table the vendor's answers would place them in.</li><li><strong>Extend.</strong> Open <strong>One Server vs Two</strong> and, in the card headed <em>What the numbers do not say</em>, open the disclosure at the foot of that card. The second of its three paragraphs describes running two servers under genuinely separate control as &quot;an organisational problem, not a technical one&quot;. A patron standing at a catalog terminal can see neither operator's records. Using that phrase and your fourth table, filled in step 8, say what such a patron could check for themselves about whether the two operators are staying apart, and what they would have to take on trust instead. Then open <strong>What It Does Not Hide</strong>, read the card headed <em>Honest scope</em>, and say what the one-server column asks you to believe in place of non-collusion, and what that card says this page does not prove.</li><li><strong>Extend.</strong> Your observer log, recorded into the fifth table in step 9, has columns that came out identical across the three rows and a column that did not. Open <strong>What It Does Not Hide</strong> and go back to the card headed <em>What a network observer sees</em>; if its log is empty because the page was reloaded or a setting changed since, press the filled button — the one that queries a random book — three times again, so the two boxes under the log are on screen. Using your three recorded rows, those two boxes and the four properties in your sixth table, say which single fact about a patron's request this design keeps from a network observer, and list what it leaves that observer holding. Then pick one item from that list which a library could reduce by something other than encryption, and say what the page suggests would reduce it.</li><li><strong>Extend.</strong> Open <strong>Homomorphic Selection</strong> and use the buttons in the card headed <em>The homomorphic inner product</em> to fold the records into the answer one at a time, then eight at a time, then the rest. Watch the running answer and the measured budget as you go. Before the record you chose has been reached, what does the page say the accumulator decrypts to — and why does the budget fall anyway? Use the page's own three-line account of why the sum does the selecting.</li><li><strong>Extend.</strong> Back on <strong>The Shelf</strong>, in the card headed <em>This run</em>, type a string into <strong>Run seed</strong> and press <strong>Pin this seed</strong>. Read the warning the page then prints beside it. Get a classmate to pin the same string and pick the same shelf position, and compare your tiles on <strong>The Server's View</strong> with theirs. Then say, using that warning, why a real system must never let a run be pinned this way, and how this failure is related to the one you produced in step 4.</li><li><strong>Extend.</strong> Do this one last, because it discards everything you measured. Open <strong>Noise Exhaustion</strong> and, in the card headed <em>Push it until it breaks</em>, lower the ciphertext modulus one step at a time, retrieving at each setting, until the page reports a failure code instead of your record. Record the code and the three figures the page reports with it. Then, using the note printed under those figures, say which of those three checks a real patron's own software could run for itself, and which it could not — and say why that distinction is the reason the page insists a deployment sizes its parameters in advance. The card headed <em>The failure codes</em> names the other three codes and what raises each.</li></ol>
+</section>
+  </div>
+</article>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <p class="t-foot-licence">Teaching materials: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You may copy, adapt, print and redistribute these materials, including commercially, as long as you give credit. When you adapt one, keep this line on it: <span class="t-attrib">Crypto Lab teaching materials by Paul A. Clark, CC BY 4.0 — https://crypto-lab.systemslibrarian.dev/teach/</span></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

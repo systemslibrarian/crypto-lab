@@ -1,7 +1,7 @@
 ---
 exhibit: shor
 module: post-quantum
-minutes: 15
+minutes: 18
 outcomes: [1, 2]
 source_commit: 66c0e3109427
 checked: 2026-09-22

@@ -1,7 +1,7 @@
 ---
 exhibit: harvest-vault
 module: post-quantum
-minutes: 20
+minutes: 21
 outcomes: [2, 5]
 source_commit: 1c8241953291
 checked: 2026-09-22

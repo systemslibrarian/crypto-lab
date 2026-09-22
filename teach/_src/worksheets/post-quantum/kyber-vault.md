@@ -1,7 +1,7 @@
 ---
 exhibit: kyber-vault
 module: post-quantum
-minutes: 15
+minutes: 20
 outcomes: [4]
 source_commit: 3f80e2eaa9c9
 checked: 2026-09-22

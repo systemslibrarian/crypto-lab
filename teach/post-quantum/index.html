@@ -49,7 +49,7 @@
     "Students will be able to trace an ML-KEM key establishment through KeyGen, Encaps and Decaps, and distinguish what a KEM provides from message encryption and from peer authentication.",
     "Students will be able to predict and then verify the outcome of an X25519 + ML-KEM-768 hybrid session when one or both key-establishment wires are broken, and explain why a hybrid is a hedge rather than a doubling of security."
   ],
-  "timeRequired": "PT95M",
+  "timeRequired": "PT117M",
   "isAccessibleForFree": true,
   "author": {
     "@type": "Person",
@@ -118,7 +118,7 @@
 
 <dl class="t-facts">
   <div><dt>Audience</dt><dd>Upper-division undergraduate or graduate security students, including motivated newcomers to quantum algorithms and lattice-based cryptography.</dd></div>
-  <div><dt>Class time</dt><dd>About 95 minutes of class time for the core sequence, plus about 20 minutes of extension. Predict is pre-class reading and Explain is a spoken debrief.</dd></div>
+  <div><dt>Class time</dt><dd>About 117 minutes of class time for the core sequence, plus about 21 minutes of extension. Predict is pre-class reading and Explain is a spoken debrief.</dd></div>
   <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
 </dl>
 
@@ -134,12 +134,12 @@
 <table>
 <thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
 <tbody>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-shor/">Shor</a></th><td>Break it</td><td>15</td><td>Enter a composite N or pick a preset, press Run Shor's Algorithm several times, and follow the step log, period chart, QFT distribution with retunable phasor wheels, and continued-fraction table to the gcd step that recovers the factors.</td><td><a href="shor/">Worksheet<span class="visually-hidden"> for Shor</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-grover/">Grover</a></th><td>Break it</td><td>20</td><td>Set the qubit count, step Grover iterations with the oracle + diffusion sub-steps and prediction mode on, watch the state vector rotate toward and then past the target, sample with Measure ×100, and compare AES key sizes in the impact panels.</td><td><a href="grover/">Worksheet<span class="visually-hidden"> for Grover</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/">Lattice Gentle</a></th><td>Intro</td><td>30</td><td>Work through Guided mode: drag a 2D basis and decode a target by rounding, compare a good and a bad basis for the shortest vector, step Gauss and LLL, type LWE and SIS candidates, push toy-Kyber's noise past q/4 and tamper with toy-KEM ciphertexts and toy-Dilithium signatures, then answer the exit check.</td><td><a href="lattice-gentle/">Worksheet<span class="visually-hidden"> for Lattice Gentle</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/">Kyber Vault</a></th><td>Fix</td><td>15</td><td>Pick an ML-KEM parameter set and step KeyGen, Encaps and Decaps until both secrets match, encrypt a message through the ML-KEM + AES-256-GCM hybrid and tamper with the ML-KEM ciphertext, then solve the toy LWE system clean versus noisy.</td><td><a href="kyber-vault/">Worksheet<span class="visually-hidden"> for Kyber Vault</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-hybrid-wire/">Hybrid Wire</a></th><td>Fix</td><td>15</td><td>Step the X25519 + ML-KEM-768 handshake to the HKDF combiner, send encrypted chat messages and tamper with the session, then toggle either or both wires to broken in the Threat model tab and read the measured verdict.</td><td><a href="hybrid-wire/">Worksheet<span class="visually-hidden"> for Hybrid Wire</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/">Harvest Vault</a></th><td>Extension</td><td>20</td><td>In the Prove it panel, send a message over the toy handshake, deploy the PQC upgrade, send again and run Q-Day to compare the recorded sessions, then work the Mosca X + Y &gt; Z calculator with sector presets and Q-Day scenarios.</td><td><a href="harvest-vault/">Worksheet<span class="visually-hidden"> for Harvest Vault</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-shor/">Shor</a></th><td>Break it</td><td>18</td><td>Enter a composite N or pick a preset, press Run Shor's Algorithm several times, and follow the step log, period chart, QFT distribution with retunable phasor wheels, and continued-fraction table to the gcd step that recovers the factors.</td><td><a href="shor/">Worksheet<span class="visually-hidden"> for Shor</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-grover/">Grover</a></th><td>Break it</td><td>26</td><td>Set the qubit count, step Grover iterations with the oracle + diffusion sub-steps and prediction mode on, watch the state vector rotate toward and then past the target, sample with Measure ×100, and compare AES key sizes in the impact panels.</td><td><a href="grover/">Worksheet<span class="visually-hidden"> for Grover</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/">Lattice Gentle</a></th><td>Intro</td><td>33</td><td>Work through Guided mode: drag a 2D basis and decode a target by rounding, compare a good and a bad basis for the shortest vector, step Gauss and LLL, type LWE and SIS candidates, push toy-Kyber's noise past q/4 and tamper with toy-KEM ciphertexts and toy-Dilithium signatures, then answer the exit check.</td><td><a href="lattice-gentle/">Worksheet<span class="visually-hidden"> for Lattice Gentle</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/">Kyber Vault</a></th><td>Fix</td><td>20</td><td>Pick an ML-KEM parameter set and step KeyGen, Encaps and Decaps until both secrets match, encrypt a message through the ML-KEM + AES-256-GCM hybrid and tamper with the ML-KEM ciphertext, then solve the toy LWE system clean versus noisy.</td><td><a href="kyber-vault/">Worksheet<span class="visually-hidden"> for Kyber Vault</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-hybrid-wire/">Hybrid Wire</a></th><td>Fix</td><td>20</td><td>Step the X25519 + ML-KEM-768 handshake to the HKDF combiner, send encrypted chat messages and tamper with the session, then toggle either or both wires to broken in the Threat model tab and read the measured verdict.</td><td><a href="hybrid-wire/">Worksheet<span class="visually-hidden"> for Hybrid Wire</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/">Harvest Vault</a></th><td>Extension</td><td>21</td><td>In the Prove it panel, send a message over the toy handshake, deploy the PQC upgrade, send again and run Q-Day to compare the recorded sessions, then work the Mosca X + Y &gt; Z calculator with sector presets and Q-Day scenarios.</td><td><a href="harvest-vault/">Worksheet<span class="visually-hidden"> for Harvest Vault</span></a></td></tr>
 </tbody>
 </table>
 </div>

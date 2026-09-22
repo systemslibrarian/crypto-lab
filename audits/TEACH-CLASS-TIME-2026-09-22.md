@@ -49,6 +49,11 @@ guessed. Selected measurements, all made against the labs' own code:
 - **Harvest Vault** — the Q-Day search sweeps a keyspace of 8,388,449 candidates in about
   40 ms. Its own a11y spec allows 120 s and calls it "genuinely slow work": a ceiling mistaken
   for a measurement, wrong by three orders of magnitude.
+- **Shor** — a run replays its trace at 300 ms a step: median 3.3 s, about 11 seconds of
+  waiting across the whole worksheet. Measured over 5,000 headless runs of N = 91, which also
+  settled the probabilistic outcomes the sheet asks students to record.
+- **Lattice Gentle** — nothing in the lab waits at all. Its heaviest computation on the
+  worksheet path, an exhaustive search over 3,721 candidates, benchmarks at 69 microseconds.
 
 ## Published figures, before and after
 
@@ -72,7 +77,12 @@ guessed. Selected measurements, all made against the labs' own code:
 | library-privacy | Blind Relay | 20 | 23 | over its plan by 3, accepted and recorded |
 | library-privacy | DP Noise | 25 | 24 | |
 | library-privacy | Shelf Oracle | 30 | 25 | |
-| post-quantum | all six | 15 / 20 / 30 / 15 / 15 / 20 | **not yet derived** | their Explain figures are residuals; a derivation is in progress |
+| post-quantum | Shor | 15 | 18 | derives to 17.5; 26.5% of runs end on a shared factor with no period, and a session averages about six retry lines to record |
+| post-quantum | Grover | 20 | 26 | the largest understatement in the fleet |
+| post-quantum | Lattice Gentle | 30 | 33 | 68 Record cells, over half of its Do time |
+| post-quantum | Kyber Vault | 15 | 20 | no wall-clock term at all: about 4.5 ms of ML-KEM across the whole sheet |
+| post-quantum | Hybrid Wire | 15 | 20 | derives to 19.6 |
+| post-quantum | Harvest Vault | 20 | 21 | derives to 20.6 |
 
 ## Module totals against the plans those modules were budgeted to
 
@@ -85,7 +95,7 @@ derived, so the module page's class time is the derived sum. These plans survive
 | key-exchange | 75 | 64 | No — 11 minutes of slack |
 | public-key | 110 | 107 | Near enough |
 | library-privacy | 60 | 69 | No — 9 minutes over |
-| post-quantum | 95 | not yet derived | Unknown |
+| post-quantum | 95 | 117 | No — 22 minutes over, every one of the six understated |
 
 `library-privacy`'s `course_fit` still offers it as "a one- or two-meeting unit". At 69 minutes
 of core it is not a one-meeting unit. Left unchanged pending a decision.

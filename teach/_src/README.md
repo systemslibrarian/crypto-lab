@@ -24,7 +24,7 @@ GitHub rather than at the hub.
 | `worksheets/<module-id>/<exhibit>.md` | One worksheet: front matter plus a small Markdown subset. |
 | `landing.html` | The /teach/ prose. `<!-- teach:name -->` markers are filled in by the generator. |
 | `site.json` | Strings every page shares: the syllabus line, the hub URL, the repo. |
-| `evidence.json` | Dated observations the privacy section is built from. Record new ones; do not paraphrase. |
+| `evidence.json` | Dated observations the privacy section is built from, recorded with `node tools/teach-observe.js <url>`. Record new ones; do not paraphrase. |
 
 Exhibit titles and live URLs always come from the cards in `index.html`, and author,
 version and date come from `CITATION.cff`. Do not retype either here.
@@ -49,7 +49,7 @@ An exhibit name that matches no card fails the build rather than being substitut
 ### Per-exhibit checks (null until observed; every one dated)
 
 ```json
-"privacy": {
+"privacy": {                     // from node tools/teach-observe.js <exhibit url> [engine]
   "checked": "YYYY-MM-DD",
   "other_origins": ["https://fonts.googleapis.com"],
   "storage": ["localStorage: theme"],
@@ -105,8 +105,11 @@ answer space when printed; empty table cells under Record are the spaces student
 
 Anchors are what the daily drift check (`tools/teach-drift.js`) looks for on the live
 exhibit. A control counts as present if it is in the DOM once the page has rendered, even
-on a tab that is not open. If a step needs a control with no stable id or exact label,
-state the goal instead of naming the control, and log a finding for that lab.
+on a tab that is not open. A control that only appears after an interaction (a panel that
+unlocks at a later step, a button a run creates) is not there on load, so the check cannot
+see it: do not list it as an anchor. If a step needs a control with no stable id or exact
+label, or one that only appears later, state the goal instead of naming the control, and
+log a finding for that lab.
 
 Explanations may not go further than the lab's own README: no broader limitation, no
 stronger mechanism, no citation the lab does not carry unless checked against the primary

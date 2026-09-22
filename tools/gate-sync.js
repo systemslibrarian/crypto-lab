@@ -107,8 +107,10 @@
  *                    counted and printed on every run instead; see the
  *                    "Carded labs this checker never opened" line in the summary,
  *                    which counts distinct github.io slugs linked from index.html.
- *                    As of 2026-09-10 this rule matches no lab, and one carded
- *                    lab (snow2) is uncloned and therefore outside it.
+ *                    As of 2026-09-10 this rule matches no lab, and one linked
+ *                    slug (snow2) is uncloned and therefore outside it. Snow 2
+ *                    moved from a card to Related Projects on 2026-09-22; it is
+ *                    still counted, because the count is of linked slugs.
  *
  *                    Publisher names are compared case-insensitively, as GitHub
  *                    resolves owner/repo, so `Actions/Deploy-Pages` is recognised
@@ -915,9 +917,10 @@ function siblingLabs() {
  * every rule above is silent about that lab — so all three are counted here.
  *
  * Reason (b) has no instance today and the example that used to sit here was
- * wrong. Two carded slugs lack the crypto-lab- prefix, snow2 and crypto-compare,
- * but crypto-compare IS inside LAB_DIR_RE (/^crypto-(lab|compare|counsel)/) and
- * is judged like any other lab. snow2 is the only carded slug the regex excludes
+ * wrong. Two linked github.io slugs lack the crypto-lab- prefix, snow2 and
+ * crypto-compare (both in Related Projects since 2026-09-22), but crypto-compare IS
+ * inside LAB_DIR_RE (/^crypto-(lab|compare|counsel)/) and is judged like any other
+ * lab. snow2 is the only linked slug the regex excludes
  * and it has no clone here at all, so it hits reason (a) first and reason (b)
  * never fires. The branch stays because the naming fact is real and a future
  * clone would land in it — but it is empty, and naming a lab it does not

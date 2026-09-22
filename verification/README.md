@@ -93,7 +93,6 @@ This index is generated from the registry and per-lab manifests. Do not edit by 
 | [Traitor Trace](https://github.com/systemslibrarian/crypto-lab-traitor-trace) | not yet audited | ENCRYPTION, PROTOCOLS | 2 |
 | [Web of Trust](https://github.com/systemslibrarian/crypto-lab-web-of-trust) | not yet audited | SIGNATURES, KEY EXCHANGE, PROTOCOLS | 2 |
 | [World Ciphers](https://github.com/systemslibrarian/crypto-lab-world-ciphers) | not yet audited | ENCRYPTION | 2 |
-| [Snow 2](https://github.com/systemslibrarian/snow2) | not yet audited | ENCRYPTION, STEGANOGRAPHY | 2 |
 | [Accumulator](https://github.com/systemslibrarian/crypto-lab-accumulator) | not yet audited | PROTOCOLS, PRIVACY | 3 |
 | [Babel Hash](https://github.com/systemslibrarian/crypto-lab-babel-hash) | not yet audited | HASHING & KDFS | 3 |
 | [Bcrypt Forge](https://github.com/systemslibrarian/crypto-lab-bcrypt-forge) | not yet audited | HASHING & KDFS | 3 |

@@ -11,6 +11,10 @@
  * This script checks both directions against index.html:
  *   - every demo the map cites resolves to a real card, and
  *   - every card is cited by some concept.
+ * It also checks the file's one catalog count, "**Catalogued total: N.**",
+ * against the number of cards. That line is typed by hand, and a count a human
+ * retypes drifts the day a card is added or removed (Snow 2's move to Related
+ * Projects on 2026-09-22 is what found it), so it is checked, not trusted.
  *
  * Usage (run from the crypto-lab repo root):
  *   node tools/concept-sync.js          Report coverage; exit 0 always.
@@ -163,11 +167,17 @@ function main() {
     console.log('  → drop the "(built, uncatalogued)" marker for these.');
   }
 
-  const errors = dangling.length + unmapped.length + stale.length;
+  const total = /\*\*Catalogued total: (\d+)\.\*\*/.exec(md);
+  const totalWrong = total && Number(total[1]) !== titles.length;
+  if (!total) console.log('No "**Catalogued total: N.**" line found; nothing to compare.');
+  else console.log('Catalogued total line: ' + total[1] + (totalWrong ? ' — but there are ' + titles.length + ' cards' : ' (matches)'));
+
+  const errors = dangling.length + unmapped.length + stale.length + (totalWrong ? 1 : 0);
   if (errors && check) {
     console.error('\nconcept-coverage.md out of step with index.html.');
     if (dangling.length) console.error('  Cited-but-no-card: a demo was renamed, or the citation is a typo.');
     if (unmapped.length) console.error('  Carded-but-unmapped: file each new demo under its concept in concept-coverage.md.');
+    if (totalWrong) console.error('  "Catalogued total" disagrees with the card count: set it to ' + titles.length + '.');
     process.exit(1);
   }
   if (check) console.log('\nconcept-coverage.md in step with index.html.');

@@ -21,7 +21,7 @@ each has a checker that fails when it drifts:
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
 
-Eight more checkers guard the sibling demo repos, and the fleet itself, rather than
+Nine more checkers guard the sibling demo repos, and the fleet itself, rather than
 a file derived from `index.html`:
 
 | Invariant | Checker |
@@ -34,14 +34,35 @@ a file derived from `index.html`:
 | the paragraph saying why that dispatch exists is one text fleet-wide | `node tools/dispatch-comment-sync.js check` |
 | every clause of that paragraph is still TRUE of the fleet it is written into | `node tools/dispatch-claims.js check` |
 | every lab that owes a dispatch is still present, and still classifiable | `node tools/dispatch-census.js check` |
+| what actually protects each lab's default branch, asked of BOTH endpoints | `node tools/protection-census.js` |
 
-The last two are also folded into `dispatch-sync check`, so the fast loop does not
-grow a command. Run them directly when the answer matters on its own — after editing
-`CANONICAL`, or after cloning or removing a lab.
+`dispatch-claims` and `dispatch-census` are also folded into `dispatch-sync check`,
+so the fast loop does not grow a command. Run them directly when the answer matters on
+its own — after editing `CANONICAL`, or after cloning or removing a lab.
+(`protection-census` is NOT folded into anything: it is the newest row, it needs the
+network, and it answers a question no other checker asks.)
 
-`deploy-sync` and `fleet-sync` are the two checkers here that need the network and
-`gh`; each takes about 30 seconds for the whole fleet, so neither is part of the
-fast loop. **Run them after any cross-repo pass, after anything that touches a
+`protection-census` answers one question and is READ-ONLY by construction: it issues
+GETs and has no write path, because a census that could edit access control would be a
+worse problem than the one it reports. It exists because
+`/branches/{branch}/protection` is **blind to repository rulesets** and answers 404 for
+a ruleset-protected branch with the same body it uses for an unprotected one. On
+2026-09-21 `crypto-lab-privacy-pass` was recorded as unprotected on the strength of
+that 404 — through three drafts of a lane brief and two corrections to its protection
+table — while in fact carrying an active ruleset requiring `build` and
+`verdict-coverage` with no bypass actors, making it the **strictest** branch in the
+fleet: it binds admins, which the `enforce_admins: false` labs do not. So a 404 from
+one endpoint never produces `none`; only both endpoints answering cleanly, both saying
+no, does. Anything else — an error, a rate limit, a missing repo, an unparseable body —
+is **UNREAD and fails the run**, because "could not look" must never read as "nothing
+there". `classic+ruleset` is reported as its own state rather than folded into either,
+for the same reason. Its denominator is declared, not discovered: the labs pinned in
+`tools/dispatch-census.json`. Surveyed 2026-09-22 across all 204: 3 classic, 1 ruleset,
+200 none, 0 UNREAD, in 21 seconds.
+
+`deploy-sync`, `fleet-sync` and `protection-census` are the three checkers here that
+need the network and `gh`; each takes 20 to 30 seconds for the whole fleet, so none of
+them is part of the fast loop. **Run them after any cross-repo pass, after anything that touches a
 workflow, and after building a lab.**
 
 `fleet-sync` exists because every other checker in this repo compares the catalog

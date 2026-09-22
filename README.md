@@ -2,6 +2,8 @@
 
 🥇 **[Crypto Lab](https://crypto-lab.systemslibrarian.dev/)** · [2026 Cybersecurity Excellence Awards — Gold Winner](https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/)
 
+**[Teaching a course? → Course modules for instructors](https://crypto-lab.systemslibrarian.dev/teach/)**
+
 > Browser-based cryptography demos — no backends, no accounts, just the math.\*
 
 \* ⚡ One deliberate exception: **[Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/)** runs a live Rust/TFHE-rs server to demonstrate real fully homomorphic encryption — it adds your two encrypted numbers and still mathematically cannot read them.
@@ -9,8 +11,6 @@
 A curated collection of single-concept cryptography demonstrations. Each one isolates a real primitive or protocol and makes it interactive in the browser. Classic algorithms, post-quantum schemes, zero-knowledge proofs — all grounded in real specifications, not toy reimplementations.
 
 **Live →** https://crypto-lab.systemslibrarian.dev/
-
-**Teaching with Crypto Lab →** https://crypto-lab.systemslibrarian.dev/teach/
 
 ---
 

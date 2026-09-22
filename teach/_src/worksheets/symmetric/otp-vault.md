@@ -1,7 +1,7 @@
 ---
 exhibit: otp-vault
 module: symmetric
-minutes: 25
+minutes: 20
 outcomes: [2]
 source_commit: 6b2bb1c14f73
 checked: 2026-09-22

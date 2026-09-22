@@ -1,7 +1,7 @@
 ---
 exhibit: hidden-bit
 module: symmetric
-minutes: 20
+minutes: 15
 outcomes: [1]
 source_commit: 00705ccbf695
 checked: 2026-09-22

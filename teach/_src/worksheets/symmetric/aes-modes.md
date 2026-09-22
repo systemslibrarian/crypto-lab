@@ -1,7 +1,7 @@
 ---
 exhibit: aes-modes
 module: symmetric
-minutes: 20
+minutes: 15
 outcomes: [3]
 source_commit: cbfb1b4dfa2c
 checked: 2026-09-22

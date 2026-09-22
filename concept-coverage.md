@@ -221,8 +221,14 @@ sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
 Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Format Ward ·
-Feistel Forge · Sector Vault · Sleeve Check.
+Feistel Forge · Sector Vault · Sleeve Check · Export Grade.
 SPN, ARX, sponge, stream, lightweight, and Feistel.
+
+Export Grade adds key loading as cipher structure. Real TEA1 passes its known-answer tests
+while the ten-byte input is compressed into the 32-bit register the generator actually sees,
+and a worker recovers that register against the same core. It belongs here rather than under
+§30 because the design of the pre-generator reduction is the mechanism; exhaustive search is
+the consequence the lab uses to measure it.
 
 Feistel Forge makes the *construction* the subject rather than a cipher that happens to use
 one. Camellia and SM4 sit on World Ciphers as national ciphers and Blowfish on Bcrypt Forge
@@ -877,7 +883,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 201.**
+**Catalogued total: 202.**
 
 ---
 

@@ -136,6 +136,11 @@
 
 </section>
 
+<section aria-labelledby="assess"><h2 id="assess">What students hand in</h2>
+<p><strong>Two-run handshake trace.</strong> One honest run and one attacked run of the same protocol, set side by side from the student's own Record tables, naming the field that differs between them and the check that did or did not notice. It has to say which of the two threats the difference speaks to: an eavesdropper, or a party in the middle.</p>
+<p>It is drawn from what the worksheets already produce, so it adds no new task. Values differ from run to run, so there is no key to mark against: what a marker is reading is whether each claim is tied to something the student recorded, and whether the reasoning from it holds.</p>
+</section>
+
 <section aria-labelledby="discuss"><h2 id="discuss">Discussion questions</h2>
 <ol><li>Mallory solves no discrete logarithm in the Diffie–Hellman lab. What does she exploit instead, and why does switching to the 2048-bit group leave her attack untouched?</li><li>Under the TLS lab's 'Break the ECDHE agreement' fault, the certificate chain and CertificateVerify still verify. What does that tell you about the difference between knowing who your peer is and sharing keys with it?</li><li>The TLS MITM panel's 'Relay unchanged' move passes the client's checks. Should that count as a successful attack? What does the attacker end up holding?</li><li>Downgrade Wire can show 'Handshake COMPLETED' beside 'DOWNGRADE — ALARM'. Why does the lab keep the cryptographic result and the security verdict as separate indicators, and what goes wrong if they are merged?</li><li>Transcript binding makes the strip fail closed. How can a client's retry policy hand the attacker the downgrade anyway, and what does 'PQC required' cost in exchange for stopping the silent downgrade?</li></ol></section>
 

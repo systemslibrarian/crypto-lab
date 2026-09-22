@@ -173,6 +173,17 @@ function readModules(cards) {
     if (!Array.isArray(m.trimmed) || !m.trimmed.every((t) => t && typeof t.name === 'string' && typeof t.reason === 'string')) {
       fail(`${where}: trimmed must be a list of {name, reason}`);
     }
+    /* The assessment artifact. Two sentences at most, because it is a thing a student
+       hands in, not a rubric: the worksheets already say what to do, and this names
+       which of what they produce is the submission. Held short in the validator so it
+       cannot quietly grow into a second set of instructions. */
+    const a = m.assessment || {};
+    if (typeof a.name !== 'string' || !a.name.trim()) fail(`${where}: assessment.name must be a non-empty string`);
+    if (typeof a.description !== 'string' || !a.description.trim()) fail(`${where}: assessment.description must be a non-empty string`);
+    else {
+      const sentences = a.description.trim().split(/(?<=[.?!])\s+/).filter(Boolean).length;
+      if (sentences > 2) fail(`${where}: assessment.description must be one or two sentences, not ${sentences}`);
+    }
     if (!DATE_RE.test(m.last_checked || '')) fail(`${where}: last_checked must be YYYY-MM-DD`);
     if (!Array.isArray(m.exhibits) || !m.exhibits.length) { fail(`${where}: exhibits must be a non-empty list`); continue; }
     const seen = new Set();
@@ -665,6 +676,11 @@ ${rows}
 </table>
 </div>
 ${differ.length ? `<p class="t-callout">In ${differ.map((x) => esc(x.card.title)).join(', ')}, keys or inputs are generated fresh for each run, so your values will differ from your classmates’.</p>` : ''}
+</section>
+
+<section aria-labelledby="assess"><h2 id="assess">What students hand in</h2>
+<p><strong>${esc(m.assessment.name)}.</strong> ${esc(m.assessment.description)}</p>
+<p>It is drawn from what the worksheets already produce, so it adds no new task. Values differ from run to run, so there is no key to mark against: what a marker is reading is whether each claim is tied to something the student recorded, and whether the reasoning from it holds.</p>
 </section>
 ${trimmed}
 <section aria-labelledby="discuss"><h2 id="discuss">Discussion questions</h2>

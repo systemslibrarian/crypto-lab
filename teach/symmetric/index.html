@@ -144,6 +144,11 @@
 
 </section>
 
+<section aria-labelledby="assess"><h2 id="assess">What students hand in</h2>
+<p><strong>Mode failure brief.</strong> One page that takes each exhibit in the sequence in turn, names the property the mode or key was supposed to provide, and points at the line or value from the student's own run where it stopped holding. Each claim has to cite something the student recorded rather than a general statement about the mode.</p>
+<p>It is drawn from what the worksheets already produce, so it adds no new task. Values differ from run to run, so there is no key to mark against: what a marker is reading is whether each claim is tied to something the student recorded, and whether the reasoning from it holds.</p>
+</section>
+
 <section aria-labelledby="discuss"><h2 id="discuss">Discussion questions</h2>
 <ol><li>In Hidden Bit, random guessing and re-encryption both flatten against chained-IV CBC, yet the BEAST-style predictor breaks it. What does a flat measurement tell you about a scheme, and what does it not tell you?</li><li>Why does XORing two ciphertexts made with the same one-time pad, or the same CTR nonce, remove the key entirely, and why does that undo what OTP Vault's Panel 2 shows about a single ciphertext?</li><li>AES-CBC with a random IV hides repeated messages, yet Padding Oracle recovers its plaintext without the key. What is CBC missing, and why does the lab call the silent server's protection fragile while Encrypt-then-MAC stops the attack before decryption?</li><li>One reused nonce produces different outcomes across Nonce Collision's cards. Why does AES-GCM lose integrity while AES-CBC leaks a shared prefix, and why is recovering the GHASH subkey H not the same as recovering the AES key?</li><li>Where do repeated nonces come from in real systems, and which remedy the lab names (a persistent counter with a single encryptor, limiting how many random-nonce messages one key encrypts, or a misuse-resistant AEAD such as AES-GCM-SIV) addresses which cause?</li></ol></section>
 

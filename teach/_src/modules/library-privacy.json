@@ -260,5 +260,9 @@
     ]
   },
   "trimmed": [],
+  "assessment": {
+    "name": "Who learns what table",
+    "description": "One row for each arrangement the module covers, saying which party learns the title asked for and which learns who asked, filled in from the student's own runs rather than from the descriptions on the pages. Each row has to name the observation that settles it."
+  },
   "last_checked": "2026-09-22"
 }

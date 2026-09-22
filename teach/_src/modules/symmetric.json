@@ -286,5 +286,9 @@
     ]
   },
   "trimmed": [],
+  "assessment": {
+    "name": "Mode failure brief",
+    "description": "One page that takes each exhibit in the sequence in turn, names the property the mode or key was supposed to provide, and points at the line or value from the student's own run where it stopped holding. Each claim has to cite something the student recorded rather than a general statement about the mode."
+  },
   "last_checked": "2026-09-22"
 }

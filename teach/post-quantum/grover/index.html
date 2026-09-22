@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Grover — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Grover exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/grover/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Grover">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/grover/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Grover">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/grover/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Post-quantum transition</a></li><li><span aria-current="page">Grover</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Post-quantum transition</a></p>
+  <h1>Worksheet: Grover</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-grover/">Grover</a></dd></div>
+  <div><dt>Time</dt><dd>About 20 minutes of class time; Predict is pre-class reading</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>873e40d8f891</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to contrast the impact of Shor's and Grover's algorithms on public-key and symmetric primitives, and justify why symmetric primitives mostly need larger parameters while RSA, ECC and Diffie-Hellman need replacement.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/post-quantum/grover.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/post-quantum/grover.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>A search space holds 16 keys and exactly one of them is correct. Classically, how many keys would you expect to try before you hit it? Grover's search needs roughly the square root of the space instead. Write down the number of Grover iterations you expect, and say which of the two numbers you are more confident about.</li><li>Grover's oracle recognises the correct key and flips the sign of its amplitude — it turns a positive number negative. Predict what that does to the <em>probability</em> of measuring the correct key at that instant: raises it, lowers it, or leaves it alone. Give a reason before you look.</li><li>You keep pressing Step long after the amplitude has climbed. Predict what the success probability does: keeps rising, levels off at some ceiling, or falls again. Sketch the shape you expect on a graph of probability against iteration count.</li><li>Grover is usually summarised as &quot;it halves your effective key length&quot;. Predict what AES-128 and AES-256 become under that rule, and predict whether a halved key length is the same thing as a broken cipher. Then predict which of AES-256 and RSA-2048 the page will say needs a bigger parameter and which needs a different algorithm.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>The exhibit is one long page of panels, not tabs. Each step names the panel heading to scroll to.</p>
+<ol><li>In the <strong>Grover's Algorithm — Amplitude Amplification</strong> panel, leave <strong>Search space n qubits</strong> at 4. Record the N readout beside the slider, the index and binary label on the target line, and the two numbers on the iteration line, which reads <code>Iteration: k = 0 / k* = 3</code>. Scroll to <strong>Classical vs Quantum Search</strong> and record the three numbers in the two strategy blocks: the classical expected queries, the Grover oracle queries, and the reflections applied. Fill in the first table.</li><li>Back in <strong>Grover's Algorithm — Amplitude Amplification</strong>, check <strong>Show oracle + diffusion sub-steps</strong>. A sub-step line appears under the iteration line reading <code>State — equal-ish superposition after the last iteration</code>. Record the target amplitude and the probability from the amplitude readout beside the bar chart, and whether the target's bar sits above or below the centre line.</li><li>Press <strong>Step</strong> once. The sub-step line now reads <code>Oracle — flip the target’s phase</code>. Record the same three things again. Press <strong>Step</strong> a second time; the line reads <code>Diffusion — invert all amplitudes about the mean</code>. Record the same three things a third time. Fill in the second table.</li><li>Press <strong>Reset</strong>, uncheck <strong>Show oracle + diffusion sub-steps</strong>, and check <strong>Prediction mode</strong>. Press <strong>Step</strong>: instead of advancing, the page asks you to commit a guess and offers three answers. Write your guess in the third table, then choose the matching answer. Read the verdict line and record what the page says actually happened, with the two percentages it prints. After each commit, glance at the probability curve below the charts and find the moving dot. Repeat until the gold banner appears reporting that the optimal k* has been reached.</li><li>Press <strong>Measure ×100</strong> and record the hit count, the empirical success and the theoretical figure in the fourth table.</li><li>Press <strong>Step</strong> once more. The prompt now says you are at or past k*; commit a guess and record the verdict in the last row of the third table. The banner should change. Press <strong>Measure ×100</strong> again and record the second row of the fourth table.</li><li>Scroll to <strong>Why Grover Still Doesn't Break AES Instantly</strong>. Set <strong>Key size</strong> to AES-128 and record the classical and Grover figures; set it to AES-256 and record the same two. Fill in the fifth table.</li><li>Scroll to <strong>The Real Cost of One Oracle Call</strong>. This panel has its own <strong>Key size</strong> control, and it does not follow the one in the panel above. Set it to AES-128 and record the iterations, the cost per oracle call, the total circuit depth and the practical threat; then set it to AES-256 and record the same four. Fill in the sixth table.</li></ol>
+<aside class="ws-note"><p>If pressing <strong>Step</strong> appears to do nothing, check whether <strong>Prediction mode</strong> is on. With it on, <strong>Step</strong> only opens the question — the walk advances when you commit to one of the three answers.</p></aside>
+<aside class="ws-note"><p>The measurement grid clears itself whenever the state changes, so read your hit count before you press <strong>Step</strong> again.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything here comes from your own run. Only the target line in the first table and the hit counts in the fourth are yours alone; every other cell should match your neighbour's, and Explain 3 asks you to check that.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Reading, My value">
+<table>
+<thead><tr><th scope="col">Reading</th><th scope="col">My value</th></tr></thead>
+<tbody>
+<tr><th scope="row">N</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Target index, and its binary label</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Optimal iterations k*</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Classical expected queries</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Grover oracle queries</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Reflections applied</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Sub-step, Target amplitude, Success probability, Target bar above or below the centre line">
+<table>
+<thead><tr><th scope="col">Sub-step</th><th scope="col">Target amplitude</th><th scope="col">Success probability</th><th scope="col">Target bar above or below the centre line</th></tr></thead>
+<tbody>
+<tr><th scope="row">State, before the oracle</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Oracle</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Diffusion</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Step, My prediction, What the page reported, Probability before and after">
+<table>
+<thead><tr><th scope="col">Step</th><th scope="col">My prediction</th><th scope="col">What the page reported</th><th scope="col">Probability before and after</th></tr></thead>
+<tbody>
+<tr><th scope="row">k = 0 to k = 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k = 1 to k = 2</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k = 2 to k = 3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k = 3 to k = 4</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Measured at, Target hits out of 100, Empirical success, Theoretical">
+<table>
+<thead><tr><th scope="col">Measured at</th><th scope="col">Target hits out of 100</th><th scope="col">Empirical success</th><th scope="col">Theoretical</th></tr></thead>
+<tbody>
+<tr><th scope="row">k = k*</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">k = k* + 1</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Key size, Classical brute force, Grover (idealized)">
+<table>
+<thead><tr><th scope="col">Key size</th><th scope="col">Classical brute force</th><th scope="col">Grover (idealized)</th></tr></thead>
+<tbody>
+<tr><th scope="row">AES-128</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-256</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Key size, Grover iterations, Cost per oracle call, Total circuit depth, Practical threat">
+<table>
+<thead><tr><th scope="col">Key size</th><th scope="col">Grover iterations</th><th scope="col">Cost per oracle call</th><th scope="col">Total circuit depth</th><th scope="col">Practical threat</th></tr></thead>
+<tbody>
+<tr><th scope="row">AES-128</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-256</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>In your second table, the oracle changed the sign of the target amplitude. Did your probability column change across that row? Using the <strong>Reality</strong> line the Myth and Reality panel shows during the oracle sub-step, and the relationship the amplitude readout prints between an amplitude and a probability, explain what the oracle did and what it did not do. Then say what the diffusion row changed that the oracle row did not.</li><li>Describe in one sentence how the probability moved across the four rows of your third table. The rotation view's caption says the state is a unit vector, that each iteration rotates it by 2θ toward the target axis, and that success probability is the squared height. Use that to explain why your last step lowered the probability rather than raising it.</li><li>Your two measurement rows were taken from two different states. Compare each empirical success against the theoretical figure printed beside it, and compare your figures with a classmate's. Using the caption beside the <strong>Measure ×100</strong> button, explain why running Grover to k* is not the same as knowing the key, and why your hit count is not your classmate's.</li><li>Both key sizes in your sixth table have their iteration count set at half the key length, yet the page calls one of them weakened and the other strong. Look at which of the three cost figures changes between your two rows and which stays the same. Use that to explain both the halving and the difference in verdict. Then read <strong>The Mitigation</strong> in the <strong>Impact on Symmetric Cryptography</strong> panel: what does it say fixes the symmetric case, and what does it say public-key systems need instead? Say which of those two claims you saw evidence for in this exhibit and which one the page only asserts.</li><li>The <strong>About This Demo</strong> panel lists, under <strong>This demo is not</strong>, several things the simulation leaves out. Name the item on that list that most limits what your sixth table can tell you about a real attack, and say why.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You run a service that encrypts stored records with AES-128 and authenticates them with HMAC-SHA-256, and you are asked what to change for a post-quantum threat model. Using <strong>The Mitigation</strong> list in the <strong>Impact on Symmetric Cryptography</strong> panel and the hash table above it, name the parameter changes the page supports and say, from your own sixth table, what each one buys. Then use the note printed under the hash table to say which hash property the halving rule applies to and which one it does not.</li><li><strong>Extend.</strong> In the <strong>Grover's Algorithm — Amplitude Amplification</strong> panel, move <strong>Search space n qubits</strong> to 8 and record N and k<em> from the readouts; then move it to 12 and record them again. Above 8 qubits the bar chart is replaced by a note saying the space is too large to draw individual bars; the rotation view and the probability curve keep working. Alongside each pair write the square root of N. Compare how k</em> grows against how N grows, and say whether the growth you recorded looks like N or like the square root of N.</li><li><strong>Extend.</strong> With the slider back at 4, press <strong>Reset</strong>, then press <strong>Random target</strong> several times and watch the target line, the iteration line and the amplitude readout. Record which of those three change and which do not. The math layer under the two charts prints the equations for θ and for the success probability with the current numbers substituted; use them to explain what the probability depends on.</li><li><strong>Extend.</strong> In the <strong>Impact on Symmetric Cryptography</strong> panel, open the disclosure <strong>Grover vs Shor — The Two Quantum Threats</strong> and read its seven rows. For each row, mark whether this exhibit showed you evidence for it or only stated it. Keep the marked table: the companion Shor exhibit covers the rows this one only states.</li><li><strong>Extend.</strong> Work the <strong>Challenge Mode</strong> panel as an exit ticket. Answer all of its questions, read each explanation, and note any question whose explanation disagrees with what you recorded above.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

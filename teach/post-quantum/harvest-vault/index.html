@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Harvest Vault — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Harvest Vault exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/harvest-vault/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Harvest Vault">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/harvest-vault/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Harvest Vault">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/post-quantum/harvest-vault/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Post-quantum transition</a></li><li><span aria-current="page">Harvest Vault</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Post-quantum transition</a></p>
+  <h1>Worksheet: Harvest Vault</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/">Harvest Vault</a></dd></div>
+  <div><dt>Time</dt><dd>About 20 minutes of class time; Predict is pre-class reading</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>1c8241953291</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to contrast the impact of Shor's and Grover's algorithms on public-key and symmetric primitives, and justify why symmetric primitives mostly need larger parameters while RSA, ECC and Diffie-Hellman need replacement.</li><li>Students will be able to predict and then verify the outcome of an X25519 + ML-KEM-768 hybrid session when one or both key-establishment wires are broken, and explain why a hybrid is a hedge rather than a doubling of security.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/post-quantum/harvest-vault.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/post-quantum/harvest-vault.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>This is an extension worksheet: you work it on your own, and nothing here needs an instructor standing over it. Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>The exhibit keeps a copy of each session you send, as bytes: the panel says the two public keys, the nonce and the ciphertext are copied, that this is what a passive wiretap sees and nothing more, and that your plaintext is never in the copy. After the attack runs, the panel reports for each stored record whether the stored bytes are unchanged since capture. Predict what it will report for a record that was captured <em>before</em> you press <strong>Deploy the PQC upgrade</strong>, and say why.</li><li>You will send one message before deploying the upgrade and one after it. Predict which of the two the attack recovers. For the one you expect it to miss, predict whether the reason is that the attacker failed at the same hard problem it solved for the other message, or something else — and say what that something else would be.</li><li>The classical handshake is Diffie-Hellman in a small group, and the attacker searches every candidate private exponent in turn. The panel reports how many exponents it tried and how many were possible. Predict roughly what fraction of the possible exponents the search will get through before it stops, and predict whether two captured sessions will cost the same amount of work.</li><li>The calculator on the same page asks whether X + Y &gt; Z, where X is the number of years the data must stay secret, Y is the number of years migration takes and Z is the number of years until Q-Day. Predict whether a profile whose data must stay secret for decades can be moved out of &quot;at risk&quot; by changing Z alone, and say which of the three numbers an organization actually controls.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>Work straight down the page. Everything in this section is in two panels.</p>
+<ol><li>Open the exhibit. In the step nav that follows you down the page, press <strong>4 · Prove it</strong> to reach the panel headed <strong>PROVE IT: CAPTURE A HANDSHAKE, THEN UPGRADE</strong>. Read the note that begins <strong>Toy scale, stated plainly.</strong> and keep it in view: the rest of this worksheet leans on it.</li><li>In <strong>Message to send</strong>, replace the text with a short line of your own — something you would not want read aloud. Press <strong>Send over the classical handshake</strong> and wait for the line under the buttons to say the session was captured. Record the new row's <strong>Captured</strong> time, its <strong>Handshake</strong> value, and the start of its <strong>Stored bytes</strong> cell (the hex run and the SHA-256 that follows it) in the first table.</li><li>Press <strong>Deploy the PQC upgrade</strong>. Read the line under the buttons and record what it says about the records that are already in the store. Notice that the first button has changed its wording.</li><li>In <strong>Message to send</strong>, type a second, different line. Press <strong>Send over the hybrid handshake</strong> — the same button as before, now relabelled. Record row two in the first table the same way.</li><li>Press <strong>Run Q-Day</strong> and wait until the line under the buttons says Q-Day is complete. For each row, record the <strong>At Q-Day</strong> cell in the second table: the verdict, the recovered text or the failure line, whether it is byte-identical to what was sent, what it says about the stored bytes since capture, and the exponents-tried figure with its timing.</li><li>Read the block headed <strong>What this run showed</strong> below the table and fill in the third table from it.</li><li>Press <strong>5 · Your risk</strong> in the step nav to reach the panel headed <strong>MOSCA'S THEOREM: X + Y &gt; Z</strong>. Without touching the sliders, record the sector name shown as selected, the three slider values, the year printed next to Z, and the verdict line, in the fourth table. Then press the <strong>Library</strong> sector button and record the same row again.</li><li>Scroll to the block headed <strong>Across the plausible Q-Day range</strong> in the same panel and record its three chips in the fifth table.</li></ol>
+<aside class="ws-note"><p>If you lose your place, <strong>Reset exhibit</strong> empties the store and re-arms the upgrade, and you can start again from step 2.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Every value in these tables comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Session, Captured, Handshake, Stored bytes: hex run and SHA-256">
+<table>
+<thead><tr><th scope="col">Session</th><th scope="col">Captured</th><th scope="col">Handshake</th><th scope="col">Stored bytes: hex run and SHA-256</th></tr></thead>
+<tbody>
+<tr><th scope="row">One, sent before the upgrade</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Two, sent after the upgrade</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Session, Verdict, Recovered text, or the failure line, Byte-identical to what was sent?, Stored bytes since capture, Exponents tried, and how long">
+<table>
+<thead><tr><th scope="col">Session</th><th scope="col">Verdict</th><th scope="col">Recovered text, or the failure line</th><th scope="col">Byte-identical to what was sent?</th><th scope="col">Stored bytes since capture</th><th scope="col">Exponents tried, and how long</th></tr></thead>
+<tbody>
+<tr><th scope="row">One</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Two</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: What this run showed, The sentence, in your own words, with its numbers">
+<table>
+<thead><tr><th scope="col">What this run showed</th><th scope="col">The sentence, in your own words, with its numbers</th></tr></thead>
+<tbody>
+<tr><th scope="row">Sessions captured before the upgrade, and how many were recovered</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Sessions captured after the upgrade, and how many were recovered</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Stored records hashing to what they hashed at capture time</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Attacker effort: exponents, time, and out of how many possible</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Sector shown as selected, X, Y, Z, Year next to Z, Verdict line as printed">
+<table>
+<thead><tr><th scope="col">Sector shown as selected</th><th scope="col">X</th><th scope="col">Y</th><th scope="col">Z</th><th scope="col">Year next to Z</th><th scope="col">Verdict line as printed</th></tr></thead>
+<tbody>
+<tr><th scope="row">As the page loaded</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Library</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Chip, Verdict, The X+Y and Z comparison as printed">
+<table>
+<thead><tr><th scope="col">Chip</th><th scope="col">Verdict</th><th scope="col">The X+Y and Z comparison as printed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Aggressive</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Center</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Conservative</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Row one came back as readable text and row two did not. Both messages were protected the same way — the lab's <a href="https://github.com/systemslibrarian/crypto-lab-harvest-vault">README</a> describes the panel as running HKDF-SHA-256 and AES-256-GCM — and the failure line you recorded for row two names AES-GCM. Using your two rows, say what the attacker had to break in order to read row one, and whether AES-GCM failed there. Then say, for row two, what the attacker did get and what it did not.</li><li>Compare the exponents-tried figures in your two rows with each other, and with the &quot;out of&quot; figure in the <strong>What this run showed</strong> block. Why did the two rows cost different amounts of work, and why will a classmate's figures differ from yours? Using the <strong>Toy scale, stated plainly.</strong> note, say why this same search would not be the attack at a real Diffie-Hellman size, and what the note says breaks those instead.</li><li>Write down the count of stored records that hash to what they hashed at capture time, and the sentence the panel prints after it. Using only that, explain why pressing <strong>Deploy the PQC upgrade</strong> could not change the outcome for your first message. What would have had to be different about the order of your presses for that message to have survived?</li><li>For each of your two rows in the fourth table, write out the X + Y &gt; Z comparison the page printed. Which of the three numbers could an organization in that sector actually change, and which is not theirs to change? Then use your three chips and the page's own note under <strong>Across the plausible Q-Day range</strong> — &quot;The lesson isn't the exact date — it's whether you survive the whole range&quot; — to say what the page is claiming by showing three Q-Day dates at once rather than one, and what would have to be true of a profile for its three chips to disagree with each other.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> Your service runs TLS 1.3 with ECDHE today, and a hybrid key exchange is on the roadmap three years out. Using your two Q-Day rows, write two sentences for a manager: one saying what the upgrade will do for traffic sent after it lands, and one saying what it will not do for traffic sent before. Then name the recorded values you would put in front of them as evidence — and, using the <strong>Toy scale, stated plainly.</strong> note, say why the exponent count is not one of them.</li><li><strong>Fix.</strong> The <strong>Library</strong> profile you recorded printed a verdict at the Z the page had loaded. Using the three numbers in that row, state what would have to change, and by how much, for the same profile to print the other verdict at that same Z. Say which of those levers a library could actually pull, and what the page's context block for that profile — headed <strong>LIBRARY PATRON PRIVACY CONTEXT</strong> at the foot of the same panel — says about how quickly it could pull it.</li><li><strong>Extend.</strong> Press <strong>2 · What breaks</strong> in the step nav to reach the panel headed <strong>WHAT QUANTUM BREAKS — AND WHAT IT DOESN'T</strong>. Read both columns, the note underneath them, and the collapsed check below that note. Write down which primitives the page puts in each column, and what it says Grover's algorithm does to AES-256. Then reconcile that with your row one, where a message protected with AES-256-GCM came back in plaintext: name the thing that was broken, and say why the page argues that &quot;we use AES-256&quot; is not an answer to this threat.</li><li><strong>Extend.</strong> Press <strong>6 · Mitigate</strong> to reach the panel headed <strong>SECTOR RISK MATRIX + MITIGATIONS</strong>. Move focus onto each dot in turn — without activating one, which loads that sector into the calculator — and read what appears in the box below the matrix; write down two sectors that the box puts in different risk states. The legend under the matrix tells you to move the Z slider above to watch dots cross between states. Try that, then try the row of buttons labelled <strong>Q-Day assumption:</strong> above the matrix, and write down which of the two actually moves the dots — and which sectors change state when it does.</li><li><strong>Extend.</strong> Back in the calculator panel, set <strong>X - Data sensitivity lifetime (years data must remain secret)</strong>, <strong>Y - Migration time (years to complete PQC transition)</strong> and <strong>Z - Q-Day estimate (years until cryptographically relevant quantum computer)</strong> to numbers that match a system you actually use. Read the brief in the box under <strong>YOUR RISK BRIEF</strong> (<strong>Copy brief</strong> puts the same text on your clipboard) and write down its verdict line and its &quot;latest year to start&quot; line. The brief prints a name for your sector: compare it with the name on the selector button you pressed, and note any difference between the two.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

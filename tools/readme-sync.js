@@ -3,6 +3,17 @@
 //   node tools/readme-sync.js        rewrite README.md and index.html's hero count
 //   node tools/readme-sync.js check  exit 1 if either differs from generated
 //
+// All Demos mirrors the live catalog: the same sections (SECTIONS), in the same
+// order, and within each section the cards in the order the page shows them —
+// featured cards first, then document order, exactly as the page's grouping code
+// appends them. Each row carries the card's own description, its live demo, its
+// source repository and its primitive chips. The section sits between the
+// readme-sync:all-demos markers; everything between them is regenerated.
+//
+// Every card must map to exactly one section (TITLE_TO_SECTION). A card with no
+// section fails the run rather than being dropped or filed under a guess: the
+// catalog page would not show it under any heading either.
+//
 // It also owns the hero count in index.html's <h1> (#exhibit-count). That number
 // IS written at runtime — the JS counts .feature-card/.project-card and sets
 // textContent — so a browser always sees the truth and the stale literal is
@@ -12,6 +23,9 @@
 // reported from outside rather than caught here. A number a human retypes after
 // a runtime path has already made it invisible is the definition of one that
 // drifts, so it is generated now.
+//
+// Output is the same on every OS: no locale-dependent sorting anywhere, and the
+// line endings follow the README's own.
 const fs = require('fs');
 const path = require('path');
 const root = path.join(__dirname, '..');
@@ -21,37 +35,77 @@ const html = fs.readFileSync(htmlPath, 'utf8');
 const md = fs.readFileSync(mdPath, 'utf8');
 const eol = md.includes('\r\n') ? '\r\n' : '\n';
 
+const NAMED = { amp: '&', apos: "'", quot: '"', lt: '<', gt: '>', rarr: '→', pi: 'π' };
 const decode = s => s
-  .replace(/&amp;/g, '&').replace(/&apos;/g, "'").replace(/&#39;/g, "'")
-  .replace(/&quot;/g, '"').replace(/&rarr;/g, '→').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+  .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+  .replace(/&([a-z]+);/gi, (all, n) => (n in NAMED ? NAMED[n] : all));
+
+/* A table cell: a literal pipe would end the cell. */
+const cell = s => s.replace(/\|/g, '\\|');
 
 const cards = [];
-const cardRe = /<a class="((?:project|feature)-card[^"]*)" data-category="[^"]*" href="(https:\/\/systemslibrarian\.github\.io\/[^\/"]+\/)"[\s\S]*?<\/a>/g;
+const cardRe = /<a class="((?:project|feature)-card[^"]*)" data-category="[^"]*" href="(https:\/\/systemslibrarian\.github\.io\/([^\/"]+)\/)"[\s\S]*?<\/a>/g;
 let m;
 while ((m = cardRe.exec(html)) !== null) {
   const block = m[0];
   const kicker = /card-kicker">([^<]+)</.exec(block);
   const title = /(?:project|feature)-title">([^<]+)</.exec(block);
+  const copy = /(?:project|feature)-copy">([^<]+)</.exec(block);
   const chips = [...block.matchAll(/class="chip">([^<]+)</g)].map(x => decode(x[1].trim()));
   cards.push({
     href: m[2],
+    slug: m[3],
     wip: m[1].includes('wip-card'),
+    featured: m[1].startsWith('feature-card'),
     kicker: kicker ? decode(kicker[1].trim()) : '',
     title: title ? decode(title[1].trim()) : '',
+    copy: copy ? decode(copy[1].trim().replace(/\s+/g, ' ')) : '',
     chips,
   });
 }
 const bySlug = {};
-cards.forEach(c => { bySlug[c.href.replace(/^.*github\.io\//, '').replace(/\/$/, '')] = c; });
+cards.forEach(c => { bySlug[c.slug] = c; });
+
+/* The page's own JS literals, read the same way LEARNING_PATHS is. */
+function literal(name, open, close) {
+  const start = html.indexOf('var ' + name + ' = ' + open);
+  if (start === -1) { console.error(name + ' not found in index.html'); process.exit(1); }
+  const end = html.indexOf(close + ';', start);
+  return eval('(' + html.slice(start + ('var ' + name + ' = ').length, end + 1) + ')');
+}
 
 const row = c =>
   '| [' + c.title + '](' + c.href + ')' + (c.wip ? ' *(WIP)*' : '') +
   ' | ' + c.kicker + ' | ' + c.chips.join(' · ') + ' |';
 
-// All Demos: every card, sorted by Category (kicker) then title.
-const allRows = [...cards]
-  .sort((a, b) => a.kicker.localeCompare(b.kicker, 'en') || a.title.localeCompare(b.title, 'en'))
-  .map(row).join(eol);
+// All Demos: grouped by the catalog's sections, in the catalog's order.
+const SECTIONS = literal('SECTIONS', '[', ']');
+const TITLE_TO_SECTION = literal('TITLE_TO_SECTION', '{', '}');
+const unsectioned = cards.filter(c => !TITLE_TO_SECTION[c.title]);
+if (unsectioned.length) {
+  console.error('Cards with no section in TITLE_TO_SECTION (add them there first): '
+    + unsectioned.map(c => c.title).join(', '));
+  process.exit(1);
+}
+const ordered = [...cards.filter(c => c.featured), ...cards.filter(c => !c.featured)];
+const demoRow = c =>
+  '| [' + cell(c.title) + '](' + c.href + ')' + (c.wip ? ' *(WIP)*' : '') +
+  ' | ' + cell(c.copy) +
+  ' | [' + c.slug + '](https://github.com/systemslibrarian/' + c.slug + ')' +
+  ' | ' + cell(c.chips.join(' · ')) + ' |';
+const allDemos = [
+  '<!-- readme-sync:all-demos:begin — generated by tools/readme-sync.js from index.html; do not edit by hand -->',
+  'Grouped the way the [live catalog](https://crypto-lab.systemslibrarian.dev/) groups them, in the same order.',
+];
+SECTIONS.forEach(s => {
+  const inSection = ordered.filter(c => TITLE_TO_SECTION[c.title] === s.id);
+  if (!inSection.length) return;
+  allDemos.push('', '### ' + s.label, '', '| Demo | Description | Source | Primitives |', '|---|---|---|---|');
+  inSection.forEach(c => allDemos.push(demoRow(c)));
+});
+allDemos.push('<!-- readme-sync:all-demos:end -->');
+const allBlock = allDemos.join(eol);
 
 // Featured: keep the demos and order already listed in the README's Featured table.
 const featBody = /## Featured\r?\n\r?\n\|[^\n]*\r?\n\|---\|---\|---\|\r?\n([\s\S]*?)\r?\n\r?\n---/.exec(md);
@@ -63,13 +117,16 @@ const featRows = featSlugs.map(s => {
 }).join(eol);
 
 // Learning Paths: from the LEARNING_PATHS array in the page's JS.
-const pIdx = html.indexOf('var LEARNING_PATHS = [');
-const pEnd = html.indexOf('];', pIdx);
-if (pIdx === -1) { console.error('LEARNING_PATHS not found'); process.exit(1); }
-const paths = eval('(' + html.slice(pIdx + 'var LEARNING_PATHS = '.length, pEnd + 1) + ')');
+const paths = literal('LEARNING_PATHS', '[', ']');
 const pathRows = paths.map(p =>
   '| **' + p.label.replace(/ Path$/, '') + '** | ' + p.blurb + ' | ' +
   p.steps.map(s => s.title).join(' → ') + ' |').join(eol);
+
+const allRe = /<!-- readme-sync:all-demos:begin[^\n]*-->[\s\S]*?<!-- readme-sync:all-demos:end -->/;
+if (!allRe.test(md)) {
+  console.error('README.md has no readme-sync:all-demos markers under "## All Demos" — the section cannot be generated.');
+  process.exit(1);
+}
 
 let out = md.replace(
   /(## Featured\r?\n\r?\n\|[^\n]*\r?\n\|---\|---\|---\|\r?\n)[\s\S]*?(\r?\n\r?\n---)/,
@@ -77,9 +134,7 @@ let out = md.replace(
 out = out.replace(
   /(\| Path \| Focus \| Journey \|\r?\n\|---\|---\|---\|\r?\n)[\s\S]*?(\r?\n\r?\n---)/,
   (_, head, tail) => head + pathRows + tail);
-out = out.replace(
-  /(## All Demos\r?\n\r?\n\|[^\n]*\r?\n\|---\|---\|---\|\r?\n)[\s\S]*?(\r?\n\r?\n---)/,
-  (_, head, tail) => head + allRows + tail);
+out = out.replace(allRe, () => allBlock);
 
 /* The hero count. Fail rather than skip if the span is gone: a generator that
    silently finds nothing to generate is how the literal got stale in the first
@@ -113,7 +168,7 @@ if (process.argv[2] === 'check') {
 } else {
   fs.writeFileSync(mdPath, out);
   if (heroHtml !== html) fs.writeFileSync(htmlPath, heroHtml);
-  console.log('README.md regenerated: ' + cards.length + ' cards, ' + featSlugs.length + ' featured, '
-    + paths.length + ' learning paths.'
+  console.log('README.md regenerated: ' + cards.length + ' cards in ' + SECTIONS.length + ' sections, '
+    + featSlugs.length + ' featured, ' + paths.length + ' learning paths.'
     + (heroHtml !== html ? ' Hero count ' + heroWas + ' -> ' + cards.length + '.' : ''));
 }

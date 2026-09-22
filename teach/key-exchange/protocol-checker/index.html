@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Protocol Checker — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Protocol Checker exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/key-exchange/protocol-checker/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Protocol Checker">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/key-exchange/protocol-checker/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Protocol Checker">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/key-exchange/protocol-checker/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Key exchange &amp; secure channels</a></li><li><span aria-current="page">Protocol Checker</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Key exchange &amp; secure channels</a></p>
+  <h1>Worksheet: Protocol Checker</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/">Protocol Checker</a></dd></div>
+  <div><dt>Time</dt><dd>About 20 minutes of class time; Predict is pre-class reading</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>24c7e9c2dd01</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><p>None of this module's outcomes are served by this worksheet's class sequence. Its class sequence is a demonstration of symbolic protocol analysis rather than one of this module's outcomes: the Diffie-Hellman arc that served outcome 1 moved into Fix / Extend when the worksheet was cut to its budget.</p></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/key-exchange/protocol-checker.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/key-exchange/protocol-checker.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>The attacker in this model owns the network: it intercepts messages and sends anything it can assemble from what it has seen, but it cannot guess a nonce and cannot open a ciphertext addressed to someone else. Honest A starts a Needham-Schroeder session with a party M that she has chosen to talk to, while honest B runs as responder. Predict whether M can end up holding <code>Nb</code>, the nonce B generated for a session B believes is with A. Say what you think M would have to do with the messages it intercepts.</li><li>Lowe's 1995 repair changes one field: message 2 goes from <code>{Na, Nb}_pkA</code> to <code>{Na, Nb, B}_pkA</code>. Predict which party's check fails first when the same relay is tried against the repaired protocol, and which field it fails on.</li><li>Now a raw Diffie-Hellman exchange: A and B send public shares with nothing binding a share to its sender, and A then sends a secret under the key she derives. Predict whether an attacker who never recovers anyone's exponent can read that secret, and what it would have to send in place of B's share. Then predict what changes when each share is signed by its sender.</li><li>The checker shows two indicators side by side, one labelled <strong>Cryptographic primitive</strong> and one labelled <strong>Security verdict</strong>. Predict what each of them reads after a run that finds an attack. Then predict whether the numbers in the status line will be the same for you and for a classmate running the same protocol.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and go to the <strong>Run the search</strong> section. Before pressing anything, read the <strong>Protocol</strong> picker, the three numbered protocol messages below it, and the scenario-and-goal line under those. Write down the term the page names after &quot;does the attacker learn&quot;, and which of the three message lines carries the tag <code>this message</code>. Read both indicators and fill the &quot;before any run&quot; column of the first table.</li><li>Open the disclosure <strong>How the search actually works (for the curious)</strong>. Read the paragraph listing what the attacker can do with what it holds, and the paragraph after it on the order the search explores in. Note the one rule the page calls the subtle one, and what that rule lets the attacker pass along.</li><li>Press <strong>Run search</strong>. Fill the second column of the first table, then read the status line and fill the Needham-Schroeder Public Key row of the second table.</li><li>Find the <strong>Attack trace</strong> panel and note how many messages the counter under the trace says the trace holds.</li><li>Under the trace, step back one message at a time until that counter reads <code>start</code>. In the <strong>Attacker's knowledge</strong> panel beside it, record the terms the attacker holds before any message and the rule shown on each, in the <code>start</code> row of the third table.</li><li>Step forward one message at a time. At each stop, record what the counter reads, the wire line the trace marks as current, the terms the knowledge panel highlights as new, and the rule shown on each of them. Stop when stepping forward no longer advances the counter.</li><li>Read the <strong>One attacker, two conversations</strong> panel and the sentence under it. Fill the Needham-Schroeder Public Key column of the fourth table.</li><li>Tick <strong>Message 2 includes the responder's identity B</strong>. Before pressing anything, note what happened to the verdict, the trace and the status line, and which message line now carries the tag <code>this message</code>. Then press <strong>Run search</strong> and fill the Needham-Schroeder-Lowe rows of the second and fifth tables, reading the fifth from the panel headed <strong>The engine shows its work</strong>.</li></ol>
+<aside class="ws-note"><p>The disclosure in step 2 closes again whenever the checker redraws, which happens when you run a search, step the trace or tick a toggle. Read it before step 3, and reopen it if you want it later.</p></aside>
+<aside class="ws-note"><p>In step 6 the highlight marks what is new at that step. At <code>start</code> nothing is highlighted, so that row records what the panel lists at all.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything here comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Indicator, Before any run, After the Needham-Schroeder Public Key run">
+<table>
+<thead><tr><th scope="col">Indicator</th><th scope="col">Before any run</th><th scope="col">After the Needham-Schroeder Public Key run</th></tr></thead>
+<tbody>
+<tr><th scope="row">Cryptographic primitive</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Security verdict</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Protocol under test, Verdict, States explored, Injections weighed, Depth, Bound">
+<table>
+<thead><tr><th scope="col">Protocol under test</th><th scope="col">Verdict</th><th scope="col">States explored</th><th scope="col">Injections weighed</th><th scope="col">Depth</th><th scope="col">Bound</th></tr></thead>
+<tbody>
+<tr><th scope="row">Needham-Schroeder Public Key</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Needham-Schroeder-Lowe</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Stepper reads, Wire line marked current, Terms new at this step, Rule shown on each">
+<table>
+<thead><tr><th scope="col">Stepper reads</th><th scope="col">Wire line marked current</th><th scope="col">Terms new at this step</th><th scope="col">Rule shown on each</th></tr></thead>
+<tbody>
+<tr><th scope="row"><code>start</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>message 1</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>message 2</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>message 3</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>message 4</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row"><code>message 5</code></th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: What the diagram showed, Needham-Schroeder Public Key">
+<table>
+<thead><tr><th scope="col">What the diagram showed</th><th scope="col">Needham-Schroeder Public Key</th></tr></thead>
+<tbody>
+<tr><th scope="row">Lane marked as deceived</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What that lane believes</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Who it is actually talking to</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Lane with no belief shown</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Last wire line of the trace</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Re-run after the fix, How the status line ends, in my own words, What the repair panel names">
+<table>
+<thead><tr><th scope="col">Re-run after the fix</th><th scope="col">How the status line ends, in my own words</th><th scope="col">What the repair panel names</th></tr></thead>
+<tbody>
+<tr><th scope="row">Needham-Schroeder-Lowe</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>The <strong>Cryptographic primitive</strong> indicator read the same thing before and after an attack was found. Using the note under that indicator and the panel at the top of the page, explain what the page is separating by carrying two indicators, and what a reader would lose if the page carried one.</li><li>From your third table: at which step did the goal term first appear, and what rule was shown on it? That rule takes two inputs. Name both of them from your own tables — one is a message in the trace, the other is a term the attacker held from the start — and explain why the page can call this a leak of protocol logic rather than a recovered key.</li><li>Compare the wire lines of messages 1 and 2, then of messages 3 and 4. One pair shares a body but changes recipient; the other pair is the same line twice. Using the rule list in the disclosure you read in step 2, say what the attacker did to produce each of those two messages, and which of the two needed it to open the message first. Two of your rows in the third table have nothing new in them: say which, what those messages have in common, and why the attack still needs them.</li><li>After the fix, the repair panel names a field the pattern requires and a different field the reply carries. Using those two, explain why the relay in your trace no longer reaches its recipient. The panel's last step makes a second claim, about a term the attacker cannot build for itself: state it in your own words and say why the first claim alone would not be enough.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You are reviewing a handshake in which the reply to a challenge returns the challenge but does not name who is sending it. Using the two fields your repair panel named, state the change you would ask for and what a reviewer should be able to check once it lands. Then, using the honesty note at the top of the page and the bound in your second table, say what a <code>No attack in bound</code> result would and would not entitle that reviewer to claim.</li><li><strong>Extend.</strong> In <strong>Protocol</strong>, choose <code>Diffie-Hellman key exchange — unauthenticated · signed</code>. Changing the protocol clears the fix and the verdict, so press <strong>Run search</strong> on a clean page. Write down, in the columns your second table uses, the verdict for Naive Diffie-Hellman together with its states explored, injections weighed, depth and bound. Then read the <strong>One attacker, two conversations</strong> panel and the sentence under it, and write down which lane is marked as deceived, what that lane believes, who it is actually talking to, which lane has no belief shown, and the last wire line of the trace. Compare all of it with your third prediction.</li><li><strong>Extend.</strong> With Diffie-Hellman still selected, tick <strong>Sign each Diffie-Hellman share</strong> and press <strong>Run search</strong> again. Write down the verdict for Signed Diffie-Hellman and the same four numbers. Then, from the repair panel headed <strong>The engine shows its work</strong>, write down how the status line ends in your own words and what that panel names.</li><li><strong>Extend.</strong> Naive Diffie-Hellman gave up its secret and Signed Diffie-Hellman did not, and the obstacle the repair panel names is a signature. Using what you wrote down for those two runs and the last wire line you noted, say what the signature binds and which threat it therefore addresses. Then, using the page's own note on perfect cryptography, name a way of attacking a Diffie-Hellman exchange that this checker's verdict says nothing about, and explain why its model cannot express it. Finally: in the naive run, one lane of <strong>One attacker, two conversations</strong> is marked as not having run. Using what <strong>How the search actually works (for the curious)</strong> says about the order the search explores in, explain why the attack did not need that party.</li><li><strong>Extend.</strong> Compare your second table with a classmate's, row for row. Say which numbers matched and which did not. Then find each of the four protocols in the <strong>Each protocol, its goal, its verdict</strong> section and check the chip on its card against the verdict you recorded for it — in your second table for the two Needham-Schroeder protocols, and in the two Diffie-Hellman items above for the other two. Explain both results from the way the page describes how its search works.</li><li><strong>Extend.</strong> In <strong>Protocol</strong>, choose <code>Kerberos (toy exchange) — ticket handshake</code>. Note what happens to <strong>Run search</strong>, what the checker shows in place of the schema and the indicators, and the reason the page gives for that entry being a link. Say why a checker that cannot search an entry is better off saying so than showing a verdict for it.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

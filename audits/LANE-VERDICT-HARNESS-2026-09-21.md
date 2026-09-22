@@ -411,3 +411,143 @@ is exactly why the head is recorded rather than the PR number.
 Note the interaction with D1's other half: updating a branch that has fallen
 behind `main` is itself a new head, so it voids the verdict. Where both apply,
 update first and audit the result — never audit, then update, then merge.
+
+---
+
+## The audits, and what they returned
+
+Eight independent auditors, one per lab, commissioned 2026-09-21 against the SHA
+set pinned under D5. Every audit named its head SHA; every one matched; every tree
+was left clean. **Result: one CONFIRMED, seven SUSPECT.**
+
+| PR | Overall | Fixes that failed |
+|---|---|---|
+| `fold-gate#11` | CONFIRMED | — (two residuals, below) |
+| `hidden-bit#7` | SUSPECT | 4 |
+| `order-leak#5` | SUSPECT | 1, 4 |
+| `pqxdh-wire#4` | SUSPECT | 4 |
+| `privacy-pass#6` | SUSPECT | 4, 5 |
+| `proof-tally#8` | SUSPECT | 1 |
+| `sleeve-check#2` | SUSPECT | D2 |
+| `split-point#5` | SUSPECT | 1 |
+
+Fixes 2 and 3 hold in all eight, tested in both directions in every lab. Every
+recorded mutation set is sound: 11 to 41 mutations per lab, all killed, none
+survived, each on the marker its own record names.
+
+**Two failures are systemic, not per-lab, and that is the finding.**
+
+### Fix 1 is a source-text scan in all eight labs
+
+Every lab implemented "the kill goes through the helper" as a substring or regex
+match over spec source. Three auditors defeated it three different ways, and two
+proved it by differential in an isolated tree — same source, same built bundle,
+opposite outcome with only the spec changing, so a patch that never landed cannot
+explain it:
+
+- **Comment it out.** `fold-gate`: a live `data-result` flip on the chain verdict
+  **ships green** because `expectVerdict(page, 'chain'` survives inside a comment.
+  The page would serve `FOLDED 8 → 1, VALID` with its machine-readable result
+  saying `fail`, gate green, and the mutation record asserting that exact case is
+  covered. `proof-tally`: same shape, and the page it ships says a tampered proof
+  was **ADMITTED**, painted alarm, with both the recorded kill and the coverage
+  test that polices it green.
+- **Keep the call, make it tautological.** `order-leak`: feed the helper values
+  read off the page in the same test, apply the recorded mutation, and the
+  attacker's auxiliary histogram loses every label — `["0","1","2","3"]` for
+  `["Support","Finance","Research","Sales"]` — with the rule green.
+- **Satisfy it from elsewhere in the file.** `split-point`: the rule is
+  FILE-granular, so rewriting the killing assertion while leaving an unrelated
+  helper call elsewhere leaves the recorded mutation alive through all 23 tests.
+  Its tree already ships an instance: `tree-point`'s recorded `expectedFlip` is
+  never observed on any run.
+
+### Fix 4 failed in four labs, the same way each time
+
+The oracle checks a rendered aggregate's current VALUE but not the SHAPE of the
+claim beside it:
+
+- `hidden-bit` — one switching-curve measurement replicated across every row of a
+  table still captioned *"200 trials each"*: 35/35 green.
+- `pqxdh-wire` — *"Three honest root updates completed"* is an English literal no
+  oracle compares to the chain. Rendered live as *"Seven honest root updates
+  completed"* over a four-root chain, gate green.
+- `order-leak` — *"240 of 240 stored ciphertexts are distinct"* rendered beside
+  *"1000 sealed rows"*, nothing red; its only oracle runs at the default row count.
+- `privacy-pass` — a hard-coded `2` survives where a measured bucket count belongs
+  (literal `3` is killed), and `kat-count` accepts even a WRONG literal, because
+  its oracle checks the page only against itself.
+
+Each is a builder fix, and three of the four auditors named the function in the
+lab's own source that would close it.
+
+---
+
+## Maintainer decisions, 2026-09-22
+
+**D6 — a mention is still not an assertion, one level down. Fix 1 as implemented
+does not satisfy Fix 1.** A rule that a comment, a tautological argument, or an
+unrelated line elsewhere in the file can satisfy is not enforcing "a marker's text
+and its state are one claim". This applies to **all eight labs including
+`fold-gate`**, whose audit returned CONFIRMED on the brief's literal wording while
+its own auditor demonstrated a live state flip shipping green.
+
+The fix, in every lab: **`expectVerdict`/`expectClaim` record the `(test title,
+marker)` pairs they actually EXECUTE, and the coverage test asserts that every
+mutation record's pair was observed at runtime.** All three auditors proposed this
+independently. It is the same discovered-rather-than-declared correction the rest
+of this brief makes — the denominator must come from what ran, not from what the
+source says ran.
+
+**Nothing merges until that lands.** `fold-gate#11` is held with the other seven.
+
+**D7 — D2 reaches `scale-compare` and the lede in `sleeve-check`.** The
+`lottery-probability` row is clean and under-claims, but the probability reading it
+dropped was not retired — it moved one row down into `scale-compare`, a MARKED
+verdict that calls the figure *"likelier / rarer than the TKlog coincidence"*, and
+one paragraph up into an unattributed lede instructing the reader to *"Move the
+scale until a run of lottery wins gets that rare"*. A marked verdict the gate judges
+must not assert in the page's own voice what the page cannot show, so
+`scale-compare` is reworded to the scale reading. The lede keeps Perrin's argument
+and gains its attribution at the point of use, rather than being flattened.
+
+Also corrected: the source comment and `README.md` both said the probability
+reading was left to the attributed prose **above** the readout. Perrin's attributed
+note is **below** it; what sits above is the unattributed lede. That claim was
+false and is fixed.
+
+**D8 — the `privacy-pass` ruleset stays, now that it is recorded.** Fix 5's point
+is that access control does not change as a side effect of a harness pass, and that
+holds in both directions: the lane does not remove it either. It is written into
+the protection table above with its creation time and its bypass settings, so it is
+no longer invisible, which was the actual defect. Whether that shape spreads to the
+other seven is a deliberate decision for another day.
+
+---
+
+## A process finding the lane has to carry
+
+**The eight auditors shared one Bash shell and one scratchpad directory, and it bit
+three times.** `hidden-bit`'s `verdicts.spec.ts.orig` backup was overwritten by
+another lab's agent using the same filename, briefly putting a FOREIGN spec into
+that repo — caught by `git status` before any run used it. `privacy-pass` saw two
+recorded mutations report as false survivors because the patch never applied in the
+shared shell. `order-leak` found a `vite preview` and a Playwright worker it did not
+start inside its own repo, and discarded an entire pass.
+
+Pinned ports do not fix this; they prevent server collisions between labs, not
+shared filesystem state or a shell whose working directory another agent moved.
+
+**The rule that follows: any absence-shaped result — a mutation that SURVIVED, a
+check that stayed green — must be proven by differential in an isolated tree.**
+`git archive <sha>` into a private directory, `node_modules` symlinked, a port
+nothing else holds, md5 of the source before and after, and proof the BUILT artifact
+changed; where the bundle is content-hashed, its filename changing is that proof.
+Best of all, read the mutated string back out of the rendered DOM.
+
+This is not theoretical rigour. Re-verifying the four survivor-based SUSPECT
+verdicts under that protocol, **three held and one of the auditors' own probes was
+caught not having applied at all** — a `perl -0pi` that died on `${money(...)}`
+interpolation, leaving both hashes unchanged while the page still printed the old
+figures. It would have been reported as a survivor. A patcher that exits non-zero
+unless exactly one occurrence is replaced is the minimum.

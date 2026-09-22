@@ -1537,13 +1537,52 @@
     }
 
     /* ── For educators: links into /teach/ ── */
-    .teach-link {
+    .featured-cta { margin-top: 14px; }
+    .teach-cta { text-transform: none; letter-spacing: 0.02em; font-size: 12.5px; }
+    .teach-cta, .teach-band .cl-nav-btn { gap: 6px; }
+    .teach-band {
+      margin: 0 0 22px;
+      padding: 18px 22px;
+      border: 1px solid var(--border-strong);
+      background: linear-gradient(135deg, rgba(53, 214, 187, 0.08), rgba(8, 17, 24, 0.9) 60%);
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 14px 28px;
+      align-items: center;
+    }
+    .teach-band-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.35rem;
+      line-height: 1.2;
+      color: var(--text-hi);
+    }
+    .teach-band-copy { margin-top: 6px; color: var(--text); font-size: 13px; line-height: 1.6; max-width: 62ch; }
+    .teach-band-actions { margin-top: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+    .teach-band-address { font-size: 12px; color: var(--text); }
+    .teach-band-address-label { color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10.5px; margin-right: 6px; }
+    .teach-band-url { color: var(--text-hi); user-select: all; -webkit-user-select: all; white-space: nowrap; }
+    .teach-band-modules { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+    .teach-band-modules a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 5px 10px;
+      border: 1px solid rgba(53, 214, 187, 0.45);
+      background: rgba(8, 17, 24, 0.78);
       color: var(--teal);
+      font-size: 11.5px;
       text-decoration: underline;
       text-underline-offset: 2px;
-      white-space: nowrap;
     }
-    .teach-link:hover { color: var(--text-hi); }
+    .teach-band-modules a:hover { border-color: var(--teal); color: var(--text-hi); }
+    .teach-band a:focus-visible, .teach-cta:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+    @media (max-width: 900px) {
+      .teach-band { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .teach-band { padding: 16px; }
+    }
     .nav-menu-educators {
       display: grid;
       gap: 2px;
@@ -1742,8 +1781,28 @@
               </span>
             </a>
           </div>
-          <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math. New here? Start with the picks below. <a class="teach-link" href="teach/">Teaching a course? Course modules <span aria-hidden="true">&rarr;</span></a></p>
+          <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math. New here? Start with the picks below.</p>
+          <p class="featured-cta"><a class="cl-nav-btn teach-cta" href="teach/">Teaching a course? Course modules <span aria-hidden="true">&rarr;</span></a></p>
         </div>
+        <section class="teach-band" aria-labelledby="teach-band-title">
+          <div class="teach-band-main">
+            <h2 class="teach-band-title" id="teach-band-title">Teaching with Crypto Lab</h2>
+            <p class="teach-band-copy">Course modules for instructors: learning outcomes, ordered exhibits, discussion questions and instructor notes.</p>
+            <div class="teach-band-actions">
+              <a class="cl-nav-btn" href="teach/">Open the course modules <span aria-hidden="true">&rarr;</span></a>
+              <p class="teach-band-address"><span class="teach-band-address-label">Address to share</span> <span class="teach-band-url">crypto-lab.systemslibrarian.dev/teach</span></p>
+            </div>
+          </div>
+          <!-- teach-build:modules:begin -->
+          <ul class="teach-band-modules" aria-label="Course modules">
+            <li><a href="teach/symmetric/">Security &amp; symmetric encryption</a></li>
+            <li><a href="teach/public-key/">Public-key &amp; signatures</a></li>
+            <li><a href="teach/key-exchange/">Key exchange &amp; secure channels</a></li>
+            <li><a href="teach/post-quantum/">Post-quantum transition</a></li>
+            <li><a href="teach/library-privacy/">Library privacy, for iSchools</a></li>
+          </ul>
+          <!-- teach-build:modules:end -->
+        </section>
         <div class="featured-grid" id="featured-grid"></div>
       </div>
     </section>

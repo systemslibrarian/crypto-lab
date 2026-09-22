@@ -14,7 +14,8 @@
  *
  * Generated (never hand-edit; rerun this instead):
  *   teach/index.html, teach/<id>/index.html, teach/<id>/<name>/index.html,
- *   teach/<id>/anchors.json, the COURSE_MODULES block in index.html, and the three
+ *   teach/<id>/anchors.json, the COURSE_MODULES block and the hero band's module
+ *   links in index.html, and the three
  *   issue forms in .github/ISSUE_TEMPLATE/ (so their module dropdowns match the modules).
  *
  * Why the sources sit under an underscore folder: the hub is a legacy GitHub Pages
@@ -50,6 +51,8 @@ const LAST_SECTION = ['Fix / Extend', 'Fix', 'Extend'];
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const BEGIN = '/* teach-build:begin */';
 const END = '/* teach-build:end */';
+const LIST_BEGIN = '<!-- teach-build:modules:begin -->';
+const LIST_END = '<!-- teach-build:modules:end -->';
 
 /* The count lint (1.7): a number in front of a catalog noun goes stale the day the
  * catalog changes. Compute it at generation time or leave it out. */
@@ -934,6 +937,22 @@ function courseModulesBlock(modules) {
   return `${BEGIN}\n    var COURSE_MODULES = [\n${lines.join(',\n')}\n    ];\n    ${END}`;
 }
 
+/* The "Teaching with Crypto Lab" band under the hero: one link per module. */
+function bandModulesBlock(modules) {
+  const items = modules.map((m) => `            <li><a href="teach/${m.id}/">${esc(m.title)}</a></li>`);
+  return `${LIST_BEGIN}\n          <ul class="teach-band-modules" aria-label="Course modules">\n${items.join('\n')}\n          </ul>\n          ${LIST_END}`;
+}
+
+function withBandModules(html, modules) {
+  const a = html.indexOf(LIST_BEGIN);
+  const b = html.indexOf(LIST_END);
+  if (a === -1 || b === -1 || b < a) {
+    fail('index.html: the teach-build:modules markers are missing — the band\'s module links cannot be generated.');
+    return html;
+  }
+  return html.slice(0, a) + bandModulesBlock(modules) + html.slice(b + LIST_END.length);
+}
+
 function withCourseModules(html, modules) {
   const a = html.indexOf(BEGIN);
   const b = html.indexOf(END);
@@ -985,7 +1004,7 @@ function build() {
   }
   for (const w of worksheets) files.set(path.join(TEACH, w.module.id, w.name, 'index.html'), worksheetPage(w, cff, site));
   for (const [p, body] of issueForms(modules)) files.set(p, body);
-  files.set(INDEX, withCourseModules(read(INDEX), modules));
+  files.set(INDEX, withBandModules(withCourseModules(read(INDEX), modules), modules));
   return { files, modules };
 }
 

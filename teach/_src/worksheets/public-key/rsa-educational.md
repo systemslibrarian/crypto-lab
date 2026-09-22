@@ -1,7 +1,7 @@
 ---
 exhibit: rsa-educational
 module: public-key
-minutes: 25
+minutes: 20
 outcomes: [1, 2]
 source_commit: ad0235d64da7
 checked: 2026-09-22

@@ -105,13 +105,26 @@ function readCitation() {
   const given = /given-names:\s*"([^"]+)"/.exec(text);
   const c = {
     title: get('title'), version: get('version'), date: get('date-released'),
-    url: get('url'), repo: get('repository-code'),
+    url: get('url'), repo: get('repository-code'), license: get('license'),
     family: family ? family[1] : '', given: given ? given[1] : '',
   };
-  for (const k of ['title', 'version', 'date', 'url', 'family', 'given']) {
+  for (const k of ['title', 'version', 'date', 'url', 'family', 'given', 'license']) {
     if (!c[k]) fail(`CITATION.cff: missing ${k}`);
   }
   if (c.date && !DATE_RE.test(c.date)) fail('CITATION.cff: date-released must be YYYY-MM-DD');
+  /* One source for the reuse terms: the licence id in CITATION.cff, which teach/LICENSE
+     carries in full. Every page's footer and the landing page's Reuse section are written
+     from this, so the terms cannot drift between them. */
+  const LICENSES = {
+    'CC-BY-4.0': {
+      name: 'Creative Commons Attribution 4.0 International (CC BY 4.0)',
+      short: 'CC BY 4.0',
+      url: 'https://creativecommons.org/licenses/by/4.0/',
+      freedoms: 'copy, adapt, print and redistribute these materials, including commercially, as long as you give credit',
+    },
+  };
+  if (c.license && !LICENSES[c.license]) fail(`CITATION.cff: license ${c.license} is not one this generator knows how to describe`);
+  c.licenseInfo = LICENSES[c.license] || null;
   c.year = c.date.slice(0, 4);
   c.initials = c.given.split(/\s+/).map((w) => w[0] + '.').join(' ');
   return c;
@@ -184,6 +197,12 @@ function readModules(cards) {
       checkDated(x.support, `${w}.support`, (s) => {
         if (!Array.isArray(s.results) || !s.results.every((r) => r.engine && r.viewport && r.result)) {
           fail(`${w}.support: results must be a list of {engine, viewport, result, notes}`);
+        }
+        /* The module page publishes a summary, not the log. Anything that is not a clean pass
+           therefore needs one instructor-facing line saying what to do about it; the per-engine
+           detail stays in this file, which the page links to. */
+        if ((s.results || []).some((r) => r.result !== 'pass') && !s.headline) {
+          fail(`${w}.support: a result that is not "pass" needs a one-line "headline" for the module page`);
         }
       });
       checkDated(x.run_specific_values, `${w}.run_specific_values`, (r) => {
@@ -411,11 +430,23 @@ function classTime(minutes) {
   return `About ${minutes} minutes of class time; ${CLASS_TIME_NOTE}`;
 }
 
+/* The line a faculty member keeps on an adapted worksheet. */
+function attributionLine(cff, site) {
+  return `${cff.title} teaching materials by ${cff.given} ${cff.family}, ${cff.licenseInfo.short} — ${site.hub_url}teach/`;
+}
+
+function licenceFoot(cff, site) {
+  if (!cff.licenseInfo) return '';
+  return `<p class="t-foot-licence">Teaching materials: <a href="${cff.licenseInfo.url}">${esc(cff.licenseInfo.short)}</a>. `
+    + `You may ${esc(cff.licenseInfo.freedoms)}. When you adapt one, keep this line on it: `
+    + `<span class="t-attrib">${esc(attributionLine(cff, site))}</span></p>`;
+}
+
 /* ---------- page chrome ---------- */
 
 const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E";
 
-function page({ depth, title, description, canonical, date, author, crumbs, main, jsonld }) {
+function page({ depth, title, description, canonical, date, author, crumbs, main, jsonld, licence }) {
   const up = depth ? '../'.repeat(depth) : './';
   const hub = '../'.repeat(depth + 1);
   const slash = date.replace(/-/g, '/');
@@ -460,6 +491,7 @@ ${main}
 </main>
 <footer class="t-foot">
   <p class="t-foot-links"><a href="${hub}">Crypto Lab catalog</a> · <a href="${up}">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  ${licence || ''}
   <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
 </footer>
 <script src="${up}teach.js"></script>
@@ -523,29 +555,45 @@ function notChecked() {
   return '<span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span>';
 }
 
-function supportCell(x) {
-  if (!x.support) return notChecked();
-  const rows = x.support.results.map((r) => `<li>${esc(r.engine)}, ${esc(r.viewport)}: ${esc(r.result)}${r.notes ? ` — ${esc(r.notes)}` : ''}</li>`).join('');
-  return `<ul class="t-tight">${rows}</ul><span class="t-dated">Checked ${esc(x.support.checked)}</span>`;
+/* What an instructor acts on: which engines were checked, whether it holds at phone
+   width, the date, and anything that is not a clean pass — one short line each. The
+   per-engine detail, the transfer sizes and the source lines behind every verdict stay
+   in the module's data file, which this block links to. */
+function checksBlock(m, site) {
+  const checked = m.exhibits.filter((x) => x.support);
+  const dates = [...new Set(checked.map((x) => x.support.checked))].sort();
+  const engines = [...new Set(checked.flatMap((x) => x.support.results.map((r) => r.engine.split(' ')[0])))];
+  const supportExceptions = checked.filter((x) => x.support.results.some((r) => r.result !== 'pass'));
+  const privacyChecked = m.exhibits.filter((x) => x.privacy);
+  const privacyExceptions = privacyChecked.filter((x) => x.privacy.other_origins.length || x.privacy.cookies.length || x.privacy.headline);
+  const dataUrl = `https://github.com/${site.repo}/blob/${site.branch}/teach/_src/modules/${m.id}.json`;
+  const list2 = (items) => `<ul>${items.map((s) => `<li>${s}</li>`).join('')}</ul>`;
+
+  if (!checked.length && !privacyChecked.length) {
+    return `<p>${notChecked()}</p>\n<p>The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>`;
+  }
+  const support = checked.length
+    ? `<p><strong>Browser support.</strong> Every exhibit in this module, and every step of its worksheet, was run in `
+      + `${listSentence(engines)} at a desktop width and at a phone width (1280 by 720 and 390 by 720), `
+      + `checked ${dates.join(' and ')}.`
+      + (supportExceptions.length ? ` ${supportExceptions.length === 1 ? 'One exhibit needs a word of warning' : 'Some exhibits need a word of warning'}:` : ' No exhibit had a problem at either width.')
+      + `</p>`
+      + (supportExceptions.length ? list2(supportExceptions.map((x) => `<strong>${esc(x.card.title)}</strong> — ${esc(x.support.headline)}`)) : '')
+    : '';
+  const privacy = privacyChecked.length
+    ? `<p><strong>Privacy.</strong> Opening these exhibits sends nothing to anyone but the site they are served from: `
+      + `no exhibit sets a cookie, and none stores anything beyond the setting that pins its dark theme.`
+      + (privacyExceptions.length ? ` The exception${privacyExceptions.length === 1 ? '' : 's'}:` : '')
+      + `</p>`
+      + (privacyExceptions.length ? list2(privacyExceptions.map((x) => `<strong>${esc(x.card.title)}</strong> — ${esc(x.privacy.headline || ('loads a web font from ' + x.privacy.other_origins.join(' and ')))}`)) : '')
+    : '';
+  return `${support}\n${privacy}\n<p><a href="${dataUrl}">Detailed check results</a> — engine versions, every step run, transfer sizes, and the source line behind each run-specific verdict. The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>`;
 }
 
-function privacyCell(x) {
-  if (!x.privacy) return notChecked();
-  const p = x.privacy;
-  const origins = p.other_origins.length ? p.other_origins.map(esc).join(', ') : 'none observed';
-  return `<ul class="t-tight"><li>Other origins contacted: ${origins}</li>`
-    + `<li>Browser storage: ${p.storage.length ? p.storage.map(esc).join(', ') : 'none observed'}</li>`
-    + `<li>Cookies: ${p.cookies.length ? p.cookies.map(esc).join(', ') : 'none observed'}</li>`
-    + (p.notes ? `<li>${esc(p.notes)}</li>` : '')
-    + `</ul><span class="t-dated">Observed ${esc(p.checked)}</span>`;
-}
-
-function runCell(x) {
-  if (!x.run_specific_values) return notChecked();
-  const r = x.run_specific_values;
-  const say = { yes: 'Yes — your values will differ from your classmates’.', partly: 'Partly.', no: 'No.' }[r.value];
-  return `${esc(say)}${r.source ? ` <span class="t-src">(${esc(r.source)})</span>` : ''}${r.notes ? ` ${esc(r.notes)}` : ''}`
-    + `<span class="t-dated">Checked ${esc(r.checked)}</span>`;
+/* "a, b and c" */
+function listSentence(items) {
+  if (items.length < 2) return esc(items[0] || '');
+  return esc(items.slice(0, -1).join(', ')) + ' and ' + esc(items[items.length - 1]);
 }
 
 function modulePage(m, cff, site, worksheets) {
@@ -554,11 +602,13 @@ function modulePage(m, cff, site, worksheets) {
   const ext = minutesOf(m, false);
   const rows = m.exhibits.map((x) => {
     const ws = worksheets.find((w) => w.module === m && w.name === x.name);
-    return `<tr><th scope="row"><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></th>`
-      + `<td>${ROLE_LABEL[x.role]}</td><td>${x.minutes}</td><td>${esc(x.students_do)}</td>`
-      + `<td>${ws ? `<a href="${x.name}/">Worksheet<span class="visually-hidden"> for ${esc(x.card.title)}</span></a>` : '<span class="t-pending">Not yet written</span>'}</td></tr>`;
+    /* What students do is a sentence, not a field: it gets its own full-width row rather
+       than a column that squeezes it to a few words a line. */
+    return `<tr><th scope="row" rowspan="2"><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></th>`
+      + `<td>${ROLE_LABEL[x.role]}</td><td>${x.minutes} min</td>`
+      + `<td>${ws ? `<a href="${x.name}/">Worksheet<span class="visually-hidden"> for ${esc(x.card.title)}</span></a>` : '<span class="t-pending">Not yet written</span>'}</td></tr>`
+      + `\n<tr class="t-row-note"><td colspan="3">${esc(x.students_do)}</td></tr>`;
   }).join('\n');
-  const checks = m.exhibits.map((x) => `<tr><th scope="row">${esc(x.card.title)}</th><td>${supportCell(x)}</td><td>${privacyCell(x)}</td><td>${runCell(x)}</td></tr>`).join('\n');
   const differ = m.exhibits.filter((x) => x.run_specific_values && x.run_specific_values.value === 'yes');
   const cites = m.exhibits.map((x) => `<li><p class="t-cite">${apaExhibit(cff, x.card)}</p></li>`).join('\n');
   const bibs = m.exhibits.map((x) => bibExhibit(cff, x.card)).join('\n\n');
@@ -592,7 +642,7 @@ function modulePage(m, cff, site, worksheets) {
 </header>
 
 <dl class="t-facts">
-  <div><dt>Audience</dt><dd>${esc(m.audience)}</dd></div>
+  <div${m.audience.length > 80 ? ' class="t-fact-wide"' : ''}><dt>Audience</dt><dd>${esc(m.audience)}</dd></div>
   <div><dt>Class time</dt><dd>About ${core} minutes of class time for the core sequence${ext ? `, plus about ${ext} minutes of extension` : ''}. ${esc(CLASS_TIME_NOTE.charAt(0).toUpperCase() + CLASS_TIME_NOTE.slice(1))}.${m.time_note ? ` ${esc(m.time_note)}` : ''}</dd></div>
   <div><dt>Last checked</dt><dd>${esc(m.last_checked)}</dd></div>
 </dl>
@@ -608,7 +658,7 @@ ${m.exhibits.filter((x) => x.outcome_note || x.time_note).map((x) => [x.time_not
 <p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
 <div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
 <table>
-<thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
+<thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Time</th><th scope="col">Worksheet</th></tr></thead>
 <tbody>
 ${rows}
 </tbody>
@@ -627,17 +677,8 @@ ${trimmed}
 <h3>Conceptual answers</h3>${list(m.instructor_notes.conceptual_answers)}
 </section>
 
-<section aria-labelledby="readiness"><h2 id="readiness">Browser support, privacy and run-specific values</h2>
-<p>Recorded per exhibit, with the date each observation was made. Engines are named; no device was tested unless it is named here.</p>
-<div class="t-table" role="region" tabindex="0" aria-label="Browser support, privacy and run-specific values per exhibit">
-<table>
-<thead><tr><th scope="col">Exhibit</th><th scope="col">Browser support</th><th scope="col">Privacy notes</th><th scope="col">Values differ per run?</th></tr></thead>
-<tbody>
-${checks}
-</tbody>
-</table>
-</div>
-<p>The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>
+<section aria-labelledby="readiness"><h2 id="readiness">Checks</h2>
+${checksBlock(m, site)}
 </section>
 
 <section aria-labelledby="syllabus"><h2 id="syllabus">For your syllabus</h2>
@@ -655,6 +696,7 @@ ${syllabusBlock(site, 'module-syllabus')}
     author: authorName(cff), jsonld,
     crumbs: [{ label: 'Crypto Lab', href: '../../' }, { label: 'Teach', href: '../' }, { label: m.title }],
     main,
+    licence: licenceFoot(cff, site),
   });
 }
 
@@ -713,6 +755,7 @@ ${w.body}
     canonical, date: w.meta.checked, author: authorName(cff),
     crumbs: [{ label: 'Crypto Lab', href: '../../../' }, { label: 'Teach', href: '../../' }, { label: m.title, href: '../' }, { label: x.card.title }],
     main,
+    licence: licenceFoot(cff, site),
   });
 }
 
@@ -766,6 +809,16 @@ function landingPage(modules, worksheets, cards, cff, site, evidence) {
       const all = [...cards.values()].sort(byKey((c) => c.title));
       return `<ul class="t-cites t-cites--all">${all.map((c) => `<li><p class="t-cite">${apaExhibit(cff, c)}</p></li>`).join('\n')}</ul>`;
     },
+    'licence-terms': () => {
+      if (!cff.licenseInfo) { fail('CITATION.cff: no license, so the reuse terms cannot be stated'); return ''; }
+      return `<p>The module pages, worksheets and instructor notes here are published under the `
+        + `<a href="${cff.licenseInfo.url}">${esc(cff.licenseInfo.name)}</a>. You may ${esc(cff.licenseInfo.freedoms)}: `
+        + `print a worksheet for a class, rewrite it for your own students, translate it, or build it into a course pack.</p>`
+        + `<p>To give credit, keep a line like this one on anything you adapt:</p>`
+        + `<p class="t-attrib-block"><span class="t-attrib">${esc(attributionLine(cff, site))}</span></p>`
+        + `<p>This covers the teaching materials only. Each demonstration keeps the licence in its own repository, and the `
+        + `<a href="https://github.com/${site.repo}/blob/${site.branch}/teach/LICENSE">full licence text</a> sits beside these pages.</p>`;
+    },
     'citation-file': () => `<a href="https://github.com/${site.repo}/blob/${site.branch}/CITATION.cff">CITATION.cff</a>`,
   };
   const used = new Set();
@@ -781,6 +834,7 @@ function landingPage(modules, worksheets, cards, cff, site, evidence) {
     canonical: `${site.hub_url}teach/`, date: cff.date, author: authorName(cff),
     crumbs: [{ label: 'Crypto Lab', href: '../' }, { label: 'Teach' }],
     main: src.trimEnd(),
+    licence: licenceFoot(cff, site),
   });
 }
 

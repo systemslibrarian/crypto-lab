@@ -301,3 +301,53 @@ on the `final-opening` marker, whose kill was validated by text alone under Fix
 1. It is very likely true. It is not yet proven to this fleet's standard, and a
 catalog sentence is the wrong place to carry an unproven negative claim. It goes
 back when fold-gate passes an audit under all three rules.
+
+---
+
+## Maintainer decisions, 2026-09-21
+
+Recorded here rather than left in the transcript, for the reason at the top of this
+file. All eight lane PRs were open and mergeable when these were taken:
+`fold-gate#11`, `hidden-bit#7`, `order-leak#5`, `pqxdh-wire#4`, `privacy-pass#6`,
+`proof-tally#8`, `sleeve-check#2`, `split-point#5`.
+
+**D1 — a green check is the builder's side of the claim; merge on the auditor's.**
+No lane PR merges until an independent auditor returns CONFIRMED on all six fixes
+for that lab. SUSPECT holds the PR, it does not qualify it. Where a branch is
+behind `main`, update it and let CI re-run before merging, so the verdict is about
+the tree that actually lands rather than the tree that was audited. **Once
+`fold-gate#11` has merged and passed, README:18's sentence — *"This NIFS alone is
+neither zero-knowledge nor a succinct proof"* — goes back on the Fold Gate card**,
+closing the item left open at the end of "The catalog side, answered".
+
+**D2 — if the page cannot show the difference, it cannot claim it.** Two
+measurements survive their own mutation set for the same reason: their oracle sums
+terms that are equal by construction, and summing N equal terms is arithmetically
+identical to multiplying one of them by N. No test written against these pages can
+separate the two, so the mechanism word in the sentence beside each number is
+unbacked.
+
+| Lab | Marker | The word it cannot back |
+|---|---|---|
+| `proof-tally` | `replay-total` | *Summed over every submission* — the exhibit submits one report twice, so its two contributions are equal and a page that doubled the first is observationally identical |
+| `sleeve-check` | `lottery-probability` | *probability of that run* — the exponent is one literal scaled by the run count; composing independent wins and scaling one figure are the same arithmetic |
+
+Both are reworded **in their existing open PRs** to what the page can actually
+demonstrate, with any mechanism word it cannot back dropped, and the limit noted in
+each README. **Both are re-audited before merging** — a reword that weakens a
+sentence still has to face the same gate.
+
+**Adding a rendered case where the sum and the product differ is a design change,
+not a harness fix, and is deferred to a separate decision.** It is the only thing
+that would make either sentence provable, and it changes what the exhibit teaches;
+that is not a call the lane makes on its way past.
+
+**D3 — the majors pass stays parked until all eight lane PRs are merged.**
+
+**D4 — fold-gate's RE-QUERY gets its own small PR, after #11 merges.** It is not
+folded into #11. `dispatch-sync check` names `crypto-lab-fold-gate` as the fleet's
+one remaining RE-QUERY: its dispatch is guarded by a second `gh pr view` of the PR
+it just merged, so a failure of that call prints nothing, exits 0, and ships
+nothing. It is a real defect and it is unrelated to the six fixes. Folding it in
+would mean the thing that merges is no longer the thing that was audited, which is
+the one property D1 exists to protect.

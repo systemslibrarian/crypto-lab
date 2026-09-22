@@ -660,9 +660,33 @@ Three figures failed that test on 2026-09-22, in three different ways:
   where the instrument screenshots. It was caught before publication only because the same
   page reported zero errors when the screenshot was removed.
 
+**A citation year is derived the same way, and its absence is a third state.** An exhibit's
+year comes from `source_commit_date` — the date of the pinned `source_commit` its worksheet
+was actually checked against — and **never from the lab's latest commit**. Dating an exhibit
+by its newest commit publishes a year for a build the worksheet was never checked against:
+inheritance from an adjacent number, in exactly the shape this section is about, and harder
+to spot because the number is real and belongs to the right repository.
+
+Where the record does not hold that date, the citation carries **no year field at all**, and
+specifically not `(n.d.)`. That is not a formatting convention, it is a claim: `(n.d.)`
+asserts that no date exists for the work. One does — every exhibit is a living page with a
+history. What is missing is the record on *this* side, which is a different fact and must not
+be published as the first. Omitting a field is honest; asserting an absence is not. This is
+the "recorded as not derived" rule above, in the one case where the convention of the field's
+own notation invites you to break it.
+
+`audits/TEACH-CITATION-DATES-2026-09-22.md` is the ledger: ten exhibits dated from the pinned
+commit in a local clone, and **fourteen still pending**, each named with the commit that would
+date it. They are pending rather than undatable — the labs were deliberately not fetched,
+because another lane was working in those repositories and a fetch is a write to a repository
+another agent is using. When finishing them, **re-derive rather than copying the dates in that
+file**: a worksheet re-checked against a newer build gets a new `source_commit`, and its date
+moves with it.
+
 The rule applies to anything a reader would take as measured: minutes, engine support, privacy
-observations, run-specific verdicts. When a figure moves, say in the pull request what changed
-to move it, because a number that has changed twice is the one a reader most needs explained.
+observations, run-specific verdicts, citation years. When a figure moves, say in the pull request
+what changed to move it, because a number that has changed twice is the one a reader most needs
+explained.
 
 ---
 

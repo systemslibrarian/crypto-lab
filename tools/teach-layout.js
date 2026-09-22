@@ -63,7 +63,11 @@ const IN_PAGE = ({ minChars, ratio }) => {
     return [...lines.values()].map((l) => l.right - l.left);
   };
 
-  const prose = [...document.querySelectorAll('p, li, dd, dt, td, th, figcaption')]
+  /* The measure is the page's own body measure, read from the main content: a footer
+     line that spans the window would otherwise inflate it and make every other block
+     look narrow by comparison. */
+  const scope = document.querySelector('main') || document.body;
+  const prose = [...scope.querySelectorAll('p, li, dd, dt, td, th, figcaption')]
     .filter((e) => (e.textContent || '').trim().length > 120);
   const measure = Math.max(0, ...prose.map((e) => e.getBoundingClientRect().width));
 

@@ -551,3 +551,58 @@ caught not having applied at all** — a `perl -0pi` that died on `${money(...)}
 interpolation, leaving both hashes unchanged while the page still printed the old
 figures. It would have been reported as a survivor. A patcher that exits non-zero
 unless exactly one occurrence is replaced is the minimum.
+
+---
+
+## D8 follow-on — the ruleset's provenance, and the census rule that follows
+
+**When, exactly.** Re-derived 2026-09-22, all times `-0400`:
+
+| | |
+|---|---|
+| `privacy-pass` commit `a4de0f0` | 2026-09-21 **05:05:53** |
+| **ruleset 23758807 created** | 2026-09-21 **05:06:29** (36s later) |
+| `privacy-pass` commit `7b3f10e` | 2026-09-21 05:13:23 |
+| `privacy-pass` commit `f3beeba` (#5) | 2026-09-21 05:16:17 |
+| this brief's first commit `3088cec` | 2026-09-21 08:13:41 |
+| **Fix 5 written — `35345be`, "the branch-protection freeze"** | 2026-09-21 **08:17:17** |
+
+**So the ruleset pre-dates Fix 5 by three hours and eleven minutes.** It is not a
+breach of the freeze; the freeze did not exist yet. It is the behaviour the freeze
+was written to stop, occurring before anyone had written it down — which is the
+better reading of it and the reason D8 leaves it alone rather than treating it as
+something to undo.
+
+**Who — UNCHECKED, and it is not recoverable.** GitHub's rulesets API exposes
+`created_at` and `updated_at` and **no creator field**; `GET /rulesets/23758807`
+was read in full to confirm that. The audit-log endpoint is organization- and
+enterprise-only and 404s for this personal account. Creating a ruleset needs admin
+on the repo, which means the account owner's credentials — the maintainer directly,
+or any agent acting with `gh` under that account — and the API cannot distinguish
+those two. The 36-second gap after `a4de0f0` landed points at whoever was working
+that lab at that moment, but that is **inference, not evidence**, and is recorded
+as such rather than as a finding.
+
+That unrecoverability is itself the argument for the next rule: if a protection
+change cannot be attributed after the fact, it has to be *noticed* at the time.
+
+**The census rule, from now on: a protection census asks BOTH endpoints.**
+
+```
+gh api repos/<owner>/<repo>/branches/main/protection   # classic; 404 means NO CLASSIC protection
+gh api repos/<owner>/<repo>/rules/branches/main        # rulesets; [] means none
+```
+
+A 404 from the first **never** means unprotected. It means no *classic* protection,
+and a branch can be fully protected — admin-binding, as this one is — with that
+endpoint answering 404 the whole time. Every protection claim in this document
+before 2026-09-22 rested on the first endpoint alone, which is why `privacy-pass`
+read as unprotected through three drafts and two corrections.
+
+This is the same defect this fleet keeps re-finding under different names: a
+checker that could not see, reporting clean. `fleet-sync` exists because the
+catalog could not notice a demo it was never told about. `gate-sync` was blind to
+`peaceiris` publishers. `dispatch-census` exists because a lab can leave in silence.
+Now: a protection census blind to rulesets. The shape is always a denominator taken
+from the source that happens to be convenient rather than from the question being
+asked.

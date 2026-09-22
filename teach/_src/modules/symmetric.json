@@ -3,7 +3,7 @@
   "position": 10,
   "title": "Security & symmetric encryption",
   "audience": "Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal.",
-  "course_fit": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.",
+  "course_fit": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. About 87 minutes of core lab time, which fits two 50-minute meetings with a little room for discussion, or two 75-minute meetings comfortably.",
   "prerequisites": [
     "XOR on bits and bytes",
     "Reading hexadecimal byte strings",

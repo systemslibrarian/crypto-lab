@@ -3,7 +3,7 @@
   "position": 40,
   "title": "Post-quantum transition",
   "audience": "Upper-division undergraduate or graduate security students, including motivated newcomers to quantum algorithms and lattice-based cryptography.",
-  "course_fit": "Upper-division undergraduate or graduate courses in computer security, applied cryptography or network security, as a two-meeting unit on the quantum threat to public-key cryptography and the move to ML-KEM and hybrid key exchange.",
+  "course_fit": "Upper-division undergraduate or graduate courses in computer security, applied cryptography or network security, covering the quantum threat to public-key cryptography and the move to ML-KEM and hybrid key exchange. About 117 minutes of core lab time: two meetings of 75 minutes, or three of 50 — not two of 50, which it overruns.",
   "prerequisites": [
     "Modular arithmetic and the Euclidean gcd",
     "How RSA and Diffie-Hellman / ECDH key agreement work at a high level",

@@ -84,21 +84,32 @@ guessed. Selected measurements, all made against the labs' own code:
 | post-quantum | Hybrid Wire | 15 | 20 | derives to 19.6 |
 | post-quantum | Harvest Vault | 20 | 21 | derives to 20.6 |
 
-## Module totals against the plans those modules were budgeted to
+## Module budgets
 
-The budget was never a published field: it lived in the per-exhibit minutes, which are now
-derived, so the module page's class time is the derived sum. These plans survive only here.
+The budget used to be a planning figure the worksheets were written to hit, which is how it
+became an inherited number: several worksheets were costed to land on it rather than measured.
+**The derived total is now the budget.** There is no separate planned figure to keep, and the
+module page's class time is that same derived sum.
 
-| Module | Planned core | Derived core | Still describes the module? |
+| Module | Budget (was) | Budget (now, derived) | Change |
 |---|---|---|---|
-| symmetric | 100 | 87 | No — 13 minutes of slack |
-| key-exchange | 75 | 64 | No — 11 minutes of slack |
-| public-key | 110 | 107 | Near enough |
-| library-privacy | 60 | 69 | No — 9 minutes over |
-| post-quantum | 95 | 117 | No — 22 minutes over, every one of the six understated |
+| symmetric | 100 | **87** | −13 |
+| key-exchange | 75 | **64** | −11 |
+| public-key | 110 | **107** | −3 |
+| library-privacy | 60 | **69** | +9 |
+| post-quantum | 95 | **117** | +22 |
 
-`library-privacy`'s `course_fit` still offers it as "a one- or two-meeting unit". At 69 minutes
-of core it is not a one-meeting unit. Left unchanged pending a decision.
+Three `course_fit` sentences described the old figures and were corrected to the derived ones,
+each saying what the total implies for 50- and 75-minute meetings:
+
+- **symmetric** — 87 minutes fits two 50-minute meetings with a little room to discuss.
+- **library-privacy** — 69 minutes is a two-meeting unit; it was offered as "a one- or
+  two-meeting unit", and a single meeting works only in a 75-minute slot, leaving almost none.
+- **post-quantum** — 117 minutes is two meetings of 75 or three of 50, **not** two of 50,
+  which it overruns. It had been published as a two-meeting unit with no length given.
+
+`public-key` and `key-exchange` state no meeting structure, so their derived totals contradict
+nothing in their prose.
 
 ## Decisions recorded, so they are not re-litigated by a later recount
 

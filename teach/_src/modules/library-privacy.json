@@ -3,7 +3,7 @@
   "position": 50,
   "title": "Library privacy, for iSchools",
   "audience": "Library and information science students in an iSchool, with no mathematics or cryptography background, who need to reason about who can learn what about a patron from a catalog search, a request log, or a published statistic.",
-  "course_fit": "Fits an undergraduate or graduate LIS course on information ethics, privacy, or library systems and technology, as a one- or two-meeting unit. The shelf-oracle extension suits students who also take a technical or information-security elective.",
+  "course_fit": "Fits an undergraduate or graduate LIS course on information ethics, privacy, or library systems and technology, as a two-meeting unit: about 69 minutes of core lab time, which fits two 50-minute meetings with room to discuss, while a single meeting works only in a 75-minute slot and leaves almost none. The shelf-oracle extension suits students who also take a technical or information-security elective.",
   "prerequisites": [
     "No mathematics background assumed; the shelf-oracle extension is the exception.",
     "No cryptography or programming background assumed.",

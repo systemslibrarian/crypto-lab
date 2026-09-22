@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Hidden Bit — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Hidden Bit exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/symmetric/hidden-bit/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Hidden Bit">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/hidden-bit/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Hidden Bit">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/hidden-bit/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Security &amp; symmetric encryption</a></li><li><span aria-current="page">Hidden Bit</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Security &amp; symmetric encryption</a></p>
+  <h1>Worksheet: Hidden Bit</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a></dd></div>
+  <div><dt>Time</dt><dd>About 20 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>00705ccbf695</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to explain, using the hidden-bit IND-CPA game, why deterministic AES-ECB and CBC with a predictable chained IV let a named adversary tell which of two messages was encrypted.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/symmetric/hidden-bit.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/symmetric/hidden-bit.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>In this game a challenger samples a hidden bit (the coin) and uses it to pick which of two equal-length messages to encrypt; an adversary then tries to name the coin. How often would a blind guess be right? The page scores an adversary with <code>2 · wins / trials - 1</code>. Predict the score of a blind guesser, and of an adversary that is never wrong.</li><li>Suppose one key encrypts the same message twice. Predict whether the two ciphertexts will be identical under AES-ECB, and under AES-GCM, which the page describes as using &quot;a fresh 96-bit nonce&quot;.</li><li>The adversary Re-encrypt and compare sees both messages, the challenge ciphertext and a public encryption oracle that encrypts messages of its choosing. Fill in the prediction column of the second table under Record: for each row, will that adversary beat a blind guess (&quot;edge&quot;) or not (&quot;no edge&quot;)?</li><li>The page describes AES-CBC, chained IV as CBC &quot;whose next IV is the previous ciphertext tail&quot;. If a blind guess and Re-encrypt and compare both show no edge against it, would you conclude that it hides which message was encrypted? What could a third adversary, the BEAST-style IV predictor, do with an IV it can see coming?</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and stay on the <strong>Hidden-bit game</strong> tab. The page generates an RSA key before its controls appear, so allow a moment. This worksheet uses only the AES choices in <strong>Scheme</strong>.</li><li>In <strong>Scheme</strong>, choose <strong>AES-ECB (BROKEN)</strong> and read the hint under the menu. Set <strong>Adversary</strong> to <strong>Random guess</strong>. Press <strong>Step one</strong> four times. After each press, record the coin shown under <strong>Seal the coin</strong> and the last eight hex characters of the <strong>Ciphertext begins</strong> line, just before the dots. If all four coins match, keep pressing until the coin changes and record that press as the fourth.</li><li>Choose <strong>AES-GCM</strong> in <strong>Scheme</strong>, read its hint, and repeat step 2 in the AES-GCM columns.</li><li>Leave <strong>Trials</strong> at 200. For each of the first four rows of the second table, choose that <strong>Scheme</strong> and <strong>Adversary</strong>, press <strong>Run</strong>, and wait until the note under the controls begins &quot;Fresh result&quot;. Record <strong>Wins</strong>, <strong>MEASURED ADVANTAGE</strong>, the <strong>Wilson 95% interval</strong> and the first words of the verdict under the advantage bar.</li><li>Choose <strong>AES-CBC, chained IV (BROKEN)</strong>. A panel headed <strong>A flat line is not a verdict</strong> appears below the ledger. Run and record the <strong>Random guess</strong> and <strong>Re-encrypt and compare</strong> rows the same way, then record that panel's heading as it now reads.</li><li>Open <strong>Adversary</strong> again: with this scheme it also lists <strong>BEAST-style IV predictor</strong>. Choose it, press <strong>Run</strong>, and record the last row.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Values in every table come from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Step one press, AES-ECB coin, AES-ECB ciphertext, last eight hex, AES-GCM coin, AES-GCM ciphertext, last eight hex">
+<table>
+<thead><tr><th scope="col">Step one press</th><th scope="col">AES-ECB coin</th><th scope="col">AES-ECB ciphertext, last eight hex</th><th scope="col">AES-GCM coin</th><th scope="col">AES-GCM ciphertext, last eight hex</th></tr></thead>
+<tbody>
+<tr><th scope="row">First</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Third</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Fourth</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Scheme, Adversary, My prediction, Wins, Measured advantage, Wilson 95% interval, Verdict, first words">
+<table>
+<thead><tr><th scope="col">Scheme</th><th scope="col">Adversary</th><th scope="col">My prediction</th><th scope="col">Wins</th><th scope="col">Measured advantage</th><th scope="col">Wilson 95% interval</th><th scope="col">Verdict, first words</th></tr></thead>
+<tbody>
+<tr><th scope="row">AES-GCM</th><td>Re-encrypt and compare</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CTR</th><td>Re-encrypt and compare</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-ECB (BROKEN)</th><td>Random guess</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-ECB (BROKEN)</th><td>Re-encrypt and compare</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CBC, chained IV (BROKEN)</th><td>Random guess</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CBC, chained IV (BROKEN)</th><td>Re-encrypt and compare</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CBC, chained IV (BROKEN)</th><td>BEAST-style IV predictor</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Chained-IV panel, Heading as it reads">
+<table>
+<thead><tr><th scope="col">Chained-IV panel</th><th scope="col">Heading as it reads</th></tr></thead>
+<tbody>
+<tr><th scope="row">After the Random guess and Re-encrypt and compare runs</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Compare the two halves of your first table. Under AES-ECB, what did presses with the same coin have in common, and was that also true under AES-GCM? The lab's <a href="https://github.com/systemslibrarian/crypto-lab-hidden-bit">README</a> lists &quot;Deterministic encryption leaks equality&quot; under What Can Go Wrong. Explain that sentence using your AES-ECB records.</li><li>Re-encrypt and compare sees both messages, the challenge ciphertext and the public encryption oracle. Describe how a strategy with that name could identify the coin against AES-ECB, then explain why your AES-GCM and AES-CTR rows came out as they did. Use the hint the page shows under <strong>Scheme</strong> for each.</li><li>The same README says: &quot;Chaining the previous ciphertext tail into the next IV gives the BEAST-style adversary a chosen-plaintext equality test.&quot; Using CBC encryption as you learned it in class, explain how an adversary that knows the IV its next oracle query will use can choose that query's message so the answer tests which message the challenge contains. Which part of the two ciphertexts would it compare?</li><li>Look at your three chained-IV rows and the panel heading you recorded. Using the panel's own sentence and the verdict text under the advantage bar, say what a measured advantage near zero tells you about a scheme and what it does not.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> One service encrypts short records with AES-ECB; another encrypts a stream of messages with AES-CBC, taking each IV from the end of the previous ciphertext. For each, name the adversary in your table that did best against it, say what the scheme would have to change so that repeating a message, or knowing the next IV, no longer helps that adversary, and say which of the page's AES schemes you would test in its place. Word your conclusion so it claims no more than the verdict that scheme earned in your run.</li><li><strong>Extend.</strong> Choose <strong>AES-GCM</strong> and <strong>Random guess</strong>. Set <strong>Trials</strong> to 10 and press <strong>Run</strong>, then set it to 2000 and run again, recording the <strong>Wilson 95% interval</strong> each time. How does the interval's width change? Use that to explain why the page refuses fewer than ten trials for <strong>Run</strong> and says that &quot;a sample is not a proof&quot;.</li><li><strong>Extend.</strong> Compare your second table with a classmate's. Which rows match exactly and which differ? Using the README's note that &quot;Finite samples fluctuate&quot;, explain why.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

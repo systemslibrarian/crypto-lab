@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Nonce Collision — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Nonce Collision exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/symmetric/nonce-collision/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Nonce Collision">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/nonce-collision/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Nonce Collision">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/nonce-collision/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Security &amp; symmetric encryption</a></li><li><span aria-current="page">Nonce Collision</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Security &amp; symmetric encryption</a></p>
+  <h1>Worksheet: Nonce Collision</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/">Nonce Collision</a></dd></div>
+  <div><dt>Time</dt><dd>About 15 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>d23b6ec02c35</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to distinguish the consequences of nonce reuse for AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC, including which key material the attacker recovers and which it does not.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/symmetric/nonce-collision.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/symmetric/nonce-collision.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>One key, one nonce, two messages. For each of AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC (where the nonce is called an IV), predict what an attacker who sees only the ciphertexts, and the tags where there are tags, can gain: the plaintext, the ability to forge a tag, the fact that the two messages begin the same way, or the encryption key. Write your predictions in the first table under Record.</li><li>AES-CTR encrypts by XORing the plaintext with a keystream that depends only on the key and the nonce. Predict what C₁ ⊕ C₂ looks like when each message gets its own nonce, and when both share one. If you repeated the shared-nonce case with a brand-new key and a brand-new nonce, would C₁ ⊕ C₂ change?</li><li>Suppose nonce reuse lets an attacker recover the secret an AEAD tag is computed with, but not the key used to encrypt. Predict what that attacker can do to a message sent under the reused nonce, and to a message sent under a fresh one.</li><li>Two messages begin with the same text and are encrypted with AES-CBC. Predict whether any of their ciphertext blocks will be identical when each gets its own random IV, and when they share one IV.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and scroll to <strong>Same mistake, four outcomes</strong>. Read the note on the two indicators: the cryptographic result is what the primitive returned, and the security verdict is whether the guarantee still holds.</li><li>On the <strong>AES-CTR</strong> card, make sure <strong>Reuse the nonce</strong> is off and press <strong>Run</strong>. The card encrypts two messages under fresh nonces and prints C₁ ⊕ C₂ as a lane of hex bytes. Record the first four bytes. Press <strong>Run</strong> again and record the first four bytes again.</li><li>On the <strong>AES-CBC</strong> card, make sure <strong>Reuse the IV</strong> is off and press <strong>Run</strong>. Record the number after <em>Shared leading ciphertext blocks</em>. Press <strong>Run</strong> again and record it again.</li><li>Press <strong>Run all four — one reused nonce</strong>. Every card switches to a reused nonce and runs.</li><li>On the <strong>AES-GCM</strong> card, record the cryptographic result, whether the recovered H <em>matches ground truth</em>, and the first eight hex digits of <em>recovered H</em>. On the <strong>ChaCha20-Poly1305</strong> card, record the cryptographic result, whether the one-time key <em>matches ground truth</em>, and the first eight hex digits of <em>recovered r</em>.</li><li>On the <strong>ChaCha20-Poly1305</strong> card, find the lane of hex bytes labelled C₁ ⊕ C₂ = P₁ ⊕ P₂. Count how many bytes at its start are 00, and note the first byte that is not. On the <strong>AES-CTR</strong> card, record the <em>as text</em> line: message 2, recovered by XORing message 1 back in. On the <strong>AES-CBC</strong> card, count the ciphertext block rows marked <em>identical</em>.</li><li>Press <strong>Run all four — one reused nonce</strong> a second time and record the same values again.</li></ol>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Values you record in the second, third and fourth tables come from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Construction, My prediction, What the card computed, in your own words">
+<table>
+<thead><tr><th scope="col">Construction</th><th scope="col">My prediction</th><th scope="col">What the card computed, in your own words</th></tr></thead>
+<tbody>
+<tr><th scope="row">AES-CTR</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-GCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">ChaCha20-Poly1305</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">AES-CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Fresh-nonce run, AES-CTR: first four bytes of C₁ ⊕ C₂, AES-CBC: shared leading ciphertext blocks">
+<table>
+<thead><tr><th scope="col">Fresh-nonce run</th><th scope="col">AES-CTR: first four bytes of C₁ ⊕ C₂</th><th scope="col">AES-CBC: shared leading ciphertext blocks</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Reused-nonce run, Card, Cryptographic result, Matches ground truth, Recovered value, first eight hex digits">
+<table>
+<thead><tr><th scope="col">Reused-nonce run</th><th scope="col">Card</th><th scope="col">Cryptographic result</th><th scope="col">Matches ground truth</th><th scope="col">Recovered value, first eight hex digits</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td>AES-GCM</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">First run</th><td>ChaCha20-Poly1305</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td>AES-GCM</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td>ChaCha20-Poly1305</td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Reused-nonce run, AES-CTR: message 2 as recovered, ChaCha20-Poly1305: leading 00 bytes, then the first other byte, AES-CBC: block rows marked identical">
+<table>
+<thead><tr><th scope="col">Reused-nonce run</th><th scope="col">AES-CTR: message 2 as recovered</th><th scope="col">ChaCha20-Poly1305: leading 00 bytes, then the first other byte</th><th scope="col">AES-CBC: block rows marked identical</th></tr></thead>
+<tbody>
+<tr><th scope="row">First run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second run</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Did your recovered H and recovered r change between your two reused runs? The page says H is fixed by the key, and the one-time key (r, s) by the key and the nonce. What does your answer tell you about the key each run used? Now compare how the fresh AES-CTR lane and the reused ChaCha20-Poly1305 lane behaved across two runs (the consequence table lists keystream reuse for both), and explain the difference using C₁ ⊕ C₂ = P₁ ⊕ P₂. What do the 00 bytes at the start of the reused lane say about the two messages at those positions?</li><li>The AES-GCM and ChaCha20-Poly1305 verifiers both accepted a tag the attacker computed. Why does the page treat a VALID result here as an alarm rather than a success?</li><li>Name the secret each authenticated card recovered and the key the page says it did not recover. Using <strong>Why the forgeries work — one cancellation, twice</strong> and the consequence table, say what an attacker holding the recovered value can do under the reused nonce, and what the page says it cannot do to a message sent under a fresh nonce.</li><li>AES-CTR gave up message 2 but has no tag to forge. Using your AES-CBC block counts, explain what an attacker learns from identical leading CBC blocks and what the card says the attacker does not learn. Why does the page call CBC's failure weaker?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A service encrypts with AES-GCM under one long-lived key. One engineer proposes random 96-bit nonces; another proposes a counter kept on a virtual machine that is sometimes restored from a snapshot. Using <strong>Where a nonce actually repeats</strong>, explain how each proposal could still repeat a nonce. Using <strong>Fixes, and what this lab is not</strong>, say which remedy the page offers against each risk, and what the page says AES-GCM-SIV would still leak if a nonce did repeat.</li><li><strong>Extend.</strong> Under <strong>Why the forgeries work — one cancellation, twice</strong>, expand the AES-GCM derivation and press <strong>Run it on real bytes and cancel</strong>. Record whether each check line under the computed values passed. Press the button again (it now reads <strong>Run it again with new keys</strong>) and compare tag₁ and the recovered H with your first press. Which values changed, and which checks still held?</li><li><strong>Extend.</strong> Under <strong>Random 96-bit nonces and the birthday bound</strong>, choose <strong>32-bit</strong> and move <strong>Messages encrypted (log scale)</strong> until the collision probability passes one half. Then choose <strong>96-bit (GCM)</strong> and read where the page puts a 50% chance. Compare that with the random-IV limit stated in the note below the readouts, and explain why the limit sits so far below the 50% point.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

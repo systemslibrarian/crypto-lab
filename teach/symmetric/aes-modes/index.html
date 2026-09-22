@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: AES Modes — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the AES Modes exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/symmetric/aes-modes/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: AES Modes">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/aes-modes/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: AES Modes">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/symmetric/aes-modes/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Security &amp; symmetric encryption</a></li><li><span aria-current="page">AES Modes</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Security &amp; symmetric encryption</a></p>
+  <h1>Worksheet: AES Modes</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a></dd></div>
+  <div><dt>Time</dt><dd>About 20 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>cbfb1b4dfa2c</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to compare ECB, CBC, CTR, GCM and CCM by whether each provides confidentiality alone or authenticated encryption, and predict how each responds when a ciphertext bit is flipped.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/symmetric/aes-modes.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/symmetric/aes-modes.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>You encrypt one 16-character block repeated four times under ECB, CBC, CTR, GCM and CCM, with a fresh random key for each mode. For each mode, predict whether any two ciphertext blocks will be identical. Write your predictions in the first table under Record.</li><li>An attacker changes one bit, or one byte, at the start of a ciphertext, and the receiver decrypts it with the correct key. For each of the five modes, predict whether the receiver gets plaintext back and, if so, how much of it changes. Write your predictions in the second table.</li><li>A message that decrypts to <code>userdata=guest--;admin=0;-------</code> was encrypted with AES-CBC and nothing else. Could someone who never learns the key make it decrypt with <code>admin=1</code> instead? Say which part of the ciphertext you think they would change, and what you expect to happen to the rest of the message.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<ol><li>Open the exhibit and choose the <strong>Compare</strong> tab. In <strong>Plaintext</strong>, type one block of exactly 16 characters, spaces included, four times in a row with nothing between the copies; the box suggests <code>YELLOW SUBMARINE</code>. Press <strong>Encrypt under all 5 modes</strong>. For each card, record whether it warns about duplicate blocks and what its note says about integrity or authentication.</li><li>Write a test message of at least 40 characters using ordinary letters, digits and spaces, and copy it. You will paste it into each mode's tab so that every mode encrypts the same text.</li><li>Open the <strong>ECB</strong> tab. Paste your test message into <strong>Plaintext</strong> and press <strong>Encrypt with ECB</strong>. Note which hex fields the tab fills in, then press <strong>Decrypt (after flipping 1 ciphertext block)</strong>. Record what the page says it changed and what came back.</li><li>Open the <strong>CBC</strong> tab. Paste your test message into <strong>Plaintext</strong>, press <strong>Encrypt with CBC</strong> and note the hex fields, then press <strong>Demo: Bit-Flip</strong>. Record what the page says it changed and compare the original plaintext with the text after the bit flip.</li><li>Still on the <strong>CBC</strong> tab, press <strong>Demo: Targeted Bit-Flip (admin=0 → admin=1)</strong>. This demo encrypts its own fixed message under a new key. Record the lines named in the third table.</li><li>Open the <strong>CTR</strong> tab. Paste your test message into <strong>Plaintext Message 1</strong>, press <strong>Encrypt with CTR</strong> and note the hex fields, then press <strong>Decrypt (1-bit ciphertext flip)</strong>. Record the result.</li><li>Open the <strong>GCM</strong> tab. Paste your test message into <strong>Plaintext</strong> and leave the other fields as they are. Press <strong>Encrypt with GCM</strong> and note the hex fields, then press <strong>Demo: Tamper Detection</strong>. Record what the page reports.</li><li>Open the <strong>CCM</strong> tab. Paste your test message into <strong>Plaintext</strong>, press <strong>Encrypt with CCM</strong> and note the hex fields, then press <strong>Demo: Tamper Detection</strong>. Record what the page reports.</li></ol>
+<aside class="ws-note"><p>If no card in step 1 warns about duplicates, count your block again: it must be exactly 16 ordinary characters, with no line break or space between the copies.</p></aside>
+<aside class="ws-note"><p>If the CBC result in step 4 says decryption failed, check that your test message is at least 40 characters, then press <strong>Encrypt with CBC</strong> and <strong>Demo: Bit-Flip</strong> again.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything you record comes from your own run. Leave the hex itself out: the tables ask what the page showed and said.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Compare card, My prediction: any identical blocks?, Duplicate warning on the card, What the card's note says about integrity or authentication">
+<table>
+<thead><tr><th scope="col">Compare card</th><th scope="col">My prediction: any identical blocks?</th><th scope="col">Duplicate warning on the card</th><th scope="col">What the card's note says about integrity or authentication</th></tr></thead>
+<tbody>
+<tr><th scope="row">ECB</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CTR</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">GCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Mode tab, Hex fields the tab fills in, My prediction for a changed ciphertext, What the page says it changed, What came back, or what the page reported">
+<table>
+<thead><tr><th scope="col">Mode tab</th><th scope="col">Hex fields the tab fills in</th><th scope="col">My prediction for a changed ciphertext</th><th scope="col">What the page says it changed</th><th scope="col">What came back, or what the page reported</th></tr></thead>
+<tbody>
+<tr><th scope="row">ECB</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CBC</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CTR</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">GCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">CCM</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Targeted bit-flip, What the page shows">
+<table>
+<thead><tr><th scope="col">Targeted bit-flip</th><th scope="col">What the page shows</th></tr></thead>
+<tbody>
+<tr><th scope="row">Original decrypt</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Text after the flip</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Verdict line</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Which Compare cards warned about duplicate blocks? Using those cards' notes and the tab's <strong>What to look for</strong> section, explain why repeated 16-character input blocks came out as repeated ciphertext blocks there and not under the other modes.</li><li>Use the rule the targeted demo prints, <code>P₁[i] = AES⁻¹(C₁)[i] ⊕ C₀[i]</code>, to explain your CBC <strong>Demo: Bit-Flip</strong> result: what happened to plaintext block 0, what happened to plaintext block 1, and why. Then explain why the targeted demo changed a byte of C₀ in order to change <code>admin=0</code> in P₁.</li><li>The CTR tab describes encryption as XORing the plaintext with a keystream made from counter values. Use that description to explain the change you recorded for CTR, and how CTR's result compares with your CBC result.</li><li>Explain the GCM and CCM results you recorded. According to the page, what does each mode check before it releases plaintext, and what does that check cover?</li><li>Sort ECB, CBC, CTR, GCM and CCM into &quot;confidentiality only&quot; and &quot;authenticated encryption&quot;, citing one entry from your tables for each mode. Did any mode in the first group also leak something in your Compare run, without anyone changing the ciphertext?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> You maintain a service that keeps <code>admin=0</code> inside an AES-CBC ciphertext with no MAC, as in the targeted demo. Using the page's <strong>Which mode should I use?</strong> list and the threat model on the <strong>CBC</strong> tab, name two changes the page supports. For each one, say how the CBC row of your second table would read afterwards, and why.</li><li><strong>Extend.</strong> On the <strong>CBC</strong> tab, replace your test message with one shorter than 16 characters. Press <strong>Encrypt with CBC</strong>, then <strong>Demo: Bit-Flip</strong>, then <strong>Decrypt (tampered ciphertext)</strong>, and record what the page reports each time. Using which block your change landed in, explain why a one-block message behaves differently from your longer one. If the page reports an error, note what it calls that error; the next exhibit in this module builds on it.</li><li><strong>Extend.</strong> On the <strong>Compare</strong> tab, change one character in just one copy of your repeated block and press <strong>Encrypt under all 5 modes</strong> again. Which ECB blocks still match each other? Using the threat model on the <strong>ECB</strong> tab, say what an attacker who sees only that ciphertext learns about your message.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 ---
 exhibit: downgrade-wire
 module: key-exchange
-minutes: 25
+minutes: 21
 outcomes: [4, 5]
 source_commit: 2de65778ff73
 checked: 2026-09-22

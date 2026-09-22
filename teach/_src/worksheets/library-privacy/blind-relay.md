@@ -1,7 +1,7 @@
 ---
 exhibit: blind-relay
 module: library-privacy
-minutes: 20
+minutes: 23
 outcomes: [1, 2, 3, 5]
 source_commit: 9de776c3565d
 checked: 2026-09-22

@@ -49,7 +49,7 @@
     "Students will be able to demonstrate a supported_groups downgrade against an unbound negotiation and explain how transcript binding through the Finished MAC makes the same strip abort.",
     "Students will be able to evaluate server and client policies (PQC preferred versus required, fail-open versus fail-closed retry) for whether they let an on-path attacker force a downgrade."
   ],
-  "timeRequired": "PT77M",
+  "timeRequired": "PT64M",
   "isAccessibleForFree": true,
   "author": {
     "@type": "Person",
@@ -106,7 +106,7 @@
 
 <dl class="t-facts">
   <div><dt>Audience</dt><dd>Undergraduate computer science, networking, and security students, and motivated newcomers, who can follow modular arithmetic and want to see how two parties agree on a key over an open network and what stops an attacker from sitting in the middle.</dd></div>
-  <div><dt>Class time</dt><dd>About 77 minutes of class time for the core sequence, plus about 20 minutes of extension. Predict is pre-class reading. The core sequence is two minutes over the 75 this module plans for, in TLS Handshake, after every cut its worksheet named: what remains would cost the question that asks which check stopped which attacker move.</dd></div>
+  <div><dt>Class time</dt><dd>About 64 minutes of class time for the core sequence, plus about 19 minutes of extension. Predict is pre-class reading and Explain is a spoken debrief.</dd></div>
   <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
 </dl>
 
@@ -122,10 +122,10 @@
 <table>
 <thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
 <tbody>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/">DH MITM</a></th><td>Intro</td><td>20</td><td>Run a Diffie–Hellman exchange on the parameter presets, press Break it to recover Alice's secret exponent by baby-step giant-step, run Mallory's man-in-the-middle to leave Alice and Bob with two different keys, then run the ECDSA-signed exchange honest and tampered to watch it fail closed.</td><td><a href="diffie-hellman-mitm/">Worksheet<span class="visually-hidden"> for DH MITM</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/">TLS Handshake</a></th><td>Fix</td><td>32</td><td>Step through the eight handshake steps reading the transcript-hash chip, check that both sides compute the same X25519 secret, inject each fault in Break this handshake and each attacker move in the MITM panel to see which verifier checks fail, then press New session and compare which values change.</td><td><a href="tls-handshake/">Worksheet<span class="visually-hidden"> for TLS Handshake</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-downgrade-wire/">Downgrade Wire</a></th><td>Break it</td><td>25</td><td>Play the downgrade, then strip X25519MLKEM768 and run it unbound and under TLS 1.3 (or Compare both), expand Show the Finished MAC to follow the byte diff, and flip the server policy, sentinel checks, and retry policy to see which settings let the downgrade through.</td><td><a href="downgrade-wire/">Worksheet<span class="visually-hidden"> for Downgrade Wire</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/">Protocol Checker</a></th><td>Extension</td><td>20</td><td>Run the search on Needham-Schroeder Public Key, step the attack trace and attacker-knowledge panel to watch the attacker derive Nb, tick Lowe's fix and re-run, then switch to Diffie-Hellman and toggle signatures.</td><td><a href="protocol-checker/">Worksheet<span class="visually-hidden"> for Protocol Checker</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/">DH MITM</a></th><td>Intro</td><td>19</td><td>Run a Diffie–Hellman exchange on the parameter presets, press Break it to recover Alice's secret exponent by baby-step giant-step, run Mallory's man-in-the-middle to leave Alice and Bob with two different keys, then run the ECDSA-signed exchange honest and tampered to watch it fail closed.</td><td><a href="diffie-hellman-mitm/">Worksheet<span class="visually-hidden"> for DH MITM</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/">TLS Handshake</a></th><td>Fix</td><td>24</td><td>Step through the eight handshake steps reading the transcript-hash chip, check that both sides compute the same X25519 secret, inject each fault in Break this handshake and each attacker move in the MITM panel to see which verifier checks fail, then press New session and compare which values change.</td><td><a href="tls-handshake/">Worksheet<span class="visually-hidden"> for TLS Handshake</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-downgrade-wire/">Downgrade Wire</a></th><td>Break it</td><td>21</td><td>Play the downgrade, then strip X25519MLKEM768 and run it unbound and under TLS 1.3 (or Compare both), expand Show the Finished MAC to follow the byte diff, and flip the server policy, sentinel checks, and retry policy to see which settings let the downgrade through.</td><td><a href="downgrade-wire/">Worksheet<span class="visually-hidden"> for Downgrade Wire</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/">Protocol Checker</a></th><td>Extension</td><td>19</td><td>Run the search on Needham-Schroeder Public Key, step the attack trace and attacker-knowledge panel to watch the attacker derive Nb, tick Lowe's fix and re-run, then switch to Diffie-Hellman and toggle signatures.</td><td><a href="protocol-checker/">Worksheet<span class="visually-hidden"> for Protocol Checker</span></a></td></tr>
 </tbody>
 </table>
 </div>

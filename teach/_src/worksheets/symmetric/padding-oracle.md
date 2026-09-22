@@ -1,7 +1,7 @@
 ---
 exhibit: padding-oracle
 module: symmetric
-minutes: 35
+minutes: 24
 outcomes: [3, 4]
 source_commit: 3a7e02e6daeb
 checked: 2026-09-22

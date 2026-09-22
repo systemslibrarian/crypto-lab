@@ -1,7 +1,7 @@
 ---
 exhibit: tls-handshake
 module: key-exchange
-minutes: 32
+minutes: 24
 outcomes: [2, 3]
 source_commit: dbbdc73da172
 checked: 2026-09-22

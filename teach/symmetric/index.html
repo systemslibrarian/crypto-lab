@@ -49,7 +49,7 @@
     "Students will be able to trace how a padding-validity oracle lets an attacker recover AES-CBC plaintext byte by byte without the key, and explain why verifying a MAC before decryption stops the same attack.",
     "Students will be able to distinguish the consequences of nonce reuse for AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC, including which key material the attacker recovers and which it does not."
   ],
-  "timeRequired": "PT100M",
+  "timeRequired": "PT87M",
   "isAccessibleForFree": true,
   "author": {
     "@type": "Person",
@@ -112,7 +112,7 @@
 
 <dl class="t-facts">
   <div><dt>Audience</dt><dd>Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal.</dd></div>
-  <div><dt>Class time</dt><dd>About 100 minutes of class time for the core sequence. Predict is pre-class reading.</dd></div>
+  <div><dt>Class time</dt><dd>About 87 minutes of class time for the core sequence. Predict is pre-class reading and Explain is a spoken debrief.</dd></div>
   <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
 </dl>
 
@@ -129,9 +129,9 @@
 <thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
 <tbody>
 <tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a></th><td>Intro</td><td>15</td><td>In Exhibit 01, pick an AES scheme (GCM, CTR, chained-IV CBC or ECB) and an adversary (random guess, re-encrypt and compare, or the BEAST-style IV predictor), run or step real trials, and read the measured advantage, Wilson interval and verdict.</td><td><a href="hidden-bit/">Worksheet<span class="visually-hidden"> for Hidden Bit</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-otp-vault/">OTP Vault</a></th><td>Break it</td><td>20</td><td>Encrypt a message under a fresh random pad, type any same-length plaintext to derive a key that maps the fixed ciphertext to it, then switch on key reuse and crib-drag C1 ⊕ C2 to peel both messages apart, including a built-in challenge.</td><td><a href="otp-vault/">Worksheet<span class="visually-hidden"> for OTP Vault</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a></th><td>Fix</td><td>15</td><td>Encrypt your own plaintext under ECB, CBC, CTR, GCM and CCM, inspect the key, IV or nonce, ciphertext and tag, and run the ECB pattern-leak, CBC bit-flip and GCM tamper-detection demos to see which modes accept a modified ciphertext.</td><td><a href="aes-modes/">Worksheet<span class="visually-hidden"> for AES Modes</span></a></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/">Padding Oracle</a></th><td>Break it</td><td>35</td><td>Predict whether a crafted final padding byte passes the real oracle, run the byte-by-byte attack on a block you type, then run the identical attack against leaky, silent and Encrypt-then-MAC servers and tamper with an AES-GCM ciphertext.</td><td><a href="padding-oracle/">Worksheet<span class="visually-hidden"> for Padding Oracle</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-otp-vault/">OTP Vault</a></th><td>Break it</td><td>19</td><td>Encrypt a message under a fresh random pad, type any same-length plaintext to derive a key that maps the fixed ciphertext to it, then switch on key reuse and crib-drag C1 ⊕ C2 to peel both messages apart, including a built-in challenge.</td><td><a href="otp-vault/">Worksheet<span class="visually-hidden"> for OTP Vault</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a></th><td>Fix</td><td>14</td><td>Encrypt your own plaintext under ECB, CBC, CTR, GCM and CCM, inspect the key, IV or nonce, ciphertext and tag, and run the ECB pattern-leak, CBC bit-flip and GCM tamper-detection demos to see which modes accept a modified ciphertext.</td><td><a href="aes-modes/">Worksheet<span class="visually-hidden"> for AES Modes</span></a></td></tr>
+<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/">Padding Oracle</a></th><td>Break it</td><td>24</td><td>Predict whether a crafted final padding byte passes the real oracle, run the byte-by-byte attack on a block you type, then run the identical attack against leaky, silent and Encrypt-then-MAC servers and tamper with an AES-GCM ciphertext.</td><td><a href="padding-oracle/">Worksheet<span class="visually-hidden"> for Padding Oracle</span></a></td></tr>
 <tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/">Nonce Collision</a></th><td>Break it</td><td>15</td><td>Encrypt two messages under one AES-CTR key and nonce and crib-drag the second out of C1 ⊕ C2, then switch each construction to a reused nonce (or press &quot;Run all four — one reused nonce&quot;) and read each card's cryptographic result beside its security verdict.</td><td><a href="nonce-collision/">Worksheet<span class="visually-hidden"> for Nonce Collision</span></a></td></tr>
 </tbody>
 </table>

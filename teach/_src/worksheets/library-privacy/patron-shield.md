@@ -1,7 +1,7 @@
 ---
 exhibit: patron-shield
 module: library-privacy
-minutes: 15
+minutes: 22
 outcomes: [1, 2, 3, 5]
 source_commit: 93f3f7226fe7
 checked: 2026-09-22

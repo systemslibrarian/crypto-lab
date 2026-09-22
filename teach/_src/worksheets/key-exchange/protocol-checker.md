@@ -1,7 +1,7 @@
 ---
 exhibit: protocol-checker
 module: key-exchange
-minutes: 20
+minutes: 19
 outcomes: []
 source_commit: 24c7e9c2dd01
 checked: 2026-09-22

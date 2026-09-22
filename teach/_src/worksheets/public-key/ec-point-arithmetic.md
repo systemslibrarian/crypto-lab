@@ -1,7 +1,7 @@
 ---
 exhibit: ec-point-arithmetic
 module: public-key
-minutes: 15
+minutes: 17
 outcomes: [4]
 source_commit: ce6c3d3eb0c2
 checked: 2026-09-22

@@ -3,7 +3,7 @@ exhibit: padding-oracle
 module: symmetric
 minutes: 35
 outcomes: [3, 4]
-source_commit: e57bb57259b8
+source_commit: 3a7e02e6daeb
 checked: 2026-09-22
 anchors:
   - "#tab-1"

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: Downgrade Wire — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the Downgrade Wire exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/key-exchange/downgrade-wire/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: Downgrade Wire">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/key-exchange/downgrade-wire/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: Downgrade Wire">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/key-exchange/downgrade-wire/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Key exchange &amp; secure channels</a></li><li><span aria-current="page">Downgrade Wire</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Key exchange &amp; secure channels</a></p>
+  <h1>Worksheet: Downgrade Wire</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-downgrade-wire/">Downgrade Wire</a></dd></div>
+  <div><dt>Time</dt><dd>About 25 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>2de65778ff73</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to demonstrate a supported_groups downgrade against an unbound negotiation and explain how transcript binding through the Finished MAC makes the same strip abort.</li><li>Students will be able to evaluate server and client policies (PQC preferred versus required, fail-open versus fail-closed retry) for whether they let an on-path attacker force a downgrade.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/key-exchange/downgrade-wire.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/key-exchange/downgrade-wire.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>A client offers two key-exchange groups, a post-quantum hybrid first and a classical one second, and the server supports both. An attacker sitting on the wire deletes the hybrid entry from the client's list before the server reads it. Predict which group the server selects, and whether either endpoint has any way to notice the deletion at that moment. Write your prediction in the first table under Record.</li><li>Now suppose the handshake ends with each side computing a MAC over a hash of every handshake message it saw, and each side checking the other's. Predict, for the same deletion, whether the two MACs agree and what the connection does as a result. Write that prediction in the first table too.</li><li>The list entry for a group is two bytes on the wire. Predict whether deleting one entry changes two bytes of the handshake or many more, and say what else you think a client has to send for a group it is offering.</li><li>Two server settings: one takes the best group that survives the trip, the other refuses to finish a handshake without a post-quantum group. Two client reactions to a failed handshake: give up, or retry with a smaller offer. Predict which combinations still leave an on-path attacker with a downgrade it can use.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>This exhibit is one long page of panels, not tabs. Scroll to the panel each step names.</p>
+<ol><li>Open the exhibit and read the panel <strong>What is negotiation stripping?</strong>. Note the one question it says decides whether a strip works.</li><li>Scroll to <strong>Break it yourself: strip the offer</strong>. Under <strong>Client → ClientHello</strong> read the two rows of <strong>supported_groups (preference order)</strong>: each row shows a group name, its codepoint and whether it is post-quantum or classical. Write both rows into the second table under Record.</li><li>Press <strong>Play the downgrade</strong>. When the results appear, record the line under <strong>Server</strong>, the <strong>Cryptographic result</strong>, the <strong>Security verdict</strong>, the session-key line, and the sentence printed just below the two indicators. These five go in the third table, one row per run.</li><li>Look at the <strong>Transcript binding</strong> control: it now shows <strong>Unbound (pre-TLS-1.3 model)</strong> selected, and the hybrid row has gone from the client's list. Press <strong>Reset offer</strong> to put the row back. Confirm <strong>Server policy</strong> is on <strong>PQC preferred</strong>, then select <strong>TLS 1.3 (transcript-bound)</strong>.</li><li>Press the strip button on the hybrid row, labelled <strong>Strip X25519MLKEM768 from the ClientHello</strong>, and watch the <strong>On-path attacker</strong> lane. Press <strong>Run handshake</strong> and record the same five things as in step 3.</li><li>Expand <strong>Show the Finished MAC — compute both sides and compare</strong>. Record, in the fourth table: the two byte counts in the deletion sentence, the hex on the two <strong>1 · supported_groups on the wire</strong> rows, the badge under <strong>2 · Transcript-Hash</strong>, and the badge under <strong>3 · server Finished (verify_data)</strong>.</li><li>Press <strong>Reset offer</strong>, then press <strong>Run handshake</strong> again with nothing stripped and <strong>TLS 1.3 (transcript-bound)</strong> still selected. Record the five things from step 3, then expand the Finished MAC panel again and fill in the second row of the fourth table.</li><li>Press <strong>Compare unbound vs TLS 1.3</strong> and record both cards in the fifth table. Scroll to <strong>One config line: PQC preferred vs required</strong>, press <strong>Run the same strip under both policies</strong>, and record both cards in the sixth table.</li><li>Scroll to <strong>Downgrade by denial of service</strong>. Leave <strong>Retry without PQ (fail-open)</strong> selected under <strong>On handshake failure</strong> and press <strong>Run two rounds</strong>; record both attempts and the line below them in the last table. Then select <strong>Give up (fail-closed)</strong>, press <strong>Run two rounds</strong> again, and record.</li></ol>
+<aside class="ws-note"><p>Finish recording step 7 before you press <strong>Compare unbound vs TLS 1.3</strong>. Compare clears the results area, and the Finished MAC panel goes with it.</p></aside>
+<aside class="ws-note"><p>The flying byte string between the lanes is decoration, and it is hidden from screen readers on purpose. Every number this worksheet asks for is in the text below it.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything below comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: Question, My prediction, What happened">
+<table>
+<thead><tr><th scope="col">Question</th><th scope="col">My prediction</th><th scope="col">What happened</th></tr></thead>
+<tbody>
+<tr><th scope="row">Predict 1 — which group, and does anyone notice?</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Predict 2 — do the MACs agree, and what does the connection do?</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: ClientHello row, Group name, Codepoint, Post-quantum or classical">
+<table>
+<thead><tr><th scope="col">ClientHello row</th><th scope="col">Group name</th><th scope="col">Codepoint</th><th scope="col">Post-quantum or classical</th></tr></thead>
+<tbody>
+<tr><th scope="row">First</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Second</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Run, Server line, Cryptographic result, Security verdict, Session-key line, The sentence below, in your own words">
+<table>
+<thead><tr><th scope="col">Run</th><th scope="col">Server line</th><th scope="col">Cryptographic result</th><th scope="col">Security verdict</th><th scope="col">Session-key line</th><th scope="col">The sentence below, in your own words</th></tr></thead>
+<tbody>
+<tr><th scope="row">Play the downgrade</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Hybrid stripped, TLS 1.3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Nothing stripped, TLS 1.3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Finished MAC panel, Bytes deleted, and bytes of key_share, supported_groups the client sent, supported_groups the server received, Transcript-Hash badge, server Finished badge">
+<table>
+<thead><tr><th scope="col">Finished MAC panel</th><th scope="col">Bytes deleted, and bytes of key_share</th><th scope="col">supported_groups the client sent</th><th scope="col">supported_groups the server received</th><th scope="col">Transcript-Hash badge</th><th scope="col">server Finished badge</th></tr></thead>
+<tbody>
+<tr><th scope="row">Hybrid stripped, TLS 1.3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Nothing stripped, TLS 1.3</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Compare card, Cryptographic result, Security verdict, What its note says, in your own words">
+<table>
+<thead><tr><th scope="col">Compare card</th><th scope="col">Cryptographic result</th><th scope="col">Security verdict</th><th scope="col">What its note says, in your own words</th></tr></thead>
+<tbody>
+<tr><th scope="row">Unbound (pre-TLS-1.3)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">TLS 1.3 (transcript-bound)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Policy card, Cryptographic result, Security verdict, What its note says, in your own words">
+<table>
+<thead><tr><th scope="col">Policy card</th><th scope="col">Cryptographic result</th><th scope="col">Security verdict</th><th scope="col">What its note says, in your own words</th></tr></thead>
+<tbody>
+<tr><th scope="row">PQC preferred</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">PQC required</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 7: Retry policy, Attempt 1: label, offer, result, Attempt 2: label, offer, result, The line below the attempts">
+<table>
+<thead><tr><th scope="col">Retry policy</th><th scope="col">Attempt 1: label, offer, result</th><th scope="col">Attempt 2: label, offer, result</th><th scope="col">The line below the attempts</th></tr></thead>
+<tbody>
+<tr><th scope="row">Retry without PQ (fail-open)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Give up (fail-closed)</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Three of your rows in the third table differ in only two things: whether the hybrid group survived to the server, and which <strong>Transcript binding</strong> setting was selected. Using the page's two indicator names — <strong>Cryptographic result</strong> and <strong>Security verdict</strong> — explain why the run that completed is the one the page calls an alarm, and why the run that aborted is the one it calls a defense.</li><li>Compare your two rows in the fourth table. In one, the page said the attacker deleted nothing; in the other it reported a deletion much larger than the two bytes of a codepoint. Using the deletion sentence, say what else the attacker had to delete. Then read the note printed under the third stage and state the reason the page gives for the two MACs disagreeing — does that reason turn on how many bytes were deleted?</li><li>Walk the three stages the Finished MAC panel prints — <strong>1 · supported_groups on the wire</strong>, <strong>2 · Transcript-Hash</strong>, <strong>3 · server Finished (verify_data)</strong> — and say what changed at each stage in your stripped run and what carried the change from each stage to the next. Then find the <strong>Simplified:</strong> paragraph in <strong>What is real, and what this does not prove</strong>: where does it say a real TLS 1.3 stack usually notices the mismatch instead, and does that change whether the strip succeeds?</li><li>Both cards in the policy panel ran the same strip with transcript binding off. Say what each policy did with the weaker suite, and, using the paragraph printed below the two cards, name the cost the page attaches to <strong>PQC required</strong>.</li><li>In your fail-open run, attempt 2 completed and the note says every byte of it was validly bound. Explain why transcript binding did not stop that downgrade, and what the attacker had to be able to do for the retry path to work. Then compare your fail-closed run: what did the attacker come away with, and what did the client pay for that?</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A client team ships a stack that is &quot;PQC preferred&quot; on the server and retries without PQ when a handshake fails. Using your policy table and your fail-open table, say which of the two settings you would change first and why, and state what the page says each change costs. Say also which of the two settings transcript binding already protects them against, and which it does not.</li><li><strong>Extend.</strong> Press <strong>Reset offer</strong>, leave <strong>TLS 1.3 (transcript-bound)</strong> selected, and this time press the strip button on the classical row, labelled <strong>Strip x25519 from the ClientHello</strong>. Press <strong>Run handshake</strong>, expand the Finished MAC panel and record which group the deletion sentence names and how many bytes it reports. Compare that byte count with the one from your hybrid strip and explain the difference, using what the client sends for each group.</li><li><strong>Extend.</strong> Press <strong>Reset offer</strong>, set <strong>Server policy</strong> to <strong>PQC required</strong>, strip the hybrid row again, keep <strong>TLS 1.3 (transcript-bound)</strong> and press <strong>Run handshake</strong>. Record the <strong>Cryptographic result</strong> and the <strong>Security verdict</strong>, and compare them with the <strong>PQC required</strong> card in the policy panel. The two runs differ in one setting; say which check the page reports as the one that stopped the handshake in each, and what that tells you about the order the two checks run in.</li><li><strong>Extend.</strong> Scroll to <strong>The weaker cousin: the downgrade sentinel</strong>. With both boxes ticked, record the line the panel prints. Untick <strong>Client checks the sentinel</strong> and record it again; re-tick that box, untick <strong>Server writes the sentinel</strong>, and record it a third time. Using the list under <strong>Why it is weaker than transcript binding</strong>, say which of the three reasons your two unticked runs demonstrated, and which one this panel cannot show you.</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worksheet: DH MITM — Crypto Lab</title>
+<meta name="description" content="A Predict, Do, Record, Explain worksheet for the DH MITM exhibit.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/key-exchange/diffie-hellman-mitm/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Worksheet: DH MITM">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/key-exchange/diffie-hellman-mitm/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Worksheet: DH MITM">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/key-exchange/diffie-hellman-mitm/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../../../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../">Crypto Lab</a></li><li><a href="../../">Teach</a></li><li><a href="../">Key exchange &amp; secure channels</a></li><li><span aria-current="page">DH MITM</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+
+<header class="t-hero">
+  <p class="t-eyebrow">Worksheet · <a href="../">Key exchange &amp; secure channels</a></p>
+  <h1>Worksheet: DH MITM</h1>
+</header>
+
+<dl class="t-facts">
+  <div><dt>Exhibit</dt><dd><a href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/">DH MITM</a></dd></div>
+  <div><dt>Time</dt><dd>About 20 minutes</dd></div>
+  <div><dt>Checked against</dt><dd>Lab commit <code>8d69dbc7ae4f</code> on 2026-09-22</dd></div>
+</dl>
+
+<section aria-labelledby="serves"><h2 id="serves">Outcomes this worksheet serves</h2><ul><li>Students will be able to contrast a passive eavesdropper with an active man-in-the-middle against Diffie–Hellman, and identify which threat larger parameters address and which one requires authentication.</li></ul></section>
+
+<div class="t-actions no-print">
+  <button type="button" class="t-btn" data-print>Print this worksheet</button>
+  <a class="t-btn t-btn--ghost" href="https://raw.githubusercontent.com/systemslibrarian/crypto-lab/main/teach/_src/worksheets/key-exchange/diffie-hellman-mitm.md">Raw Markdown to edit</a>
+  <a class="t-btn t-btn--ghost" href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/worksheets/key-exchange/diffie-hellman-mitm.md">View source on GitHub</a>
+</div>
+
+<div class="ws-student print-only" aria-hidden="true"><span>Name</span><span>Date</span></div>
+
+<div class="ws-body">
+<section class="ws-sec ws-sec--predict" aria-labelledby="ws-predict">
+<h2 id="ws-predict">Predict</h2>
+<p>Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.</p>
+<ol class="ws-answer"><li>Eve records everything that crosses the wire: the modulus <code>p</code>, the generator <code>g</code>, Alice's public value <code>A</code> and Bob's public value <code>B</code>. To get the shared secret she has to recover a private exponent. The attack this exhibit runs costs roughly <code>√p</code> steps. Write down roughly how many steps that is for <code>p = 23</code>, and for a 2048-bit modulus, and say which of the two you expect a browser tab to finish.</li><li>Mallory can change messages in flight, not just read them. Predict whether she has to solve a discrete logarithm to end up reading Alice's messages. Then say how many secret keys exist once the exchange finishes, and who holds each one.</li><li>Take Eve and Mallory separately. For each, predict whether replacing <code>p = 23</code> with a 2048-bit modulus stops that attacker.</li><li>Alice signs her public value with a long-term identity key and Bob checks the signature before he uses the value. Predict what Bob's check does when the value that reaches him is not the value Alice signed, and whether he carries on with the exchange anyway.</li></ol>
+</section>
+<section class="ws-sec ws-sec--do" aria-labelledby="ws-do">
+<h2 id="ws-do">Do</h2>
+<p>The page is one scrollable lesson, not a set of tabs. Each step below names the part it happens in.</p>
+<ol><li>Open the exhibit and scroll to Part 2, <strong>Eve is watching — and it doesn't help her</strong>. Leave <strong>Group parameters</strong> on <code>Tiny — p = 23, g = 5</code> and leave <strong>Alice secret a</strong> and <strong>Bob secret b</strong> at the values you find. Press <strong>Run exchange</strong>, then fill the Tiny column of the first table from <strong>On the wire (everything Eve sees)</strong> and <strong>Computed privately (never transmitted)</strong>.</li><li>Press <strong>Break it · recover a</strong>. Fill the Tiny row of the third table: the exponent the panel says it recovered, the number of group operations, and the milliseconds it reports.</li><li>The same panel now prints a cost table. Copy its four rows into the second table, under the headings the page uses: <strong>Preset</strong>, <strong>Size</strong>, <strong>BSGS cost ≈ √p</strong> and <strong>Status</strong>.</li><li>Set <strong>Group parameters</strong> to <code>Small — p = 2357, g = 2</code>. The panel re-runs the exchange by itself and the exponent boxes refill with that preset's starting values. Press <strong>Break it · recover a</strong> and fill the Small row of the third table.</li><li>Set <strong>Group parameters</strong> to <code>Realistic — 2048-bit (RFC 3526 group 14)</code>. Fill the Realistic column of the first table — for long numbers write down what the panel shows you, including the digit count it prints. Then try to press <strong>Break it · recover a</strong>, record in the third table whether you can, and read the note in the banner just above the panel.</li><li>Scroll to Part 3, <strong>Mallory in the middle</strong>. Leave <strong>Group parameters</strong> on <code>Small — p = 2357, g = 2</code> and leave <strong>Alice a</strong>, <strong>Bob b</strong>, <strong>Mallory ↔ Alice (m₁)</strong> and <strong>Mallory ↔ Bob (m₂)</strong> at their starting values. Press <strong>Run the attack</strong>.</li><li>Press <strong>Next</strong> repeatedly, reading each line as it appears, until the step counter beside it reaches the last step; <strong>Show all</strong> jumps straight there. Fill the fourth table from the three party cards and from the numbered walkthrough lines, then write down the verdict line printed under the two key cards.</li><li>Keep or replace the text in <strong>Alice's message</strong> and <strong>Mallory rewrites it to</strong>, then press <strong>Send through Mallory</strong>. Fill the fifth table from the five numbered relay lines and the two cards underneath them.</li><li>Scroll to Part 4, <strong>Sign the handshake</strong>. Press <strong>Run signed exchange (honest)</strong> and fill the first row of the sixth table from <strong>Transcript Bob verifies</strong>, <strong>Bob's verify()</strong> and <strong>Bob proceeds?</strong>. Then press <strong>Run signed exchange (Mallory tampers)</strong> and fill the second row the same way, plus the status sentence in your own words.</li></ol>
+<aside class="ws-note"><p>Copy the cost table in step 3 before you change the preset. Changing <strong>Group parameters</strong> repaints that panel with the exchange view, and the cost table comes back only after another <strong>Break it · recover a</strong>.</p></aside>
+<aside class="ws-note"><p>Every break in steps 2 and 4 finishes in a moment; the <strong>BSGS cost ≈ √p</strong> rows you copied are the scale of each search. On the Realistic preset the page switches the button off instead of starting a search it cannot finish, so nothing you can press here will hang the tab.</p></aside>
+<aside class="ws-note"><p>In step 7, if <strong>Next</strong> is greyed out, the walkthrough is already sitting at its last step. Press <strong>Run the attack</strong> to start it again from step 1.</p></aside>
+<aside class="ws-note"><p>Part 4 signs a fixed exchange of its own — the same group and exponents Part 3 starts with. Run step 9 before you change any exponent in Part 3 if you want the two parts' numbers to line up.</p></aside>
+</section>
+<section class="ws-sec ws-sec--record" aria-labelledby="ws-record">
+<h2 id="ws-record">Record</h2>
+<p>Everything in these tables comes from your own run.</p>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 1: What the panel shows, Tiny, Realistic">
+<table>
+<thead><tr><th scope="col">What the panel shows</th><th scope="col">Tiny</th><th scope="col">Realistic</th></tr></thead>
+<tbody>
+<tr><th scope="row">A = gᵃ mod p</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">B = gᵇ mod p</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Alice: Bᵃ mod p</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Bob: Aᵇ mod p</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">The status line under them</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 2: Preset, Size, BSGS cost ≈ √p, Status">
+<table>
+<thead><tr><th scope="col">Preset</th><th scope="col">Size</th><th scope="col">BSGS cost ≈ √p</th><th scope="col">Status</th></tr></thead>
+<tbody>
+<tr><th scope="row">Tiny</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Small</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Medium</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Realistic</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 3: Preset, Could you press Break it?, Exponent the panel says it recovered, Group operations, Milliseconds">
+<table>
+<thead><tr><th scope="col">Preset</th><th scope="col">Could you press Break it?</th><th scope="col">Exponent the panel says it recovered</th><th scope="col">Group operations</th><th scope="col">Milliseconds</th></tr></thead>
+<tbody>
+<tr><th scope="row">Tiny</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Small</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Realistic</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 4: Party, Value it sends, Value it receives, Key it computes">
+<table>
+<thead><tr><th scope="col">Party</th><th scope="col">Value it sends</th><th scope="col">Value it receives</th><th scope="col">Key it computes</th></tr></thead>
+<tbody>
+<tr><th scope="row">Alice</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Bob</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Mallory, facing Alice</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Mallory, facing Bob</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 5: Relay line, What the page showed">
+<table>
+<thead><tr><th scope="col">Relay line</th><th scope="col">What the page showed</th></tr></thead>
+<tbody>
+<tr><th scope="row">What Mallory read</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What Mallory forwarded</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">What Bob receives</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Bob reads Alice's original bytes directly?</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+<div class="ws-table" role="region" tabindex="0" aria-label="Record table 6: Signed run, The self value in Transcript Bob verifies, Bob's verify(), Bob proceeds?">
+<table>
+<thead><tr><th scope="col">Signed run</th><th scope="col">The self value in Transcript Bob verifies</th><th scope="col">Bob's verify()</th><th scope="col">Bob proceeds?</th></tr></thead>
+<tbody>
+<tr><th scope="row">Honest</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+<tr><th scope="row">Mallory tampers</th><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td><td class="ws-blank"><span class="visually-hidden">blank for your answer</span></td></tr>
+</tbody></table></div>
+</section>
+<section class="ws-sec ws-sec--explain" aria-labelledby="ws-explain">
+<h2 id="ws-explain">Explain</h2>
+<ol class="ws-answer"><li>Compare your group-operation counts for Tiny and Small with the <strong>BSGS cost ≈ √p</strong> column you copied. The panel says each extra bit of the modulus roughly doubles this attack's work while the exchange itself stays a few multiplications. Does your column agree? Using the Realistic row of the same table, say what running this attack there would cost.</li><li>Your first table shows the exchange still finished at production size; your fourth shows Mallory ending the run holding a key with each side, without pressing <strong>Break it · recover a</strong> at all. Using the page's note about what Mallory did <em>not</em> need, say what she needed instead, and whether running Part 3 on the Realistic group would have stopped her. Then name, for Eve and for Mallory separately, the defence this page offers against each, citing one row of your tables as evidence for each.</li><li>The second card in your fifth table asks whether Bob can read Alice's original bytes. Say what failed there and why, using what your fourth table recorded about Alice's key and Bob's key. What does the page say Alice and Bob ended up sharing with each other?</li><li>In your sixth table the two runs differ in exactly one field of the transcript Bob verifies. Name that field, and compare the tampered run's value with the value Alice receives in your fourth table. Then use the <strong>Unauthenticated DH</strong> and <strong>Authenticated DH (signed)</strong> columns to explain why Mallory cannot simply produce a signature over the transcript she wants Bob to see.</li></ol>
+</section>
+<section class="ws-sec ws-sec--fix" aria-labelledby="ws-fix">
+<h2 id="ws-fix">Fix / Extend</h2>
+<ol class="ws-answer"><li><strong>Fix.</strong> A service you maintain does raw, unauthenticated Diffie–Hellman over a 2048-bit group, and the team proposes moving to a larger group. Using your sixth table and the page's <strong>How real protocols authenticate DH</strong> list, say what that move does and does not change, name the change the page proposes instead, and say which row of your sixth table the service's handshake would then resemble.</li><li><strong>Extend.</strong> In Part 3, set <strong>Alice a</strong> and <strong>Bob b</strong> to the same number, and <strong>Mallory ↔ Alice (m₁)</strong> and <strong>Mallory ↔ Bob (m₂)</strong> to the same number as each other. Press <strong>Run the attack</strong>, then <strong>Send through Mallory</strong> again. Record the verdict line and the second card. The page attributes this outcome to the toy modulus; look at the four exponents you typed and at step 5 and step 6 of the walkthrough, and say what else about them explains it.</li><li><strong>Extend.</strong> In Part 2, put your own number into <strong>Alice secret a</strong>. Before pressing anything, read the notice that appears at the top of the panel and write down which control it tells you to press. Then press <strong>Break it · recover a</strong> and compare your group-operation count with a classmate who typed a different number on the same preset. Which of the two numbers in your second table's row for that preset changed, and which did not? Say what that tells you about whether the cost column describes one particular search or the size of the space being searched.</li><li><strong>Extend.</strong> In Part 2, set <strong>Group parameters</strong> to <code>Medium — p = 1000003, g = 2</code>. The panel re-runs the exchange by itself and the exponent boxes refill with that preset's starting values. Press <strong>Break it · recover a</strong> and write down three things: the exponent the panel says it recovered, the number of group operations, and the milliseconds it reports. Put that operation count beside the <strong>BSGS cost ≈ √p</strong> figure in the <code>Medium</code> row of your second table, and say whether the step up from <code>Small</code> to <code>Medium</code> moves the way that column predicts.</li><li><strong>Extend.</strong> In Part 2, set <strong>Group parameters</strong> to <code>Tiny — p = 23, g = 5</code> and press <strong>Break it · recover a</strong>. Under the cost table the panel prints two paragraphs: the first warns against generalising that curve to real Diffie–Hellman and names a different algorithm for finite-field groups, the second is about many servers sharing one prime. From those two paragraphs: what sets the security level of the Realistic group, why does the page put that group at about 112 bits rather than at the exponent in its own cost table — the <code>Realistic</code> row of your second table — and what does the page say goes wrong when many servers share one prime?</li></ol>
+</section>
+</div>
+
+<p class="t-disclaimer">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../../../">Crypto Lab catalog</a> · <a href="../../">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="../../teach.js"></script>
+</body>
+</html>

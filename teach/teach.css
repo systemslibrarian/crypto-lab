@@ -150,6 +150,13 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
    which is why .t-table is focusable. */
 .t-table table, .ws-table table { min-width: 34rem; }
 .t-table th, .t-table td, .ws-table th, .ws-table td { min-width: 7rem; }
+/* The row header carries the prose; the answer columns carry a tick or a short note. A
+   7rem floor is right for an answer column and far too narrow for a sentence, and giving
+   both the same floor is what squeezed one row header in a record table down to about
+   twenty characters a line. The first column gets a measure of its own, and the table
+   grows past its own min-width and scrolls in its labelled region, which is what that
+   region is for. */
+.t-table tbody th[scope="row"], .ws-table tbody th[scope="row"] { min-width: 16rem; }
 .t-table th, .t-table td, .ws-table th, .ws-table td {
   border-bottom: 1px solid var(--border);
   padding: 0.55rem 0.7rem;

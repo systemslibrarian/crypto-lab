@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teach with Crypto Lab — Crypto Lab</title>
+<meta name="description" content="Course modules, worksheets, citation and privacy notes for instructors using Crypto Lab exhibits in class.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="./teach.css">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.title" content="Teach with Crypto Lab">
+<meta name="DC.creator" content="Clark, Paul A.">
+<meta name="DC.date" content="2026-09-22">
+<meta name="DC.identifier" content="https://crypto-lab.systemslibrarian.dev/teach/">
+<meta name="DC.publisher" content="Crypto Lab">
+<meta name="DC.type" content="InteractiveResource">
+<meta name="DC.language" content="en">
+<meta name="citation_title" content="Teach with Crypto Lab">
+<meta name="citation_author" content="Clark, Paul A.">
+<meta name="citation_publication_date" content="2026/09/22">
+<meta name="citation_public_url" content="https://crypto-lab.systemslibrarian.dev/teach/">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top">
+  <a class="t-brand" href="../"><span class="t-badge" aria-hidden="true">CL</span><span class="t-brand-text">Crypto Lab</span></a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Crypto Lab</a></li><li><span aria-current="page">Teach</span></li></ol></nav>
+</header>
+<main id="main" class="t-main">
+<header class="t-hero">
+  <p class="t-eyebrow">For educators</p>
+  <h1>Teach with Crypto Lab</h1>
+  <p class="t-lede">Course modules, worksheets and citation details for instructors who want to use Crypto Lab exhibits in class. Nothing here needs an account.</p>
+</header>
+
+<nav class="t-toc" aria-label="On this page">
+  <ul>
+    <li><a href="#who">Who this is for</a></li>
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#syllabus">For your syllabus</a></li>
+    <li><a href="#checks">How exhibits are checked</a></li>
+    <li><a href="#accessibility">Accessibility</a></li>
+    <li><a href="#privacy">Privacy and data</a></li>
+    <li><a href="#cite">How to cite</a></li>
+    <li><a href="#contact">Tell us, or ask for a module</a></li>
+  </ul>
+</nav>
+
+<section aria-labelledby="who">
+<h2 id="who">Who this is for</h2>
+<p>Instructors in computer science, security and information science who want students to see a cryptographic mechanism work, and fail, rather than read about it. Each exhibit isolates one idea and runs in the browser; the modules below group a few of them into a sequence that fits one or two class meetings.</p>
+<p>If you are learning on your own, the <a href="../">catalog’s learning paths</a> are built for you. Modules are built for a course: each one states its audience, prerequisites and outcomes, and gives discussion questions and public instructor notes.</p>
+</section>
+
+<section aria-labelledby="modules">
+<h2 id="modules">Modules</h2>
+<p>This is a menu, not a curriculum. Take one module, take one exhibit from a module, or reorder them to fit your course. Class times are estimates for the core sequence; extensions are optional.</p>
+<ul class="t-modules">
+<li class="t-module">
+<h3><a href="symmetric/">Security &amp; symmetric encryption</a></h3>
+<p>Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.</p>
+<p class="t-meta"><strong>Audience:</strong> Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal.<br><strong>Exhibits:</strong> Hidden Bit · OTP Vault · AES Modes · Padding Oracle · Nonce Collision<br><strong>Class time:</strong> about 100 minutes for the core sequence<br><strong>Worksheets:</strong> Padding Oracle</p>
+</li>
+<li class="t-module">
+<h3><a href="public-key/">Public-key &amp; signatures</a></h3>
+<p>Fits the public-key unit of an undergraduate computer security, network security, or applied cryptography course. The nonce-lattice extension suits a cryptanalysis elective or an advanced assignment for students comfortable with vectors and bases.</p>
+<p class="t-meta"><strong>Audience:</strong> Upper-division undergraduate CS and security students, and motivated newcomers, meeting public-key encryption and digital signatures with the math worked on small numbers before real key sizes appear.<br><strong>Exhibits:</strong> Educational RSA · RSA Forge · Point Arithmetic · ECDSA Forge · Nonce Lattice <span class="t-tag">extension</span><br><strong>Class time:</strong> about 110 minutes for the core sequence<br><strong>Worksheets:</strong> in preparation</p>
+</li>
+<li class="t-module">
+<h3><a href="key-exchange/">Key exchange &amp; secure channels</a></h3>
+<p>Fits the key-exchange or TLS unit of an undergraduate computer networking, network security, or introductory cryptography course. The extension exhibit suits an upper-level security or formal-methods course that introduces symbolic protocol analysis.</p>
+<p class="t-meta"><strong>Audience:</strong> Undergraduate computer science, networking, and security students, and motivated newcomers, who can follow modular arithmetic and want to see how two parties agree on a key over an open network and what stops an attacker from sitting in the middle.<br><strong>Exhibits:</strong> DH MITM · TLS Handshake · Downgrade Wire · Protocol Checker <span class="t-tag">extension</span><br><strong>Class time:</strong> about 75 minutes for the core sequence<br><strong>Worksheets:</strong> in preparation</p>
+</li>
+<li class="t-module">
+<h3><a href="post-quantum/">Post-quantum transition</a></h3>
+<p>Upper-division undergraduate or graduate courses in computer security, applied cryptography or network security, as a two-meeting unit on the quantum threat to public-key cryptography and the move to ML-KEM and hybrid key exchange.</p>
+<p class="t-meta"><strong>Audience:</strong> Upper-division undergraduate or graduate security students, including motivated newcomers to quantum algorithms and lattice-based cryptography.<br><strong>Exhibits:</strong> Shor · Grover · Lattice Gentle · Kyber Vault · Hybrid Wire · Harvest Vault <span class="t-tag">extension</span><br><strong>Class time:</strong> about 95 minutes for the core sequence<br><strong>Worksheets:</strong> in preparation</p>
+</li>
+<li class="t-module">
+<h3><a href="library-privacy/">Library privacy, for iSchools</a></h3>
+<p>Fits an undergraduate or graduate LIS course on information ethics, privacy, or library systems and technology, as a one- or two-meeting unit. The shelf-oracle extension suits students who also take a technical or information-security elective.</p>
+<p class="t-meta"><strong>Audience:</strong> Library and information science students in an iSchool, with no mathematics or cryptography background, who need to reason about who can learn what about a patron from a catalog search, a request log, or a published statistic.<br><strong>Exhibits:</strong> Patron Shield · Blind Relay · DP Noise · Shelf Oracle <span class="t-tag">extension</span><br><strong>Class time:</strong> about 60 minutes for the core sequence<br><strong>Worksheets:</strong> in preparation</p>
+</li>
+</ul>
+</section>
+
+<section aria-labelledby="syllabus">
+<h2 id="syllabus">For your syllabus</h2>
+<p>A line you can paste into a syllabus or an assignment:</p>
+<div class="t-syllabus">
+<p id="syllabus-line" class="t-syllabus-line">Crypto Lab exhibits are teaching demonstrations, not production libraries. Do not use exhibit code to protect real data.</p>
+<button type="button" class="t-btn" data-copy="syllabus-line">Copy syllabus line</button>
+<span class="t-copy-status" role="status" aria-live="polite"></span>
+</div>
+</section>
+
+<section aria-labelledby="checks">
+<h2 id="checks">How exhibits are checked</h2>
+<p>Each exhibit is its own repository and its own site, built and published by its own GitHub Actions workflow. The <a href="https://github.com/systemslibrarian/crypto-lab/blob/main/audits/_MASTER-TEMPLATE.md">lab standard</a> asks that a lab’s publish step wait for its unit tests, including known-answer tests from the specification it implements, and for a browser test suite, run through Playwright, that includes an automated accessibility scan (axe-core, WCAG 2.1 A and AA rules) of the built site. It also asks for a “claims” suite that checks what a page says against what the page computes.</p>
+<p>Practice varies from lab to lab. Reading the workflow files that publish the labs on 2026-09-22, we found that most run both a unit suite and a browser suite, while some run only one of the two. Most test in Chromium only; a few also test in Firefox and WebKit, the engine behind Safari. Many labs have a claims suite and some do not. A green build therefore means different things for different labs.</p>
+<p>What these checks do not establish: that an explanation teaches well, that a lab behaves the same in browsers its tests do not run, how it works with a screen reader or keyboard alone, or that its cryptography is free of mistakes its tests do not cover.</p>
+<h3>The worksheet drift check</h3>
+<p>Once a day, a scheduled job opens the live exhibit behind each worksheet and looks for every control the worksheet names. If one is missing, it opens an issue in this repository naming the worksheet, so a missing control is usually reported within a day of the change going live. It cannot stop a lab from publishing the change, and it cannot confirm that the lab still behaves the way the worksheet describes; it only confirms that the named controls are still on the page.</p>
+<p>The pages under /teach/ are generated from data files in this repository, and a check in this repository’s CI fails when a generated page no longer matches its sources.</p>
+</section>
+
+<section aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<h3>What is tested automatically</h3>
+<ul>
+<li>In labs whose workflows include the browser suite, axe-core checks WCAG 2.1 A and AA rules against the built site before it is published, usually in Chromium only. Some labs add their own contrast and non-text checks.</li>
+<li>The catalog page was scanned with axe-core by hand on 2026-09-22, before and after the links to these pages were added; axe reported no violations either time. The catalog page has no automated accessibility check in CI.</li>
+<li>These teaching pages were scanned with axe-core by hand on 2026-09-22 before publication; axe reported no violations. They have no automated accessibility check in CI.</li>
+</ul>
+<h3>What is not tested automatically</h3>
+<p>A full keyboard-only walk through an exhibit, use with a screen reader, zoom and reflow, legibility on a classroom projector, motion and timing in animations, and cognitive load. These need a person.</p>
+<p>Passing axe is not conformance. Automated rules find some kinds of barriers and cannot judge many others, so nothing on this site claims conformance with WCAG.</p>
+<h3>Reporting a barrier</h3>
+<p>Open a <a href="https://github.com/systemslibrarian/crypto-lab/issues/new?template=teaching-material-problem.yml">teaching material problem</a> report and choose “Accessibility barrier”. Say which page or exhibit, which browser, which assistive technology if any, and what got in the way. If a student cannot use GitHub, an instructor can file the report for them.</p>
+</section>
+
+<section aria-labelledby="privacy">
+<h2 id="privacy">Privacy and data</h2>
+<p>Nothing here requires an account, and there are no class rosters, no grade passback and no hosted answer keys. What follows records what the catalog and these pages actually contacted when they were observed, with the date.</p>
+<h3>What these pages contact</h3>
+<p><strong>The catalog page (crypto-lab.systemslibrarian.dev)</strong> <span class="t-dated">Observed 2026-09-22 in Chromium, driven by Playwright. Loaded the live page, scrolled to the end, waited for the network to go quiet, and recorded every request, cookie and web-storage key.</span></p>
+<ul><li><code>https://fonts.googleapis.com</code> — web-font stylesheet</li><li><code>https://fonts.gstatic.com</code> — web-font files</li><li><code>https://raw.githubusercontent.com</code> — the award badge image</li></ul>
+<ul>
+<li>Cookies: none set</li>
+<li>Browser storage: localStorage key &quot;theme&quot;, set to &quot;dark&quot; so the page keeps its single dark theme</li>
+<li>Scripts from other origins: none</li>
+</ul>
+<p><strong>These teaching pages (/teach/)</strong> <span class="t-dated">Observed 2026-09-22 in Chromium, driven by Playwright. Loaded a local copy of the generated pages before publication (the landing page, module pages and a worksheet), waited for the network to go quiet, and recorded every request, cookie and web-storage key.</span></p>
+<p>No requests to any other origin.</p>
+<ul>
+<li>Cookies: none set</li>
+<li>Browser storage: none used</li>
+<li>Scripts from other origins: none</li>
+</ul>
+<h3>What the exhibits contact</h3>
+<p>Each exhibit is a separate site on systemslibrarian.github.io and makes its own requests. Some labs load web fonts from Google Fonts. The lab standard has a lab write one localStorage key, <code>theme</code>, to keep its single dark theme, and some labs also store settings of their own, such as the last configuration used. Each module page lists what was observed for its exhibits, with the date, once they have been checked.</p>
+<p><a href="https://systemslibrarian.github.io/crypto-lab-blind-oracle/">Blind Oracle</a> is the exception the catalog itself names: its card says it has a live backend. When its page loads it contacts <code>https://blind-oracle-api.onrender.com</code> (a request to /health), and the numbers you encrypt are sent there as ciphertext, with a public evaluation key, for the server to add. <span class="t-dated">Observed 2026-09-22 in Chromium, driven by Playwright; server address read from the lab's .env.production at commit 8dd04f298223.</span></p>
+<h3>Hosting</h3>
+<p>The catalog, these pages and the exhibits are served by GitHub Pages. For what GitHub records about visitors to Pages sites, see GitHub’s own documentation: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">GitHub Pages data collection</a>.</p>
+</section>
+
+<section aria-labelledby="cite">
+<h2 id="cite">How to cite</h2>
+<h3>The collection</h3>
+<p>APA:</p>
+<p class="t-cite">Clark, P. A. (2026). <em>Crypto Lab</em> (Version 2026.09.22) [Computer software]. https://crypto-lab.systemslibrarian.dev/</p>
+<pre class="t-pre">@misc{clark_crypto_lab_2026,
+  author       = {Clark, Paul A.},
+  title        = {Crypto Lab},
+  year         = {2026},
+  version      = {2026.09.22},
+  howpublished = {\url{https://crypto-lab.systemslibrarian.dev/}},
+  note         = {Accessed <span data-accessed="iso">[date accessed]</span>}
+}</pre>
+<p>Reference managers can also read the <a href="https://github.com/systemslibrarian/crypto-lab/blob/main/CITATION.cff">CITATION.cff</a> file in the repository, and these pages carry Dublin Core and <code>citation_*</code> metadata.</p>
+<h3>A single exhibit</h3>
+<p>Exhibits change as they are improved, so cite them with the date you used them. The date below is filled in from your device’s clock when the page loads.</p>
+<details class="t-details">
+<summary>Exhibit citations (APA)</summary>
+<ul class="t-cites t-cites--all"><li><p class="t-cite">Clark, P. A. (n.d.). <em>Ablation Wire</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ablation-wire/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Accumulator</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-accumulator/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>AEGIS Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-aegis-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>AES Modes</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-aes-modes/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Ascon</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ascon/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Attestation Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-attestation-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Attribute Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-attribute-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Babel Hash</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-babel-hash/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>BB84</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-bb84/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Bcrypt Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Beacon Lock</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-beacon-lock/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Biham Lens</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-biham-lens/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>BIKE Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-bike-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Bitcoin Script</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-bitcoin-script/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Bitcoin Wallet</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Blind Hello</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-blind-hello/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Blind Oracle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-blind-oracle/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Blind Relay</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-blind-relay/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Blind Sign</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-blind-sign/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Broken Trust</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-broken-trust/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Bulletproofs</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-bulletproofs/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Card Trick</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-card-trick/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>ChaCha20 Stream</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-chacha20-stream/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Chain of Trust</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-chain-of-trust/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Ciphertext Mirror</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>CKKS Lab</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ckks-lab/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Collision Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-collision-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Commit Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-commit-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Context Ward</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-context-ward/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Corrupted Oracle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Covert Channel Studio</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-covert-channel-studio/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Credential Veil</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-credential-veil/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Curve Lens</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-curve-lens/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Curve448</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-curve448/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Dead Sea Cipher</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>DH MITM</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Dilithium Reject</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-dilithium-reject/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Dilithium Seal</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-dilithium-seal/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>DKG Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-dkg-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>DNSSEC Chain</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-dnssec-chain/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Downgrade Wire</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-downgrade-wire/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>DP Noise</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-dp-noise/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>DRBG Arena</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-drbg-arena/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>E91</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-e91/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>ECDSA Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Ed25519 Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ed25519-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Educational RSA</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-rsa-educational/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>ElGamal Plain</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-elgamal-plain/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Encrochat</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-encrochat/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Enigma Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-enigma-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Entropy Collapse</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-entropy-collapse/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Envelope KMS</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-envelope-kms/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Factor Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-factor-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Falcon Seal</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-falcon-seal/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Feistel Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-feistel-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>FHE Arena</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-fhe-arena/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Fold Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-fold-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Format Ward</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-format-ward/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Frodo Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-frodo-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>FROST Threshold</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-frost-threshold/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Frozen Heart</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-frozen-heart/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Garbled Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-garbled-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>GG20 Wallet</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-gg20-wallet/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>GGH Trapdoor</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ggh-trapdoor/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Ghost Commit</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ghost-commit/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Grover</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-grover/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Harvest Timeline</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-harvest-timeline/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Harvest Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-harvest-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Hash Zoo</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hash-zoo/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>HAWK</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hawk/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Hidden Bit</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hidden-bit/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>HPKE Envelope</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hpke-envelope/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>HQC Timing</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hqc-timing/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>HQC Timing Break</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>HQC Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hqc-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Hybrid Guide</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hybrid-guide/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Hybrid PQC</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Hybrid Sign</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hybrid-sign/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Hybrid Wire</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-hybrid-wire/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>IBE Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ibe-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Icy DVRF</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-icy-dvrf/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Iron Letter</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-iron-letter/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Iron Serpent</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-iron-serpent/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Isogeny Atlas</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Isogeny Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-isogeny-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>J-UNIWARD</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-j-uniward/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Jevil</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-jevil/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>JWT Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-jwt-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>KDF Arena</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-kdf-arena/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>KDF Chain</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-kdf-chain/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>KEM Trap</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-kem-trap/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Kerberos v5</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-kerberos/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Key Exchange</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-key-exchange/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Key Mirror</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-key-mirror/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>KMAC Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-kmac-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Kyber Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-kyber-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>KyberSlash</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-kyberslash/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Lattice Builder</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-lattice-builder/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Lattice Fault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-lattice-fault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Lattice Gentle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-lattice-gentle/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>LLL Break</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-lll-break/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>LMS Ledger</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-lms-ledger/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>LMS/XMSS</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-lms-xmss/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>LWE Hints</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-lwe-hints/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>MAC Race</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-mac-race/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Masked Core</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-masked-core/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Matsui Line</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-matsui-line/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>MAYO Seal</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-mayo-seal/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>McEliece Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-mceliece-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Merkle Proofs</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-merkle-proofs/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Merkle Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-merkle-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>MLS Group</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-mls-group/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Model Breach</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-model-breach/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>MPCitH Sign</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-mpcith-sign/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Multivariate UOV</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-multivariate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>MuSig Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-musig-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Noise Pipe</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-noise-pipe/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Nonce Collision</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-nonce-collision/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Nonce Guard</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-nonce-guard/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Nonce Lattice</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-nonce-lattice/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>NTRU Classic</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ntru-classic/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Oblivious Shelf</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>OPAQUE Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-opaque-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>ORAM Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-oram-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Order Leak</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-order-leak/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>OT Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ot-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>OTP Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-otp-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Padding Oracle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-padding-oracle/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Paillier Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-paillier-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Pairing Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-pairing-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>PAKE Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-pake-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Patron Shield</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-patron-shield/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Phantom Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-phantom-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>PKI Chain</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-pki-chain/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Point Arithmetic</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Poly1305 MAC</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-poly1305-mac/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Polynomial Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-polynomial-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Power Trace</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-power-trace/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>PQ Families</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-pq-families/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>PQ Rotation</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-pq-rotation/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>PQ TLS Handshake</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>PQXDH Wire</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Privacy Pass</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-privacy-pass/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Proof Tally</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-proof-tally/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Protocol Checker</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-protocol-checker/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Protocol Compose</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-protocol-compose/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>PSI Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-psi-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Quantum Entropy</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-quantum-entropy/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Quantum Vault KpqC</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Ratchet Wire</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ratchet-wire/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Regex Veil — FTE</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-fte/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Rekey Relay</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-rekey-relay/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Reshare Circle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-reshare-circle/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Ring Sign</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ring-sign/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>RSA Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-rsa-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Salamander</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-salamander/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Schnorr Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-schnorr-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Scloud+ Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-scloud-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Search Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-search-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Sector Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-sector-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Shadow Vault</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-shadow-vault/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Shamir Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-shamir-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Shamir vs FROST</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Shelf Oracle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-shelf-oracle/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Shor</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-shor/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Signed Bytes</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-signed-bytes/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Silent Tally</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-silent-tally/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Simon's Period</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-simon-period/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Sleeve Check</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-sleeve-check/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>SNARK Arena</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-snark-arena/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Snow 2</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/snow2/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>SPAKE Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-spake-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>SPDZ Forge</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-spdz-forge/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>SPHINCS+ Ledger</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Sphinx Mix</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-sphinx-mix/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Split Point</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-split-point/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>SSH Handshake</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-ssh-handshake/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>STARK Tower</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-stark-tower/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Stego Suite</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-stego-suite/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Stream Ward</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-stream-ward/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Syndrome Drain</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-syndrome-drain/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Syndrome Hints</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-syndrome-hints/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Threshold Decrypt</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Threshold ML-DSA</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Time Trust</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-time-trust/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Time-Lock Puzzle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Timing Oracle</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-timing-oracle/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Timing Side-Channel</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>TLS Handshake</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-tls-handshake/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Token Tell</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-token-tell/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Traitor Trace</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-traitor-trace/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>VDF</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-vdf/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Vigenère Break</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-vigenere-break/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>VRF Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-vrf-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>VSS Gate</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-vss-gate/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>Web of Trust</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-web-of-trust/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>WebAuthn</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-webauthn/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>World Ciphers</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-world-ciphers/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>World Hashes</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-world-hashes/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>X3DH Wire</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-x3dh-wire/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>ZK Arena</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-zk-arena/</p></li>
+<li><p class="t-cite">Clark, P. A. (n.d.). <em>ZK Proof Lab</em> [Interactive teaching demonstration]. Crypto Lab. Retrieved <span data-accessed="apa">[date accessed]</span>, from https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/</p></li></ul>
+</details>
+</section>
+
+<section aria-labelledby="contact">
+<h2 id="contact">Tell us, or ask for a module</h2>
+<ul>
+<li><a href="https://github.com/systemslibrarian/crypto-lab/issues/new?template=course-use.yml">Using Crypto Lab in a course</a>: tell us where and how. You choose whether it may be listed publicly.</li>
+<li><a href="https://github.com/systemslibrarian/crypto-lab/issues/new?template=teaching-material-problem.yml">Teaching material problem</a>: a worksheet step that no longer matches its exhibit, an error, or an accessibility barrier.</li>
+<li><a href="https://github.com/systemslibrarian/crypto-lab/issues/new?template=request-a-module.yml">Request a module</a>: the course, the level and the topics you need.</li>
+</ul>
+</section>
+</main>
+<footer class="t-foot">
+  <p class="t-foot-links"><a href="../">Crypto Lab catalog</a> · <a href="./">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
+</footer>
+<script src="./teach.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use Crypto Lab in teaching or research, please cite it using the metadata below."
+type: software
+title: "Crypto Lab"
+abstract: "Browser-based cryptography teaching demonstrations, with course modules and worksheets for instructors."
+authors:
+  - family-names: "Clark"
+    given-names: "Paul A."
+    # TODO(Paul): add your ORCID iD here as  orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+# Date-based version. tools/ release scripts bump version and date-released together.
+version: "2026.09.22"
+date-released: "2026-09-22"
+url: "https://crypto-lab.systemslibrarian.dev/"
+repository-code: "https://github.com/systemslibrarian/crypto-lab"
+# TODO(Paul): once the collection is archived on Zenodo, add its DOI here:
+# identifiers:
+#   - type: doi
+#     value: "10.5281/zenodo.XXXXXXX"
+#     description: "Archived snapshot of the collection"
+# TODO(Paul): add  license:  once the license for teach/ content is chosen (see teach/LICENSE).
+keywords:
+  - cryptography
+  - security education
+  - interactive demonstrations
+  - course modules

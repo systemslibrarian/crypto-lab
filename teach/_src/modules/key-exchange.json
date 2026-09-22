@@ -1,0 +1,108 @@
+{
+  "id": "key-exchange",
+  "position": 30,
+  "title": "Key exchange & secure channels",
+  "audience": "Undergraduate computer science, networking, and security students, and motivated newcomers, who can follow modular arithmetic and want to see how two parties agree on a key over an open network and what stops an attacker from sitting in the middle.",
+  "course_fit": "Fits the key-exchange or TLS unit of an undergraduate computer networking, network security, or introductory cryptography course. The extension exhibit suits an upper-level security or formal-methods course that introduces symbolic protocol analysis.",
+  "prerequisites": [
+    "Modular exponentiation (computing g^a mod p)",
+    "Hash functions and MACs at the level of what they take in and return",
+    "Digital signatures as sign and verify operations",
+    "Authenticated encryption (for example AES-GCM) as a black box",
+    "The client-server shape of an HTTPS connection"
+  ],
+  "outcomes": [
+    "Students will be able to contrast a passive eavesdropper with an active man-in-the-middle against Diffie–Hellman, and identify which threat larger parameters address and which one requires authentication.",
+    "Students will be able to trace a TLS 1.3 handshake message by message, stating for each step which keys are derived and which transcript a signature or Finished MAC covers.",
+    "Students will be able to predict which TLS 1.3 verification check fails under a given fault or attacker strategy, and justify the prediction from what that check binds.",
+    "Students will be able to demonstrate a supported_groups downgrade against an unbound negotiation and explain how transcript binding through the Finished MAC makes the same strip abort.",
+    "Students will be able to evaluate server and client policies (PQC preferred versus required, fail-open versus fail-closed retry) for whether they let an on-path attacker force a downgrade."
+  ],
+  "exhibits": [
+    {
+      "name": "diffie-hellman-mitm",
+      "role": "intro",
+      "minutes": 20,
+      "students_do": "Run a Diffie–Hellman exchange on the parameter presets, press Break it to recover Alice's secret exponent by baby-step giant-step, run Mallory's man-in-the-middle to leave Alice and Bob with two different keys, then run the ECDSA-signed exchange honest and tampered to watch it fail closed.",
+      "source_commit": "8d69dbc7ae4f",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "tls-handshake",
+      "role": "fix",
+      "minutes": 30,
+      "students_do": "Step through the eight handshake steps reading the transcript-hash chip, check that both sides compute the same X25519 secret, inject each fault in Break this handshake and each attacker move in the MITM panel to see which verifier checks fail, then press New session and compare which values change.",
+      "source_commit": "beacd76b3f49",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "downgrade-wire",
+      "role": "break-it",
+      "minutes": 25,
+      "students_do": "Play the downgrade, then strip X25519MLKEM768 and run it unbound and under TLS 1.3 (or Compare both), expand Show the Finished MAC to follow the byte diff, and flip the server policy, sentinel checks, and retry policy to see which settings let the downgrade through.",
+      "source_commit": "80deb12533ca",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "protocol-checker",
+      "role": "extension",
+      "minutes": 20,
+      "students_do": "Run the search on Needham-Schroeder Public Key, step the attack trace and attacker-knowledge panel to watch the attacker derive Nb, tick Lowe's fix and re-run, then switch to Diffie-Hellman and toggle signatures.",
+      "source_commit": "adfe80443e54",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    }
+  ],
+  "discussion_questions": [
+    "Mallory solves no discrete logarithm in the Diffie–Hellman lab. What does she exploit instead, and why does switching to the 2048-bit group leave her attack untouched?",
+    "Under the TLS lab's 'Break the ECDHE agreement' fault, the certificate chain and CertificateVerify still verify. What does that tell you about the difference between knowing who your peer is and sharing keys with it?",
+    "The TLS MITM panel's 'Relay unchanged' move passes the client's checks. Should that count as a successful attack? What does the attacker end up holding?",
+    "Downgrade Wire can show 'Handshake COMPLETED' beside 'DOWNGRADE — ALARM'. Why does the lab keep the cryptographic result and the security verdict as separate indicators, and what goes wrong if they are merged?",
+    "Transcript binding makes the strip fail closed. How can a client's retry policy hand the attacker the downgrade anyway, and what does 'PQC required' cost in exchange for stopping the silent downgrade?"
+  ],
+  "instructor_notes": {
+    "expected_observations": [
+      "Diffie–Hellman, Part 2: on the toy presets Break it recovers Alice's exponent almost immediately; on the 2048-bit preset the button is disabled, and the page explains that its cost chart describes baby-step giant-step specifically, not the security level of real finite-field Diffie–Hellman.",
+      "Diffie–Hellman, Part 3: the section loads already showing the finished attack, and Run the attack restarts the six-step walkthrough. Alice's and Bob's keys differ; in the relay panel Mallory reads and rewrites the message, and Bob cannot decrypt Alice's original ciphertext with his own key.",
+      "Diffie–Hellman, Part 4: the honest signed exchange verifies and Bob proceeds; with Mallory tampering, verification fails and the handshake aborts.",
+      "TLS: the key-exchange panel shows the client- and server-computed X25519 secrets matching byte for byte. Under Break the ECDHE agreement, chain validation and CertificateVerify pass while both Finished MACs fail; under Flip a byte in flight, CertificateVerify and both Finished MACs fail together while the ECDHE outputs still agree.",
+      "TLS MITM panel: reusing the server's certificate fails the signature check, signing with the attacker's own key fails the trust anchor, and relaying unchanged passes the checks while the attacker does not hold the session secret.",
+      "TLS: New session keeps the server's Ed25519 leaf key and changes the ephemeral keys and the secrets derived from ECDHE. New session re-runs with whichever fault is currently selected, so choose Honest session first when comparing sessions.",
+      "Downgrade Wire: an unbound strip reports Handshake COMPLETED on x25519 with DOWNGRADE — ALARM; the same strip under TLS 1.3 reports ABORTED on a Finished MAC mismatch with DEFENSE HELD, and the Finished MAC view marks the differing bytes in the transcript hash and the server Finished. Play the downgrade leaves the binding control on Unbound, so switch it back to TLS 1.3 before running the defended case.",
+      "Downgrade Wire, later panels: PQC preferred lets the strip complete while PQC required refuses the classical-only suite; the sentinel catches the version rollback when the server writes it and the client checks it; a fail-open retry policy ends in a downgrade while fail-closed refuses to weaken.",
+      "Protocol Checker (extension): Needham-Schroeder Public Key returns ATTACK FOUND with a trace in which M relays between two sessions; with Lowe's fix ticked the identical search reports No attack in bound; naive Diffie-Hellman reports an attack and signed Diffie-Hellman does not."
+    ],
+    "misconceptions": [
+      "Larger Diffie–Hellman parameters stop a man-in-the-middle. They raise the cost for a passive eavesdropper; the active attacker computes no discrete logarithm, so authentication, not parameter size, is what stops her.",
+      "The baby-step giant-step cost curve is the security level of real Diffie–Hellman. The lab states that the square-root cost belongs to that generic algorithm; the number field sieve is sub-exponential and is what sets the real security level of a finite-field group.",
+      "A valid certificate chain and CertificateVerify prove that both sides share keys. They prove who the peer is; the Finished MACs are what catch a key-agreement mismatch.",
+      "The TLS lab's byte counts and lock badges describe a real deployment. The Certificate body uses the demo's own encoding rather than X.509, and the application-data record is the one record actually AEAD-sealed; the handshake-key badges name the layer a message belongs to.",
+      "A handshake that completes is a good handshake. Downgrade Wire shows a completed handshake that is a security failure and renders it as an alarm.",
+      "TLS 1.3 resists downgrade because it detects tampering with the offer. The lab frames the answer as the record of what was offered being cryptographically bound into the key that gets agreed, not as the protocol detecting tampering.",
+      "The downgrade sentinel is as strong as transcript binding. The sentinel signals a version rollback and says nothing about a group strip inside TLS 1.3; it is a flag the client must remember to check, and it lives in one field.",
+      "The silent downgrade lets the attacker read traffic now. The lab states that it weakens the key exchange, exposing recorded traffic to future quantum decryption, without compromising authentication or letting anyone read the traffic today.",
+      "In a real TLS 1.3 stack a strip is caught at the Finished MAC. The lab isolates the Finished MAC so it can be watched byte for byte, and notes that in a real stack the diverging transcript also changes the handshake traffic keys, so the mismatch usually surfaces one step earlier.",
+      "'No attack found' from the symbolic checker means the protocol is safe. It means no attack in that model within the displayed bound, under a perfect-cryptography assumption that hides timing, padding, and implementation attacks."
+    ],
+    "conceptual_answers": [
+      "Mallory exploits the missing authentication: plain Diffie–Hellman does not check who sent a public value, so she runs one exchange with Alice and a separate one with Bob. Larger groups raise the cost of the discrete-log attack an eavesdropper would need, but Mallory computes no discrete log, so group size does not affect her; binding each share to an identity with a signature, certificate, or PAKE is what stops her.",
+      "Authentication proves who the peer is, not that the two sides derived the same keys. The Finished MACs are computed under keys derived from the ECDHE output, so they are the check that catches a key-agreement mismatch that the certificate and signature cannot see.",
+      "Relaying unchanged passes the checks because nothing the transcript hash covers was altered. The client accepts, but the attacker holds no session secret: relaying without altering the handshake makes it a wire, not a listener, and the moment it changes anything the hash covers the checks start failing.",
+      "A handshake can complete cryptographically and still be a security failure. Keeping the two indicators separate lets a silent downgrade render as an alarm rather than as a success, so a completed-but-weakened connection is not mistaken for a good outcome.",
+      "If the client reacts to a failed handshake by retrying with a smaller offer, an attacker who can break the connection twice walks it back to the classical-only group: the primitive held, but the retry policy gave it away. 'PQC required' prevents the silent downgrade by converting it into a hard failure, which costs availability and is its own attack surface."
+    ]
+  },
+  "trimmed": [],
+  "last_checked": "2026-09-22"
+}

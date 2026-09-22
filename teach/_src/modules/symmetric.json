@@ -1,0 +1,118 @@
+{
+  "id": "symmetric",
+  "position": 10,
+  "title": "Security & symmetric encryption",
+  "audience": "Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal.",
+  "course_fit": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. Planned across two class meetings of 50 to 75 minutes each.",
+  "prerequisites": [
+    "XOR on bits and bytes",
+    "Reading hexadecimal byte strings",
+    "AES as a block cipher: a keyed function on 16-byte blocks",
+    "Basic probability: a blind guess of a fair coin is right half the time",
+    "A current desktop browser"
+  ],
+  "outcomes": [
+    "Students will be able to explain, using the hidden-bit IND-CPA game, why deterministic AES-ECB and CBC with a predictable chained IV let a named adversary tell which of two messages was encrypted.",
+    "Students will be able to demonstrate that reusing a one-time-pad key or a stream-cipher keystream reduces two ciphertexts to the XOR of their plaintexts, and recover plaintext from that XOR by crib-dragging.",
+    "Students will be able to compare ECB, CBC, CTR, GCM and CCM by whether each provides confidentiality alone or authenticated encryption, and predict how each responds when a ciphertext bit is flipped.",
+    "Students will be able to trace how a padding-validity oracle lets an attacker recover AES-CBC plaintext byte by byte without the key, and explain why verifying a MAC before decryption stops the same attack.",
+    "Students will be able to distinguish the consequences of nonce reuse for AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC, including which key material the attacker recovers and which it does not."
+  ],
+  "exhibits": [
+    {
+      "name": "hidden-bit",
+      "role": "intro",
+      "minutes": 15,
+      "students_do": "In Exhibit 01, pick an AES scheme (GCM, CTR, chained-IV CBC or ECB) and an adversary (random guess, re-encrypt and compare, or the BEAST-style IV predictor), run or step real trials, and read the measured advantage, Wilson interval and verdict.",
+      "source_commit": "00705ccbf695",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "otp-vault",
+      "role": "break-it",
+      "minutes": 20,
+      "students_do": "Encrypt a message under a fresh random pad, type any same-length plaintext to derive a key that maps the fixed ciphertext to it, then switch on key reuse and crib-drag C1 ⊕ C2 to peel both messages apart, including a built-in challenge.",
+      "source_commit": "3d058af543b1",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "aes-modes",
+      "role": "fix",
+      "minutes": 15,
+      "students_do": "Encrypt your own plaintext under ECB, CBC, CTR, GCM and CCM, inspect the key, IV or nonce, ciphertext and tag, and run the ECB pattern-leak, CBC bit-flip and GCM tamper-detection demos to see which modes accept a modified ciphertext.",
+      "source_commit": "cbfb1b4dfa2c",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "padding-oracle",
+      "role": "break-it",
+      "minutes": 35,
+      "students_do": "Predict whether a crafted final padding byte passes the real oracle, run the byte-by-byte attack on a block you type, then run the identical attack against leaky, silent and Encrypt-then-MAC servers and tamper with an AES-GCM ciphertext.",
+      "source_commit": "e57bb57259b8",
+      "worksheet": "padding-oracle",
+      "privacy": null,
+      "support": null,
+      "run_specific_values": {
+        "checked": "2026-09-22",
+        "value": "partly",
+        "source": "src/oracle.ts:96-102 at e57bb57259b8: a fresh random AES-128 key and IV for every session",
+        "notes": "Oracle query counts in Full Block and for the leaky server differ from run to run; the forced-byte answers and the recovered plaintext do not."
+      }
+    },
+    {
+      "name": "nonce-collision",
+      "role": "break-it",
+      "minutes": 15,
+      "students_do": "Encrypt two messages under one AES-CTR key and nonce and crib-drag the second out of C1 ⊕ C2, then switch each construction to a reused nonce (or press \"Run all four — one reused nonce\") and read each card's cryptographic result beside its security verdict.",
+      "source_commit": "d23b6ec02c35",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    }
+  ],
+  "discussion_questions": [
+    "In Hidden Bit, random guessing and re-encryption both flatten against chained-IV CBC, yet the BEAST-style predictor breaks it. What does a flat measurement tell you about a scheme, and what does it not tell you?",
+    "Why does XORing two ciphertexts made with the same one-time pad, or the same CTR nonce, remove the key entirely, and why does that undo what OTP Vault's Panel 2 shows about a single ciphertext?",
+    "AES-CBC with a random IV hides repeated messages, yet Padding Oracle recovers its plaintext without the key. What is CBC missing, and why does the lab call the silent server's protection fragile while Encrypt-then-MAC stops the attack before decryption?",
+    "One reused nonce produces different outcomes across Nonce Collision's cards. Why does AES-GCM lose integrity while AES-CBC leaks a shared prefix, and why is recovering the GHASH subkey H not the same as recovering the AES key?",
+    "Where do repeated nonces come from in real systems, and which remedy the lab names (a persistent counter with a single encryptor, limiting how many random-nonce messages one key encrypts, or a misuse-resistant AEAD such as AES-GCM-SIV) addresses which cause?"
+  ],
+  "instructor_notes": {
+    "expected_observations": [
+      "Hidden Bit: AES-ECB with re-encrypt-and-compare, and chained-IV CBC with the BEAST-style predictor, earn a BROKEN verdict whose interval excludes zero; AES-GCM and AES-CTR under random guessing or re-encryption report NO ADVANTAGE FOUND BY THESE ADVERSARIES. The lab notes that finite samples fluctuate, so reruns differ slightly.",
+      "Hidden Bit: choosing AES-CBC, chained IV reveals the 'A flat line is not a verdict' panel; once random guessing and re-encryption have both flattened, its heading changes to say no advantage was found and the scheme is broken. Exhibit 01 renders after an RSA-2048 key is generated, so allow a moment on first load.",
+      "OTP Vault: Panel 2 produces a valid key for any target of the ciphertext's byte length and refuses other lengths. In Panel 3 the default crib 'the ' exposes stretches of both messages with key reuse on and noise with it off; with reuse on, re-rolling the session keys changes the ciphertexts but not C1 ⊕ C2. The Control challenge in Panel 5 uses independent keystreams and does not yield readable text.",
+      "AES Modes: in the Compare tab, repeated 16-byte input blocks appear as repeated ciphertext blocks under ECB and not under the other modes. Tampered ECB, CBC and CTR ciphertexts still decrypt (CTR flips the same plaintext bit; CBC garbles one block and flips the matching bit in the next), while GCM and CCM reject the tampered ciphertext and release no plaintext. With a short plaintext the CBC tamper can instead fail the padding check, and the page labels that error a padding oracle, which sets up the next exhibit. The targeted bit-flip demo turns admin=0 into admin=1 without the key.",
+      "Padding Oracle: Panels 3 and 4 print a byte-for-byte match badge against the plaintext the session encrypted, beside a running oracle-query count. In the Panel 6 bench the leaky server gives up its block, the silent and Encrypt-then-MAC servers exhaust the probes for a byte and stop, and the MAC-rejections column shows Encrypt-then-MAC queries rejected before decryption. Tampering with the AES-GCM ciphertext fails authentication with no plaintext shown.",
+      "Nonce Collision: with a reused nonce, the CTR card reports lost confidentiality, the GCM and ChaCha20-Poly1305 cards report a forged tag accepted by the real verifier with the recovered authentication subkey or one-time key checked against ground truth, and the CBC card reports prefix equality; the GCM and ChaCha20-Poly1305 cards state the encryption key was not recovered. Pressing a cancellation button again prints new numbers, because each press uses a fresh key."
+    ],
+    "misconceptions": [
+      "A near-zero measured advantage shows a scheme is IND-CPA secure. Hidden Bit says it means the named adversaries failed, and its chained-IV CBC fixture flattens under two adversaries while falling to a third.",
+      "Re-rolling the key hides key reuse. In OTP Vault, with reuse on, the key cancels, so C1 ⊕ C2 does not change when the session keys are re-rolled.",
+      "ECB is acceptable because each block is still AES-encrypted. AES Modes' threat model notes the attacker cannot decrypt a single block but can see which blocks repeat and can splice or reorder blocks undetected.",
+      "The padding oracle attack breaks AES or recovers the key. Padding Oracle describes it as exploiting CBC together with observable padding validation, and AES Modes lists key recovery among what the attacker cannot do.",
+      "Returning one uniform error response is as good as authenticating. Padding Oracle's silent server still runs the padding check, and the lab warns that real deployments can leak the same bit through timing or downstream behaviour, as Lucky Thirteen did; the Encrypt-then-MAC server rejects modified ciphertexts before decryption.",
+      "Nonce reuse in GCM or ChaCha20-Poly1305 hands over the encryption key. Nonce Collision recovers the GHASH authentication subkey or the Poly1305 one-time key, which enables forgery, and states the AES or ChaCha20 key is not learned.",
+      "Nonce Collision shows these ciphers are weak. The lab says it demonstrates that violating the unique-nonce rule fails, construction by construction, not that the ciphers are weak when used as specified."
+    ],
+    "conceptual_answers": [
+      "A measured advantage estimates how one named strategy performs over a finite number of trials. An interval that excludes zero is evidence of a break; an interval that crosses zero means those strategies found no pattern. The chained-IV CBC fixture shows a scheme can flatten for weak adversaries and still fall to a better one, which is why the lab says a flat histogram is not a proof and points to reductions in its later exhibit.",
+      "Each ciphertext is the plaintext XOR the same pad, so XORing the two ciphertexts cancels the pad and leaves P1 ⊕ P2. For a single ciphertext, any plaintext of the right length has a key that produces it, so the ciphertext reveals nothing beyond length. A second message under the same pad removes that freedom: a correct guess about part of one plaintext exposes the matching bytes of the other, which is crib-dragging. A reused CTR or ChaCha20 nonce repeats the keystream and reduces to the same situation.",
+      "CBC provides confidentiality without integrity, so an attacker can submit modified ciphertexts and learn whether the padding check passed. The silent server still performs that check but answers identically, and the lab warns the same bit can leak through timing, logs or downstream behaviour. Encrypt-then-MAC verifies a MAC over the ciphertext first, so modified ciphertexts are rejected before AES-CBC decryption and the padding check is not reached. AEAD modes such as GCM check the authentication tag before releasing plaintext.",
+      "In GCM the tag is a GHASH value keyed by H with a per-nonce mask XORed on top. Under one reused nonce, XORing two tags cancels the mask and leaves an equation in H; solving it lets the attacker compute valid tags for forged ciphertexts under that nonce, and the keystream reuse also exposes P1 ⊕ P2. H is derived from the AES key but is not the AES key, so the attacker does not gain decryption under fresh nonces. CBC with a repeated IV becomes deterministic, so equal leading plaintext blocks give equal leading ciphertext blocks: an equality leak rather than a keystream collapse.",
+      "Random nonces collide by the birthday bound, far sooner than the size of the nonce space suggests, which is why SP 800-38D limits how many messages one key may encrypt with random IVs. Counters repeat when state rewinds, for example after a VM snapshot, a process fork or a container rollback. A persistent counter with a single encryptor addresses uniqueness; a misuse-resistant AEAD such as AES-GCM-SIV limits the damage of a repeat to revealing whether two plaintexts were identical, which the lab describes but does not run."
+    ]
+  },
+  "trimmed": [],
+  "last_checked": "2026-09-22"
+}

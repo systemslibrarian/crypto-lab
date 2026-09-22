@@ -1,0 +1,45 @@
+{
+  "hub": {
+    "label": "The catalog page (crypto-lab.systemslibrarian.dev)",
+    "observed": "2026-09-22",
+    "engine": "Chromium, driven by Playwright",
+    "method": "Loaded the live page, scrolled to the end, waited for the network to go quiet, and recorded every request, cookie and web-storage key.",
+    "other_origins": [
+      {
+        "origin": "https://fonts.googleapis.com",
+        "what": "web-font stylesheet"
+      },
+      {
+        "origin": "https://fonts.gstatic.com",
+        "what": "web-font files"
+      },
+      {
+        "origin": "https://raw.githubusercontent.com",
+        "what": "the award badge image"
+      }
+    ],
+    "cookies": [],
+    "storage": [
+      "localStorage key \"theme\", set to \"dark\" so the page keeps its single dark theme"
+    ],
+    "external_scripts": []
+  },
+  "teach": {
+    "label": "These teaching pages (/teach/)",
+    "observed": "2026-09-22",
+    "engine": "Chromium, driven by Playwright",
+    "method": "Loaded a local copy of the generated pages before publication (the landing page, module pages and a worksheet), waited for the network to go quiet, and recorded every request, cookie and web-storage key.",
+    "other_origins": [],
+    "cookies": [],
+    "storage": [],
+    "external_scripts": []
+  },
+  "exception": {
+    "exhibit": "crypto-lab-blind-oracle",
+    "server_origin": "https://blind-oracle-api.onrender.com",
+    "on_load": "a request to /health",
+    "observed": "2026-09-22",
+    "engine": "Chromium, driven by Playwright",
+    "source": "the lab's .env.production at commit 8dd04f298223"
+  }
+}

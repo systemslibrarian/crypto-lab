@@ -1,0 +1,110 @@
+{
+  "id": "library-privacy",
+  "position": 50,
+  "title": "Library privacy, for iSchools",
+  "audience": "Library and information science students in an iSchool, with no mathematics or cryptography background, who need to reason about who can learn what about a patron from a catalog search, a request log, or a published statistic.",
+  "course_fit": "Fits an undergraduate or graduate LIS course on information ethics, privacy, or library systems and technology, as a one- or two-meeting unit. The shelf-oracle extension suits students who also take a technical or information-security elective.",
+  "prerequisites": [
+    "No mathematics background assumed; the shelf-oracle extension is the exception.",
+    "No cryptography or programming background assumed.",
+    "Basic familiarity with searching a library catalog.",
+    "Reading a simple chart: DP Noise shows two probability curves side by side, and students need only compare how spread out they are."
+  ],
+  "outcomes": [
+    "Students will be able to identify, for a catalog search, which party learns the requested title and which learns who asked, under a plain search, two-server private retrieval (patron-shield), and a relay-plus-gateway split (blind-relay).",
+    "Students will be able to predict what two cooperating operators can reconstruct by combining what each already holds, and explain why the patron cannot confirm from their own device that the operators are staying apart.",
+    "Students will be able to distinguish what these designs conceal (which record was requested; the link between a patron's address and their request) from what they leave visible (that a query happened, when, how often, and its size or timing).",
+    "Students will be able to demonstrate how two published totals can reveal one person's value, and describe how calibrated noise, a declared cap on one person's contribution, and a finite query budget limit what published statistics reveal about an individual while leaving group-level conclusions visible.",
+    "Students will be able to evaluate a vendor's or institution's privacy claim by naming the assumption it rests on (operators not combining their records, a trusted holder of the raw data, a budget that is enforced) and the party who must be trusted for it to hold."
+  ],
+  "exhibits": [
+    {
+      "name": "patron-shield",
+      "role": "intro",
+      "minutes": 15,
+      "students_do": "Choose a book, run a private query and watch each of two simulated servers receive its own random request, read what each server saw, press the collusion button to see the two requests combined into the book's name, and switch between the naive and PIR views to compare what a server logs.",
+      "source_commit": "b307d3be857f",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "blind-relay",
+      "role": "break-it",
+      "minutes": 20,
+      "students_do": "Type a search query, run the exchange and step it from client through relay and gateway to see which party holds your address and which holds your request, flip the switch that lets relay and gateway compare notes, then simulate several clients at once and join the relay's and gateway's logs on size and on timing, with padding off and then on.",
+      "source_commit": "c0afaa3430ae",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "dp-noise",
+      "role": "fix",
+      "minutes": 25,
+      "students_do": "On the guided route, run the differencing attack to recover one employee's exact salary from two totals and re-run it with noise added, move the privacy setting ε and watch the with-Alice and without-Alice results slide together, declare a salary cap and decide what happens to a new hire above it, then average many noisy answers to recover the payroll and spend a query budget until the page refuses to answer.",
+      "source_commit": "c3ce2e9a3e1a",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    },
+    {
+      "name": "shelf-oracle",
+      "role": "extension",
+      "minutes": 30,
+      "students_do": "Pick a book from the shelf, try to guess which encrypted entry hides your choice before and after deliberately breaking the encryption's randomness, fold the records into the answer step by step while the measured noise budget falls, run one-server and two-server retrieval head to head and make the two servers compare notes, then shrink the modulus until the answer decrypts to garbage and watch what a network observer still logs.",
+      "source_commit": "762b705ff11c",
+      "worksheet": null,
+      "privacy": null,
+      "support": null,
+      "run_specific_values": null
+    }
+  ],
+  "discussion_questions": [
+    "Patron Shield and Blind Relay each protect a patron as long as two organizations keep what they hold apart. If a library contracted two vendors to play those roles, what would you want to know about their ownership, contracts and jurisdiction, and what could the library actually verify?",
+    "Blind Relay's correlation exhibit joins a relay's log with a gateway's log without the two operators cooperating, the way a court order, a breach or an acquisition might. What does that suggest about which request logs a library or its vendors should keep, for how long, and in whose custody?",
+    "Patron Shield hides which book was requested but not that a patron searched, when, or how often. For a patron researching a medical or political topic, which of those remaining facts matters most, and what policy or practice outside the protocol could reduce it?",
+    "DP Noise recovers one person's salary by subtracting two published totals. How could the same subtraction apply to circulation or program statistics a library publishes, and how would a privacy budget change how many reports the library could release?",
+    "Differential privacy, as DP Noise demonstrates it, protects what is published while a curator still holds the raw records. Which library records would that help with, and which would still depend on retention and access policy?"
+  ],
+  "instructor_notes": {
+    "expected_observations": [
+      "patron-shield: after a query runs, the privacy analysis lists the catalog slots each server received as two different random subsets and says neither server alone saw the query; the retrieved title appears with a correctness badge driven by the page's own byte-for-byte check.",
+      "patron-shield: pressing 'Simulate the servers colluding' combines the two requests and names the book that was requested; the naive view shows the exact title in a plain search request, while the PIR view shows a random mask.",
+      "blind-relay: the page prompts for 'a query you would rather not have attached to your name'. Have students type an invented query rather than a real one; the exhibit is a teaching demonstration, not a place for real searches.",
+      "blind-relay: stepping the exchange fills each party's card at the step where it acquires a fact; the relay's card lists the client address and a ciphertext it cannot open, and the gateway's lists the decrypted request with the relay, not the client, as its connection source.",
+      "blind-relay: turning on 'Relay and gateway compare notes' changes the privacy verdict to BROKEN while the separate cryptographic-result indicator still reports that the encryption verified.",
+      "blind-relay: without padding, joining the two logs on size links clients to their requests; with padding on, the size join collapses into one anonymity set, but the timing join still links clients to requests.",
+      "dp-noise: in exact mode the differencing attack recovers the target's salary exactly; in the differential-privacy mode repeated runs return different values that miss it, and the panel notes what the attack itself cost in privacy budget.",
+      "dp-noise: the core-path navigator marks a step Established after the learner runs that step's interaction, not by scrolling past it or by a linked ε arriving from another exhibit.",
+      "dp-noise: at a fixed ε, switching the dial's question from the headcount to the total payroll changes the noise by a very large factor, because one person can move a payroll total far more than a headcount.",
+      "dp-noise: in the sensitivity exercise, the option to raise the bound so the new hire fits is refused, with the reason given on the page.",
+      "dp-noise: the averaging attack's error shrinks as more answers are averaged until the true payroll is recovered, and the ledger refuses a query that would overdraw the budget.",
+      "dp-noise: noisy results differ from run to run unless Classroom mode (seeded sampling) is switched on, and seeded panels say so on screen.",
+      "shelf-oracle (extension): with fresh randomness the distinguisher's measured accuracy is set against a coin-flip baseline; with the reuse switch on, the same crude attack succeeds reliably. Until the chosen record is folded in, the accumulator decrypts to zero, and the two-server column's collusion button recovers the index in a single operation."
+    ],
+    "misconceptions": [
+      "Encrypting a search keeps it private. Blind Relay shows encryption stops a party reading a request but not knowing that someone asked; the collusion join recovers who asked what without decrypting anything.",
+      "Private retrieval hides that a patron searched. Patron Shield hides which record was requested, not that a query happened, who asked, when, how often, or the response size.",
+      "If each server behaves on its own terms, the patron is protected. Both labs' privacy depends on the operators not pooling what they hold, and Blind Relay's client card states that non-collusion is an assumption the client cannot verify cryptographically.",
+      "Keeping the servers apart also means the right book comes back. Patron Shield separates the two: one dishonest server learns nothing alone, but a single malicious server can return a corrupted record with nothing in the protocol to flag it.",
+      "Padding solves traffic analysis. In Blind Relay, padding defeats the size join but not the timing join; the page names batching or mixing, which OHTTP does not provide, as the remaining countermeasure.",
+      "If each published answer is noisy, publishing many is harmless. DP Noise's averaging attack recovers the true payroll from many individually private answers, which is why its ledger refuses further queries once the budget is spent.",
+      "Differential privacy anonymizes the dataset or protects the raw records. DP Noise states that it protects the output of a computation, not its inputs, and is not anonymization of a released table; the model it demonstrates trusts a curator who holds the raw data.",
+      "A strong privacy setting means nothing can be learned. DP Noise bounds what can be learned about one person; conclusions about a group are what a release is for, and differential privacy does not prevent them.",
+      "Differential privacy repairs the relay and gateway problems seen in Blind Relay. It addresses a different release, published statistics; Blind Relay names batching or mixing as the countermeasure for timing correlation."
+    ],
+    "conceptual_answers": [
+      "On vendor roles: the protection rests on an organizational promise rather than on cryptography. The patron's device cannot confirm the operators are separate, and common ownership, a legal demand reaching both, or one party handing its key to the other produces the same result as open collusion. The questions a library can ask are therefore about the arrangement (who operates each role, under what contract and jurisdiction) rather than about the cryptography.",
+      "On log retention: separately kept logs can be joined later by whoever obtains both, with no decryption, because request size and arrival time can link them when traffic is sparse. Padding removes the size link but not the timing link, so what is logged, and who can obtain both sets, matters alongside the encryption.",
+      "On what remains visible: Patron Shield scopes its protection to which record was requested; occurrence, identity, timing, frequency and response size are transport and identity problems it does not address. A split like Blind Relay's separates identity from the party reading the request, but neither lab hides timing without further mechanisms such as batching or mixing.",
+      "On published statistics: two aggregates that differ by one person subtract to that person. Calibrated noise makes each answer imprecise about any one individual, but many noisy answers averaged together converge on the truth, so repeated releases have to be counted against a finite budget and refused once it is spent. Conclusions about a group remain visible by design.",
+      "On raw records: in the model DP Noise demonstrates, a trusted curator holds the raw data and randomizes what it publishes. Differential privacy protects the output of a computation, not its inputs, and is not anonymization of a released table, so the raw records remain a matter of who holds them and under what policy."
+    ]
+  },
+  "trimmed": [],
+  "last_checked": "2026-09-22"
+}

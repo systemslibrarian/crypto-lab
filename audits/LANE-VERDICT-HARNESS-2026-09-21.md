@@ -254,7 +254,31 @@ from the API on 2026-09-21, not assumed:
 | `fold-gate` | `build`, `verdict-coverage` |
 | `order-leak` | `build`, `verdict-coverage` |
 | `split-point` | `build`, `verdict-coverage` |
-| `hidden-bit`, `pqxdh-wire`, `privacy-pass`, `proof-tally`, `sleeve-check` | none (404) |
+| `privacy-pass` | `build`, `verdict-coverage` — by an active RULESET, not legacy protection |
+| `hidden-bit`, `pqxdh-wire`, `proof-tally`, `sleeve-check` | none |
+
+**That `privacy-pass` row is a correction, and the way it was missed is the point.**
+The first two drafts of this table read `none (404)` for it, because
+`/repos/{repo}/branches/main/protection` answers **404 for a branch protected by a
+repository ruleset** — the legacy endpoint cannot see rulesets at all. A 404 there
+means "no LEGACY protection", never "unprotected", and reading it as the latter is a
+checker reporting clean because it could not look: the third instance of that shape
+this document records. `/repos/{repo}/rules/branches/main` is the question that
+actually answers it, and it was not asked until the privacy-pass audit asked it.
+
+Re-derived ruleset-aware across all eight on 2026-09-21: `privacy-pass` is the only
+lab with a ruleset. It is named *"main: verdict coverage must pass"*, requires
+`build` and `verdict-coverage`, also blocks deletion and non-fast-forward, and
+carries `bypass_actors: []` with `current_user_can_bypass: never` — so it **binds
+admins**, making it STRICTER than `order-leak` and `split-point`, whose
+`enforce_admins: false` does not. It was created at `2026-09-21T05:06:29`, between
+two of that lab's own lane commits: the mid-lane builder pattern Fix 5 exists to
+stop, caught after the fact because nothing was watching for it.
+
+So "the three protected labs" was wrong twice over: there are four, they are
+protected by two different mechanisms, and the one this table called unprotected is
+the one that binds admins hardest. Re-derive it with BOTH endpoints before relying
+on it — this row has now been wrong in every draft that has existed.
 
 **Only `fold-gate` carries `enforce_admins: true`.** `order-leak` and
 `split-point` both have it `false`, so protection there does not bind a repo

@@ -723,3 +723,93 @@ harness one.
 - `globalSetup` must be an absolute `fileURLToPath(...)` path: a relative one
   resolves against the resolver's idea of the config dir and breaks in exactly the
   archived-tree-with-symlinked-`node_modules` isolation this lane mandates.
+
+---
+
+## Maintainer decisions, 2026-09-22 (second set)
+
+**D9 — one mechanism, and it is `pqxdh-wire`'s.** The runtime-pairs round produced
+six variants of D6. They are not equally strong, and the lane does not get to keep
+six. All eight labs adopt this combination:
+
+1. **The record pins the CLAIM, keyed by marker.** `kills: { <marker>: { test, claim } }`,
+   where the keys ARE the covered set, so the record and the coverage list cannot
+   disagree — there is no second list to drift.
+2. **The pair is recorded AFTER the assertions pass**, so "observed" means executed
+   and held, not merely reached.
+3. **The check runs from a throwing `globalTeardown`**, not a dependent project.
+4. **The tautology is caught at runtime by tainting the read** (`order-leak`'s
+   mechanism): read helpers taint what they return, and an assertion helper refuses
+   a tainted expectation.
+
+**`privacy-pass` settles the pinning question, by measurement rather than argument.**
+Its rule keyed a bare `(spec, test, marker)` triple, and it probed the consequence
+rather than reasoning about it: a DECOY `expectVerdict` on the same marker in the
+same test satisfies the triple while the real assertion is weakened to text — **17
+passed, exit 0**. A pinned claim refuses that decoy, because the decoy does not carry
+the recorded claim. Six labs shipped a rule a decoy defeats; one measured it.
+
+**The teardown question is settled by what a dependent project does when its
+dependency fails: it is SKIPPED.** That is exactly the run where a mutation is
+applied and the answer matters most. The gate is red either way, so this costs
+diagnosis rather than strength — but a coverage rule that goes quiet on mutation
+runs is the wrong shape for a harness whose whole purpose is mutation runs.
+`fold-gate` found the same behaviour independently and documented it in its config
+instead of changing approach; that is the weaker of the two responses.
+
+**Recording after the assertions pass** is chosen over recording at entry for the
+same reason the pin is chosen over the triple: it is the reading that cannot be
+satisfied by less.
+
+Bring the eight labs to this bar BEFORE re-auditing. Re-auditing eight labs against
+a bar that has not been set would grade six different mechanisms against one
+sentence, and any standardisation afterwards voids all eight verdicts again under
+D5.
+
+**D10 — a measurement with nothing to check against is not a verified claim, and
+must not wear the badge of one.** Every builder in the round reported the same
+residual independently: runtime observation cannot see a tautological `expectClaim`,
+and a measurement has no honest thing to pin, because its expectation is recomputed
+from the run on purpose and pinning its value would restore the literal Fix 4 exists
+to remove.
+
+Name the defect correctly and the remedy follows. **A tautological `expectClaim` is
+a claim checked against itself** — the same shape as a figure inherited from its own
+budget, which this fleet already has a rule about. There is nothing independent to
+compare against, so no amount of pinning fixes it. Pinning was always the wrong tool.
+
+So: **every `expectClaim` names its source of truth**, and there are three kinds —
+
+- an **external constant** (a figure from a cited document),
+- a **published known-answer test**,
+- or a value **re-derived by independent code** under `verification/`.
+
+A measurement with none of the three is **not a verified claim**. It is labelled
+**measured, not verified** — in the manifest and on the page — and covered by a
+mutation sweep that fails on a survivor. It must not carry the same badge as a
+checked claim. The point is not to forbid such measurements: a page may legitimately
+render a number nothing independent can confirm. The point is that a reader, and the
+next auditor, must be able to tell which kind they are looking at, and today they
+cannot, because both render identically.
+
+---
+
+## A correction to the runtime-pairs round record
+
+**`hidden-bit`'s Fix 4 parameter change was reported but not landed.** That builder's
+report states: *"The config moves 200 → 2,000 trials and q 16 → 32, and that is
+load-bearing rather than caution"*, with the analysis that at 200 trials the rendered
+tolerance is 0.381 — wider than the entire 0.004–0.380 spread the curve covers — so
+every row sits inside every other row's tolerance and a replicated curve is
+indistinguishable by construction.
+
+Re-derived from the branch at `3f81e16` on 2026-09-22: `src/ui/switching.ts` carries
+marker additions only, its controls still default to q = 48 and 400 trials per point,
+and `e2e/claims.spec.ts` still drives the switching test at **q = 20, trials = 200**.
+The oracle was strengthened; the parameters it depends on were not.
+
+By that builder's own analysis the oracle therefore still cannot discriminate a
+replicated curve at the count its test runs. **The fix is incomplete, and its own
+report is the evidence.** This is a reminder that a builder's report is the builder's
+side of the claim in exactly the way D1 says a green check is — and that a re-audit
+has to read the tree, not the report.

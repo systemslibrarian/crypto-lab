@@ -625,6 +625,47 @@ exactly the one most likely to be inherited without checking.
 
 ---
 
+## The teaching layer (`teach/`)
+
+`teach/_src/` holds the sources — one JSON per module, one Markdown worksheet per exhibit —
+and `node tools/teach-build.js` generates every page under `teach/`. The format rules a
+worksheet must obey are in `teach/_src/README.md`. Three checkers guard it: `teach-build.js
+check` (generated pages match their sources, and the count lint), `tools/teach-drift.js`
+(every control a worksheet names is still on the live exhibit), and `tools/teach-layout.js`
+(no page scrolls sideways, overflows its container, or wraps prose into a column).
+
+**Every published figure must be derived from the thing it describes.** Not inherited from a
+target, a budget, an adjacent number, or a CI setting. A figure that cannot be derived yet is
+recorded as not derived — `null`, or a stated "not checked" — rather than published as an
+inherited one. A number that arrived by inheritance looks exactly like a measured one on the
+page, which is what makes this worth a rule instead of a habit.
+
+Three figures failed that test on 2026-09-22, in three different ways:
+
+- **A budget became an estimate.** The five `symmetric` worksheets carried the module's
+  planned minutes straight into their front matter. Measured against what a student actually
+  does, they ran 19 to 34 minutes against published figures of 15 to 35 — one of them nine
+  minutes short, another seven minutes long. The same drafts had counted Predict inside the
+  total while later modules counted it outside, so the figures were not even inconsistent in
+  one direction.
+- **A CI timeout became a duration.** Padding Oracle's 35 minutes matched the lab's own e2e
+  ceilings for the three runs the worksheet performs (120 + 120 + 180 seconds). Those are
+  limits on a throttled runner, not how long anything takes: the Full Block attack issues
+  about 2,060 real oracle queries and waits about 7 seconds at the default speed, and the
+  honest class-time figure is 24.
+- **A measurement artefact became a lab defect.** The readiness check reported a
+  Content-Security-Policy console error against `crypto-lab-kyber-vault` in WebKit. Taking a
+  screenshot makes Playwright inject a stylesheet, and that lab's strict `style-src 'self'`
+  refuses it — so the error belonged to the instrument, in exactly the one engine and width
+  where the instrument screenshots. It was caught before publication only because the same
+  page reported zero errors when the screenshot was removed.
+
+The rule applies to anything a reader would take as measured: minutes, engine support, privacy
+observations, run-specific verdicts. When a figure moves, say in the pull request what changed
+to move it, because a number that has changed twice is the one a reader most needs explained.
+
+---
+
 ## Conventions
 
 - No backend, no accounts — every demo is browser-only.

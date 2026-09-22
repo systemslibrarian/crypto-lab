@@ -279,6 +279,12 @@ function readWorksheets(modules) {
       if (!ex) { fail(`${where}: ${name} is not an exhibit of module ${modId}`); continue; }
       if (ex.worksheet !== name) fail(`teach/_src/modules/${modId}.json: exhibit ${name} has a worksheet; set "worksheet": "${name}"`);
       if (!Number.isInteger(meta.minutes) || meta.minutes <= 0) fail(`${where}: minutes must be a positive integer`);
+      /* The module page prints the exhibit's minutes and sums them for the module's class
+         time; the worksheet page prints its own. Nothing compared them until 2026-09-22, so
+         the two could drift apart and both look authoritative. They are one figure. */
+      if (ex && Number.isInteger(ex.minutes) && ex.minutes !== meta.minutes) {
+        fail(`${where}: minutes is ${meta.minutes} but teach/_src/modules/${modId}.json gives ${name} ${ex.minutes} — they are the same figure and must agree`);
+      }
       /* An empty list is allowed and means what it says: this worksheet's class sequence
          serves none of the module's outcomes. The module data then has to say what it does
          instead, so the gap is recorded rather than implied. */
@@ -414,12 +420,14 @@ function renderWorksheetBody(md, where) {
   return out.join('\n');
 }
 
-/* Minutes are class time. Predict is answered before the exhibit is opened, so it is
-   reading rather than lab time, and every page says so in the same words. */
-const PREDICT_NOTE = 'Predict is pre-class reading';
+/* Minutes are class time, and every page states what that covers in the same words:
+   Predict is answered before the exhibit is opened, so it is reading rather than lab
+   time, and Explain is a debrief the instructor leads rather than written work in the
+   room. Both change the number materially, so neither is left to be inferred. */
+const CLASS_TIME_NOTE = 'Predict is pre-class reading and Explain is a spoken debrief';
 
 function classTime(minutes) {
-  return `About ${minutes} minutes of class time; ${PREDICT_NOTE}`;
+  return `About ${minutes} minutes of class time; ${CLASS_TIME_NOTE}`;
 }
 
 /* The line a faculty member keeps on an adapted worksheet. */
@@ -635,7 +643,7 @@ function modulePage(m, cff, site, worksheets) {
 
 <dl class="t-facts">
   <div${m.audience.length > 80 ? ' class="t-fact-wide"' : ''}><dt>Audience</dt><dd>${esc(m.audience)}</dd></div>
-  <div><dt>Class time</dt><dd>About ${core} minutes of class time for the core sequence${ext ? `, plus about ${ext} minutes of extension` : ''}. ${esc(PREDICT_NOTE.charAt(0).toUpperCase() + PREDICT_NOTE.slice(1))}.${m.time_note ? ` ${esc(m.time_note)}` : ''}</dd></div>
+  <div><dt>Class time</dt><dd>About ${core} minutes of class time for the core sequence${ext ? `, plus about ${ext} minutes of extension` : ''}. ${esc(CLASS_TIME_NOTE.charAt(0).toUpperCase() + CLASS_TIME_NOTE.slice(1))}.${m.time_note ? ` ${esc(m.time_note)}` : ''}</dd></div>
   <div><dt>Last checked</dt><dd>${esc(m.last_checked)}</dd></div>
 </dl>
 
@@ -645,7 +653,8 @@ function modulePage(m, cff, site, worksheets) {
 <ol>${m.outcomes.map((o) => `<li>${esc(o)}</li>`).join('')}</ol></section>
 
 <section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
-${m.exhibits.filter((x) => x.outcome_note).map((x) => `<p class="t-outcome-note"><strong>${esc(x.card.title)}:</strong> ${esc(x.outcome_note)}</p>`).join('\n')}
+${m.exhibits.filter((x) => x.outcome_note || x.time_note).map((x) => [x.time_note, x.outcome_note].filter(Boolean)
+    .map((note) => `<p class="t-outcome-note"><strong>${esc(x.card.title)}:</strong> ${esc(note)}</p>`).join('\n')).join('\n')}
 <p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
 <div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
 <table>

@@ -1,7 +1,7 @@
 ---
 exhibit: nonce-lattice
 module: public-key
-minutes: 25
+minutes: 30
 outcomes: [5]
 source_commit: 6b023a9e821b
 checked: 2026-09-22

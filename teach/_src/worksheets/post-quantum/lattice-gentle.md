@@ -1,7 +1,7 @@
 ---
 exhibit: lattice-gentle
 module: post-quantum
-minutes: 30
+minutes: 33
 outcomes: [3, 4]
 source_commit: 893db9f6f046
 checked: 2026-09-22

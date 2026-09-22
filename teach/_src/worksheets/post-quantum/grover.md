@@ -1,7 +1,7 @@
 ---
 exhibit: grover
 module: post-quantum
-minutes: 20
+minutes: 26
 outcomes: [2]
 source_commit: 873e40d8f891
 checked: 2026-09-22

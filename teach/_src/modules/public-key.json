@@ -23,7 +23,7 @@
     {
       "name": "rsa-educational",
       "role": "intro",
-      "minutes": 20,
+      "minutes": 29,
       "students_do": "Build an RSA key from two small primes (or random ones) and follow n, φ(n), e and d, encrypt and decrypt a short message with the square-and-multiply trace, sign and verify with the tamper toggle, factor the weak key, and compare textbook ciphertext with WebCrypto RSA-OAEP and the live Enc(a)·Enc(b) malleability forgery.",
       "source_commit": "ad0235d64da7",
       "worksheet": "rsa-educational",
@@ -64,12 +64,13 @@
         "value": "partly",
         "source": "src/ui/keygen.ts:79 with src/rsa/bigint-math.ts:152-161 at ad0235d64da7 (Roll random primes draws two fresh 16-bit primes), and src/rsa/oaep.ts:36-40 (RSA-OAEP re-randomises on every press)",
         "notes": "On the starting key every derivation row, the ciphertext, the e·d identity, the recovered primes and the iteration count are identical for every student; only the rolled-key table, the factoring time and the two OAEP ciphertexts differ. The rolled key's exponent is always 65537."
-      }
+      },
+      "time_note": "Runs about 29 minutes against the 25 planned. The earlier figure came from a cut-savings claim rather than a recount, and some of those savings were Fix / Extend items, which are homework and cost no class time; counted step by step, the cut freed about four minutes, not ten."
     },
     {
       "name": "rsa-forge",
       "role": "break-it",
-      "minutes": 35,
+      "minutes": 32,
       "students_do": "On the Small Exponent Attack and Bleichenbacher Oracle tabs, pick a config and run the Håstad broadcast attack (CRT plus cube root on three e = 3 ciphertexts), then set up the 128-bit key, query the padding oracle, show Enc(a)·Enc(b) = Enc(a·b), and run the Bleichenbacher attack both automatically and in You Are the Oracle mode.",
       "source_commit": "2152e7023198",
       "worksheet": "rsa-forge",
@@ -115,7 +116,7 @@
     {
       "name": "ec-point-arithmetic",
       "role": "intro",
-      "minutes": 15,
+      "minutes": 17,
       "students_do": "Drag P and Q along a real curve (or use the menus and arrow keys) to watch the chord or tangent, reflection and λ, x₃, y₃ update, flip Over ℝ / Over 𝔽ₚ to run the same addition on a point lattice, step k·P by repeated addition and by double-and-add, and walk a small subgroup until it lands on the target point.",
       "source_commit": "ce6c3d3eb0c2",
       "worksheet": "ec-point-arithmetic",
@@ -160,7 +161,7 @@
     {
       "name": "ecdsa-forge",
       "role": "break-it",
-      "minutes": 26,
+      "minutes": 29,
       "students_do": "Generate a secp256k1 or P-256 key, sign and verify, move the toy-curve sliders to watch two same-nonce signatures give up d, run the nonce-reuse compromise on real 256-bit keys with its recovered-equals-victim proof, then compare random and RFC 6979 signatures and try the attack against RFC 6979.",
       "source_commit": "1de890f5e9f9",
       "worksheet": "ecdsa-forge",
@@ -225,7 +226,7 @@
     {
       "name": "nonce-lattice",
       "role": "extension",
-      "minutes": 25,
+      "minutes": 30,
       "students_do": "Choose a scenario preset or set curve, leak mode, leak size and signature count, read the feasibility gauge, run the HNP/LLL attack and step through Sign, Build HNP, Reduce and Extract to the byte-for-byte key grid, then press Measure this column to test where recovery starts failing.",
       "source_commit": "6b023a9e821b",
       "worksheet": "nonce-lattice",

@@ -3,7 +3,7 @@
   "position": 50,
   "title": "Library privacy, for iSchools",
   "audience": "Library and information science students in an iSchool, with no mathematics or cryptography background, who need to reason about who can learn what about a patron from a catalog search, a request log, or a published statistic.",
-  "course_fit": "Fits an undergraduate or graduate LIS course on information ethics, privacy, or library systems and technology, as a one- or two-meeting unit. The shelf-oracle extension suits students who also take a technical or information-security elective.",
+  "course_fit": "Fits an undergraduate or graduate LIS course on information ethics, privacy, or library systems and technology, as a two-meeting unit: about 69 minutes of core lab time, which fits two 50-minute meetings with room to discuss, while a single meeting works only in a 75-minute slot and leaves almost none. The shelf-oracle extension suits students who also take a technical or information-security elective.",
   "prerequisites": [
     "No mathematics background assumed; the shelf-oracle extension is the exception.",
     "No cryptography or programming background assumed.",
@@ -21,7 +21,7 @@
     {
       "name": "patron-shield",
       "role": "intro",
-      "minutes": 15,
+      "minutes": 22,
       "students_do": "Choose a book, run a private query and watch each of two simulated servers receive its own random request, read what each server saw, press the collusion button to see the two requests combined into the book's name, and switch between the naive and PIR views to compare what a server logs.",
       "source_commit": "93f3f7226fe7",
       "worksheet": "patron-shield",
@@ -66,12 +66,13 @@
         "value": "partly",
         "source": "src/pir.ts:97-101 at 93f3f7226fe7: a fresh uniform mask drawn with crypto.getRandomValues on every run",
         "notes": "The two slot lists, their counts and the request line differ on every run and between students. The retrieved title, the verdict under it, and the position and book the collusion panel names follow the book the student chose, so they differ between students only by that choice."
-      }
+      },
+      "time_note": "Runs about 22 minutes against the 15 this module planned for. The published 15 covered Do and Record only: its own notes say Explain was never counted, in any modality, so the overrun is the debrief that was always going to happen and was never in the figure."
     },
     {
       "name": "blind-relay",
       "role": "break-it",
-      "minutes": 20,
+      "minutes": 23,
       "students_do": "Type a search query, run the exchange and step it from client through relay and gateway to see which party holds your address and which holds your request, flip the switch that lets relay and gateway compare notes, then simulate several clients at once and join the relay's and gateway's logs on size and on timing, with padding off and then on.",
       "source_commit": "9de776c3565d",
       "worksheet": "blind-relay",
@@ -112,12 +113,13 @@
         "value": "partly",
         "source": "src/main.ts:15 and src/ohttp/request.ts:60-82 at 9de776c3565d: one gateway key pair per page load, and a fresh ephemeral key sealing every request",
         "notes": "Every hex value differs, and so does anything built from the query a student invents. The whole correlation exhibit is fixed: the four crowd queries, the arrival clock, both join outcomes and the verdict wording are the same for everyone, which is what makes the padded-versus-unpadded comparison work."
-      }
+      },
+      "time_note": "Runs about 23 minutes against the 20 planned. Its Explain was priced below even a spoken rate — under a minute for each of five multi-part questions — so the overrun is what those questions actually cost to discuss, not new material."
     },
     {
       "name": "dp-noise",
       "role": "fix",
-      "minutes": 25,
+      "minutes": 24,
       "students_do": "On the guided route, run the differencing attack to recover one employee's exact salary from two totals and re-run it with noise added, move the privacy setting ε and watch the with-Alice and without-Alice results slide together, declare a salary cap and decide what happens to a new hire above it, then average many noisy answers to recover the payroll and spend a query budget until the page refuses to answer.",
       "source_commit": "abca4df106c0",
       "worksheet": "dp-noise",
@@ -171,7 +173,7 @@
     {
       "name": "shelf-oracle",
       "role": "extension",
-      "minutes": 30,
+      "minutes": 25,
       "students_do": "Pick a book from the shelf, try to guess which encrypted entry hides your choice before and after deliberately breaking the encryption's randomness, fold the records into the answer step by step while the measured noise budget falls, run one-server and two-server retrieval head to head and make the two servers compare notes, then shrink the modulus until the answer decrypts to garbage and watch what a network observer still logs.",
       "source_commit": "66c860a4a312",
       "worksheet": "shelf-oracle",

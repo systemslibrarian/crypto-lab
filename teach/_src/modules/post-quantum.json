@@ -3,7 +3,7 @@
   "position": 40,
   "title": "Post-quantum transition",
   "audience": "Upper-division undergraduate or graduate security students, including motivated newcomers to quantum algorithms and lattice-based cryptography.",
-  "course_fit": "Upper-division undergraduate or graduate courses in computer security, applied cryptography or network security, as a two-meeting unit on the quantum threat to public-key cryptography and the move to ML-KEM and hybrid key exchange.",
+  "course_fit": "Upper-division undergraduate or graduate courses in computer security, applied cryptography or network security, covering the quantum threat to public-key cryptography and the move to ML-KEM and hybrid key exchange. About 117 minutes of core lab time: two meetings of 75 minutes, or three of 50 — not two of 50, which it overruns.",
   "prerequisites": [
     "Modular arithmetic and the Euclidean gcd",
     "How RSA and Diffie-Hellman / ECDH key agreement work at a high level",
@@ -22,7 +22,7 @@
     {
       "name": "shor",
       "role": "break-it",
-      "minutes": 15,
+      "minutes": 18,
       "students_do": "Enter a composite N or pick a preset, press Run Shor's Algorithm several times, and follow the step log, period chart, QFT distribution with retunable phasor wheels, and continued-fraction table to the gcd step that recovers the factors.",
       "source_commit": "66c0e3109427",
       "worksheet": "shor",
@@ -68,7 +68,7 @@
     {
       "name": "grover",
       "role": "break-it",
-      "minutes": 20,
+      "minutes": 26,
       "students_do": "Set the qubit count, step Grover iterations with the oracle + diffusion sub-steps and prediction mode on, watch the state vector rotate toward and then past the target, sample with Measure ×100, and compare AES key sizes in the impact panels.",
       "source_commit": "873e40d8f891",
       "worksheet": "grover",
@@ -114,7 +114,7 @@
     {
       "name": "lattice-gentle",
       "role": "intro",
-      "minutes": 30,
+      "minutes": 33,
       "students_do": "Work through Guided mode: drag a 2D basis and decode a target by rounding, compare a good and a bad basis for the shortest vector, step Gauss and LLL, type LWE and SIS candidates, push toy-Kyber's noise past q/4 and tamper with toy-KEM ciphertexts and toy-Dilithium signatures, then answer the exit check.",
       "source_commit": "893db9f6f046",
       "worksheet": "lattice-gentle",
@@ -160,7 +160,7 @@
     {
       "name": "kyber-vault",
       "role": "fix",
-      "minutes": 15,
+      "minutes": 20,
       "students_do": "Pick an ML-KEM parameter set and step KeyGen, Encaps and Decaps until both secrets match, encrypt a message through the ML-KEM + AES-256-GCM hybrid and tamper with the ML-KEM ciphertext, then solve the toy LWE system clean versus noisy.",
       "source_commit": "3f80e2eaa9c9",
       "worksheet": "kyber-vault",
@@ -204,7 +204,7 @@
     {
       "name": "hybrid-wire",
       "role": "fix",
-      "minutes": 15,
+      "minutes": 20,
       "students_do": "Step the X25519 + ML-KEM-768 handshake to the HKDF combiner, send encrypted chat messages and tamper with the session, then toggle either or both wires to broken in the Threat model tab and read the measured verdict.",
       "source_commit": "5b7ae68ae3bc",
       "worksheet": "hybrid-wire",
@@ -250,7 +250,7 @@
     {
       "name": "harvest-vault",
       "role": "extension",
-      "minutes": 20,
+      "minutes": 21,
       "students_do": "In the Prove it panel, send a message over the toy handshake, deploy the PQC upgrade, send again and run Q-Day to compare the recorded sessions, then work the Mosca X + Y > Z calculator with sector presets and Q-Day scenarios.",
       "source_commit": "1c8241953291",
       "worksheet": "harvest-vault",

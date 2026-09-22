@@ -1,7 +1,7 @@
 ---
 exhibit: dp-noise
 module: library-privacy
-minutes: 25
+minutes: 24
 outcomes: [4, 5]
 source_commit: abca4df106c0
 checked: 2026-09-22

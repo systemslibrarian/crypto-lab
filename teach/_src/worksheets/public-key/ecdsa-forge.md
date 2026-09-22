@@ -1,7 +1,7 @@
 ---
 exhibit: ecdsa-forge
 module: public-key
-minutes: 26
+minutes: 29
 outcomes: [5]
 source_commit: 1de890f5e9f9
 checked: 2026-09-22

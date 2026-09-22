@@ -1,7 +1,7 @@
 ---
 exhibit: shelf-oracle
 module: library-privacy
-minutes: 30
+minutes: 25
 outcomes: [2, 3, 5]
 source_commit: 66c860a4a312
 checked: 2026-09-22

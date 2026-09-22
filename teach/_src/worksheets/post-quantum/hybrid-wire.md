@@ -1,7 +1,7 @@
 ---
 exhibit: hybrid-wire
 module: post-quantum
-minutes: 15
+minutes: 20
 outcomes: [4, 5]
 source_commit: 5b7ae68ae3bc
 checked: 2026-09-22

@@ -1,7 +1,7 @@
 ---
 exhibit: diffie-hellman-mitm
 module: key-exchange
-minutes: 20
+minutes: 19
 outcomes: [1]
 source_commit: 8d69dbc7ae4f
 checked: 2026-09-22

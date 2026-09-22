@@ -119,7 +119,10 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
 
 .t-toc ul { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; padding: 0; margin: 1.6rem 0 0; list-style: none; }
 
-.t-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0.8rem; margin: 1.4rem 0 0; }
+.t-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 0.8rem; margin: 1.4rem 0 0; }
+/* A long value (an audience sentence, say) takes the whole row rather than wrapping to a
+   few words a line inside one grid track. */
+.t-fact-wide { grid-column: 1 / -1; }
 .t-facts div { border: 1px solid var(--border); background-color: var(--panel); padding: 0.7rem 0.9rem; }
 .t-facts dt { color: var(--text-dim); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .t-facts dd { margin: 0.2rem 0 0; }
@@ -142,6 +145,11 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
 
 .t-table { position: relative; overflow-x: auto; margin: 1rem 0; border: 1px solid var(--border); }
 .t-table table, .ws-table table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+/* A table with a prose column must not be squeezed until its text breaks every two or three
+   words. Below this width the table keeps its measure and its own labelled region scrolls,
+   which is why .t-table is focusable. */
+.t-table table, .ws-table table { min-width: 34rem; }
+.t-table th, .t-table td, .ws-table th, .ws-table td { min-width: 7rem; }
 .t-table th, .t-table td, .ws-table th, .ws-table td {
   border-bottom: 1px solid var(--border);
   padding: 0.55rem 0.7rem;
@@ -150,6 +158,8 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
 }
 .t-table thead th, .ws-table thead th { background-color: var(--panel-strong); color: var(--text-hi); font-size: 0.85rem; }
 .t-tight { margin: 0; padding-left: 1.1rem; }
+/* The sentence describing an exhibit runs the width of the table, under its row. */
+.t-row-note td { border-top: 0; padding-top: 0; color: var(--text-lo); }
 .t-dated { display: block; color: var(--text-dim); font-size: 0.85rem; }
 .t-src { color: var(--text-dim); font-family: var(--mono); font-size: 0.85rem; }
 .t-pending { color: var(--text-dim); font-style: italic; }
@@ -239,6 +249,7 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
     background: #fff !important; color: #000 !important; border-color: #000 !important;
   }
   .t-table, .ws-table { overflow: visible; border-color: #000; }
+  .t-table table, .ws-table table { min-width: 0; }
   .t-table th, .t-table td, .ws-table th, .ws-table td { border: 1px solid #000; }
   .ws-blank { height: 2.2rem; }
   .ws-answer > li::after { height: 4.5rem; border-bottom: 1px solid #000; }

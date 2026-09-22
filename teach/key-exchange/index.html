@@ -105,7 +105,7 @@
 </header>
 
 <dl class="t-facts">
-  <div><dt>Audience</dt><dd>Undergraduate computer science, networking, and security students, and motivated newcomers, who can follow modular arithmetic and want to see how two parties agree on a key over an open network and what stops an attacker from sitting in the middle.</dd></div>
+  <div class="t-fact-wide"><dt>Audience</dt><dd>Undergraduate computer science, networking, and security students, and motivated newcomers, who can follow modular arithmetic and want to see how two parties agree on a key over an open network and what stops an attacker from sitting in the middle.</dd></div>
   <div><dt>Class time</dt><dd>About 75 minutes for the core sequence, plus about 20 minutes of extension</dd></div>
   <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
 </dl>
@@ -119,12 +119,16 @@
 <p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
 <div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
 <table>
-<thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Minutes</th><th scope="col">What students do</th><th scope="col">Worksheet</th></tr></thead>
+<thead><tr><th scope="col">Exhibit</th><th scope="col">Role</th><th scope="col">Time</th><th scope="col">Worksheet</th></tr></thead>
 <tbody>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/">DH MITM</a></th><td>Intro</td><td>20</td><td>Run a Diffie–Hellman exchange on the parameter presets, press Break it to recover Alice's secret exponent by baby-step giant-step, run Mallory's man-in-the-middle to leave Alice and Bob with two different keys, then run the ECDSA-signed exchange honest and tampered to watch it fail closed.</td><td><span class="t-pending">Not yet written</span></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/">TLS Handshake</a></th><td>Fix</td><td>30</td><td>Step through the eight handshake steps reading the transcript-hash chip, check that both sides compute the same X25519 secret, inject each fault in Break this handshake and each attacker move in the MITM panel to see which verifier checks fail, then press New session and compare which values change.</td><td><span class="t-pending">Not yet written</span></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-downgrade-wire/">Downgrade Wire</a></th><td>Break it</td><td>25</td><td>Play the downgrade, then strip X25519MLKEM768 and run it unbound and under TLS 1.3 (or Compare both), expand Show the Finished MAC to follow the byte diff, and flip the server policy, sentinel checks, and retry policy to see which settings let the downgrade through.</td><td><span class="t-pending">Not yet written</span></td></tr>
-<tr><th scope="row"><a href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/">Protocol Checker</a></th><td>Extension</td><td>20</td><td>Run the search on Needham-Schroeder Public Key, step the attack trace and attacker-knowledge panel to watch the attacker derive Nb, tick Lowe's fix and re-run, then switch to Diffie-Hellman and toggle signatures.</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr><th scope="row" rowspan="2"><a href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/">DH MITM</a></th><td>Intro</td><td>20 min</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr class="t-row-note"><td colspan="3">Run a Diffie–Hellman exchange on the parameter presets, press Break it to recover Alice's secret exponent by baby-step giant-step, run Mallory's man-in-the-middle to leave Alice and Bob with two different keys, then run the ECDSA-signed exchange honest and tampered to watch it fail closed.</td></tr>
+<tr><th scope="row" rowspan="2"><a href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/">TLS Handshake</a></th><td>Fix</td><td>30 min</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr class="t-row-note"><td colspan="3">Step through the eight handshake steps reading the transcript-hash chip, check that both sides compute the same X25519 secret, inject each fault in Break this handshake and each attacker move in the MITM panel to see which verifier checks fail, then press New session and compare which values change.</td></tr>
+<tr><th scope="row" rowspan="2"><a href="https://systemslibrarian.github.io/crypto-lab-downgrade-wire/">Downgrade Wire</a></th><td>Break it</td><td>25 min</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr class="t-row-note"><td colspan="3">Play the downgrade, then strip X25519MLKEM768 and run it unbound and under TLS 1.3 (or Compare both), expand Show the Finished MAC to follow the byte diff, and flip the server policy, sentinel checks, and retry policy to see which settings let the downgrade through.</td></tr>
+<tr><th scope="row" rowspan="2"><a href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/">Protocol Checker</a></th><td>Extension</td><td>20 min</td><td><span class="t-pending">Not yet written</span></td></tr>
+<tr class="t-row-note"><td colspan="3">Run the search on Needham-Schroeder Public Key, step the attack trace and attacker-knowledge panel to watch the attacker derive Nb, tick Lowe's fix and re-run, then switch to Diffie-Hellman and toggle signatures.</td></tr>
 </tbody>
 </table>
 </div>
@@ -141,19 +145,8 @@
 <h3>Conceptual answers</h3><ul><li>Mallory exploits the missing authentication: plain Diffie–Hellman does not check who sent a public value, so she runs one exchange with Alice and a separate one with Bob. Larger groups raise the cost of the discrete-log attack an eavesdropper would need, but Mallory computes no discrete log, so group size does not affect her; binding each share to an identity with a signature, certificate, or PAKE is what stops her.</li><li>Authentication proves who the peer is, not that the two sides derived the same keys. The Finished MACs are computed under keys derived from the ECDHE output, so they are the check that catches a key-agreement mismatch that the certificate and signature cannot see.</li><li>Relaying unchanged passes the checks because nothing the transcript hash covers was altered. The client accepts, but the attacker holds no session secret: relaying without altering the handshake makes it a wire, not a listener, and the moment it changes anything the hash covers the checks start failing.</li><li>A handshake can complete cryptographically and still be a security failure. Keeping the two indicators separate lets a silent downgrade render as an alarm rather than as a success, so a completed-but-weakened connection is not mistaken for a good outcome.</li><li>If the client reacts to a failed handshake by retrying with a smaller offer, an attacker who can break the connection twice walks it back to the classical-only group: the primitive held, but the retry policy gave it away. 'PQC required' prevents the silent downgrade by converting it into a hard failure, which costs availability and is its own attack surface.</li></ul>
 </section>
 
-<section aria-labelledby="readiness"><h2 id="readiness">Browser support, privacy and run-specific values</h2>
-<p>Recorded per exhibit, with the date each observation was made. Engines are named; no device was tested unless it is named here.</p>
-<div class="t-table" role="region" tabindex="0" aria-label="Browser support, privacy and run-specific values per exhibit">
-<table>
-<thead><tr><th scope="col">Exhibit</th><th scope="col">Browser support</th><th scope="col">Privacy notes</th><th scope="col">Values differ per run?</th></tr></thead>
-<tbody>
-<tr><th scope="row">DH MITM</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
-<tr><th scope="row">TLS Handshake</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
-<tr><th scope="row">Downgrade Wire</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
-<tr><th scope="row">Protocol Checker</th><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td><td><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></td></tr>
-</tbody>
-</table>
-</div>
+<section aria-labelledby="readiness"><h2 id="readiness">Checks</h2>
+<p><span class="t-pending">Not yet checked. This is filled in when the module’s worksheets are written.</span></p>
 <p>The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>
 </section>
 

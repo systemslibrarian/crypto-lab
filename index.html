@@ -1349,6 +1349,14 @@
         padding: 16px 16px 26px;
         gap: 18px;
       }
+
+      /* At phone widths the wordmark and the two nav buttons do not fit on one line;
+         without this the nav runs past the header's right edge (clipped by its own
+         overflow: hidden, so the second button loses its end). */
+      .cl-header {
+        flex-wrap: wrap;
+        row-gap: 10px;
+      }
     }
 
     body.menu-open {

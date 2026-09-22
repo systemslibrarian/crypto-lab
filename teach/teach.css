@@ -150,6 +150,9 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
 }
 .t-table thead th, .ws-table thead th { background-color: var(--panel-strong); color: var(--text-hi); font-size: 0.85rem; }
 .t-tight { margin: 0; padding-left: 1.1rem; }
+.t-foot-licence { margin: 0.6rem 0 0; font-size: 0.9rem; color: var(--text-lo); max-width: 72ch; }
+.t-attrib { font-style: italic; }
+.t-attrib-block { padding: 0.6rem 0.8rem; border-left: 3px solid var(--accent); background: var(--panel); }
 .t-dated { display: block; color: var(--text-dim); font-size: 0.85rem; }
 .t-src { color: var(--text-dim); font-family: var(--mono); font-size: 0.85rem; }
 .t-pending { color: var(--text-dim); font-style: italic; }

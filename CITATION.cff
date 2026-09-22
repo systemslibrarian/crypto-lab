@@ -17,7 +17,9 @@ repository-code: "https://github.com/systemslibrarian/crypto-lab"
 #   - type: doi
 #     value: "10.5281/zenodo.XXXXXXX"
 #     description: "Archived snapshot of the collection"
-# TODO(Paul): add  license:  once the license for teach/ content is chosen (see teach/LICENSE).
+# The teaching materials under teach/ are CC BY 4.0 (see teach/LICENSE). The demonstration
+# code keeps the licence in each repository's own LICENSE file.
+license: CC-BY-4.0
 keywords:
   - cryptography
   - security education

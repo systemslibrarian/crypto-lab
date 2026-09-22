@@ -105,13 +105,26 @@ function readCitation() {
   const given = /given-names:\s*"([^"]+)"/.exec(text);
   const c = {
     title: get('title'), version: get('version'), date: get('date-released'),
-    url: get('url'), repo: get('repository-code'),
+    url: get('url'), repo: get('repository-code'), license: get('license'),
     family: family ? family[1] : '', given: given ? given[1] : '',
   };
-  for (const k of ['title', 'version', 'date', 'url', 'family', 'given']) {
+  for (const k of ['title', 'version', 'date', 'url', 'family', 'given', 'license']) {
     if (!c[k]) fail(`CITATION.cff: missing ${k}`);
   }
   if (c.date && !DATE_RE.test(c.date)) fail('CITATION.cff: date-released must be YYYY-MM-DD');
+  /* One source for the reuse terms: the licence id in CITATION.cff, which teach/LICENSE
+     carries in full. Every page's footer and the landing page's Reuse section are written
+     from this, so the terms cannot drift between them. */
+  const LICENSES = {
+    'CC-BY-4.0': {
+      name: 'Creative Commons Attribution 4.0 International (CC BY 4.0)',
+      short: 'CC BY 4.0',
+      url: 'https://creativecommons.org/licenses/by/4.0/',
+      freedoms: 'copy, adapt, print and redistribute these materials, including commercially, as long as you give credit',
+    },
+  };
+  if (c.license && !LICENSES[c.license]) fail(`CITATION.cff: license ${c.license} is not one this generator knows how to describe`);
+  c.licenseInfo = LICENSES[c.license] || null;
   c.year = c.date.slice(0, 4);
   c.initials = c.given.split(/\s+/).map((w) => w[0] + '.').join(' ');
   return c;
@@ -389,11 +402,23 @@ function renderWorksheetBody(md, where) {
   return out.join('\n');
 }
 
+/* The line a faculty member keeps on an adapted worksheet. */
+function attributionLine(cff, site) {
+  return `${cff.title} teaching materials by ${cff.given} ${cff.family}, ${cff.licenseInfo.short} — ${site.hub_url}teach/`;
+}
+
+function licenceFoot(cff, site) {
+  if (!cff.licenseInfo) return '';
+  return `<p class="t-foot-licence">Teaching materials: <a href="${cff.licenseInfo.url}">${esc(cff.licenseInfo.short)}</a>. `
+    + `You may ${esc(cff.licenseInfo.freedoms)}. When you adapt one, keep this line on it: `
+    + `<span class="t-attrib">${esc(attributionLine(cff, site))}</span></p>`;
+}
+
 /* ---------- page chrome ---------- */
 
 const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E";
 
-function page({ depth, title, description, canonical, date, author, crumbs, main, jsonld }) {
+function page({ depth, title, description, canonical, date, author, crumbs, main, jsonld, licence }) {
   const up = depth ? '../'.repeat(depth) : './';
   const hub = '../'.repeat(depth + 1);
   const slash = date.replace(/-/g, '/');
@@ -438,6 +463,7 @@ ${main}
 </main>
 <footer class="t-foot">
   <p class="t-foot-links"><a href="${hub}">Crypto Lab catalog</a> · <a href="${up}">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source on GitHub</a></p>
+  ${licence || ''}
   <blockquote class="t-quote"><p>So whether you eat or drink or whatever you do, do it all for the glory of God.</p><cite>1 Corinthians 10:31</cite></blockquote>
 </footer>
 <script src="${up}teach.js"></script>
@@ -631,6 +657,7 @@ ${syllabusBlock(site, 'module-syllabus')}
     author: authorName(cff), jsonld,
     crumbs: [{ label: 'Crypto Lab', href: '../../' }, { label: 'Teach', href: '../' }, { label: m.title }],
     main,
+    licence: licenceFoot(cff, site),
   });
 }
 
@@ -687,6 +714,7 @@ ${w.body}
     canonical, date: w.meta.checked, author: authorName(cff),
     crumbs: [{ label: 'Crypto Lab', href: '../../../' }, { label: 'Teach', href: '../../' }, { label: m.title, href: '../' }, { label: x.card.title }],
     main,
+    licence: licenceFoot(cff, site),
   });
 }
 
@@ -740,6 +768,16 @@ function landingPage(modules, worksheets, cards, cff, site, evidence) {
       const all = [...cards.values()].sort(byKey((c) => c.title));
       return `<ul class="t-cites t-cites--all">${all.map((c) => `<li><p class="t-cite">${apaExhibit(cff, c)}</p></li>`).join('\n')}</ul>`;
     },
+    'licence-terms': () => {
+      if (!cff.licenseInfo) { fail('CITATION.cff: no license, so the reuse terms cannot be stated'); return ''; }
+      return `<p>The module pages, worksheets and instructor notes here are published under the `
+        + `<a href="${cff.licenseInfo.url}">${esc(cff.licenseInfo.name)}</a>. You may ${esc(cff.licenseInfo.freedoms)}: `
+        + `print a worksheet for a class, rewrite it for your own students, translate it, or build it into a course pack.</p>`
+        + `<p>To give credit, keep a line like this one on anything you adapt:</p>`
+        + `<p class="t-attrib-block"><span class="t-attrib">${esc(attributionLine(cff, site))}</span></p>`
+        + `<p>This covers the teaching materials only. Each demonstration keeps the licence in its own repository, and the `
+        + `<a href="https://github.com/${site.repo}/blob/${site.branch}/teach/LICENSE">full licence text</a> sits beside these pages.</p>`;
+    },
     'citation-file': () => `<a href="https://github.com/${site.repo}/blob/${site.branch}/CITATION.cff">CITATION.cff</a>`,
   };
   const used = new Set();
@@ -755,6 +793,7 @@ function landingPage(modules, worksheets, cards, cff, site, evidence) {
     canonical: `${site.hub_url}teach/`, date: cff.date, author: authorName(cff),
     crumbs: [{ label: 'Crypto Lab', href: '../' }, { label: 'Teach' }],
     main: src.trimEnd(),
+    licence: licenceFoot(cff, site),
   });
 }
 

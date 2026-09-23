@@ -53,6 +53,7 @@
  *   node tools/catalog-evidence.js --lab <slug>    just one lab, with every anchor
  *   node tools/catalog-evidence.js write           write the derived fields onto the cards
  *   node tools/catalog-evidence.js verify          re-read every anchor already on a card
+ *   node tools/catalog-evidence.js gaps            chips the vocabulary has never heard of
  *   node tools/catalog-evidence.js --json          machine-readable
  *
  * `verify` is the one that matters over time: an anchor is a line number, and
@@ -70,7 +71,23 @@ const REPOS = path.join(ROOT, '..');
 const HTML = path.join(ROOT, 'index.html');
 
 const CODE_EXT = /\.(ts|js|mjs|cjs|tsx|jsx)$/;
-const SKIP = /(^|\/)(node_modules|dist|build|\.git|test-results|playwright-report|coverage|\.vite)(\/|$)/;
+/* Languages this scanner does NOT read. Not a wish list — the labs that use them.
+ * crypto-lab-silent-tally implements its field arithmetic in Rust and exposes it
+ * through a WASM binding, so its src-ts/ is a wrapper and every algorithm is in
+ * the .rs files. Reading the wrapper and reporting UNKNOWN says "nothing there"
+ * about source that was never opened. That is protection-census's mistake exactly:
+ * a 404 from the one endpoint you asked, published as absence. */
+const UNREAD_LANGS = [
+  { name: 'Rust', re: /\.rs$/ },
+  { name: 'Go', re: /\.go$/ },
+  { name: 'Python', re: /\.py$/ },
+  { name: 'C/C++', re: /\.(c|cc|cpp|h|hpp)$/ },
+  { name: 'Java', re: /\.java$/ },
+  { name: 'C#', re: /\.cs$/ },
+  { name: 'Swift', re: /\.swift$/ },
+  { name: 'WebAssembly', re: /\.(wasm|wat)$/ },
+];
+const SKIP = /(^|\/)(node_modules|dist|build|\.git|test-results|playwright-report|coverage|\.vite|target|pkg)(\/|$)/;
 /* Tests and e2e are the lab's checks on itself, not the lab. A spec that asserts
    an AES vector is evidence the suite knows about AES, not that the demo does. */
 const NOT_THE_LAB = /(^|\/)(e2e|tests?|__tests__|scripts|contrast)(\/|$)|\.(spec|test)\.[tj]sx?$/;
@@ -230,7 +247,19 @@ function camelSplit(text) {
 function shapeOf(line, code, term) {
   /* import / require whose module path carries the term */
   const imports = [...line.matchAll(/(?:from\s*|require\(\s*|import\(\s*)['"]([^'"]+)['"]/g)].map((x) => x[1]);
-  if (imports.some((p) => term.re.test(p))) return 'import';
+  if (imports.some((p) => term.re.test(p) || term.re.test(camelSplit(p)))) return 'import';
+  /* …or whose imported BINDINGS carry it. Reading only the path missed
+     `import { x25519 } from '@noble/curves/ed25519'` — the module is named for
+     one algorithm and exports another — and `import { sm3 as sm3Hash } from
+     'sm-crypto'`, where the package name says nothing at all. Both are as direct
+     an implementation as a call. */
+  if (/\b(?:import|require)\b/.test(line)) {
+    const braces = /\{([^}]*)\}/.exec(line);
+    if (braces) {
+      const names = braces[1].split(',').flatMap((b) => b.split(/\s+as\s+/)).map((b) => b.trim()).filter(Boolean);
+      if (names.some((n) => term.re.test(n) || term.re.test(camelSplit(n)))) return 'import';
+    }
+  }
   /* WebCrypto: the term is a quoted algorithm name anywhere on a subtle line, or
      on the `name:` of an algorithm object. */
   const quoted = [...line.matchAll(/['"]([^'"]{2,40})['"]/g)].map((x) => x[1]);
@@ -243,7 +272,11 @@ function shapeOf(line, code, term) {
       && /\b(?:hash|namedCurve|iv|length|salt|info|modulusLength|publicExponent|tagLength|counter|saltLength|iterations)\s*:/.test(line));
   if (isSubtle && quoted.some((q) => term.re.test(q))) return 'call';
   /* a declaration whose NAME carries the term */
-  const decl = /(?:^|[\s;{(,])(?:async\s+)?(?:function|class)\s+([A-Za-z_$][\w$]*)|(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=/g;
+  /* The `(?::[^=]+)?` is TypeScript's type annotation, and leaving it out was a
+     silent systematic miss: `export const SECP256K1: FpPreset = {` declares
+     secp256k1 and matched nothing, because the pattern wanted the `=` to follow
+     the identifier directly. Every annotated const in the fleet was invisible. */
+  const decl = /(?:^|[\s;{(,])(?:async\s+)?(?:function|class)\s+([A-Za-z_$][\w$]*)|(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*(?::[^=]{1,80})?=/g;
   let d;
   while ((d = decl.exec(code)) !== null) {
     const id = d[1] || d[2];
@@ -267,23 +300,27 @@ function labFiles(dir) {
   const files = walk(dir);
   const code = [];
   const prose = [];
+  const unread = new Map();
   for (const f of files) {
     const rel = path.relative(dir, f);
     if (NOT_THE_LAB.test(rel) || NOT_THIS_LABS_CODE.test(rel)) continue;
+    for (const lang of UNREAD_LANGS) {
+      if (lang.re.test(rel)) unread.set(lang.name, (unread.get(lang.name) || 0) + 1);
+    }
     if (CODE_EXT.test(f)) code.push(rel);
     else if (/\.html?$/.test(f)) { code.push(rel); prose.push(rel); }
     else if (/\.md$/i.test(f)) prose.push(rel);
   }
-  return { code, prose };
+  return { code, prose, unread };
 }
 
 /** Everything derivable about one lab. Never throws; a missing clone is a state. */
 function evidenceFor(slug) {
   const dir = path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
-    return { slug, cloned: false, implements: [], references: [], attacks: [], standards: [], implementation: 'UNKNOWN' };
+    return { slug, cloned: false, implements: [], references: [], attacks: [], standards: [], implementation: 'UNKNOWN', unscanned: [], notScanned: false };
   }
-  const { code, prose } = labFiles(dir);
+  const { code, prose, unread } = labFiles(dir);
   const hits = new Map();   // term name -> {shape, at}
   const mentions = new Map();
   const attackHits = new Map();
@@ -379,7 +416,25 @@ function evidenceFor(slug) {
   else if (libs.has('WASM')) implementation = 'WASM';
   else if (impl.length) implementation = 'hand-rolled';
 
-  return { slug, cloned: true, implements: impl, references: refs, attacks: atks, standards: bodies, implementation };
+  /* NOT-SCANNED is a THIRD state, and the distinction is the whole point.
+     UNKNOWN means every file this tool can read was read and no algorithm was
+     derivable — a real finding about a lab that models rather than computes.
+     NOT-SCANNED means the lab's implementation is in a language this tool does
+     not open, so it has no finding to report. Folding the second into the first
+     publishes "implements nothing" about source nobody looked at. */
+  const unreadable = [...unread.entries()].sort((a, b) => b[1] - a[1])
+    .map(([name, n]) => `${name}:${n}`);
+  return {
+    slug,
+    cloned: true,
+    implements: impl,
+    references: refs,
+    attacks: atks,
+    standards: bodies,
+    implementation,
+    unscanned: unreadable,
+    notScanned: impl.length === 0 && unreadable.length > 0,
+  };
 }
 
 /* ---- cards ---------------------------------------------------------------- */
@@ -405,8 +460,11 @@ const attr = (block, name) => {
 const encode = (items) => items.map((i) => (i.at ? `${i.name}@${i.at}` : i.name)).join(' | ');
 
 function fieldsFor(ev) {
+  const implemented = ev.implements.length ? encode(ev.implements)
+    : (ev.notScanned ? 'NOT-SCANNED' : 'UNKNOWN');
   return {
-    implements: ev.cloned ? (ev.implements.length ? encode(ev.implements) : 'UNKNOWN') : 'UNKNOWN',
+    implements: ev.cloned ? implemented : 'UNKNOWN',
+    unscanned: (ev.unscanned || []).join(' | '),
     references: ev.references.length ? ev.references.join(' | ') : '',
     attacks: ev.attacks.length ? encode(ev.attacks) : '',
     standards: ev.standards.length ? ev.standards.join(' | ') : '',
@@ -425,13 +483,14 @@ function writeCards(all) {
        between two labs is not derivable from either lab's source. */
     const parts = [
       `data-implements="${f.implements}"`,
+      f.unscanned ? `data-unscanned="${f.unscanned}"` : null,
       f.references ? `data-references="${f.references}"` : null,
       f.attacks ? `data-attacks="${f.attacks}"` : null,
       f.standards ? `data-standards="${f.standards}"` : null,
       `data-implementation="${f.implementation}"`,
     ].filter(Boolean);
     const anchorHref = `href="https://systemslibrarian.github.io/${c.slug}/"`;
-    const stripped = c.block.replace(/\sdata-(?:implements|references|attacks|standards|implementation)="[^"]*"/g, '');
+    const stripped = c.block.replace(/\sdata-(?:implements|unscanned|references|attacks|standards|implementation)="[^"]*"/g, '');
     const next = stripped.replace(anchorHref, `${anchorHref}\n            ${parts.join('\n            ')}`);
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }
@@ -445,7 +504,7 @@ function verifyAnchors(all) {
   const byName = new Map(ALGORITHMS.map((a) => [a.name, a]));
   for (const c of all) {
     const stored = attr(c.block, 'implements');
-    if (!stored || stored === 'UNKNOWN') continue;
+    if (!stored || stored === 'UNKNOWN' || stored === 'NOT-SCANNED') continue;
     for (const item of stored.split(' | ')) {
       const at = item.indexOf('@');
       if (at < 0) { bad.push({ slug: c.slug, item, why: 'no anchor' }); continue; }
@@ -488,6 +547,32 @@ function main() {
   const all = cards()
     .filter((c) => !one || c.slug === one)
     .map((c) => ({ ...c, ev: evidenceFor(c.slug) }));
+
+  if (mode === 'gaps') {
+    /* Chips naming something the vocabulary has never heard of. The header
+       promises the vocabulary grows on purpose rather than by being wrong
+       quietly, and this is the thing that makes that true: a declared
+       vocabulary's blind spot is invisible from inside it. `scalarMul` was
+       missed because the term demanded `scalarMult` with a t, and the only
+       symptom was one lab reading UNKNOWN. */
+    const seen = new Map();
+    for (const c of all) {
+      const chips = [...c.block.matchAll(/class="chip">([^<]+)</g)].map((x) => x[1].trim());
+      for (const chip of chips) {
+        if (ALGORITHMS.some((t) => t.re.test(chip)) || ATTACKS.some((t) => t.re.test(chip))) continue;
+        if (!seen.has(chip)) seen.set(chip, []);
+        seen.get(chip).push(c.slug.replace('crypto-lab-', ''));
+      }
+    }
+    const rows = [...seen].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+    console.log(`Chips matching no vocabulary term: ${rows.length} distinct, on ${new Set(rows.flatMap((r) => r[1])).size} labs.`);
+    console.log('Most are concepts rather than algorithms and belong nowhere near the index.');
+    console.log('The ones worth reading are algorithm NAMES — those are vocabulary gaps.\n');
+    for (const [chip, labs] of rows.slice(0, 40)) {
+      console.log(`  ${String(labs.length).padStart(3)}  ${chip.padEnd(30)} ${labs.slice(0, 4).join(', ')}${labs.length > 4 ? ', …' : ''}`);
+    }
+    return;
+  }
 
   if (mode === 'verify') return verifyAnchors(all);
   if (mode === 'write') return writeCards(all);

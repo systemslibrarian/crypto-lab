@@ -94,8 +94,8 @@ const ALGORITHMS = [
   { name: 'DSA', kind: 'algorithm', family: 'signature', re: /(?<![A-Za-z][-_ ])(?<![A-Za-z])\bdsa\b/i, std: 'NIST:FIPS 186-4' },
   { name: 'ECDSA', kind: 'algorithm', family: 'signature', re: /ecdsa/i, std: 'NIST:FIPS 186-5' },
   { name: 'EdDSA', kind: 'algorithm', family: 'signature', re: /eddsa/i, std: 'IETF:RFC 8032' },
-  { name: 'Ed25519', kind: 'algorithm', family: 'signature', re: /ed25519/i, std: 'IETF:RFC 8032' },
-  { name: 'Ed448', kind: 'algorithm', family: 'signature', re: /ed448/i, std: 'IETF:RFC 8032' },
+  { name: 'Ed25519', kind: 'algorithm', family: 'signature', re: /ed25519/i, alias: 'EdDSA', std: 'IETF:RFC 8032' },
+  { name: 'Ed448', kind: 'algorithm', family: 'signature', re: /ed448/i, alias: 'EdDSA', std: 'IETF:RFC 8032' },
   { name: 'X25519', kind: 'algorithm', family: 'key exchange', re: /x25519|curve25519/i, std: 'IETF:RFC 7748' },
   { name: 'X448', kind: 'algorithm', family: 'key exchange', re: /x448/i, std: 'IETF:RFC 7748' },
   { name: 'P-256', kind: 'algorithm', family: 'elliptic curve', re: /\bp-?256\b|secp256r1|prime256v1/i, std: 'NIST:SP 800-186' },
@@ -111,12 +111,12 @@ const ALGORITHMS = [
 
   // --- post-quantum ---
   { name: 'ML-KEM', kind: 'algorithm', family: 'PQ KEM', re: /ml[-_ ]?kem/i, std: 'NIST:FIPS 203' },
-  { name: 'Kyber', kind: 'algorithm', family: 'PQ KEM', re: /\bkyber\b/i, std: 'NIST:FIPS 203 (as ML-KEM)' },
+  { name: 'Kyber', kind: 'algorithm', family: 'PQ KEM', re: /\bkyber\b/i, alias: 'ML-KEM', std: 'NIST:FIPS 203 (as ML-KEM)' },
   { name: 'ML-DSA', kind: 'algorithm', family: 'PQ signature', re: /ml[-_ ]?dsa/i, std: 'NIST:FIPS 204' },
-  { name: 'Dilithium', kind: 'algorithm', family: 'PQ signature', re: /dilithium/i, std: 'NIST:FIPS 204 (as ML-DSA)' },
+  { name: 'Dilithium', kind: 'algorithm', family: 'PQ signature', re: /dilithium/i, alias: 'ML-DSA', std: 'NIST:FIPS 204 (as ML-DSA)' },
   { name: 'SLH-DSA', kind: 'algorithm', family: 'PQ signature', re: /slh[-_ ]?dsa/i, std: 'NIST:FIPS 205' },
-  { name: 'SPHINCS+', kind: 'algorithm', family: 'PQ signature', re: /sphincs/i, std: 'NIST:FIPS 205 (as SLH-DSA)' },
-  { name: 'Falcon', kind: 'algorithm', family: 'PQ signature', re: /\bfalcon\b/i, std: 'NIST:FIPS 206 draft (as FN-DSA)' },
+  { name: 'SPHINCS+', kind: 'algorithm', family: 'PQ signature', re: /sphincs/i, alias: 'SLH-DSA', std: 'NIST:FIPS 205 (as SLH-DSA)' },
+  { name: 'Falcon', kind: 'algorithm', family: 'PQ signature', re: /\bfalcon\b/i, alias: 'FN-DSA', std: 'NIST:FIPS 206 draft (as FN-DSA)' },
   { name: 'HQC', kind: 'algorithm', family: 'PQ KEM', re: /\bhqc\b/i, std: 'NIST:selected 2025, FIPS pending' },
   { name: 'Classic McEliece', kind: 'algorithm', family: 'PQ KEM', re: /mceliece/i, std: 'ISO:ISO/IEC 18033-2 amendment' },
   { name: 'BIKE', kind: 'algorithm', family: 'PQ KEM', re: /\bbike\b/i, std: null },
@@ -139,7 +139,7 @@ const ALGORITHMS = [
   { name: 'Shamir secret sharing', kind: 'algorithm', family: 'secret sharing', re: /shamir/i, std: null },
   { name: 'Feldman VSS', kind: 'algorithm', family: 'secret sharing', re: /feldman/i, std: null },
   { name: 'Pedersen commitment', kind: 'algorithm', family: 'commitment', re: /pedersen/i, std: null },
-  { name: 'Merkle tree', kind: 'algorithm', family: 'authenticated data structure', re: /merkle/i, std: null },
+  { name: 'Merkle tree', kind: 'algorithm', family: 'authenticated data structure', re: /merkle(?![-_ ]?damg)/i, std: null },
   { name: 'Bloom filter', kind: 'algorithm', family: 'probabilistic structure', re: /bloom[-_ ]?filter/i, std: null },
 
   // --- zero knowledge ---
@@ -153,7 +153,7 @@ const ALGORITHMS = [
   { name: 'Schnorr identification', kind: 'algorithm', family: 'proof system', re: /schnorr[-_ ]?(?:id|identification|proof)/i, std: null },
 
   // --- MPC, PIR, FHE ---
-  { name: 'Garbled circuits', kind: 'algorithm', family: 'MPC', re: /garbled[-_ ]?circuit|yao/i, std: null },
+  { name: 'Garbled circuits', kind: 'algorithm', family: 'MPC', re: /garbled[-_ ]?circuit|(?<!dolev[-_ ])\byao\b/i, std: null },
   { name: 'Oblivious transfer', kind: 'algorithm', family: 'MPC', re: /oblivious[-_ ]?transfer/i, pathRe: /(^|\/)ot(?:[-_./]|$)/i, std: null },
   { name: 'Private set intersection', kind: 'algorithm', family: 'MPC', re: /\bpsi\b|private[-_ ]set[-_ ]intersection/i, std: null },
   { name: 'BGV', kind: 'algorithm', family: 'FHE', re: /\bbgv\b/i, std: null },
@@ -210,8 +210,18 @@ const ALGORITHMS = [
   { name: 'GGH', kind: 'algorithm', family: 'lattice cryptosystem', re: /\bggh\b/i, std: null },
   { name: 'Isogeny walk', kind: 'algorithm', family: 'isogeny', re: /isogen/i, std: null },
   { name: 'CSIDH', kind: 'algorithm', family: 'isogeny', re: /\bcsidh\b/i, std: null },
-  { name: 'EC point arithmetic', kind: 'algorithm', family: 'elliptic curve', re: /point[-_ ]?(?:add|double|mul)|scalar[-_ ]?mult/i, std: null },
+  { name: 'EC point arithmetic', kind: 'algorithm', family: 'elliptic curve', re: /point[-_ ]?(?:add|double|mul|order)|scalar[-_ ]?mul|is[-_ ]?on[-_ ]?curve|double[-_ ]?and[-_ ]?add/i, std: null },
   { name: 'Montgomery ladder', kind: 'algorithm', family: 'elliptic curve', re: /montgomery[-_ ]?ladder/i, std: null },
+
+  // --- found by `catalog-evidence.js gaps`: chips naming algorithms the vocabulary lacked ---
+  { name: 'ristretto255', kind: 'algorithm', family: 'elliptic curve', re: /ristretto/i, std: 'IETF:RFC 9496' },
+  { name: 'Streebog', kind: 'algorithm', family: 'hash', re: /streebog|gost[-_ ]?r?[-_ ]?34\.11/i, std: 'ISO:GOST R 34.11-2012' },
+  { name: 'Kuznyechik', kind: 'algorithm', family: 'block cipher', re: /kuznyechik|gost[-_ ]?r?[-_ ]?34\.12/i, std: 'ISO:GOST R 34.12-2015' },
+  { name: 'Magma', kind: 'algorithm', family: 'block cipher', re: /\bmagma\b/i, std: 'ISO:GOST R 34.12-2015' },
+  { name: 'FF1', kind: 'algorithm', family: 'format-preserving encryption', re: /\bff1\b|format[-_ ]?preserving/i, std: 'NIST:SP 800-38G' },
+  { name: 'FRI', kind: 'algorithm', family: 'proof system', re: /\bfri\b(?![-_ ]?(?:day|end))/i, std: null },
+  { name: 'Private information retrieval', kind: 'algorithm', family: 'PIR', re: /\bpir\b|private[-_ ]?information[-_ ]?retrieval/i, std: null },
+  { name: 'CGL hash', kind: 'algorithm', family: 'isogeny', re: /\bcgl\b/i, std: null },
 ];
 
 
@@ -258,7 +268,13 @@ const IMPLEMENTATION_SHAPES = [
   { name: 'hand-rolled', re: null }, // assigned when algorithm evidence exists but no library
 ];
 
-/* `pathRe` overrides `re` when matching a FILE PATH. A few terms are decisive as
+/* `alias` names the SAME algorithm under its other name. Kyber became ML-KEM in
+   FIPS 203 and Dilithium became ML-DSA in FIPS 204; a lab implementing one is a
+   lab implementing the other, and a card chipping "CRYSTALS-Dilithium" beside an
+   `src/crypto/mldsa.ts` is right rather than wrong. Without this the rename shows
+   up as a fleet-wide contradiction that is purely an artefact of the rename.
+
+   `pathRe` overrides `re` when matching a FILE PATH. A few terms are decisive as
    a filename and far too loose as a line pattern: `src/ot.ts` is unambiguously
    oblivious transfer, while the two letters "ot" on a line are nothing. */
 module.exports = { ALGORITHMS, ATTACKS, IMPLEMENTATION_SHAPES };

@@ -41,6 +41,7 @@
  *   node tools/catalog-sync.js check    exit 1 if it drifts, or a claim is unsupported
  *   node tools/catalog-sync.js report          overlap pairs with no stated difference
  *   node tools/catalog-sync.js contradictions  cards naming an algorithm their lab does not implement
+ *   node tools/catalog-sync.js chips           apply the chip rule: which namings are honest, which are not
  */
 'use strict';
 const fs = require('fs');
@@ -80,7 +81,7 @@ function cards() {
     const split = (items, field, slug) => items.map((i) => {
       const at = i.lastIndexOf('@');
       if (at < 0) {
-        if (field === 'implements' && i !== 'UNKNOWN') {
+        if (field === 'implements' && i !== 'UNKNOWN' && i !== 'NOT-SCANNED') {
           errors.push(`${slug}: data-implements entry "${i}" has no @file:line anchor`);
         }
         return { name: i, at: null };
@@ -98,7 +99,9 @@ function cards() {
       copy: grab('copy'),
       chips: [...block.matchAll(/class="chip">([^<]+)</g)].map((x) => decode(x[1].trim())),
       unknown: impl === 'UNKNOWN' || impl === '',
-      implements: impl === 'UNKNOWN' || impl === '' ? [] : split(list(impl), 'implements', slug),
+      notScanned: impl === 'NOT-SCANNED',
+      unscanned: list(attr('unscanned')),
+      implements: impl === 'UNKNOWN' || impl === 'NOT-SCANNED' || impl === '' ? [] : split(list(impl), 'implements', slug),
       references: list(attr('references')),
       attacks: split(list(attr('attacks')), 'attacks', slug),
       standards: list(attr('standards')),
@@ -261,9 +264,21 @@ function build(list) {
   L.push('');
   const sorted = [...list].sort((a, b) => a.title.localeCompare(b.title));
   const unknown = sorted.filter((c) => c.unknown);
-  L.push(`${sorted.length} labs. ${unknown.length} carry **UNKNOWN** for what they implement:`);
-  L.push('that is not "implements nothing", it is "this was not derivable from the source" —');
-  L.push('most are labs that model or attack an algorithm rather than compute it.');
+  const notScanned = sorted.filter((c) => c.notScanned);
+  const partial = sorted.filter((c) => !c.notScanned && c.unscanned.length);
+  L.push(`${sorted.length} labs, in three states rather than two.`);
+  L.push('');
+  L.push(`**UNKNOWN (${unknown.length})** — every file this scanner reads was read and no algorithm was`);
+  L.push('derivable. That is a finding: most of these model or attack an algorithm rather than');
+  L.push('compute it.');
+  L.push('');
+  L.push(`**NOT-SCANNED (${notScanned.length})** — the lab implements its cryptography in a language this`);
+  L.push('scanner does not read, so there is no finding either way. `could not look` is not');
+  L.push('`nothing there`, and collapsing the two would publish "implements nothing" about source');
+  L.push('nobody opened. ' + (notScanned.length ? notScanned.map((c) => `\`${c.slug}\` (${c.unscanned.join(', ')})`).join(', ') : ''));
+  L.push('');
+  L.push(`**Partially unread (${partial.length})** — algorithms were derived, and some of the lab is still in a`);
+  L.push('language this scanner does not read, so its list is a floor rather than a total.');
   L.push('');
   for (const c of sorted) {
     L.push(`### ${c.title}${c.wip ? ' *(WIP)*' : ''}`);
@@ -272,7 +287,15 @@ function build(list) {
     L.push('');
     L.push(c.copy);
     L.push('');
-    L.push(`- **Implements:** ${c.unknown ? 'UNKNOWN — not derivable from this lab\'s source' : c.implements.map((i) => `${i.name}${anchor(i)}`).join(', ')}`);
+    const implLine = c.notScanned
+      ? `**NOT-SCANNED** — this lab's implementation is in ${c.unscanned.join(', ')}, which this scanner does not read. No finding either way.`
+      : c.unknown
+        ? 'UNKNOWN — every file this scanner reads was read, and no algorithm was derivable'
+        : c.implements.map((i) => `${i.name}${anchor(i)}`).join(', ');
+    L.push(`- **Implements:** ${implLine}`);
+    if (!c.notScanned && c.unscanned.length) {
+      L.push(`- **Partially unread:** ${c.unscanned.join(', ')} — the list above covers only this lab's JavaScript and TypeScript.`);
+    }
     if (c.references.length) L.push(`- **References:** ${c.references.join(', ')}`);
     if (c.attacks.length) L.push(`- **Attacks shown:** ${c.attacks.map((a) => `${a.name}${anchor(a)}`).join(', ')}`);
     L.push(`- **Standards body:** ${c.standards.length ? c.standards.join(', ') : '—'}`);
@@ -292,6 +315,9 @@ function validate(list) {
     for (const i of c.implements) {
       if (!VOCAB.has(i.name)) errors.push(`${c.slug}: implements "${i.name}", which is not in catalog-vocab.js`);
     }
+    if (c.notScanned && !c.unscanned.length) {
+      errors.push(`${c.slug}: NOT-SCANNED without data-unscanned saying which language was not read`);
+    }
     for (const o of c.overlaps) {
       if (!known.has(o.slug)) errors.push(`${c.slug}: overlaps "${o.slug}", which has no card`);
       if (!o.difference) errors.push(`${c.slug}: overlap with "${o.slug}" states no difference`);
@@ -303,6 +329,85 @@ function main() {
   const mode = process.argv[2];
   const list = cards();
   validate(list);
+
+  if (mode === 'chips') {
+    /* THE RULE.
+     *
+     * A card may name an algorithm its lab does not implement. Where it names it
+     * decides whether that is honest.
+     *
+     *   DESCRIPTION — always allowed. Prose carries its own verbs. "A
+     *   full-decryption oracle attack ON HQC" cannot be misread as a build
+     *   claim, and forbidding it would forbid attack labs from naming what they
+     *   attack.
+     *
+     *   CHIP — a chip is the card's claim about its own stack, and it has no
+     *   verb to qualify it. A BARE algorithm name in a chip therefore reads as
+     *   "this lab builds this". It fails when the lab does not.
+     *
+     *   MARKED CHIP — passes. A chip that says what it means in its own
+     *   vocabulary rather than borrowing the implementation one: `vs. HQC`
+     *   names a target, `Toy-Scale Only` and `Modelled Decode Time` name a
+     *   fidelity. The marker is what stops a reader inheriting a build claim.
+     *
+     *   NOT-SCANNED — exempt. This tool has no finding about a lab whose source
+     *   it cannot read, and a checker with no finding must not accuse. Same rule
+     *   as protection-census: "could not look" is not "nothing there", and it is
+     *   certainly not "you are wrong". */
+    const MARKED = /^(?:vs\.?|versus|against|attacks?|breaks?|targets?)\b|\b(?:target|toy|modelled|modeled|simulated|stand-?in|abstract|educational|only)\b/i;
+    const violations = [];
+    const clearedByProse = [];
+    const cannotJudge = [];
+    /* An algorithm is implemented if the lab implements it under EITHER name. */
+    const satisfied = (impl, t) => impl.has(t.name)
+      || (t.alias && impl.has(t.alias))
+      || ALGORITHMS.some((o) => o.alias === t.name && impl.has(o.name));
+    for (const c of list) {
+      if (c.notScanned) continue;
+      const impl = new Set(c.implements.map((i) => i.name));
+      const prose = `${c.kicker} ${c.copy}`;
+      for (const t of ALGORITHMS) {
+        const inChip = c.chips.find((ch) => t.re.test(ch));
+        const inProse = t.re.test(prose);
+        if (!inChip && !inProse) continue;
+        if (satisfied(impl, t)) continue;
+        /* A COMPOSITE chip — `ChaCha20-Poly1305`, `HKDF-SHA256`, `SHA-1 / SHA-256`
+           — names several algorithms in one breath. If the lab implements any of
+           them the chip is not a false claim, it is a chip about a construction
+           whose parts this index lists separately. */
+        if (inChip && ALGORITHMS.filter((o) => o.re.test(inChip)).some((o) => satisfied(impl, o))) continue;
+        /* A lab this scanner only partly read cannot be judged: the algorithm
+           may well be in the part it did not open. shadow-vault chips
+           ChaCha20-Poly1305 and keeps its stream cipher in Rust. Reporting that
+           as a card error is the accusation-without-a-finding this whole file
+           is built to avoid. */
+        if (c.unscanned.length) { cannotJudge.push({ slug: c.slug, algorithm: t.name, unscanned: c.unscanned }); continue; }
+        if (inChip && !MARKED.test(inChip)) {
+          violations.push({ slug: c.slug, title: c.title, algorithm: t.name, chip: inChip });
+        } else if (inChip) {
+          clearedByProse.push({ slug: c.slug, algorithm: t.name, why: `marked chip "${inChip}"` });
+        } else {
+          clearedByProse.push({ slug: c.slug, algorithm: t.name, why: 'named in the description only' });
+        }
+      }
+    }
+    const labs = new Set(violations.map((v) => v.slug));
+    console.log('RULE: a chip naming an algorithm the lab does not implement must be MARKED');
+    console.log('      (a target — "vs. HQC" — or a fidelity — "Toy-Scale Only"). Prose is free.');
+    console.log('      NOT-SCANNED labs are exempt: no finding, no accusation.\n');
+    console.log(`Cleared by the rule: ${clearedByProse.length} namings (prose, or an already-marked chip).`);
+    console.log(`Violations: ${violations.length} chips across ${labs.size} labs.`);
+    console.log(`Cannot judge: ${cannotJudge.length} — the lab is partially unread, so the algorithm may be in the part not opened.\n`);
+    const byLab = new Map();
+    for (const v of violations) {
+      if (!byLab.has(v.slug)) byLab.set(v.slug, []);
+      byLab.get(v.slug).push(v);
+    }
+    for (const [slug, vs] of [...byLab].sort((a, b) => b[1].length - a[1].length)) {
+      console.log(`  ${slug.replace('crypto-lab-', '').padEnd(26)} ${vs.map((v) => `${v.chip} (${v.algorithm})`).join(', ')}`);
+    }
+    return;
+  }
 
   if (mode === 'contradictions') {
     /* A card's own words, checked against what its lab was found to implement.

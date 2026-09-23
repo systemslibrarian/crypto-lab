@@ -45,6 +45,32 @@ implementations are not derivable is **UNKNOWN**, which is not "implements
 nothing": 21 labs are UNKNOWN and most of them model or attack an algorithm
 rather than compute it.
 
+**A lab is in one of THREE states, not two.** `UNKNOWN` means every file this
+scanner reads was read and no algorithm was derivable — a finding, and usually a
+true one about a lab that models or attacks rather than computes. `NOT-SCANNED`
+means the lab implements its cryptography in a language the scanner does not
+open, so there is no finding either way: `crypto-lab-silent-tally` and
+`crypto-lab-ablation-wire` are Rust behind a WASM binding, and reporting them
+UNKNOWN published "implements nothing" about source nobody looked at. That is
+`protection-census`'s 404 in a different costume. A further **nine** labs are
+partially unread — `quantum-vault-kpqc` alone carries 27 Rust files, 4 C/C++ and
+3 WebAssembly — and their algorithm lists are a floor rather than a total, which
+`CATALOG.md` says on each one. `data-unscanned` records the languages and counts.
+
+**The chip rule.** A card may name an algorithm its lab does not implement, and
+where it names it decides whether that is honest. In the DESCRIPTION it is always
+fine: prose has verbs, and "an attack ON HQC" cannot be misread as a build claim.
+In a CHIP it is not, because a chip is the card's claim about its own stack and
+has no verb to qualify it — unless the chip is MARKED, saying what it means in
+its own vocabulary instead of borrowing the implementation one: `vs. HQC` names a
+target, `Toy-Scale Only` and `Modelled Decode Time` name a fidelity.
+`node tools/catalog-sync.js chips` applies it. It is **not** wired into `check`,
+and the reason is the recurring one: the rule is only as good as the scanner's
+recall, and the 28 it currently flags are dominated by protocol-level identity a
+source scanner cannot establish — `crypto-lab-tls-handshake` chips TLS 1.3 and
+writes no such literal anywhere in its code. Promoting it to a failing check
+means fixing recall first, not lowering the bar.
+
 Anchors are line numbers and line numbers rot, so
 `node tools/catalog-evidence.js verify` re-opens every one against the clones
 and fails on any that no longer resolves. It runs in the weekly fleet job, since

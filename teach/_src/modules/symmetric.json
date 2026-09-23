@@ -281,29 +281,31 @@
         }
       },
       {
-        "text": "AES Modes: in the targeted bit-flip demo the explanation says it flips bit 0 of C₀[7], while the result line below it says “After flipping bit 0 of C₀[1]”. The code flips byte 7; the result line names the wrong byte.",
+        "text": "AES Modes: the targeted bit-flip demo explains that it flips bit 0 of C₀[7], and its result line names the same byte. Until 2026-09-23 that result line read C₀[1] while the code flipped byte 7, so the sentence describing the attack named a byte the attack never touched; fixed in the lab and re-derived here in Chromium, Firefox and WebKit.",
         "exhibit": "aes-modes",
-        "rederived": "2026-09-22",
+        "rederived": "2026-09-23",
         "observable": {
           "kind": "text-present",
-          "needle": "After flipping bit 0 of C₀[1]",
+          "needle": "After flipping bit 0 of C₀[7]",
           "steps": [
             "#tab-cbc",
             "#cbc-encrypt-btn",
             "#cbc-targeted-btn"
-          ]
+          ],
+          "note": "the result line must keep naming the byte the code flips"
         }
       },
       {
-        "text": "AES Modes: the GCM tab’s self-check marks “Attacker recovers the GHASH subkey H and can forge any future message under that key” as correct, and its explanation says the attacker can forge any ciphertext under that key. That reaches past the forgery under the reused nonce the lab actually builds; the worksheet does not use this self-check.",
+        "text": "AES Modes: the GCM tab’s self-check marks “can forge further messages under that nonce” correct, and its explanation says why the subkey H alone does not forge under a fresh nonce — the tag also carries a mask E_K(J0) that moves with the nonce. Until 2026-09-23 it marked “forge any future message under that key” correct, which reached past the forgery the lab builds and contradicted the lab’s own fresh-nonce control; fixed in the lab and re-derived here in all three engines.",
         "exhibit": "aes-modes",
-        "rederived": "2026-09-22",
+        "rederived": "2026-09-23",
         "observable": {
           "kind": "text-present",
-          "needle": "can forge any future message under that key",
+          "needle": "forge further messages under that nonce",
           "steps": [
             "#tab-gcm"
-          ]
+          ],
+          "note": "the answer must stay scoped to the nonce the forgery was built under"
         }
       },
       {
@@ -318,16 +320,16 @@
         }
       },
       {
-        "text": "Nonce Collision: with a reused nonce, the CTR card reports lost confidentiality, the GCM and ChaCha20-Poly1305 cards report a forged tag accepted by the real verifier with the recovered authentication subkey or one-time key checked against ground truth, and the CBC card reports prefix equality; the GCM and ChaCha20-Poly1305 cards state the encryption key was not recovered. Pressing a cancellation button again prints new numbers, because each press uses a fresh key. With fresh nonces, the GCM and ChaCha20-Poly1305 cards verify under a different nonce than they encrypted with and print “(mismatched nonce) REJECT”, and each card’s banner and the scoreboard follow the reuse toggle rather than the computed result, so the worksheet has students record computed values.",
+        "text": "Nonce Collision: with a reused nonce, the CTR card reports lost confidentiality, the GCM and ChaCha20-Poly1305 cards report a forged tag accepted by the real verifier with the recovered authentication subkey or one-time key checked against ground truth, and the CBC card reports prefix equality; the GCM and ChaCha20-Poly1305 cards state the encryption key was not recovered. Pressing a cancellation button again prints new numbers, because each press uses a fresh key. With fresh nonces, both authenticated cards now encrypt and verify under one nonce and report VALID, and each card’s banner and the scoreboard follow the computed result. Until 2026-09-23 that path verified under a second random nonce, so an honest tag never verified and the card printed “(mismatched nonce) REJECT” beneath a SAFE heading, while the scoreboard was written from the reuse toggle before the run; fixed in the lab and re-derived here in all three engines. The worksheet still has students record computed values rather than banners, which is the habit worth building whether or not a banner happens to agree.",
         "exhibit": "nonce-collision",
-        "rederived": "2026-09-22",
+        "rederived": "2026-09-23",
         "observable": {
           "kind": "text-present",
-          "needle": "(mismatched nonce)",
+          "needle": "WebCrypto verify: VALID",
           "steps": [
             "#run-all-fresh"
           ],
-          "note": "the fresh-nonce run is where the mismatched-nonce reject line is rendered"
+          "note": "an honest tag under a fresh nonce must actually verify"
         }
       }
     ],

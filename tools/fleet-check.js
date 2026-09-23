@@ -5,7 +5,7 @@
  * Run: node tools/fleet-check.js
  * Prevents: a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand
  *
- * These five ask GitHub rather than this repository, which is what makes them the group
+ * These ask GitHub, or the sibling clones, rather than this repository — which is what makes them the group
  * worth scheduling: their answers change without anyone touching this repo. A lab can
  * start serving a stale build, or be published with no card, or have its branch
  * protection altered, on a day nobody commits anything here. Every other checker
@@ -31,7 +31,7 @@
  * was dealt with", and deciding that is a person's job.
  *
  * Usage (from the repo root):
- *   node tools/fleet-check.js                 run all six, exit 1 if any failed
+ *   node tools/fleet-check.js                 run them all, exit 1 if any failed
  *   node tools/fleet-check.js --open-issues   also open or update the one issue
  *                                             (needs the gh CLI and GH_TOKEN)
  *   node tools/fleet-check.js --json          machine-readable
@@ -51,6 +51,10 @@ const CHECKERS = [
   { name: 'gate-sync', args: ['tools/gate-sync.js', 'check'] },
   { name: 'dispatch-sync', args: ['tools/dispatch-sync.js', 'check'] },
   { name: 'theme-sync', args: ['tools/theme-sync.js', 'check'] },
+  /* Not a GitHub question, but the same shape: its answer changes when a LAB
+     changes, not when this repo does. Every anchor on a card is a line number in
+     a sibling repo, and a line number rots the moment someone edits above it. */
+  { name: 'catalog-evidence', args: ['tools/catalog-evidence.js', 'verify'] },
 ];
 
 /* protection-census is NOT in that list, and the reason is worth keeping.

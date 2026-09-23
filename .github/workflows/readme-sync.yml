@@ -33,3 +33,9 @@ jobs:
       # if nothing checked them.
       - name: README.md's tools table matches the tools
         run: node tools/tools-sync.js check
+      # CATALOG.md is generated from the same cards, and its check does a second job:
+      # it fails a card that claims to implement an algorithm without a file:line
+      # anchor behind the claim. It needs no clones — the evidence is on the card —
+      # so the claim and the check travel together in one pull request.
+      - name: CATALOG.md matches the cards, and every claim has its evidence
+        run: node tools/catalog-sync.js check

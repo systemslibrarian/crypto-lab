@@ -167,7 +167,12 @@ function cadence() {
       if (!words.size) continue;
       let src;
       try { src = code(caller); } catch { continue; }
-      for (const m of src.matchAll(/['"`]tools\/([\w.-]+)['"`]/g)) {
+      /* Normal quotes only, NOT backticks. A backtick-delimited `tools/x.js` is
+         markdown formatting, and catalog-sync.js generates prose full of it —
+         which had catalog-evidence.js, a weekly clone-backed checker, reported
+         as running on every PR and push. Same error as the YAML comments above:
+         a tool NAMED by another tool is not a tool RUN by it. */
+      for (const m of src.matchAll(/['"]tools\/([\w.-]+)['"]/g)) {
         const callee = m[1];
         if (callee === caller) continue;
         const have = byTool.get(callee) || new Set();

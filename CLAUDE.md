@@ -12,7 +12,7 @@ The catalog has three navigation layers and they all live in `index.html`:
 
 Two cross-cutting tags (`FOUNDATIONS`, `REAL-WORLD SYSTEMS`) are applied at runtime via `FOUNDATIONS_TITLES` and `REAL_WORLD_TITLES` arrays, so you don't repeat them in every card's `data-category`.
 
-`index.html` is the single source of truth. Three maintainer-facing files derive from it and
+`index.html` is the single source of truth. Four maintainer-facing files derive from it and
 each has a checker that fails when it drifts:
 
 | File | Holds | Checker |
@@ -21,6 +21,34 @@ each has a checker that fails when it drifts:
 | `README.md` | the "Maintaining the fleet" table | `node tools/tools-sync.js check` |
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
+| `CATALOG.md` | the algorithm-level view: reverse index, standards bodies, overlaps | `node tools/catalog-sync.js check` |
+
+`CATALOG.md` answers the one question the cards cannot: *which labs implement
+ML-KEM?* The chips look like they should answer it and cannot — there are 625
+distinct chips across 207 cards, so a chip search returns the labs that happened
+to spell it your way and looks complete while doing it. The card schema therefore
+carries six more fields (`data-implements`, `data-references`, `data-attacks`,
+`data-standards`, `data-implementation`, `data-overlaps`), and the first five are
+DERIVED from each lab's own source by `node tools/catalog-evidence.js write` —
+never hand-written. `data-overlaps` is the exception: how two labs differ is not
+derivable from either one, so it is judged, hand-written, and left alone by the
+writer.
+
+**Every implemented algorithm carries a `file:line` anchor, and a claim without
+one fails `catalog-sync check`.** The anchor is what stops the index becoming a
+grep: every one of these labs is ABOUT cryptography, so every algorithm name
+appears in every lab that discusses it. `crypto-lab-hqc-timing` is the case to
+keep in mind — it is entirely about HQC's decoder and implements neither HQC nor
+a decoder, as its own README says outright ("an abstract timing model — not a
+real BCH decoder"). Under a grep it is an HQC implementation. A lab whose
+implementations are not derivable is **UNKNOWN**, which is not "implements
+nothing": 21 labs are UNKNOWN and most of them model or attack an algorithm
+rather than compute it.
+
+Anchors are line numbers and line numbers rot, so
+`node tools/catalog-evidence.js verify` re-opens every one against the clones
+and fails on any that no longer resolves. It runs in the weekly fleet job, since
+its answer changes when a LAB changes rather than when this repo does.
 
 Nine more checkers guard the sibling demo repos, and the fleet itself, rather than
 a file derived from `index.html`:

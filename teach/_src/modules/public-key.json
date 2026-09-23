@@ -190,7 +190,12 @@
             "engine": "Chromium 153",
             "viewport": "390x720",
             "result": "issues",
-            "notes": "The page is about 288px wider than the viewport, so it scrolls sideways. Otherwise every worksheet step ran and every anchor was present."
+            "notes": "The page is about 288px wider than the viewport, so it scrolls sideways; the widest element is the page header. Re-derived on 2026-09-22 at the same figure. Otherwise every worksheet step ran and every anchor was present.",
+            "rederived": "2026-09-22",
+            "issue": {
+              "kind": "horizontal-overflow",
+              "overflow_px": 288
+            }
           },
           {
             "engine": "Firefox 155",
@@ -202,7 +207,12 @@
             "engine": "Firefox 155",
             "viewport": "390x720",
             "result": "issues",
-            "notes": "The page is about 288px wider than the viewport, so it scrolls sideways. Otherwise every worksheet step ran and every anchor was present."
+            "notes": "The page is about 288px wider than the viewport, so it scrolls sideways; the widest element is the page header. Re-derived on 2026-09-22 at the same figure. Otherwise every worksheet step ran and every anchor was present.",
+            "rederived": "2026-09-22",
+            "issue": {
+              "kind": "horizontal-overflow",
+              "overflow_px": 288
+            }
           },
           {
             "engine": "WebKit 26.6",
@@ -214,10 +224,15 @@
             "engine": "WebKit 26.6",
             "viewport": "390x720",
             "result": "issues",
-            "notes": "The page is about 287px wider than the viewport, so it scrolls sideways. Otherwise every worksheet step ran and every anchor was present."
+            "notes": "The page is about 287px wider than the viewport, so it scrolls sideways; the widest element is the page header. Re-derived on 2026-09-22 at the same figure. Otherwise every worksheet step ran and every anchor was present.",
+            "rederived": "2026-09-22",
+            "issue": {
+              "kind": "horizontal-overflow",
+              "overflow_px": 287
+            }
           }
         ],
-        "headline": "the page does not reflow at phone width: it stays about 288px wider than the screen, so it scrolls sideways. Use it on a laptop or a projector."
+        "headline": "the page does not reflow at phone width: it stays about 288px wider than the screen in every engine checked, so it scrolls sideways"
       },
       "run_specific_values": {
         "checked": "2026-09-22",

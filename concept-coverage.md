@@ -108,6 +108,15 @@ Crypto Lab exhibit, so its card moved to Related Projects on the hub and in the 
 concept this file maps is no longer cited by it. §4 stays `DEEP` on the exhibits that remain,
 with ChaCha20 Stream still carrying the stream-cipher construction.*
 
+*Version 14 — files the five labs carded on 2026-09-23: Air Stream under §4 (deployed 3GPP
+stream-cipher construction), KpqC Pair under §10 (NTRU+ is its lattice half), TC26 Pair under
+§11 (code-based Shipovnik), SM2 Forge under §28 (its headline break is a reused nonce) and
+Misty Lens under §30 (the related-key sandwich distinguisher). Catalogued total moves to 207.
+All five are additions to concepts already `COVERED`, so no status changes and the Gap summary
+stays empty. Every one was live with no card — and therefore no README row, no corpus entry
+and no line here — which is the silent-drop shape `fleet-sync` exists to catch, found by
+running it rather than by noticing.*
+
 *Three of the eight needed a judgment rather than a lookup, and in two of them the concept
 diverges from the catalog section — which is the divergence this file exists to allow. **Split
 Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
@@ -221,7 +230,7 @@ sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
 Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Format Ward ·
-Feistel Forge · Sector Vault · Sleeve Check · Export Grade.
+Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream.
 SPN, ARX, sponge, stream, lightweight, and Feistel.
 
 Export Grade adds key loading as cipher structure. Real TEA1 passes its known-answer tests
@@ -311,7 +320,7 @@ mirror and the point of both is lost.
 **10. Lattices (LWE / SIS / NTRU) — `DEEP`**
 Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · GGH Trapdoor · Dilithium Seal ·
 Dilithium Reject · Falcon Seal · HAWK · LLL Break · LWE Hints · Quantum Vault KpqC ·
-Lattice Gentle · Lattice Builder.
+Lattice Gentle · Lattice Builder · KpqC Pair.
 Lattice Gentle is the entry point by hand — SVP/CVP and LLL worked through before any named
 scheme appears — and Lattice Builder is the entry point by eye, two dials straightening a
 scrambled field until the shortest vector is readable.
@@ -362,7 +371,7 @@ security concept. An "under the hood" NTT demo would be a fine addition; concept
 completeness does not depend on it.
 
 **11. Codes / syndrome decoding — `COVERED`**
-McEliece Gate · BIKE Vault · HQC Vault · Syndrome Drain · Syndrome Hints.
+McEliece Gate · BIKE Vault · HQC Vault · Syndrome Drain · Syndrome Hints · TC26 Pair.
 
 **12. Multivariate / MQ — `COVERED`**
 Multivariate UOV · MAYO Seal. UOV plus its designated successor: MAYO Seal runs real keygen,
@@ -671,7 +680,7 @@ two cross-link.
 
 **28. Nonce and randomness misuse — `COVERED`**
 Nonce Collision · Nonce Guard · Nonce Lattice · Entropy Collapse · ECDSA Forge · Schnorr
-Forge.
+Forge · SM2 Forge.
 
 **29. Composition and parsing failures — `COVERED`**
 Protocol Compose · Signed Bytes · Salamander · KEM Trap · JWT Forge · Padding Oracle ·
@@ -688,7 +697,7 @@ guarantee is the lesson; the mode is not broken.
 
 **30. Classical cryptanalytic technique — `COVERED`**
 Biham Lens (differential) · Matsui Line (linear) · Vigenère Break · Collision Vault ·
-Model Breach · LLL Break.
+Model Breach · LLL Break · Misty Lens.
 
 Matsui Line completes the canonical pair. It is genuinely different mathematics —
 approximation *bias* and the piling-up lemma rather than difference propagation — and it
@@ -883,7 +892,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 202.**
+**Catalogued total: 207.**
 
 ---
 

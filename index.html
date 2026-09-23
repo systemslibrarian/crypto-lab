@@ -1804,7 +1804,7 @@
       <div class="wrap">
         <div class="featured-head">
           <div class="featured-headline-row">
-            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">202</span> interactive cryptography exhibits</span></h1>
+            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">207</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -1911,6 +1911,81 @@
                 <span class="chip">P-256</span>
               </div>
               <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-air-stream/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Mobile Air Interface</div>
+            <div class="project-title">Air Stream</div>
+            <div class="project-copy">Generate 128-EEA1, 128-EEA2 and 128-EEA3 keystream from one key, COUNT, bearer and direction, and check each against the test vectors in its own specification.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SNOW 3G</span>
+                <span class="chip">ZUC</span>
+                <span class="chip">AES-CTR</span>
+                <span class="chip">3GPP</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-kpqc-pair/" target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Korean PQC</div>
+            <div class="project-title">KpqC Pair</div>
+            <div class="project-copy">AIMer signs from a symmetric one-way function while NTRU+ encapsulates from the older NTRU line — the two KpqC algorithms Quantum Vault left out.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">AIMer</span>
+                <span class="chip">NTRU+</span>
+                <span class="chip">KpqC</span>
+                <span class="chip">Lattice</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-tc26-pair/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Russian PQC</div>
+            <div class="project-title">TC26 Pair</div>
+            <div class="project-copy">Two TC26 post-quantum signature proposals side by side: code-based Shipovnik and stateless hash-based Hypericum, both built over Streebog.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Shipovnik</span>
+                <span class="chip">Hypericum</span>
+                <span class="chip">Streebog</span>
+                <span class="chip">Hash-Based</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sm2-forge/" target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Chinese Standard</div>
+            <div class="project-title">SM2 Forge</div>
+            <div class="project-copy">Sign and encrypt under GB/T 32918 SM2, read the identity digest that precedes every signature, compare both deployed ciphertext orders, then recover a key from a reused nonce.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SM2</span>
+                <span class="chip">SM3</span>
+                <span class="chip">Nonce Reuse</span>
+                <span class="chip">RFC 8998</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-misty-lens/" target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Related-Key Attack</div>
+            <div class="project-title">Misty Lens</div>
+            <div class="project-copy">Run MISTY1 and KASUMI side by side, map the design changes between them, and execute the seven-round related-key sandwich distinguisher in the page.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">MISTY1</span>
+                <span class="chip">KASUMI</span>
+                <span class="chip">Related-Key</span>
+                <span class="chip">Feistel</span>
+              </div>
+              <span class="arrow">&rarr;</span>
             </div>
           </a>
 
@@ -5107,6 +5182,8 @@
       'Harvest Vault': 'post-quantum', 'PQ Rotation': 'post-quantum',
       'BB84': 'post-quantum', 'Shor': 'post-quantum', 'Grover': 'post-quantum',
       'Corrupted Oracle': 'cryptanalysis', 'Export Grade': 'cryptanalysis',
+      'Misty Lens': 'cryptanalysis', 'Air Stream': 'symmetric',
+      'KpqC Pair': 'post-quantum', 'TC26 Pair': 'post-quantum', 'SM2 Forge': 'public-key',
       'Model Breach': 'cryptanalysis',
       'Biham Lens': 'cryptanalysis', 'Padding Oracle': 'cryptanalysis',
       'Timing Oracle': 'cryptanalysis', 'Nonce Guard': 'cryptanalysis',
@@ -5176,7 +5253,7 @@
     ,
       'Fold Gate'
     ];
-    var REAL_WORLD_TITLES = [
+    var REAL_WORLD_TITLES = ['Air Stream', 'SM2 Forge', 
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',
       'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
       'WebAuthn','Web of Trust','SSH Handshake','Bitcoin Wallet',

@@ -87,8 +87,15 @@ workflow, and after building a lab.**
 `secrets.GITHUB_TOKEN` is scoped to the repository the workflow runs in, so reading a
 sibling repo's branch protection answers `403 Resource not accessible by integration`.
 The first scheduled run reported UNREAD for all 204 labs and filed it as a failure.
-Scheduling it needs a PAT with read access to the other repositories; until then it stays
-manual and the table says manual. They are the group whose answers change without
+Scheduling it needs a fine-grained PAT whose repository access covers every
+`crypto-lab-*` repo, with one permission — **Administration: Read-only**, which is where
+both branch protection and rulesets live, and which is all a read-only census needs. A
+classic PAT works but wants `repo`, far broader than reading protection. The full note,
+including the step to add and the secret to reference, is in
+`.github/workflows/fleet.yml` beside the job that would run it — where someone deciding
+on the credential will be looking. Until it exists `protection-census` stays manual, run
+locally where your own `gh` auth already has the access, and the generated table says
+manual, because a cadence the job cannot deliver is not one to publish. They are the group whose answers change without
 anyone committing here — a lab can start serving a stale build, be published with no
 card, or have its branch protection altered on a day this repo sees no activity — and
 until 2026-09-23 every one of them ran only when somebody remembered. Five labs sat live

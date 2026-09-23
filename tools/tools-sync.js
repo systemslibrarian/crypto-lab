@@ -138,7 +138,12 @@ function cadence() {
       const gatedToPR = /pull_request|push/.test(gate) && !/schedule/.test(gate);
       if (hasPR && !gatedToSchedule) words.add('every PR and push');
       if (hasCron && !gatedToPR) cronWords.forEach((w) => words.add(w));
-      for (const m of job.matchAll(/node (tools\/[\w.-]+)/g)) {
+      /* Comments do not run. This workflow carries a block explaining what
+         protection-census would need to be scheduled, quoting the step that would run
+         it — and counting that as an invocation put the tool back in the table as
+         weekly, which is precisely the claim the block exists to say is not true. */
+      const executable = job.split('\n').filter((l) => !/^\s*#/.test(l)).join('\n');
+      for (const m of executable.matchAll(/node (tools\/[\w.-]+)/g)) {
         const name = path.basename(m[1]);
         const said = byTool.get(name) || new Set();
         words.forEach((w) => said.add(w));

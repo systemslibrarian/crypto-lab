@@ -55,3 +55,40 @@ jobs:
         run: node tools/fleet-check.js --open-issues
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── protection-census is NOT in this job, and adding it is a credential decision ──
+      #
+      # It belongs here by every other measure: it asks GitHub, its answer changes with
+      # nobody committing, and it is the only thing that notices a lab's branch
+      # protection changing. What stops it is the token.
+      #
+      # `secrets.GITHUB_TOKEN` is scoped to the repository the workflow runs in. Reading
+      # branch protection on a SIBLING repo answers `403 Resource not accessible by
+      # integration` — it is not a permissions block that `permissions:` above can lift,
+      # because the token has no standing in those repositories at all. The first
+      # scheduled run proved it: UNREAD for all 204 labs, filed as a failure.
+      #
+      # What would fix it, if you decide the credential is worth it:
+      #
+      #   A fine-grained PAT whose repository access covers every crypto-lab-* repo,
+      #   with ONE permission — Administration: Read-only. Branch protection and
+      #   repository rulesets both sit under Administration, and read is all the census
+      #   needs; it is read-only by construction and has no write path.
+      #
+      #   A classic PAT works too but wants `repo`, which is far broader than reading
+      #   protection — it carries write to code and settings across everything it can
+      #   see. Prefer the fine-grained one.
+      #
+      # Then store it as a repository secret and add a step here:
+      #
+      #   - name: What protects each lab's default branch
+      #     run: node tools/protection-census.js
+      #     env:
+      #       GH_TOKEN: ${{ secrets.FLEET_READ_TOKEN }}
+      #
+      # and add it back to CHECKERS in tools/fleet-check.js so its failures join the one
+      # issue rather than only failing the job.
+      #
+      # Until that exists it stays MANUAL — run locally, where your own `gh` auth already
+      # has the access — and the generated table in README.md says manual, because a
+      # cadence this job cannot deliver is not one to publish.

@@ -69,6 +69,53 @@ const CHECKERS = [
  * leaving it out: UNREAD exists precisely so "could not look" never reads as "nothing
  * there", and that is the one rule that file is built around. */
 
+/* Findings already decided on, so a known state does not sit in the same list as a
+ * surprise. Each names the decision and what would clear it, and NOTHING is muted: the
+ * checker still fails, its full excerpt still goes in the issue, and the run still
+ * exits non-zero. The only thing an expectation changes is which list a finding is
+ * read in.
+ *
+ * Keyed on the violation MARKER a checker prints, not on the checker. Marking a whole
+ * checker "expected" would hide a new failure behind a known one — dispatch-sync is
+ * exactly that case: two of its five markers are decided on, and the other three are
+ * not. Decisions live in audits/LANE-VERDICT-HARNESS-2026-09-21.md. */
+const EXPECTED = {
+  'dispatch-sync': [
+    {
+      marker: 'RE-QUERY',
+      decision: 'D4',
+      unblocks: 'fold-gate\'s RE-QUERY gets its own small PR once #11 merges — deliberately not folded in, so the PR that merges stays the PR that was audited',
+    },
+    {
+      marker: 'UNPINNED-LAB',
+      decision: 'D12',
+      unblocks: 'the census is deliberately unpinned: re-pin with `node tools/dispatch-census.js write` once the six new labs have their initial commits and the lane building them reports done',
+    },
+    {
+      marker: 'COUNT',
+      decision: 'D12',
+      unblocks: 'same pin as UNPINNED-LAB — a pin taken over a half-built fleet is a figure inherited from a moment rather than derived from a state',
+    },
+  ],
+};
+
+/* Violation markers these checkers print: `NAME (n)` at the head of a section. A
+ * checker that fails without printing one cannot be accounted for by a marker, and is
+ * reported as unaccounted rather than assumed fine. */
+const MARKERS = /^\s*([A-Z][A-Z-]{2,})\s*\((\d+)\)/gm;
+
+function classify(result) {
+  const declared = EXPECTED[result.name] || [];
+  const seen = [...new Set([...result.full.matchAll(MARKERS)].map((m) => m[1]))];
+  const matched = declared.filter((e) => seen.includes(e.marker));
+  const unmatched = seen.filter((m) => !declared.some((e) => e.marker === m));
+  /* Tracked only when every marker it printed is one we decided on, and it printed at
+     least one. Anything else — an undeclared marker, or no marker at all — is a
+     surprise until someone says otherwise. */
+  const tracked = matched.length > 0 && unmatched.length === 0;
+  return { ...result, tracked, matched, unmatched, seen };
+}
+
 const argv = process.argv.slice(2);
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -95,6 +142,7 @@ function run(checker) {
        its counts and ends with a remedy snippet. Taking only the tail quoted that
        remedy into the issue and left the finding out. */
     tail: excerpt(out),
+    full: out,
   };
 }
 
@@ -113,22 +161,41 @@ function body(failed, firstFailed, runUrl) {
   const age = firstFailed === today()
     ? 'First failing run.'
     : `Failing since **${firstFailed}** — ${days} day${days === 1 ? '' : 's'}.`;
+  const surprises = failed.filter((f) => !f.tracked);
+  const tracked = failed.filter((f) => f.tracked);
+  const section = (f) => [
+    `### \`${f.command}\``,
+    '',
+    ...(f.matched.length
+      ? [`Decided on: ${f.matched.map((e) => `**${e.decision}** (\`${e.marker}\`) — ${e.unblocks}`).join('; ')}`, '']
+      : []),
+    ...(f.unmatched.length
+      ? [`Not accounted for by any decision: ${f.unmatched.map((m) => `\`${m}\``).join(', ')}`, '']
+      : []),
+    '```',
+    f.tail,
+    '```',
+    '',
+  ];
   return [
     SINCE(firstFailed),
-    `${failed.length} of ${CHECKERS.length} network-backed checkers failed on the weekly run.`,
+    `${failed.length} of ${CHECKERS.length} network-backed checkers failed on the weekly run`
+      + (tracked.length ? `, ${tracked.length} of them entirely on findings already decided on.` : '.'),
     '',
     age,
     '',
     `These ${CHECKERS.length} ask GitHub rather than this repository, so their answers change without anyone committing here.`,
     '',
-    ...failed.flatMap((f) => [
-      `### \`${f.command}\``,
-      '',
-      '```',
-      f.tail,
-      '```',
-      '',
-    ]),
+    ...(surprises.length
+      ? ['## Not accounted for', '',
+         'Either carrying a violation no decision covers, or failing without printing one this can read.', '',
+         ...surprises.flatMap(section)]
+      : ['## Not accounted for', '', '_None — every failure below is a state already decided on._', '']),
+    ...(tracked.length
+      ? ['## Expected and tracked', '',
+         'Still failing, still exiting non-zero, and nothing here is muted — only read separately, so a known state does not sit in the same list as a surprise.',
+         '', ...tracked.flatMap(section)]
+      : []),
     runUrl ? `Run: ${runUrl}` : null,
     '',
     '_Updated in place by `tools/fleet-check.js`. It reuses this issue rather than opening a new one each week, so the "failing since" date keeps counting; it never closes one, because a checker passing once is not the same as the problem being dealt with._',
@@ -148,7 +215,7 @@ function report(failed, runUrl) {
     const firstFailed = m ? m[1] : today();
     gh(['issue', 'edit', String(existing.number), '--body', body(failed, firstFailed, runUrl)]);
     gh(['issue', 'comment', String(existing.number), '--body',
-      `Still failing on the ${today()} run: ${failed.map((f) => `\`${f.name}\``).join(', ')}.`]);
+      `Still failing on the ${today()} run: ${failed.map((f) => `\`${f.name}\`${f.tracked ? ' (expected)' : ''}`).join(', ')}.`]);
     console.log(`\nUpdated issue #${existing.number} (failing since ${firstFailed}).`);
     return;
   }
@@ -157,7 +224,7 @@ function report(failed, runUrl) {
 }
 
 function main() {
-  const results = CHECKERS.map(run); // every one, regardless of earlier failures
+  const results = CHECKERS.map(run).map(classify); // every one, regardless of earlier failures
   const failed = results.filter((r) => !r.ok);
 
   if (argv.includes('--json')) {
@@ -165,7 +232,8 @@ function main() {
   } else {
     console.log(`Weekly fleet check — ${CHECKERS.length} network-backed checkers, all run regardless of failures.\n`);
     for (const r of results) {
-      console.log(`  ${(r.ok ? 'PASS' : 'FAIL').padEnd(5)} ${r.name.padEnd(20)} ${String(r.seconds).padStart(3)}s  ${r.command}`);
+      const note = r.ok ? '' : r.tracked ? `  (expected: ${[...new Set(r.matched.map((e) => e.decision))].join(', ')})` : '';
+      console.log(`  ${(r.ok ? 'PASS' : 'FAIL').padEnd(5)} ${r.name.padEnd(20)} ${String(r.seconds).padStart(3)}s  ${r.command}${note}`);
     }
     console.log(`\n  ${results.filter((r) => r.ok).length} passed, ${failed.length} failed.`);
     for (const f of failed) {

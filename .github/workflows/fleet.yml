@@ -42,8 +42,20 @@ jobs:
       # by name rather than quietly shrinking anyone's denominator.
       - name: Clone the fleet beside this repo
         run: |
+          # The list is every crypto-lab-* repo PLUS anything the census pins that does
+          # not carry that prefix. Filtering on the prefix alone left crypto-compare and
+          # crypto-counsel uncloned, and dispatch-sync reported them as NOT-CLONED — a
+          # finding about this workflow's clone step, reported as if it were about the
+          # labs. A checker's denominator is the pin, so the clone has to cover the pin.
           gh repo list systemslibrarian --limit 400 --json name \
             --jq '.[] | select(.name | startswith("crypto-lab-")) | .name' > /tmp/labs.txt
+          node -e '
+            const c = require("./tools/dispatch-census.json");
+            const pinned = new Set();
+            for (const v of Object.values(c)) if (Array.isArray(v)) for (const n of v) if (typeof n === "string") pinned.add(n);
+            for (const n of [...pinned].sort()) if (!n.startsWith("crypto-lab-") && n !== "crypto-lab") console.log(n);
+          ' >> /tmp/labs.txt
+          sort -u /tmp/labs.txt -o /tmp/labs.txt
           wc -l < /tmp/labs.txt
           xargs -P 8 -I{} sh -c \
             'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \

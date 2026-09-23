@@ -666,7 +666,16 @@ Then add an auto-merge job to the workflow that runs the gate on `pull_request`:
             sleep 15          # a sibling PR merging first moves main under us
           done
           [ -n "$merged" ] || { echo "::warning::gate passed, merge did not land"; exit 0; }
-          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main   # see §6.2
+          # A merge made with GITHUB_TOKEN raises no push event -- GitHub suppresses
+          # them so workflows cannot retrigger themselves -- so deploy would never run
+          # and the site would keep serving the previous build. Ask for it explicitly;
+          # a workflow_dispatch through the API is not suppressed. The dispatched run
+          # is the same gate-then-deploy pipeline, so a bad merge still ships nothing.
+          #
+          # Dispatch the file THIS lab has: most are deploy.yml, some deploy-pages.yml
+          # or pages.yml. A copied name 404s only on the auto-merge path, after the
+          # merge has landed. See §6.2.
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -674,6 +683,17 @@ Then add an auto-merge job to the workflow that runs the gate on `pull_request`:
 
 `needs:` is the whole safety argument — the gate decides, not the version number.
 A major that breaks the lab fails the gate and the PR stays open for a human.
+
+**The comment above that dispatch line is part of the block, not decoration.** Until
+2026-09-23 this sample carried `# see §6.2` there and put the argument in prose below,
+outside the YAML — so a lab built by copying this block got a dispatch with nothing in
+the file saying why it exists. Eight labs created after the 2026-09-10 normalisation
+pass are missing it or have drifted from it, every one of them born that way rather than
+having lost it: `fold-gate`, `hidden-bit`, `order-leak`, `pqxdh-wire`, `privacy-pass`,
+`proof-tally`, `split-point` (absent) and `kpqc-pair` (drifted). Deleting that paragraph
+and deleting the dispatch it defends are the same edit six months apart, which is why
+`tools/dispatch-comment-sync.js` holds one wording fleet-wide and `dispatch-sync check`
+fails a lab whose copy differs. Copy the comment with the code.
 
 **If this lab's gate lives in a reusable workflow** (one that `deploy.yml` calls
 via `uses: ./.github/workflows/test.yml`), the job must NOT go there: a called

@@ -2,6 +2,9 @@
 /*
  * theme-sync.js — hold every lab to exactly one theme, pinned, with no toggle.
  *
+ * Run: node tools/theme-sync.js check
+ * Prevents: a lab drifting off its single pinned theme, or a removed theme toggle coming back
+ *
  * The fleet used to ship a light palette and a header toggle that persisted its
  * choice. The palettes read badly and the persistence meant one past click
  * pinned a returning visitor to light forever, so both were removed: each lab

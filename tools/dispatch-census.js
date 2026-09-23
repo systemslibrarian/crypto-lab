@@ -3,6 +3,9 @@
  * dispatch-census.js — pin WHICH labs the dispatch checkers judge, and refuse to
  * lose one in silence.
  *
+ * Run: node tools/dispatch-census.js check
+ * Prevents: a lab dropping out of the dispatch checkers’ denominator without the count going red
+ *
  * ---------------------------------------------------------------------------
  * The defect this closes
  *

@@ -3,6 +3,9 @@
  * teach-build.js — generate the /teach/ pages from teach/_src/, plus the course-module
  * map in index.html that puts a "Course module" link under each module's cards.
  *
+ * Run: node tools/teach-build.js check
+ * Prevents: a generated teach page drifting from its source, and a hardcoded catalog count going stale
+ *
  * Sources (hand-edited):
  *   teach/_src/modules/<id>.json            one file per course module
  *   teach/_src/worksheets/<id>/<name>.md    worksheet sources: front matter + a small Markdown subset

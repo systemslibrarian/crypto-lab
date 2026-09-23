@@ -28,3 +28,8 @@ jobs:
           node-version: 24
       - name: README.md matches the generator's output
         run: node tools/readme-sync.js check
+      # The maintenance table is generated too — from each tool's own header and from
+      # the workflow job that runs it — so it drifts the same way the demo tables would
+      # if nothing checked them.
+      - name: README.md's tools table matches the tools
+        run: node tools/tools-sync.js check

@@ -2,6 +2,9 @@
 /*
  * port-sync.js — one Playwright port per lab, pinned, and --strictPort kept.
  *
+ * Run: node tools/port-sync.js check
+ * Prevents: two labs sharing a Playwright port, where a local run silently tests whatever is already listening
+ *
  * Two labs sharing a port is not a style problem. Playwright's default
  * `reuseExistingServer: !process.env.CI` means a local run that finds something
  * already listening on its port will USE it rather than start its own. So when

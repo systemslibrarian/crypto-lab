@@ -3,6 +3,9 @@
  * dispatch-comment-sync.js — one wording, fleet-wide, for the paragraph that
  * says WHY the auto-merge step dispatches a deploy at all.
  *
+ * Run: node tools/dispatch-comment-sync.js check
+ * Prevents: the paragraph explaining why the dispatch exists drifting into many wordings, or being deleted with the line it defends
+ *
  * ---------------------------------------------------------------------------
  * Why a checker for a comment
  *

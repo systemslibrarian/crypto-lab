@@ -2,6 +2,9 @@
 /*
  * concept-sync.js — keep concept-coverage.md in step with the catalog.
  *
+ * Run: node tools/concept-sync.js check
+ * Prevents: the gap list answering “is anything missing?” wrongly because a demo was never filed under a concept
+ *
  * concept-coverage.md maps every demo onto the concept it teaches, so "what's
  * left to build?" is a lookup rather than an audit. That map only stays useful
  * if it stays honest: a new demo that never gets filed under a concept silently

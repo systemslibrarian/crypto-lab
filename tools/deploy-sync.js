@@ -2,6 +2,9 @@
 /*
  * deploy-sync.js — assert that what is on each lab's main is what the live site serves.
  *
+ * Run: node tools/deploy-sync.js check
+ * Prevents: a lab serving a build older than its own main, with nothing anywhere going red
+ *
  * Every other checker here compares files to files. This one compares main to
  * reality, because that is where this fleet actually drifts, and it drifts
  * silently: on 2026-08-20 nine labs were serving a build older than their main

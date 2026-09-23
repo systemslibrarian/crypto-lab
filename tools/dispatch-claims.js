@@ -2,6 +2,9 @@
 /*
  * dispatch-claims.js — hold the CANONICAL paragraph to the facts it asserts.
  *
+ * Run: node tools/dispatch-claims.js check
+ * Prevents: the canonical dispatch paragraph asserting something the fleet’s own YAML no longer supports
+ *
  * ---------------------------------------------------------------------------
  * The defect this closes
  *

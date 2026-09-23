@@ -3,6 +3,9 @@
  * dispatch-proof.js — the evidence for tools/dispatch-sync.js and
  * tools/transform.mjs, made re-runnable.
  *
+ * Run: node tools/dispatch-proof.js
+ * Prevents: the dispatch work’s claims being trusted without re-running the evidence behind them
+ *
  * The auto-merge rewrite was justified by a proof that existed only in a
  * transcript: the validator passes the labs that already had the fix, fails the
  * old construct, the transform turns one into the other, and under the injected

@@ -3,6 +3,9 @@
  * teach-issues.js — re-derive the issues recorded against each exhibit, against the
  * live page.
  *
+ * Run: node tools/teach-issues.js
+ * Prevents: a module page publishing a defect note about a lab that stopped being true
+ *
  * WHY THIS EXISTS
  *
  * A module page publishes the problems its exhibits have: "in WebKit at phone width

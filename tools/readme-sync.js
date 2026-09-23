@@ -1,4 +1,7 @@
 // readme-sync.js — regenerate README.md's Featured, Learning Paths, and All
+//
+// Run: node tools/readme-sync.js check
+// Prevents: this README’s tables drifting from the cards they are generated from
 // Demos tables from index.html, so the site is the single source of truth.
 //   node tools/readme-sync.js        rewrite README.md and index.html's hero count
 //   node tools/readme-sync.js check  exit 1 if either differs from generated

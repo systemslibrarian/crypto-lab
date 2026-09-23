@@ -3,6 +3,9 @@
  * gate-sync.js — assert that the gate a Dependabot bump merges against IS the
  * gate the deploy depends on.
  *
+ * Run: node tools/gate-sync.js check
+ * Prevents: a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching
+ *
  * deploy-sync asks whether the live site matches main. This one asks the
  * question one step earlier: whether anything could have landed on main that
  * main's own deploy would refuse to ship. Those are different failures. A lab

@@ -18,6 +18,7 @@ each has a checker that fails when it drifts:
 | File | Holds | Checker |
 |---|---|---|
 | `README.md` | Featured / Learning Paths / All Demos tables | `node tools/readme-sync.js check` |
+| `README.md` | the "Maintaining the fleet" table | `node tools/tools-sync.js check` |
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
 
@@ -41,6 +42,21 @@ so the fast loop does not grow a command. Run them directly when the answer matt
 its own — after editing `CANONICAL`, or after cloning or removing a lab.
 (`protection-census` is NOT folded into anything: it is the newest row, it needs the
 network, and it answers a question no other checker asks.)
+
+**README.md's "Maintaining the fleet" table is generated, and its text lives in the
+tools.** Each row comes out of the tool it describes: the command from that file's
+`Run:` header line, the failure from its `Prevents:` line, and the cadence from the
+workflow JOB that runs it — per job, not per workflow, because `teach.yml` triggers on
+pull_request, push and a daily cron while its jobs are gated to different subsets, and
+reading the workflow's triggers gave `teach-drift` "every PR and push" when it only ever
+runs daily. Never hand-edit the block; run `node tools/tools-sync.js`, and if a row is
+wrong, fix the header rather than the README — the header is the source.
+
+A tracked tool with a `Run:` line and no `Prevents:` line **fails the check**. That is
+the point of it: the sentence saying which failure a checker exists to prevent is the
+one worth having, and this is the only thing that makes anyone write it. The table lists
+tracked tools only, and names any untracked file in `tools/` in a footnote, so an
+absence is never read as a claim that nothing else is there.
 
 `protection-census` answers one question and is READ-ONLY by construction: it issues
 GETs and has no write path, because a census that could edit access control would be a

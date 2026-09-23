@@ -2,6 +2,9 @@
 /*
  * teach-drift.js — the daily worksheet drift check.
  *
+ * Run: node tools/teach-drift.js
+ * Prevents: a worksheet naming a control its live exhibit no longer has
+ *
  * For every worksheet listed in a teach/<module>/anchors.json, open the live exhibit in
  * Chromium and confirm that each control the worksheet names is present on the page.
  * A missing control, or an exhibit that will not load, fails the run; with --open-issues

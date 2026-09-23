@@ -2,6 +2,9 @@
 /*
  * fleet-sync.js — assert that every lab that EXISTS has a card here.
  *
+ * Run: node tools/fleet-sync.js check
+ * Prevents: a lab going live with no card, which every catalog checker then reads as consistent rather than missing
+ *
  * The other checkers all compare this repo to something derived from it:
  * readme-sync reads the cards, corpus-sync reads the cards, concept-sync reads
  * the cards. So a lab with no card is missing from all of them *consistently*,

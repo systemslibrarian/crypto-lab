@@ -3,6 +3,9 @@
  * teach-observe.js — record what a page contacts, for teach/_src/evidence.json and the
  * per-exhibit privacy notes on module pages.
  *
+ * Run: node tools/teach-observe.js <exhibit url>
+ * Prevents: a privacy note on a module page describing contacts the exhibit no longer makes
+ *
  * Loads the page, scrolls to the end, waits for the network to go quiet, and prints
  * every origin other than the page's own that it contacted, with the kind of request,
  * plus cookies, web-storage keys and scripts loaded from other origins. It records

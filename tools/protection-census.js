@@ -2,6 +2,9 @@
 /*
  * protection-census.js — what actually protects each lab's default branch.
  *
+ * Run: node tools/protection-census.js
+ * Prevents: reading a 404 from the classic protection endpoint as unprotected when a ruleset is protecting the branch
+ *
  * READ-ONLY. It issues GET requests through `gh api` and nothing else. It has no
  * write path, no `--fix`, and no flag that changes anything on GitHub. Branch
  * protection is access control; a census that could edit it would be a worse

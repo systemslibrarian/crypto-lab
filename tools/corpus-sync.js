@@ -2,6 +2,9 @@
 /*
  * corpus-sync.js — keep the crypto-counsel RAG corpus in step with this catalog.
  *
+ * Run: node tools/corpus-sync.js check
+ * Prevents: a demo staying invisible to the crypto-counsel chatbot because its corpus entry was never added
+ *
  * The crypto-counsel chatbot embeds a snapshot of crypto-lab demo cards in its
  * corpus.json (entries with id "demo_crypto_lab_<slug>"). That snapshot does NOT
  * update itself, so every time a demo is added here it must also be added there.

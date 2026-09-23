@@ -3,6 +3,9 @@
  * dispatch-sync.js — assert that the post-auto-merge deploy dispatch CANNOT be
  * skipped in silence.
  *
+ * Run: node tools/dispatch-sync.js check
+ * Prevents: a merged bump whose deploy dispatch can fail, print nothing and exit 0, leaving the live site on the old build
+ *
  * deploy-sync asks whether the live site matches main. gate-sync asks whether
  * the gate a bump merges against is the gate the deploy depends on. This one
  * asks a narrower question that neither of them can see: once a bump HAS merged

@@ -81,9 +81,14 @@ need the network and `gh`; each takes 20 to 30 seconds for the whole fleet, so n
 them is part of the fast loop. **Run them after any cross-repo pass, after anything that touches a
 workflow, and after building a lab.**
 
-**Six of them also run weekly on their own**, through `.github/workflows/fleet.yml` and
-`tools/fleet-check.js`: `fleet-sync`, `deploy-sync`, `gate-sync`, `dispatch-sync`,
-`theme-sync` and `protection-census`. They are the group whose answers change without
+**Five of them also run weekly on their own**, through `.github/workflows/fleet.yml` and
+`tools/fleet-check.js`: `fleet-sync`, `deploy-sync`, `gate-sync`, `dispatch-sync` and
+`theme-sync`. `protection-census` belongs with them and is deliberately NOT there:
+`secrets.GITHUB_TOKEN` is scoped to the repository the workflow runs in, so reading a
+sibling repo's branch protection answers `403 Resource not accessible by integration`.
+The first scheduled run reported UNREAD for all 204 labs and filed it as a failure.
+Scheduling it needs a PAT with read access to the other repositories; until then it stays
+manual and the table says manual. They are the group whose answers change without
 anyone committing here — a lab can start serving a stale build, be published with no
 card, or have its branch protection altered on a day this repo sees no activity — and
 until 2026-09-23 every one of them ran only when somebody remembered. Five labs sat live

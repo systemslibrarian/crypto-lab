@@ -51,8 +51,23 @@ const CHECKERS = [
   { name: 'gate-sync', args: ['tools/gate-sync.js', 'check'] },
   { name: 'dispatch-sync', args: ['tools/dispatch-sync.js', 'check'] },
   { name: 'theme-sync', args: ['tools/theme-sync.js', 'check'] },
-  { name: 'protection-census', args: ['tools/protection-census.js'] },
 ];
+
+/* protection-census is NOT in that list, and the reason is worth keeping.
+ *
+ * It belongs there by every other measure — it asks GitHub, its answer changes without
+ * anyone committing here, and it is how a branch protection change gets noticed. But
+ * `secrets.GITHUB_TOKEN` is scoped to the repository the workflow runs in, so reading
+ * branch protection on a sibling repo answers `403 Resource not accessible by
+ * integration`. The first scheduled run reported UNREAD for all 204 labs and filed that
+ * as a failure: a weekly false alarm, which is how a checker's issues start being closed
+ * unread.
+ *
+ * Adding it back needs a PAT with read access to the other repositories, not a change
+ * here. Until then it stays manual, the table says manual, and nothing claims a coverage
+ * this job cannot establish. Muting the 403 inside the census would have been worse than
+ * leaving it out: UNREAD exists precisely so "could not look" never reads as "nothing
+ * there", and that is the one rule that file is built around. */
 
 const argv = process.argv.slice(2);
 const today = () => new Date().toISOString().slice(0, 10);

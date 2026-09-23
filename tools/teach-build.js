@@ -626,6 +626,48 @@ function listSentence(items) {
   return esc(items.slice(0, -1).join(', ')) + ' and ' + esc(items[items.length - 1]);
 }
 
+/* The "Ready to teach" block: what an instructor needs in order to decide whether
+   this module fits their next class, derived entirely from the module file. No field
+   in it is written by hand, so nothing here can drift from the checks further down
+   the page — the Checks section below stays the full record, and this is a reading
+   of it.
+
+   What it deliberately does not say: that a module works in engines nobody ran, or
+   on hardware nobody tested. The engines named are the engines with a recorded
+   result, the widths named are the widths those results were taken at, and an
+   exhibit with a recorded issue is named rather than averaged away. */
+function readyBlock(m, core, ext) {
+  const results = m.exhibits.flatMap((x) => ((x.support || {}).results || []).map((r) => ({ x, r })));
+  const engines = [...new Set(results.map(({ r }) => r.engine))].sort();
+  const widths = results.map(({ r }) => r.viewport).join(' ');
+  const where = [/1280/.test(widths) ? 'desktop width' : '', /390/.test(widths) ? 'phone width' : '']
+    .filter(Boolean).join(' and ');
+
+  const seen = new Map();
+  for (const { x, r } of results.filter(({ r }) => r.result !== 'pass')) {
+    if (!seen.has(x.card.title)) seen.set(x.card.title, new Set());
+    seen.get(x.card.title).add(r.engine);
+  }
+  const issues = [...seen]
+    .map(([title, engs]) => `${esc(title)} (${listSentence([...engs].sort().map(esc))})`)
+    .join('; ');
+
+  const sheets = m.exhibits.filter((x) => x.worksheet)
+    .map((x) => `<a href="${x.name}/">${esc(x.card.title)}</a>`).join(' · ');
+
+  return `
+<section class="t-ready" aria-labelledby="ready">
+<h2 id="ready">Ready to teach</h2>
+<dl class="t-ready-list">
+  <div><dt>Class time</dt><dd>About ${core} minutes for the core sequence${ext ? `, plus about ${ext} minutes of extension` : ''}. ${esc(CLASS_TIME_NOTE.charAt(0).toUpperCase() + CLASS_TIME_NOTE.slice(1))}.</dd></div>
+  <div><dt>Checked in</dt><dd>${listSentence(engines.map(esc))}${where ? `, at ${where}` : ''}.</dd></div>
+  <div><dt>Known issues</dt><dd>${issues ? `${issues}. <a href="#readiness">What the checks found</a>.` : `None recorded in <a href="#readiness">the checks below</a>.`}</dd></div>
+  <div class="t-fact-wide"><dt>Worksheets</dt><dd>${sheets || 'None written yet.'}</dd></div>
+</dl>
+</section>
+`;
+}
+
 function modulePage(m, cff, site, worksheets) {
   const canonical = `${site.hub_url}teach/${m.id}/`;
   const core = minutesOf(m, true);
@@ -681,6 +723,7 @@ function modulePage(m, cff, site, worksheets) {
   <div><dt>Last checked</dt><dd>${esc(m.last_checked)}</dd></div>
 </dl>
 
+${readyBlock(m, core, ext)}
 <section aria-labelledby="prereq"><h2 id="prereq">Prerequisites</h2>${list(m.prerequisites)}</section>
 
 <section aria-labelledby="outcomes"><h2 id="outcomes">Learning outcomes</h2>

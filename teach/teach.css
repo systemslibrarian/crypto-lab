@@ -127,6 +127,18 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
 .t-facts dt { color: var(--text-dim); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .t-facts dd { margin: 0.2rem 0 0; }
 
+/* Ready to teach: the same definition-list shape as the facts above it, given its own
+   surround so it reads as a panel to decide from rather than more prose to work
+   through. Each value is a sentence, so the tracks are wider than the facts grid's —
+   a two-word column here would be the crushed-prose defect the layout check exists
+   for. Every row is derived in teach-build.js; nothing in it is hand-written. */
+.t-ready { border: 1px solid var(--accent); background-color: var(--panel); padding: 0.9rem 1.1rem 1.1rem; margin: 1.6rem 0 0; }
+.t-ready > h2 { margin: 0; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-hi); border: 0; }
+.t-ready-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 0.7rem; margin: 0.8rem 0 0; }
+.t-ready-list div { border: 1px solid var(--border); padding: 0.6rem 0.8rem; }
+.t-ready-list dt { color: var(--text-dim); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.t-ready-list dd { margin: 0.2rem 0 0; }
+
 .t-modules { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 1rem; }
 .t-module { border: 1px solid var(--border); background-color: var(--panel); padding: 1rem 1.2rem; }
 .t-module h3 { margin: 0 0 0.3rem; font-size: 1.15rem; }

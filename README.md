@@ -333,26 +333,27 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 |---|---|---|
 | `node tools/concept-sync.js check` | the gap list answering “is anything missing?” wrongly because a demo was never filed under a concept | manual |
 | `node tools/corpus-sync.js check` | a demo staying invisible to the crypto-counsel chatbot because its corpus entry was never added | manual |
-| `node tools/deploy-sync.js check` | a lab serving a build older than its own main, with nothing anywhere going red | manual |
+| `node tools/deploy-sync.js check` | a lab serving a build older than its own main, with nothing anywhere going red | weekly |
 | `node tools/dispatch-census.js check` | a lab dropping out of the dispatch checkers’ denominator without the count going red | manual |
 | `node tools/dispatch-claims.js check` | the canonical dispatch paragraph asserting something the fleet’s own YAML no longer supports | manual |
 | `node tools/dispatch-comment-sync.js check` | the paragraph explaining why the dispatch exists drifting into many wordings, or being deleted with the line it defends | manual |
 | `node tools/dispatch-proof.js` | the dispatch work’s claims being trusted without re-running the evidence behind them | manual |
-| `node tools/dispatch-sync.js check` | a merged bump whose deploy dispatch can fail, print nothing and exit 0, leaving the live site on the old build | manual |
-| `node tools/fleet-sync.js check` | a lab going live with no card, which every catalog checker then reads as consistent rather than missing | manual |
-| `node tools/gate-sync.js check` | a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching | manual |
+| `node tools/dispatch-sync.js check` | a merged bump whose deploy dispatch can fail, print nothing and exit 0, leaving the live site on the old build | weekly |
+| `node tools/fleet-check.js` | a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand | weekly |
+| `node tools/fleet-sync.js check` | a lab going live with no card, which every catalog checker then reads as consistent rather than missing | weekly |
+| `node tools/gate-sync.js check` | a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching | weekly |
 | `node tools/port-sync.js check` | two labs sharing a Playwright port, where a local run silently tests whatever is already listening | manual |
-| `node tools/protection-census.js` | reading a 404 from the classic protection endpoint as unprotected when a ruleset is protecting the branch | manual |
+| `node tools/protection-census.js` | reading a 404 from the classic protection endpoint as unprotected when a ruleset is protecting the branch | weekly |
 | `node tools/readme-sync.js check` | this README’s tables drifting from the cards they are generated from | every PR and push |
 | `node tools/teach-build.js check` | a generated teach page drifting from its source, and a hardcoded catalog count going stale | every PR and push |
 | `node tools/teach-drift.js` | a worksheet naming a control its live exhibit no longer has | daily |
 | `node tools/teach-issues.js` | a module page publishing a defect note about a lab that stopped being true | daily |
 | `node tools/teach-layout.js` | a teach page scrolling sideways, overflowing its container, or crushing prose into a column | every PR and push |
 | `node tools/teach-observe.js <exhibit url>` | a privacy note on a module page describing contacts the exhibit no longer makes | manual |
-| `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | manual |
+| `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | weekly |
 | `node tools/tools-sync.js check` | this list drifting from the tools it describes | every PR and push |
 
-14 of these 20 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+8 of these 21 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
 Not listed above: `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 

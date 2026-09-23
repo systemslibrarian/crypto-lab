@@ -1,0 +1,57 @@
+# Fleet check: the six checkers that ask GitHub rather than this repository.
+#
+# These are scheduled because their answers change without anyone committing here — a
+# lab can start serving a stale build, be published with no card, or have its branch
+# protection altered on a day this repo sees no activity. Every other checker compares
+# files that only move when someone moves them, and those run on pull_request.
+#
+# Weekly rather than daily: each takes 20 to 30 seconds across the fleet, and a daily
+# run of six network checks is a lot of noise for a question whose answer moves slowly.
+name: Fleet check
+
+on:
+  schedule:
+    - cron: '41 7 * * 1'   # weekly, Mondays
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: fleet-check
+  cancel-in-progress: false
+
+jobs:
+  fleet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      # theme-sync reads every page of every lab, so the labs have to be here. The
+      # others ask the API. Cloning the fleet is the slow part of this job, not the
+      # checks, which is the other reason it runs weekly rather than daily.
+      # gate-sync, dispatch-sync and theme-sync read the labs' own files, so the labs
+      # have to be on disk beside this repo, which is where those checkers look. The
+      # other three ask the API. Cloning is the slow part of this job, not the checks —
+      # the other reason it runs weekly rather than daily. Shallow and parallel; a
+      # clone that fails is a warning and a missing lab, which dispatch-census reports
+      # by name rather than quietly shrinking anyone's denominator.
+      - name: Clone the fleet beside this repo
+        run: |
+          gh repo list systemslibrarian --limit 400 --json name \
+            --jq '.[] | select(.name | startswith("crypto-lab-")) | .name' > /tmp/labs.txt
+          wc -l < /tmp/labs.txt
+          xargs -P 8 -I{} sh -c \
+            'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
+              || echo "::warning::clone failed: {}"' < /tmp/labs.txt
+          ls -1d ../crypto-lab-* | wc -l
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Every network-backed checker, then one issue naming all that failed
+        run: node tools/fleet-check.js --open-issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

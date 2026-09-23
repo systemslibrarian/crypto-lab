@@ -81,6 +81,25 @@ need the network and `gh`; each takes 20 to 30 seconds for the whole fleet, so n
 them is part of the fast loop. **Run them after any cross-repo pass, after anything that touches a
 workflow, and after building a lab.**
 
+**Six of them also run weekly on their own**, through `.github/workflows/fleet.yml` and
+`tools/fleet-check.js`: `fleet-sync`, `deploy-sync`, `gate-sync`, `dispatch-sync`,
+`theme-sync` and `protection-census`. They are the group whose answers change without
+anyone committing here — a lab can start serving a stale build, be published with no
+card, or have its branch protection altered on a day this repo sees no activity — and
+until 2026-09-23 every one of them ran only when somebody remembered. Five labs sat live
+and uncatalogued, and sixteen repositories had no topics, because nothing asked.
+
+Four things about that runner are deliberate and worth not undoing. **Every checker runs
+even after one fails**, so a single failure cannot hide the other five. **One issue per
+run** names every checker that failed, because six issues a week is how people learn to
+close them unread. **An open issue is reused and updated**, so the "failing since" date
+keeps counting instead of resetting weekly — a failure that has stood for a month is the
+thing worth seeing. And it **closes nothing**: a checker passing once is not the same as
+a problem being dealt with, and that judgement is a person's.
+
+Running it by hand is still right after a cross-repo pass. Weekly is the floor, not the
+cadence you should rely on.
+
 `fleet-sync` exists because every other checker in this repo compares the catalog
 to something derived FROM the catalog. `readme-sync`, `corpus-sync` and
 `concept-sync` all read the cards, so a lab with no card is missing from all three

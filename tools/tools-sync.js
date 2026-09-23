@@ -108,7 +108,19 @@ function cadence() {
     const on = /^on:([\s\S]*?)^\w/m.exec(text);
     const trig = on ? on[1] : '';
     const hasPR = /^\s*(pull_request|push):/m.test(trig);
-    const hasCron = /cron:\s*'/.test(trig);
+    /* A cron is not automatically "daily". `41 7 * * 1` runs on Mondays, and calling
+       that daily in the table would be the same class of error as the per-workflow
+       cadence bug: a number read from the right place and reported as the wrong fact. */
+    const crons = [...trig.matchAll(/cron:\s*'([^']+)'/g)].map((m) => m[1]);
+    const cronWord = (expr) => {
+      const [, , dom, mon, dow] = expr.trim().split(/\s+/);
+      if (dow && dow !== '*') return 'weekly';
+      if (dom && dom !== '*') return 'monthly';
+      if (mon && mon !== '*') return 'yearly';
+      return 'daily';
+    };
+    const cronWords = [...new Set(crons.map(cronWord))];
+    const hasCron = cronWords.length > 0;
 
     /* Split the file into job blocks: `jobs:` then two-space-indented keys. */
     const jobsAt = text.indexOf('\njobs:');
@@ -125,12 +137,38 @@ function cadence() {
       const gatedToSchedule = /schedule|workflow_dispatch/.test(gate) && !/pull_request|push/.test(gate);
       const gatedToPR = /pull_request|push/.test(gate) && !/schedule/.test(gate);
       if (hasPR && !gatedToSchedule) words.add('every PR and push');
-      if (hasCron && !gatedToPR) words.add('daily');
+      if (hasCron && !gatedToPR) cronWords.forEach((w) => words.add(w));
       for (const m of job.matchAll(/node (tools\/[\w.-]+)/g)) {
         const name = path.basename(m[1]);
         const said = byTool.get(name) || new Set();
         words.forEach((w) => said.add(w));
         byTool.set(name, said);
+      }
+    }
+  }
+
+  /* A checker a SCHEDULED tool runs is scheduled. fleet-check.js is the only thing the
+     weekly workflow names, and it runs six others; without following that hop the six
+     would still read "manual" in a table whose whole subject is what runs unattended.
+     Only executable references count — comments are stripped first, because half these
+     headers name each other in prose. */
+  const code = (file) => fs.readFileSync(path.join(TOOLS, file), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .split('\n').filter((l) => !l.trim().startsWith('//')).join('\n');
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const [caller, words] of [...byTool]) {
+      if (!words.size) continue;
+      let src;
+      try { src = code(caller); } catch { continue; }
+      for (const m of src.matchAll(/['"`]tools\/([\w.-]+)['"`]/g)) {
+        const callee = m[1];
+        if (callee === caller) continue;
+        const have = byTool.get(callee) || new Set();
+        const before = have.size;
+        words.forEach((w) => have.add(w));
+        if (have.size !== before) { byTool.set(callee, have); changed = true; }
       }
     }
   }

@@ -267,9 +267,69 @@
       "Hidden Bit: choosing AES-CBC, chained IV reveals the 'A flat line is not a verdict' panel; once random guessing and re-encryption have both flattened, its heading changes to say no advantage was found and the scheme is broken. Exhibit 01 renders after an RSA-2048 key is generated, so allow a moment on first load.",
       "Hidden Bit: the Exhibit 01 header says “Choose two equal-length messages.”, but the two AES messages are fixed in the lab and never shown, so the worksheet has students record coins and ciphertext bytes instead.",
       "OTP Vault: Panel 2 produces a valid key for any target of the ciphertext's byte length and refuses other lengths. In Panel 3 the default crib 'the ' exposes stretches of both messages with key reuse on and noise with it off; with reuse on, re-rolling the session keys changes the ciphertexts but not C1 ⊕ C2. The Control challenge in Panel 5 uses independent keystreams and does not yield readable text. The workbench marks any offset where every revealed byte is printable as “a plausible hit”, wrong offsets included, so students decide by whether the text reads as language. The reveal box in Panel 5 stays ticked when another challenge loads.",
-      "AES Modes: in the Compare tab, repeated 16-byte input blocks appear as repeated ciphertext blocks under ECB and not under the other modes. Tampered ECB, CBC and CTR ciphertexts still decrypt (CTR flips the same plaintext bit; CBC garbles one block and flips the matching bit in the next), while GCM and CCM reject the tampered ciphertext and release no plaintext. With a short plaintext the CBC tamper can instead fail the padding check, and the page labels that error a padding oracle, which sets up the next exhibit. The targeted bit-flip demo turns admin=0 into admin=1 without the key. The targeted demo’s explanation flips bit 0 of C₀[7] while its result line names C₀[1]; the code flips byte 7. The GCM tab’s self-check marks “can forge any future message under that key” as correct, which reaches past the forgery under the reused nonce that the lab builds; the worksheet does not use that self-check.",
-      "Padding Oracle: Panels 3 and 4 print a byte-for-byte match badge against the plaintext the session encrypted, beside a running oracle-query count. In the Panel 6 bench the leaky server gives up its block, the silent and Encrypt-then-MAC servers exhaust the probes for a byte and stop, and the MAC-rejections column shows Encrypt-then-MAC queries rejected before decryption. Tampering with the AES-GCM ciphertext fails authentication with no plaintext shown. Plan this exhibit on a Chromium- or Firefox-based browser. In the WebKit build recorded in the support table below, WebCrypto accepts a final 0x00 byte as valid padding: Panel 1 answers Valid for the forced 0x00 that the page’s own explanation calls invalid, and the Full Block attack and the leaky server in Panel 6 stop partway through in about half of sessions.",
-      "Nonce Collision: with a reused nonce, the CTR card reports lost confidentiality, the GCM and ChaCha20-Poly1305 cards report a forged tag accepted by the real verifier with the recovered authentication subkey or one-time key checked against ground truth, and the CBC card reports prefix equality; the GCM and ChaCha20-Poly1305 cards state the encryption key was not recovered. Pressing a cancellation button again prints new numbers, because each press uses a fresh key. With fresh nonces, the GCM and ChaCha20-Poly1305 cards verify under a different nonce than they encrypted with and print “(mismatched nonce) REJECT”, and each card’s banner and the scoreboard follow the reuse toggle rather than the computed result, so the worksheet has students record computed values."
+      {
+        "text": "AES Modes: in the Compare tab, repeated 16-byte input blocks appear as repeated ciphertext blocks under ECB and not under the other modes. Tampered ECB, CBC and CTR ciphertexts still decrypt (CTR flips the same plaintext bit; CBC garbles one block and flips the matching bit in the next), while GCM and CCM reject the tampered ciphertext and release no plaintext. With a short plaintext the CBC tamper can instead fail the padding check, and the page labels that error a padding oracle, which sets up the next exhibit. The targeted bit-flip demo turns admin=0 into admin=1 without the key.",
+        "exhibit": "aes-modes",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "text-present",
+          "needle": "only ECB will report duplicate blocks",
+          "steps": [
+            "#tab-compare"
+          ],
+          "note": "the Compare tab's own 'What to look for' line, which is what this note is restating"
+        }
+      },
+      {
+        "text": "AES Modes: in the targeted bit-flip demo the explanation says it flips bit 0 of C₀[7], while the result line below it says “After flipping bit 0 of C₀[1]”. The code flips byte 7; the result line names the wrong byte.",
+        "exhibit": "aes-modes",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "text-present",
+          "needle": "After flipping bit 0 of C₀[1]",
+          "steps": [
+            "#tab-cbc",
+            "#cbc-encrypt-btn",
+            "#cbc-targeted-btn"
+          ]
+        }
+      },
+      {
+        "text": "AES Modes: the GCM tab’s self-check marks “Attacker recovers the GHASH subkey H and can forge any future message under that key” as correct, and its explanation says the attacker can forge any ciphertext under that key. That reaches past the forgery under the reused nonce the lab actually builds; the worksheet does not use this self-check.",
+        "exhibit": "aes-modes",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "text-present",
+          "needle": "can forge any future message under that key",
+          "steps": [
+            "#tab-gcm"
+          ]
+        }
+      },
+      {
+        "text": "Padding Oracle: Panels 3 and 4 print a byte-for-byte match badge against the plaintext the session encrypted, beside a running oracle-query count. In the Panel 6 bench the leaky server gives up its block, the silent and Encrypt-then-MAC servers exhaust the probes for a byte and stop, and the MAC-rejections column shows Encrypt-then-MAC queries rejected before decryption. Tampering with the AES-GCM ciphertext fails authentication with no plaintext shown. A WebKit-only failure recorded here until 2026-09-22 — WebCrypto accepting a final 0x00 byte as valid padding, which failed three worksheet steps — was re-derived against the live page that day in all three engines and no longer reproduces: the forced 0x00 row answers Invalid, Full Block completes, and the Panel 6 leaky server gives up its block. Whether the lab changed or the engine did is not established here.",
+        "exhibit": "padding-oracle",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "the claim is about what a decryption oracle answers after a multi-step attack, which needs the exhibit driven through several panels and read per engine; teach-issues.js checks rendered text, not attack outcomes",
+          "cadence": "re-derive whenever the support block for this exhibit is re-observed, and at least every academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "Nonce Collision: with a reused nonce, the CTR card reports lost confidentiality, the GCM and ChaCha20-Poly1305 cards report a forged tag accepted by the real verifier with the recovered authentication subkey or one-time key checked against ground truth, and the CBC card reports prefix equality; the GCM and ChaCha20-Poly1305 cards state the encryption key was not recovered. Pressing a cancellation button again prints new numbers, because each press uses a fresh key. With fresh nonces, the GCM and ChaCha20-Poly1305 cards verify under a different nonce than they encrypted with and print “(mismatched nonce) REJECT”, and each card’s banner and the scoreboard follow the reuse toggle rather than the computed result, so the worksheet has students record computed values.",
+        "exhibit": "nonce-collision",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "text-present",
+          "needle": "(mismatched nonce)",
+          "steps": [
+            "#run-all-fresh"
+          ],
+          "note": "the fresh-nonce run is where the mismatched-nonce reject line is rendered"
+        }
+      }
     ],
     "misconceptions": [
       "A near-zero measured advantage shows a scheme is IND-CPA secure. Hidden Bit says it means the named adversaries failed, and its chained-IV CBC fixture flattens under two adversaries while falling to a third.",

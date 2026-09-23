@@ -303,26 +303,125 @@
   ],
   "instructor_notes": {
     "expected_observations": [
-      "Educational RSA: Generate lists p, q, n, φ(n), e and d as a trace; the mod-n clock shows e·d written as a multiple of φ plus one; ticking the tamper checkbox flips the signature verdict from VALID to INVALID.",
-      "Educational RSA: 'Factor it!' breaks the small key and shows the recovered primes, the reconstructed d and a decryption made with it, while the 2048-bit card's button stays disabled and its cost is labeled a projection that is never run. Encrypting the same text twice with textbook RSA repeats the ciphertext, the OAEP comparison does not, and the malleability rows show a ciphertext product decrypting to a·b. The square-and-multiply trace opens on the small exponent and reports four operations against a naive three, so read it as the comparison the page prints rather than as a saving; the saving appears once the real exponent is selected.",
-      "RSA Forge: in Pick Your Config, the e = 3 / no-padding choice has its message recovered, while the e = 65537 / OAEP choice runs the same CRT and cube-root steps and does not recover it; the manual Håstad flow shows N, M = m³ and the recovered message. Every error this exhibit reports — pressing a button out of order included — is announced only to a screen reader, so an out-of-order press looks like a dead button. Press in the order the worksheet gives.",
-      "RSA Forge: during the Bleichenbacher run the interval bar narrows and plaintext bytes light up left to right, and the result is checked by re-encryption; in You Are the Oracle mode a wrong answer can steer the attack to a value the page flags as not verified.",
-      "EC Point Arithmetic: the construction and the λ, x₃, y₃ readout update together as P and Q move; the 𝔽ₚ view applies the same law to a lattice of points; double-and-add reaches the same k·G as repeated addition with far fewer operations, and repeated addition declines a large k while saying how cheap double-and-add would be; walking the toy subgroup eventually lands on Q and reports the step count. The reflection and the third intersection are drawn on the canvas but never written to the text readout, and the ECDLP panel keeps one fixed secret until New secret is pressed, so a whole class walking the subgroup on a fresh load reports the same answer.",
-      "ECDSA Forge: in the toy attack both signatures show the same r, the recovered d matches the real key, and a new signature minted with it verifies; equal message hashes or a degenerate nonce produce an explanation instead of a result. Run Full Compromise reveals the victim key; RFC 6979 repeats r when the same message is signed again, and the attack against RFC 6979 reports that it is blocked. The curve menu in the first exhibit also governs the 256-bit compromise and the RFC 6979 panel, and switching it leaves earlier sample rows in place, so reset the samples before reading a list.",
-      "Nonce Lattice (extension): the page starts a run as soon as it loads, using the configuration last saved in that browser or the default MSB setting; bit-leak presets end with a byte-for-byte key match, the Defender (RFC 6979) preset fails and explains why, and settings below the information floor fail with a diagnostic. The feasibility badge is computed from the leak size and signature count alone, so it can read FEASIBLE on a run that recovers nothing and INFEASIBLE on the nonce-reuse run that recovers the key every time; the worksheet turns that into a question rather than hiding it."
+      {
+        "text": "Educational RSA: Generate lists p, q, n, φ(n), e and d as a trace; the mod-n clock shows e·d written as a multiple of φ plus one; ticking the tamper checkbox flips the signature verdict from VALID to INVALID.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "Educational RSA: 'Factor it!' breaks the small key and shows the recovered primes, the reconstructed d and a decryption made with it, while the 2048-bit card's button stays disabled and its cost is labeled a projection that is never run. Encrypting the same text twice with textbook RSA repeats the ciphertext, the OAEP comparison does not, and the malleability rows show a ciphertext product decrypting to a·b. The square-and-multiply trace opens on the small exponent and reports four operations against a naive three, so read it as the comparison the page prints rather than as a saving; the saving appears once the real exponent is selected.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "RSA Forge: in Pick Your Config, the e = 3 / no-padding choice has its message recovered, while the e = 65537 / OAEP choice runs the same CRT and cube-root steps and does not recover it; the manual Håstad flow shows N, M = m³ and the recovered message. Every error this exhibit reports — pressing a button out of order included — is announced only to a screen reader, so an out-of-order press looks like a dead button. Press in the order the worksheet gives.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "RSA Forge: during the Bleichenbacher run the interval bar narrows and plaintext bytes light up left to right, and the result is checked by re-encryption; in You Are the Oracle mode a wrong answer can steer the attack to a value the page flags as not verified.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "EC Point Arithmetic: the construction and the λ, x₃, y₃ readout update together as P and Q move; the 𝔽ₚ view applies the same law to a lattice of points; double-and-add reaches the same k·G as repeated addition with far fewer operations, and repeated addition declines a large k while saying how cheap double-and-add would be; walking the toy subgroup eventually lands on Q and reports the step count. The reflection and the third intersection are drawn on the canvas but never written to the text readout, and the ECDLP panel keeps one fixed secret until New secret is pressed, so a whole class walking the subgroup on a fresh load reports the same answer.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "ECDSA Forge: in the toy attack both signatures show the same r, the recovered d matches the real key, and a new signature minted with it verifies; equal message hashes or a degenerate nonce produce an explanation instead of a result. Run Full Compromise reveals the victim key; RFC 6979 repeats r when the same message is signed again, and the attack against RFC 6979 reports that it is blocked. The curve menu in the first exhibit also governs the 256-bit compromise and the RFC 6979 panel, and switching it leaves earlier sample rows in place, so reset the samples before reading a list.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "Nonce Lattice (extension): the page starts a run as soon as it loads, using the configuration last saved in that browser or the default MSB setting; bit-leak presets end with a byte-for-byte key match, the Defender (RFC 6979) preset fails and explains why, and settings below the information floor fail with a diagnostic. The feasibility badge is computed from the leak size and signature count alone, so it can read FEASIBLE on a run that recovers nothing and INFEASIBLE on the nonce-reuse run that recovers the key every time; the worksheet turns that into a question rather than hiding it.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      }
     ],
     "misconceptions": [
-      "A textbook RSA round trip that decrypts correctly is not a scheme fit for real use: the labs show textbook RSA is deterministic and malleable, and real systems add OAEP for encryption and PSS for signatures.",
-      "Educational RSA hashes with a 64-bit FNV-1a toy hash, not SHA-256, and labels those signatures forgeable; its VALID verdict demonstrates the verify equation, not a production-grade signature.",
+      {
+        "text": "A textbook RSA round trip that decrypts correctly is not a scheme fit for real use: the labs show textbook RSA is deterministic and malleable, and real systems add OAEP for encryption and PSS for signatures.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "Educational RSA hashes with a 64-bit FNV-1a toy hash, not SHA-256, and labels those signatures forgeable; its VALID verdict demonstrates the verify equation, not a production-grade signature.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
       "A larger modulus does not stop Håstad or Bleichenbacher: they exploit a small exponent without padding and a PKCS#1 v1.5 padding oracle, and RSA Forge states that the mathematics are identical at real key sizes and only scale differs.",
-      "Toy-size breaks do not mean the underlying problems are easy: small moduli and small subgroups fall because they are small, and the labs set them beside 2048-bit RSA and secp256k1 to show the gap.",
+      {
+        "text": "Toy-size breaks do not mean the underlying problems are easy: small moduli and small subgroups fall because they are small, and the labs set them beside 2048-bit RSA and secp256k1 to show the gap.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
       "The smooth curve is the picture, not the cryptosystem: real elliptic-curve cryptography runs the same group law over a finite field, where the curve becomes a scatter of points.",
       "RFC 6979 nonces do repeat r when the same message is signed twice; the protection is that different messages get different nonces, and ECDSA Forge notes this rests on HMAC-SHA-256 behaving as a pseudorandom function, so a collision is negligibly unlikely rather than impossible.",
       "Extension: the lattice attack does not break a correct signer; Nonce Lattice's signer deliberately hands the attacker known nonce bits."
     ],
     "conceptual_answers": [
       "OAEP mixes a fresh random seed into the message before exponentiation, so equal plaintexts stop producing equal ciphertexts, and a product of ciphertexts decrypts to padding that fails the integrity check instead of to a related message. That removes the equality leak, the multiplicative forgery, and the common m that Håstad's CRT step relies on.",
-      "Each break shown is a search whose size is set by the parameters: trial division up to the square root of n, or walking a subgroup whose size is the group order. The mechanism is the same at real sizes; what changes is the cost, which the labs show growing beyond any feasible computation (a GNFS projection for RSA, and roughly the square root of the group order for generic discrete-log attacks).",
+      {
+        "text": "Each break shown is a search whose size is set by the parameters: trial division up to the square root of n, or walking a subgroup whose size is the group order. The mechanism is the same at real sizes; what changes is the cost, which the labs show growing beyond any feasible computation (a GNFS projection for RSA, and roughly the square root of the group order for generic discrete-log attacks).",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
       "RSA is multiplicatively homomorphic, so the attacker can turn the hidden plaintext m into m·s for a chosen s without the key. Each 'conformant' answer proves m·s landed in the valid-padding window, narrowing the interval that contains m until one value remains. Any observable difference between padding failures and other decryption failures recreates the oracle.",
       "Nonce reuse needs two signatures made with the same nonce, visible as a repeated r, and yields d with two lines of algebra; the lattice attack needs a few known or biased nonce bits across many signatures and stacks them into a Hidden Number Problem. RFC 6979 derives k from the key and the message, which takes the random number generator out of the trust path; leaks of nonce bits through timing or other side channels remain an implementation concern.",
       "A good answer weighs RSA's larger keys and padding pitfalls, ECDSA's dependence on nonce discipline and its signature malleability unless low-S is enforced, and Ed25519's deterministic-by-design nonces, against interoperability requirements such as TLS certificates, JWT algorithms or existing wallet ecosystems."

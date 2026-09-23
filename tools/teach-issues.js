@@ -95,6 +95,64 @@ function cardUrls() {
   return urls;
 }
 
+/* Instructor notes that assert something about a live exhibit. Same treatment as a
+   support record: a claim with a date, re-derived on the same schedule. They live under
+   a different key, which is exactly why they went unchecked — the symmetric module told
+   instructors to avoid WebKit for Padding Oracle for months after that stopped being
+   true, because nothing read this key. */
+function noteRecords() {
+  const urls = cardUrls();
+  const out = [];
+  for (const file of fs.readdirSync(MODULES).filter((f) => f.endsWith('.json')).sort()) {
+    const m = JSON.parse(fs.readFileSync(path.join(MODULES, file), 'utf8'));
+    const notes = m.instructor_notes || {};
+    for (const key of Object.keys(notes)) {
+      for (const [i, n] of (notes[key] || []).entries()) {
+        if (typeof n === 'string' || !n.observable) continue;
+        out.push({
+          module: m.id,
+          exhibit: n.exhibit || null,
+          url: n.exhibit ? urls.get(n.exhibit) || null : null,
+          where: `instructor_notes.${key}[${i}]`,
+          engine: 'every engine',
+          viewport: '1400x1000',
+          result: 'note',
+          rederived: n.rederived || null,
+          text: n.text,
+          issue: n.observable,
+        });
+      }
+    }
+  }
+  return out;
+}
+
+/* Drive the named controls, then look for the text the note turns on. */
+async function checkNote(rec) {
+  const engines = ['chromium', 'firefox', 'webkit'];
+  const seen = {};
+  for (const eng of engines) {
+    const browser = await playwright[eng].launch();
+    try {
+      const page = await browser.newPage({ viewport: { width: 1400, height: 1000 } });
+      await page.goto(rec.url, { waitUntil: 'load', timeout: 60000 });
+      await page.waitForTimeout(1200);
+      for (const sel of rec.issue.steps || []) {
+        await page.locator(sel).first().click({ timeout: 20000 }).catch(() => {});
+        await page.waitForTimeout(900);
+      }
+      const text = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
+      seen[eng] = text.includes(rec.issue.needle);
+      await page.close();
+    } catch (e) {
+      seen[eng] = `error: ${String(e.message).split('\n')[0]}`;
+    } finally {
+      await browser.close();
+    }
+  }
+  return seen;
+}
+
 function records() {
   const urls = cardUrls();
   const out = [];
@@ -178,13 +236,45 @@ function openIssue(rec, verdict) {
 }
 
 async function main() {
-  const recs = records();
+  const recs = [...records(), ...noteRecords()];
   const findings = [];
 
   for (const rec of recs) {
     const label = `${rec.module}/${rec.exhibit} ${rec.engine}`;
     if (rec.issue.kind === 'manual') {
-      findings.push({ rec, state: 'UNCHECKED', detail: `no tool can re-derive this kind; last re-derived by hand ${rec.rederived || 'never'}` });
+      /* A manual claim is REPORTED every run so it cannot be forgotten, and FAILS only
+         once it is older than its own stated cadence. A check that is red every day is
+         a check people learn to scroll past, which is how the stale notes survived. */
+      const days = rec.issue.cadence_days;
+      const age = rec.rederived ? Math.floor((Date.now() - Date.parse(rec.rederived)) / 86400000) : null;
+      const overdue = age === null || (Number.isInteger(days) && age > days);
+      findings.push({
+        rec,
+        state: overdue ? 'OVERDUE' : 'UNCHECKED',
+        detail: `${rec.issue.why || 'not automated'} — last re-derived by hand ${rec.rederived || 'never'}`
+          + (age === null ? '' : ` (${age} days ago)`) + `; cadence: ${rec.issue.cadence || 'none stated'}`,
+      });
+      continue;
+    }
+    if (rec.issue.kind === 'text-present' || rec.issue.kind === 'text-absent') {
+      if (!rec.url) {
+        findings.push({ rec, state: 'UNREADABLE', detail: 'no card in index.html links this exhibit, so its live URL is unknown' });
+        continue;
+      }
+      const seen = await checkNote(rec);
+      const errs = Object.entries(seen).filter(([, v]) => typeof v === 'string');
+      if (errs.length) {
+        findings.push({ rec, state: 'UNREADABLE', detail: errs.map(([e, v]) => `${e} ${v}`).join('; ') });
+        continue;
+      }
+      const want = rec.issue.kind === 'text-present';
+      const wrong = Object.entries(seen).filter(([, v]) => v !== want).map(([e]) => e);
+      const quoted = JSON.stringify(rec.issue.needle);
+      if (!wrong.length) {
+        findings.push({ rec, state: 'MATCHES', detail: `${quoted} ${want ? 'present' : 'absent'} in every engine, as the note says` });
+      } else {
+        findings.push({ rec, state: 'GONE', detail: `the note turns on ${quoted} being ${want ? 'present' : 'absent'}; it is not, in ${wrong.join(' and ')}` });
+      }
       continue;
     }
     if (rec.issue.kind !== 'horizontal-overflow') {
@@ -215,16 +305,19 @@ async function main() {
   } else {
     console.log(`Recorded issues re-derived against the live pages: ${findings.length} checked.\n`);
     for (const f of findings) {
-      console.log(`  ${f.state.padEnd(10)} ${`${f.rec.module}/${f.rec.exhibit}`.padEnd(34)} ${f.rec.engine.padEnd(14)} ${f.detail}`);
+      const what = `${f.rec.module}/${f.rec.exhibit || '-'}${f.rec.where ? ` ${f.rec.where}` : ''}`;
+      console.log(`  ${f.state.padEnd(10)} ${what.padEnd(46)} ${f.detail}`);
     }
     const by = (s) => findings.filter((f) => f.state === s).length;
     console.log('');
-    for (const s of ['MATCHES', 'MOVED', 'GONE', 'UNCHECKED', 'UNREADABLE']) {
+    for (const s of ['MATCHES', 'MOVED', 'GONE', 'OVERDUE', 'UNCHECKED', 'UNREADABLE']) {
       if (by(s)) console.log(`  ${String(by(s)).padStart(3)}  ${s}`);
     }
   }
 
-  const stale = findings.filter((f) => f.state !== 'MATCHES');
+  /* UNCHECKED is visible but not a failure: it is a claim under its own cadence, doing
+     what it said it would. Everything else — moved, gone, overdue, unreadable — is. */
+  const stale = findings.filter((f) => f.state !== 'MATCHES' && f.state !== 'UNCHECKED');
   if (argv.includes('--open-issues')) {
     for (const f of stale.filter((x) => x.state === 'GONE' || x.state === 'MOVED')) openIssue(f.rec, f);
   }

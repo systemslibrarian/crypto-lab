@@ -76,9 +76,21 @@ jobs:
       - run: npm ci
         working-directory: tools
       # No --with-deps: that apt step has wedged CI across this fleet (audits/kickoff.md).
-      - run: npx playwright install chromium
+      # Recorded issues name the engine they were seen in, so re-deriving them needs
+      # each of those engines, not only the one the drift check uses.
+      - run: npx playwright install chromium firefox webkit
         working-directory: tools
       - name: Every control a worksheet names is still on its live exhibit
         run: node tools/teach-drift.js --open-issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # A recorded issue is a claim about a lab, published to instructors on the module
+      # page, and it goes stale the way any other figure does: re-derived for the first
+      # time on 2026-09-22, three of the four recorded here no longer matched the live
+      # page. `if: always()` so a drift failure above cannot hide a stale issue here —
+      # the two checks answer different questions and both answers are wanted.
+      - name: Every issue a module page publishes still reproduces
+        if: always()
+        run: node tools/teach-issues.js --open-issues
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

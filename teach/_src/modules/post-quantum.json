@@ -305,11 +305,61 @@
   ],
   "instructor_notes": {
     "expected_observations": [
-      "shor: runs are randomized. Across repeated runs of the same N the base a, the period r and the retry path change; some attempts are discarded (odd period, a trivial square root, or no convergent passing a^r ≡ 1 mod N), and some runs obtain a factor from gcd(a, N) before any order finding, in which case no QFT chart is drawn. When the quantum path runs, the QFT bars peak at multiples of Q/r and the phasor hands add at an on-peak frequency and cancel off-peak. A run that retries, or that ends by sharing a factor with N before any period is found, is one of this algorithm's own outcomes rather than a fault: the worksheet has students record it. The lab's README describes the shared-factor case as a restart, while the page treats it as a successful ending.",
-      "grover: success probability climbs toward a maximum near k* and then falls if stepping continues (overshoot), visible on the probability curve and as the state vector rotating past the target axis. With sub-steps on, the oracle turns the target amplitude negative and diffusion reflects the amplitudes about the mean. Measure ×100 samples the current state, so success shows up as a frequency tracking the state's probability rather than as a certainty. Turning the sub-step decomposition off rewinds the iteration counter to the start of the current step, discarding the iteration just watched, with nothing on screen to say so; press Reset first. Two different controls are both labelled Key size, in panels students read across, and they do not track each other.",
-      "lattice-gentle: switching to the bad basis leaves the lattice points and the shortest vector unchanged while the rounding decode lands farther from the target. Raising the toy-Kyber error past the q/4 ceiling makes decrypted bits flip; a tampered KEM ciphertext silently yields the fallback key instead of an error; toy-Dilithium signing shows rejection sampling, and the tamper buttons are refused by the verifier. Moving the error-bound slider silently replaces the worked example's numbers with fresh seeded ones, so the values a student just copied stop being the values on screen. The canvas can only be dragged with a pointer; the numeric fields are the keyboard route, and the worksheet uses those.",
-      "kyber-vault: at the end of the stepper both parties hold byte-identical shared secrets although the ciphertext is what crossed the wire. After tampering with the ML-KEM ciphertext, AES-256-GCM authenticated decryption fails. In the scalar LWE primer, elimination recovers s from the clean system but not from the published noisy one (the page notes that an occasional noisy draw survives; a new instance fixes it). The card that demonstrates hybrid encryption runs its own second encapsulation, so the ciphertext shown there is unrelated to the one above it, and nothing on the page says so.",
-      "hybrid-wire: breaking one wire leaves the lab's verdict at still safe, because the attacker's reconstruction attempts fail to open the intercepted record; breaking both lets the reconstruction open the record and the recovered plaintext is printed. Tampering with the ML-KEM ciphertext in the chat makes later decryptions fail authentication. The tamper demonstration says it shows AES-GCM rejecting a modified ciphertext, but the flip changes the session key, so the check that actually fails is the one on the re-derived IV. Its own note then says the metadata was modified, which it was not.",
+      {
+        "text": "shor: runs are randomized. Across repeated runs of the same N the base a, the period r and the retry path change; some attempts are discarded (odd period, a trivial square root, or no convergent passing a^r ≡ 1 mod N), and some runs obtain a factor from gcd(a, N) before any order finding, in which case no QFT chart is drawn. When the quantum path runs, the QFT bars peak at multiples of Q/r and the phasor hands add at an on-peak frequency and cancel off-peak. A run that retries, or that ends by sharing a factor with N before any period is found, is one of this algorithm's own outcomes rather than a fault: the worksheet has students record it. The lab's README describes the shared-factor case as a restart, while the page treats it as a successful ending.",
+        "exhibit": "shor",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "grover: success probability climbs toward a maximum near k* and then falls if stepping continues (overshoot), visible on the probability curve and as the state vector rotating past the target axis. With sub-steps on, the oracle turns the target amplitude negative and diffusion reflects the amplitudes about the mean. Measure ×100 samples the current state, so success shows up as a frequency tracking the state's probability rather than as a certainty. Turning the sub-step decomposition off rewinds the iteration counter to the start of the current step, discarding the iteration just watched, with nothing on screen to say so; press Reset first. Two different controls are both labelled Key size, in panels students read across, and they do not track each other.",
+        "exhibit": "grover",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "lattice-gentle: switching to the bad basis leaves the lattice points and the shortest vector unchanged while the rounding decode lands farther from the target. Raising the toy-Kyber error past the q/4 ceiling makes decrypted bits flip; a tampered KEM ciphertext silently yields the fallback key instead of an error; toy-Dilithium signing shows rejection sampling, and the tamper buttons are refused by the verifier. Moving the error-bound slider silently replaces the worked example's numbers with fresh seeded ones, so the values a student just copied stop being the values on screen. The canvas can only be dragged with a pointer; the numeric fields are the keyboard route, and the worksheet uses those.",
+        "exhibit": "lattice-gentle",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "kyber-vault: at the end of the stepper both parties hold byte-identical shared secrets although the ciphertext is what crossed the wire. After tampering with the ML-KEM ciphertext, AES-256-GCM authenticated decryption fails. In the scalar LWE primer, elimination recovers s from the clean system but not from the published noisy one (the page notes that an occasional noisy draw survives; a new instance fixes it). The card that demonstrates hybrid encryption runs its own second encapsulation, so the ciphertext shown there is unrelated to the one above it, and nothing on the page says so.",
+        "exhibit": "kyber-vault",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
+      {
+        "text": "hybrid-wire: breaking one wire leaves the lab's verdict at still safe, because the attacker's reconstruction attempts fail to open the intercepted record; breaking both lets the reconstruction open the record and the recovered plaintext is printed. Tampering with the ML-KEM ciphertext in the chat makes later decryptions fail authentication. The tamper demonstration says it shows AES-GCM rejecting a modified ciphertext, but the flip changes the session key, so the check that actually fails is the one on the re-derived IV. Its own note then says the metadata was modified, which it was not.",
+        "exhibit": "hybrid-wire",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
       "harvest-vault (extension): a session sent before the PQC upgrade is recovered byte-identical at Q-Day; a session sent after the upgrade is not, even though the attacker solves the same discrete log, because the lattice half of the key never crossed the wire. The risk-matrix legend tells students to move the Q-Day slider to watch the dots move; the dots follow the Q-Day assumption buttons instead, and the slider does not touch them."
     ],
     "misconceptions": [
@@ -317,9 +367,27 @@
       "Shor also breaks AES and hash functions. Shor targets factoring and discrete logarithms (RSA, ECC, classical Diffie-Hellman); symmetric ciphers and hashes face Grover's quadratic speedup instead.",
       "Grover makes AES-128 practically breakable because the idealized cost halves the key length. The per-iteration oracle is a full AES circuit and Grover is inherently sequential, so the real cost is far higher.",
       "Running more Grover iterations always helps. Past k* the state rotates past the target and success probability falls.",
-      "Quantum search checks all keys at once and reads out the winner. The oracle marks the target with a phase; measurement collapses the state to a single outcome rather than reading off amplitudes.",
+      {
+        "text": "Quantum search checks all keys at once and reads out the winner. The oracle marks the target with a phase; measurement collapses the state to a single outcome rather than reading off amplitudes.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
       "ML-KEM's secret key is a good basis of a lattice. The secret is a short vector hidden inside noisy modular equations; the good/bad basis picture is an intuition, not the mechanism.",
-      "The 2D lattice exhibits show that lattice problems are hard. They are easy by design; the lab shows why the assumption has its shape, not that it holds.",
+      {
+        "text": "The 2D lattice exhibits show that lattice problems are hard. They are easy by design; the lab shows why the assumption has its shape, not that it holds.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
       "A KEM encrypts the message. ML-KEM establishes a shared key; the lab's hybrid path hands that key to AES-256-GCM to encrypt data.",
       "NIST security categories are exact bit strengths. The lab treats them as comparison targets, not exact classical or quantum bit-strength measurements.",
       "Final ML-KEM and pre-standard CRYSTALS-Kyber are interchangeable. Details changed during standardization, so keys, ciphertexts and encodings should not be assumed byte-compatible.",
@@ -330,7 +398,16 @@
     "conceptual_answers": [
       "Shor: once the period is known, the difference-of-squares step and the two gcds are classical arithmetic, so the quantum part of the attack is order finding. Systems whose security rests on factoring or discrete logarithms (RSA, ECC, classical Diffie-Hellman) are exposed; symmetric ciphers and hash functions are not broken by Shor and face Grover's quadratic speedup instead.",
       "Grover vs Shor: Grover's speedup for unstructured search is quadratic and provably optimal, and each iteration runs a full cipher circuit sequentially, so enlarging keys restores the margin; symmetric primitives mostly need larger parameters. Shor solves the underlying factoring and discrete-log problems in polynomial time, so larger RSA or ECC keys do not help, and public-key cryptography moves to post-quantum schemes instead.",
-      "Lattices: the ML-KEM secret is a short vector hidden inside noisy module-LWE equations, not a good basis. The conjectured hardness lives in short-vector problems in high dimension, connected to MLWE and MSIS by security reductions; in two dimensions reduction algorithms solve the problems outright, so the small exhibits show the shape of the assumption rather than its truth.",
+      {
+        "text": "Lattices: the ML-KEM secret is a short vector hidden inside noisy module-LWE equations, not a good basis. The conjectured hardness lives in short-vector problems in high dimension, connected to MLWE and MSIS by security reductions; in two dimensions reduction algorithms solve the problems outright, so the small exhibits show the shape of the assumption rather than its truth.",
+        "rederived": "2026-09-22",
+        "observable": {
+          "kind": "manual",
+          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
+          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
+          "cadence_days": 120
+        }
+      },
       "KEM limits: nothing in the demo authenticates Bob's public key or Alice's identity, so an active attacker could substitute a public key. A real protocol must bind keys to identities and to the handshake context, and would need a record protocol (replay handling, sequencing, rekeying, nonce strategy) for more than a single in-memory message.",
       "Hybrid: the cost is the extra ML-KEM public key and ciphertext on the wire, which can push a handshake past one packet, plus implementation complexity. The session can still fail through an unsound combiner, a flaw in either implementation, or peers that disagree on parameters or transcript binding. The secrets must pass through a sound KDF that binds both wires; the lab's own combiner leaves transcript binding to an outer protocol such as TLS 1.3."
     ]

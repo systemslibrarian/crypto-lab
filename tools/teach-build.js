@@ -146,6 +146,9 @@ function isStrList(v, min, max) {
     v.every((s) => typeof s === 'string' && s.trim() && !s.includes('\n'));
 }
 
+/* A note is a string or {text, …}; everything that reads notes goes through this. */
+const noteText = (n) => (typeof n === 'string' ? n : (n && n.text) || '');
+
 function readModules(cards) {
   const dir = path.join(SRC, 'modules');
   const files = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort();
@@ -167,8 +170,35 @@ function readModules(cards) {
     });
     if (!isStrList(m.discussion_questions, 3, 5)) fail(`${where}: discussion_questions must be 3 to 5 one-line strings`);
     const notes = m.instructor_notes || {};
+    /* An instructor note is either a plain string — a conceptual point, which nothing
+       can re-derive — or an object carrying the same sentence plus how to re-check it.
+       The split exists because a note that asserts something about a LIVE exhibit is a
+       claim with an expiry date, and this file had been treating both kinds the same.
+       On 2026-09-22 the symmetric module was still telling instructors to avoid WebKit
+       for Padding Oracle, months after that stopped being true, because no check had
+       ever read this key. A claim does not stop needing a re-derivation date by sitting
+       under `instructor_notes` instead of under `support`. */
+    for (const key of ['expected_observations', 'misconceptions', 'conceptual_answers']) {
+      for (const [i, n] of (Array.isArray(notes[key]) ? notes[key] : []).entries()) {
+        if (typeof n === 'string') continue;
+        const at = `${where}: instructor_notes.${key}[${i}]`;
+        if (!n || typeof n.text !== 'string' || !n.text.trim()) fail(`${at} must have a non-empty "text"`);
+        const o = (n && n.observable) || {};
+        if (!['text-present', 'text-absent', 'manual'].includes(o.kind)) {
+          fail(`${at}.observable.kind must be "text-present", "text-absent" or "manual"`);
+        }
+        if (o.kind !== 'manual') {
+          if (!n.exhibit) fail(`${at} needs "exhibit": which exhibit the claim is about`);
+          if (typeof o.needle !== 'string' || !o.needle.trim()) fail(`${at}.observable.needle must be the text to look for`);
+        } else if (!o.why || !o.cadence || !Number.isInteger(o.cadence_days)) {
+          fail(`${at}.observable is manual, so it needs "why" it is not automated, a "cadence" in words, and "cadence_days" as an integer`);
+        }
+        if (!DATE_RE.test(n.rederived || '')) fail(`${at} needs "rederived": "YYYY-MM-DD" — when this was last checked against the live page`);
+      }
+    }
     for (const k of ['expected_observations', 'misconceptions', 'conceptual_answers']) {
-      if (!isStrList(notes[k], 1, 30)) fail(`${where}: instructor_notes.${k} must be a list of one-line strings`);
+      const texts = (Array.isArray(notes[k]) ? notes[k] : []).map(noteText);
+      if (!isStrList(texts, 1, 30)) fail(`${where}: instructor_notes.${k} must be a list of notes`);
     }
     if (!Array.isArray(m.trimmed) || !m.trimmed.every((t) => t && typeof t.name === 'string' && typeof t.reason === 'string')) {
       fail(`${where}: trimmed must be a list of {name, reason}`);
@@ -644,6 +674,17 @@ function checksBlock(m, site) {
   return `${support}\n${privacy}\n<p><a href="${dataUrl}">Detailed check results</a> — engine versions, every step run, transfer sizes, and the source line behind each run-specific verdict. The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>`;
 }
 
+/* A note that asserts something about a live exhibit carries the date it was last
+   checked against one, printed where the note is read rather than in a table
+   elsewhere: the reader deciding whether to trust it is the reader looking at it. */
+function notesList(items) {
+  return `<ul>${(items || []).map((n) => {
+    const text = esc(noteText(n));
+    const on = typeof n === 'string' ? '' : n.rederived;
+    return `<li>${text}${on ? ` <span class="t-dated">Re-derived against the live page ${esc(on)}.</span>` : ''}</li>`;
+  }).join('')}</ul>`;
+}
+
 /* "a, b and c" */
 function listSentence(items) {
   if (items.length < 2) return esc(items[0] || '');
@@ -791,9 +832,9 @@ ${trimmed}
 
 <section aria-labelledby="notes"><h2 id="notes">Instructor notes</h2>
 <p>These notes are public, and they are conceptual on purpose: they describe what students should notice and why, never the specific values a run produces.</p>
-<h3>Expected observations</h3>${list(m.instructor_notes.expected_observations)}
-<h3>Common misconceptions</h3>${list(m.instructor_notes.misconceptions)}
-<h3>Conceptual answers</h3>${list(m.instructor_notes.conceptual_answers)}
+<h3>Expected observations</h3>${notesList(m.instructor_notes.expected_observations)}
+<h3>Common misconceptions</h3>${notesList(m.instructor_notes.misconceptions)}
+<h3>Conceptual answers</h3>${notesList(m.instructor_notes.conceptual_answers)}
 </section>
 
 <section aria-labelledby="readiness"><h2 id="readiness">Checks</h2>

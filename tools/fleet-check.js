@@ -5,7 +5,7 @@
  * Run: node tools/fleet-check.js
  * Prevents: a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand
  *
- * These six ask GitHub rather than this repository, which is what makes them the group
+ * These five ask GitHub rather than this repository, which is what makes them the group
  * worth scheduling: their answers change without anyone touching this repo. A lab can
  * start serving a stale build, or be published with no card, or have its branch
  * protection altered, on a day nobody commits anything here. Every other checker

@@ -119,7 +119,7 @@ function body(failed, firstFailed, runUrl) {
     '',
     age,
     '',
-    'These six ask GitHub rather than this repository, so their answers change without anyone committing here.',
+    `These ${CHECKERS.length} ask GitHub rather than this repository, so their answers change without anyone committing here.`,
     '',
     ...failed.flatMap((f) => [
       `### \`${f.command}\``,

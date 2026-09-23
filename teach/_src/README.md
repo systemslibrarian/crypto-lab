@@ -58,9 +58,13 @@ An exhibit name that matches no card fails the build rather than being substitut
 },
 "support": {
   "checked": "YYYY-MM-DD",
+  "headline": "one instructor-facing line, required when any result is not a pass",
   "results": [
     { "engine": "Chromium", "viewport": "1280x720", "result": "pass", "notes": "" },
-    { "engine": "WebKit", "viewport": "390 wide", "result": "issues", "notes": "what failed" }
+    { "engine": "WebKit", "viewport": "390x720", "result": "issues", "notes": "what failed",
+      // required on any result that is not a pass:
+      "rederived": "YYYY-MM-DD",              // when this was last checked against the LIVE page
+      "issue": { "kind": "horizontal-overflow", "overflow_px": 92 } }
   ]
 },
 "run_specific_values": {
@@ -73,6 +77,25 @@ An exhibit name that matches no card fails the build rather than being substitut
 
 A module page says "your values will differ from your classmates'" only for exhibits whose
 `run_specific_values.value` is `yes`. Name engines, never devices that were not tested.
+
+**A recorded issue needs a re-derivation date, and a shape a tool can re-check.** The
+module page publishes these issues to instructors, which makes each one a claim about a
+lab that goes stale the way a class-time figure does. Re-derived for the first time on
+2026-09-22, three of the four recorded here were wrong: two no longer reproduced at all,
+and one had moved from about 136px to about 92px. So a result that is not a `pass`
+carries `rederived`, the date it was last checked against the live page, and an `issue`
+whose `kind` says how to re-check it:
+
+- `horizontal-overflow` — carries `overflow_px`; `tools/teach-issues.js` loads the live
+  exhibit in that engine at the narrowest viewport named and measures it.
+- `manual` — no tool can re-derive this one. It is reported as UNCHECKED on every run,
+  with its age, rather than passing quietly: a check that cannot look must not report
+  clean.
+
+`node tools/teach-issues.js` re-derives them all and exits non-zero on any that has
+moved, gone, or cannot be read; the scheduled Teach pages workflow runs it with
+`--open-issues`. It never edits these files — clearing a record is a judgement about
+whether the lab changed or the engine did, and that belongs to a maintainer.
 
 ## Worksheets (`worksheets/<module-id>/<exhibit>.md`)
 

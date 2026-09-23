@@ -221,6 +221,26 @@ function readModules(cards) {
         if ((s.results || []).some((r) => r.result !== 'pass') && !s.headline) {
           fail(`${w}.support: a result that is not "pass" needs a one-line "headline" for the module page`);
         }
+        /* A recorded issue is a published claim about a lab, and it goes stale the same way
+           a class-time figure does: on 2026-09-22, three of the four issues recorded here
+           no longer matched the live page — two had been fixed and one had moved from about
+           136px to about 92px. So a result that is not a pass carries the date it was last
+           re-derived against the live page, and the page prints it beside the issue.
+           `issue.kind` is what lets tools/teach-issues.js re-derive it without a human:
+           `horizontal-overflow` carries the figure it should measure, and `manual` says
+           plainly that no tool can check this one, rather than letting it pass unexamined. */
+        for (const r of (s.results || []).filter((x) => x.result !== 'pass')) {
+          if (!DATE_RE.test(r.rederived || '')) {
+            fail(`${w}.support: the "${r.engine}" result is not a pass, so it needs "rederived": "YYYY-MM-DD" — the date it was last checked against the live page`);
+          }
+          const issue = r.issue || {};
+          if (!['horizontal-overflow', 'manual'].includes(issue.kind)) {
+            fail(`${w}.support: the "${r.engine}" result needs "issue": { "kind": "horizontal-overflow" | "manual", … } so it can be re-derived`);
+          }
+          if (issue.kind === 'horizontal-overflow' && !Number.isInteger(issue.overflow_px)) {
+            fail(`${w}.support: the "${r.engine}" horizontal-overflow issue needs "overflow_px" as an integer`);
+          }
+        }
       });
       checkDated(x.run_specific_values, `${w}.run_specific_values`, (r) => {
         if (!['yes', 'partly', 'no'].includes(r.value)) fail(`${w}.run_specific_values.value must be yes, partly or no`);
@@ -608,7 +628,11 @@ function checksBlock(m, site) {
       + `checked ${dates.join(' and ')}.`
       + (supportExceptions.length ? ` ${supportExceptions.length === 1 ? 'One exhibit needs a word of warning' : 'Some exhibits need a word of warning'}:` : ' No exhibit had a problem at either width.')
       + `</p>`
-      + (supportExceptions.length ? list2(supportExceptions.map((x) => `<strong>${esc(x.card.title)}</strong> — ${esc(x.support.headline)}`)) : '')
+      + (supportExceptions.length ? list2(supportExceptions.map((x) => {
+        const on = rederivedOn(x);
+        return `<strong>${esc(x.card.title)}</strong> — ${esc(x.support.headline)}`
+          + (on.length ? ` <span class="t-dated">Last re-derived against the live page ${esc(on.join(' and '))}.</span>` : '');
+      })) : '')
     : '';
   const privacy = privacyChecked.length
     ? `<p><strong>Privacy.</strong> Opening these exhibits sends nothing to anyone but the site they are served from: `
@@ -636,6 +660,12 @@ function listSentence(items) {
    on hardware nobody tested. The engines named are the engines with a recorded
    result, the widths named are the widths those results were taken at, and an
    exhibit with a recorded issue is named rather than averaged away. */
+/* The date the issues recorded against an exhibit were last checked against the live
+   page — not the date the exhibit was first observed. The two drift apart, and it is
+   the re-derivation date that says whether a published issue still describes the lab. */
+const rederivedOn = (x) => [...new Set(((x.support || {}).results || [])
+  .filter((r) => r.result !== 'pass').map((r) => r.rederived).filter(Boolean))].sort();
+
 function readyBlock(m, core, ext) {
   const results = m.exhibits.flatMap((x) => ((x.support || {}).results || []).map((r) => ({ x, r })));
   const engines = [...new Set(results.map(({ r }) => r.engine))].sort();
@@ -651,6 +681,10 @@ function readyBlock(m, core, ext) {
   const issues = [...seen]
     .map(([title, engs]) => `${esc(title)} (${listSentence([...engs].sort().map(esc))})`)
     .join('; ');
+  /* A recorded issue is a claim about a lab, and it goes stale the way any other
+     published figure does, so the block prints when it was last checked rather than
+     leaving a reader to assume it is current. */
+  const rederived = [...new Set(m.exhibits.flatMap(rederivedOn))].sort();
 
   const sheets = m.exhibits.filter((x) => x.worksheet)
     .map((x) => `<a href="${x.name}/">${esc(x.card.title)}</a>`).join(' · ');
@@ -661,7 +695,9 @@ function readyBlock(m, core, ext) {
 <dl class="t-ready-list">
   <div><dt>Class time</dt><dd>About ${core} minutes for the core sequence${ext ? `, plus about ${ext} minutes of extension` : ''}. ${esc(CLASS_TIME_NOTE.charAt(0).toUpperCase() + CLASS_TIME_NOTE.slice(1))}.</dd></div>
   <div><dt>Checked in</dt><dd>${listSentence(engines.map(esc))}${where ? `, at ${where}` : ''}.</dd></div>
-  <div><dt>Known issues</dt><dd>${issues ? `${issues}. <a href="#readiness">What the checks found</a>.` : `None recorded in <a href="#readiness">the checks below</a>.`}</dd></div>
+  <div><dt>Known issues</dt><dd>${issues
+    ? `${issues}. <a href="#readiness">What the checks found</a>. <span class="t-dated">Last re-derived against the live page ${esc(rederived.join(' and '))}.</span>`
+    : `None recorded in <a href="#readiness">the checks below</a>.`}</dd></div>
   <div class="t-fact-wide"><dt>Worksheets</dt><dd>${sheets || 'None written yet.'}</dd></div>
 </dl>
 </section>

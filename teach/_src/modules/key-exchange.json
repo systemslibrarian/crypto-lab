@@ -203,10 +203,15 @@
             "engine": "WebKit 26.6",
             "viewport": "390x720",
             "result": "issues",
-            "notes": "The page is about 136px wider than the viewport, so it scrolls sideways. Otherwise every worksheet step ran and every anchor was present."
+            "notes": "The page is about 92px wider than the viewport, so it scrolls sideways. Re-derived on 2026-09-22: it had been recorded at about 136px, so the figure has moved. Otherwise every worksheet step ran and every anchor was present.",
+            "rederived": "2026-09-22",
+            "issue": {
+              "kind": "horizontal-overflow",
+              "overflow_px": 92
+            }
           }
         ],
-        "headline": "in WebKit at phone width the page sits about 136px wider than the screen, so it scrolls sideways; Chromium and Firefox reflow correctly. Everything on the page still works. Use it on a laptop, or expect sideways scrolling on a phone."
+        "headline": "in WebKit at phone width the page sits about 92px wider than the screen, so it scrolls sideways; it had been recorded at about 136px"
       },
       "run_specific_values": {
         "checked": "2026-09-22",

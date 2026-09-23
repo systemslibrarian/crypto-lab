@@ -123,7 +123,7 @@
 <dl class="t-ready-list">
   <div><dt>Class time</dt><dd>About 107 minutes for the core sequence, plus about 30 minutes of extension. Predict is pre-class reading and Explain is a spoken debrief.</dd></div>
   <div><dt>Checked in</dt><dd>Chromium 153, Firefox 155 and WebKit 26.6, at desktop width and phone width.</dd></div>
-  <div><dt>Known issues</dt><dd>ECDSA Forge (Chromium 153, Firefox 155 and WebKit 26.6). <a href="#readiness">What the checks found</a>.</dd></div>
+  <div><dt>Known issues</dt><dd>ECDSA Forge (Chromium 153, Firefox 155 and WebKit 26.6). <a href="#readiness">What the checks found</a>. <span class="t-dated">Last re-derived against the live page 2026-09-22.</span></dd></div>
   <div class="t-fact-wide"><dt>Worksheets</dt><dd><a href="rsa-educational/">Educational RSA</a> · <a href="rsa-forge/">RSA Forge</a> · <a href="ec-point-arithmetic/">Point Arithmetic</a> · <a href="ecdsa-forge/">ECDSA Forge</a> · <a href="nonce-lattice/">Nonce Lattice</a></dd></div>
 </dl>
 </section>
@@ -178,7 +178,7 @@
 </section>
 
 <section aria-labelledby="readiness"><h2 id="readiness">Checks</h2>
-<p><strong>Browser support.</strong> Every exhibit in this module, and every step of its worksheet, was run in Chromium, Firefox and WebKit at a desktop width and at a phone width (1280 by 720 and 390 by 720), checked 2026-09-22. One exhibit needs a word of warning:</p><ul><li><strong>ECDSA Forge</strong> — the page does not reflow at phone width: it stays about 288px wider than the screen, so it scrolls sideways. Use it on a laptop or a projector.</li></ul>
+<p><strong>Browser support.</strong> Every exhibit in this module, and every step of its worksheet, was run in Chromium, Firefox and WebKit at a desktop width and at a phone width (1280 by 720 and 390 by 720), checked 2026-09-22. One exhibit needs a word of warning:</p><ul><li><strong>ECDSA Forge</strong> — the page does not reflow at phone width: it stays about 288px wider than the screen in every engine checked, so it scrolls sideways <span class="t-dated">Last re-derived against the live page 2026-09-22.</span></li></ul>
 <p><strong>Privacy.</strong> Opening these exhibits sends nothing to anyone but the site they are served from: no exhibit sets a cookie, and none stores anything beyond the setting that pins its dark theme. The exception:</p><ul><li><strong>Nonce Lattice</strong> — loads its web font from Google Fonts, so opening it sends a request to that service.</li></ul>
 <p><a href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/_src/modules/public-key.json">Detailed check results</a> — engine versions, every step run, transfer sizes, and the source line behind each run-specific verdict. The worksheet drift check reads this module’s <a href="anchors.json">anchors manifest</a>.</p>
 </section>

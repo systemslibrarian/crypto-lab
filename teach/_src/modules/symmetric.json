@@ -193,11 +193,11 @@
           {
             "engine": "WebKit 26.6",
             "viewport": "1280x720 and 390x720",
-            "result": "fails three worksheet steps",
-            "notes": "WebCrypto in this engine accepts a final 0x00 byte as valid PKCS#7 padding, which Chromium and Firefox reject, and three worksheet steps rest on that check: the forced 0x00 row in Do step 3 reads \"The oracle answered: Valid\", against the page's own explanation that 0x00 claims zero padding bytes; Full Block printed \"Attack stopped.\" in 6 of 10 runs, after 329 to 495 oracle queries and with no console error, where Chromium 153 and Firefox 155 recovered the block in 10 of 10 (1,745 to 2,605 queries); and the leaky server in the Panel 6 bench failed in 3 of 6 runs. Otherwise: 24 anchors present; 20 anchored controls take keyboard focus and have accessible names (5 of them once the step before them has run); no console errors; no horizontal scrolling; no animation left running with reduced motion requested; about 34 KB transferred on load."
+            "result": "pass",
+            "notes": "Re-derived against the live page on 2026-09-22 and no longer reproducing. It had been recorded as: WebCrypto in this engine accepts a final 0x00 byte as valid PKCS#7 padding, failing three worksheet steps. Driven through the page’s own controls, the forced 0x00 row now answers Invalid in this engine as it does in Chromium and Firefox; Full Block completed every run attempted; and the Panel 6 leaky server recovered the block byte for byte on every run, within the query range recorded for the engines that worked. Whether the lab changed or the engine did is not established here. Otherwise: 24 anchors present; 20 anchored controls take keyboard focus and have accessible names (5 of them once the step before them has run); no console errors; no horizontal scrolling; no animation left running with reduced motion requested; about 34 KB transferred on load.",
+            "rederived": "2026-09-22"
           }
-        ],
-        "headline": "three of its worksheet steps fail in WebKit, which accepts a padding byte the other engines reject. Run this one in a Chromium- or Firefox-based browser."
+        ]
       },
       "run_specific_values": {
         "checked": "2026-09-22",

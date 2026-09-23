@@ -683,8 +683,22 @@ another agent is using. When finishing them, **re-derive rather than copying the
 file**: a worksheet re-checked against a newer build gets a new `source_commit`, and its date
 moves with it.
 
+**A report of a change is evidence of intent, not of state.** Re-derive every claimed change
+from the branch before it counts, exactly as `deploy-sync` re-derives what is served rather
+than trusting a green check. A builder saying a parameter moved, an agent saying a file was
+written, a commit message saying a value was raised — each is the author's side of the claim,
+and each has been wrong in this repository. Read the tree.
+
+**And re-derive it over the WHOLE tree.** On 2026-09-22 this rule was applied to a builder's
+report and still reached the wrong answer: two of the three files that could have held the
+change were read, the change was in the third, and a landed change was recorded in an audit as
+never made. Deriving from part of a denominator is not deriving — it is inheritance wearing a
+measurement's clothes, and it is the same defect as reading one protection endpoint and calling
+a ruleset-protected branch unprotected. Search the whole tree for the value before reporting it
+absent; the search costs nothing and the retraction does not.
+
 The rule applies to anything a reader would take as measured: minutes, engine support, privacy
-observations, run-specific verdicts, citation years. When a figure moves, say in the pull request
+observations, run-specific verdicts, citation years, and reported changes. When a figure moves, say in the pull request
 what changed to move it, because a number that has changed twice is the one a reader most needs
 explained.
 

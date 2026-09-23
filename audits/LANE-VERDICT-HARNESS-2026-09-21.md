@@ -794,22 +794,94 @@ cannot, because both render identically.
 
 ---
 
-## A correction to the runtime-pairs round record
+## A correction to the runtime-pairs round record — WITHDRAWN, and why
 
-**`hidden-bit`'s Fix 4 parameter change was reported but not landed.** That builder's
-report states: *"The config moves 200 → 2,000 trials and q 16 → 32, and that is
-load-bearing rather than caution"*, with the analysis that at 200 trials the rendered
-tolerance is 0.381 — wider than the entire 0.004–0.380 spread the curve covers — so
-every row sits inside every other row's tolerance and a replicated curve is
-indistinguishable by construction.
+**The claim made here on 2026-09-22 was wrong, and it is left standing with its
+retraction because the way it went wrong is the lesson.**
 
-Re-derived from the branch at `3f81e16` on 2026-09-22: `src/ui/switching.ts` carries
-marker additions only, its controls still default to q = 48 and 400 trials per point,
-and `e2e/claims.spec.ts` still drives the switching test at **q = 20, trials = 200**.
-The oracle was strengthened; the parameters it depends on were not.
+It asserted that `hidden-bit`'s Fix 4 parameter change — *"the config moves 200 →
+2,000 trials and q 16 → 32"* — was reported but never landed. It landed.
+`e2e/verdicts.spec.ts:806` reads `const requestedTrials = 2_000`, sets
+`#switch-queries` to `32` and `#switch-bits` to `8`, and carries the tolerance
+analysis in a comment directly above it. It is the setup of the test that owns the
+`curve-replicates-one-measurement` mutation, which is also recorded, in
+`mutations/registry.json`.
 
-By that builder's own analysis the oracle therefore still cannot discriminate a
-replicated curve at the count its test runs. **The fix is incomplete, and its own
-report is the evidence.** This is a reminder that a builder's report is the builder's
-side of the claim in exactly the way D1 says a green check is — and that a re-audit
-has to read the tree, not the report.
+**How the error was made:** I looked in `e2e/claims.spec.ts`, which holds the OLDER
+switching test and still drives q = 20 at 200 trials, and in `src/ui/switching.ts`,
+whose control defaults are untouched — and concluded from those two files that the
+change was absent. The new test lives in a third file. Two files were derived from;
+the third was assumed not to exist.
+
+That is the same defect this document keeps recording, committed by the auditor
+rather than the builder: **a conclusion generalised from a partial denominator.**
+`fleet-sync` exists because the catalog could not see a lab it was never told about.
+`gate-sync` was blind to `peaceiris` publishers. The protection census read one
+endpoint and called a ruleset-protected branch unprotected. Here, two files out of
+three, and the missing one held the answer.
+
+The check that would have caught it costs nothing and was not run: search the whole
+tree for the value before reporting it absent.
+
+**What was actually still open, and is now closed:** `e2e/claims.spec.ts` drove the
+older bound check at q = 20 / 200 trials while the owning test drove q = 32 / 2,000,
+so the two disagreed about the parameters the exhibit's claim depends on. At 200
+trials that older test's tolerance is wide enough to admit nearly anything, which is
+the same weakness in a second place. Both specs now take the parameters from one
+shared constant, so they cannot drift apart again.
+
+---
+
+## Maintainer decisions, 2026-09-22 (third set)
+
+**D11 — a report is evidence of intent; the tree is evidence of state.** Promoted out
+of this document and into `CLAUDE.md`, beside the derived-not-inherited rule, because
+it is not a fact about this lane. Every claimed change is re-derived from the branch
+before it counts, the way a green check is. And it is re-derived over the WHOLE tree:
+the retraction above was produced by deriving from two of three candidate files, which
+is inheritance wearing a measurement's clothes.
+
+**D12 — the dispatch census stays UNPINNED, deliberately.** `dispatch-census.js write`
+on 2026-09-22 produced 209 labs, not the 205 that adding `crypto-lab` itself would
+give. The other four are `crypto-lab-export-grade`, `crypto-lab-misty-lens`,
+`crypto-lab-sm2-forge` and `crypto-lab-tc26-pair` — repositories another lane is
+building right now. All six of the new labs have **zero commits**, and four have
+already grown a workflow since this session started.
+
+Pinning now would be **a figure inherited from a moment rather than derived from a
+state**: it would freeze a half-built fleet, and `check` would fail the day those
+repositories commit. The pin's whole purpose is to be the denominator that notices a
+lab leaving, and a denominator taken mid-build cannot do that job.
+
+**What unblocks it:** the six repositories have their initial commits, and the lane
+building them reports done. Then `node tools/dispatch-census.js write`, and read the
+diff — added rows are the new labs, and a removed row is a lab that stopped being
+seen. Until then `dispatch-sync check` will report the count disagreeing with the pin,
+and that disagreement is correct rather than a failure to fix.
+
+**D13 — hands off the shared clones while another lane is in them.** `crypto-lab` and
+`crypto-counsel` are single working copies on this machine and two sessions write to
+them. This is not hypothetical: on 2026-09-22 `demo_crypto_lab_export_grade` appeared
+in `crypto-counsel/corpus.json` mid-edit while this lane was appending to the same
+file, and `index.html`, `README.md` and `concept-coverage.md` changed under this lane
+in `crypto-lab` while a commit was being prepared. The entry that appeared was
+complete; the next one might be caught mid-write and wrong, and a torn JSON file
+committed by the wrong session is expensive to unpick.
+
+So this lane writes to its own brief and to the lab repositories it owns, and nothing
+else in those two clones, until the other lane reports done.
+
+### What this lane touched in the shared clones, for reconciliation
+
+| When (2026-09-22) | Repository | Paths | Commit |
+|---|---|---|---|
+| during the teach work | `crypto-lab` | `teach/**`, `tools/teach-*.js`, `teach/teach.css`, `CLAUDE.md`, `.github/workflows/teach.yml` | merges of #9, #10, #14, #15, #16, #17, #18 |
+| after #10 merged | `crypto-lab` | `tools/majors-sync.js` — committed by accident on a `git add -A`, then untracked again; the file is unchanged on disk | `deeeb95` |
+| citation dates | `crypto-lab` | `teach/_src/modules/*.json`, `tools/teach-build.js`, `teach/_src/landing.html`, `audits/TEACH-CITATION-DATES-2026-09-22.md` | in #16 |
+| lane record | `crypto-lab` | `audits/LANE-VERDICT-HARNESS-2026-09-21.md`, `tools/protection-census.js`, `CLAUDE.md` | `511ce56`, `d13bc93`, `dc0f57c`, `3495a0e`, `c0b4e0b`, `18a3349`, `e549d4b`, `008810a`, and this one |
+| corpus | `crypto-counsel` | `corpus.json` (Curve Lens entry rewritten), `README.md` counts | `6f2c85e` |
+| corpus | `crypto-counsel` | `corpus.json` (Ghost Commit entry added; **Export Grade's entry, written by the other lane, was carried in the same commit** because rewriting a file another process was writing risked losing it), `README.md` counts re-derived | `71f50d9` |
+
+Nothing else in either clone was written by this lane. The catalog card work on
+`index.html`, `README.md` and `concept-coverage.md` dated 2026-09-22 is the other
+lane's, and was left untouched.

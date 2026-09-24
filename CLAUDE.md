@@ -65,11 +65,37 @@ has no verb to qualify it — unless the chip is MARKED, saying what it means in
 its own vocabulary instead of borrowing the implementation one: `vs. HQC` names a
 target, `Toy-Scale Only` and `Modelled Decode Time` name a fidelity.
 `node tools/catalog-sync.js chips` applies it. It is **not** wired into `check`,
-and the reason is the recurring one: the rule is only as good as the scanner's
-recall, and the 28 it currently flags are dominated by protocol-level identity a
-source scanner cannot establish — `crypto-lab-tls-handshake` chips TLS 1.3 and
-writes no such literal anywhere in its code. Promoting it to a failing check
-means fixing recall first, not lowering the bar.
+because the rule is only as good as the scanner's recall — every algorithm the
+scanner misses becomes a card falsely accused of overclaiming.
+
+**That is measured rather than asserted.** `node tools/catalog-recall.js` scores
+the scanner against `tools/fixtures/catalog/recall.json`, twelve labs whose truth
+was established by reading each README's claims and confirming them in that lab's
+own source — never from the scanner's own output, which would measure nothing and
+report 100%. Two numbers, never averaged, because they fail for different reasons
+and are fixed by different work:
+
+- **recall 92.6%** (25 of 27) — of what a lab implements AND the vocabulary can
+  name, how much the detection shapes find.
+- **coverage 67.5%** (27 of 40) — of everything a lab implements, how much the
+  vocabulary can name at all.
+
+It measures recall, **not precision**: the fixture is a verified subset, so a find
+it does not name is outside its scope rather than wrong. Precision comes from the
+other direction — sampling anchors and reading the lines they point at.
+
+**The gate criterion is written down instead of re-argued:** the chip rule may
+become a failing check at **recall ≥ 95% over ≥ 20 fixture labs**, with every
+known miss class closed or explicitly exempted. Today: 92.6% over 12 — NOT MET.
+The four known classes are listed in `catalog-recall.js` with what would close
+each: **protocol-identity** (a lab implements TLS 1.3, E91 or OPAQUE and no
+identifier in its source says so — the live example, and the harder one),
+**non-typescript** (already handled by NOT-SCANNED, and exempted by the rule),
+**vocabulary** (closed by `catalog-evidence.js gaps`), and **vendored** (an
+anchor into a minified line proves nothing, so these must be unjudgeable rather
+than absent). `catalog-recall.js check` runs weekly and fails on a DROP below a
+recorded floor — raise the floor when recall improves, never lower it to make a
+run pass.
 
 Anchors are line numbers and line numbers rot, so
 `node tools/catalog-evidence.js verify` re-opens every one against the clones

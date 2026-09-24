@@ -4133,7 +4133,7 @@
             data-attacks="Brute force@demos/babel-hash/src/main.ts:821 | Length extension@demos/babel-hash/src/crypto/hmac.ts:7 | Timing side-channel@README.md:24"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-overlaps="crypto-lab-hash-zoo: both compare SHA-256, SHA3-256 and BLAKE3 as three constructions; babel-hash is the hash entry in the crypto-compare portfolio, while hash-zoo additionally proves a SHA-256 length-extension forgery at runtime rather than describing one"
+            data-overlaps="crypto-lab-hash-zoo: DUPLICATION - both compare the same three hash functions (SHA-256 Merkle-Damgard, SHA3-256 sponge, BLAKE3 tree) and both compute every digest in-browser from the real primitives. The only separation the two READMEs support is that babel-hash sits in the crypto-compare portfolio, which is where a lab lives rather than what it teaches. Needs a decision on whether one absorbs the other, not a sentence."
            
            
            

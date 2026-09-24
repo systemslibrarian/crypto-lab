@@ -551,17 +551,21 @@ may teach the same primitive from different angles — but an overlap **with no 
 difference** is a question nobody has answered, and a visitor choosing between the
 two has nothing to go on.
 
-44 pairs, 8 with a stated difference, **36 without**.
+44 pairs: 7 with a stated difference, **1 examined and found to be duplication**, 36 nobody has looked at.
+
+A pair marked DUPLICATION is a finding, not a description: someone read both and
+found no difference worth having. It is listed first because it is the only row here
+that asks for a decision.
 
 | Labs | Shared | Stated difference |
 |---|---|---|
+| Babel Hash / Hash Zoo | BLAKE3, SHA-256, SHA-3 | **DUPLICATION** — both compare the same three hash functions (SHA-256 Merkle-Damgard, SHA3-256 sponge, BLAKE3 tree) and both compute every digest in-browser from the real primitives. The only separation the two READMEs support is that babel-hash sits in the crypto-compare portfolio, which is where a lab lives rather than what it teaches. Needs a decision on whether one absorbs the other, not a sentence. |
 | KDF Chain / KDF Arena | Argon2, HKDF, PBKDF2, scrypt, SHA-256 | kdf-chain teaches what problem each KDF solves and walks a decision tree for choosing one; kdf-arena benchmarks the same four side by side and reports attacker cost against wall-clock time |
 | Ratchet Wire / Encrochat | AES, AES-GCM, Diffie-Hellman, Double Ratchet, Ed25519, HKDF, SHA-256, X25519 | ratchet-wire demonstrates the Double Ratchet working as designed; encrochat reconstructs the 2020 Encrochat takedown, where the same construction was never broken and the endpoint was compromised instead |
 | Frodo Vault / Scloud+ Vault | FrodoKEM, LWE, ML-KEM | both are unstructured-LWE KEMs: frodo-vault is FrodoKEM, the conservative plain-LWE design that avoids algebraic structure outright; scloud-vault is Scloud+, which keeps unstructured LWE but adds ternary secrets and Barnes-Wall lattice coding for efficiency |
 | STARK Tower / Polynomial Forge | FRI, Merkle tree, SHA-256 | stark-tower runs a whole STARK, prover and verifier, catching a cheating prover through a FRI low-degree test; polynomial-forge opens the commitment layer underneath and compares KZG, IPA and FRI as schemes in their own right |
 | Format Ward / Regex Veil — FTE | AES, AES-CBC, FF1 | format-ward PRESERVES an existing format with FF1 and FF3-1, so ciphertext keeps the length and alphabet of the input; fte TRANSFORMS ciphertext into whatever language a regular expression defines, by ranking a DFA slice |
 | RSA Forge / Hidden Bit | AES, AES-GCM, RSA, RSA-OAEP, RSA-PSS, SHA-256 | rsa-forge is about RSA itself, its padding schemes and the attacks on them; hidden-bit is about the security DEFINITIONS, running IND-CPA, IND-CCA2 and EUF-CMA experiments in which RSA and AES are merely the schemes under test |
-| Babel Hash / Hash Zoo | BLAKE3, SHA-256, SHA-3 | both compare SHA-256, SHA3-256 and BLAKE3 as three constructions; babel-hash is the hash entry in the crypto-compare portfolio, while hash-zoo additionally proves a SHA-256 length-extension forgery at runtime rather than describing one |
 | VSS Gate / Reshare Circle | Feldman VSS, Pedersen commitment, Shamir secret sharing | vss-gate adds VERIFIABILITY to Shamir sharing at deal time, through Feldman and Pedersen commitments; reshare-circle leaves the dealing alone and refreshes shares over time, using HJKY proactive sharing against perpetual leakage |
 | Ciphertext Mirror / Lattice Builder | Keccak, ML-KEM, NTT, SHA-3, SHAKE | **none stated** |
 | Nonce Guard / Order Leak | AES, AES-GCM, AES-SIV | **none stated** |
@@ -723,7 +727,7 @@ SHA-256, SHA3-256, and BLAKE3 side by side with live avalanche visualization, le
 - **Attacks shown:** Brute force `demos/babel-hash/src/main.ts:821`, Length extension `demos/babel-hash/src/crypto/hmac.ts:7`, Timing side-channel `README.md:24`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Overlaps:** `crypto-lab-hash-zoo` — both compare SHA-256, SHA3-256 and BLAKE3 as three constructions; babel-hash is the hash entry in the crypto-compare portfolio, while hash-zoo additionally proves a SHA-256 length-extension forgery at runtime rather than describing one
+- **Overlaps:** `crypto-lab-hash-zoo` — DUPLICATION - both compare the same three hash functions (SHA-256 Merkle-Damgard, SHA3-256 sponge, BLAKE3 tree) and both compute every digest in-browser from the real primitives. The only separation the two READMEs support is that babel-hash sits in the crypto-compare portfolio, which is where a lab lives rather than what it teaches. Needs a decision on whether one absorbs the other, not a sentence.
 
 ### BB84
 

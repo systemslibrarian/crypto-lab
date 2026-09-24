@@ -55,6 +55,10 @@ const CHECKERS = [
      changes, not when this repo does. Every anchor on a card is a line number in
      a sibling repo, and a line number rots the moment someone edits above it. */
   { name: 'catalog-evidence', args: ['tools/catalog-evidence.js', 'verify'] },
+  /* Recall against the hand-built fixture. Weekly rather than per-PR for the same
+     reason as the line above — it reads the clones — and it fails only on a DROP,
+     so it catches a scanner change that quietly stops finding things. */
+  { name: 'catalog-recall', args: ['tools/catalog-recall.js', 'check'] },
 ];
 
 /* protection-census is NOT in that list, and the reason is worth keeping.

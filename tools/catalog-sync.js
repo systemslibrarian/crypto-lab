@@ -145,10 +145,34 @@ function overlaps(list) {
   return pairs.sort((x, y) => y.score - x.score || x.a.slug.localeCompare(y.a.slug));
 }
 
-function stated(pair) {
+/* An overlap is in one of THREE states, not two.
+ *
+ *   stated       someone examined the pair and wrote down how they differ
+ *   DUPLICATION  someone examined the pair and found NO difference worth having
+ *   unstated     nobody has looked
+ *
+ * The middle one has to be its own state or it decays into the first. The
+ * babel-hash/hash-zoo pair is why: both compare the same three hash functions,
+ * and the only thing the two READMEs supported was that one of them lives in the
+ * crypto-compare portfolio. Recording that as "the difference" would file a
+ * finding about duplication under the heading of a distinction, and the finding
+ * would never be seen again. Where a lab belongs is not what it teaches. */
+function recorded(pair) {
   const fwd = pair.a.overlaps.find((o) => o.slug === pair.b.slug && o.difference);
   const rev = pair.b.overlaps.find((o) => o.slug === pair.a.slug && o.difference);
   return fwd || rev || null;
+}
+
+const DUPLICATION = /^DUPLICATION\b[:\s-]*/;
+
+function stated(pair) {
+  const r = recorded(pair);
+  return r && !DUPLICATION.test(r.difference) ? r : null;
+}
+
+function duplication(pair) {
+  const r = recorded(pair);
+  return r && DUPLICATION.test(r.difference) ? { ...r, note: r.difference.replace(DUPLICATION, '') } : null;
 }
 
 function build(list) {
@@ -240,7 +264,8 @@ function build(list) {
 
   /* --- overlap report ----------------------------------------------------- */
   const pairs = overlaps(list);
-  const unstated = pairs.filter((p) => !stated(p));
+  const dupes = pairs.filter((p) => duplication(p));
+  const unstated = pairs.filter((p) => !stated(p) && !duplication(p));
   L.push('## Overlap report');
   L.push('');
   L.push('Pairs of labs that implement the same algorithms, weighted so that sharing a rare');
@@ -249,13 +274,21 @@ function build(list) {
   L.push('difference** is a question nobody has answered, and a visitor choosing between the');
   L.push('two has nothing to go on.');
   L.push('');
-  L.push(`${pairs.length} pairs, ${pairs.length - unstated.length} with a stated difference, **${unstated.length} without**.`);
+  L.push(`${pairs.length} pairs: ${pairs.filter((p) => stated(p)).length} with a stated difference, `
+    + `**${dupes.length} examined and found to be duplication**, ${unstated.length} nobody has looked at.`);
+  L.push('');
+  L.push('A pair marked DUPLICATION is a finding, not a description: someone read both and');
+  L.push('found no difference worth having. It is listed first because it is the only row here');
+  L.push('that asks for a decision.');
   L.push('');
   L.push('| Labs | Shared | Stated difference |');
   L.push('|---|---|---|');
-  for (const p of pairs) {
+  const ordered = [...pairs].sort((x, y) => (duplication(y) ? 1 : 0) - (duplication(x) ? 1 : 0));
+  for (const p of ordered) {
+    const d = duplication(p);
     const s = stated(p);
-    L.push(`| ${p.a.title} / ${p.b.title} | ${p.shared.join(', ')} | ${s ? s.difference : '**none stated**'} |`);
+    const cell = d ? `**DUPLICATION** — ${d.note}` : s ? s.difference : '**none stated**';
+    L.push(`| ${p.a.title} / ${p.b.title} | ${p.shared.join(', ')} | ${cell} |`);
   }
   L.push('');
 
@@ -446,8 +479,18 @@ function main() {
   }
 
   if (mode === 'report') {
-    const pairs = overlaps(list).filter((p) => !stated(p));
-    console.log(`Overlap pairs with no stated difference: ${pairs.length}\n`);
+    const all = overlaps(list);
+    const dupes = all.filter((p) => duplication(p));
+    const pairs = all.filter((p) => !stated(p) && !duplication(p));
+    if (dupes.length) {
+      console.log(`DUPLICATION — examined, no difference found (${dupes.length}). These want a decision, not a sentence:\n`);
+      for (const p of dupes) {
+        console.log(`  ${p.a.slug} / ${p.b.slug}`);
+        console.log(`    ${duplication(p).note}`);
+        console.log(`    shared: ${p.shared.join(', ')}\n`);
+      }
+    }
+    console.log(`Overlap pairs nobody has looked at: ${pairs.length}\n`);
     for (const p of pairs) {
       console.log(`  ${p.a.slug}`);
       console.log(`  ${p.b.slug}`);

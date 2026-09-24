@@ -68,8 +68,15 @@ const FLOOR = 0.80;
 const MISS_CLASSES = [
   {
     id: 'protocol-identity',
-    what: 'The lab implements a named PROTOCOL, and no identifier in its source carries the protocol name. crypto-lab-tls-handshake builds a TLS 1.3 handshake and writes no such literal; the same for E91, OPAQUE and Noise.',
-    closes: 'a protocol-level shape: treat a lab whose repo slug and README title both name a protocol term as evidence for that term, anchored to the module that implements the handshake.',
+    status: 'PARTLY CLOSED',
+    what: 'The lab implements a named PROTOCOL and no identifier in its source carries the protocol name. crypto-lab-tls-handshake builds a TLS 1.3 handshake and writes no such literal.',
+    closes: 'The `protocol` shape now closes it for labs that declare TWO of that protocol\'s own message structures without a dominant foreign prefix — ClientHello AND EncryptedExtensions, say. Three labs qualify. It does NOT reach a lab naming only one, so crypto-lab-blind-hello builds real TLS ClientHello structures and is still missed. Note what was rejected: keying on the repo slug, which would have had crypto-lab-hqc-timing claiming HQC — the exact false claim just removed from four cards. Each looser variant was tried and measured: a substring match gave 38 findings that were mostly nonsense, and single-structure evidence claimed TLS for an SSH lab and an SRP file that had borrowed the names.',
+  },
+  {
+    id: 'unnamed-implementation',
+    status: 'IRREDUCIBLE for a name-based scanner',
+    what: 'The lab computes the algorithm and never writes its name in executable code — only in comments, prose or a UI string, all of which are blanked on purpose because a mention is not an implementation. crypto-lab-commit-gate does P-256 arithmetic and names the curve only in a comment; crypto-lab-harvest-vault implements a ring-LWE KEM whose source never says so; crypto-lab-ggh-trapdoor calls its rounding step nothing in particular; crypto-lab-hqc-timing-break names its inner code `repeats`. FIVE of the six current misses are this class, so it, and not protocol identity, is what holds recall down.',
+    closes: 'nothing a name-based scanner can do, and loosening to read comments would re-admit exactly the mentions-as-implementations error the whole design rejects. The rule must treat it as unjudgeable: it is the reason a recall target of 95% may be the wrong bar, rather than a target still to be reached.',
   },
   {
     id: 'non-typescript',
@@ -78,8 +85,9 @@ const MISS_CLASSES = [
   },
   {
     id: 'vocabulary',
-    what: 'The lab implements an algorithm no vocabulary term can name. ristretto255 was on seven labs and in no term; AEGIS-256, HPKE, J-PAKE, CPace and Dragonfly are in none today.',
-    closes: '`node tools/catalog-evidence.js gaps`, which lists chips matching no term. It is the only way a declared vocabulary sees its own blind spots.',
+    status: 'CLOSED for the sampled labs (coverage 68.2% -> 90.8%)',
+    what: 'The lab implements an algorithm no vocabulary term can name. ristretto255 was on seven labs and in no term; AEGIS-256, HPKE, J-PAKE, CPace, Dragonfly, GHASH, hash-to-curve, HMAC-DRBG and Babai rounding were in none. All are terms now, and coverage moved 68.2% -> 90.8% on this fixture.',
+    closes: '`node tools/catalog-evidence.js gaps`, which lists chips matching no term - the only way a declared vocabulary sees its own blind spots. Closing it LOWERED recall, from 91.1% to 89.8%, because a newly nameable algorithm is then held to recall like any other: a term that exists and still finds nothing is not progress, and the measurement now says so rather than rewarding the addition.',
   },
   {
     id: 'vendored',
@@ -118,11 +126,25 @@ function main() {
     const measurable = expect.implements.filter((n) => names.has(n));
     const notNameable = expect.implements.filter((n) => !names.has(n));
     for (const n of notNameable) unnameable.push(`${slug}: ${n}`);
-    const missed = measurable.filter((n) => !got.has(n));
-    hit += measurable.length - missed.length;
-    truth += measurable.length;
-    outOfVocab += expect.outOfVocabulary.length;
-    rows.push({ slug, stratum: expect.stratum, expected: measurable.length, missed, extra: [...got].filter((n) => !expect.implements.includes(n)) });
+    /* An outOfVocabulary entry is re-checked against the LIVE vocabulary, not
+       trusted as written. The fixture records what had no term ON THE DAY it was
+       built; adding a term is exactly how the coverage class gets closed, and a
+       static list could never show that. Anything now nameable moves into the
+       measured set and is held to recall like everything else - which is the
+       point: a term that exists and still finds nothing is not progress. */
+    const nowNameable = [];
+    const stillUnnameable = [];
+    for (const n of expect.outOfVocabulary) {
+      const term = ALGORITHMS.find((t) => t.re.test(n));
+      if (term) nowNameable.push(term.name);
+      else stillUnnameable.push(n);
+    }
+    const allMeasurable = [...new Set([...measurable, ...nowNameable])];
+    const missed = allMeasurable.filter((n) => !got.has(n));
+    hit += allMeasurable.length - missed.length;
+    truth += allMeasurable.length;
+    outOfVocab += stillUnnameable.length;
+    rows.push({ slug, stratum: expect.stratum, expected: allMeasurable.length, missed, promoted: nowNameable, extra: [...got].filter((n) => !allMeasurable.includes(n)) });
   }
 
   const recall = truth ? hit / truth : 1;
@@ -139,6 +161,7 @@ function main() {
     const mark = r.missed.length ? 'MISS' : ' ok ';
     console.log(`  ${mark}  ${r.slug.replace('crypto-lab-', '').padEnd(24)} ${String(r.expected).padStart(2)} expected` +
       (r.missed.length ? `  — missed ${r.missed.join(', ')}` : '') +
+      (r.promoted.length ? `  [${r.promoted.length} newly nameable]` : '') +
       (r.extra.length ? `  (+${r.extra.length} beyond the fixture's scope)` : ''));
   }
   console.log(`\n  RECALL    ${(recall * 100).toFixed(1)}%  — ${hit} of ${truth} in-vocabulary implementations found`);
@@ -149,7 +172,7 @@ function main() {
 
   console.log('\nKNOWN MISS CLASSES');
   for (const c of MISS_CLASSES) {
-    console.log(`\n  ${c.id}`);
+    console.log(`\n  ${c.id}${c.status ? `  [${c.status}]` : ''}`);
     console.log(`    ${c.what}`);
     console.log(`    closes with: ${c.closes}`);
   }

@@ -75,10 +75,18 @@ own source — never from the scanner's own output, which would measure nothing 
 report 100%. Two numbers, never averaged, because they fail for different reasons
 and are fixed by different work:
 
-- **recall 92.6%** (25 of 27) — of what a lab implements AND the vocabulary can
+- **recall 89.8%** (53 of 59) — of what a lab implements AND the vocabulary can
   name, how much the detection shapes find.
-- **coverage 67.5%** (27 of 40) — of everything a lab implements, how much the
+- **coverage 90.8%** (59 of 65) — of everything a lab implements, how much the
   vocabulary can name at all.
+
+The fixture is grown **as the work goes, not when the gate is in reach** — one
+assembled to clear a threshold measures the threshold. It went 12 → 20 labs
+before any of the fixes below, and recall fell 92.6% → 91.1% on the larger
+sample, which is what an honest extension is free to do. Round 2 also changed the
+sampling method to sha1(slug) order, because the original interval sampling is
+not stable under growth: change the count and every pick moves, so a bigger
+fixture would not contain the smaller one.
 
 It measures recall, **not precision**: the fixture is a verified subset, so a find
 it does not name is outside its scope rather than wrong. Precision comes from the
@@ -86,16 +94,30 @@ other direction — sampling anchors and reading the lines they point at.
 
 **The gate criterion is written down instead of re-argued:** the chip rule may
 become a failing check at **recall ≥ 95% over ≥ 20 fixture labs**, with every
-known miss class closed or explicitly exempted. Today: 92.6% over 12 — NOT MET.
-The four known classes are listed in `catalog-recall.js` with what would close
-each: **protocol-identity** (a lab implements TLS 1.3, E91 or OPAQUE and no
-identifier in its source says so — the live example, and the harder one),
-**non-typescript** (already handled by NOT-SCANNED, and exempted by the rule),
-**vocabulary** (closed by `catalog-evidence.js gaps`), and **vendored** (an
-anchor into a minified line proves nothing, so these must be unjudgeable rather
-than absent). `catalog-recall.js check` runs weekly and fails on a DROP below a
-recorded floor — raise the floor when recall improves, never lower it to make a
-run pass.
+known miss class closed or explicitly exempted. Today: **89.8% over 20 — NOT
+MET**, and `catalog-recall.js` prints that verdict itself. Five classes, in
+`catalog-recall.js` with what closes each:
+
+- **vocabulary** — CLOSED for the sampled labs by `catalog-evidence.js gaps`.
+- **protocol-identity** — PARTLY closed by the `protocol` shape, which fires when
+  a lab declares **two** of a protocol's own message structures with no dominant
+  foreign prefix. What was rejected matters more than what was built: keying on
+  the repo slug would have had `crypto-lab-hqc-timing` claiming HQC, the exact
+  false claim just removed from four cards.
+- **unnamed-implementation** — IRREDUCIBLE, and the real ceiling. **Five of the
+  six current misses** are labs that compute an algorithm and never write its
+  name in executable code: `commit-gate` does P-256 arithmetic and names the
+  curve only in a comment. Reading comments would re-admit mentions-as-
+  implementations, which is the error the whole design rejects.
+- **non-typescript** — handled by NOT-SCANNED and exempted by the rule.
+- **vendored** — an anchor into a minified line proves nothing, so these are
+  unjudgeable rather than absent.
+
+Because the ceiling is irreducible, **95% may be the wrong bar rather than a
+target still to reach** — that is a decision to take deliberately, not to
+discover by lowering it quietly. `catalog-recall.js check` runs weekly and fails
+on a DROP below a recorded floor: raise the floor when recall improves, never
+lower it to make a run pass.
 
 Anchors are line numbers and line numbers rot, so
 `node tools/catalog-evidence.js verify` re-opens every one against the clones

@@ -26,6 +26,8 @@
  *           identifier being invoked            crypto.subtle.sign('HMAC', ...)
  *   path    the FILE is named for the algorithm and declares something
  *                                                        src/misty1/misty1.ts
+ *   protocol  the lab builds or parses that PROTOCOL's own message structures
+ *                                                        function buildClientHello(
  *   import  the term is in a module path being imported  from '@noble/hashes/sha256'
  *   decl    the term is in the name of a function, class or const being declared
  *                                                        function aesGcmEncrypt(
@@ -65,6 +67,7 @@
 const fs = require('fs');
 const path = require('path');
 const { ALGORITHMS, ATTACKS } = require('./catalog-vocab.js');
+const PROTOCOL_TERMS = ALGORITHMS.filter((t) => t.structures);
 
 const ROOT = path.join(__dirname, '..');
 const REPOS = path.join(ROOT, '..');
@@ -236,6 +239,53 @@ function camelSplit(text) {
     .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
 }
 
+/** Does this line build or parse one of the protocol's own message structures?
+ *
+ * Checked OUTSIDE the term-regex gate, which is the whole point and was the bug
+ * the first time: `buildClientHello` contains no substring "TLS 1.3", so a gate
+ * that first requires the term's own pattern to match the line can never reach
+ * this. Protocol identity exists precisely where the protocol's NAME is absent.
+ *
+ * Narrow on purpose: a lab that IMPLEMENTS a protocol declares its message
+ * types, while a lab that MODELS an attack on one declares runAttack and llr.
+ * Keying on the repo slug instead would manufacture the exact false claim just
+ * removed from four cards - crypto-lab-hqc-timing has "hqc" in its name and
+ * implements none of it. */
+const flatten = (t) => t.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+function structuresNamed(code, term) {
+  if (!term.structures) return [];
+  const ids = [
+    ...[...code.matchAll(/(?:^|[\s;{(,])(?:async\s+)?(?:function|class|interface|type|enum)\s+([A-Za-z_$][\w$]*)/g)].map((x) => x[1]),
+    ...[...code.matchAll(/(?:const|let|var)\s+([A-Za-z_$][\w$]*)/g)].map((x) => x[1]),
+    ...[...code.matchAll(/([A-Za-z_$][\w$]*)\s*\(/g)].map((x) => x[1]),
+  ];
+  /* Whole camel TOKENS in contiguous order, never a substring. Substring
+     matching put `Envelope` (an OPAQUE message) on an ECIES lab, `LeafNode` (an
+     MLS one) on an LMS hash tree, and `OpenBase` on a variable called
+     openBaseline - 38 findings, almost all nonsense. `buildClientHello` splits
+     to [build, client, hello] and contains [client, hello] in order; that is a
+     match and `openBaseline` is not. */
+  const toks = (t) => camelSplit(t).toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+  const out = [];
+  for (const st of term.structures) {
+    const r = toks(st);
+    for (const id of ids) {
+      const a = toks(id);
+      const at = a.findIndex((_, k) => r.every((w, m) => a[k + m] === w));
+      if (at < 0) continue;
+      /* The tokens BEFORE the match, so a caller can see whether every hit in a
+         lab shares one foreign prefix. crypto-lab-pake-gate names SRP-6a's two
+         messages `srpClientHello` and `srpServerHello`: two distinct TLS
+         structures by name, neither of them TLS. `build` in `buildClientHello`
+         is a verb and varies; `srp` is another protocol and does not. */
+      out.push({ structure: st, prefix: a.slice(0, at).join('-') });
+      break;
+    }
+  }
+  return out;
+}
+
 /* The three shapes, tested against ONE line of comment-blanked code.
  *
  * The decl and invoked-identifier tests read the line with string CONTENTS
@@ -324,6 +374,7 @@ function evidenceFor(slug) {
   const hits = new Map();   // term name -> {shape, at}
   const mentions = new Map();
   const attackHits = new Map();
+  const structureHits = new Map();
   const libs = new Set();
 
   const record = (map, name, at, shape) => {
@@ -333,7 +384,7 @@ function evidenceFor(slug) {
      file the walk happened to open. A declaration says more than an import:
      `from './hqc'` proves a module is used, `function hqcDecode(` shows the work
      being done, and the anchor is there to be read by a person. */
-  const RANK = { decl: 4, call: 3, import: 2, path: 1 };
+  const RANK = { decl: 5, call: 4, protocol: 3, import: 2, path: 1 };
   const keepBest = (map, name, at, shape) => {
     const have = map.get(name);
     if (!have || RANK[shape] > RANK[have.shape]) map.set(name, { at, shape });
@@ -368,6 +419,14 @@ function evidenceFor(slug) {
         if (shape) keepBest(hits, term.name, `${rel}:${i + 1}`, shape);
         else if (!hits.has(term.name)) record(mentions, term.name, `${rel}:${i + 1}`, 'mention');
       }
+      for (const term of PROTOCOL_TERMS) {
+        for (const hit of structuresNamed(codeLines[i], term)) {
+          if (!structureHits.has(term.name)) structureHits.set(term.name, { seen: new Set(), prefixes: [], at: `${rel}:${i + 1}` });
+          const h = structureHits.get(term.name);
+          h.seen.add(hit.structure);
+          h.prefixes.push(hit.prefix);
+        }
+      }
       if (pathTerms.length && DECLARES.test(codeLines[i])) {
         for (const term of pathTerms) keepBest(hits, term.name, `${rel}:${i + 1}`, 'path');
       }
@@ -395,6 +454,27 @@ function evidenceFor(slug) {
         if (atk.re.test(line)) record(attackHits, atk.name, `${rel}:${i + 1}`, 'prose');
       }
     }
+  }
+
+  /* TWO distinct message types of the same protocol, not one. A single borrowed
+     identifier proves nothing: crypto-lab-ssh-handshake declares `ServerHello`
+     for SSH's own exchange and crypto-lab-pake-gate calls SRP-6a's first message
+     `srpClientHello`. Neither implements TLS, and both matched on one name.
+     Two of a protocol's own messages co-occurring is the evidence. */
+  for (const [name, v] of structureHits) {
+    if (v.seen.size < 2) continue;
+    /* A foreign prefix DOMINATING the occurrences means the lab renamed another
+       protocol's messages after this one. crypto-lab-pake-gate calls SRP-6a's
+       two messages `srpClientHello` and `srpServerHello` and then holds one in a
+       bare `clientHello` local — four occurrences prefixed `srp` and one not, so
+       "all of them share a prefix" was not enough and "most of them do" is.
+       Dominance rather than unanimity, because the local variable is downstream
+       of the naming, not independent evidence of it. */
+    const tally = new Map();
+    for (const pre of v.prefixes) tally.set(pre, (tally.get(pre) || 0) + 1);
+    const [topPrefix, topCount] = [...tally].sort((a, b) => b[1] - a[1])[0];
+    if (topPrefix !== '' && topCount * 2 >= v.prefixes.length) continue;
+    keepBest(hits, name, v.at, 'protocol');
   }
 
   const impl = [...hits.entries()].map(([name, v]) => ({ name, at: v.at, shape: v.shape }))
@@ -525,8 +605,15 @@ function verifyAnchors(all) {
          anchors stale — a verifier stricter than the deriver, which reports
          rot that is not there and teaches people to ignore it. */
       const pathRx = term.pathRe || term.re;
+      /* The line, the path, OR one of the protocol's own message structures -
+         the three ways the deriver can establish a term. A protocol anchor
+         points at `export interface ClientHello`, which does not contain the
+         string "TLS 1.3" and never will. This is the second time a verifier has
+         been written stricter than the deriver that fed it; both times the
+         symptom was freshly written anchors reported as rot. */
       const named = term.re.test(line) || term.re.test(camelSplit(line))
-        || pathRx.test(file) || pathRx.test(camelSplit(file));
+        || pathRx.test(file) || pathRx.test(camelSplit(file))
+        || structuresNamed(line, term).length > 0;
       if (!named) bad.push({ slug: c.slug, item, why: `neither line ${lineNo} nor the path names it` });
     }
   }

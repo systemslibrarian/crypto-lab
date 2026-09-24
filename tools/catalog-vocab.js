@@ -162,15 +162,15 @@ const ALGORITHMS = [
   { name: 'TFHE', kind: 'algorithm', family: 'FHE', re: /\btfhe\b/i, std: null },
 
   // --- protocols and deployed systems ---
-  { name: 'TLS 1.3', kind: 'algorithm', family: 'protocol', re: /tls[-_ ]?1\.3/i, std: 'IETF:RFC 8446' },
-  { name: 'Noise protocol', kind: 'algorithm', family: 'protocol', re: /noise[-_ ]?(?:protocol|xx|ik|nk|handshake)/i, std: null },
+  { name: 'TLS 1.3', kind: 'algorithm', family: 'protocol', re: /tls[-_ ]?1\.3/i, structures: ['ClientHello', 'ServerHello', 'EncryptedExtensions', 'HelloRetryRequest', 'CertificateVerify', 'NewSessionTicket'], std: 'IETF:RFC 8446' },
+  { name: 'Noise protocol', kind: 'algorithm', family: 'protocol', re: /noise[-_ ]?(?:protocol|xx|ik|nk|handshake)/i, structures: ['MixHash', 'MixKey'], std: null },
   { name: 'X3DH', kind: 'algorithm', family: 'protocol', re: /x3dh/i, std: null },
   { name: 'PQXDH', kind: 'algorithm', family: 'protocol', re: /pqxdh/i, std: null },
   { name: 'Double Ratchet', kind: 'algorithm', family: 'protocol', re: /double[-_ ]?ratchet/i, std: null },
-  { name: 'MLS', kind: 'algorithm', family: 'protocol', re: /\bmls\b(?![-_ ]?(?:results?|list))/i, std: 'IETF:RFC 9420' },
-  { name: 'Kerberos', kind: 'algorithm', family: 'protocol', re: /kerberos/i, std: 'IETF:RFC 4120' },
-  { name: 'WebAuthn', kind: 'algorithm', family: 'protocol', re: /webauthn/i, std: 'W3C:WebAuthn Level 3' },
-  { name: 'OPAQUE', kind: 'algorithm', family: 'PAKE', re: /\bopaque\b/i, std: 'IETF:draft-irtf-cfrg-opaque' },
+  { name: 'MLS', kind: 'algorithm', family: 'protocol', re: /\bmls\b(?![-_ ]?(?:results?|list))/i, structures: ['KeyPackage', 'TreeKEM', 'RatchetTree'], std: 'IETF:RFC 9420' },
+  { name: 'Kerberos', kind: 'algorithm', family: 'protocol', re: /kerberos/i, structures: ['AsReq', 'AsRep', 'TgsReq', 'TgsRep', 'ApReq'], std: 'IETF:RFC 4120' },
+  { name: 'WebAuthn', kind: 'algorithm', family: 'protocol', re: /webauthn/i, structures: ['AttestationObject', 'AuthenticatorData', 'ClientDataJson'], std: 'W3C:WebAuthn Level 3' },
+  { name: 'OPAQUE', kind: 'algorithm', family: 'PAKE', re: /\bopaque\b/i, structures: ['RegistrationRequest', 'RegistrationResponse', 'CredentialResponse'], std: 'IETF:draft-irtf-cfrg-opaque' },
   { name: 'SRP', kind: 'algorithm', family: 'PAKE', re: /\bsrp\b/i, std: 'IETF:RFC 2945' },
   { name: 'SPAKE2', kind: 'algorithm', family: 'PAKE', re: /spake2/i, std: 'IETF:RFC 9382' },
   { name: 'OPRF', kind: 'algorithm', family: 'oblivious PRF', re: /\boprf\b|voprf/i, std: 'IETF:RFC 9497' },
@@ -179,7 +179,7 @@ const ALGORITHMS = [
   { name: 'HOTP', kind: 'algorithm', family: 'one-time password', re: /\bhotp\b/i, std: 'IETF:RFC 4226' },
   { name: 'One-time pad', kind: 'algorithm', family: 'cipher', re: /one[-_ ]?time[-_ ]?pad|\bvernam\b/i, pathRe: /(^|\/)(?:vernam|one-?time-?pad)(?:[-_./]|$)|(^|\/)otp(?:[-_./]|$)(?![\s\S]*[ht]otp)/i, std: null },
   { name: 'BB84', kind: 'algorithm', family: 'QKD', re: /bb84/i, std: null },
-  { name: 'E91', kind: 'algorithm', family: 'QKD', re: /\be91\b|ekert/i, std: null },
+  { name: 'E91', kind: 'algorithm', family: 'QKD', re: /\be91\b|ekert/i, structures: ['Chsh', 'BellTest'], std: null },
   { name: "Shor's algorithm", kind: 'algorithm', family: 'quantum algorithm', re: /\bshor(?:'s)?\b/i, std: null },
   { name: "Grover's algorithm", kind: 'algorithm', family: 'quantum algorithm', re: /\bgrover(?:'s)?\b/i, std: null },
 
@@ -222,6 +222,27 @@ const ALGORITHMS = [
   { name: 'FRI', kind: 'algorithm', family: 'proof system', re: /\bfri\b(?![-_ ]?(?:day|end))/i, std: null },
   { name: 'Private information retrieval', kind: 'algorithm', family: 'PIR', re: /\bpir\b|private[-_ ]?information[-_ ]?retrieval/i, std: null },
   { name: 'CGL hash', kind: 'algorithm', family: 'isogeny', re: /\bcgl\b/i, std: null },
+
+  // --- closing the vocabulary miss class, found by `catalog-evidence.js gaps`
+  //     and by the ground-truth fixture's outOfVocabulary lists ---
+  { name: 'AEGIS-256', kind: 'algorithm', family: 'AEAD', re: /\baegis[-_ ]?(?:128|256)?\b/i, std: 'IETF:draft-irtf-cfrg-aegis-aead' },
+  { name: 'HPKE', kind: 'algorithm', family: 'hybrid public-key encryption', re: /\bhpke\b/i, std: 'IETF:RFC 9180' },
+  { name: 'DHKEM', kind: 'algorithm', family: 'KEM', re: /\bdhkem\b/i, std: 'IETF:RFC 9180' },
+  { name: 'J-PAKE', kind: 'algorithm', family: 'PAKE', re: /\bj[-_ ]?pake\b/i, std: 'IETF:RFC 8236' },
+  { name: 'CPace', kind: 'algorithm', family: 'PAKE', re: /\bcpace\b/i, std: 'IETF:RFC 9383' },
+  { name: 'Dragonfly', kind: 'algorithm', family: 'PAKE', re: /\bdragonfly\b|\bsae\b/i, std: 'IETF:RFC 7664' },
+  { name: 'Boneh-Franklin IBE', kind: 'algorithm', family: 'identity-based encryption', re: /boneh[-_ ]?franklin|basic[-_ ]?ident|\bibe\b/i, std: 'IETF:RFC 5091' },
+  { name: 'Pairing', kind: 'algorithm', family: 'pairing', re: /\b(?:weil|tate|ate)[-_ ]?pairing|\bpairing\b/i, std: null },
+  { name: 'Fujisaki-Okamoto transform', kind: 'algorithm', family: 'KEM transform', re: /fujisaki|\bfo[-_ ]?transform\b/i, std: null },
+  { name: 'GHASH', kind: 'algorithm', family: 'MAC', re: /\bghash\b/i, std: 'NIST:SP 800-38D' },
+  { name: 'Hash-to-curve', kind: 'algorithm', family: 'elliptic curve', re: /hash[-_ ]?to[-_ ]?curve|hashto(?:curve|point)/i, std: 'IETF:RFC 9380' },
+  { name: 'HMAC-DRBG', kind: 'algorithm', family: 'DRBG', re: /hmac[-_ ]?drbg/i, std: 'NIST:SP 800-90A' },
+  { name: 'CTR-DRBG', kind: 'algorithm', family: 'DRBG', re: /ctr[-_ ]?drbg/i, std: 'NIST:SP 800-90A' },
+  { name: 'Encrypted Client Hello', kind: 'algorithm', family: 'protocol', re: /encrypted[-_ ]?client[-_ ]?hello|\bech\b/i, structures: ['EchConfig', 'ClientHelloInner', 'ClientHelloOuter', 'EchOuterExtensions'], std: 'IETF:draft-ietf-tls-esni' },
+  { name: 'Babai rounding', kind: 'algorithm', family: 'lattice algorithm', re: /babai/i, std: null },
+  { name: 'Format-transforming encryption', kind: 'algorithm', family: 'steganography', re: /format[-_ ]?transforming|\bfte\b/i, std: null },
+  { name: 'Repetition code', kind: 'algorithm', family: 'error-correcting code', re: /repetition[-_ ]?code/i, std: null },
+  { name: 'KZG commitment', kind: 'algorithm', family: 'polynomial commitment', re: /\bkzg\b/i, std: null },
 ];
 
 
@@ -268,7 +289,16 @@ const IMPLEMENTATION_SHAPES = [
   { name: 'hand-rolled', re: null }, // assigned when algorithm evidence exists but no library
 ];
 
-/* `alias` names the SAME algorithm under its other name. Kyber became ML-KEM in
+/* `structures` closes the protocol-identity miss class, and it is deliberately
+   NOT a slug or title rule. A lab that IMPLEMENTS a protocol declares that
+   protocol's own message types - `buildClientHello`, `decodeClientHelloInner` -
+   while a lab that ATTACKS or MODELS one declares `runAttack` and `llr`. Keying
+   on the slug would be the same mistake the four fixed cards made from the other
+   side: crypto-lab-hqc-timing has "hqc" in its name and implements no HQC, so a
+   slug rule would manufacture exactly the false claim that was just removed.
+   `ClientHello` is unmistakably TLS in a way that "tls" in a repo name is not.
+
+   `alias` names the SAME algorithm under its other name. Kyber became ML-KEM in
    FIPS 203 and Dilithium became ML-DSA in FIPS 204; a lab implementing one is a
    lab implementing the other, and a card chipping "CRYSTALS-Dilithium" beside an
    `src/crypto/mldsa.ts` is right rather than wrong. Without this the rename shows

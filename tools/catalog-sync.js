@@ -101,6 +101,7 @@ function cards() {
       unknown: impl === 'UNKNOWN' || impl === '',
       notScanned: impl === 'NOT-SCANNED',
       unscanned: list(attr('unscanned')),
+      commentOnly: split(list(attr('comment-only')), 'comment-only', slug),
       implements: impl === 'UNKNOWN' || impl === 'NOT-SCANNED' || impl === '' ? [] : split(list(impl), 'implements', slug),
       references: list(attr('references')),
       attacks: split(list(attr('attacks')), 'attacks', slug),
@@ -386,7 +387,17 @@ function main() {
      *   NOT-SCANNED — exempt. This tool has no finding about a lab whose source
      *   it cannot read, and a checker with no finding must not accuse. Same rule
      *   as protection-census: "could not look" is not "nothing there", and it is
-     *   certainly not "you are wrong". */
+     *   certainly not "you are wrong".
+     *
+     *   COMMENT-ONLY — exempt, on exactly the same grounds. The algorithm's name
+     *   is in this lab's own CODE FILES and never in anything that executes:
+     *   crypto-lab-commit-gate does P-256 arithmetic and names the curve in a
+     *   comment beside it. The scanner can see the code is ABOUT the algorithm
+     *   and cannot tell whether it computes it, which is no finding rather than
+     *   a negative one. Note the boundary: a name in the README or a UI string
+     *   does NOT exempt, because that is a lab talking about an algorithm rather
+     *   than code annotated with it. That boundary is what keeps the four fixed
+     *   cards flagged. */
     const MARKED = /^(?:vs\.?|versus|against|attacks?|breaks?|targets?)\b|\b(?:target|toy|modelled|modeled|simulated|stand-?in|abstract|educational|only)\b/i;
     const violations = [];
     const clearedByProse = [];
@@ -414,7 +425,9 @@ function main() {
            ChaCha20-Poly1305 and keeps its stream cipher in Rust. Reporting that
            as a card error is the accusation-without-a-finding this whole file
            is built to avoid. */
-        if (c.unscanned.length) { cannotJudge.push({ slug: c.slug, algorithm: t.name, unscanned: c.unscanned }); continue; }
+        if (c.unscanned.length) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `partially unread (${c.unscanned.join(', ')})` }); continue; }
+        const inert = c.commentOnly.find((x) => x.name === t.name);
+        if (inert) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `named only in non-executable code at ${inert.at}` }); continue; }
         if (inChip && !MARKED.test(inChip)) {
           violations.push({ slug: c.slug, title: c.title, algorithm: t.name, chip: inChip });
         } else if (inChip) {
@@ -430,7 +443,9 @@ function main() {
     console.log('      NOT-SCANNED labs are exempt: no finding, no accusation.\n');
     console.log(`Cleared by the rule: ${clearedByProse.length} namings (prose, or an already-marked chip).`);
     console.log(`Violations: ${violations.length} chips across ${labs.size} labs.`);
-    console.log(`Cannot judge: ${cannotJudge.length} — the lab is partially unread, so the algorithm may be in the part not opened.\n`);
+    console.log(`Cannot judge: ${cannotJudge.length} — no finding, so no accusation:`);
+    for (const c of cannotJudge) console.log(`    ${c.slug.replace('crypto-lab-', '').padEnd(24)} ${c.algorithm.padEnd(22)} ${c.why}`);
+    console.log('');
     const byLab = new Map();
     for (const v of violations) {
       if (!byLab.has(v.slug)) byLab.set(v.slug, []);

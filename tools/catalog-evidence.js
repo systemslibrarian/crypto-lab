@@ -149,7 +149,14 @@ function regexCanStartHere(emitted) {
 function lex(src) {
   let strings = '';
   let code = '';
-  const push = (inStrings, inCode) => { strings += inStrings; code += inCode; };
+  /* The third view: COMMENT BODIES ONLY. Not string contents - that was tried
+     and it swallowed the rule whole, taking violations from 28 to 1, because
+     these labs build their UI out of template literals full of prose naming
+     algorithms. A name in a UI string is a lab TALKING about an algorithm; a
+     name in a comment is code ANNOTATED with it, sitting beside the arithmetic
+     it describes. Only the second is evidence that the scanner cannot tell. */
+  let inert = '';
+  const push = (inStrings, inCode, inInert) => { strings += inStrings; code += inCode; inert += (inInert === undefined ? (inCode === '\n' ? '\n' : ' '.repeat(inCode.length)) : inInert); };
   let i = 0;
   let state = 'code';
   let quote = '';
@@ -178,7 +185,7 @@ function lex(src) {
     }
     if (state === 'line') {
       if (c === '\n') { state = 'code'; push('\n', '\n'); i += 1; continue; }
-      push(' ', ' '); i += 1; continue;
+      push(' ', ' ', c); i += 1; continue;
     }
     if (state === 'regex') {
       if (c === '\\') { push('  ', '  '); i += 2; continue; }
@@ -190,16 +197,16 @@ function lex(src) {
     }
     if (state === 'block') {
       if (c === '*' && n === '/') { state = 'code'; push('  ', '  '); i += 2; continue; }
-      push(c === '\n' ? '\n' : ' ', c === '\n' ? '\n' : ' '); i += 1; continue;
+      push(c === '\n' ? '\n' : ' ', c === '\n' ? '\n' : ' ', c); i += 1; continue;
     }
     // inside a string literal
     if (c === '\\') { push(src.slice(i, i + 2), '  '); i += 2; continue; }
     if (quote === '`' && c === '$' && n === '{') { stack.push({ quote, depth: 0 }); state = 'code'; push('${', '${'); i += 2; continue; }
     if (c === quote) { state = 'code'; push(c, c); i += 1; continue; }
     if (c === '\n') { push('\n', '\n'); i += 1; continue; }
-    push(c, ' '); i += 1;
+    push(c, ' ', ' '); i += 1;
   }
-  return { strings, code };
+  return { strings, code, inert };
 }
 
 /** Inline <script> bodies are code; the rest of an HTML file is prose. */
@@ -368,13 +375,14 @@ function labFiles(dir) {
 function evidenceFor(slug) {
   const dir = path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
-    return { slug, cloned: false, implements: [], references: [], attacks: [], standards: [], implementation: 'UNKNOWN', unscanned: [], notScanned: false };
+    return { slug, cloned: false, implements: [], references: [], attacks: [], standards: [], implementation: 'UNKNOWN', unscanned: [], notScanned: false, commentOnly: [] };
   }
   const { code, prose, unread } = labFiles(dir);
   const hits = new Map();   // term name -> {shape, at}
   const mentions = new Map();
   const attackHits = new Map();
   const structureHits = new Map();
+  const commentOnly = new Map();
   const libs = new Set();
 
   const record = (map, name, at, shape) => {
@@ -401,6 +409,7 @@ function evidenceFor(slug) {
     if (/\.wasm\b|WebAssembly\./.test(src)) libs.add('WASM');
     const lines = src.split('\n');
     const codeLines = lexed.code.split('\n');
+    const inertLines = lexed.inert.split('\n');
     /* A file's PATH is evidence about every declaration in it. src/misty1/fo.ts
        declares `misty1Fo`, but src/ciphers/aria.ts declares `expandKey` — the
        algorithm is named by the directory, not by the identifier, and reading
@@ -418,6 +427,15 @@ function evidenceFor(slug) {
         const shape = shapeOf(line, codeLines[i], term);
         if (shape) keepBest(hits, term.name, `${rel}:${i + 1}`, shape);
         else if (!hits.has(term.name)) record(mentions, term.name, `${rel}:${i + 1}`, 'mention');
+      }
+      const inertLine = inertLines[i] || '';
+      if (inertLine.trim()) {
+        for (const term of ALGORITHMS) {
+          if (commentOnly.has(term.name)) continue;
+          if (term.re.test(inertLine) || term.re.test(camelSplit(inertLine))) {
+            commentOnly.set(term.name, `${rel}:${i + 1}`);
+          }
+        }
       }
       for (const term of PROTOCOL_TERMS) {
         for (const hit of structuresNamed(codeLines[i], term)) {
@@ -477,6 +495,14 @@ function evidenceFor(slug) {
     keepBest(hits, name, v.at, 'protocol');
   }
 
+  /* A name is comment-only when it appears in this lab's own CODE FILES and
+     never in anything that executes. It is the scanner saying "the code here is
+     about this algorithm and I cannot tell whether it computes it" - which is a
+     different fact from UNKNOWN and from a README mention, and is the state the
+     chip rule must not accuse. */
+  const inertOnly = [...commentOnly.entries()].filter(([n]) => !hits.has(n))
+    .map(([name, at]) => ({ name, at })).sort((a, b) => a.name.localeCompare(b.name));
+
   const impl = [...hits.entries()].map(([name, v]) => ({ name, at: v.at, shape: v.shape }))
     .sort((a, b) => a.name.localeCompare(b.name));
   const refs = [...mentions.keys()].filter((n) => !hits.has(n)).sort();
@@ -514,6 +540,7 @@ function evidenceFor(slug) {
     implementation,
     unscanned: unreadable,
     notScanned: impl.length === 0 && unreadable.length > 0,
+    commentOnly: inertOnly,
   };
 }
 
@@ -545,6 +572,7 @@ function fieldsFor(ev) {
   return {
     implements: ev.cloned ? implemented : 'UNKNOWN',
     unscanned: (ev.unscanned || []).join(' | '),
+    commentOnly: encode(ev.commentOnly || []),
     references: ev.references.length ? ev.references.join(' | ') : '',
     attacks: ev.attacks.length ? encode(ev.attacks) : '',
     standards: ev.standards.length ? ev.standards.join(' | ') : '',
@@ -564,13 +592,14 @@ function writeCards(all) {
     const parts = [
       `data-implements="${f.implements}"`,
       f.unscanned ? `data-unscanned="${f.unscanned}"` : null,
+      f.commentOnly ? `data-comment-only="${f.commentOnly}"` : null,
       f.references ? `data-references="${f.references}"` : null,
       f.attacks ? `data-attacks="${f.attacks}"` : null,
       f.standards ? `data-standards="${f.standards}"` : null,
       `data-implementation="${f.implementation}"`,
     ].filter(Boolean);
     const anchorHref = `href="https://systemslibrarian.github.io/${c.slug}/"`;
-    const stripped = c.block.replace(/\sdata-(?:implements|unscanned|references|attacks|standards|implementation)="[^"]*"/g, '');
+    const stripped = c.block.replace(/\sdata-(?:implements|unscanned|comment-only|references|attacks|standards|implementation)="[^"]*"/g, '');
     const next = stripped.replace(anchorHref, `${anchorHref}\n            ${parts.join('\n            ')}`);
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }

@@ -193,10 +193,14 @@ const ALGORITHMS = [
   { name: 'Rail fence cipher', kind: 'algorithm', family: 'historical cipher', re: /rail[-_ ]?fence/i, std: null },
   { name: 'Substitution cipher', kind: 'algorithm', family: 'historical cipher', re: /substitution[-_ ]?cipher/i, std: null },
 
+  /* SM2/SM3/SM4 are two letters and a digit, which is also what a local variable
+     in a chart looks like. `const sm2 = 1 + (rawM2 / maxRaw) * 3.2` in
+     crypto-lab-commit-gate's visualisation was read as the Chinese signature
+     standard. They need crypto context or the file path, never the bare token. */
   // --- national and regional standards ---
-  { name: 'SM2', kind: 'algorithm', family: 'public key', re: /\bsm2\b/i, std: 'ISO:ISO/IEC 14888-3 / GB/T 32918' },
-  { name: 'SM3', kind: 'algorithm', family: 'hash', re: /\bsm3\b/i, std: 'ISO:ISO/IEC 10118-3 / GB/T 32905' },
-  { name: 'SM4', kind: 'algorithm', family: 'block cipher', re: /\bsm4\b/i, std: 'ISO:ISO/IEC 18033-3 / GB/T 32907' },
+  { name: 'SM2', kind: 'algorithm', family: 'public key', re: /sm2[-_ ]?(?:sign|verify|encrypt|decrypt|keypair|curve|point|cipher)|(?:sign|verify|encrypt|decrypt)[-_ ]?sm2\b|\bsm-?crypto\b/i, pathRe: /(^|\/)sm2(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 14888-3 / GB/T 32918' },
+  { name: 'SM3', kind: 'algorithm', family: 'hash', re: /sm3[-_ ]?(?:hash|digest|compress|init|update|block)|\bsm-?crypto\b/i, pathRe: /(^|\/)sm3(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 10118-3 / GB/T 32905' },
+  { name: 'SM4', kind: 'algorithm', family: 'block cipher', re: /sm4[-_ ]?(?:encrypt|decrypt|cipher|round|sbox|key|trace|block)|(?:encrypt|decrypt)[-_ ]?sm4\b/i, pathRe: /(^|\/)sm4(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 18033-3 / GB/T 32907' },
   { name: 'MISTY1', kind: 'algorithm', family: 'block cipher', re: /\bmisty1?\b/i, std: 'ISO:ISO/IEC 18033-3' },
   { name: 'KASUMI', kind: 'algorithm', family: 'block cipher', re: /\bkasumi\b/i, std: 'ETSI:SAGE KASUMI' },
   { name: 'Camellia', kind: 'algorithm', family: 'block cipher', re: /\bcamellia\b/i, std: 'IETF:RFC 3713' },

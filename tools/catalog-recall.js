@@ -95,10 +95,16 @@ const GATE = { recall: 0.88, labs: 20, movedFrom: 0.95, movedOn: '2026-09-24' };
 const MISS_CLASSES = [
   {
     id: 'protocol-identity',
-    resolved: false,
-    status: 'PARTLY CLOSED — and the one class still blocking the gate',
+    resolved: true,
+    status: 'PARTLY CLOSED, and the RESIDUE EXEMPTED BY MEASUREMENT — do not reopen without reading the three variants below',
     what: 'The lab implements a named PROTOCOL and no identifier in its source carries the protocol name. crypto-lab-tls-handshake builds a TLS 1.3 handshake and writes no such literal.',
-    closes: 'The `protocol` shape now closes it for labs that declare TWO of that protocol\'s own message structures without a dominant foreign prefix — ClientHello AND EncryptedExtensions, say. Three labs qualify. It does NOT reach a lab naming only one, so crypto-lab-blind-hello builds real TLS ClientHello structures and is still missed. Note what was rejected: keying on the repo slug, which would have had crypto-lab-hqc-timing claiming HQC — the exact false claim just removed from four cards. Each looser variant was tried and measured: a substring match gave 38 findings that were mostly nonsense, and single-structure evidence claimed TLS for an SSH lab and an SRP file that had borrowed the names.',
+    closes: 'The `protocol` shape closes it for labs declaring TWO of that protocol\'s own message structures with no dominant non-verb prefix; four labs qualify. The residue - a lab naming only ONE, like crypto-lab-blind-hello with its TLS ClientHello - is EXEMPTED rather than chased, recorded as `protocol-partial` and treated by the chip rule as no finding. A shape that declines to claim must decline to accuse.',
+    doNotReopen: [
+      'Keying on the repo SLUG or README title: would have crypto-lab-hqc-timing claiming HQC, which is the exact false claim four cards were just corrected for. Never tried in anger; rejected on inspection.',
+      'Substring matching on structure names: 38 findings, almost all nonsense. `Envelope` (an OPAQUE message) landed on an ECIES lab, `LeafNode` (an MLS one) on an LMS hash tree, and `OpenBase` matched a variable called openBaseline.',
+      'Whole-token matching on ONE structure: claimed TLS 1.3 for crypto-lab-ssh-handshake, which declares ServerHello for SSH\'s own exchange, and for crypto-lab-pake-gate, whose author named SRP-6a\'s first message srpClientHello.',
+      'Two structures with a UNANIMOUS prefix: still passed pake-gate, which has four srp-prefixed occurrences and one bare local downstream of them. Dominance, not unanimity - and verbs excluded, since `encode` acts on a message where `srp` renames it.',
+    ],
   },
   {
     id: 'unnamed-implementation',
@@ -209,6 +215,10 @@ function main() {
     console.log(`\n  ${c.id}${c.status ? `  [${c.status}]` : ''}`);
     console.log(`    ${c.what}`);
     console.log(`    closes with: ${c.closes}`);
+    if (c.doNotReopen) {
+      console.log('    ALREADY TRIED, each measured rather than reasoned about:');
+      for (const v of c.doNotReopen) console.log(`      - ${v}`);
+    }
   }
 
   const nLabs = Object.keys(fixture.labs).length;

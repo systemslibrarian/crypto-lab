@@ -102,6 +102,7 @@ function cards() {
       notScanned: impl === 'NOT-SCANNED',
       unscanned: list(attr('unscanned')),
       commentOnly: split(list(attr('comment-only')), 'comment-only', slug),
+      protocolPartial: split(list(attr('protocol-partial')), 'protocol-partial', slug),
       implements: impl === 'UNKNOWN' || impl === 'NOT-SCANNED' || impl === '' ? [] : split(list(impl), 'implements', slug),
       references: list(attr('references')),
       attacks: split(list(attr('attacks')), 'attacks', slug),
@@ -389,6 +390,13 @@ function main() {
      *   as protection-census: "could not look" is not "nothing there", and it is
      *   certainly not "you are wrong".
      *
+     *   PROTOCOL-PARTIAL — exempt, on the same grounds. The lab names ONE of a
+     *   protocol's own message structures, below the two the `protocol` shape
+     *   requires before it will claim identity. crypto-lab-blind-hello builds
+     *   real TLS ClientHello structures and names no second TLS message. The
+     *   shape declines to claim there; a shape that declines to claim must also
+     *   decline to accuse, or the scanner's caution becomes the card's fault.
+     *
      *   COMMENT-ONLY — exempt, on exactly the same grounds. The algorithm's name
      *   is in this lab's own CODE FILES and never in anything that executes:
      *   crypto-lab-commit-gate does P-256 arithmetic and names the curve in a
@@ -428,6 +436,8 @@ function main() {
         if (c.unscanned.length) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `partially unread (${c.unscanned.join(', ')})` }); continue; }
         const inert = c.commentOnly.find((x) => x.name === t.name);
         if (inert) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `named only in non-executable code at ${inert.at}` }); continue; }
+        const partial = c.protocolPartial.find((x) => x.name === t.name);
+        if (partial) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `partial protocol evidence at ${partial.at}` }); continue; }
         if (inChip && !MARKED.test(inChip)) {
           violations.push({ slug: c.slug, title: c.title, algorithm: t.name, chip: inChip });
         } else if (inChip) {

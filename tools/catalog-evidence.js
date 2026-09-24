@@ -260,6 +260,11 @@ function camelSplit(text) {
  * implements none of it. */
 const flatten = (t) => t.toLowerCase().replace(/[^a-z0-9]/g, '');
 
+/* Verbs that act on a structure without renaming it. */
+const VERBS = new Set(['build', 'make', 'create', 'new', 'encode', 'decode', 'parse',
+  'read', 'write', 'serialize', 'serialise', 'deserialize', 'deserialise', 'format',
+  'to', 'from', 'get', 'set', 'is', 'as', 'the', 'a', 'an', 'raw', 'inner', 'outer']);
+
 function structuresNamed(code, term) {
   if (!term.structures) return [];
   const ids = [
@@ -286,7 +291,13 @@ function structuresNamed(code, term) {
          messages `srpClientHello` and `srpServerHello`: two distinct TLS
          structures by name, neither of them TLS. `build` in `buildClientHello`
          is a verb and varies; `srp` is another protocol and does not. */
-      out.push({ structure: st, prefix: a.slice(0, at).join('-') });
+      /* Leading VERBS are stripped before the prefix is recorded. `encode` in
+         `encodeClientHello` is an action performed on the protocol's own
+         message; `srp` in `srpClientHello` is a different protocol wearing its
+         name. Counting both as prefixes cost crypto-lab-downgrade-wire a true
+         finding, because every one of its mentions is an encode or a decode. */
+      const pre = a.slice(0, at).filter((t) => !VERBS.has(t)).join('-');
+      out.push({ structure: st, prefix: pre });
       break;
     }
   }
@@ -375,7 +386,7 @@ function labFiles(dir) {
 function evidenceFor(slug) {
   const dir = path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
-    return { slug, cloned: false, implements: [], references: [], attacks: [], standards: [], implementation: 'UNKNOWN', unscanned: [], notScanned: false, commentOnly: [] };
+    return { slug, cloned: false, implements: [], references: [], attacks: [], standards: [], implementation: 'UNKNOWN', unscanned: [], notScanned: false, commentOnly: [], protocolPartial: [] };
   }
   const { code, prose, unread } = labFiles(dir);
   const hits = new Map();   // term name -> {shape, at}
@@ -479,8 +490,17 @@ function evidenceFor(slug) {
      for SSH's own exchange and crypto-lab-pake-gate calls SRP-6a's first message
      `srpClientHello`. Neither implements TLS, and both matched on one name.
      Two of a protocol's own messages co-occurring is the evidence. */
+  /* Where the protocol shape DECLINES to claim, it records that it declined.
+     Both residues below are real evidence the scanner cannot resolve, and a
+     scanner that will not claim must also not accuse - the same bargain as
+     NOT-SCANNED and comment-only. Without this they were silent, and silence
+     from a checker reads as a negative finding. */
+  const protocolPartial = [];
   for (const [name, v] of structureHits) {
-    if (v.seen.size < 2) continue;
+    if (v.seen.size < 2) {
+      protocolPartial.push({ name, at: v.at, why: `names only ${[...v.seen][0]}` });
+      continue;
+    }
     /* A foreign prefix DOMINATING the occurrences means the lab renamed another
        protocol's messages after this one. crypto-lab-pake-gate calls SRP-6a's
        two messages `srpClientHello` and `srpServerHello` and then holds one in a
@@ -491,7 +511,10 @@ function evidenceFor(slug) {
     const tally = new Map();
     for (const pre of v.prefixes) tally.set(pre, (tally.get(pre) || 0) + 1);
     const [topPrefix, topCount] = [...tally].sort((a, b) => b[1] - a[1])[0];
-    if (topPrefix !== '' && topCount * 2 >= v.prefixes.length) continue;
+    if (topPrefix !== '' && topCount * 2 >= v.prefixes.length) {
+      protocolPartial.push({ name, at: v.at, why: `every mention prefixed "${topPrefix}"` });
+      continue;
+    }
     keepBest(hits, name, v.at, 'protocol');
   }
 
@@ -541,6 +564,7 @@ function evidenceFor(slug) {
     unscanned: unreadable,
     notScanned: impl.length === 0 && unreadable.length > 0,
     commentOnly: inertOnly,
+    protocolPartial: protocolPartial.filter((x) => !hits.has(x.name)).sort((a, b) => a.name.localeCompare(b.name)),
   };
 }
 
@@ -573,6 +597,7 @@ function fieldsFor(ev) {
     implements: ev.cloned ? implemented : 'UNKNOWN',
     unscanned: (ev.unscanned || []).join(' | '),
     commentOnly: encode(ev.commentOnly || []),
+    protocolPartial: encode(ev.protocolPartial || []),
     references: ev.references.length ? ev.references.join(' | ') : '',
     attacks: ev.attacks.length ? encode(ev.attacks) : '',
     standards: ev.standards.length ? ev.standards.join(' | ') : '',
@@ -593,13 +618,14 @@ function writeCards(all) {
       `data-implements="${f.implements}"`,
       f.unscanned ? `data-unscanned="${f.unscanned}"` : null,
       f.commentOnly ? `data-comment-only="${f.commentOnly}"` : null,
+      f.protocolPartial ? `data-protocol-partial="${f.protocolPartial}"` : null,
       f.references ? `data-references="${f.references}"` : null,
       f.attacks ? `data-attacks="${f.attacks}"` : null,
       f.standards ? `data-standards="${f.standards}"` : null,
       `data-implementation="${f.implementation}"`,
     ].filter(Boolean);
     const anchorHref = `href="https://systemslibrarian.github.io/${c.slug}/"`;
-    const stripped = c.block.replace(/\sdata-(?:implements|unscanned|comment-only|references|attacks|standards|implementation)="[^"]*"/g, '');
+    const stripped = c.block.replace(/\sdata-(?:implements|unscanned|comment-only|protocol-partial|references|attacks|standards|implementation)="[^"]*"/g, '');
     const next = stripped.replace(anchorHref, `${anchorHref}\n            ${parts.join('\n            ')}`);
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }

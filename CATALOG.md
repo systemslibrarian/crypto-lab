@@ -360,7 +360,7 @@ A lab in *italics* references the algorithm without implementing it.
 | **Noise protocol** | [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/noise.ts:181` | *Ratchet Wire*, *KDF Chain*, *Poly1305 MAC*, *MLS Group*, *Key Exchange* |
 | **PQXDH** | [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/pqxdh/kdf.ts:6` | *Kyber Vault*, *Hybrid Wire*, *Key Exchange*, *Hybrid Guide*, *Hybrid PQC*, *Lattice Gentle*, *Privacy Pass*, *Order Leak*, *Split Point*, *Proof Tally*, *Fold Gate*, *Hidden Bit* |
 | **Privacy Pass** | [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/main.ts:4` | *Blind Sign*, *Blind Relay*, *Credential Veil*, *Order Leak*, *Split Point*, *Proof Tally*, *Fold Gate*, *Hidden Bit*, *PQXDH Wire* |
-| **TLS 1.3** | [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) `src/handshake.ts:27`<br>[TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/certs.ts:147` | *Quantum Vault KpqC*, *SM2 Forge*, *Shadow Vault*, *Kyber Vault*, *World Ciphers*, *Hybrid Wire*, *Downgrade Wire*, *AES Modes*, *Educational RSA*, *RSA Forge*, *Curve Lens*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Padding Oracle*, *ChaCha20 Stream*, *Ed25519 Forge*, *Hash Zoo*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Curve448*, *Harvest Timeline*, *Hybrid Sign*, *KyberSlash*, *PQ Rotation*, *Scloud+ Vault*, *PQ Families*, *Key Exchange*, *SSH Handshake*, *Hybrid Guide*, *DH MITM*, *Hybrid PQC*, *KEM Trap*, *Blind Hello*, *Protocol Checker*, *Simon's Period*, *Stream Ward*, *Context Ward* |
+| **TLS 1.3** | [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) `src/negotiation/handshake.ts:62`<br>[PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) `src/handshake.ts:27`<br>[TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/certs.ts:147` | *Quantum Vault KpqC*, *SM2 Forge*, *Shadow Vault*, *Kyber Vault*, *World Ciphers*, *Hybrid Wire*, *AES Modes*, *Educational RSA*, *RSA Forge*, *Curve Lens*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Padding Oracle*, *ChaCha20 Stream*, *Ed25519 Forge*, *Hash Zoo*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Curve448*, *Harvest Timeline*, *Hybrid Sign*, *KyberSlash*, *PQ Rotation*, *Scloud+ Vault*, *PQ Families*, *Key Exchange*, *SSH Handshake*, *Hybrid Guide*, *DH MITM*, *Hybrid PQC*, *KEM Trap*, *Blind Hello*, *Protocol Checker*, *Simon's Period*, *Stream Ward*, *Context Ward* |
 | **WebAuthn** | [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) `src/live.ts:300` | *Curve Lens*, *OPAQUE Gate*, *ECDSA Forge*, *Kerberos v5*, *Signed Bytes* |
 | **X3DH** | [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/session-init.ts:89`<br>[X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/x3dh.ts:7`<br>[MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/app.ts:469`<br>[PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/main.ts:17` | *Air Stream*, *KpqC Pair*, *TC26 Pair*, *SM2 Forge*, *Misty Lens*, *Export Grade*, *SPHINCS+ Ledger*, *Curve Lens*, *Noise Pipe*, *Ed25519 Forge*, *OPAQUE Gate*, *Curve448*, *Hybrid Sign*, *Key Exchange*, *SSH Handshake*, *MAYO Seal*, *DH MITM*, *Hybrid PQC*, *Key Mirror*, *Encrochat*, *MuSig Gate*, *Shelf Oracle*, *Feistel Forge*, *Rekey Relay*, *Polynomial Forge*, *DNSSEC Chain*, *Masked Core*, *Sector Vault*, *Attribute Gate*, *Sphinx Mix*, *Attestation Gate*, *GGH Trapdoor*, *Factor Forge*, *Privacy Pass*, *Order Leak*, *Split Point*, *Proof Tally*, *Fold Gate*, *Hidden Bit*, *Sleeve Check* |
 
@@ -497,7 +497,7 @@ disagree about who owns SHA-256.
 | SEED | RFC 4269 | 1 |
 | SPAKE2 | RFC 9382 | 1 |
 | SRP | RFC 2945 | 1 |
-| TLS 1.3 | RFC 8446 | 2 |
+| TLS 1.3 | RFC 8446 | 3 |
 | TOTP | RFC 6238 | 1 |
 | X25519 | RFC 7748 | 20 |
 | X448 | RFC 7748 | 1 |
@@ -634,7 +634,7 @@ may teach the same primitive from different angles — but an overlap **with no 
 difference** is a question nobody has answered, and a visitor choosing between the
 two has nothing to go on.
 
-76 pairs: 7 with a stated difference, **1 examined and found to be duplication**, 68 nobody has looked at.
+78 pairs: 7 with a stated difference, **1 examined and found to be duplication**, 70 nobody has looked at.
 
 A pair marked DUPLICATION is a finding, not a description: someone read both and
 found no difference worth having. It is listed first because it is the only row here
@@ -648,13 +648,13 @@ that asks for a decision.
 | Ratchet Wire / Encrochat | AES, AES-GCM, Diffie-Hellman, Double Ratchet, Ed25519, HKDF, SHA-256, X25519 | ratchet-wire demonstrates the Double Ratchet working as designed; encrochat reconstructs the 2020 Encrochat takedown, where the same construction was never broken and the endpoint was compromised instead |
 | Falcon Seal / HAWK | Babai rounding, Falcon, SHA-256 | **none stated** |
 | Frodo Vault / Scloud+ Vault | FrodoKEM, LWE, ML-KEM | both are unstructured-LWE KEMs: frodo-vault is FrodoKEM, the conservative plain-LWE design that avoids algebraic structure outright; scloud-vault is Scloud+, which keeps unstructured LWE but adds ternary secrets and Barnes-Wall lattice coding for efficiency |
-| PQ TLS Handshake / TLS Handshake | Ed25519, HKDF, HMAC, SHA-256, TLS 1.3, X25519 | **none stated** |
 | HPKE Envelope / Blind Hello | DHKEM, HPKE, X25519 | **none stated** |
 | STARK Tower / Polynomial Forge | FRI, Merkle tree, SHA-256 | stark-tower runs a whole STARK, prover and verifier, catching a cheating prover through a FRI low-degree test; polynomial-forge opens the commitment layer underneath and compares KZG, IPA and FRI as schemes in their own right |
 | Format Ward / Regex Veil — FTE | AES, AES-CBC, FF1 | format-ward PRESERVES an existing format with FF1 and FF3-1, so ciphertext keeps the length and alphabet of the input; fte TRANSFORMS ciphertext into whatever language a regular expression defines, by ranking a DFA slice |
 | Blind Hello / Blind Relay | DHKEM, HPKE | **none stated** |
 | RSA Forge / Hidden Bit | AES, AES-GCM, RSA, RSA-OAEP, RSA-PSS, SHA-256 | rsa-forge is about RSA itself, its padding schemes and the attacks on them; hidden-bit is about the security DEFINITIONS, running IND-CPA, IND-CCA2 and EUF-CMA experiments in which RSA and AES are merely the schemes under test |
 | Beacon Lock / Attribute Gate | AES, AES-GCM, BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256 | **none stated** |
+| Downgrade Wire / PQ TLS Handshake | Ed25519, HKDF, HMAC, ML-KEM, SHA-256, TLS 1.3, X25519 | **none stated** |
 | VSS Gate / Reshare Circle | Feldman VSS, Pedersen commitment, Shamir secret sharing | vss-gate adds VERIFIABILITY to Shamir sharing at deal time, through Feldman and Pedersen commitments; reshare-circle leaves the dealing alone and refreshes shares over time, using HJKY proactive sharing against perpetual leakage |
 | Ciphertext Mirror / Lattice Builder | Keccak, ML-KEM, NTT, SHA-3, SHAKE | **none stated** |
 | Nonce Guard / Order Leak | AES, AES-GCM, AES-SIV | **none stated** |
@@ -682,6 +682,8 @@ that asks for a decision.
 | DKG Gate / Reshare Circle | Feldman VSS, Pedersen commitment | **none stated** |
 | VSS Gate / DKG Gate | Feldman VSS, Pedersen commitment | **none stated** |
 | Beacon Lock / Rekey Relay | AES, AES-GCM, BLS signatures, BLS12-381, Pairing, SHA-256 | **none stated** |
+| Downgrade Wire / TLS Handshake | Ed25519, HKDF, HMAC, SHA-256, TLS 1.3, X25519 | **none stated** |
+| PQ TLS Handshake / TLS Handshake | Ed25519, HKDF, HMAC, SHA-256, TLS 1.3, X25519 | **none stated** |
 | MLS Group / HPKE Envelope | AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, HPKE, SHA-256, X25519 | **none stated** |
 | Ratchet Wire / X3DH Wire | AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-256, X25519, X3DH | **none stated** |
 | Ratchet Wire / MLS Group | AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-256, X25519, X3DH | **none stated** |
@@ -1231,8 +1233,8 @@ The PKI that has to sign statements about names which do not exist. Validate a r
 
 Strip X25519MLKEM768 from a TLS 1.3 ClientHello and watch two PQ-capable endpoints agree on classical X25519 — then turn on the Finished MAC and watch transcript binding abort the same strip.
 
-- **Implements:** Ed25519 `src/kex/x25519.ts:11`, HKDF `src/negotiation/transcript.ts:18`, HMAC `src/negotiation/transcript.ts:19`, ML-KEM `src/kex/mlkem768.ts:21`, SHA-256 `src/negotiation/transcript.ts:60`, X25519 `src/kex/x25519.ts:27`
-- **References:** Diffie-Hellman, ECDH, P-256, Pairing, RSA, TLS 1.3
+- **Implements:** Ed25519 `src/kex/x25519.ts:11`, HKDF `src/negotiation/transcript.ts:18`, HMAC `src/negotiation/transcript.ts:19`, ML-KEM `src/kex/mlkem768.ts:21`, SHA-256 `src/negotiation/transcript.ts:60`, TLS 1.3 `src/negotiation/handshake.ts:62`, X25519 `src/kex/x25519.ts:27`
+- **References:** Diffie-Hellman, ECDH, P-256, Pairing, RSA
 - **Attacks shown:** Discrete log `src/negotiation/handshake.ts:140`, Downgrade attack `src/ui/panels.ts:433`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble

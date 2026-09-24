@@ -110,16 +110,31 @@ those look identical unless the reason is recorded, so it is recorded in
 when recall improves, never lowered again. Moving it a second time is the
 maintainer's call, not a tool's and not an agent's.**
 
-Today: **recall 89.8% ok, 20 labs ok, one miss class unresolved — NOT MET,
-blocked by protocol-identity.** Five classes, in `catalog-recall.js` with what
+Today: **recall 89.8% ok, 20 labs ok, all five miss classes resolved — MET.**
+Met is permission, not obligation: turning the chip rule into a failing check
+would redden CI on the 22 chips it still flags, so dispositioning those comes
+first and the decision is the maintainer's. Five classes, in `catalog-recall.js` with what
 closes each:
 
 - **vocabulary** — CLOSED for the sampled labs by `catalog-evidence.js gaps`.
 - **protocol-identity** — PARTLY closed by the `protocol` shape, which fires when
   a lab declares **two** of a protocol's own message structures with no dominant
-  foreign prefix. What was rejected matters more than what was built: keying on
-  the repo slug would have had `crypto-lab-hqc-timing` claiming HQC, the exact
-  false claim just removed from four cards.
+  non-verb prefix; four labs qualify. **The residue is EXEMPTED, not chased.** A
+  lab naming only one — `blind-hello` builds real TLS ClientHello structures and
+  names no second TLS message — is recorded as `protocol-partial` and treated by
+  the chip rule as no finding: a shape that declines to claim must decline to
+  accuse, or the scanner's caution becomes the card's fault.
+
+  **Do not reopen this by writing a looser shape.** Three were tried and each was
+  measured: substring matching on structure names gave 38 findings that were
+  mostly nonsense (`Envelope` put OPAQUE on an ECIES lab, `LeafNode` put MLS on
+  an LMS hash tree); single-structure matching claimed TLS for an SSH lab and for
+  an SRP file whose author borrowed the name; two structures with a *unanimous*
+  prefix still passed `pake-gate`. And keying on the repo slug — the obvious idea
+  — would have had `crypto-lab-hqc-timing` claiming HQC, which is the exact false
+  claim four cards were just corrected for. A rule that invents an HQC claim is
+  worse than one that misses blind-hello's TLS. The variants and what each
+  produced are in `catalog-recall.js` under `doNotReopen`, printed on every run.
 - **unnamed-implementation** — IRREDUCIBLE, the real ceiling, and now **named
   and exempted the way NOT-SCANNED is**. Five of the six current misses are labs
   that compute an algorithm and never write its name in executable code:

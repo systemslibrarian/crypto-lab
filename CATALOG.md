@@ -765,7 +765,7 @@ One fixed-size digest commits to a growing set. Prove a certificate is in it —
 
 [`crypto-lab-aegis-gate`](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) · Authenticated Encryption · ENCRYPTION
 
-AEGIS-256 from the CFRG draft with AES round-function state updates, six-register sponge flow, tag derivation, and official test-vector verification in the browser.
+AEGIS-256 as described in CFRG Informational RFC 10032, with AES round-function state updates, six-register sponge flow, tag derivation, and RFC test-vector verification in the browser.
 
 - **Implements:** AEGIS-256 `src/aegis.ts:239`, AES `src/aes-round-vis.ts:32`, AES-GCM `src/benchmark.ts:116`
 - **References:** AES-CCM, AES-SIV, Ascon, Caesar cipher, ChaCha20, GHASH, Poly1305, TLS 1.3

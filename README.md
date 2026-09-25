@@ -360,6 +360,4 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 
 Not listed above: `catalog-vocab.js`, `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 
-This table lists tools git tracks. `majors-sync.js` is present in `tools/` but untracked — work in progress rather than fleet machinery, and absent here for that reason rather than because nothing else exists.
-
 <!-- tools-sync:end -->

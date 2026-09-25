@@ -1591,7 +1591,7 @@ SHA-256 vs SHA3-256 vs BLAKE3 internals — live avalanche analysis, Merkle-Damg
 
 [`crypto-lab-hawk`](https://systemslibrarian.github.io/crypto-lab-hawk/) · Post-Quantum Signatures · POST-QUANTUM, SIGNATURES
 
-An educational HAWK lab covering integer-only lattice signatures, discrete Gaussian sampling over Z, and the NIST Round 2 additional-signatures landscape.
+An educational HAWK lab covering integer-only lattice signatures, discrete Gaussian sampling over Z, and the July 2026 key-recovery attack that led to HAWK's withdrawal from NIST's additional-signatures process.
 
 - **Implements:** Babai rounding `src/main.ts:958`, Falcon `src/gaussian.ts:222`, ML-DSA `src/hawk.ts:966`, SHA-256 `src/hawk.ts:136`
 - **References:** AES, DES, Dilithium, Ed25519, Fiat-Shamir, LMS, LWE, ML-KEM, NTRU, NTT, SHAKE, SLH-DSA, SPHINCS+, Shamir secret sharing, XMSS

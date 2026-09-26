@@ -32,7 +32,7 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | Path | Focus | Journey |
 |---|---|---|
 | **Developer** | A builder's journey — from primitives to the protocols you actually ship. | Babel Hash → AES Modes → KDF Chain → Educational RSA → RSA Forge → Point Arithmetic → Curve Lens → Signed Bytes → DH MITM → X3DH Wire → Noise Pipe → OPAQUE Gate → WebAuthn → SSH Handshake → TLS Handshake → PQ TLS Handshake |
-| **Cryptanalyst** | An attacker's lens — classical ciphers to post-quantum side channels. | Dead Sea Cipher → Biham Lens → Padding Oracle → Timing Oracle → Power Trace → Salamander → Nonce Collision → Entropy Collapse → Nonce Lattice → Frozen Heart → KyberSlash → Lattice Fault |
+| **Cryptanalyst** | Mathematical attacks exploit structure and statistics; oracles exploit response differences; side channels measure timing or power; faults alter computation. Follow each from classical ciphers to PQC. | Dead Sea Cipher → Biham Lens → Matsui Line → Padding Oracle → Timing Oracle → Power Trace → Masked Core → Salamander → Nonce Collision → Entropy Collapse → Nonce Lattice → Frozen Heart → KyberSlash → Lattice Fault |
 | **Post-Quantum** | A focused track on PQ KEMs, signatures, hybrids, and migration. | PQ Families → Kyber Vault → KEM Trap → Dilithium Seal → MAYO Seal → Hybrid Wire → Hybrid PQC → Downgrade Wire → PQ TLS Handshake → PQ Rotation → Harvest Timeline |
 | **Key Exchange** | How two parties agree on a secret — classical ECDH to hybrid post-quantum handshakes. | Key Exchange → Curve Lens → DH MITM → X3DH Wire → Ratchet Wire → Noise Pipe → OPAQUE Gate → TLS Handshake → Kyber Vault → Hybrid Wire → PQ TLS Handshake |
 

@@ -162,7 +162,7 @@ const ALGORITHMS = [
   { name: 'TFHE', kind: 'algorithm', family: 'FHE', re: /\btfhe\b/i, std: null },
 
   // --- protocols and deployed systems ---
-  { name: 'TLS 1.3', kind: 'algorithm', family: 'protocol', re: /tls[-_ ]?1\.3/i, structures: ['ClientHello', 'ServerHello', 'EncryptedExtensions', 'HelloRetryRequest', 'CertificateVerify', 'NewSessionTicket'], std: 'IETF:RFC 8446' },
+  { name: 'TLS 1.3', kind: 'algorithm', family: 'protocol', re: /tls[-_ ]?1\.3/i, structures: ['ClientHello', 'ServerHello', 'EncryptedExtensions', 'HelloRetryRequest', 'CertificateVerify', 'NewSessionTicket'], std: 'IETF:RFC 9846' },
   { name: 'Noise protocol', kind: 'algorithm', family: 'protocol', re: /noise[-_ ]?(?:protocol|xx|ik|nk|handshake)/i, structures: ['MixHash', 'MixKey'], std: null },
   { name: 'X3DH', kind: 'algorithm', family: 'protocol', re: /x3dh/i, std: null },
   { name: 'PQXDH', kind: 'algorithm', family: 'protocol', re: /pqxdh/i, std: null },

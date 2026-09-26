@@ -228,14 +228,15 @@ function build(list) {
   for (const fam of [...byFamily.keys()].sort()) {
     L.push(`### ${fam}`);
     L.push('');
-    L.push('| Algorithm | Implemented by | Also referenced by |');
-    L.push('|---|---|---|');
     for (const name of byFamily.get(fam).sort()) {
-      const who = impls.get(name).map((x) => `[${x.c.title}](https://systemslibrarian.github.io/${x.c.slug}/) \`${x.at}\``).join('<br>');
+      const who = impls.get(name).map((x) => `[${x.c.title}](https://systemslibrarian.github.io/${x.c.slug}/) \`${x.at}\``).join('; ');
       const alsoRef = (refs.get(name) || []).map((c) => `*${c.title}*`).join(', ');
-      L.push(`| **${name}** | ${who} | ${alsoRef || '—'} |`);
+      L.push(`#### ${name}`);
+      L.push('');
+      L.push(`- **Implemented by:** ${who}`);
+      L.push(`- **Also referenced by:** ${alsoRef || '—'}`);
+      L.push('');
     }
-    L.push('');
   }
 
   /* --- standards-body index ---------------------------------------------- */
@@ -283,16 +284,17 @@ function build(list) {
   L.push('found no difference worth having. It is listed first because it is the only row here');
   L.push('that asks for a decision.');
   L.push('');
-  L.push('| Labs | Shared | Stated difference |');
-  L.push('|---|---|---|');
   const ordered = [...pairs].sort((x, y) => (duplication(y) ? 1 : 0) - (duplication(x) ? 1 : 0));
   for (const p of ordered) {
     const d = duplication(p);
     const s = stated(p);
     const cell = d ? `**DUPLICATION** — ${d.note}` : s ? s.difference : '**none stated**';
-    L.push(`| ${p.a.title} / ${p.b.title} | ${p.shared.join(', ')} | ${cell} |`);
+    L.push(`**${p.a.title} / ${p.b.title}**`);
+    L.push('');
+    L.push(`- **Shared:** ${p.shared.join(', ')}`);
+    L.push(`- **Stated difference:** ${cell}`);
+    L.push('');
   }
-  L.push('');
 
   /* --- per-lab entries ---------------------------------------------------- */
   L.push('## Labs');

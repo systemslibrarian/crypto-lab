@@ -945,7 +945,7 @@ TLS 1.3 encrypts everything except the hostname it announces first — seal the 
 
 [`crypto-lab-blind-oracle`](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) · Homomorphic Encryption · HOMOMORPHIC
 
-A server computes on encrypted values without seeing the plaintext. A concise, live introduction to FHE using TFHE-rs.
+A server adds encrypted values with TFHE-rs while the decryption key stays in your browser. See why a client must keep decryption-error feedback private.
 
 - **Implements:** TFHE `src/clientFhe.ts:45`
 - **References:** BFV, BGV, CKKS, ElGamal, Paillier

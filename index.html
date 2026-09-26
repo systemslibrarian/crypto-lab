@@ -3437,9 +3437,9 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Homomorphic Encryption</div>
             <div class="project-title">Blind Oracle</div>
-            <div class="project-copy">A server computes on encrypted values without seeing the plaintext. A concise, live introduction to FHE using TFHE-rs.</div>
+            <div class="project-copy">A server adds encrypted values with TFHE-rs while the decryption key stays in your browser. See why a client must keep decryption-error feedback private.</div>
             <div class="card-note">
-              <span class="card-note-tag">⚡ The one exception</span>This is the lab's single demo with a live backend — a Rust/TFHE-rs server adds your two encrypted numbers homomorphically and still mathematically cannot read them.
+              <span class="card-note-tag">⚡ The one exception</span>This lab uses a live Rust/TFHE-rs server. Its evaluation key cannot decrypt, and the browser does not send the result or its decryption verdict back.
             </div>
             <div class="project-meta">
               <div class="stack">

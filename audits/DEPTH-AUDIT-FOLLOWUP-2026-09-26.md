@@ -1,0 +1,257 @@
+# Depth audit follow-up — 2026-09-26
+
+This is an evidence addendum to [the initial audit](DEPTH-AUDIT-2026-09-25.md), not a replacement scorecard. The original ledger's `?` denotes an unresolved dimension even when its source inventory says SCANNED. The ranking below is limited to the findings adjudicated here. A successful build or a README assertion is not evidence that a particular cryptographic claim was tested.
+
+## Coverage and interpretation
+
+| Scope | Count | Interpretation |
+|---|---:|---|
+| Catalog-linked default branches exported | 207 | Current commit inventory in the appendix; source is readable locally |
+| Targeted source and CI adjudications in this addendum | 4 | The ranked findings below |
+| Additional provenance cases resolved | 2 | Hidden Bit and Kyber Vault published fixtures |
+| Other exported labs | 202 | No targeted dimension adjudication in this addendum; do not rank by the original partial scores |
+| Entire repos inaccessible | 0 | Partial language/vendor scans remain subject to the original ledger's caveats |
+
+The rubric remains **T/I/C/N/G/H/Z** with weights **4/4/2/2/2/1/1** for published ground truth, independent check, displayed claim, negative test, deploy gate, limits/guidance, and observed nonzero tests. `?` is excluded from numerator and denominator. A test command returning success can still exercise only a CSP assertion. The appendix pins the export rather than recycling line anchors from a changed commit. Source scan coverage is not dimension coverage.
+
+## Ranked needs work
+
+| Priority | Lab and teaching impact | Evidence and highest-value addition | Current assurance boundary |
+|---:|---|---|---|
+| 1 | [Hidden Bit](https://github.com/systemslibrarian/crypto-lab-hidden-bit/tree/702998b5891de72a8051f73452ac6cc111885842), course module | The [verdict mutation sweep](https://github.com/systemslibrarian/crypto-lab-hidden-bit/actions/runs/36138414270) ended with `NO BASELINE` for `cca-verdict-never-alarms`; its unmutated [CCA verdict assertion](https://github.com/systemslibrarian/crypto-lab-hidden-bit/blob/702998b5891de72a8051f73452ac6cc111885842/e2e/verdicts.spec.ts#L208-L241) failed in the sweep. [Deploy needs that job](https://github.com/systemslibrarian/crypto-lab-hidden-bit/blob/702998b5891de72a8051f73452ac6cc111885842/.github/workflows/deploy.yml#L54-L82). Reproduce the baseline failure, distinguish nondeterministic experiment behavior from UI/test sequencing, and require a passing baseline followed by a killed CCA mutation. Ground truth is the [computed wins/trials/interval](https://github.com/systemslibrarian/crypto-lab-hidden-bit/blob/702998b5891de72a8051f73452ac6cc111885842/e2e/verdicts.spec.ts#L216-L227), not a published CCA-output vector. | The main build and ordinary claim test passed; the current deploy did not. The mutation result cannot be counted as a kill. |
+| 2 | [McEliece Gate](https://github.com/systemslibrarian/crypto-lab-mceliece-gate/tree/b706294323a031c7e3600147bc7717b7e8459ed5), outside course | A [copy change](https://github.com/systemslibrarian/crypto-lab-mceliece-gate/blob/b706294323a031c7e3600147bc7717b7e8459ed5/src/ui.ts#L479) ships `binary Goppa codes since 1978`, while the [arrival-state assertion](https://github.com/systemslibrarian/crypto-lab-mceliece-gate/blob/b706294323a031c7e3600147bc7717b7e8459ed5/e2e/gate.ts#L271-L274) still expects `conservative post-quantum security since 1978`. The [Chromium accessibility job](https://github.com/systemslibrarian/crypto-lab-mceliece-gate/actions/runs/36241710268) fails before axe scans the driven states. Update the expectation to the intended shipped copy, then run the full accessibility gate. Ground truth for this gap is the actual first-rendered textarea value. | Unit tests and build passed; deployment was skipped after the browser gate failed. No conclusion about WCAG compliance follows from this run. |
+| 3 | [Lattice Builder](https://github.com/systemslibrarian/crypto-lab-lattice-builder/tree/f4d1b98b6d9bf7a25732c93e179d1da0ad5e6b43), outside course | [README](https://github.com/systemslibrarian/crypto-lab-lattice-builder/blob/f4d1b98b6d9bf7a25732c93e179d1da0ad5e6b43/README.md#L81) and [page copy](https://github.com/systemslibrarian/crypto-lab-lattice-builder/blob/f4d1b98b6d9bf7a25732c93e179d1da0ad5e6b43/src/AdvancedMode.tsx#L437) claim the custom ML-KEM is checked against all NIST vectors. Yet [the test script](https://github.com/systemslibrarian/crypto-lab-lattice-builder/blob/f4d1b98b6d9bf7a25732c93e179d1da0ad5e6b43/package.json#L11) selects `test/**/*.test.js`; the only matched file is [test/csp.test.js](https://github.com/systemslibrarian/crypto-lab-lattice-builder/blob/f4d1b98b6d9bf7a25732c93e179d1da0ad5e6b43/test/csp.test.js#L1). The [Pages build](https://github.com/systemslibrarian/crypto-lab-lattice-builder/blob/f4d1b98b6d9bf7a25732c93e179d1da0ad5e6b43/.github/workflows/deploy-pages.yml#L51-L54) ran that CSP suite: its [job log](https://github.com/systemslibrarian/crypto-lab-lattice-builder/actions/runs/35869200370) reports six cases, one skipped, with no ML-KEM fixture. Pin an official [NIST ACVP FIPS 203 sample](https://github.com/usnistgov/ACVP-Server/tree/975de31eb83d87039ec88934fdc47d8c312b892d/gen-val/json-files/ML-KEM-keyGen-FIPS203) and exercise the exported deterministic key generation, encapsulation and decapsulation, including invalid inputs, in `npm test`; otherwise qualify the claim. | T=0, I=0, G=+, H=+, Z=+; C/N remain `?` (4/12 assessed). This is an unsupported assurance claim, not evidence that the implementation computes wrong values. |
+| 4 | [FROST Threshold](https://github.com/systemslibrarian/crypto-lab-frost-threshold/tree/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf), outside course | The [README takeaway](https://github.com/systemslibrarian/crypto-lab-frost-threshold/blob/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf/README.md#L55-L60) and [recap](https://github.com/systemslibrarian/crypto-lab-frost-threshold/blob/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf/src/exhibits/recap.ts#L22-L26) say the key is “never whole,” and the [keygen display](https://github.com/systemslibrarian/crypto-lab-frost-threshold/blob/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf/src/exhibits/keygen.ts#L24-L29) says shares stay on each participant's device in a real deployment. The demo's [WASM return](https://github.com/systemslibrarian/crypto-lab-frost-threshold/blob/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf/crate/src/lib.rs#L17-L21) serializes [all signing shares as hex](https://github.com/systemslibrarian/crypto-lab-frost-threshold/blob/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf/crate/src/keygen.rs#L55-L85) into one page. Qualify the trusted-dealer and browser boundary beside keygen/recap and README takeaway: the aggregate *function* receives public material, while the teaching page handles every secret share and does not isolate participants. | The [production warning](https://github.com/systemslibrarian/crypto-lab-frost-threshold/blob/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf/README.md#L7-L12) and independent [ed25519-dalek signature check](https://github.com/systemslibrarian/crypto-lab-frost-threshold/blob/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf/crate/src/pipeline_tests.rs#L375-L390) are present; neither establishes participant isolation in the page. |
+
+The corresponding catalog cards describe the lessons without repeating these assurance or isolation claims: [Hidden Bit](../index.html), [McEliece Gate](../index.html), [Lattice Builder](../index.html), and [FROST Threshold](../index.html). No catalog-card edit is indicated by these findings.
+
+## Resolved provenance, reference, and correctly light boundaries
+
+| Disposition | Anchored evidence |
+|---|---|
+| Published fixture credited for Hidden Bit | [src/kats.ts:14-45](https://github.com/systemslibrarian/crypto-lab-hidden-bit/blob/702998b5891de72a8051f73452ac6cc111885842/src/kats.ts#L14-L45) compares fixed outputs from FIPS 197 C.1, RFC 6979 A.2.5 and RFC 8032 7.1; the [rendered count assertion](https://github.com/systemslibrarian/crypto-lab-hidden-bit/blob/702998b5891de72a8051f73452ac6cc111885842/e2e/verdicts.spec.ts#L195-L206) also checks the UI. The original T=`?` is now T=`+`. |
+| Published fixture credited for Kyber Vault | [mlkem-acvp.test.ts](https://github.com/systemslibrarian/crypto-lab-kyber-vault/blob/3aa79354c57cdbb046d471b1157241a71aa52c35/demos/kyber-vault/src/__tests__/mlkem-acvp.test.ts#L1-L75) pins the ACVP-Server source commit and checks key generation, encapsulation, decapsulation and invalid keys. The original T=`?` is now T=`+`; this tests the Noble implementation used by the lab. |
+| Prior ranked additions landed | [Padding Oracle](https://github.com/systemslibrarian/crypto-lab-padding-oracle/tree/247e70b), [Patron Shield](https://github.com/systemslibrarian/crypto-lab-patron-shield/tree/69adfdc), [Nonce Lattice](https://github.com/systemslibrarian/crypto-lab-nonce-lattice/tree/3eaea06), [Pairing Gate](https://github.com/systemslibrarian/crypto-lab-pairing-gate/tree/0e3edf0) have newer default-branch commits containing their recommended fixtures or independent checks. Their old ranked rows are historical, not open tasks. |
+| Correctly light examples | The initial audit's [Biham Lens](DEPTH-AUDIT-2026-09-25.md#correctly-light), Grover, Shor, RSA Educational, OTP Vault, Harvest Vault, HQC Timing and Diffie-Hellman MITM explanations still delimit toy/model claims. This addendum does not demand a production primitive vector for those lessons. |
+
+The original reference examples describe concrete checks rather than a blanket assurance label. This addendum does not re-rank them against unresolved entries.
+
+## Checker and gate note
+
+| README manual | Derived manual | README scheduled | Derived scheduled | Check |
+|---:|---:|---:|---:|---|
+| 9 | 9 | 15 | 15 | `node tools/tools-sync.js check` passed at this export |
+
+## Current default-branch export inventory
+
+`exported` means the source was obtained; it does not turn `?` into `0` or `+`. The detailed seven-dimension first pass is in the initial audit at its historical pins. The findings above were checked at these current pins.
+
+| Lab | Commit | Review in this addendum |
+|---|---|---|
+| [crypto-lab-ablation-wire](https://github.com/systemslibrarian/crypto-lab-ablation-wire/tree/8ad03c068a133660b27755ff0910e0391f8e0dcc) | `8ad03c068a13` | exported; unresolved dimensions retained |
+| [crypto-lab-accumulator](https://github.com/systemslibrarian/crypto-lab-accumulator/tree/50db63d594c6220196d157f58d27a7fc2a5e0b41) | `50db63d594c6` | exported; unresolved dimensions retained |
+| [crypto-lab-aegis-gate](https://github.com/systemslibrarian/crypto-lab-aegis-gate/tree/a57f157a67100ba8f5a21b13e2199129df8e6556) | `a57f157a6710` | exported; unresolved dimensions retained |
+| [crypto-lab-aes-modes](https://github.com/systemslibrarian/crypto-lab-aes-modes/tree/843f0f4a3e14248e2aa6cbc56dde35f8bef62ea8) | `843f0f4a3e14` | exported; unresolved dimensions retained |
+| [crypto-lab-air-stream](https://github.com/systemslibrarian/crypto-lab-air-stream/tree/1710b2975733c6652d7e14f8bd99dd5027185164) | `1710b2975733` | exported; unresolved dimensions retained |
+| [crypto-lab-ascon](https://github.com/systemslibrarian/crypto-lab-ascon/tree/61c56db0358e56bd3208b172934761af117d64e8) | `61c56db0358e` | exported; unresolved dimensions retained |
+| [crypto-lab-attestation-gate](https://github.com/systemslibrarian/crypto-lab-attestation-gate/tree/2dedc4e1c984cf14b593ab8251792c7564757370) | `2dedc4e1c984` | exported; unresolved dimensions retained |
+| [crypto-lab-attribute-gate](https://github.com/systemslibrarian/crypto-lab-attribute-gate/tree/a6aa5430a4a81426cb2fafcab0feaa1a351d3913) | `a6aa5430a4a8` | exported; unresolved dimensions retained |
+| [crypto-lab-babel-hash](https://github.com/systemslibrarian/crypto-lab-babel-hash/tree/74c523b3f3577dbc63ea59bb6b1f75cb3c5edd97) | `74c523b3f357` | exported; unresolved dimensions retained |
+| [crypto-lab-bb84](https://github.com/systemslibrarian/crypto-lab-bb84/tree/4689a88c85ddce5da796f897e670f121d3b71566) | `4689a88c85dd` | exported; unresolved dimensions retained |
+| [crypto-lab-bcrypt-forge](https://github.com/systemslibrarian/crypto-lab-bcrypt-forge/tree/e46270eafb13e8061b38d4afa2261917970dbb56) | `e46270eafb13` | exported; unresolved dimensions retained |
+| [crypto-lab-beacon-lock](https://github.com/systemslibrarian/crypto-lab-beacon-lock/tree/2afde321bfd68c7808b5d5b6da65fba4da485820) | `2afde321bfd6` | exported; unresolved dimensions retained |
+| [crypto-lab-biham-lens](https://github.com/systemslibrarian/crypto-lab-biham-lens/tree/27249921456d250cb3955f89b2c43bdbc1c5a577) | `27249921456d` | exported; unresolved dimensions retained |
+| [crypto-lab-bike-vault](https://github.com/systemslibrarian/crypto-lab-bike-vault/tree/f436ed0dbe26021959356e02b0d887c334229923) | `f436ed0dbe26` | exported; unresolved dimensions retained |
+| [crypto-lab-bitcoin-script](https://github.com/systemslibrarian/crypto-lab-bitcoin-script/tree/40bc5cba8c1f7ee338fd792869b0af2d9b3af241) | `40bc5cba8c1f` | exported; unresolved dimensions retained |
+| [crypto-lab-bitcoin-wallet](https://github.com/systemslibrarian/crypto-lab-bitcoin-wallet/tree/951a100896c17a93e9be4388e06af319725c4a84) | `951a100896c1` | exported; unresolved dimensions retained |
+| [crypto-lab-blind-hello](https://github.com/systemslibrarian/crypto-lab-blind-hello/tree/7cdae0b20d7327f80792d3d07c76b8269854ec0e) | `7cdae0b20d73` | exported; unresolved dimensions retained |
+| [crypto-lab-blind-oracle](https://github.com/systemslibrarian/crypto-lab-blind-oracle/tree/5e4de265b52eb7b3a38db84ae1c33008481bffae) | `5e4de265b52e` | exported; unresolved dimensions retained |
+| [crypto-lab-blind-relay](https://github.com/systemslibrarian/crypto-lab-blind-relay/tree/eb6ac58b889b6a3fee2ec400df15c0255533cfc5) | `eb6ac58b889b` | exported; unresolved dimensions retained |
+| [crypto-lab-blind-sign](https://github.com/systemslibrarian/crypto-lab-blind-sign/tree/693e22598881616b1ac639e04ebf0f7fb10f7cf4) | `693e22598881` | exported; unresolved dimensions retained |
+| [crypto-lab-broken-trust](https://github.com/systemslibrarian/crypto-lab-broken-trust/tree/221bbf3950965ceed3106a12dc88e489fef0d36b) | `221bbf395096` | exported; unresolved dimensions retained |
+| [crypto-lab-bulletproofs](https://github.com/systemslibrarian/crypto-lab-bulletproofs/tree/09b65bc8c29cce5c8747e29823c1cb7eeea28770) | `09b65bc8c29c` | exported; unresolved dimensions retained |
+| [crypto-lab-card-trick](https://github.com/systemslibrarian/crypto-lab-card-trick/tree/126579c282efcf5ea58228252b2ee646c25ec8b4) | `126579c282ef` | exported; unresolved dimensions retained |
+| [crypto-lab-chacha20-stream](https://github.com/systemslibrarian/crypto-lab-chacha20-stream/tree/c2dfac9170f999fb73fc50d1e30e32c3b35d9ae4) | `c2dfac9170f9` | exported; unresolved dimensions retained |
+| [crypto-lab-chain-of-trust](https://github.com/systemslibrarian/crypto-lab-chain-of-trust/tree/94f33f58e494e0534dbc89e2ec7c75bef0a0448e) | `94f33f58e494` | exported; unresolved dimensions retained |
+| [crypto-lab-ciphertext-mirror](https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror/tree/e85063defa6dca5c4576d86264d4e7d81f702dff) | `e85063defa6d` | exported; unresolved dimensions retained |
+| [crypto-lab-ckks-lab](https://github.com/systemslibrarian/crypto-lab-ckks-lab/tree/c518cded731c040a165c41e83dff0c739418cb0d) | `c518cded731c` | exported; unresolved dimensions retained |
+| [crypto-lab-collision-vault](https://github.com/systemslibrarian/crypto-lab-collision-vault/tree/476dec52aa83e9eb3045cfb79a6e01d9a030f0d0) | `476dec52aa83` | exported; unresolved dimensions retained |
+| [crypto-lab-commit-gate](https://github.com/systemslibrarian/crypto-lab-commit-gate/tree/98f205f1ca920eba6bd67c5d6900d47d7a1864c6) | `98f205f1ca92` | exported; unresolved dimensions retained |
+| [crypto-lab-context-ward](https://github.com/systemslibrarian/crypto-lab-context-ward/tree/0fa3a0ee23fdb9dc6a8a294592dfed7434622c69) | `0fa3a0ee23fd` | exported; unresolved dimensions retained |
+| [crypto-lab-corrupted-oracle](https://github.com/systemslibrarian/crypto-lab-corrupted-oracle/tree/ea7644876219e4253875eebbd695417ec2e68b74) | `ea7644876219` | exported; unresolved dimensions retained |
+| [crypto-lab-covert-channel-studio](https://github.com/systemslibrarian/crypto-lab-covert-channel-studio/tree/de4bfe0c9bb1f7733f795d9154a2cf3e023f8117) | `de4bfe0c9bb1` | exported; unresolved dimensions retained |
+| [crypto-lab-credential-veil](https://github.com/systemslibrarian/crypto-lab-credential-veil/tree/cc97144ec5f02828177b85fc4f87510b01e852e7) | `cc97144ec5f0` | exported; unresolved dimensions retained |
+| [crypto-lab-curve-lens](https://github.com/systemslibrarian/crypto-lab-curve-lens/tree/cc1c7ac3f2d479a8a6a089d26588e919246586e1) | `cc1c7ac3f2d4` | exported; unresolved dimensions retained |
+| [crypto-lab-curve448](https://github.com/systemslibrarian/crypto-lab-curve448/tree/6eef37da07d567b114a18d49db1c99e014e2c548) | `6eef37da07d5` | exported; unresolved dimensions retained |
+| [crypto-lab-dead-sea-cipher](https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher/tree/1a96dd39fc35055072e734bb235eff5e7d71e41c) | `1a96dd39fc35` | exported; unresolved dimensions retained |
+| [crypto-lab-diffie-hellman-mitm](https://github.com/systemslibrarian/crypto-lab-diffie-hellman-mitm/tree/1da86737c6290e2ffd8e73cd7350dbc563d1853f) | `1da86737c629` | exported; unresolved dimensions retained |
+| [crypto-lab-dilithium-reject](https://github.com/systemslibrarian/crypto-lab-dilithium-reject/tree/42090e5a6e9905ae959724792e9bfdf0144c4e51) | `42090e5a6e99` | exported; unresolved dimensions retained |
+| [crypto-lab-dilithium-seal](https://github.com/systemslibrarian/crypto-lab-dilithium-seal/tree/30268a422f69273a78749ac9df2270de648c1a63) | `30268a422f69` | exported; unresolved dimensions retained |
+| [crypto-lab-dkg-gate](https://github.com/systemslibrarian/crypto-lab-dkg-gate/tree/004e4954b3a469dfb109c49aaec4225f9188db2b) | `004e4954b3a4` | exported; unresolved dimensions retained |
+| [crypto-lab-dnssec-chain](https://github.com/systemslibrarian/crypto-lab-dnssec-chain/tree/9c1bec4e06ba131ac1a0ddaaf665f833fcad7356) | `9c1bec4e06ba` | exported; unresolved dimensions retained |
+| [crypto-lab-downgrade-wire](https://github.com/systemslibrarian/crypto-lab-downgrade-wire/tree/f44aa7d9a8e85b6a8a2c44f9889d3d589921ff0c) | `f44aa7d9a8e8` | exported; unresolved dimensions retained |
+| [crypto-lab-dp-noise](https://github.com/systemslibrarian/crypto-lab-dp-noise/tree/5f45e293c0ba55f928eee1854933e149d08564d4) | `5f45e293c0ba` | exported; unresolved dimensions retained |
+| [crypto-lab-drbg-arena](https://github.com/systemslibrarian/crypto-lab-drbg-arena/tree/498abbbad73a2286e4e34f1caf8c6a60c9c51a48) | `498abbbad73a` | exported; unresolved dimensions retained |
+| [crypto-lab-e91](https://github.com/systemslibrarian/crypto-lab-e91/tree/8182aaa5c0f9481a77be4cee98665e7bb8905d5e) | `8182aaa5c0f9` | exported; unresolved dimensions retained |
+| [crypto-lab-ec-point-arithmetic](https://github.com/systemslibrarian/crypto-lab-ec-point-arithmetic/tree/fdcf8ca82a6c4e957b9cf41f95075cd03ada92da) | `fdcf8ca82a6c` | exported; unresolved dimensions retained |
+| [crypto-lab-ecdsa-forge](https://github.com/systemslibrarian/crypto-lab-ecdsa-forge/tree/02cef5916297c7242eeab502438272b0c8224e7b) | `02cef5916297` | exported; unresolved dimensions retained |
+| [crypto-lab-ed25519-forge](https://github.com/systemslibrarian/crypto-lab-ed25519-forge/tree/9716a9451de3a42a6a6779c0975410c0d852cd5c) | `9716a9451de3` | exported; unresolved dimensions retained |
+| [crypto-lab-elgamal-plain](https://github.com/systemslibrarian/crypto-lab-elgamal-plain/tree/b3fa02685c9b602e6d36cc94c00964d2abdbbe1c) | `b3fa02685c9b` | exported; unresolved dimensions retained |
+| [crypto-lab-encrochat](https://github.com/systemslibrarian/crypto-lab-encrochat/tree/6ec5b58435455cb017e0abaf2549d7c6f1d168fc) | `6ec5b5843545` | exported; unresolved dimensions retained |
+| [crypto-lab-enigma-forge](https://github.com/systemslibrarian/crypto-lab-enigma-forge/tree/5f29bf8381b4a7fd8625d9bd75f342ed033b0b2f) | `5f29bf8381b4` | exported; unresolved dimensions retained |
+| [crypto-lab-entropy-collapse](https://github.com/systemslibrarian/crypto-lab-entropy-collapse/tree/77b3e629ab59feabc3d6ff6f6194b19c23105fe0) | `77b3e629ab59` | exported; unresolved dimensions retained |
+| [crypto-lab-envelope-kms](https://github.com/systemslibrarian/crypto-lab-envelope-kms/tree/81b675c6d18bf2e1ae4df7db234562688d532f76) | `81b675c6d18b` | exported; unresolved dimensions retained |
+| [crypto-lab-export-grade](https://github.com/systemslibrarian/crypto-lab-export-grade/tree/77601242dfa34d9874e1d363295e0241232d1129) | `77601242dfa3` | exported; unresolved dimensions retained |
+| [crypto-lab-factor-forge](https://github.com/systemslibrarian/crypto-lab-factor-forge/tree/2d002143df138883c566aa01b77e0d8b8e8d227a) | `2d002143df13` | exported; unresolved dimensions retained |
+| [crypto-lab-falcon-seal](https://github.com/systemslibrarian/crypto-lab-falcon-seal/tree/0610209d496b459ff172c8dfa9402f3e984e090a) | `0610209d496b` | exported; unresolved dimensions retained |
+| [crypto-lab-feistel-forge](https://github.com/systemslibrarian/crypto-lab-feistel-forge/tree/658dd92925d5ccdad2411fb44d8ed0f9449d3b43) | `658dd92925d5` | exported; unresolved dimensions retained |
+| [crypto-lab-fhe-arena](https://github.com/systemslibrarian/crypto-lab-fhe-arena/tree/6e03177e3fcacb1322ffec3266ae225e76f25af2) | `6e03177e3fca` | exported; unresolved dimensions retained |
+| [crypto-lab-fold-gate](https://github.com/systemslibrarian/crypto-lab-fold-gate/tree/75da5b97d6c43496f838ea08c4d0b263ea022a54) | `75da5b97d6c4` | exported; unresolved dimensions retained |
+| [crypto-lab-format-ward](https://github.com/systemslibrarian/crypto-lab-format-ward/tree/ed4d9e769b358e9c2dafbfcc022c7420435f9cc1) | `ed4d9e769b35` | exported; unresolved dimensions retained |
+| [crypto-lab-frodo-vault](https://github.com/systemslibrarian/crypto-lab-frodo-vault/tree/53190e6dde92027c5b635d5b1830e107aeb76d29) | `53190e6dde92` | exported; unresolved dimensions retained |
+| [crypto-lab-frost-threshold](https://github.com/systemslibrarian/crypto-lab-frost-threshold/tree/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf) | `c56b90f0d85a` | ranked finding |
+| [crypto-lab-frozen-heart](https://github.com/systemslibrarian/crypto-lab-frozen-heart/tree/17d6857b25115fa682e05a8fb62980ccc72906ba) | `17d6857b2511` | exported; unresolved dimensions retained |
+| [crypto-lab-fte](https://github.com/systemslibrarian/crypto-lab-fte/tree/7f5f70af8bb699573a330b9ff87359b1bede29f2) | `7f5f70af8bb6` | exported; unresolved dimensions retained |
+| [crypto-lab-garbled-gate](https://github.com/systemslibrarian/crypto-lab-garbled-gate/tree/1b3a5c7e08c14a34e6314e0eb20d3064aba151c6) | `1b3a5c7e08c1` | exported; unresolved dimensions retained |
+| [crypto-lab-gg20-wallet](https://github.com/systemslibrarian/crypto-lab-gg20-wallet/tree/e532c377139651b64f2e56a19d4972a253581108) | `e532c3771396` | exported; unresolved dimensions retained |
+| [crypto-lab-ggh-trapdoor](https://github.com/systemslibrarian/crypto-lab-ggh-trapdoor/tree/0132de9231ba293a6c593cf623200c3f38225dc4) | `0132de9231ba` | exported; unresolved dimensions retained |
+| [crypto-lab-ghost-commit](https://github.com/systemslibrarian/crypto-lab-ghost-commit/tree/88abb12c24089a2606306816f54a575e58c723b0) | `88abb12c2408` | exported; unresolved dimensions retained |
+| [crypto-lab-grover](https://github.com/systemslibrarian/crypto-lab-grover/tree/1997d5e36dbb38f30c914716d03edfb89972bc5b) | `1997d5e36dbb` | exported; unresolved dimensions retained |
+| [crypto-lab-harvest-timeline](https://github.com/systemslibrarian/crypto-lab-harvest-timeline/tree/afa8ae3d1c07ac72410d08491f8145c888c33fa1) | `afa8ae3d1c07` | exported; unresolved dimensions retained |
+| [crypto-lab-harvest-vault](https://github.com/systemslibrarian/crypto-lab-harvest-vault/tree/4ee75febfe512a965fc9e4f3e672ffb2924fa494) | `4ee75febfe51` | exported; unresolved dimensions retained |
+| [crypto-lab-hash-zoo](https://github.com/systemslibrarian/crypto-lab-hash-zoo/tree/ea45b742a13f8dc2f5bb131a99ccd5875165dd9c) | `ea45b742a13f` | exported; unresolved dimensions retained |
+| [crypto-lab-hawk](https://github.com/systemslibrarian/crypto-lab-hawk/tree/10910e698cadfd406c279cf71c7372edbe8d87b8) | `10910e698cad` | exported; unresolved dimensions retained |
+| [crypto-lab-hidden-bit](https://github.com/systemslibrarian/crypto-lab-hidden-bit/tree/702998b5891de72a8051f73452ac6cc111885842) | `702998b5891d` | ranked finding |
+| [crypto-lab-hpke-envelope](https://github.com/systemslibrarian/crypto-lab-hpke-envelope/tree/aa3f70da12a81c2ce785be5bf9590cef7b7f80a7) | `aa3f70da12a8` | exported; unresolved dimensions retained |
+| [crypto-lab-hqc-timing](https://github.com/systemslibrarian/crypto-lab-hqc-timing/tree/a6c492ef3b021060e6b2d8413a10719acbeb0112) | `a6c492ef3b02` | exported; unresolved dimensions retained |
+| [crypto-lab-hqc-timing-break](https://github.com/systemslibrarian/crypto-lab-hqc-timing-break/tree/50c0b64a3597cfc9caf97eca16b69420e4f09f35) | `50c0b64a3597` | exported; unresolved dimensions retained |
+| [crypto-lab-hqc-vault](https://github.com/systemslibrarian/crypto-lab-hqc-vault/tree/8c73fdf58b8359965d93e913ffc1b55be394c5e6) | `8c73fdf58b83` | exported; unresolved dimensions retained |
+| [crypto-lab-hybrid-guide](https://github.com/systemslibrarian/crypto-lab-hybrid-guide/tree/0840345bd9fcd1bcda21de80a7c5a290658ac0cb) | `0840345bd9fc` | exported; unresolved dimensions retained |
+| [crypto-lab-hybrid-pqc](https://github.com/systemslibrarian/crypto-lab-hybrid-pqc/tree/48b4b1afdaf326e5ccf52d637b75d07d1e58eade) | `48b4b1afdaf3` | exported; unresolved dimensions retained |
+| [crypto-lab-hybrid-sign](https://github.com/systemslibrarian/crypto-lab-hybrid-sign/tree/115b0d21b723c8937e4a2cf282c7d14c5650b0c5) | `115b0d21b723` | exported; unresolved dimensions retained |
+| [crypto-lab-hybrid-wire](https://github.com/systemslibrarian/crypto-lab-hybrid-wire/tree/5b7ae68ae3bcc19817870b59954442e49f88aab3) | `5b7ae68ae3bc` | exported; unresolved dimensions retained |
+| [crypto-lab-ibe-gate](https://github.com/systemslibrarian/crypto-lab-ibe-gate/tree/aa8f03003319808edac8b8e8f50155926d5aa8a5) | `aa8f03003319` | exported; unresolved dimensions retained |
+| [crypto-lab-icy-dvrf](https://github.com/systemslibrarian/crypto-lab-icy-dvrf/tree/9506224c141fb75e84a4b1a686e632939eaf7316) | `9506224c141f` | exported; unresolved dimensions retained |
+| [crypto-lab-iron-letter](https://github.com/systemslibrarian/crypto-lab-iron-letter/tree/3fb357d84f145b7944d02744a08dd8be381618a2) | `3fb357d84f14` | exported; unresolved dimensions retained |
+| [crypto-lab-iron-serpent](https://github.com/systemslibrarian/crypto-lab-iron-serpent/tree/dabdded459f72d1bd8d58e7bf45f49b8cb9bdd2d) | `dabdded459f7` | exported; unresolved dimensions retained |
+| [crypto-lab-isogeny-atlas](https://github.com/systemslibrarian/crypto-lab-isogeny-atlas/tree/17e29746e9ca92518912e7e7962968d74fea8996) | `17e29746e9ca` | exported; unresolved dimensions retained |
+| [crypto-lab-isogeny-gate](https://github.com/systemslibrarian/crypto-lab-isogeny-gate/tree/f6f409888c6398d8e4b00cda2a7175f0eedc9a51) | `f6f409888c63` | exported; unresolved dimensions retained |
+| [crypto-lab-j-uniward](https://github.com/systemslibrarian/crypto-lab-j-uniward/tree/43e7dd883fa866fe213ae16d3536332402fc7266) | `43e7dd883fa8` | exported; unresolved dimensions retained |
+| [crypto-lab-jevil](https://github.com/systemslibrarian/crypto-lab-jevil/tree/4db66aaa6141721e1d2eae35e5ed3f0973288772) | `4db66aaa6141` | exported; unresolved dimensions retained |
+| [crypto-lab-jwt-forge](https://github.com/systemslibrarian/crypto-lab-jwt-forge/tree/6d6e78b49289f70f261f11851815b9899827f656) | `6d6e78b49289` | exported; unresolved dimensions retained |
+| [crypto-lab-kdf-arena](https://github.com/systemslibrarian/crypto-lab-kdf-arena/tree/d01f58062eaf9eadcb34019e28a1ad2c2d682fd5) | `d01f58062eaf` | exported; unresolved dimensions retained |
+| [crypto-lab-kdf-chain](https://github.com/systemslibrarian/crypto-lab-kdf-chain/tree/33acf8dce505c4468fe011989bb5b7cf45e084b6) | `33acf8dce505` | exported; unresolved dimensions retained |
+| [crypto-lab-kem-trap](https://github.com/systemslibrarian/crypto-lab-kem-trap/tree/80e043e9cbed9f51a49fedbfc755b0d74360d1cf) | `80e043e9cbed` | exported; unresolved dimensions retained |
+| [crypto-lab-kerberos](https://github.com/systemslibrarian/crypto-lab-kerberos/tree/f580012298b3e5dc8cdbe067c08e2bcf470bf8d6) | `f580012298b3` | exported; unresolved dimensions retained |
+| [crypto-lab-key-exchange](https://github.com/systemslibrarian/crypto-lab-key-exchange/tree/8f31c77c32707b5a9133df024f559ef483ef12b1) | `8f31c77c3270` | exported; unresolved dimensions retained |
+| [crypto-lab-key-mirror](https://github.com/systemslibrarian/crypto-lab-key-mirror/tree/89d7aa6a6a56261525186fb589b4ac04d6e81d40) | `89d7aa6a6a56` | exported; unresolved dimensions retained |
+| [crypto-lab-kmac-gate](https://github.com/systemslibrarian/crypto-lab-kmac-gate/tree/2315d38d45b6a9f1bd392c8719490486cef78382) | `2315d38d45b6` | exported; unresolved dimensions retained |
+| [crypto-lab-kpqc-pair](https://github.com/systemslibrarian/crypto-lab-kpqc-pair/tree/0ef5fe67aec9d501cc58fff9a58fae9f013fa462) | `0ef5fe67aec9` | exported; unresolved dimensions retained |
+| [crypto-lab-kyber-vault](https://github.com/systemslibrarian/crypto-lab-kyber-vault/tree/3aa79354c57cdbb046d471b1157241a71aa52c35) | `3aa79354c57c` | provenance resolved |
+| [crypto-lab-kyberslash](https://github.com/systemslibrarian/crypto-lab-kyberslash/tree/4b931164d9241702c55070ad4939dba5f35ccd1b) | `4b931164d924` | exported; unresolved dimensions retained |
+| [crypto-lab-lattice-builder](https://github.com/systemslibrarian/crypto-lab-lattice-builder/tree/f4d1b98b6d9bf7a25732c93e179d1da0ad5e6b43) | `f4d1b98b6d9b` | ranked finding |
+| [crypto-lab-lattice-fault](https://github.com/systemslibrarian/crypto-lab-lattice-fault/tree/6a12d9310550981ce2dcf4cb9c0b9db999906c9d) | `6a12d9310550` | exported; unresolved dimensions retained |
+| [crypto-lab-lattice-gentle](https://github.com/systemslibrarian/crypto-lab-lattice-gentle/tree/8a8896f8b9365a3f8665d6002cb3dd91a13942c0) | `8a8896f8b936` | exported; unresolved dimensions retained |
+| [crypto-lab-lll-break](https://github.com/systemslibrarian/crypto-lab-lll-break/tree/f3e51f07a4880ab13f0c2fbe6ffd41d204df13a1) | `f3e51f07a488` | exported; unresolved dimensions retained |
+| [crypto-lab-lms-ledger](https://github.com/systemslibrarian/crypto-lab-lms-ledger/tree/b55685fc1fd17a0889caaaf12df919383e2b100d) | `b55685fc1fd1` | exported; unresolved dimensions retained |
+| [crypto-lab-lms-xmss](https://github.com/systemslibrarian/crypto-lab-lms-xmss/tree/727c3d350f4ce75d2f594d0c129b381d8fe1aec6) | `727c3d350f4c` | exported; unresolved dimensions retained |
+| [crypto-lab-lwe-hints](https://github.com/systemslibrarian/crypto-lab-lwe-hints/tree/19324cbe8b63b7e31f49e403a7950e50ca8a826d) | `19324cbe8b63` | exported; unresolved dimensions retained |
+| [crypto-lab-mac-race](https://github.com/systemslibrarian/crypto-lab-mac-race/tree/4c0e376316f4b1c2a4cbd686ef04820f0b8abea4) | `4c0e376316f4` | exported; unresolved dimensions retained |
+| [crypto-lab-masked-core](https://github.com/systemslibrarian/crypto-lab-masked-core/tree/cc17b68b301ab58ab8c4167d61f6f6520af509c8) | `cc17b68b301a` | exported; unresolved dimensions retained |
+| [crypto-lab-matsui-line](https://github.com/systemslibrarian/crypto-lab-matsui-line/tree/54ae594278d010249b2f72eb664567b0e28c3494) | `54ae594278d0` | exported; unresolved dimensions retained |
+| [crypto-lab-mayo-seal](https://github.com/systemslibrarian/crypto-lab-mayo-seal/tree/1586d1a40673179750de0f0f9daa976dbe75f173) | `1586d1a40673` | exported; unresolved dimensions retained |
+| [crypto-lab-mceliece-gate](https://github.com/systemslibrarian/crypto-lab-mceliece-gate/tree/b706294323a031c7e3600147bc7717b7e8459ed5) | `b706294323a0` | ranked finding |
+| [crypto-lab-merkle-proofs](https://github.com/systemslibrarian/crypto-lab-merkle-proofs/tree/5f2adac7e23cdebb4431dc3c7a424309d75fc109) | `5f2adac7e23c` | exported; unresolved dimensions retained |
+| [crypto-lab-merkle-vault](https://github.com/systemslibrarian/crypto-lab-merkle-vault/tree/ef859d27522ee61447ed9ec86d0c5124d51aa68d) | `ef859d27522e` | exported; unresolved dimensions retained |
+| [crypto-lab-misty-lens](https://github.com/systemslibrarian/crypto-lab-misty-lens/tree/19044d74b09ea26520a3502aae764f74ef6e63a9) | `19044d74b09e` | exported; unresolved dimensions retained |
+| [crypto-lab-mls-group](https://github.com/systemslibrarian/crypto-lab-mls-group/tree/1f93874318f4c650a4edc1ad67dcbe488aa88f64) | `1f93874318f4` | exported; unresolved dimensions retained |
+| [crypto-lab-model-breach](https://github.com/systemslibrarian/crypto-lab-model-breach/tree/a1e3864c76e26f622608c25325ead69869119465) | `a1e3864c76e2` | exported; unresolved dimensions retained |
+| [crypto-lab-mpcith-sign](https://github.com/systemslibrarian/crypto-lab-mpcith-sign/tree/c549dcee8b8f752df7f3021fa81cce457de751e7) | `c549dcee8b8f` | exported; unresolved dimensions retained |
+| [crypto-lab-multivariate](https://github.com/systemslibrarian/crypto-lab-multivariate/tree/711ebba8afd8801167929395aca16b3679acd2a7) | `711ebba8afd8` | exported; unresolved dimensions retained |
+| [crypto-lab-musig-gate](https://github.com/systemslibrarian/crypto-lab-musig-gate/tree/4a4564b1f4e8f39774ee4068933be7b2491a69e8) | `4a4564b1f4e8` | exported; unresolved dimensions retained |
+| [crypto-lab-noise-pipe](https://github.com/systemslibrarian/crypto-lab-noise-pipe/tree/24fd5463abe29fd0e0c648b518d9057cb370d2d6) | `24fd5463abe2` | exported; unresolved dimensions retained |
+| [crypto-lab-nonce-collision](https://github.com/systemslibrarian/crypto-lab-nonce-collision/tree/27b6677bbcffd8fda8a7a3d9381672bf5c212cbf) | `27b6677bbcff` | exported; unresolved dimensions retained |
+| [crypto-lab-nonce-guard](https://github.com/systemslibrarian/crypto-lab-nonce-guard/tree/1d75e27039b89de03b9baac389149165907bcf6b) | `1d75e27039b8` | exported; unresolved dimensions retained |
+| [crypto-lab-nonce-lattice](https://github.com/systemslibrarian/crypto-lab-nonce-lattice/tree/3eaea063714bef8a4e5fbfe65db50b29abaa88b7) | `3eaea063714b` | exported; unresolved dimensions retained |
+| [crypto-lab-ntru-classic](https://github.com/systemslibrarian/crypto-lab-ntru-classic/tree/7d2037cf8d8d82555d6c31c7a7060bb4f2d5a649) | `7d2037cf8d8d` | exported; unresolved dimensions retained |
+| [crypto-lab-oblivious-shelf](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/tree/031b78797781d0c179b15c8599df80a95e2c251f) | `031b78797781` | exported; unresolved dimensions retained |
+| [crypto-lab-opaque-gate](https://github.com/systemslibrarian/crypto-lab-opaque-gate/tree/744d8e00f296e65cf1370c92fc6a2018b0c6e538) | `744d8e00f296` | exported; unresolved dimensions retained |
+| [crypto-lab-oram-vault](https://github.com/systemslibrarian/crypto-lab-oram-vault/tree/8452868518b71db7681ec07baf069c4257fa6c1f) | `8452868518b7` | exported; unresolved dimensions retained |
+| [crypto-lab-order-leak](https://github.com/systemslibrarian/crypto-lab-order-leak/tree/aa1885268bc4ab2900c9c3a5068c5adb4df0c8fa) | `aa1885268bc4` | exported; unresolved dimensions retained |
+| [crypto-lab-ot-gate](https://github.com/systemslibrarian/crypto-lab-ot-gate/tree/f62ef729e6bdfdb2f492906c86dbc19fe4488536) | `f62ef729e6bd` | exported; unresolved dimensions retained |
+| [crypto-lab-otp-vault](https://github.com/systemslibrarian/crypto-lab-otp-vault/tree/fc5b39ab859115ecc2814d963f40f6f71e7c76c3) | `fc5b39ab8591` | exported; unresolved dimensions retained |
+| [crypto-lab-padding-oracle](https://github.com/systemslibrarian/crypto-lab-padding-oracle/tree/247e70b1a13a5ca681060fed7ec42d77027eed9f) | `247e70b1a13a` | exported; unresolved dimensions retained |
+| [crypto-lab-paillier-gate](https://github.com/systemslibrarian/crypto-lab-paillier-gate/tree/3c46939e75323dab93e75b3647acf43eee33a2ec) | `3c46939e7532` | exported; unresolved dimensions retained |
+| [crypto-lab-pairing-gate](https://github.com/systemslibrarian/crypto-lab-pairing-gate/tree/0e3edf03054367f4b020f2e5aec30d9e7e949e85) | `0e3edf030543` | exported; unresolved dimensions retained |
+| [crypto-lab-pake-gate](https://github.com/systemslibrarian/crypto-lab-pake-gate/tree/cebf0a80f3e641dfd7b39688dce074201d21cc14) | `cebf0a80f3e6` | exported; unresolved dimensions retained |
+| [crypto-lab-patron-shield](https://github.com/systemslibrarian/crypto-lab-patron-shield/tree/69adfdcd332ca0445e2c122336b44182906d211d) | `69adfdcd332c` | exported; unresolved dimensions retained |
+| [crypto-lab-phantom-vault](https://github.com/systemslibrarian/crypto-lab-phantom-vault/tree/737a53531291c24539ffcc6578df2051d6c5c2cb) | `737a53531291` | exported; unresolved dimensions retained |
+| [crypto-lab-pki-chain](https://github.com/systemslibrarian/crypto-lab-pki-chain/tree/fe738f912b15c946e54bbeb88e6d3cf91d8e51fe) | `fe738f912b15` | exported; unresolved dimensions retained |
+| [crypto-lab-poly1305-mac](https://github.com/systemslibrarian/crypto-lab-poly1305-mac/tree/5c9c1f0a293731aa9f6dd1fa8710fc141edd209f) | `5c9c1f0a2937` | exported; unresolved dimensions retained |
+| [crypto-lab-polynomial-forge](https://github.com/systemslibrarian/crypto-lab-polynomial-forge/tree/551db07c9440b7186d5df1cae36c617c4ccbb88f) | `551db07c9440` | exported; unresolved dimensions retained |
+| [crypto-lab-power-trace](https://github.com/systemslibrarian/crypto-lab-power-trace/tree/fb1ea2bea78357c7a2389329a280b533c22a9e32) | `fb1ea2bea783` | exported; unresolved dimensions retained |
+| [crypto-lab-pq-families](https://github.com/systemslibrarian/crypto-lab-pq-families/tree/3d553669d495f9cb606dbabbbb1e51bc480ce61a) | `3d553669d495` | exported; unresolved dimensions retained |
+| [crypto-lab-pq-rotation](https://github.com/systemslibrarian/crypto-lab-pq-rotation/tree/df8f7e6edd7491181314be281135217220e5d497) | `df8f7e6edd74` | exported; unresolved dimensions retained |
+| [crypto-lab-pq-tls-handshake](https://github.com/systemslibrarian/crypto-lab-pq-tls-handshake/tree/2974175fc4d1204c5f2c145645eef47a65013154) | `2974175fc4d1` | exported; unresolved dimensions retained |
+| [crypto-lab-pqxdh-wire](https://github.com/systemslibrarian/crypto-lab-pqxdh-wire/tree/5dfdea7ba1707764b2ef40d3ad68d0c3e2864a67) | `5dfdea7ba170` | exported; unresolved dimensions retained |
+| [crypto-lab-privacy-pass](https://github.com/systemslibrarian/crypto-lab-privacy-pass/tree/9396eeca65358f4392f8449608f1bc45efcb7c97) | `9396eeca6535` | exported; unresolved dimensions retained |
+| [crypto-lab-proof-tally](https://github.com/systemslibrarian/crypto-lab-proof-tally/tree/494df6c9f336731796a2143f6d15d8c0b79402f6) | `494df6c9f336` | exported; unresolved dimensions retained |
+| [crypto-lab-protocol-checker](https://github.com/systemslibrarian/crypto-lab-protocol-checker/tree/4ce2029d8fb2ee96f858c1380ebc596b396c6890) | `4ce2029d8fb2` | exported; unresolved dimensions retained |
+| [crypto-lab-protocol-compose](https://github.com/systemslibrarian/crypto-lab-protocol-compose/tree/dbfb3faed91a90bd4d484088507ac2c3c0b726c8) | `dbfb3faed91a` | exported; unresolved dimensions retained |
+| [crypto-lab-psi-gate](https://github.com/systemslibrarian/crypto-lab-psi-gate/tree/0c9132b25bd513411bc4698abf0f5f5e9dcaeabf) | `0c9132b25bd5` | exported; unresolved dimensions retained |
+| [crypto-lab-quantum-entropy](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/tree/58b690d875abea61f59a9cd89b8d53ea2d487e33) | `58b690d875ab` | exported; unresolved dimensions retained |
+| [crypto-lab-quantum-vault-kpqc](https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc/tree/c0c067dba8dc942924fe754949ad4ceb26ec49a6) | `c0c067dba8dc` | exported; unresolved dimensions retained |
+| [crypto-lab-ratchet-wire](https://github.com/systemslibrarian/crypto-lab-ratchet-wire/tree/503c2a1f4cd568287d406c81ed7217a5f9ffc0c9) | `503c2a1f4cd5` | exported; unresolved dimensions retained |
+| [crypto-lab-rekey-relay](https://github.com/systemslibrarian/crypto-lab-rekey-relay/tree/f3d5129dbdb7d0409dcaad1a2d66fee1c015e2b8) | `f3d5129dbdb7` | exported; unresolved dimensions retained |
+| [crypto-lab-reshare-circle](https://github.com/systemslibrarian/crypto-lab-reshare-circle/tree/09f63b7009834a63e1496e0aa28625b1b7b3bf3d) | `09f63b700983` | exported; unresolved dimensions retained |
+| [crypto-lab-ring-sign](https://github.com/systemslibrarian/crypto-lab-ring-sign/tree/a9938758c5ee4f638d3454683908e4742e0d56c7) | `a9938758c5ee` | exported; unresolved dimensions retained |
+| [crypto-lab-rsa-educational](https://github.com/systemslibrarian/crypto-lab-rsa-educational/tree/37ca24b0425a5ef953ae036702b8e03fa9464bce) | `37ca24b0425a` | exported; unresolved dimensions retained |
+| [crypto-lab-rsa-forge](https://github.com/systemslibrarian/crypto-lab-rsa-forge/tree/cf6fb36cd825220129345f601b93177ae8c816d2) | `cf6fb36cd825` | exported; unresolved dimensions retained |
+| [crypto-lab-salamander](https://github.com/systemslibrarian/crypto-lab-salamander/tree/aab11fe0e1e10544bc4a5b92a819d33181643c99) | `aab11fe0e1e1` | exported; unresolved dimensions retained |
+| [crypto-lab-schnorr-forge](https://github.com/systemslibrarian/crypto-lab-schnorr-forge/tree/5a643271335b2fe968b48a60fba28a79c3106e23) | `5a643271335b` | exported; unresolved dimensions retained |
+| [crypto-lab-scloud-vault](https://github.com/systemslibrarian/crypto-lab-scloud-vault/tree/5a24fee5e7bd5fb2b66c0cd47a09f7993cf092a0) | `5a24fee5e7bd` | exported; unresolved dimensions retained |
+| [crypto-lab-search-vault](https://github.com/systemslibrarian/crypto-lab-search-vault/tree/23afb5d80315cfc22a95f7e03c855435e639de22) | `23afb5d80315` | exported; unresolved dimensions retained |
+| [crypto-lab-sector-vault](https://github.com/systemslibrarian/crypto-lab-sector-vault/tree/2ff2c5efd5a52384ce4b362191a20e890daff55c) | `2ff2c5efd5a5` | exported; unresolved dimensions retained |
+| [crypto-lab-shadow-vault](https://github.com/systemslibrarian/crypto-lab-shadow-vault/tree/f094b96e6bd798867abbd3d2512476a3618cb010) | `f094b96e6bd7` | exported; unresolved dimensions retained |
+| [crypto-lab-shamir-gate](https://github.com/systemslibrarian/crypto-lab-shamir-gate/tree/2436171fb8b9d7ee062e6e3de034c3a7ea3e36d0) | `2436171fb8b9` | exported; unresolved dimensions retained |
+| [crypto-lab-shamir-vs-frost](https://github.com/systemslibrarian/crypto-lab-shamir-vs-frost/tree/a5e5f027e3ef5b509f3fb0202ba331cfaf238315) | `a5e5f027e3ef` | exported; unresolved dimensions retained |
+| [crypto-lab-shelf-oracle](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/tree/da53a64abd3cf6a242f5ebfbb66fffb63703dd1b) | `da53a64abd3c` | exported; unresolved dimensions retained |
+| [crypto-lab-shor](https://github.com/systemslibrarian/crypto-lab-shor/tree/33d40f79952ee275c6451f5555beba1d095fd8ea) | `33d40f79952e` | exported; unresolved dimensions retained |
+| [crypto-lab-signed-bytes](https://github.com/systemslibrarian/crypto-lab-signed-bytes/tree/6da21366a24e341b1b39c8d73fab78a661ca134a) | `6da21366a24e` | exported; unresolved dimensions retained |
+| [crypto-lab-silent-tally](https://github.com/systemslibrarian/crypto-lab-silent-tally/tree/14e5c0d540be889d414498e74d8f61b951ef639e) | `14e5c0d540be` | exported; unresolved dimensions retained |
+| [crypto-lab-simon-period](https://github.com/systemslibrarian/crypto-lab-simon-period/tree/a41a4bb0585c17aff5b360fb85c1ea25cb353293) | `a41a4bb0585c` | exported; unresolved dimensions retained |
+| [crypto-lab-sleeve-check](https://github.com/systemslibrarian/crypto-lab-sleeve-check/tree/97f753a2326d015ec6170b741af40bc91c9258ee) | `97f753a2326d` | exported; unresolved dimensions retained |
+| [crypto-lab-sm2-forge](https://github.com/systemslibrarian/crypto-lab-sm2-forge/tree/4205cbff13acd37373e989aee5863878b33ee647) | `4205cbff13ac` | exported; unresolved dimensions retained |
+| [crypto-lab-snark-arena](https://github.com/systemslibrarian/crypto-lab-snark-arena/tree/9a72143f2668bb590cde2e2296b4460e2e4928bb) | `9a72143f2668` | exported; unresolved dimensions retained |
+| [crypto-lab-spake-gate](https://github.com/systemslibrarian/crypto-lab-spake-gate/tree/0e4590532ac33d22f4a0525f66b31ce8a1366c8d) | `0e4590532ac3` | exported; unresolved dimensions retained |
+| [crypto-lab-spdz-forge](https://github.com/systemslibrarian/crypto-lab-spdz-forge/tree/5a401bfec053f7c97aabd4bc1c991598cb5e53d6) | `5a401bfec053` | exported; unresolved dimensions retained |
+| [crypto-lab-sphincs-ledger](https://github.com/systemslibrarian/crypto-lab-sphincs-ledger/tree/92d9ce6a6aee33b014d8cba6b16ef516da5d9e98) | `92d9ce6a6aee` | exported; unresolved dimensions retained |
+| [crypto-lab-sphinx-mix](https://github.com/systemslibrarian/crypto-lab-sphinx-mix/tree/def321cb1b28308a7c4190583af9e1940b687a5d) | `def321cb1b28` | exported; unresolved dimensions retained |
+| [crypto-lab-split-point](https://github.com/systemslibrarian/crypto-lab-split-point/tree/ab679b95e79e102952ecda35a85202a8d5987bdf) | `ab679b95e79e` | exported; unresolved dimensions retained |
+| [crypto-lab-ssh-handshake](https://github.com/systemslibrarian/crypto-lab-ssh-handshake/tree/ff9eead05724c199d94b76ce3186c47a3b9a50fc) | `ff9eead05724` | exported; unresolved dimensions retained |
+| [crypto-lab-stark-tower](https://github.com/systemslibrarian/crypto-lab-stark-tower/tree/ecaf38b701f8067371edf89b4c6e676bfba3ab6f) | `ecaf38b701f8` | exported; unresolved dimensions retained |
+| [crypto-lab-stego-suite](https://github.com/systemslibrarian/crypto-lab-stego-suite/tree/5dd03b16d2133e2f70ba4369d2cf842e7ac5cac9) | `5dd03b16d213` | exported; unresolved dimensions retained |
+| [crypto-lab-stream-ward](https://github.com/systemslibrarian/crypto-lab-stream-ward/tree/a5be1dd09f2b135459d168ab60940c85a6624e10) | `a5be1dd09f2b` | exported; unresolved dimensions retained |
+| [crypto-lab-syndrome-drain](https://github.com/systemslibrarian/crypto-lab-syndrome-drain/tree/59a97cc56607595a260805061298f85627d685d2) | `59a97cc56607` | exported; unresolved dimensions retained |
+| [crypto-lab-syndrome-hints](https://github.com/systemslibrarian/crypto-lab-syndrome-hints/tree/34b88b39ec647ac5fcc8d16c9b0194cbfd7c9a3c) | `34b88b39ec64` | exported; unresolved dimensions retained |
+| [crypto-lab-tc26-pair](https://github.com/systemslibrarian/crypto-lab-tc26-pair/tree/1524136e52cb64e57adfcdfa3ccead7f320cf1b7) | `1524136e52cb` | exported; unresolved dimensions retained |
+| [crypto-lab-threshold-decrypt](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/tree/a2c571e281d177c53b962ab40592d990ae1e844f) | `a2c571e281d1` | exported; unresolved dimensions retained |
+| [crypto-lab-threshold-mldsa](https://github.com/systemslibrarian/crypto-lab-threshold-mldsa/tree/cbf0a1b8c086624e6e4db38251c0d978ffc548bf) | `cbf0a1b8c086` | exported; unresolved dimensions retained |
+| [crypto-lab-time-lock-puzzle](https://github.com/systemslibrarian/crypto-lab-time-lock-puzzle/tree/fcb981865990380f815403bfb5a883d90b098f16) | `fcb981865990` | exported; unresolved dimensions retained |
+| [crypto-lab-time-trust](https://github.com/systemslibrarian/crypto-lab-time-trust/tree/2852cac498088a44c2b05278f7b7891df684845d) | `2852cac49808` | exported; unresolved dimensions retained |
+| [crypto-lab-timing-oracle](https://github.com/systemslibrarian/crypto-lab-timing-oracle/tree/3ca8a5f15d5775dd6b2356a8eaf56a48c23a3dc2) | `3ca8a5f15d57` | exported; unresolved dimensions retained |
+| [crypto-lab-timing-sidechannel](https://github.com/systemslibrarian/crypto-lab-timing-sidechannel/tree/0351f083727575530f3691a8cfb773e01f74f6e6) | `0351f0837275` | exported; unresolved dimensions retained |
+| [crypto-lab-tls-handshake](https://github.com/systemslibrarian/crypto-lab-tls-handshake/tree/fd17eb4dfd5a74aa1b6cf684955af5557487ed05) | `fd17eb4dfd5a` | exported; unresolved dimensions retained |
+| [crypto-lab-token-tell](https://github.com/systemslibrarian/crypto-lab-token-tell/tree/41100d93f8174cfce0b0be71989aebdde4d6b4db) | `41100d93f817` | exported; unresolved dimensions retained |
+| [crypto-lab-traitor-trace](https://github.com/systemslibrarian/crypto-lab-traitor-trace/tree/0ace9eeb2cd932edef1d5170416994613c1f7776) | `0ace9eeb2cd9` | exported; unresolved dimensions retained |
+| [crypto-lab-vdf](https://github.com/systemslibrarian/crypto-lab-vdf/tree/c5f2a4b2a0581fcf0c568eea5ba4c65b954928ed) | `c5f2a4b2a058` | exported; unresolved dimensions retained |
+| [crypto-lab-vigenere-break](https://github.com/systemslibrarian/crypto-lab-vigenere-break/tree/15dfd3a572dc098a42cf878bfba1005f02b05930) | `15dfd3a572dc` | exported; unresolved dimensions retained |
+| [crypto-lab-vrf-gate](https://github.com/systemslibrarian/crypto-lab-vrf-gate/tree/ec084f1edada61388c54a52334b43b7dc7e61414) | `ec084f1edada` | exported; unresolved dimensions retained |
+| [crypto-lab-vss-gate](https://github.com/systemslibrarian/crypto-lab-vss-gate/tree/b88123382255af7c5b6ef4dec1af11fde65ee538) | `b88123382255` | exported; unresolved dimensions retained |
+| [crypto-lab-web-of-trust](https://github.com/systemslibrarian/crypto-lab-web-of-trust/tree/fcd2d7ca19e58e1821a6cb205bfcd8a27f10bc50) | `fcd2d7ca19e5` | exported; unresolved dimensions retained |
+| [crypto-lab-webauthn](https://github.com/systemslibrarian/crypto-lab-webauthn/tree/1485b67de4cd6cf8d48ae7021bd5900fde771227) | `1485b67de4cd` | exported; unresolved dimensions retained |
+| [crypto-lab-world-ciphers](https://github.com/systemslibrarian/crypto-lab-world-ciphers/tree/51cea193cf47f4abc491afe6ffb86f0ca7cdac5d) | `51cea193cf47` | exported; unresolved dimensions retained |
+| [crypto-lab-world-hashes](https://github.com/systemslibrarian/crypto-lab-world-hashes/tree/6f417f5104da2ee120c0fda724eb7bbc301f280b) | `6f417f5104da` | exported; unresolved dimensions retained |
+| [crypto-lab-x3dh-wire](https://github.com/systemslibrarian/crypto-lab-x3dh-wire/tree/0b8587962dd6824778b7d55bdac3c47c86dec9f2) | `0b8587962dd6` | exported; unresolved dimensions retained |
+| [crypto-lab-zk-arena](https://github.com/systemslibrarian/crypto-lab-zk-arena/tree/dc2c022ab4c6341dbd7fc0c395716cecc97dd126) | `dc2c022ab4c6` | exported; unresolved dimensions retained |
+| [crypto-lab-zk-proof-lab](https://github.com/systemslibrarian/crypto-lab-zk-proof-lab/tree/384ac53a03f26fa86200e6b7ea9e491975e0bf3d) | `384ac53a03f2` | exported; unresolved dimensions retained |

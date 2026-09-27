@@ -323,6 +323,35 @@ things that go wrong go wrong quietly: a lab can be live with no card here, or s
 a build older than its own `main`, while every file-in-this-repo check stays green.
 These tools each exist because one of those happened.
 
+### Scheduled research watch
+
+A ChatGPT scheduled task checks Crypto Lab research **daily**. It uses this catalog's current default branch to discover the labs, checks primary research and standards sources, and reports a finding only when a specific repository has a new, actionable gap. It does not edit repositories; a maintainer reviews and applies any suggested change. This watch is separate from the repository's CI checks below.
+
+The task's prompt as of September 27, 2026 is reproduced verbatim below. Its opening says “Weekly” and asks for an eight-day lookback, while the task's actual schedule is daily; the overlap helps catch later substantiation and revisions.
+
+```text
+Weekly Crypto Lab watch. Lookback window: developments dated in the last 8 days (overlap is intentional).
+
+CATALOG: Use the current default branch of https://github.com/systemslibrarian/crypto-lab as the dynamic catalog of all linked lab repositories and their topics. Include the catalog itself and any newly added labs.
+
+STEP 1 — SCAN: Search for newly published or newly substantiated cryptanalysis, errata, withdrawals, standards decisions (drafts, finals, deprecations), and deployment guidance within the window. Check original papers, IACR ePrint, NIST (FIPS/SP/IR, PQC announcements), IETF/IRTF/CFRG, other relevant standards bodies, and researcher disclosures. News may supply leads, but verify every technical claim against a primary source.
+
+STEP 2 — TRIAGE: Keep only developments that could materially affect a covered primitive, protocol, attack demonstration, parameter choice, or research/status claim. For each, classify it as: demonstrated result, extrapolation, attack-model-conditional, preprint, withdrawn, or final standard.
+
+STEP 3 — MATCH: Only for developments that survive triage, identify every potentially affected lab from its actual contents (README, code, UI text, learning materials), not just the catalog tags. Inspect each affected repo's current default branch and its catalog card before judging an update necessary. If the repo already reflects the development (check content and recent commits), suppress it.
+
+OUTPUT — only for specific, new, actionable gaps, one entry each:
+- Severity: Critical (now factually wrong or insecure) / Correction (outdated status or claim) / Enhancement (worth adding)
+- Repo(s) and file/section
+- What is now inaccurate or missing
+- Primary source with date and link
+- Suggested concise change
+- Meaningful test, if any
+Include the catalog when its own cards or learning materials need correction. Sort by severity.
+
+If nothing is actionable, reply with exactly one line: "Crypto Lab watch: no actionable changes this week." Do not modify, open PRs against, or merge any repository.
+```
+
 The table is generated from the tools themselves — the command from each tool's `Run:`
 line, the failure from its `Prevents:` line, and the cadence from the workflow job that
 runs it. Do not edit it by hand; run `node tools/tools-sync.js`.

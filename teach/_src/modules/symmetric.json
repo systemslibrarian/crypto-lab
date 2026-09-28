@@ -22,6 +22,7 @@
     {
       "name": "hidden-bit",
       "role": "intro",
+      "meeting": 1,
       "minutes": 15,
       "students_do": "In Exhibit 01, pick an AES scheme (GCM, CTR, chained-IV CBC or ECB) and an adversary (random guess, re-encrypt and compare, or the BEAST-style IV predictor), run or step real trials, and read the measured advantage, Wilson interval and verdict.",
       "source_commit": "00705ccbf695",
@@ -69,6 +70,7 @@
     {
       "name": "otp-vault",
       "role": "break-it",
+      "meeting": 1,
       "minutes": 19,
       "students_do": "Encrypt a message under a fresh random pad, type any same-length plaintext to derive a key that maps the fixed ciphertext to it, then switch on key reuse and crib-drag C1 ⊕ C2 to peel both messages apart, including a built-in challenge.",
       "source_commit": "6b2bb1c14f73",
@@ -115,6 +117,7 @@
     {
       "name": "aes-modes",
       "role": "fix",
+      "meeting": 1,
       "minutes": 14,
       "students_do": "Encrypt your own plaintext under ECB, CBC, CTR, GCM and CCM, inspect the key, IV or nonce, ciphertext and tag, and run the ECB pattern-leak, CBC bit-flip and GCM tamper-detection demos to see which modes accept a modified ciphertext.",
       "source_commit": "cbfb1b4dfa2c",
@@ -162,6 +165,7 @@
     {
       "name": "padding-oracle",
       "role": "break-it",
+      "meeting": 2,
       "minutes": 24,
       "students_do": "Predict whether a crafted final padding byte passes the real oracle, run the byte-by-byte attack on a block you type, then run the identical attack against leaky, silent and Encrypt-then-MAC servers and tamper with an AES-GCM ciphertext.",
       "source_commit": "3a7e02e6daeb",
@@ -209,6 +213,7 @@
     {
       "name": "nonce-collision",
       "role": "break-it",
+      "meeting": 2,
       "minutes": 15,
       "students_do": "Encrypt two messages under one AES-CTR key and nonce and crib-drag the second out of C1 ⊕ C2, then switch each construction to a reused nonce (or press \"Run all four — one reused nonce\") and read each card's cryptographic result beside its security verdict.",
       "source_commit": "d23b6ec02c35",

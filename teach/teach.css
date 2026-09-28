@@ -95,6 +95,23 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
 .t-crumbs li + li::before { content: "/"; color: var(--text-dim); margin-right: 0.4rem; }
 .t-crumbs [aria-current] { color: var(--text-hi); }
 
+/* Exhibit nav — carried by every worksheet and every sequence row. Wraps to one
+   item a line on a narrow screen rather than scrolling sideways. */
+.t-exnav { margin: 1rem 0; padding: 0.7rem 0.9rem; border: 1px solid var(--rule); border-radius: 6px; }
+.t-exnav p { margin: 0 0 0.2rem; font-size: 0.9rem; }
+.t-exnav-where { color: var(--text-dim); }
+.t-exnav-what { color: var(--text-hi); font-weight: 600; }
+.t-exnav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem; margin: 0.5rem 0 0; padding: 0; list-style: none; font-size: 0.9rem; }
+.t-exnav-links li { margin: 0; }
+.t-exnav-here { color: var(--text-hi); font-weight: 600; }
+.t-exnav-off { color: var(--text-dim); }
+.t-exnav-meeting { color: var(--text-dim); font-size: 0.85em; }
+.t-row-nav td { padding-top: 0; }
+.t-row-nav .t-exnav { margin: 0.2rem 0 0.4rem; }
+@media (max-width: 520px) {
+  .t-exnav-links { flex-direction: column; gap: 0.35rem; }
+}
+
 /* ---- layout ---- */
 .t-main {
   max-width: 50rem;

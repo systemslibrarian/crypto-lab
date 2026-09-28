@@ -323,11 +323,35 @@ things that go wrong go wrong quietly: a lab can be live with no card here, or s
 a build older than its own `main`, while every file-in-this-repo check stays green.
 These tools each exist because one of those happened.
 
+### What each watch is responsible for
+
+Two different questions are being asked here, and neither answers the other's.
+
+The **scheduled research watch** below asks *did the outside world change?* — new
+cryptanalysis, errata, a withdrawal, a standards decision, a shift in deployment
+guidance. It reads primary sources, works out which labs a finding touches by
+inspecting what those labs actually contain rather than going by their titles, and
+reports what it found. It never edits a repository.
+
+The **tools** in the table that follows ask *did this fleet drift from itself?* — a lab
+live with no card here, a site serving a build older than its own `main`, a card
+claiming an algorithm its source does not implement, a worksheet naming a control its
+exhibit no longer has, a module page publishing a defect note that stopped being true.
+
+A finding from one is not evidence about the other. A lab can be perfectly
+self-consistent and describe a standard withdrawn last week; it can be current with the
+literature and serving a stale build. Green here means the fleet agrees with itself, and
+nothing more than that.
+
+Neither asks whether the demonstrations teach well — whether a student who works through
+an exhibit comes away understanding the thing it was built to show. That needs an
+instructor, not a checker, and nothing in this section is a substitute for one.
+
 ### Scheduled research watch
 
 A ChatGPT scheduled task checks Crypto Lab research **daily**. It uses this catalog's current default branch to discover the labs, checks primary research and standards sources, and reports a finding only when a specific repository has a new, actionable gap. It does not edit repositories; a maintainer reviews and applies any suggested change. This watch is separate from the repository's CI checks below.
 
-The task's prompt as of September 27, 2026 is reproduced verbatim below. Its opening says “Weekly” and asks for an eight-day lookback, while the task's actual schedule is daily; the overlap helps catch later substantiation and revisions.
+The task's prompt as of September 27, 2026 is reproduced verbatim below. **The reproduction may lag the task**: the scheduled task lives in ChatGPT, nothing here can read it, and no check compares the two — so treat the block as what the prompt said on that date rather than as what is running now. Its opening says “Weekly” and asks for an eight-day lookback, while the task's actual schedule is daily; the overlap helps catch later substantiation and revisions.
 
 ```text
 Weekly Crypto Lab watch. Lookback window: developments dated in the last 8 days (overlap is intentional).

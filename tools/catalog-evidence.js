@@ -66,12 +66,16 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const { ALGORITHMS, ATTACKS } = require('./catalog-vocab.js');
 const PROTOCOL_TERMS = ALGORITHMS.filter((t) => t.structures);
 
 const ROOT = path.join(__dirname, '..');
 const REPOS = path.join(ROOT, '..');
 const HTML = path.join(ROOT, 'index.html');
+// Human review covers source shapes the conservative JS/TS scanner cannot prove.
+// Each review is pinned to a lab commit; a changed lab must be reviewed again.
+const REVIEWS = require('./catalog-reviewed.json');
 
 const CODE_EXT = /\.(ts|js|mjs|cjs|tsx|jsx)$/;
 /* Languages this scanner does NOT read. Not a wish list — the labs that use them.
@@ -535,6 +539,26 @@ function evidenceFor(slug) {
   const inertOnly = [...commentOnly.entries()].filter(([n]) => !hits.has(n))
     .map(([name, at]) => ({ name, at })).sort((a, b) => a.name.localeCompare(b.name));
 
+  const review = REVIEWS[slug];
+  if (review) {
+    const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+    if (head !== review.commit) {
+      throw new Error(`${slug}: source review pinned to ${review.commit}, clone is ${head}; re-review before writing evidence`);
+    }
+    for (const name of review.remove || []) hits.delete(name);
+    for (const item of review.add || []) {
+      const at = item.lastIndexOf('@');
+      const name = item.slice(0, at);
+      const anchor = item.slice(at + 1);
+      if (at < 0 || !ALGORITHMS.some((term) => term.name === name) || !/^.+:\d+$/.test(anchor)) {
+        throw new Error(`${slug}: invalid reviewed implementation ${item}`);
+      }
+      hits.set(name, { at: anchor, shape: 'reviewed' });
+    }
+    if (review.state === 'N/A' && hits.size) {
+      throw new Error(`${slug}: N/A review conflicts with ${[...hits.keys()].join(', ')}`);
+    }
+  }
   const impl = [...hits.entries()].map(([name, v]) => ({ name, at: v.at, shape: v.shape }))
     .sort((a, b) => a.name.localeCompare(b.name));
   const refs = [...mentions.keys()].filter((n) => !hits.has(n)).sort();
@@ -553,6 +577,9 @@ function evidenceFor(slug) {
   else if (libs.has('@noble')) implementation = '@noble';
   else if (libs.has('WASM')) implementation = 'WASM';
   else if (impl.length) implementation = 'hand-rolled';
+  if (review?.implementation) implementation = review.implementation;
+  else if (review?.state === 'N/A') implementation = 'N/A (model or attack)';
+  else if (impl.length && implementation === 'UNKNOWN') implementation = 'reviewed source';
 
   /* NOT-SCANNED is a THIRD state, and the distinction is the whole point.
      UNKNOWN means every file this tool can read was read and no algorithm was
@@ -560,7 +587,7 @@ function evidenceFor(slug) {
      NOT-SCANNED means the lab's implementation is in a language this tool does
      not open, so it has no finding to report. Folding the second into the first
      publishes "implements nothing" about source nobody looked at. */
-  const unreadable = [...unread.entries()].sort((a, b) => b[1] - a[1])
+  const unreadable = [...unread.entries()].filter(([name]) => !review?.covered?.includes(name)).sort((a, b) => b[1] - a[1])
     .map(([name, n]) => `${name}:${n}`);
   return {
     slug,
@@ -572,6 +599,7 @@ function evidenceFor(slug) {
     implementation,
     unscanned: unreadable,
     notScanned: impl.length === 0 && unreadable.length > 0,
+    reviewed: review ? { commit: review.commit, note: review.note, state: review.state || 'covered' } : null,
     commentOnly: inertOnly,
     protocolPartial: protocolPartial.filter((x) => !hits.has(x.name)).sort((a, b) => a.name.localeCompare(b.name)),
   };
@@ -601,7 +629,7 @@ const encode = (items) => items.map((i) => (i.at ? `${i.name}@${i.at}` : i.name)
 
 function fieldsFor(ev) {
   const implemented = ev.implements.length ? encode(ev.implements)
-    : (ev.notScanned ? 'NOT-SCANNED' : 'UNKNOWN');
+    : (ev.notScanned ? 'NOT-SCANNED' : (ev.reviewed?.state === 'N/A' ? 'N/A' : 'UNKNOWN'));
   return {
     implements: implemented,
     unscanned: (ev.unscanned || []).join(' | '),
@@ -611,6 +639,8 @@ function fieldsFor(ev) {
     attacks: ev.attacks.length ? encode(ev.attacks) : '',
     standards: ev.standards.length ? ev.standards.join(' | ') : '',
     implementation: ev.implementation,
+    reviewCommit: ev.reviewed?.commit || '',
+    reviewNote: ev.reviewed?.note || '',
   };
 }
 
@@ -632,9 +662,11 @@ function writeCards(all) {
       f.attacks ? `data-attacks="${f.attacks}"` : null,
       f.standards ? `data-standards="${f.standards}"` : null,
       `data-implementation="${f.implementation}"`,
+      f.reviewCommit ? `data-review-commit="${f.reviewCommit}"` : null,
+      f.reviewNote ? `data-review-note="${f.reviewNote}"` : null,
     ].filter(Boolean);
     const anchorHref = `href="https://systemslibrarian.github.io/${c.slug}/"`;
-    const stripped = c.block.replace(/\sdata-(?:implements|unscanned|comment-only|protocol-partial|references|attacks|standards|implementation)="[^"]*"/g, '');
+    const stripped = c.block.replace(/^[ \t]*data-(?:implements|unscanned|comment-only|protocol-partial|references|attacks|standards|implementation|review-commit|review-note)="[^"]*"\r?\n/gm, '');
     const next = stripped.replace(anchorHref, `${anchorHref}\n            ${parts.join('\n            ')}`);
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }
@@ -648,7 +680,7 @@ function verifyAnchors(all) {
   const byName = new Map(ALGORITHMS.map((a) => [a.name, a]));
   for (const c of all) {
     const stored = attr(c.block, 'implements');
-    if (!stored || stored === 'UNKNOWN' || stored === 'NOT-SCANNED') continue;
+    if (!stored || stored === 'UNKNOWN' || stored === 'NOT-SCANNED' || stored === 'N/A') continue;
     for (const item of stored.split(' | ')) {
       const at = item.indexOf('@');
       if (at < 0) { bad.push({ slug: c.slug, item, why: 'no anchor' }); continue; }
@@ -660,6 +692,13 @@ function verifyAnchors(all) {
       const lines = fs.readFileSync(full, 'utf8').split('\n');
       const line = lines[Number(lineNo) - 1];
       if (line === undefined) { bad.push({ slug: c.slug, item, why: `file has only ${lines.length} lines` }); continue; }
+      // A reviewed anchor may name the implementing operation generically
+      // (generate_shares, for example). Its source commit was checked above;
+      // keep the exact line alive without pretending a name grep proved it.
+      if (REVIEWS[c.slug]?.add?.includes(item)) {
+        if (!line.trim()) bad.push({ slug: c.slug, item, why: 'reviewed line is blank' });
+        continue;
+      }
       const term = byName.get(name);
       if (!term) { bad.push({ slug: c.slug, item, why: 'not a vocabulary term' }); continue; }
       /* The evidence is the line OR the path, because that is how it was

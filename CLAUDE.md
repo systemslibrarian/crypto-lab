@@ -25,12 +25,14 @@ each has a checker that fails when it drifts:
 
 `CATALOG.md` answers the one question the cards cannot: *which labs implement
 ML-KEM?* The chips look like they should answer it and cannot — there are 625
-distinct chips across 207 cards, so a chip search returns the labs that happened
+distinct chips across 208 cards, so a chip search returns the labs that happened
 to spell it your way and looks complete while doing it. The card schema therefore
 carries six more fields (`data-implements`, `data-references`, `data-attacks`,
 `data-standards`, `data-implementation`, `data-overlaps`), and the first five are
 DERIVED from each lab's own source by `node tools/catalog-evidence.js write` —
-never hand-written. `data-overlaps` is the exception: how two labs differ is not
+never hand-written. Source shapes the scanner cannot establish have a pinned,
+human-reviewed supplement in `tools/catalog-reviewed.json`; the writer applies it
+only at the recorded lab commit. `data-overlaps` is the exception: how two labs differ is not
 derivable from either one, so it is judged, hand-written, and left alone by the
 writer.
 
@@ -42,20 +44,18 @@ keep in mind — it is entirely about HQC's decoder and implements neither HQC n
 a decoder, as its own README says outright ("an abstract timing model — not a
 real BCH decoder"). Under a grep it is an HQC implementation. A lab whose
 implementations are not derivable is **UNKNOWN**, which is not "implements
-nothing": 21 labs are UNKNOWN and most of them model or attack an algorithm
-rather than compute it.
+nothing". A source-reviewed lab that implements no named algorithm is **N/A**;
+its reason and inspected commit travel with the generated catalog entry.
 
-**A lab is in one of THREE states, not two.** `UNKNOWN` means every file this
-scanner reads was read and no algorithm was derivable — a finding, and usually a
-true one about a lab that models or attacks rather than computes. `NOT-SCANNED`
-means the lab implements its cryptography in a language the scanner does not
-open, so there is no finding either way: `crypto-lab-silent-tally` and
-`crypto-lab-ablation-wire` are Rust behind a WASM binding, and reporting them
-UNKNOWN published "implements nothing" about source nobody looked at. That is
-`protection-census`'s 404 in a different costume. A further **nine** labs are
-partially unread — `quantum-vault-kpqc` alone carries 27 Rust files, 4 C/C++ and
-3 WebAssembly — and their algorithm lists are a floor rather than a total, which
-`CATALOG.md` says on each one. `data-unscanned` records the languages and counts.
+**Implementation and coverage are separate.** `UNKNOWN` means no named algorithm
+was derived and no source review resolved the miss. `N/A` requires a source review
+of the actual lab at a pinned commit; it means no named algorithm in this index,
+not that the lab does no useful computation. `NOT-SCANNED` means the algorithm
+lives in source the scanner has not read. A lab may implement known algorithms
+and still be partially unread; the remaining language and count live in
+`data-unscanned`. A reviewed source commit that changes must be reviewed again
+before `catalog-evidence.js` will write its card. Opaque third-party WASM remains
+explicitly partial even when its TypeScript caller proves which algorithm it invokes.
 
 **The chip rule.** A card may name an algorithm its lab does not implement, and
 where it names it decides whether that is honest. In the DESCRIPTION it is always
@@ -75,9 +75,9 @@ own source — never from the scanner's own output, which would measure nothing 
 report 100%. Two numbers, never averaged, because they fail for different reasons
 and are fixed by different work:
 
-- **recall 89.8%** (53 of 59) — of what a lab implements AND the vocabulary can
+- **recall 90.2%** (55 of 61) — of what a lab implements AND the vocabulary can
   name, how much the detection shapes find.
-- **coverage 90.8%** (59 of 65) — of everything a lab implements, how much the
+- **coverage 93.8%** (61 of 65) — of everything a lab implements, how much the
   vocabulary can name at all.
 
 The fixture is grown **as the work goes, not when the gate is in reach** — one
@@ -110,7 +110,7 @@ those look identical unless the reason is recorded, so it is recorded in
 when recall improves, never lowered again. Moving it a second time is the
 maintainer's call, not a tool's and not an agent's.**
 
-Today: **recall 89.8% ok, 20 labs ok, all five miss classes resolved — MET.**
+Today: **recall 90.2% ok, 20 labs ok, all five miss classes resolved — MET.**
 Met is permission, not obligation: turning the chip rule into a failing check
 would redden CI on the 22 chips it still flags, so dispositioning those comes
 first and the decision is the maintainer's. Five classes, in `catalog-recall.js` with what

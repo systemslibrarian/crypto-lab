@@ -1,0 +1,227 @@
+{
+  "crypto-lab-ablation-wire": {
+    "commit": "8ad03c068a133660b27755ff0910e0391f8e0dcc",
+    "add": [
+      "AES-GCM@codetalker-core/src/aead.rs:5",
+      "ChaCha20-Poly1305@codetalker-core/src/aead.rs:6",
+      "HKDF@codetalker-core/src/kdf.rs:4",
+      "SHA-256@codetalker-core/src/kdf.rs:5",
+      "X25519@codetalker-core/src/kem.rs:97",
+      "ML-KEM@codetalker-core/src/kem.rs:253",
+      "Ed25519@codetalker-core/src/identity.rs:172",
+      "ML-DSA@codetalker-core/src/identity.rs:221"
+    ],
+    "covered": [
+      "Rust"
+    ],
+    "implementation": "Rust crates / WASM",
+    "note": "Rust crypto core reviewed; WASM is built from that core"
+  },
+  "crypto-lab-biham-lens": {
+    "commit": "27249921456d250cb3955f89b2c43bdbc1c5a577",
+    "add": [
+      "Toy SPN@demos/biham-lens/src/crypto/spn.ts:95"
+    ],
+    "note": "Executes a toy SPN, not DES"
+  },
+  "crypto-lab-card-trick": {
+    "commit": "126579c282efcf5ea58228252b2ee646c25ec8b4",
+    "add": [
+      "Five-card trick@src/cards/protocol.ts:2"
+    ],
+    "note": "Runs den Boer's physical-card AND protocol; no encryption"
+  },
+  "crypto-lab-context-ward": {
+    "commit": "0fa3a0ee23fdb9dc6a8a294592dfed7434622c69",
+    "covered": [
+      "Python"
+    ],
+    "note": "Python verifier uses the same SHA-256, HMAC and Ed25519 primitives already found in TS"
+  },
+  "crypto-lab-covert-channel-studio": {
+    "commit": "de4bfe0c9bb1f7733f795d9154a2cf3e023f8117",
+    "state": "N/A",
+    "note": "Covert-channel encoders and detectors; no named cryptographic primitive implemented"
+  },
+  "crypto-lab-dp-noise": {
+    "commit": "5f45e293c0ba55f928eee1854933e149d08564d4",
+    "add": [
+      "Laplace mechanism@src/dp/laplace.ts:45",
+      "Gaussian mechanism@src/dp/discrete.ts:40"
+    ],
+    "note": "Runs discrete and continuous differential-privacy noise mechanisms"
+  },
+  "crypto-lab-export-grade": {
+    "commit": "77601242dfa34d9874e1d363295e0241232d1129",
+    "add": [
+      "TEA1@src/tea1/core.ts:93"
+    ],
+    "note": "Runs TETRA TEA1 and a bounded state-recovery demonstration"
+  },
+  "crypto-lab-frost-threshold": {
+    "commit": "c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf",
+    "add": [
+      "FROST@crate/src/round2.rs:54"
+    ],
+    "covered": [
+      "Rust"
+    ],
+    "implementation": "Rust FROST crate / WASM",
+    "note": "Rust keygen, signing rounds and aggregation reviewed"
+  },
+  "crypto-lab-ghost-commit": {
+    "commit": "88abb12c24089a2606306816f54a575e58c723b0",
+    "add": [
+      "SHA-1@src/git/objects.ts:16",
+      "SHA-256@src/git/objects.ts:16"
+    ],
+    "note": "WebCrypto hashes actual Git object preimages selected through a runtime algorithm map"
+  },
+  "crypto-lab-hqc-timing": {
+    "commit": "a6c492ef3b021060e6b2d8413a10719acbeb0112",
+    "state": "N/A",
+    "note": "Synthetic timing model; explicitly no HQC or BCH decoder"
+  },
+  "crypto-lab-hqc-timing-break": {
+    "commit": "50c0b64a3597cfc9caf97eca16b69420e4f09f35",
+    "add": [
+      "Repetition code@src/engine.ts:163"
+    ],
+    "note": "Runs a repetition-code surrogate and majority recovery; no HQC decoder"
+  },
+  "crypto-lab-iron-serpent": {
+    "commit": "dabdded459f72d1bd8d58e7bf45f49b8cb9bdd2d",
+    "add": [
+      "Argon2@demos/iron-serpent/src/kdf.ts:48"
+    ],
+    "note": "Argon2id is invoked through a bundled external WASM binary; its source is absent"
+  },
+  "crypto-lab-matsui-line": {
+    "commit": "54ae594278d010249b2f72eb664567b0e28c3494",
+    "add": [
+      "Toy SPN@src/crypto/spn.ts:66"
+    ],
+    "note": "Executes a toy SPN for Matsui's linear attack"
+  },
+  "crypto-lab-model-breach": {
+    "commit": "a1e3864c76e26f622608c25325ead69869119465",
+    "add": [
+      "Toy HiAE@src/hiae.ts:50"
+    ],
+    "note": "Executes a deliberately toy HiAE model, not the production cipher"
+  },
+  "crypto-lab-point-ledger": {
+    "commit": "49dfff0b098791f09e26ecccb53f04b8ad22f1ef",
+    "remove": [
+      "ECDSA",
+      "SHA-3"
+    ],
+    "note": "Fresh clone inspected; ECDSA is a data table and SHA-3 is merely the module path exporting SHAKE"
+  },
+  "crypto-lab-quantum-entropy": {
+    "commit": "58b690d875abea61f59a9cd89b8d53ea2d487e33",
+    "add": [
+      "Toeplitz extractor@src/entropy/toeplitz.ts:21",
+      "von Neumann extractor@src/entropy/vonneumann.ts:15"
+    ],
+    "note": "Runs both extractors on generated bits; source QRNG is modeled"
+  },
+  "crypto-lab-quantum-vault-kpqc": {
+    "commit": "c0c067dba8dc942924fe754949ad4ceb26ec49a6",
+    "add": [
+      "SMAUG-T@wasm/src/smaug_exports.c:2",
+      "HAETAE@wasm/src/haetae_exports.c:2",
+      "HKDF@crates/qv-core/src/encrypt.rs:20"
+    ],
+    "covered": [
+      "Rust",
+      "C/C++"
+    ],
+    "implementation": "Rust/C wrappers and WASM",
+    "note": "Rust and C source reviewed; three compiled WASM binaries remain opaque"
+  },
+  "crypto-lab-rsa-educational": {
+    "commit": "37ca24b0425a5ef953ae036702b8e03fa9464bce",
+    "covered": [
+      "Python"
+    ],
+    "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS"
+  },
+  "crypto-lab-shadow-vault": {
+    "commit": "f094b96e6bd798867abbd3d2512476a3618cb010",
+    "add": [
+      "ChaCha20-Poly1305@crate/src/lib.rs:13",
+      "SHA-256@crate/src/lib.rs:17"
+    ],
+    "covered": [
+      "Rust",
+      "WebAssembly"
+    ],
+    "implementation": "RustCrypto / compiled WASM",
+    "note": "Rust crypto core reviewed; bundled WASM is built from that core"
+  },
+  "crypto-lab-silent-tally": {
+    "commit": "14e5c0d540be889d414498e74d8f61b951ef639e",
+    "add": [
+      "Shamir secret sharing@src/lib.rs:111"
+    ],
+    "covered": [
+      "Rust"
+    ],
+    "implementation": "Rust/WASM",
+    "note": "Rust field arithmetic and Shamir share generation/reconstruction reviewed"
+  },
+  "crypto-lab-snark-arena": {
+    "commit": "9a72143f2668bb590cde2e2296b4460e2e4928bb",
+    "remove": [
+      "PLONK"
+    ],
+    "add": [
+      "Groth16@src/ui/realproof.ts:97"
+    ],
+    "covered": [
+      "WebAssembly"
+    ],
+    "note": "Checked-in circuit source and real snarkjs Groth16 flow reviewed; PLONK is shown only as a comparison"
+  },
+  "crypto-lab-syndrome-drain": {
+    "commit": "59a97cc56607595a260805061298f85627d685d2",
+    "state": "N/A",
+    "note": "Models decode-one-of-many work factors; no code-based KEM or decoder implemented"
+  },
+  "crypto-lab-syndrome-hints": {
+    "commit": "34b88b39ec647ac5fcc8d16c9b0194cbfd7c9a3c",
+    "add": [
+      "Information-set decoding@src/sdp/isd.ts:4",
+      "Stern decoding@src/sdp/stern.ts:2"
+    ],
+    "note": "Runs Prange-style and Stern information-set decoding against toy instances"
+  },
+  "crypto-lab-tc26-pair": {
+    "commit": "1524136e52cb64e57adfcdfa3ccead7f320cf1b7",
+    "remove": [
+      "Shamir secret sharing"
+    ],
+    "add": [
+      "Shipovnik@native/shipovnik_wrapper.c:68",
+      "Hypericum@native/hypericum_wrapper.c:41"
+    ],
+    "covered": [
+      "C/C++"
+    ],
+    "implementation": "C wrappers / WASM",
+    "note": "C wrappers and TS calls reviewed; two compiled reference WASM binaries remain opaque"
+  },
+  "crypto-lab-timing-sidechannel": {
+    "commit": "0351f083727575530f3691a8cfb773e01f74f6e6",
+    "state": "N/A",
+    "note": "Runs early-exit comparison timing attack; no named cryptographic primitive"
+  },
+  "crypto-lab-token-tell": {
+    "commit": "41100d93f8174cfce0b0be71989aebdde4d6b4db",
+    "covered": [
+      "Python"
+    ],
+    "note": "Python reference-data generators reviewed; browser uses TS detection and ECDSA"
+  }
+}

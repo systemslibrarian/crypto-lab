@@ -47,6 +47,7 @@
 const fs = require('fs');
 const path = require('path');
 const { ALGORITHMS } = require('./catalog-vocab.js');
+const REVIEWS = require('./catalog-reviewed.json');
 
 const ROOT = path.join(__dirname, '..');
 const HTML = path.join(ROOT, 'index.html');
@@ -81,7 +82,7 @@ function cards() {
     const split = (items, field, slug) => items.map((i) => {
       const at = i.lastIndexOf('@');
       if (at < 0) {
-        if (field === 'implements' && i !== 'UNKNOWN' && i !== 'NOT-SCANNED') {
+        if (field === 'implements' && i !== 'UNKNOWN' && i !== 'NOT-SCANNED' && i !== 'N/A') {
           errors.push(`${slug}: data-implements entry "${i}" has no @file:line anchor`);
         }
         return { name: i, at: null };
@@ -100,10 +101,13 @@ function cards() {
       chips: [...block.matchAll(/class="chip">([^<]+)</g)].map((x) => decode(x[1].trim())),
       unknown: impl === 'UNKNOWN' || impl === '',
       notScanned: impl === 'NOT-SCANNED',
+      noNamedPrimitive: impl === 'N/A',
+      reviewCommit: attr('review-commit'),
+      reviewNote: attr('review-note'),
       unscanned: list(attr('unscanned')),
       commentOnly: split(list(attr('comment-only')), 'comment-only', slug),
       protocolPartial: split(list(attr('protocol-partial')), 'protocol-partial', slug),
-      implements: impl === 'UNKNOWN' || impl === 'NOT-SCANNED' || impl === '' ? [] : split(list(impl), 'implements', slug),
+      implements: impl === 'UNKNOWN' || impl === 'NOT-SCANNED' || impl === 'N/A' || impl === '' ? [] : split(list(impl), 'implements', slug),
       references: list(attr('references')),
       attacks: split(list(attr('attacks')), 'attacks', slug),
       standards: list(attr('standards')),
@@ -187,12 +191,13 @@ function build(list) {
   L.push('Every line below is generated from `index.html`, which stays the single source of');
   L.push('truth. The algorithm facts on each card are derived from that lab\'s own source by');
   L.push('`tools/catalog-evidence.js`, and each implemented algorithm carries the `file:line`');
-  L.push('where the evidence is. Nothing here is maintained by hand.');
+  L.push('where the evidence is. Source shapes the scanner cannot establish are recorded');
+  L.push('in `tools/catalog-reviewed.json` at a pinned lab commit. Nothing here is edited by hand.');
   L.push('');
   L.push('**Implemented** means the lab\'s code computes it — the algorithm appears in a');
-  L.push('declaration, an invocation, a module import, or a WebCrypto call.');
+  L.push('declaration, an invocation, a module import, a WebCrypto call, or a pinned source review.');
   L.push('**Referenced** means the lab names it without implementing it: a lab that teaches an');
-  L.push('attack on HQC by modelling its decode time references HQC and implements nothing.');
+  L.push('attack on HQC by modelling its decode time references HQC without implementing HQC.');
   L.push('The distinction is the point of the index, and a grep cannot make it.');
   L.push('');
   L.push('Regenerate with `node tools/catalog-sync.js`; re-derive the underlying facts with');
@@ -303,19 +308,24 @@ function build(list) {
   const unknown = sorted.filter((c) => c.unknown);
   const notScanned = sorted.filter((c) => c.notScanned);
   const partial = sorted.filter((c) => !c.notScanned && c.unscanned.length);
-  L.push(`${sorted.length} labs, in three states rather than two.`);
+  L.push(`${sorted.length} labs. Implementation findings and source coverage are separate questions.`);
+  L.push('');
+  const noNamedPrimitive = sorted.filter((c) => c.noNamedPrimitive);
+  L.push(`**N/A (${noNamedPrimitive.length})** — source-reviewed labs that model an attack or`);
+  L.push('system but implement no named algorithm in this index. N/A is a reviewed');
+  L.push('finding, not the automatic scanner\'s answer to a miss.');
   L.push('');
   L.push(`**UNKNOWN (${unknown.length})** — every file this scanner reads was read and no algorithm was`);
-  L.push('derivable. That is a finding: most of these model or attack an algorithm rather than');
-  L.push('compute it.');
+  L.push('derivable, with no source review resolving whether that is an intentional model or');
+  L.push('a missed implementation. Do not treat this as N/A.');
   L.push('');
   L.push(`**NOT-SCANNED (${notScanned.length})** — the lab implements its cryptography in a language this`);
   L.push('scanner does not read, so there is no finding either way. `could not look` is not');
   L.push('`nothing there`, and collapsing the two would publish "implements nothing" about source');
-  L.push('nobody opened. ' + (notScanned.length ? notScanned.map((c) => `\`${c.slug}\` (${c.unscanned.join(', ')})`).join(', ') : ''));
+  L.push('nobody opened.' + (notScanned.length ? ' ' + notScanned.map((c) => `\`${c.slug}\` (${c.unscanned.join(', ')})`).join(', ') : ''));
   L.push('');
-  L.push(`**Partially unread (${partial.length})** — algorithms were derived, and some of the lab is still in a`);
-  L.push('language this scanner does not read, so its list is a floor rather than a total.');
+  L.push(`**Partially unread (${partial.length})** — some bundled source or binary remains opaque`);
+  L.push('to this index; the algorithm list is a floor rather than a total.');
   L.push('');
   for (const c of sorted) {
     L.push(`### ${c.title}${c.wip ? ' *(WIP)*' : ''}`);
@@ -327,11 +337,14 @@ function build(list) {
     const implLine = c.notScanned
       ? `**NOT-SCANNED** — this lab's implementation is in ${c.unscanned.join(', ')}, which this scanner does not read. No finding either way.`
       : c.unknown
-        ? 'UNKNOWN — every file this scanner reads was read, and no algorithm was derivable'
+        ? 'UNKNOWN — scanner found no named algorithm; source review still needed'
+        : c.noNamedPrimitive
+          ? 'N/A — reviewed source implements no named algorithm in this index'
         : c.implements.map((i) => `${i.name}${anchor(i)}`).join(', ');
     L.push(`- **Implements:** ${implLine}`);
+    if (c.reviewCommit) L.push(`- **Source review:** [${c.reviewCommit.slice(0, 12)}](https://github.com/systemslibrarian/${c.slug}/commit/${c.reviewCommit}) — ${c.reviewNote}`);
     if (!c.notScanned && c.unscanned.length) {
-      L.push(`- **Partially unread:** ${c.unscanned.join(', ')} — the list above covers only this lab's JavaScript and TypeScript.`);
+      L.push(`- **Partially unread:** ${c.unscanned.join(', ')} — source or compiled binary not fully available for review here.`);
     }
     if (c.references.length) L.push(`- **References:** ${c.references.join(', ')}`);
     if (c.attacks.length) L.push(`- **Attacks shown:** ${c.attacks.map((a) => `${a.name}${anchor(a)}`).join(', ')}`);
@@ -349,6 +362,26 @@ function build(list) {
 function validate(list) {
   const known = new Set(list.map((c) => c.slug));
   for (const c of list) {
+    const review = REVIEWS[c.slug];
+    if (review) {
+      if (c.reviewCommit !== review.commit || c.reviewNote !== review.note) {
+        errors.push(`${c.slug}: card review differs from tools/catalog-reviewed.json`);
+      }
+      if (c.noNamedPrimitive !== (review.state === 'N/A')) {
+        errors.push(`${c.slug}: N/A state differs from pinned source review`);
+      }
+      for (const item of review.add || []) {
+        const at = item.lastIndexOf('@');
+        if (!c.implements.some((x) => x.name === item.slice(0, at) && x.at === item.slice(at + 1))) {
+          errors.push(`${c.slug}: reviewed implementation ${item} is absent from card`);
+        }
+      }
+      for (const name of review.remove || []) {
+        if (c.implements.some((x) => x.name === name)) errors.push(`${c.slug}: rejected ${name} remains on card`);
+      }
+    } else if (c.reviewCommit || c.reviewNote || c.noNamedPrimitive) {
+      errors.push(`${c.slug}: review or N/A claim without a source review record`);
+    }
     for (const i of c.implements) {
       if (!VOCAB.has(i.name)) errors.push(`${c.slug}: implements "${i.name}", which is not in catalog-vocab.js`);
     }

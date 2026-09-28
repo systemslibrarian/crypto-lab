@@ -117,7 +117,7 @@ const MISS_CLASSES = [
     id: 'non-typescript',
     resolved: true,
     status: 'EXEMPTED — NOT-SCANNED and partially-unread labs are skipped by the rule',
-    what: 'The implementation is in a language this scanner does not read. Two labs are NOT-SCANNED for this reason and nine more are partially unread, quantum-vault-kpqc alone holding 27 Rust files.',
+    what: 'The implementation is in source this scanner does not read. Pinned source reviews now cover the earlier Rust/Python/C cases; three labs retain opaque bundled WASM and remain explicitly partial.',
     closes: 'reporting, not detection — already handled by the NOT-SCANNED state and the partially-unread note. The chip rule exempts both, so this class cannot produce a false accusation.',
   },
   {

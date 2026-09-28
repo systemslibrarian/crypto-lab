@@ -219,9 +219,14 @@ need the network and `gh`; each takes 20 to 30 seconds for the whole fleet, so n
 them is part of the fast loop. **Run them after any cross-repo pass, after anything that touches a
 workflow, and after building a lab.**
 
-**Five of them also run weekly on their own**, through `.github/workflows/fleet.yml` and
-`tools/fleet-check.js`: `fleet-sync`, `deploy-sync`, `gate-sync`, `dispatch-sync` and
-`theme-sync`. `protection-census` belongs with them and is deliberately NOT there:
+**Seven checkers also run weekly on their own**, through `.github/workflows/fleet.yml`
+and `tools/fleet-check.js`: `fleet-sync`, `deploy-sync`, `gate-sync`, `dispatch-sync`,
+`theme-sync`, `catalog-evidence verify` and `catalog-recall check`. The last two read the
+sibling clones rather than GitHub, and belong to the group for the same reason — their
+answers change when a LAB changes, not when this repo does. This sentence said five
+until 2026-09-27, when a depth audit asked whether the manual-versus-scheduled count was
+stale; it was, and by the additions made in this repository. The generated table in
+`README.md` was right throughout, which is the argument for generating it. `protection-census` belongs with them and is deliberately NOT there:
 `secrets.GITHUB_TOKEN` is scoped to the repository the workflow runs in, so reading a
 sibling repo's branch protection answers `403 Resource not accessible by integration`.
 The first scheduled run reported UNREAD for all 204 labs and filed it as a failure.
@@ -448,6 +453,38 @@ drop in the denominator is now as loud as a drift in the numerator.** Adding or
 removing a lab therefore requires re-pinning: `node tools/dispatch-census.js write`,
 then read the diff — that file is the only thing that remembers a lab used to be
 here.
+
+**Depth of assurance is audited, and the audit is generated.** `audits/DEPTH-AUDIT-2026-09-25.md`
+and its follow-up read the fleet by hand and are the reason `tools/depth-audit.js` can be
+narrow. Both stated their own limit: source-scan coverage is not dimension coverage, most
+labs carried `?` on the dimensions that weigh most, and neither would rank from partial
+scores. The generator derives those dimensions from an export of each remote default
+branch in `.scratch/` — never from the local clones, which carry uncommitted work — and
+records the sha so every anchor points at the commit that was read.
+
+It reuses the hand audit's published rubric rather than inventing a second scale:
+**T** ground truth 4, **I** independent check 4, **C** displayed claim 2, **N** negative
+test 2, **G** deploy gate 2, **H** limits 1. A `?` is excluded from BOTH the earned and the
+assessed weight, so an unknown is never averaged into a score. The seventh dimension —
+whether a test step runs and reports zero tests — is credited only on OBSERVED run output,
+which files cannot show; the generator reports the structural hazard instead and leaves the
+observed answer to the evidence that can establish it.
+
+**It is calibrated against the hand audit rather than trusted.** Scoring the seven labs
+that audit named as references reproduced three of them on the first pass, and the
+disagreements were definitional, not arithmetic: this tool marks a dimension `0` where a
+careful reader left it `?`, and `0` is the stronger claim. The report carries that
+comparison, because a derivation that quietly disagrees with a careful hand read is worth
+seeing rather than tuning away. Two bugs came out of it — a fixture file named
+`vectors.ts` was never read because the path pattern wanted `vectors` as a whole directory,
+and the shared lexer was called with the view that blanks string contents, which hid every
+import path, test name and hex vector in the fleet.
+
+**What `+` on ground truth does not establish**: that the values were copied from the
+publication rather than reproduced from a validated implementation. `crypto-lab-kem-trap`
+is the case to know — its vectors file cites FIPS 203 and ACVP beside pinned hex and says
+in its own header that the bytes come from `@noble/post-quantum`, "which passes the NIST
+ACVP ML-KEM test suite". A strong provenance chain, and not a published vector.
 
 Three more files under `tools/` are not checkers and are not run in the loop:
 

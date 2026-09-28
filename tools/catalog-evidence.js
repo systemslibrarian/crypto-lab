@@ -747,4 +747,19 @@ function main() {
   }
 }
 
-main();
+/* Exported so tools/depth-audit.js can blank comments with the SAME lexer rather
+   than growing a second one. Two comment-blankers in one repository would drift,
+   and the subtle cases here - a regex literal holding a quote, a template literal
+   spanning four hundred lines - are exactly where they would drift. */
+module.exports = {
+  lex,
+  camelSplit,
+  /* Comments blanked, STRING CONTENTS KEPT. The other view (`lex().code`) blanks
+     both, which is right for finding declarations and wrong for anything that
+     lives in a string: an import path, a test name, a hex vector. Using it by
+     mistake made tools/depth-audit.js unable to see `from '@noble/...'` or
+     `it('rejects ...')` at all, and quietly demoted the fleet's reference labs. */
+  blankComments: (src) => lex(src).strings,
+};
+
+if (require.main === module) main();

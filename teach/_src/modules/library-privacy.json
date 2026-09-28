@@ -387,8 +387,8 @@
   },
   "trimmed": [],
   "assessment": {
-    "name": "Who learns what table",
-    "description": "One row for each arrangement the module covers, saying which party learns the title asked for and which learns who asked, filled in from the student's own runs rather than from the descriptions on the pages. Each row has to name the observation that settles it."
+    "name": "Vendor claim review",
+    "description": "A short review of one privacy claim a vendor could make about a library catalog, saying what the arrangement behind it actually conceals, what it leaves visible, and which party has to be trusted for the claim to hold. It has to cite the student's own recorded observation for each part, and say what two published totals differing by one person would still give away."
   },
   "last_checked": "2026-09-22"
 }

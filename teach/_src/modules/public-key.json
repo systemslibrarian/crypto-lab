@@ -429,8 +429,8 @@
   },
   "trimmed": [],
   "assessment": {
-    "name": "Recovery account",
-    "description": "A short account of one private value the student recovered during the sequence, tracing it back through the recorded intermediate values to the two runs or signatures that made the recovery possible. It has to say which step supplied the information the key's owner did not intend to give away."
+    "name": "Accept-or-reject sheet",
+    "description": "A verdict of accept or reject on each scheme the sequence exercises, each verdict tied to a value from the student's own Record tables rather than to a claim printed on the page. Each reject has to name the failure it rests on and what an observer learns from published values alone; each accept has to name what the page says that acceptance still depends on."
   },
   "last_checked": "2026-09-22",
   "time_note": "These figures are class time only. Each worksheet's own accounting counted its Predict questions inside the total, and Predict is answered before the exhibit is opened, so every figure here is five minutes lower than the draft's."

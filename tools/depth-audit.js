@@ -211,6 +211,72 @@ const IS_TEST = (rel) => /(^|\/)(tests?|__tests__|e2e|spec)(\/|$)/.test(rel)
      invisible to three dimensions at once while nothing reported the gap. */
   || /(^|\/)scripts\/test\.[a-z]+$/.test(rel);
 
+
+/* ---- C: a rendered value compared with a COMPUTED one --------------------
+ *
+ * The first version credited C on the PRESENCE of a `claims.spec.` file, and an
+ * adversarial pass measured what that was worth: 145 labs had such a file and
+ * all 145 scored `+`; 66 did not and none did. A column everything passes
+ * inflates every rank it appears in and discriminates nothing.
+ *
+ * The dimension asks whether a test asserts that what the page DISPLAYS matches
+ * what the code COMPUTED. So the expected side has to be an expression - a
+ * variable, a call, an arithmetic result - and not a literal. Asserting that a
+ * panel reads "0 hex digits differ" checks the page against a sentence someone
+ * typed; asserting it equals `digestBefore` checks it against the computation.
+ *
+ * Getting the literal test right took three passes, each failure a false credit:
+ * an array of strings `['KAT MATCH','KAT MATCH']` is not computed; a trailing
+ * `{ timeout: 60_000 }` is an option and not an expected value; a regex is a
+ * pattern; and `[^)]*` argument capture stops at the first `)`, which in
+ * `toContainText('... reproduce asconEncrypt() exactly')` sits INSIDE the string
+ * and leaves an unterminated literal that reads as an expression.
+ */
+const C_READS = /textContent|innerText|innerHTML|allTextContents|inputValue|toHaveText|toContainText|getByTestId|getByRole/;
+
+/** Arguments of the call starting at or after `from`, with balanced parens, quotes respected. */
+function argsFrom(line, from) {
+  const open = line.indexOf('(', from);
+  if (open < 0) return null;
+  let depth = 0;
+  let quote = null;
+  for (let i = open; i < line.length; i += 1) {
+    const c = line[i];
+    if (quote) { if (c === '\\') i += 1; else if (c === quote) quote = null; continue; }
+    if (c === "'" || c === '"' || c === '`') { quote = c; continue; }
+    if (c === '(') depth += 1;
+    else if (c === ')') { depth -= 1; if (depth === 0) return line.slice(open + 1, i); }
+  }
+  return line.slice(open + 1);
+}
+
+/** The first argument only; a trailing options object is not an expected value. */
+function firstArg(args) {
+  let depth = 0;
+  let quote = null;
+  for (let i = 0; i < args.length; i += 1) {
+    const c = args[i];
+    if (quote) { if (c === '\\') i += 1; else if (c === quote) quote = null; continue; }
+    if (c === "'" || c === '"' || c === '`') { quote = c; continue; }
+    if ('([{'.includes(c)) depth += 1;
+    else if (')]}'.includes(c)) depth -= 1;
+    else if (c === ',' && depth === 0) return args.slice(0, i);
+  }
+  return args;
+}
+
+/** Literal if nothing but literal material survives stripping. */
+function isLiteralExpr(expr) {
+  return expr
+    .replace(/\/(?:[^/\\\n]|\\.)+\/[gimsuy]*/g, ' ')
+    .replace(/`(?:[^`\\$]|\\.|\$(?!\{))*`/g, ' ')
+    .replace(/'(?:[^'\\]|\\.)*'/g, ' ')
+    .replace(/"(?:[^"\\]|\\.)*"/g, ' ')
+    .replace(/\b(?:true|false|null|undefined|NaN)\b/g, ' ')
+    .replace(/-?\d[\d_.eE]*/g, ' ')
+    .replace(/[[\]{},:\s]/g, '') === '';
+}
+
 function classify(lab, files) {
   const src = files.filter((f) => !VENDORED.test(f));
   const tests = src.filter((f) => IS_TEST(f) && /\.(ts|tsx|js|jsx|mjs|cjs|rs|py)$/.test(f));
@@ -328,32 +394,55 @@ function classify(lab, files) {
   }
   if (I === '0' && !tests.length && !rustInline.length) { I = '?'; note.I = 'no readable test files'; }
 
-  /* ---- C: a test asserting what the page displays ---- */
+  /* ---- C: a rendered value compared with a computed one ---- */
   let C = '0';
-  /* A claims spec is credited on what it ASSERTS, not on its filename. */
-  const claimsFile = tests.find((f) => /claims?\.spec\./i.test(f));
-  if (claimsFile) {
-    const text = readCode(lab, claimsFile) || '';
-    /* An assertion ABOUT RENDERED TEXT, not merely the first expect() in the
-       file - which in this fleet's boilerplate is the uncaught-page-errors
-       fixture, identical in every lab and about nothing the page displays. */
-    const at = lineOf(text, /toHaveText|toContainText|textContent|innerText/);
-    C = at ? '+' : '?';
-    evidence.C = `${claimsFile}:${at || 1}`;
-    note.C = at ? 'claims spec asserts against rendered text' : 'a claims spec with no assertion this tool could find';
-  } else {
-    for (const f of tests) {
-      if (/(a11y|accessib|contrast|layout|theme|nontext)/i.test(f) || /(^|\/)gate\.[tj]s$/.test(f)) continue;
+  {
+    const candidates = tests.filter((f) => !/(a11y|accessib|contrast|layout|theme|nontext|visual|screenshot)/i.test(f)
+      && !/(^|\/)gate\.[tj]s$/.test(f));
+    if (!candidates.length) { C = '?'; note.C = 'no readable non-harness test files'; }
+    let literalOnly = null;
+    for (const f of candidates) {
+      if (C === '+') break;
       const text = readCode(lab, f);
       if (!text) continue;
-      if (!/toHaveText|textContent|innerText|innerHTML|toContainText/.test(text)) continue;
-      C = '?';
-      evidence.C = `${f}:${lineOf(text, /toHaveText|textContent|innerText|innerHTML|toContainText/)}`;
-      note.C = 'asserts rendered text; not derivable here whether it is compared with a computed value';
-      break;
+      /* Locals holding something read off the page. */
+      const rendered = new Set();
+      for (const m of text.matchAll(/(?:const|let|var)\s+\{?\s*([\w,\s]+?)\s*\}?\s*=\s*[^;\n]*(?:textContent|innerText|innerHTML|allTextContents|inputValue)/g)) {
+        for (const n of m[1].split(',')) rendered.add(n.trim());
+      }
+      const lines = text.split('\n');
+      for (let i = 0; i < lines.length; i += 1) {
+        const line = lines[i];
+        const tx = /\.(?:toHaveText|toContainText)\(/.exec(line);
+        if (tx) {
+          const a = argsFrom(line, tx.index);
+          if (a && a.trim() && !isLiteralExpr(firstArg(a))) {
+            C = '+'; evidence.C = `${f}:${i + 1}`;
+            note.C = `rendered text compared with ${firstArg(a).trim().slice(0, 48)}`;
+            break;
+          }
+        }
+        const ex = /expect\(\s*([\w.[\]'"]+)/.exec(line);
+        const cmp = /\.\s*(?:toBe|toEqual|toStrictEqual)\(/.exec(line);
+        if (ex && cmp) {
+          const a = argsFrom(line, cmp.index);
+          const actual = ex[1].split(/[.[]/)[0];
+          if (a && a.trim() && (rendered.has(actual) || C_READS.test(line)) && !isLiteralExpr(firstArg(a))) {
+            C = '+'; evidence.C = `${f}:${i + 1}`;
+            note.C = `page value compared with ${firstArg(a).trim().slice(0, 48)}`;
+            break;
+          }
+        }
+        if (!literalOnly && C_READS.test(line) && /expect\(|assert/.test(line)) literalOnly = `${f}:${i + 1}`;
+      }
+    }
+    if (C === '0') {
+      evidence.C = literalOnly;
+      note.C = literalOnly
+        ? 'asserts rendered text, but only against literals'
+        : 'no assertion comparing a rendered value with a computed one';
     }
   }
-  if (C === '0' && !tests.length) { C = '?'; note.C = 'no readable test files'; }
 
   /* ---- N: something fails when it should ---- */
   let N = '0';

@@ -464,7 +464,19 @@ records the sha so every anchor points at the commit that was read.
 
 It reuses the hand audit's published rubric rather than inventing a second scale:
 **T** ground truth 4, **I** independent check 4, **C** displayed claim 2, **N** negative
-test 2, **G** deploy gate 2, **H** limits 1. A `?` is excluded from BOTH the earned and the
+test 2, **G** deploy gate 2, **H** limits 1.
+
+**A dimension that cannot discriminate does not stay in the score.** `C` first credited the
+PRESENCE of a `claims.spec.` file, and measuring it settled the matter: every lab with such
+a file was credited and every lab without one was not, so the column ranked nothing and
+inflated every score it appeared in. It now requires an assertion whose expected side is an
+EXPRESSION rather than a literal — a panel asserted to read `"0 hex digits differ"` is
+checked against a sentence someone typed, while one asserted equal to `digestBefore` is
+checked against the computation. Three false-credit shapes had to be excluded to make that
+test honest: an array of string literals, a trailing `{ timeout: … }` option read as an
+expected value, and argument capture that stops at the first `)` — which in
+`toContainText('… reproduce asconEncrypt() exactly')` sits inside the string and leaves an
+unterminated literal that reads as an expression. A `?` is excluded from BOTH the earned and the
 assessed weight, so an unknown is never averaged into a score. The seventh dimension —
 whether a test step runs and reports zero tests — is credited only on OBSERVED run output,
 which files cannot show; the generator reports the structural hazard instead and leaves the

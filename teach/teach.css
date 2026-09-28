@@ -113,6 +113,11 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
    six-pixel sideways scroll that a local run did not reproduce. */
 .t-row-nav .t-exnav { margin: 0.2rem 0 0.4rem; padding: 0; border: 0; min-width: 0; }
 .t-exnav, .t-exnav p, .t-exnav-links { min-width: 0; overflow-wrap: anywhere; }
+/* The syllabus line now ends in a URL, and a URL is one unbreakable token. It
+   fits at 390px in a local Chromium and not under CI's fallback font metrics,
+   which is what a six-pixel sideways scroll on the module page turned out to be.
+   Let it break rather than hold the page open. */
+.t-syllabus-line { overflow-wrap: anywhere; }
 @media (max-width: 520px) {
   .t-exnav-links { flex-direction: column; gap: 0.35rem; }
 }

@@ -185,7 +185,7 @@ function build(rows, meta) {
   L.push('|---|---:|---|---:|');
   L.push(`| T ground truth | ${WEIGHTS.T} | a named published source cited beside fixed material | ${unresolved.T} |`);
   L.push(`| I independent check | ${WEIGHTS.I} | a test reads an outside implementation, or a separate verification script runs | ${unresolved.I} |`);
-  L.push(`| C displayed claim | ${WEIGHTS.C} | a claims spec asserts what the page shows | ${unresolved.C} |`);
+  L.push(`| C displayed claim | ${WEIGHTS.C} | a test compares a RENDERED value with one the code computed, not with a literal | ${unresolved.C} |`);
   L.push(`| N negative test | ${WEIGHTS.N} | a throw, rejection, or a case named for the failure it forces | ${unresolved.N} |`);
   L.push(`| G deploy gate | ${WEIGHTS.G} | the publishing workflow runs a test step; engines are named, never inferred | ${unresolved.G} |`);
   L.push(`| H limits and guidance | ${WEIGHTS.H} | README states scale or limits | ${unresolved.H} |`);
@@ -193,6 +193,14 @@ function build(rows, meta) {
   L.push('`+` credited · `0` inspected and not met · `?` not derivable here. **A `?` is excluded from');
   L.push('both the earned and the assessed weight**, so an unknown is never averaged into a score.');
   L.push('Two scores with different assessed weights are not comparable as fractions.');
+  L.push('');
+  L.push('**The displayed-claim dimension was rebuilt after it failed to discriminate.** It first');
+  L.push('credited the PRESENCE of a claims spec, and measurement showed what that was worth: every');
+  L.push('lab with such a file scored credited and every lab without it did not. A column everything');
+  L.push('passes inflates every rank it appears in. It now requires an assertion whose expected side');
+  L.push('is an expression rather than a literal — a page panel reading "0 hex digits differ" is');
+  L.push('checked against a sentence someone typed, while one equal to `digestBefore` is checked');
+  L.push('against the computation.');
   L.push('');
   L.push('**The seventh dimension is not scored here.** Whether a test step runs and reports zero');
   L.push('tests is credited in this rubric only on observed run output, which is file-invisible.');

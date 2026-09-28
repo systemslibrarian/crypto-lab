@@ -95,6 +95,33 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
 .t-crumbs li + li::before { content: "/"; color: var(--text-dim); margin-right: 0.4rem; }
 .t-crumbs [aria-current] { color: var(--text-hi); }
 
+/* Exhibit nav — carried by every worksheet and every sequence row. Wraps to one
+   item a line on a narrow screen rather than scrolling sideways. */
+.t-exnav { margin: 1rem 0; padding: 0.7rem 0.9rem; border: 1px solid var(--rule); border-radius: 6px; }
+.t-exnav p { margin: 0 0 0.2rem; font-size: 0.9rem; }
+.t-exnav-where { color: var(--text-dim); }
+.t-exnav-what { color: var(--text-hi); font-weight: 600; }
+.t-exnav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem; margin: 0.5rem 0 0; padding: 0; list-style: none; font-size: 0.9rem; }
+.t-exnav-links li { margin: 0; }
+.t-exnav-here { color: var(--text-hi); font-weight: 600; }
+.t-exnav-off { color: var(--text-dim); }
+.t-exnav-meeting { color: var(--text-dim); font-size: 0.85em; }
+.t-row-nav td { padding-top: 0; }
+/* Inside a sequence row the nav must not be what makes the table wider than the
+   page. It carries no border or side padding there, and long exhibit titles are
+   allowed to break rather than hold a line open. CI caught this at 390px as a
+   six-pixel sideways scroll that a local run did not reproduce. */
+.t-row-nav .t-exnav { margin: 0.2rem 0 0.4rem; padding: 0; border: 0; min-width: 0; }
+.t-exnav, .t-exnav p, .t-exnav-links { min-width: 0; overflow-wrap: anywhere; }
+/* The syllabus line now ends in a URL, and a URL is one unbreakable token. It
+   fits at 390px in a local Chromium and not under CI's fallback font metrics,
+   which is what a six-pixel sideways scroll on the module page turned out to be.
+   Let it break rather than hold the page open. */
+.t-syllabus-line { overflow-wrap: anywhere; }
+@media (max-width: 520px) {
+  .t-exnav-links { flex-direction: column; gap: 0.35rem; }
+}
+
 /* ---- layout ---- */
 .t-main {
   max-width: 50rem;

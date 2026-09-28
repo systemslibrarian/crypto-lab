@@ -236,6 +236,21 @@ function readModules(cards) {
       if (!x.card) unresolved.push(`${m.id}: ${x.name}`);
       if (!ROLES.includes(x.role)) fail(`${w}: role must be one of ${ROLES.join(', ')}`);
       if (!Number.isInteger(x.minutes) || x.minutes <= 0) fail(`${w}: minutes must be a positive integer`);
+      /* Which class meeting this exhibit belongs to. OPTIONAL: absence means the
+         module states no boundary, and the nav then shows none.
+         EXPLICIT, and never a running sum of minutes. Those figures exist to be
+         recosted - they are re-derived against what a student actually does - so
+         a boundary derived from them would move every time one exhibit was
+         retimed, silently resequencing someone's course. */
+      if (x.meeting !== undefined) {
+        if (!Number.isInteger(x.meeting) || x.meeting < 1) fail(`${w}: meeting must be a positive integer`);
+        else if (i > 0) {
+          const prev = m.exhibits[i - 1].meeting;
+          if (prev !== undefined && x.meeting < prev) {
+            fail(`${w}: meeting ${x.meeting} follows meeting ${prev}; meetings cannot run backwards through the sequence`);
+          }
+        }
+      }
       if (typeof x.students_do !== 'string' || !x.students_do.trim() || x.students_do.includes('\n')) fail(`${w}: students_do must be one line`);
       if (!/^[0-9a-f]{7,40}$/.test(x.source_commit || '')) fail(`${w}: source_commit must be a commit sha`);
       if (x.worksheet !== null && x.worksheet !== x.name) fail(`${w}: worksheet must be null or "${x.name}"`);
@@ -756,12 +771,17 @@ function modulePage(m, cff, site, worksheets) {
     const ws = worksheets.find((w) => w.module === m && w.name === x.name);
     /* What students do is a sentence, not a field: it gets its own full-width row rather
        than a column that squeezes it to a few words a line. */
-    return `<tr><th scope="row" rowspan="2"><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></th>`
+    /* The title now addresses the TEACH page when there is one. A syllabus link
+       should land a student on the worksheet that frames the exhibit, not on the
+       raw lab; the live lab keeps its own marked outbound link in the nav row. */
+    const head = ws ? `<a href="${x.name}/">${esc(x.card.title)}</a>` : `<a href="${esc(x.card.url)}">${esc(x.card.title)}</a>`;
+    return `<tr><th scope="row" rowspan="3">${head}</th>`
       + `<td>${ROLE_LABEL[x.role]}</td><td>${x.minutes} min</td>`
       + `<td>${ws ? `<a href="${x.name}/">Worksheet<span class="visually-hidden"> for ${esc(x.card.title)}</span></a>` : '<span class="t-pending">Not yet written</span>'}</td></tr>`
       + `\n<tr class="t-row-note"><td colspan="3">${esc(x.students_do)}</td></tr>`
       /* The citation sits beside the exhibit it cites, rather than in a list further
          down that a reader has to match back up by title. */
+      + `\n<tr class="t-row-nav"><td colspan="3">${exhibitNav(m, x, worksheets, { onWorksheet: false, compact: true })}</td></tr>`
       + `\n<tr class="t-row-cite" id="cite-${esc(x.card.slug)}"><td colspan="3">`
       + `<span class="t-cite-label">Cite this exhibit:</span> <span class="t-cite">${apaExhibit(cff, x.card, exhibitYear(x))}</span>`
       + `</td></tr>`;
@@ -845,7 +865,7 @@ ${checksBlock(m, site)}
 </section>
 
 <section aria-labelledby="syllabus"><h2 id="syllabus">For your syllabus</h2>
-${syllabusBlock(site, 'module-syllabus')}
+${syllabusBlock(site, 'module-syllabus', canonical)}
 </section>
 
 <section aria-labelledby="cite"><h2 id="cite">How to cite this module’s exhibits</h2>
@@ -863,9 +883,13 @@ ${syllabusBlock(site, 'module-syllabus')}
   });
 }
 
-function syllabusBlock(site, id) {
+/* The syllabus line now carries an ADDRESS, and it is the teach page rather than
+   the lab. What an instructor pastes into a syllabus should land a student on
+   the worksheet that frames the exhibit; the live lab is one marked link away
+   from there. Without a url this block copied a sentence and no destination. */
+function syllabusBlock(site, id, url) {
   return `<div class="t-syllabus">
-<p id="${id}" class="t-syllabus-line">${esc(site.syllabus_line)}</p>
+<p id="${id}" class="t-syllabus-line">${esc(site.syllabus_line)}${url ? ` ${esc(url)}` : ''}</p>
 <button type="button" class="t-btn" data-copy="${id}">Copy syllabus line</button>
 <span class="t-copy-status" role="status" aria-live="polite"></span>
 </div>`;
@@ -873,7 +897,49 @@ function syllabusBlock(site, id) {
 
 /* ---------- /teach/<module>/<exhibit>/ ---------- */
 
-function worksheetPage(w, cff, site) {
+/** The short nav carried by every worksheet and every sequence row.
+ *
+ * Position is the exhibit's place in the published sequence. A MEETING BOUNDARY
+ * is shown only where the `meeting` field says there is one - never worked out
+ * from a running total of minutes, because those minutes are re-derived whenever
+ * an exhibit is recosted and a boundary computed from them would move with them.
+ *
+ * Previous and next stay inside /teach/. Only "exhibit" leaves for the live lab,
+ * and it is marked as leaving.
+ */
+function exhibitNav(m, x, worksheets, { onWorksheet, compact }) {
+  const seq = m.exhibits;
+  const i = seq.indexOf(x);
+  const hasWs = (e) => !!worksheets.find((w) => w.module === m && w.name === e.name);
+  const prev = i > 0 ? seq[i - 1] : null;
+  const next = i + 1 < seq.length ? seq[i + 1] : null;
+  const href = (e) => (onWorksheet ? `../${e.name}/` : `${e.name}/`);
+  const link = (e, label) => (e && hasWs(e)
+    ? `<a href="${href(e)}">${label}</a>`
+    : `<span class="t-exnav-off">${label}</span>`);
+  const boundary = (e) => (e && e.meeting !== undefined && x.meeting !== undefined && e.meeting !== x.meeting
+    ? ` <span class="t-exnav-meeting">(meeting ${e.meeting})</span>` : '');
+  const self = onWorksheet
+    ? '<span class="t-exnav-here" aria-current="page">worksheet</span>'
+    : (hasWs(x) ? `<a href="${x.name}/">worksheet</a>` : '<span class="t-exnav-off">worksheet</span>');
+  /* In a sequence ROW the first two lines are the row itself - the table already
+     has an Exhibit column, a Role column and a Time column - so the compact form
+     carries the position and the links and repeats nothing. It is also narrower,
+     which matters: the full form held the table open past the viewport at 390px. */
+  const where = `<p class="t-exnav-where"><a href="${onWorksheet ? '../' : './'}">${esc(m.title)}</a> · exhibit ${i + 1} of ${seq.length}${x.meeting !== undefined ? ` · meeting ${x.meeting}` : ''}</p>`;
+  const what = `<p class="t-exnav-what">${esc(x.card.title)} · ${ROLE_LABEL[x.role]} · ~${x.minutes} min</p>`;
+  return `<nav class="t-exnav${compact ? ' t-exnav-compact' : ''}" aria-label="Exhibit navigation for ${esc(x.card.title)}">
+${compact ? `<p class="t-exnav-where">Exhibit ${i + 1} of ${seq.length}${x.meeting !== undefined ? ` · meeting ${x.meeting}` : ''}</p>` : `${where}\n${what}`}
+<ul class="t-exnav-links">
+<li>${prev ? `${link(prev, compact ? '← previous' : `← ${esc(prev.card.title)}`)}${boundary(prev)}` : '<span class="t-exnav-off">← start</span>'}</li>
+<li>${self}</li>
+<li><a href="${esc(x.card.url)}" target="_blank" rel="noopener">exhibit <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens the live lab in a new tab)</span></a></li>
+<li>${next ? `${link(next, compact ? 'next →' : `${esc(next.card.title)} →`)}${boundary(next)}` : '<span class="t-exnav-off">end →</span>'}</li>
+</ul>
+</nav>`;
+}
+
+function worksheetPage(w, cff, site, worksheets) {
   const m = w.module;
   const x = w.exhibit;
   const canonical = `${site.hub_url}teach/${m.id}/${w.name}/`;
@@ -888,6 +954,7 @@ function worksheetPage(w, cff, site) {
   <p class="t-eyebrow">Worksheet · <a href="../">${esc(m.title)}</a></p>
   <h1>${esc(title)}</h1>
 </header>
+${exhibitNav(m, x, worksheets, { onWorksheet: true })}
 
 <dl class="t-facts">
   <div><dt>Exhibit</dt><dd><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></dd></div>
@@ -936,7 +1003,8 @@ function modulePrintPage(m, cff, site, worksheets) {
 <article class="ws-handout" aria-labelledby="h-${esc(w.name)}">
   <h2 id="h-${esc(w.name)}">${esc(x.card.title)}</h2>
   <dl class="t-facts">
-    <div><dt>Exhibit</dt><dd><a href="${esc(x.card.url)}">${esc(x.card.title)}</a></dd></div>
+    <div><dt>Exhibit</dt><dd><a href="${site.hub_url}teach/${m.id}/${x.name}/">${esc(x.card.title)}</a>`
+      + ` <span class="t-print-live">live exhibit: ${esc(x.card.url)}</span></dd></div>
     <div><dt>Time</dt><dd>${esc(classTime(w.meta.minutes))}</dd></div>
     <div><dt>Checked against</dt><dd>Lab commit <code>${esc(w.meta.source_commit)}</code> on ${esc(w.meta.checked)}</dd></div>
   </dl>
@@ -1004,7 +1072,7 @@ function landingPage(modules, worksheets, cards, cff, site, evidence) {
 <p class="t-meta"><strong>Audience:</strong> ${esc(m.audience)}<br><strong>Exhibits:</strong> ${names}<br><strong>Class time:</strong> about ${core} minutes for the core sequence<br><strong>Worksheets:</strong> ${written.length ? written.join(' · ') : 'in preparation'}</p>
 </li>`;
     }).join('\n'),
-    syllabus: () => syllabusBlock(site, 'syllabus-line'),
+    syllabus: () => syllabusBlock(site, 'syllabus-line', `${site.hub_url}teach/`),
     'hub-observed': () => observedList(evidence.hub),
     'teach-observed': () => observedList(evidence.teach),
     exception: () => {
@@ -1315,7 +1383,7 @@ function build() {
     files.set(path.join(TEACH, m.id, 'print', 'index.html'), modulePrintPage(m, cff, site, worksheets));
     files.set(path.join(TEACH, m.id, 'anchors.json'), anchorsManifest(m, worksheets, site));
   }
-  for (const w of worksheets) files.set(path.join(TEACH, w.module.id, w.name, 'index.html'), worksheetPage(w, cff, site));
+  for (const w of worksheets) files.set(path.join(TEACH, w.module.id, w.name, 'index.html'), worksheetPage(w, cff, site, worksheets));
   for (const [p, body] of issueForms(modules)) files.set(p, body);
   files.set(INDEX, withBandModules(withCourseModules(read(INDEX), modules), modules));
   return { files, modules };

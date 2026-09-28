@@ -1,8 +1,8 @@
 # Fleet check: the six checkers that ask GitHub rather than this repository.
 #
 # These are scheduled because their answers change without anyone committing here — a
-# lab can start serving a stale build, be published with no card, or have its branch
-# protection altered on a day this repo sees no activity. Every other checker compares
+# lab can start serving a stale build, be published with no card, or invalidate a
+# pinned catalog source review on a day this repo sees no activity. Every other checker compares
 # files that only move when someone moves them, and those run on pull_request.
 #
 # Weekly rather than daily: each takes 20 to 30 seconds across the fleet, and a daily

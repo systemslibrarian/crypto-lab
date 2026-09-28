@@ -157,7 +157,11 @@ scanner change that quietly stops finding things turns something red.
 
 Anchors are line numbers and line numbers rot, so
 `node tools/catalog-evidence.js verify` re-opens every one against the clones
-and fails on any that no longer resolves. It runs in the weekly fleet job, since
+and fails on any that no longer resolves. It also compares every pinned source
+review with its cloned lab's current HEAD, including reviewed N/A labs without
+anchors, and fails when a reviewed clone is missing or its pin is stale. Re-read
+the changed lab before updating a pin; a passing anchor alone does not prove the
+review still covers its source. It runs in the weekly fleet job, since
 its answer changes when a LAB changes rather than when this repo does.
 
 Nine more checkers guard the sibling demo repos, and the fleet itself, rather than

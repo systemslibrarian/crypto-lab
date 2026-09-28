@@ -679,6 +679,18 @@ function verifyAnchors(all) {
   let checked = 0;
   const byName = new Map(ALGORITHMS.map((a) => [a.name, a]));
   for (const c of all) {
+    const review = REVIEWS[c.slug];
+    if (review) {
+      const dir = path.join(REPOS, c.slug);
+      if (!fs.existsSync(path.join(dir, '.git'))) {
+        bad.push({ slug: c.slug, item: 'source review', why: 'reviewed lab clone is missing' });
+      } else {
+        const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+        if (head !== review.commit) {
+          bad.push({ slug: c.slug, item: 'source review', why: `reviewed ${review.commit.slice(0, 12)}, current ${head.slice(0, 12)}; re-review and update the pin` });
+        }
+      }
+    }
     const stored = attr(c.block, 'implements');
     if (!stored || stored === 'UNKNOWN' || stored === 'NOT-SCANNED' || stored === 'N/A') continue;
     for (const item of stored.split(' | ')) {
@@ -720,23 +732,25 @@ function verifyAnchors(all) {
       if (!named) bad.push({ slug: c.slug, item, why: `neither line ${lineNo} nor the path names it` });
     }
   }
-  console.log(`Anchors checked: ${checked}. Stale: ${bad.length}.`);
+  console.log(`Anchors checked: ${checked}. Stale anchors or source reviews: ${bad.length}.`);
   for (const b of bad) console.log(`  ${b.slug.padEnd(34)} ${b.item}  — ${b.why}`);
   if (bad.length) {
-    console.log('\nAn anchor is a line number and line numbers rot. Re-derive with:'
+    console.log('\nInspect the current lab source, update pinned reviews where needed, then re-derive with:'
       + '\n  node tools/catalog-evidence.js write');
     process.exit(1);
   }
-  console.log('Every anchor still resolves: the line it points to, or the file it names, still carries its algorithm.');
+  console.log('Every anchor still resolves and every pinned source review matches its lab clone.');
 }
 
 function main() {
   const argv = process.argv.slice(2);
   const mode = argv.find((a) => !a.startsWith('-')) || 'report';
   const one = argv.includes('--lab') ? argv[argv.indexOf('--lab') + 1] : null;
-  const all = cards()
-    .filter((c) => !one || c.slug === one)
-    .map((c) => ({ ...c, ev: evidenceFor(c.slug) }));
+  const selected = cards().filter((c) => !one || c.slug === one);
+  // Verification reads the stored claims and clone HEADs. Re-derivation would
+  // reject the first stale pin before this pass could report all stale reviews.
+  if (mode === 'verify') return verifyAnchors(selected);
+  const all = selected.map((c) => ({ ...c, ev: evidenceFor(c.slug) }));
 
   if (mode === 'gaps') {
     /* Chips naming something the vocabulary has never heard of. The header
@@ -764,7 +778,6 @@ function main() {
     return;
   }
 
-  if (mode === 'verify') return verifyAnchors(all);
   if (mode === 'write') return writeCards(all);
 
   if (argv.includes('--json')) {

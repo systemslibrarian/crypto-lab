@@ -107,7 +107,12 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
 .t-exnav-off { color: var(--text-dim); }
 .t-exnav-meeting { color: var(--text-dim); font-size: 0.85em; }
 .t-row-nav td { padding-top: 0; }
-.t-row-nav .t-exnav { margin: 0.2rem 0 0.4rem; }
+/* Inside a sequence row the nav must not be what makes the table wider than the
+   page. It carries no border or side padding there, and long exhibit titles are
+   allowed to break rather than hold a line open. CI caught this at 390px as a
+   six-pixel sideways scroll that a local run did not reproduce. */
+.t-row-nav .t-exnav { margin: 0.2rem 0 0.4rem; padding: 0; border: 0; min-width: 0; }
+.t-exnav, .t-exnav p, .t-exnav-links { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 520px) {
   .t-exnav-links { flex-direction: column; gap: 0.35rem; }
 }

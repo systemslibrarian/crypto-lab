@@ -2,8 +2,8 @@
   "id": "symmetric",
   "position": 10,
   "title": "Security & symmetric encryption",
-  "audience": "Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal.",
-  "course_fit": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. About 87 minutes of core lab time, which fits two 50-minute meetings with a little room for discussion, or two 75-minute meetings comfortably.",
+  "audience": "Upper-division undergraduate computer science and security students, and motivated newcomers already comfortable with XOR, hexadecimal, and AES as a keyed function on 16-byte blocks. An introductory security course can take Hidden Bit, OTP Vault, and AES Modes as a one-meeting cut; Padding Oracle and Nonce Collision assume that cut has already happened.",
+  "course_fit": "Fits the modes-of-operation and misuse week of an upper-division applied-cryptography or computer-security course. About 87 minutes of core lab time: two 50-minute meetings with little slack, or two 75-minute meetings comfortably. An introductory security unit that stops after AES Modes is a different, shorter assignment — not this module with the last two exhibits skipped mid-sequence.",
   "prerequisites": [
     "XOR on bits and bytes",
     "Reading hexadecimal byte strings",
@@ -214,6 +214,7 @@
       "name": "nonce-collision",
       "role": "break-it",
       "meeting": 2,
+      "outcome_note": "This is where keystream reuse is shown on a real stream cipher. OTP Vault meets the same outcome on an admitted stand-in keystream, so a course that stops after the first meeting has the outcome as written and not that instance of it.",
       "minutes": 15,
       "students_do": "Encrypt two messages under one AES-CTR key and nonce and crib-drag the second out of C1 ⊕ C2, then switch each construction to a reused nonce (or press \"Run all four — one reused nonce\") and read each card's cryptographic result beside its security verdict.",
       "source_commit": "d23b6ec02c35",

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Security &amp; symmetric encryption — Crypto Lab</title>
-<meta name="description" content="Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. About 87 minutes of core lab time, which fits two 50-minute meetings with a little room for discussion, or two 75-minute meetings comfortably.">
+<meta name="description" content="Fits the modes-of-operation and misuse week of an upper-division applied-cryptography or computer-security course. About 87 minutes of core lab time: two 50-minute meetings with little slack, or two 75-minute meetings comfortably. An introductory security unit that stops after AES Modes is a different, shorter assignment — not this module with the last two exhibits skipped mid-sequence.">
 <link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/teach/symmetric/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="../teach.css">
@@ -25,7 +25,7 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Security & symmetric encryption",
-  "description": "Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. About 87 minutes of core lab time, which fits two 50-minute meetings with a little room for discussion, or two 75-minute meetings comfortably.",
+  "description": "Fits the modes-of-operation and misuse week of an upper-division applied-cryptography or computer-security course. About 87 minutes of core lab time: two 50-minute meetings with little slack, or two 75-minute meetings comfortably. An introductory security unit that stops after AES Modes is a different, shorter assignment — not this module with the last two exhibits skipped mid-sequence.",
   "url": "https://crypto-lab.systemslibrarian.dev/teach/symmetric/",
   "inLanguage": "en",
   "learningResourceType": "Course module",
@@ -33,7 +33,7 @@
   "audience": {
     "@type": "EducationalAudience",
     "educationalRole": "student",
-    "audienceType": "Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal."
+    "audienceType": "Upper-division undergraduate computer science and security students, and motivated newcomers already comfortable with XOR, hexadecimal, and AES as a keyed function on 16-byte blocks. An introductory security course can take Hidden Bit, OTP Vault, and AES Modes as a one-meeting cut; Padding Oracle and Nonce Collision assume that cut has already happened."
   },
   "competencyRequired": [
     "XOR on bits and bytes",
@@ -107,11 +107,11 @@
 <header class="t-hero">
   <p class="t-eyebrow">Course module</p>
   <h1>Security &amp; symmetric encryption</h1>
-  <p class="t-lede">Fits the symmetric-encryption unit of an introductory computer-security course, or the modes-of-operation and misuse week of an upper-division applied-cryptography course. About 87 minutes of core lab time, which fits two 50-minute meetings with a little room for discussion, or two 75-minute meetings comfortably.</p>
+  <p class="t-lede">Fits the modes-of-operation and misuse week of an upper-division applied-cryptography or computer-security course. About 87 minutes of core lab time: two 50-minute meetings with little slack, or two 75-minute meetings comfortably. An introductory security unit that stops after AES Modes is a different, shorter assignment — not this module with the last two exhibits skipped mid-sequence.</p>
 </header>
 
 <dl class="t-facts">
-  <div class="t-fact-wide"><dt>Audience</dt><dd>Undergraduate computer science and security students, from an introductory security course through upper-division applied cryptography, and motivated newcomers comfortable with XOR and hexadecimal.</dd></div>
+  <div class="t-fact-wide"><dt>Audience</dt><dd>Upper-division undergraduate computer science and security students, and motivated newcomers already comfortable with XOR, hexadecimal, and AES as a keyed function on 16-byte blocks. An introductory security course can take Hidden Bit, OTP Vault, and AES Modes as a one-meeting cut; Padding Oracle and Nonce Collision assume that cut has already happened.</dd></div>
   <div><dt>Class time</dt><dd>About 87 minutes of class time for the core sequence. Predict is pre-class reading and Explain is a spoken debrief.</dd></div>
   <div><dt>Last checked</dt><dd>2026-09-22</dd></div>
 </dl>
@@ -130,10 +130,13 @@
 <section aria-labelledby="prereq"><h2 id="prereq">Prerequisites</h2><ul><li>XOR on bits and bytes</li><li>Reading hexadecimal byte strings</li><li>AES as a block cipher: a keyed function on 16-byte blocks</li><li>Basic probability: a blind guess of a fair coin is right half the time</li><li>A current desktop browser</li></ul></section>
 
 <section aria-labelledby="outcomes"><h2 id="outcomes">Learning outcomes</h2>
-<ol><li>Students will be able to explain, using the hidden-bit IND-CPA game, why deterministic AES-ECB and CBC with a predictable chained IV let a named adversary tell which of two messages was encrypted.</li><li>Students will be able to demonstrate that reusing a one-time-pad key or a stream-cipher keystream reduces two ciphertexts to the XOR of their plaintexts, and recover plaintext from that XOR by crib-dragging.</li><li>Students will be able to compare ECB, CBC, CTR, GCM and CCM by whether each provides confidentiality alone or authenticated encryption, and predict how each responds when a ciphertext bit is flipped.</li><li>Students will be able to trace how a padding-validity oracle lets an attacker recover AES-CBC plaintext byte by byte without the key, and explain why verifying a MAC before decryption stops the same attack.</li><li>Students will be able to distinguish the consequences of nonce reuse for AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC, including which key material the attacker recovers and which it does not.</li></ol></section>
+<ol><li>Students will be able to explain, using the hidden-bit IND-CPA game, why deterministic AES-ECB and CBC with a predictable chained IV let a named adversary tell which of two messages was encrypted.</li><li>Students will be able to demonstrate that reusing a one-time-pad key or a stream-cipher keystream reduces two ciphertexts to the XOR of their plaintexts, and recover plaintext from that XOR by crib-dragging.</li><li>Students will be able to compare ECB, CBC, CTR, GCM and CCM by whether each provides confidentiality alone or authenticated encryption, and predict how each responds when a ciphertext bit is flipped.</li><li>Students will be able to trace how a padding-validity oracle lets an attacker recover AES-CBC plaintext byte by byte without the key, and explain why verifying a MAC before decryption stops the same attack.</li><li>Students will be able to distinguish the consequences of nonce reuse for AES-CTR, AES-GCM, ChaCha20-Poly1305 and AES-CBC, including which key material the attacker recovers and which it does not.</li></ol>
+<h3>Which meeting finishes which outcome</h3>
+<ul class="t-meeting-outcomes"><li><strong>Meeting 1</strong> — Hidden Bit, OTP Vault, AES Modes: finishes outcomes 1, 2, 3</li><li><strong>Meeting 2</strong> — Padding Oracle, Nonce Collision: finishes outcomes 4, 5</li></ul>
+<p>Taken from each worksheet's own outcome tags, grouped by the meeting its exhibit sits in. An outcome is listed where a student finishes it, not where it is first met.</p></section>
 
 <section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
-
+<p class="t-outcome-note"><strong>Nonce Collision:</strong> This is where keystream reuse is shown on a real stream cipher. OTP Vault meets the same outcome on an admitted stand-in keystream, so a course that stops after the first meeting has the outcome as written and not that instance of it.</p>
 <p>Each exhibit opens in its own site. Roles: <strong>Intro</strong> builds the idea, <strong>Break it</strong> has students cause the failure, <strong>Fix</strong> shows the construction that holds, and <strong>Extension</strong> is optional depth.</p>
 <div class="t-table" role="region" tabindex="0" aria-label="Module sequence">
 <table>

@@ -781,7 +781,7 @@ function modulePage(m, cff, site, worksheets) {
       + `\n<tr class="t-row-note"><td colspan="3">${esc(x.students_do)}</td></tr>`
       /* The citation sits beside the exhibit it cites, rather than in a list further
          down that a reader has to match back up by title. */
-      + `\n<tr class="t-row-nav"><td colspan="3">${exhibitNav(m, x, worksheets, { onWorksheet: false })}</td></tr>`
+      + `\n<tr class="t-row-nav"><td colspan="3">${exhibitNav(m, x, worksheets, { onWorksheet: false, compact: true })}</td></tr>`
       + `\n<tr class="t-row-cite" id="cite-${esc(x.card.slug)}"><td colspan="3">`
       + `<span class="t-cite-label">Cite this exhibit:</span> <span class="t-cite">${apaExhibit(cff, x.card, exhibitYear(x))}</span>`
       + `</td></tr>`;
@@ -907,7 +907,7 @@ function syllabusBlock(site, id, url) {
  * Previous and next stay inside /teach/. Only "exhibit" leaves for the live lab,
  * and it is marked as leaving.
  */
-function exhibitNav(m, x, worksheets, { onWorksheet }) {
+function exhibitNav(m, x, worksheets, { onWorksheet, compact }) {
   const seq = m.exhibits;
   const i = seq.indexOf(x);
   const hasWs = (e) => !!worksheets.find((w) => w.module === m && w.name === e.name);
@@ -922,14 +922,19 @@ function exhibitNav(m, x, worksheets, { onWorksheet }) {
   const self = onWorksheet
     ? '<span class="t-exnav-here" aria-current="page">worksheet</span>'
     : (hasWs(x) ? `<a href="${x.name}/">worksheet</a>` : '<span class="t-exnav-off">worksheet</span>');
-  return `<nav class="t-exnav" aria-label="Exhibit navigation for ${esc(x.card.title)}">
-<p class="t-exnav-where"><a href="${onWorksheet ? '../' : './'}">${esc(m.title)}</a> · exhibit ${i + 1} of ${seq.length}${x.meeting !== undefined ? ` · meeting ${x.meeting}` : ''}</p>
-<p class="t-exnav-what">${esc(x.card.title)} · ${ROLE_LABEL[x.role]} · ~${x.minutes} min</p>
+  /* In a sequence ROW the first two lines are the row itself - the table already
+     has an Exhibit column, a Role column and a Time column - so the compact form
+     carries the position and the links and repeats nothing. It is also narrower,
+     which matters: the full form held the table open past the viewport at 390px. */
+  const where = `<p class="t-exnav-where"><a href="${onWorksheet ? '../' : './'}">${esc(m.title)}</a> · exhibit ${i + 1} of ${seq.length}${x.meeting !== undefined ? ` · meeting ${x.meeting}` : ''}</p>`;
+  const what = `<p class="t-exnav-what">${esc(x.card.title)} · ${ROLE_LABEL[x.role]} · ~${x.minutes} min</p>`;
+  return `<nav class="t-exnav${compact ? ' t-exnav-compact' : ''}" aria-label="Exhibit navigation for ${esc(x.card.title)}">
+${compact ? `<p class="t-exnav-where">Exhibit ${i + 1} of ${seq.length}${x.meeting !== undefined ? ` · meeting ${x.meeting}` : ''}</p>` : `${where}\n${what}`}
 <ul class="t-exnav-links">
-<li>${prev ? `${link(prev, `← ${esc(prev.card.title)}`)}${boundary(prev)}` : '<span class="t-exnav-off">← start of module</span>'}</li>
+<li>${prev ? `${link(prev, compact ? '← previous' : `← ${esc(prev.card.title)}`)}${boundary(prev)}` : '<span class="t-exnav-off">← start</span>'}</li>
 <li>${self}</li>
 <li><a href="${esc(x.card.url)}" target="_blank" rel="noopener">exhibit <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens the live lab in a new tab)</span></a></li>
-<li>${next ? `${link(next, `${esc(next.card.title)} →`)}${boundary(next)}` : '<span class="t-exnav-off">end of module →</span>'}</li>
+<li>${next ? `${link(next, compact ? 'next →' : `${esc(next.card.title)} →`)}${boundary(next)}` : '<span class="t-exnav-off">end →</span>'}</li>
 </ul>
 </nav>`;
 }

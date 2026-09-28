@@ -1446,16 +1446,16 @@ that asks for a decision.
 
 ## Labs
 
-207 labs, in three states rather than two.
+208 labs, in three states rather than two.
 
 **UNKNOWN (14)** — every file this scanner reads was read and no algorithm was
 derivable. That is a finding: most of these model or attack an algorithm rather than
 compute it.
 
-**NOT-SCANNED (2)** — the lab implements its cryptography in a language this
+**NOT-SCANNED (3)** — the lab implements its cryptography in a language this
 scanner does not read, so there is no finding either way. `could not look` is not
 `nothing there`, and collapsing the two would publish "implements nothing" about source
-nobody opened. `crypto-lab-ablation-wire` (Rust:17), `crypto-lab-silent-tally` (Rust:1)
+nobody opened. `crypto-lab-ablation-wire` (Rust:17), `crypto-lab-point-ledger` (not cloned here), `crypto-lab-silent-tally` (Rust:1)
 
 **Partially unread (9)** — algorithms were derived, and some of the lab is still in a
 language this scanner does not read, so its list is a floor rather than a total.
@@ -3119,6 +3119,16 @@ Drag P and Q to see the chord-and-tangent group law, flip ℝ↔𝔽ₚ to run t
 - **Attacks shown:** Brute force `src/ui/panel-hard.ts:115`, Discrete log `src/ui/panel-hard.ts:164`, Nonce reuse `README.md:35`
 - **Standards body:** SECG
 - **Implementation:** hand-rolled
+
+### Point Ledger
+
+[`crypto-lab-point-ledger`](https://systemslibrarian.github.io/crypto-lab-point-ledger/) · Quantum Cost Accounting · POST-QUANTUM, ZERO-KNOWLEDGE
+
+Quantum resource estimates for secp256k1, a classical multiplication dialog, and where fuzz-test evidence stops supporting a Fiat-Shamir soundness claim.
+
+- **Implements:** **NOT-SCANNED** — this lab's implementation is in not cloned here, which this scanner does not read. No finding either way.
+- **Standards body:** —
+- **Implementation:** UNKNOWN
 
 ### Poly1305 MAC
 

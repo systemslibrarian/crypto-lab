@@ -112,6 +112,10 @@ with ChaCha20 Stream still carrying the stream-cipher construction.*
 stream-cipher construction), KpqC Pair under §10 (NTRU+ is its lattice half), TC26 Pair under
 §11 (code-based Shipovnik), SM2 Forge under §28 (its headline break is a reused nonce) and
 Misty Lens under §30 (the related-key sandwich distinguisher). Catalogued total moves to 207.
+
+*Version 15 — files Point Ledger under §33. It is the resource-accounting end of the same
+concept: Shor is already covered as a period-finding attack, and this asks what running it
+against secp256k1 would take. No status change. Catalogued total moves to 208.*
 All five are additions to concepts already `COVERED`, so no status changes and the Gap summary
 stays empty. Every one was live with no card — and therefore no README row, no corpus entry
 and no line here — which is the silent-drop shape `fleet-sync` exists to catch, found by
@@ -756,7 +760,8 @@ the most contestable concept boundary in the list; some would fold it into §30.
 
 **33. Quantum attacks — `COVERED`**
 Shor (period finding → asymmetric) · Grover (amplitude amplification → symmetric search) ·
-Simon's Period (query separation → structured symmetric constructions).
+Simon's Period (query separation → structured symmetric constructions) ·
+Point Ledger (what running Shor against secp256k1 would actually cost).
 
 Simon's Period completes the triad: exponential-to-polynomial *query* complexity against
 Even-Mansour and CBC-MAC, categorically different from Grover's square-root speedup. It was
@@ -892,7 +897,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 207.**
+**Catalogued total: 208.**
 
 ---
 

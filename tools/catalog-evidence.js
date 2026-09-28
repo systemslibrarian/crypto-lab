@@ -386,7 +386,16 @@ function labFiles(dir) {
 function evidenceFor(slug) {
   const dir = path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
-    return { slug, cloned: false, implements: [], references: [], attacks: [], standards: [], implementation: 'UNKNOWN', unscanned: [], notScanned: false, commentOnly: [], protocolPartial: [] };
+    /* A lab with no clone here is NOT-SCANNED, not UNKNOWN. UNKNOWN means every
+       file this tool reads was read and nothing was derivable; this is the tool
+       never having opened anything. Reporting the second as the first is the
+       conflation the NOT-SCANNED state exists to end, and a newly carded lab -
+       carded before it is cloned - is exactly where it shows up. */
+    return {
+      slug, cloned: false, implements: [], references: [], attacks: [], standards: [],
+      implementation: 'UNKNOWN', unscanned: ['not cloned here'], notScanned: true,
+      commentOnly: [], protocolPartial: [],
+    };
   }
   const { code, prose, unread } = labFiles(dir);
   const hits = new Map();   // term name -> {shape, at}
@@ -594,7 +603,7 @@ function fieldsFor(ev) {
   const implemented = ev.implements.length ? encode(ev.implements)
     : (ev.notScanned ? 'NOT-SCANNED' : 'UNKNOWN');
   return {
-    implements: ev.cloned ? implemented : 'UNKNOWN',
+    implements: implemented,
     unscanned: (ev.unscanned || []).join(' | '),
     commentOnly: encode(ev.commentOnly || []),
     protocolPartial: encode(ev.protocolPartial || []),

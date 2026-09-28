@@ -38,15 +38,71 @@ version and date come from `CITATION.cff`. Do not retype either here.
 | `title`, `audience`, `course_fit` | One line each. |
 | `prerequisites` | List of one-line strings. |
 | `outcomes` | Three to five, each starting "Students will be able to", with a measurable Bloom's verb. |
-| `exhibits` | Ordered. Each: `name` (repo name minus `crypto-lab-`), `role` (intro, break-it, fix or extension), `minutes`, `students_do` (one line, from the lab's README, not the card blurb), `source_commit` (the lab commit read), `worksheet` (null, or the exhibit name once a worksheet exists), and the three per-exhibit checks below. |
+| `exhibits` | Ordered. Fields in their own table below. |
 | `discussion_questions` | Three to five. |
-| `instructor_notes` | `expected_observations`, `misconceptions`, `conceptual_answers`. Public, so conceptual only: never the values a run produces. |
+| `instructor_notes` | `expected_observations`, `misconceptions`, `conceptual_answers`. Public, so conceptual only: never the values a run produces. Each note is either a plain string or an object; the object form is documented below. |
+| `assessment` | Required. `{ "name", "description" }`. The description is capped at two sentences — see below for why that cap is deliberate. |
 | `trimmed` | Exhibits left out of the sequence, each `{ "name", "reason" }`. |
 | `last_checked` | YYYY-MM-DD. |
 
 An exhibit name that matches no card fails the build rather than being substituted.
 
+### Exhibit fields (entries in `exhibits`)
+
+| Field | Rule |
+|---|---|
+| `name` | The repo name minus `crypto-lab-`. Must match a card in `index.html`. |
+| `role` | `intro`, `break-it`, `fix` or `extension`. |
+| `minutes` | Positive integer. Re-derived against what a student actually does, not a budget. |
+| `students_do` | One line, taken from the lab's README rather than the card blurb. |
+| `source_commit` | The lab commit that was read, 7 to 40 hex characters. |
+| `source_commit_date` | Optional, `YYYY-MM-DD`: the date of that pinned commit. It is what dates an exhibit's citation. Where the record does not hold it the citation carries **no year field at all**, and specifically not `(n.d.)` — omitting a field is honest, asserting an absence is not. Never the lab's latest commit date, which would date a build the worksheet was never checked against. |
+| `worksheet` | `null`, or the exhibit name once a worksheet exists. |
+| `outcome_note` | Required when the worksheet serves no outcome, saying what the exhibit does instead. Rendered on the module page. |
+| `time_note` | Optional, one line, rendered beside `outcome_note` on the module page. |
+| `privacy`, `support`, `run_specific_values` | The three per-exhibit checks below. |
+
+### The assessment artifact
+
+`assessment` names the one object a student hands in, and the description is held
+to **two sentences by the validator**. That cap is deliberate and worth keeping.
+
+The worksheets are ungraded inquiry; the artifact is the thing collected from what
+they already produce. A longer field becomes a second set of instructions sitting
+beside the worksheets, and then the two drift — the worksheets say what to do, and
+an instructions-shaped assessment says it again, differently. The cap makes that
+impossible rather than discouraged.
+
+It follows that a prompt list and a rubric do not belong here. A rubric is grading
+criteria for an instructor, not a description of the object; the artifact is
+written to be gradable by a human with no answer key, because values differ from
+run to run. The same bar as `instructor_notes` applies: no run-specific values.
+
+### Instructor note objects
+
+A note may be a plain string, or an object when it carries something that has to
+be re-checked against the live exhibit:
+
+| Field | Rule |
+|---|---|
+| `text` | The note itself. |
+| `exhibit` | Optional: which exhibit it belongs to. |
+| `rederived` | `YYYY-MM-DD`, when this was last checked against the live page. Required. |
+| `observable.kind` | `text-present`, `text-absent` or `manual`. |
+| `observable.needle` | The text to look for. Required for `text-present` and `text-absent`. |
+| `observable.why`, `observable.cadence`, `observable.cadence_days` | Required when `kind` is `manual`: why it is not automated, the cadence in words, and the same cadence as an integer. |
+| `observable.steps`, `observable.note` | Optional detail. |
+
+A note that states a defect is a claim about a live page, so it carries the date
+it was re-derived and something a checker can look for. `tools/teach-issues.js`
+re-reads them.
+
 ### Per-exhibit checks (null until observed; every one dated)
+
+A `support` result that is not a pass needs a one-line `headline` for the module
+page and its own `rederived` date; the same applies to a `privacy` record with
+other origins, cookies or storage. The headline is what the module page prints,
+so it is a sentence rather than a code.
 
 ```json
 "privacy": {                     // from node tools/teach-observe.js <exhibit url> [engine]

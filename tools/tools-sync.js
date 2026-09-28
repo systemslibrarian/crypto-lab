@@ -223,12 +223,21 @@ function block() {
     out.push(`Not listed above: ${notRun.map((f) => `\`${f}\``).join(', ')} — support code, fixtures, and `
       + 'one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.');
   }
-  if (untracked.length) {
-    out.push('');
-    out.push(`This table lists tools git tracks. ${untracked.map((f) => `\`${f}\``).join(', ')} `
-      + `${untracked.length === 1 ? 'is' : 'are'} present in \`tools/\` but untracked — work in progress rather than `
-      + 'fleet machinery, and absent here for that reason rather than because nothing else exists.');
-  }
+  /* A CONSTANT sentence, with no filenames in it.
+   *
+   * Naming the untracked files made the generated block depend on the working
+   * tree of whoever ran it: CI checks out tracked files only, so it regenerates
+   * a block with no footnote and fails against a README committed from a machine
+   * that had work in progress in `tools/`. A generated file that cannot be
+   * reproduced from the repository is not generated, it is transcribed.
+   *
+   * The sentence still does the job it was added for - an absence here must not
+   * read as a claim that nothing else exists - and the actual filenames go to
+   * stdout, where the person running it is the one who can see them anyway. */
+  out.push('');
+  out.push('This table lists the tools git tracks. Anything untracked in `tools/` is work in '
+    + 'progress rather than fleet machinery, and is absent here for that reason rather than '
+    + 'because nothing else exists.');
   out.push('');
   out.push(END);
   return out.join('\n');
@@ -264,6 +273,8 @@ function main() {
   }
   fs.writeFileSync(README, readme.replace(current, next));
   console.log('README.md tools block regenerated.');
+  const loose = rows().untracked;
+  if (loose.length) console.log(`  untracked in tools/, deliberately not listed in the table: ${loose.join(', ')}`);
 }
 
 main();

@@ -10,3 +10,8 @@ CRYPTO-LAB-TEMPLATE*.md
 
 # Installed by tools/package.json for the verification renderers.
 tools/node_modules/
+
+# Read-only exports of each lab's remote default branch, written by
+# tools/depth-audit.js. Disposable: re-created from GitHub on demand, and never
+# a source of truth — the remote is.
+.scratch/

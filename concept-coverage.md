@@ -116,6 +116,11 @@ Misty Lens under §30 (the related-key sandwich distinguisher). Catalogued total
 *Version 15 — files Point Ledger under §33. It is the resource-accounting end of the same
 concept: Shor is already covered as a period-finding attack, and this asks what running it
 against secp256k1 would take. No status change. Catalogued total moves to 208.*
+
+*Version 16 — files SM9 Forge under §9. China's identity-based standard belongs beside IBE
+Gate's Boneh-Franklin because it answers the same question differently: the identity enters
+in the exponent by inversion rather than as a hashed curve point. No status change — §9 was
+already `DEEP`. Catalogued total moves to 209.*
 All five are additions to concepts already `COVERED`, so no status changes and the Gap summary
 stays empty. Every one was live with no card — and therefore no README row, no corpus entry
 and no line here — which is the silent-drop shape `fleet-sync` exists to catch, found by
@@ -317,7 +322,7 @@ cross-links Shor rather than simulating it, and the number field sieve appears o
 Curve Lens · Point Arithmetic · ElGamal Plain · DH MITM · Curve448 · Ed25519 Forge.
 
 **9. Pairings / bilinear maps — `DEEP`**
-Pairing Gate · IBE Gate · Credential Veil · Rekey Relay · Attribute Gate.
+Pairing Gate · IBE Gate · Credential Veil · Rekey Relay · Attribute Gate · SM9 Forge.
 
 Rekey Relay and Attribute Gate are a **declared pair** — same curve, same section, both with
 an escrow subplot — and they are kept distinct by which question each leads on. Attribute
@@ -326,6 +331,18 @@ term that refuses to cancel. Rekey Relay leads on **delegation**: BBS98 against 
 the older scheme's re-encryption key is `b·a⁻¹`, so the relay and the delegatee together
 recover the delegator's private key in one modular division. Read either as the other's
 mirror and the point of both is lost.
+
+SM9 Forge is the pair's counterpart one level down, on how the private key is MADE. Where
+Boneh-Franklin hashes an identity to a curve point and multiplies it by the master secret —
+the construction IBE Gate builds — SM9 hashes the identity to a scalar, adds the master
+secret and inverts, so the identity enters in the exponent. The lab runs the whole family
+over BN256 and the R-ate pairing against the worked examples in the standard's own annexes.
+The inversion has a consequence it makes visible: the identity hash cancels from the
+verification equation when both sides use the same one, so a KGC and a verifier that agree
+on a non-standard hash interoperate perfectly — a passing check establishes that the two
+sides agreed, not that either conformed. SM9's real verifier still refuses a key extracted
+under a different hash, at HASH-MISMATCH; identity is checked, agreement is simply not
+conformance.
 
 **10. Lattices (LWE / SIS / NTRU) — `DEEP`**
 Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · GGH Trapdoor · Dilithium Seal ·
@@ -903,7 +920,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 208.**
+**Catalogued total: 209.**
 
 ---
 

@@ -252,5 +252,15 @@
       "Python"
     ],
     "note": "Python reference-data generators reviewed; browser uses TS detection and ECDSA"
+  },
+  "crypto-lab-sm9-forge": {
+    "commit": "c65722ad3e852963c29fcdaae52188663e1ce79b",
+    "reviewed": "2026-09-29",
+    "remove": [
+      "Boneh-Franklin IBE",
+      "SM3",
+      "SM4"
+    ],
+    "note": "Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
   }
 }

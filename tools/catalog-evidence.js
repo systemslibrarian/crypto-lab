@@ -387,7 +387,7 @@ function labFiles(dir) {
 }
 
 /** Everything derivable about one lab. Never throws; a missing clone is a state. */
-function evidenceFor(slug, { strict = false } = {}) {
+function evidenceFor(slug) {
   const dir = path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
     /* A lab with no clone here is NOT-SCANNED, not UNKNOWN. UNKNOWN means every
@@ -544,21 +544,14 @@ function evidenceFor(slug, { strict = false } = {}) {
   if (review) {
     const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
     if (head !== review.commit) {
-      /* WRITE REFUSES; READ-ONLY MODES REPORT. The two differ on purpose, so
-         please do not unify them.
-         Writing applies a person's judgement - the add and remove lists below -
-         to source that has since changed, which is the judgement being
-         inherited rather than made. Refusing is the whole point of the pin.
-         Reading writes nothing. A recall measurement or a JSON dump that dies on
-         the first stale pin loses the entire measurement to protect a file it
-         was never going to touch, and the tools that consume this output are in
-         the weekly job: they came back as a stack trace instead of a number.
-         So a read reports the stale pin by name, declines to apply its edits -
-         the edits are what cannot be trusted - and carries on. */
+      /* A stale pin is RECORDED here and acted on by each caller; nothing throws.
+         What must not happen is a person's recorded add and remove lists being
+         applied to source that has since changed - that is their judgement being
+         inherited rather than made - so those edits are skipped just below.
+         Everything else about the lab is derived as usual.
+         This used to throw, which aborted the whole pass on the first stale lab
+         in card order. See the note on the filter in writeCards. */
       staleReview = { pinned: review.commit, current: head };
-      if (strict) {
-        throw new Error(`${slug}: source review pinned to ${review.commit}, clone is ${head}; re-review before writing evidence`);
-      }
     }
     if (!staleReview) {
     for (const name of review.remove || []) hits.delete(name);
@@ -667,7 +660,26 @@ function fieldsFor(ev) {
 function writeCards(all) {
   let html = fs.readFileSync(HTML, 'utf8');
   let changed = 0;
-  for (const c of all) {
+  /* SKIP THE LABS WHOSE PINS ARE STALE; WRITE EVERY OTHER LAB.
+   *
+   * The guard exists to stop a person's recorded add and remove lists being
+   * applied to source that has since changed. Skipping does exactly that: a
+   * stale-pinned lab's card is not rewritten, so it stays byte-identical and
+   * keeps the state that person last reviewed.
+   *
+   * What it no longer does is refuse to update labs the guard has no view on.
+   * That was never a policy - it was a throw inside evidenceFor, so the first
+   * stale lab in CARD ORDER aborted the whole pass and nothing was written at
+   * all. The cost was not theoretical: five cards credited Shamir secret sharing
+   * on the strength of Fiat-Shamir, the vocabulary had already been narrowed to
+   * exclude that, none of those five labs carried a pin, and the correction sat
+   * blocked behind unrelated labs awaiting a person's re-review.
+   *
+   * The run still exits non-zero, so the pass completes AND stays red: skipped
+   * work is reported rather than quietly dropped. */
+  const stale = all.filter((c) => c.ev.staleReview);
+  const writable = all.filter((c) => !c.ev.staleReview);
+  for (const c of writable) {
     const f = fieldsFor(c.ev);
     /* data-overlaps is NOT touched: it is the one judged field, and a difference
        between two labs is not derivable from either lab's source. */
@@ -690,6 +702,15 @@ function writeCards(all) {
   }
   fs.writeFileSync(HTML, html);
   console.log(`index.html: derived fields written to ${changed} cards.`);
+  if (stale.length) {
+    console.log(`\nSTALE-REVIEW (${stale.length}) — left untouched, byte-identical, holding the state each was last reviewed in:`);
+    for (const c of stale) {
+      console.log(`  ${c.slug.padEnd(34)} reviewed ${c.ev.staleReview.pinned.slice(0, 12)}, clone ${c.ev.staleReview.current.slice(0, 12)}`);
+    }
+    console.log('Re-read those labs and update their pins in tools/catalog-reviewed.json.');
+    console.log('Exiting non-zero: the rest of the catalog is written, and this stays red until they are cleared.');
+    process.exitCode = 1;
+  }
 }
 
 function verifyAnchors(all) {
@@ -813,8 +834,7 @@ function main() {
   // Verification reads the stored claims and clone HEADs. Re-derivation would
   // reject the first stale pin before this pass could report all stale reviews.
   if (mode === 'verify') return verifyAnchors(selected);
-  /* Only the writer is strict. See the note at the guard in evidenceFor. */
-  const all = selected.map((c) => ({ ...c, ev: evidenceFor(c.slug, { strict: mode === 'write' }) }));
+  const all = selected.map((c) => ({ ...c, ev: evidenceFor(c.slug) }));
 
   /* Every read-only mode names the stale pins it worked around, so a number that
      came out of a partly-inherited review is never mistaken for a clean one. */

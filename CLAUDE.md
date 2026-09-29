@@ -954,6 +954,27 @@ publishers invisible to `gate-sync`, a reusable-workflow call invisible to the g
 re-derivation in `dispatch-claims`, and a `node --import tsx --test` invocation invisible to
 a pattern expecting `node --test`.
 
+**A guard scoped to one lab can fail an entire pass, and the blockage publishes what it
+was meant to prevent.** `catalog-evidence` refused to write evidence for a lab whose pinned
+source review had gone stale, which is right: the pin records a person's reading, and
+applying their recorded edits to source that has since changed is that judgement being
+inherited rather than made. But the refusal was a `throw` inside the per-lab derivation, so
+the first stale lab in CARD ORDER aborted the whole run and nothing was written for any
+lab. Meanwhile the vocabulary had been narrowed to stop `Fiat-Shamir` matching Shamir
+secret sharing, and five cards were still crediting labs with an algorithm they do not
+implement. None of those five carried a pin. The correction sat blocked behind unrelated
+labs waiting on a person, and the catalog published five false claims for as long as it
+held.
+
+The shape to look for: **a local safety check whose failure mode is global.** Refusing one
+lab is a decision about that lab; refusing the pass is a decision about every other lab,
+taken by accident. The writer now skips the labs the guard actually has a view on, leaves
+their cards byte-identical, names them, and still exits non-zero — the pass completes and
+the pressure survives. Worth checking wherever a per-item guard sits inside a fleet-wide
+loop: `dispatch-comment-sync` refuses a block it cannot parse, `theme-sync` and `gate-sync`
+fail a lab they cannot read. Each of those reports and continues, which is the behaviour to
+copy.
+
 The rule applies to anything a reader would take as measured: minutes, engine support, privacy
 observations, run-specific verdicts, citation years, and reported changes. When a figure moves, say in the pull request
 what changed to move it, because a number that has changed twice is the one a reader most needs

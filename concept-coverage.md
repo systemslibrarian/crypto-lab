@@ -241,7 +241,13 @@ Export Grade adds key loading as cipher structure. Real TEA1 passes its known-an
 while the ten-byte input is compressed into the 32-bit register the generator actually sees,
 and a worker recovers that register against the same core. It belongs here rather than under
 §30 because the design of the pre-generator reduction is the mechanism; exhaustive search is
-the consequence the lab uses to measure it.
+the consequence the lab uses to measure it. Two later exhibits extend that consequence
+without changing the placement: one extrapolates the learner's own measured search rate
+across larger keyspaces, and one plots thirteen published full-round AES key-recovery
+results against their brute-force lines from a sourced table. Neither executes a
+cryptanalytic technique, so neither earns a §30 listing — §30 is for labs that run one. The
+reduced-round margin view stays with Iron Serpent and quantum search with Grover; Export
+Grade links to both rather than restating either.
 
 Feistel Forge makes the *construction* the subject rather than a cipher that happens to use
 one. Camellia and SM4 sit on World Ciphers as national ciphers and Blowfish on Bcrypt Forge

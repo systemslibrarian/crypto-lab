@@ -58,12 +58,15 @@
     "note": "Runs discrete and continuous differential-privacy noise mechanisms"
   },
   "crypto-lab-export-grade": {
-    "commit": "c48e8c95ec8e8beb971fc8d1d43a5f957ec69781",
+    "commit": "b61f133b5e1392eb8d9809de0d9478097a4f0a43",
     "reviewed": "2026-09-29",
     "add": [
       "TEA1@src/tea1/core.ts:93"
     ],
-    "note": "Runs TETRA TEA1 and a bounded state-recovery demonstration"
+    "remove": [
+      "AES"
+    ],
+    "note": "Runs TETRA TEA1 and a bounded state-recovery demonstration. Exhibits 5 and 6 add no cryptography: src/attack/rate.ts is arithmetic over the search Exhibit 3 already runs, and src/data/attacks.ts is a sourced citation table. AES-128/192/256 are named throughout that table and implemented nowhere in this lab."
   },
   "crypto-lab-frost-threshold": {
     "commit": "c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf",

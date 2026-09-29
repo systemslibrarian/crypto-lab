@@ -323,7 +323,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### DES
 
 - **Implemented by:** [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) `src/attacks/mitm.ts:80`
-- **Also referenced by:** *Iron Serpent*, *Shamir Gate*, *Dead Sea Cipher*, *Biham Lens*, *HAWK*, *Matsui Line*, *Shelf Oracle*, *Sphinx Mix*
+- **Also referenced by:** *Export Grade*, *Iron Serpent*, *Shamir Gate*, *Dead Sea Cipher*, *Biham Lens*, *HAWK*, *Matsui Line*, *Shelf Oracle*, *Sphinx Mix*
 
 #### KASUMI
 
@@ -353,7 +353,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Serpent
 
 - **Implemented by:** [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/benchmark.ts:60`
-- **Also referenced by:** *Kyber Vault*, *World Ciphers*, *Dead Sea Cipher*, *Biham Lens*, *Hybrid Wire*, *Babel Hash*, *AES Modes*, *Matsui Line*, *Feistel Forge*
+- **Also referenced by:** *Export Grade*, *Kyber Vault*, *World Ciphers*, *Dead Sea Cipher*, *Biham Lens*, *Hybrid Wire*, *Babel Hash*, *AES Modes*, *Matsui Line*, *Feistel Forge*
 
 #### Simon
 
@@ -767,12 +767,12 @@ A lab in *italics* references the algorithm without implementing it.
 #### PQXDH
 
 - **Implemented by:** [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/pqxdh/kdf.ts:6`
-- **Also referenced by:** *Kyber Vault*, *Hybrid Wire*, *Key Exchange*, *Hybrid Guide*, *Hybrid PQC*, *Lattice Gentle*, *Privacy Pass*, *Order Leak*, *Split Point*, *Proof Tally*, *Fold Gate*, *Hidden Bit*
+- **Also referenced by:** *Export Grade*, *Kyber Vault*, *Hybrid Wire*, *Key Exchange*, *Hybrid Guide*, *Hybrid PQC*, *Lattice Gentle*, *Privacy Pass*, *Order Leak*, *Split Point*, *Proof Tally*, *Fold Gate*, *Hidden Bit*
 
 #### Privacy Pass
 
 - **Implemented by:** [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/main.ts:4`
-- **Also referenced by:** *RSA Forge*, *Blind Sign*, *Blind Relay*, *Credential Veil*, *Order Leak*, *Split Point*, *Proof Tally*, *Fold Gate*, *Hidden Bit*, *PQXDH Wire*
+- **Also referenced by:** *Export Grade*, *RSA Forge*, *Blind Sign*, *Blind Relay*, *Credential Veil*, *Order Leak*, *Split Point*, *Proof Tally*, *Fold Gate*, *Hidden Bit*, *PQXDH Wire*
 
 #### TLS 1.3
 
@@ -818,7 +818,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Grover's algorithm
 
 - **Implemented by:** [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) `src/grover.ts:73`; [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) `src/main.ts:1098`
-- **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Shor*, *Dilithium Seal*, *World Ciphers*, *Dead Sea Cipher*, *SPHINCS+ Ledger*, *Babel Hash*, *McEliece Gate*, *Pairing Gate*, *Harvest Vault*, *Hybrid Sign*, *PQ Families*, *Key Exchange*, *E91*, *Card Trick*, *Simon's Period*, *Polynomial Forge*
+- **Also referenced by:** *Quantum Vault KpqC*, *Export Grade*, *BB84*, *Shor*, *Dilithium Seal*, *World Ciphers*, *Dead Sea Cipher*, *SPHINCS+ Ledger*, *Babel Hash*, *McEliece Gate*, *Pairing Gate*, *Harvest Vault*, *Hybrid Sign*, *PQ Families*, *Key Exchange*, *E91*, *Card Trick*, *Simon's Period*, *Polynomial Forge*
 
 #### Shor's algorithm
 
@@ -2237,12 +2237,12 @@ RFC 3394/5649 AES key wrap, DEK/KEK hierarchy, KMS-style key rotation, re-wrap w
 
 [`crypto-lab-export-grade`](https://systemslibrarian.github.io/crypto-lab-export-grade/) · Export-Controlled Cipher · ATTACKS, ENCRYPTION
 
-Run real TETRA TEA1, trace its 80-bit key into a 32-bit working register, then recover that register in a browser-sized brute-force window.
+Run real TETRA TEA1, trace its 80-bit key into a 32-bit working register, recover that register in a browser-sized window, then extrapolate the rate your own browser measured out to 2^80 and 2^128 and set it beside the published attacks on full-round AES.
 
 - **Implements:** TEA1 `src/tea1/core.ts:93`
-- **Source review:** [c48e8c95ec8e](https://github.com/systemslibrarian/crypto-lab-export-grade/commit/c48e8c95ec8e8beb971fc8d1d43a5f957ec69781) — Runs TETRA TEA1 and a bounded state-recovery demonstration
-- **References:** AEGIS-256, AES, AES-XTS, BB84, Boneh-Franklin IBE, Bulletproofs, Diffie-Hellman, E91, MD5, OPAQUE, OPRF, Paillier, SHA-256, Schnorr, Shamir secret sharing, Simon, X3DH
-- **Attacks shown:** Brute force `brief.md:15`, Known-plaintext attack `src/ui/app.ts:264`, Timing side-channel `CRYPTO-LAB-TEMPLATE.md:342`
+- **Source review:** [b61f133b5e13](https://github.com/systemslibrarian/crypto-lab-export-grade/commit/b61f133b5e1392eb8d9809de0d9478097a4f0a43) — Runs TETRA TEA1 and a bounded state-recovery demonstration. Exhibits 5 and 6 add no cryptography: src/attack/rate.ts is arithmetic over the search Exhibit 3 already runs, and src/data/attacks.ts is a sourced citation table. AES-128/192/256 are named throughout that table and implemented nowhere in this lab.
+- **References:** AEGIS-256, AES, AES-XTS, BB84, Boneh-Franklin IBE, Bulletproofs, DES, Diffie-Hellman, E91, Grover's algorithm, MD5, OPAQUE, OPRF, PQXDH, Paillier, Privacy Pass, SHA-256, Schnorr, Serpent, Shamir secret sharing, Simon, X3DH
+- **Attacks shown:** Brute force `src/data/attacks.ts:337`, Chosen-ciphertext attack `src/data/attacks.ts:106`, Key recovery `src/data/attacks.ts:53`, Known-plaintext attack `src/data/attacks.ts:162`, Nonce reuse `index.html:509`, Padding oracle `index.html:509`, Side-channel (unspecified) `index.html:509`, Timing side-channel `CRYPTO-LAB-TEMPLATE.md:342`
 - **Standards body:** ETSI
 - **Implementation:** hand-rolled
 
@@ -2266,7 +2266,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
 
 - **Implements:** Babai rounding `src/babai.ts:32`, Falcon `src/falcon.ts:176`, NTRU `src/trapdoor.ts:303`, NTT `src/ntt.ts:45`, Private set intersection `src/ntt.ts:24`, SHA-256 `src/falcon.ts:130`
 - **References:** Dilithium, Gaussian mechanism, Kyber, LWE, ML-DSA, SLH-DSA, SPHINCS+
-- **Attacks shown:** Brute force `src/ui.ts:182`, Key recovery `src/ui.ts:401`, Lattice reduction `src/trapdoor-panel.ts:82`, Side-channel (unspecified) `src/ui.ts:761`, Timing side-channel `src/ui.ts:493`
+- **Attacks shown:** Brute force `src/ui.ts:182`, Key recovery `src/ui.ts:401`, Lattice reduction `src/trapdoor-panel.ts:82`, Side-channel (unspecified) `src/ui.ts:764`, Timing side-channel `src/ui.ts:493`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 
@@ -3325,7 +3325,7 @@ A guided tour of the five post-quantum problem families — lattice, code-based,
 
 - **Implements:** Information-set decoding `src/crypto.ts:240`, Lamport `src/crypto.ts:53`, SHA-256 `src/crypto.ts:35`
 - **References:** AES, ARIA, BIKE, CSIDH, Classic McEliece, Dilithium, ECDSA, Falcon, Fujisaki-Okamoto transform, Grover's algorithm, HQC, Isogeny walk, Kyber, LMS, LWE, ML-DSA, ML-KEM, Merkle tree, NTRU, P-256, Pairing, RSA, SHA-384, SHAKE, SIKE, SLH-DSA, SPHINCS+, Schnorr, Shamir secret sharing, Shor's algorithm, TLS 1.3, Winternitz, X25519, XMSS
-- **Attacks shown:** Birthday bound `src/data.ts:398`, Chosen-ciphertext attack `src/data.ts:176`, Chosen-plaintext attack `src/data.ts:843`, Differential cryptanalysis `src/data.ts:513`, Discrete log `src/data.ts:699`, Factoring `src/data.ts:699`, Fault injection `src/data.ts:85`, Key recovery `src/data.ts:129`, Lattice reduction `src/data.ts:139`, Side-channel (unspecified) `src/data.ts:212`, Timing side-channel `src/data.ts:280`
+- **Attacks shown:** Birthday bound `src/data.ts:414`, Chosen-ciphertext attack `src/data.ts:192`, Chosen-plaintext attack `src/data.ts:859`, Differential cryptanalysis `src/data.ts:529`, Discrete log `src/data.ts:715`, Factoring `src/data.ts:715`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:155`, Side-channel (unspecified) `src/data.ts:228`, Timing side-channel `src/data.ts:296`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 

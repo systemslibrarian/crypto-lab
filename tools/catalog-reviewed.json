@@ -58,8 +58,8 @@
     "note": "Runs discrete and continuous differential-privacy noise mechanisms"
   },
   "crypto-lab-export-grade": {
-    "commit": "77601242dfa34d9874e1d363295e0241232d1129",
-    "reviewed": "2026-09-22",
+    "commit": "c48e8c95ec8e8beb971fc8d1d43a5f957ec69781",
+    "reviewed": "2026-09-29",
     "add": [
       "TEA1@src/tea1/core.ts:93"
     ],
@@ -221,8 +221,8 @@
     "note": "Runs Prange-style and Stern information-set decoding against toy instances"
   },
   "crypto-lab-tc26-pair": {
-    "commit": "1524136e52cb64e57adfcdfa3ccead7f320cf1b7",
-    "reviewed": "2026-09-22",
+    "commit": "a9a9d6c764c5f1e7ab0b50e952f61affc5d3ce92",
+    "reviewed": "2026-09-29",
     "remove": [
       "Shamir secret sharing"
     ],

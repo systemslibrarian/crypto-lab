@@ -54,6 +54,7 @@ An exhibit name that matches no card fails the build rather than being substitut
 | `name` | The repo name minus `crypto-lab-`. Must match a card in `index.html`. |
 | `role` | `intro`, `break-it`, `fix` or `extension`. |
 | `minutes` | Positive integer. Re-derived against what a student actually does, not a budget. |
+| `meeting` | Optional positive integer, and it must not run backwards through the sequence. Which class meeting the exhibit belongs to. **Set it only where the module's own sources state where the break falls** — see below. |
 | `students_do` | One line, taken from the lab's README rather than the card blurb. |
 | `source_commit` | The lab commit that was read, 7 to 40 hex characters. |
 | `source_commit_date` | Optional, `YYYY-MM-DD`: the date of that pinned commit. It is what dates an exhibit's citation. Where the record does not hold it the citation carries **no year field at all**, and specifically not `(n.d.)` — omitting a field is honest, asserting an absence is not. Never the lab's latest commit date, which would date a build the worksheet was never checked against. |
@@ -61,6 +62,32 @@ An exhibit name that matches no card fails the build rather than being substitut
 | `outcome_note` | Required when the worksheet serves no outcome, saying what the exhibit does instead. Rendered on the module page. |
 | `time_note` | Optional, one line, rendered beside `outcome_note` on the module page. |
 | `privacy`, `support`, `run_specific_values` | The three per-exhibit checks below. |
+
+### `meeting`, and why most modules do not have one
+
+A meeting boundary is declared, never computed. It is not derived from a running
+sum of `minutes`, because those minutes exist to be recosted: they are re-derived
+against what a student actually does, so a boundary computed from them would move
+every time one exhibit was retimed, silently resequencing somebody's course.
+
+The same reasoning rules out filling the field in from a module's prose, and that
+is the easier mistake to make. **A meeting count is not a boundary.**
+`library-privacy` calls itself a two-meeting unit and `post-quantum` says two
+meetings of seventy-five minutes or three of fifty — neither says where the break
+falls, and post-quantum's count changes with the length of the slot. Choosing a
+split for them would be the minutes-derivation error wearing different clothes:
+a boundary invented to make the data look complete, then rendered on the module
+page as though the sources had stated it.
+
+So the field is set where a boundary was checked against the worksheets, and left
+unset everywhere else. An exhibit with no `meeting` is not missing data. The nav
+shows a boundary where the sources state one and none where they do not, and the
+module page's outcome grouping prints nothing at all for a module declaring fewer
+than two meetings.
+
+If you are about to add a `meeting` to a module because its neighbours have one,
+that is the thing this note exists to stop. Add it when you can say, from the
+worksheets, which exhibit finishes the first meeting.
 
 ### The assessment artifact
 

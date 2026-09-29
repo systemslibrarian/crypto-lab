@@ -88,6 +88,13 @@ const CHECKERS = [
  * exactly that case: two of its five markers are decided on, and the other three are
  * not. Decisions live in audits/LANE-VERDICT-HARNESS-2026-09-21.md. */
 const EXPECTED = {
+  'catalog-evidence': [
+    {
+      marker: 'STALE-REVIEW',
+      decision: 'the maintainer is working through these',
+      unblocks: 'each pin records a PERSON\'s reading of a lab whose source the scanner could not resolve, so only a person can clear it: re-read the lab and update its commit in `tools/catalog-reviewed.json`. Nothing here can be re-derived, which is why it sits in this list rather than the one beside it — STALE-ANCHOR next to it is a line number that rotted and `node tools/catalog-evidence.js write` fixes it, so that one stays a surprise',
+    },
+  ],
   'dispatch-sync': [
     {
       marker: 'RE-QUERY',

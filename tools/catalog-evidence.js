@@ -387,7 +387,7 @@ function labFiles(dir) {
 }
 
 /** Everything derivable about one lab. Never throws; a missing clone is a state. */
-function evidenceFor(slug) {
+function evidenceFor(slug, { strict = false } = {}) {
   const dir = path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
     /* A lab with no clone here is NOT-SCANNED, not UNKNOWN. UNKNOWN means every
@@ -398,7 +398,7 @@ function evidenceFor(slug) {
     return {
       slug, cloned: false, implements: [], references: [], attacks: [], standards: [],
       implementation: 'UNKNOWN', unscanned: ['not cloned here'], notScanned: true,
-      commentOnly: [], protocolPartial: [],
+      commentOnly: [], protocolPartial: [], staleReview: null,
     };
   }
   const { code, prose, unread } = labFiles(dir);
@@ -540,11 +540,27 @@ function evidenceFor(slug) {
     .map(([name, at]) => ({ name, at })).sort((a, b) => a.name.localeCompare(b.name));
 
   const review = REVIEWS[slug];
+  let staleReview = null;
   if (review) {
     const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
     if (head !== review.commit) {
-      throw new Error(`${slug}: source review pinned to ${review.commit}, clone is ${head}; re-review before writing evidence`);
+      /* WRITE REFUSES; READ-ONLY MODES REPORT. The two differ on purpose, so
+         please do not unify them.
+         Writing applies a person's judgement - the add and remove lists below -
+         to source that has since changed, which is the judgement being
+         inherited rather than made. Refusing is the whole point of the pin.
+         Reading writes nothing. A recall measurement or a JSON dump that dies on
+         the first stale pin loses the entire measurement to protect a file it
+         was never going to touch, and the tools that consume this output are in
+         the weekly job: they came back as a stack trace instead of a number.
+         So a read reports the stale pin by name, declines to apply its edits -
+         the edits are what cannot be trusted - and carries on. */
+      staleReview = { pinned: review.commit, current: head };
+      if (strict) {
+        throw new Error(`${slug}: source review pinned to ${review.commit}, clone is ${head}; re-review before writing evidence`);
+      }
     }
+    if (!staleReview) {
     for (const name of review.remove || []) hits.delete(name);
     for (const item of review.add || []) {
       const at = item.lastIndexOf('@');
@@ -557,6 +573,7 @@ function evidenceFor(slug) {
     }
     if (review.state === 'N/A' && hits.size) {
       throw new Error(`${slug}: N/A review conflicts with ${[...hits.keys()].join(', ')}`);
+    }
     }
   }
   const impl = [...hits.entries()].map(([name, v]) => ({ name, at: v.at, shape: v.shape }))
@@ -601,6 +618,7 @@ function evidenceFor(slug) {
     notScanned: impl.length === 0 && unreadable.length > 0,
     reviewed: review ? { commit: review.commit, note: review.note, state: review.state || 'covered' } : null,
     commentOnly: inertOnly,
+    staleReview,
     protocolPartial: protocolPartial.filter((x) => !hits.has(x.name)).sort((a, b) => a.name.localeCompare(b.name)),
   };
 }
@@ -676,6 +694,7 @@ function writeCards(all) {
 
 function verifyAnchors(all) {
   const bad = [];
+  const unreadable = [];
   let checked = 0;
   const byName = new Map(ALGORITHMS.map((a) => [a.name, a]));
   for (const c of all) {
@@ -683,13 +702,27 @@ function verifyAnchors(all) {
     if (review) {
       const dir = path.join(REPOS, c.slug);
       if (!fs.existsSync(path.join(dir, '.git'))) {
-        bad.push({ slug: c.slug, item: 'source review', why: 'reviewed lab clone is missing' });
+        /* Not a stale review and not a finding about the lab: a pin this pass
+           could not read. It is listed apart from the stale ones so a reader is
+           not told to re-review something nobody looked at. */
+        if (!unreadable.includes(c.slug)) unreadable.push(c.slug);
       } else {
         const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
         if (head !== review.commit) {
           bad.push({ slug: c.slug, item: 'source review', why: `reviewed ${review.commit.slice(0, 12)}, current ${head.slice(0, 12)}; re-review and update the pin` });
         }
       }
+    }
+    /* No clone here means this pass could not look, and every anchor it would
+       have checked is unreadable for one reason rather than missing for many.
+       Reporting "file is gone" per anchor claims something about files nobody
+       opened - the UNKNOWN-versus-NOT-SCANNED conflation one layer up, in the
+       verifier this time. Say it once, and move on. */
+    if (!fs.existsSync(path.join(REPOS, c.slug, '.git'))) {
+      if (attr(c.block, 'implements') && !['UNKNOWN', 'NOT-SCANNED', 'N/A'].includes(attr(c.block, 'implements'))) {
+        unreadable.push(c.slug);
+      }
+      continue;
     }
     const stored = attr(c.block, 'implements');
     if (!stored || stored === 'UNKNOWN' || stored === 'NOT-SCANNED' || stored === 'N/A') continue;
@@ -732,11 +765,41 @@ function verifyAnchors(all) {
       if (!named) bad.push({ slug: c.slug, item, why: `neither line ${lineNo} nor the path names it` });
     }
   }
-  console.log(`Anchors checked: ${checked}. Stale anchors or source reviews: ${bad.length}.`);
-  for (const b of bad) console.log(`  ${b.slug.padEnd(34)} ${b.item}  — ${b.why}`);
-  if (bad.length) {
-    console.log('\nInspect the current lab source, update pinned reviews where needed, then re-derive with:'
-      + '\n  node tools/catalog-evidence.js write');
+  /* Reported under NAMED MARKERS, one per class, because the weekly runner reads
+     markers to tell a decided-on state from a surprise. Folded into one count,
+     twenty pins awaiting a person's re-review would sit in the same list as an
+     anchor that silently rotted, and the second would be read as routine. */
+  const staleReviews = bad.filter((b) => b.item === 'source review');
+  const staleAnchors = bad.filter((b) => b.item !== 'source review');
+  console.log(`Anchors checked: ${checked}.\n`);
+  if (staleReviews.length) {
+    console.log(`STALE-REVIEW (${staleReviews.length}) — the lab moved since a person reviewed it; the pin needs a person again.`);
+    for (const b of staleReviews) console.log(`  ${b.slug.padEnd(34)} ${b.why}`);
+    console.log('');
+  }
+  if (staleAnchors.length) {
+    console.log(`STALE-ANCHOR (${staleAnchors.length}) — a line number that no longer resolves.`);
+    for (const b of staleAnchors) console.log(`  ${b.slug.padEnd(34)} ${b.item}  — ${b.why}`);
+    console.log('');
+  }
+  if (unreadable.length) {
+    console.log(`UNREADABLE (${unreadable.length}) — no clone here, so this pass could not look. Not a finding about the lab.`);
+    for (const slug of unreadable) console.log(`  ${slug.padEnd(34)} clone it to check its anchors and its pinned review`);
+    console.log('');
+  }
+  if (bad.length || unreadable.length) {
+    if (staleAnchors.length) {
+      console.log('For a stale anchor: re-derive with `node tools/catalog-evidence.js write`.');
+      if (staleReviews.length) {
+        console.log('  — but note the writer REFUSES while any pinned review is stale, so the reviews above'
+          + '\n    have to be cleared first. That ordering is deliberate, not an oversight: re-deriving'
+          + '\n    would otherwise apply a person\'s judgement to source that has since changed.');
+      }
+    }
+    if (staleReviews.length) {
+      console.log('For a stale review: inspect the current lab source and update the pin in tools/catalog-reviewed.json.');
+    }
+    if (unreadable.length) console.log('For an unreadable lab: clone it next to this repository.');
     process.exit(1);
   }
   console.log('Every anchor still resolves and every pinned source review matches its lab clone.');
@@ -750,7 +813,20 @@ function main() {
   // Verification reads the stored claims and clone HEADs. Re-derivation would
   // reject the first stale pin before this pass could report all stale reviews.
   if (mode === 'verify') return verifyAnchors(selected);
-  const all = selected.map((c) => ({ ...c, ev: evidenceFor(c.slug) }));
+  /* Only the writer is strict. See the note at the guard in evidenceFor. */
+  const all = selected.map((c) => ({ ...c, ev: evidenceFor(c.slug, { strict: mode === 'write' }) }));
+
+  /* Every read-only mode names the stale pins it worked around, so a number that
+     came out of a partly-inherited review is never mistaken for a clean one. */
+  const stale = all.filter((c) => c.ev.staleReview);
+  if (stale.length && mode !== 'write') {
+    console.error(`STALE-REVIEW (${stale.length}) — pinned source reviews whose lab has moved. Their recorded`);
+    console.error('add/remove edits were NOT applied here; everything else in this run is derived as usual.');
+    for (const c of stale) {
+      console.error(`  ${c.slug.padEnd(34)} reviewed ${c.ev.staleReview.pinned.slice(0, 12)}, clone ${c.ev.staleReview.current.slice(0, 12)}`);
+    }
+    console.error('Update the pins in tools/catalog-reviewed.json after re-reading those labs.\n');
+  }
 
   if (mode === 'gaps') {
     /* Chips naming something the vocabulary has never heard of. The header

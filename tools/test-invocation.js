@@ -44,6 +44,25 @@
  * with no workflows at all. A checker that cannot see must not report either
  * verdict — the rule this fleet keeps re-learning.
  *
+ * WHAT A CLEAN RESULT DOES NOT ESTABLISH
+ *
+ * That every test file reaches a runner. This asks whether a runner is invoked
+ * at all; it does not open that runner's own configuration afterwards. A
+ * Playwright project scoped by `testMatch`, or a `testIgnore`, can still exclude
+ * a spec the runner was told to run, and this tool would report the lab as
+ * having a caller for that kind of test — which it does. A lab absent from the
+ * findings has a caller for each kind of test it carries, and nothing stronger.
+ *
+ * That limit is named rather than chased. Following config scoping means reading
+ * each runner's resolution rules, and a half-done version of it would produce
+ * confident wrong answers where this produces a stated boundary.
+ *
+ * AND CHECK THE LABS THAT DO NOT APPEAR. A near-empty result here is a claim
+ * about every lab in the fleet. crypto-lab-padding-oracle is the reason: it
+ * resolves only because this tool follows a harness one hop, and that harness
+ * exists because `node --test` once exited 0 having loaded nothing — the lab
+ * that had already fixed this class was the one the detector could not see.
+ *
  * Usage (from the repo root):
  *   node tools/test-invocation.js            report
  *   node tools/test-invocation.js --json     machine-readable

@@ -935,6 +935,25 @@ measurement's clothes, and it is the same defect as reading one protection endpo
 a ruleset-protected branch unprotected. Search the whole tree for the value before reporting it
 absent; the search costs nothing and the retraction does not.
 
+**A lab that solved a problem in an unusual way is systematically invisible to a checker
+built around the usual way.** This is the re-derive rule turned on the checker instead of
+the claim, and it bites hardest where it is least expected: at the labs a sweep does NOT
+name. `tools/test-invocation.js` looks for test files no workflow runs, and
+`crypto-lab-padding-oracle` resolves only because the tool follows a hand-written harness
+one hop into the repository. That harness exists *because* `node --test` once exited 0
+having loaded none of its files and the gate passed with a log reading zero tests — so the
+one lab in the fleet that had already fixed this exact class was the one the detector could
+not see. It would have been reported as a finding, or as unreadable, on the strength of
+having solved the problem.
+
+The practice that follows: **when a sweep comes back near-empty, or one lab stands out as
+the sole finding, check the labs that do not appear before trusting the one that does.** An
+empty result is a claim about every lab, and the labs most likely to break a detector are
+the ones that did something thoughtful. The same shape has now appeared as `peaceiris`
+publishers invisible to `gate-sync`, a reusable-workflow call invisible to the gate
+re-derivation in `dispatch-claims`, and a `node --import tsx --test` invocation invisible to
+a pattern expecting `node --test`.
+
 The rule applies to anything a reader would take as measured: minutes, engine support, privacy
 observations, run-specific verdicts, citation years, and reported changes. When a figure moves, say in the pull request
 what changed to move it, because a number that has changed twice is the one a reader most needs

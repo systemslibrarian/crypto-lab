@@ -827,7 +827,8 @@ ${readyBlock(m, core, ext)}
 <section aria-labelledby="prereq"><h2 id="prereq">Prerequisites</h2>${list(m.prerequisites)}</section>
 
 <section aria-labelledby="outcomes"><h2 id="outcomes">Learning outcomes</h2>
-<ol>${m.outcomes.map((o) => `<li>${esc(o)}</li>`).join('')}</ol></section>
+<ol>${m.outcomes.map((o) => `<li>${esc(o)}</li>`).join('')}</ol>
+${meetingOutcomes(m, worksheets)}</section>
 
 <section aria-labelledby="sequence"><h2 id="sequence">Sequence</h2>
 ${m.exhibits.filter((x) => x.outcome_note || x.time_note).map((x) => [x.time_note, x.outcome_note].filter(Boolean)
@@ -907,6 +908,42 @@ function syllabusBlock(site, id, url) {
  * Previous and next stay inside /teach/. Only "exhibit" leaves for the live lab,
  * and it is marked as leaving.
  */
+/** Which outcomes each meeting finishes — DERIVED, not asserted.
+ *
+ * Read from the worksheets' own `outcomes` tags grouped by each exhibit's
+ * `meeting`, so the claim on the module page cannot drift from what the
+ * worksheets say they serve. An outcome is listed under the LAST meeting that
+ * serves it, because that is where a student finishes it; listing it under the
+ * first would promise it complete before it is.
+ *
+ * Returns nothing when a module declares fewer than two meetings. A module with
+ * no stated boundary has no split to report, and inventing one would be the page
+ * claiming a structure its sources do not have.
+ */
+function meetingOutcomes(m, worksheets) {
+  const meetings = [...new Set(m.exhibits.map((x) => x.meeting).filter((n) => n !== undefined))].sort((a, b) => a - b);
+  if (meetings.length < 2) return '';
+  const last = new Map();
+  for (const x of m.exhibits) {
+    if (x.meeting === undefined) continue;
+    const ws = worksheets.find((w) => w.module === m && w.name === x.name);
+    if (!ws) continue;
+    for (const n of ws.meta.outcomes || []) last.set(n, Math.max(last.get(n) || 0, x.meeting));
+  }
+  const rows = meetings.map((mt) => {
+    const nums = [...last.entries()].filter(([, v]) => v === mt).map(([k]) => k).sort((a, b) => a - b);
+    const names = m.exhibits.filter((x) => x.meeting === mt).map((x) => x.card.title);
+    return `<li><strong>Meeting ${mt}</strong> — ${esc(names.join(', '))}: `
+      + (nums.length
+        ? `finishes ${nums.length === 1 ? 'outcome' : 'outcomes'} ${nums.join(', ')}`
+        : 'finishes no outcome on its own')
+      + '</li>';
+  }).join('');
+  return `<h3>Which meeting finishes which outcome</h3>
+<ul class="t-meeting-outcomes">${rows}</ul>
+<p>Taken from each worksheet's own outcome tags, grouped by the meeting its exhibit sits in. An outcome is listed where a student finishes it, not where it is first met.</p>`;
+}
+
 function exhibitNav(m, x, worksheets, { onWorksheet, compact }) {
   const seq = m.exhibits;
   const i = seq.indexOf(x);

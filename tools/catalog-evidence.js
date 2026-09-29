@@ -703,9 +703,14 @@ function writeCards(all) {
   fs.writeFileSync(HTML, html);
   console.log(`index.html: derived fields written to ${changed} cards.`);
   if (stale.length) {
-    console.log(`\nSTALE-REVIEW (${stale.length}) — left untouched, byte-identical, holding the state each was last reviewed in:`);
-    for (const c of stale) {
-      console.log(`  ${c.slug.padEnd(34)} reviewed ${c.ev.staleReview.pinned.slice(0, 12)}, clone ${c.ev.staleReview.current.slice(0, 12)}`);
+    const today = new Date();
+    const aged = stale.map((c) => {
+      const d = REVIEWS[c.slug] && REVIEWS[c.slug].reviewed;
+      return { c, days: d ? Math.floor((today - Date.parse(`${d}T00:00:00Z`)) / 86400000) : null, on: d };
+    }).sort((a, b) => (b.days ?? -1) - (a.days ?? -1));
+    console.log(`\nSTALE-REVIEW (${stale.length}) — left untouched, byte-identical, holding the state each was last reviewed in. Oldest first:`);
+    for (const a of aged) {
+      console.log(`  ${a.days === null ? '  undated' : `${String(a.days).padStart(4)}d`}  ${a.c.slug.padEnd(32)} reviewed ${a.on || '(no date)'}`);
     }
     console.log('Re-read those labs and update their pins in tools/catalog-reviewed.json.');
     console.log('Exiting non-zero: the rest of the catalog is written, and this stays red until they are cleared.');
@@ -713,15 +718,40 @@ function writeCards(all) {
   }
 }
 
+/** The lab's ACTUAL head, read from the remote without fetching.
+ *
+ * The staleness check used to compare a pin against `git rev-parse HEAD` in the
+ * local clone, and a clone nobody fetched is not the lab. Every one of the
+ * eighteen pins it reported stale turned out to match its lab's real main
+ * exactly; what had moved was the working copy. That is this repository's
+ * recurring defect wearing yet another coat - a checker reading whatever was
+ * convenient rather than the thing the question is about - and it had produced a
+ * re-review queue with nothing in it.
+ *
+ * Returns null when the remote cannot be read, which is reported as unreadable
+ * rather than as a stale pin.
+ */
+function remoteHeadOf(dir) {
+  try {
+    const out = execFileSync('git', ['-C', dir, 'ls-remote', 'origin', 'HEAD'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    const sha = out.trim().split(/\s+/)[0];
+    return /^[0-9a-f]{40}$/.test(sha) ? sha : null;
+  } catch { return null; }
+}
+
 function verifyAnchors(all) {
   const bad = [];
   const unreadable = [];
+  const behind = [];
   let checked = 0;
   const byName = new Map(ALGORITHMS.map((a) => [a.name, a]));
   for (const c of all) {
     const review = REVIEWS[c.slug];
     if (review) {
       const dir = path.join(REPOS, c.slug);
+      if (!review.reviewed) {
+        bad.push({ slug: c.slug, item: 'source review', why: 'no "reviewed" date recorded, so this pin cannot be aged' });
+      }
       if (!fs.existsSync(path.join(dir, '.git'))) {
         /* Not a stale review and not a finding about the lab: a pin this pass
            could not read. It is listed apart from the stale ones so a reader is
@@ -729,8 +759,21 @@ function verifyAnchors(all) {
         if (!unreadable.includes(c.slug)) unreadable.push(c.slug);
       } else {
         const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-        if (head !== review.commit) {
-          bad.push({ slug: c.slug, item: 'source review', why: `reviewed ${review.commit.slice(0, 12)}, current ${head.slice(0, 12)}; re-review and update the pin` });
+        const remote = remoteHeadOf(dir);
+        if (remote === null) {
+          if (!unreadable.includes(c.slug)) unreadable.push(c.slug);
+        } else if (remote === review.commit && head !== review.commit) {
+          /* The pin is CURRENT; this working copy is behind. Not a re-review, and
+             not the lab's problem - but it does mean every anchor derived here
+             came from source the lab has moved past, so it is a finding about
+             this checkout and it says which command clears it. */
+          behind.push({ slug: c.slug, clone: head, actual: remote });
+        } else if (remote !== review.commit) {
+          bad.push({
+            slug: c.slug,
+            item: 'source review',
+            why: `reviewed ${review.commit.slice(0, 12)}, lab is now ${remote.slice(0, 12)}; re-review and update the pin`,
+          });
         }
       }
     }
@@ -790,12 +833,31 @@ function verifyAnchors(all) {
      markers to tell a decided-on state from a surprise. Folded into one count,
      twenty pins awaiting a person's re-review would sit in the same list as an
      anchor that silently rotted, and the second would be read as routine. */
-  const staleReviews = bad.filter((b) => b.item === 'source review');
+  /* Stale pins are AGED and sorted oldest first. A red exit seen every week says
+     the same thing every week; a number that grows says how long it has been
+     ignored, which is the part a weekly issue can carry and an exit code cannot.
+     The age comes from the `reviewed` date recorded beside each pin, so this
+     needs no network and cannot drift from the pin it describes. */
+  const today = new Date();
+  const ageOf = (slug) => {
+    const d = REVIEWS[slug] && REVIEWS[slug].reviewed;
+    if (!d) return null;
+    return Math.floor((today - Date.parse(`${d}T00:00:00Z`)) / 86400000);
+  };
+  const staleReviews = bad.filter((b) => b.item === 'source review')
+    .map((b) => ({ ...b, days: ageOf(b.slug) }))
+    .sort((a, b) => (b.days ?? -1) - (a.days ?? -1));
   const staleAnchors = bad.filter((b) => b.item !== 'source review');
   console.log(`Anchors checked: ${checked}.\n`);
   if (staleReviews.length) {
-    console.log(`STALE-REVIEW (${staleReviews.length}) — the lab moved since a person reviewed it; the pin needs a person again.`);
-    for (const b of staleReviews) console.log(`  ${b.slug.padEnd(34)} ${b.why}`);
+    const oldest = staleReviews[0].days;
+    console.log(`STALE-REVIEW (${staleReviews.length}) — oldest ${oldest === null ? 'undated' : `${oldest} days`}; `
+      + 'the lab moved since a person reviewed it, so the pin needs a person again. Oldest first.');
+    for (const b of staleReviews) {
+      const age = b.days === null ? '  undated' : `${String(b.days).padStart(4)}d`;
+      const on = REVIEWS[b.slug] && REVIEWS[b.slug].reviewed;
+      console.log(`  ${age}  ${b.slug.padEnd(32)} reviewed ${on || '(no date recorded)'} — ${b.why}`);
+    }
     console.log('');
   }
   if (staleAnchors.length) {
@@ -803,12 +865,19 @@ function verifyAnchors(all) {
     for (const b of staleAnchors) console.log(`  ${b.slug.padEnd(34)} ${b.item}  — ${b.why}`);
     console.log('');
   }
+  if (behind.length) {
+    console.log(`CLONE-BEHIND (${behind.length}) — the pin matches the lab, but this checkout does not.`);
+    console.log('Not a re-review and not the lab\'s problem: every anchor derived here came from source');
+    console.log('the lab has moved past. Fetch these and re-derive.');
+    for (const b of behind) console.log(`  ${b.slug.padEnd(34)} clone ${b.clone.slice(0, 12)}, lab ${b.actual.slice(0, 12)}`);
+    console.log('');
+  }
   if (unreadable.length) {
-    console.log(`UNREADABLE (${unreadable.length}) — no clone here, so this pass could not look. Not a finding about the lab.`);
+    console.log(`UNREADABLE (${unreadable.length}) — no clone here, or its remote could not be read, so this pass could not look. Not a finding about the lab.`);
     for (const slug of unreadable) console.log(`  ${slug.padEnd(34)} clone it to check its anchors and its pinned review`);
     console.log('');
   }
-  if (bad.length || unreadable.length) {
+  if (bad.length || unreadable.length || behind.length) {
     if (staleAnchors.length) {
       console.log('For a stale anchor: re-derive with `node tools/catalog-evidence.js write`.');
       if (staleReviews.length) {
@@ -819,6 +888,9 @@ function verifyAnchors(all) {
     }
     if (staleReviews.length) {
       console.log('For a stale review: inspect the current lab source and update the pin in tools/catalog-reviewed.json.');
+    }
+    if (behind.length) {
+      console.log('For a clone behind its lab: `git -C ../<lab> pull --ff-only`, then re-derive.');
     }
     if (unreadable.length) console.log('For an unreadable lab: clone it next to this repository.');
     process.exit(1);

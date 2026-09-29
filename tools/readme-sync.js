@@ -2,6 +2,7 @@
 //
 // Run: node tools/readme-sync.js check
 // Prevents: this README’s tables drifting from the cards they are generated from
+// Reads: index.html's cards, its SECTIONS / TITLE_TO_SECTION / LEARNING_PATHS literals and #exhibit-count, plus README.md's Featured rows
 // Demos tables from index.html, so the site is the single source of truth.
 //   node tools/readme-sync.js        rewrite README.md and index.html's hero count
 //   node tools/readme-sync.js check  exit 1 if either differs from generated

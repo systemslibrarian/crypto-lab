@@ -4,6 +4,7 @@
  *
  * Run: node tools/catalog-sync.js check
  * Prevents: the algorithm index drifting from the cards, and a card claiming an algorithm with no evidence behind it
+ * Reads: index.html's cards, tools/catalog-vocab.js, tools/catalog-reviewed.json, and CATALOG.md itself for the check diff
  *
  * index.html stays the single source of truth. The cards carry the facts —
  * catalog-evidence.js derives them from each lab's own source and writes them

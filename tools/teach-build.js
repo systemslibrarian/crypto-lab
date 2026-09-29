@@ -5,6 +5,7 @@
  *
  * Run: node tools/teach-build.js check
  * Prevents: a generated teach page drifting from its source, and a hardcoded catalog count going stale
+ * Reads: teach/_src — module JSON, worksheet Markdown, landing.html, site.json, evidence.json — plus index.html's cards and CITATION.cff
  *
  * Sources (hand-edited):
  *   teach/_src/modules/<id>.json            one file per course module

@@ -5,6 +5,7 @@
  *
  * Run: node tools/gate-sync.js check
  * Prevents: a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching
+ * Reads: sibling clones' .github/workflows/*.yml and each clone's package.json scripts, plus this repo's index.html github.io slugs
  *
  * deploy-sync asks whether the live site matches main. This one asks the
  * question one step earlier: whether anything could have landed on main that

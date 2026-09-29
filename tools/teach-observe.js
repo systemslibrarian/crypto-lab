@@ -5,6 +5,7 @@
  *
  * Run: node tools/teach-observe.js <exhibit url>
  * Prevents: a privacy note on a module page describing contacts the exhibit no longer makes
+ * Reads: only the URL passed on argv, loaded live in Playwright (chromium|firefox|webkit); no file in this repo
  *
  * Loads the page, scrolls to the end, waits for the network to go quiet, and prints
  * every origin other than the page's own that it contacted, with the kind of request,

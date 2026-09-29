@@ -4,6 +4,7 @@
  *
  * Run: node tools/port-sync.js check
  * Prevents: two labs sharing a Playwright port, where a local run silently tests whatever is already listening
+ * Reads: playwright.config.ts in each sibling clone under ../crypto-lab-<slug>, and tools/playwright-ports.json
  *
  * Two labs sharing a port is not a style problem. Playwright's default
  * `reuseExistingServer: !process.env.CI` means a local run that finds something

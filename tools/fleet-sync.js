@@ -4,6 +4,7 @@
  *
  * Run: node tools/fleet-sync.js check
  * Prevents: a lab going live with no card, which every catalog checker then reads as consistent rather than missing
+ * Reads: `gh repo list systemslibrarian`, index.html's github.io slugs, each clone's origin/HEAD tree after a fetch, else gh api git/trees/HEAD
  *
  * The other checkers all compare this repo to something derived from it:
  * readme-sync reads the cards, corpus-sync reads the cards, concept-sync reads

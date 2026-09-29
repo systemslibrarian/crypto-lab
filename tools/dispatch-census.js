@@ -5,6 +5,7 @@
  *
  * Run: node tools/dispatch-census.js check
  * Prevents: a lab dropping out of the dispatch checkers’ denominator without the count going red
+ * Reads: tools/dispatch-census.json, and sibling clones' .github/workflows/*.yml through dispatch-comment-sync's readers
  *
  * ---------------------------------------------------------------------------
  * The defect this closes

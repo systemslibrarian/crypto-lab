@@ -5,6 +5,7 @@
  *
  * Run: node tools/teach-issues.js
  * Prevents: a module page publishing a defect note about a lab that stopped being true
+ * Reads: teach/_src/modules/*.json, index.html card hrefs, and the live github.io exhibit pages those name, in Playwright
  *
  * WHY THIS EXISTS
  *

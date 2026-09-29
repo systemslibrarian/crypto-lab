@@ -5,6 +5,7 @@
  *
  * Run: node tools/dispatch-sync.js check
  * Prevents: a merged bump whose deploy dispatch can fail, print nothing and exit 0, leaving the live site on the old build
+ * Reads: sibling clones' .github/workflows/*.yml, plus tools/dispatch-census.json via dispatch-comment-sync/-claims/-census
  *
  * deploy-sync asks whether the live site matches main. gate-sync asks whether
  * the gate a bump merges against is the gate the deploy depends on. This one

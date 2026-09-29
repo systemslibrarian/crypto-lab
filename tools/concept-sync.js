@@ -4,6 +4,7 @@
  *
  * Run: node tools/concept-sync.js check
  * Prevents: the gap list answering “is anything missing?” wrongly because a demo was never filed under a concept
+ * Reads: concept-coverage.md's citation paragraphs and total line, and index.html's card titles
  *
  * concept-coverage.md maps every demo onto the concept it teaches, so "what's
  * left to build?" is a lookup rather than an audit. That map only stays useful

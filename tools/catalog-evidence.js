@@ -5,6 +5,7 @@
  *
  * Run: node tools/catalog-evidence.js verify
  * Prevents: the catalog asserting a lab implements an algorithm its source does not
+ * Reads: ../crypto-lab-<slug>/ clones (code, READMEs) + local HEAD + `ls-remote origin HEAD`; index.html; catalog-vocab.js; catalog-reviewed.json
  *
  * It reads the sibling clones, so like deploy-sync and fleet-sync it is NOT in
  * the fast loop. `catalog-sync.js` needs none of this: the facts it generates

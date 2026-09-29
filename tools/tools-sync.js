@@ -5,10 +5,14 @@
  *
  * Run: node tools/tools-sync.js check
  * Prevents: this list drifting from the tools it describes
+ * Reads: git ls-files -- tools, each tracked tools/*.js header and body, this repo's .github/workflows/*.yml, and README.md
  *
  * Every row is read out of the tool it describes: the one-line purpose from the first
  * sentence of its header, the command from its `Run:` line, and the failure it exists
- * to prevent from its `Prevents:` line. Nothing in the table is written by hand, so a
+ * to prevent from its `Prevents:` line. A `Reads:` line is required too and is not put
+ * in the table - it is for the person checking a checker, who needs to know what it
+ * opened before judging what it concluded, and that reader is in the source rather than
+ * in the README. Nothing in the table is written by hand, so a
  * tool whose purpose changes and whose header follows drags the README with it, and
  * one whose header does not follow fails this check instead of quietly publishing a
  * stale sentence.
@@ -89,7 +93,13 @@ function readTool(file) {
     if (!lines[i] || /^[A-Za-z][\w -]*:/.test(lines[i])) break;
     purpose += ` ${lines[i]}`;
   }
-  return { file, purpose: purpose.replace(/\s+/g, ' ').trim(), run: tagged('Run'), prevents: tagged('Prevents') };
+  return {
+    file,
+    purpose: purpose.replace(/\s+/g, ' ').trim(),
+    run: tagged('Run'),
+    prevents: tagged('Prevents'),
+    reads: tagged('Reads'),
+  };
 }
 
 /** Which workflow, if any, runs this tool — and on what triggers. */
@@ -199,6 +209,16 @@ function rows() {
     if (!t.run && !t.prevents) { notRun.push(file); continue; }
     if (!t.run) fail(`${file}: has a "Prevents:" line but no "Run:" line`);
     if (!t.prevents) fail(`${file}: is runnable but its header does not say what failure it prevents — add a "Prevents:" line`);
+    /* A tool must name its SOURCES as well as its purpose. Four times a checker
+       here has answered from something near the question rather than the thing
+       the question is about - one protection endpoint instead of two, the
+       TypeScript in a Rust lab, a missing clone, an unfetched one - and each
+       time the bug was one line under logic that was sound, which is why
+       reviewing the logic never found it. The first step on any new or changed
+       checker is to print the source it opened for one subject and confirm by
+       hand that it is the thing the checker claims to describe. This line is
+       what that reader checks against, so it is required. */
+    if (!t.reads) fail(`${file}: is runnable but its header does not say what it opens — add a "Reads:" line naming the exact paths, endpoints, refs or commands`);
     const said = [...(when.get(file) || [])];
     listed.push({ ...t, when: said.length ? said.join(', ') : 'manual' });
   }

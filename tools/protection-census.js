@@ -4,6 +4,7 @@
  *
  * Run: node tools/protection-census.js
  * Prevents: reading a 404 from the classic protection endpoint as unprotected when a ruleset is protecting the branch
+ * Reads: tools/dispatch-census.json for the lab list, then 3 `gh api` GETs per lab: repos/{o}/{r}, branches/{b}/protection, rules/branches/{b}
  *
  * READ-ONLY. It issues GET requests through `gh api` and nothing else. It has no
  * write path, no `--fix`, and no flag that changes anything on GitHub. Branch

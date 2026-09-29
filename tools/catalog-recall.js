@@ -4,6 +4,7 @@
  *
  * Run: node tools/catalog-recall.js
  * Prevents: the chip rule being promoted to a failing check on a judgement call rather than a measurement
+ * Reads: tools/fixtures/catalog/recall.json and catalog-vocab.js, and shells out to `node tools/catalog-evidence.js --json` (which opens every clone)
  *
  * WHY THIS EXISTS
  *

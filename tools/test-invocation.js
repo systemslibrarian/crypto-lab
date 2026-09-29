@@ -4,6 +4,7 @@
  *
  * Run: node tools/test-invocation.js
  * Prevents: a lab carrying a full test suite that CI never executes, which reads as clean everywhere because nothing reports a test that was never attempted
+ * Reads: .scratch/<lab>/ exports of remote default branches — workflows, every package.json, playwright.config, in-repo harness JS
  *
  * A DIFFERENT QUESTION FROM THE ZERO-TEST SWEEP. That one reads runs that
  * happened and asks whether any reported nothing. This one asks whether the run

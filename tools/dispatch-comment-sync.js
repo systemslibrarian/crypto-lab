@@ -5,6 +5,7 @@
  *
  * Run: node tools/dispatch-comment-sync.js check
  * Prevents: the paragraph explaining why the dispatch exists drifting into many wordings, or being deleted with the line it defends
+ * Reads: sibling clones' .github/workflows YAML, which it also rewrites, and tools/dispatch-census.json via its two sibling checkers
  *
  * ---------------------------------------------------------------------------
  * Why a checker for a comment

@@ -4,6 +4,7 @@
  *
  * Run: node tools/deploy-sync.js check
  * Prevents: a lab serving a build older than its own main, with nothing anywhere going red
+ * Reads: sibling clones' .github/workflows/*.yml, origin/main after a git fetch in each clone, and gh run list --repo systemslibrarian/<lab>
  *
  * Every other checker here compares files to files. This one compares main to
  * reality, because that is where this fleet actually drifts, and it drifts

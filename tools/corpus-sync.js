@@ -4,6 +4,7 @@
  *
  * Run: node tools/corpus-sync.js check
  * Prevents: a demo staying invisible to the crypto-counsel chatbot because its corpus entry was never added
+ * Reads: index.html hrefs; corpus.json from $CRYPTO_COUNSEL_CORPUS, ../crypto-counsel-1/ or ../crypto-counsel/; gen: ../crypto-lab-<slug>/README.md
  *
  * The crypto-counsel chatbot embeds a snapshot of crypto-lab demo cards in its
  * corpus.json (entries with id "demo_crypto_lab_<slug>"). That snapshot does NOT

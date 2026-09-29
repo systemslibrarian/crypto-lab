@@ -4,6 +4,7 @@
  *
  * Run: node tools/fleet-check.js
  * Prevents: a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand
+ * Reads: seven sibling checkers' stdout (fleet/deploy/gate/dispatch/theme-sync, catalog-evidence, catalog-recall) and this repo's open issue body
  *
  * These ask GitHub, or the sibling clones, rather than this repository — which is what makes them the group
  * worth scheduling: their answers change without anyone touching this repo. A lab can

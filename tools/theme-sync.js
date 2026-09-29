@@ -4,6 +4,7 @@
  *
  * Run: node tools/theme-sync.js check
  * Prevents: a lab drifting off its single pinned theme, or a removed theme toggle coming back
+ * Reads: sibling clone working trees — every .html page in each lab, and its .ts/.js/.mjs/.cjs/.tsx for toggle code
  *
  * The fleet used to ship a light palette and a header toggle that persisted its
  * choice. The palettes read badly and the persistence meant one past click

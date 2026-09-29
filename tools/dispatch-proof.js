@@ -5,6 +5,7 @@
  *
  * Run: node tools/dispatch-proof.js
  * Prevents: the dispatch work’s claims being trusted without re-running the evidence behind them
+ * Reads: tools/fixtures/dispatch/{reference,mutations}/*.yml, transform.mjs, and (A5/A7) the live sibling clones' .github/workflows/
  *
  * The auto-merge rewrite was justified by a proof that existed only in a
  * transcript: the validator passes the labs that already had the fix, fails the

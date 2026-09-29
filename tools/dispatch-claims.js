@@ -4,6 +4,7 @@
  *
  * Run: node tools/dispatch-claims.js check
  * Prevents: the canonical dispatch paragraph asserting something the fleet’s own YAML no longer supports
+ * Reads: CANONICAL in tools/dispatch-comment-sync.js, sibling clones' .github/workflows/*.yml (incl. reusable calls), tools/dispatch-census.json
  *
  * ---------------------------------------------------------------------------
  * The defect this closes

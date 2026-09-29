@@ -4,6 +4,7 @@
  *
  * Run: node tools/teach-drift.js
  * Prevents: a worksheet naming a control its live exhibit no longer has
+ * Reads: teach/<module>/anchors.json (generated), then each exhibit's LIVE page at systemslibrarian.github.io/crypto-lab-<slug>/ in Chromium
  *
  * For every worksheet listed in a teach/<module>/anchors.json, open the live exhibit in
  * Chromium and confirm that each control the worksheet names is present on the page.

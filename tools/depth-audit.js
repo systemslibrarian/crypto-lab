@@ -5,6 +5,7 @@
  *
  * Run: node tools/depth-audit.js check
  * Prevents: a depth ranking resting on dimensions nobody re-derived, and a coverage figure that ages into a claim
+ * Reads: .scratch/<lab>/ exports of each remote default branch (not the local clones), .scratch/.exported.tsv, index.html, teach/_src/
  *
  * WHY A GENERATOR AND NOT A THIRD REPORT
  *

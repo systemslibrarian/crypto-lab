@@ -194,9 +194,13 @@ reading the workflow's triggers gave `teach-drift` "every PR and push" when it o
 runs daily. Never hand-edit the block; run `node tools/tools-sync.js`, and if a row is
 wrong, fix the header rather than the README — the header is the source.
 
-A tracked tool with a `Run:` line and no `Prevents:` line **fails the check**. That is
-the point of it: the sentence saying which failure a checker exists to prevent is the
-one worth having, and this is the only thing that makes anyone write it. The table lists
+A tracked tool with a `Run:` line and no `Prevents:` line **fails the check**, and so
+does one with no `Reads:` line. That is the point of both: the sentence saying which
+failure a checker exists to prevent is the one worth having, the sentence naming what it
+opens is the one a reader needs before judging what it concluded, and this is the only
+thing that makes anyone write either. `Reads:` is deliberately NOT in the generated
+table — it is for the person checking a checker, and that reader is in the source rather
+than in the README. The table lists
 tracked tools only, and names any untracked file in `tools/` in a footnote, so an
 absence is never read as a claim that nothing else is there.
 
@@ -967,6 +971,29 @@ these the bug was one line: which endpoint, which file extension, which director
 never found it. When a checker reports something surprising about a lab, check what it
 opened before checking what it concluded — and when it reports something UNsurprising,
 check anyway, because that is where the fourth one hid for as long as it did.
+
+#### The first step, before reviewing any logic
+
+When a checker is written, or an existing one changes what it reads: **print the source it
+opened for ONE subject — the exact endpoint, path, ref or command — and confirm by hand
+that it is the thing the checker claims to describe.** Do that before reading a line of its
+logic.
+
+It is one command and it would have caught all four. Printing `repos/{owner}/{repo}/branches/
+{branch}/protection` next to "is this branch protected" shows immediately that a ruleset is
+nowhere in it. Printing `../crypto-lab-silent-tally/src-ts/main.ts` next to "what does this
+lab implement" shows a wrapper being read for a Rust implementation. Printing
+`git -C ../crypto-lab-model-breach rev-parse HEAD` next to "has this lab moved since it was
+reviewed" shows a local clone standing in for the lab.
+
+Each of those reads wrong the moment it is set beside the question, and stays invisible for
+as long as you only read the code around it. Reviewing logic tells you whether the checker
+does what it says; printing the source tells you whether it is looking at the right thing,
+and that is the failure this repository keeps having.
+
+Every tracked runnable tool therefore declares its sources in a **`Reads:`** header line,
+the way it already declares `Prevents:`, and `tools-sync` fails one that does not. The line
+is for the reader doing this step: it says what to go and check.
 
 **A lab that solved a problem in an unusual way is systematically invisible to a checker
 built around the usual way.** This is the re-derive rule turned on the checker instead of

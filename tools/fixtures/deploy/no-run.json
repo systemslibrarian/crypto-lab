@@ -1,0 +1,3 @@
+{ "why": "An auto-merge landed a bump with GITHUB_TOKEN. No push event, so nothing fired for this sha. The ONLY case the old blanket hint described.",
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "expect": { "cause": "NO-RUN" },
+  "runs": [ { "databaseId": 1, "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "status": "completed", "conclusion": "success" } ] }

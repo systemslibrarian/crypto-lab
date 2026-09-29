@@ -2345,7 +2345,7 @@
             data-attacks="Side-channel (unspecified)@README.md:12 | Timing side-channel@CRYPTO-LAB-TEMPLATE.md:342"
             data-standards="ISO | NIST"
             data-implementation="C wrappers / WASM"
-            data-review-commit="1524136e52cb64e57adfcdfa3ccead7f320cf1b7"
+            data-review-commit="a9a9d6c764c5f1e7ab0b50e952f61affc5d3ce92"
             data-review-note="C wrappers and TS calls reviewed; two compiled reference WASM binaries remain opaque"
            
            
@@ -2631,7 +2631,7 @@
             data-attacks="Brute force@brief.md:15 | Known-plaintext attack@src/ui/app.ts:264 | Timing side-channel@CRYPTO-LAB-TEMPLATE.md:342"
             data-standards="ETSI"
             data-implementation="hand-rolled"
-            data-review-commit="77601242dfa34d9874e1d363295e0241232d1129"
+            data-review-commit="c48e8c95ec8e8beb971fc8d1d43a5f957ec69781"
             data-review-note="Runs TETRA TEA1 and a bounded state-recovery demonstration"
            
            
@@ -3601,6 +3601,7 @@
           <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-blind-oracle/"
             data-implements="TFHE@src/clientFhe.ts:45"
             data-references="BFV | BGV | CKKS | ElGamal | Paillier"
+            data-attacks="Key recovery@README.md:48 | Side-channel (unspecified)@README.md:48"
             data-implementation="hand-rolled"
            
            
@@ -3814,7 +3815,7 @@
           </a>
 
           <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-patron-shield/"
-            data-implements="Private information retrieval@src/main.ts:472"
+            data-implements="Private information retrieval@src/main.ts:473"
             data-references="Private set intersection | Shamir secret sharing | Simon"
             data-implementation="hand-rolled"
            
@@ -4312,7 +4313,7 @@
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/"
             data-implements="Ed25519@src/bench/runner.ts:111 | Fiat-Shamir@src/ui/tab3-how-it-works.ts:224 | LWE@src/ui/tab3-how-it-works.ts:231 | ML-DSA@src/crypto/mldsa.ts:47 | SHA-256@src/crypto/seal.ts:43"
             data-references="AES | Dilithium | ECDSA | Falcon | Grover's algorithm | Kyber | ML-KEM | NTT | P-256 | Pairing | RSA | RSA-PSS | SHAKE | SLH-DSA | SPHINCS+ | Schnorr | Shor's algorithm"
-            data-attacks="Discrete log@src/ui/tab3-how-it-works.ts:129 | Factoring@src/ui/tab2-compare.ts:20 | Fault injection@README.md:485 | Key recovery@src/ui/timing-variability.ts:242 | Side-channel (unspecified)@src/data/runtime.ts:118 | Timing side-channel@src/data/runtime.ts:90"
+            data-attacks="Discrete log@src/ui/tab3-how-it-works.ts:129 | Factoring@src/ui/tab2-compare.ts:20 | Fault injection@README.md:486 | Key recovery@src/ui/timing-variability.ts:242 | Side-channel (unspecified)@src/data/runtime.ts:118 | Timing side-channel@src/data/runtime.ts:90"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
            
@@ -4492,9 +4493,9 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/"
-            data-implements="AES@demos/kyber-vault/src/crypto/hybrid.ts:47 | AES-GCM@demos/kyber-vault/src/crypto/hybrid.ts:63 | HKDF@demos/kyber-vault/src/crypto/hybrid.ts:48 | Kyber@demos/kyber-vault/index.html:159 | LWE@demos/kyber-vault/src/crypto/lwe.ts:135 | ML-KEM@demos/kyber-vault/src/crypto/hybrid.ts:101 | NTT@demos/kyber-vault/src/crypto/ntt.ts:51 | SHA-256@demos/kyber-vault/src/crypto/hybrid.ts:43 | X25519@demos/kyber-vault/src/benchmark.ts:46"
-            data-references="Classic McEliece | ECDH | Fujisaki-Okamoto transform | HMAC | HQC | PQXDH | RSA | Ring-LWE | Serpent | TLS 1.3"
-            data-attacks="Brute force@demos/kyber-vault/src/crypto/lwe.ts:165 | Chosen-ciphertext attack@demos/kyber-vault/src/main.ts:681 | Side-channel (unspecified)@README.md:56 | Timing side-channel@README.md:32"
+            data-implements="AES@demos/kyber-vault/src/crypto/hybrid.ts:47 | AES-GCM@demos/kyber-vault/src/crypto/hybrid.ts:63 | HKDF@demos/kyber-vault/src/crypto/hybrid.ts:48 | Kyber@demos/kyber-vault/src/benchmark.ts:49 | LWE@demos/kyber-vault/src/crypto/lwe.ts:141 | ML-KEM@demos/kyber-vault/src/crypto/hybrid.ts:101 | NTT@demos/kyber-vault/src/crypto/ntt.ts:53 | SHA-256@demos/kyber-vault/src/crypto/hybrid.ts:43 | X25519@demos/kyber-vault/src/benchmark.ts:103"
+            data-references="Classic McEliece | ECDH | Fujisaki-Okamoto transform | HMAC | HQC | PQXDH | RSA | Ring-LWE | Serpent"
+            data-attacks="Brute force@demos/kyber-vault/src/crypto/lwe.ts:171 | Chosen-ciphertext attack@demos/kyber-vault/src/main.ts:832 | Side-channel (unspecified)@demos/kyber-vault/src/main.ts:730"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
            
@@ -5134,7 +5135,7 @@
           <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-wire/"
             data-implements="AES@demos/hybrid-wire/src/crypto/security.ts:50 | AES-GCM@demos/hybrid-wire/src/crypto/security.ts:52 | Ed25519@demos/hybrid-wire/src/crypto/x25519.ts:1 | HKDF@demos/hybrid-wire/src/crypto/hybrid.ts:56 | ML-KEM@demos/hybrid-wire/src/benchmark.ts:46 | X25519@demos/hybrid-wire/src/benchmark.ts:33"
             data-references="Diffie-Hellman | Dilithium | Double Ratchet | ECDH | Kyber | PQXDH | SHA-256 | SHA-512 | Serpent | TLS 1.3"
-            data-attacks="Side-channel (unspecified)@demos/hybrid-wire/README.md:9"
+            data-attacks="Side-channel (unspecified)@demos/hybrid-wire/src/main.ts:914"
             data-standards="IETF | NIST"
             data-implementation="@noble"
            
@@ -5603,8 +5604,8 @@
 
           <a class="project-card" data-category="ENCRYPTION | SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/"
             data-implements="AES@src/hybrid.ts:66 | AES-GCM@src/hybrid.ts:67 | RSA@src/hybrid.ts:42 | RSA-OAEP@src/determinism.ts:54 | RSA-PSS@src/pss-encode.ts:51 | SHA-256@src/oaep-encode.ts:15"
-            data-references="ChaCha20 | ChaCha20-Poly1305 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Kyber | ML-DSA | ML-KEM | P-256 | Poly1305 | Shor's algorithm | TLS 1.3 | X25519"
-            data-attacks="Brute force@README.md:5 | Cache timing@index.html:1536 | Chosen-ciphertext attack@src/glossary.ts:42 | Chosen-plaintext attack@src/determinism.ts:68 | Factoring@src/glossary.ts:18 | Known-plaintext attack@index.html:1472 | Nonce reuse@README.md:52 | Padding oracle@src/attacks.ts:753 | Side-channel (unspecified)@index.html:1536 | Signature malleability@src/glossary.ts:46"
+            data-references="ChaCha20 | ChaCha20-Poly1305 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | ML-DSA | ML-KEM | P-256 | Poly1305 | Privacy Pass | Shor's algorithm | TLS 1.3 | X25519"
+            data-attacks="Brute force@README.md:5 | Cache timing@index.html:1539 | Chosen-ciphertext attack@src/glossary.ts:42 | Chosen-plaintext attack@src/determinism.ts:68 | Factoring@src/attacks.ts:76 | Known-plaintext attack@index.html:1475 | Nonce reuse@README.md:59 | Padding oracle@src/attacks.ts:857 | Side-channel (unspecified)@index.html:1539 | Signature malleability@src/attacks.ts:124"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
            
@@ -6497,7 +6498,7 @@
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-mceliece-gate/"
             data-implements="AES@src/mceliece.ts:173 | AES-GCM@src/mceliece.ts:175 | Classic McEliece@src/keysize.ts:7 | ML-KEM@src/keysize.ts:16 | RSA@src/ui.ts:388 | SHA-256@src/mceliece.ts:81"
             data-references="BIKE | Grover's algorithm | HQC | Information-set decoding | Isogeny walk | Kyber | LWE | NTRU | Pairing | Reed-Muller | Reed-Solomon"
-            data-attacks="Brute force@src/toy/goppa-code.ts:347 | Man-in-the-middle@README.md:29 | Side-channel (unspecified)@LIMITATIONS.md:43"
+            data-attacks="Brute force@src/toy/goppa-code.ts:347 | Key recovery@src/ui.ts:192 | Man-in-the-middle@README.md:31 | Side-channel (unspecified)@LIMITATIONS.md:44"
             data-standards="IETF | ISO | NIST"
             data-implementation="WebCrypto"
            
@@ -8264,9 +8265,9 @@
           </a>
 
           <a class="project-card" data-category="SIGNATURES | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-blind-sign/"
-            data-implements="Ed25519@src/ecblind.ts:1 | RSA@src/blind.ts:39 | RSA-PSS@src/rfc9474.ts:83 | Schnorr@src/main.ts:1178 | SHA-256@src/blind.ts:265 | SHA-384@src/rfc9474.ts:53 | SHA-512@src/ecblind.ts:109"
+            data-implements="Ed25519@src/ecblind.ts:1 | RSA@src/blind.ts:39 | RSA-PSS@src/rfc9474.ts:83 | Schnorr@src/main.ts:1184 | SHA-256@src/blind.ts:265 | SHA-384@src/rfc9474.ts:53 | SHA-512@src/ecblind.ts:109"
             data-references="BLS signatures | EC point arithmetic | EdDSA | Pairing | Privacy Pass | Private set intersection | RSA-OAEP | ristretto255"
-            data-attacks="Discrete log@src/main.ts:427 | Factoring@src/main.ts:466 | Signature malleability@src/main.ts:290"
+            data-attacks="Discrete log@src/main.ts:433 | Factoring@src/main.ts:301 | Signature malleability@src/main.ts:290"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
            
@@ -9040,7 +9041,7 @@
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/"
             data-implements="Keccak@src/shake256.ts:41 | Kyber@src/timing.ts:88 | ML-DSA@src/loopabort.ts:37 | NTT@src/loopabort.ts:116 | SHAKE@src/shake256.ts:81"
             data-references="Dilithium | EC point arithmetic | Fujisaki-Okamoto transform | HQC | ML-KEM | Shamir secret sharing"
-            data-attacks="Chosen-ciphertext attack@src/main.ts:179 | Chosen-plaintext attack@src/main.ts:40 | Fault injection@src/main.ts:40 | Key recovery@src/main.ts:253 | Lattice reduction@src/loopabort.ts:629 | Padding oracle@src/main.ts:617 | Power analysis@src/main.ts:17 | Side-channel (unspecified)@src/main.ts:170 | Timing side-channel@src/main.ts:40"
+            data-attacks="Chosen-ciphertext attack@src/main.ts:180 | Chosen-plaintext attack@src/main.ts:40 | Fault injection@src/main.ts:40 | Key recovery@src/main.ts:254 | Lattice reduction@src/loopabort.ts:629 | Padding oracle@src/main.ts:618 | Power analysis@src/main.ts:17 | Side-channel (unspecified)@src/main.ts:171 | Timing side-channel@src/main.ts:40"
             data-standards="NIST"
             data-implementation="hand-rolled"
            
@@ -11620,6 +11621,7 @@
 
           <a class="project-card" data-category="ATTACKS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-nonce-lattice/"
             data-implements="Babai rounding@src/lattice/babai.ts:37 | ECDSA@src/app.ts:433 | HMAC@src/crypto/biased-nonce.ts:26 | P-256@src/analysis.ts:5 | secp256k1@src/curves/secp256k1.ts:8 | SHA-256@src/crypto/biased-nonce.ts:26"
+            data-unscanned="Python:1"
             data-references="EC point arithmetic | Kyber | LWE | ML-KEM | P-384"
             data-attacks="Key recovery@src/app.ts:219 | Lattice reduction@src/app.ts:161 | Nonce reuse@src/app.ts:147 | Side-channel (unspecified)@src/app.ts:332 | Timing side-channel@src/app.ts:287"
             data-standards="IETF | NIST | SECG"
@@ -12061,7 +12063,7 @@
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/"
             data-implements="Keccak@src/lib/mlkem/sha3.ts:69 | ML-KEM@src/lib/mlkem/fips203.ts:304 | NTT@src/lib/mlkem/fips203.ts:55 | SHA-3@src/lib/mlkem/sha3.ts:172 | SHAKE@src/lib/mlkem/sha3.ts:180"
             data-references="Fujisaki-Okamoto transform | HQC | Kyber | ML-DSA | X25519"
-            data-attacks="Chosen-ciphertext attack@src/cards/card-imperfect-df-oracle/view.ts:163 | Chosen-plaintext attack@src/cards/card-masked-comparison/view.ts:287 | Fault injection@src/cards/card-rnr-blinding/reality.ts:7 | Key recovery@src/cards/card-imperfect-df-oracle/reality.ts:7 | Power analysis@src/components/ConceptPrimer.ts:25 | Side-channel (unspecified)@src/cards/card-imperfect-df-oracle/reality.ts:15 | Signature malleability@src/components/DecapPrimer.ts:30 | Timing side-channel@README.md:69"
+            data-attacks="Chosen-ciphertext attack@src/cards/card-imperfect-df-oracle/view.ts:163 | Chosen-plaintext attack@src/cards/card-masked-comparison/view.ts:287 | Fault injection@src/cards/card-rnr-blinding/reality.ts:7 | Key recovery@src/cards/card-imperfect-df-oracle/reality.ts:7 | Power analysis@src/components/ConceptPrimer.ts:25 | Side-channel (unspecified)@src/cards/card-imperfect-df-oracle/reality.ts:15 | Signature malleability@src/components/DecapPrimer.ts:30 | Timing side-channel@README.md:71"
             data-standards="NIST"
             data-implementation="hand-rolled"
            
@@ -12230,7 +12232,7 @@
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:53 | SHA-256@src/crypto.ts:35"
             data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | Winternitz | X25519 | XMSS"
-            data-attacks="Birthday bound@src/data.ts:386 | Chosen-ciphertext attack@src/data.ts:178 | Chosen-plaintext attack@src/data.ts:825 | Differential cryptanalysis@src/data.ts:501 | Discrete log@src/data.ts:687 | Factoring@src/data.ts:687 | Key recovery@src/data.ts:448 | Lattice reduction@src/data.ts:141 | Side-channel (unspecified)@src/data.ts:213 | Timing side-channel@src/data.ts:87"
+            data-attacks="Birthday bound@src/data.ts:398 | Chosen-ciphertext attack@src/data.ts:176 | Chosen-plaintext attack@src/data.ts:843 | Differential cryptanalysis@src/data.ts:513 | Discrete log@src/data.ts:699 | Factoring@src/data.ts:699 | Fault injection@src/data.ts:85 | Key recovery@src/data.ts:129 | Lattice reduction@src/data.ts:139 | Side-channel (unspecified)@src/data.ts:212 | Timing side-channel@src/data.ts:280"
             data-standards="NIST"
             data-implementation="WebCrypto"
            
@@ -12902,7 +12904,7 @@
           <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-otp-vault/"
             data-implements="One-time pad@src/otp/challenges.ts:22"
             data-references="AES | AES-CTR | AES-GCM | AES-SIV | BB84 | ChaCha20 | Poly1305 | SNOW 2.0 | Vigenere cipher"
-            data-attacks="Chosen-plaintext attack@src/ui/perfectSecrecyPanel.ts:63 | Frequency analysis@README.md:73 | Key recovery@src/ui/importPanel.ts:100 | Known-plaintext attack@chat.md:49 | Nonce reuse@src/ui/keystreamReusePanel.ts:109"
+            data-attacks="Chosen-plaintext attack@src/ui/perfectSecrecyPanel.ts:63 | Frequency analysis@README.md:73 | Key recovery@src/ui/importPanel.ts:102 | Known-plaintext attack@chat.md:49 | Nonce reuse@src/ui/keystreamReusePanel.ts:113"
             data-implementation="hand-rolled"
            
            
@@ -13410,7 +13412,7 @@
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-mayo-seal/"
             data-implements="AES@src/mayo/prf.ts:23 | CTR-DRBG@src/mayo/nist-drbg.ts:11 | SHA-3@src/mayo/prf.ts:11 | SHAKE@src/mayo/prf.ts:14"
             data-references="Diffie-Hellman | Dilithium | Falcon | ML-DSA | OPAQUE | OPRF | Paillier | SLH-DSA | SPHINCS+ | Shamir secret sharing | X3DH"
-            data-attacks="Fault injection@README.md:110 | Key recovery@README.md:110 | Side-channel (unspecified)@README.md:23"
+            data-attacks="Fault injection@README.md:110 | Key recovery@README.md:33 | Side-channel (unspecified)@README.md:23"
             data-standards="NIST"
             data-implementation="@noble"
            
@@ -13926,7 +13928,7 @@
           <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/"
             data-implements="Diffie-Hellman@src/crypto/kem.ts:76 | Ed25519@src/crypto/kem.ts:16 | HKDF@src/crypto/kem.ts:79 | ML-DSA@src/crypto/attack.ts:114 | ML-KEM@src/crypto/attack.ts:64 | SHA-256@src/crypto/kem.ts:19 | X25519@src/crypto/kem.ts:57"
             data-references="DHKEM | Dilithium | ECDH | Kyber | LWE | PQXDH | Pairing | SHA-512 | SLH-DSA | SPHINCS+ | Shor's algorithm | TLS 1.3 | X3DH"
-            data-attacks="Brute force@BUILD-TEMPLATE(1).md:74 | Discrete log@src/ui/securityModel.ts:76 | Downgrade attack@chat.md:134 | Key recovery@src/crypto/attack.ts:31 | Side-channel (unspecified)@src/data.ts:173 | Timing side-channel@src/data.ts:173"
+            data-attacks="Brute force@BUILD-TEMPLATE(1).md:74 | Discrete log@src/ui/securityModel.ts:76 | Downgrade attack@chat.md:134 | Key recovery@src/crypto/attack.ts:31 | Side-channel (unspecified)@src/data.ts:181 | Timing side-channel@src/data.ts:181"
             data-standards="IETF | NIST"
             data-implementation="@noble"
            
@@ -14688,9 +14690,9 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kem-trap/"
-            data-implements="Fujisaki-Okamoto transform@src/ui/lab.ts:15 | HKDF@src/kem/callers.ts:33 | HMAC@src/kem/callers.ts:38 | ML-KEM@src/kem/callers.ts:24 | NTT@src/kem/fo-transform.ts:76 | SHA-256@src/kem/callers.ts:22 | SHA-3@src/kem/fo-transform.ts:24 | SHAKE@src/kem/fo-transform.ts:93"
+            data-implements="Fujisaki-Okamoto transform@src/ui/lab.ts:16 | HKDF@src/kem/callers.ts:33 | HMAC@src/kem/callers.ts:38 | ML-KEM@src/kem/callers.ts:24 | NTT@src/kem/fo-transform.ts:76 | SHA-256@src/kem/callers.ts:22 | SHA-3@src/kem/fo-transform.ts:24 | SHAKE@src/kem/fo-transform.ts:93"
             data-references="Kyber | LWE | TLS 1.3"
-            data-attacks="Chosen-ciphertext attack@src/ui/lab.ts:569 | Key recovery@src/ui/lab.ts:573 | Side-channel (unspecified)@README.md:70 | Timing side-channel@src/ui/lab.ts:573"
+            data-attacks="Chosen-ciphertext attack@src/ui/lab.ts:400 | Key recovery@src/ui/lab.ts:400 | Side-channel (unspecified)@README.md:71 | Timing side-channel@src/ui/lab.ts:597"
             data-standards="IETF | NIST"
             data-implementation="@noble"
            
@@ -16403,8 +16405,8 @@
 
           <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-syndrome-hints/"
             data-implements="Information-set decoding@src/sdp/isd.ts:4 | Stern decoding@src/sdp/stern.ts:2"
-            data-references="Classic McEliece | HQC | Hamming code | LWE"
-            data-attacks="Fault injection@src/main.ts:605 | Key recovery@src/main.ts:1078 | Power analysis@src/main.ts:603 | Side-channel (unspecified)@src/main.ts:830"
+            data-references="Classic McEliece | EC point arithmetic | HQC | Hamming code | LWE"
+            data-attacks="Brute force@chat.md:341 | Fault injection@src/main.ts:605 | Key recovery@src/main.ts:1078 | Power analysis@src/main.ts:603 | Side-channel (unspecified)@src/main.ts:830"
             data-implementation="hand-rolled"
             data-review-commit="34b88b39ec647ac5fcc8d16c9b0194cbfd7c9a3c"
             data-review-note="Runs Prange-style and Stern information-set decoding against toy instances"
@@ -18511,9 +18513,9 @@
           </a>
 
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sector-vault/"
-            data-implements="AES@src/crypto/xts.ts:106 | AES-GCM@src/crypto/gcm.ts:67 | AES-XTS@src/crypto/xts.ts:33"
+            data-implements="AES@src/crypto/xts.ts:113 | AES-GCM@src/crypto/gcm.ts:67 | AES-XTS@src/crypto/xts.ts:33"
             data-references="AEGIS-256 | AES-CBC | AES-ECB | BB84 | Boneh-Franklin IBE | Bulletproofs | Diffie-Hellman | MD5 | Merkle tree | OPAQUE | OPRF | Paillier | Schnorr | Shamir secret sharing | Simon | X3DH"
-            data-attacks="Chosen-plaintext attack@src/ui/panelRelocate.ts:25 | Nonce reuse@src/ui/panelComparison.ts:57 | Padding oracle@README.md:218 | Signature malleability@src/ui/panelScope.ts:90 | Timing side-channel@CRYPTO-LAB-TEMPLATE.md:320"
+            data-attacks="Chosen-plaintext attack@src/ui/panelRelocate.ts:25 | Nonce reuse@src/ui/panelComparison.ts:57 | Padding oracle@README.md:219 | Signature malleability@src/ui/panelScope.ts:90 | Timing side-channel@CRYPTO-LAB-TEMPLATE.md:320"
             data-standards="NIST"
             data-implementation="WebCrypto"
            

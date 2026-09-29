@@ -398,6 +398,7 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 | `node tools/dispatch-comment-sync.js check` | the paragraph explaining why the dispatch exists drifting into many wordings, or being deleted with the line it defends | manual |
 | `node tools/dispatch-proof.js` | the dispatch work’s claims being trusted without re-running the evidence behind them | manual |
 | `node tools/dispatch-sync.js check` | a merged bump whose deploy dispatch can fail, print nothing and exit 0, leaving the live site on the old build | weekly |
+| `node tools/evidence-shape-proof.js` | a variable name crediting a lab with an algorithm it does not implement | manual |
 | `node tools/fleet-check.js` | a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand | weekly |
 | `node tools/fleet-sync.js check` | a lab going live with no card, which every catalog checker then reads as consistent rather than missing | weekly |
 | `node tools/gate-sync.js check` | a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching | weekly |
@@ -413,7 +414,7 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 | `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | weekly |
 | `node tools/tools-sync.js check` | this list drifting from the tools it describes | every PR and push |
 
-12 of these 27 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+13 of these 28 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
 Not listed above: `catalog-vocab.js`, `clone-source.js`, `depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 

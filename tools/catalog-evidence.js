@@ -242,6 +242,32 @@ function splitHtml(src) {
 /** Identifiers that present rather than compute. */
 const PRESENTS = /^(?:render|draw|paint|format|describe|explain|label|display|chart|plot|tooltip|caption|legend|summar|narrat|annotate)/i;
 
+/* A declaration whose VALUE is a projection does not compute the algorithm it is
+   named after. PRESENTS catches the function that draws a thing; this catches the
+   constant that models one.
+
+   crypto-lab-export-grade was credited with implementing AES on the strength of
+
+       const aes128 = extrapolate(128, rate.candidatesPerSecond, multiplier);
+
+   which holds an extrapolation of the learner's own measured brute-force rate out
+   to a 128-bit keyspace. The lab implements no AES - Exhibit 6 plots published
+   results from a citation table. `aes128` camel-splits to "aes 128", `\baes\b`
+   matches, and the declaration shape does the rest. This is mentions-as-
+   implementations arriving through a VARIABLE NAME, the one route the string-
+   blanking lexer cannot see, because the name is executable code.
+
+   It keys on the INITIALISER, not on the identifier. The obvious rule - "an
+   identifier that is the algorithm name plus a key size is a table row" - was
+   written first and measured: it moved 21 anchors across 18 labs and removed no
+   false claim anywhere, because `hmacSha256`, `shake128`, `mlKem768` and
+   `keccakF1600` all end in digits that are part of the STANDARD INSTANCE NAME.
+   The vocabulary's canonical term is the family; real code names the parameter
+   set. Suppressing on digits demotes those labs to a worse anchor - frodo-vault's
+   ML-KEM moved from src/frodo-kem.ts to src/main.ts - to fix nothing. That
+   variant is recorded here so it is not rediscovered and retried. */
+const MODELS = /^(?:extrapolat|estimat|project|predict|forecast|budget|scale|assume)/i;
+
 /** Split camelCase and PascalCase so `\b` anchored terms can reach inside an
  * identifier. `toyCkks`, `lweSample` and `encryptMisty1CoreRounds` are all
  * implementations whose algorithm name has no word boundary in front of it, and
@@ -379,6 +405,10 @@ function shapeOf(line, code, term) {
        paints a diagram of Module-LWE; reading it as an implementation is the
        same error as reading a mention, one layer in. */
     if (PRESENTS.test(id)) continue;
+    /* `const aes128 = extrapolate(...)` - the name says AES, the value is a
+       projection. Only the initialiser of THIS declaration is read. */
+    const init = /=\s*([A-Za-z_$][\w$]*)\s*\(/.exec(code.slice(d.index + d[0].length - 1));
+    if (init && MODELS.test(init[1])) continue;
     if (term.re.test(id) || term.re.test(camelSplit(id))) return 'decl';
   }
   /* an identifier carrying the term being invoked */

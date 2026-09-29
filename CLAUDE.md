@@ -935,6 +935,39 @@ measurement's clothes, and it is the same defect as reading one protection endpo
 a ruleset-protected branch unprotected. Search the whole tree for the value before reporting it
 absent; the search costs nothing and the retraction does not.
 
+### Answering from a copy, and reporting the gap as a fact about the lab
+
+Four times now a checker here has answered from something near the question rather than the
+thing the question is about, then published the difference as a finding. They were found
+separately, given separate names, and are one defect. The next checker should be built with
+this in mind rather than adding a fifth name to it.
+
+| The checker read | It should have read | What it published |
+|---|---|---|
+| one protection endpoint, which 404s for a ruleset | both endpoints | `crypto-lab-privacy-pass` **unprotected**, through three drafts of a lane brief — while it carried the strictest branch in the fleet |
+| the TypeScript in a lab whose crypto is Rust behind WASM | the lab's own implementation language | **implements nothing**, about source it never opened |
+| a card's anchors with no clone on disk | the lab, or nothing | **file is gone**, per anchor, about files nobody looked at |
+| `git rev-parse HEAD` in an unfetched clone | the lab's actual head | **eighteen stale reviews**, a re-review queue with nothing in it, while hiding the two that were real |
+
+Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
+`NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`. What makes them work is not the name but the
+refusal underneath it — a checker that could not look reports that it could not look, and
+is never permitted to express the gap as a negative finding about the subject.
+
+Two things fall out of this that are easy to miss.
+
+**The wrong answer is usually the confident one.** None of these four failed loudly. Each
+produced a clean, specific, actionable-looking claim, and the third and fourth even told a
+person exactly what to go and do about it — re-read eighteen labs, restore missing files.
+A checker reading the wrong source does not go quiet; it goes wrong fluently.
+
+**Ask what the checker is actually reading before asking whether it is right.** For each of
+these the bug was one line: which endpoint, which file extension, which directory, which
+`rev-parse`. The logic above it was sound in every case, which is why reviewing the logic
+never found it. When a checker reports something surprising about a lab, check what it
+opened before checking what it concluded — and when it reports something UNsurprising,
+check anyway, because that is where the fourth one hid for as long as it did.
+
 **A lab that solved a problem in an unusual way is systematically invisible to a checker
 built around the usual way.** This is the re-derive rule turned on the checker instead of
 the claim, and it bites hardest where it is least expected: at the labs a sweep does NOT

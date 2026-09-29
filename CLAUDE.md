@@ -985,6 +985,47 @@ someone thought to list, which is why the worktree is the actual fix and this is
 Two habits that cost nothing beside it: stage explicit paths rather than a directory, and read
 `git status` before `git commit` rather than after `git push`.
 
+**A GENERATOR can sweep another lane's work with no `git add` at all.** The staging rule is
+about what you ADD; this is about what a tool READS. Every generator here derives a tracked
+file in this repo from the sibling clones — and it reads whatever is on disk in those clones,
+including a colleague's half-finished edit, then writes it into output you commit under your
+own name. On 2026-09-29 a `catalog-evidence write` in the vocabulary lane pulled three labs'
+in-progress derivations out of clones another lane was mid-edit in: `crypto-lab-export-grade`
+(a new `src/data/attacks.ts`, a rewritten reference set, and an `AES@src/ui/app.ts:696` claim),
+`crypto-lab-falcon-seal` and `crypto-lab-pq-families` (attack anchors shifted by edits above
+them). That AES anchor did not survive the same session — `catalog-evidence verify` called it
+stale, because the line had moved again underneath it. It was caught by diffing the generated
+output card by card, which is luck, not a control. **A worktree does not help here**: the
+worktree isolates *this* repo, and the swept bytes came from the *sibling* repos, which every
+lane shares no matter where its checkout lives.
+
+`tools/clone-source.js` is the fix, and every clone-reading tool goes through it. Each clone
+gets `git status --porcelain` before it is read: a clean one is read from its working tree,
+byte-identical to HEAD; a **dirty one is exported with `git archive HEAD`** and read from
+there, so the derivation describes committed state and nothing else; one that cannot be
+exported — an empty repository — is **refused by name** rather than read anyway. Untracked
+files count as dirty on purpose, because the scanners walk directories and read a file nobody
+has added exactly like a tracked one.
+
+HEAD-reading rather than refusing, because refusing every dirty lab would shrink the generated
+catalog whenever a colleague had a file open — a **discovered denominator**, the defect this
+file keeps re-finding. Cost: about 10 seconds across 213 clones, plus one export per dirty
+clone (three, the day it was written).
+
+**The one thing it cannot prevent, it reports.** Status is cached per clone so a run describes
+one snapshot, which leaves a real window: a generator takes about two and a half minutes and
+another lane can start editing inside it. So every clone read as clean is re-asked at the end
+of the run, and if any has since gone dirty the run prints **TORN SNAPSHOT** and exits
+non-zero — the bytes are a mix of two states and the output must not be committed. Same rule
+as `protection-census`: "could not look" is never "nothing there", and "the ground moved" is
+never "the ground was still".
+
+`node tools/clone-guard-proof.js` asserts all of it against throwaway repositories — that an
+uncommitted edit, an untracked file and a deleted file each leave generated output unchanged,
+that a **committed** change still moves it (the negative control, without which a guard that
+returned a constant would pass), that an empty repository is refused, and that the torn-
+snapshot detector fires only when a clone actually changes mid-run. 12 checks.
+
 **A report of a change is evidence of intent, not of state.** Re-derive every claimed change
 from the branch before it counts, exactly as `deploy-sync` re-derives what is served rather
 than trusting a green check. A builder saying a parameter moved, an agent saying a file was

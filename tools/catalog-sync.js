@@ -6,7 +6,8 @@
  * Prevents: the algorithm index drifting from the cards, a card claiming an algorithm with no evidence behind it, and a chip the vocabulary cannot name passing as clean
  * Reads: index.html's cards, tools/catalog-vocab.js, tools/catalog-reviewed.json, CATALOG.md itself for the check diff,
  *        tools/catalog-chip-exempt.json, and — for `vocab` — every ../crypto-lab-<slug>/package.json plus each clone's
- *        file and directory names to four levels (never their contents)
+ *        file and directory names to four levels (never their contents), read from committed HEAD when that clone
+ *        has a dirty working tree (see clone-source.js)
  *
  * index.html stays the single source of truth. The cards carry the facts —
  * catalog-evidence.js derives them from each lab's own source and writes them
@@ -53,6 +54,7 @@ const fs = require('fs');
 const path = require('path');
 const { ALGORITHMS } = require('./catalog-vocab.js');
 const REVIEWS = require('./catalog-reviewed.json');
+const { sourceRoot, summary: cloneSummary } = require('./clone-source.js');
 
 const ROOT = path.join(__dirname, '..');
 const HTML = path.join(ROOT, 'index.html');
@@ -421,8 +423,13 @@ function fleetEvidence(slugs) {
   const specifiers = new Set();
   const byLab = new Map();
   for (const slug of slugs) {
-    const dir = path.join(ROOT, '..', slug);
-    if (!fs.existsSync(dir)) continue;
+    const clone = path.join(ROOT, '..', slug);
+    if (!fs.existsSync(clone)) continue;
+    /* Committed state only: a dependency another lane has added but not
+       committed must not decide whether this repo's vocabulary is complete. */
+    const src = sourceRoot(clone);
+    if (!src.root) continue;
+    const dir = src.root;
     const deps = new Set();
     const names = new Set();
     try {
@@ -756,6 +763,9 @@ function main() {
       console.error('names it on evidence that is not about the algorithm at all.');
       for (const b of v.bad) console.error(`  ${b.kind.padEnd(17)} ${b.what}\n${' '.repeat(20)}${b.why}`);
     } else {
+      const cs = cloneSummary();
+      if (cs.fromHead.length) console.log(`Read from committed HEAD (dirty working tree): ${cs.fromHead.map((x) => x.slug.replace('crypto-lab-', '')).join(', ')}`);
+      if (cs.refused.length) console.log(`Refused (dirty, HEAD unreadable): ${cs.refused.map((x) => x.slug).join(', ')}`);
       console.log(`Vocabulary invariants hold over ${ALGORITHMS.length} terms and ${list.length} cards:`);
       console.log('  every term matches its own name, no term is credited by a package name alone,');
       console.log(`  and every chip with a dependency behind it resolves to a term (${v.exempt} declared`);

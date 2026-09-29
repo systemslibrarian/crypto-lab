@@ -5,7 +5,9 @@
  *
  * Run: node tools/catalog-evidence.js verify
  * Prevents: the catalog asserting a lab implements an algorithm its source does not
- * Reads: ../crypto-lab-<slug>/ clones (code, READMEs) + local HEAD + `ls-remote origin HEAD`; index.html; catalog-vocab.js; catalog-reviewed.json
+ * Reads: ../crypto-lab-<slug>/ clones (code, READMEs) — from the WORKING TREE when clean and from
+ *        `git archive HEAD` when dirty, see clone-source.js — plus local HEAD + `ls-remote origin HEAD`;
+ *        index.html; catalog-vocab.js; catalog-reviewed.json
  *
  * It reads the sibling clones, so like deploy-sync and fleet-sync it is NOT in
  * the fast loop. `catalog-sync.js` needs none of this: the facts it generates
@@ -69,6 +71,7 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { ALGORITHMS, ATTACKS } = require('./catalog-vocab.js');
+const { sourceRoot, summary: cloneSummary, tornSnapshot } = require('./clone-source.js');
 const PROTOCOL_TERMS = ALGORITHMS.filter((t) => t.structures);
 
 const ROOT = path.join(__dirname, '..');
@@ -420,7 +423,19 @@ function evidenceFor(slug) {
       commentOnly: [], protocolPartial: [], staleReview: null,
     };
   }
-  const { code, prose, unread } = labFiles(dir);
+  /* Read this lab's FILES from its committed state, never from another lane's
+     half-finished edit. `dir` stays the clone for git commands below; `src` is
+     where bytes come from. See tools/clone-source.js for the incident. */
+  const src = sourceRoot(dir);
+  if (src.from === 'refused') {
+    return {
+      slug, cloned: true, implements: [], references: [], attacks: [], standards: [],
+      implementation: 'UNKNOWN', unscanned: [`dirty clone, HEAD unreadable (${src.dirty} paths)`], notScanned: true,
+      commentOnly: [], protocolPartial: [], staleReview: null,
+    };
+  }
+  const read = src.root;
+  const { code, prose, unread } = labFiles(read);
   const hits = new Map();   // term name -> {shape, at}
   const mentions = new Map();
   const attackHits = new Map();
@@ -443,7 +458,7 @@ function evidenceFor(slug) {
 
   for (const rel of code) {
     let raw;
-    try { raw = fs.readFileSync(path.join(dir, rel), 'utf8'); } catch { continue; }
+    try { raw = fs.readFileSync(path.join(read, rel), 'utf8'); } catch { continue; }
     const text = /\.html?$/.test(rel) ? splitHtml(raw).code : raw;
     const lexed = lex(text);
     const src = lexed.strings;
@@ -500,7 +515,7 @@ function evidenceFor(slug) {
 
   for (const rel of prose) {
     let raw;
-    try { raw = fs.readFileSync(path.join(dir, rel), 'utf8'); } catch { continue; }
+    try { raw = fs.readFileSync(path.join(read, rel), 'utf8'); } catch { continue; }
     const text = /\.html?$/.test(rel) ? splitHtml(raw).prose : raw;
     const lines = text.split('\n');
     for (let i = 0; i < lines.length; i += 1) {
@@ -676,6 +691,28 @@ function fieldsFor(ev) {
 
 /* ---- modes ---------------------------------------------------------------- */
 
+/* Which labs were read from committed HEAD rather than from their working tree,
+   printed on every run. A generator that quietly substituted its source would be
+   the same silence it exists to prevent. */
+function printCloneSource() {
+  const torn = tornSnapshot();
+  if (torn.length) {
+    console.error(`TORN SNAPSHOT (${torn.length}) — these clones were CLEAN when this run read them and are`);
+    console.error('dirty now, so the bytes above are a mix of two states. Re-run once the other lane settles;');
+    console.error('do not commit generated output from this run.');
+    for (const t of torn) console.error(`  ${t.slug.padEnd(34)} ${t.dirty} path(s) changed mid-run`);
+  }
+  const cs = cloneSummary();
+  if (cs.fromHead.length) {
+    console.log(`Read from committed HEAD, working tree dirty (${cs.fromHead.length}): `
+      + cs.fromHead.map((x) => `${x.slug.replace('crypto-lab-', '')} (${x.dirty})`).join(', '));
+  }
+  if (cs.refused.length) {
+    console.log(`REFUSED, dirty and HEAD unreadable (${cs.refused.length}): `
+      + cs.refused.map((x) => x.slug.replace('crypto-lab-', '')).join(', '));
+  }
+}
+
 function writeCards(all) {
   let html = fs.readFileSync(HTML, 'utf8');
   let changed = 0;
@@ -720,7 +757,9 @@ function writeCards(all) {
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }
   fs.writeFileSync(HTML, html);
+  printCloneSource();
   console.log(`index.html: derived fields written to ${changed} cards.`);
+  if (tornSnapshot().length) process.exitCode = 1;
   if (stale.length) {
     const today = new Date();
     const aged = stale.map((c) => {
@@ -814,7 +853,8 @@ function verifyAnchors(all) {
       if (at < 0) { bad.push({ slug: c.slug, item, why: 'no anchor' }); continue; }
       const name = item.slice(0, at);
       const [file, lineNo] = item.slice(at + 1).split(':');
-      const full = path.join(REPOS, c.slug, file);
+      const vsrc = sourceRoot(path.join(REPOS, c.slug));
+      const full = path.join(vsrc.root || path.join(REPOS, c.slug), file);
       checked += 1;
       if (!fs.existsSync(full)) { bad.push({ slug: c.slug, item, why: 'file is gone' }); continue; }
       const lines = fs.readFileSync(full, 'utf8').split('\n');
@@ -867,6 +907,7 @@ function verifyAnchors(all) {
     .map((b) => ({ ...b, days: ageOf(b.slug) }))
     .sort((a, b) => (b.days ?? -1) - (a.days ?? -1));
   const staleAnchors = bad.filter((b) => b.item !== 'source review');
+  printCloneSource();
   console.log(`Anchors checked: ${checked}.\n`);
   if (staleReviews.length) {
     const oldest = staleReviews[0].days;

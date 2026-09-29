@@ -985,6 +985,14 @@ someone thought to list, which is why the worktree is the actual fix and this is
 Two habits that cost nothing beside it: stage explicit paths rather than a directory, and read
 `git status` before `git commit` rather than after `git push`.
 
+**Cut every lane branch from `origin/main`, never from another lane's local branch — doing so
+reproduces the sweeping problem at PR level.** Seen on 2026-09-29: a lane branched from a
+sibling lane's local branch, that branch was squash-merged, and the PR then showed ~20 files
+the lane never touched — `.gitignore` and a one-line `Reads:` header on every tool — because
+the squash left the original commits as non-ancestors. The fix is `git rebase --onto
+origin/main <old-base>`, and the check is to read `git diff --stat origin/main...HEAD` before
+opening the PR and confirm every file in it is yours.
+
 **A GENERATOR can sweep another lane's work with no `git add` at all.** The staging rule is
 about what you ADD; this is about what a tool READS. Every generator here derives a tracked
 file in this repo from the sibling clones — and it reads whatever is on disk in those clones,

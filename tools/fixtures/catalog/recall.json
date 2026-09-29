@@ -14,10 +14,28 @@
     "`outOfVocabulary` is the lab's other implemented algorithms, for which no term",
     "exists. These are NOT recall failures - the scanner cannot be blamed for missing a",
     "term nobody wrote - but they are the vocabulary's coverage debt, counted separately",
-    "so the two failures never get averaged into one comfortable number."
+    "so the two failures never get averaged into one comfortable number.",
+    "",
+    "WHY THIS IS NOT THE WHOLE FLEET, AND CANNOT BE GENERATED INTO ONE.",
+    "",
+    "Every entry costs a hand read: the lab's README for what it claims, then its own",
+    "source, in whatever language, to confirm each claim. That is the one thing that",
+    "cannot be automated here, because the only tool that could do it is the tool being",
+    "measured - ground truth derived from catalog-evidence would report 100% and mean",
+    "nothing. 208 labs of that reading is a hand audit, not a generated fixture, and a",
+    "fixture assembled quickly to cover more ground is the exact failure `grown` names.",
+    "",
+    "'Every lab with a hand-rolled implementation' is also not a set this fixture can",
+    "address, and the reason is worth keeping: strata come from the scanner's own",
+    "IMPLEMENTATION_SHAPES, which are first-match-wins, so one crypto.subtle call makes",
+    "a lab 'WebCrypto' however much it hand-rolls. crypto-lab-air-stream hand-rolls both",
+    "SNOW 3G and ZUC and is classified WebCrypto for a single AES block call. The",
+    "'hand-rolled' stratum is therefore labs that use NO library at all, not labs",
+    "containing a hand-rolled implementation - a distinction that decides which labs a",
+    "sampling rule can even reach."
   ],
   "sampled": "2026-09-24",
-  "method": "Round 1 (12 labs, 2026-09-24) was stratified by implementation style and taken at fixed intervals through each stratum in sorted order. That method is NOT stable under growth - changing the count reshuffles every pick, so a larger fixture would not contain the smaller one and the two could not be compared. Round 2 (to 20 labs, 2026-09-24) therefore orders each stratum by sha1(slug) and takes the first N not already present, which makes every future extension a superset. Targets over-weight the small strata on purpose: WebCrypto 6 (of 92), @noble 5 (46), hand-rolled 5 (44), UNKNOWN 3 (14), partially-unread 1 (9). The two NOT-SCANNED labs are excluded by construction - there is no finding to measure. Strata come from the scanner's OWN implementation classification, which is a limitation worth stating: a lab it badly misreads could be mis-stratified.",
+  "method": "Round 1 (12 labs, 2026-09-24) was stratified by implementation style and taken at fixed intervals through each stratum in sorted order. That method is NOT stable under growth - changing the count reshuffles every pick, so a larger fixture would not contain the smaller one and the two could not be compared. Round 2 (to 20 labs, 2026-09-24) therefore orders each stratum by sha1(slug) and takes the first N not already present, which makes every future extension a superset. Targets over-weight the small strata on purpose: WebCrypto 6 (of 92), @noble 5 (46), hand-rolled 5 (44), UNKNOWN 3 (14), partially-unread 1 (9). The two NOT-SCANNED labs are excluded by construction - there is no finding to measure. Strata come from the scanner's OWN implementation classification, which is a limitation worth stating: a lab it badly misreads could be mis-stratified. Round 3 (to 21 labs, 2026-09-29) adds one lab OUT OF sha1 order and says so in the entry: crypto-lab-air-stream is the regression witness for the vocabulary class, not a sample pick, and the sha1 ordering of every other stratum is untouched so the superset property still holds for future growth.",
   "labs": {
     "crypto-lab-aegis-gate": {
       "stratum": "WebCrypto",
@@ -236,6 +254,18 @@
         "toy 4-round SPN"
       ],
       "how": "linear cryptanalysis against the same toy 4-round SPN that crypto-lab-biham-lens attacks with differentials. DES is discussed as the historical target and never implemented, so UNKNOWN is the correct finding."
+    },
+    "crypto-lab-air-stream": {
+      "stratum": "WebCrypto",
+      "addedOutOfOrder": "2026-09-29, as a REGRESSION WITNESS rather than a sample pick. This is the lab whose missing ZUC term exposed the vocabulary class as open outside the sample, so it belongs in the measurement that claims the class is closed. It is declared here rather than slipped in, because the sha1(slug) growth rule exists so every later fixture is a superset of every earlier one, and a silent out-of-order pick would break that property without anyone noticing.",
+      "implements": [
+        "AES",
+        "AES-CTR",
+        "SNOW 3G",
+        "ZUC"
+      ],
+      "outOfVocabulary": [],
+      "how": "Ground truth read from README 'What It Is' (128-EEA1/SNOW 3G, 128-EEA2/AES-CTR, 128-EEA3/ZUC) and confirmed in source. SNOW 3G hand-rolled in src/snow/snow3g.ts (LFSR/FSM clock, SNOW_SQ S-box in constants.ts, generateSnowEea1Keystream:227, encryptSnowEea1:250). ZUC hand-rolled in src/zuc/zuc.ts (GF(2^31-1) add31/rotate31:23-30, generateZucEea3Keystream:177, encryptZucEea3:199; ZUC_D/S0/S1 in constants.ts), KAT from the GSMA EEA3/EIA3 implementors' data and cross-checked against @li0ard/zuc. AES via crypto.subtle in src/aes/eea2.ts:19-27. AES-CTR is implemented in that same file - buildEea2Counter:31 plus the keystream XOR - and the string 'CTR' appears nowhere in it, so it is an unnamed-implementation miss by construction. NOT listed: AES-CBC, which the scanner credits from the WebCrypto algorithm name at eea2.ts:19; that call is a single-block primitive with a zero IV used to build CTR, and the lab implements no chaining. The fixture measures recall over a verified subset, so leaving it out records it as out of scope rather than as a false positive - precision is measured the other way round, by reading anchors."
     }
   },
   "grown": "Grown as the work goes, not when a threshold is in reach. A fixture assembled to clear a gate measures the gate."

@@ -387,7 +387,7 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 |---|---|---|
 | `node tools/catalog-evidence.js verify` | the catalog asserting a lab implements an algorithm its source does not | weekly |
 | `node tools/catalog-recall.js` | the chip rule being promoted to a failing check on a judgement call rather than a measurement | weekly |
-| `node tools/catalog-sync.js check` | the algorithm index drifting from the cards, and a card claiming an algorithm with no evidence behind it | every PR and push |
+| `node tools/catalog-sync.js check` | the algorithm index drifting from the cards, a card claiming an algorithm with no evidence behind it, and a chip the vocabulary cannot name passing as clean | every PR and push |
 | `node tools/concept-sync.js check` | the gap list answering “is anything missing?” wrongly because a demo was never filed under a concept | manual |
 | `node tools/corpus-sync.js check` | a demo staying invisible to the crypto-counsel chatbot because its corpus entry was never added | manual |
 | `node tools/deploy-sync.js check` | a lab serving a build older than its own main, with nothing anywhere going red | weekly |

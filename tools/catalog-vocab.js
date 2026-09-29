@@ -53,6 +53,13 @@ const ALGORITHMS = [
   { name: 'Ascon', kind: 'algorithm', family: 'AEAD', re: /\bascon\b/i, std: 'NIST:SP 800-232' },
   { name: 'SNOW 3G', kind: 'algorithm', family: 'stream cipher', re: /snow[-_ ]?3g/i, std: 'ETSI:SAGE SNOW 3G' },
   { name: 'SNOW 2.0', kind: 'algorithm', family: 'stream cipher', re: /snow[-_ ]?2(\.0)?\b/i, std: null },
+  /* ZUC was missing entirely until 2026-09-29, and the shape of that miss is worth
+     keeping: crypto-lab-air-stream hand-rolls ZUC in src/zuc/zuc.ts and chips it,
+     and because no term could NAME the algorithm it was invisible in BOTH
+     directions — never credited as implemented, and never judged by the chip rule,
+     which only tests chips against terms that exist. A vocabulary gap is not a
+     neutral absence; it is a card whose strongest claim nothing is checking. */
+  { name: 'ZUC', kind: 'algorithm', family: 'stream cipher', re: /\bzuc\b|\bzuc[-_](?:d|s0|s1|256|eea3|eia3)\b|\b128[-_ ]?e[ei]a3\b/i, std: 'ETSI:3GPP TS 35.221 / GM/T 0001-2012' },
   { name: 'RC4', kind: 'algorithm', family: 'stream cipher', re: /\brc4\b/i, std: null },
   { name: 'DES', kind: 'algorithm', family: 'block cipher', re: /\bdes\b(?!ign|crip|tin)/i, std: 'NIST:FIPS 46-3 (withdrawn)' },
   { name: '3DES', kind: 'algorithm', family: 'block cipher', re: /3des|triple[-_ ]?des/i, std: 'NIST:SP 800-67' },
@@ -64,7 +71,7 @@ const ALGORITHMS = [
   { name: 'Toy HiAE', kind: 'algorithm', family: 'teaching AEAD', re: /\b(?:toy[-_ ]?)?hiae\b/i, std: null },
   { name: 'Speck', kind: 'algorithm', family: 'block cipher', re: /\bspeck\b/i, std: null },
   { name: 'Simon', kind: 'algorithm', family: 'block cipher', re: /\bsimon\b(?!\s+singh)/i, std: null },
-  { name: 'PRESENT', kind: 'algorithm', family: 'block cipher', re: /\bpresent[-_ ]?(?:80|128|cipher)\b/i, std: 'ISO:ISO/IEC 29192-2' },
+  { name: 'PRESENT', kind: 'algorithm', family: 'block cipher', re: /\bpresent[-_ ]?(?:80|128|cipher)\b/i, chipRe: /^present(?:[-_ ]?(?:80|128))?$/i, std: 'ISO:ISO/IEC 29192-2' },
 
   // --- hashes and MACs ---
   { name: 'SHA-1', kind: 'algorithm', family: 'hash', re: /sha[-_ ]?1\b/i, std: 'NIST:FIPS 180-4 (deprecated)' },
@@ -92,7 +99,7 @@ const ALGORITHMS = [
   { name: 'Laplace mechanism', kind: 'algorithm', family: 'differential privacy', re: /laplace/i, std: null },
   { name: 'Gaussian mechanism', kind: 'algorithm', family: 'differential privacy', re: /gaussian[-_ ]?mechanism|discrete[-_ ]?gaussian|gaussian[-_ ]?sigma/i, std: null },
   { name: 'bcrypt', kind: 'algorithm', family: 'password KDF', re: /\bbcrypt\b/i, std: null },
-  { name: 'Balloon', kind: 'algorithm', family: 'password KDF', re: /balloon[-_ ]?hash/i, std: null },
+  { name: 'Balloon', kind: 'algorithm', family: 'password KDF', re: /balloon[-_ ]?hash/i, chipRe: /^balloon(?:[-_ ]?hash(?:ing)?)?$/i, std: null },
 
   // --- classical public key ---
   { name: 'RSA', kind: 'algorithm', family: 'public key', re: /\brsa\b/i, std: 'IETF:RFC 8017' },
@@ -212,17 +219,41 @@ const ALGORITHMS = [
   /* SM2/SM3/SM4 are two letters and a digit, which is also what a local variable
      in a chart looks like. `const sm2 = 1 + (rawM2 / maxRaw) * 3.2` in
      crypto-lab-commit-gate's visualisation was read as the Chinese signature
-     standard. They need crypto context or the file path, never the bare token. */
+     standard. They need crypto context or the file path, never the bare token.
+
+     Narrowing `re` that far had a second consequence that went unnoticed for as
+     long as the first one was fixed: the BARE chip "SM2" stopped matching too, so
+     the chip rule silently judged none of these cards. `chipRe` is the answer —
+     a chip is a curated human label, not a line of code, and `const sm2` is
+     never a chip. See the note on chipRe/symbolRe at the foot of this file.
+
+     Both carried `\bsm-?crypto\b` until 2026-09-29, which credited the ALGORITHM
+     on the strength of a PACKAGE NAME. `sm-crypto` ships SM2, SM3 and SM4, so it
+     says nothing about which one a repo uses: crypto-lab-world-hashes imports
+     only `sm3` from it and was credited with implementing SM2, anchored at the
+     import line. A package name is evidence that a dependency exists, never that
+     an algorithm is used. `symbolRe` restores what was actually wanted there —
+     the imported SYMBOL `sm3`, which is a named algorithm, as opposed to the
+     path it came from, which is a vendor's product line.
+
+     `iv` is deliberately NOT in SM3's context list, though `SM3_IV` is a named
+     symbol and would qualify. Adding it moved crypto-lab-world-hashes' anchor
+     from `src/length-extension.ts:118` to `:110` — from `sm3Compress`, which
+     shows the compression function being computed, to `const SM3_IV`, which is a
+     constant beside it. Both are inside the same in-repo SM3, both are `decl`
+     shape, and keepBest breaks that tie on line order, so the wider pattern
+     silently bought a weaker anchor. An anchor exists to be read by a person;
+     the constant is worse to land on than the function. */
   // --- national and regional standards ---
-  { name: 'SM2', kind: 'algorithm', family: 'public key', re: /sm2[-_ ]?(?:sign|verify|encrypt|decrypt|keypair|curve|point|cipher)|(?:sign|verify|encrypt|decrypt)[-_ ]?sm2\b|\bsm-?crypto\b/i, pathRe: /(^|\/)sm2(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 14888-3 / GB/T 32918' },
-  { name: 'SM3', kind: 'algorithm', family: 'hash', re: /sm3[-_ ]?(?:hash|digest|compress|init|update|block)|\bsm-?crypto\b/i, pathRe: /(^|\/)sm3(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 10118-3 / GB/T 32905' },
-  { name: 'SM4', kind: 'algorithm', family: 'block cipher', re: /sm4[-_ ]?(?:encrypt|decrypt|cipher|round|sbox|key|trace|block)|(?:encrypt|decrypt)[-_ ]?sm4\b/i, pathRe: /(^|\/)sm4(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 18033-3 / GB/T 32907' },
+  { name: 'SM2', kind: 'algorithm', family: 'public key', re: /sm2[-_ ]?(?:sign|verify|encrypt|decrypt|keypair|curve|point|cipher)|(?:sign|verify|encrypt|decrypt)[-_ ]?sm2\b/i, symbolRe: /^sm2$/i, chipRe: /^sm2$/i, pathRe: /(^|\/)sm2(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 14888-3 / GB/T 32918' },
+  { name: 'SM3', kind: 'algorithm', family: 'hash', re: /sm3[-_ ]?(?:hash|digest|compress|init|update|block)/i, symbolRe: /^sm3$/i, chipRe: /^sm3$/i, pathRe: /(^|\/)sm3(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 10118-3 / GB/T 32905' },
+  { name: 'SM4', kind: 'algorithm', family: 'block cipher', re: /sm4[-_ ]?(?:encrypt|decrypt|cipher|round|sbox|key|trace|block)|(?:encrypt|decrypt)[-_ ]?sm4\b/i, symbolRe: /^sm4$/i, chipRe: /^sm4$/i, pathRe: /(^|\/)sm4(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 18033-3 / GB/T 32907' },
   { name: 'MISTY1', kind: 'algorithm', family: 'block cipher', re: /\bmisty1?\b/i, std: 'ISO:ISO/IEC 18033-3' },
   { name: 'KASUMI', kind: 'algorithm', family: 'block cipher', re: /\bkasumi\b/i, std: 'ETSI:SAGE KASUMI' },
   { name: 'Camellia', kind: 'algorithm', family: 'block cipher', re: /\bcamellia\b/i, std: 'IETF:RFC 3713' },
-  { name: 'ARIA', kind: 'algorithm', family: 'block cipher', re: /aria[-_ ]?(?:cipher|128|192|256|encrypt|decrypt|sbox|round|key)/i, pathRe: /(^|\/)aria(?:[-_./]|$)/i, std: 'IETF:RFC 5794' },
-  { name: 'SEED', kind: 'algorithm', family: 'block cipher', re: /seed[-_ ]?(?:cipher|block|encrypt|decrypt|round|sbox)|\bkisa[-_ ]?seed\b/i, std: 'IETF:RFC 4269' },
-  { name: 'LEA', kind: 'algorithm', family: 'block cipher', re: /\blea[-_ ]?(?:cipher|128|192|256|round|encrypt)\b/i, std: 'ISO:ISO/IEC 29192-2' },
+  { name: 'ARIA', kind: 'algorithm', family: 'block cipher', re: /aria[-_ ]?(?:cipher|128|192|256|encrypt|decrypt|sbox|round|key)/i, chipRe: /^aria(?:[-_ ]?(?:128|192|256))?$/i, pathRe: /(^|\/)aria(?:[-_./]|$)/i, std: 'IETF:RFC 5794' },
+  { name: 'SEED', kind: 'algorithm', family: 'block cipher', re: /seed[-_ ]?(?:cipher|block|encrypt|decrypt|round|sbox)|\bkisa[-_ ]?seed\b/i, chipRe: /^seed(?:[-_ ]?128)?$/i, std: 'IETF:RFC 4269' },
+  { name: 'LEA', kind: 'algorithm', family: 'block cipher', re: /\blea[-_ ]?(?:cipher|128|192|256|round|encrypt)\b/i, chipRe: /^lea(?:[-_ ]?(?:128|192|256))?$/i, std: 'ISO:ISO/IEC 29192-2' },
   { name: 'HIGHT', kind: 'algorithm', family: 'block cipher', re: /\bhight\b/i, std: 'ISO:ISO/IEC 18033-3' },
   { name: 'EC-KCDSA', kind: 'algorithm', family: 'signature', re: /kcdsa/i, std: 'ISO:ISO/IEC 14888-3' },
 
@@ -230,13 +261,18 @@ const ALGORITHMS = [
   { name: 'GGH', kind: 'algorithm', family: 'lattice cryptosystem', re: /\bggh\b/i, std: null },
   { name: 'Isogeny walk', kind: 'algorithm', family: 'isogeny', re: /isogen/i, std: null },
   { name: 'CSIDH', kind: 'algorithm', family: 'isogeny', re: /\bcsidh\b/i, std: null },
-  { name: 'EC point arithmetic', kind: 'algorithm', family: 'elliptic curve', re: /point[-_ ]?(?:add|double|mul|order)|scalar[-_ ]?mul|is[-_ ]?on[-_ ]?curve|double[-_ ]?and[-_ ]?add/i, std: null },
+  { name: 'EC point arithmetic', kind: 'algorithm', family: 'elliptic curve', re: /point[-_ ]?(?:add|double|mul|order)|scalar[-_ ]?mul|is[-_ ]?on[-_ ]?curve|double[-_ ]?and[-_ ]?add/i, chipRe: /^ec[-_ ]?point[-_ ]?arithmetic$/i, std: null },
   { name: 'Montgomery ladder', kind: 'algorithm', family: 'elliptic curve', re: /montgomery[-_ ]?ladder/i, std: null },
 
   // --- found by `catalog-evidence.js gaps`: chips naming algorithms the vocabulary lacked ---
   { name: 'ristretto255', kind: 'algorithm', family: 'elliptic curve', re: /ristretto/i, std: 'IETF:RFC 9496' },
   { name: 'Streebog', kind: 'algorithm', family: 'hash', re: /streebog|gost[-_ ]?r?[-_ ]?34\.11/i, std: 'ISO:GOST R 34.11-2012' },
   { name: 'Kuznyechik', kind: 'algorithm', family: 'block cipher', re: /kuznyechik|gost[-_ ]?r?[-_ ]?34\.12/i, std: 'ISO:GOST R 34.12-2015' },
+  /* Found by `catalog-sync.js vocab` on its first run, by the same evidence that
+     found ZUC: crypto-lab-world-hashes chips Kupyna and depends on @li0ard/kupyna,
+     and no term could name it. Two gaps of one class in one run is the argument
+     for the check existing rather than for the two entries. */
+  { name: 'Kupyna', kind: 'algorithm', family: 'hash', re: /kupyna|dstu[-_ ]?7564/i, std: 'DSTU:DSTU 7564:2014' },
   { name: 'Magma', kind: 'algorithm', family: 'block cipher', re: /\bmagma\b/i, std: 'ISO:GOST R 34.12-2015' },
   { name: 'FF1', kind: 'algorithm', family: 'format-preserving encryption', re: /\bff1\b|format[-_ ]?preserving/i, std: 'NIST:SP 800-38G' },
   { name: 'FRI', kind: 'algorithm', family: 'proof system', re: /\bfri\b(?![-_ ]?(?:day|end))/i, std: null },
@@ -326,5 +362,24 @@ const IMPLEMENTATION_SHAPES = [
 
    `pathRe` overrides `re` when matching a FILE PATH. A few terms are decisive as
    a filename and far too loose as a line pattern: `src/ot.ts` is unambiguously
-   oblivious transfer, while the two letters "ot" on a line are nothing. */
+   oblivious transfer, while the two letters "ot" on a line are nothing.
+
+   `chipRe` overrides `re` when matching a CHIP, and exists because the two are
+   not the same kind of text. `re` is tuned for CODE, where a short token is
+   usually a variable; a chip is a curated label a person wrote on a card, where
+   "SM4" means the cipher and nothing else. Tuning `re` down to survive
+   `const sm2 = ...` also made the bare chips "SM2", "SM3", "SM4" and "ARIA"
+   match no term at all, which did not read as a failure anywhere: the chip rule
+   only judges chips against terms that exist, so a card's strongest claim went
+   unchecked and the output still said the run was clean. A term's own NAME must
+   match its own chip pattern — `catalog-sync.js vocab` fails when it does not,
+   because that invariant is what makes the gap loud instead of silent.
+
+   `symbolRe` overrides `re` for an imported SYMBOL, and only there. The rule it
+   encodes: a module PATH may never credit an algorithm by itself, because a
+   package is a vendor's product line and an algorithm is one thing in it. The
+   binding `sm3` in `import { sm3 } from 'sm-crypto'` is a named algorithm; the
+   string `'sm-crypto'` is not. Keeping the two apart is the whole distinction,
+   and `catalog-sync.js vocab` re-derives it against the fleet's real dependency
+   list rather than trusting anyone to remember it. */
 module.exports = { ALGORITHMS, ATTACKS, IMPLEMENTATION_SHAPES };

@@ -20,7 +20,7 @@ with `node tools/catalog-evidence.js verify`.
 
 ## Reverse index — which labs implement what
 
-160 algorithms are implemented somewhere in the fleet, grouped by family.
+162 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -480,6 +480,11 @@ A lab in *italics* references the algorithm without implementing it.
 - **Implemented by:** [Babel Hash](https://systemslibrarian.github.io/crypto-lab-babel-hash/) `demos/babel-hash/src/crypto/hash.ts:127`; [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) `src/hasher.ts:154`
 - **Also referenced by:** *STARK Tower*, *MAC Race*, *World Hashes*, *Poly1305 MAC*, *Merkle Vault*, *Bitcoin Wallet*, *Collision Vault*
 
+#### Kupyna
+
+- **Implemented by:** [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) `src/main.ts:241`
+- **Also referenced by:** *World Ciphers*, *Collision Vault*, *Sleeve Check*
+
 #### MD5
 
 - **Implemented by:** [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) `src/lib.ts:116`; [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) `demos/collision-vault/src/hashing/md5.ts:10`
@@ -512,8 +517,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### SM3
 
-- **Implemented by:** [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) `src/length-extension.ts:118`
-- **Also referenced by:** *SM2 Forge*
+- **Implemented by:** [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) `src/sm2/sm2.ts:1`; [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) `src/length-extension.ts:118`
+- **Also referenced by:** —
 
 #### Streebog
 
@@ -793,8 +798,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### SM2
 
-- **Implemented by:** [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) `src/sm2/curve.ts:5`; [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) `src/hashes.ts:5`
-- **Also referenced by:** —
+- **Implemented by:** [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) `src/sm2/curve.ts:5`
+- **Also referenced by:** *World Hashes*
 
 ### public-key encryption
 
@@ -912,6 +917,11 @@ A lab in *italics* references the algorithm without implementing it.
 - **Implemented by:** [Export Grade](https://systemslibrarian.github.io/crypto-lab-export-grade/) `src/tea1/core.ts:93`
 - **Also referenced by:** —
 
+#### ZUC
+
+- **Implemented by:** [Air Stream](https://systemslibrarian.github.io/crypto-lab-air-stream/) `src/core/families.ts:113`
+- **Also referenced by:** —
+
 ### teaching AEAD
 
 #### Toy HiAE
@@ -959,6 +969,12 @@ disagree about who owns SHA-256.
 |---|---|---|
 | SIKE | — | 1 |
 
+### DSTU
+
+| Algorithm | Document | Labs |
+|---|---|---|
+| Kupyna | DSTU 7564:2014 | 1 |
+
 ### ETSI
 
 | Algorithm | Document | Labs |
@@ -966,6 +982,7 @@ disagree about who owns SHA-256.
 | KASUMI | SAGE KASUMI | 1 |
 | SNOW 3G | SAGE SNOW 3G | 1 |
 | TEA1 | TETRA TEA1 | 1 |
+| ZUC | 3GPP TS 35.221 / GM/T 0001-2012 | 1 |
 
 ### IETF
 
@@ -1024,8 +1041,8 @@ disagree about who owns SHA-256.
 | FrodoKEM | ISO/IEC 18033-2 amendment | 2 |
 | Kuznyechik | GOST R 34.12-2015 | 2 |
 | MISTY1 | ISO/IEC 18033-3 | 1 |
-| SM2 | ISO/IEC 14888-3 / GB/T 32918 | 2 |
-| SM3 | ISO/IEC 10118-3 / GB/T 32905 | 1 |
+| SM2 | ISO/IEC 14888-3 / GB/T 32918 | 1 |
+| SM3 | ISO/IEC 10118-3 / GB/T 32905 | 2 |
 | SM4 | ISO/IEC 18033-3 / GB/T 32907 | 1 |
 | Streebog | GOST R 34.11-2012 | 2 |
 
@@ -1632,7 +1649,7 @@ ECB, CBC, CTR, GCM, and CCM with live padding oracle attack. Real WebCrypto oper
 
 Generate 128-EEA1, 128-EEA2 and 128-EEA3 keystream from one key, COUNT, bearer and direction, and check each against the test vectors in its own specification.
 
-- **Implements:** AES `src/aes/eea2.ts:18`, AES-CBC `src/aes/eea2.ts:19`, SNOW 3G `src/snow/snow3g.ts:120`
+- **Implements:** AES `src/aes/eea2.ts:18`, AES-CBC `src/aes/eea2.ts:19`, SNOW 3G `src/snow/snow3g.ts:120`, ZUC `src/core/families.ts:113`
 - **References:** AEGIS-256, AES-CTR, AES-XTS, BB84, Boneh-Franklin IBE, Bulletproofs, CMAC, ChaCha20, Diffie-Hellman, E91, MD5, OPAQUE, OPRF, Paillier, SHA-256, Schnorr, Shamir secret sharing, Simon, X3DH
 - **Attacks shown:** Side-channel (unspecified) `README.md:26`, Timing side-channel `CRYPTO-LAB-TEMPLATE.md:342`
 - **Standards body:** ETSI, NIST
@@ -1909,7 +1926,7 @@ Approximate FHE for encrypted floating-point arithmetic, homomorphic neural netw
 Verify real published MD5 and SHA-1 collision pairs — SHAttered, identical-prefix, chosen-prefix — live in the browser, then watch SHA-256 and SHA-3 resist the same attack.
 
 - **Implements:** MD5 `demos/collision-vault/src/hashing/md5.ts:10`, SHA-1 `demos/collision-vault/src/hashing/trace.ts:111`, SHA-256 `demos/collision-vault/src/hashing/webcrypto.ts:34`, SHA-3 `demos/collision-vault/src/hashing/sha3.ts:9`, SHA-512 `demos/collision-vault/src/hashing/webcrypto.ts:39`
-- **References:** BLAKE3, CMAC, GHASH, HMAC, Keccak, Merkle tree, Poly1305, Streebog
+- **References:** BLAKE3, CMAC, GHASH, HMAC, Keccak, Kupyna, Merkle tree, Poly1305, Streebog
 - **Attacks shown:** Birthday bound `README.md:62`, Brute force `demos/collision-vault/src/pairs/manifest.ts:64`, Collision attack `demos/collision-vault/src/hashing/index.ts:44`, Length extension `demos/collision-vault/src/main.ts:214`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
@@ -3671,7 +3688,7 @@ Exact statevector Simon's algorithm recovering a hidden XOR period in O(n) queri
 GOST published a 256-byte S-box as a bare table. It falls out of four small constants and field arithmetic — evidence about how it was designed, which is not by itself an attack.
 
 - **Implements:** AES `src/gost/aes.ts:31`, Kuznyechik `src/gost/field.ts:25`
-- **References:** AEGIS-256, AES-XTS, BB84, Boneh-Franklin IBE, Bulletproofs, Camellia, Diffie-Hellman, E91, MD5, OPAQUE, OPRF, Paillier, SHA-256, SHA-3, Schnorr, Shamir secret sharing, Simon, Streebog, X3DH
+- **References:** AEGIS-256, AES-XTS, BB84, Boneh-Franklin IBE, Bulletproofs, Camellia, Diffie-Hellman, E91, Kupyna, MD5, OPAQUE, OPRF, Paillier, SHA-256, SHA-3, Schnorr, Shamir secret sharing, Simon, Streebog, X3DH
 - **Attacks shown:** Chosen-plaintext attack `brief.md:311`, Discrete log `src/ui/tablePane.ts:255`, Key recovery `brief.md:45`, Side-channel (unspecified) `README.md:76`, Timing side-channel `CRYPTO-LAB-TEMPLATE.md:342`
 - **Standards body:** ISO, NIST
 - **Implementation:** hand-rolled
@@ -3682,8 +3699,8 @@ GOST published a 256-byte S-box as a bare table. It falls out of four small cons
 
 Sign and encrypt under GB/T 32918 SM2, read the identity digest that precedes every signature, compare both deployed ciphertext orders, then recover a key from a reused nonce.
 
-- **Implements:** SM2 `src/sm2/curve.ts:5`
-- **References:** AEGIS-256, AES-XTS, BB84, Boneh-Franklin IBE, Bulletproofs, Diffie-Hellman, E91, ECDSA, MD5, OPAQUE, OPRF, Paillier, Pairing, SHA-256, SM3, Schnorr, Shamir secret sharing, Simon, TLS 1.3, X3DH
+- **Implements:** SM2 `src/sm2/curve.ts:5`, SM3 `src/sm2/sm2.ts:1`
+- **References:** AEGIS-256, AES-XTS, BB84, Boneh-Franklin IBE, Bulletproofs, Diffie-Hellman, E91, ECDSA, MD5, OPAQUE, OPRF, Paillier, Pairing, SHA-256, Schnorr, Shamir secret sharing, Simon, TLS 1.3, X3DH
 - **Attacks shown:** Key recovery `README.md:5`, Nonce reuse `src/attack/nonce-reuse.ts:4`, Timing side-channel `CRYPTO-LAB-TEMPLATE.md:342`
 - **Standards body:** ISO
 - **Implementation:** @noble
@@ -4034,7 +4051,7 @@ Passwordless authentication via FIDO2 / WebAuthn — assertion verification, ori
 Camellia (Japan), ARIA (South Korea), SM4 (China), and Kuznyechik (Russia) side by side with AES. Encrypt/decrypt playgrounds, S-box analysis, and geopolitical compliance context.
 
 - **Implements:** AES `src/main.ts:115`, AES-CBC `src/main.ts:177`, ARIA `src/main.ts:194`, Camellia `src/ciphers/camellia.ts:58`, Kuznyechik `src/ciphers/registry.ts:70`, SEED `src/ciphers/registry.ts:44`, SM4 `src/ciphers/registry.ts:27`
-- **References:** Ascon, ChaCha20, Grover's algorithm, NTT, OPAQUE, Serpent, Streebog, TLS 1.3, Toy SPN
+- **References:** Ascon, ChaCha20, Grover's algorithm, Kupyna, NTT, OPAQUE, Serpent, Streebog, TLS 1.3, Toy SPN
 - **Attacks shown:** Birthday bound `index.html:725`, Nonce reuse `README.md:47`, Power analysis `index.html:94`
 - **Standards body:** IETF, ISO, NIST
 - **Implementation:** @noble
@@ -4045,10 +4062,10 @@ Camellia (Japan), ARIA (South Korea), SM4 (China), and Kuznyechik (Russia) side 
 
 SM3 (China), Streebog (Russia), and Kupyna (Ukraine) alongside SHA-256 and SHA-3. Five-way simultaneous hashing, avalanche analysis, and cryptographic sovereignty context.
 
-- **Implements:** HMAC `src/length-extension.ts:507`, SHA-256 `src/length-extension.ts:51`, SHA-3 `src/main.ts:237`, SHA-512 `src/main.ts:236`, SM2 `src/hashes.ts:5`, SM3 `src/length-extension.ts:118`, Streebog `src/main.ts:239`
-- **References:** AES, BLAKE3, CMAC, Camellia, GHASH, Keccak, Kuznyechik, Merkle tree, OPAQUE, Poly1305
+- **Implements:** HMAC `src/length-extension.ts:507`, Kupyna `src/main.ts:241`, SHA-256 `src/length-extension.ts:51`, SHA-3 `src/main.ts:237`, SHA-512 `src/main.ts:236`, SM3 `src/length-extension.ts:118`, Streebog `src/main.ts:239`
+- **References:** AES, BLAKE3, CMAC, Camellia, GHASH, Keccak, Kuznyechik, Merkle tree, OPAQUE, Poly1305, SM2
 - **Attacks shown:** Birthday bound `src/collision-search.ts:180`, Brute force `src/main.ts:512`, Length extension `src/length-extension.ts:303`
-- **Standards body:** IETF, ISO, NIST
+- **Standards body:** DSTU, IETF, ISO, NIST
 - **Implementation:** @noble
 
 ### X3DH Wire

@@ -3,8 +3,10 @@
  * catalog-sync.js — generate CATALOG.md, the algorithm-level view of the fleet.
  *
  * Run: node tools/catalog-sync.js check
- * Prevents: the algorithm index drifting from the cards, and a card claiming an algorithm with no evidence behind it
- * Reads: index.html's cards, tools/catalog-vocab.js, tools/catalog-reviewed.json, and CATALOG.md itself for the check diff
+ * Prevents: the algorithm index drifting from the cards, a card claiming an algorithm with no evidence behind it, and a chip the vocabulary cannot name passing as clean
+ * Reads: index.html's cards, tools/catalog-vocab.js, tools/catalog-reviewed.json, CATALOG.md itself for the check diff,
+ *        tools/catalog-chip-exempt.json, and — for `vocab` — every ../crypto-lab-<slug>/package.json plus each clone's
+ *        file and directory names to four levels (never their contents)
  *
  * index.html stays the single source of truth. The cards carry the facts —
  * catalog-evidence.js derives them from each lab's own source and writes them
@@ -43,6 +45,8 @@
  *   node tools/catalog-sync.js report          overlap pairs with no stated difference
  *   node tools/catalog-sync.js contradictions  cards naming an algorithm their lab does not implement
  *   node tools/catalog-sync.js chips           apply the chip rule: which namings are honest, which are not
+ *   node tools/catalog-sync.js vocab           the vocabulary's own invariants (also run by `check`)
+ *   node tools/catalog-sync.js vocab --modules  … and the non-failing module-backed chip report
  */
 'use strict';
 const fs = require('fs');
@@ -396,6 +400,182 @@ function validate(list) {
   }
 }
 
+/* A chip is matched by `chipRe` as well as `re`, additively. `re` is tuned for
+   CODE, where `sm2` is usually a local variable; a chip is a label a person put
+   on a card, where "SM4" is the cipher. Narrowing `re` enough to survive
+   `const sm2 = 1 + ...` also stopped the bare chips "SM2", "SM3", "SM4" and
+   "ARIA" matching anything, and nothing went red: this rule only judges chips
+   against terms that exist, so four cards' strongest claims were unjudged and
+   the run still printed a clean result. */
+function namesChip(term, chip) {
+  return (term.chipRe && term.chipRe.test(chip)) || term.re.test(chip);
+}
+
+const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+/* Every npm specifier the fleet actually depends on, and every source file and
+   directory name in each lab. Declared from the clones rather than imagined,
+   because both vocabulary checks below are assertions ABOUT the fleet and a
+   hand-written list of package names would drift the moment a lab added one. */
+function fleetEvidence(slugs) {
+  const specifiers = new Set();
+  const byLab = new Map();
+  for (const slug of slugs) {
+    const dir = path.join(ROOT, '..', slug);
+    if (!fs.existsSync(dir)) continue;
+    const deps = new Set();
+    const names = new Set();
+    try {
+      const pkg = JSON.parse(fs.readFileSync(path.join(dir, 'package.json'), 'utf8'));
+      for (const field of ['dependencies', 'devDependencies', 'peerDependencies']) {
+        for (const d of Object.keys(pkg[field] || {})) { deps.add(d); specifiers.add(d); }
+      }
+    } catch { /* a lab with no package.json contributes no specifiers */ }
+    const walk = (rel, depth) => {
+      if (depth > 4) return;
+      let entries;
+      try { entries = fs.readdirSync(path.join(dir, rel), { withFileTypes: true }); } catch { return; }
+      for (const e of entries) {
+        if (e.name === 'node_modules' || e.name === '.git' || e.name.startsWith('.')) continue;
+        names.add(e.name.replace(/\.[a-z]+$/i, ''));
+        if (e.isDirectory()) walk(path.join(rel, e.name), depth + 1);
+      }
+    };
+    walk('', 0);
+    byLab.set(slug, { deps, names });
+  }
+  return { specifiers, byLab };
+}
+
+/* Top-level alternatives of a regex source: the `|` branches at depth 0. Split
+   this way rather than on every `|` because `(?:sign|verify)` is one branch. */
+function alternatives(src) {
+  const out = [];
+  let depth = 0;
+  let cur = '';
+  let cls = false;
+  for (let i = 0; i < src.length; i += 1) {
+    const ch = src[i];
+    if (ch === '\\') { cur += ch + (src[i + 1] || ''); i += 1; continue; }
+    if (cls) { cls = ch !== ']'; cur += ch; continue; }
+    if (ch === '[') { cls = true; cur += ch; continue; }
+    if (ch === '(') depth += 1;
+    if (ch === ')') depth -= 1;
+    if (ch === '|' && depth === 0) { out.push(cur); cur = ''; continue; }
+    cur += ch;
+  }
+  out.push(cur);
+  return out.filter(Boolean);
+}
+
+/* THE VOCABULARY'S OWN INVARIANTS.
+ *
+ * Three failures, each one a defect this repository actually shipped, and each
+ * invisible because the tools that could have seen it were asking a different
+ * question.
+ *
+ *   NAME-UNMATCHED    a term whose own NAME does not match its own chip pattern,
+ *                     so the vocabulary cannot recognise the plainest way a card
+ *                     names it. SM2, SM3, SM4 and ARIA were all in this state and
+ *                     the chip rule reported nothing about the cards carrying
+ *                     those chips — not "no violation", no judgement at all.
+ *
+ *   PACKAGE-ONLY      an alternative that fires on an npm SPECIFIER the fleet
+ *                     depends on while carrying no literal of the term's own
+ *                     name. `\bsm-?crypto\b` on SM2 was exactly this: sm-crypto
+ *                     ships SM2, SM3 and SM4, so the specifier says which VENDOR
+ *                     a lab uses and never which algorithm. It credited
+ *                     crypto-lab-world-hashes — which imports only `sm3` — with
+ *                     implementing SM2, anchored at that import line.
+ *
+ *   CHIP-UNNAMEABLE   a chip no term can name, on a lab whose package.json
+ *                     depends on something of that name. This is the ZUC case:
+ *                     crypto-lab-air-stream hand-rolls ZUC in src/zuc/, depends
+ *                     on @li0ard/zuc and chips "ZUC" — and because no term
+ *                     existed the card was neither credited nor judged. On its
+ *                     first run this rule found a second one, Kupyna, by the
+ *                     same evidence on the same lab type.
+ *
+ * WHY THE THIRD IS DEPENDENCY-BACKED AND NOT "EVERY CHIP MUST RESOLVE". Measured
+ * before it was written, both ways:
+ *
+ *   every chip          400 distinct chips match no term, on 191 of 208 labs.
+ *                       Almost all are concepts ("Lattice", "Key Rotation",
+ *                       "Unlinkability") or standards ("FIPS 203", "3GPP",
+ *                       "RFC 6979") that must never become algorithm entries.
+ *                       A check that red-flags 191 labs on day one is one that
+ *                       gets switched off in a week.
+ *   module-backed       73 findings — still mostly concepts, because labs name
+ *                       their source files after their exhibits, so "Composition"
+ *                       and "Aggregation" have a module each. Kept as a REPORT
+ *                       (`node tools/catalog-sync.js vocab --modules`), never a
+ *                       failure.
+ *   dependency-backed   4 findings, of which one was a real algorithm gap. A lab
+ *                       that took a DEPENDENCY named for the chip has made a
+ *                       claim with a purchase order behind it.
+ *
+ * The three non-algorithm survivors are DECLARED in catalog-chip-exempt.json
+ * with a reason each, rather than filtered by a rule that would also hide the
+ * next Kupyna. Deleting a row there turns this red until a term exists. */
+const EXEMPT_CHIPS = require('./catalog-chip-exempt.json').exempt;
+
+/* The literal alphanumeric runs in one regex alternative, so a package-matching
+   alternative can be asked whether it carries the term's own name. Tokens
+   shorter than three characters are dropped: `\bsm-?crypto\b` yields "sm" and
+   "crypto", and "sm" is a substring of "sm2" — accepting it would let every
+   two-letter prefix launder a vendor's package name into an algorithm claim. */
+function literals(alt) {
+  return alt
+    .replace(/\\[bdswBDSW]/g, ' ')
+    .replace(/\[[^\]]*\]/g, ' ')
+    .replace(/[^A-Za-z0-9]+/g, ' ')
+    .split(' ')
+    .filter((t) => t.length >= 3)
+    .map((t) => t.toLowerCase());
+}
+
+function vocabChecks(list, opts = {}) {
+  const bad = [];
+  for (const t of ALGORITHMS) {
+    if (!namesChip(t, t.name)) {
+      bad.push({ kind: 'NAME-UNMATCHED', what: t.name, why: `its own name matches neither its re nor its chipRe, so no card can name it the obvious way. Give it a chipRe.` });
+    }
+  }
+  const { specifiers, byLab } = fleetEvidence(list.map((c) => c.slug));
+  for (const t of ALGORITHMS) {
+    const self = norm(t.name);
+    for (const alt of alternatives(t.re.source)) {
+      let rx;
+      try { rx = new RegExp(alt, 'i'); } catch { continue; }
+      const hits = [...specifiers].filter((spec) => rx.test(spec));
+      if (!hits.length) continue;
+      const toks = literals(alt);
+      const carriesName = toks.some((tok) => self.includes(tok) || tok.includes(self));
+      if (!carriesName) {
+        bad.push({ kind: 'PACKAGE-ONLY', what: t.name, why: `alternative /${alt}/ fires on a package name that does not name ${t.name}: ${hits.sort().slice(0, 4).join(', ')}. A specifier is a vendor's product line; match the imported SYMBOL with symbolRe instead.` });
+      }
+    }
+  }
+  const modules = [];
+  for (const c of list) {
+    const ev = byLab.get(c.slug);
+    if (!ev) continue;
+    for (const chip of c.chips) {
+      if (ALGORITHMS.some((t) => namesChip(t, chip))) continue;
+      const n = norm(chip);
+      if (n.length < 3) continue;
+      const dep = [...ev.deps].find((d) => norm(d.split('/').pop()) === n);
+      if (dep) {
+        if (EXEMPT_CHIPS.some((e) => e.slug === c.slug && e.chip === chip)) continue;
+        bad.push({ kind: 'CHIP-UNNAMEABLE', what: `${c.slug} chips "${chip}"`, why: `no term names it, and this lab depends on ${dep}. Add a term, or declare it in tools/catalog-chip-exempt.json with the reason it is not an algorithm.` });
+      } else if ([...ev.names].some((f) => norm(f) === n)) {
+        modules.push({ slug: c.slug, chip });
+      }
+    }
+  }
+  return { bad, modules, exempt: EXEMPT_CHIPS.length, reported: opts.modules ? modules : [] };
+}
+
 function main() {
   const mode = process.argv[2];
   const list = cards();
@@ -455,7 +635,7 @@ function main() {
       const impl = new Set(c.implements.map((i) => i.name));
       const prose = `${c.kicker} ${c.copy}`;
       for (const t of ALGORITHMS) {
-        const inChip = c.chips.find((ch) => t.re.test(ch));
+        const inChip = c.chips.find((ch) => namesChip(t, ch));
         const inProse = t.re.test(prose);
         if (!inChip && !inProse) continue;
         if (satisfied(impl, t)) continue;
@@ -463,7 +643,7 @@ function main() {
            — names several algorithms in one breath. If the lab implements any of
            them the chip is not a false claim, it is a chip about a construction
            whose parts this index lists separately. */
-        if (inChip && ALGORITHMS.filter((o) => o.re.test(inChip)).some((o) => satisfied(impl, o))) continue;
+        if (inChip && ALGORITHMS.filter((o) => namesChip(o, inChip)).some((o) => satisfied(impl, o))) continue;
         /* A lab this scanner only partly read cannot be judged: the algorithm
            may well be in the part it did not open. shadow-vault chips
            ChaCha20-Poly1305 and keeps its stream cipher in Rust. Reporting that
@@ -520,7 +700,7 @@ function main() {
           title: c.title,
           algorithm: t.name,
           state: refd.has(t.name) ? 'referenced, not implemented' : (c.unknown ? 'lab implements UNKNOWN' : 'not found in the lab at all'),
-          where: c.chips.some((ch) => t.re.test(ch)) ? 'chip' : 'description',
+          where: c.chips.some((ch) => namesChip(t, ch)) ? 'chip' : 'description',
         });
       }
     }
@@ -569,6 +749,28 @@ function main() {
     process.exit(1);
   }
   const current = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
+  if (mode === 'vocab' || mode === 'check') {
+    const v = vocabChecks(list, { modules: process.argv.includes('--modules') });
+    if (v.bad.length) {
+      console.error(`VOCABULARY (${v.bad.length}) — a term that cannot name what it indexes, or one that`);
+      console.error('names it on evidence that is not about the algorithm at all.');
+      for (const b of v.bad) console.error(`  ${b.kind.padEnd(17)} ${b.what}\n${' '.repeat(20)}${b.why}`);
+    } else {
+      console.log(`Vocabulary invariants hold over ${ALGORITHMS.length} terms and ${list.length} cards:`);
+      console.log('  every term matches its own name, no term is credited by a package name alone,');
+      console.log(`  and every chip with a dependency behind it resolves to a term (${v.exempt} declared`);
+      console.log('  exemptions in tools/catalog-chip-exempt.json).');
+    }
+    if (v.reported.length) {
+      console.log(`\nMODULE-BACKED chips with no term (${v.reported.length}) — REPORT, never a failure. Labs name`);
+      console.log('their files after their exhibits, so most of these are concepts rather than');
+      console.log('algorithms. Read it when growing the vocabulary; do not gate on it.');
+      for (const m of v.reported) console.log(`    ${m.slug.replace('crypto-lab-', '').padEnd(24)} ${m.chip}`);
+    }
+    if (mode === 'vocab') { if (v.bad.length) process.exit(1); return; }
+    if (v.bad.length) process.exit(1);
+  }
+
   if (mode === 'check') {
     if (current === next) {
       console.log(`CATALOG.md in step with index.html (${list.length} labs).`);

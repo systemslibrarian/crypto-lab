@@ -317,6 +317,28 @@ function structuresNamed(code, term) {
  * a lab whose README says it implements no decoder at all — claiming to
  * implement HQC. The import and WebCrypto tests deliberately DO read string
  * contents: a module path and an algorithm name are strings by nature. */
+/* The BINDINGS of an import/require line, which is the only place a term's bare
+   token is allowed to count. A module PATH is a vendor's product line and never
+   evidence on its own: `sm-crypto` ships SM2, SM3 and SM4, and crediting the
+   path put SM2 on crypto-lab-world-hashes, which imports only `sm3` from it.
+   `symbolRe` is therefore tested against the imported NAME and never against the
+   path, and terms without one are unaffected. */
+function importedSymbols(line) {
+  if (!/\b(?:import|require)\b/.test(line)) return [];
+  const braces = /\{([^}]*)\}/.exec(line);
+  if (!braces) return [];
+  return braces[1].split(',').flatMap((b) => b.split(/\s+as\s+/)).map((b) => b.trim()).filter(Boolean);
+}
+
+/* Does this line name the term at all? The gate in front of shapeOf. A term with
+   a `symbolRe` can also be named by an imported binding the line pattern cannot
+   see: `import { sm3 } from '@li0ard/sm3'` survives neither `re` nor camelSplit,
+   which turns `sm3` into `sm 3`. */
+function namesTerm(line, camel, term) {
+  if (term.re.test(line) || term.re.test(camel)) return true;
+  return Boolean(term.symbolRe) && importedSymbols(line).some((n) => term.symbolRe.test(n));
+}
+
 function shapeOf(line, code, term) {
   /* import / require whose module path carries the term */
   const imports = [...line.matchAll(/(?:from\s*|require\(\s*|import\(\s*)['"]([^'"]+)['"]/g)].map((x) => x[1]);
@@ -326,13 +348,9 @@ function shapeOf(line, code, term) {
      one algorithm and exports another — and `import { sm3 as sm3Hash } from
      'sm-crypto'`, where the package name says nothing at all. Both are as direct
      an implementation as a call. */
-  if (/\b(?:import|require)\b/.test(line)) {
-    const braces = /\{([^}]*)\}/.exec(line);
-    if (braces) {
-      const names = braces[1].split(',').flatMap((b) => b.split(/\s+as\s+/)).map((b) => b.trim()).filter(Boolean);
-      if (names.some((n) => term.re.test(n) || term.re.test(camelSplit(n)))) return 'import';
-    }
-  }
+  const names = importedSymbols(line);
+  if (names.some((n) => term.re.test(n) || term.re.test(camelSplit(n))
+    || (term.symbolRe && term.symbolRe.test(n)))) return 'import';
   /* WebCrypto: the term is a quoted algorithm name anywhere on a subtle line, or
      on the `name:` of an algorithm object. */
   const quoted = [...line.matchAll(/['"]([^'"]{2,40})['"]/g)].map((x) => x[1]);
@@ -448,7 +466,7 @@ function evidenceFor(slug) {
       if (!line.trim()) continue;
       const camel = camelSplit(line);
       for (const term of ALGORITHMS) {
-        if (!term.re.test(line) && !term.re.test(camel)) continue;
+        if (!namesTerm(line, camel, term)) continue;
         const shape = shapeOf(line, codeLines[i], term);
         if (shape) keepBest(hits, term.name, `${rel}:${i + 1}`, shape);
         else if (!hits.has(term.name)) record(mentions, term.name, `${rel}:${i + 1}`, 'mention');
@@ -824,7 +842,7 @@ function verifyAnchors(all) {
          string "TLS 1.3" and never will. This is the second time a verifier has
          been written stricter than the deriver that fed it; both times the
          symptom was freshly written anchors reported as rot. */
-      const named = term.re.test(line) || term.re.test(camelSplit(line))
+      const named = namesTerm(line, camelSplit(line), term)
         || pathRx.test(file) || pathRx.test(camelSplit(file))
         || structuresNamed(line, term).length > 0;
       if (!named) bad.push({ slug: c.slug, item, why: `neither line ${lineNo} nor the path names it` });
@@ -932,7 +950,7 @@ function main() {
     for (const c of all) {
       const chips = [...c.block.matchAll(/class="chip">([^<]+)</g)].map((x) => x[1].trim());
       for (const chip of chips) {
-        if (ALGORITHMS.some((t) => t.re.test(chip)) || ATTACKS.some((t) => t.re.test(chip))) continue;
+        if (ALGORITHMS.some((t) => (t.chipRe || t.re).test(chip)) || ATTACKS.some((t) => t.re.test(chip))) continue;
         if (!seen.has(chip)) seen.set(chip, []);
         seen.get(chip).push(c.slug.replace('crypto-lab-', ''));
       }

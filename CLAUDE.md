@@ -75,9 +75,9 @@ own source — never from the scanner's own output, which would measure nothing 
 report 100%. Two numbers, never averaged, because they fail for different reasons
 and are fixed by different work:
 
-- **recall 90.2%** (55 of 61) — of what a lab implements AND the vocabulary can
+- **recall 90.8%** (59 of 65) — of what a lab implements AND the vocabulary can
   name, how much the detection shapes find.
-- **coverage 93.8%** (61 of 65) — of everything a lab implements, how much the
+- **coverage 94.2%** (65 of 69) — of everything a lab implements, how much the
   vocabulary can name at all.
 
 The fixture is grown **as the work goes, not when the gate is in reach** — one
@@ -110,13 +110,37 @@ those look identical unless the reason is recorded, so it is recorded in
 when recall improves, never lowered again. Moving it a second time is the
 maintainer's call, not a tool's and not an agent's.**
 
-Today: **recall 90.2% ok, 20 labs ok, all five miss classes resolved — MET.**
+Today: **recall 90.8% ok, 21 labs ok, all five miss classes resolved — MET.**
 Met is permission, not obligation: turning the chip rule into a failing check
-would redden CI on the 22 chips it still flags, so dispositioning those comes
-first and the decision is the maintainer's. Five classes, in `catalog-recall.js` with what
-closes each:
+would redden CI on the 26 chips across 22 labs it still flags, so dispositioning
+those comes first and the decision is the maintainer's. Five classes, in
+`catalog-recall.js` with what closes each:
 
-- **vocabulary** — CLOSED for the sampled labs by `catalog-evidence.js gaps`.
+- **vocabulary** — CLOSED ON THE SAMPLE, and **the sample was never the fleet**.
+  This read "CLOSED for the sampled labs by `catalog-evidence.js gaps`" until
+  2026-09-29, which was true and was read as more than it said. `gaps` is a
+  REPORT someone has to open, and the claim rested on 20 labs. An audit of
+  Chinese-standard coverage then found **ZUC absent from the vocabulary
+  entirely**: `crypto-lab-air-stream` hand-rolls it in `src/zuc/zuc.ts`, depends
+  on `@li0ard/zuc` and chips `ZUC`, and because no term could NAME it the card
+  was **neither credited with it nor judged by the chip rule** — invisible in
+  both directions, on a lab the sample never reached. A missing term is not a
+  neutral absence; it is a card whose strongest claim nothing is checking.
+  What closes the class is a CHECK rather than a sample: `node
+  tools/catalog-sync.js vocab` (folded into `catalog-sync check`) fails on any
+  chip no term names whose lab **depends on a package of that name**, across all
+  208 cards. It also fails a term whose own NAME does not match its own pattern
+  — SM2, SM3, SM4 and ARIA were all in that state, so the chip rule silently
+  judged none of those cards — and any alternative that credits an algorithm on
+  a **package name alone**: `\bsm-?crypto\b` on SM2 did exactly that, and
+  `crypto-lab-world-hashes`, which imports only `sm3`, was published as
+  implementing SM2 with the import line as its anchor. On its first run the
+  check found a second real gap, **Kupyna**, by the same evidence. The
+  dependency-backed rule is the one that fails; "every chip must resolve" was
+  measured first and rejected (400 distinct chips match no term across 191
+  labs, almost all concepts like `Lattice` or standards like `FIPS 203`), and
+  the module-backed variant (73 findings) is a report, not a gate. The three
+  non-algorithm survivors are declared in `tools/catalog-chip-exempt.json`.
 - **protocol-identity** — PARTLY closed by the `protocol` shape, which fires when
   a lab declares **two** of a protocol's own message structures with no dominant
   non-verb prefix; four labs qualify. **The residue is EXEMPTED, not chased.** A

@@ -1804,7 +1804,7 @@
       <div class="wrap">
         <div class="featured-head">
           <div class="featured-headline-row">
-            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">208</span> interactive cryptography exhibits</span></h1>
+            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">209</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -20222,7 +20222,7 @@
       'BB84': 'post-quantum', 'Shor': 'post-quantum', 'Grover': 'post-quantum',
       'Corrupted Oracle': 'cryptanalysis', 'Export Grade': 'cryptanalysis',
       'Misty Lens': 'cryptanalysis', 'Air Stream': 'symmetric',
-      'KpqC Pair': 'post-quantum', 'TC26 Pair': 'post-quantum', 'SM2 Forge': 'public-key',
+      'KpqC Pair': 'post-quantum', 'TC26 Pair': 'post-quantum', 'SM2 Forge': 'public-key', 'SM9 Forge': 'public-key',
       'Model Breach': 'cryptanalysis',
       'Biham Lens': 'cryptanalysis', 'Padding Oracle': 'cryptanalysis',
       'Timing Oracle': 'cryptanalysis', 'Nonce Guard': 'cryptanalysis',
@@ -20839,6 +20839,30 @@
         <cite>1 Corinthians 10:31</cite>
       </div>
       <p class="footer-links"><a href="teach/">Teach with Crypto Lab</a></p>
+          <a class="project-card" data-category="SIGNATURES | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sm9-forge/"
+            data-implements="EC point arithmetic@src/attack/nonce-reuse.ts:92 | Pairing@src/sm9/encrypt.ts:223 | SM9@src/sm9/pairing.ts:57"
+            data-references="BLS signatures | BLS12-381 | Boneh-Franklin IBE | DSA | ECDSA | HQC | Hash-to-curve | MD5 | One-time pad | SHA-256"
+            data-attacks="Discrete log@src/main.ts:43 | Key recovery@brief.md:232 | Nonce reuse@src/ui/pane5-break.ts:44"
+            data-standards="ISO"
+            data-implementation="hand-rolled"
+            data-review-commit="c65722ad3e852963c29fcdaae52188663e1ce79b"
+            data-review-note="Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Identity-Based Cryptography</div>
+            <div class="project-title">SM9 Forge</div>
+            <div class="project-copy">Extract an identity key by inverting in the exponent rather than hashing to a curve, run SM9’s signature, key exchange and encryption against the standard’s own worked examples, and see why two implementations agreeing doesn’t prove either followed the spec.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SM9</span>
+                <span class="chip">Identity-Based</span>
+                <span class="chip">R-ate Pairing</span>
+                <span class="chip">BN256</span>
+                <span class="chip">Key Escrow</span>
+                <span class="chip">Nonce Reuse</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
     </div>
   </footer>
 </body>

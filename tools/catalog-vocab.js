@@ -249,6 +249,30 @@ const ALGORITHMS = [
   { name: 'SM3', kind: 'algorithm', family: 'hash', re: /sm3[-_ ]?(?:hash|digest|compress|init|update|block)/i, symbolRe: /^sm3$/i, chipRe: /^sm3$/i, pathRe: /(^|\/)sm3(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 10118-3 / GB/T 32905' },
   { name: 'SM4', kind: 'algorithm', family: 'block cipher', re: /sm4[-_ ]?(?:encrypt|decrypt|cipher|round|sbox|key|trace|block)|(?:encrypt|decrypt)[-_ ]?sm4\b/i, symbolRe: /^sm4$/i, chipRe: /^sm4$/i, pathRe: /(^|\/)sm4(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 18033-3 / GB/T 32907' },
   { name: 'MISTY1', kind: 'algorithm', family: 'block cipher', re: /\bmisty1?\b/i, std: 'ISO:ISO/IEC 18033-3' },
+  /* SM9 is China's identity-based family — GM/T 0044-2016, GB/T 38635-2020 — and
+     it was the fourth ShangMi gap of the class `catalog-sync.js vocab` exists to
+     catch: crypto-lab-sm9-forge implements the whole family in src/sm9/ and no
+     term could name it. Same context requirement as SM2/SM3/SM4, because `sm9`
+     is two letters and a digit; the file path carries most of the weight here,
+     since this lab keeps every operation under src/sm9/. */
+  { name: 'SM9', kind: 'algorithm', family: 'identity-based encryption', re: /sm9[-_ ]?(?:sign|verify|encrypt|decrypt|extract|keypair|master|kem|exchange|pairing|params|hash|identity)|(?:sign|verify|encrypt|decrypt|extract)[-_ ]?sm9\b/i, symbolRe: /^sm9$/i, chipRe: /^sm9$/i, pathRe: /(^|\/)sm9(?:[-_./]|$)/i, std: 'ISO:ISO/IEC 14888-3 / GM/T 0044-2016' },
+  /* NEITHER `BN256` NOR `R-ate pairing` gets a term, and both were tried.
+
+     `R-ate pairing` is already covered: the existing `Pairing` term matches the
+     chip "R-ate Pairing" via `ate[-_ ]?pairing` and matches `export function
+     pairing(` in crypto-lab-sm9-forge's src/sm9/pairing.ts. A second entry would
+     split one concept across two rows of the reverse index.
+
+     `BN256` was added, measured, and taken out again. The curve is real and the
+     lab genuinely computes over it — src/sm9/params.ts carries Q, N, B, P1, P2,
+     TRACE and the cofactor — but nothing in executable code is NAMED for it: the
+     string "BN256" appears once in a block comment and twice inside UI template
+     literals, and a UI string deliberately does not earn the comment-only
+     exemption. So the term produced exactly one new chip-rule violation, on the
+     BN256 chip of the lab that implements it. That is the unnamed-implementation
+     class turning an invisible truth into a false accusation, and the rule this
+     file works under is explicit: a shape that declines to claim must decline to
+     accuse. Add the term when a lab names the curve in code, not before. */
   { name: 'KASUMI', kind: 'algorithm', family: 'block cipher', re: /\bkasumi\b/i, std: 'ETSI:SAGE KASUMI' },
   { name: 'Camellia', kind: 'algorithm', family: 'block cipher', re: /\bcamellia\b/i, std: 'IETF:RFC 3713' },
   { name: 'ARIA', kind: 'algorithm', family: 'block cipher', re: /aria[-_ ]?(?:cipher|128|192|256|encrypt|decrypt|sbox|round|key)/i, chipRe: /^aria(?:[-_ ]?(?:128|192|256))?$/i, pathRe: /(^|\/)aria(?:[-_./]|$)/i, std: 'IETF:RFC 5794' },

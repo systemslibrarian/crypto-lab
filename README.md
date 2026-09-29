@@ -408,10 +408,11 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 | `node tools/teach-issues.js` | a module page publishing a defect note about a lab that stopped being true | daily |
 | `node tools/teach-layout.js` | a teach page scrolling sideways, overflowing its container, or crushing prose into a column | every PR and push |
 | `node tools/teach-observe.js <exhibit url>` | a privacy note on a module page describing contacts the exhibit no longer makes | manual |
+| `node tools/test-invocation.js` | a lab carrying a full test suite that CI never executes, which reads as clean everywhere because nothing reports a test that was never attempted | manual |
 | `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | weekly |
 | `node tools/tools-sync.js check` | this list drifting from the tools it describes | every PR and push |
 
-10 of these 25 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+11 of these 26 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
 Not listed above: `catalog-vocab.js`, `depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 

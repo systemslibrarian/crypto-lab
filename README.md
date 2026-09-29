@@ -390,6 +390,7 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 | `node tools/catalog-sync.js check` | the algorithm index drifting from the cards, a card claiming an algorithm with no evidence behind it, and a chip the vocabulary cannot name passing as clean | every PR and push |
 | `node tools/clone-guard-proof.js` | a generator silently deriving this repo's tracked files from another lane's uncommitted work | manual |
 | `node tools/concept-sync.js check` | the gap list answering “is anything missing?” wrongly because a demo was never filed under a concept | manual |
+| `node tools/corpus-freshness.js` | a corpus entry going on describing a lab that has since changed underneath it, with every other checker green | manual |
 | `node tools/corpus-sync.js check` | a demo staying invisible to the crypto-counsel chatbot because its corpus entry was never added | manual |
 | `node tools/deploy-sync.js check` | a lab serving a build older than its own main, with nothing anywhere going red | weekly |
 | `node tools/depth-audit.js check` | a depth ranking resting on dimensions nobody re-derived, and a coverage figure that ages into a claim | manual |
@@ -413,7 +414,7 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 | `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | weekly |
 | `node tools/tools-sync.js check` | this list drifting from the tools it describes | every PR and push |
 
-12 of these 27 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+13 of these 28 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
 Not listed above: `catalog-vocab.js`, `clone-source.js`, `depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 

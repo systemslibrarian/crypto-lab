@@ -1,0 +1,3 @@
+{ "why": "Green run that shipped nothing because its deploy job was skipped - the 'if: github.event_name == push' shape that also skips workflow_dispatch. Reaching the classifier at all means no successful deploy was found for this sha.",
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "expect": { "cause": "NO-DEPLOY-JOB", "runId": 13 },
+  "runs": [ { "databaseId": 13, "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "status": "completed", "conclusion": "success" } ] }

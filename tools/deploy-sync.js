@@ -45,6 +45,7 @@
  * Usage (from the crypto-lab repo root):
  *   node tools/deploy-sync.js          Report; exit 0 always.
  *   node tools/deploy-sync.js check    Same report; exit 1 on any lab that is stale.
+ *   node tools/deploy-sync.js selftest Offline: the stale-cause classifier against fixtures.
  */
 'use strict';
 const fs = require('fs');
@@ -77,6 +78,53 @@ function deployingLabs() {
     if (wf) out.push({ repo, workflow: wf });
   }
   return out;
+}
+
+// Why a stale lab is stale. The report used to guess, in one sentence, for every
+// lab at once: "usually an auto-merge landed a bump and no deploy followed it".
+// On 2026-09-29 that sentence was wrong for all five stale labs — every one had
+// a deploy run that FIRED and FAILED, four of them in a gate step, and one of
+// those was a stale test fixture rather than a real defect. The guess sent a
+// reader to `gh workflow run`, which re-runs the same failing workflow and
+// changes nothing. So the cause is now derived per lab from that lab's own runs.
+//
+// Pure on purpose: it takes the already-filtered run list and returns a verdict,
+// so `selftest` can exercise every branch from fixtures with no network.
+function classifyStaleCause(real, head) {
+  const atHead = real.filter((r) => r.headSha === head);
+  if (!atHead.length) {
+    return { cause: 'NO-RUN', detail: 'no run of this workflow exists for this sha' };
+  }
+  // Newest first is how `gh run list` returns them; the newest attempt is the
+  // one that decides the current state.
+  const r = atHead[0];
+  if (r.status !== 'completed') {
+    return { cause: 'PENDING', runId: r.databaseId, detail: `run is still ${r.status}` };
+  }
+  if (r.conclusion === 'cancelled') {
+    return { cause: 'CANCELLED', runId: r.databaseId,
+      detail: 'run was cancelled — a superseding push or a concurrency group, and nothing shipped' };
+  }
+  if (r.conclusion === 'failure' || r.conclusion === 'timed_out') {
+    return { cause: 'FAILED', runId: r.databaseId, detail: `run concluded ${r.conclusion}` };
+  }
+  // Success at head would have been CURRENT before we got here, so a success
+  // reaching this point means the deploy JOB inside it did not run.
+  return { cause: 'NO-DEPLOY-JOB', runId: r.databaseId,
+    detail: `run concluded ${r.conclusion} but shipped nothing — its deploy job was skipped` };
+}
+
+// The failing job and step out of `gh run view --json jobs`. Named rather than
+// summarised: "Accessibility gate" and "Check formatting" are different problems
+// and a reader should not have to open the run to tell which they have.
+function failingStep(jobs) {
+  if (!Array.isArray(jobs)) return null;
+  for (const j of jobs) {
+    if (j.conclusion !== 'failure') continue;
+    const step = (j.steps || []).find((st) => st.conclusion === 'failure');
+    return { job: j.name, step: step ? step.name : null };
+  }
+  return null;
 }
 
 async function inspect({ repo, workflow }) {
@@ -113,7 +161,7 @@ async function inspect({ repo, workflow }) {
   if (atHead.some((r) => r.status !== 'completed')) return { repo, verdict: 'PENDING', head };
 
   if (!shipped.length) {
-    return { repo, verdict: 'NEVER-DEPLOYED', head,
+    return { repo, verdict: 'NEVER-DEPLOYED', head, ...classifyStaleCause(real, head),
       detail: atHead.length ? `newest run at head concluded ${atHead[0].conclusion}` : 'no successful deploy on record' };
   }
 
@@ -123,7 +171,7 @@ async function inspect({ repo, workflow }) {
     .split('\n').filter((f) => f && !f.startsWith('.github/'));
   if (!changed.length) return { repo, verdict: 'CURRENT', head, detail: 'only .github/ changed since the last deploy' };
 
-  return { repo, verdict: 'STALE', head,
+  return { repo, verdict: 'STALE', head, ...classifyStaleCause(real, head),
     detail: `live site built at ${last.slice(0, 7)}; since then ${changed.slice(0, 3).join(', ')}${changed.length > 3 ? ` (+${changed.length - 3} more)` : ''}` };
 }
 
@@ -138,8 +186,51 @@ function pooled(items, fn, width) {
   return Promise.all(workers).then(() => out);
 }
 
+// Offline test of the two pure functions above, over tools/fixtures/deploy/.
+// They are the whole of the new behaviour and they are the part that decides
+// what a maintainer is told to do next, so they are tested rather than trusted.
+// Every fixture carries a `why`, because a fixture whose reason is not written
+// down is one the next person deletes when it becomes inconvenient.
+function selftest() {
+  const dir = path.join(__dirname, 'fixtures', 'deploy');
+  let pass = 0;
+  const fail = [];
+  for (const f of fs.readdirSync(dir).sort()) {
+    if (!f.endsWith('.json')) continue;
+    const fx = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+    const got = fx.jobs ? failingStep(fx.jobs) : classifyStaleCause(fx.runs, fx.head);
+    const bad = Object.entries(fx.expect).filter(([k, v]) => (got || {})[k] !== v);
+    if (bad.length) {
+      fail.push(`${f}: expected ${JSON.stringify(fx.expect)}, got ${JSON.stringify(got)}`);
+    } else {
+      pass++;
+      console.log(`  ok  ${f.replace(/\.json$/, '')} \u2014 ${fx.why.split('.')[0]}`);
+    }
+  }
+  // Every cause the reporter can print must be reachable from a fixture, or a
+  // branch gets added with no test and the suite still says green.
+  const covered = new Set(fs.readdirSync(dir).filter((f) => f.endsWith('.json'))
+    .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).expect.cause)
+    .filter(Boolean));
+  for (const cause of Object.keys(CAUSE_TEXT)) {
+    if (!covered.has(cause)) fail.push(`no fixture covers cause ${cause}`);
+  }
+  console.log(fail.length ? `\n${pass} passed, ${fail.length} FAILED` : `\n${pass} passed, 0 failed`);
+  for (const m of fail) console.log(`  FAIL  ${m}`);
+  return fail.length ? 1 : 0;
+}
+
+const CAUSE_TEXT = {
+  'NO-RUN': 'never fired for this sha',
+  FAILED: 'fired and FAILED',
+  CANCELLED: 'fired and was CANCELLED',
+  PENDING: 'still running',
+  'NO-DEPLOY-JOB': 'succeeded but skipped its deploy job',
+};
+
 async function main() {
   const check = process.argv[2] === 'check';
+  if (process.argv[2] === 'selftest') return selftest();
   const labs = deployingLabs();
   const rows = await pooled(labs, inspect, 12);
 
@@ -164,11 +255,51 @@ async function main() {
     return 0;
   }
 
+  // One extra API call per STALE lab (not per lab), to name the failing job and
+  // step. Stale labs are a handful; this keeps the whole run inside its budget.
+  await pooled(stale.filter((r) => r.cause === 'FAILED'), async (r) => {
+    const raw = await sh('gh', ['run', 'view', String(r.runId),
+      '--repo', `systemslibrarian/${r.repo}`, '--json', 'jobs'], FLEET_ROOT);
+    if (!raw) return;
+    try { r.failing = failingStep(JSON.parse(raw).jobs); } catch { /* leave unnamed */ }
+  }, 8);
+
   console.log(`\nStale (${stale.length}) — main has shipped nothing to these:`);
-  for (const r of stale) console.log(`  ${r.repo}\n      ${r.detail}`);
-  console.log('\nUsually: an auto-merge landed a bump and no deploy followed it.');
-  console.log('Re-run one by hand with:  gh workflow run <deploy workflow> --repo systemslibrarian/<repo> --ref main');
-  console.log('See audits/_MASTER-TEMPLATE.md §6.2 for why that does not happen on its own.');
+  for (const r of stale) {
+    console.log(`  ${r.repo}`);
+    console.log(`      ${r.detail}`);
+    console.log(`      deploy run: ${CAUSE_TEXT[r.cause] || r.cause}${r.runId ? ` (run ${r.runId})` : ''}`);
+    if (r.failing) {
+      console.log(`      failing job: ${r.failing.job}${r.failing.step ? ` \u2192 step "${r.failing.step}"` : ''}`);
+    }
+  }
+
+  // The remedy depends on the cause, so it is printed per cause rather than as
+  // one sentence over all of them. Telling someone to re-dispatch a workflow
+  // that just failed wastes a run and teaches them the report is noise.
+  const seen = new Set(stale.map((r) => r.cause));
+  console.log('');
+  if (seen.has('NO-RUN')) {
+    console.log('NO-RUN: nothing fired for this sha — the auto-merge landed a bump with no deploy after it.');
+    console.log('        gh workflow run <deploy workflow> --repo systemslibrarian/<repo> --ref main');
+    console.log('        See audits/_MASTER-TEMPLATE.md §6.2 for why that does not happen on its own.');
+  }
+  if (seen.has('FAILED')) {
+    console.log('FAILED: the deploy DID fire and failed. Re-dispatching runs the same failure again —');
+    console.log('        read the named step first. A gate step can fail for a non-product reason');
+    console.log('        (a stale fixture, a config that moved), which does not look different here.');
+  }
+  if (seen.has('CANCELLED')) {
+    console.log('CANCELLED: superseded or cancelled, so nothing shipped. Check whether a newer sha');
+    console.log('        deployed instead before re-running this one.');
+  }
+  if (seen.has('PENDING')) {
+    console.log('PENDING: still running. Re-check before treating it as stale.');
+  }
+  if (seen.has('NO-DEPLOY-JOB')) {
+    console.log('NO-DEPLOY-JOB: the run went green while its deploy job was skipped — an `if:` gate');
+    console.log('        that excludes the event that triggered it. _MASTER-TEMPLATE.md §6.2.');
+  }
   return check ? 1 : 0;
 }
 

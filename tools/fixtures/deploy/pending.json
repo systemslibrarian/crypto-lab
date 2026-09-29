@@ -1,0 +1,3 @@
+{ "why": "Still in flight. Must not be reported with a remedy that assumes it already failed.",
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "expect": { "cause": "PENDING", "runId": 11 },
+  "runs": [ { "databaseId": 11, "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "status": "in_progress", "conclusion": null } ] }

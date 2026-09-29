@@ -1,0 +1,4 @@
+{ "why": "A failed retry after an earlier cancelled attempt at the same sha. gh returns newest first, so the newest attempt decides - otherwise a lab that failed on retry reads as merely cancelled.",
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "expect": { "cause": "FAILED", "runId": 21 },
+  "runs": [ { "databaseId": 21, "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "status": "completed", "conclusion": "failure" },
+            { "databaseId": 20, "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "status": "completed", "conclusion": "cancelled" } ] }

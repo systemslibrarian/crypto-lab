@@ -1,0 +1,6 @@
+{ "why": "Naming the failing job AND step is the point: 'Accessibility gate' and 'Check formatting' are different problems. A skipped job before the failing one must not be reported as the cause.",
+  "jobs": [ { "name": "build", "conclusion": "failure",
+              "steps": [ { "name": "Install", "conclusion": "success" },
+                         { "name": "Accessibility gate (axe-core, WCAG A/AA)", "conclusion": "failure" } ] },
+            { "name": "deploy", "conclusion": "skipped", "steps": [] } ],
+  "expect": { "job": "build", "step": "Accessibility gate (axe-core, WCAG A/AA)" } }

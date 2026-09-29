@@ -1,0 +1,3 @@
+{ "why": "Superseded by a newer push under a concurrency group. Nothing shipped, and CLAUDE.md is explicit that cancelled does not count as deployed.",
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "expect": { "cause": "CANCELLED", "runId": 9 },
+  "runs": [ { "databaseId": 9, "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "status": "completed", "conclusion": "cancelled" } ] }

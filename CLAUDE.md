@@ -925,6 +925,42 @@ another agent is using. When finishing them, **re-derive rather than copying the
 file**: a worksheet re-checked against a newer build gets a new `source_commit`, and its date
 moves with it.
 
+### One working tree per lane — use a git worktree
+
+**Each lane works in its own `git worktree`, not in a shared checkout.** From the repo:
+
+```sh
+git worktree add ../crypto-lab-lane-<name> -b <branch>
+```
+
+One checkout, one index, one set of uncommitted files. Two agents sharing that is the cause,
+and a broad `git add` is only the symptom — the sweep is what you notice, the shared tree is
+what made it possible. Three collisions in eight days, each verified from the commits rather
+than recalled:
+
+| when | what was swept | how it shows |
+|---|---|---|
+| 2026-09-22 | `tools/majors-sync.js`, parked work-in-progress | rode into PR #10 (`fbfb8dc`), backed out 83 seconds later in `deeeb95`, whose message names the cause in the author's own words: *"It rode into #10 on a `git add -A -- teach tools` of mine while I was resolving that branch's merge."* |
+| 2026-09-22 | the Export Grade corpus entry, in `../crypto-counsel` | `71f50d9` there: *"The Export Grade entry in this commit is NOT mine. It appeared in this working tree while I was editing corpus.json."* |
+| 2026-09-29 | `tools/catalog-vocab.js`, mid-write, **and `majors-sync.js` again** | `fd03fe2` captured a 337-line snapshot of a file that is 376 lines now — a paragraph caught halfway through being written |
+
+**Backing out afterwards is not the fix.** Every one of these was caught and reversed within
+minutes, and the reversals are themselves public commits on `main` that a reader has to
+reconcile. Worse, two of the three carried a state its author had not finished choosing: the
+Export Grade entry shipped describing the demo as WIP and its author rewrote that paragraph
+seven minutes later, and tonight's snapshot froze a comment mid-sentence. A clean back-out
+still publishes someone's draft under another author's name.
+
+Note what recurs: **the same 573-line parked file was swept twice, a week apart, byte for
+byte.** Reversing it the first time changed nothing about the second, because the reversal
+left it merely untracked — and `f3afc10` (2026-08-04) had already prescribed the remedy for
+exactly this, gitignoring a parked file *"so a future `git add -A` cannot sweep it in"*. That
+remedy was not applied then; it is applied now. But a `.gitignore` entry only protects files
+someone thought to list, which is why the worktree is the actual fix and this is the patch.
+
+Two habits that cost nothing beside it: stage explicit paths rather than a directory, and read
+`git status` before `git commit` rather than after `git push`.
+
 **A report of a change is evidence of intent, not of state.** Re-derive every claimed change
 from the branch before it counts, exactly as `deploy-sync` re-derives what is served rather
 than trusting a green check. A builder saying a parameter moved, an agent saying a file was

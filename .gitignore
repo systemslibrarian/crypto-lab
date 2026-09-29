@@ -15,3 +15,11 @@ tools/node_modules/
 # tools/depth-audit.js. Disposable: re-created from GitHub on demand, and never
 # a source of truth — the remote is.
 .scratch/
+
+# Parked work-in-progress: a majors-only dependency pass, held out of commits on
+# purpose and carrying a known indentation bug. Ignored rather than left merely
+# untracked, because untracked is exactly the state a broad `git add` sweeps up —
+# this file rode into a commit twice, on 2026-09-22 and again on 2026-09-29, both
+# times byte-identical. The precedent is f3afc10 (2026-08-04), which prescribed
+# this for the demo-authoring template and was not applied here at the time.
+tools/majors-sync.js

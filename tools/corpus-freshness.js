@@ -16,14 +16,27 @@
  * scripts/validate.mjs, which requires the field) against that lab's current
  * HEAD, and reports FOUR states, never folded into each other:
  *
- *   CURRENT        nothing substantive has landed since the review
- *   STALE          the lab has moved in a way a reader would ask about
- *   NEVER-REVIEWED reviewed is null — the prose has never been checked
- *   UNREADABLE     no clone, or git refused — "could not look", never "nothing there"
+ *   CURRENT             nothing substantive has landed since the review
+ *   STALE               the lab has moved in a way a reader would ask about
+ *   NEVER-REVIEWED      reviewed is null — the prose has never been checked
+ *   UNPUBLISHED-REVIEW  the reviewed commit is not in origin/main's history
+ *   UNREADABLE          no clone, or git refused — "could not look", never "nothing there"
  *
  * UNREADABLE is its own state for the reason protection-census keeps one: a
  * missing clone must never read as a clean bill of health, and folding it into
  * CURRENT is how a checker starts lying quietly.
+ *
+ * UNPUBLISHED-REVIEW is its own state for a related reason, and it is the one
+ * failure here that is about the RECORD rather than the lab. A reviewed commit
+ * that is not in origin/main's history is not a baseline: the prose was written
+ * from a build nobody else can reach. On 2026-09-29 eight entries were pinned
+ * that way — the clones sat on a lane's local `verdict-harness` branch — and one
+ * of them, privacy-pass, described a client-roster control that exists on no
+ * published branch. The check then reported all eight STALE, which was true and
+ * for the wrong reason, and a reader following that report would have re-read
+ * eight labs to fix one bad sha. It fails loudly rather than being accepted,
+ * because "the commit I read" and "the commit anyone else can read" are
+ * different facts and only the second is a baseline for prose about a live site.
  *
  * SUBSTANTIVE CHANGE is defined here, deliberately and narrowly: a commit that
  * touches the lab's README.md or anything under src/. Those are the surfaces the
@@ -69,9 +82,22 @@ function findCorpus(explicit) {
 /* Pure, so selftest can drive every branch with no clone and no network.
  * `changed` is the list of paths touched since the reviewed commit, or null
  * when git could not be asked at all. */
-function classify(reviewed, changed) {
+function classify(reviewed, changed, isAncestor) {
   if (reviewed === null || reviewed === undefined) return { state: 'NEVER-REVIEWED' };
   if (changed === null) return { state: 'UNREADABLE' };
+  // A reviewed commit that is not in origin/main's history is not a baseline at
+  // all. It happened on 2026-09-29: eight entries were pinned to commits on a
+  // lane's local `verdict-harness` branch, so the check compared a published
+  // branch against a private one and called the entries stale for the wrong
+  // reason. One of the eight, privacy-pass, described a control that is not
+  // published anywhere — prose written from a build no visitor can reach.
+  //
+  // It is its own state rather than an UNREADABLE or a STALE, because it is a
+  // different fact with a different fix: not "the lab moved" and not "I could
+  // not look", but "this review was never of the published lab". Folding it into
+  // either would let the sha stay wrong while the row looked explicable.
+  if (isAncestor === false) return { state: 'UNPUBLISHED-REVIEW' };
+  if (isAncestor === null) return { state: 'UNREADABLE' };
   const substantive = changed.filter((f) => f === 'README.md' || f.startsWith('src/'));
   if (!substantive.length) return { state: 'CURRENT', skipped: changed.length };
   return { state: 'STALE', files: substantive };
@@ -98,6 +124,22 @@ function refFor(dir) {
   } catch {
     return null;
   }
+}
+
+/* Is the reviewed commit actually in origin/main's history?
+ *
+ * `git merge-base --is-ancestor A B` exits 0 when A is an ancestor of B, 1 when
+ * it is not, and something else when it cannot tell — an unknown sha, a shallow
+ * clone, not a repository. The three answers are kept apart: true, false, and
+ * null for "could not tell", because collapsing the third into either direction
+ * is how a checker starts asserting things it did not establish. */
+function isAncestorOf(dir, sha, ref) {
+  const r = require('child_process').spawnSync('git',
+    ['-C', dir, 'merge-base', '--is-ancestor', sha, ref], { stdio: 'ignore' });
+  if (r.error || r.status === null) return null;
+  if (r.status === 0) return true;
+  if (r.status === 1) return false;
+  return null; // 128 and friends: could not tell
 }
 
 function changedSince(dir, sha, fetch) {
@@ -138,16 +180,67 @@ function selftest() {
     { why: 'one substantive file among noise still counts',
       reviewed: { lab_commit: 'a'.repeat(40), date: '2026-09-29' },
       changed: ['package-lock.json', 'src/main.ts'], expect: 'STALE' },
+    { why: 'reviewed at a commit outside origin/main: the record is wrong, not the lab',
+      reviewed: { lab_commit: 'a'.repeat(40), date: '2026-09-29' },
+      changed: ['README.md'], ancestor: false, expect: 'UNPUBLISHED-REVIEW' },
+    { why: 'an unpublished review outranks STALE — fix the sha before re-reading the lab',
+      reviewed: { lab_commit: 'a'.repeat(40), date: '2026-09-29' },
+      changed: ['README.md', 'src/main.ts'], ancestor: false, expect: 'UNPUBLISHED-REVIEW' },
+    { why: 'ancestry could not be determined; must not be read as published',
+      reviewed: { lab_commit: 'a'.repeat(40), date: '2026-09-29' },
+      changed: [], ancestor: null, expect: 'UNREADABLE' },
   ];
   const fail = [];
   let pass = 0;
+
+  /* The classifier fixtures above drive the decision with a boolean. This one
+   * drives the PROBE, against a real repository built here and thrown away:
+   * a commit on `main`, then a commit on a side branch that main never sees.
+   * That is exactly the shape that produced the 2026-09-29 mispinning, and a
+   * boolean fixture cannot catch a probe that reads git wrongly. */
+  {
+    const os = require('os');
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'cf-ancestry-'));
+    const git = (...a) => require('child_process').execFileSync('git', ['-C', tmp, ...a],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    try {
+      git('init', '-q', '-b', 'main');
+      git('config', 'user.email', 'selftest@example.invalid');
+      git('config', 'user.name', 'selftest');
+      fs.writeFileSync(path.join(tmp, 'README.md'), 'base\n');
+      git('add', 'README.md'); git('commit', '-qm', 'base');
+      const onMain = git('rev-parse', 'HEAD');
+      // A local branch whose commit main will never contain.
+      git('checkout', '-q', '-b', 'side');
+      fs.writeFileSync(path.join(tmp, 'README.md'), 'side only\n');
+      git('add', 'README.md'); git('commit', '-qm', 'side only');
+      const onSideOnly = git('rev-parse', 'HEAD');
+      git('checkout', '-q', 'main');
+
+      const cases = [
+        ['a commit on main is an ancestor of main', onMain, 'main', true],
+        ['a commit only on a side branch is NOT an ancestor of main', onSideOnly, 'main', false],
+        ['an unknown sha is "could not tell", not "not an ancestor"', 'b'.repeat(40), 'main', null],
+      ];
+      for (const [why, sha, ref, want] of cases) {
+        const got = isAncestorOf(tmp, sha, ref);
+        if (got !== want) fail.push(`probe: expected ${want}, got ${got} — ${why}`);
+        else { pass++; console.log(`  ok  ${String(want).padEnd(14)} ${why}`); }
+      }
+    } catch (e) {
+      fail.push(`probe fixture could not be built: ${e.message}`);
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
+    }
+  }
+
   for (const f of fixtures) {
-    const got = classify(f.reviewed, f.changed).state;
+    const got = classify(f.reviewed, f.changed, 'ancestor' in f ? f.ancestor : true).state;
     if (got !== f.expect) fail.push(`expected ${f.expect}, got ${got} — ${f.why}`);
     else { pass++; console.log(`  ok  ${f.expect.padEnd(14)} ${f.why}`); }
   }
   // Every state the reporter can print must be reachable from a fixture.
-  for (const state of ['CURRENT', 'STALE', 'NEVER-REVIEWED', 'UNREADABLE']) {
+  for (const state of ['CURRENT', 'STALE', 'NEVER-REVIEWED', 'UNPUBLISHED-REVIEW', 'UNREADABLE']) {
     if (!fixtures.some((f) => f.expect === state)) fail.push(`no fixture covers ${state}`);
   }
   console.log(fail.length ? `\n${pass} passed, ${fail.length} FAILED` : `\n${pass} passed, 0 failed`);
@@ -172,8 +265,12 @@ function main() {
     const slug = e.id.replace(/^demo_(?:crypto_lab_)?/, '').replace(/_/g, '-');
     const dir = path.join(SIBLINGS, `crypto-lab-${slug}`);
     let changed = null;
-    if (e.reviewed && fs.existsSync(dir)) changed = changedSince(dir, e.reviewed.lab_commit, doFetch);
-    return { slug, reviewed: e.reviewed, ...classify(e.reviewed, changed) };
+    let ancestor = null;
+    if (e.reviewed && fs.existsSync(dir)) {
+      changed = changedSince(dir, e.reviewed.lab_commit, doFetch);
+      if (changed !== null) ancestor = isAncestorOf(dir, e.reviewed.lab_commit, 'origin/main');
+    }
+    return { slug, reviewed: e.reviewed, ...classify(e.reviewed, changed, ancestor) };
   });
 
   const by = (s) => rows.filter((r) => r.state === s);
@@ -181,7 +278,8 @@ function main() {
 
   console.log(`Corpus: ${corpusPath}`);
   console.log(`Demo entries: ${rows.length} | current ${by('CURRENT').length} | stale ${stale.length} | ` +
-    `never reviewed ${by('NEVER-REVIEWED').length} | unreadable ${by('UNREADABLE').length}`);
+    `never reviewed ${by('NEVER-REVIEWED').length} | unpublished ${by('UNPUBLISHED-REVIEW').length} | ` +
+    `unreadable ${by('UNREADABLE').length}`);
 
   if (stale.length) {
     console.log(`\nSTALE (${stale.length}) — the lab moved under the entry; re-read it and re-pin reviewed:`);
@@ -191,6 +289,16 @@ function main() {
     }
   }
   if (staleOnly) return 0;
+
+  const unpublished = by('UNPUBLISHED-REVIEW');
+  if (unpublished.length) {
+    console.log(`\nUNPUBLISHED-REVIEW (${unpublished.length}) — reviewed at a commit that is NOT in`);
+    console.log('origin/main\'s history, so the prose was written from a build no visitor can reach.');
+    console.log('Re-read the lab at origin/main and re-pin; do not just move the sha:');
+    for (const r of unpublished) {
+      console.log(`  ${r.slug}  reviewed at ${r.reviewed.lab_commit.slice(0, 8)} (${r.reviewed.date}) — not an ancestor of origin/main`);
+    }
+  }
 
   const unreadable = by('UNREADABLE');
   if (unreadable.length) {
@@ -202,7 +310,7 @@ function main() {
     console.log(`\nNEVER-REVIEWED (${never.length}) — prose never checked against the lab. Not a regression:`);
     console.log('  a backlog, recorded rather than back-dated. Re-read one, then pin reviewed in corpus.json.');
   }
-  if (!stale.length && !unreadable.length && !never.length) {
+  if (!stale.length && !unreadable.length && !never.length && !unpublished.length) {
     console.log('\nEvery corpus entry has been checked against its lab since that lab last changed.');
   }
   console.log(`\nCompared against origin/main in each clone${doFetch ? ' (fetched just now)' : ', WITHOUT fetching'}.`);

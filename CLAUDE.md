@@ -1141,6 +1141,40 @@ observations, run-specific verdicts, citation years, and reported changes. When 
 what changed to move it, because a number that has changed twice is the one a reader most needs
 explained.
 
+**A gate's SETUP helper must not assert product copy.** A shared `boot()` in `e2e/gate.ts`
+runs before every test that imports it, so an assertion there fails all of them at once —
+under whatever name those tests carry. On 2026-09-26 `crypto-lab-mceliece-gate` changed one
+textarea's default string, in the same commit that corrected the lab's security claims after
+the Weis structural-attack preprint. `gate.ts` still asserted the old sentence. Its `boot()`
+threw, both axe runs failed, the build job failed, the deploy job was skipped, and
+`deploy-sync` reported the lab stale. **The step that went red was called "Accessibility
+gate", and four of its six a11y tests had passed.** For three days the live site went on
+serving "the most battle-tested post-quantum proposal in existence" and three "strong choice"
+recommendations, while main held the correction, and the one red thing in sight named the
+wrong subject.
+
+That is the cost: not that the assertion was wrong, but that **a copy change was reported as
+an accessibility failure**, and the report was believed. A gate's setup should assert
+STRUCTURE — the controls exist, the first branch is the one that ships, nothing is
+`[hidden]` that should be visible. Assertions about what a string SAYS belong in
+`e2e/claims.spec.ts`, where §4.1b already puts them and where a failure names copy as the
+subject. A setup helper is the worst place in the repo to put a sentence, because it is the
+place where the failure is furthest from its cause.
+
+**77 of the 167 labs with an `e2e/gate.ts` currently assert product copy in it** (surveyed
+2026-09-29), from one string to fifteen. That is a standing hazard rather than a bug list:
+every one of those labs will, on some future copy edit, report a red gate under a name that
+has nothing to do with what changed. Move the assertion when you next touch the lab; do not
+sweep all 77, because each is a judgement about which assertions are structural and which are
+copy, and a sweep would make that judgement 77 times without reading any of them.
+
+The same shape reaches the report that reads those runs. `deploy-sync` used to end with one
+sentence for every stale lab — *"usually an auto-merge landed a bump and no deploy followed
+it"* — which was wrong for all five stale labs on 2026-09-29: each had a deploy that fired
+and FAILED. It now derives the cause per lab and names the failing job and step, because
+"fired and failed in a gate step" and "never fired" have opposite remedies and the guess sent
+you to the one that re-runs the same failure.
+
 ---
 
 ## Conventions

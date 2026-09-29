@@ -399,6 +399,7 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 | `node tools/dispatch-comment-sync.js check` | the paragraph explaining why the dispatch exists drifting into many wordings, or being deleted with the line it defends | manual |
 | `node tools/dispatch-proof.js` | the dispatch work’s claims being trusted without re-running the evidence behind them | manual |
 | `node tools/dispatch-sync.js check` | a merged bump whose deploy dispatch can fail, print nothing and exit 0, leaving the live site on the old build | weekly |
+| `node tools/evidence-shape-proof.js` | a variable name crediting a lab with an algorithm it does not implement | manual |
 | `node tools/fleet-check.js` | a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand | weekly |
 | `node tools/fleet-sync.js check` | a lab going live with no card, which every catalog checker then reads as consistent rather than missing | weekly |
 | `node tools/gate-sync.js check` | a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching | weekly |

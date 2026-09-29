@@ -2627,12 +2627,12 @@
 
           <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-export-grade/"
             data-implements="TEA1@src/tea1/core.ts:93"
-            data-references="AEGIS-256 | AES | AES-XTS | BB84 | Boneh-Franklin IBE | Bulletproofs | Diffie-Hellman | E91 | MD5 | OPAQUE | OPRF | Paillier | SHA-256 | Schnorr | Shamir secret sharing | Simon | X3DH"
-            data-attacks="Brute force@brief.md:15 | Known-plaintext attack@src/ui/app.ts:264 | Timing side-channel@CRYPTO-LAB-TEMPLATE.md:342"
+            data-references="AEGIS-256 | AES | AES-XTS | BB84 | Boneh-Franklin IBE | Bulletproofs | DES | Diffie-Hellman | E91 | Grover's algorithm | MD5 | OPAQUE | OPRF | PQXDH | Paillier | Privacy Pass | SHA-256 | Schnorr | Serpent | Shamir secret sharing | Simon | X3DH"
+            data-attacks="Brute force@src/data/attacks.ts:337 | Chosen-ciphertext attack@src/data/attacks.ts:106 | Key recovery@src/data/attacks.ts:53 | Known-plaintext attack@src/data/attacks.ts:162 | Nonce reuse@index.html:509 | Padding oracle@index.html:509 | Side-channel (unspecified)@index.html:509 | Timing side-channel@CRYPTO-LAB-TEMPLATE.md:342"
             data-standards="ETSI"
             data-implementation="hand-rolled"
-            data-review-commit="c48e8c95ec8e8beb971fc8d1d43a5f957ec69781"
-            data-review-note="Runs TETRA TEA1 and a bounded state-recovery demonstration"
+            data-review-commit="b61f133b5e1392eb8d9809de0d9478097a4f0a43"
+            data-review-note="Runs TETRA TEA1 and a bounded state-recovery demonstration. Exhibits 5 and 6 add no cryptography: src/attack/rate.ts is arithmetic over the search Exhibit 3 already runs, and src/data/attacks.ts is a sourced citation table. AES-128/192/256 are named throughout that table and implemented nowhere in this lab."
            
            
            
@@ -2691,13 +2691,15 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Export-Controlled Cipher</div>
             <div class="project-title">Export Grade</div>
-            <div class="project-copy">Run real TETRA TEA1, trace its 80-bit key into a 32-bit working register, then recover that register in a browser-sized brute-force window.</div>
+            <div class="project-copy">Run real TETRA TEA1, trace its 80-bit key into a 32-bit working register, recover that register in a browser-sized window, then extrapolate the rate your own browser measured out to 2^80 and 2^128 and set it beside the published attacks on full-round AES.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">TEA1</span>
                 <span class="chip">TETRA</span>
                 <span class="chip">Key Reduction</span>
                 <span class="chip">Brute Force</span>
+                <span class="chip">Cost Extrapolation</span>
+                <span class="chip">vs. AES</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -6862,7 +6864,7 @@
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-falcon-seal/"
             data-implements="Babai rounding@src/babai.ts:32 | Falcon@src/falcon.ts:176 | NTRU@src/trapdoor.ts:303 | NTT@src/ntt.ts:45 | Private set intersection@src/ntt.ts:24 | SHA-256@src/falcon.ts:130"
             data-references="Dilithium | Gaussian mechanism | Kyber | LWE | ML-DSA | SLH-DSA | SPHINCS+"
-            data-attacks="Brute force@src/ui.ts:182 | Key recovery@src/ui.ts:401 | Lattice reduction@src/trapdoor-panel.ts:82 | Side-channel (unspecified)@src/ui.ts:761 | Timing side-channel@src/ui.ts:493"
+            data-attacks="Brute force@src/ui.ts:182 | Key recovery@src/ui.ts:401 | Lattice reduction@src/trapdoor-panel.ts:82 | Side-channel (unspecified)@src/ui.ts:764 | Timing side-channel@src/ui.ts:493"
             data-standards="NIST"
             data-implementation="WebCrypto"
            
@@ -12232,7 +12234,7 @@
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:53 | SHA-256@src/crypto.ts:35"
             data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | Winternitz | X25519 | XMSS"
-            data-attacks="Birthday bound@src/data.ts:398 | Chosen-ciphertext attack@src/data.ts:176 | Chosen-plaintext attack@src/data.ts:843 | Differential cryptanalysis@src/data.ts:513 | Discrete log@src/data.ts:699 | Factoring@src/data.ts:699 | Fault injection@src/data.ts:85 | Key recovery@src/data.ts:129 | Lattice reduction@src/data.ts:139 | Side-channel (unspecified)@src/data.ts:212 | Timing side-channel@src/data.ts:280"
+            data-attacks="Birthday bound@src/data.ts:414 | Chosen-ciphertext attack@src/data.ts:192 | Chosen-plaintext attack@src/data.ts:859 | Differential cryptanalysis@src/data.ts:529 | Discrete log@src/data.ts:715 | Factoring@src/data.ts:715 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:155 | Side-channel (unspecified)@src/data.ts:228 | Timing side-channel@src/data.ts:296"
             data-standards="NIST"
             data-implementation="WebCrypto"
            

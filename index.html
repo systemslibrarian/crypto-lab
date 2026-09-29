@@ -2157,7 +2157,7 @@
           </a>
 
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-air-stream/"
-            data-implements="AES@src/aes/eea2.ts:18 | AES-CBC@src/aes/eea2.ts:19 | SNOW 3G@src/snow/snow3g.ts:120"
+            data-implements="AES@src/aes/eea2.ts:18 | AES-CBC@src/aes/eea2.ts:19 | SNOW 3G@src/snow/snow3g.ts:120 | ZUC@src/core/families.ts:113"
             data-references="AEGIS-256 | AES-CTR | AES-XTS | BB84 | Boneh-Franklin IBE | Bulletproofs | CMAC | ChaCha20 | Diffie-Hellman | E91 | MD5 | OPAQUE | OPRF | Paillier | SHA-256 | Schnorr | Shamir secret sharing | Simon | X3DH"
             data-attacks="Side-channel (unspecified)@README.md:26 | Timing side-channel@CRYPTO-LAB-TEMPLATE.md:342"
             data-standards="ETSI | NIST"
@@ -2444,8 +2444,8 @@
           </a>
 
           <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sm2-forge/"
-            data-implements="SM2@src/sm2/curve.ts:5"
-            data-references="AEGIS-256 | AES-XTS | BB84 | Boneh-Franklin IBE | Bulletproofs | Diffie-Hellman | E91 | ECDSA | MD5 | OPAQUE | OPRF | Paillier | Pairing | SHA-256 | SM3 | Schnorr | Shamir secret sharing | Simon | TLS 1.3 | X3DH"
+            data-implements="SM2@src/sm2/curve.ts:5 | SM3@src/sm2/sm2.ts:1"
+            data-references="AEGIS-256 | AES-XTS | BB84 | Boneh-Franklin IBE | Bulletproofs | Diffie-Hellman | E91 | ECDSA | MD5 | OPAQUE | OPRF | Paillier | Pairing | SHA-256 | Schnorr | Shamir secret sharing | Simon | TLS 1.3 | X3DH"
             data-attacks="Key recovery@README.md:5 | Nonce reuse@src/attack/nonce-reuse.ts:4 | Timing side-channel@CRYPTO-LAB-TEMPLATE.md:342"
             data-standards="ISO"
             data-implementation="@noble"
@@ -4690,7 +4690,7 @@
 
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-world-ciphers/"
             data-implements="AES@src/main.ts:115 | AES-CBC@src/main.ts:177 | ARIA@src/main.ts:194 | Camellia@src/ciphers/camellia.ts:58 | Kuznyechik@src/ciphers/registry.ts:70 | SEED@src/ciphers/registry.ts:44 | SM4@src/ciphers/registry.ts:27"
-            data-references="Ascon | ChaCha20 | Grover's algorithm | NTT | OPAQUE | Serpent | Streebog | TLS 1.3 | Toy SPN"
+            data-references="Ascon | ChaCha20 | Grover's algorithm | Kupyna | NTT | OPAQUE | Serpent | Streebog | TLS 1.3 | Toy SPN"
             data-attacks="Birthday bound@index.html:725 | Nonce reuse@README.md:47 | Power analysis@index.html:94"
             data-standards="IETF | ISO | NIST"
             data-implementation="@noble"
@@ -7224,10 +7224,10 @@
           </a>
 
           <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-world-hashes/"
-            data-implements="HMAC@src/length-extension.ts:507 | SHA-256@src/length-extension.ts:51 | SHA-3@src/main.ts:237 | SHA-512@src/main.ts:236 | SM2@src/hashes.ts:5 | SM3@src/length-extension.ts:118 | Streebog@src/main.ts:239"
-            data-references="AES | BLAKE3 | CMAC | Camellia | GHASH | Keccak | Kuznyechik | Merkle tree | OPAQUE | Poly1305"
+            data-implements="HMAC@src/length-extension.ts:507 | Kupyna@src/main.ts:241 | SHA-256@src/length-extension.ts:51 | SHA-3@src/main.ts:237 | SHA-512@src/main.ts:236 | SM3@src/length-extension.ts:118 | Streebog@src/main.ts:239"
+            data-references="AES | BLAKE3 | CMAC | Camellia | GHASH | Keccak | Kuznyechik | Merkle tree | OPAQUE | Poly1305 | SM2"
             data-attacks="Birthday bound@src/collision-search.ts:180 | Brute force@src/main.ts:512 | Length extension@src/length-extension.ts:303"
-            data-standards="IETF | ISO | NIST"
+            data-standards="DSTU | IETF | ISO | NIST"
             data-implementation="@noble"
            
            
@@ -12979,7 +12979,7 @@
 
           <a class="project-card" data-category="HASHING & KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-collision-vault/"
             data-implements="MD5@demos/collision-vault/src/hashing/md5.ts:10 | SHA-1@demos/collision-vault/src/hashing/trace.ts:111 | SHA-256@demos/collision-vault/src/hashing/webcrypto.ts:34 | SHA-3@demos/collision-vault/src/hashing/sha3.ts:9 | SHA-512@demos/collision-vault/src/hashing/webcrypto.ts:39"
-            data-references="BLAKE3 | CMAC | GHASH | HMAC | Keccak | Merkle tree | Poly1305 | Streebog"
+            data-references="BLAKE3 | CMAC | GHASH | HMAC | Keccak | Kupyna | Merkle tree | Poly1305 | Streebog"
             data-attacks="Birthday bound@README.md:62 | Brute force@demos/collision-vault/src/pairs/manifest.ts:64 | Collision attack@demos/collision-vault/src/hashing/index.ts:44 | Length extension@demos/collision-vault/src/main.ts:214"
             data-standards="IETF | NIST"
             data-implementation="@noble"
@@ -19665,7 +19665,7 @@
 
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sleeve-check/"
             data-implements="AES@src/gost/aes.ts:31 | Kuznyechik@src/gost/field.ts:25"
-            data-references="AEGIS-256 | AES-XTS | BB84 | Boneh-Franklin IBE | Bulletproofs | Camellia | Diffie-Hellman | E91 | MD5 | OPAQUE | OPRF | Paillier | SHA-256 | SHA-3 | Schnorr | Shamir secret sharing | Simon | Streebog | X3DH"
+            data-references="AEGIS-256 | AES-XTS | BB84 | Boneh-Franklin IBE | Bulletproofs | Camellia | Diffie-Hellman | E91 | Kupyna | MD5 | OPAQUE | OPRF | Paillier | SHA-256 | SHA-3 | Schnorr | Shamir secret sharing | Simon | Streebog | X3DH"
             data-attacks="Chosen-plaintext attack@brief.md:311 | Discrete log@src/ui/tablePane.ts:255 | Key recovery@brief.md:45 | Side-channel (unspecified)@README.md:76 | Timing side-channel@CRYPTO-LAB-TEMPLATE.md:342"
             data-standards="ISO | NIST"
             data-implementation="hand-rolled"

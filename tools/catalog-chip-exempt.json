@@ -1,0 +1,24 @@
+{
+  "_why": "Chips that no vocabulary term names, on a lab whose own package.json depends on something of that name. Each row is a DECLARED decision that the chip is not an algorithm this index can carry, with the reason. The denominator is declared here rather than discovered by the checker, because a chip that quietly stops being flagged is the same silence the checker exists to end. Removing a row makes catalog-sync.js vocab fail until a term exists or the row comes back.",
+  "_added": "2026-09-29",
+  "exempt": [
+    {
+      "slug": "crypto-lab-kpqc-pair",
+      "chip": "KpqC",
+      "dependency": "@killd21/kpqc",
+      "why": "KpqC is Korea's post-quantum standardisation PROGRAMME, not an algorithm. The algorithms it selected — SMAUG-T, HAETAE, AIMer, NTRU+ — are the indexable things, and the first two already have terms. A term named for the competition would credit a lab with implementing a committee."
+    },
+    {
+      "slug": "crypto-lab-threshold-mldsa",
+      "chip": "Post-Quantum",
+      "dependency": "@noble/post-quantum",
+      "why": "A category, and the package is a library of many algorithms rather than one. The chip says which shelf this lab is on; ML-DSA is what it implements, and that already has a term and an anchor."
+    },
+    {
+      "slug": "crypto-lab-chain-of-trust",
+      "chip": "X.509",
+      "dependency": "@peculiar/x509",
+      "why": "A certificate FORMAT, not an algorithm. The algorithms inside a certificate — RSA, ECDSA, SHA-256 — are indexed separately and are what the reverse index is asked about. Indexing the container would put every PKI lab under a term that answers no question about which primitive it builds."
+    }
+  ]
+}

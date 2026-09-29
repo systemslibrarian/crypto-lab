@@ -75,9 +75,9 @@ own source — never from the scanner's own output, which would measure nothing 
 report 100%. Two numbers, never averaged, because they fail for different reasons
 and are fixed by different work:
 
-- **recall 90.2%** (55 of 61) — of what a lab implements AND the vocabulary can
+- **recall 90.8%** (59 of 65) — of what a lab implements AND the vocabulary can
   name, how much the detection shapes find.
-- **coverage 93.8%** (61 of 65) — of everything a lab implements, how much the
+- **coverage 94.2%** (65 of 69) — of everything a lab implements, how much the
   vocabulary can name at all.
 
 The fixture is grown **as the work goes, not when the gate is in reach** — one
@@ -110,13 +110,37 @@ those look identical unless the reason is recorded, so it is recorded in
 when recall improves, never lowered again. Moving it a second time is the
 maintainer's call, not a tool's and not an agent's.**
 
-Today: **recall 90.2% ok, 20 labs ok, all five miss classes resolved — MET.**
+Today: **recall 90.8% ok, 21 labs ok, all five miss classes resolved — MET.**
 Met is permission, not obligation: turning the chip rule into a failing check
-would redden CI on the 22 chips it still flags, so dispositioning those comes
-first and the decision is the maintainer's. Five classes, in `catalog-recall.js` with what
-closes each:
+would redden CI on the 26 chips across 22 labs it still flags, so dispositioning
+those comes first and the decision is the maintainer's. Five classes, in
+`catalog-recall.js` with what closes each:
 
-- **vocabulary** — CLOSED for the sampled labs by `catalog-evidence.js gaps`.
+- **vocabulary** — CLOSED ON THE SAMPLE, and **the sample was never the fleet**.
+  This read "CLOSED for the sampled labs by `catalog-evidence.js gaps`" until
+  2026-09-29, which was true and was read as more than it said. `gaps` is a
+  REPORT someone has to open, and the claim rested on 20 labs. An audit of
+  Chinese-standard coverage then found **ZUC absent from the vocabulary
+  entirely**: `crypto-lab-air-stream` hand-rolls it in `src/zuc/zuc.ts`, depends
+  on `@li0ard/zuc` and chips `ZUC`, and because no term could NAME it the card
+  was **neither credited with it nor judged by the chip rule** — invisible in
+  both directions, on a lab the sample never reached. A missing term is not a
+  neutral absence; it is a card whose strongest claim nothing is checking.
+  What closes the class is a CHECK rather than a sample: `node
+  tools/catalog-sync.js vocab` (folded into `catalog-sync check`) fails on any
+  chip no term names whose lab **depends on a package of that name**, across all
+  208 cards. It also fails a term whose own NAME does not match its own pattern
+  — SM2, SM3, SM4 and ARIA were all in that state, so the chip rule silently
+  judged none of those cards — and any alternative that credits an algorithm on
+  a **package name alone**: `\bsm-?crypto\b` on SM2 did exactly that, and
+  `crypto-lab-world-hashes`, which imports only `sm3`, was published as
+  implementing SM2 with the import line as its anchor. On its first run the
+  check found a second real gap, **Kupyna**, by the same evidence. The
+  dependency-backed rule is the one that fails; "every chip must resolve" was
+  measured first and rejected (400 distinct chips match no term across 191
+  labs, almost all concepts like `Lattice` or standards like `FIPS 203`), and
+  the module-backed variant (73 findings) is a report, not a gate. The three
+  non-algorithm survivors are declared in `tools/catalog-chip-exempt.json`.
 - **protocol-identity** — PARTLY closed by the `protocol` shape, which fires when
   a lab declares **two** of a protocol's own message structures with no dominant
   non-verb prefix; four labs qualify. **The residue is EXEMPTED, not chased.** A
@@ -960,6 +984,47 @@ someone thought to list, which is why the worktree is the actual fix and this is
 
 Two habits that cost nothing beside it: stage explicit paths rather than a directory, and read
 `git status` before `git commit` rather than after `git push`.
+
+**A GENERATOR can sweep another lane's work with no `git add` at all.** The staging rule is
+about what you ADD; this is about what a tool READS. Every generator here derives a tracked
+file in this repo from the sibling clones — and it reads whatever is on disk in those clones,
+including a colleague's half-finished edit, then writes it into output you commit under your
+own name. On 2026-09-29 a `catalog-evidence write` in the vocabulary lane pulled three labs'
+in-progress derivations out of clones another lane was mid-edit in: `crypto-lab-export-grade`
+(a new `src/data/attacks.ts`, a rewritten reference set, and an `AES@src/ui/app.ts:696` claim),
+`crypto-lab-falcon-seal` and `crypto-lab-pq-families` (attack anchors shifted by edits above
+them). That AES anchor did not survive the same session — `catalog-evidence verify` called it
+stale, because the line had moved again underneath it. It was caught by diffing the generated
+output card by card, which is luck, not a control. **A worktree does not help here**: the
+worktree isolates *this* repo, and the swept bytes came from the *sibling* repos, which every
+lane shares no matter where its checkout lives.
+
+`tools/clone-source.js` is the fix, and every clone-reading tool goes through it. Each clone
+gets `git status --porcelain` before it is read: a clean one is read from its working tree,
+byte-identical to HEAD; a **dirty one is exported with `git archive HEAD`** and read from
+there, so the derivation describes committed state and nothing else; one that cannot be
+exported — an empty repository — is **refused by name** rather than read anyway. Untracked
+files count as dirty on purpose, because the scanners walk directories and read a file nobody
+has added exactly like a tracked one.
+
+HEAD-reading rather than refusing, because refusing every dirty lab would shrink the generated
+catalog whenever a colleague had a file open — a **discovered denominator**, the defect this
+file keeps re-finding. Cost: about 10 seconds across 213 clones, plus one export per dirty
+clone (three, the day it was written).
+
+**The one thing it cannot prevent, it reports.** Status is cached per clone so a run describes
+one snapshot, which leaves a real window: a generator takes about two and a half minutes and
+another lane can start editing inside it. So every clone read as clean is re-asked at the end
+of the run, and if any has since gone dirty the run prints **TORN SNAPSHOT** and exits
+non-zero — the bytes are a mix of two states and the output must not be committed. Same rule
+as `protection-census`: "could not look" is never "nothing there", and "the ground moved" is
+never "the ground was still".
+
+`node tools/clone-guard-proof.js` asserts all of it against throwaway repositories — that an
+uncommitted edit, an untracked file and a deleted file each leave generated output unchanged,
+that a **committed** change still moves it (the negative control, without which a guard that
+returned a constant would pass), that an empty repository is refused, and that the torn-
+snapshot detector fires only when a clone actually changes mid-run. 12 checks.
 
 **A report of a change is evidence of intent, not of state.** Re-derive every claimed change
 from the branch before it counts, exactly as `deploy-sync` re-derives what is served rather

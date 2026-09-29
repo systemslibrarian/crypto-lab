@@ -124,9 +124,9 @@ const MISS_CLASSES = [
   {
     id: 'vocabulary',
     resolved: true,
-    status: 'CLOSED for the sampled labs (coverage 68.2% -> 90.8%)',
+    status: 'CLOSED ON THE SAMPLE, and the SAMPLE WAS NEVER THE FLEET — now closed fleet-wide by a check instead of by sampling',
     what: 'The lab implements an algorithm no vocabulary term can name. ristretto255 was on seven labs and in no term; AEGIS-256, HPKE, J-PAKE, CPace, Dragonfly, GHASH, hash-to-curve, HMAC-DRBG and Babai rounding were in none. All are terms now, and coverage moved 68.2% -> 90.8% on this fixture.',
-    closes: '`node tools/catalog-evidence.js gaps`, which lists chips matching no term - the only way a declared vocabulary sees its own blind spots. Closing it LOWERED recall, from 91.1% to 89.8%, because a newly nameable algorithm is then held to recall like any other: a term that exists and still finds nothing is not progress, and the measurement now says so rather than rewarding the addition.',
+    closes: '`node tools/catalog-evidence.js gaps` lists chips matching no term, which is how the first round was found, and closing it LOWERED recall from 91.1% to 89.8% - a newly nameable algorithm is then held to recall like any other, so a term that exists and still finds nothing is not progress. But `gaps` is a REPORT somebody has to read, and this class was recorded CLOSED on the strength of 20 sampled labs. On 2026-09-29 an audit of Chinese-standard coverage found ZUC missing entirely: crypto-lab-air-stream hand-rolls it in src/zuc/zuc.ts, depends on @li0ard/zuc and chips "ZUC", and because no term could NAME it the card was neither credited with it nor judged by the chip rule - invisible in both directions, on a lab outside the sample. `node tools/catalog-sync.js vocab` is what actually closes the class: it FAILS on any chip no term names whose lab depends on a package of that name, over all 208 cards rather than over the sample, and on its first run it found a second one (Kupyna, crypto-lab-world-hashes). A sampled measurement can only ever say the class is closed WHERE IT LOOKED.',
   },
   {
     id: 'vendored',

@@ -1,6 +1,7 @@
 {
   "crypto-lab-ablation-wire": {
     "commit": "8ad03c068a133660b27755ff0910e0391f8e0dcc",
+    "reviewed": "2026-09-10",
     "add": [
       "AES-GCM@codetalker-core/src/aead.rs:5",
       "ChaCha20-Poly1305@codetalker-core/src/aead.rs:6",
@@ -19,6 +20,7 @@
   },
   "crypto-lab-biham-lens": {
     "commit": "27249921456d250cb3955f89b2c43bdbc1c5a577",
+    "reviewed": "2026-09-10",
     "add": [
       "Toy SPN@demos/biham-lens/src/crypto/spn.ts:95"
     ],
@@ -26,6 +28,7 @@
   },
   "crypto-lab-card-trick": {
     "commit": "126579c282efcf5ea58228252b2ee646c25ec8b4",
+    "reviewed": "2026-09-24",
     "add": [
       "Five-card trick@src/cards/protocol.ts:2"
     ],
@@ -33,6 +36,7 @@
   },
   "crypto-lab-context-ward": {
     "commit": "0fa3a0ee23fdb9dc6a8a294592dfed7434622c69",
+    "reviewed": "2026-09-24",
     "covered": [
       "Python"
     ],
@@ -40,11 +44,13 @@
   },
   "crypto-lab-covert-channel-studio": {
     "commit": "de4bfe0c9bb1f7733f795d9154a2cf3e023f8117",
+    "reviewed": "2026-09-10",
     "state": "N/A",
     "note": "Covert-channel encoders and detectors; no named cryptographic primitive implemented"
   },
   "crypto-lab-dp-noise": {
     "commit": "5f45e293c0ba55f928eee1854933e149d08564d4",
+    "reviewed": "2026-09-24",
     "add": [
       "Laplace mechanism@src/dp/laplace.ts:45",
       "Gaussian mechanism@src/dp/discrete.ts:40"
@@ -53,6 +59,7 @@
   },
   "crypto-lab-export-grade": {
     "commit": "77601242dfa34d9874e1d363295e0241232d1129",
+    "reviewed": "2026-09-22",
     "add": [
       "TEA1@src/tea1/core.ts:93"
     ],
@@ -60,6 +67,7 @@
   },
   "crypto-lab-frost-threshold": {
     "commit": "c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf",
+    "reviewed": "2026-09-24",
     "add": [
       "FROST@crate/src/round2.rs:54"
     ],
@@ -71,6 +79,7 @@
   },
   "crypto-lab-ghost-commit": {
     "commit": "88abb12c24089a2606306816f54a575e58c723b0",
+    "reviewed": "2026-09-24",
     "add": [
       "SHA-1@src/git/objects.ts:16",
       "SHA-256@src/git/objects.ts:16"
@@ -79,11 +88,13 @@
   },
   "crypto-lab-hqc-timing": {
     "commit": "a6c492ef3b021060e6b2d8413a10719acbeb0112",
+    "reviewed": "2026-09-24",
     "state": "N/A",
     "note": "Synthetic timing model; explicitly no HQC or BCH decoder"
   },
   "crypto-lab-hqc-timing-break": {
     "commit": "50c0b64a3597cfc9caf97eca16b69420e4f09f35",
+    "reviewed": "2026-09-24",
     "add": [
       "Repetition code@src/engine.ts:163"
     ],
@@ -91,6 +102,7 @@
   },
   "crypto-lab-iron-serpent": {
     "commit": "dabdded459f72d1bd8d58e7bf45f49b8cb9bdd2d",
+    "reviewed": "2026-09-10",
     "add": [
       "Argon2@demos/iron-serpent/src/kdf.ts:48"
     ],
@@ -98,6 +110,7 @@
   },
   "crypto-lab-matsui-line": {
     "commit": "54ae594278d010249b2f72eb664567b0e28c3494",
+    "reviewed": "2026-09-24",
     "add": [
       "Toy SPN@src/crypto/spn.ts:66"
     ],
@@ -105,6 +118,7 @@
   },
   "crypto-lab-model-breach": {
     "commit": "a1e3864c76e26f622608c25325ead69869119465",
+    "reviewed": "2026-09-24",
     "add": [
       "Toy HiAE@src/hiae.ts:50"
     ],
@@ -112,6 +126,7 @@
   },
   "crypto-lab-point-ledger": {
     "commit": "49dfff0b098791f09e26ecccb53f04b8ad22f1ef",
+    "reviewed": "2026-09-23",
     "remove": [
       "ECDSA",
       "SHA-3"
@@ -120,6 +135,7 @@
   },
   "crypto-lab-quantum-entropy": {
     "commit": "58b690d875abea61f59a9cd89b8d53ea2d487e33",
+    "reviewed": "2026-09-24",
     "add": [
       "Toeplitz extractor@src/entropy/toeplitz.ts:21",
       "von Neumann extractor@src/entropy/vonneumann.ts:15"
@@ -128,6 +144,7 @@
   },
   "crypto-lab-quantum-vault-kpqc": {
     "commit": "c0c067dba8dc942924fe754949ad4ceb26ec49a6",
+    "reviewed": "2026-09-10",
     "add": [
       "SMAUG-T@wasm/src/smaug_exports.c:2",
       "HAETAE@wasm/src/haetae_exports.c:2",
@@ -142,6 +159,7 @@
   },
   "crypto-lab-rsa-educational": {
     "commit": "37ca24b0425a5ef953ae036702b8e03fa9464bce",
+    "reviewed": "2026-09-24",
     "covered": [
       "Python"
     ],
@@ -149,6 +167,7 @@
   },
   "crypto-lab-shadow-vault": {
     "commit": "f094b96e6bd798867abbd3d2512476a3618cb010",
+    "reviewed": "2026-09-24",
     "add": [
       "ChaCha20-Poly1305@crate/src/lib.rs:13",
       "SHA-256@crate/src/lib.rs:17"
@@ -162,6 +181,7 @@
   },
   "crypto-lab-silent-tally": {
     "commit": "14e5c0d540be889d414498e74d8f61b951ef639e",
+    "reviewed": "2026-09-17",
     "add": [
       "Shamir secret sharing@src/lib.rs:111"
     ],
@@ -173,6 +193,7 @@
   },
   "crypto-lab-snark-arena": {
     "commit": "9a72143f2668bb590cde2e2296b4460e2e4928bb",
+    "reviewed": "2026-09-24",
     "remove": [
       "PLONK"
     ],
@@ -186,11 +207,13 @@
   },
   "crypto-lab-syndrome-drain": {
     "commit": "59a97cc56607595a260805061298f85627d685d2",
+    "reviewed": "2026-09-26",
     "state": "N/A",
     "note": "Models decode-one-of-many work factors; no code-based KEM or decoder implemented"
   },
   "crypto-lab-syndrome-hints": {
     "commit": "34b88b39ec647ac5fcc8d16c9b0194cbfd7c9a3c",
+    "reviewed": "2026-09-24",
     "add": [
       "Information-set decoding@src/sdp/isd.ts:4",
       "Stern decoding@src/sdp/stern.ts:2"
@@ -199,6 +222,7 @@
   },
   "crypto-lab-tc26-pair": {
     "commit": "1524136e52cb64e57adfcdfa3ccead7f320cf1b7",
+    "reviewed": "2026-09-22",
     "remove": [
       "Shamir secret sharing"
     ],
@@ -214,11 +238,13 @@
   },
   "crypto-lab-timing-sidechannel": {
     "commit": "0351f083727575530f3691a8cfb773e01f74f6e6",
+    "reviewed": "2026-09-24",
     "state": "N/A",
     "note": "Runs early-exit comparison timing attack; no named cryptographic primitive"
   },
   "crypto-lab-token-tell": {
     "commit": "41100d93f8174cfce0b0be71989aebdde4d6b4db",
+    "reviewed": "2026-09-23",
     "covered": [
       "Python"
     ],

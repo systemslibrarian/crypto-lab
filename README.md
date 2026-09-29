@@ -415,7 +415,7 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 | `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | weekly |
 | `node tools/tools-sync.js check` | this list drifting from the tools it describes | every PR and push |
 
-13 of these 28 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+14 of these 29 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
 Not listed above: `catalog-vocab.js`, `clone-source.js`, `depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 

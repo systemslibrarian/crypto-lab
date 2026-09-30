@@ -3715,9 +3715,9 @@ Sign and encrypt under GB/T 32918 SM2, read the identity digest that precedes ev
 Extract an identity key by inverting in the exponent rather than hashing to a curve, run SM9’s signature, key exchange and encryption against the standard’s own worked examples, and see why two implementations agreeing doesn’t prove either followed the spec.
 
 - **Implements:** EC point arithmetic `src/attack/nonce-reuse.ts:92`, Pairing `src/sm9/encrypt.ts:223`, SM9 `src/sm9/pairing.ts:57`
-- **Source review:** [c65722ad3e85](https://github.com/systemslibrarian/crypto-lab-sm9-forge/commit/c65722ad3e852963c29fcdaae52188663e1ce79b) — Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner.
+- **Source review:** [9f362ccfd71a](https://github.com/systemslibrarian/crypto-lab-sm9-forge/commit/9f362ccfd71a48ee41789c52b54bc9de4008d830) — Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner.
 - **References:** BLS signatures, BLS12-381, Boneh-Franklin IBE, DSA, ECDSA, HQC, Hash-to-curve, MD5, One-time pad, SHA-256
-- **Attacks shown:** Discrete log `src/main.ts:43`, Key recovery `brief.md:232`, Nonce reuse `src/ui/pane5-break.ts:44`
+- **Attacks shown:** Discrete log `src/main.ts:54`, Key recovery `brief.md:232`, Nonce reuse `src/ui/pane5-break.ts:44`
 - **Standards body:** ISO
 - **Implementation:** hand-rolled
 

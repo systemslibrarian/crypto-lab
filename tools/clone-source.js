@@ -45,6 +45,23 @@
  * clones, plus one `git archive` per DIRTY clone — three on the day this was
  * written. Untracked files are deliberately INCLUDED in the dirty test: the
  * scanner walks directories, so an untracked file is read like any other.
+ *
+ * TRACKED FILES ONLY, AND WHY THE DIRTY TEST WAS NOT ENOUGH.
+ *
+ * `git status --porcelain` does not report IGNORED files. So a clone holding a
+ * gitignored file reads as CLEAN, is read from its working tree, and the
+ * directory walk opens that file like any other. On 2026-09-30 that put 19
+ * `CRYPTO-LAB-TEMPLATE.md` references and anchors into index.html — a scaffolding
+ * document `.gitignore` excludes, present on 25 clones because a session copied
+ * it in, absent from every one of those repositories. It credited labs with
+ * BB84, E91, OPAQUE, PQXDH and more, and emitted anchors into a file no fresh
+ * clone has: they resolve here and fail anywhere else.
+ *
+ * `trackedFiles()` is therefore the only list a generator may read. It comes
+ * from `git ls-files`, so it is exactly what a fresh clone would receive, and it
+ * is used for CLEAN clones as well as dirty ones — the clean case is the one
+ * that was wrong. A HEAD export already contains only tracked paths, so the same
+ * list addresses both roots and one code path serves both.
  */
 'use strict';
 const fs = require('fs');
@@ -53,6 +70,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const cache = new Map();
+const trackedCache = new Map();
 let tmpRoot = null;
 
 function tmp() {
@@ -135,8 +153,38 @@ function tornSnapshot() {
   return torn;
 }
 
+/**
+ * The paths a fresh clone of this lab would have: `git ls-files`, relative,
+ * NUL-separated so a filename with a newline cannot split a record.
+ *
+ * Returns null when git cannot answer — the caller must treat that as "could
+ * not look", never as "this lab has no files".
+ */
+function trackedFiles(dir) {
+  if (trackedCache.has(dir)) return trackedCache.get(dir);
+  let out;
+  try {
+    const raw = execFileSync('git', ['-C', dir, 'ls-files', '-z'], {
+      encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024,
+    });
+    out = raw.split('\0').filter(Boolean);
+  } catch {
+    out = null;
+  }
+  trackedCache.set(dir, out);
+  return out;
+}
+
+/** Is this path one git tracks in that clone? Used to refuse an anchor into a
+ *  file the repository does not contain. */
+function isTracked(dir, rel) {
+  const list = trackedFiles(dir);
+  if (list === null) return null;
+  return list.includes(rel.split(path.sep).join('/'));
+}
+
 /** Drop the cached status for one clone. Only tests should need this. */
-function forget(dir) { cache.delete(dir); }
+function forget(dir) { cache.delete(dir); trackedCache.delete(dir); }
 
 /** What this process read from HEAD or refused, for the run to print. */
 function summary() {
@@ -149,4 +197,4 @@ function summary() {
   return { fromHead, refused };
 }
 
-module.exports = { sourceRoot, summary, tornSnapshot, forget };
+module.exports = { sourceRoot, summary, tornSnapshot, forget, trackedFiles, isTracked };

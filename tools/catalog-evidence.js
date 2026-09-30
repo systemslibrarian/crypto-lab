@@ -71,7 +71,7 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { ALGORITHMS, ATTACKS } = require('./catalog-vocab.js');
-const { sourceRoot, summary: cloneSummary, tornSnapshot } = require('./clone-source.js');
+const { sourceRoot, summary: cloneSummary, tornSnapshot, trackedFiles, isTracked, forget: forgetTracked } = require('./clone-source.js');
 const PROTOCOL_TERMS = ALGORITHMS.filter((t) => t.structures);
 
 const ROOT = path.join(__dirname, '..');
@@ -108,14 +108,54 @@ const NOT_THE_LAB = /(^|\/)(e2e|tests?|__tests__|scripts|contrast)(\/|$)|\.(spec
    crypto-lab-sm2-forge's sm-crypto.d.ts is a type stub for a dependency. */
 const NOT_THIS_LABS_CODE = /(^|\/)(vendor|vendored|third[-_]party|public\/lib)(\/|$)|\.min\.[tj]sx?$|\.d\.ts$/;
 
-function walk(dir, out = []) {
-  let entries;
-  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return out; }
-  for (const e of entries) {
-    const p = path.join(dir, e.name);
+/* The files a FRESH CLONE would have, never what happens to be on this disk.
+ *
+ * This used to walk directories, and `git status --porcelain` does not report
+ * IGNORED files, so a clone holding a gitignored file read as clean and the walk
+ * opened it. On 2026-09-30 that credited labs with BB84, E91, OPAQUE and PQXDH
+ * out of a gitignored CRYPTO-LAB-TEMPLATE.md, and emitted anchors into it that
+ * resolve on this machine and nowhere else.
+ *
+ * `clone` is the real repository (git answers about it); `readRoot` is where the
+ * bytes come from, which is the same directory for a clean clone and a HEAD
+ * export for a dirty one. A tracked path exists under both. */
+/* Has this lab moved in a way a SOURCE REVIEW would have to read again?
+ *
+ * Same scope as tools/corpus-freshness.js, deliberately: commits touching
+ * README.md or src/. A pin records a person's reading of the lab's source, and
+ * a commit that changes neither its source nor its README has not invalidated
+ * that reading.
+ *
+ * Measured, not assumed. On 2026-09-30 a fleet-wide `chat.md` / `.gitignore`
+ * batch moved every clone's HEAD by one commit and turned 23 pins stale at once.
+ * Twenty-two of those 23 had changed ZERO README or src files - the median diff
+ * was +1/-0 - and the only lab with real movement was crypto-lab-sm9-forge, at
+ * 14 files and +3148/-698. A rule that calls all 23 stale buries the one that
+ * matters, and it does worse than that here: writeCards leaves a stale lab's
+ * card byte-identical, so an unrelated one-line commit FREEZES a card holding
+ * claims that need correcting.
+ *
+ * `null` from git is treated as moved: could not look is never "nothing changed". */
+function movedSubstantively(dir, from, to) {
+  try {
+    const out = execFileSync('git', ['-C', dir, 'diff', '--name-only', `${from}..${to}`], {
+      encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 32 * 1024 * 1024,
+    });
+    return out.split('\n').filter(Boolean).some((f) => f === 'README.md' || f.startsWith('src/'));
+  } catch {
+    return true;
+  }
+}
+
+function labFilePaths(clone, readRoot) {
+  const tracked = trackedFiles(clone);
+  if (tracked === null) return null;          // could not look — never "no files"
+  const out = [];
+  for (const rel of tracked) {
+    const p = path.join(readRoot, rel);
     if (SKIP.test(p)) continue;
-    if (e.isDirectory()) walk(p, out);
-    else out.push(p);
+    if (!fs.existsSync(p)) continue;          // tracked but absent from a HEAD export
+    out.push(p);
   }
   return out;
 }
@@ -420,8 +460,9 @@ function shapeOf(line, code, term) {
 /* A line that declares something executable, used with a path match. */
 const DECLARES = /(?:^|[\s;{(,])(?:export\s+)?(?:async\s+)?function\s+[A-Za-z_$]|(?:^|[\s;{(,])class\s+[A-Za-z_$]/;
 
-function labFiles(dir) {
-  const files = walk(dir);
+function labFiles(dir, clone = dir) {
+  const files = labFilePaths(clone, dir);
+  if (files === null) return { code: [], prose: [], unread: new Map(), unreadable: true };
   const code = [];
   const prose = [];
   const unread = new Map();
@@ -465,7 +506,14 @@ function evidenceFor(slug) {
     };
   }
   const read = src.root;
-  const { code, prose, unread } = labFiles(read);
+  const { code, prose, unread, unreadable: cannotList } = labFiles(read, dir);
+  if (cannotList) {
+    return {
+      slug, cloned: true, implements: [], references: [], attacks: [], standards: [],
+      implementation: 'UNKNOWN', unscanned: ['git could not list tracked files'], notScanned: true,
+      commentOnly: [], protocolPartial: [], staleReview: null,
+    };
+  }
   const hits = new Map();   // term name -> {shape, at}
   const mentions = new Map();
   const attackHits = new Map();
@@ -607,7 +655,7 @@ function evidenceFor(slug) {
   let staleReview = null;
   if (review) {
     const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-    if (head !== review.commit) {
+    if (head !== review.commit && movedSubstantively(dir, review.commit, head)) {
       /* A stale pin is RECORDED here and acted on by each caller; nothing throws.
          What must not happen is a person's recorded add and remove lists being
          applied to source that has since changed - that is their judgement being
@@ -856,7 +904,9 @@ function verifyAnchors(all) {
              came from source the lab has moved past, so it is a finding about
              this checkout and it says which command clears it. */
           behind.push({ slug: c.slug, clone: head, actual: remote });
-        } else if (remote !== review.commit) {
+        } else if (remote !== review.commit && movedSubstantively(dir, review.commit, remote)) {
+          /* Same substantive scope as the derivation above and as
+             corpus-freshness: only README.md or src/ invalidates a source review. */
           bad.push({
             slug: c.slug,
             item: 'source review',
@@ -876,8 +926,15 @@ function verifyAnchors(all) {
       }
       continue;
     }
-    const stored = attr(c.block, 'implements');
-    if (!stored || stored === 'UNKNOWN' || stored === 'NOT-SCANNED' || stored === 'N/A') continue;
+    /* Both anchored fields, not just one. `data-attacks` carries `Name@file:line`
+       exactly as `data-implements` does, and nothing checked it: the 19
+       CRYPTO-LAB-TEMPLATE.md anchors that prompted this work were all in
+       data-attacks, invisible to a verifier that only ever read implements. */
+    const stored = ['implements', 'attacks']
+      .map((f) => attr(c.block, f))
+      .filter((v) => v && !['UNKNOWN', 'NOT-SCANNED', 'N/A'].includes(v))
+      .join(' | ');
+    if (!stored) continue;
     for (const item of stored.split(' | ')) {
       const at = item.indexOf('@');
       if (at < 0) { bad.push({ slug: c.slug, item, why: 'no anchor' }); continue; }
@@ -886,6 +943,12 @@ function verifyAnchors(all) {
       const vsrc = sourceRoot(path.join(REPOS, c.slug));
       const full = path.join(vsrc.root || path.join(REPOS, c.slug), file);
       checked += 1;
+      /* An anchor into a file the repository does not track is not an anchor.
+         It resolves on a machine where someone left that file lying about and
+         fails on a fresh clone, which is the opposite of what an anchor is for.
+         Checked before existence, because the gitignored case EXISTS on disk. */
+      const tracked = isTracked(path.join(REPOS, c.slug), file);
+      if (tracked === false) { bad.push({ slug: c.slug, item, why: 'anchored into a file git does not track' }); continue; }
       if (!fs.existsSync(full)) { bad.push({ slug: c.slug, item, why: 'file is gone' }); continue; }
       const lines = fs.readFileSync(full, 'utf8').split('\n');
       const line = lines[Number(lineNo) - 1];
@@ -988,8 +1051,101 @@ function verifyAnchors(all) {
   console.log('Every anchor still resolves and every pinned source review matches its lab clone.');
 }
 
+/* Proof that a gitignored file cannot reach the derivation.
+ *
+ * Builds a throwaway repository twice: once clean, once with an IGNORED file
+ * full of algorithm names. The derived file list must be identical. A boolean
+ * assertion about `trackedFiles` would not catch the original defect, because
+ * the defect was that a caller walked directories instead of asking git at all.
+ *
+ * The ignored file is named the way the real one was, and carries names no
+ * other file in the fixture mentions, so if it leaks the difference is obvious.
+ */
+function selftest() {
+  const os = require('os');
+  const { execFileSync } = require('child_process');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ce-tracked-'));
+  const git = (...a) => execFileSync('git', ['-C', tmp, ...a], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  const fail = [];
+  let pass = 0;
+  try {
+    git('init', '-q', '-b', 'main');
+    git('config', 'user.email', 'selftest@example.invalid');
+    git('config', 'user.name', 'selftest');
+    fs.mkdirSync(path.join(tmp, 'src'), { recursive: true });
+    fs.writeFileSync(path.join(tmp, 'src', 'main.ts'), 'export function sha256() { return 1 }\n');
+    fs.writeFileSync(path.join(tmp, '.gitignore'), 'CRYPTO-LAB-TEMPLATE*.md\nchat.md\n');
+    git('add', '.'); git('commit', '-qm', 'base');
+
+    const before = labFilePaths(tmp, tmp).map((f) => path.relative(tmp, f)).sort();
+
+    // The file that caused this: ignored, on disk, stuffed with algorithm names.
+    fs.writeFileSync(path.join(tmp, 'CRYPTO-LAB-TEMPLATE.md'),
+      '# template\nBB84 and E91 and OPAQUE and PQXDH and Bulletproofs and AES-XTS\n');
+    fs.writeFileSync(path.join(tmp, 'chat.md'), 'we discussed ML-KEM and Kyber at length\n');
+
+    const after = labFilePaths(tmp, tmp).map((f) => path.relative(tmp, f)).sort();
+
+    if (JSON.stringify(before) !== JSON.stringify(after)) {
+      fail.push(`an ignored file changed the derived file list:\n    before ${JSON.stringify(before)}\n    after  ${JSON.stringify(after)}`);
+    } else { pass++; console.log('  ok  an ignored file on disk does not change the file list'); }
+
+    if (after.some((f) => /CRYPTO-LAB-TEMPLATE|chat\.md/.test(f))) {
+      fail.push('an ignored file appears in the derived file list');
+    } else { pass++; console.log('  ok  neither ignored file appears in the list'); }
+
+    // git status calls this clean, which is exactly why the dirty test missed it.
+    const status = git('status', '--porcelain').trim();
+    if (status !== '') fail.push(`fixture should read clean, got: ${status}`);
+    else { pass++; console.log('  ok  git status reports the clone CLEAN with both ignored files present'); }
+
+    // An UNTRACKED-but-not-ignored file must also stay out.
+    fs.writeFileSync(path.join(tmp, 'scratch.ts'), 'export const falcon = 1\n');
+    forgetTracked(tmp);
+    const withUntracked = labFilePaths(tmp, tmp).map((f) => path.relative(tmp, f)).sort();
+    if (withUntracked.includes('scratch.ts')) fail.push('an untracked file reached the derived file list');
+    else { pass++; console.log('  ok  an untracked file does not reach the list either'); }
+
+    // And a TRACKED file must still be read, or the rule proves nothing.
+    if (!after.includes(path.join('src', 'main.ts'))) fail.push('a tracked file went missing from the list');
+    else { pass++; console.log('  ok  a tracked file is still read'); }
+
+    /* The substantive-change rule, BOTH ways. A rule that only ever answered
+       "not stale" would pass a one-sided fixture and bury every real one. */
+    const base = git('rev-parse', 'HEAD').trim();
+    fs.writeFileSync(path.join(tmp, '.gitignore'), 'CRYPTO-LAB-TEMPLATE*.md\nchat.md\nnotes.txt\n');
+    git('add', '.gitignore'); git('commit', '-qm', 'ignore notes');
+    const afterIgnoreOnly = git('rev-parse', 'HEAD').trim();
+    if (movedSubstantively(tmp, base, afterIgnoreOnly)) fail.push('a .gitignore-only commit was called substantive');
+    else { pass++; console.log('  ok  a .gitignore-only commit does NOT invalidate a pin'); }
+
+    fs.writeFileSync(path.join(tmp, 'src', 'main.ts'), 'export function sha512() { return 2 }\n');
+    git('add', 'src/main.ts'); git('commit', '-qm', 'change src');
+    const afterSrc = git('rev-parse', 'HEAD').trim();
+    if (!movedSubstantively(tmp, afterIgnoreOnly, afterSrc)) fail.push('a src/ change was not called substantive');
+    else { pass++; console.log('  ok  a src/ change DOES invalidate a pin'); }
+
+    fs.writeFileSync(path.join(tmp, 'README.md'), '# lab\n');
+    git('add', 'README.md'); git('commit', '-qm', 'add readme');
+    if (!movedSubstantively(tmp, afterSrc, git('rev-parse', 'HEAD').trim())) fail.push('a README.md change was not called substantive');
+    else { pass++; console.log('  ok  a README.md change DOES invalidate a pin'); }
+
+    if (movedSubstantively(tmp, 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeef', 'HEAD') !== true) {
+      fail.push('an unreadable range was not treated as moved');
+    } else { pass++; console.log('  ok  a range git cannot read counts as moved, never as unchanged'); }
+  } catch (e) {
+    fail.push(`fixture could not be built: ${e.message}`);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+  console.log(fail.length ? `\n${pass} passed, ${fail.length} FAILED` : `\n${pass} passed, 0 failed`);
+  for (const m of fail) console.log(`  FAIL  ${m}`);
+  return fail.length ? 1 : 0;
+}
+
 function main() {
   const argv = process.argv.slice(2);
+  if (argv[0] === 'selftest') process.exit(selftest());
   const mode = argv.find((a) => !a.startsWith('-')) || 'report';
   const one = argv.includes('--lab') ? argv[argv.indexOf('--lab') + 1] : null;
   const selected = cards().filter((c) => !one || c.slug === one);

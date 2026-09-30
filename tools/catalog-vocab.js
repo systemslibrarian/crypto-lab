@@ -160,6 +160,44 @@ const ALGORITHMS = [
   { name: 'HAETAE', kind: 'algorithm', family: 'PQ signature', re: /haetae/i, std: null },
   { name: 'Shipovnik', kind: 'algorithm', family: 'PQ signature', re: /shipovnik/i, std: null },
   { name: 'Hypericum', kind: 'algorithm', family: 'PQ signature', re: /hypericum/i, std: null },
+  /* The two KpqC schemes crypto-lab-kpqc-pair hand-rolls. `NTRU+` needs its own
+     term beside NTRU: it is a distinct KEM from the same line, and `\bntru\b`
+     matches the plus form, so a chip reading "NTRU+" names both and the
+     composite-chip rule clears it on either. The path form is how the lab
+     spells it - src/ntruplus/ring.ts. */
+  { name: 'AIMer', kind: 'algorithm', family: 'PQ signature', re: /\baimer\b/i, pathRe: /(?:^|\/)aimer(?:[-_./]|$)/i, std: null },
+  { name: 'NTRU+', kind: 'algorithm', family: 'PQ KEM', re: /ntru\s*\+|\bntruplus\b/i, chipRe: /ntru\s*\+|\bntruplus\b/i, pathRe: /(?:^|\/)ntru[-_]?plus(?:[-_./]|$)/i, std: null },
+  /* UOV, which crypto-lab-multivariate implements in src/uov.ts and whose only
+     credit before this was `Shamir secret sharing`, read off the identifier
+     `kipnisShamirAttack` - an attack ON it by Kipnis and Shamir. Removing that
+     false credit in #74 left the card UNKNOWN, which was honest and useless;
+     this is the term that makes what the lab does nameable. MAYO's whipped
+     variant keeps its own term. */
+  { name: 'UOV', kind: 'algorithm', family: 'PQ signature', re: /\buov\b|unbalanced[-_ ]?oil[-_ ]?and[-_ ]?vinegar/i, pathRe: /(?:^|\/)uov(?:[-_./]|$)/i, std: null },
+  /* Chow's white-box AES, which crypto-lab-glass-box builds and then breaks
+     twice. `chow` is in the pattern deliberately: the lab's executable code
+     names AES, GF and its own table builders, and says "Chow's construction"
+     only in comments beside them - so this term is comment-only there, which is
+     the state that exempts the chip rule rather than accusing the card. The
+     attacks on it are separate terms below, where a card can carry them
+     honestly. */
+  { name: 'White-box AES', kind: 'algorithm', family: 'obfuscation', re: /white[-_ ]?box[-_ ]?aes|\bchow\b[^\n]{0,40}(?:construction|table|encoding|network)|white[-_ ]?box[^\n]{0,30}(?:table|encoding|network)/i, chipRe: /white[-_ ]?box/i, std: null },
+  /* Fuzzy extractors and the BCH code crypto-lab-drift-key corrects with. The
+     secure sketch is the construction; the code is the primitive under it, and
+     the lab keeps them in separate files (src/crypto/sketch.ts, bch.ts) because
+     the point of the exhibit is how much entropy the helper data costs. */
+  /* `structures` rather than a path, on purpose. crypto-lab-drift-key keeps the
+     construction in src/crypto/sketch.ts and names it "code-offset secure
+     sketch" only in that file's header COMMENT - its executable code declares
+     `PublicHelper` and `EnrollmentSecret`, which are the sketch's own data. A
+     pathRe on `sketch` was written first and rejected: `sketch` is an ordinary
+     English word, it is the only such file in the fleet TODAY, and a term keyed
+     on it would credit a fuzzy extractor to the next lab that sketches
+     anything. Two named structures is the same evidence the protocol shape
+     already uses for TLS and OPAQUE, and it cannot fire on a coincidence of
+     vocabulary. */
+  { name: 'Fuzzy extractor', kind: 'algorithm', family: 'KDF', re: /fuzzy[-_ ]?extractor|secure[-_ ]?sketch|code[-_ ]?offset[^\n]{0,24}sketch/i, chipRe: /fuzzy[-_ ]?extractor|secure[-_ ]?sketch/i, structures: ['PublicHelper', 'EnrollmentSecret', 'ReproduceAttempt'], std: null },
+  { name: 'BCH code', kind: 'algorithm', family: 'error-correcting code', re: /\bbch\b/i, chipRe: /\bbch\b/i, pathRe: /(?:^|\/)bch(?:[-_.]|$)/i, std: null },
   { name: 'Feldman VSS', kind: 'algorithm', family: 'secret sharing', re: /feldman/i, std: null },
   { name: 'Pedersen commitment', kind: 'algorithm', family: 'commitment', re: /pedersen/i, std: null },
   { name: 'Merkle tree', kind: 'algorithm', family: 'authenticated data structure', re: /merkle(?![-_ ]?damg)/i, std: null },
@@ -211,7 +249,16 @@ const ALGORITHMS = [
   { name: 'OPAQUE', kind: 'algorithm', family: 'PAKE', re: /\bopaque\b/i, structures: ['RegistrationRequest', 'RegistrationResponse', 'CredentialResponse'], std: 'IETF:draft-irtf-cfrg-opaque' },
   { name: 'SRP', kind: 'algorithm', family: 'PAKE', re: /\bsrp\b/i, std: 'IETF:RFC 2945' },
   { name: 'SPAKE2', kind: 'algorithm', family: 'PAKE', re: /spake2/i, std: 'IETF:RFC 9382' },
-  { name: 'OPRF', kind: 'algorithm', family: 'oblivious PRF', re: /\boprf\b|voprf/i, std: 'IETF:RFC 9497' },
+  /* `structures` so the anchor lands on the protocol rather than on an attack.
+     OPRF already derived for crypto-lab-psi-gate, which is the right term - an
+     oblivious PRF is not a key exchange, so Diffie-Hellman would have been
+     wrong - but the anchor was `simulateMaliciousOprfBob` in src/attacks.ts,
+     the one file that runs a deliberately BROKEN OPRF, because src/attacks.ts
+     sorts before src/oprf-psi.ts and the real implementation names the protocol
+     only in a comment and in TypeScript interfaces. Those interfaces are the
+     evidence: OPRFKeyMaterial, OPRFAliceRound, OPRFBobRound. No other lab in
+     the fleet declares any of them. */
+  { name: 'OPRF', kind: 'algorithm', family: 'oblivious PRF', re: /\boprf\b|voprf/i, structures: ['OPRFKeyMaterial', 'OPRFAliceRound', 'OPRFBobRound'], std: 'IETF:RFC 9497' },
   { name: 'Privacy Pass', kind: 'algorithm', family: 'protocol', re: /privacy[-_ ]?pass/i, std: 'IETF:RFC 9576' },
   { name: 'TOTP', kind: 'algorithm', family: 'one-time password', re: /\btotp\b/i, std: 'IETF:RFC 6238' },
   { name: 'HOTP', kind: 'algorithm', family: 'one-time password', re: /\bhotp\b/i, std: 'IETF:RFC 4226' },
@@ -404,6 +451,17 @@ const ATTACKS = [
   { name: 'Ciphertext malleability', family: 'malleability', specific: true, re: /malleab\w*(?=[^\n]{0,140}(?:ciphertext|plaintext|\baead\b|homomorph|\bfhe\b|encrypt|decrypt|flip[^\n]{0,20}bits?|bits?[^\n]{0,20}flip|authenticat))|(?:ciphertext|plaintext|\baead\b|homomorph|\bfhe\b|encrypt|decrypt|flip[^\n]{0,20}bits?|bits?[^\n]{0,20}flip|authenticat)[^\n]{0,140}malleab/i },
   { name: 'Malleability (unspecified)', family: 'malleability', specific: false, re: /malleab/i },
   { name: 'Hash-flooding', re: /hash[-_ ]?flood/i },
+  /* The two attacks crypto-lab-glass-box runs on its own white-box AES, and the
+     two crypto-lab-return-path runs on a toy SPN. All four are named by the code
+     that performs them - src/attack/dca.ts, src/attack/bge.ts, runBoomerang,
+     ImpossibleRequest - which is why they belong here rather than in the
+     algorithm list: the card has data-attacks for exactly this. `Differential
+     cryptanalysis` stays separate; an impossible differential is the absence of
+     one, and a boomerang chains two. */
+  { name: 'Differential computation analysis', re: /\bdca\b|differential[-_ ]?computation[-_ ]?analysis/i },
+  { name: 'BGE attack', re: /\bbge\b/i },
+  { name: 'Boomerang attack', re: /\bboomerang\b/i },
+  { name: 'Impossible differential', re: /impossible[-_ ]?differential/i },
   { name: 'Side-channel (unspecified)', re: /side[-_ ]?channel/i },
 ];
 

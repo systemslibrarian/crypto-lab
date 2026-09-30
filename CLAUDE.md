@@ -1102,6 +1102,47 @@ measurement's clothes, and it is the same defect as reading one protection endpo
 a ruleset-protected branch unprotected. Search the whole tree for the value before reporting it
 absent; the search costs nothing and the retraction does not.
 
+**A lab change is not SHIPPED until `deploy-sync` says the lab is current and the served
+bytes carry the change.** A green local run is not evidence, a push is not evidence, and a
+green check on the commit is not evidence either — the check that matters may not have run.
+`deploy` is gated on the browser gate in every lab, so a gate failure means the site keeps
+serving the previous build with `main` quietly ahead of it, which is the exact state
+`deploy-sync` exists to find and the one this file has described since 2026-08-20 without
+anyone applying it to their own work.
+
+On 2026-09-30 this lane reported `crypto-lab-adaptor-gate` complete — accent, favicon and a
+sourced correction — on the strength of 127 unit and 116 browser tests passing locally. The
+browser gate had failed on CI on that same commit and on every run after it, so none of it was
+live, and the report stood for three hours. Two commands would have caught it:
+
+```
+node tools/deploy-sync.js check
+curl -s <the lab's Pages URL>/assets/<its css> | grep -- '--accent'
+```
+
+Ask the served bytes for the thing you changed, not the workflow for its opinion. And note the
+third state: a run can fail for reasons that are not the lab's — that one's deploy job later
+reported *"The job was not started because it repeatedly failed to be acquired (5 attempts)"*,
+a runner-allocation failure. Re-run it; do not fix anything.
+
+**Labs with PER-PLATFORM visual baselines need the `-linux` set updated too.** A lab whose
+snapshots are named `*-visual-darwin.png` and `*-visual-linux.png` keeps one baseline per
+rendering environment, and `playwright test --update-snapshots` writes only the platform it is
+run on. Updating on macOS leaves the `-linux` set holding the old render, and CI renders in
+`mcr.microsoft.com/playwright:<pinned>` — so the gate fails on exactly the snapshots that were
+"already updated".
+
+Regenerating them locally is not a route worth trying: on Apple silicon that container runs
+under QEMU, and emulated amd64 crashed `chrome-headless-shell` on all 13 tests with a core
+dump each. **Take the render CI itself produced** — the failing run uploads `test-results/`,
+which holds an `-actual.png` per failure — and then check it rather than trusting it. The two
+checks that make that honest, both used on 2026-09-30:
+
+- open each image and read it against the baseline it replaces, confirming the only difference
+  is the one you intended;
+- confirm the first attempt and the automatic retry produced BYTE-IDENTICAL images, which is
+  what separates a deterministic render from a flaky one.
+
 ### Answering from a copy, and reporting the gap as a fact about the lab
 
 Four times now a checker here has answered from something near the question rather than the

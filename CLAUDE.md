@@ -751,9 +751,18 @@ For each new demo:
    first paragraph is parsed as citations — later paragraphs are commentary.
 2. Re-check the concept's status: a `GAP` or `PARTIAL` may now be `COVERED`. If the demo
    closes a gap listed in the **Gap summary** table, remove that row.
-3. Bump the version note at the top of the file, saying what changed, and update the
+3. **Append** a version note at the top of the file, saying what changed, and update the
    "**Catalogued total: N.**" line near the end: `concept-sync check` fails when it
    disagrees with the number of cards.
+
+   The version notes are **append-only paragraphs**. Add a new `*Version N — …*` paragraph
+   after the last one; never edit an existing note to mention your change. Each note is the
+   record of one decision and the reasoning that stood behind it at the time, and a note
+   rewritten to cover a later change stops being that. This is a rule because it has been
+   broken here: a "bump the version note" reading took it as an instruction to overwrite,
+   and one edit replaced Version 6's multi-paragraph account of closing the last five gaps
+   with a sentence about a different demo. Nothing in the file or its checker noticed —
+   `concept-sync` verifies citations against cards and is blind to the prose around them.
 4. Confirm parity:
 
    ```
@@ -761,6 +770,22 @@ For each new demo:
    ```
 
    A clean run prints `Cited but no card (0)` and `Carded but unmapped (0)`.
+
+### 8. Regenerate the teaching layer
+
+`teach/index.html` carries a generated APA citation for **every catalogued demo**, so a new
+card puts that page out of date and `node tools/teach-build.js check` — which runs in CI —
+fails on the missing entry. It is not obvious from the card edit: nothing under `teach/`
+mentions the new lab, and the demo has no worksheet of its own.
+
+```
+node tools/teach-build.js
+```
+
+The new citation carries **no year field**, and specifically not `(n.d.)` — a demo with no
+`source_commit_date` in the record has no date on *this* side, which is a different claim
+from asserting none exists. See "The teaching layer" below for why that distinction is
+load-bearing.
 
 If a demo is built but its card is not landing yet, cite it as
 `*Name (built, uncatalogued)*` — `concept-sync` treats that as known backlog rather than a

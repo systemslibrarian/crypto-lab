@@ -1804,7 +1804,7 @@
       <div class="wrap">
         <div class="featured-head">
           <div class="featured-headline-row">
-            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">210</span> interactive cryptography exhibits</span></h1>
+            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">211</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -20221,6 +20221,7 @@
       'Corrupted Oracle': 'cryptanalysis', 'Export Grade': 'cryptanalysis',
       'Misty Lens': 'cryptanalysis', 'Air Stream': 'symmetric',
       'KpqC Pair': 'post-quantum', 'TC26 Pair': 'post-quantum', 'SM2 Forge': 'public-key', 'SM9 Forge': 'public-key',
+      'Adaptor Gate': 'public-key',
       'Model Breach': 'cryptanalysis',
       'Biham Lens': 'cryptanalysis', 'Padding Oracle': 'cryptanalysis',
       'Timing Oracle': 'cryptanalysis', 'Nonce Guard': 'cryptanalysis',
@@ -20868,7 +20869,8 @@
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-review-commit="86142c92e563a1c446fca3e5e85f23cc2c7c0f64"
-            data-review-note="Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design." target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            data-review-note="Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design."
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Post-Quantum Selection</div>
             <div class="project-title">PQ Chooser</div>
             <div class="project-copy">Set what constrains you and get a shortlist of two or three post-quantum schemes to investigate, built from sizes it derives by running the real algorithms in your browser rather than quoting a table.</div>
@@ -20878,6 +20880,28 @@
                 <span class="chip">FIPS 203/204/205</span>
                 <span class="chip">Live Benchmark</span>
                 <span class="chip">TLS Wire Cost</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-adaptor-gate/"
+            data-implements="Schnorr@src/crypto/attacks.ts:8 | secp256k1@src/crypto/attacks.ts:8 | SHA-256@src/crypto/vectors.ts:23"
+            data-references="EC point arithmetic | ECDSA | FROST"
+            data-attacks="Discrete log@src/ui/honesty.ts:109 | Key recovery@src/ui/honesty.ts:50 | Nonce reuse@src/crypto/attacks.ts:65"
+            data-standards="NIST | SECG"
+            data-implementation="@noble"
+            data-review-commit="f838c41a6708ee52e70e395f394c53b513d31558"
+            data-review-note="Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Scriptless Scripts</div>
+            <div class="project-title">Adaptor Gate</div>
+            <div class="project-copy">One click turns a pre-signature the real BIP-340 verifier rejects into a valid signature, then subtracts the two to read the secret back out — the fact that atomic swaps and PTLC routing are both built on.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">BIP-340</span>
+                <span class="chip">secp256k1</span>
+                <span class="chip">Atomic Swap</span>
+                <span class="chip">PTLC</span>
               </div>
               <span class="arrow">&rarr;</span>
             </div>

@@ -829,9 +829,7 @@ function writeCards(all) {
       f.reviewCommit ? `data-review-commit="${f.reviewCommit}"` : null,
       f.reviewNote ? `data-review-note="${f.reviewNote}"` : null,
     ].filter(Boolean);
-    const anchorHref = `href="https://systemslibrarian.github.io/${c.slug}/"`;
-    const stripped = c.block.replace(/^[ \t]*data-(?:implements|unscanned|comment-only|protocol-partial|references|attacks|standards|implementation|review-commit|review-note)="[^"]*"\r?\n/gm, '');
-    const next = stripped.replace(anchorHref, `${anchorHref}\n            ${parts.join('\n            ')}`);
+    const next = applyDerived(c.block, c.slug, parts);
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }
   fs.writeFileSync(HTML, html);
@@ -1072,6 +1070,42 @@ function verifyAnchors(all) {
   console.log('Every anchor still resolves and every pinned source review matches its lab clone.');
 }
 
+const DERIVED_ATTRS = 'implements|unscanned|comment-only|protocol-partial|references|attacks|standards|implementation|review-commit|review-note';
+
+/** Replace a card's derived attributes with `parts`, idempotently.
+ *
+ * Stripping is two passes because the fleet holds two shapes. A card that has
+ * been written before carries each derived attribute on its OWN line, and the
+ * line-anchored pass clears those. A card written for the FIRST time does not:
+ * a hand-authored card is a single `<a ...>` line, the insert splits it after
+ * `href`, and whatever followed href — `target`, `rel`, `style` — ends up on
+ * the same line as the LAST derived attribute. A line-anchored strip cannot
+ * see that one, so the next write leaves it in place and adds its own copy.
+ *
+ * `crypto-lab-pq-chooser` carried two identical `data-review-note` attributes
+ * for exactly one run that way, and every newly carded lab was one write from
+ * the same. The duplicate is invisible on the page — a browser takes the first
+ * and both said the same thing — which is what makes it worth a test rather
+ * than a fix.
+ *
+ * The separator is conditional so the shapes converge instead of accumulating:
+ * a first write breaks the line before the tag's remaining attributes, and a
+ * card already in that shape gets nothing added. Writing the same card twice
+ * is then a no-op, which `selftest` asserts in both directions.
+ */
+function applyDerived(block, slug, parts) {
+  const anchorHref = `href="https://systemslibrarian.github.io/${slug}/"`;
+  const stripped = block
+    .replace(new RegExp(`^[ \\t]*data-(?:${DERIVED_ATTRS})="[^"]*"\\r?\\n`, 'gm'), '')
+    .replace(new RegExp(`data-(?:${DERIVED_ATTRS})="[^"]*"[ \\t]*`, 'g'), '');
+  const at = stripped.indexOf(anchorHref);
+  if (at === -1) return block;
+  const head = stripped.slice(0, at + anchorHref.length);
+  const tail = stripped.slice(at + anchorHref.length);
+  const sep = /^\r?\n/.test(tail) ? '' : '\n           ';
+  return `${head}\n            ${parts.join('\n            ')}${sep}${tail}`;
+}
+
 /* Proof that a gitignored file cannot reach the derivation.
  *
  * Builds a throwaway repository twice: once clean, once with an IGNORED file
@@ -1177,6 +1211,56 @@ function selftest() {
     } else if (judgeAnchor({ ...implAnchor, terms: algorithmsOnly }) !== null) {
       fail.push('MUTATION proves nothing: the algorithm-only map failed the algorithm anchor too');
     } else { pass++; console.log('  ok  MUTATION algorithm-only map: attack anchor refused, algorithm anchor kept - the fixture discriminates'); }
+    /* The rewrite, on the two card shapes the fleet actually holds. A fixture
+       with only the already-written shape passes while the duplication bug is
+       present, because that shape is the one the line-anchored strip can see. */
+    const PARTS = ['data-implements="X@src/a.ts:1"', 'data-review-note="a note"'];
+    const fresh = '          <a class="project-card" data-category="SIGNATURES" '
+      + 'href="https://systemslibrarian.github.io/crypto-lab-demo/" target="_blank" rel="noopener" style="--accent: #ff6b7f;">\n'
+      + '            <div class="project-title">Demo</div>\n          </a>';
+    const once = applyDerived(fresh, 'crypto-lab-demo', PARTS);
+    const twice = applyDerived(once, 'crypto-lab-demo', PARTS);
+    const count = (h, a) => (h.match(new RegExp(`data-${a}=`, 'g')) || []).length;
+
+    if (count(once, 'review-note') !== 1) fail.push(`first write produced ${count(once, 'review-note')} data-review-note attributes`);
+    else { pass++; console.log('  ok  a first write on a one-line card emits each derived attribute once'); }
+
+    if (count(twice, 'review-note') !== 1 || count(twice, 'implements') !== 1) {
+      fail.push(`re-writing a newly carded lab duplicated an attribute: ${count(twice, 'implements')} implements, ${count(twice, 'review-note')} review-note`);
+    } else { pass++; console.log('  ok  re-writing a newly carded lab does NOT duplicate the last attribute'); }
+
+    if (twice !== once) fail.push('writing the same card twice was not a no-op');
+    else { pass++; console.log('  ok  writing the same card twice is byte-identical'); }
+
+    if (!/target="_blank" rel="noopener" style="--accent: #ff6b7f;">/.test(twice) || !/<div class="project-title">Demo<\/div>/.test(twice)) {
+      fail.push(`the rewrite lost part of the card:\n${twice}`);
+    } else { pass++; console.log('  ok  the tag tail and the card body survive the rewrite'); }
+
+    /* And the other direction: a card already carrying its attributes on their
+       own lines must not grow a blank line per run. */
+    const settled = applyDerived(once, 'crypto-lab-demo', ['data-implements="Y@src/b.ts:2"']);
+    const settledAgain = applyDerived(settled, 'crypto-lab-demo', ['data-implements="Y@src/b.ts:2"']);
+    if (settledAgain !== settled) fail.push('a settled card changed on a second write with the same fields');
+    else { pass++; console.log('  ok  a settled card is stable across writes'); }
+    if (count(settled, 'review-note') !== 0) fail.push('a field that stopped being derived was left behind');
+    else { pass++; console.log('  ok  a field that stops being derived is removed, not orphaned'); }
+
+    /* The shape already committed before this was fixed, verbatim: the last
+       derived attribute sharing its line with the tag's remaining attributes.
+       Only the second strip pass can see it, so this is the case that fails
+       without one — the separator fix alone stops new cards entering the shape
+       and does nothing for the cards already in it. */
+    const carried = '          <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-demo/"\n'
+      + '            data-implements="X@src/a.ts:1"\n'
+      + '            data-review-note="a note" target="_blank" rel="noopener" style="--accent: #ff6b7f;">\n'
+      + '            <div class="project-title">Demo</div>\n          </a>';
+    const repaired = applyDerived(carried, 'crypto-lab-demo', PARTS);
+    if (count(repaired, 'review-note') !== 1) {
+      fail.push(`a card carrying the pre-fix shape kept ${count(repaired, 'review-note')} data-review-note attributes`);
+    } else { pass++; console.log('  ok  a card already in the pre-fix shape is repaired, not duplicated'); }
+    if (!/target="_blank" rel="noopener" style="--accent: #ff6b7f;">/.test(repaired)) {
+      fail.push(`repairing the pre-fix shape lost the tag tail:\n${repaired}`);
+    } else { pass++; console.log('  ok  repairing it keeps the tail attributes it shared a line with'); }
   } catch (e) {
     fail.push(`fixture could not be built: ${e.message}`);
   } finally {

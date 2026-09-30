@@ -254,7 +254,7 @@
     "note": "Python reference-data generators reviewed; browser uses TS detection and ECDSA"
   },
   "crypto-lab-sm9-forge": {
-    "commit": "c65722ad3e852963c29fcdaae52188663e1ce79b",
+    "commit": "690be6461041b85f6fee99087c998f0c9a07e577",
     "reviewed": "2026-09-29",
     "remove": [
       "Boneh-Franklin IBE",

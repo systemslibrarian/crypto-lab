@@ -1804,7 +1804,7 @@
       <div class="wrap">
         <div class="featured-head">
           <div class="featured-headline-row">
-            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">209</span> interactive cryptography exhibits</span></h1>
+            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">210</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -20165,6 +20165,7 @@
 
     var TITLE_TO_SECTION = {
       'Point Ledger': 'post-quantum',
+      'PQ Chooser': 'post-quantum',
       'Phantom Vault': 'foundations', 'DRBG Arena': 'foundations',
       'Babel Hash': 'foundations', 'Hash Zoo': 'foundations',
       'World Hashes': 'foundations', 'MAC Race': 'foundations',
@@ -20856,6 +20857,27 @@
                 <span class="chip">BN256</span>
                 <span class="chip">Key Escrow</span>
                 <span class="chip">Nonce Reuse</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pq-chooser/"
+            data-implements="ECDSA@src/bench/runner.ts:324 | Falcon@src/derive/adapters.ts:30 | ML-DSA@src/derive/adapters.ts:16 | ML-KEM@src/derive/spec-sizes.ts:51 | P-256@src/bench/runner.ts:329 | RSA@src/bench/runner.ts:374 | SHA-256@src/bench/runner.ts:330 | SLH-DSA@src/derive/adapters.ts:24 | X25519@src/bench/runner.ts:250"
+            data-references="Dilithium | ECDH | Kyber | NTRU | P-384 | Pairing | SPHINCS+ | TLS 1.3"
+            data-attacks="Key recovery@src/data/risk.ts:43 | Side-channel (unspecified)@src/choose/rules.ts:63 | Timing side-channel@src/data/risk.ts:80"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto"
+            data-review-commit="86142c92e563a1c446fca3e5e85f23cc2c7c0f64"
+            data-review-note="Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design." target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Post-Quantum Selection</div>
+            <div class="project-title">PQ Chooser</div>
+            <div class="project-copy">Set what constrains you and get a shortlist of two or three post-quantum schemes to investigate, built from sizes it derives by running the real algorithms in your browser rather than quoting a table.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Derived Sizes</span>
+                <span class="chip">FIPS 203/204/205</span>
+                <span class="chip">Live Benchmark</span>
+                <span class="chip">TLS Wire Cost</span>
               </div>
               <span class="arrow">&rarr;</span>
             </div>

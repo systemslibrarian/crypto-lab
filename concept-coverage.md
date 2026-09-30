@@ -121,6 +121,11 @@ against secp256k1 would take. No status change. Catalogued total moves to 208.*
 Gate's Boneh-Franklin because it answers the same question differently: the identity enters
 in the exponent by inversion rather than as a hashed curve point. No status change — §9 was
 already `DEEP`. Catalogued total moves to 209.*
+
+*Version 17 — files PQ Chooser under §35. It is the selection step the migration concept
+leads to, and sits beside PQ Families by granularity: parameter sets rather than families,
+with every displayed size derived from real keygen, encapsulation and signing output rather
+than quoted. No status change — §35 was already `DEEP`. Catalogued total moves to 210.*
 All five are additions to concepts already `COVERED`, so no status changes and the Gap summary
 stays empty. Every one was live with no card — and therefore no README row, no corpus entry
 and no line here — which is the silent-drop shape `fleet-sync` exists to catch, found by
@@ -801,7 +806,18 @@ BB84 · E91 · Quantum Entropy.
 
 **35. Post-quantum migration — `DEEP`**
 PQ Families · Harvest Vault · Harvest Timeline · PQ Rotation · Hybrid Guide · Hybrid PQC ·
-Hybrid Sign · Downgrade Wire.
+Hybrid Sign · Downgrade Wire · PQ Chooser.
+
+PQ Chooser is the selection step this concept leads to, and it is separated from PQ Families
+by granularity rather than subject. Families compares the five FAMILIES with one
+representative scheme each and argues why lattices won; Chooser puts parameter sets beside
+one another — ML-KEM 512/768/1024, ML-DSA 44/65/87, Falcon 512/1024, SLH-DSA at both s and f
+— and answers which two or three to investigate under a stated constraint. It derives every
+displayed size from real keygen, encapsulation and signing output rather than quoting
+constants, keeping the spec figures as test oracles so the page and the standard can be shown
+to agree without the page reading from the standard. Its NIST category column is deliberately
+unaligned, because the smallest set of each scheme is not the same security level: ML-DSA-44
+claims category 2 where Falcon-512 and SLH-DSA-128s claim category 1.
 
 ---
 
@@ -920,7 +936,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 209.**
+**Catalogued total: 210.**
 
 ---
 

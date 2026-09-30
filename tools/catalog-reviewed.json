@@ -253,6 +253,11 @@
     ],
     "note": "Python reference-data generators reviewed; browser uses TS detection and ECDSA"
   },
+  "crypto-lab-pq-chooser": {
+    "commit": "86142c92e563a1c446fca3e5e85f23cc2c7c0f64",
+    "reviewed": "2026-09-30",
+    "note": "Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design."
+  },
   "crypto-lab-sm9-forge": {
     "commit": "9f362ccfd71a48ee41789c52b54bc9de4008d830",
     "reviewed": "2026-09-29",

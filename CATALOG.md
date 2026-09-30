@@ -1071,7 +1071,7 @@ disagree about who owns SHA-256.
 | Dilithium | FIPS 204 (as ML-DSA) | 1 |
 | ECDH | SP 800-56A | 7 |
 | ECDSA | FIPS 186-5 | 15 |
-| Falcon | FIPS 206 draft (as FN-DSA) | 3 |
+| Falcon | FIPS 206 (in development, as FN-DSA) | 3 |
 | FF1 | SP 800-38G | 2 |
 | GHASH | SP 800-38D | 6 |
 | HMAC-DRBG | SP 800-90A | 4 |

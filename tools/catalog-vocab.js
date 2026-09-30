@@ -130,7 +130,7 @@ const ALGORITHMS = [
   { name: 'Dilithium', kind: 'algorithm', family: 'PQ signature', re: /dilithium/i, alias: 'ML-DSA', std: 'NIST:FIPS 204 (as ML-DSA)' },
   { name: 'SLH-DSA', kind: 'algorithm', family: 'PQ signature', re: /slh[-_ ]?dsa/i, std: 'NIST:FIPS 205' },
   { name: 'SPHINCS+', kind: 'algorithm', family: 'PQ signature', re: /sphincs/i, alias: 'SLH-DSA', std: 'NIST:FIPS 205 (as SLH-DSA)' },
-  { name: 'Falcon', kind: 'algorithm', family: 'PQ signature', re: /\bfalcon\b/i, alias: 'FN-DSA', std: 'NIST:FIPS 206 draft (as FN-DSA)' },
+  { name: 'Falcon', kind: 'algorithm', family: 'PQ signature', re: /\bfalcon\b/i, alias: 'FN-DSA', std: 'NIST:FIPS 206 (in development, as FN-DSA)' },
   { name: 'HQC', kind: 'algorithm', family: 'PQ KEM', re: /\bhqc\b/i, std: 'NIST:selected 2025, FIPS pending' },
   { name: 'Classic McEliece', kind: 'algorithm', family: 'PQ KEM', re: /mceliece/i, std: 'ISO:ISO/IEC 18033-2 amendment' },
   { name: 'BIKE', kind: 'algorithm', family: 'PQ KEM', re: /\bbike\b/i, std: null },

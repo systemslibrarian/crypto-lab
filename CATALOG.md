@@ -20,7 +20,7 @@ with `node tools/catalog-evidence.js verify`.
 
 ## Reverse index — which labs implement what
 
-165 algorithms are implemented somewhere in the fleet, grouped by family.
+168 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -225,6 +225,11 @@ A lab in *italics* references the algorithm without implementing it.
 - **Implemented by:** [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) `src/trapdoor.ts:303`; [NTRU Classic](https://systemslibrarian.github.io/crypto-lab-ntru-classic/) `src/main.ts:14`
 - **Also referenced by:** *KpqC Pair*, *SPHINCS+ Ledger*, *McEliece Gate*, *BIKE Vault*, *LMS Ledger*, *LLL Break*, *MPCitH Sign*, *HAWK*, *LMS/XMSS*, *Scloud+ Vault*, *PQ Families*, *Multivariate UOV*, *GGH Trapdoor*, *PQ Chooser*
 
+#### NTRU+
+
+- **Implemented by:** [KpqC Pair](https://systemslibrarian.github.io/crypto-lab-kpqc-pair/) `src/ntruplus/reference.ts:22`
+- **Also referenced by:** —
+
 #### SIKE
 
 - **Implemented by:** [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) `src/main.ts:1193`
@@ -236,6 +241,11 @@ A lab in *italics* references the algorithm without implementing it.
 - **Also referenced by:** *KpqC Pair*
 
 ### PQ signature
+
+#### AIMer
+
+- **Implemented by:** [KpqC Pair](https://systemslibrarian.github.io/crypto-lab-kpqc-pair/) `src/aimer/reference.ts:12`
+- **Also referenced by:** —
 
 #### Dilithium
 
@@ -276,6 +286,11 @@ A lab in *italics* references the algorithm without implementing it.
 
 - **Implemented by:** [TC26 Pair](https://systemslibrarian.github.io/crypto-lab-tc26-pair/) `native/shipovnik_wrapper.c:68`
 - **Also referenced by:** —
+
+#### UOV
+
+- **Implemented by:** [Multivariate UOV](https://systemslibrarian.github.io/crypto-lab-multivariate/) `src/attack.ts:46`; [MAYO Seal](https://systemslibrarian.github.io/crypto-lab-mayo-seal/) `src/mayo/uov.ts:169`
+- **Also referenced by:** *Falcon Seal*, *Isogeny Gate*, *MPCitH Sign*, *HAWK*, *PQ Families*, *PQ Chooser*
 
 ### QKD
 
@@ -1123,6 +1138,7 @@ disagree about who owns SHA-256.
 | Algorithm | Document | Labs |
 |---|---|---|
 | ABDP15 IPFE | — | 1 |
+| AIMer | — | 1 |
 | Babai rounding | — | 5 |
 | Baby-step giant-step | — | 3 |
 | BB84 | — | 2 |
@@ -1163,6 +1179,7 @@ disagree about who owns SHA-256.
 | Montgomery ladder | — | 1 |
 | Noise protocol | — | 1 |
 | NTRU | — | 2 |
+| NTRU+ | — | 1 |
 | NTT | — | 8 |
 | Oblivious transfer | — | 1 |
 | One-time pad | — | 2 |
@@ -1186,6 +1203,7 @@ disagree about who owns SHA-256.
 | Toeplitz extractor | — | 1 |
 | Toy HiAE | — | 1 |
 | Toy SPN | — | 2 |
+| UOV | — | 2 |
 | Vigenere cipher | — | 2 |
 | von Neumann extractor | — | 1 |
 | Winternitz | — | 2 |
@@ -1629,7 +1647,7 @@ that asks for a decision.
 system but implement no named algorithm in this index. N/A is a reviewed
 finding, not the automatic scanner's answer to a miss.
 
-**UNKNOWN (1)** — every file this scanner reads was read and no algorithm was
+**UNKNOWN (0)** — every file this scanner reads was read and no algorithm was
 derivable, with no source review resolving whether that is an intentional model or
 a missed implementation. Do not treat this as N/A.
 
@@ -1808,7 +1826,7 @@ A live differential cryptanalysis attack on a toy SPN cipher — the technique c
 - **Implements:** Toy SPN `demos/biham-lens/src/crypto/spn.ts:95`
 - **Source review:** [27249921456d](https://github.com/systemslibrarian/crypto-lab-biham-lens/commit/27249921456d250cb3955f89b2c43bdbc1c5a577) — Executes a toy SPN, not DES
 - **References:** AES, AES-CBC, Ascon, DES, Enigma, MD5, PRESENT, RSA, SHA-1, Serpent, Shamir secret sharing, Simon, Speck, Vigenere cipher
-- **Attacks shown:** Brute force `README.md:12`, Chosen-ciphertext attack `README.md:56`, Chosen-plaintext attack `demos/biham-lens/src/main.ts:1091`, Collision attack `README.md:57`, Differential cryptanalysis `demos/biham-lens/src/main.ts:1082`, Key recovery `README.md:22`, Padding oracle `README.md:56`
+- **Attacks shown:** Brute force `README.md:12`, Chosen-ciphertext attack `README.md:56`, Chosen-plaintext attack `demos/biham-lens/src/main.ts:1091`, Collision attack `README.md:57`, Differential cryptanalysis `demos/biham-lens/src/main.ts:1082`, Impossible differential `demos/biham-lens/src/main.ts:783`, Key recovery `README.md:22`, Padding oracle `README.md:56`
 - **Standards body:** —
 - **Implementation:** hand-rolled
 
@@ -2301,7 +2319,7 @@ Run real TETRA TEA1, trace its 80-bit key into a 32-bit working register, recove
 - **Implements:** TEA1 `src/tea1/core.ts:93`
 - **Source review:** [b61f133b5e13](https://github.com/systemslibrarian/crypto-lab-export-grade/commit/b61f133b5e1392eb8d9809de0d9478097a4f0a43) — Runs TETRA TEA1 and a bounded state-recovery demonstration. Exhibits 5 and 6 add no cryptography: src/attack/rate.ts is arithmetic over the search Exhibit 3 already runs, and src/data/attacks.ts is a sourced citation table. AES-128/192/256 are named throughout that table and implemented nowhere in this lab.
 - **References:** AES, DES, Grover's algorithm, Serpent
-- **Attacks shown:** Brute force `src/data/attacks.ts:337`, Chosen-ciphertext attack `src/data/attacks.ts:106`, Key recovery `src/data/attacks.ts:53`, Known-plaintext attack `src/data/attacks.ts:162`, Nonce reuse `index.html:509`, Padding oracle `index.html:509`, Side-channel (unspecified) `index.html:509`, Timing side-channel `index.html:509`
+- **Attacks shown:** Boomerang attack `src/data/attacks.ts:85`, Brute force `src/data/attacks.ts:337`, Chosen-ciphertext attack `src/data/attacks.ts:106`, Key recovery `src/data/attacks.ts:53`, Known-plaintext attack `src/data/attacks.ts:162`, Nonce reuse `index.html:509`, Padding oracle `index.html:509`, Side-channel (unspecified) `index.html:509`, Timing side-channel `index.html:509`
 - **Standards body:** ETSI
 - **Implementation:** hand-rolled
 
@@ -2324,7 +2342,7 @@ Seven classical factoring methods on a real BigInt N, each waiting for a differe
 Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side comparison against ML-DSA and SLH-DSA, and implementation security warnings.
 
 - **Implements:** Babai rounding `src/babai.ts:32`, Falcon `src/falcon.ts:176`, NTRU `src/trapdoor.ts:303`, NTT `src/ntt.ts:45`, SHA-256 `src/falcon.ts:130`
-- **References:** Dilithium, Gaussian mechanism, Kyber, LWE, ML-DSA, SLH-DSA, SPHINCS+
+- **References:** Dilithium, Gaussian mechanism, Kyber, LWE, ML-DSA, SLH-DSA, SPHINCS+, UOV
 - **Attacks shown:** Brute force `src/ui.ts:182`, Key recovery `src/ui.ts:401`, Lattice reduction `src/trapdoor-panel.ts:82`, Side-channel (unspecified) `src/ui.ts:764`, Timing side-channel `src/ui.ts:493`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
@@ -2529,7 +2547,7 @@ SHA-256 vs SHA3-256 vs BLAKE3 internals — live avalanche analysis, Merkle-Damg
 An educational HAWK lab covering integer-only lattice signatures, discrete Gaussian sampling over Z, and the July 2026 key-recovery attack that led to HAWK's withdrawal from NIST's additional-signatures process.
 
 - **Implements:** Babai rounding `src/main.ts:958`, Falcon `src/gaussian.ts:222`, Gaussian mechanism `src/gaussian.ts:82`, ML-DSA `src/hawk.ts:968`, SHA-256 `src/hawk.ts:136`
-- **References:** AES, DES, Dilithium, Ed25519, Fiat-Shamir, LMS, LWE, ML-KEM, NTRU, NTT, SHAKE, SLH-DSA, SPHINCS+, XMSS
+- **References:** AES, DES, Dilithium, Ed25519, Fiat-Shamir, LMS, LWE, ML-KEM, NTRU, NTT, SHAKE, SLH-DSA, SPHINCS+, UOV, XMSS
 - **Attacks shown:** Chosen-plaintext attack `README.md:85`, Discrete log `src/main.ts:228`, Factoring `src/main.ts:227`, Fault injection `src/main.ts:150`, Key recovery `src/main.ts:125`, Lattice reduction `src/lip-attack.ts:406`, Side-channel (unspecified) `src/main.ts:151`, Timing side-channel `src/main.ts:188`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
@@ -2566,7 +2584,7 @@ The 2020 timing attack on HQC's BCH decoder — the parameterization predating t
 
 - **Implements:** N/A — reviewed source implements no named algorithm in this index
 - **Source review:** [a6c492ef3b02](https://github.com/systemslibrarian/crypto-lab-hqc-timing/commit/a6c492ef3b021060e6b2d8413a10719acbeb0112) — Synthetic timing model; explicitly no HQC or BCH decoder
-- **References:** BCH, BIKE, Classic McEliece, Fujisaki-Okamoto transform, HMAC, HQC, Information-set decoding, ML-KEM, RSA, Reed-Muller, Reed-Solomon, STARK
+- **References:** BCH, BCH code, BIKE, Classic McEliece, Fujisaki-Okamoto transform, HMAC, HQC, Information-set decoding, ML-KEM, RSA, Reed-Muller, Reed-Solomon, STARK
 - **Attacks shown:** Cache timing `src/data.ts:47`, Chosen-ciphertext attack `src/data.ts:17`, Key recovery `src/data.ts:27`, Side-channel (unspecified) `src/main.ts:6`, Timing side-channel `src/data.ts:17`
 - **Standards body:** —
 - **Implementation:** N/A (model or attack)
@@ -2579,7 +2597,7 @@ A full-decryption oracle on HQC, where compiler rewrites reintroduce cache timin
 
 - **Implements:** Repetition code `src/engine.ts:163`
 - **Source review:** [50c0b64a3597](https://github.com/systemslibrarian/crypto-lab-hqc-timing-break/commit/50c0b64a3597cfc9caf97eca16b69420e4f09f35) — Runs a repetition-code surrogate and majority recovery; no HQC decoder
-- **References:** BCH, HQC, Information-set decoding, Kyber, ML-DSA, ML-KEM, Reed-Muller, STARK
+- **References:** BCH, BCH code, HQC, Information-set decoding, Kyber, ML-DSA, ML-KEM, Reed-Muller, STARK
 - **Attacks shown:** Cache timing `src/data.ts:7`, Chosen-ciphertext attack `src/data.ts:66`, Fault injection `README.md:57`, Key recovery `src/data.ts:87`, Side-channel (unspecified) `src/data.ts:7`, Timing side-channel `src/data.ts:66`
 - **Standards body:** —
 - **Implementation:** hand-rolled
@@ -2713,7 +2731,7 @@ A real supersingular isogeny graph over GF(431²), computed live from the modula
 Elliptic-curve isogenies with a toy CSIDH over GF(419), supersingular graph walks, the Castryck-Decru break of SIDH, and the surviving branches of the field in SQIsign.
 
 - **Implements:** CSIDH `src/graph.ts:22`, EC point arithmetic `src/ec.ts:106`, Isogeny walk `src/csidh.ts:92`, SIKE `src/main.ts:1193`
-- **References:** Classic McEliece, HQC, Kyber, ML-DSA, ML-KEM, SLH-DSA
+- **References:** Classic McEliece, HQC, Kyber, ML-DSA, ML-KEM, SLH-DSA, UOV
 - **Attacks shown:** Brute force `src/csidh.ts:267`, Key recovery `README.md:32`, Lattice reduction `src/main.ts:363`
 - **Standards body:** broken 2022
 - **Implementation:** hand-rolled
@@ -2844,7 +2862,7 @@ SHA3-256, SHAKE, cSHAKE and KMAC driven by one hand-rolled Keccak-f[1600] permut
 
 AIMer signs from a symmetric one-way function while NTRU+ encapsulates from the older NTRU line — the two KpqC algorithms Quantum Vault left out.
 
-- **Implements:** SHAKE `src/aimer/aim.ts:127`
+- **Implements:** AIMer `src/aimer/reference.ts:12`, NTRU+ `src/ntruplus/reference.ts:22`, SHAKE `src/aimer/aim.ts:127`
 - **References:** Fiat-Shamir, HAETAE, NTRU, SHA-256, SHA-3, SMAUG-T, Shamir secret sharing
 - **Attacks shown:** Side-channel (unspecified) `README.md:143`
 - **Standards body:** NIST
@@ -2999,7 +3017,7 @@ Matsui's Algorithm 2 against the same toy SPN Biham Lens attacks — count the b
 
 Runs real MAYO keygen, signing, and verification over GF(16), stepping through the moment an oil space too small to invert becomes solvable once k copies of the map are whipped together.
 
-- **Implements:** AES `src/mayo/prf.ts:23`, CTR-DRBG `src/mayo/nist-drbg.ts:11`, SHAKE `src/mayo/prf.ts:14`
+- **Implements:** AES `src/mayo/prf.ts:23`, CTR-DRBG `src/mayo/nist-drbg.ts:11`, SHAKE `src/mayo/prf.ts:14`, UOV `src/mayo/uov.ts:169`
 - **References:** Dilithium, Falcon, ML-DSA, SHA-3, SLH-DSA, SPHINCS+
 - **Attacks shown:** Fault injection `README.md:110`, Key recovery `README.md:33`, Side-channel (unspecified) `README.md:23`
 - **Standards body:** NIST
@@ -3048,7 +3066,7 @@ Run MISTY1 and KASUMI side by side, map the design changes between them, and exe
 
 - **Implements:** KASUMI `src/kasumi/fi.ts:3`, MISTY1 `src/misty1/fi.ts:3`
 - **References:** Shamir secret sharing
-- **Attacks shown:** Chosen-plaintext attack `src/ui/attackPane.ts:133`, Differential cryptanalysis `README.md:11`, Key recovery `src/ui/attackPane.ts:128`, Linear cryptanalysis `README.md:62`
+- **Attacks shown:** Boomerang attack `src/ui/attackPane.ts:30`, Chosen-plaintext attack `src/ui/attackPane.ts:133`, Differential cryptanalysis `README.md:11`, Key recovery `src/ui/attackPane.ts:128`, Linear cryptanalysis `README.md:62`
 - **Standards body:** ETSI, ISO
 - **Implementation:** hand-rolled
 
@@ -3083,7 +3101,7 @@ A HiAE threat-model case study showing candidate enumeration, MITM state recover
 Post-quantum signatures from MPC-in-the-Head with additive secret sharing, SHA-256 commitments, Merkle proofs, Fiat-Shamir, and hidden-view challenges over a toy PERK-style witness.
 
 - **Implements:** Fiat-Shamir `src/main.ts:460`, Merkle tree `src/sharing.ts:155`, SHA-256 `src/mpcith.ts:160`
-- **References:** AES, Dilithium, Falcon, ML-DSA, NTRU, SLH-DSA, SPHINCS+
+- **References:** AES, Dilithium, Falcon, ML-DSA, NTRU, SLH-DSA, SPHINCS+, UOV
 - **Attacks shown:** Side-channel (unspecified) `README.md:81`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
@@ -3094,11 +3112,11 @@ Post-quantum signatures from MPC-in-the-Head with additive secret sharing, SHA-2
 
 A real Unbalanced Oil-and-Vinegar scheme over GF(256) signs and verifies in the browser, showing how fixing the vinegar variables turns the MQ trapdoor into a linear solve — plus the 2022 Beullens attack that broke Rainbow.
 
-- **Implements:** UNKNOWN — scanner found no named algorithm; source review still needed
+- **Implements:** UOV `src/attack.ts:46`
 - **References:** AES, ARIA, Dilithium, Falcon, ML-DSA, ML-KEM, NTRU, SHA-256, SLH-DSA, SPHINCS+, Shamir secret sharing
 - **Attacks shown:** Key recovery `src/data.ts:19`
 - **Standards body:** —
-- **Implementation:** UNKNOWN
+- **Implementation:** hand-rolled
 
 ### MuSig Gate
 
@@ -3395,7 +3413,7 @@ Set what constrains you and get a shortlist of two or three post-quantum schemes
 
 - **Implements:** ECDSA `src/bench/runner.ts:324`, Falcon `src/derive/adapters.ts:30`, ML-DSA `src/derive/adapters.ts:16`, ML-KEM `src/derive/adapters.ts:15`, P-256 `src/bench/runner.ts:329`, RSA `src/bench/runner.ts:374`, SHA-256 `src/bench/runner.ts:330`, SLH-DSA `src/derive/adapters.ts:24`, X25519 `src/bench/runner.ts:250`
 - **Source review:** [86142c92e563](https://github.com/systemslibrarian/crypto-lab-pq-chooser/commit/86142c92e563a1c446fca3e5e85f23cc2c7c0f64) — Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design.
-- **References:** Dilithium, ECDH, Kyber, NTRU, P-384, Pairing, SPHINCS+, TLS 1.3
+- **References:** Dilithium, ECDH, Kyber, NTRU, P-384, Pairing, SPHINCS+, TLS 1.3, UOV
 - **Attacks shown:** Key recovery `src/data/risk.ts:43`, Side-channel (unspecified) `src/choose/rules.ts:63`, Timing side-channel `src/data/risk.ts:80`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
@@ -3407,7 +3425,7 @@ Set what constrains you and get a shortlist of two or three post-quantum schemes
 A guided tour of the five post-quantum problem families — lattice, code-based, hash-based, multivariate, and isogeny — with the assumptions, history, and standardization status of each.
 
 - **Implements:** Information-set decoding `src/crypto.ts:240`, Lamport `src/crypto.ts:55`, SHA-256 `src/crypto.ts:35`
-- **References:** AES, ARIA, BIKE, CSIDH, Classic McEliece, Dilithium, ECDSA, Falcon, Fujisaki-Okamoto transform, Grover's algorithm, HQC, Isogeny walk, Kyber, LMS, LWE, ML-DSA, ML-KEM, Merkle tree, NTRU, P-256, Pairing, RSA, SHA-384, SHAKE, SIKE, SLH-DSA, SPHINCS+, Schnorr, Shamir secret sharing, Shor's algorithm, TLS 1.3, Winternitz, X25519, XMSS
+- **References:** AES, ARIA, BIKE, CSIDH, Classic McEliece, Dilithium, ECDSA, Falcon, Fujisaki-Okamoto transform, Grover's algorithm, HQC, Isogeny walk, Kyber, LMS, LWE, ML-DSA, ML-KEM, Merkle tree, NTRU, P-256, Pairing, RSA, SHA-384, SHAKE, SIKE, SLH-DSA, SPHINCS+, Schnorr, Shamir secret sharing, Shor's algorithm, TLS 1.3, UOV, Winternitz, X25519, XMSS
 - **Attacks shown:** Birthday bound `src/data.ts:414`, Chosen-ciphertext attack `src/data.ts:192`, Chosen-plaintext attack `src/data.ts:859`, Differential cryptanalysis `src/data.ts:529`, Discrete log `src/data.ts:715`, Factoring `src/data.ts:715`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:155`, Side-channel (unspecified) `src/data.ts:228`, Timing side-channel `src/data.ts:296`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
@@ -3928,7 +3946,7 @@ How code-based KEMs erode below NIST Level 1 when one public key derives many se
 
 - **Implements:** N/A — reviewed source implements no named algorithm in this index
 - **Source review:** [59a97cc56607](https://github.com/systemslibrarian/crypto-lab-syndrome-drain/commit/59a97cc56607595a260805061298f85627d685d2) — Models decode-one-of-many work factors; no code-based KEM or decoder implemented
-- **References:** BCH, BIKE, Classic McEliece, HPKE, HQC, Hamming code, Information-set decoding, Kyber, ML-KEM, Pairing, Reed-Muller, Reed-Solomon
+- **References:** BCH, BCH code, BIKE, Classic McEliece, HPKE, HQC, Hamming code, Information-set decoding, Kyber, ML-KEM, Pairing, Reed-Muller, Reed-Solomon
 - **Attacks shown:** Cache timing `README.md:89`, Key recovery `FIX-NOTES.md:39`, Timing side-channel `README.md:88`
 - **Standards body:** —
 - **Implementation:** N/A (model or attack)

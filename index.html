@@ -2249,7 +2249,7 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-kpqc-pair/"
-            data-implements="SHAKE@src/aimer/aim.ts:127"
+            data-implements="AIMer@src/aimer/reference.ts:12 | NTRU+@src/ntruplus/reference.ts:22 | SHAKE@src/aimer/aim.ts:127"
             data-references="Fiat-Shamir | HAETAE | NTRU | SHA-256 | SHA-3 | SMAUG-T | Shamir secret sharing"
             data-attacks="Side-channel (unspecified)@README.md:143"
             data-standards="NIST"
@@ -2538,7 +2538,7 @@
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-misty-lens/"
             data-implements="KASUMI@src/kasumi/fi.ts:3 | MISTY1@src/misty1/fi.ts:3"
             data-references="Shamir secret sharing"
-            data-attacks="Chosen-plaintext attack@src/ui/attackPane.ts:133 | Differential cryptanalysis@README.md:11 | Key recovery@src/ui/attackPane.ts:128 | Linear cryptanalysis@README.md:62"
+            data-attacks="Boomerang attack@src/ui/attackPane.ts:30 | Chosen-plaintext attack@src/ui/attackPane.ts:133 | Differential cryptanalysis@README.md:11 | Key recovery@src/ui/attackPane.ts:128 | Linear cryptanalysis@README.md:62"
             data-standards="ETSI | ISO"
             data-implementation="hand-rolled"
            
@@ -2629,7 +2629,7 @@
           <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-export-grade/"
             data-implements="TEA1@src/tea1/core.ts:93"
             data-references="AES | DES | Grover's algorithm | Serpent"
-            data-attacks="Brute force@src/data/attacks.ts:337 | Chosen-ciphertext attack@src/data/attacks.ts:106 | Key recovery@src/data/attacks.ts:53 | Known-plaintext attack@src/data/attacks.ts:162 | Nonce reuse@index.html:509 | Padding oracle@index.html:509 | Side-channel (unspecified)@index.html:509 | Timing side-channel@index.html:509"
+            data-attacks="Boomerang attack@src/data/attacks.ts:85 | Brute force@src/data/attacks.ts:337 | Chosen-ciphertext attack@src/data/attacks.ts:106 | Key recovery@src/data/attacks.ts:53 | Known-plaintext attack@src/data/attacks.ts:162 | Nonce reuse@index.html:509 | Padding oracle@index.html:509 | Side-channel (unspecified)@index.html:509 | Timing side-channel@index.html:509"
             data-standards="ETSI"
             data-implementation="hand-rolled"
             data-review-commit="b61f133b5e1392eb8d9809de0d9478097a4f0a43"
@@ -5060,7 +5060,7 @@
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/"
             data-implements="Toy SPN@demos/biham-lens/src/crypto/spn.ts:95"
             data-references="AES | AES-CBC | Ascon | DES | Enigma | MD5 | PRESENT | RSA | SHA-1 | Serpent | Shamir secret sharing | Simon | Speck | Vigenere cipher"
-            data-attacks="Brute force@README.md:12 | Chosen-ciphertext attack@README.md:56 | Chosen-plaintext attack@demos/biham-lens/src/main.ts:1091 | Collision attack@README.md:57 | Differential cryptanalysis@demos/biham-lens/src/main.ts:1082 | Key recovery@README.md:22 | Padding oracle@README.md:56"
+            data-attacks="Brute force@README.md:12 | Chosen-ciphertext attack@README.md:56 | Chosen-plaintext attack@demos/biham-lens/src/main.ts:1091 | Collision attack@README.md:57 | Differential cryptanalysis@demos/biham-lens/src/main.ts:1082 | Impossible differential@demos/biham-lens/src/main.ts:783 | Key recovery@README.md:22 | Padding oracle@README.md:56"
             data-implementation="hand-rolled"
             data-review-commit="27249921456d250cb3955f89b2c43bdbc1c5a577"
             data-review-note="Executes a toy SPN, not DES"
@@ -6864,7 +6864,7 @@
 
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-falcon-seal/"
             data-implements="Babai rounding@src/babai.ts:32 | Falcon@src/falcon.ts:176 | NTRU@src/trapdoor.ts:303 | NTT@src/ntt.ts:45 | SHA-256@src/falcon.ts:130"
-            data-references="Dilithium | Gaussian mechanism | Kyber | LWE | ML-DSA | SLH-DSA | SPHINCS+"
+            data-references="Dilithium | Gaussian mechanism | Kyber | LWE | ML-DSA | SLH-DSA | SPHINCS+ | UOV"
             data-attacks="Brute force@src/ui.ts:182 | Key recovery@src/ui.ts:401 | Lattice reduction@src/trapdoor-panel.ts:82 | Side-channel (unspecified)@src/ui.ts:764 | Timing side-channel@src/ui.ts:493"
             data-standards="NIST"
             data-implementation="WebCrypto"
@@ -8951,7 +8951,7 @@
 
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-gate/"
             data-implements="CSIDH@src/graph.ts:22 | EC point arithmetic@src/ec.ts:106 | Isogeny walk@src/csidh.ts:92 | SIKE@src/main.ts:1193"
-            data-references="Classic McEliece | HQC | Kyber | ML-DSA | ML-KEM | SLH-DSA"
+            data-references="Classic McEliece | HQC | Kyber | ML-DSA | ML-KEM | SLH-DSA | UOV"
             data-attacks="Brute force@src/csidh.ts:267 | Key recovery@README.md:32 | Lattice reduction@src/main.ts:363"
             data-standards="broken 2022"
             data-implementation="hand-rolled"
@@ -9209,7 +9209,7 @@
 
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-mpcith-sign/"
             data-implements="Fiat-Shamir@src/main.ts:460 | Merkle tree@src/sharing.ts:155 | SHA-256@src/mpcith.ts:160"
-            data-references="AES | Dilithium | Falcon | ML-DSA | NTRU | SLH-DSA | SPHINCS+"
+            data-references="AES | Dilithium | Falcon | ML-DSA | NTRU | SLH-DSA | SPHINCS+ | UOV"
             data-attacks="Side-channel (unspecified)@README.md:81"
             data-standards="NIST"
             data-implementation="WebCrypto"
@@ -10218,7 +10218,7 @@
 
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-hawk/"
             data-implements="Babai rounding@src/main.ts:958 | Falcon@src/gaussian.ts:222 | Gaussian mechanism@src/gaussian.ts:82 | ML-DSA@src/hawk.ts:968 | SHA-256@src/hawk.ts:136"
-            data-references="AES | DES | Dilithium | Ed25519 | Fiat-Shamir | LMS | LWE | ML-KEM | NTRU | NTT | SHAKE | SLH-DSA | SPHINCS+ | XMSS"
+            data-references="AES | DES | Dilithium | Ed25519 | Fiat-Shamir | LMS | LWE | ML-KEM | NTRU | NTT | SHAKE | SLH-DSA | SPHINCS+ | UOV | XMSS"
             data-attacks="Chosen-plaintext attack@README.md:85 | Discrete log@src/main.ts:228 | Factoring@src/main.ts:227 | Fault injection@src/main.ts:150 | Key recovery@src/main.ts:125 | Lattice reduction@src/lip-attack.ts:406 | Side-channel (unspecified)@src/main.ts:151 | Timing side-channel@src/main.ts:188"
             data-standards="NIST"
             data-implementation="hand-rolled"
@@ -10310,7 +10310,7 @@
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/"
             data-implements="Repetition code@src/engine.ts:163"
             data-comment-only="Information-set decoding@src/engine.ts:68"
-            data-references="BCH | HQC | Information-set decoding | Kyber | ML-DSA | ML-KEM | Reed-Muller | STARK"
+            data-references="BCH | BCH code | HQC | Information-set decoding | Kyber | ML-DSA | ML-KEM | Reed-Muller | STARK"
             data-attacks="Cache timing@src/data.ts:7 | Chosen-ciphertext attack@src/data.ts:66 | Fault injection@README.md:57 | Key recovery@src/data.ts:87 | Side-channel (unspecified)@src/data.ts:7 | Timing side-channel@src/data.ts:66"
             data-implementation="hand-rolled"
             data-review-commit="50c0b64a3597cfc9caf97eca16b69420e4f09f35"
@@ -12156,7 +12156,7 @@
 
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing/"
             data-implements="N/A"
-            data-references="BCH | BIKE | Classic McEliece | Fujisaki-Okamoto transform | HMAC | HQC | Information-set decoding | ML-KEM | RSA | Reed-Muller | Reed-Solomon | STARK"
+            data-references="BCH | BCH code | BIKE | Classic McEliece | Fujisaki-Okamoto transform | HMAC | HQC | Information-set decoding | ML-KEM | RSA | Reed-Muller | Reed-Solomon | STARK"
             data-attacks="Cache timing@src/data.ts:47 | Chosen-ciphertext attack@src/data.ts:17 | Key recovery@src/data.ts:27 | Side-channel (unspecified)@src/main.ts:6 | Timing side-channel@src/data.ts:17"
             data-implementation="N/A (model or attack)"
             data-review-commit="a6c492ef3b021060e6b2d8413a10719acbeb0112"
@@ -12234,7 +12234,7 @@
 
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:55 | SHA-256@src/crypto.ts:35"
-            data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | Winternitz | X25519 | XMSS"
+            data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | UOV | Winternitz | X25519 | XMSS"
             data-attacks="Birthday bound@src/data.ts:414 | Chosen-ciphertext attack@src/data.ts:192 | Chosen-plaintext attack@src/data.ts:859 | Differential cryptanalysis@src/data.ts:529 | Discrete log@src/data.ts:715 | Factoring@src/data.ts:715 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:155 | Side-channel (unspecified)@src/data.ts:228 | Timing side-channel@src/data.ts:296"
             data-standards="NIST"
             data-implementation="WebCrypto"
@@ -13339,10 +13339,10 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-multivariate/"
-            data-implements="UNKNOWN"
+            data-implements="UOV@src/attack.ts:46"
             data-references="AES | ARIA | Dilithium | Falcon | ML-DSA | ML-KEM | NTRU | SHA-256 | SLH-DSA | SPHINCS+ | Shamir secret sharing"
             data-attacks="Key recovery@src/data.ts:19"
-            data-implementation="UNKNOWN"
+            data-implementation="hand-rolled"
            
            
            
@@ -13415,7 +13415,7 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-mayo-seal/"
-            data-implements="AES@src/mayo/prf.ts:23 | CTR-DRBG@src/mayo/nist-drbg.ts:11 | SHAKE@src/mayo/prf.ts:14"
+            data-implements="AES@src/mayo/prf.ts:23 | CTR-DRBG@src/mayo/nist-drbg.ts:11 | SHAKE@src/mayo/prf.ts:14 | UOV@src/mayo/uov.ts:169"
             data-references="Dilithium | Falcon | ML-DSA | SHA-3 | SLH-DSA | SPHINCS+"
             data-attacks="Fault injection@README.md:110 | Key recovery@README.md:33 | Side-channel (unspecified)@README.md:23"
             data-standards="NIST"
@@ -13582,7 +13582,7 @@
           <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-syndrome-drain/"
             data-implements="N/A"
             data-comment-only="BIKE@src/model.ts:110 | Classic McEliece@src/model.ts:123 | HQC@src/model.ts:97"
-            data-references="BCH | BIKE | Classic McEliece | HPKE | HQC | Hamming code | Information-set decoding | Kyber | ML-KEM | Pairing | Reed-Muller | Reed-Solomon"
+            data-references="BCH | BCH code | BIKE | Classic McEliece | HPKE | HQC | Hamming code | Information-set decoding | Kyber | ML-KEM | Pairing | Reed-Muller | Reed-Solomon"
             data-attacks="Cache timing@README.md:89 | Key recovery@FIX-NOTES.md:39 | Timing side-channel@README.md:88"
             data-implementation="N/A (model or attack)"
             data-review-commit="59a97cc56607595a260805061298f85627d685d2"
@@ -20866,7 +20866,7 @@
           </a>
           <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pq-chooser/"
             data-implements="ECDSA@src/bench/runner.ts:324 | Falcon@src/derive/adapters.ts:30 | ML-DSA@src/derive/adapters.ts:16 | ML-KEM@src/derive/adapters.ts:15 | P-256@src/bench/runner.ts:329 | RSA@src/bench/runner.ts:374 | SHA-256@src/bench/runner.ts:330 | SLH-DSA@src/derive/adapters.ts:24 | X25519@src/bench/runner.ts:250"
-            data-references="Dilithium | ECDH | Kyber | NTRU | P-384 | Pairing | SPHINCS+ | TLS 1.3"
+            data-references="Dilithium | ECDH | Kyber | NTRU | P-384 | Pairing | SPHINCS+ | TLS 1.3 | UOV"
             data-attacks="Key recovery@src/data/risk.ts:43 | Side-channel (unspecified)@src/choose/rules.ts:63 | Timing side-channel@src/data/risk.ts:80"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"

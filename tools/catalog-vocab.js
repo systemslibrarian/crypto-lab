@@ -178,7 +178,16 @@ const ALGORITHMS = [
   // --- MPC, PIR, FHE ---
   { name: 'Garbled circuits', kind: 'algorithm', family: 'MPC', re: /garbled[-_ ]?circuit|(?<!dolev[-_ ])\byao\b/i, std: null },
   { name: 'Oblivious transfer', kind: 'algorithm', family: 'MPC', re: /oblivious[-_ ]?transfer/i, pathRe: /(^|\/)ot(?:[-_./]|$)/i, std: null },
-  { name: 'Private set intersection', kind: 'algorithm', family: 'MPC', re: /\bpsi\b|private[-_ ]set[-_ ]intersection/i, std: null },
+  /* PSI the protocol against psi the Greek letter, which is the more common
+     meaning in this fleet's own source: crypto-lab-falcon-seal's `findPsi`
+     searches for an NTT primitive root, crypto-lab-jevil's `psi<T>(F, i)` is a
+     field map, and crypto-lab-factor-forge's `const PSI` is a table of
+     pseudoprime witnesses. Three labs credited with implementing private set
+     intersection, none of which does. The spelled-out form always matches; the
+     bare acronym needs a set or an intersection near it, which is what
+     crypto-lab-psi-gate's `runPSI(aliceSet, bobSet): PSIResult` has and a Greek
+     letter does not. */
+  { name: 'Private set intersection', kind: 'algorithm', family: 'MPC', re: /private[-_ ]set[-_ ]intersection|\bpsi\b(?=[^\n]{0,80}(?:set|intersect))|(?:set|intersect)[^\n]{0,80}\bpsi\b/i, pathRe: /(?:^|\/)(?:oprf-)?psi(?:[-_.]|$)/i, std: null },
   { name: 'BGV', kind: 'algorithm', family: 'FHE', re: /\bbgv\b/i, std: null },
   { name: 'BFV', kind: 'algorithm', family: 'FHE', re: /\bbfv\b/i, std: null },
   { name: 'CKKS', kind: 'algorithm', family: 'FHE', re: /\bckks\b/i, std: null },

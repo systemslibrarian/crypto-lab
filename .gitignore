@@ -23,3 +23,4 @@ tools/node_modules/
 # times byte-identical. The precedent is f3afc10 (2026-08-04), which prescribed
 # this for the demo-authoring template and was not applied here at the time.
 tools/majors-sync.js
+chat.md

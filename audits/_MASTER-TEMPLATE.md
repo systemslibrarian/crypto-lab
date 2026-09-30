@@ -505,6 +505,41 @@ Rules learned the hard way:
 - Verify the mutation actually APPLIED before trusting a negative result. A `lang` mutation that
   silently no-op'd on `<html lang="en" data-theme="dark">` produced a false "oracle is dead".
 
+#### A lab that renders VERDICT MARKERS runs its mutations from a script (REQUIRED, forward-looking)
+
+The five steps above are a person's checklist, and a person performing them writes the result
+down afterwards. That is where they fail. A sentence describing a mutation cannot be replayed,
+and a paragraph describing a run is the author's side of the claim rather than the run's.
+
+So, for a lab carrying `data-verdict` / `data-claim` markers, three requirements:
+
+1. **Each mutation is recorded as a CONCRETE PATCH** — the file, an anchor that must occur
+   exactly once, and its replacement — never as a sentence describing an edit.
+2. **A kill is defined by four rules, and the script enforces all four:** the owning test PASSED
+   unmutated in the same run; the patch actually CHANGED the file; the run served the MUTATED
+   code; and a patch that does not compile is **DOES NOT BUILD** and is never a kill.
+3. **Every `observed` record is written by the thing that ran it, never typed.** Writing those
+   records back into the ledger is OPTIONAL — see below.
+
+Rule 2's third clause is a property, not a mechanism, and the fleet proves it two ways.
+`crypto-lab-privacy-pass` requires the built bundle's hash to move. `crypto-lab-hidden-bit`
+classifies the failure instead, refusing any red run whose output matches a build error, a
+server that never started, or a connection refused, and pins the port with `CI=1` so no reused
+server can answer. `crypto-lab-pqxdh-wire` does both. Any of the three satisfies the rule; what
+is not acceptable is trusting a red run without asking which.
+
+**On writing back.** `privacy-pass` writes each `observed` line into its ledger; `hidden-bit`
+and `pqxdh-wire` deliberately do not, and their reason is the better one to understand before
+copying either. Both make an unperformed record FAIL THE SUITE — their helpers write the (test,
+marker) pairs they actually executed to a run-scoped sink, and a global teardown fails the run
+when a recorded kill never appeared there. An archived string would be a second copy of an
+answer already enforced. `privacy-pass` writes one because its records are quoted in prose
+elsewhere. Archival is a choice; enforcement is the requirement, and a lab that has neither has
+nothing.
+
+**This is forward-looking.** Nothing here obliges a retrofit of an existing lab. It governs a
+new verdict-rendering lab and any lab whose mutation records are being rewritten anyway.
+
 ### 4.1d Negative claims — test what the cryptography does NOT buy (REQUIRED)
 
 §1 and §2 require every demo to state what it does **not** prove. Nothing tests that, which

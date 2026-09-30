@@ -602,6 +602,31 @@ Do **not** put `FOUNDATIONS` or `REAL-WORLD SYSTEMS` directly in `data-category`
 - `#ff6b7f` (crimson)
 - `#9f88ff` (violet)
 
+**The card's accent and the LAB's accent are two different things, deliberately.** The four
+colours above are a property of the GRID — they exist so neighbouring cards differ, judged at
+4, 2 and 1 columns. A lab's own `--accent` is a property of that lab's identity, and labs keep
+theirs: `bitcoin-script` is Bitcoin orange `#f7931a`, `phantom-vault` is `#3d8ef8`. **There is
+no fleet convergence, and a sweep that imposed one would be a regression.**
+
+The rule is narrower and it is the one that can actually be checked: **every lab defines
+`--accent` on `:root`.** A lab that defines none is not neutral — the fleet top bar reads
+`var(--accent, #35d6bb)` in three places, so an undefined token paints the bar teal whatever
+the card says.
+
+Surveyed live across all 208 carded labs on 2026-09-30, reading the computed value off each
+served page rather than parsing CSS:
+
+| | |
+|---|---|
+| define `--accent` with an off-palette identity colour | **131** — deliberate, leave them |
+| define one of the four, matching their card | 11 |
+| define one of the four, a DIFFERENT one from their card | 10 — drift, worth fixing |
+| define none, so the top bar falls back to teal | **55** |
+| …of those 55, whose card is NOT teal | **40** — a visible disagreement |
+
+So 11 of 208 agree with their card, and that is fine. The 40 are the ones that read as a
+mistake rather than a choice, and the 10 are the only genuine drift.
+
 ### 2. Wire the demo into the JS maps (same `<script>` IIFE)
 
 **a.** Add the demo's exact title to `TITLE_TO_SECTION` with one of these section ids:

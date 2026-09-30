@@ -993,6 +993,35 @@ the squash left the original commits as non-ancestors. The fix is `git rebase --
 origin/main <old-base>`, and the check is to read `git diff --stat origin/main...HEAD` before
 opening the PR and confirm every file in it is yours.
 
+**Never merge on a check you have not watched to completion, and never trust a local check run
+against a main that has since moved.** Two rules, one incident, 2026-09-29: PR #59 was merged
+while `tools-sync check` was red, and main stayed broken for four minutes until #60 fixed it.
+
+The proximate cause was a polling loop that treated "not pending" as "passing", so a `fail`
+line ended the wait and the merge went ahead. **Let the tool block instead of deciding for
+yourself:**
+
+```sh
+gh pr checks <n> --watch --fail-fast && gh pr merge <n> --squash --delete-branch
+```
+
+`--watch` blocks until every check settles and `--fail-fast` exits non-zero on the first
+failure, so the `&&` is the whole guard. `gh pr merge --auto --squash` is the stronger form —
+GitHub itself refuses to merge until the checks pass, and it survives you losing the terminal —
+and it is the right choice when the branch is not urgent.
+
+The deeper cause was a **generator race, and it is not fixed by watching checks**. #58 and #59
+each added a tool and each regenerated `README.md`'s tools block against a main that did not yet
+have the other. The per-tool ROWS merged cleanly, because they are generated per tool. The
+SUMMARY LINE counts them, so main landed saying "13 of these 28" over a `tools/` holding 29.
+Both PRs were green when they were checked, and neither was green afterwards.
+
+So: **before merging, re-fetch `origin/main`, and if it moved since your local run, re-run every
+generator check the other side could have touched** — `tools-sync`, `readme-sync`, `catalog-sync`
+— and push the regenerated file if it differs. Any file with a generated COUNT or TOTAL in it is
+exposed this way: the rows merge, the tally does not. `readme-sync`'s card count,
+`concept-sync`'s catalogued total, and `tools-sync`'s "N of these M" line are all of this shape.
+
 **A GENERATOR can sweep another lane's work with no `git add` at all.** The staging rule is
 about what you ADD; this is about what a tool READS. Every generator here derives a tracked
 file in this repo from the sibling clones — and it reads whatever is on disk in those clones,

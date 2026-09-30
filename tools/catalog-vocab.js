@@ -312,6 +312,14 @@ const ALGORITHMS = [
   { name: 'CPace', kind: 'algorithm', family: 'PAKE', re: /\bcpace\b/i, std: 'IETF:RFC 9383' },
   { name: 'Dragonfly', kind: 'algorithm', family: 'PAKE', re: /\bdragonfly\b|\bsae\b/i, std: 'IETF:RFC 7664' },
   { name: 'Boneh-Franklin IBE', kind: 'algorithm', family: 'identity-based encryption', re: /boneh[-_ ]?franklin|basic[-_ ]?ident|\bibe\b/i, std: 'IETF:RFC 5091' },
+  /* Inner-product functional encryption. Keyed on the CONSTRUCTION's name and on
+     `FunctionalKey`, the scheme's own object, and deliberately NOT on the bare
+     phrase "inner product": `crypto-lab-bulletproofs` is built around the
+     inner-product ARGUMENT, a proof-compression technique with no functional
+     encryption in it, and a loose term would have credited it with a scheme it
+     does not contain. Nor on the module path — `./ipfe` proves a file is named
+     ipfe.ts, which is the repo-slug mistake one directory down. */
+  { name: 'ABDP15 IPFE', kind: 'algorithm', family: 'functional encryption', re: /\babdp(?:[-_ ]?15)?\b|functional[-_ ]?key\b|inner[-_ ]?product[-_ ]?(?:fe\b|functional)/i, std: null },
   { name: 'Pairing', kind: 'algorithm', family: 'pairing', re: /\b(?:weil|tate|ate)[-_ ]?pairing|\bpairing\b/i, std: null },
   { name: 'Fujisaki-Okamoto transform', kind: 'algorithm', family: 'KEM transform', re: /fujisaki|\bfo[-_ ]?transform\b/i, std: null },
   { name: 'GHASH', kind: 'algorithm', family: 'MAC', re: /\bghash\b/i, std: 'NIST:SP 800-38D' },
@@ -320,6 +328,13 @@ const ALGORITHMS = [
   { name: 'CTR-DRBG', kind: 'algorithm', family: 'DRBG', re: /ctr[-_ ]?drbg/i, std: 'NIST:SP 800-90A' },
   { name: 'Encrypted Client Hello', kind: 'algorithm', family: 'protocol', re: /encrypted[-_ ]?client[-_ ]?hello|\bech\b/i, structures: ['EchConfig', 'ClientHelloInner', 'ClientHelloOuter', 'EchOuterExtensions'], std: 'IETF:draft-ietf-tls-esni' },
   { name: 'Babai rounding', kind: 'algorithm', family: 'lattice algorithm', re: /babai/i, std: null },
+  /* Baby-step giant-step. `bsgs` is in the term because it is how two labs
+     spell it in code; without it `crypto-lab-zk-arena`'s `bsgs()` reads as a
+     lab that only discusses the algorithm. The ATTACKS vocabulary already
+     matches `baby[-_ ]step` under `Discrete log`; that is a different claim -
+     using a discrete log to decrypt is not mounting one as an attack - and the
+     two terms are meant to be able to fire on the same line. */
+  { name: 'Baby-step giant-step', kind: 'algorithm', family: 'discrete log algorithm', re: /baby[-_ ]?step|giant[-_ ]?step|\bbsgs\b/i, std: null },
   { name: 'Format-transforming encryption', kind: 'algorithm', family: 'steganography', re: /format[-_ ]?transforming|\bfte\b/i, std: null },
   { name: 'Repetition code', kind: 'algorithm', family: 'error-correcting code', re: /repetition[-_ ]?code/i, std: null },
   { name: 'KZG commitment', kind: 'algorithm', family: 'polynomial commitment', re: /\bkzg\b/i, std: null },

@@ -666,7 +666,7 @@ function evidenceFor(slug) {
       staleReview = { pinned: review.commit, current: head };
     }
     if (!staleReview) {
-    for (const name of review.remove || []) hits.delete(name);
+    applyReviewRemovals(slug, review.remove, hits, attackHits);
     for (const item of review.add || []) {
       const at = item.lastIndexOf('@');
       const name = item.slice(0, at);
@@ -1070,6 +1070,32 @@ function verifyAnchors(all) {
   console.log('Every anchor still resolves and every pinned source review matches its lab clone.');
 }
 
+/** Apply a pinned review's `remove` list to BOTH derived claim maps.
+ *
+ * It used to reach only the implementations. That is the same asymmetry #66
+ * found in `verify`, which read `data-implements` and not `data-attacks` while
+ * all 39 polluted anchors were attacks — so the one mechanism a person has for
+ * correcting the scanner could correct the field that was right and not the
+ * field that was wrong. `crypto-lab-function-key` is where it showed: five of
+ * its derived attacks are false about that lab and none of them was reachable.
+ *
+ * A name in NEITHER vocabulary now throws rather than doing nothing. A typo in
+ * a pin was previously a silent no-op — `hits.delete('Man in the middle')`
+ * removes nothing and reports nothing — which is a review that looks applied
+ * and is not. The two vocabularies share no name today (`catalog-recall` and
+ * the verify selftest both assert it), so removing from both is unambiguous.
+ */
+function applyReviewRemovals(slug, names, hits, attackHits) {
+  for (const name of names || []) {
+    const known = ALGORITHMS.some((t) => t.name === name) || ATTACKS.some((t) => t.name === name);
+    if (!known) {
+      throw new Error(`${slug}: reviewed remove names "${name}", which is in neither vocabulary`);
+    }
+    hits.delete(name);
+    attackHits.delete(name);
+  }
+}
+
 const DERIVED_ATTRS = 'implements|unscanned|comment-only|protocol-partial|references|attacks|standards|implementation|review-commit|review-note';
 
 /** Replace a card's derived attributes with `parts`, idempotently.
@@ -1261,6 +1287,24 @@ function selftest() {
     if (!/target="_blank" rel="noopener" style="--accent: #ff6b7f;">/.test(repaired)) {
       fail.push(`repairing the pre-fix shape lost the tag tail:\n${repaired}`);
     } else { pass++; console.log('  ok  repairing it keeps the tail attributes it shared a line with'); }
+
+    /* A pinned review's `remove` has to reach the ATTACKS map too. A fixture
+       that only checks the implements side passes while that half is missing,
+       which is how it stayed missing. */
+    const impls = new Map([['SHA-256', { at: 'a:1' }], ['ristretto255', { at: 'b:2' }]]);
+    const atks = new Map([['Man-in-the-middle', { at: 'c:3' }], ['Discrete log', { at: 'd:4' }]]);
+    applyReviewRemovals('fixture', ['SHA-256', 'Man-in-the-middle'], impls, atks);
+    if (impls.has('SHA-256')) fail.push('a reviewed remove did not reach the implements map');
+    else { pass++; console.log('  ok  a reviewed remove deletes an implementation'); }
+    if (atks.has('Man-in-the-middle')) fail.push('a reviewed remove did not reach the ATTACKS map');
+    else { pass++; console.log('  ok  a reviewed remove deletes an attack'); }
+    if (!impls.has('ristretto255') || !atks.has('Discrete log')) {
+      fail.push('a reviewed remove deleted a name it was not given');
+    } else { pass++; console.log('  ok  it deletes only the names it was given'); }
+    let threw = false;
+    try { applyReviewRemovals('fixture', ['Man in the middle'], impls, atks); } catch { threw = true; }
+    if (!threw) fail.push('a remove naming neither vocabulary was silently ignored');
+    else { pass++; console.log('  ok  a remove naming neither vocabulary throws instead of no-opping'); }
   } catch (e) {
     fail.push(`fixture could not be built: ${e.message}`);
   } finally {

@@ -144,6 +144,15 @@ does with a signature — use it as a channel — and draws the boundary with §
 2-of-2 joint key a real swap locks into is MuSig Gate's subject. §15 keeps one sentence.
 Version 18's note stands as written; this one records what was rewritten under it.*
 
+*Version 20 — files Function Key under §8. It is the first demo in the catalog to use a
+discrete log as a cost rather than as a hardness assumption: ABDP15's inner-product functional
+encryption decrypts to a group element, and turning that back into the answer is a bounded
+baby-step giant-step search the lab charges in group operations. Filed by assumption family,
+following the precedent that ABE files under §9 for its pairing. §8 stays `COVERED`, and the
+placement carries an open taxonomy question with it — a key that releases a FUNCTION of the
+plaintext may deserve its own concept, distinct from §9's access control and §22's homomorphic
+computation. Recorded there rather than decided here. Catalogued total moves to 212.*
+
 *Three of the eight needed a judgment rather than a lookup, and in two of them the concept
 diverges from the catalog section — which is the divergence this file exists to allow. **Split
 Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
@@ -337,7 +346,27 @@ cross-links Shor rather than simulating it, and the number field sieve appears o
 `L_N[1/3, 1.923]` cost formula, labelled as a formula.
 
 **8. Discrete logarithm — `COVERED`**
-Curve Lens · Point Arithmetic · ElGamal Plain · DH MITM · Curve448 · Ed25519 Forge.
+Curve Lens · Point Arithmetic · ElGamal Plain · DH MITM · Curve448 · Ed25519 Forge ·
+Function Key.
+
+Function Key is the one that uses the discrete log as a **cost** rather than as a hardness
+assumption. ABDP15's DDH-based inner-product functional encryption decrypts to `g^⟨x,y⟩`, so
+recovering the answer means solving a discrete log — tractable only because the answer is
+small, and the lab charges what "small" costs in group operations with a symmetric baby-step
+giant-step and plots it against `√W`. It files here by assumption family rather than by
+application, following the precedent that attribute-based encryption files under §9 for its
+pairing rather than under an access-control heading of its own.
+
+That placement is the least invasive available and not obviously the right one. "A key that
+releases a FUNCTION of the plaintext" is arguably its own concept, distinct from §9's access
+control — whether you may decrypt — and from §22's homomorphic computation — computing without
+decrypting. This file has no entry for it. Recorded as an open taxonomy question rather than
+answered in passing: if a new concept is opened, §8 and §22 should both cross-reference it, and
+§8 stays `COVERED` either way. Read Function Key against Attribute Gate (§9) rather than beside
+it — ABE controls *whether* the plaintext is released and resists collusion; IPFE controls
+*which function* is released, and its keys combine linearly exactly as authorized, which is why
+`n` independent ones reconstruct the plaintext and, with no ciphertext at all, the master
+secret.
 
 **9. Pairings / bilinear maps — `DEEP`**
 Pairing Gate · IBE Gate · Credential Veil · Rekey Relay · Attribute Gate · SM9 Forge.
@@ -964,7 +993,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 211.**
+**Catalogued total: 212.**
 
 ---
 

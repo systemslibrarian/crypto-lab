@@ -85,6 +85,18 @@
     "implementation": "Rust FROST crate / WASM",
     "note": "Rust keygen, signing rounds and aggregation reviewed"
   },
+  "crypto-lab-function-key": {
+    "commit": "f6628c00c2b70ddde2efd7462f0b9494e8c00d7d",
+    "reviewed": "2026-09-30",
+    "remove": [
+      "Man-in-the-middle",
+      "Signature malleability",
+      "Chosen-plaintext attack",
+      "Chosen-ciphertext attack",
+      "Discrete log"
+    ],
+    "note": "Browser TypeScript throughout, no other language and no WASM. Group operations are @noble/curves 2.4.0, pinned to RFC 9496 Appendix A (16 A.1 multiples both directions, 29 A.2 rejections, 8 A.3 map outputs) before any scheme code was written on it; ABDP15 Construction 3.1 and the baby-step giant-step, exact-rational and mod-l algebra are implemented in-repo. Five derived attacks are removed because none is an attack this lab shows, and each was matched by a different accident: Man-in-the-middle came from the string 'DH MITM' inside CATALOG-ENTRY.md, which is this catalog's own concept line quoted back in the lab's handoff doc and not lab source at all; Signature malleability from /malleab/i on a seed label, in a lab that has no signatures - what it demonstrates is CIPHERTEXT malleability, and its own source calls that 'not an attack and not a flaw in the proof'; Chosen-plaintext attack from CPA inside 'IND-FE-CPA', the security notion ABDP15 proves rather than an attack mounted; Chosen-ciphertext attack from CCA inside 'Any CCA security whatever', a line in the NOT-BUILT list; and Discrete log from 'baby step', which this lab pays as a decryption cost and never mounts. The two attacks it does show, key collusion and ciphertext malleability, have no term in the vocabulary."
+  },
   "crypto-lab-ghost-commit": {
     "commit": "88abb12c24089a2606306816f54a575e58c723b0",
     "reviewed": "2026-09-24",

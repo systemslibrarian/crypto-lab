@@ -42,6 +42,15 @@
     ],
     "note": "Runs den Boer's physical-card AND protocol; no encryption"
   },
+  "crypto-lab-collision-vault": {
+    "commit": "476dec52aa83e9eb3045cfb79a6e01d9a030f0d0",
+    "reviewed": "2026-09-30",
+    "add": [
+      "SHA-256@demos/collision-vault/src/hashing/index.ts:79",
+      "SHA-512@demos/collision-vault/src/hashing/index.ts:81"
+    ],
+    "note": "The lab hashes with WebCrypto through one local helper, and names the algorithm only as that helper's STRING ARGUMENT: hashing/index.ts:79 is `return webcryptoDigest('SHA-256', bytes)` and :81 the SHA-512 case, while webcrypto.ts:25 does the work as `subtle().digest(algo, copy)` with algo a parameter. No line carries both the name and the operation, so no detection shape can reach it, and the only other place either name appears in executable code is a vectors table (SHA256_VECTORS, SHA512_VECTORS) - which is test data, not an implementation, and is now correctly suppressed. Reviewed by reading hashing/index.ts and hashing/webcrypto.ts in full: both digests are computed by the platform on the learner's input, which is the lab's whole subject. Anchored at the call sites rather than at the digest call, because those are the lines that say WHICH algorithm."
+  },
   "crypto-lab-context-ward": {
     "commit": "0fa3a0ee23fdb9dc6a8a294592dfed7434622c69",
     "reviewed": "2026-09-24",

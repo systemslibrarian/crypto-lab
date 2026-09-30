@@ -208,12 +208,19 @@
         "HKDF",
         "HMAC",
         "SHA-256",
-        "SHA-3"
+        "SHAKE"
       ],
       "outOfVocabulary": [
         "Fujisaki-Okamoto transform"
       ],
-      "how": "imports @noble/post-quantum/ml-kem.js plus hkdf, hmac, sha2 and sha3 from @noble/hashes; encapsulate/decapsulate and deriveSessionKey call them."
+      "how": "imports @noble/post-quantum/ml-kem.js plus hkdf, hmac and sha2 from @noble/hashes; encapsulate/decapsulate and deriveSessionKey call them. Its one FIPS 202 function is SHAKE-256: src/kem/fo-transform.ts:24 imports `shake256` from '@noble/hashes/sha3.js' and :93 returns `shake256(input, { dkLen: 32 })`. No SHA3-224/256/384/512 appears anywhere in src/.",
+      "corrected": {
+        "date": "2026-09-30",
+        "was": "SHA-3",
+        "now": "SHAKE",
+        "why": "The entry read SHA-3 and its own `how` note said why - 'sha3 from @noble/hashes' - so the expectation rested on the MODULE NAME rather than on the function the lab calls. Read against the source, the only FIPS 202 function in src/ is shake256 (fo-transform.ts:24 and :93); SHA3-n appears nowhere. The vocabulary lists SHA-3 as a hash and SHAKE as an XOF, so they are different names here and crediting both from one import would double-count it.",
+        "established": "By reading crypto-lab-kem-trap at origin/main and grepping src/ for every sha3 and shake occurrence. NOT taken from catalog-evidence.js output, which would measure the scanner against itself. The scanner's own answer was consulted only afterwards, to confirm the corrected expectation is the one it now meets."
+      }
     },
     "crypto-lab-ibe-gate": {
       "stratum": "@noble",

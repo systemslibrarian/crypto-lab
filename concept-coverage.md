@@ -131,6 +131,13 @@ stays empty. Every one was live with no card — and therefore no README row, no
 and no line here — which is the silent-drop shape `fleet-sync` exists to catch, found by
 running it rather than by noticing.*
 
+*Version 18 — files Adaptor Gate under §38 and §15. It is the scriptless half of the wallet
+concept: the spending condition is carried in a signature rather than in a script, so §38
+gains the case its two script-level demos cannot show, and §15 gains a release model with no
+timer in it — the secret falls out of the arithmetic when someone settles, not when work is
+ground or a beacon publishes. No status change; both concepts were already `COVERED`.
+Catalogued total moves to 211.*
+
 *Three of the eight needed a judgment rather than a lookup, and in two of them the concept
 diverges from the catalog section — which is the divergence this file exists to allow. **Split
 Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
@@ -419,13 +426,20 @@ problems).
 SPHINCS+ Ledger · LMS/XMSS · LMS Ledger · Jevil.
 
 **15. Delay, sequential work, and release conditions — `COVERED`**
-VDF · Time-Lock Puzzle · Beacon Lock. VDF and Time-Lock Puzzle are *self-opening* delay:
-someone grinds sequential work until the secret falls out. Beacon Lock supplies the third
-release model — nobody grinds; everyone waits for a public randomness beacon to publish a
+VDF · Time-Lock Puzzle · Beacon Lock · Adaptor Gate. VDF and Time-Lock Puzzle are
+*self-opening* delay: someone grinds sequential work until the secret falls out. Beacon
+Lock supplies the third release model — nobody grinds; everyone waits for a public randomness beacon to publish a
 signature on a future round, and that signature is what opens the ciphertext. It is
 Boneh-Franklin IBE where the identity is the round number, byte-compatible with drand's
 tlock, and it makes both non-mathematical assumptions explicit: the beacon must stay live,
 and a threshold of operators must not sign early in private.
+
+Adaptor Gate is the fourth, and the one with no timer in it at all. Nobody grinds and
+nobody waits: the secret is released by the act of settling, because a pre-signature is
+publishable and verifiably incomplete, and the completed signature minus the pre-signature
+*is* the secret. Filing it here is the point — an atomic swap still needs a timelocked
+refund bolted on beside it, which is the tell that the release condition and the deadline
+are separate mechanisms rather than one.
 
 **Terminology precision (do not blur these):**
 
@@ -435,6 +449,7 @@ and a threshold of operators must not sign early in private.
 | VDF | Prover computes, anyone verifies fast | Same, plus a succinct proof |
 | Beacon timelock (drand-style) | Nobody — wait for the beacon | Threshold beacon operators are honest/live |
 | Witness encryption | Anyone holding an NP witness | General, largely theoretical |
+| Adaptor signature | Nobody — the spender reveals it by spending | Signature unforgeability; any deadline is a separate timelock |
 
 Drand-style timelock is **identity-based encryption where the identity is a future round
 number**, and the beacon's threshold BLS signature on that round extracts the decryption
@@ -875,7 +890,15 @@ inside a medium or a message format and the fourth surveys carriers, so the spac
 covered several times over.
 
 **38. Blockchain and wallet mechanics — `COVERED`**
-Bitcoin Script · Bitcoin Wallet.
+Bitcoin Script · Bitcoin Wallet · Adaptor Gate.
+
+Bitcoin Script and Bitcoin Wallet are both about what the chain can see — a script the
+verifier evaluates, an address derivation anyone can repeat. Adaptor Gate is the part it
+cannot: the spending condition is carried in the signature rather than in a script, so a
+swap or a routed payment settles as an ordinary single-signature spend and leaves nothing
+on-chain that distinguishes it from any other. That is what *scriptless script* names, and
+it is why the same demo is also filed under §15 — the release model it belongs to is a
+property of the signature, not of the ledger.
 
 **39. Operational key management — `COVERED`**
 Envelope KMS · PQ Rotation · Ghost Commit.
@@ -936,7 +959,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 210.**
+**Catalogued total: 211.**
 
 ---
 

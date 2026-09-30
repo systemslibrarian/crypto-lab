@@ -18,6 +18,11 @@
     "implementation": "Rust crates / WASM",
     "note": "Rust crypto core reviewed; WASM is built from that core"
   },
+  "crypto-lab-adaptor-gate": {
+    "commit": "f838c41a6708ee52e70e395f394c53b513d31558",
+    "reviewed": "2026-09-30",
+    "note": "Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
+  },
   "crypto-lab-biham-lens": {
     "commit": "27249921456d250cb3955f89b2c43bdbc1c5a577",
     "reviewed": "2026-09-10",

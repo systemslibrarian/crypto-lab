@@ -1178,6 +1178,17 @@ observations, run-specific verdicts, citation years, and reported changes. When 
 what changed to move it, because a number that has changed twice is the one a reader most needs
 explained.
 
+**A mutation that fails to apply is indistinguishable from a mutation nothing caught.**
+Both look like a green run. On 2026-09-29, routing the dormant `verdict-harness` branches,
+a spot-check meant to pin `dataset.tone` was pointed at a lab that does not use it: the
+edit silently did not apply, the suite came back green, and the pair read exactly like
+"the harness does not bite". The only thing that distinguished them was noticing the file
+had not changed. **Before reading a green-then-red pair as evidence, confirm the source
+diff is non-empty and the built bundle hash moved** — a mutation applied to a file the
+build does not include is the same failure one step later, and it is quieter. This is
+`§4.1c` turned on the person running it: the discipline assumes the mutation happened, and
+nothing in a test report can tell you whether it did.
+
 **A gate's SETUP helper must not assert product copy.** A shared `boot()` in `e2e/gate.ts`
 runs before every test that imports it, so an assertion there fails all of them at once —
 under whatever name those tests carry. On 2026-09-26 `crypto-lab-mceliece-gate` changed one

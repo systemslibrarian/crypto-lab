@@ -138,6 +138,12 @@ timer in it — the secret falls out of the arithmetic when someone settles, not
 ground or a beacon publishes. No status change; both concepts were already `COVERED`.
 Catalogued total moves to 211.*
 
+*Version 19 — no catalogued change: the §38 and §15 commentary filed with Adaptor Gate in
+v18 is replaced with the maintainer's own text. §38 now frames it as the third thing a chain
+does with a signature — use it as a channel — and draws the boundary with §19, where the
+2-of-2 joint key a real swap locks into is MuSig Gate's subject. §15 keeps one sentence.
+Version 18's note stands as written; this one records what was rewritten under it.*
+
 *Three of the eight needed a judgment rather than a lookup, and in two of them the concept
 diverges from the catalog section — which is the divergence this file exists to allow. **Split
 Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
@@ -428,18 +434,15 @@ SPHINCS+ Ledger · LMS/XMSS · LMS Ledger · Jevil.
 **15. Delay, sequential work, and release conditions — `COVERED`**
 VDF · Time-Lock Puzzle · Beacon Lock · Adaptor Gate. VDF and Time-Lock Puzzle are
 *self-opening* delay: someone grinds sequential work until the secret falls out. Beacon
-Lock supplies the third release model — nobody grinds; everyone waits for a public randomness beacon to publish a
-signature on a future round, and that signature is what opens the ciphertext. It is
-Boneh-Franklin IBE where the identity is the round number, byte-compatible with drand's
-tlock, and it makes both non-mathematical assumptions explicit: the beacon must stay live,
-and a threshold of operators must not sign early in private.
+Lock supplies the third release model — nobody grinds; everyone waits for a public
+randomness beacon to publish a signature on a future round, and that signature is what
+opens the ciphertext. It is Boneh-Franklin IBE where the identity is the round number,
+byte-compatible with drand's tlock, and it makes both non-mathematical assumptions
+explicit: the beacon must stay live, and a threshold of operators must not sign early in
+private.
 
-Adaptor Gate is the fourth, and the one with no timer in it at all. Nobody grinds and
-nobody waits: the secret is released by the act of settling, because a pre-signature is
-publishable and verifiably incomplete, and the completed signature minus the pre-signature
-*is* the secret. Filing it here is the point — an atomic swap still needs a timelocked
-refund bolted on beside it, which is the tell that the release condition and the deadline
-are separate mechanisms rather than one.
+Adaptor Gate is the fourth: nobody grinds and nobody waits — the release happens when a
+counterparty claims funds, and the claim itself publishes the secret.
 
 **Terminology precision (do not blur these):**
 
@@ -449,7 +452,7 @@ are separate mechanisms rather than one.
 | VDF | Prover computes, anyone verifies fast | Same, plus a succinct proof |
 | Beacon timelock (drand-style) | Nobody — wait for the beacon | Threshold beacon operators are honest/live |
 | Witness encryption | Anyone holding an NP witness | General, largely theoretical |
-| Adaptor signature | Nobody — the spender reveals it by spending | Signature unforgeability; any deadline is a separate timelock |
+| Adaptor signature | Nobody — a counterparty claiming funds publishes it | Signature unforgeability; any deadline is a separate timelock |
 
 Drand-style timelock is **identity-based encryption where the identity is a future round
 number**, and the beacon's threshold BLS signature on that round extracts the decryption
@@ -892,13 +895,15 @@ covered several times over.
 **38. Blockchain and wallet mechanics — `COVERED`**
 Bitcoin Script · Bitcoin Wallet · Adaptor Gate.
 
-Bitcoin Script and Bitcoin Wallet are both about what the chain can see — a script the
-verifier evaluates, an address derivation anyone can repeat. Adaptor Gate is the part it
-cannot: the spending condition is carried in the signature rather than in a script, so a
-swap or a routed payment settles as an ordinary single-signature spend and leaves nothing
-on-chain that distinguishes it from any other. That is what *scriptless script* names, and
-it is why the same demo is also filed under §15 — the release model it belongs to is a
-property of the signature, not of the ledger.
+Adaptor Gate adds the third thing a chain does with a signature: use it as a channel.
+Script and Wallet both treat a signature as an authorisation that a chain checks; an
+adaptor signature is an authorisation that also *carries* a secret, because the completed
+signature differs from the pre-signature by exactly the adaptor scalar. That is the whole
+of scriptless scripts — conditions enforced by signature algebra rather than by script —
+and it is why the atomic swap and the PTLC in that lab are one construction seen twice
+rather than two topics. Note the boundary with §19: the 2-of-2 joint key a real swap would
+lock into is MuSig Gate's subject, and Adaptor Gate models the lock deliberately so the
+adaptor arithmetic stays in view.
 
 **39. Operational key management — `COVERED`**
 Envelope KMS · PQ Rotation · Ghost Commit.

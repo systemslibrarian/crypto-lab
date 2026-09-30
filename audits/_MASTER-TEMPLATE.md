@@ -410,9 +410,17 @@ default remain: 4220 (`hybrid-pqc`/`j-uniward`), 4221 (`hybrid-sign`/`bitcoin-sc
 **Ship a `LICENSE` file** — MIT, `Copyright (c) <year> Paul Clark`, at the repo root. This was
 missed on 156 of 176 repos, which meant the default applied: exclusive copyright, i.e. a public
 teaching demo nobody was permitted to copy or adapt. (Closed fleet-wide 2026-08-05, 176/176.)
-Also ensure the repo root has a `.gitignore` covering `node_modules/`, `dist/`, `test-results/`
-and `playwright-report/` — in a **nested** lab (`demos/<slug>/`) a `.gitignore` in the subfolder
-does **not** cover the repo root.
+Also ensure the repo root has a `.gitignore` covering `node_modules/`, `dist/`, `test-results/`,
+`playwright-report/` and `chat.md` — in a **nested** lab (`demos/<slug>/`) a `.gitignore` in the
+subfolder does **not** cover the repo root.
+
+`chat.md` is the working-notes file a session leaves behind, and it belongs on disk and out of
+the repo for the same reason this template's own local copy does: a committed snapshot of one
+conversation ages silently into a second, wrong account of what the lab does. It was missing from
+190 of 217 clones on 2026-09-29 and added to 181 of them in one pass; nine were skipped because
+another session had them on a feature branch, and nine more already **tracked** a `chat.md`, where
+the ignore line is inert until the file is `git rm --cached`'d. A new lab should start with the
+line rather than acquire it later.
 
 **`playwright.config.ts` — build before you serve.** The `webServer.command` MUST run the
 build, not just the preview:

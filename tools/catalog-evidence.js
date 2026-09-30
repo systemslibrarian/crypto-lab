@@ -875,12 +875,50 @@ function remoteHeadOf(dir) {
   } catch { return null; }
 }
 
+/* The terms an anchor may name: BOTH vocabularies, because a card carries
+   both anchored fields. `data-implements` names ALGORITHMS and `data-attacks`
+   names ATTACKS, and on 2026-09-30 the verifier started reading the second
+   field (#66) while still building this map from the first alone. Every
+   attack anchor in the catalog - 618 of them - came back "not a vocabulary
+   term" in one run: rot that was not there, reported fluently, one week before
+   the fleet job would have filed it as such. The map is built in one place so
+   the deriver and the verifier cannot disagree about what a name may be. */
+function verifyTerms() {
+  return new Map([...ALGORITHMS, ...ATTACKS].map((t) => [t.name, t]));
+}
+
+/* One anchor, judged. Pure: the caller has already resolved the file and read
+   the line, so a fixture can drive this with no clone and no network, and the
+   selftest can replay the algorithm-only map above and watch it fail. Returns
+   null when the anchor holds, else the reason it does not. */
+function judgeAnchor({ name, file, lineNo, line, terms }) {
+  const term = terms.get(name);
+  if (!term) return 'not a vocabulary term';
+  /* The evidence is the line OR the path, because that is how it was
+     derived: src/gost/aes.ts names AES on every line of it, and the anchor
+     points at the first declaration in the file rather than at a line
+     repeating the word. Checking only the line called 242 freshly written
+     anchors stale — a verifier stricter than the deriver, which reports
+     rot that is not there and teaches people to ignore it. */
+  const pathRx = term.pathRe || term.re;
+  /* The line, the path, OR one of the protocol's own message structures -
+     the three ways the deriver can establish a term. A protocol anchor
+     points at `export interface ClientHello`, which does not contain the
+     string "TLS 1.3" and never will. This is the second time a verifier has
+     been written stricter than the deriver that fed it; both times the
+     symptom was freshly written anchors reported as rot. */
+  const named = namesTerm(line, camelSplit(line), term)
+    || pathRx.test(file) || pathRx.test(camelSplit(file))
+    || structuresNamed(line, term).length > 0;
+  return named ? null : `neither line ${lineNo} nor the path names it`;
+}
+
 function verifyAnchors(all) {
   const bad = [];
   const unreadable = [];
   const behind = [];
   let checked = 0;
-  const byName = new Map(ALGORITHMS.map((a) => [a.name, a]));
+  const byName = verifyTerms();
   for (const c of all) {
     const review = REVIEWS[c.slug];
     if (review) {
@@ -960,25 +998,8 @@ function verifyAnchors(all) {
         if (!line.trim()) bad.push({ slug: c.slug, item, why: 'reviewed line is blank' });
         continue;
       }
-      const term = byName.get(name);
-      if (!term) { bad.push({ slug: c.slug, item, why: 'not a vocabulary term' }); continue; }
-      /* The evidence is the line OR the path, because that is how it was
-         derived: src/gost/aes.ts names AES on every line of it, and the anchor
-         points at the first declaration in the file rather than at a line
-         repeating the word. Checking only the line called 242 freshly written
-         anchors stale — a verifier stricter than the deriver, which reports
-         rot that is not there and teaches people to ignore it. */
-      const pathRx = term.pathRe || term.re;
-      /* The line, the path, OR one of the protocol's own message structures -
-         the three ways the deriver can establish a term. A protocol anchor
-         points at `export interface ClientHello`, which does not contain the
-         string "TLS 1.3" and never will. This is the second time a verifier has
-         been written stricter than the deriver that fed it; both times the
-         symptom was freshly written anchors reported as rot. */
-      const named = namesTerm(line, camelSplit(line), term)
-        || pathRx.test(file) || pathRx.test(camelSplit(file))
-        || structuresNamed(line, term).length > 0;
-      if (!named) bad.push({ slug: c.slug, item, why: `neither line ${lineNo} nor the path names it` });
+      const why = judgeAnchor({ name, file, lineNo, line, terms: byName });
+      if (why) bad.push({ slug: c.slug, item, why });
     }
   }
   /* Reported under NAMED MARKERS, one per class, because the weekly runner reads
@@ -1133,6 +1154,29 @@ function selftest() {
     if (movedSubstantively(tmp, 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeef', 'HEAD') !== true) {
       fail.push('an unreadable range was not treated as moved');
     } else { pass++; console.log('  ok  a range git cannot read counts as moved, never as unchanged'); }
+
+    /* The verifier judges BOTH anchored fields against BOTH vocabularies.
+       Fixture: one algorithm anchor and one attack anchor of the shape the
+       deriver writes. Mutation: the map built from ALGORITHMS alone, which is
+       what verify used until 2026-09-30 and what called 618 attack anchors
+       rot. The mutation must FAIL on the attack anchor and PASS on the
+       algorithm one, or the fixture is not measuring the defect. */
+    const terms = verifyTerms();
+    const algorithmsOnly = new Map(ALGORITHMS.map((t) => [t.name, t]));
+    const implAnchor = { name: 'SHA-256', file: 'src/main.ts', lineNo: '1', line: 'export function sha256() { return 1 }' };
+    const attackAnchor = { name: 'Nonce reuse', file: 'src/attack.ts', lineNo: '4', line: 'export function nonceReuseRecovery(sigA, sigB) {' };
+    if (judgeAnchor({ ...implAnchor, terms }) !== null) fail.push('an algorithm anchor was not accepted');
+    else { pass++; console.log('  ok  an algorithm anchor resolves against the shared term map'); }
+    if (judgeAnchor({ ...attackAnchor, terms }) !== null) fail.push(`an attack anchor was not accepted: ${judgeAnchor({ ...attackAnchor, terms })}`);
+    else { pass++; console.log('  ok  an attack anchor resolves against the shared term map'); }
+    if (judgeAnchor({ name: 'Not a term', file: 'src/x.ts', lineNo: '1', line: 'not a term', terms }) !== 'not a vocabulary term') {
+      fail.push('a name in neither vocabulary was accepted');
+    } else { pass++; console.log('  ok  a name in neither vocabulary is still refused'); }
+    if (judgeAnchor({ ...attackAnchor, terms: algorithmsOnly }) !== 'not a vocabulary term') {
+      fail.push('MUTATION not caught: an algorithm-only map accepted an attack anchor, so this fixture would not have seen the 618');
+    } else if (judgeAnchor({ ...implAnchor, terms: algorithmsOnly }) !== null) {
+      fail.push('MUTATION proves nothing: the algorithm-only map failed the algorithm anchor too');
+    } else { pass++; console.log('  ok  MUTATION algorithm-only map: attack anchor refused, algorithm anchor kept - the fixture discriminates'); }
   } catch (e) {
     fail.push(`fixture could not be built: ${e.message}`);
   } finally {
@@ -1229,6 +1273,8 @@ function main() {
 module.exports = {
   lex,
   camelSplit,
+  verifyTerms,
+  judgeAnchor,
   /* Comments blanked, STRING CONTENTS KEPT. The other view (`lex().code`) blanks
      both, which is right for finding declarations and wrong for anything that
      lives in a string: an import path, a test name, a hex vector. Using it by

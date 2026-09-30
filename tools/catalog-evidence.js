@@ -308,6 +308,73 @@ const PRESENTS = /^(?:render|draw|paint|format|describe|explain|label|display|ch
    variant is recorded here so it is not rediscovered and retried. */
 const MODELS = /^(?:extrapolat|estimat|project|predict|forecast|budget|scale|assume)/i;
 
+/* A declaration that names an ATTACK on an algorithm does not implement the
+   algorithm. Third of the same family: PRESENTS draws it, MODELS projects it,
+   this one attacks it.
+
+       export function kipnisShamirAttack(        crypto-lab-multivariate
+
+   camel-splits to "kipnis Shamir Attack", `\bshamir\b` matches, and the lab was
+   credited with implementing Shamir secret sharing - which it does not; it
+   implements UOV, and Kipnis and Shamir are the authors of an attack on it. The
+   card already has somewhere to put that fact: `data-attacks`.
+
+   It keys on the identifier's LAST word rather than anywhere in it, because
+   `attackPane` presents an attack and `runAttack` performs one, while
+   `aesAttack` is the shape that misattributes. A surname lookbehind was the
+   other candidate - `(?<!kipnis)\bshamir\b`, extending the one already there
+   for Fiat-Shamir - and it was rejected because it needs a new lookbehind per
+   co-author, per term, forever: Dunkelman-Keller-Shamir is in this fleet too. */
+const ATTACKS_IT = /(?:attack|attacks|break|breaks|forgery|exploit|cryptanalysis)$/i;
+
+/* A declaration that MEASURES an algorithm is data about it, not an
+   implementation of it. crypto-lab-mceliece-gate was credited with implementing
+   RSA on
+
+       const rsaBytes = SIZE_COMPARISONS.find((e) => e.name === "RSA-2048 public key")!.bytes;
+
+   a lookup in its own key-size comparison table. The scalar-literal rule below
+   does not reach it, because the initialiser is a call.
+
+   Keyed on the last word, same as ATTACKS_IT: `aesKeyBytes` is a size and
+   `bytesToAes` is a conversion. */
+const MEASURES = /(?:bytes|bits|size|sizes|length|len|count|year|years|iterations|rate)$/i;
+
+/* A declaration that HOLDS TEST DATA is not the operation the data is for.
+
+       const zucKey = hexToBytes('173d14ba5003731d7a60049470f00a29')   crypto-lab-air-stream
+
+   is a known-answer-test input in src/core/families.ts. It was crypto-lab-air-stream's
+   ZUC anchor, while the lab's actual ZUC lives in `export class Zuc128` in
+   src/zuc/zuc.ts - so the card pointed a reader at a hex string instead of at the
+   cipher. Both are `decl` shaped and the walk keeps the first, which is why rank
+   alone could not fix it.
+
+   This does not make the lab implement less; it moves the anchor to the thing
+   worth reading. A term whose ONLY evidence is test data loses the credit, which
+   is the right answer too: holding another implementation's vectors is not
+   implementing it. */
+const HOLDS_DATA = /(?:key|keys|iv|ivs|nonce|nonces|vector|vectors|expected|plaintext|ciphertext|kat|kats|fixture|fixtures)$/i;
+
+/** The last camel word of an identifier, for the three guards above. */
+const lastWord = (id) => camelSplit(id).split(/[\s_]+/).filter(Boolean).pop() || id;
+
+/** A declaration whose value is a bare scalar literal: a number, a string, a
+ *  boolean. `const MLKEM_ORIGIN_YEAR = 2017` is a fact about ML-KEM and
+ *  `const MCELIECE_348864_PUBLIC_KEY_BYTES = 261120` is a fact about Classic
+ *  McEliece; neither computes anything. ARRAY and OBJECT initialisers are
+ *  deliberately NOT included - an S-box IS part of an implementation, and
+ *  `const AES_SBOX = [0x63, ...]` must keep crediting AES. */
+const SCALAR_INIT = /^\s*(?:-?\d[\d_]*n?|0[xob][0-9a-fA-F_]+n?|'[^']*'|"[^"]*"|`[^`]*`|true|false|null|undefined)\s*(?:as\s+[\w.<>[\]]+\s*)?[;,)]?\s*(?:\/\/.*)?$/;
+
+/** A value that IS data: a literal, an array or object of them, or a byte
+ *  conversion of a literal. Paired with HOLDS_DATA, whose name test alone
+ *  cannot tell a stored test vector from a live key object. */
+const DATA_INIT = /^\s*(?:-?\d|0[xob][0-9a-fA-F]|'|"|`|\[|\{|true|false|null|undefined|new\s+Uint8Array\s*\(|(?:hex|bytes|utf8|base64)[A-Za-z]*\s*\(\s*['"`]|Buffer\.from\s*\(\s*['"`])/;
+
+/** An all-zero WebCrypto IV, written as a literal. */
+const ZERO_IV = /\biv\s*:\s*new\s+Uint8Array\(\s*(?:8|12|16|1[0-9]|2[0-9]|32)?\s*\)/;
+
 /** Split camelCase and PascalCase so `\b` anchored terms can reach inside an
  * identifier. `toyCkks`, `lweSample` and `encryptMisty1CoreRounds` are all
  * implementations whose algorithm name has no word boundary in front of it, and
@@ -408,29 +475,94 @@ function namesTerm(line, camel, term) {
   return Boolean(term.symbolRe) && importedSymbols(line).some((n) => term.symbolRe.test(n));
 }
 
-function shapeOf(line, code, term) {
-  /* import / require whose module path carries the term */
+function shapeOf(line, code, term, wide) {
+  /* import / require, whose BINDINGS decide when it has any. Reading the path
+     first missed `import { x25519 } from '@noble/curves/ed25519'` — the module
+     is named for one algorithm and exports another — so bindings-matching was
+     added beside it. But the path was still tested FIRST, so the same line
+     credited BOTH, and
+
+         import { ristretto255, ristretto255_hasher } from '@noble/curves/ed25519.js'
+
+     credited crypto-lab-fold-gate with implementing Ed25519 on the strength of a
+     filename, while every binding on the line says ristretto255. A named import
+     is a statement about what is used; the path is a statement about where it
+     lives. When the line says which symbols it took, that list is the evidence
+     and the path is not consulted. A default, namespace or side-effect import
+     names no symbols, and there the path is all there is. */
   const imports = [...line.matchAll(/(?:from\s*|require\(\s*|import\(\s*)['"]([^'"]+)['"]/g)].map((x) => x[1]);
-  if (imports.some((p) => term.re.test(p) || term.re.test(camelSplit(p)))) return 'import';
-  /* …or whose imported BINDINGS carry it. Reading only the path missed
-     `import { x25519 } from '@noble/curves/ed25519'` — the module is named for
-     one algorithm and exports another — and `import { sm3 as sm3Hash } from
-     'sm-crypto'`, where the package name says nothing at all. Both are as direct
-     an implementation as a call. */
-  const names = importedSymbols(line);
-  if (names.some((n) => term.re.test(n) || term.re.test(camelSplit(n))
-    || (term.symbolRe && term.symbolRe.test(n)))) return 'import';
+  /* Importing an ATTACK is not importing an implementation. crypto-lab-multivariate
+     suppressed `export function kipnisShamirAttack(` at its declaration and was
+     then credited with Shamir secret sharing anyway, from
+     `import { kipnisShamirAttack, publicPartOf } from './attack.ts'` one file
+     away - the same false claim, reached by the other route. A binding that names
+     an attack is excluded from BOTH tests below: it cannot credit its term, and
+     it cannot make the bindings informative enough to override the path, because
+     it identifies no implementation either way. */
+  const names = importedSymbols(line).filter((n) => !ATTACKS_IT.test(lastWord(n)));
+  const binds = (t) => names.some((n) => t.re.test(n) || t.re.test(camelSplit(n))
+    || (t.symbolRe && t.symbolRe.test(n)));
+  if (binds(term)) return 'import';
+  /* The path is overridden only when a binding names a DIFFERENT algorithm, which
+     is the precise form of the fold-gate defect: `ristretto255` and `x25519` are
+     themselves vocabulary terms, so they say positively what was taken from a
+     file called ed25519.js. A binding that names no algorithm says nothing about
+     which one - `import { ctr } from '@noble/ciphers/aes.js'` takes AES-CTR,
+     `import { extract, expand } from '@noble/hashes/hkdf.js'` takes HKDF, and
+     `import { generateKeyPair } from '@hub/hpke/dhkem'` takes DHKEM. Requiring a
+     binding to name the term outright removed all three, and AES from
+     crypto-lab-split-point and crypto-lab-attestation-gate with them. So the
+     question is not "does a binding name this term" but "does a binding name a
+     term at all": if one does, it is the evidence; if none does, the path is
+     still all there is. */
+  const informative = names.some((n) => ALGORITHMS.some((t) => t.re.test(n)
+    || t.re.test(camelSplit(n)) || (t.symbolRe && t.symbolRe.test(n))));
+  if (!informative && imports.some((p) => term.re.test(p) || term.re.test(camelSplit(p)))) return 'import';
   /* WebCrypto: the term is a quoted algorithm name anywhere on a subtle line, or
      on the `name:` of an algorithm object. */
-  const quoted = [...line.matchAll(/['"]([^'"]{2,40})['"]/g)].map((x) => x[1]);
+  /* A WebCrypto call is often written across four lines, and the algorithm name
+     is on none of the first one:
+
+         const bits = await crypto.subtle.deriveBits(
+           {
+             name: 'HKDF',
+             hash: 'SHA-256',
+
+     `wide` is that call's own lines joined, so the quoted name is read with the
+     operation that uses it and the ANCHOR points at the operation. Reading one
+     line at a time meant the only HKDF evidence in crypto-lab-harvest-vault and
+     crypto-lab-kyber-vault was the importKey above it - key material standing in
+     for a derivation, which is the weaker claim in the wrong place. It is used
+     ONLY for the quoted-name test below, never for declarations: widening those
+     would let one line's `const` be credited to its neighbour. */
+  const view = wide && /crypto\.subtle\.\w+\s*\($/.test(line.trim()) ? wide : line;
+  const quoted = [...view.matchAll(/['"]([^'"]{2,40})['"]/g)].map((x) => x[1]);
   /* A WebCrypto algorithm object, not any object with a `name`. The bare
      `name:` test read `{ name: "HQC-128", bytes: 2249 }` — a row in a key-size
      TABLE — as crypto-lab-mceliece-gate implementing HQC. A real algorithm
      object carries one of WebCrypto's own parameter keys alongside the name. */
-  const isSubtle = /crypto\.subtle\.\w+/.test(line)
+  const isSubtle = /crypto\.subtle\.\w+/.test(view)
     || (/\bname\s*:\s*['"]/.test(line)
       && /\b(?:hash|namedCurve|iv|length|salt|info|modulusLength|publicExponent|tagLength|counter|saltLength|iterations)\s*:/.test(line));
-  if (isSubtle && quoted.some((q) => term.re.test(q))) return 'call';
+  if (isSubtle && quoted.some((q) => term.re.test(q))) {
+    /* An all-zero IV means the caller wanted the BLOCK CIPHER, not the mode.
+       crypto-lab-air-stream builds 128-EEA2 (AES-CTR) and reaches the raw AES
+       block through `{ name: 'AES-CBC', iv: new Uint8Array(16) }` on one block -
+       the standard way to get ECB out of WebCrypto, which offers no ECB. It was
+       credited with implementing AES-CBC, a mode it does not use and does not
+       claim: its chips say AES-CTR. AES itself still credits, from the same
+       line, because that part is true. A real CBC lab passes a real IV and is
+       untouched. */
+    if (/^AES-(?:CBC|CTR|GCM|CCM|KW|SIV|XTS)$/.test(term.name) && ZERO_IV.test(view)) return null;
+    /* `importKey` names the algorithm a key is FOR. It is key material, not an
+       operation, and it is ranked below every other shape so that a lab which
+       also performs the operation anchors on the operation. A term whose ONLY
+       evidence is an imported key is not recorded as implemented - intent is not
+       computation - which is what finally takes AES-CBC off air-stream, whose
+       other AES-CBC line is the zero-IV call above. */
+    if (/crypto\.subtle\.importKey/.test(view)) return 'keyimport';
+    return 'call';
+  }
   /* a declaration whose NAME carries the term */
   /* The `(?::[^=]+)?` is TypeScript's type annotation, and leaving it out was a
      silent systematic miss: `export const SECP256K1: FpPreset = {` declares
@@ -445,15 +577,57 @@ function shapeOf(line, code, term) {
        paints a diagram of Module-LWE; reading it as an implementation is the
        same error as reading a mention, one layer in. */
     if (PRESENTS.test(id)) continue;
+    /* An attack on it, a measurement of it, or a stored test vector for it -
+       none of the three is an implementation of it. Keyed on the identifier's
+       last word; see each guard's own note. */
+    const last = lastWord(id);
+    /* An attack on it is not an implementation of it, whatever declares it: a
+       function that attacks and a constant that attacks are the same claim. */
+    if (ATTACKS_IT.test(last)) continue;
+    const rest = code.slice(d.index + d[0].length - 1);
+    const isVar = /^\s*(?::[^=]{0,80})?=/.test(rest);
+    /* MEASURES and HOLDS_DATA are about what a VARIABLE holds, so they do not
+       apply to a function or a class. A function DOES something even when its
+       name is a noun: `bulletproofBytes(bits)` computes a proof size and
+       crypto-lab-bulletproofs implements Bulletproofs, `isdPrangeBits(n, k, t)`
+       computes Prange's work factor and crypto-lab-pq-families implements
+       information-set decoding. Applying these two to every declaration took the
+       term off four labs that do implement it - including the lab the term is
+       named after, which is the shape of a rule that has stopped discriminating. */
+    if (isVar && MEASURES.test(last)) continue;
     /* `const aes128 = extrapolate(...)` - the name says AES, the value is a
        projection. Only the initialiser of THIS declaration is read. */
-    const init = /=\s*([A-Za-z_$][\w$]*)\s*\(/.exec(code.slice(d.index + d[0].length - 1));
+    const init = /=\s*([A-Za-z_$][\w$]*)\s*\(/.exec(rest);
     if (init && MODELS.test(init[1])) continue;
-    if (term.re.test(id) || term.re.test(camelSplit(id))) return 'decl';
+    /* …and a declaration whose value is a bare scalar is a FACT about the
+       algorithm rather than a computation of it. */
+    if (isVar && SCALAR_INIT.test(rest.replace(/^\s*(?::[^=]{0,80})?=/, ''))) continue;
+    /* HOLDS_DATA needs the VALUE to be data as well as the name to say so.
+       `const zucKey = hexToBytes('173d…')` is a test vector; `const hkdfKey =
+       await crypto.subtle.importKey(…)` is a live key object, and suppressing it
+       took HKDF off two labs that derive with it. Literals, arrays, objects and
+       byte conversions of a literal are data; anything awaited or computed is
+       not. */
+    if (isVar && HOLDS_DATA.test(last) && DATA_INIT.test(rest.replace(/^\s*(?::[^=]{0,80})?=/, ''))) continue;
+    /* A function or class that IS the algorithm outranks a variable that holds a
+       result of it. Both were 'decl', so the walk kept whichever file it opened
+       first: crypto-lab-air-stream's ZUC anchored at `const zuc =
+       encryptZucEea3(...)` in src/core/families.ts - a call in a test-vector
+       table - while `export class Zuc128` sat unreferenced in src/zuc/zuc.ts,
+       because src/core sorts before src/zuc and equal ranks do not replace. Both
+       are real evidence; one is the thing itself. */
+    if (term.re.test(id) || term.re.test(camelSplit(id))) return d[1] ? 'decl' : 'binding';
   }
-  /* an identifier carrying the term being invoked */
+  /* an identifier carrying the term being invoked - with the same three guards
+     the declaration gets. `if (mount) renderFiatShamir(mount);` credited
+     crypto-lab-dilithium-seal with Fiat-Shamir and `renderModuleLWE(mount)` with
+     LWE, both from the CALL SITE of a function whose own declaration PRESENTS
+     already suppressed. The guard was applied where the thing is defined and not
+     where it is used, so the suppression was one line of evidence deep. */
   const calls = [...code.matchAll(/([A-Za-z_$][\w$]*)\s*\(/g)].map((x) => x[1]);
-  if (calls.some((id) => term.re.test(id) || term.re.test(camelSplit(id)))) return 'call';
+  if (calls.some((id) => !PRESENTS.test(id) && !MODELS.test(id)
+    && !ATTACKS_IT.test(lastWord(id)) && !MEASURES.test(lastWord(id))
+    && (term.re.test(id) || term.re.test(camelSplit(id))))) return 'call';
   return null;
 }
 
@@ -528,7 +702,7 @@ function evidenceFor(slug) {
      file the walk happened to open. A declaration says more than an import:
      `from './hqc'` proves a module is used, `function hqcDecode(` shows the work
      being done, and the anchor is there to be read by a person. */
-  const RANK = { decl: 5, call: 4, protocol: 3, import: 2, path: 1 };
+  const RANK = { decl: 6, binding: 5, call: 4, protocol: 3, import: 2, path: 1, keyimport: 0 };
   const keepBest = (map, name, at, shape) => {
     const have = map.get(name);
     if (!have || RANK[shape] > RANK[have.shape]) map.set(name, { at, shape });
@@ -558,9 +732,19 @@ function evidenceFor(slug) {
       const line = lines[i];
       if (!line.trim()) continue;
       const camel = camelSplit(line);
+      /* A WebCrypto call left open at the end of a line continues onto the next
+         ones, and its algorithm name is usually on none of the first. The gate
+         below asks whether THIS line names a term, so `crypto.subtle.deriveKey(`
+         named nothing and was skipped - and the only HKDF evidence left in
+         crypto-lab-harvest-vault and crypto-lab-kyber-vault was the importKey
+         above it. Where the line is an open call, the window it opens is asked
+         as well; shapeOf reads that window under the same condition. */
+      const wide = lines.slice(i, i + 5).join(' ');
+      const opens = /crypto\.subtle\.\w+\s*\($/.test(line.trim());
       for (const term of ALGORITHMS) {
-        if (!namesTerm(line, camel, term)) continue;
-        const shape = shapeOf(line, codeLines[i], term);
+        if (!namesTerm(line, camel, term)
+          && !(opens && namesTerm(wide, camelSplit(wide), term))) continue;
+        const shape = shapeOf(line, codeLines[i], term, wide);
         if (shape) keepBest(hits, term.name, `${rel}:${i + 1}`, shape);
         else if (!hits.has(term.name)) record(mentions, term.name, `${rel}:${i + 1}`, 'mention');
       }
@@ -680,6 +864,20 @@ function evidenceFor(slug) {
       throw new Error(`${slug}: N/A review conflicts with ${[...hits.keys()].join(', ')}`);
     }
     }
+  }
+  /* An imported KEY is intent, not computation. `crypto.subtle.importKey('raw',
+     k, { name: 'AES-GCM' }, ...)` says a key of that type exists; the encrypt
+     call says the algorithm ran, and that call is what the anchor should point
+     at. Where a lab performs the operation too, the shape ranking has already
+     preferred it and nothing here fires. Where an imported key is the ONLY
+     evidence, the term moves to `data-references`: still recorded, no longer
+     claimed as implemented. That is what finally takes AES-CBC off
+     crypto-lab-air-stream, whose two AES-CBC lines are an importKey and a
+     zero-IV single-block call. */
+  for (const [name, v] of [...hits.entries()]) {
+    if (v.shape !== 'keyimport') continue;
+    hits.delete(name);
+    if (!mentions.has(name)) mentions.set(name, { at: v.at, shape: 'keyimport' });
   }
   const impl = [...hits.entries()].map(([name, v]) => ({ name, at: v.at, shape: v.shape }))
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -889,7 +1087,7 @@ function verifyTerms() {
    the line, so a fixture can drive this with no clone and no network, and the
    selftest can replay the algorithm-only map above and watch it fail. Returns
    null when the anchor holds, else the reason it does not. */
-function judgeAnchor({ name, file, lineNo, line, terms }) {
+function judgeAnchor({ name, file, lineNo, line, terms, wide }) {
   const term = terms.get(name);
   if (!term) return 'not a vocabulary term';
   /* The evidence is the line OR the path, because that is how it was
@@ -905,7 +1103,16 @@ function judgeAnchor({ name, file, lineNo, line, terms }) {
      string "TLS 1.3" and never will. This is the second time a verifier has
      been written stricter than the deriver that fed it; both times the
      symptom was freshly written anchors reported as rot. */
-  const named = namesTerm(line, camelSplit(line), term)
+  /* …or the lines the anchored call SPANS, under the same condition shapeOf
+     uses to read them. The deriver anchors a multi-line `crypto.subtle.X(` at
+     the call, whose own line names no algorithm, so checking the line alone
+     called 70 freshly written anchors stale. That is the THIRD time a verifier
+     here has been written stricter than the deriver that fed it, and all three
+     times the symptom was identical: new anchors reported as rot. The condition
+     is copied deliberately rather than loosened - a verifier that accepted any
+     nearby line would stop checking the anchor at all. */
+  const view = wide && /crypto\.subtle\.\w+\s*\($/.test(line.trim()) ? wide : line;
+  const named = namesTerm(view, camelSplit(view), term)
     || pathRx.test(file) || pathRx.test(camelSplit(file))
     || structuresNamed(line, term).length > 0;
   return named ? null : `neither line ${lineNo} nor the path names it`;
@@ -996,7 +1203,10 @@ function verifyAnchors(all) {
         if (!line.trim()) bad.push({ slug: c.slug, item, why: 'reviewed line is blank' });
         continue;
       }
-      const why = judgeAnchor({ name, file, lineNo, line, terms: byName });
+      const why = judgeAnchor({
+        name, file, lineNo, line, terms: byName,
+        wide: lines.slice(Number(lineNo) - 1, Number(lineNo) + 4).join(' '),
+      });
       if (why) bad.push({ slug: c.slug, item, why });
     }
   }
@@ -1224,6 +1434,21 @@ function selftest() {
     const terms = verifyTerms();
     const algorithmsOnly = new Map(ALGORITHMS.map((t) => [t.name, t]));
     const implAnchor = { name: 'SHA-256', file: 'src/main.ts', lineNo: '1', line: 'export function sha256() { return 1 }' };
+    /* The deriver anchors a multi-line WebCrypto call at the call itself, whose
+       own line names nothing. verify must read the same window or it reports
+       fresh anchors as rot - it did, 70 of them, the third time that has
+       happened here. Both directions are asserted: the window resolves it, and
+       a window on a line that is NOT an open call does not. */
+    const spanAnchor = {
+      name: 'HKDF', file: 'src/kdf.ts', lineNo: '3',
+      line: '  return crypto.subtle.deriveKey(',
+      wide: "  return crypto.subtle.deriveKey( { name: 'HKDF', hash: 'SHA-256',",
+    };
+    if (judgeAnchor({ ...spanAnchor, terms }) !== null) fail.push('a multi-line WebCrypto anchor was called stale');
+    else { pass++; console.log('  ok  an anchor on a multi-line WebCrypto call reads the lines it spans'); }
+    if (judgeAnchor({ ...spanAnchor, line: '  const unrelated = 1', terms }) === null) {
+      fail.push('the window was read on a line that is not an open WebCrypto call');
+    } else { pass++; console.log('  ok  and does not read that window on any other line'); }
     const attackAnchor = { name: 'Nonce reuse', file: 'src/attack.ts', lineNo: '4', line: 'export function nonceReuseRecovery(sigA, sigB) {' };
     if (judgeAnchor({ ...implAnchor, terms }) !== null) fail.push('an algorithm anchor was not accepted');
     else { pass++; console.log('  ok  an algorithm anchor resolves against the shared term map'); }
@@ -1403,6 +1628,12 @@ module.exports = {
   camelSplit,
   verifyTerms,
   judgeAnchor,
+  /* The real shape decision, exported so tools/evidence-shape-proof.js can drive
+     THIS function instead of a copy of its decl branch. The copy was honest
+     about being one - it grabbed the guard regexes out of this file's source so
+     they could not drift - but it could only ever test the branch it had
+     reimplemented, and the guards now live in four branches. */
+  shapeOf,
   /* Comments blanked, STRING CONTENTS KEPT. The other view (`lex().code`) blanks
      both, which is right for finding declarations and wrong for anything that
      lives in a string: an import path, a test name, a hex vector. Using it by

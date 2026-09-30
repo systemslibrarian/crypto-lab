@@ -107,6 +107,48 @@ const NOT_THE_LAB = /(^|\/)(e2e|tests?|__tests__|scripts|contrast)(\/|$)|\.(spec
    A .d.ts DECLARES an external library's shape and implements none of it —
    crypto-lab-sm2-forge's sm-crypto.d.ts is a type stub for a dependency. */
 const NOT_THIS_LABS_CODE = /(^|\/)(vendor|vendored|third[-_]party|public\/lib)(\/|$)|\.min\.[tj]sx?$|\.d\.ts$/;
+/* A BUILD DOCUMENT is the instruction for making a lab, not a description of
+   one. It names algorithms the way a recipe names ingredients - as things to
+   consider - so reading one as evidence credits every lab that was built from
+   the same template with whatever that template happens to mention.
+   Twenty-three anchors pointed into these, all in data-attacks: `Brute force`
+   in six labs from one line of BUILD-TEMPLATE(1).md, `Timing side-channel` in
+   crypto-lab-air-stream and crypto-lab-point-ledger from line 342 of two copies
+   of the same template, `Man-in-the-middle` from a Playwright baseURL that
+   happens to contain the slug crypto-lab-diffie-hellman-mitm.
+
+   Tracked-set filtering cannot reach them: unlike the gitignored
+   CRYPTO-LAB-TEMPLATE.md that prompted that rule, these are committed files in
+   the repository, and rightly so - a lab's own build brief belongs in its
+   history. They are excluded by WHAT THEY ARE instead.
+
+   The boundary is narrow, and README.md, docs/ explanations, LIMITATIONS.md,
+   SECURITY.md, INVARIANTS.md and TEACHING.md all stay scannable: those describe
+   the lab that exists. A name in one of those is the lab talking about itself.
+   `.github/` is excluded for the same reason as e2e/ above - it is the
+   repository's machinery, not the demo - and playwright.config.* with it, whose
+   only algorithm names are inside a URL. */
+const BUILD_DOC = new RegExp([
+  '(^|/)\\.github(/|$)',                        // CI, issue templates, PR templates
+  '(^|/)playwright\\.config\\.[a-z]+$',          // a baseURL is not evidence
+  '(^|/)brief\\.md$',                           // 28 labs: the build brief
+  '(^|/)kickoff\\.md$',
+  '(^|/)CATALOG-ENTRY\\.md$',                    // catalog data handed back
+  '(^|/)MISSION-SCRIPT\\.md$',
+  '(^|/)HARNESS\\.md$',
+  '[^/]*PROMPT[^/]*\\.md$',                       // BUILD-PROMPT, PROMPT-standardize-…, crypto-lab-vdf-prompt
+  '[^/]*TEMPLATE[^/]*\\.md$',                     // BUILD-TEMPLATE(1), _MASTER-TEMPLATE, CRYPTO-LAB-TEMPLATE
+  /* A 404 page, an OG card and a timing harness are not the demo, and this is
+     tools/theme-sync.js's NON_DEMO_PAGE list, reused rather than reinvented.
+     The measurement found why it belongs here too: with playwright.config
+     excluded, crypto-lab-timing-oracle's `Timing side-channel` anchor moved to
+     public/404.html:10, which reads `var base = "/crypto-lab-timing-oracle/";`
+     - the lab's own SLUG inside a redirect URL. Keying on the slug is the one
+     shape tools/catalog-recall.js records as never to reopen, because it would
+     have crypto-lab-hqc-timing claiming HQC. Both labs keep the term from a
+     real line; only the anchor moves. */
+  '(^|/)(?:404\\.html|og-card\\.html|[^/]*-harness\\.html|quality-gates\\.html|logic-smoke\\.html)$',
+].join('|'), 'i');
 
 /* The files a FRESH CLONE would have, never what happens to be on this disk.
  *
@@ -642,7 +684,7 @@ function labFiles(dir, clone = dir) {
   const unread = new Map();
   for (const f of files) {
     const rel = path.relative(dir, f);
-    if (NOT_THE_LAB.test(rel) || NOT_THIS_LABS_CODE.test(rel)) continue;
+    if (NOT_THE_LAB.test(rel) || NOT_THIS_LABS_CODE.test(rel) || BUILD_DOC.test(rel)) continue;
     for (const lang of UNREAD_LANGS) {
       if (lang.re.test(rel)) unread.set(lang.name, (unread.get(lang.name) || 0) + 1);
     }
@@ -878,6 +920,19 @@ function evidenceFor(slug) {
     if (v.shape !== 'keyimport') continue;
     hits.delete(name);
     if (!mentions.has(name)) mentions.set(name, { at: v.at, shape: 'keyimport' });
+  }
+  /* ONE FAMILY, ONE FINDING. A line reading "yield a valid raw signature on
+     m1*m2" matches both `Signature malleability` and the bare
+     `Malleability (unspecified)`, and recording both says the scanner could not
+     tell when it could. Where any specific member of a family matched, the
+     vague member is dropped; where none did, the vague one is the honest answer
+     and stays. The same shape would remove the 42 cards that currently carry a
+     specific side-channel AND `Side-channel (unspecified)`, which is left for
+     the maintainer: one `family` field on three existing terms. */
+  for (const fam of new Set(ATTACKS.filter((a) => a.family).map((a) => a.family))) {
+    const members = ATTACKS.filter((a) => a.family === fam);
+    if (!members.some((a) => a.specific && attackHits.has(a.name))) continue;
+    for (const a of members) if (!a.specific) attackHits.delete(a.name);
   }
   const impl = [...hits.entries()].map(([name, v]) => ({ name, at: v.at, shape: v.shape }))
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -1431,6 +1486,50 @@ function selftest() {
        what verify used until 2026-09-30 and what called 618 attack anchors
        rot. The mutation must FAIL on the attack anchor and PASS on the
        algorithm one, or the fixture is not measuring the defect. */
+    /* BUILD DOCUMENTS are excluded by what they are, because tracked-set
+       filtering cannot reach them: they are committed files, and a lab's build
+       brief belongs in its history. Both directions, since an exclusion that
+       swallowed README.md would remove most of the fleet's evidence. */
+    for (const f of ['brief.md', 'docs/BUILD-PROMPT.md', 'BUILD-TEMPLATE(1).md', '_MASTER-TEMPLATE.md',
+      'CRYPTO-LAB-TEMPLATE.md', 'CATALOG-ENTRY.md', 'audits/kickoff.md', 'verification/HARNESS.md',
+      'MISSION-SCRIPT.md', 'PROMPT-standardize-parts-A-D(2).md', '.github/checks/console.mjs',
+      'playwright.config.ts', 'crypto-lab-vdf-prompt.md', 'public/404.html',
+      'web-demo/smaug-timing-harness.html']) {
+      if (BUILD_DOC.test(f)) pass++;
+      else fail.push(`a build document is still scanned: ${f}`);
+    }
+    console.log('  ok  fifteen build documents, CI, config and non-demo pages are excluded');
+    for (const f of ['README.md', 'docs/specification.md', 'LIMITATIONS.md', 'SECURITY.md',
+      'INVARIANTS.md', 'TEACHING.md', 'docs/CRYPTO-DECISIONS.md', 'src/ui/template.ts', 'src/main.ts',
+      'index.html', 'demos/kyber-vault/index.html']) {
+      if (!BUILD_DOC.test(f)) pass++;
+      else fail.push(`a lab's own document is no longer scanned: ${f}`);
+    }
+    console.log("  ok  eleven of the lab's own documents, pages and sources are still scanned");
+
+    /* ONE FAMILY, ONE FINDING - asserted on the real lines, both ways. */
+    const mall = (line) => {
+      const hit = ATTACKS.filter((a) => a.family === 'malleability' && a.re.test(line));
+      const specific = hit.filter((a) => a.specific);
+      return (specific.length ? specific : hit).map((a) => a.name).sort().join(' + ');
+    };
+    const MALL = [
+      ['This is the malleability eNFS exploits at scale: raw RSA oracle answers on m1 and m2 yield a valid raw signature on m1*m2', 'Signature malleability', 'crypto-lab-rsa-forge'],
+      ['<th scope="row">Malleable signatures</th>', 'Signature malleability', 'crypto-lab-ecdsa-forge'],
+      ['Live cofactor / ZIP215 malleability', 'Signature malleability', 'crypto-lab-ed25519-forge'],
+      ['FHE ciphertexts are malleable by design', 'Ciphertext malleability', 'crypto-lab-fhe-arena'],
+      ['ChaCha20 is malleable: an attacker can flip bits in the ciphertext', 'Ciphertext malleability', 'crypto-lab-chacha20-stream'],
+      ['making the ciphertext non-malleable rather than merely private', 'Ciphertext malleability', 'crypto-lab-beacon-lock'],
+      ['interface MalleabilityResult {', 'Malleability (unspecified)', 'crypto-lab-merkle-vault'],
+      ['<h3 class="attack-title">Malleability attack</h3>', 'Malleability (unspecified)', 'crypto-lab-paillier-gate'],
+      ['nonces, and malleability turn that same math into real breaks.', 'Malleability (unspecified)', 'crypto-lab-elgamal-plain'],
+    ];
+    for (const [line, want, why] of MALL) {
+      const got = mall(line);
+      if (got === want) { pass++; console.log(`  ok  ${want.padEnd(26)} ${why}`); }
+      else fail.push(`malleability: "${line.slice(0, 40)}" gave ${got || 'nothing'}, want ${want}`);
+    }
+
     const terms = verifyTerms();
     const algorithmsOnly = new Map(ALGORITHMS.map((t) => [t.name, t]));
     const implAnchor = { name: 'SHA-256', file: 'src/main.ts', lineNo: '1', line: 'export function sha256() { return 1 }' };

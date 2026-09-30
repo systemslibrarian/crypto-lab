@@ -187,7 +187,13 @@ const ALGORITHMS = [
      bare acronym needs a set or an intersection near it, which is what
      crypto-lab-psi-gate's `runPSI(aliceSet, bobSet): PSIResult` has and a Greek
      letter does not. */
-  { name: 'Private set intersection', kind: 'algorithm', family: 'MPC', re: /private[-_ ]set[-_ ]intersection|\bpsi\b(?=[^\n]{0,80}(?:set|intersect))|(?:set|intersect)[^\n]{0,80}\bpsi\b/i, pathRe: /(?:^|\/)(?:oprf-)?psi(?:[-_.]|$)/i, std: null },
+  /* `chipRe` is the bare acronym on purpose. The context requirement above is
+     about SOURCE, where `psi` is more often the Greek letter; a CHIP reading
+     "PSI" or "DH-PSI" is a card's claim about its stack and can only mean the
+     protocol. Without this, narrowing `re` stopped the chip "DH-PSI" naming
+     this term at all, so crypto-lab-psi-gate - which implements it - was
+     flagged for a chip it earns. */
+  { name: 'Private set intersection', kind: 'algorithm', family: 'MPC', re: /private[-_ ]set[-_ ]intersection|\bpsi\b(?=[^\n]{0,80}(?:set|intersect))|(?:set|intersect)[^\n]{0,80}\bpsi\b/i, chipRe: /\bpsi\b|private[-_ ]set[-_ ]intersection/i, pathRe: /(?:^|\/)(?:oprf-)?psi(?:[-_.]|$)/i, std: null },
   { name: 'BGV', kind: 'algorithm', family: 'FHE', re: /\bbgv\b/i, std: null },
   { name: 'BFV', kind: 'algorithm', family: 'FHE', re: /\bbfv\b/i, std: null },
   { name: 'CKKS', kind: 'algorithm', family: 'FHE', re: /\bckks\b/i, std: null },
@@ -379,7 +385,24 @@ const ATTACKS = [
   { name: 'Factoring', re: /factoring|factorisation|factorization/i },
   { name: 'Discrete log', re: /discrete[-_ ]?log|pollard[-_ ]?rho|baby[-_ ]?step/i },
   { name: 'Invalid curve attack', re: /invalid[-_ ]?curve/i },
-  { name: 'Signature malleability', re: /malleab/i },
+  /* MALLEABILITY, split three ways, because /malleab/i alone credited
+     "Signature malleability" to 25 labs and only nine were about signatures.
+     The rest were ciphertext malleability - FHE ciphertexts malleable by design
+     in crypto-lab-fhe-arena, bit-flipping a ChaCha20 stream, Paillier's
+     homomorphism, XTS's known malleability - and five were neither: a
+     Fiat-Shamir transcript in crypto-lab-zk-proof-lab, a bare
+     `interface MalleabilityResult` in crypto-lab-merkle-vault.
+
+     Each specific term needs its own subject within 140 characters of the word,
+     which is what separates "yield a valid raw signature on m1*m2" from "shift
+     the ciphertexts". Where neither subject is present the finding is
+     (unspecified) - the same third state `Side-channel (unspecified)` already
+     uses, and for the same reason: the scanner can see malleability is at issue
+     and cannot tell of what. `family` makes that exclusive, so a line naming a
+     subject does not also produce the vague finding. */
+  { name: 'Signature malleability', family: 'malleability', specific: true, re: /malleab\w*(?=[^\n]{0,140}(?:signature|\bsigs?\b|ecdsa|schnorr|ed25519|eddsa|bip[-_ ]?146|bip[-_ ]?340|zip[-_ ]?215|low[-_ ]?s\b|canonical))|(?:signature|\bsigs?\b|ecdsa|schnorr|ed25519|eddsa|bip[-_ ]?146|bip[-_ ]?340|zip[-_ ]?215|low[-_ ]?s\b|canonical)[^\n]{0,140}malleab/i },
+  { name: 'Ciphertext malleability', family: 'malleability', specific: true, re: /malleab\w*(?=[^\n]{0,140}(?:ciphertext|plaintext|\baead\b|homomorph|\bfhe\b|encrypt|decrypt|flip[^\n]{0,20}bits?|bits?[^\n]{0,20}flip|authenticat))|(?:ciphertext|plaintext|\baead\b|homomorph|\bfhe\b|encrypt|decrypt|flip[^\n]{0,20}bits?|bits?[^\n]{0,20}flip|authenticat)[^\n]{0,140}malleab/i },
+  { name: 'Malleability (unspecified)', family: 'malleability', specific: false, re: /malleab/i },
   { name: 'Hash-flooding', re: /hash[-_ ]?flood/i },
   { name: 'Side-channel (unspecified)', re: /side[-_ ]?channel/i },
 ];

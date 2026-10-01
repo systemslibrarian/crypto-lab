@@ -1035,6 +1035,24 @@ someone thought to list, which is why the worktree is the actual fix and this is
 Two habits that cost nothing beside it: stage explicit paths rather than a directory, and read
 `git status` before `git commit` rather than after `git push`.
 
+**A worktree under that name used to BE a lab, as far as three checkers could tell.** The
+command above creates `../crypto-lab-lane-<name>`, which matches the directory-name filter
+`theme-sync`, `gate-sync`, `dispatch-sync` and `dispatch-comment-sync` use to find the fleet,
+and it contains this repository's own `.github/workflows` and generated `teach/` pages. On
+2026-10-01 a worktree at `../crypto-lab-expect` failed `theme-sync` on
+`crypto-lab-expect/teach/symmetric/index.html` — a finding naming a path inside the catalog
+and reading as a lab defect — and took `dispatch-sync` to `UNPINNED-LAB` and `COUNT` against
+its census, because disk said 223 where the pin says 222. Following this file's own
+instructions produced it.
+
+`tools/sibling-labs.js` is now the one enumerator all four share, and it excludes a sibling
+whose `.git` is a FILE rather than a directory: that is a linked worktree, so it is a second
+working copy of a repository already in the list. The exclusion is PRINTED with the names, not
+taken in silence, because a denominator that drops quietly is the defect `dispatch-census.json`
+exists to make loud. Proven both ways against a worktree at `../crypto-lab-lane-test`: without
+the guard `theme-sync` fails on two generated teach pages and `dispatch-sync` exits 1; with it
+all four hold their counts and name the exclusion.
+
 **Cut every lane branch from `origin/main`, never from another lane's local branch — doing so
 reproduces the sweeping problem at PR level.** Seen on 2026-09-29: a lane branched from a
 sibling lane's local branch, that branch was squash-merged, and the PR then showed ~20 files

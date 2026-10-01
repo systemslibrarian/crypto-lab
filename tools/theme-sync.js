@@ -56,6 +56,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { isLinkedWorktree, excludedLine } = require('./sibling-labs.js');
+
 const REPO_ROOT = path.join(__dirname, '..');
 const FLEET_ROOT = path.join(REPO_ROOT, '..');
 
@@ -101,10 +103,16 @@ function labPages() {
   // dot-directories, and Vite builds to dist/, so nothing under one can reach a visitor.
   const isScratchDir = (name) => name.startsWith('.');
   const pages = [];
+  const excludedWorktrees = [];
   for (const repo of fs.readdirSync(FLEET_ROOT).sort()) {
     if (!repo.startsWith('crypto-lab-')) continue;
     const root = path.join(FLEET_ROOT, repo);
     if (!fs.statSync(root).isDirectory()) continue;
+    /* A linked git worktree is a second working copy of a repository already in
+     * this list, and a worktree of THIS repository carries generated teach/
+     * pages that no lab rule applies to. Excluded and named below, never
+     * dropped in silence. See tools/sibling-labs.js. */
+    if (isLinkedWorktree(root)) { excludedWorktrees.push(repo); continue; }
     const found = [];
     (function walk(dir, depth) {
       if (depth > 4) return;
@@ -122,6 +130,7 @@ function labPages() {
     found.sort((a, b) => a.split(path.sep).length - b.split(path.sep).length || a.localeCompare(b));
     for (const file of found) pages.push({ repo, file });
   }
+  pages.excludedWorktrees = excludedWorktrees;
   return pages;
 }
 
@@ -323,6 +332,8 @@ function main() {
   const light = pages.filter((p) => EXCEPTIONS[p.repo]).length;
   console.log(`Lab pages checked: ${pages.length} ` +
     `(${pages.length - light} dark, ${light} deliberately light)`);
+  const wt = excludedLine(pages.excludedWorktrees || []);
+  if (wt) console.log(wt);
 
   // Not a failure: these are inert today. But they are inert because of one CSS
   // rule per page, so anyone editing those inline <style> blocks needs to know.

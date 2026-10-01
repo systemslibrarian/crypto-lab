@@ -138,12 +138,16 @@ const FLEET_ROOT = path.join(__dirname, '..', '..');
  * examined only if someone has cloned it here. crypto-compare and crypto-counsel
  * are deliberately inside it — both carry this job and neither is under the
  * crypto-lab- prefix, so a glob on crypto-lab-* would miss them in silence. */
-const LAB_DIR_RE = /^crypto-(lab|compare|counsel)/;
+/* Linked git worktrees under a matching name are excluded and NAMED, not dropped
+ * in silence — see tools/sibling-labs.js for why one appears there at all. */
+const { siblingLabs: enumerate, LAB_DIR_RE } = require('./sibling-labs.js');
+
+let excludedWorktrees = [];
 
 function siblingLabs() {
-  return fs.readdirSync(FLEET_ROOT).sort()
-    .filter((d) => LAB_DIR_RE.test(d))
-    .filter((d) => fs.existsSync(path.join(FLEET_ROOT, d, '.github', 'workflows')));
+  const { labs, excluded } = enumerate(FLEET_ROOT, { requireWorkflows: true });
+  excludedWorktrees = excluded;
+  return labs;
 }
 
 function workflowFiles(repoDir) {
@@ -400,6 +404,8 @@ function main() {
   const broken = rows.filter((r) => r.verdict !== 'OK' && r.verdict !== 'NO-PAGES');
 
   console.log(`Labs cloned here: ${labs.length} | with a Dependabot auto-merge job: ${withJob.size}`);
+  const wt = require('./sibling-labs.js').excludedLine(excludedWorktrees);
+  if (wt) console.log(wt);
   console.log(`Auto-merge jobs checked: ${rows.length} (${ok.length} sound, ${broken.length} can skip the dispatch in silence)`);
 
   const noJob = labs.filter((l) => !withJob.has(l));

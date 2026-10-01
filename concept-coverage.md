@@ -153,6 +153,14 @@ placement carries an open taxonomy question with it — a key that releases a FU
 plaintext may deserve its own concept, distinct from §9's access control and §22's homomorphic
 computation. Recorded there rather than decided here. Catalogued total moves to 212.*
 
+*Version 21 — files MGM Mode under §5. It is the catalog's first AEAD whose authentication is
+multilinear rather than polynomial: every block is weighted by its own block-cipher output
+H_i = E_K(Z_i) where GCM weights by powers of one H, and the lab sets the two side by side over
+the same field. It is also the first lab to carry Magma, the 64-bit GOST cipher, which World
+Ciphers names only as the predecessor Kalyna and Kuznyechik replaced. §5 stays `COVERED`; the
+64-bit data limit it computes cross-links Feistel Forge's Sweet32 exhibit rather than repeating it.
+Catalogued total moves to 213.*
+
 *Three of the eight needed a judgment rather than a lookup, and in two of them the concept
 diverges from the catalog section — which is the divergence this file exists to allow. **Split
 Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
@@ -309,7 +317,7 @@ out to be structured and, so far as anyone has shown, harmless. Provenance is ch
 cases; the verdict is not the same, and that is the point.
 
 **5. Message authentication — `COVERED`**
-MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward · KMAC Gate. Polynomial MACs, AEAD, and
+MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward · KMAC Gate · MGM Mode. Polynomial MACs, AEAD, and
 misuse-resistant AEAD. Stream Ward extends the arc past the single message: chained streaming
 AEAD, where each segment's tag covers a rolling chain state plus its sequence number, so
 reordering or truncating intact valid frames is caught. One-shot AEAD authenticates *content*;
@@ -993,7 +1001,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 212.**
+**Catalogued total: 213.**
 
 ---
 

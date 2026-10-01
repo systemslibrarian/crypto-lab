@@ -133,6 +133,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const { siblingLabs: labDirs } = require('./sibling-labs.js');
 
 /* The canonical rationale, WITHOUT the leading `# ` and without indentation —
  * both are supplied per site so each repo keeps its own. This array is the
@@ -178,10 +179,12 @@ const indentOf = (l) => l.length - l.trimStart().length;
  * be mutation-tested, and an untested checker is the thing this whole file
  * exists to stop being. It defaults to FLEET_ROOT, so every caller that does
  * not care is unchanged. */
+/* Shared with gate-sync, dispatch-sync and theme-sync, and the reason it is
+ * shared is that a linked git worktree beside the clones must not be counted as
+ * a lab. dispatch-census.js enumerates through this function, so without the
+ * exclusion a lane worktree reads as an unpinned lab. See tools/sibling-labs.js. */
 function siblingLabs(root = FLEET_ROOT) {
-  return fs.readdirSync(root).sort()
-    .filter((d) => LAB_DIR_RE.test(d))
-    .filter((d) => fs.existsSync(path.join(root, d, '.github', 'workflows')));
+  return labDirs(root, { requireWorkflows: true }).labs;
 }
 
 function workflowFiles(repoDir) {

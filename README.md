@@ -427,7 +427,7 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 
 14 of these 29 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
-Not listed above: `catalog-vocab.js`, `clone-source.js`, `depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
+Not listed above: `catalog-vocab.js`, `clone-source.js`, `depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `sibling-labs.js`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 
 This table lists the tools git tracks. Anything untracked in `tools/` is work in progress rather than fleet machinery, and is absent here for that reason rather than because nothing else exists.
 

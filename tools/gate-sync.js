@@ -899,12 +899,16 @@ function cardedSlugs() {
  * if someone has cloned it here, under a directory whose name starts
  * crypto-lab / crypto-compare / crypto-counsel, containing .github/workflows.
  * unseenCarded() below is the accounting for everything that misses. */
-const LAB_DIR_RE = /^crypto-(lab|compare|counsel)/;
+/* Linked git worktrees under a matching name are excluded and NAMED, not dropped
+ * in silence — see tools/sibling-labs.js for why one appears there at all. */
+const { siblingLabs: enumerate, LAB_DIR_RE } = require('./sibling-labs.js');
+
+let excludedWorktrees = [];
 
 function siblingLabs() {
-  return fs.readdirSync(FLEET_ROOT).sort()
-    .filter((d) => LAB_DIR_RE.test(d))
-    .filter((d) => fs.existsSync(path.join(FLEET_ROOT, d, '.github', 'workflows')));
+  const { labs, excluded } = enumerate(FLEET_ROOT, { requireWorkflows: true });
+  excludedWorktrees = excluded;
+  return labs;
 }
 
 /* Carded labs that siblingLabs() never returned, with the reason each one missed.
@@ -990,6 +994,8 @@ function main() {
   console.log(`Labs gated by both a Pages deploy and a Dependabot auto-merge: ${rows.length}`);
   console.log(`  ${rows.length - failing.size - warning.size} clean, ${failing.size} failing, `
     + `${warning.size} warning only`);
+  const wt = require('./sibling-labs.js').excludedLine(excludedWorktrees);
+  if (wt) console.log(wt);
   console.log(`Skipped, not violations: ${skipped['no-automerge'].length} with no auto-merge job, `
     + `${skipped['no-deploy'].length} with no Pages deploy, ${skipped.neither.length} with neither`);
   /* Name them. The count on its own is where this checker hid two labs it could

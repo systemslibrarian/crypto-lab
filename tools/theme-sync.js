@@ -20,6 +20,8 @@
  * Per lab index.html it asserts:
  *   1. <html> carries data-theme, set to the theme that lab is supposed to have
  *   2. the head pins that theme with a literal, rather than reading a stored one
+ *      (or, with no inline head script at all, nothing in the lab writes
+ *      data-theme, so the <html> literal is the pin — see pinnedByMarkupAlone)
  *   3. no #cl-theme-toggle survives anywhere in the file
  *
  * It then sweeps the whole repo for code that still DRIVES a toggle — clicks it,
@@ -153,7 +155,7 @@ function inspect(repo, file) {
   const head = html.slice(0, html.indexOf('</head>') + 1 || html.length);
   const pin = new RegExp(
     `setAttribute\\(\\s*['"]data-theme['"]\\s*,\\s*['"]${want}['"]\\s*\\)`);
-  if (!pin.test(head)) {
+  if (!pin.test(head) && !pinnedByMarkupAlone(repo, head)) {
     problems.push(`the head does not pin data-theme to "${want}" with a literal`);
   }
   // A boot script that still READS a stored preference is the bug that made a
@@ -167,6 +169,49 @@ function inspect(repo, file) {
   }
 
   return problems;
+}
+
+/*
+ * A page with NO inline script in its head is pinned by the <html data-theme>
+ * literal alone, provided nothing in the lab can change it afterwards. That is
+ * the strict-CSP shape: crypto-lab-kyber-vault removed every inline script so
+ * `script-src 'self'` could hold (its 0923913, 2026-09-19), and the boot script
+ * went with them. A boot pin exists to overwrite a stored or OS preference
+ * before first paint; a page that runs nothing before first paint and never
+ * writes data-theme has nothing to overwrite. Requiring the script would mean
+ * failing the lab for its CSP, or pushing it to weaken one.
+ *
+ * Both conditions are needed. Without the second, a lab could drop its boot
+ * script and set the theme from prefers-color-scheme in its bundle, and this
+ * would read the markup and call it pinned. So any code file in the lab that
+ * sets or removes data-theme disqualifies it, a dead legacy toggle included.
+ */
+const INLINE_SCRIPT = /<script\b(?![^>]*\bsrc\s*=)[^>]*>/i;
+const WRITES_THEME =
+  /setAttribute\(\s*['"]data-theme['"]|removeAttribute\(\s*['"]data-theme['"]|\.dataset\.theme\s*=(?!=)|\.dataset\[\s*['"]theme['"]\s*\]\s*=(?!=)/;
+const writesThemeCache = new Map();
+function pinnedByMarkupAlone(repo, head) {
+  if (INLINE_SCRIPT.test(head)) return false;
+  if (!writesThemeCache.has(repo)) writesThemeCache.set(repo, themeWriters(repo).length > 0);
+  return !writesThemeCache.get(repo);
+}
+function themeWriters(repo) {
+  const skip = new Set(['node_modules', 'dist', '.git', 'playwright-report',
+    'test-results', 'target', 'coverage', 'build', 'original', 'archive', '.tmp-checks']);
+  const found = [];
+  (function walk(dir) {
+    let entries;
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) { if (!skip.has(e.name)) walk(full); continue; }
+      if (!CODE_EXT.includes(path.extname(e.name))) continue;
+      let src;
+      try { src = stripComments(fs.readFileSync(full, 'utf8')); } catch { continue; }
+      if (WRITES_THEME.test(src)) found.push(full);
+    }
+  })(path.join(FLEET_ROOT, repo));
+  return found;
 }
 
 // Code that only makes sense when a toggle exists. Comments are ignored: plenty

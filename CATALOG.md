@@ -20,7 +20,7 @@ with `node tools/catalog-evidence.js verify`.
 
 ## Reverse index — which labs implement what
 
-168 algorithms are implemented somewhere in the fleet, grouped by family.
+167 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -314,11 +314,6 @@ A lab in *italics* references the algorithm without implementing it.
 - **Also referenced by:** *TC26 Pair*, *Babel Hash*, *Hash Zoo*, *World Hashes*, *LMS Ledger*, *LMS/XMSS*, *ORAM Vault*, *ZK Arena*, *Jevil*, *PQ Families*, *Web of Trust*, *Bitcoin Wallet*, *Collision Vault*, *Bitcoin Script*, *Stream Ward*, *KMAC Gate*, *DNSSEC Chain*, *Sector Vault*, *Attestation Gate*, *Ghost Commit*
 
 ### block cipher
-
-#### 3DES
-
-- **Implemented by:** [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/ui/frost-panel.ts:194`
-- **Also referenced by:** *AES Modes*, *Feistel Forge*
 
 #### AES
 
@@ -657,8 +652,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### AES-KW
 
-- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:18`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/aes-kw.ts:78`; [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) `src/ui/app.ts:56`
-- **Also referenced by:** *Feistel Forge*
+- **Implemented by:** [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/aes-kw.ts:78`
+- **Also referenced by:** *Format Ward*
 
 ### lattice algorithm
 
@@ -1085,13 +1080,12 @@ disagree about who owns SHA-256.
 
 | Algorithm | Document | Labs |
 |---|---|---|
-| 3DES | SP 800-67 | 1 |
 | AES | FIPS 197 | 65 |
 | AES-CBC | SP 800-38A | 11 |
 | AES-CCM | SP 800-38C | 1 |
 | AES-CTR | SP 800-38A | 8 |
 | AES-GCM | SP 800-38D | 50 |
-| AES-KW | SP 800-38F | 3 |
+| AES-KW | SP 800-38F | 1 |
 | AES-XTS | SP 800-38E | 1 |
 | Ascon | SP 800-232 | 1 |
 | CMAC | SP 800-38B | 1 |
@@ -1218,7 +1212,7 @@ may teach the same primitive from different angles — but an overlap **with no 
 difference** is a question nobody has answered, and a visitor choosing between the
 two has nothing to go on.
 
-83 pairs: 7 with a stated difference, **1 examined and found to be duplication**, 75 nobody has looked at.
+82 pairs: 7 with a stated difference, **1 examined and found to be duplication**, 74 nobody has looked at.
 
 A pair marked DUPLICATION is a finding, not a description: someone read both and
 found no difference worth having. It is listed first because it is the only row here
@@ -1577,11 +1571,6 @@ that asks for a decision.
 **Pairing Gate / Attribute Gate**
 
 - **Shared:** BLS signatures, BLS12-381, Pairing
-- **Stated difference:** **none stated**
-
-**Quantum Vault KpqC / Envelope KMS**
-
-- **Shared:** AES, AES-GCM, AES-KW, HKDF, SHA-256
 - **Stated difference:** **none stated**
 
 **Kerberos v5 / Hidden Bit**
@@ -2354,7 +2343,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
 Real DES stepped round by round, where the round function need not be invertible — and DES's is not. Then double DES falls to meet-in-the-middle, and a 64-bit block collides at the birthday bound.
 
 - **Implements:** DES `src/attacks/mitm.ts:80`
-- **References:** 3DES, AES, AES-GCM, AES-KW, Blowfish, Camellia, FF1, KASUMI, MISTY1, SHA-256, Serpent, Simon, Speck, Toy SPN, Twofish
+- **References:** 3DES, AES, AES-GCM, Blowfish, Camellia, FF1, KASUMI, MISTY1, SHA-256, Serpent, Simon, Speck, Toy SPN, Twofish
 - **Attacks shown:** Birthday bound `src/ui/mitmPanel.ts:296`, Brute force `src/attacks/complement.ts:138`, Chosen-plaintext attack `src/ui/complementPanel.ts:71`, Differential cryptanalysis `README.md:276`, Key recovery `README.md:303`, Known-plaintext attack `src/attacks/sweet32.ts:351`, Linear cryptanalysis `README.md:200`, Man-in-the-middle `src/main.ts:28`, Nonce reuse `src/ui/sweet32Panel.ts:590`, Padding oracle `README.md:203`, Side-channel (unspecified) `README.md:204`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
@@ -2389,7 +2378,7 @@ Combining two satisfying R1CS instances leaves a computable cross term; relax th
 FF1 and FF3-1 tokenization of credit cards, SSNs, and phone numbers — with the linear cryptanalysis that got FF3-1 cut from NIST's draft revision.
 
 - **Implements:** AES `src/ff1.ts:47`, AES-CBC `src/ff1.ts:150`, FF1 `src/attack.ts:23`
-- **References:** AES-GCM, AES-SIV, ChaCha20, ChaCha20-Poly1305, Poly1305, RSA, RSA-OAEP
+- **References:** AES-GCM, AES-KW, AES-SIV, ChaCha20, ChaCha20-Poly1305, Poly1305, RSA, RSA-OAEP
 - **Attacks shown:** Brute force `src/ui.ts:774`, Chosen-plaintext attack `src/ui.ts:775`, Frequency analysis `src/ui.ts:720`, Known-plaintext attack `src/ui.ts:851`, Linear cryptanalysis `src/ui.ts:862`, Nonce reuse `README.md:81`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
@@ -2767,7 +2756,7 @@ A hash-based few-time signature scheme over the Goldilocks field using Lagrange 
 
 Paste or generate a JWT, tamper with claims, and swap algorithms to watch alg:none and HS/RS key-confusion attacks succeed against a vulnerable verifier and fail against a correct one.
 
-- **Implements:** AES-KW `src/ui/app.ts:56`, ECDSA `src/jwt/keys.ts:58`, HMAC `src/jwt/sign.ts:66`, P-256 `src/jwt/keys.ts:58`, RSA `src/jwt/keys.ts:46`, SHA-256 `src/jwt/keys.ts:41`
+- **Implements:** ECDSA `src/jwt/keys.ts:58`, HMAC `src/jwt/sign.ts:66`, P-256 `src/jwt/keys.ts:58`, RSA `src/jwt/keys.ts:46`, SHA-256 `src/jwt/keys.ts:41`
 - **References:** Ed25519, RSA-OAEP, RSA-PSS
 - **Attacks shown:** Brute force `README.md:50`, Nonce reuse `README.md:70`, Padding oracle `README.md:74`, Timing side-channel `README.md:73`
 - **Standards body:** IETF, NIST
@@ -3543,7 +3532,7 @@ A biased beam-splitter QRNG, Shannon vs min-entropy on the same stream, von Neum
 
 Threshold short-secret encryption using secret sharing and Korean post-quantum cryptography, compiled to WASM for direct browser use.
 
-- **Implements:** AES `web-demo/src/crypto/aes.ts:9`, AES-GCM `web-demo/src/crypto/aes.ts:10`, AES-KW `web-demo/src/crypto/pipeline.ts:18`, HAETAE `wasm/src/haetae_exports.c:2`, HKDF `crates/qv-core/src/encrypt.rs:20`, PBKDF2 `web-demo/src/crypto/keywrap.ts:40`, SHA-256 `web-demo/src/crypto/keywrap.ts:40`, Shamir secret sharing `web-demo/src/crypto/pipeline.ts:16`, SMAUG-T `wasm/src/smaug_exports.c:2`
+- **Implements:** AES `web-demo/src/crypto/aes.ts:9`, AES-GCM `web-demo/src/crypto/aes.ts:10`, HAETAE `wasm/src/haetae_exports.c:2`, HKDF `crates/qv-core/src/encrypt.rs:20`, PBKDF2 `web-demo/src/crypto/keywrap.ts:40`, SHA-256 `web-demo/src/crypto/keywrap.ts:40`, Shamir secret sharing `web-demo/src/crypto/pipeline.ts:16`, SMAUG-T `wasm/src/smaug_exports.c:2`
 - **Source review:** [c0c067dba8dc](https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc/commit/c0c067dba8dc942924fe754949ad4ceb26ec49a6) — Rust and C source reviewed; three compiled WASM binaries remain opaque
 - **Partially unread:** WebAssembly:3 — source or compiled binary not fully available for review here.
 - **References:** AES-CBC, AES-CCM, AES-ECB, Argon2, CTR-DRBG, ChaCha20, Diffie-Hellman, Dilithium, ECDH, ECDSA, Ed25519, Fiat-Shamir, Fujisaki-Okamoto transform, Gaussian mechanism, Grover's algorithm, HMAC, Keccak, Kyber, LWE, MD5, ML-DSA, ML-KEM, NTT, OPAQUE, Pairing, Poly1305, RSA, RSA-PSS, SHA-3, SHAKE, Schnorr, Shor's algorithm, TLS 1.3, XChaCha20-Poly1305, bcrypt
@@ -3715,7 +3704,7 @@ Split a secret into shares using Shamir's Secret Sharing and reconstruct with an
 
 Compare Shamir secret sharing against FROST signatures side by side — watch Shamir reassemble the key in memory while FROST signs without it ever existing. Real GF(256) and Ed25519. No backend.
 
-- **Implements:** 3DES `src/ui/frost-panel.ts:194`, Ed25519 `src/frost/keygen.ts:4`, FROST `src/ui/risk-scenarios.ts:166`, HMAC `src/ui/shamir-panel.ts:539`, SHA-256 `src/ui/shamir-panel.ts:539`, SHA-512 `src/frost/keygen.ts:14`, Shamir secret sharing `src/frost/field.ts:80`
+- **Implements:** Ed25519 `src/frost/keygen.ts:4`, FROST `src/ui/risk-scenarios.ts:166`, HMAC `src/ui/shamir-panel.ts:539`, SHA-256 `src/ui/shamir-panel.ts:539`, SHA-512 `src/frost/keygen.ts:14`, Shamir secret sharing `src/frost/field.ts:80`
 - **References:** Schnorr
 - **Attacks shown:** Key recovery `src/ui/decision-guide.ts:22`, Nonce reuse `src/ui/decision-guide.ts:48`, Side-channel (unspecified) `src/ui/decision-guide.ts:39`
 - **Standards body:** IETF, NIST

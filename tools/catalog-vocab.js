@@ -354,14 +354,20 @@ const ALGORITHMS = [
 
   // --- found by `catalog-evidence.js gaps`: chips naming algorithms the vocabulary lacked ---
   { name: 'ristretto255', kind: 'algorithm', family: 'elliptic curve', re: /ristretto/i, std: 'IETF:RFC 9496' },
-  { name: 'Streebog', kind: 'algorithm', family: 'hash', re: /streebog|gost[-_ ]?r?[-_ ]?34\.11/i, std: 'ISO:GOST R 34.11-2012' },
-  { name: 'Kuznyechik', kind: 'algorithm', family: 'block cipher', re: /kuznyechik|gost[-_ ]?r?[-_ ]?34\.12/i, std: 'ISO:GOST R 34.12-2015' },
+  /* Streebog IS in ISO/IEC 10118-3:2018 (dedicated hash-functions 11 and 12),
+     so it stays under ISO, citing the ISO document the way SM3 does. Kuznyechik
+     and Magma are NOT in ISO/IEC 18033-3: the amendment proposing Kuznyechik was
+     withdrawn, and crypto-lab-world-ciphers says so (README.md:57). Filing them
+     under ISO published a standardisation the catalog's own lab denies, so they
+     answer to GOST, the way Kupyna answers to DSTU. */
+  { name: 'Streebog', kind: 'algorithm', family: 'hash', re: /streebog|gost[-_ ]?r?[-_ ]?34\.11/i, std: 'ISO:ISO/IEC 10118-3 / GOST R 34.11-2012' },
+  { name: 'Kuznyechik', kind: 'algorithm', family: 'block cipher', re: /kuznyechik|gost[-_ ]?r?[-_ ]?34\.12/i, std: 'GOST:GOST R 34.12-2015' },
   /* Found by `catalog-sync.js vocab` on its first run, by the same evidence that
      found ZUC: crypto-lab-world-hashes chips Kupyna and depends on @li0ard/kupyna,
      and no term could name it. Two gaps of one class in one run is the argument
      for the check existing rather than for the two entries. */
   { name: 'Kupyna', kind: 'algorithm', family: 'hash', re: /kupyna|dstu[-_ ]?7564/i, std: 'DSTU:DSTU 7564:2014' },
-  { name: 'Magma', kind: 'algorithm', family: 'block cipher', re: /\bmagma\b/i, std: 'ISO:GOST R 34.12-2015' },
+  { name: 'Magma', kind: 'algorithm', family: 'block cipher', re: /\bmagma\b/i, std: 'GOST:GOST R 34.12-2015' },
   { name: 'FF1', kind: 'algorithm', family: 'format-preserving encryption', re: /\bff1\b|format[-_ ]?preserving/i, std: 'NIST:SP 800-38G' },
   { name: 'FRI', kind: 'algorithm', family: 'proof system', re: /\bfri\b(?![-_ ]?(?:day|end))/i, std: null },
   { name: 'Private information retrieval', kind: 'algorithm', family: 'PIR', re: /\bpir\b|private[-_ ]?information[-_ ]?retrieval/i, std: null },

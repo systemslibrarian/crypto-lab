@@ -1013,6 +1013,12 @@ disagree about who owns SHA-256.
 | TEA1 | TETRA TEA1 | 1 |
 | ZUC | 3GPP TS 35.221 / GM/T 0001-2012 | 1 |
 
+### GOST
+
+| Algorithm | Document | Labs |
+|---|---|---|
+| Kuznyechik | GOST R 34.12-2015 | 2 |
+
 ### IETF
 
 | Algorithm | Document | Labs |
@@ -1068,13 +1074,12 @@ disagree about who owns SHA-256.
 |---|---|---|
 | Classic McEliece | ISO/IEC 18033-2 amendment | 1 |
 | FrodoKEM | ISO/IEC 18033-2 amendment | 2 |
-| Kuznyechik | GOST R 34.12-2015 | 2 |
 | MISTY1 | ISO/IEC 18033-3 | 1 |
 | SM2 | ISO/IEC 14888-3 / GB/T 32918 | 1 |
 | SM3 | ISO/IEC 10118-3 / GB/T 32905 | 2 |
 | SM4 | ISO/IEC 18033-3 / GB/T 32907 | 1 |
 | SM9 | ISO/IEC 14888-3 / GM/T 0044-2016 | 1 |
-| Streebog | GOST R 34.11-2012 | 2 |
+| Streebog | ISO/IEC 10118-3 / GOST R 34.11-2012 | 2 |
 
 ### NIST
 
@@ -3780,7 +3785,7 @@ GOST published a 256-byte S-box as a bare table. It falls out of four small cons
 - **Implements:** AES `src/gost/aes.ts:31`, Kuznyechik `src/gost/kuznyechik.ts:18`
 - **References:** Camellia, Kupyna, SHA-256, SHA-3, Streebog
 - **Attacks shown:** Discrete log `src/ui/tablePane.ts:255`, Side-channel (unspecified) `README.md:76`
-- **Standards body:** ISO, NIST
+- **Standards body:** GOST, NIST
 - **Implementation:** hand-rolled
 
 ### SM2 Forge
@@ -4155,7 +4160,7 @@ Camellia (Japan), ARIA (South Korea), SM4 (China), and Kuznyechik (Russia) side 
 - **Implements:** AES `src/main.ts:115`, AES-CBC `src/main.ts:177`, ARIA `src/main.ts:195`, Camellia `src/ciphers/camellia.ts:58`, Kuznyechik `src/ciphers/registry.ts:70`, SEED `src/ciphers/registry.ts:44`, SM4 `src/ciphers/sm4-trace.ts:101`
 - **References:** Ascon, ChaCha20, Grover's algorithm, Kupyna, NTT, OPAQUE, Serpent, Streebog, TLS 1.3, Toy SPN
 - **Attacks shown:** Birthday bound `index.html:725`, Nonce reuse `README.md:47`, Power analysis `index.html:94`
-- **Standards body:** IETF, ISO, NIST
+- **Standards body:** GOST, IETF, ISO, NIST
 - **Implementation:** @noble
 
 ### World Hashes

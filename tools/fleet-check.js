@@ -89,30 +89,23 @@ const CHECKERS = [
  * exactly that case: two of its five markers are decided on, and the other three are
  * not. Decisions live in audits/LANE-VERDICT-HARNESS-2026-09-21.md. */
 const EXPECTED = {
-  'catalog-evidence': [
-    {
-      marker: 'STALE-REVIEW',
-      decision: 'the maintainer is working through these',
-      unblocks: 'each pin records a PERSON\'s reading of a lab whose source the scanner could not resolve, so only a person can clear it: re-read the lab and update its commit in `tools/catalog-reviewed.json`. Nothing here can be re-derived, which is why it sits in this list rather than the one beside it — STALE-ANCHOR next to it is a line number that rotted and `node tools/catalog-evidence.js write` fixes it, so that one stays a surprise',
-    },
-  ],
-  'dispatch-sync': [
-    {
-      marker: 'RE-QUERY',
-      decision: 'D4',
-      unblocks: 'fold-gate\'s RE-QUERY gets its own small PR once #11 merges — deliberately not folded in, so the PR that merges stays the PR that was audited',
-    },
-    {
-      marker: 'UNPINNED-LAB',
-      decision: 'D12',
-      unblocks: 'the census is deliberately unpinned: re-pin with `node tools/dispatch-census.js write` once the six new labs have their initial commits and the lane building them reports done',
-    },
-    {
-      marker: 'COUNT',
-      decision: 'D12',
-      unblocks: 'same pin as UNPINNED-LAB — a pin taken over a half-built fleet is a figure inherited from a moment rather than derived from a state',
-    },
-  ],
+  /* EMPTY ON PURPOSE, and emptied by the findings clearing rather than by a decision
+   * to stop tracking them. Four entries stood here until 2026-10-01:
+   *
+   *   catalog-evidence STALE-REVIEW  the maintainer re-read the pinned labs; `verify`
+   *                                  now reports every pin matching its clone
+   *   dispatch-sync    RE-QUERY      D4 — fold-gate's re-query is gone; 0 of 221
+   *                                  auto-merges can skip the dispatch in silence
+   *   dispatch-sync    UNPINNED-LAB  D12 — the census is re-pinned at 222/221/220
+   *   dispatch-sync    COUNT         D12 — same pin
+   *
+   * A spent decision is worse than no decision. It keeps reading the marker as
+   * known, so the NEXT occurrence — a different lab, a new pin going stale, a
+   * census that falls behind again — arrives in the accounted-for list instead of
+   * the surprising one. That is the muting this file's own comment warns about, one
+   * level down: not a whole checker marked expected, but a marker whose reason has
+   * expired. Each is restored by re-deciding it, not by remembering it was here.
+   */
 };
 
 /* Violation markers these checkers print: `NAME (n)` at the head of a section. A

@@ -2861,7 +2861,7 @@ SHA3-256, SHAKE, cSHAKE and KMAC driven by one hand-rolled Keccak-f[1600] permut
 
 [`crypto-lab-kpqc-pair`](https://systemslibrarian.github.io/crypto-lab-kpqc-pair/) · Korean PQC · POST-QUANTUM, SIGNATURES
 
-AIMer signs from a symmetric one-way function while NTRU+ encapsulates from the older NTRU line — the two KpqC algorithms Quantum Vault left out.
+Historical AIM2-based AIMer signing, with a reported public-key-only forgery vulnerability (ePrint 2026/2235, September 28, 2026), beside NTRU+ from the older NTRU line. Honest round trips do not establish signature security.
 
 - **Implements:** AIMer `src/aimer/reference.ts:12`, NTRU+ `src/ntruplus/reference.ts:22`, SHAKE `src/aimer/aim.ts:127`
 - **References:** Fiat-Shamir, HAETAE, NTRU, SHA-256, SHA-3, SMAUG-T, Shamir secret sharing

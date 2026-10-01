@@ -548,6 +548,34 @@ function vocabChecks(list, opts = {}) {
       bad.push({ kind: 'NAME-UNMATCHED', what: t.name, why: `its own name matches neither its re nor its chipRe, so no card can name it the obvious way. Give it a chipRe.` });
     }
   }
+  /* TWO TERMS FOR ONE ALGORITHM credit every lab that has it TWICE, and nothing
+     here noticed. #77 added `BCH code` beside an existing `BCH` with the identical
+     regex and the identical family, and three published cards carried both names
+     until it was found by reading a derived card rather than by any gate.
+     NAME-UNMATCHED and PACKAGE-ONLY both pass a duplicate trivially: it matches
+     its own name, and it fires on no package name.
+     Two tests, because a duplicate can arrive either way. An identical regex
+     SOURCE is the copy-paste case. Mutual name matching is the near-miss case,
+     where one term's pattern is broad enough to name the other -- which is also
+     what a deliberate alias pair looks like, so `alias` is excused. */
+  const byPattern = new Map();
+  for (const t of ALGORITHMS) {
+    const key = String(t.re);
+    if (byPattern.has(key)) {
+      bad.push({ kind: 'DUPLICATE-TERM', what: `${byPattern.get(key)} and ${t.name}`, why: `share the identical pattern ${key}, so every lab matching it is credited twice. Keep one term and merge onto it anything the other added.` });
+    } else byPattern.set(key, t.name);
+  }
+  for (const a of ALGORITHMS) {
+    for (const b of ALGORITHMS) {
+      if (a.name >= b.name) continue;
+      if (a.alias === b.name || b.alias === a.name) continue;
+      if (String(a.re) === String(b.re)) continue;
+      if (namesChip(b, a.name) && namesChip(a, b.name)) {
+        bad.push({ kind: 'DUPLICATE-TERM', what: `${a.name} and ${b.name}`, why: `each term's pattern names the other, so one chip or one line is credited to both. Narrow one, or declare them an alias pair if they are the same algorithm under two names.` });
+      }
+    }
+  }
+
   const { specifiers, byLab } = fleetEvidence(list.map((c) => c.slug));
   for (const t of ALGORITHMS) {
     const self = norm(t.name);
@@ -767,7 +795,8 @@ function main() {
       if (cs.fromHead.length) console.log(`Read from committed HEAD (dirty working tree): ${cs.fromHead.map((x) => x.slug.replace('crypto-lab-', '')).join(', ')}`);
       if (cs.refused.length) console.log(`Refused (dirty, HEAD unreadable): ${cs.refused.map((x) => x.slug).join(', ')}`);
       console.log(`Vocabulary invariants hold over ${ALGORITHMS.length} terms and ${list.length} cards:`);
-      console.log('  every term matches its own name, no term is credited by a package name alone,');
+      console.log('  every term matches its own name, no two terms index the same algorithm,');
+      console.log('  no term is credited by a package name alone,');
       console.log(`  and every chip with a dependency behind it resolves to a term (${v.exempt} declared`);
       console.log('  exemptions in tools/catalog-chip-exempt.json).');
     }

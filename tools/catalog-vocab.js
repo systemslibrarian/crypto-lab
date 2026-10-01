@@ -148,7 +148,7 @@ const ALGORITHMS = [
   // --- codes, secret sharing, commitments ---
   { name: 'Reed-Solomon', kind: 'algorithm', family: 'error-correcting code', re: /reed[-_ ]?solomon/i, std: null },
   { name: 'Reed-Muller', kind: 'algorithm', family: 'error-correcting code', re: /reed[-_ ]?muller/i, std: null },
-  { name: 'BCH', kind: 'algorithm', family: 'error-correcting code', re: /\bbch\b/i, std: null },
+  { name: 'BCH', kind: 'algorithm', family: 'error-correcting code', re: /\bbch\b/i, chipRe: /\bbch\b/i, pathRe: /(?:^|\/)bch(?:[-_.]|$)/i, std: null },
   { name: 'Hamming code', kind: 'algorithm', family: 'error-correcting code', re: /hamming[-_ ]?code/i, std: null },
   { name: 'Shamir secret sharing', kind: 'algorithm', family: 'secret sharing', re: /(?<!fiat)(?<!fiat[-_ ])\bshamir\b/i, std: null },
   { name: 'FROST', kind: 'algorithm', family: 'threshold signature', re: /\bfrost(?:[-_ ]|\b)/i, std: 'IETF:RFC 9591' },
@@ -182,10 +182,13 @@ const ALGORITHMS = [
      attacks on it are separate terms below, where a card can carry them
      honestly. */
   { name: 'White-box AES', kind: 'algorithm', family: 'obfuscation', re: /white[-_ ]?box[-_ ]?aes|\bchow\b[^\n]{0,40}(?:construction|table|encoding|network)|white[-_ ]?box[^\n]{0,30}(?:table|encoding|network)/i, chipRe: /white[-_ ]?box/i, std: null },
-  /* Fuzzy extractors and the BCH code crypto-lab-drift-key corrects with. The
-     secure sketch is the construction; the code is the primitive under it, and
-     the lab keeps them in separate files (src/crypto/sketch.ts, bch.ts) because
-     the point of the exhibit is how much entropy the helper data costs. */
+  /* The fuzzy extractor crypto-lab-drift-key builds. The secure sketch is the
+     construction and BCH is the primitive under it, which the lab keeps in a
+     separate file because the point of the exhibit is how much entropy the
+     public helper data costs. BCH already had a term (above); #77 added a
+     second one called `BCH code` with the IDENTICAL regex, which credited three
+     cards twice. Its pathRe was the only new thing and now lives on the
+     original. */
   /* `structures` rather than a path, on purpose. crypto-lab-drift-key keeps the
      construction in src/crypto/sketch.ts and names it "code-offset secure
      sketch" only in that file's header COMMENT - its executable code declares
@@ -197,7 +200,6 @@ const ALGORITHMS = [
      already uses for TLS and OPAQUE, and it cannot fire on a coincidence of
      vocabulary. */
   { name: 'Fuzzy extractor', kind: 'algorithm', family: 'KDF', re: /fuzzy[-_ ]?extractor|secure[-_ ]?sketch|code[-_ ]?offset[^\n]{0,24}sketch/i, chipRe: /fuzzy[-_ ]?extractor|secure[-_ ]?sketch/i, structures: ['PublicHelper', 'EnrollmentSecret', 'ReproduceAttempt'], std: null },
-  { name: 'BCH code', kind: 'algorithm', family: 'error-correcting code', re: /\bbch\b/i, chipRe: /\bbch\b/i, pathRe: /(?:^|\/)bch(?:[-_.]|$)/i, std: null },
   { name: 'Feldman VSS', kind: 'algorithm', family: 'secret sharing', re: /feldman/i, std: null },
   { name: 'Pedersen commitment', kind: 'algorithm', family: 'commitment', re: /pedersen/i, std: null },
   { name: 'Merkle tree', kind: 'algorithm', family: 'authenticated data structure', re: /merkle(?![-_ ]?damg)/i, std: null },

@@ -3515,7 +3515,7 @@ A guided tour of the five post-quantum problem families — lattice, code-based,
 
 - **Implements:** Information-set decoding `src/crypto.ts:240`, Lamport `src/crypto.ts:55`, SHA-256 `src/crypto.ts:35`
 - **References:** AES, ARIA, BIKE, CSIDH, Classic McEliece, Dilithium, ECDSA, Falcon, Fujisaki-Okamoto transform, Grover's algorithm, HQC, Isogeny walk, Kyber, LMS, LWE, ML-DSA, ML-KEM, Merkle tree, NTRU, P-256, Pairing, RSA, SHA-384, SHAKE, SIKE, SLH-DSA, SPHINCS+, Schnorr, Shamir secret sharing, Shor's algorithm, TLS 1.3, UOV, Winternitz, X25519, XMSS
-- **Attacks shown:** Birthday bound `src/data.ts:414`, Chosen-ciphertext attack `src/data.ts:192`, Chosen-plaintext attack `src/data.ts:859`, Differential cryptanalysis `src/data.ts:529`, Discrete log `src/data.ts:715`, Factoring `src/data.ts:715`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:155`, Side-channel (unspecified) `src/data.ts:228`, Timing side-channel `src/data.ts:296`
+- **Attacks shown:** Birthday bound `src/data.ts:421`, Chosen-ciphertext attack `src/data.ts:192`, Chosen-plaintext attack `src/data.ts:866`, Differential cryptanalysis `src/data.ts:536`, Discrete log `src/data.ts:722`, Factoring `src/data.ts:722`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:155`, Side-channel (unspecified) `src/data.ts:228`, Timing side-channel `src/data.ts:296`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 

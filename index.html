@@ -1804,7 +1804,7 @@
       <div class="wrap">
         <div class="featured-head">
           <div class="featured-headline-row">
-            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">213</span> interactive cryptography exhibits</span></h1>
+            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">218</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -20031,6 +20031,103 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
+          <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-drift-key/"
+            data-implements="BCH@src/crypto/bch.ts:62 | Fuzzy extractor@src/crypto/sketch.ts:53 | HKDF@src/crypto/kdf.ts:34 | SHA-256@src/crypto/kdf.ts:34"
+            data-references="Classic McEliece | HMAC | Repetition code"
+            data-attacks="Brute force@src/ui/panels/context.ts:72 | Key recovery@src/ui/panels/guided.ts:606 | Side-channel (unspecified)@src/ui/panels/context.ts:100"
+            data-standards="IETF | NIST"
+            data-implementation="hand-rolled"
+            target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Fuzzy Extractor</div>
+            <div class="project-title">Drift Key</div>
+            <div class="project-copy">Turn a noisy reading that never repeats into the same key every time: a code-offset secure sketch over hand-built BCH codes, HKDF-SHA-256, and the exact entropy the public helper data costs.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Fuzzy Extractor</span>
+                <span class="chip">Code-Offset Sketch</span>
+                <span class="chip">BCH</span>
+                <span class="chip">HKDF-SHA-256</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/"
+            data-implements="Keccak@src/entropy/keccak.ts:49 | SHA-256@src/entropy/counter-hash.ts:85 | SHA-3@src/entropy/keccak.ts:227"
+            data-references="CTR-DRBG | DSA | HMAC-DRBG | MD5 | One-time pad | Toeplitz extractor | von Neumann extractor"
+            data-standards="NIST"
+            data-implementation="WebCrypto"
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Entropy Assessment</div>
+            <div class="project-title">Noise to Numbers</div>
+            <div class="project-copy">NIST SP 800-90B min-entropy from pinned runs of the real assessment tool: a modelled Infinite Noise TRNG scores 0.37 bits per bit, a SHA-256 counter scores 0.92. Entropy belongs to the source, not the bytes.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SP 800-90B</span>
+                <span class="chip">Min-Entropy</span>
+                <span class="chip">Keccak-f[1600]</span>
+                <span class="chip">Modelled Noise Source</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+          <a class="project-card" data-category="RANDOMNESS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pulse-chain/"
+            data-implements="BLS signatures@src/drand/verify.ts:25 | BLS12-381@src/drand/verify.ts:25 | Hash-to-curve@src/drand/verify.ts:85 | Pairing@src/drand/verify.ts:86 | RSA@src/core/der.ts:114 | SHA-256@src/drand/verify.ts:48 | SHA-512@src/nist/verify.ts:61"
+            data-references="Pedersen commitment | Schnorr"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto"
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Randomness Beacons</div>
+            <div class="project-title">Pulse Chain</div>
+            <div class="project-copy">Recompute real NIST Beacon 2.0 pulses byte by byte, walk their SHA-512 hash chain and skiplist, verify drand rounds with a BLS12-381 pairing, and see what no check proves: whether the operator knew first.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">NIST Beacon 2.0</span>
+                <span class="chip">drand</span>
+                <span class="chip">BLS12-381</span>
+                <span class="chip">SHA-512</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-glass-box/"
+            data-implements="AES@src/aes/aes-ref.ts:162 | White-box AES@src/lab.worker.ts:64"
+            data-references="AES-CBC | DES | Encrypted Client Hello"
+            data-attacks="BGE attack@src/lab.worker.ts:26 | Brute force@src/main.ts:1755 | Chosen-plaintext attack@src/ui/diagram.ts:87 | Collision attack@src/main.ts:1984 | Differential computation analysis@src/attack/dca.ts:407 | Fault injection@README.md:171 | Power analysis@src/main.ts:1739 | Side-channel (unspecified)@README.md:60 | Timing side-channel@README.md:293"
+            data-standards="NIST"
+            data-implementation="WebCrypto"
+            target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">White-Box Crypto</div>
+            <div class="project-title">Glass Box</div>
+            <div class="project-copy">Chow-style white-box AES-128 built from your key as 2,032 encoded lookup tables, then attacked twice: differential computation analysis pulls the key from execution traces, and BGE step A1 strips the table encodings.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">White-Box AES</span>
+                <span class="chip">Chow 2002</span>
+                <span class="chip">DCA</span>
+                <span class="chip">BGE Attack</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-return-path/"
+            data-implements="Toy SPN@src/crypto/experiments.ts:23"
+            data-references="AES | DES | KASUMI | MISTY1 | Shamir secret sharing"
+            data-attacks="Boomerang attack@src/crypto/failures.ts:40 | Brute force@src/ui/switchPanel.ts:418 | Chosen-ciphertext attack@src/ui/boomerangPanel.ts:278 | Chosen-plaintext attack@src/ui/boomerangPanel.ts:278 | Differential cryptanalysis@src/main.ts:44 | Impossible differential@src/main.ts:33 | Linear cryptanalysis@src/ui/cipherPanel.ts:134"
+            data-implementation="hand-rolled"
+            target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Differential Cryptanalysis</div>
+            <div class="project-title">Return Path</div>
+            <div class="project-copy">Impossible differentials and the boomerang attack on the same toy SPN as Biham Lens, with DDT and BCT tables computed live, an adaptive chosen-ciphertext oracle, and a one-way-impossible crossing every round trip closes.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Impossible Differential</span>
+                <span class="chip">Boomerang Attack</span>
+                <span class="chip">BCT</span>
+                <span class="chip">Toy SPN</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
         </div>
       </div>
     </section>
@@ -20203,6 +20300,8 @@
       'Iron Serpent': 'symmetric',
       'World Ciphers': 'symmetric', 'AES Modes': 'symmetric',
       'MGM Mode': 'symmetric',
+      'Drift Key': 'foundations', 'Noise to Numbers': 'foundations', 'Pulse Chain': 'foundations',
+      'Glass Box': 'cryptanalysis', 'Return Path': 'cryptanalysis',
       'ChaCha20 Stream': 'symmetric', 'Format Ward': 'symmetric',
       'AEGIS Gate': 'symmetric', 'Ascon': 'symmetric',
       'Shadow Vault': 'symmetric',
@@ -20304,6 +20403,7 @@
     };
 
     var FOUNDATIONS_TITLES = [
+      'Drift Key', 'Noise to Numbers',
       'Phantom Vault','DRBG Arena','Babel Hash','Hash Zoo','World Hashes',
       'MAC Race','Poly1305 MAC','KDF Chain','KDF Arena','Bcrypt Forge',
       'Merkle Vault','Commit Gate','Shamir Gate','VRF Gate','Curve Lens',
@@ -20315,7 +20415,7 @@
     ,
       'Fold Gate'
     ];
-    var REAL_WORLD_TITLES = ['Air Stream', 'SM2 Forge', 
+    var REAL_WORLD_TITLES = ['Air Stream', 'SM2 Forge', 'Pulse Chain', 
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',
       'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
       'WebAuthn','Web of Trust','SSH Handshake','Bitcoin Wallet',

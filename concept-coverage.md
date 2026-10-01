@@ -161,6 +161,18 @@ Ciphers names only as the predecessor Kalyna and Kuznyechik replaced. §5 stays 
 64-bit data limit it computes cross-links Feistel Forge's Sweet32 exhibit rather than repeating it.
 Catalogued total moves to 213.*
 
+*Version 22 — files five demos that were live with no card, found by comparing the GitHub
+repository list with the catalog: 219 crypto-lab repositories against 213 cards, of which
+Blind Oracle API is the known exemption (a headless service with no page). Noise to Numbers and
+Pulse Chain go under §2: the first assesses a source's min-entropy with NIST SP 800-90B and shows
+a published counter hashed with SHA-256 outscoring a modelled physical source, the second verifies
+public randomness that anyone can check yet the operator could still have known first. Drift Key
+goes under §6 as key derivation from a noisy, non-repeating source (a fuzzy extractor). Glass Box
+goes under §27, because differential computation analysis is a side-channel attack run on the
+program's own memory trace. Return Path goes under §30 beside Biham Lens, whose toy cipher it
+reuses for impossible differentials and the boomerang. No status changes: §2 and §27 were already
+`DEEP`, §6 and §30 already `COVERED`. Catalogued total moves to 218.*
+
 *Three of the eight needed a judgment rather than a lookup, and in two of them the concept
 diverges from the catalog section — which is the divergence this file exists to allow. **Split
 Point** and **Proof Tally** are both carded in the `privacy` section and neither leads on a
@@ -264,7 +276,7 @@ OTP Vault. Information-theoretic security plus the two-time-pad break that shows
 guarantee actually costs.
 
 **2. Randomness, entropy, and generator failure — `DEEP`**
-DRBG Arena · Corrupted Oracle · Entropy Collapse · Quantum Entropy · VRF Gate. Correct
+DRBG Arena · Corrupted Oracle · Entropy Collapse · Quantum Entropy · VRF Gate · Noise to Numbers · Pulse Chain. Correct
 case, backdoored case, seed-provenance case, physical extraction, and output anyone can
 verify was not ground out to order.
 
@@ -324,7 +336,7 @@ reordering or truncating intact valid frames is caught. One-shot AEAD authentica
 this authenticates *order and completeness*.
 
 **6. Key derivation and password hashing — `COVERED`**
-KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault.
+KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault · Drift Key.
 
 ---
 
@@ -753,7 +765,7 @@ still passes. A boot quote proves what was measured, not what is running.
 
 **27. Side channels — timing, power, fault — `DEEP`**
 Timing Oracle · Timing Side-Channel · Power Trace · KyberSlash · HQC Timing · HQC Timing
-Break · Lattice Fault · Ciphertext Mirror · Broken Trust · Masked Core. Saturated; new
+Break · Lattice Fault · Ciphertext Mirror · Broken Trust · Masked Core · Glass Box. Saturated; new
 side-channel papers should be judged as *variants* unless they teach a new leakage
 **mechanism**.
 
@@ -784,7 +796,7 @@ guarantee is the lesson; the mode is not broken.
 
 **30. Classical cryptanalytic technique — `COVERED`**
 Biham Lens (differential) · Matsui Line (linear) · Vigenère Break · Collision Vault ·
-Model Breach · LLL Break · Misty Lens.
+Model Breach · LLL Break · Misty Lens · Return Path.
 
 Matsui Line completes the canonical pair. It is genuinely different mathematics —
 approximation *bias* and the piling-up lemma rather than difference propagation — and it
@@ -1001,7 +1013,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 213.**
+**Catalogued total: 218.**
 
 ---
 

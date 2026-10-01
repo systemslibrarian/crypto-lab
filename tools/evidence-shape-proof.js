@@ -25,6 +25,16 @@
  *   ZERO_IV      `{ name: 'AES-CBC', iv: new Uint8Array(16) }` on one block is
  *                the raw block cipher, not the CBC mode.
  *
+ * Before any guard runs, a term's own pattern has to stop at the edges of a
+ * name. Two did not, and four cards carried the result: `heldKeyWrapper`
+ * (crypto-lab-jwt-forge) and the module path `./keywrap`, which holds AES-GCM
+ * (crypto-lab-quantum-vault-kpqc), were credited as AES-KW implementations; a
+ * UI field called `keyWrap` gave crypto-lab-feistel-forge an AES-KW reference;
+ * and `step3Desc` (crypto-lab-shamir-vs-frost) was credited as 3DES. Those
+ * lines are kept below in both views the walk reads: through shapeOf, and as
+ * the bare pattern over raw and camel-split text, which is all a reference or
+ * `verify` ever applies.
+ *
  * plus two rules about where evidence may come from at all: an import line's
  * BINDINGS decide when it has any, and `importKey` is key material rather than
  * an operation (shape `keyimport`, which evidenceFor demotes to a reference).
@@ -42,7 +52,7 @@
  */
 'use strict';
 const { ALGORITHMS } = require('./catalog-vocab.js');
-const { lex, shapeOf } = require('./catalog-evidence.js');
+const { lex, shapeOf, camelSplit } = require('./catalog-evidence.js');
 
 const term = (n) => {
   const t = ALGORITHMS.find((a) => a.name === n);
@@ -167,6 +177,28 @@ const CASES = [
     [['  const x = 1', '    {', "      name: 'HKDF',"], 'HKDF', null,
       'NEGATIVE the window is only read when the anchor line IS an open WebCrypto call'],
   ]],
+  ['term boundaries — a name inside a longer name is not the name', [
+    ["function heldKeyWrapper(): VerifierKey {", 'AES-KW', null,
+      'the jwt-forge line: a key wrapper is not AES Key Wrap'],
+    ["import { wrapShare, unwrapShare } from './keywrap';", 'AES-KW', null,
+      'the quantum-vault-kpqc line: its keywrap module wraps shares with AES-GCM'],
+    ["  const { wrap: keyWrap, input: keyInput } = textField(", 'AES-KW', null,
+      'the feistel-forge line: a text field'],
+    ["  const step3Desc = document.createElement('p');", '3DES', null,
+      'the shamir-vs-frost line: step 3, description'],
+    ["  const tripleDescriptor = describe(x);", '3DES', null,
+      'the next one: triple-des needs a trailing boundary too'],
+    ["export function aesKwWrap(kek: Uint8Array, plaintext: Uint8Array): Uint8Array {", 'AES-KW', 'decl',
+      'NEGATIVE the envelope-kms line: RFC 3394 wrap is still credited'],
+    ["export function aesKeyWrap(kek, key) {", 'AES-KW', 'decl',
+      'NEGATIVE spelled out, still credited'],
+    ["  const wrapped = await crypto.subtle.wrapKey('raw', dek, kek, 'AES-KW');", 'AES-KW', 'call',
+      'NEGATIVE the WebCrypto algorithm name is still credited'],
+    ["function tripleDesEncrypt(block, keys) {", '3DES', 'decl',
+      'NEGATIVE triple DES spelled as an identifier is still credited'],
+    ["export function encrypt3Des(block, keys) {", '3DES', null,
+      'COST of the left boundary: a digit glued to the word before it is not seen. No lab in the fleet spelled 3DES this way when the boundary was added'],
+  ]],
   ['keyimport and ZERO_IV — intent and the raw block', [
     ["    return crypto.subtle.importKey('raw', asArrayBuffer(key), { name: 'AES-CBC' }, false, ['encrypt'])", 'AES-CBC', 'keyimport',
       'the air-stream line: key material, ranked below every operation'],
@@ -193,5 +225,25 @@ for (const [group, cases] of CASES) {
   }
   console.log('');
 }
+/* The bare pattern, over the two views every reader of a term applies: the
+   line as written and its camel split. References and `verify` use nothing
+   else, so a pattern that matches here reaches a card whatever shapeOf says. */
+const PATTERN_CASES = [
+  ['heldKeyWrapper', 'AES-KW', false], ["from './keywrap'", 'AES-KW', false],
+  ['keyWrap', 'AES-KW', false], ['keywrap_key', 'AES-KW', false],
+  ['step3Desc', '3DES', false], ['tripleDescriptor', '3DES', false],
+  ['AES-KW', 'AES-KW', true], ['aes_kw', 'AES-KW', true],
+  ['AES key wrap and DEK/KEK key rotation', 'AES-KW', true], ['aesKwUnwrap', 'AES-KW', true],
+  ['3DES_EDE', '3DES', true], ['Triple-DES', '3DES', true], ['TripleDES', '3DES', true],
+];
+console.log('term patterns over raw and camel-split text');
+for (const [text, name, want] of PATTERN_CASES) {
+  const t = term(name);
+  const got = t.re.test(text) || t.re.test(camelSplit(text));
+  const why = `${want ? 'names' : 'does not name'} ${name}: ${text}`;
+  if (got === want) { pass += 1; console.log(`  ok    ${why}`); }
+  else { failed.push(`term patterns: ${why}`); console.log(`  FAIL  ${why}`); }
+}
+console.log('');
 console.log(`${pass} passed, ${failed.length} failed.`);
 if (failed.length) process.exit(1);

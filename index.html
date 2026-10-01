@@ -10310,7 +10310,7 @@
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/"
             data-implements="Repetition code@src/engine.ts:163"
             data-comment-only="Information-set decoding@src/engine.ts:68"
-            data-references="BCH | BCH code | HQC | Information-set decoding | Kyber | ML-DSA | ML-KEM | Reed-Muller | STARK"
+            data-references="BCH | HQC | Information-set decoding | Kyber | ML-DSA | ML-KEM | Reed-Muller | STARK"
             data-attacks="Cache timing@src/data.ts:7 | Chosen-ciphertext attack@src/data.ts:66 | Fault injection@README.md:57 | Key recovery@src/data.ts:87 | Side-channel (unspecified)@src/data.ts:7 | Timing side-channel@src/data.ts:66"
             data-implementation="hand-rolled"
             data-review-commit="50c0b64a3597cfc9caf97eca16b69420e4f09f35"
@@ -12156,7 +12156,7 @@
 
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing/"
             data-implements="N/A"
-            data-references="BCH | BCH code | BIKE | Classic McEliece | Fujisaki-Okamoto transform | HMAC | HQC | Information-set decoding | ML-KEM | RSA | Reed-Muller | Reed-Solomon | STARK"
+            data-references="BCH | BIKE | Classic McEliece | Fujisaki-Okamoto transform | HMAC | HQC | Information-set decoding | ML-KEM | RSA | Reed-Muller | Reed-Solomon | STARK"
             data-attacks="Cache timing@src/data.ts:47 | Chosen-ciphertext attack@src/data.ts:17 | Key recovery@src/data.ts:27 | Side-channel (unspecified)@src/main.ts:6 | Timing side-channel@src/data.ts:17"
             data-implementation="N/A (model or attack)"
             data-review-commit="a6c492ef3b021060e6b2d8413a10719acbeb0112"
@@ -13582,7 +13582,7 @@
           <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-syndrome-drain/"
             data-implements="N/A"
             data-comment-only="BIKE@src/model.ts:110 | Classic McEliece@src/model.ts:123 | HQC@src/model.ts:97"
-            data-references="BCH | BCH code | BIKE | Classic McEliece | HPKE | HQC | Hamming code | Information-set decoding | Kyber | ML-KEM | Pairing | Reed-Muller | Reed-Solomon"
+            data-references="BCH | BIKE | Classic McEliece | HPKE | HQC | Hamming code | Information-set decoding | Kyber | ML-KEM | Pairing | Reed-Muller | Reed-Solomon"
             data-attacks="Cache timing@README.md:89 | Key recovery@FIX-NOTES.md:39 | Timing side-channel@README.md:88"
             data-implementation="N/A (model or attack)"
             data-review-commit="59a97cc56607595a260805061298f85627d685d2"
@@ -19033,8 +19033,8 @@
 
           <a class="project-card" data-category="PRIVACY | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-privacy-pass/"
             data-implements="Hash-to-curve@src/oprf/voprf.ts:47 | OPRF@src/main.ts:3 | P-384@src/oprf/voprf.ts:1 | Privacy Pass@src/main.ts:4 | SHA-256@src/oprf/voprf.ts:25 | SHA-384@src/oprf/voprf.ts:64"
-            data-references="EC point arithmetic | OPAQUE | P-256 | PQXDH | RSA | Schnorr | ristretto255"
-            data-attacks="Nonce reuse@brief.md:118"
+            data-references="EC point arithmetic | OPAQUE | RSA"
+            data-attacks="Factoring@src/main.ts:77"
             data-standards="IETF | NIST"
             data-implementation="@noble"
            
@@ -20910,7 +20910,8 @@
           </a>
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-function-key/"
             data-implements="ABDP15 IPFE@src/crypto/attacks.ts:24 | Baby-step giant-step@src/crypto/dlog.ts:130 | EC point arithmetic@src/crypto/ristretto.ts:80 | ristretto255@src/crypto/dlog.ts:25 | SHA-512@src/crypto/prng.ts:47"
-            data-references="BLS signatures | BLS12-381 | Boneh-Franklin IBE | Bulletproofs | CKKS | Diffie-Hellman | Ed25519 | ElGamal | FROST | Hash-to-curve | LWE | MD5 | Paillier | Private information retrieval | RSA | SHA-256 | Schnorr | Shamir secret sharing | X3DH"
+            data-references="BLS signatures | BLS12-381 | CKKS | Ed25519 | ElGamal | FROST | Hash-to-curve | LWE | MD5 | Paillier | RSA | SHA-256 | Schnorr | Shamir secret sharing | X3DH"
+            data-attacks="Ciphertext malleability@src/ui/stages.ts:1087"
             data-standards="IETF | NIST"
             data-implementation="@noble"
             data-review-commit="f6628c00c2b70ddde2efd7462f0b9494e8c00d7d"

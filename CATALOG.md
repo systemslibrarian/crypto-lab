@@ -897,7 +897,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Bulletproofs
 
-- **Implemented by:** [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/app.ts:713`
+- **Implemented by:** [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/app.ts:760`
 - **Also referenced by:** *ZK Proof Lab*, *STARK Tower*, *SNARK Arena*, *Commit Gate*, *Ring Sign*, *ZK Arena*, *Frozen Heart*, *Credential Veil*, *Polynomial Forge*
 
 ### secret sharing
@@ -946,7 +946,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Schnorr
 
-- **Implemented by:** [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/schnorr.js:46`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/main.ts:1184`; [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) `src/ui/attackPanel.ts:2`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/app.ts:717`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/ui.ts:1046`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/schnorr-nizk.ts:27`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/main.ts:11`; [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) `src/musig/bip340.ts:14`; [Adaptor Gate](https://systemslibrarian.github.io/crypto-lab-adaptor-gate/) `src/crypto/attacks.ts:8`
+- **Implemented by:** [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/schnorr.js:46`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/main.ts:1184`; [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) `src/ui/attackPanel.ts:2`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/app.ts:764`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/ui.ts:1046`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/schnorr-nizk.ts:27`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/main.ts:11`; [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) `src/musig/bip340.ts:14`; [Adaptor Gate](https://systemslibrarian.github.io/crypto-lab-adaptor-gate/) `src/crypto/attacks.ts:8`
 - **Also referenced by:** *Quantum Vault KpqC*, *SM2 Forge*, *STARK Tower*, *SNARK Arena*, *DKG Gate*, *Garbled Gate*, *FROST Threshold*, *Dilithium Seal*, *Shamir Gate*, *Curve Lens*, *Pairing Gate*, *GG20 Wallet*, *Commit Gate*, *Threshold ML-DSA*, *PQ Families*, *Bitcoin Script*, *Shamir vs FROST*, *Credential Veil*, *Rekey Relay*, *Sphinx Mix*, *Pulse Chain*, *Function Key*
 
 ### steganography
@@ -1972,7 +1972,7 @@ Leak one bit of ML-DSA's per-signature masking randomness and the secret subkey 
 
 ZK range proofs using Bulletproofs on ristretto255 — 64-bit Pedersen commitments, aggregate proofs over multiple ranges, the inner-product argument, and a tamper-rejection demo.
 
-- **Implements:** Bulletproofs `src/app.ts:713`, EC point arithmetic `src/crypto/ristretto.ts:66`, Pedersen commitment `src/app.ts:16`, ristretto255 `src/crypto/ristretto.ts:53`, Schnorr `src/app.ts:717`, SHA-512 `src/crypto/ristretto.ts:55`
+- **Implements:** Bulletproofs `src/app.ts:760`, EC point arithmetic `src/crypto/ristretto.ts:66`, Pedersen commitment `src/app.ts:16`, ristretto255 `src/crypto/ristretto.ts:53`, Schnorr `src/app.ts:764`, SHA-512 `src/crypto/ristretto.ts:55`
 - **References:** BLS12-381, Ed25519, Fiat-Shamir, Groth16, PLONK, STARK, Shamir secret sharing
 - **Attacks shown:** Discrete log `README.md:5`, Replay attack `src/app.ts:133`
 - **Standards body:** IETF, NIST
@@ -2954,7 +2954,7 @@ A KyberSlash timing-attack lab for ML-KEM, covering secret-dependent division, v
 
 - **Implements:** Kyber `src/timing-model.ts:200`
 - **References:** Fujisaki-Okamoto transform, HQC, ML-DSA, ML-KEM, RSA, TLS 1.3
-- **Attacks shown:** Fault injection `src/main.ts:205`, Key recovery `src/main.ts:1549`, Padding oracle `src/main.ts:217`, Power analysis `README.md:32`, Side-channel (unspecified) `src/main.ts:172`, Timing side-channel `src/main.ts:210`
+- **Attacks shown:** Fault injection `src/main.ts:205`, Key recovery `src/main.ts:1551`, Padding oracle `src/main.ts:217`, Power analysis `README.md:32`, Side-channel (unspecified) `src/main.ts:172`, Timing side-channel `src/main.ts:210`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
 

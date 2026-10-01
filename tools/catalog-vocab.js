@@ -368,6 +368,11 @@ const ALGORITHMS = [
      for the check existing rather than for the two entries. */
   { name: 'Kupyna', kind: 'algorithm', family: 'hash', re: /kupyna|dstu[-_ ]?7564/i, std: 'DSTU:DSTU 7564:2014' },
   { name: 'Magma', kind: 'algorithm', family: 'block cipher', re: /\bmagma\b/i, std: 'GOST:GOST R 34.12-2015' },
+  /* MGM is standardised in Russia as R 1323565.1.026-2019 and published as RFC 9058,
+     an Independent Submission rather than IETF-stream, so it answers to GOST.
+     Added with crypto-lab-mgm-mode: a hand-rolled mode with no package to depend
+     on, so the vocab check could never have flagged its absence. */
+  { name: 'MGM', kind: 'algorithm', family: 'AEAD', re: /(?<![a-z0-9])mgm(?![a-z0-9])|multilinear[-_ ]?galois/i, std: 'GOST:R 1323565.1.026-2019 / RFC 9058' },
   { name: 'FF1', kind: 'algorithm', family: 'format-preserving encryption', re: /\bff1\b|format[-_ ]?preserving/i, std: 'NIST:SP 800-38G' },
   { name: 'FRI', kind: 'algorithm', family: 'proof system', re: /\bfri\b(?![-_ ]?(?:day|end))/i, std: null },
   { name: 'Private information retrieval', kind: 'algorithm', family: 'PIR', re: /\bpir\b|private[-_ ]?information[-_ ]?retrieval/i, std: null },

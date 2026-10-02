@@ -601,6 +601,59 @@
       display: none;
     }
 
+    .search-suggestions {
+      position: absolute;
+      z-index: 40;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      max-height: min(430px, 62vh);
+      overflow-y: auto;
+      border: 1px solid var(--border-strong);
+      background: #0b1821;
+      box-shadow: var(--shadow);
+    }
+
+    .search-suggestions[hidden] {
+      display: none;
+    }
+
+    .search-suggestion {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: baseline;
+      width: 100%;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .search-suggestion:last-child {
+      border-bottom: 0;
+    }
+
+    .search-suggestion:hover,
+    .search-suggestion[aria-selected="true"] {
+      background: rgba(53, 214, 187, 0.11);
+    }
+
+    .search-suggestion-value {
+      min-width: 0;
+      color: var(--text-hi);
+      font-size: 11.5px;
+      overflow-wrap: anywhere;
+    }
+
+    .search-suggestion-kind {
+      color: var(--text-dim);
+      font-size: 8.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
     .search-help {
       margin: 8px 0 0;
       color: var(--text-dim);
@@ -1947,9 +2000,10 @@
         <div class="filter-bar collapsed" id="filter-bar">
           <div class="filter-bar-head">
             <div class="search-bar">
-              <input type="text" id="demo-search" placeholder="Search concepts, algorithms, attacks, standards…" aria-label="Search Crypto Lab demos" />
+              <input type="text" id="demo-search" placeholder="Search concepts, algorithms, attacks, standards…" aria-label="Search Crypto Lab demos" role="combobox" aria-autocomplete="list" aria-controls="search-suggestions" aria-expanded="false" />
               <button class="search-clear" id="search-clear" aria-label="Clear search" hidden>✕</button>
               <kbd class="search-kbd" aria-hidden="true">/</kbd>
+              <div class="search-suggestions" id="search-suggestions" role="listbox" aria-label="Search suggestions" hidden></div>
             </div>
             <button class="filter-toggle" id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-panel">
               <span class="filter-toggle-label">Filters</span>
@@ -20707,19 +20761,19 @@
     var searchEngine = window.CryptoLabSearch;
     if (!searchEngine) throw new Error('catalog-search.js failed to load');
 
-    function searchTerms(card, attribute, stripAnchors) {
+    function searchValues(card, attribute, stripAnchors) {
       var raw = card.getAttribute(attribute) || '';
-      if (!stripAnchors) return raw;
       return raw.split('|').map(function (part) {
-        return part.split('@')[0].trim();
-      }).filter(Boolean).join(' ');
+        if (stripAnchors) part = part.split('@')[0];
+        return part.trim();
+      }).filter(Boolean);
     }
 
     var cardData = cards.map(function (card) {
       var title = ((card.querySelector('.feature-title, .project-title') || {}).textContent || '').trim();
       var copy = (card.querySelector('.feature-copy, .project-copy') || {}).textContent || '';
       var kicker = (card.querySelector('.card-kicker') || {}).textContent || '';
-      var chips = Array.from(card.querySelectorAll('.chip')).map(function (c) { return c.textContent; }).join(' ');
+      var chipValues = Array.from(card.querySelectorAll('.chip')).map(function (c) { return c.textContent.trim(); }).filter(Boolean);
       var raw = card.getAttribute('data-category') || '';
       var cats = raw.split('|').map(function (c) { return c.trim(); }).filter(Boolean);
       var extras = TITLE_TO_EXTRA_CATS[title] || [];
@@ -20730,30 +20784,79 @@
       var section = TITLE_TO_SECTION[title] || '';
       if (section) card.setAttribute('data-section', section);
 
+      var implementsValues = searchValues(card, 'data-implements', true);
+      var attackValues = searchValues(card, 'data-attacks', true);
+      var referenceValues = searchValues(card, 'data-references', false);
+      var standardValues = searchValues(card, 'data-standards', false);
+      var implementationValues = searchValues(card, 'data-implementation', false);
+
       var fields = {
         title: title,
         copy: copy,
         kicker: kicker,
-        chips: chips,
+        chips: chipValues.join(' '),
         categories: cats.join(' '),
         section: section,
-        implements: searchTerms(card, 'data-implements', true),
-        attacks: searchTerms(card, 'data-attacks', true),
-        references: searchTerms(card, 'data-references', false),
-        standards: searchTerms(card, 'data-standards', false),
-        implementation: searchTerms(card, 'data-implementation', false)
+        implements: implementsValues.join(' '),
+        attacks: attackValues.join(' '),
+        references: referenceValues.join(' '),
+        standards: standardValues.join(' '),
+        implementation: implementationValues.join(' ')
       };
+
+      var concepts = [];
+      function addConcepts(values, kind) {
+        values.forEach(function (value) {
+          if (value) concepts.push({ value: value, kind: kind });
+        });
+      }
+      addConcepts(implementsValues, 'Primitive');
+      addConcepts(attackValues, 'Attack');
+      addConcepts(standardValues, 'Standard');
+      addConcepts(referenceValues, 'Reference');
+      addConcepts(implementationValues, 'Implementation');
+      addConcepts(chipValues, 'Topic');
+      addConcepts(cats, 'Category');
+      if (kicker) concepts.push({ value: kicker, kind: 'Topic' });
 
       return {
         el: card,
         title: title,
         search: searchEngine.prepare(fields),
+        concepts: concepts,
         categories: cats,
         section: section,
         added: card.getAttribute('data-added') || '',
         updated: card.getAttribute('data-updated') || '',
         searchScore: 0
       };
+    });
+
+    var conceptMap = new Map();
+    var conceptKindPriority = { Primitive: 7, Attack: 6, Standard: 5, Reference: 4, Topic: 3, Category: 2, Implementation: 1 };
+    cardData.forEach(function (d) {
+      d.concepts.forEach(function (c) {
+        var key = searchEngine.normalize(c.value);
+        if (!key || key.length < 2) return;
+        var prev = conceptMap.get(key);
+        if (!prev || (conceptKindPriority[c.kind] || 0) > (conceptKindPriority[prev.kind] || 0)) {
+          conceptMap.set(key, { title: c.value, value: c.value, kind: c.kind });
+        }
+      });
+    });
+
+    var conceptData = Array.from(conceptMap.values()).map(function (c) {
+      c.search = searchEngine.prepare({
+        title: c.value,
+        implements: c.kind === 'Primitive' ? c.value : '',
+        attacks: c.kind === 'Attack' ? c.value : '',
+        standards: c.kind === 'Standard' ? c.value : '',
+        references: c.kind === 'Reference' ? c.value : '',
+        implementation: c.kind === 'Implementation' ? c.value : '',
+        categories: c.kind === 'Category' ? c.value : '',
+        kicker: c.kind === 'Topic' ? c.value : ''
+      });
+      return c;
     });
 
     /* ── Card dates ──────────────────────────────────────────────────────────
@@ -21196,7 +21299,151 @@
         updateClear();
         filter();
         input.focus();
+        updateSuggestions();
       });
+    });
+
+    var suggestionsEl = document.getElementById('search-suggestions');
+    var suggestionIndex = -1;
+
+    function closeSuggestions() {
+      if (!suggestionsEl) return;
+      suggestionsEl.hidden = true;
+      suggestionsEl.textContent = '';
+      suggestionIndex = -1;
+      input.setAttribute('aria-expanded', 'false');
+      input.removeAttribute('aria-activedescendant');
+    }
+
+    function setActiveSuggestion(index) {
+      if (!suggestionsEl || suggestionsEl.hidden) return;
+      var options = Array.from(suggestionsEl.querySelectorAll('[role="option"]'));
+      if (!options.length) return;
+      suggestionIndex = (index + options.length) % options.length;
+      options.forEach(function (opt, i) {
+        var active = i === suggestionIndex;
+        opt.setAttribute('aria-selected', active ? 'true' : 'false');
+        if (active) {
+          input.setAttribute('aria-activedescendant', opt.id);
+          opt.scrollIntoView({ block: 'nearest' });
+        }
+      });
+    }
+
+    function selectSuggestion(option) {
+      if (!option) return;
+      var value = option.getAttribute('data-suggestion-value') || '';
+      var kind = option.getAttribute('data-suggestion-kind') || '';
+      input.value = value;
+      updateClear();
+      filter();
+      closeSuggestions();
+      input.focus();
+
+      if (kind === 'Lab') {
+        var hit = cardData.find(function (d) { return d.title === value; });
+        if (hit) {
+          hit.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          hit.el.classList.remove('flash');
+          void hit.el.offsetWidth;
+          hit.el.classList.add('flash');
+        }
+      }
+    }
+
+    function updateSuggestions() {
+      if (!suggestionsEl) return;
+      var q = input.value.trim();
+      if (q.length < 2 || document.activeElement !== input) {
+        closeSuggestions();
+        return;
+      }
+
+      var structured = q.indexOf(':') !== -1;
+      var concepts = structured ? [] : searchEngine.rank(conceptData, q).slice(0, 4).map(function (x) {
+        return { value: x.item.value, kind: x.item.kind };
+      });
+
+      var labs = searchEngine.rank(cardData, q).filter(function (x) {
+        if (activeCategory && !x.item.categories.includes(activeCategory)) return false;
+        if (activeSet && activeSet.indexOf(x.item.title) === -1) return false;
+        return true;
+      }).slice(0, concepts.length ? 5 : 8).map(function (x) {
+        return { value: x.item.title, kind: 'Lab' };
+      });
+
+      var seen = new Set();
+      var suggestions = concepts.concat(labs).filter(function (s) {
+        var key = searchEngine.normalize(s.value);
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }).slice(0, 8);
+
+      suggestionsEl.textContent = '';
+      suggestionIndex = -1;
+      if (!suggestions.length) {
+        closeSuggestions();
+        return;
+      }
+
+      suggestions.forEach(function (s, i) {
+        var option = document.createElement('div');
+        option.className = 'search-suggestion';
+        option.id = 'search-suggestion-' + i;
+        option.setAttribute('role', 'option');
+        option.setAttribute('aria-selected', 'false');
+        option.setAttribute('data-suggestion-value', s.value);
+        option.setAttribute('data-suggestion-kind', s.kind);
+
+        var value = document.createElement('span');
+        value.className = 'search-suggestion-value';
+        value.textContent = s.value;
+
+        var kind = document.createElement('span');
+        kind.className = 'search-suggestion-kind';
+        kind.textContent = s.kind;
+
+        option.appendChild(value);
+        option.appendChild(kind);
+        suggestionsEl.appendChild(option);
+      });
+
+      suggestionsEl.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+    }
+
+    if (suggestionsEl) {
+      suggestionsEl.addEventListener('mousedown', function (e) { e.preventDefault(); });
+      suggestionsEl.addEventListener('click', function (e) {
+        selectSuggestion(e.target.closest('[role="option"]'));
+      });
+    }
+
+    input.addEventListener('focus', updateSuggestions);
+    input.addEventListener('keydown', function (e) {
+      if (!suggestionsEl || suggestionsEl.hidden) {
+        if (e.key === 'ArrowDown') updateSuggestions();
+        return;
+      }
+      var options = Array.from(suggestionsEl.querySelectorAll('[role="option"]'));
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setActiveSuggestion(suggestionIndex + 1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setActiveSuggestion(suggestionIndex <= 0 ? options.length - 1 : suggestionIndex - 1);
+      } else if (e.key === 'Enter' && suggestionIndex >= 0) {
+        e.preventDefault();
+        selectSuggestion(options[suggestionIndex]);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeSuggestions();
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.search-bar')) closeSuggestions();
     });
 
     /* Order control. Changing the order re-lays out the grid and re-runs the
@@ -21256,7 +21503,10 @@
       });
     }
 
-    input.addEventListener('input', filter);
+    input.addEventListener('input', function () {
+      filter();
+      updateSuggestions();
+    });
 
     /* Clear button */
     function updateClear() {
@@ -21270,6 +21520,7 @@
       updateClear();
       input.focus();
       filter();
+      closeSuggestions();
     });
 
     /* Kicker clicks — filter by topic */

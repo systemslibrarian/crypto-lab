@@ -14,8 +14,10 @@ const cards = [...html.matchAll(/<a class="[^"]*(?:feature-card|project-card)[^"
 assert(cards.length >= 200, 'catalog unexpectedly has fewer than 200 cards');
 assert.strictEqual(cards.filter(m => m.index > footer).length, 0, 'catalog cards must not appear after the footer opens');
 assert(html.includes('src="catalog-search.js"'), 'catalog-search.js is not loaded');
+assert(html.includes('id="search-suggestions"'), 'autocomplete listbox is not present');
+assert(html.includes('aria-autocomplete="list"'), 'search input does not expose autocomplete semantics');
 for (const field of ['data-implements','data-attacks','data-references','data-standards','data-implementation']) {
-  assert(html.includes("searchTerms(card, '" + field + "'"), 'search does not index ' + field);
+  assert(html.includes("searchValues(card, '" + field + "'"), 'search does not index ' + field);
 }
 
 function item(title, fields) {

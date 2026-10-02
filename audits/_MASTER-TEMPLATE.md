@@ -318,16 +318,29 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: 'list',
   use: {
-    baseURL: 'http://localhost:4173/<REPO-BASE>/', // if vite base is "./", use http://localhost:4173/
-    colorScheme: 'dark',                            // dark is the only theme
+    baseURL: 'http://localhost:<PORT>/<REPO-BASE>/', // if vite base is "./", use http://localhost:<PORT>/
+    colorScheme: 'dark',                             // dark is the only theme
   },
   webServer: {
-    command: 'npm run build && npm run preview -- --port 4173 --strictPort',  // build FIRST — see §4.1
-    url: 'http://localhost:4173/<REPO-BASE>/',
+    command: 'npm run build && npm run preview -- --port <PORT> --strictPort',  // build FIRST — see §4.1
+    url: 'http://localhost:<PORT>/<REPO-BASE>/',
     reuseExistingServer: !process.env.CI,
   },
 })
 ```
+
+**`<PORT>` is assigned, not chosen — ask the tool.** From the catalog repo:
+
+```
+node tools/port-sync.js            # reports every port in use, and re-pins the registry
+```
+
+Take a port no lab holds, put it in all three places above, and re-run `node
+tools/port-sync.js` to pin it in `tools/playwright-ports.json`. **This sample used to read
+`4173` in all three slots**, which §4.1's own port rule below forbids by name — and the cost
+is measured: on 2026-10-02 **36 labs were on 4173**, nine pairs shared a port, and 26 labs
+with a Playwright config were absent from the registry. A literal in a copyable sample beats
+a rule in prose every time, so the literal is gone.
 
 **`e2e/a11y.spec.ts` — do NOT hand-write this from scratch, and do NOT copy the old template
 gate.** Copy a current honest gate (`e2e/gate.ts` + `contrast.ts` + `nontext.ts` +
@@ -393,19 +406,25 @@ failed build serves the previous bundle and passes green, which proves nothing.
 
 **`package.json`:** `"test:a11y": "playwright test"`. And **exclude `e2e/` from Vitest** (`vite.config.ts → test: { include: ['src/**/*.test.ts'] }`) so the Playwright specs aren't collected as unit tests.
 
-**Port:** pick one **no sibling lab already uses**, in the **4600–4700** range, and it must be
-unique **in committed state** — a port fix living only in a working tree is not a fix. Grep every
-sibling before choosing:
+**Port:** one per lab, unique **in committed state** — a port fix living only in a working
+tree is not a fix — and **pinned in `tools/playwright-ports.json`**, which is the registry
+`port-sync` judges against. `node tools/port-sync.js` is the authority on what is free; do
+not pick by grepping siblings and do not read a count from this file. Two things that follow:
 
-```
-grep -rhoE "localhost:[0-9]+" ../crypto-lab-*/playwright.config.ts | sort -u
-```
+- **Never the Vite default 4173.** A shared port means `reuseExistingServer` silently scans a
+  *different lab's* preview — that has really happened here (`bb84` reported `kdf-chain`'s
+  violations) — and during a §4.1c mutation check it can scan an **unmutated checkout still
+  running from a previous run**, which reads as "the mutation was not caught" and sends
+  someone to fix a check that works.
+- **Keep `--strictPort`.** Without it Playwright takes the next free port, so the collision
+  stops being visible and the config stops describing what actually ran.
 
-**Never the Vite default 4173.** With 170+ labs side by side, a shared port means
-`reuseExistingServer` silently scans a *different lab's* preview — that has really happened here
-(`bb84` reported `kdf-chain`'s violations). As of 2026-08-14 three duplicate pairs and one 4173
-default remain: 4220 (`hybrid-pqc`/`j-uniward`), 4221 (`hybrid-sign`/`bitcoin-script`), 4223
-(`harvest-vault`/`ibe-gate`), and `blind-relay` on 4173.
+This paragraph used to carry its own census — "as of 2026-08-14 three duplicate pairs and one
+4173 default remain" — naming `hybrid-pqc`/`j-uniward`, `hybrid-sign`/`bitcoin-script`,
+`harvest-vault`/`ibe-gate` and `blind-relay`. Seven weeks later every one of those labs was
+still unfixed and the real figures were nine pairs and 36 labs on 4173, so the census was
+both stale and read as the whole problem. A list of findings in a template is not a tracker;
+`port-sync` is.
 
 **Ship a `LICENSE` file** — MIT, `Copyright (c) <year> Paul Clark`, at the repo root. This was
 missed on 156 of 176 repos, which meant the default applied: exclusive copyright, i.e. a public
@@ -426,7 +445,7 @@ line rather than acquire it later.
 build, not just the preview:
 
 ```ts
-command: 'npm run build && npm run preview -- --port 4283 --strictPort',
+command: 'npm run build && npm run preview -- --port <PORT> --strictPort',
 ```
 
 `preview` serves whatever is already in `dist/`. Without the build in front, a run tests a
@@ -453,6 +472,37 @@ publish a build whose cryptography was broken so long as the browser specs passe
 that `"test:a11y": "playwright test"` runs **every** Playwright spec despite its name, so a repo
 naming that script in CI may be running more than the name suggests — and a repo whose functional
 tests are NOT Playwright specs (a `tsx` or `node` script) is running none of them.
+
+### 4.1a The gate's SETUP asserts structure, never product copy (REQUIRED)
+
+A shared `boot()` in `e2e/gate.ts` runs before every test that imports it, so one assertion
+there fails all of them at once — under whatever name those tests carry. On 2026-09-26
+`crypto-lab-mceliece-gate` changed one textarea's default string, in the same commit that
+corrected the lab's security claims. `gate.ts` still asserted the old sentence, so `boot()`
+threw, both axe runs failed, the build job failed, the deploy was skipped, and `deploy-sync`
+reported the lab stale. **The step that went red was called "Accessibility gate", and four
+of its six a11y tests had passed.** For three days the live site served
+"the most battle-tested post-quantum proposal in existence" while `main` held the correction,
+and the one red thing in sight named the wrong subject.
+
+So in a setup helper:
+
+- **Assert STRUCTURE** — the controls exist, the arrival panel is the one that ships, counts
+  (`.tab-btn` → 6), `[hidden]`/`toBeEmpty()` on lazily-rendered panels, a skip link whose
+  target exists, no theme control, `details[open]` at zero, a default that matches a *shape*
+  (`toHaveValue(/^[0-9a-f]{64}$/)`).
+- **Never assert what a string SAYS** — `toContainText('VALID')`, `toHaveText('UTF-8 text')`,
+  or a default message asserted as a whole sentence. Those belong in §4.1b's
+  `claims.spec.ts`, where a failure names copy as the subject.
+
+**This applies to the lab §4.1 tells you to copy.** As of 2026-10-02
+`crypto-lab-schnorr-forge`'s `boot()` carried three copy assertions, one of them the full
+sentence `'Schnorr is the signature ECDSA wishes it were.'` — so a lab built by copying it and
+rewriting "every lab-specific passage" writes its OWN default sentence into `boot()` and
+inherits the defect. Move those assertions into `claims.spec.ts` as you copy. Fleet-wide, **77
+of the 167 labs with an `e2e/gate.ts` assert product copy in it** (surveyed 2026-09-29), from
+one string to fifteen: a standing hazard rather than a bug list, since each is a judgement
+about which assertions are structural.
 
 ### 4.1b `e2e/claims.spec.ts` — the claims suite (REQUIRED)
 
@@ -577,6 +627,30 @@ both is decorative.
 This goes in the existing claims suite. Do not add a `CLAIMS.yaml`, a `THREAT-MODEL.md`, or a
 second verifier in another language — see §4.1b for why the suite is the enforceable home.
 
+### 4.1e Two hazards that make a green run meaningless
+
+**A test step that runs zero tests exits 0.** `node --test` can load none of your files and
+report success, and the gate passes with a log reading zero tests — which is how
+`crypto-lab-padding-oracle` ended up with a hand-written harness, and why
+`tools/test-invocation.js` exists to find test files no workflow runs. So assert the COUNT,
+not just the exit code: read the runner's summary line in CI and fail when it reports 0, and
+check that the glob in your workflow actually matches the files on disk. A lab whose tests
+are invoked as `node --import tsx --test` is invisible to a pattern expecting `node --test` —
+if a detector says your lab has no tests, check the invocation before believing it.
+
+**Per-platform visual baselines need the `-linux` set too.** A lab whose snapshots are named
+`*-visual-darwin.png` and `*-visual-linux.png` keeps one baseline per rendering environment,
+and `playwright test --update-snapshots` writes only the platform you ran on. Updating on
+macOS leaves `-linux` holding the old render, and CI renders in
+`mcr.microsoft.com/playwright:<pinned>` — so the gate fails on exactly the snapshots that
+were "already updated". Do not try to regenerate them locally: on Apple silicon that
+container runs under QEMU, and emulated amd64 crashed `chrome-headless-shell` on all 13 tests
+with a core dump each. **Take the render CI produced** — the failing run uploads
+`test-results/` with an `-actual.png` per failure — then check it rather than trusting it:
+read each image against the baseline it replaces and confirm the only difference is the one
+you intended, and confirm the first attempt and the automatic retry produced BYTE-IDENTICAL
+images, which is what separates a deterministic render from a flaky one.
+
 ### 4.2 Author to these rules from the start (exactly what the gate checks)
 
 - **Contrast** ≥ 4.5:1 body text, ≥ 3:1 large text / UI components. Never convey state by **color alone** (icon + text + color).
@@ -631,6 +705,10 @@ on:
 concurrency:
   group: pages-${{ github.ref }}   # NOT a bare `pages`: with cancel-in-progress
   cancel-in-progress: true         # a PR run would cancel a live main deploy
+# 15 labs still carry the bare `pages` group, the reference lab in §4.1 among them
+# (measured 2026-10-02). `gate-sync` reports it as a warning rather than a failure
+# because it only bites once the workflow gains a pull_request trigger -- which the
+# block above adds. So if you copy a lab's deploy.yml, fix the group as you copy it.
 
 # build job, after `npm run build`:
 - run: npm test
@@ -649,10 +727,50 @@ concurrency:
   # deploy job, so the site still never updates.
 ```
 
-Current pinned action versions fleet-wide (verified green across 176 repos on
-2026-08-18): `actions/checkout@v7`, `actions/setup-node@v7`,
-`actions/configure-pages@v6`, `actions/upload-pages-artifact@v5`,
-`actions/deploy-pages@v5`.
+Current action versions, counted across all 220 cloned labs on 2026-10-02 rather than
+asserted: `actions/checkout@v7` (264 uses), `actions/setup-node@v7` (253),
+`actions/upload-pages-artifact@v5` (212), `actions/deploy-pages@v5` (212),
+`dependabot/fetch-metadata@v3` (214), `actions/configure-pages@v6` (96 — only the labs that
+need it). **No lab is on `fetch-metadata@v2`**, which is what this file told you to install
+until 2026-10-02; a new lab built from it started one major behind and Dependabot opened a
+bump against it the same week. If a version here disagrees with the fleet, the fleet is
+right — re-count before trusting the list.
+
+**Pin `node-version: 22`.** This file said nothing about Node until 2026-10-02 and the fleet
+shows the cost: 127 workflow files on 22, 93 on **20**, 32 on 24. Node 20 left maintenance in
+April 2026, so those 93 run a release that no longer gets security fixes — drift by omission,
+in the one field nobody thought to standardise. 22 is the fleet's majority and the reference
+lab's value; 24 is fine for a new lab, 20 is not.
+
+**Set the repository's Pages source to "GitHub Actions" — this file never said so, and the
+omission cost three months.** The workflow above uploads an artifact and publishes it with
+`actions/deploy-pages`, which only works when Pages is configured for `build_type: workflow`.
+The two states to know, because they are NOT symmetric:
+
+- **`workflow` + a branch publisher** (`peaceiris/actions-gh-pages`, a `gh-pages` push) —
+  the run goes green, the branch updates, and **the site never changes**, because Pages under
+  `workflow` serves only an uploaded artifact. `crypto-lab-dilithium-reject` and
+  `crypto-lab-elgamal-plain` sat in this state from 2026-07-11 to 2026-10-01 with every check
+  green; dilithium-reject's live CSS was missing an accessibility fix its own `main` had
+  carried the whole time, measured at 204px of horizontal scroll against WCAG 1.4.10.
+  `deploy-sync` calls this **PUBLISH-UNSERVED** and fails it.
+- **`legacy` + an artifact publisher** — merely dead configuration: Pages builds the branch
+  regardless, so the site is current and the upload does nothing. Reported as
+  **ARTIFACT-UNUSED**, a note rather than a failure.
+
+Check it, do not assume it:
+
+```
+gh api repos/systemslibrarian/crypto-lab-<slug>/pages --jq '.build_type'   # must print: workflow
+```
+
+**Then ask the served bytes for the thing you changed.** A green run is not evidence that it
+shipped — §6.2 is entirely about a green run that ships nothing:
+
+```
+node tools/deploy-sync.js check                          # from the catalog repo
+curl -s https://systemslibrarian.github.io/crypto-lab-<slug>/assets/<css> | grep -- '--accent'
+```
 
 Also: `vite.config.ts` `base: '/crypto-lab-<demo-name>/'` (read the real repo name, don't guess); **no root-absolute asset paths** (`/foo` 404s under the project subpath — use `./foo`, a Vite-imported asset, or a `data:` URI); pin `@playwright/test` to a current build to avoid the corrupt-cache install loop. Verify the live URL loads with no 404s after deploy.
 
@@ -701,7 +819,7 @@ Then add an auto-merge job to the workflow that runs the gate on `pull_request`:
     # the merged bump never deploys, and a `|| echo` fallback hides it.
     steps:
       - id: meta
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@v3
       - name: Merge any bump whose gate went green
         run: |
           for attempt in 1 2 3; do
@@ -852,6 +970,58 @@ that actually opens PRs.
    just its root `index.html` — a sub-page that boots from `localStorage` or
    `prefers-color-scheme` instead of pinning a literal will fail it, which is exactly the
    defect it was widened to catch.
+
+9. **Pin the new lab in the two registries that have a declared denominator**, or two
+   checkers fail it for not existing in them:
+
+   ```
+   node tools/dispatch-census.js write   # then read the diff: one ADDED row is right
+   node tools/port-sync.js               # pins this lab's Playwright port
+   ```
+
+   `dispatch-sync check` fails an unpinned lab as **UNPINNED-LAB** on purpose — the same
+   silence that hides a new lab hides a departed one, so a drop in the denominator is as loud
+   as a drift in the numerator. `tools/dispatch-census.json` is the only thing that remembers
+   a lab used to be here.
+
+10. **Confirm it shipped, from the served bytes** — not from a green check:
+    `node tools/deploy-sync.js check`, then `curl` the live page for the thing you changed.
+    See §6.
+
+## What will judge this lab
+
+This file tells you what to build. **Twenty-three checkers in the catalog repo judge the
+fleet, and this file named 7 of them until 2026-10-02** — so the other 16 were rules a new
+lab could only discover by going red, which is why the same corrections kept being applied to
+new labs one at a time. These are the ones that judge YOUR lab rather than the catalog's own
+files; run them from `crypto-lab/`:
+
+| Checker | Fails your lab when |
+|---|---|
+| `fleet-sync.js check` | it is live on GitHub with no card here |
+| `theme-sync.js check` | any page in it does not pin one theme with a literal, or a theme control returns |
+| `gate-sync.js check` | a Dependabot bump could merge against a lighter gate than the deploy runs (§6.1) |
+| `dispatch-sync.js check` | the auto-merge re-queries the merge instead of reading its exit status, or the lab is unpinned (§6.2, step 9) |
+| `dispatch-comment-sync.js check` | the dispatch rationale paragraph differs from the fleet's one wording |
+| `dispatch-census.js check` | it stopped matching its pinned row, or was never pinned |
+| `deploy-sync.js check` | the live site is not built from the sha on `main` — including PUBLISH-UNSERVED (§6) |
+| `port-sync.js check` | its Playwright port collides, is unpinned, or `--strictPort` is missing (§4.1) |
+| `test-invocation.js` | it has test files no workflow runs (§4.1e) |
+| `catalog-evidence.js verify` | a `file:line` anchor on its card no longer resolves |
+| `catalog-sync.js check` | a chip names an algorithm its source does not implement, or `CATALOG.md` drifts |
+| `readme-sync.js check` · `corpus-sync.js check` · `concept-sync.js check` | its card is missing from a file derived from the cards |
+| `protection-census.js` | (read-only) reports what protects its default branch, asked of BOTH endpoints |
+
+The rest guard the catalog's own generated files and the teaching layer
+(`tools-sync`, `corpus-freshness`, `catalog-recall`, `teach-build`, `teach-drift`,
+`teach-layout`, `dispatch-claims`, `depth-audit`). `README.md`'s "Maintaining the fleet"
+table is generated from the tools themselves and is the current list — **read it rather than
+this one**, for the same reason the port census was deleted from §4.1: a hand-kept copy of a
+generated list is drift waiting to happen.
+
+Seven run weekly in `.github/workflows/fleet.yml` with no one watching, so a lab can break
+long after you ship it: `fleet-sync`, `deploy-sync`, `gate-sync`, `dispatch-sync`,
+`theme-sync`, `catalog-evidence verify`, `catalog-recall check`.
 
 ---
 

@@ -44,9 +44,12 @@
 const fs = require('fs');
 const path = require('path');
 
+const {
+  siblingLabs, siblingLabs: siblingLabsForFloor, excludedLine, fleetUnreadLine, fleetUnread, pinnedCloneCount,
+} = require('./sibling-labs');
+
 const FLEET_ROOT = path.join(__dirname, '..', '..');
 const REGISTRY = path.join(__dirname, 'playwright-ports.json');
-const LAB_RE = /^crypto-(lab|compare|counsel)/;
 
 /* The first port-shaped number in the config. Configs write it either as
  * `const port = 4667` or straight into a `localhost:4667` baseURL; both forms
@@ -85,9 +88,18 @@ function commandPortsOf(text) {
   return [...text.matchAll(/--port[\s=]+(\d{4})/g)].map((m) => Number(m[1]));
 }
 
+/* A linked git worktree of a LAB is the case that bites here, and it is created
+ * by following CLAUDE.md's own instruction inside a lab repo: the worktree holds
+ * that lab's playwright.config.ts, with that lab's port, so this checker read it
+ * as a second lab and reported `4357 crypto-lab-lane-porttest,
+ * crypto-lab-schnorr-forge` — a lab colliding with itself. Proven both ways on
+ * 2026-10-02: with the worktree the denominator was 205 and the collision count
+ * 10, without it 204 and 9. sibling-labs.js excludes it and NAMES it, because a
+ * denominator that drops quietly is the defect the census exists to make loud. */
 function scan() {
   const labs = [];
-  for (const dir of fs.readdirSync(FLEET_ROOT).filter((d) => LAB_RE.test(d))) {
+  const { labs: dirs, excluded } = siblingLabs(FLEET_ROOT);
+  for (const dir of dirs) {
     const cfg = path.join(FLEET_ROOT, dir, 'playwright.config.ts');
     if (!fs.existsSync(cfg)) continue;
     const text = fs.readFileSync(cfg, 'utf8');
@@ -99,7 +111,9 @@ function scan() {
       cmdPorts: [...new Set(commandPortsOf(text))],
     });
   }
-  return labs.sort((a, b) => (a.port || 0) - (b.port || 0));
+  labs.sort((a, b) => (a.port || 0) - (b.port || 0));
+  labs.excluded = excluded;
+  return labs;
 }
 
 /* Offline test of the two consistency rules, over tools/fixtures/ports. The
@@ -136,6 +150,27 @@ function selftest() {
       console.log(`  ok  ${name} — ${expect.why}`);
     }
   }
+  /* The fleet floor, asserted here because this is the tool whose absence of one
+   * produced the finding: run from a directory with no clones beside it,
+   * port-sync printed "Labs with a Playwright config: 0" and then "Every lab has
+   * its own port, pinned, with --strictPort" and exited 0. Both directions are
+   * checked -- a floor that always fired would be as useless as none. */
+  {
+    const pinned = pinnedCloneCount();
+    if (!Number.isInteger(pinned) || pinned < 1) {
+      fail.push('fleet floor: the census declares no integer lab total to floor against');
+    } else {
+      if (!fleetUnread(0)) fail.push('fleet floor: zero clones did not refuse');
+      if (!fleetUnread(pinned - 1)) fail.push('fleet floor: one clone short of the census did not refuse');
+      if (fleetUnread(pinned)) fail.push('fleet floor: the pinned count itself was refused');
+      if (fleetUnread(pinned + 1)) fail.push('fleet floor: a clone MORE than the census was refused');
+      if (!fail.length) {
+        pass += 4;
+        console.log(`  ok  fleet-floor — refuses 0 and ${pinned - 1} clones, allows ${pinned} and ${pinned + 1}`);
+      }
+    }
+  }
+
   // A fixture set with no positive case would pass against a rule that never fires.
   if (!Object.values(PORT_FIXTURES).some((e) => e.mismatch)) fail.push('no fixture exercises the mismatch rule');
   if (!Object.values(PORT_FIXTURES).some((e) => e.noUrl)) fail.push('no fixture exercises the no-url rule');
@@ -147,7 +182,17 @@ function selftest() {
 
 function main() {
   const check = process.argv[2] === 'check';
+  /* selftest is offline by design -- fixtures only, no clones -- so it runs
+   * before the fleet floor below. */
   if (process.argv[2] === 'selftest') process.exit(selftest());
+  /* A checker that cannot see the clones must not report them clean. Four of
+   * these reported a clean pass over zero labs until 2026-10-02 -- see the
+   * measurements in tools/sibling-labs.js. The floor is the census, so it moves
+   * when a lab is added or removed and nowhere else. */
+  {
+    const unread = fleetUnreadLine(siblingLabsForFloor(FLEET_ROOT));
+    if (unread) { console.log(unread); process.exit(1); }
+  }
   const labs = scan();
   const problems = [];
 
@@ -176,6 +221,8 @@ function main() {
   const unpinned = labs.filter((l) => !pinned.has(l.lab));
 
   console.log(`Labs with a Playwright config: ${labs.length} | distinct ports: ${Object.keys(byPort).length}`);
+  const excl = excludedLine(labs.excluded || []);
+  if (excl) console.log(excl);
 
   if (collisions.length) {
     console.log(`\nTWO LABS ON ONE PORT (${collisions.length}) — a run can hit the wrong lab's server,`);

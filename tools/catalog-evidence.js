@@ -177,16 +177,64 @@ const BUILD_DOC = new RegExp([
  * card byte-identical, so an unrelated one-line commit FREEZES a card holding
  * claims that need correcting.
  *
- * `null` from git is treated as moved: could not look is never "nothing changed". */
+ * `null` from git is treated as moved: could not look is never "nothing changed".
+ *
+ * EXCEPT in the one case where "could not look" is the whole answer. A SHALLOW
+ * clone does not contain the pinned commit, so the diff cannot be computed for a
+ * reason that has nothing to do with the lab. On 2026-10-01 the weekly fleet job
+ * reported STALE-REVIEW for 27 labs and failed; the same run on full clones
+ * reported none. `.github/workflows/fleet.yml` clones with `--depth 1`, so every
+ * pin older than HEAD was unreachable, every diff threw, and every throw became
+ * a claim that a person had to re-read that lab. A re-review queue of 27 labs,
+ * none of which needed re-reviewing — the fourth entry in CLAUDE.md's
+ * answering-from-a-copy table is the same defect with `rev-parse` in an unfetched
+ * clone, and this is it in CI.
+ *
+ * So the absent-commit case is split by asking git which it is:
+ *
+ *   commit present, README/src touched      'moved'       STALE-REVIEW
+ *   commit present, nothing substantive     'not-moved'   the pin still holds
+ *   commit absent, clone is shallow         'unreadable'  PIN-UNREADABLE
+ *   commit absent, clone is complete        'moved'       the pin names something
+ *                                                        this repository does not
+ *                                                        have, which IS a finding
+ *
+ * The last line keeps the proven behaviour for a pin pointing at nothing, and the
+ * self-test still asserts it. `unreadable` fails the run as loudly as a stale pin
+ * does — it is not a pass — but it is reported as a fact about the CLONE, and it
+ * never asks a person to go and re-read a lab nobody has established has moved. */
 function movedSubstantively(dir, from, to) {
   try {
     const out = execFileSync('git', ['-C', dir, 'diff', '--name-only', `${from}..${to}`], {
       encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 32 * 1024 * 1024,
     });
-    return out.split('\n').filter(Boolean).some((f) => f === 'README.md' || f.startsWith('src/'));
+    return out.split('\n').filter(Boolean).some((f) => f === 'README.md' || f.startsWith('src/'))
+      ? 'moved' : 'not-moved';
   } catch {
-    return true;
+    return hasCommit(dir, from) ? 'moved' : (isShallow(dir) ? 'unreadable' : 'moved');
   }
+}
+
+/** Is this object in this clone at all? Asked of the clone, not of the remote. */
+function hasCommit(dir, sha) {
+  try {
+    execFileSync('git', ['-C', dir, 'cat-file', '-e', `${sha}^{commit}`],
+      { stdio: ['ignore', 'ignore', 'ignore'] });
+    return true;
+  } catch { return false; }
+}
+
+/* Labs whose pin could not be judged because the clone is shallow. Module level
+ * because the derivation fills it per lab and the reports read it once. */
+const pinUnreadable = new Set();
+
+/** A `--depth` clone. Its history is truncated, so an older commit is absent for
+ *  a reason that says nothing about the lab. */
+function isShallow(dir) {
+  try {
+    return execFileSync('git', ['-C', dir, 'rev-parse', '--is-shallow-repository'],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() === 'true';
+  } catch { return false; }
 }
 
 function labFilePaths(clone, readRoot) {
@@ -881,7 +929,16 @@ function evidenceFor(slug) {
   let staleReview = null;
   if (review) {
     const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-    if (head !== review.commit && movedSubstantively(dir, review.commit, head)) {
+    const movement = head === review.commit ? 'not-moved' : movedSubstantively(dir, review.commit, head);
+    if (movement === 'unreadable') {
+      /* Could not look is not permission to apply the pin. The recorded add and
+         remove lists stay unapplied and the card stays byte-identical, exactly as
+         for a stale pin — but it is reported as PIN-UNREADABLE, because nobody has
+         established that this lab moved. */
+      pinUnreadable.add(slug);
+      staleReview = { pinned: review.commit, current: head, unreadable: true };
+    }
+    if (movement === 'moved') {
       /* A stale pin is RECORDED here and acted on by each caller; nothing throws.
          What must not happen is a person's recorded add and remove lists being
          applied to source that has since changed - that is their judgement being
@@ -1089,7 +1146,20 @@ function writeCards(all) {
   printCloneSource();
   console.log(`index.html: derived fields written to ${changed} cards.`);
   if (tornSnapshot().length) process.exitCode = 1;
-  if (stale.length) {
+  const unreadablePins = stale.filter((c) => c.ev.staleReview.unreadable);
+  const reallyStale = stale.filter((c) => !c.ev.staleReview.unreadable);
+  if (unreadablePins.length) {
+    console.log(`\nPIN-UNREADABLE (${unreadablePins.length}) — the pinned commit is absent from a SHALLOW clone,`);
+    console.log('  so whether the lab moved could not be asked. Their cards are left byte-identical and their');
+    console.log('  recorded edits unapplied, the same as a stale pin — but none of these is a re-review queue.');
+    for (const c of unreadablePins) {
+      console.log(`  ${c.slug.padEnd(32)} pinned ${c.ev.staleReview.pinned.slice(0, 12)} — not in this clone`);
+    }
+    console.log('Fetch the pinned commits (`git -C ../<lab> fetch --depth 1 origin <pin>`) and re-run.');
+    process.exitCode = 1;
+  }
+  if (reallyStale.length) {
+    const stale = reallyStale;
     const today = new Date();
     const aged = stale.map((c) => {
       const d = REVIEWS[c.slug] && REVIEWS[c.slug].reviewed;
@@ -1177,6 +1247,7 @@ function verifyAnchors(all) {
   const bad = [];
   const unreadable = [];
   const behind = [];
+  const shallowPins = [];
   let checked = 0;
   const byName = verifyTerms();
   for (const c of all) {
@@ -1202,14 +1273,21 @@ function verifyAnchors(all) {
              came from source the lab has moved past, so it is a finding about
              this checkout and it says which command clears it. */
           behind.push({ slug: c.slug, clone: head, actual: remote });
-        } else if (remote !== review.commit && movedSubstantively(dir, review.commit, remote)) {
+        } else if (remote !== review.commit) {
           /* Same substantive scope as the derivation above and as
-             corpus-freshness: only README.md or src/ invalidates a source review. */
-          bad.push({
-            slug: c.slug,
-            item: 'source review',
-            why: `reviewed ${review.commit.slice(0, 12)}, lab is now ${remote.slice(0, 12)}; re-review and update the pin`,
-          });
+             corpus-freshness: only README.md or src/ invalidates a source review.
+             A shallow clone cannot answer the question at all, and says so as its
+             own state rather than as a claim that this lab needs re-reading. */
+          const movement = movedSubstantively(dir, review.commit, remote);
+          if (movement === 'unreadable') {
+            shallowPins.push({ slug: c.slug, pinned: review.commit, remote });
+          } else if (movement === 'moved') {
+            bad.push({
+              slug: c.slug,
+              item: 'source review',
+              why: `reviewed ${review.commit.slice(0, 12)}, lab is now ${remote.slice(0, 12)}; re-review and update the pin`,
+            });
+          }
         }
       }
     }
@@ -1286,6 +1364,16 @@ function verifyAnchors(all) {
   const staleAnchors = bad.filter((b) => b.item !== 'source review');
   printCloneSource();
   console.log(`Anchors checked: ${checked}.\n`);
+  if (shallowPins.length) {
+    console.log(`PIN-UNREADABLE (${shallowPins.length}) — the pinned commit is NOT IN THIS CLONE and the clone`);
+    console.log('  is shallow, so whether the lab moved could not be asked. This is a finding about the');
+    console.log('  checkout, never about the lab: none of these is a re-review queue. Clear it by fetching');
+    console.log('  the pinned commits — `git -C ../<lab> fetch --depth 1 origin <pin>` — or by cloning deeper.');
+    for (const p of shallowPins) {
+      console.log(`  ${p.slug.padEnd(32)} pinned ${p.pinned.slice(0, 12)}, remote ${p.remote.slice(0, 12)} — absent here`);
+    }
+    console.log('');
+  }
   if (staleReviews.length) {
     const oldest = staleReviews[0].days;
     console.log(`STALE-REVIEW (${staleReviews.length}) — oldest ${oldest === null ? 'undated' : `${oldest} days`}; `
@@ -1314,7 +1402,7 @@ function verifyAnchors(all) {
     for (const slug of unreadable) console.log(`  ${slug.padEnd(34)} clone it to check its anchors and its pinned review`);
     console.log('');
   }
-  if (bad.length || unreadable.length || behind.length) {
+  if (bad.length || unreadable.length || behind.length || shallowPins.length) {
     if (staleAnchors.length) {
       console.log('For a stale anchor: re-derive with `node tools/catalog-evidence.js write`.');
       if (staleReviews.length) {
@@ -1330,6 +1418,11 @@ function verifyAnchors(all) {
       console.log('For a clone behind its lab: `git -C ../<lab> pull --ff-only`, then re-derive.');
     }
     if (unreadable.length) console.log('For an unreadable lab: clone it next to this repository.');
+    if (shallowPins.length) {
+      console.log('For an unreadable PIN: the clone is shallow and does not contain the pinned commit.'
+        + '\n  Fetch it — `git -C ../<lab> fetch --depth 1 origin <pin>` — or clone without --depth.'
+        + '\n  Do NOT re-review these labs on the strength of this line: it is not evidence any moved.');
+    }
     process.exit(1);
   }
   console.log('Every anchor still resolves and every pinned source review matches its lab clone.');
@@ -1462,23 +1555,56 @@ function selftest() {
     fs.writeFileSync(path.join(tmp, '.gitignore'), 'CRYPTO-LAB-TEMPLATE*.md\nchat.md\nnotes.txt\n');
     git('add', '.gitignore'); git('commit', '-qm', 'ignore notes');
     const afterIgnoreOnly = git('rev-parse', 'HEAD').trim();
-    if (movedSubstantively(tmp, base, afterIgnoreOnly)) fail.push('a .gitignore-only commit was called substantive');
+    if (movedSubstantively(tmp, base, afterIgnoreOnly) !== 'not-moved') fail.push('a .gitignore-only commit was called substantive');
     else { pass++; console.log('  ok  a .gitignore-only commit does NOT invalidate a pin'); }
 
     fs.writeFileSync(path.join(tmp, 'src', 'main.ts'), 'export function sha512() { return 2 }\n');
     git('add', 'src/main.ts'); git('commit', '-qm', 'change src');
     const afterSrc = git('rev-parse', 'HEAD').trim();
-    if (!movedSubstantively(tmp, afterIgnoreOnly, afterSrc)) fail.push('a src/ change was not called substantive');
+    if (movedSubstantively(tmp, afterIgnoreOnly, afterSrc) !== 'moved') fail.push('a src/ change was not called substantive');
     else { pass++; console.log('  ok  a src/ change DOES invalidate a pin'); }
 
     fs.writeFileSync(path.join(tmp, 'README.md'), '# lab\n');
     git('add', 'README.md'); git('commit', '-qm', 'add readme');
-    if (!movedSubstantively(tmp, afterSrc, git('rev-parse', 'HEAD').trim())) fail.push('a README.md change was not called substantive');
+    if (movedSubstantively(tmp, afterSrc, git('rev-parse', 'HEAD').trim()) !== 'moved') fail.push('a README.md change was not called substantive');
     else { pass++; console.log('  ok  a README.md change DOES invalidate a pin'); }
 
-    if (movedSubstantively(tmp, 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeef', 'HEAD') !== true) {
+    if (movedSubstantively(tmp, 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeef', 'HEAD') !== 'moved') {
       fail.push('an unreadable range was not treated as moved');
     } else { pass++; console.log('  ok  a range git cannot read counts as moved, never as unchanged'); }
+
+    /* A SHALLOW clone is the one case where "could not look" is the whole answer,
+       and it has to be told apart from the line above. Both are a commit git
+       cannot diff; only one is a reason to ask a person to re-read a lab.
+
+       The mutation this guards against is the original `catch { return true }`,
+       which produced 27 STALE-REVIEW rows in the weekly job on 2026-10-01 and
+       none on full clones. Fixture: clone tmp with --depth 1, then ask about a
+       commit the truncated history does not contain. */
+    {
+      const shallow = fs.mkdtempSync(path.join(os.tmpdir(), 'cl-shallow-'));
+      let built = true;
+      try {
+        execFileSync('git', ['clone', '--quiet', '--depth', '1', `file://${tmp}`, shallow],
+          { stdio: ['ignore', 'ignore', 'ignore'] });
+      } catch { built = false; }
+      if (!built) {
+        console.log('  --  shallow-clone case SKIPPED: git could not make the fixture');
+      } else {
+        const absent = movedSubstantively(shallow, base, 'HEAD');
+        if (absent !== 'unreadable') {
+          fail.push(`a shallow clone missing the pinned commit was reported as '${absent}', not 'unreadable'`);
+        } else { pass++; console.log("  ok  a shallow clone missing the pin is 'unreadable', never a stale review"); }
+
+        /* And the distinction must not swallow a real finding: once the pinned
+           commit IS present, the same clone answers about content again. */
+        const present = movedSubstantively(shallow, 'HEAD', 'HEAD');
+        if (present !== 'not-moved') {
+          fail.push(`a shallow clone that CAN see the range answered '${present}'`);
+        } else { pass++; console.log('  ok  a shallow clone still answers about a range it does contain'); }
+      }
+      fs.rmSync(shallow, { recursive: true, force: true });
+    }
 
     /* The verifier judges BOTH anchored fields against BOTH vocabularies.
        Fixture: one algorithm anchor and one attack anchor of the shape the
@@ -1652,7 +1778,17 @@ function main() {
 
   /* Every read-only mode names the stale pins it worked around, so a number that
      came out of a partly-inherited review is never mistaken for a clean one. */
-  const stale = all.filter((c) => c.ev.staleReview);
+  const stale = all.filter((c) => c.ev.staleReview && !c.ev.staleReview.unreadable);
+  const unjudgeable = all.filter((c) => c.ev.staleReview && c.ev.staleReview.unreadable);
+  if (unjudgeable.length && mode !== 'write') {
+    console.error(`PIN-UNREADABLE (${unjudgeable.length}) — the pinned commit is absent from a shallow clone, so`);
+    console.error('whether the lab moved could not be asked. Their recorded edits were NOT applied. This says');
+    console.error('nothing about those labs; fetch the pinned commits and re-run.');
+    for (const c of unjudgeable) {
+      console.error(`  ${c.slug.padEnd(34)} pinned ${c.ev.staleReview.pinned.slice(0, 12)} — not in this clone`);
+    }
+    console.error('');
+  }
   if (stale.length && mode !== 'write') {
     console.error(`STALE-REVIEW (${stale.length}) — pinned source reviews whose lab has moved. Their recorded`);
     console.error('add/remove edits were NOT applied here; everything else in this run is derived as usual.');

@@ -1199,11 +1199,21 @@ this in mind rather than adding a fifth name to it.
 | the TypeScript in a lab whose crypto is Rust behind WASM | the lab's own implementation language | **implements nothing**, about source it never opened |
 | a card's anchors with no clone on disk | the lab, or nothing | **file is gone**, per anchor, about files nobody looked at |
 | `git rev-parse HEAD` in an unfetched clone | the lab's actual head | **eighteen stale reviews**, a re-review queue with nothing in it, while hiding the two that were real |
+| `git diff <pin>..HEAD` in a `--depth 1` clone, where the pin is absent | whether the pinned commit is even present | **twenty-seven stale reviews** in the weekly job on 2026-10-01, and none from the same checkers on full clones |
 
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
-`NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`. What makes them work is not the name but the
-refusal underneath it — a checker that could not look reports that it could not look, and
-is never permitted to express the gap as a negative finding about the subject.
+`NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`. What makes them work is not
+the name but the refusal underneath it — a checker that could not look reports that it could
+not look, and is never permitted to express the gap as a negative finding about the subject.
+
+**The fifth one is the fourth one again, in the other environment, and that is the lesson in
+it.** The `rev-parse` case was fixed in the clones a person runs against; the same question
+was still unanswerable in CI, where `fleet.yml` clones `--depth 1` and the pinned commit is
+simply not there. `catch { return true }` then turned "this clone has no such commit" into
+"a person must re-read this lab", twenty-seven times, in an issue a person was being asked to
+act on. **So when one of these is fixed, ask where else the same question is asked** — the
+local run and the scheduled run are different readers of the same checker, and only one of
+them had been looked at.
 
 Two things fall out of this that are easy to miss.
 

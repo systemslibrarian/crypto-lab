@@ -241,8 +241,8 @@
     "note": "Checked-in circuit source and real snarkjs Groth16 flow reviewed; PLONK is shown only as a comparison"
   },
   "crypto-lab-syndrome-drain": {
-    "commit": "1b7cc875aa5ae793fc6529934539a04548250167",
-    "reviewed": "2026-10-01",
+    "commit": "7187714a9cadf1570726228f02e00dae48abc9df",
+    "reviewed": "2026-10-02",
     "state": "N/A",
     "note": "Models decode-one-of-many work factors; no code-based KEM or decoder implemented"
   },

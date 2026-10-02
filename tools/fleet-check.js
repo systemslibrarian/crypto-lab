@@ -4,7 +4,7 @@
  *
  * Run: node tools/fleet-check.js
  * Prevents: a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand
- * Reads: seven sibling checkers' stdout (fleet/deploy/gate/dispatch/theme-sync, catalog-evidence, catalog-recall) and this repo's open issue body
+ * Reads: eight sibling checkers' stdout (fleet/deploy/gate/dispatch/theme-sync, catalog-evidence, catalog-recall, lab-dates) and this repo's open issue body
  *
  * These ask GitHub, or the sibling clones, rather than this repository — which is what makes them the group
  * worth scheduling: their answers change without anyone touching this repo. A lab can
@@ -60,6 +60,10 @@ const CHECKERS = [
      reason as the line above — it reads the clones — and it fails only on a DROP,
      so it catches a scanner change that quietly stops finding things. */
   { name: 'catalog-recall', args: ['tools/catalog-recall.js', 'check'] },
+  /* Card dates. Same shape again, and the most literally time-dependent of the
+     set: a card says when its demo last changed, so the answer is wrong the
+     moment a lab lands a commit here and nobody re-runs the writer. */
+  { name: 'lab-dates', args: ['tools/lab-dates.js', 'check'] },
 ];
 
 /* protection-census is NOT in that list, and the reason is worth keeping.

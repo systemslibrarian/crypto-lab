@@ -179,7 +179,7 @@
         "notes": "Observed with Playwright in Chromium, Firefox and WebKit at 1280x720 and 390x720, through page load and every worksheet step: no request went to any origin but the exhibit’s own."
       },
       "support": {
-        "checked": "2026-09-22",
+        "checked": "2026-10-01",
         "results": [
           {
             "engine": "Chromium 153",
@@ -202,8 +202,8 @@
           {
             "engine": "WebKit 26.6",
             "viewport": "390x720",
-            "result": "issues",
-            "notes": "The page is about 92px wider than the viewport, so it scrolls sideways. Re-derived on 2026-09-22: it had been recorded at about 136px, so the figure has moved. Otherwise every worksheet step ran and every anchor was present.",
+            "result": "pass",
+            "notes": "Re-derived against the live page on 2026-10-01 and no longer reproducing. It had been recorded as about 136px wider than the viewport at 390x720, re-derived at 92px on 2026-09-22, and fixed in crypto-lab-protocol-checker#20: WebKit sizes a <select> from its widest option, and that contribution reached the document even though the control itself fit. Measured at 390x720 after the fix: 0px in WebKit, Chromium and Firefox. Otherwise every worksheet step ran and every anchor was present.",
             "rederived": "2026-09-22",
             "issue": {
               "kind": "horizontal-overflow",

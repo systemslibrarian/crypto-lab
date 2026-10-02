@@ -141,6 +141,15 @@ function scan() {
       lab: dir,
       port: portOf(text),
       strict: /strictPort/.test(text),
+      /* `--strictPort` is a VITE flag, and it is Vite's preview server that
+       * silently increments to the next free port. A server that cannot do that
+       * does not need the flag and will never carry it. crypto-compare serves
+       * its static export with a node http server -- `server.listen(port)`
+       * raises EADDRINUSE and kills the process -- so requiring the literal
+       * reported it as a finding on the strength of being unable to have the
+       * bug. Same shape as reading only literal ports: the lab that solved it
+       * differently is the one the detector accuses. */
+      canFallBack: /\bpreview\b/.test(text),
       urlPorts: [...new Set(urlPortsOf(text))],
       cmdPorts: [...new Set(commandPortsOf(text))],
     });
@@ -237,7 +246,10 @@ function main() {
   }
 
   const collisions = Object.entries(byPort).filter(([, v]) => v.length > 1);
-  const unstrict = labs.filter((l) => !l.strict);
+  const unstrict = labs.filter((l) => !l.strict && l.canFallBack);
+  /* Named, never silently skipped: a denominator that drops quietly is the
+   * defect this file keeps re-finding. */
+  const noFallback = labs.filter((l) => !l.strict && !l.canFallBack);
 
   // The command starts a server on a port the config never polls.
   const mismatched = labs.filter((l) =>
@@ -267,6 +279,12 @@ function main() {
     console.log(`\nNO --strictPort (${unstrict.length}) — Playwright will silently take the next free`);
     console.log('port, so a collision stops being visible and the config stops describing the run:');
     for (const l of unstrict) console.log(`  ${l.lab}`);
+  }
+
+  if (noFallback.length) {
+    console.log(`\nNo --strictPort and none needed (${noFallback.length}) — the webServer`);
+    console.log('command is not a Vite preview, so it cannot silently take another port:');
+    for (const l of noFallback) console.log(`  ${l.lab}`);
   }
   if (mismatched.length) {
     console.log(`\nSERVER PORT != POLLED PORT (${mismatched.length}) — Playwright starts the preview`);

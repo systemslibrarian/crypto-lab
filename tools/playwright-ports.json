@@ -56,8 +56,20 @@
   "lab": "crypto-lab-iron-letter"
  },
  {
+  "port": 4220,
+  "lab": "crypto-lab-hybrid-pqc"
+ },
+ {
+  "port": 4221,
+  "lab": "crypto-lab-hybrid-sign"
+ },
+ {
   "port": 4222,
   "lab": "crypto-lab-bitcoin-wallet"
+ },
+ {
+  "port": 4224,
+  "lab": "crypto-lab-hybrid-guide"
  },
  {
   "port": 4226,
@@ -110,6 +122,10 @@
  {
   "port": 4252,
   "lab": "crypto-lab-ntru-classic"
+ },
+ {
+  "port": 4253,
+  "lab": "crypto-lab-oblivious-shelf"
  },
  {
   "port": 4254,
@@ -336,6 +352,10 @@
   "lab": "crypto-lab-world-ciphers"
  },
  {
+  "port": 4368,
+  "lab": "crypto-lab-icy-dvrf"
+ },
+ {
   "port": 4373,
   "lab": "crypto-lab-kdf-arena"
  },
@@ -386,6 +406,10 @@
  {
   "port": 4606,
   "lab": "crypto-lab-lll-break"
+ },
+ {
+  "port": 4607,
+  "lab": "crypto-lab-j-uniward"
  },
  {
   "port": 4608,
@@ -652,16 +676,40 @@
   "lab": "crypto-lab-traitor-trace"
  },
  {
+  "port": 4674,
+  "lab": "crypto-lab-noise-to-numbers"
+ },
+ {
   "port": 4676,
   "lab": "crypto-lab-bitcoin-script"
+ },
+ {
+  "port": 4677,
+  "lab": "crypto-lab-ibe-gate"
+ },
+ {
+  "port": 4678,
+  "lab": "crypto-lab-blind-relay"
+ },
+ {
+  "port": 4679,
+  "lab": "crypto-lab-harvest-vault"
  },
  {
   "port": 4682,
   "lab": "crypto-lab-attribute-gate"
  },
  {
+  "port": 4683,
+  "lab": "crypto-lab-function-key"
+ },
+ {
   "port": 4684,
   "lab": "crypto-lab-privacy-pass"
+ },
+ {
+  "port": 4685,
+  "lab": "crypto-lab-glass-box"
  },
  {
   "port": 4686,
@@ -680,6 +728,10 @@
   "lab": "crypto-lab-shelf-oracle"
  },
  {
+  "port": 4693,
+  "lab": "crypto-lab-pq-chooser"
+ },
+ {
   "port": 4694,
   "lab": "crypto-lab-masked-core"
  },
@@ -690,6 +742,10 @@
  {
   "port": 4696,
   "lab": "crypto-lab-polynomial-forge"
+ },
+ {
+  "port": 4697,
+  "lab": "crypto-lab-export-grade"
  },
  {
   "port": 4698,
@@ -710,5 +766,53 @@
  {
   "port": 4708,
   "lab": "crypto-lab-shadow-vault"
+ },
+ {
+  "port": 4709,
+  "lab": "crypto-lab-air-stream"
+ },
+ {
+  "port": 4710,
+  "lab": "crypto-lab-sm2-forge"
+ },
+ {
+  "port": 4711,
+  "lab": "crypto-lab-sm9-forge"
+ },
+ {
+  "port": 4712,
+  "lab": "crypto-lab-adaptor-gate"
+ },
+ {
+  "port": 4713,
+  "lab": "crypto-lab-kpqc-pair"
+ },
+ {
+  "port": 4714,
+  "lab": "crypto-lab-mgm-mode"
+ },
+ {
+  "port": 4715,
+  "lab": "crypto-lab-drift-key"
+ },
+ {
+  "port": 4716,
+  "lab": "crypto-lab-misty-lens"
+ },
+ {
+  "port": 4717,
+  "lab": "crypto-lab-pulse-chain"
+ },
+ {
+  "port": 4718,
+  "lab": "crypto-lab-return-path"
+ },
+ {
+  "port": 4719,
+  "lab": "crypto-lab-point-ledger"
+ },
+ {
+  "port": 4720,
+  "lab": "crypto-lab-tc26-pair"
  }
 ]

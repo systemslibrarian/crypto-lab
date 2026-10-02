@@ -901,7 +901,7 @@ function cardedSlugs() {
  * unseenCarded() below is the accounting for everything that misses. */
 /* Linked git worktrees under a matching name are excluded and NAMED, not dropped
  * in silence — see tools/sibling-labs.js for why one appears there at all. */
-const { siblingLabs: enumerate, LAB_DIR_RE } = require('./sibling-labs.js');
+const { siblingLabs: enumerate, siblingLabs: siblingLabsForFloor, fleetUnreadLine, LAB_DIR_RE } = require('./sibling-labs.js');
 
 let excludedWorktrees = [];
 
@@ -954,6 +954,14 @@ const ORDER = ['DEPLOY-UNRECOGNISED', 'GATE-WEAKER', 'PUSH-GATED', 'FUSED-GATE-O
 
 function main() {
   const check = process.argv[2] === 'check';
+  /* A checker that cannot see the clones must not report them clean. Four of
+   * these reported a clean pass over zero labs until 2026-10-02 -- see the
+   * measurements in tools/sibling-labs.js. The floor is the census, so it moves
+   * when a lab is added or removed and nowhere else. */
+  {
+    const unread = fleetUnreadLine(siblingLabsForFloor(FLEET_ROOT));
+    if (unread) { console.log(unread); process.exit(1); }
+  }
   const repos = siblingLabs();
   const carded = cardedSlugs();
 

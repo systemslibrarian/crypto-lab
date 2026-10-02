@@ -53,6 +53,7 @@ const path = require('path');
 const { execFile } = require('child_process');
 
 const FLEET_ROOT = path.join(__dirname, '..', '..');
+const { siblingLabs: siblingLabsForFloor, fleetUnreadLine } = require('./sibling-labs.js');
 
 // Async on purpose: execFileSync would block the event loop and the pool below
 // would run serially, which for ~180 labs is the difference between seconds and
@@ -332,7 +333,17 @@ const CAUSE_TEXT = {
 
 async function main() {
   const check = process.argv[2] === 'check';
+  /* selftest is offline by design -- fixtures only, no clones -- so it runs
+   * before the fleet floor below. */
   if (process.argv[2] === 'selftest') return selftest();
+  /* A checker that cannot see the clones must not report them clean. Four of
+   * these reported a clean pass over zero labs until 2026-10-02 -- see the
+   * measurements in tools/sibling-labs.js. The floor is the census, so it moves
+   * when a lab is added or removed and nowhere else. */
+  {
+    const unread = fleetUnreadLine(siblingLabsForFloor(FLEET_ROOT));
+    if (unread) { console.log(unread); return 1; }
+  }
   const labs = deployingLabs();
   const rows = await pooled(labs, inspect, 12);
 

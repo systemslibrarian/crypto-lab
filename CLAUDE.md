@@ -24,8 +24,8 @@ each has a checker that fails when it drifts:
 | `CATALOG.md` | the algorithm-level view: reverse index, standards bodies, overlaps | `node tools/catalog-sync.js check` |
 
 `CATALOG.md` answers the one question the cards cannot: *which labs implement
-ML-KEM?* The chips look like they should answer it and cannot — there are 625
-distinct chips across 208 cards, so a chip search returns the labs that happened
+ML-KEM?* The chips look like they should answer it and cannot — there are 667
+distinct chips across 218 cards, so a chip search returns the labs that happened
 to spell it your way and looks complete while doing it. The card schema therefore
 carries six more fields (`data-implements`, `data-references`, `data-attacks`,
 `data-standards`, `data-implementation`, `data-overlaps`), and the first five are
@@ -188,7 +188,7 @@ the changed lab before updating a pin; a passing anchor alone does not prove the
 review still covers its source. It runs in the weekly fleet job, since
 its answer changes when a LAB changes rather than when this repo does.
 
-Nine more checkers guard the sibling demo repos, and the fleet itself, rather than
+Ten more checkers guard the sibling demo repos, and the fleet itself, rather than
 a file derived from `index.html`:
 
 | Invariant | Checker |
@@ -202,6 +202,7 @@ a file derived from `index.html`:
 | every clause of that paragraph is still TRUE of the fleet it is written into | `node tools/dispatch-claims.js check` |
 | every lab that owes a dispatch is still present, and still classifiable | `node tools/dispatch-census.js check` |
 | what actually protects each lab's default branch, asked of BOTH endpoints | `node tools/protection-census.js` |
+| every lab serves its Playwright suite on its own port, with `--strictPort` | `node tools/port-sync.js check` |
 
 `dispatch-claims` and `dispatch-census` are also folded into `dispatch-sync check`,
 so the fast loop does not grow a command. Run them directly when the answer matters on
@@ -369,6 +370,23 @@ Rust service with no page and no card, and remains a fair skip. The rule matches
 lab today; it exists so the next new publisher cannot arrive unseen. The skipped labs
 are now listed by name too — the bare count is what hid these two.
 
+`port-sync` guards the thing every mutation check in this fleet rests on. Playwright's
+`reuseExistingServer: !process.env.CI` means a local run that finds something already
+listening on its port USES it, so two labs sharing a port can have a test pass against a
+different lab's server, or — during a §4.1c mutation check — against an **unmutated
+checkout still running from a previous run**. That reads as "the mutation was not caught"
+and sends someone to fix a check that works. `--strictPort` is the other half: without it
+Playwright silently takes the next free port, so the collision stops being visible and the
+config stops describing what actually ran. The registry is `tools/playwright-ports.json`.
+
+**Do not take a port from the master template's sample config.** It shows `4173` in three
+places and then forbids it 80 lines later ("Never the Vite default 4173"), and a third
+sample uses `4283`, which is outside the 4600–4700 range the rule states. Measured
+2026-10-02: **36 labs are on 4173**, nine pairs share a port, and 26 labs with a Playwright
+config are absent from the registry. Ask the tool, not the prose — `node
+tools/port-sync.js` reports and re-pins; the template now points at it instead of
+restating a range and a census that rot.
+
 `dispatch-sync` asks the one question `gate-sync` cannot reach: not whether the
 gate is wired right, but whether — once a bump **has** merged itself — the
 `gh workflow run` that ships it can fail without saying so. The construct it exists
@@ -530,7 +548,16 @@ is the case to know — its vectors file cites FIPS 203 and ACVP beside pinned h
 in its own header that the bytes come from `@noble/post-quantum`, "which passes the NIST
 ACVP ML-KEM test suite". A strong provenance chain, and not a published vector.
 
-Three more files under `tools/` are not checkers and are not run in the loop:
+**Nine tracked files under `tools/` are not checkers and are not run in the loop**, and the
+authoritative list is the generated footnote under README.md's table rather than a count
+here — this sentence said "three" until 2026-10-02 and named three, while the footnote
+`tools-sync` writes named nine: `catalog-vocab.js`, `clone-source.js`,
+`depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`,
+`render-verification.mjs`, `sibling-labs.js`, `transform.mjs`, `validate-manifest.mjs`.
+A hand-kept count beside a generated one is the drift this file keeps re-finding; read the
+footnote. The three below are here because their REASONING is worth carrying, not because
+they are the whole set:
+
 
 | File | What it is |
 |---|---|
@@ -1188,7 +1215,7 @@ checks that make that honest, both used on 2026-09-30:
 
 ### Answering from a copy, and reporting the gap as a fact about the lab
 
-Four times now a checker here has answered from something near the question rather than the
+Seven times now a checker here has answered from something near the question rather than the
 thing the question is about, then published the difference as a finding. They were found
 separately, given separate names, and are one defect. The next checker should be built with
 this in mind rather than adding a fifth name to it.
@@ -1201,11 +1228,54 @@ this in mind rather than adding a fifth name to it.
 | `git rev-parse HEAD` in an unfetched clone | the lab's actual head | **eighteen stale reviews**, a re-review queue with nothing in it, while hiding the two that were real |
 | `git diff <pin>..HEAD` in a `--depth 1` clone, where the pin is absent | whether the pinned commit is even present | **twenty-seven stale reviews** in the weekly job on 2026-10-01, and none from the same checkers on full clones |
 | workflows containing the literal `deploy-pages`, in `deploy-sync` | every publisher, as `gate-sync` already did | **nothing at all** about two labs, for three months, while both served a build from 2026-07-11 |
+| a lab's own linked worktree, in `port-sync` | the clones, excluding second working copies | **a false collision** — `4357 crypto-lab-lane-porttest, crypto-lab-schnorr-forge`, a lab colliding with itself |
 
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
 `NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`. What makes them work is not
 the name but the refusal underneath it — a checker that could not look reports that it could
 not look, and is never permitted to express the gap as a negative finding about the subject.
+
+**The seventh is reached by following this file's own worktree instruction, one level
+down.** `sibling-labs.js` was written because `git worktree add ../crypto-lab-lane-<name>`
+in the CATALOG makes a 223rd lab; the same command inside a LAB repo makes a worktree
+holding that lab's `playwright.config.ts`, with that lab's port. `port-sync` enumerated
+siblings with its own regex rather than the shared enumerator, so it read the worktree as a
+second lab and reported `4357 crypto-lab-lane-porttest, crypto-lab-schnorr-forge`. Proven
+both ways on 2026-10-02: with the worktree the denominator was 205 and the collision count
+10, without it 204 and 9. **So when one of these is fixed, fix it in the ONE place every
+caller reads** — four checkers took the shared enumerator and a fifth kept its own copy,
+which is the same lesson as `PAGES_PUBLISHERS` being copied instead of imported.
+
+### An absence is not an exclusion, and only one of them was loud
+
+`sibling-labs.js` was careful to NAME what it excluded, on the argument that a denominator
+dropping quietly is the defect the census exists to make loud. It said nothing about the
+denominator being **empty**. Measured 2026-10-02 by running each clone-reading checker from
+a worktree outside the fleet root, where the clones are simply not there:
+
+| checker | exit | what it printed |
+|---|---|---|
+| `port-sync` | **0** | `Labs with a Playwright config: 0`, then *"Every lab has its own port, pinned, with --strictPort"* |
+| `theme-sync` | **0** | `Lab pages checked: 0`, then *"Every lab pins one theme, and none ships a toggle"* |
+| `gate-sync` | **0** | `Labs gated by both a Pages deploy and a Dependabot auto-merge: 0` |
+| `deploy-sync` | **0** | `Deploying labs checked: 0 (0 current, 0 stale, 0 pending)` |
+| `dispatch-sync` | 1 | refused — disk says 0, the census pins 222 |
+| `dispatch-comment-sync` | 1 | refused — *"the derivation saw 0 dispatch sites"* |
+
+**Three of those four run in the weekly job, which clones the siblings itself.** A clone
+step that half fails therefore turns the fleet green while nothing is checked at all. The
+two that refused are the two with a **declared** denominator, which is the argument for
+`dispatch-census.json` demonstrated rather than asserted — so that denominator is now the
+floor for all of them: `siblingLabs()` returns the clone count beside the labs, and
+`fleetUnreadLine()` makes fewer clones than the census pins a **FLEET-UNREAD** failure.
+Asserted both directions in `port-sync.js selftest` — 0 and pinned−1 must refuse, pinned
+and pinned+1 must not — because a floor that always fired would be as useless as none.
+
+**The worktree therefore belongs BESIDE the clones, not outside them.** Moving a lane
+worktree somewhere tidier looks like the stronger fix for the row above and is the opposite:
+every fleet checker resolves its root as this repo's parent, so from outside the fleet root
+they see zero labs. Inside it, `sibling-labs.js` excludes the worktree and names it, and the
+checkers still see the fleet. Keep using `../crypto-lab-lane-<name>`.
 
 **The sixth one is the worst kind: a checker that reported nothing.** `deploy-sync` exists to
 catch a lab serving a build older than its own `main`, and it kept a lab only if one of its

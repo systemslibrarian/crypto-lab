@@ -1,9 +1,9 @@
 // teach-layout.js — measure every generated teach page, so a layout that crushes text
+// cannot land again.
 //
 // Run: node tools/teach-layout.js
 // Prevents: a teach page scrolling sideways, overflowing its container, or crushing prose into a column
 // Reads: the generated pages under teach/ (index, module, exhibit) as local file:// URLs in Chromium — never teach/_src
-// cannot land again.
 //   node tools/teach-layout.js          check every page at 1280x720 and 390x720
 //   node tools/teach-layout.js --json   the same, as JSON
 //

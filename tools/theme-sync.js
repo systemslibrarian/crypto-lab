@@ -56,7 +56,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const { isLinkedWorktree, excludedLine } = require('./sibling-labs.js');
+const { isLinkedWorktree, excludedLine, fleetUnreadLine, siblingLabs: siblingLabsForFloor } = require('./sibling-labs.js');
 
 const REPO_ROOT = path.join(__dirname, '..');
 const FLEET_ROOT = path.join(REPO_ROOT, '..');
@@ -300,6 +300,14 @@ function legacyToggles(repo, page) {
 }
 
 function main() {
+  /* A checker that cannot see the clones must not report them clean. Four of
+   * these reported a clean pass over zero labs until 2026-10-02 -- see the
+   * measurements in tools/sibling-labs.js. The floor is the census, so it moves
+   * when a lab is added or removed and nowhere else. */
+  {
+    const unread = fleetUnreadLine(siblingLabsForFloor(FLEET_ROOT));
+    if (unread) { console.log(unread); process.exit(1); }
+  }
   const check = process.argv[2] === 'check';
   const pages = labPages();
   const bad = [];

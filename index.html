@@ -20218,6 +20218,98 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
+
+          <a class="project-card" data-category="SIGNATURES | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sm9-forge/" data-added="2026-09" data-updated="2026-09"
+            data-implements="EC point arithmetic@src/attack/nonce-reuse.ts:92 | Pairing@src/sm9/encrypt.ts:223 | SM9@src/sm9/pairing.ts:57"
+            data-references="BLS signatures | BLS12-381 | Boneh-Franklin IBE | DSA | ECDSA | Hash-to-curve | MD5 | One-time pad | SHA-256 | SM4"
+            data-attacks="Discrete log@src/main.ts:54 | Nonce reuse@src/ui/pane5-break.ts:44"
+            data-standards="ISO"
+            data-implementation="hand-rolled"
+            data-review-commit="9f362ccfd71a48ee41789c52b54bc9de4008d830"
+            data-review-note="Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Identity-Based Cryptography</div>
+            <div class="project-title">SM9 Forge</div>
+            <div class="project-copy">Extract an identity key by inverting in the exponent rather than hashing to a curve, run SM9’s signature, key exchange and encryption against the standard’s own worked examples, and see why two implementations agreeing doesn’t prove either followed the spec.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SM9</span>
+                <span class="chip">Identity-Based</span>
+                <span class="chip">R-ate Pairing</span>
+                <span class="chip">BN256</span>
+                <span class="chip">Key Escrow</span>
+                <span class="chip">Nonce Reuse</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pq-chooser/" data-added="2026-09" data-updated="2026-09"
+            data-implements="ECDSA@src/bench/runner.ts:324 | Falcon@src/derive/adapters.ts:30 | ML-DSA@src/derive/adapters.ts:16 | ML-KEM@src/derive/adapters.ts:15 | P-256@src/bench/runner.ts:329 | RSA@src/bench/runner.ts:374 | SHA-256@src/bench/runner.ts:330 | SLH-DSA@src/derive/adapters.ts:24 | X25519@src/bench/runner.ts:250"
+            data-references="Dilithium | ECDH | Kyber | NTRU | P-384 | Pairing | SPHINCS+ | TLS 1.3 | UOV"
+            data-attacks="Key recovery@src/data/risk.ts:43 | Side-channel (unspecified)@src/choose/rules.ts:63 | Timing side-channel@src/data/risk.ts:80"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto"
+            data-review-commit="86142c92e563a1c446fca3e5e85f23cc2c7c0f64"
+            data-review-note="Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design."
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Post-Quantum Selection</div>
+            <div class="project-title">PQ Chooser</div>
+            <div class="project-copy">Set what constrains you and get a shortlist of two or three post-quantum schemes to investigate, built from sizes it derives by running the real algorithms in your browser rather than quoting a table.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Derived Sizes</span>
+                <span class="chip">FIPS 203/204/205</span>
+                <span class="chip">Live Benchmark</span>
+                <span class="chip">TLS Wire Cost</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-adaptor-gate/" data-added="2026-09" data-updated="2026-09"
+            data-implements="Schnorr@src/crypto/attacks.ts:8 | secp256k1@src/crypto/adaptor.ts:156 | SHA-256@src/crypto/vectors.ts:23"
+            data-references="EC point arithmetic | ECDSA | FROST"
+            data-attacks="Discrete log@src/ui/honesty.ts:109 | Key recovery@src/ui/honesty.ts:50 | Nonce reuse@src/crypto/attacks.ts:65"
+            data-standards="NIST | SECG"
+            data-implementation="@noble"
+            data-review-commit="f838c41a6708ee52e70e395f394c53b513d31558"
+            data-review-note="secp256k1 is added by review because the scanner now reads `import { schnorr } from '@noble/curves/secp256k1.js'` as a module path rather than an implementation, which is right in general and wrong here: src/crypto/secp.ts wraps that import into the lab's own point and scalar layer (N, G, mulG, mul, liftX, invModN) and src/crypto/adaptor.ts computes the adaptor construction on it directly. The anchor is the defining point addition, R + T, not the import. Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Scriptless Scripts</div>
+            <div class="project-title">Adaptor Gate</div>
+            <div class="project-copy">One click turns a pre-signature the real BIP-340 verifier rejects into a valid signature, then subtracts the two to read the secret back out — the fact that atomic swaps and PTLC routing are both built on.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">BIP-340</span>
+                <span class="chip">secp256k1</span>
+                <span class="chip">Atomic Swap</span>
+                <span class="chip">PTLC</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-function-key/" data-added="2026-09" data-updated="2026-09"
+            data-implements="ABDP15 IPFE@src/crypto/attacks.ts:24 | Baby-step giant-step@src/crypto/dlog.ts:130 | EC point arithmetic@src/crypto/ristretto.ts:80 | ristretto255@src/crypto/dlog.ts:25 | SHA-512@src/crypto/prng.ts:47"
+            data-references="BLS signatures | BLS12-381 | CKKS | Ed25519 | ElGamal | FROST | Hash-to-curve | LWE | MD5 | Paillier | RSA | SHA-256 | Schnorr | Shamir secret sharing | X3DH"
+            data-attacks="Ciphertext malleability@src/ui/stages.ts:1087"
+            data-standards="IETF | NIST"
+            data-implementation="@noble"
+            data-review-commit="f6628c00c2b70ddde2efd7462f0b9494e8c00d7d"
+            data-review-note="Browser TypeScript throughout, no other language and no WASM. Group operations are @noble/curves 2.4.0, pinned to RFC 9496 Appendix A (16 A.1 multiples both directions, 29 A.2 rejections, 8 A.3 map outputs) before any scheme code was written on it; ABDP15 Construction 3.1 and the baby-step giant-step, exact-rational and mod-l algebra are implemented in-repo. Five derived attacks are removed because none is an attack this lab shows, and each was matched by a different accident: Man-in-the-middle came from the string 'DH MITM' inside CATALOG-ENTRY.md, which is this catalog's own concept line quoted back in the lab's handoff doc and not lab source at all; Signature malleability from /malleab/i on a seed label, in a lab that has no signatures - what it demonstrates is CIPHERTEXT malleability, and its own source calls that 'not an attack and not a flaw in the proof'; Chosen-plaintext attack from CPA inside 'IND-FE-CPA', the security notion ABDP15 proves rather than an attack mounted; Chosen-ciphertext attack from CCA inside 'Any CCA security whatever', a line in the NOT-BUILT list; and Discrete log from 'baby step', which this lab pays as a decryption cost and never mounts. The two attacks it does show, key collusion and ciphertext malleability, have no term in the vocabulary. Baby-step giant-step is added by review: src/crypto/dlog.ts is a baby-step giant-step over a symmetric range, but it names the algorithm only in comments and in the local counters babySteps and giantSteps, and the exported function is called dlogSymmetric. The anchor is that function, not the counter a narrower shape used to read."
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Functional Encryption</div>
+            <div class="project-title">Function Key</div>
+            <div class="project-copy">Issue a key that answers one question about an encrypted vector — its weighted sum — and nothing else. Then issue keys one at a time and watch the set of possible plaintexts shrink, until one more key hands over the master secret.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">ABDP15 IPFE</span>
+                <span class="chip">ristretto255</span>
+                <span class="chip">Baby-Step Giant-Step</span>
+                <span class="chip">Key Collusion</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -21194,96 +21286,6 @@
         <cite>1 Corinthians 10:31</cite>
       </div>
       <p class="footer-links"><a href="teach/">Teach with Crypto Lab</a> · Related learning: <a href="https://www.cryptool.org/en/">CrypTool</a> · <a href="https://www.cryptool.org/en/cto/">CrypTool-Online</a></p>
-          <a class="project-card" data-category="SIGNATURES | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sm9-forge/" data-added="2026-09" data-updated="2026-09"
-            data-implements="EC point arithmetic@src/attack/nonce-reuse.ts:92 | Pairing@src/sm9/encrypt.ts:223 | SM9@src/sm9/pairing.ts:57"
-            data-references="BLS signatures | BLS12-381 | Boneh-Franklin IBE | DSA | ECDSA | Hash-to-curve | MD5 | One-time pad | SHA-256 | SM4"
-            data-attacks="Discrete log@src/main.ts:54 | Nonce reuse@src/ui/pane5-break.ts:44"
-            data-standards="ISO"
-            data-implementation="hand-rolled"
-            data-review-commit="9f362ccfd71a48ee41789c52b54bc9de4008d830"
-            data-review-note="Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
-            target="_blank" rel="noopener" style="--accent: #ffb84d;">
-            <div class="card-kicker">Identity-Based Cryptography</div>
-            <div class="project-title">SM9 Forge</div>
-            <div class="project-copy">Extract an identity key by inverting in the exponent rather than hashing to a curve, run SM9’s signature, key exchange and encryption against the standard’s own worked examples, and see why two implementations agreeing doesn’t prove either followed the spec.</div>
-            <div class="project-meta">
-              <div class="stack">
-                <span class="chip">SM9</span>
-                <span class="chip">Identity-Based</span>
-                <span class="chip">R-ate Pairing</span>
-                <span class="chip">BN256</span>
-                <span class="chip">Key Escrow</span>
-                <span class="chip">Nonce Reuse</span>
-              </div>
-              <span class="arrow">&rarr;</span>
-            </div>
-          </a>
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pq-chooser/" data-added="2026-09" data-updated="2026-09"
-            data-implements="ECDSA@src/bench/runner.ts:324 | Falcon@src/derive/adapters.ts:30 | ML-DSA@src/derive/adapters.ts:16 | ML-KEM@src/derive/adapters.ts:15 | P-256@src/bench/runner.ts:329 | RSA@src/bench/runner.ts:374 | SHA-256@src/bench/runner.ts:330 | SLH-DSA@src/derive/adapters.ts:24 | X25519@src/bench/runner.ts:250"
-            data-references="Dilithium | ECDH | Kyber | NTRU | P-384 | Pairing | SPHINCS+ | TLS 1.3 | UOV"
-            data-attacks="Key recovery@src/data/risk.ts:43 | Side-channel (unspecified)@src/choose/rules.ts:63 | Timing side-channel@src/data/risk.ts:80"
-            data-standards="IETF | NIST"
-            data-implementation="WebCrypto"
-            data-review-commit="86142c92e563a1c446fca3e5e85f23cc2c7c0f64"
-            data-review-note="Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design."
-            target="_blank" rel="noopener" style="--accent: #ffb84d;">
-            <div class="card-kicker">Post-Quantum Selection</div>
-            <div class="project-title">PQ Chooser</div>
-            <div class="project-copy">Set what constrains you and get a shortlist of two or three post-quantum schemes to investigate, built from sizes it derives by running the real algorithms in your browser rather than quoting a table.</div>
-            <div class="project-meta">
-              <div class="stack">
-                <span class="chip">Derived Sizes</span>
-                <span class="chip">FIPS 203/204/205</span>
-                <span class="chip">Live Benchmark</span>
-                <span class="chip">TLS Wire Cost</span>
-              </div>
-              <span class="arrow">&rarr;</span>
-            </div>
-          </a>
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-adaptor-gate/" data-added="2026-09" data-updated="2026-09"
-            data-implements="Schnorr@src/crypto/attacks.ts:8 | secp256k1@src/crypto/adaptor.ts:156 | SHA-256@src/crypto/vectors.ts:23"
-            data-references="EC point arithmetic | ECDSA | FROST"
-            data-attacks="Discrete log@src/ui/honesty.ts:109 | Key recovery@src/ui/honesty.ts:50 | Nonce reuse@src/crypto/attacks.ts:65"
-            data-standards="NIST | SECG"
-            data-implementation="@noble"
-            data-review-commit="f838c41a6708ee52e70e395f394c53b513d31558"
-            data-review-note="secp256k1 is added by review because the scanner now reads `import { schnorr } from '@noble/curves/secp256k1.js'` as a module path rather than an implementation, which is right in general and wrong here: src/crypto/secp.ts wraps that import into the lab's own point and scalar layer (N, G, mulG, mul, liftX, invModN) and src/crypto/adaptor.ts computes the adaptor construction on it directly. The anchor is the defining point addition, R + T, not the import. Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
-            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
-            <div class="card-kicker">Scriptless Scripts</div>
-            <div class="project-title">Adaptor Gate</div>
-            <div class="project-copy">One click turns a pre-signature the real BIP-340 verifier rejects into a valid signature, then subtracts the two to read the secret back out — the fact that atomic swaps and PTLC routing are both built on.</div>
-            <div class="project-meta">
-              <div class="stack">
-                <span class="chip">BIP-340</span>
-                <span class="chip">secp256k1</span>
-                <span class="chip">Atomic Swap</span>
-                <span class="chip">PTLC</span>
-              </div>
-              <span class="arrow">&rarr;</span>
-            </div>
-          </a>
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-function-key/" data-added="2026-09" data-updated="2026-09"
-            data-implements="ABDP15 IPFE@src/crypto/attacks.ts:24 | Baby-step giant-step@src/crypto/dlog.ts:130 | EC point arithmetic@src/crypto/ristretto.ts:80 | ristretto255@src/crypto/dlog.ts:25 | SHA-512@src/crypto/prng.ts:47"
-            data-references="BLS signatures | BLS12-381 | CKKS | Ed25519 | ElGamal | FROST | Hash-to-curve | LWE | MD5 | Paillier | RSA | SHA-256 | Schnorr | Shamir secret sharing | X3DH"
-            data-attacks="Ciphertext malleability@src/ui/stages.ts:1087"
-            data-standards="IETF | NIST"
-            data-implementation="@noble"
-            data-review-commit="f6628c00c2b70ddde2efd7462f0b9494e8c00d7d"
-            data-review-note="Browser TypeScript throughout, no other language and no WASM. Group operations are @noble/curves 2.4.0, pinned to RFC 9496 Appendix A (16 A.1 multiples both directions, 29 A.2 rejections, 8 A.3 map outputs) before any scheme code was written on it; ABDP15 Construction 3.1 and the baby-step giant-step, exact-rational and mod-l algebra are implemented in-repo. Five derived attacks are removed because none is an attack this lab shows, and each was matched by a different accident: Man-in-the-middle came from the string 'DH MITM' inside CATALOG-ENTRY.md, which is this catalog's own concept line quoted back in the lab's handoff doc and not lab source at all; Signature malleability from /malleab/i on a seed label, in a lab that has no signatures - what it demonstrates is CIPHERTEXT malleability, and its own source calls that 'not an attack and not a flaw in the proof'; Chosen-plaintext attack from CPA inside 'IND-FE-CPA', the security notion ABDP15 proves rather than an attack mounted; Chosen-ciphertext attack from CCA inside 'Any CCA security whatever', a line in the NOT-BUILT list; and Discrete log from 'baby step', which this lab pays as a decryption cost and never mounts. The two attacks it does show, key collusion and ciphertext malleability, have no term in the vocabulary. Baby-step giant-step is added by review: src/crypto/dlog.ts is a baby-step giant-step over a symmetric range, but it names the algorithm only in comments and in the local counters babySteps and giantSteps, and the exported function is called dlogSymmetric. The anchor is that function, not the counter a narrower shape used to read."
-            target="_blank" rel="noopener" style="--accent: #ffb84d;">
-            <div class="card-kicker">Functional Encryption</div>
-            <div class="project-title">Function Key</div>
-            <div class="project-copy">Issue a key that answers one question about an encrypted vector — its weighted sum — and nothing else. Then issue keys one at a time and watch the set of possible plaintexts shrink, until one more key hands over the master secret.</div>
-            <div class="project-meta">
-              <div class="stack">
-                <span class="chip">ABDP15 IPFE</span>
-                <span class="chip">ristretto255</span>
-                <span class="chip">Baby-Step Giant-Step</span>
-                <span class="chip">Key Collusion</span>
-              </div>
-              <span class="arrow">&rarr;</span>
-            </div>
-          </a>
     </div>
   </footer>
 </body>

@@ -39,3 +39,6 @@ jobs:
       # so the claim and the check travel together in one pull request.
       - name: CATALOG.md matches the cards, and every claim has its evidence
         run: node tools/catalog-sync.js check
+
+      - name: Catalog document structure
+        run: node tools/catalog-structure-check.js

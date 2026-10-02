@@ -13,11 +13,7 @@ version: "2026.09.22"
 date-released: "2026-09-22"
 url: "https://crypto-lab.systemslibrarian.dev/"
 repository-code: "https://github.com/systemslibrarian/crypto-lab"
-# TODO(Paul): once the collection is archived on Zenodo, add its DOI here:
-# identifiers:
-#   - type: doi
-#     value: "10.5281/zenodo.XXXXXXX"
-#     description: "Archived snapshot of the collection"
+doi: 10.5281/zenodo.23105362
 # The software repository is MIT licensed. Teaching materials under teach/
 # remain CC BY 4.0 under teach/LICENSE.
 license: MIT

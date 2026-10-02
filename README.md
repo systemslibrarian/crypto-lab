@@ -1,5 +1,6 @@
 # Crypto Lab
 
+[![DOI](https://zenodo.org/badge/1201627976.svg)](https://doi.org/10.5281/zenodo.23105362)
 🥇 **[Crypto Lab](https://crypto-lab.systemslibrarian.dev/)** · [2026 Cybersecurity Excellence Awards — Gold Winner](https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/)
 
 **[Teaching a course? → Course modules for instructors](https://crypto-lab.systemslibrarian.dev/teach/)**

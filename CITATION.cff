@@ -1,12 +1,13 @@
 cff-version: 1.2.0
-message: "If you use Crypto Lab in teaching or research, please cite it using the metadata below."
+message: "If you use Crypto Lab in teaching or research, please cite it as below."
 type: software
-title: "Crypto Lab"
-abstract: "Browser-based cryptography teaching demonstrations, with course modules and worksheets for instructors."
+title: "Crypto Lab: Interactive Browser-Based Cryptography Demonstrations"
+abstract: "A free, open-source collection of more than 200 interactive browser-based cryptography demonstrations covering classical and modern cryptography, cryptanalysis, privacy technologies, and post-quantum cryptography, with course modules for instructors."
 authors:
   - family-names: "Clark"
     given-names: "Paul A."
-    # TODO(Paul): add your ORCID iD here as  orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+    affiliation: "Leon County Public Library"
+    orcid: "https://orcid.org/0009-0004-2394-0991"
 # Date-based version. tools/ release scripts bump version and date-released together.
 version: "2026.09.22"
 date-released: "2026-09-22"
@@ -17,11 +18,11 @@ repository-code: "https://github.com/systemslibrarian/crypto-lab"
 #   - type: doi
 #     value: "10.5281/zenodo.XXXXXXX"
 #     description: "Archived snapshot of the collection"
-# The teaching materials under teach/ are CC BY 4.0 (see teach/LICENSE). The demonstration
-# code keeps the licence in each repository's own LICENSE file.
-license: CC-BY-4.0
+# The software repository is MIT licensed. Teaching materials under teach/
+# remain CC BY 4.0 under teach/LICENSE.
+license: MIT
 keywords:
   - cryptography
-  - security education
-  - interactive demonstrations
-  - course modules
+  - cryptography education
+  - post-quantum cryptography
+  - cryptanalysis

@@ -86,8 +86,8 @@
     "note": "Runs TETRA TEA1 and a bounded state-recovery demonstration. Exhibits 5 and 6 add no cryptography: src/attack/rate.ts is arithmetic over the search Exhibit 3 already runs, and src/data/attacks.ts is a sourced citation table. AES-128/192/256 are named throughout that table and implemented nowhere in this lab."
   },
   "crypto-lab-frost-threshold": {
-    "commit": "c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf",
-    "reviewed": "2026-09-24",
+    "commit": "6908f85dbc1ebaaa2a87bab5eb093fa350ebde66",
+    "reviewed": "2026-10-01",
     "add": [
       "FROST@crate/src/round2.rs:54"
     ],

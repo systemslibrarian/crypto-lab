@@ -2468,7 +2468,7 @@ Conservative post-quantum KEM using plain LWE with no ring structure. LWE from f
 A browser-based FROST (RFC 9591) walkthrough where any qualified signer subset can produce one standard Ed25519 signature without key reassembly.
 
 - **Implements:** Ed25519 `src/exhibits/attacks.ts:34`, FROST `crate/src/round2.rs:54`, SHA-512 `src/exhibits/attacks.ts:78`, Shamir secret sharing `src/exhibits/keygen.ts:2`
-- **Source review:** [c56b90f0d85a](https://github.com/systemslibrarian/crypto-lab-frost-threshold/commit/c56b90f0d85a2e97829cb05b23fe2a8ba4144ccf) — Rust keygen, signing rounds and aggregation reviewed
+- **Source review:** [6908f85dbc1e](https://github.com/systemslibrarian/crypto-lab-frost-threshold/commit/6908f85dbc1ebaaa2a87bab5eb093fa350ebde66) — Rust keygen, signing rounds and aggregation reviewed
 - **References:** ECDSA, Feldman VSS, ML-DSA, Pedersen commitment, Schnorr, secp256k1
 - **Attacks shown:** Key recovery `src/exhibits/round1.ts:60`, Nonce reuse `src/exhibits/attacks-view.ts:2`, Side-channel (unspecified) `THREAT_MODEL.md:47`
 - **Standards body:** IETF, NIST

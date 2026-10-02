@@ -1153,8 +1153,20 @@ function landingPage(modules, worksheets, cards, cff, site, evidence) {
         if (!groups.has(key)) groups.set(key, []);
         groups.get(key).push(c);
       }
+      /* The summary lists the titles it holds. Without them this renders as 24
+         identical collapsed rows reading "Titles beginning A" ... "Titles
+         beginning Z" -- a wall of closed boxes that say nothing about whether
+         the thing you want is inside, so a reader has to open all 24 to find
+         one citation.
+
+         The titles and NOT a count, deliberately: the count lint rejects
+         "N exhibits" in generated output because a typed count and a computed
+         one look identical on the page, and that guard is worth more than the
+         number. The titles carry the same information and are the thing a
+         reader is actually scanning for. */
       return [...groups].map(([key, items]) => `<details class="t-details t-pick">`
-        + `<summary>Titles beginning ${esc(key)}</summary>`
+        + `<summary>Titles beginning ${esc(key)}`
+        + `<span class="t-pick-titles">${esc(items.map((c) => c.title).join(' · '))}</span></summary>`
         + `<ul class="t-cites">${items.map((c) => `<li><p class="t-cite">${apaExhibit(cff, c, years.get(c.slug))}</p></li>`).join('\n')}</ul>`
         + `</details>`).join('\n');
     },

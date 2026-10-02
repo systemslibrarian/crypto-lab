@@ -211,6 +211,18 @@ code { background-color: var(--panel-strong); padding: 0.05em 0.3em; border-radi
 .t-cite-label { font-weight: 600; }
 .t-pick { margin: 0.35rem 0; }
 .t-pick > summary { cursor: pointer; }
+/* A closed group has to say what is in it: the titles run on underneath the
+   letter, dimmed, so 24 collapsed rows read as a contents list rather than as
+   24 identical empty boxes. */
+.t-pick > summary { display: block; }
+.t-pick-titles {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--text-dim);
+  font-size: 0.82em;
+  line-height: 1.5;
+}
+.t-pick[open] .t-pick-titles { display: none; }
 .t-foot-licence { margin: 0.6rem 0 0; font-size: 0.9rem; color: var(--text-lo); max-width: 72ch; }
 .t-attrib { font-style: italic; }
 .t-attrib-block { padding: 0.6rem 0.8rem; border-left: 3px solid var(--accent); background: var(--panel); }

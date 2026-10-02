@@ -1,0 +1,12 @@
+{
+  "why": "The real defect, 2026-10-01. Pages serves an uploaded artifact and the lab pushes a branch, so the run is green, the branch is fresh, and the live site is three months old. crypto-lab-dilithium-reject and crypto-lab-elgamal-plain were both in this state, invisible to every other line in this report.",
+  "pages": {
+    "buildType": "workflow",
+    "publishers": [
+      "peaceiris/actions-gh-pages"
+    ]
+  },
+  "expect": {
+    "cause": "PUBLISH-UNSERVED"
+  }
+}

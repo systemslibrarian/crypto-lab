@@ -1,0 +1,12 @@
+{
+  "why": "The shape 193 labs in this fleet use, and the control. If this ever reported a cause the whole fleet would turn red at once, which is exactly the blast radius that makes the control worth keeping.",
+  "pages": {
+    "buildType": "workflow",
+    "publishers": [
+      "actions/deploy-pages"
+    ]
+  },
+  "expect": {
+    "cause": null
+  }
+}

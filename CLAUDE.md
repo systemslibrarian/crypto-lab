@@ -1200,11 +1200,33 @@ this in mind rather than adding a fifth name to it.
 | a card's anchors with no clone on disk | the lab, or nothing | **file is gone**, per anchor, about files nobody looked at |
 | `git rev-parse HEAD` in an unfetched clone | the lab's actual head | **eighteen stale reviews**, a re-review queue with nothing in it, while hiding the two that were real |
 | `git diff <pin>..HEAD` in a `--depth 1` clone, where the pin is absent | whether the pinned commit is even present | **twenty-seven stale reviews** in the weekly job on 2026-10-01, and none from the same checkers on full clones |
+| workflows containing the literal `deploy-pages`, in `deploy-sync` | every publisher, as `gate-sync` already did | **nothing at all** about two labs, for three months, while both served a build from 2026-07-11 |
 
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
 `NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`. What makes them work is not
 the name but the refusal underneath it — a checker that could not look reports that it could
 not look, and is never permitted to express the gap as a negative finding about the subject.
+
+**The sixth one is the worst kind: a checker that reported nothing.** `deploy-sync` exists to
+catch a lab serving a build older than its own `main`, and it kept a lab only if one of its
+workflows mentioned the literal `deploy-pages`. The two labs publishing with
+`peaceiris/actions-gh-pages` were therefore not judged current, not judged stale, and not
+counted — absent. Both were serving a build from 2026-07-11, and
+`crypto-lab-dilithium-reject`'s live CSS was missing an accessibility fix its own `main` had
+carried the whole time, measured at 204px of horizontal scroll against WCAG 1.4.10. `gate-sync`
+had already learned those publishers on 2026-09-10 and `deploy-sync` had not, so **the fleet
+contained the fix and the second checker never got it**. One definition is now exported and
+imported rather than copied, and the skipped repositories are printed by name: a count of what
+a checker recognised, with no list of what it did not, is the shape all six of these share.
+
+The lab-side defect under it is new and has its own rule, `PUBLISH-UNSERVED`: Pages configured
+for `build_type: workflow` serves ONLY an uploaded artifact, so a lab that publishes by pushing
+a branch has a green run, a fresh branch, and a frozen site. **Everything else `deploy-sync`
+asks is about the RUN, and the run was succeeding.** Note what the narrower version of that rule
+cost: written symmetrically, it also failed `legacy` + artifact and accused `crypto-counsel`,
+whose site updates perfectly because Pages builds the branch regardless. The directions are not
+symmetric, and checking what the checker had read about the one lab it newly accused is what
+caught it — the step above, applied to a rule I had just written.
 
 **The fifth one is the fourth one again, in the other environment, and that is the lesson in
 it.** The `rev-parse` case was fixed in the clones a person runs against; the same question

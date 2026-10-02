@@ -64,20 +64,105 @@ function sh(cmd, args, cwd) {
   });
 }
 
-// Repos that deploy a page via Actions. A Rust service or the catalog itself has
-// no Pages workflow and is not a lab this check applies to.
+/* Repos that deploy a page via Actions. A Rust service or the catalog itself has
+ * no Pages workflow and is not a lab this check applies to.
+ *
+ * IT USED TO MATCH THE LITERAL `deploy-pages` AND NOTHING ELSE, which is the same
+ * defect gate-sync had until 2026-09-10 and fixed with PAGES_PUBLISHERS. The two
+ * labs publishing with `peaceiris/actions-gh-pages` were therefore not in this
+ * checker's denominator at all: not judged current, not judged stale, absent. On
+ * 2026-10-01 both were found serving a build from 2026-07-11 -- nearly three
+ * months -- with every check in the fleet green, and crypto-lab-dilithium-reject's
+ * live CSS was missing an a11y fix its own main had carried the whole time. The
+ * sweep that found it measured the page at 204px of horizontal scroll.
+ *
+ * The publisher set is now imported from gate-sync rather than copied, so the two
+ * checkers cannot disagree about what a publisher is.
+ *
+ * And the skipped repos are NAMED. A count of what a checker recognised, with no
+ * list of what it did not, is how both of these hid for three months. */
+const { PAGES_PUBLISHERS } = require('./gate-sync.js');
+
+const USES_RE = /^\s*-?\s*uses:\s*([A-Za-z0-9._-]+\/[A-Za-z0-9._-]+)/gm;
+
+/** Every action a workflow file uses, lowercased, as gate-sync normalises them. */
+function usesIn(text) {
+  const out = new Set();
+  for (const m of text.matchAll(USES_RE)) out.add(m[1].toLowerCase());
+  return out;
+}
+
 function deployingLabs() {
   const out = [];
+  const skipped = [];
   for (const repo of fs.readdirSync(FLEET_ROOT).sort()) {
     if (!/^crypto-(lab|compare|counsel)/.test(repo)) continue;
-    const wfDir = path.join(FLEET_ROOT, repo, '.github', 'workflows');
+    const dir = path.join(FLEET_ROOT, repo);
+    /* A linked git worktree is a second working copy of a repository already in
+       this list -- see tools/sibling-labs.js. */
+    try { if (fs.statSync(path.join(dir, '.git')).isFile()) continue; } catch { /* a clone */ }
+    const wfDir = path.join(dir, '.github', 'workflows');
     let files;
     try { files = fs.readdirSync(wfDir); } catch { continue; }
-    const wf = files.find((f) => /\.ya?ml$/.test(f)
-      && fs.readFileSync(path.join(wfDir, f), 'utf8').includes('deploy-pages'));
-    if (wf) out.push({ repo, workflow: wf });
+    let found = null;
+    const publishers = new Set();
+    for (const f of files.filter((x) => /\.ya?ml$/.test(x))) {
+      const text = fs.readFileSync(path.join(wfDir, f), 'utf8');
+      for (const u of usesIn(text)) {
+        if (PAGES_PUBLISHERS.has(u)) { publishers.add(u); if (!found) found = f; }
+      }
+    }
+    if (found) out.push({ repo, workflow: found, publishers: [...publishers] });
+    else skipped.push(repo);
   }
+  out.skipped = skipped;
   return out;
+}
+
+/* Does this lab's publish actually reach the site?
+ *
+ * `build_type: workflow` means GitHub Pages serves ONLY what an
+ * actions/deploy-pages step uploads. A lab that publishes by PUSHING A BRANCH --
+ * peaceiris and friends -- then updates that branch on every run while nothing
+ * serves it, and every other signal in this checker says the deploy succeeded,
+ * because it did. The run is not the question; what Pages is configured to serve
+ * is. Both labs that hit this had a correct gate, a successful run, a freshly
+ * updated gh-pages branch carrying the right bytes, and a live site frozen in
+ * July.
+ *
+ * So: a lab whose Pages source is `workflow` and whose workflows contain no
+ * artifact-uploading publisher is PUBLISH-UNSERVED.
+ *
+ * ONE DIRECTION ONLY, and the symmetric version was written first and measured
+ * wrong. It also failed `build_type: legacy` with an artifact publisher, reasoning
+ * that an artifact uploaded into a branch-building Pages serves nothing. That
+ * accused crypto-counsel, whose Pages source is `legacy` on `main/` and whose
+ * latest Pages build is the merge commit from the same hour -- its site updates
+ * perfectly, because Pages builds the branch whether or not an artifact was
+ * uploaded. The two directions are not symmetric: `workflow` serves ONLY
+ * artifacts, so a branch push reaches nothing, while `legacy` serves the branch
+ * regardless, so a stray artifact upload is dead configuration rather than a
+ * broken site. Caught by checking what the checker had read about the one lab it
+ * newly accused, before believing the accusation.
+ *
+ * The dead-configuration case is reported as a note, never a failure.
+ *
+ * Pure, so selftest can drive every branch with no network. */
+const ARTIFACT_PUBLISHERS = new Set(['actions/deploy-pages']);
+
+function judgePublishPath(buildType, publishers) {
+  if (!buildType) return null;                       // could not read: never a verdict
+  const artifact = publishers.some((p) => ARTIFACT_PUBLISHERS.has(p));
+  const branch = publishers.some((p) => !ARTIFACT_PUBLISHERS.has(p));
+  if (buildType === 'workflow' && !artifact && branch) {
+    return { cause: 'PUBLISH-UNSERVED',
+      detail: 'Pages serves an uploaded artifact (build_type: workflow) and this lab publishes by pushing a branch, so nothing serves what it builds' };
+  }
+  if (buildType === 'legacy' && artifact && !branch) {
+    return { cause: 'ARTIFACT-UNUSED', note: true,
+      detail: 'Pages builds from a branch (build_type: legacy), so the uploaded artifact is never served — dead configuration, not a stale site' };
+  }
+  return null;
 }
 
 // Why a stale lab is stale. The report used to guess, in one sentence, for every
@@ -127,7 +212,7 @@ function failingStep(jobs) {
   return null;
 }
 
-async function inspect({ repo, workflow }) {
+async function inspect({ repo, workflow, publishers = [] }) {
   const dir = path.join(FLEET_ROOT, repo);
   // `name:` at the top of the deploying workflow is what shows up as run.name.
   let deployName = null;
@@ -140,6 +225,17 @@ async function inspect({ repo, workflow }) {
   await sh('git', ['fetch', '-q', 'origin'], dir);
   const head = await sh('git', ['rev-parse', 'origin/main'], dir);
   if (!head) return { repo, verdict: 'NO-MAIN' };
+
+  /* Asked of Pages itself, because every other signal here is about the RUN and
+     the run can succeed into nothing. A null answer is UNREAD, never a verdict. */
+  const pagesRaw = await sh('gh', ['api', `repos/systemslibrarian/${repo}/pages`,
+    '--jq', '.build_type'], dir);
+  const buildType = pagesRaw ? pagesRaw.trim() : null;
+  const unserved = judgePublishPath(buildType, publishers);
+  if (unserved) {
+    return { repo, verdict: 'UNSERVED', head, buildType, publishers,
+      cause: unserved.cause, detail: unserved.detail };
+  }
 
   const raw = await sh('gh', ['run', 'list', '--repo', `systemslibrarian/${repo}`, '--limit', '60',
     '--json', 'databaseId,headSha,event,status,conclusion,name'], dir);
@@ -198,7 +294,9 @@ function selftest() {
   for (const f of fs.readdirSync(dir).sort()) {
     if (!f.endsWith('.json')) continue;
     const fx = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
-    const got = fx.jobs ? failingStep(fx.jobs) : classifyStaleCause(fx.runs, fx.head);
+    const got = fx.pages ? (judgePublishPath(fx.pages.buildType, fx.pages.publishers) || { cause: null })
+      : fx.jobs ? failingStep(fx.jobs)
+        : classifyStaleCause(fx.runs, fx.head);
     const bad = Object.entries(fx.expect).filter(([k, v]) => (got || {})[k] !== v);
     if (bad.length) {
       fail.push(`${f}: expected ${JSON.stringify(fx.expect)}, got ${JSON.stringify(got)}`);
@@ -215,6 +313,10 @@ function selftest() {
   for (const cause of Object.keys(CAUSE_TEXT)) {
     if (!covered.has(cause)) fail.push(`no fixture covers cause ${cause}`);
   }
+  /* PUBLISH-UNSERVED is reported in its own section rather than through
+     CAUSE_TEXT, so the loop above cannot reach it. Required explicitly, because a
+     cause with no fixture is a branch nobody tested. */
+  if (!covered.has('PUBLISH-UNSERVED')) fail.push('no fixture covers cause PUBLISH-UNSERVED');
   console.log(fail.length ? `\n${pass} passed, ${fail.length} FAILED` : `\n${pass} passed, 0 failed`);
   for (const m of fail) console.log(`  FAIL  ${m}`);
   return fail.length ? 1 : 0;
@@ -235,12 +337,46 @@ async function main() {
   const rows = await pooled(labs, inspect, 12);
 
   const by = (v) => rows.filter((r) => r.verdict === v);
+  const unservedAll = by('UNSERVED');
+  const unserved = unservedAll.filter((r) => r.cause === 'PUBLISH-UNSERVED');
+  const notes = unservedAll.filter((r) => r.cause === 'ARTIFACT-UNUSED');
   const stale = [...by('STALE'), ...by('NEVER-DEPLOYED')];
   const pending = by('PENDING');
   const broken = [...by('API-ERROR'), ...by('NO-MAIN')];
 
   console.log(`Deploying labs checked: ${rows.length} ` +
-    `(${by('CURRENT').length} current, ${stale.length} stale, ${pending.length} pending)`);
+    `(${by('CURRENT').length} current, ${stale.length} stale, ${pending.length} pending`
+    + `${unserved.length ? `, ${unserved.length} UNSERVED` : ''})`);
+  /* Named, not counted. A bare "N skipped" is how two labs served a July build
+     for three months while every number here looked healthy. */
+  if (labs.skipped && labs.skipped.length) {
+    console.log(`No Pages publisher in any workflow, so not judged (${labs.skipped.length}): `
+      + labs.skipped.join(', '));
+  }
+
+  if (notes.length) {
+    console.log(`\nARTIFACT-UNUSED (${notes.length}) — a note, not a failure. Pages builds from a branch here,`);
+    console.log('so the artifact these upload is never served. The site is current; the upload is dead');
+    console.log('configuration. Removing it is tidying, and leaving it costs a reader a wrong guess.');
+    for (const r of notes) console.log(`  ${r.repo}  build_type: ${r.buildType}; uploads ${r.publishers.join(', ')}`);
+  }
+
+  if (unserved.length) {
+    console.log(`\nPUBLISH-UNSERVED (${unserved.length}) — the deploy runs and succeeds, and nothing`);
+    console.log('serves what it builds. Pages is configured for a different publish path than the one');
+    console.log('this lab uses, so the run is green, the branch or artifact is fresh, and the live site');
+    console.log('does not move. This is the one failure every other line in this report cannot see.');
+    for (const r of unserved) {
+      console.log(`  ${r.repo}`);
+      console.log(`      build_type: ${r.buildType}; publishes with ${r.publishers.join(', ') || '(none found)'}`);
+      console.log(`      ${r.detail}`);
+    }
+    console.log('');
+    console.log('Fix by making the lab publish the way its Pages source expects: an');
+    console.log('actions/upload-pages-artifact step plus an actions/deploy-pages job for');
+    console.log('build_type workflow, which is the shape audits/_MASTER-TEMPLATE.md §6.1-6.2');
+    console.log('specifies and 193 labs in this fleet already use.');
+  }
 
   if (pending.length) {
     console.log(`\nStill running (${pending.length}):`);
@@ -251,6 +387,7 @@ async function main() {
     for (const r of broken) console.log(`  ${r.repo}  ${r.verdict}`);
   }
   if (!stale.length) {
+    if (unserved.length) return 1;
     console.log('\nEvery lab\'s live site is built from the sha on its main.');
     return 0;
   }

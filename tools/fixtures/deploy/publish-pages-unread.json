@@ -1,0 +1,12 @@
+{
+  "why": "The Pages API could not be read. Could not look is never a verdict about the lab - the fourth entry in CLAUDE.md's answering-from-a-copy table is this mistake with git rev-parse.",
+  "pages": {
+    "buildType": null,
+    "publishers": [
+      "peaceiris/actions-gh-pages"
+    ]
+  },
+  "expect": {
+    "cause": null
+  }
+}

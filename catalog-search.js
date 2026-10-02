@@ -52,6 +52,7 @@
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/[\u2010-\u2015\u2212_\/\\-]+/g, ' ')
       .replace(/[^a-z0-9+.#]+/g, ' ')
+      .replace(/\.(?!\d)|(?<!\d)\./g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
   }
@@ -79,17 +80,46 @@
 
   function parse(query) {
     var out = [];
-    var re = /([A-Za-z]+):(?:"([^"]+)"|([^\s]+))|"([^"]+)"|([^\s]+)/g;
+    var re = /([A-Za-z]+):(?:"([^"]+)"|([^\s]+))|(-?)"([^"]+)"|([^\s]+)/g;
     var m;
     while ((m = re.exec(String(query || ''))) !== null) {
       var fieldName = m[1] ? normalize(m[1]).replace(/\s+/g, '') : '';
-      var value = m[2] || m[3] || m[4] || m[5] || '';
+      var value = m[2] || m[3] || m[5] || m[6] || '';
+      var negate = !fieldName && (m[4] === '-' || (m[6] && m[6][0] === '-'));
+      if (negate && m[6]) value = value.slice(1);
       var field = fieldName ? FIELD_ALIASES[fieldName] : null;
       if (fieldName && !field) value = fieldName + ' ' + value;
       var term = normalize(value);
-      if (term) out.push({ field: field || null, term: term });
+      if (term) out.push({ field: field || null, term: term, negate: !!negate,
+        mergeable: !fieldName && !m[5] });
     }
-    return out;
+
+    var aliasPhrases = new Set();
+    Object.keys(ALIASES).forEach(function (key) {
+      aliasPhrases.add(normalize(key));
+      ALIASES[key].forEach(function (v) { aliasPhrases.add(normalize(v)); });
+    });
+    var merged = [];
+    for (var i = 0; i < out.length; i++) {
+      var clause = out[i];
+      // Four/five-word aliases include MITM, HNDL and DRBG.
+      for (var size = 5; clause.mergeable && size >= 2; size--) {
+        var window = out.slice(i, i + size);
+        if (window.length !== size || !window.every(function (c) {
+          return c.mergeable && c.negate === clause.negate;
+        })) continue;
+        var joined = window.map(function (c) { return c.term; }).join(' ');
+        if (aliasPhrases.has(joined)) {
+          clause.term = joined;
+          i += size - 1;
+          break;
+        }
+      }
+      delete clause.mergeable;
+      clause.variants = variants(clause.term);
+      merged.push(clause);
+    }
+    return merged;
   }
 
   function prepare(fields) {
@@ -154,18 +184,37 @@
     return best;
   }
 
-  function fieldScore(haystack, term, weight) {
+  function matchPosition(haystack, term) {
+    // Short acronyms must be whole tokens: "mac" must not find "machine".
+    var padded = ' ' + haystack + ' ';
+    var at = padded.indexOf(' ' + term + (term.length < 4 ? ' ' : ''));
+    if (at !== -1) return { at: at, penalty: 0 };
+    // Preserve the explicitly supported DSA/ECDSA relationship, without allowing
+    // arbitrary three-letter matches inside words.
+    if (term === 'dsa') {
+      at = padded.indexOf(' ecdsa ');
+      if (at !== -1) return { at: at + 2, penalty: 25 };
+    }
+    if (term.length >= 4) {
+      at = haystack.indexOf(term);
+      if (at !== -1) return { at: at, penalty: 25 };
+    }
+    return null;
+  }
+
+  function fieldScore(haystack, clause, weight) {
     if (!haystack) return -1;
     var best = -1;
-    variants(term).forEach(function (v) {
+    clause.variants.forEach(function (v) {
       if (!v) return;
-      if (haystack.indexOf(v) !== -1) {
+      var match = matchPosition(haystack, v);
+      if (match) {
         var bonus = haystack === v ? 30
           : haystack.indexOf(v + ' ') === 0 ? 16
           : (' ' + haystack + ' ').indexOf(' ' + v + ' ') !== -1 ? 10
           : 0;
-        best = Math.max(best, weight + bonus);
-      } else {
+        best = Math.max(best, weight + bonus - match.penalty);
+      } else if (!clause.negate) {
         best = Math.max(best, fuzzyTokenScore(haystack, v, weight));
       }
     });
@@ -173,7 +222,7 @@
   }
 
   function phraseBonus(prepared, clauses) {
-    var free = clauses.filter(function (c) { return !c.field; });
+    var free = clauses.filter(function (c) { return !c.field && !c.negate; });
     if (free.length < 2) return 0;
 
     var phrase = free.map(function (c) { return c.term; }).join(' ');
@@ -183,7 +232,7 @@
       var hay = prepared[field] || '';
       if (!hay) return;
 
-      if (hay.indexOf(phrase) !== -1) {
+      if ((' ' + hay + ' ').indexOf(' ' + phrase + ' ') !== -1) {
         best = Math.max(best, 160 + Math.round(WEIGHTS[field] / 4));
         return;
       }
@@ -191,10 +240,11 @@
       var positions = [];
       for (var i = 0; i < free.length; i++) {
         var found = -1;
-        var vv = variants(free[i].term);
+        var vv = free[i].variants;
         for (var j = 0; j < vv.length; j++) {
-          var at = hay.indexOf(vv[j]);
-          if (at !== -1) {
+          var match = matchPosition(hay, vv[j]);
+          if (match && !match.penalty) {
+            var at = match.at;
             var tokenPos = hay.slice(0, at).split(' ').filter(Boolean).length;
             if (found === -1 || tokenPos < found) found = tokenPos;
           }
@@ -219,11 +269,15 @@
       var clause = clauses[i];
       var best = -1;
       if (clause.field) {
-        best = fieldScore(prepared[clause.field] || '', clause.term, WEIGHTS[clause.field] || 20);
+        best = fieldScore(prepared[clause.field] || '', clause, WEIGHTS[clause.field] || 20);
       } else {
         Object.keys(WEIGHTS).forEach(function (field) {
-          best = Math.max(best, fieldScore(prepared[field] || '', clause.term, WEIGHTS[field]));
+          best = Math.max(best, fieldScore(prepared[field] || '', clause, WEIGHTS[field]));
         });
+      }
+      if (clause.negate) {
+        if (best >= 0) return -1;
+        continue;
       }
       if (best < 0) return -1;
       total += best;

@@ -188,7 +188,7 @@ the changed lab before updating a pin; a passing anchor alone does not prove the
 review still covers its source. It runs in the weekly fleet job, since
 its answer changes when a LAB changes rather than when this repo does.
 
-Ten more checkers guard the sibling demo repos, and the fleet itself, rather than
+Eleven more checkers guard the sibling demo repos, and the fleet itself, rather than
 a file derived from `index.html`:
 
 | Invariant | Checker |
@@ -203,6 +203,7 @@ a file derived from `index.html`:
 | every lab that owes a dispatch is still present, and still classifiable | `node tools/dispatch-census.js check` |
 | what actually protects each lab's default branch, asked of BOTH endpoints | `node tools/protection-census.js` |
 | every lab serves its Playwright suite on its own port, with `--strictPort` | `node tools/port-sync.js check` |
+| every card's dates still match the lab they describe | `node tools/lab-dates.js check` |
 
 `dispatch-claims` and `dispatch-census` are also folded into `dispatch-sync check`,
 so the fast loop does not grow a command. Run them directly when the answer matters on
@@ -252,9 +253,9 @@ need the network and `gh`; each takes 20 to 30 seconds for the whole fleet, so n
 them is part of the fast loop. **Run them after any cross-repo pass, after anything that touches a
 workflow, and after building a lab.**
 
-**Seven checkers also run weekly on their own**, through `.github/workflows/fleet.yml`
+**Eight checkers also run weekly on their own**, through `.github/workflows/fleet.yml`
 and `tools/fleet-check.js`: `fleet-sync`, `deploy-sync`, `gate-sync`, `dispatch-sync`,
-`theme-sync`, `catalog-evidence verify` and `catalog-recall check`. The last two read the
+`theme-sync`, `catalog-evidence verify`, `catalog-recall check` and `lab-dates check`. The last two read the
 sibling clones rather than GitHub, and belong to the group for the same reason — their
 answers change when a LAB changes, not when this repo does. This sentence said five
 until 2026-09-27, when a depth audit asked whether the manual-versus-scheduled count was
@@ -386,6 +387,36 @@ sample uses `4283`, which is outside the 4600–4700 range the rule states. Meas
 config are absent from the registry. Ask the tool, not the prose — `node
 tools/port-sync.js` reports and re-pins; the template now points at it instead of
 restating a range and a census that rot.
+
+`lab-dates` puts a month on every card — when the lab was added, and when its DEMO last
+changed — so a reader can see what is new without reading commit logs, and the catalog can be
+ordered newest-first. The whole design turns on one measurement, and the obvious field is the
+wrong one: on 2026-10-02 **217 of the 219 lab repositories had been pushed within seven days**,
+almost all of them grouped Dependabot bumps this fleet merges automatically. A card built on
+`pushed_at` would read "Updated Oct 2026" on nearly every card and carry no information while
+looking like it carried the most useful information on the page. `crypto-lab-schnorr-forge` is
+the case to hold: pushed 2026-10-01, last changed anything a visitor can see 2026-08-15.
+
+So "updated" is the newest commit that touched the demo, and it is defined by EXCLUSION —
+lockfiles, workflows, tests and **all markdown** are not the demo. Markdown is excluded for two
+reasons, and the weaker one is the usual drift argument: a scheduled task refreshes these
+READMEs on its own. The stronger one is that a card links to the lab's PAGE, so a file the
+built site never serves did not change what a visitor sees. Checked before excluding it: three
+labs keep a `.md` under `src/`, and no lab imports markdown into its source. Inclusion was
+tried first (`README.md` + `src/`, the pair `catalog-evidence` uses) and rejected because it
+misses `demos/<slug>/src`, `web-demo/src`, `crates/`, `native/` and `wasm/` — a lab with an
+unusual layout would have shown its creation date forever, which is this repository's recurring
+shape.
+
+Three things about it are deliberate. A date that cannot be derived is **absent**, not guessed:
+no attribute is written, the card renders no line, and `check` names the lab — the same rule the
+teaching layer applies to citation years. A **shallow clone is refused by the writer as well as
+the checker**, because `git log` in a `--depth 1` clone answers confidently and wrongly, and a
+wrong date in a card is indistinguishable from a right one downstream; `crypto-lab-webauthn` was
+exactly that case on the first run. And the attributes go **after** the `href` on each card,
+because `readme-sync` and `catalog-sync` both match `data-category="…" href="…"` adjacent — the
+first version inserted before the href and took `catalog-sync` to "0 cards" and `readme-sync` to
+"Featured slug has no card", two generators quietly describing an empty catalog.
 
 `dispatch-sync` asks the one question `gate-sync` cannot reach: not whether the
 gate is wired right, but whether — once a bump **has** merged itself — the
@@ -822,6 +853,17 @@ For each new demo:
    ```
 
    A clean run prints `Cited but no card (0)` and `Carded but unmapped (0)`.
+
+### 7b. Date the new card
+
+```
+node tools/lab-dates.js
+```
+
+Reads the new repo's `created_at` and its newest commit that touched the demo, writes both as
+`data-added` / `data-updated` on the card, and re-pins `tools/lab-dates.json`. Without it the
+card carries no dates, sorts last under "Newest added" — which is exactly backwards for the
+newest lab in the catalog — and `lab-dates check` fails it as carded but unpinned.
 
 ### 8. Regenerate the teaching layer
 

@@ -1478,6 +1478,10 @@ you to the one that re-runs the same failure.
 
 ---
 
+## Architecture docs
+
+docs/ explains how each subsystem works. When a change alters how a subsystem documented there behaves, update its docs/ file in the same commit. When you explain a subsystem that has no doc yet, add one.
+
 ## Conventions
 
 - No backend, no accounts — every demo is browser-only.

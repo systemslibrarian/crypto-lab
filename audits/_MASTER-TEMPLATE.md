@@ -495,14 +495,19 @@ So in a setup helper:
   or a default message asserted as a whole sentence. Those belong in §4.1b's
   `claims.spec.ts`, where a failure names copy as the subject.
 
-**This applies to the lab §4.1 tells you to copy.** As of 2026-10-02
+**The lab §4.1 tells you to copy now obeys this**, and it did not until 2026-10-02:
 `crypto-lab-schnorr-forge`'s `boot()` carried three copy assertions, one of them the full
-sentence `'Schnorr is the signature ECDSA wishes it were.'` — so a lab built by copying it and
-rewriting "every lab-specific passage" writes its OWN default sentence into `boot()` and
-inherits the defect. Move those assertions into `claims.spec.ts` as you copy. Fleet-wide, **77
-of the 167 labs with an `e2e/gate.ts` assert product copy in it** (surveyed 2026-09-29), from
-one string to fifteen: a standing hazard rather than a bug list, since each is a judgement
-about which assertions are structural.
+sentence `'Schnorr is the signature ECDSA wishes it were.'`, so every lab built by copying it
+inherited the shape and wrote its own sentence into `boot()`. They were moved to
+`e2e/claims.spec.ts` and each was mutation-checked: changing the source string fails that one
+claims test and nothing else, and — the point of the exercise — `npm run test:a11y` now passes
+2/2 with the copy still wrong, where before it failed both under the name "Accessibility gate".
+Copy its `claims.spec.ts` along with its gate.
+
+Fleet-wide this remains a standing hazard rather than a bug list: **77 of the 167 labs with an
+`e2e/gate.ts` assert product copy in it** (surveyed 2026-09-29), from one string to fifteen.
+Do not sweep them — each is a judgement about which assertions are structural. Move them when
+you next touch the lab.
 
 ### 4.1b `e2e/claims.spec.ts` — the claims suite (REQUIRED)
 
@@ -705,10 +710,11 @@ on:
 concurrency:
   group: pages-${{ github.ref }}   # NOT a bare `pages`: with cancel-in-progress
   cancel-in-progress: true         # a PR run would cancel a live main deploy
-# 15 labs still carry the bare `pages` group, the reference lab in §4.1 among them
-# (measured 2026-10-02). `gate-sync` reports it as a warning rather than a failure
-# because it only bites once the workflow gains a pull_request trigger -- which the
-# block above adds. So if you copy a lab's deploy.yml, fix the group as you copy it.
+# 16 workflow files still carry the bare `pages` group (measured 2026-10-02, after
+# the reference lab in §4.1 was fixed). `gate-sync` reports it as a warning rather
+# than a failure because it only bites once the workflow gains a pull_request
+# trigger -- which the block above adds. So if you copy a lab's deploy.yml, fix the
+# group as you copy it.
 
 # build job, after `npm run build`:
 - run: npm test

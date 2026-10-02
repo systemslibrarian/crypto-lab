@@ -1096,4 +1096,12 @@ function main() {
   return check && failed ? 1 : 0;
 }
 
-process.exit(main());
+/* Exported so deploy-sync reads the SAME publisher set rather than a copy of it.
+ * Until 2026-10-01 each had its own idea of what publishes a page, and the two
+ * labs using peaceiris were invisible to one of them for three months. A second
+ * copy of a set is how two checkers come to disagree about the fleet.
+ *
+ * Guarded, because requiring this file must not run the whole fleet check. */
+module.exports = { PAGES_PUBLISHERS };
+
+if (require.main === module) process.exit(main());

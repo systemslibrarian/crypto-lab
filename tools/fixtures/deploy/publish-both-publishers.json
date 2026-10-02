@@ -1,0 +1,13 @@
+{
+  "why": "Both publishers present and build_type workflow: an artifact IS uploaded, so Pages has something to serve and this is not the defect. A rule that fired here would accuse a lab mid-migration of the thing it is migrating away from.",
+  "pages": {
+    "buildType": "workflow",
+    "publishers": [
+      "actions/deploy-pages",
+      "peaceiris/actions-gh-pages"
+    ]
+  },
+  "expect": {
+    "cause": null
+  }
+}

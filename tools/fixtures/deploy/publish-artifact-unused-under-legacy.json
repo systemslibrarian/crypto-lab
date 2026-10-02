@@ -1,0 +1,12 @@
+{
+  "why": "An artifact uploaded under build_type legacy is DEAD CONFIGURATION, not a broken site: Pages builds the branch whether or not an artifact arrived. Measured on crypto-counsel, whose latest Pages build is the merge commit from the same hour. The symmetric version of this rule was written first and accused it, which is why this fixture exists rather than the one it replaces.",
+  "pages": {
+    "buildType": "legacy",
+    "publishers": [
+      "actions/deploy-pages"
+    ]
+  },
+  "expect": {
+    "cause": "ARTIFACT-UNUSED"
+  }
+}

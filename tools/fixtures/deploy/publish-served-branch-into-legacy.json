@@ -1,0 +1,12 @@
+{
+  "why": "A lab pushing a branch into a Pages that builds from a branch is correct, even though it is not the fleet's shape. This rule is about whether the publish reaches the site, not about which publisher anyone prefers.",
+  "pages": {
+    "buildType": "legacy",
+    "publishers": [
+      "peaceiris/actions-gh-pages"
+    ]
+  },
+  "expect": {
+    "cause": null
+  }
+}

@@ -56,6 +56,8 @@ const REGISTRY = path.join(__dirname, 'playwright-ports.json');
  * are the same fact, so read whichever appears first rather than guessing which
  * one a given lab used. */
 function portOf(text) {
+  const c = portConstantOf(text);
+  if (c) return c.port;
   const m = text.match(/(?:\bport\s*[=:]\s*|localhost:|127\.0\.0\.1:)(\d{4})/i);
   return m ? Number(m[1]) : null;
 }
@@ -80,12 +82,44 @@ function portOf(text) {
  * rather than localhost and is perfectly consistent; a sweep that matched only
  * `localhost:` reported it as a finding on the strength of having bound its
  * host explicitly. */
+/* A config may hoist its port into a named constant and interpolate it, which is
+ * the BETTER pattern -- one literal, used in baseURL, the webServer command and
+ * the url it polls, so those three cannot drift apart. Nine labs do it:
+ *
+ *   const PORT = Number(process.env.E2E_PORT ?? 4677);
+ *   const PORT = process.env.PREVIEW_PORT ?? '4224';
+ *   const PORT = Number(process.env.A11Y_PORT) || 4253;
+ *
+ * Reading only literals reported every one of them as "names no port", and that
+ * is this repository's recurring shape in its purest form: the labs that solved
+ * the problem most carefully were the ones the detector could not see. Worse
+ * than noise -- the nine hidden ports contained three REAL collisions
+ * (ibe-gate 4677 against pulse-chain and return-path, j-uniward 4607 against
+ * sm2-forge, harvest-vault 4679 against point-ledger) which stayed invisible for
+ * as long as the reader did, and assigning "free" ports without reading them
+ * would have created more.
+ *
+ * So resolve the constant first and substitute it into the template positions.
+ * The env override is deliberately IGNORED: it is a local escape hatch, and the
+ * committed default is the thing the fleet has to keep unique. */
+function portConstantOf(text) {
+  const m = /\bconst\s+([A-Z_][A-Z0-9_]*)\s*=\s*[^;\n]*?(\d{4})[^;\n]*/i.exec(text);
+  return m ? { name: m[1], port: Number(m[2]) } : null;
+}
+
+/* Template interpolations of that constant, as the port it resolves to. */
+function resolved(text) {
+  const c = portConstantOf(text);
+  if (!c) return text;
+  return text.replace(new RegExp('\\$\\{' + c.name + '\\}', 'g'), String(c.port));
+}
+
 function urlPortsOf(text) {
-  return [...text.matchAll(/(?:localhost|127\.0\.0\.1):(\d{4})/gi)].map((m) => Number(m[1]));
+  return [...resolved(text).matchAll(/(?:localhost|127\.0\.0\.1):(\d{4})/gi)].map((m) => Number(m[1]));
 }
 
 function commandPortsOf(text) {
-  return [...text.matchAll(/--port[\s=]+(\d{4})/g)].map((m) => Number(m[1]));
+  return [...resolved(text).matchAll(/--port[\s=]+(\d{4})/g)].map((m) => Number(m[1]));
 }
 
 /* A linked git worktree of a LAB is the case that bites here, and it is created

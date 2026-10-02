@@ -102,17 +102,112 @@
     return out;
   }
 
+  function maxEdits(term) {
+    if (!term || term.indexOf(' ') !== -1 || term.length < 4) return 0;
+    return term.length >= 9 ? 2 : 1;
+  }
+
+  function editDistance(a, b, limit) {
+    if (a === b) return 0;
+    if (Math.abs(a.length - b.length) > limit) return limit + 1;
+
+    var prevPrev = null;
+    var prev = [];
+    for (var j = 0; j <= b.length; j++) prev[j] = j;
+
+    for (var i = 1; i <= a.length; i++) {
+      var cur = [i];
+      var rowMin = cur[0];
+      for (var k = 1; k <= b.length; k++) {
+        var cost = a[i - 1] === b[k - 1] ? 0 : 1;
+        var v = Math.min(cur[k - 1] + 1, prev[k] + 1, prev[k - 1] + cost);
+        if (
+          prevPrev && i > 1 && k > 1 &&
+          a[i - 1] === b[k - 2] &&
+          a[i - 2] === b[k - 1]
+        ) {
+          v = Math.min(v, prevPrev[k - 2] + 1);
+        }
+        cur[k] = v;
+        rowMin = Math.min(rowMin, v);
+      }
+      if (rowMin > limit) return limit + 1;
+      prevPrev = prev;
+      prev = cur;
+    }
+    return prev[b.length];
+  }
+
+  function fuzzyTokenScore(haystack, term, weight) {
+    var limit = maxEdits(term);
+    if (!limit) return -1;
+
+    var tokens = haystack.split(' ');
+    var best = -1;
+    for (var i = 0; i < tokens.length; i++) {
+      var token = tokens[i];
+      if (!token || Math.abs(token.length - term.length) > limit) continue;
+      if (term.length <= 5 && token[0] !== term[0]) continue;
+      var d = editDistance(term, token, limit);
+      if (d <= limit) best = Math.max(best, weight - (d * 18));
+    }
+    return best;
+  }
+
   function fieldScore(haystack, term, weight) {
     if (!haystack) return -1;
     var best = -1;
     variants(term).forEach(function (v) {
-      if (!v || haystack.indexOf(v) === -1) return;
-      var bonus = haystack === v ? 30
-        : haystack.indexOf(v + ' ') === 0 ? 16
-        : (' ' + haystack + ' ').indexOf(' ' + v + ' ') !== -1 ? 10
-        : 0;
-      best = Math.max(best, weight + bonus);
+      if (!v) return;
+      if (haystack.indexOf(v) !== -1) {
+        var bonus = haystack === v ? 30
+          : haystack.indexOf(v + ' ') === 0 ? 16
+          : (' ' + haystack + ' ').indexOf(' ' + v + ' ') !== -1 ? 10
+          : 0;
+        best = Math.max(best, weight + bonus);
+      } else {
+        best = Math.max(best, fuzzyTokenScore(haystack, v, weight));
+      }
     });
+    return best;
+  }
+
+  function phraseBonus(prepared, clauses) {
+    var free = clauses.filter(function (c) { return !c.field; });
+    if (free.length < 2) return 0;
+
+    var phrase = free.map(function (c) { return c.term; }).join(' ');
+    var best = 0;
+
+    Object.keys(WEIGHTS).forEach(function (field) {
+      var hay = prepared[field] || '';
+      if (!hay) return;
+
+      if (hay.indexOf(phrase) !== -1) {
+        best = Math.max(best, 160 + Math.round(WEIGHTS[field] / 4));
+        return;
+      }
+
+      var positions = [];
+      for (var i = 0; i < free.length; i++) {
+        var found = -1;
+        var vv = variants(free[i].term);
+        for (var j = 0; j < vv.length; j++) {
+          var at = hay.indexOf(vv[j]);
+          if (at !== -1) {
+            var tokenPos = hay.slice(0, at).split(' ').filter(Boolean).length;
+            if (found === -1 || tokenPos < found) found = tokenPos;
+          }
+        }
+        if (found === -1) return;
+        positions.push(found);
+      }
+
+      var span = Math.max.apply(Math, positions) - Math.min.apply(Math, positions);
+      if (span <= free.length) best = Math.max(best, 90 + Math.round(WEIGHTS[field] / 6));
+      else if (span <= free.length + 3) best = Math.max(best, 45 + Math.round(WEIGHTS[field] / 8));
+    });
+
     return best;
   }
 
@@ -133,7 +228,7 @@
       if (best < 0) return -1;
       total += best;
     }
-    return total;
+    return total + phraseBonus(prepared, clauses);
   }
 
   function rank(items, query) {
@@ -148,5 +243,5 @@
     });
   }
 
-  return { normalize: normalize, parse: parse, prepare: prepare, score: score, rank: rank };
+  return { normalize: normalize, parse: parse, prepare: prepare, score: score, rank: rank, editDistance: editDistance };
 });

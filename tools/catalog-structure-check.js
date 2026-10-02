@@ -38,5 +38,19 @@ assert(titles('attack:nonce-reuse').includes('Nonce Guard'), 'attack operator mu
 assert.deepStrictEqual(titles('lattice side-channel'), ['Lattice Side Channel'], 'multi-term search must use AND semantics');
 assert(titles('"padding oracle"').includes('Padding Oracle'), 'quoted phrase must match');
 assert(titles('implementation:WebCrypto').includes('Lattice Side Channel'), 'implementation operator must work');
+assert(titles('dilithum').includes('Lattice Side Channel') === false, 'typo tolerance must not invent unrelated matches');
 
-console.log('Catalog search/structure: PASS (' + cards.length + ' cards; metadata search verified)');
+const typoFixtures = [
+  item('Dilithium Seal', { implements: 'ML-DSA Dilithium' }),
+  item('Kyber Vault', { implements: 'ML-KEM Kyber' })
+];
+assert(Search.rank(typoFixtures, 'dilithum').some(x => x.item.title === 'Dilithium Seal'), 'dilithum typo must find Dilithium');
+assert(Search.rank(typoFixtures, 'kybr').some(x => x.item.title === 'Kyber Vault'), 'kybr typo must find Kyber');
+
+const proximityFixtures = [
+  item('Near', { copy: 'lattice side channel leakage' }),
+  item('Far', { title: 'Lattice Primer', attacks: 'timing side channel' })
+];
+assert.strictEqual(Search.rank(proximityFixtures, 'lattice side channel')[0].item.title, 'Near', 'same-field phrase proximity must outrank split-field matches');
+
+console.log('Catalog search/structure: PASS (' + cards.length + ' cards; metadata, typo and proximity search verified)');

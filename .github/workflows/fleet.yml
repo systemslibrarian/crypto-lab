@@ -61,6 +61,26 @@ jobs:
             'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
               || echo "::warning::clone failed: {}"' < /tmp/labs.txt
           ls -1d ../crypto-lab-* | wc -l
+
+          # A --depth 1 clone does not contain the commit a source review is pinned
+          # to, so catalog-evidence cannot ask whether that lab has moved since. It
+          # used to answer the unanswerable question with "moved": on 2026-10-01 this
+          # job reported STALE-REVIEW for 27 labs and failed, while the same checkers
+          # on full clones reported none. The checker now reports PIN-UNREADABLE for
+          # that case instead of inventing a re-review queue -- and this step removes
+          # the case, by fetching each pinned commit into its shallow clone. One
+          # object-ish fetch per reviewed lab, about thirty of them, which is far
+          # cheaper than cloning the fleet deep.
+          node -e '
+            const r = require("./tools/catalog-reviewed.json");
+            for (const [slug, v] of Object.entries(r)) if (v && v.commit) console.log(slug + " " + v.commit);
+          ' > /tmp/pins.txt
+          wc -l < /tmp/pins.txt
+          while read -r slug sha; do
+            [ -d "../$slug" ] || continue
+            git -C "../$slug" fetch --depth 1 --quiet origin "$sha" 2>/dev/null \
+              || echo "::warning::could not fetch pinned commit $sha for $slug; catalog-evidence will report PIN-UNREADABLE"
+          done < /tmp/pins.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Every network-backed checker, then one issue naming all that failed

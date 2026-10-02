@@ -4057,7 +4057,7 @@ Splitting a large file into individually authenticated segments fixes the memory
 How code-based KEMs erode below NIST Level 1 when one public key derives many session keys — run a toy decode-one-of-many search and watch the measured work fall as √D, then compute when to rotate keys.
 
 - **Implements:** N/A — reviewed source implements no named algorithm in this index
-- **Source review:** [59a97cc56607](https://github.com/systemslibrarian/crypto-lab-syndrome-drain/commit/59a97cc56607595a260805061298f85627d685d2) — Models decode-one-of-many work factors; no code-based KEM or decoder implemented
+- **Source review:** [1b7cc875aa5a](https://github.com/systemslibrarian/crypto-lab-syndrome-drain/commit/1b7cc875aa5ae793fc6529934539a04548250167) — Models decode-one-of-many work factors; no code-based KEM or decoder implemented
 - **References:** BCH, BIKE, Classic McEliece, HPKE, HQC, Hamming code, Information-set decoding, Kyber, ML-KEM, Pairing, Reed-Muller, Reed-Solomon
 - **Attacks shown:** Cache timing `README.md:89`, Key recovery `FIX-NOTES.md:39`, Timing side-channel `README.md:88`
 - **Standards body:** —

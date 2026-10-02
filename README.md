@@ -322,6 +322,10 @@ Each demo is self-contained: one concept, one repository, full source. Documenta
 
 Built by [Paul Clark](https://github.com/systemslibrarian) — IT Librarian & Systems Analyst.
 
+## Citing
+
+If you use Crypto Lab in teaching or research, please cite it via the **"Cite this repository"** button in the sidebar (APA and BibTeX), or the [Zenodo record](https://doi.org/10.5281/zenodo.23105362).
+
 ---
 
 *So whether you eat or drink or whatever you do, do it all for the glory of God. — 1 Corinthians 10:31*
@@ -429,7 +433,7 @@ runs it. Do not edit it by hand; run `node tools/tools-sync.js`.
 
 14 of these 30 run only when someone runs them. The rest run in CI, on the cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
-Not listed above: `catalog-vocab.js`, `clone-source.js`, `depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `sibling-labs.js`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
+Not listed above: `catalog-structure-check.js`, `catalog-vocab.js`, `clone-source.js`, `depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`, `render-verification.mjs`, `sibling-labs.js`, `transform.mjs`, `validate-manifest.mjs` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 
 This table lists the tools git tracks. Anything untracked in `tools/` is work in progress rather than fleet machinery, and is absent here for that reason rather than because nothing else exists.
 

@@ -5,7 +5,7 @@
  *
  * Run: node tools/teach-build.js check
  * Prevents: a generated teach page drifting from its source, and a hardcoded catalog count going stale
- * Reads: teach/_src — module JSON, worksheet Markdown, landing.html, site.json, evidence.json — plus index.html's cards and CITATION.cff
+ * Reads: teach/_src — module JSON, worksheet Markdown, landing.html, site.json, evidence.json — plus index.html's cards, CITATION.cff and teach/LICENSE
  *
  * Sources (hand-edited):
  *   teach/_src/modules/<id>.json            one file per course module
@@ -14,6 +14,7 @@
  *   teach/_src/site.json                    strings every page shares (the syllabus line, the hub URL)
  *   teach/_src/evidence.json                dated observations the privacy section is built from
  *   CITATION.cff                            author, version and date for every citation
+ *   teach/LICENSE                           the licence the teaching materials are under
  *   index.html                              the cards: the title and live URL of every exhibit
  *
  * Generated (never hand-edit; rerun this instead):
@@ -47,6 +48,7 @@ const TEACH = path.join(ROOT, 'teach');
 const SRC = path.join(TEACH, '_src');
 const INDEX = path.join(ROOT, 'index.html');
 const CFF = path.join(ROOT, 'CITATION.cff');
+const TEACH_LICENSE = path.join(ROOT, 'teach', 'LICENSE');
 
 const ROLES = ['intro', 'break-it', 'fix', 'extension'];
 const ROLE_LABEL = { intro: 'Intro', 'break-it': 'Break it', fix: 'Fix', extension: 'Extension' };
@@ -109,27 +111,36 @@ function readCitation() {
   const given = /given-names:\s*"([^"]+)"/.exec(text);
   const c = {
     title: get('title'), version: get('version'), date: get('date-released'),
-    url: get('url'), repo: get('repository-code'), license: get('license'),
+    url: get('url'), repo: get('repository-code'),
     family: family ? family[1] : '', given: given ? given[1] : '',
   };
-  for (const k of ['title', 'version', 'date', 'url', 'family', 'given', 'license']) {
+  for (const k of ['title', 'version', 'date', 'url', 'family', 'given']) {
     if (!c[k]) fail(`CITATION.cff: missing ${k}`);
   }
   if (c.date && !DATE_RE.test(c.date)) fail('CITATION.cff: date-released must be YYYY-MM-DD');
-  /* One source for the reuse terms: the licence id in CITATION.cff, which teach/LICENSE
-     carries in full. Every page's footer and the landing page's Reuse section are written
-     from this, so the terms cannot drift between them. */
+  /* One source for the reuse terms: teach/LICENSE, which carries them in full. Not the
+     `license:` in CITATION.cff — that describes the repository (MIT since 2026-10-02),
+     and the teaching materials keep their own licence. Every page's footer and the
+     landing page's Reuse section are written from this, so the terms cannot drift
+     between them. A licence this generator cannot name is a failure, never a guess. */
   const LICENSES = {
     'CC-BY-4.0': {
       name: 'Creative Commons Attribution 4.0 International (CC BY 4.0)',
       short: 'CC BY 4.0',
+      match: 'Creative Commons Attribution 4.0 International',
       url: 'https://creativecommons.org/licenses/by/4.0/',
       freedoms: 'copy, adapt, print and redistribute these materials, including commercially, as long as you give credit',
     },
   };
-  if (c.license && !LICENSES[c.license]) fail(`CITATION.cff: license ${c.license} is not one this generator knows how to describe`);
-  c.licenseInfo = LICENSES[c.license] || null;
+  const teachLicence = (fs.existsSync(TEACH_LICENSE) ? read(TEACH_LICENSE) : '').replace(/\s+/g, ' ');
+  const licenceId = Object.keys(LICENSES).find((id) => teachLicence.includes(LICENSES[id].match));
+  if (!licenceId) fail('teach/LICENSE: names no licence this generator knows how to describe');
+  c.licenseInfo = licenceId ? LICENSES[licenceId] : null;
   c.year = c.date.slice(0, 4);
+  /* The site's name, before any subtitle. The collection citation uses the full title,
+     as Zenodo does; the attribution line teach/LICENSE prescribes, each exhibit's
+     container and the WebSite name use this. */
+  c.siteName = c.title.split(':')[0].trim();
   c.initials = c.given.split(/\s+/).map((w) => w[0] + '.').join(' ');
   return c;
 }
@@ -518,7 +529,7 @@ function classTime(minutes) {
 
 /* The line a faculty member keeps on an adapted worksheet. */
 function attributionLine(cff, site) {
-  return `${cff.title} teaching materials by ${cff.given} ${cff.family}, ${cff.licenseInfo.short} — ${site.hub_url}teach/`;
+  return `${cff.siteName} teaching materials by ${cff.given} ${cff.family}, ${cff.licenseInfo.short} — ${site.hub_url}teach/`;
 }
 
 function licenceFoot(cff, site) {
@@ -625,7 +636,7 @@ function bibCollection(cff) {
 const exhibitYear = (x) => (x.source_commit_date ? x.source_commit_date.slice(0, 4) : '');
 
 function apaExhibit(cff, card, year) {
-  return `${cff.family}, ${cff.initials} ${year ? `(${esc(year)}). ` : ''}<em>${esc(card.title)}</em> [Interactive teaching demonstration]. ${esc(cff.title)}. `
+  return `${cff.family}, ${cff.initials} ${year ? `(${esc(year)}). ` : ''}<em>${esc(card.title)}</em> [Interactive teaching demonstration]. ${esc(cff.siteName)}. `
     + `Retrieved <span data-accessed="apa">[date accessed]</span>, from ${esc(card.url)}`;
 }
 
@@ -637,7 +648,7 @@ function bibExhibit(cff, card, year) {
     `  title        = {${bibText(card.title)}},`,
     ...(year ? [`  year         = {${bibText(year)}},`] : []),
     `  howpublished = {\\url{${card.url}}},`,
-    `  note         = {${bibText(cff.title)}. Accessed ${ACCESSED}}`,
+    `  note         = {${bibText(cff.siteName)}. Accessed ${ACCESSED}}`,
     '}',
   ].join('\n'));
 }
@@ -808,7 +819,7 @@ function modulePage(m, cff, site, worksheets) {
     isAccessibleForFree: true,
     author: { '@type': 'Person', name: `${cff.given} ${cff.family}` },
     dateModified: m.last_checked,
-    isPartOf: { '@type': 'WebSite', name: cff.title, url: site.hub_url },
+    isPartOf: { '@type': 'WebSite', name: cff.siteName, url: site.hub_url },
     hasPart: m.exhibits.map((x) => ({ '@type': 'LearningResource', name: x.card.title, url: x.card.url, learningResourceType: 'Interactive demonstration' })),
   };
   const main = `
@@ -1148,7 +1159,7 @@ function landingPage(modules, worksheets, cards, cff, site, evidence) {
         + `</details>`).join('\n');
     },
     'licence-terms': () => {
-      if (!cff.licenseInfo) { fail('CITATION.cff: no license, so the reuse terms cannot be stated'); return ''; }
+      if (!cff.licenseInfo) { fail('teach/LICENSE: no licence, so the reuse terms cannot be stated'); return ''; }
       return `<p>The module pages, worksheets and instructor notes here are published under the `
         + `<a href="${cff.licenseInfo.url}">${esc(cff.licenseInfo.name)}</a>. You may ${esc(cff.licenseInfo.freedoms)}: `
         + `print a worksheet for a class, rewrite it for your own students, translate it, or build it into a course pack.</p>`

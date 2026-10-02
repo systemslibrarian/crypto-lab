@@ -8,11 +8,13 @@ authors:
     given-names: "Paul A."
     affiliation: "Leon County Public Library"
     orcid: "https://orcid.org/0009-0004-2394-0991"
-# Date-based version. tools/ release scripts bump version and date-released together.
-version: "2026.09.22"
-date-released: "2026-09-22"
+# Matches the GitHub release tag Zenodo archives (v1.0.0 -> "1.0.0"). Bump version
+# and date-released together when cutting a release; nothing in tools/ does it.
+version: "1.0.0"
+date-released: "2026-10-02"
 url: "https://crypto-lab.systemslibrarian.dev/"
 repository-code: "https://github.com/systemslibrarian/crypto-lab"
+# Concept DOI ("cite all versions"); resolves to the latest Zenodo release.
 doi: 10.5281/zenodo.23105362
 # The software repository is MIT licensed. Teaching materials under teach/
 # remain CC BY 4.0 under teach/LICENSE.

@@ -601,6 +601,24 @@
       display: none;
     }
 
+    .search-help {
+      margin: 8px 0 0;
+      color: var(--text-dim);
+      font-size: 9.5px;
+      line-height: 1.6;
+    }
+
+    .search-help button {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--teal);
+      font: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
     .filter-row {
       display: flex;
       align-items: flex-start;
@@ -1929,7 +1947,7 @@
         <div class="filter-bar collapsed" id="filter-bar">
           <div class="filter-bar-head">
             <div class="search-bar">
-              <input type="text" id="demo-search" placeholder="Filter demos…" aria-label="Filter demos" />
+              <input type="text" id="demo-search" placeholder="Search concepts, algorithms, attacks, standards…" aria-label="Search Crypto Lab demos" />
               <button class="search-clear" id="search-clear" aria-label="Clear search" hidden>✕</button>
               <kbd class="search-kbd" aria-hidden="true">/</kbd>
             </div>
@@ -1940,6 +1958,7 @@
             <div class="sort-bar">
               <label for="sort-order">Order</label>
               <select id="sort-order">
+                <option value="relevance" disabled>Relevance</option>
                 <option value="curriculum" selected>Curriculum</option>
                 <option value="added-desc">Newest added</option>
                 <option value="added-asc">Oldest added</option>
@@ -1947,6 +1966,7 @@
               </select>
             </div>
           </div>
+          <p class="search-help">Search stays local in your browser. Try <button type="button" data-search-example="primitive:ML-KEM">primitive:ML-KEM</button>, <button type="button" data-search-example="attack:nonce-reuse">attack:nonce-reuse</button>, or <button type="button" data-search-example="standard:NIST">standard:NIST</button>.</p>
           <div class="filter-row" id="filter-panel">
             <div class="filter-chips" id="filter-chips"></div>
             <div class="card-count" id="card-count">
@@ -20339,6 +20359,7 @@
     </div>
   </section>
 
+  <script src="catalog-search.js"></script>
   <script>
   (function () {
     /* Featured demos shown in the "Start Here" strip, by repo slug.
@@ -20683,6 +20704,17 @@
     var activeCategory = '';
     var activeSet = null;
 
+    var searchEngine = window.CryptoLabSearch;
+    if (!searchEngine) throw new Error('catalog-search.js failed to load');
+
+    function searchTerms(card, attribute, stripAnchors) {
+      var raw = card.getAttribute(attribute) || '';
+      if (!stripAnchors) return raw;
+      return raw.split('|').map(function (part) {
+        return part.split('@')[0].trim();
+      }).filter(Boolean).join(' ');
+    }
+
     var cardData = cards.map(function (card) {
       var title = ((card.querySelector('.feature-title, .project-title') || {}).textContent || '').trim();
       var copy = (card.querySelector('.feature-copy, .project-copy') || {}).textContent || '';
@@ -20697,11 +20729,30 @@
       }
       var section = TITLE_TO_SECTION[title] || '';
       if (section) card.setAttribute('data-section', section);
-      var haystack = (title + ' ' + copy + ' ' + kicker + ' ' + chips + ' ' + cats.join(' ')).toLowerCase();
+
+      var fields = {
+        title: title,
+        copy: copy,
+        kicker: kicker,
+        chips: chips,
+        categories: cats.join(' '),
+        section: section,
+        implements: searchTerms(card, 'data-implements', true),
+        attacks: searchTerms(card, 'data-attacks', true),
+        references: searchTerms(card, 'data-references', false),
+        standards: searchTerms(card, 'data-standards', false),
+        implementation: searchTerms(card, 'data-implementation', false)
+      };
+
       return {
-        el: card, title: title, haystack: haystack, categories: cats, section: section,
+        el: card,
+        title: title,
+        search: searchEngine.prepare(fields),
+        categories: cats,
+        section: section,
         added: card.getAttribute('data-added') || '',
         updated: card.getAttribute('data-updated') || '',
+        searchScore: 0
       };
     });
 
@@ -20848,6 +20899,13 @@
       return d.added || '';
     }
 
+    function clearSectionHeaders() {
+      Object.keys(sectionHeaderEls).forEach(function (id) {
+        var h2 = sectionHeaderEls[id];
+        if (h2 && h2.parentNode) h2.parentNode.removeChild(h2);
+      });
+    }
+
     function layout() {
       if (!projectGrid) return;
       if (sortMode === 'curriculum') {
@@ -20860,14 +20918,20 @@
         });
         return;
       }
-      Object.keys(sectionHeaderEls).forEach(function (id) {
-        var h2 = sectionHeaderEls[id];
-        if (h2 && h2.parentNode) h2.parentNode.removeChild(h2);
-      });
+
+      clearSectionHeaders();
+
+      if (sortMode === 'relevance') {
+        cardData.slice().sort(function (a, b) {
+          if (a.searchScore !== b.searchScore) return b.searchScore - a.searchScore;
+          return a.title.localeCompare(b.title);
+        }).forEach(function (d) {
+          projectGrid.appendChild(d.cell || d.el);
+        });
+        return;
+      }
+
       var asc = sortMode === 'added-asc';
-      /* An undated card sorts last in both directions rather than reading as
-         the oldest thing in the catalog, which is what an empty string would do
-         ascending. Title breaks ties so the order is stable between renders. */
       cardData.slice().sort(function (a, b) {
         var ka = orderKey(a);
         var kb = orderKey(b);
@@ -21044,35 +21108,59 @@
       else bottomRowEl.appendChild(btn);
     });
 
-    /* Unified filter */
+    /* Unified category filter + cryptography-aware ranked search. */
     function filter() {
-      var q = input.value.toLowerCase().trim();
+      var q = input.value.trim();
+      var parsed = q ? searchEngine.parse(q) : [];
       var visible = 0;
       var sectionCounts = {};
+
+      cardData.forEach(function (d) {
+        d.searchScore = q ? searchEngine.score(d.search, parsed) : 0;
+        var matchSet = !activeSet || activeSet.indexOf(d.title) !== -1;
+        var matchCat = !activeCategory || d.categories.includes(activeCategory);
+        var matchText = !q || d.searchScore >= 0;
+        if (matchSet && matchCat && matchText) {
+          visible++;
+          if (d.section) sectionCounts[d.section] = (sectionCounts[d.section] || 0) + 1;
+        }
+      });
+
+      if (q) {
+        sortMode = 'relevance';
+        sortSelect.value = 'relevance';
+        sortSelect.disabled = true;
+      } else if (sortMode === 'relevance') {
+        sortMode = 'curriculum';
+        sortSelect.value = 'curriculum';
+        sortSelect.disabled = false;
+      } else {
+        sortSelect.disabled = false;
+      }
+
+      layout();
+
       cardData.forEach(function (d) {
         var matchSet = !activeSet || activeSet.indexOf(d.title) !== -1;
         var matchCat = !activeCategory || d.categories.includes(activeCategory);
-        var matchText = !q || d.haystack.indexOf(q) !== -1;
-        if (matchSet && matchCat && matchText) {
-          (d.cell || d.el).style.display = '';
-          visible++;
-          if (d.section) sectionCounts[d.section] = (sectionCounts[d.section] || 0) + 1;
-        } else {
-          (d.cell || d.el).style.display = 'none';
-        }
+        var matchText = !q || d.searchScore >= 0;
+        (d.cell || d.el).style.display = (matchSet && matchCat && matchText) ? '' : 'none';
       });
+
       SECTIONS.forEach(function (s) {
         var h = sectionHeaderEls[s.id];
-        /* A date order has no sections, so a header must stay hidden however
-           many cards match -- otherwise the filter would put a divider back
-           above cards that are no longer grouped under it. */
         if (h) h.style.display = (sortMode === 'curriculum' && sectionCounts[s.id]) ? '' : 'none';
       });
+
       var empty = visible === 0;
       noResults.hidden = !empty;
       noResults.style.display = empty ? 'block' : 'none';
-      noResults.textContent = empty ? 'No demos found.' : '';
-      var orderNote = sortMode === 'added-desc' ? ' · newest first'
+      noResults.textContent = empty
+        ? 'No demos match this search. Try an algorithm, attack, standard, or a query such as standard:NIST.'
+        : '';
+
+      var orderNote = sortMode === 'relevance' ? ' · relevance'
+        : sortMode === 'added-desc' ? ' · newest first'
         : sortMode === 'added-asc' ? ' · oldest first'
         : sortMode === 'updated-desc' ? ' · last updated first'
         : '';
@@ -21081,6 +21169,7 @@
       cardCount.classList.toggle('filtered', isFiltered);
       if (filterToggle) filterToggle.classList.toggle('filtered', !!(activeCategory || activeSet));
       filterClearBtn.hidden = !isFiltered;
+      if (sectionNavEl) sectionNavEl.hidden = sortMode !== 'curriculum';
       syncHash();
     }
 
@@ -21099,6 +21188,15 @@
     filterClearBtn.addEventListener('click', function () {
       resetFilters();
       input.focus();
+    });
+
+    document.querySelectorAll('[data-search-example]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        input.value = btn.getAttribute('data-search-example') || '';
+        updateClear();
+        filter();
+        input.focus();
+      });
     });
 
     /* Order control. Changing the order re-lays out the grid and re-runs the

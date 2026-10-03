@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `school-18` | pupils up to ~18 | modular arithmetic, hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | university and specialist | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Up to 14 — 3 · Up to 18 — 74 · Advanced — 141. Total 218.
+**Counts:** Up to 14 — 3 · Up to 18 — 75 · Advanced — 140. Total 218.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -39,7 +39,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | rule | classical cipher work, arithmetic only: polyalphabetic, Enigma, rotor |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | rule | classical cipher work, arithmetic only: Caesar, Vigen, substitution cipher **(flagged)** |
 
-## Up to 18 — `school-18` (74)
+## Up to 18 — `school-18` (75)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -74,6 +74,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | hand | harvest-now-decrypt-later as a long-term confidentiality argument, not PQC internals **(flagged)** |
 | [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | hand | a tour of hash families side by side; the sponge is named, not derived |
 | [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) | rule | school-level primitives: HKDF, AES, ChaCha20 |
+| [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) | hand | a guide to why a KEM combiner pairs X25519 with ML-KEM-768 and what breaking either half costs; it implements AES-GCM and SHA-256 and derives no PQC, so it sits with PQ Rotation, which implements ML-DSA and is also at this level |
 | [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) | rule | school-level primitives: HKDF, AES, symmetric |
 | [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) | rule | school-level primitives: HMAC, password, AES |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | rule | school-level primitives: public key, digital signature, signature |
@@ -118,7 +119,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | rule | school-level primitives: SHA-256, hashing |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (141)
+## Advanced — `advanced` (140)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -170,7 +171,6 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [HQC Timing](https://systemslibrarian.github.io/crypto-lab-hqc-timing/) | rule | needs specialist background: side-channel, constant-time, timing side |
 | [HQC Timing Break](https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/) | rule | needs specialist background: side-channel, constant-time, code-based |
 | [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) | rule | needs specialist background: ML-KEM, code-based, BIKE |
-| [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) | rule | needs specialist background: ML-KEM, quantum |
 | [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) | rule | needs specialist background: ML-KEM, ML-DSA, quantum |
 | [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) | rule | needs specialist background: ML-DSA, quantum |
 | [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) | rule | needs specialist background: ML-KEM, Kyber, quantum |

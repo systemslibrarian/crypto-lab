@@ -49,9 +49,18 @@ const PINS = path.join(__dirname, 'lab-levels.json');
 const DOC = path.join(ROOT, 'LEVELS-REVIEW.md');
 
 const LABELS = {
-  'school-14': 'Up to 14',
-  'school-18': 'Up to 18',
+  beginner: 'Beginner',
+  intermediate: 'Intermediate',
   advanced: 'Advanced',
+};
+
+/* One line each, shown beside the Level filter on the hub. These say what the
+   level asks of a READER, which is what the assignment was judged on -- not a
+   school year, which the old names implied and which does not travel. */
+const BLURBS = {
+  beginner: 'no maths beyond arithmetic',
+  intermediate: 'comfortable with algebra and basic modular arithmetic',
+  advanced: 'expects the underlying maths (groups, fields, lattices)',
 };
 
 /* Same position rule as lab-dates: AFTER the href. readme-sync and catalog-sync
@@ -94,11 +103,11 @@ function buildDoc(p) {
   L.push('');
   L.push('Three levels, as the hub filters on them:');
   L.push('');
-  L.push('| Level | Who | What it assumes |');
+  L.push('| Level | What it asks of a reader | Typical material |');
   L.push('|---|---|---|');
-  L.push('| `school-14` | pupils up to ~14 | historical and classical ciphers, simple visual ideas, no algebra beyond arithmetic |');
-  L.push('| `school-18` | pupils up to ~18 | modular arithmetic, hashing, symmetric and asymmetric basics, simple attacks |');
-  L.push('| `advanced` | university and specialist | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |');
+  L.push(`| \`beginner\` | ${BLURBS.beginner} | historical and classical ciphers, simple visual ideas |`);
+  L.push(`| \`intermediate\` | ${BLURBS.intermediate} | hashing, symmetric and asymmetric basics, simple attacks |`);
+  L.push(`| \`advanced\` | ${BLURBS.advanced} | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |`);
   L.push('');
   L.push(`**Counts:** ${p.levels.map((lv) => `${LABELS[lv]} — ${counts[lv] || 0}`).join(' · ')}. Total ${entries.length}.`);
   L.push('');

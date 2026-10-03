@@ -276,10 +276,9 @@
   },
   "crypto-lab-ec-point-arithmetic": {
    "title": "Point Arithmetic",
-   "level": "advanced",
-   "why": "needs specialist background: finite field",
-   "reviewed": "rule",
-   "uncertain": "elliptic-curve group law is foundational here but is past most 18-year-old syllabuses"
+   "level": "school-18",
+   "why": "the chord-and-tangent group law is introduced visually over the reals before the finite field, the same on-ramp shape that keeps RSA Forge at this level",
+   "reviewed": "hand"
   },
   "crypto-lab-x3dh-wire": {
    "title": "X3DH Wire",

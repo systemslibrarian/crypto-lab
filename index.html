@@ -1007,6 +1007,141 @@
       margin: 0;
     }
 
+    /* ---- Learning paths band (page body) ---------------------------------
+       One compact card per path, laid out on the same 4-column grid and the
+       same 18px gutter the catalog uses, so the band reads as part of the page
+       rather than a widget dropped on it. */
+    .path-band {
+      padding: 6px 0 18px;
+    }
+
+    .path-band-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      margin-bottom: 14px;
+    }
+
+    .path-band-title {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .path-band-note {
+      margin: 0;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .path-band-note a {
+      color: var(--teal);
+      text-underline-offset: 2px;
+    }
+
+    .path-band-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .path-band-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px 16px 14px;
+      border: 1px solid var(--border);
+      background: rgba(9, 18, 24, 0.9);
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .path-band-card:hover {
+      border-color: rgba(53, 214, 187, 0.4);
+    }
+
+    /* The card is the scroll target for "New here? Start here", so it takes
+       focus programmatically. No visible ring until it actually has focus. */
+    .path-band-card:focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 3px;
+    }
+
+    .path-band-card.is-first {
+      border-color: rgba(53, 214, 187, 0.45);
+      background: rgba(10, 26, 30, 0.95);
+    }
+
+    .path-band-name {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      line-height: 1.25;
+      color: var(--text-hi);
+    }
+
+    .path-band-focus {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text);
+      flex: 1 1 auto;
+    }
+
+    .path-band-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 8px;
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .path-band-sep {
+      opacity: 0.5;
+    }
+
+    .path-band-start {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(53, 214, 187, 0.4);
+      padding-bottom: 2px;
+      align-self: flex-start;
+    }
+
+    .path-band-start:hover,
+    .path-band-start:focus-visible {
+      border-bottom-color: var(--teal);
+    }
+
+    @media (max-width: 1120px) {
+      .path-band-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .path-band-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 460px) {
+      .path-band-grid { grid-template-columns: 1fr; }
+    }
+
     .path-card {
       border: 1px solid var(--border);
       background: rgba(8, 17, 24, 0.6);
@@ -2167,9 +2302,21 @@
                today three of its four are Advanced. Sending a newcomer "below" was
                therefore sending them into the deep end, so the on-ramp is its own
                link to the Start Here path rather than a sentence about the strip. -->
-          <a class="featured-start-here" id="featured-start-here" href="#path-start-here">New here? Start here <span aria-hidden="true">&rarr;</span></a>
+          <a class="featured-start-here" id="featured-start-here" href="#path-band-start-here">New here? Start here <span aria-hidden="true">&rarr;</span></a>
         </div>
         <div class="featured-grid" id="featured-grid" aria-labelledby="featured-demos-title"></div>
+      </div>
+    </section>
+    <!-- The paths also render inside the nav menu, which is translated off-screen
+         until the menu opens. This band is the copy on the page body: same array,
+         compact cards, no disclosure to find. -->
+    <section class="path-band" id="learning-paths-band" aria-labelledby="path-band-title">
+      <div class="wrap">
+        <div class="path-band-head">
+          <h2 class="path-band-title" id="path-band-title">Learning paths</h2>
+          <p class="path-band-note">Ordered journeys through the catalog, for learning on your own. Teaching a course? Use the <a href="teach/">course modules</a> instead.</p>
+        </div>
+        <ul class="path-band-grid" id="path-band-grid"></ul>
       </div>
     </section>
     <section class="content" id="catalog">
@@ -20888,6 +21035,7 @@
       {
         id: 'start-here',
         label: 'Start Here',
+        focus: 'No cryptography assumed. Eight Beginner labs, in order.',
         blurb: 'For a first visit, with no cryptography assumed: ciphers you can do on paper, then the fingerprint, the signature, the padlock, the password and the quantum clock. Every step is a Beginner lab -- no maths beyond arithmetic. Three more steps are planned (public and private keys, what PQC is, and the padlock question answered in one place) and will be added as those labs land.',
         steps: [
           { title: 'Dead Sea Cipher' },
@@ -20903,6 +21051,7 @@
       {
         id: 'developer',
         label: 'Developer Path',
+        focus: 'Primitives through to the protocols you actually ship.',
         blurb: "A builder's journey — from primitives to the protocols you actually ship.",
         steps: [
           { title: 'Babel Hash' },
@@ -20926,6 +21075,7 @@
       {
         id: 'cryptanalyst',
         label: 'Cryptanalyst Path',
+        focus: 'Each class of attack in turn, classical ciphers to post-quantum.',
         blurb: 'Mathematical attacks exploit structure and statistics; oracles exploit response differences; side channels measure timing or power; faults alter computation. Follow each from classical ciphers to PQC.',
         steps: [
           { title: 'Dead Sea Cipher' },
@@ -20947,6 +21097,7 @@
       {
         id: 'post-quantum',
         label: 'Post-Quantum Path',
+        focus: 'PQ KEMs, signatures, hybrids and the migration itself.',
         blurb: 'A focused track on PQ KEMs, signatures, hybrids, and migration.',
         steps: [
           { title: 'PQ Families' },
@@ -20965,6 +21116,7 @@
       {
         id: 'key-exchange',
         label: 'Key Exchange Path',
+        focus: 'How two parties agree on a secret, ECDH to hybrid handshakes.',
         blurb: 'How two parties agree on a secret — classical ECDH to hybrid post-quantum handshakes.',
         steps: [
           { title: 'Key Exchange' },
@@ -21633,22 +21785,108 @@
         pathsContainer.appendChild(details);
       });
 
-      /* The newcomer link in the featured strip. It has to do THREE things, and
-         the first one is easy to miss: #learning-paths lives inside .nav-menu,
-         which is translated off-screen until the menu is opened. A handler that
-         only scrolled would scroll to a panel nobody can see -- measured, on the
-         first version of this link: the card opened, the page did not move and
-         focus stayed on <body>. So open the menu, open the card, then focus it. */
+      /* The same paths, on the page body. The menu copies above stay as they
+         are; this is where a visitor who never opens the menu meets them.
+         Both are generated from LEARNING_PATHS, so a path cannot exist in one
+         place and not the other. */
+      var LEVEL_ORDER = ['beginner', 'intermediate', 'advanced'];
+
+      /* The level range is DERIVED from the cards the path's steps point at, not
+         written down beside the path -- a hand-kept range is one more thing that
+         goes stale the next time a level moves. A step whose card carries no
+         level contributes nothing rather than defaulting to one. */
+      function pathLevelRange(path) {
+        var seen = [];
+        path.steps.forEach(function (step) {
+          var card = titleToCard[step.title];
+          var lvl = card && card.getAttribute('data-level');
+          if (lvl && LEVEL_ORDER.indexOf(lvl) !== -1 && seen.indexOf(lvl) === -1) seen.push(lvl);
+        });
+        if (!seen.length) return '';
+        seen.sort(function (a, b) { return LEVEL_ORDER.indexOf(a) - LEVEL_ORDER.indexOf(b); });
+        var lo = LEVEL_LABEL[seen[0]];
+        var hi = LEVEL_LABEL[seen[seen.length - 1]];
+        return lo === hi ? lo : lo + ' \u2013 ' + hi;
+      }
+
+      var bandGrid = document.getElementById('path-band-grid');
+      if (bandGrid) {
+        LEARNING_PATHS.forEach(function (path, i) {
+          var li = document.createElement('li');
+          li.className = 'path-band-card' + (i === 0 ? ' is-first' : '');
+          li.id = 'path-band-' + path.id;
+          /* Focusable only programmatically: it is the scroll target for the
+             "New here? Start here" link, and adding it to the tab order would
+             put five dead stops in front of the links that actually do things. */
+          li.tabIndex = -1;
+
+          var name = document.createElement('h3');
+          name.className = 'path-band-name';
+          name.textContent = path.label;
+          li.appendChild(name);
+
+          var focus = document.createElement('p');
+          focus.className = 'path-band-focus';
+          focus.textContent = path.focus || path.blurb;
+          li.appendChild(focus);
+
+          var meta = document.createElement('p');
+          meta.className = 'path-band-meta';
+          var steps = document.createElement('span');
+          steps.textContent = path.steps.length + ' steps';
+          meta.appendChild(steps);
+          var range = pathLevelRange(path);
+          if (range) {
+            var sep = document.createElement('span');
+            sep.className = 'path-band-sep';
+            sep.setAttribute('aria-hidden', 'true');
+            sep.textContent = '\u00b7';
+            meta.appendChild(sep);
+            var lvl = document.createElement('span');
+            lvl.textContent = range;
+            meta.appendChild(lvl);
+          }
+          li.appendChild(meta);
+
+          /* "Start" goes to the first step's own lab. The link text names that
+             lab, because five links all reading "Start" would be five links a
+             screen-reader user cannot tell apart (WCAG 2.4.4) -- and two paths
+             legitimately begin at the same lab, so the accessible name carries
+             the path as well. It OPENS with the visible text rather than adding
+             it on the end, so the visible label is still a prefix of the
+             accessible name (WCAG 2.5.3, Label in Name). */
+          var first = path.steps[0];
+          var firstCard = first && titleToCard[first.title];
+          var href = (first && first.url) || (firstCard && firstCard.getAttribute('href'));
+          if (href) {
+            var start = document.createElement('a');
+            start.className = 'path-band-start';
+            start.href = href;
+            start.target = '_blank';
+            start.rel = 'noopener';
+            start.textContent = 'Start: ' + first.title;
+            start.setAttribute('aria-label', 'Start: ' + first.title + ' \u2014 ' + path.label);
+            li.appendChild(start);
+          }
+
+          bandGrid.appendChild(li);
+        });
+      }
+
+      /* The newcomer link in the featured strip scrolls to the band, not to the
+         menu. The first version of this link opened the menu copy, because that
+         was the only copy there was: measured at six widths, the card opened and
+         the page did not move, since #learning-paths sits inside .nav-menu at
+         document y = -287 until the menu opens. The band is on the page, so the
+         link is an ordinary in-page jump again and the href alone works with no
+         JS at all. */
       var startHereLink = document.getElementById('featured-start-here');
-      var startHerePath = document.getElementById('path-start-here');
-      if (startHereLink && startHerePath) {
+      var startHereCard = document.getElementById('path-band-start-here');
+      if (startHereLink && startHereCard) {
         startHereLink.addEventListener('click', function (e) {
           e.preventDefault();
-          setMenuOpen(true);
-          startHerePath.open = true;
-          var summary = startHerePath.querySelector('summary');
-          if (summary) summary.focus();
-          startHerePath.scrollIntoView({ block: 'center' });
+          startHereCard.scrollIntoView({ block: 'center' });
+          startHereCard.focus({ preventScroll: true });
         });
       }
 

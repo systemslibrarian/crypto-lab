@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About &amp; Contact — Crypto Lab</title>
+  <meta name="description" content="Who publishes Crypto Lab, how it is licensed, and how to get in touch." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23162b2a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%234dcfb0'%3ECL%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:opsz,wght,SOFT@9..144,400,50;9..144,500,50&display=swap" rel="stylesheet" />
+  <script>
+    // Dark is the only theme, pinned before first paint, exactly as the catalog
+    // does it: a visitor who stored 'light' when the old header had a toggle
+    // must not be pinned to a palette this site no longer ships.
+    (function () {
+      try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+    })();
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #071016;
+      --bg-soft: #0b1821;
+      --panel: rgba(8, 18, 25, 0.88);
+      --panel-strong: #0d1d27;
+      --border: rgba(99, 128, 146, 0.2);
+      --border-strong: rgba(99, 128, 146, 0.34);
+      --text: #c8d9e5;
+      --text-dim: #7e98aa;
+      --text-hi: #f2f8fb;
+      --accent: #35d6bb;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Fraunces', Georgia, serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 0;
+    }
+
+    .topbar a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .topbar a:hover { text-decoration: underline; }
+
+    main { padding: 48px 0 64px; }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 500;
+      color: var(--text-hi);
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .lede {
+      color: var(--text-dim);
+      font-size: 13px;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-hi);
+      margin: 38px 0 12px;
+    }
+
+    p { margin-bottom: 14px; }
+
+    a { color: var(--accent); }
+
+    ul { margin: 0 0 14px 18px; }
+
+    li { margin-bottom: 6px; }
+
+    .note {
+      border: 1px solid var(--border-strong);
+      background: var(--bg-soft);
+      padding: 14px 16px;
+      margin: 18px 0;
+      font-size: 12.5px;
+      color: var(--text-dim);
+    }
+
+    dl { margin-bottom: 14px; }
+
+    dt {
+      color: var(--text-hi);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 14px;
+    }
+
+    dd { margin-left: 0; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 0 40px;
+      color: var(--text-dim);
+      font-size: 12px;
+    }
+
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap"><a href="../">&larr; Back to Crypto Lab</a></div>
+  </div>
+
+  <main>
+    <div class="wrap">
+      <h1>About &amp; Contact</h1>
+      <p class="lede">Who publishes Crypto Lab, how it is licensed, and how to reach me.</p>
+
+      <h2>What this is</h2>
+      <p>
+        Crypto Lab is a collection of browser-based cryptography demonstrations. Every lab runs
+        entirely in your browser — there is no backend, no account, and nothing is uploaded. Each
+        one takes a single idea and makes it something you can operate: generate the keys, run the
+        attack, watch the check fail.
+      </p>
+      <p>
+        The labs are teaching demonstrations, not hardened software. They are built to be read and
+        taken apart rather than deployed, and several of them exist specifically to show how a
+        thing breaks. Nothing here should be used to protect real secrets.
+      </p>
+
+      <h2>Who publishes it</h2>
+      <dl>
+        <dt>Publisher</dt>
+        <dd>Paul A. Clark</dd>
+        <dt>Affiliation</dt>
+        <dd>
+          Paul A. Clark works at the Leon County Public Library. Crypto Lab is a personal project,
+          built and published in a personal capacity. It is not a library project, it is not
+          published by or on behalf of the library, and nothing here should be read as a statement
+          by that institution.
+        </dd>
+      </dl>
+
+      <h2>Licensing</h2>
+      <dl>
+        <dt>Code</dt>
+        <dd>
+          The catalog and each lab's source are released under the
+          <a href="https://opensource.org/licenses/MIT">MIT licence</a>. Each lab repository
+          carries its own copy.
+        </dd>
+        <dt>Teaching materials</dt>
+        <dd>
+          The module pages, worksheets and instructor notes under
+          <a href="../teach/">/teach/</a> are released under
+          <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You may print,
+          adapt, translate and build on them, including commercially, provided you give credit.
+          The <a href="https://github.com/systemslibrarian/crypto-lab/blob/main/teach/LICENSE">full
+          licence text</a> sits beside those pages.
+        </dd>
+      </dl>
+
+      <h2>Related work</h2>
+      <p>
+        <a href="https://www.cryptool.org/en/">CrypTool</a> and
+        <a href="https://www.cryptool.org/en/cto/">CrypTool-Online</a> are a long-running
+        open-source cryptography education project, offering interactive tools and learning
+        material covering both classical and modern cryptography. They cover a great deal that
+        Crypto Lab does not, and are worth your time if you are learning or teaching this subject.
+      </p>
+      <p>
+        CrypTool-Online lists Crypto Lab on its
+        <a href="https://www.cryptool.org/en/cto/links/">links page</a>.
+      </p>
+      <p class="note">
+        Crypto Lab and the CrypTool project are separate and independent. Linking in either
+        direction is not endorsement, partnership, or affiliation, and neither project speaks for
+        the other.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        The most useful way to reach me about a lab is to open an issue on its repository — a
+        correction, a broken page, or a source I have got wrong all go furthest there, because the
+        report sits next to the code it concerns.
+      </p>
+      <ul>
+        <li><a href="https://github.com/systemslibrarian">github.com/systemslibrarian</a> — all repositories</li>
+        <li><a href="https://github.com/systemslibrarian/crypto-lab/issues">Issues on the catalog</a> — for the hub, the teaching layer, or anything spanning several labs</li>
+      </ul>
+      <!-- TODO: add a contact email address here once one is chosen for this project. -->
+      <p>
+        Corrections are genuinely welcome. Several labs carry wording that changed because somebody
+        filed an issue pointing at a paper I had not cited properly.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><a href="../">Crypto Lab</a> · <a href="../teach/">Teach with Crypto Lab</a> · <a href="https://github.com/systemslibrarian/crypto-lab">Source</a></p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -276,6 +276,66 @@
       letter-spacing: 0.12em;
     }
 
+    /* Audience level. The badge is quiet on the card -- it is metadata, not a
+       claim about the cryptography -- and the three values are visually distinct
+       without relying on colour alone, since colour is the one channel a
+       colour-blind reader may not have. */
+    .card-level {
+      padding: 2px 6px;
+      border: 1px solid var(--border-strong);
+      color: var(--text-dim);
+      font-size: 8.5px;
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+    }
+
+    .card-level[data-level="school-14"] { border-style: solid; }
+    .card-level[data-level="school-18"] { border-style: dashed; }
+    .card-level[data-level="advanced"]  { border-style: dotted; }
+
+    .level-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .level-bar-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-right: 2px;
+    }
+
+    .level-btn {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: var(--panel-strong);
+      border: 1px solid var(--border-strong);
+      padding: 6px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .level-btn:hover { border-color: var(--accent, #35d6bb); }
+
+    .level-btn[aria-pressed="true"] {
+      border-color: var(--accent, #35d6bb);
+      color: var(--accent, #35d6bb);
+    }
+
+    /* The focus ring must not be clipped by the bar's own edge. */
+    .level-btn:focus-visible {
+      outline: 2px solid var(--accent, #35d6bb);
+      outline-offset: 2px;
+    }
+
     .sort-bar {
       display: flex;
       align-items: center;
@@ -2023,6 +2083,13 @@
           <p class="search-help">Search stays local in your browser. Try <button type="button" data-search-example="primitive:ML-KEM">primitive:ML-KEM</button>, <button type="button" data-search-example="attack:nonce-reuse">attack:nonce-reuse</button>, or <button type="button" data-search-example="standard:NIST">standard:NIST</button>.</p>
           <div class="filter-row" id="filter-panel">
             <div class="filter-chips" id="filter-chips"></div>
+          <div class="level-bar" role="group" aria-labelledby="level-bar-label">
+            <span class="level-bar-label" id="level-bar-label">Level</span>
+            <button type="button" class="level-btn" data-level="" aria-pressed="true">All</button>
+            <button type="button" class="level-btn" data-level="school-14" aria-pressed="false">Up to 14</button>
+            <button type="button" class="level-btn" data-level="school-18" aria-pressed="false">Up to 18</button>
+            <button type="button" class="level-btn" data-level="advanced" aria-pressed="false">Advanced</button>
+          </div>
             <div class="card-count" id="card-count">
               <span class="card-count-text"></span>
               <button class="filter-clear" id="filter-clear" type="button" hidden>Clear</button>
@@ -2032,7 +2099,7 @@
         <div class="no-results" id="no-results" hidden></div>
         <div class="feature-grid">
 
-          <a class="feature-card secondary" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" data-added="2026-03" data-updated="2026-08"
+          <a class="feature-card secondary" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" data-added="2026-03" data-updated="2026-08" data-level="advanced"
             data-implements="AES@web-demo/src/crypto/aes.ts:9 | AES-GCM@web-demo/src/crypto/aes.ts:10 | HAETAE@wasm/src/haetae_exports.c:2 | HKDF@crates/qv-core/src/encrypt.rs:20 | PBKDF2@web-demo/src/crypto/keywrap.ts:40 | SHA-256@web-demo/src/crypto/keywrap.ts:40 | Shamir secret sharing@web-demo/src/crypto/pipeline.ts:16 | SMAUG-T@wasm/src/smaug_exports.c:2"
             data-unscanned="WebAssembly:3"
             data-comment-only="SMAUG-T@web-demo/src/crypto/keywrap.ts:22"
@@ -2141,7 +2208,7 @@
         </div>
 
         <div class="project-grid">
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-phantom-vault/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-phantom-vault/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="HMAC@src/crypto/hmac-drbg.ts:36 | HMAC-DRBG@src/crypto/hmac-drbg.ts:53 | PBKDF2@src/crypto/pbkdf2.ts:31 | SHA-256@src/crypto/hmac-drbg.ts:42"
             data-references="Argon2 | CTR-DRBG | HKDF | SHA-1 | bcrypt | scrypt"
             data-attacks="Brute force@src/main.ts:140"
@@ -2232,7 +2299,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="ChaCha20@src/algorithms/chacha20-drbg.ts:58 | EC point arithmetic@src/algorithms/dual-ec-drbg.ts:101 | HMAC@src/algorithms/hmac-drbg.ts:18 | HMAC-DRBG@src/algorithms/hmac-drbg.ts:54 | P-256@src/algorithms/dual-ec-drbg.ts:24 | SHA-256@src/algorithms/chacha20-drbg.ts:151"
             data-references="CTR-DRBG | OPAQUE | RSA"
             data-attacks="Brute force@src/ui/attack-theater.ts:75 | Discrete log@src/ui/attack-theater.ts:44"
@@ -2324,7 +2391,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-air-stream/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-air-stream/" data-added="2026-09" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/aes/eea2.ts:18 | SNOW 3G@src/snow/snow3g.ts:120 | ZUC@src/zuc/zuc.ts:69"
             data-references="AES-CBC | AES-CTR | ChaCha20"
             data-attacks="Side-channel (unspecified)@README.md:26"
@@ -2416,7 +2483,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-kpqc-pair/" data-added="2026-09" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-kpqc-pair/" data-added="2026-09" data-updated="2026-10" data-level="advanced"
             data-implements="AIMer@src/aimer/reference.ts:12 | NTRU+@src/ntruplus/reference.ts:22 | SHAKE@src/aimer/aim.ts:127"
             data-references="Fiat-Shamir | HAETAE | NTRU | SHA-256 | SHA-3 | SMAUG-T | Shamir secret sharing"
             data-attacks="Side-channel (unspecified)@README.md:170"
@@ -2508,7 +2575,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-tc26-pair/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-tc26-pair/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="Fiat-Shamir@src/shipovnik/stern.ts:167 | Hypericum@native/hypericum_wrapper.c:41 | SHA-256@src/fixtures.ts:65 | Shipovnik@native/shipovnik_wrapper.c:68 | Streebog@src/hypericum/streebog.ts:9"
             data-unscanned="WebAssembly:2"
             data-references="Merkle tree | SLH-DSA | SPHINCS+ | Winternitz | XMSS"
@@ -2614,7 +2681,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sm2-forge/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sm2-forge/" data-added="2026-09" data-updated="2026-09" data-level="school-18"
             data-implements="SM2@src/sm2/sm2.ts:113 | SM3@src/sm2/sm2.ts:1"
             data-references="EC point arithmetic | ECDSA | P-256 | P-384 | Schnorr | TLS 1.3"
             data-attacks="Key recovery@README.md:5 | Nonce reuse@src/attack/nonce-reuse.ts:4 | Side-channel (unspecified)@README.md:51"
@@ -2706,7 +2773,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-misty-lens/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-misty-lens/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="KASUMI@src/kasumi/fi.ts:3 | MISTY1@src/misty1/fi.ts:3"
             data-references="Shamir secret sharing"
             data-attacks="Boomerang attack@src/ui/attackPane.ts:30 | Chosen-plaintext attack@src/ui/attackPane.ts:133 | Differential cryptanalysis@README.md:11 | Key recovery@src/ui/attackPane.ts:128 | Linear cryptanalysis@README.md:62"
@@ -2798,7 +2865,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-export-grade/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-export-grade/" data-added="2026-09" data-updated="2026-09" data-level="school-18"
             data-implements="TEA1@src/tea1/core.ts:93"
             data-references="AES | DES | Grover's algorithm | Serpent"
             data-attacks="Boomerang attack@src/data/attacks.ts:85 | Brute force@src/data/attacks.ts:337 | Chosen-ciphertext attack@src/data/attacks.ts:106 | Key recovery@src/data/attacks.ts:53 | Known-plaintext attack@src/data/attacks.ts:162 | Nonce reuse@index.html:509 | Padding oracle@index.html:509 | Side-channel (unspecified)@index.html:509 | Timing side-channel@index.html:509"
@@ -2879,7 +2946,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-drbg-arena/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-drbg-arena/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/crypto/utils.ts:56 | AES-CBC@src/crypto/utils.ts:62 | CTR-DRBG@src/crypto/ctr-drbg.ts:25 | HMAC@src/crypto/hmac-drbg.ts:20 | HMAC-DRBG@src/crypto/hmac-drbg.ts:20 | SHA-256@src/crypto/utils.ts:38 | SHA-512@src/crypto/utils.ts:43"
             data-references="Argon2 | ECDSA | HKDF | PBKDF2 | scrypt"
             data-attacks="Discrete log@src/ui/exhibit5.ts:176"
@@ -2971,7 +3038,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-bb84/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-bb84/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/encrypt.ts:37 | AES-GCM@src/encrypt.ts:37 | BB84@src/bb84.ts:198 | SHA-256@src/bb84.ts:187"
             data-references="E91 | ECDH | ECDSA | Grover's algorithm | Kyber | ML-DSA | ML-KEM | OPAQUE | P-256 | RSA | Shor's algorithm"
             data-attacks="Brute force@index.html:347 | Discrete log@index.html:346 | Factoring@index.html:345 | Man-in-the-middle@README.md:35 | Side-channel (unspecified)@README.md:37"
@@ -3062,7 +3129,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-shor/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-shor/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="Shor's algorithm@src/shor.ts:80"
             data-references="AES | BB84 | Diffie-Hellman | ECDH | ECDSA | Grover's algorithm | Kyber | ML-DSA | ML-KEM | P-256 | P-384 | RSA | SHA-3 | SLH-DSA"
             data-attacks="Discrete log@README.md:5 | Factoring@src/main.ts:422"
@@ -3139,7 +3206,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-grover/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-grover/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/aes-impact.ts:64 | Grover's algorithm@src/grover.ts:73"
             data-references="BB84 | Diffie-Hellman | HMAC | MD5 | ML-DSA | ML-KEM | RSA | SHA-1 | SHA-256 | SHA-3 | SHA-384 | SHA-512 | Shor's algorithm"
             data-attacks="Birthday bound@src/main.ts:1258 | Brute force@src/aes-impact.ts:17 | Collision attack@docs/TEACHING.md:74 | Discrete log@src/main.ts:1145 | Factoring@src/main.ts:1145"
@@ -3231,7 +3298,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-model-breach/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-model-breach/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="Toy HiAE@src/hiae.ts:50"
             data-references="AEGIS-256 | AES | Ascon"
             data-attacks="Brute force@src/main.ts:288 | Key recovery@src/main.ts:91 | Man-in-the-middle@README.md:46"
@@ -3310,7 +3377,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-letter/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-letter/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="AES@src/crypto/ecies.ts:153 | AES-GCM@src/crypto/ecies.ts:142 | ECDH@src/crypto/ecies.ts:204 | ECDSA@src/crypto/mitm.ts:16 | HKDF@src/crypto/ecies.ts:134 | P-256@src/crypto/mitm.ts:16 | RSA@src/crypto/selftest.ts:20 | RSA-OAEP@src/crypto/rsa.ts:78 | SHA-256@src/crypto/ecies.ts:142"
             data-references="Boneh-Franklin IBE | ElGamal | HMAC | RSA-PSS"
             data-attacks="Brute force@src/main.ts:271 | IV reuse@README.md:24 | Man-in-the-middle@src/main.ts:7"
@@ -3401,7 +3468,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-shadow-vault/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-shadow-vault/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="Argon2@src/crypto/wasm.ts:177 | ChaCha20-Poly1305@crate/src/lib.rs:13 | SHA-256@crate/src/lib.rs:17"
             data-comment-only="Poly1305@src/crypto/wasm.ts:161"
             data-references="AES | ChaCha20 | HKDF | HMAC | HMAC-DRBG | PBKDF2 | Playfair cipher | Poly1305 | RSA | RSA-OAEP | TLS 1.3 | scrypt"
@@ -3509,7 +3576,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Fiat-Shamir@js/fiat-shamir.js:162 | Schnorr@js/schnorr.js:46 | SHA-256@js/shared.js:302"
             data-references="Bulletproofs | FRI | Groth16 | Halo2 | PLONK | Pedersen commitment | STARK | Schnorr identification | Sigma protocol | secp256k1"
             data-attacks="Brute force@js/extractor.js:169 | Discrete log@README.md:27 | Malleability (unspecified)@README.md:28 | Side-channel (unspecified)@exhibits/schnorr.html:99"
@@ -3601,7 +3668,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-stark-tower/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-stark-tower/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="FRI@src/stark.ts:127 | Merkle tree@src/merkle.ts:71 | SHA-256@src/merkle.ts:54 | STARK@src/main.ts:20"
             data-references="BLAKE3 | Bulletproofs | Fiat-Shamir | Groth16 | NTT | PLONK | Pairing | Schnorr | Shor's algorithm"
             data-attacks="Discrete log@index.html:187"
@@ -3694,7 +3761,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-snark-arena/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-snark-arena/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Groth16@src/ui/realproof.ts:97 | KZG commitment@src/crypto/setup.ts:101"
             data-references="BLS12-381 | Bulletproofs | Fiat-Shamir | Halo2 | PLONK | Pairing | STARK | Schnorr | Shor's algorithm"
             data-attacks="Discrete log@src/ui/ceremony.ts:116"
@@ -3784,7 +3851,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-blind-oracle/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-blind-oracle/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="TFHE@src/clientFhe.ts:45"
             data-references="BFV | BGV | CKKS | ElGamal | Paillier"
             data-attacks="Key recovery@README.md:48 | Side-channel (unspecified)@README.md:48"
@@ -3849,7 +3916,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-ckks-lab/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-ckks-lab/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="CKKS@src/toyCkks.ts:209"
             data-references="BFV | BGV | ElGamal | LWE | NTT | Paillier | Private information retrieval | Ring-LWE | TFHE"
             data-attacks="Chosen-plaintext attack@README.md:72 | Side-channel (unspecified)@src/main.ts:745"
@@ -3926,7 +3993,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-fhe-arena/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-fhe-arena/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="BFV@src/toyFhe.ts:132"
             data-references="BGV | CKKS | ElGamal | NTT | Paillier | Private information retrieval | Ring-LWE | TFHE"
             data-attacks="Chosen-ciphertext attack@README.md:42 | Chosen-plaintext attack@src/main.ts:146 | Ciphertext malleability@README.md:42"
@@ -4003,7 +4070,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-patron-shield/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-patron-shield/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="Private information retrieval@src/pir.ts:245"
             data-references="Private set intersection | Shamir secret sharing | Simon"
             data-implementation="hand-rolled"
@@ -4063,7 +4130,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-vss-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-vss-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Feldman VSS@src/main.ts:1385 | Pedersen commitment@src/main.ts:1407 | Shamir secret sharing@src/main.ts:695"
             data-references="BLS signatures | ECDSA | FROST | Hash-to-curve"
             data-attacks="Discrete log@src/main.ts:844 | Side-channel (unspecified)@src/main.ts:1110"
@@ -4141,7 +4208,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-dkg-gate/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-dkg-gate/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="Feldman VSS@src/dkg/dkg.ts:32 | Hash-to-curve@src/dkg/group.ts:29 | Pedersen commitment@src/dkg/pedersen.ts:29 | ristretto255@src/dkg/group.ts:13 | SHA-512@src/dkg/testutil.ts:12"
             data-references="EC point arithmetic | ECDSA | Ed25519 | FROST | Schnorr | Shamir secret sharing"
             data-attacks="Discrete log@src/ui/ceremony.ts:351"
@@ -4233,7 +4300,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-garbled-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-garbled-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/yao.ts:236 | AES-GCM@src/yao.ts:240 | Ed25519@src/yao.ts:1 | Garbled circuits@src/main.ts:17 | SHA-256@src/yao.ts:255"
             data-references="ECDSA | FROST | OPAQUE | Oblivious transfer | Private information retrieval | Private set intersection | Schnorr | Shamir secret sharing | X25519 | ristretto255"
             data-standards="IETF | NIST"
@@ -4310,7 +4377,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-silent-tally/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-silent-tally/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Shamir secret sharing@src/lib.rs:111"
             data-references="Ed25519 | ElGamal | FROST | Feldman VSS | Paillier | Pedersen commitment"
             data-attacks="Brute force@src-ts/exhibits/exhibit6.ts:260"
@@ -4400,7 +4467,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="Ed25519@src/exhibits/attacks.ts:34 | FROST@crate/src/round2.rs:54 | SHA-512@src/exhibits/attacks.ts:78 | Shamir secret sharing@src/exhibits/keygen.ts:2"
             data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | Schnorr | secp256k1"
             data-attacks="Key recovery@src/exhibits/round1.ts:60 | Nonce reuse@src/exhibits/attacks-view.ts:2 | Side-channel (unspecified)@THREAT_MODEL.md:47"
@@ -4505,7 +4572,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="Ed25519@src/bench/runner.ts:111 | Fiat-Shamir@src/ui/tab3-how-it-works.ts:10 | LWE@src/ui/tab3-how-it-works.ts:10 | ML-DSA@src/crypto/mldsa.ts:47 | SHA-256@src/crypto/seal.ts:43"
             data-references="AES | Dilithium | ECDSA | Falcon | Grover's algorithm | Kyber | ML-KEM | NTT | P-256 | Pairing | RSA | RSA-PSS | SHAKE | SLH-DSA | SPHINCS+ | Schnorr | Shor's algorithm"
             data-attacks="Discrete log@src/ui/tab3-how-it-works.ts:129 | Factoring@src/ui/tab2-compare.ts:20 | Fault injection@README.md:491 | Key recovery@src/ui/timing-variability.ts:242 | Side-channel (unspecified)@src/data/runtime.ts:118 | Timing side-channel@src/data/runtime.ts:90"
@@ -4597,7 +4664,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-ratchet-wire/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-ratchet-wire/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="AES@ratchet-wire/src/crypto/double-ratchet.ts:257 | AES-GCM@ratchet-wire/src/crypto/double-ratchet.ts:248 | Diffie-Hellman@ratchet-wire/src/crypto/dh-ratchet.ts:70 | Double Ratchet@ratchet-wire/src/main.ts:8 | Ed25519@ratchet-wire/src/crypto/ed25519.ts:24 | HKDF@ratchet-wire/src/crypto/hkdf.ts:32 | SHA-256@ratchet-wire/src/crypto/hkdf.ts:53 | X25519@ratchet-wire/src/crypto/dh-ratchet.ts:20 | X3DH@ratchet-wire/src/crypto/session-init.ts:131"
             data-references="ECDH | EdDSA | MLS | Noise protocol | X448"
             data-attacks="Man-in-the-middle@ratchet-wire/src/crypto/session-init.ts:138 | Nonce reuse@README.md:24 | Side-channel (unspecified)@ratchet-wire/README.md:10"
@@ -4689,7 +4756,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="AES@demos/kyber-vault/src/crypto/hybrid.ts:47 | AES-GCM@demos/kyber-vault/src/crypto/hybrid.ts:63 | HKDF@demos/kyber-vault/src/crypto/hybrid.ts:55 | Kyber@demos/kyber-vault/src/benchmark.ts:49 | LWE@demos/kyber-vault/src/crypto/lwe.ts:141 | ML-KEM@demos/kyber-vault/src/crypto/hybrid.ts:101 | NTT@demos/kyber-vault/src/crypto/ntt.ts:53 | SHA-256@demos/kyber-vault/src/crypto/hybrid.ts:43 | X25519@demos/kyber-vault/src/benchmark.ts:103"
             data-references="Classic McEliece | ECDH | Fujisaki-Okamoto transform | HMAC | HQC | PQXDH | RSA | Ring-LWE | Serpent"
             data-attacks="Brute force@demos/kyber-vault/src/crypto/lwe.ts:171 | Chosen-ciphertext attack@demos/kyber-vault/src/main.ts:832 | Side-channel (unspecified)@demos/kyber-vault/src/main.ts:730"
@@ -4782,7 +4849,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-serpent/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-serpent/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="AES@demos/iron-serpent/src/benchmark.ts:86 | AES-GCM@demos/iron-serpent/src/benchmark.ts:82 | Argon2@demos/iron-serpent/src/kdf.ts:48 | HKDF@demos/iron-serpent/src/mac.ts:17 | HMAC@demos/iron-serpent/src/mac.ts:42 | Serpent@demos/iron-serpent/src/serpent-ctr.ts:13 | SHA-256@demos/iron-serpent/src/mac.ts:25"
             data-unscanned="WebAssembly:1"
             data-references="Camellia | ChaCha20 | ChaCha20-Poly1305 | DES | Kuznyechik | PBKDF2 | Poly1305 | RSA | Shamir secret sharing | Twofish | scrypt"
@@ -4887,7 +4954,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-world-ciphers/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-world-ciphers/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/main.ts:115 | AES-CBC@src/main.ts:177 | ARIA@src/main.ts:195 | Camellia@src/ciphers/camellia.ts:58 | Kuznyechik@src/ciphers/registry.ts:70 | SEED@src/ciphers/registry.ts:44 | SM4@src/ciphers/sm4-trace.ts:101"
             data-references="Ascon | ChaCha20 | Grover's algorithm | Kupyna | NTT | OPAQUE | Serpent | Streebog | TLS 1.3 | Toy SPN"
             data-attacks="Birthday bound@index.html:725 | Nonce reuse@README.md:47 | Power analysis@index.html:94"
@@ -4978,7 +5045,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-shamir-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-shamir-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@demos/shamir-gate/src/crypto.ts:55 | AES-GCM@demos/shamir-gate/src/crypto.ts:72 | Shamir secret sharing@demos/shamir-gate/index.html:118"
             data-references="DES | Ed25519 | FROST | Feldman VSS | Fiat-Shamir | ML-DSA | Pedersen commitment | RC4 | RSA | Schnorr"
             data-attacks="Differential cryptanalysis@demos/shamir-gate/src/main.ts:1474"
@@ -5069,7 +5136,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HISTORICAL" href="https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HISTORICAL" href="https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/" data-added="2026-04" data-updated="2026-08" data-level="school-14"
             data-implements="AES@demos/dead-sea-cipher/src/ciphers/aes.ts:73 | AES-CTR@demos/dead-sea-cipher/src/ciphers/ghash.ts:118 | AES-GCM@demos/dead-sea-cipher/src/ciphers/aes.ts:79 | Caesar cipher@demos/dead-sea-cipher/src/analysis/caesar-crack.ts:15 | GHASH@demos/dead-sea-cipher/src/ciphers/ghash.ts:82 | One-time pad@demos/dead-sea-cipher/src/ciphers/otp.ts:8 | PBKDF2@demos/dead-sea-cipher/src/ciphers/aes.ts:48 | Vigenere cipher@demos/dead-sea-cipher/src/ciphers/vigenere.ts:11"
             data-references="DES | Enigma | Grover's algorithm | SHA-256 | Serpent | Substitution cipher"
             data-attacks="Brute force@demos/dead-sea-cipher/src/ciphers/caesar.ts:38 | Frequency analysis@demos/dead-sea-cipher/src/content/scripture.ts:65 | Side-channel (unspecified)@demos/dead-sea-cipher/README.md:25"
@@ -5160,7 +5227,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Merkle tree@demos/sphincs-ledger/src/crypto/merkle.ts:15 | SHA-256@demos/sphincs-ledger/src/crypto/fors.ts:58 | SLH-DSA@demos/sphincs-ledger/src/crypto/params.ts:17 | SPHINCS+@demos/sphincs-ledger/src/crypto/params.ts:18 | Winternitz@demos/sphincs-ledger/src/crypto/wots.ts:35"
             data-comment-only="XMSS@demos/sphincs-ledger/src/crypto/params.ts:25"
             data-references="Dilithium | ECDSA | Ed25519 | Falcon | Grover's algorithm | HAETAE | LMS | LWE | ML-DSA | ML-KEM | NTRU | OPAQUE | RSA | SHA-3 | SHA-512 | SHAKE | Shor's algorithm | X3DH | XMSS"
@@ -5257,7 +5324,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Toy SPN@demos/biham-lens/src/crypto/spn.ts:95"
             data-references="AES | AES-CBC | Ascon | DES | Enigma | MD5 | PRESENT | RSA | SHA-1 | Serpent | Shamir secret sharing | Simon | Speck | Vigenere cipher"
             data-attacks="Brute force@README.md:12 | Chosen-ciphertext attack@README.md:56 | Chosen-plaintext attack@demos/biham-lens/src/main.ts:1091 | Collision attack@README.md:57 | Differential cryptanalysis@demos/biham-lens/src/main.ts:1082 | Impossible differential@demos/biham-lens/src/main.ts:783 | Key recovery@README.md:22 | Padding oracle@README.md:56"
@@ -5336,7 +5403,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-wire/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-wire/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="AES@demos/hybrid-wire/src/crypto/security.ts:50 | AES-GCM@demos/hybrid-wire/src/crypto/security.ts:52 | HKDF@demos/hybrid-wire/src/crypto/hybrid.ts:56 | ML-KEM@demos/hybrid-wire/src/crypto/mlkem768.ts:12 | X25519@demos/hybrid-wire/src/crypto/x25519.ts:17"
             data-references="Diffie-Hellman | Dilithium | Double Ratchet | ECDH | Ed25519 | Kyber | PQXDH | SHA-256 | SHA-512 | Serpent | TLS 1.3"
             data-attacks="Side-channel (unspecified)@demos/hybrid-wire/src/main.ts:914"
@@ -5428,7 +5495,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-downgrade-wire/" data-added="2026-07" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-downgrade-wire/" data-added="2026-07" data-updated="2026-09" data-level="school-18"
             data-implements="HKDF@src/negotiation/transcript.ts:18 | HMAC@src/negotiation/transcript.ts:19 | ML-KEM@src/kex/mlkem768.ts:21 | SHA-256@src/negotiation/transcript.ts:60 | TLS 1.3@src/negotiation/handshake.ts:62 | X25519@src/kex/x25519.ts:27"
             data-references="Diffie-Hellman | ECDH | Ed25519 | P-256 | RSA"
             data-attacks="Discrete log@src/negotiation/handshake.ts:140 | Downgrade attack@src/ui/panels.ts:433"
@@ -5521,7 +5588,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-babel-hash/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-babel-hash/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="BLAKE3@demos/babel-hash/src/crypto/hash.ts:127 | HMAC@demos/babel-hash/src/crypto/hmac.ts:9 | SHA-256@demos/babel-hash/src/crypto/length-extension.ts:61 | SHA-3@demos/babel-hash/src/crypto/hash.ts:123"
             data-references="Argon2 | Double Ratchet | Grover's algorithm | HKDF | Keccak | MD5 | Merkle tree | PBKDF2 | SHA-1 | SLH-DSA | SPHINCS+ | Serpent | Shamir secret sharing | bcrypt | scrypt"
             data-attacks="Brute force@demos/babel-hash/src/main.ts:821 | Length extension@demos/babel-hash/src/crypto/hmac.ts:7 | Timing side-channel@README.md:24"
@@ -5614,7 +5681,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-aes-modes/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-aes-modes/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/ccm.ts:18 | AES-CBC@src/cbc.ts:30 | AES-CCM@src/ccm.ts:153 | AES-CTR@src/compare.ts:113 | AES-GCM@src/compare.ts:120 | GHASH@src/forbidden.ts:99"
             data-references="3DES | Ascon | ChaCha20 | ChaCha20-Poly1305 | HMAC | Poly1305 | RC4 | Serpent | TLS 1.3"
             data-attacks="IV reuse@src/cbc.ts:97 | Key recovery@index.html:568 | Known-plaintext attack@index.html:567 | Nonce reuse@src/ctr.ts:113 | Padding oracle@src/cbc.ts:307"
@@ -5706,7 +5773,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/" data-added="2026-06" data-updated="2026-09" data-level="school-18"
             data-implements="RSA@src/ui/encrypt-decrypt.ts:3 | RSA-OAEP@src/rsa/oaep.ts:18"
             data-references="Dilithium | ECDSA | Ed25519 | Kyber | ML-DSA | ML-KEM | RSA-PSS | SHA-256 | Shor's algorithm | TLS 1.3 | X25519"
             data-attacks="Ciphertext malleability@README.md:19 | Discrete log@src/rsa/factor.ts:52 | Factoring@src/main.ts:39 | Key recovery@README.md:47 | Padding oracle@src/ui/real-world.ts:91 | Signature malleability@README.md:13"
@@ -5811,7 +5878,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION | SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/hybrid.ts:73 | AES-GCM@src/hybrid.ts:66 | RSA@src/textbook.ts:212 | RSA-OAEP@src/oaep-encode.ts:65 | RSA-PSS@src/pss-encode.ts:51 | SHA-256@src/oaep-encode.ts:15"
             data-references="ChaCha20 | ChaCha20-Poly1305 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | ML-DSA | ML-KEM | P-256 | Poly1305 | Privacy Pass | Shor's algorithm | TLS 1.3 | X25519"
             data-attacks="Brute force@README.md:5 | Cache timing@index.html:1539 | Chosen-ciphertext attack@src/glossary.ts:42 | Chosen-plaintext attack@src/determinism.ts:68 | Ciphertext malleability@src/glossary.ts:46 | Factoring@src/attacks.ts:76 | Known-plaintext attack@index.html:1475 | Nonce reuse@README.md:59 | Padding oracle@src/attacks.ts:857 | Side-channel (unspecified)@index.html:1539 | Signature malleability@src/attacks.ts:124"
@@ -5903,7 +5970,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-curve-lens/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-curve-lens/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="EC point arithmetic@src/curve.ts:105 | ECDH@src/realcurve.ts:310 | P-256@src/realcurve.ts:1 | secp256k1@src/realcurve.ts:89 | X25519@src/realcurve.ts:256"
             data-references="AES | ChaCha20 | Diffie-Hellman | Double Ratchet | ECDSA | Ed25519 | Ed448 | HKDF | Kuznyechik | ML-KEM | MLS | Montgomery ladder | RSA | Schnorr | Shor's algorithm | TLS 1.3 | WebAuthn | X3DH | X448"
             data-attacks="Brute force@src/ui.ts:605 | Discrete log@src/curve.ts:349 | Side-channel (unspecified)@README.md:33 | Timing side-channel@README.md:33"
@@ -5995,7 +6062,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
             data-implements="EC point arithmetic@src/math/curve-fp.ts:23 | secp256k1@src/math/curves.ts:73"
             data-references="Baby-step giant-step | ECDH | ECDSA | Ed25519 | EdDSA | Montgomery ladder | P-256 | X25519"
             data-attacks="Brute force@src/ui/panel-hard.ts:115 | Discrete log@src/ui/panel-hard.ts:164 | Nonce reuse@README.md:35"
@@ -6083,7 +6150,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-x3dh-wire/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-x3dh-wire/" data-added="2026-04" data-updated="2026-10" data-level="school-18"
             data-implements="AES@src/x3dh.ts:174 | AES-GCM@src/x3dh.ts:185 | Diffie-Hellman@src/kdf.ts:66 | Ed25519@src/xeddsa.ts:43 | EdDSA@src/xeddsa.ts:136 | HKDF@src/kdf.ts:37 | HMAC@src/kdf.ts:21 | SHA-256@src/kdf.ts:31 | SHA-512@src/xeddsa.ts:145 | X25519@src/x3dh.ts:59 | X3DH@src/x3dh.ts:160"
             data-references="Double Ratchet | ECDH | ML-KEM | MLS | Pairing | X448"
             data-standards="IETF | NIST"
@@ -6160,7 +6227,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-noise-pipe/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-noise-pipe/" data-added="2026-04" data-updated="2026-10" data-level="school-18"
             data-implements="AES@src/crypto.ts:103 | AES-GCM@src/crypto.ts:103 | Diffie-Hellman@src/crypto.ts:26 | HKDF@src/crypto.ts:59 | HMAC@src/crypto.ts:46 | Noise protocol@src/noise.ts:181 | SHA-256@src/crypto.ts:46 | X25519@src/crypto.ts:8"
             data-references="BLAKE2 | ChaCha20 | ChaCha20-Poly1305 | Double Ratchet | EC point arithmetic | ECDH | Ed25519 | ML-KEM | MLS | Poly1305 | TLS 1.3 | X3DH | secp256k1"
             data-attacks="Man-in-the-middle@src/patterns.ts:566 | Nonce reuse@src/noise.ts:977"
@@ -6252,7 +6319,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-mac-race/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-mac-race/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="AES@src/cmac.ts:39 | AES-CBC@src/cmac.ts:73 | CMAC@src/cmac.ts:113 | GHASH@src/ghash.ts:97 | HMAC@src/hmac.ts:83 | Poly1305@src/poly1305.ts:110 | SHA-256@src/lengthext.ts:39"
             data-references="AES-GCM | BLAKE3 | ChaCha20 | ChaCha20-Poly1305 | MD5 | SHA-1 | SHA-3 | SHA-512 | TLS 1.3"
             data-attacks="Brute force@src/ui.ts:600 | Length extension@src/lengthext.ts:5 | Nonce reuse@src/ghash.ts:188 | Side-channel (unspecified)@src/ui.ts:467 | Timing side-channel@src/timing.ts:127"
@@ -6344,7 +6411,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-kdf-chain/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-kdf-chain/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="Argon2@src/argon2.ts:26 | HKDF@src/hkdf.ts:14 | HMAC@src/pbkdf2.ts:105 | PBKDF2@src/pbkdf2.ts:20 | scrypt@src/scrypt.ts:43 | SHA-256@src/pbkdf2.ts:41 | SHA-512@src/pbkdf2.ts:48"
             data-references="BLAKE2 | ChaCha20 | ChaCha20-Poly1305 | Diffie-Hellman | Double Ratchet | MD5 | Noise protocol | Poly1305 | Salsa20 | TLS 1.3 | bcrypt"
             data-attacks="Brute force@src/decision.ts:58 | Side-channel (unspecified)@src/decision.ts:58"
@@ -6437,7 +6504,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-format-ward/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-format-ward/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/ff1.ts:47 | AES-CBC@src/ff1.ts:150 | FF1@src/attack.ts:23"
             data-references="AES-GCM | AES-KW | AES-SIV | ChaCha20 | ChaCha20-Poly1305 | Poly1305 | RSA | RSA-OAEP"
             data-attacks="Brute force@src/ui.ts:774 | Chosen-plaintext attack@src/ui.ts:775 | Frequency analysis@src/ui.ts:720 | Known-plaintext attack@src/ui.ts:851 | Linear cryptanalysis@src/ui.ts:862 | Nonce reuse@README.md:81"
@@ -6530,7 +6597,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/oracle.ts:96 | AES-CBC@src/oracle.ts:96 | AES-GCM@src/ui.ts:866 | HMAC@src/oracle.ts:82 | SHA-256@src/oracle.ts:116"
             data-references="AES-CCM | AES-SIV | ChaCha20 | ChaCha20-Poly1305 | Poly1305 | TLS 1.3"
             data-attacks="Chosen-ciphertext attack@src/exploits.ts:50 | Chosen-plaintext attack@src/exploits.ts:167 | IV reuse@src/exploits.ts:180 | Known-plaintext attack@src/exploits.ts:172 | Man-in-the-middle@src/exploits.ts:139 | Nonce reuse@README.md:70 | Padding oracle@index.html:41 | Side-channel (unspecified)@README.md:44 | Timing side-channel@src/exploits.ts:103"
@@ -6622,7 +6689,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-timing-oracle/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-timing-oracle/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="HMAC@src/hmac.ts:60 | Montgomery ladder@src/rsa.ts:64 | RSA@src/rsa.ts:156 | RSA-PSS@src/rsa.ts:183 | SHA-256@src/hmac.ts:70"
             data-references="AES | AES-GCM | Argon2 | Diffie-Hellman | HQC | ML-KEM | bcrypt | scrypt"
             data-attacks="Cache timing@src/cache.ts:12 | Fault injection@README.md:51 | Key recovery@README.md:25 | Nonce reuse@README.md:52 | Padding oracle@README.md:48 | Side-channel (unspecified)@src/ui.ts:146 | Timing side-channel@src/animate.ts:269"
@@ -6714,7 +6781,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-mceliece-gate/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-mceliece-gate/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="AES@src/mceliece.ts:173 | AES-GCM@src/mceliece.ts:182 | Classic McEliece@src/mceliece.ts:15 | SHA-256@src/mceliece.ts:81"
             data-references="BIKE | Grover's algorithm | HQC | Information-set decoding | Isogeny walk | Kyber | LWE | ML-KEM | NTRU | RSA | Reed-Muller | Reed-Solomon"
             data-attacks="Brute force@src/toy/goppa-code.ts:347 | Key recovery@src/ui.ts:192 | Man-in-the-middle@README.md:33 | Side-channel (unspecified)@LIMITATIONS.md:44"
@@ -6805,7 +6872,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-frodo-vault/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-frodo-vault/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="FrodoKEM@src/frodo-kem.ts:54 | LWE@src/math.ts:173 | ML-KEM@src/frodo-kem.ts:63 | SHA-256@src/main.ts:243"
             data-references="AES | BIKE | Classic McEliece | Dilithium | ECDH | Falcon | Fujisaki-Okamoto transform | Gaussian mechanism | HQC | Kyber | ML-DSA | NTT | Ring-LWE | SHAKE | SLH-DSA"
             data-attacks="Chosen-ciphertext attack@src/main.ts:163 | Chosen-plaintext attack@README.md:26 | Side-channel (unspecified)@src/main.ts:732"
@@ -6898,7 +6965,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-bike-vault/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-bike-vault/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/bike.ts:775 | AES-GCM@src/bike.ts:791 | BIKE@src/bike.ts:248 | SHA-256@src/bike.ts:240"
             data-references="Classic McEliece | Dilithium | Fujisaki-Okamoto transform | HQC | Isogeny walk | Kyber | LWE | ML-DSA | ML-KEM | NTRU | RSA | SIKE | SLH-DSA | SPHINCS+"
             data-attacks="Chosen-ciphertext attack@src/main.ts:217 | Factoring@src/keyviz.ts:67"
@@ -6990,7 +7057,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-hqc-vault/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-hqc-vault/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/main.ts:710 | AES-GCM@src/hqc.ts:367 | HQC@src/budget.ts:8 | SHA-256@src/hqc.ts:219"
             data-references="BIKE | Classic McEliece | Dilithium | Fujisaki-Okamoto transform | Kyber | LWE | ML-KEM | RSA | Reed-Muller | Reed-Solomon"
             data-attacks="Chosen-ciphertext attack@src/glossary.ts:6 | Chosen-plaintext attack@src/glossary.ts:14 | Side-channel (unspecified)@src/glossary.ts:72 | Timing side-channel@README.md:52"
@@ -7082,7 +7149,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-falcon-seal/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-falcon-seal/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="Babai rounding@src/babai.ts:32 | Falcon@src/falcon.ts:176 | NTRU@src/trapdoor.ts:303 | NTT@src/ntt.ts:45 | SHA-256@src/falcon.ts:130"
             data-references="Dilithium | Gaussian mechanism | Kyber | LWE | ML-DSA | SLH-DSA | SPHINCS+ | UOV"
             data-attacks="Brute force@src/ui.ts:182 | Key recovery@src/ui.ts:401 | Lattice reduction@src/trapdoor-panel.ts:82 | Side-channel (unspecified)@src/ui.ts:764 | Timing side-channel@src/ui.ts:493"
@@ -7175,7 +7242,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-chacha20-stream/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-chacha20-stream/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="ChaCha20@src/cipher.ts:14"
             data-references="AES | AES-GCM | AES-SIV | Argon2 | ChaCha20-Poly1305 | One-time pad | Poly1305 | SHA-256 | Salsa20 | TLS 1.3 | XChaCha20-Poly1305"
             data-attacks="Birthday bound@README.md:32 | Cache timing@README.md:10 | Ciphertext malleability@README.md:30 | Nonce reuse@src/cipher.ts:41 | Side-channel (unspecified)@README.md:10 | Timing side-channel@README.md:10"
@@ -7266,7 +7333,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ed25519-forge/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ed25519-forge/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="EC point arithmetic@src/forge.ts:59 | ECDSA@src/ecdsa-ui.ts:53 | Ed25519@src/ecdsa.ts:192 | P-256@src/ecdsa.ts:25 | SHA-256@src/ecdsa.ts:52"
             data-references="BLS signatures | Diffie-Hellman | Ed448 | EdDSA | FROST | RSA | SHA-512 | TLS 1.3 | X25519 | X3DH | secp256k1"
             data-attacks="Discrete log@README.md:5 | Nonce reuse@src/ecdsa-ui.ts:7 | Signature malleability@README.md:27"
@@ -7358,7 +7425,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="BLAKE3@src/hasher.ts:154 | SHA-256@src/hasher.ts:241 | SHA-3@src/hasher.ts:151"
             data-references="Argon2 | CMAC | GHASH | HKDF | HMAC | Keccak | MD5 | Merkle tree | PBKDF2 | Poly1305 | SHA-1 | TLS 1.3 | scrypt"
             data-attacks="Brute force@README.md:39 | Length extension@src/hasher.ts:216 | Side-channel (unspecified)@README.md:42 | Timing side-channel@README.md:42"
@@ -7450,7 +7517,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-world-hashes/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-world-hashes/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="HMAC@src/length-extension.ts:507 | Kupyna@src/main.ts:241 | SHA-256@src/length-extension.ts:70 | SHA-3@src/main.ts:237 | SHA-512@src/main.ts:236 | SM3@src/length-extension.ts:118 | Streebog@src/main.ts:239"
             data-references="AES | BLAKE3 | CMAC | Camellia | GHASH | Keccak | Kuznyechik | Merkle tree | OPAQUE | Poly1305 | SM2"
             data-attacks="Birthday bound@src/collision-search.ts:180 | Brute force@src/main.ts:512 | Length extension@src/length-extension.ts:303"
@@ -7542,7 +7609,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-kdf-arena/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-kdf-arena/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="Argon2@src/bench.ts:131 | HKDF@src/bench.ts:85 | PBKDF2@src/bench.ts:100 | scrypt@src/bench.ts:113 | SHA-256@src/bench.ts:5"
             data-references="ChaCha20 | ChaCha20-Poly1305 | HMAC | HMAC-DRBG | Poly1305 | SHA-1 | TLS 1.3 | bcrypt"
             data-attacks="Brute force@src/main.ts:96"
@@ -7634,7 +7701,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-poly1305-mac/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-poly1305-mac/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Poly1305@src/poly-math.ts:43"
             data-references="AES | AES-GCM | BLAKE3 | CMAC | ChaCha20 | ChaCha20-Poly1305 | GHASH | HMAC | Noise protocol | SHA-256 | Salsa20 | TLS 1.3"
             data-attacks="Brute force@src/ui.ts:345 | Nonce reuse@README.md:29 | Side-channel (unspecified)@src/ui.ts:383 | Timing side-channel@src/ui.ts:383"
@@ -7726,7 +7793,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-ot-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-ot-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/ot.ts:107 | AES-GCM@src/ot.ts:120 | Ed25519@src/ot.ts:22 | Oblivious transfer@src/ot.ts:60 | SHA-256@src/ot.ts:169"
             data-references="Diffie-Hellman | EC point arithmetic | FROST | Garbled circuits | LWE | Private information retrieval | Private set intersection | Shamir secret sharing | Shor's algorithm | X25519"
             data-attacks="Ciphertext malleability@README.md:34 | Discrete log@src/main.ts:153 | Man-in-the-middle@src/main.ts:210 | Side-channel (unspecified)@README.md:36"
@@ -7818,7 +7885,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-lms-ledger/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-lms-ledger/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="LMS@src/lms.ts:266 | SHA-256@src/lms.ts:68 | Winternitz@src/lms.ts:227"
             data-references="Dilithium | Dragonfly | ECDSA | Ed25519 | Falcon | Lamport | ML-DSA | Merkle tree | NTRU | RSA | SLH-DSA | SPHINCS+ | XMSS"
             data-standards="IETF | NIST"
@@ -7895,7 +7962,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-merkle-vault/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-merkle-vault/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="Merkle tree@src/consistency.ts:48 | SHA-256@src/merkle.ts:113"
             data-references="BLAKE3 | Bloom filter | LMS | SHA-1 | SHA-3 | SHA-512 | SLH-DSA | SPHINCS+"
             data-attacks="Malleability (unspecified)@src/main.ts:35"
@@ -7987,7 +8054,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-nonce-guard/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-nonce-guard/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/crypto.ts:28 | AES-GCM@src/crypto.ts:28 | AES-SIV@src/crypto.ts:48 | Diffie-Hellman@src/gf128poly.ts:177 | GHASH@src/crypto.ts:300"
             data-references="AES-CTR | Ascon | ChaCha20 | ChaCha20-Poly1305 | HMAC | Poly1305 | SHA-256 | SHA-384 | TLS 1.3"
             data-attacks="Birthday bound@README.md:46 | Brute force@README.md:16 | Factoring@src/main.ts:243 | Key recovery@src/main.ts:233 | Known-plaintext attack@src/crypto.ts:212 | Nonce reuse@src/crypto.ts:183 | Padding oracle@README.md:74"
@@ -8079,7 +8146,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pairing-gate/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pairing-gate/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="BLS signatures@src/main.ts:14 | BLS12-381@src/main.ts:14 | Pairing@src/main.ts:111"
             data-references="Boneh-Franklin IBE | Diffie-Hellman | EC point arithmetic | ECDSA | Ed25519 | EdDSA | FROST | Groth16 | Grover's algorithm | Hash-to-curve | P-256 | RSA | SHA-256 | Schnorr | Shor's algorithm"
             data-attacks="Discrete log@src/main.ts:226"
@@ -8165,7 +8232,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Private information retrieval@src/pir.ts:89"
             data-references="BFV | CKKS | Diffie-Hellman | LWE | Private set intersection | Shamir secret sharing"
             data-implementation="hand-rolled"
@@ -8227,7 +8294,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-stego-suite/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-stego-suite/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="AES@src/lib/crypto.ts:8 | AES-GCM@src/lib/crypto.ts:8 | PBKDF2@src/lib/crypto.ts:13 | SHA-256@src/lib/crypto.ts:13"
             data-references="SNOW 2.0"
             data-attacks="Power analysis@src/main.ts:248"
@@ -8319,7 +8386,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-gg20-wallet/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-gg20-wallet/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="EC point arithmetic@src/gg20.ts:342 | Paillier@src/gg20.ts:219 | secp256k1@src/gg20.ts:7 | SHA-256@src/gg20.ts:347"
             data-references="ECDSA | FROST | Feldman VSS | ML-DSA | Pairing | Pedersen commitment | RSA | Schnorr | Shamir secret sharing"
             data-attacks="Discrete log@src/main.ts:302 | Key recovery@src/main.ts:519 | Nonce reuse@src/main.ts:519"
@@ -8411,7 +8478,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="bcrypt@src/lib.ts:20 | MD5@src/lib.ts:116 | PBKDF2@src/crypto-client.ts:108 | SHA-256@src/crypto-worker.ts:75"
             data-references="AES | Argon2 | Blowfish | ChaCha20 | ChaCha20-Poly1305 | Falcon | HKDF | HMAC | Poly1305 | SHA-512 | scrypt"
             data-attacks="Brute force@src/exhibits.ts:528 | Side-channel (unspecified)@src/exhibits.ts:843 | Timing side-channel@README.md:28"
@@ -8503,7 +8570,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-blind-sign/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="SIGNATURES | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-blind-sign/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="Ed25519@src/ecblind.ts:1 | RSA@src/blind.ts:39 | RSA-PSS@src/rfc9474.ts:83 | Schnorr@src/main.ts:1184 | SHA-256@src/blind.ts:265 | SHA-384@src/rfc9474.ts:53 | SHA-512@src/ecblind.ts:109"
             data-references="BLS signatures | EC point arithmetic | EdDSA | Pairing | Privacy Pass | RSA-OAEP | ristretto255"
             data-attacks="Discrete log@src/main.ts:433 | Factoring@src/main.ts:301 | Signature malleability@src/main.ts:290"
@@ -8595,7 +8662,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-commit-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-commit-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="EC point arithmetic@src/pedersen.ts:52 | Pedersen commitment@src/pedersen.ts:212 | SHA-256@src/hashcommit.ts:46"
             data-references="Bulletproofs | FROST | Feldman VSS | Fiat-Shamir | Hash-to-curve | KZG commitment | Oblivious transfer | One-time pad | P-256 | Schnorr | ristretto255"
             data-attacks="Birthday bound@src/main.ts:354 | Discrete log@src/main.ts:411"
@@ -8687,7 +8754,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-pki-chain/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-pki-chain/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="ECDSA@src/ct.ts:324 | Merkle tree@src/ct.ts:156 | P-256@src/ct.ts:359 | SHA-256@src/ct.ts:110"
             data-references="Dilithium | Kerberos | ML-DSA | Shor's algorithm"
             data-standards="NIST"
@@ -8767,7 +8834,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-protocol-compose/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-protocol-compose/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="AES@src/compose.ts:47 | AES-CBC@src/compose.ts:47 | AES-GCM@src/compose.ts:57 | HMAC@src/compose.ts:95 | SHA-256@src/compose.ts:52"
             data-references="CMAC | ChaCha20 | ChaCha20-Poly1305 | GHASH | Poly1305 | TLS 1.3"
             data-attacks="Chosen-plaintext attack@README.md:27 | Length extension@src/main.ts:384 | Nonce reuse@README.md:20 | Padding oracle@src/attacks.ts:21 | Side-channel (unspecified)@src/attacks.ts:160 | Timing side-channel@src/main.ts:282"
@@ -8859,7 +8926,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-ring-sign/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-ring-sign/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="ECDSA@src/group.ts:52 | Ed25519@src/ring.ts:382 | Hash-to-curve@src/ring.ts:129 | P-256@src/group.ts:81 | SHA-256@src/group.ts:53 | SHA-512@src/ring.ts:107"
             data-references="BLS signatures | Bulletproofs | EC point arithmetic | EdDSA | FROST | Pairing | Shamir secret sharing"
             data-standards="IETF | NIST"
@@ -8936,7 +9003,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/elgamal.ts:96 | AES-GCM@src/elgamal.ts:117 | ElGamal@src/main.ts:11 | P-256@src/elgamal.ts:1 | SHA-256@src/elgamal.ts:75 | Shamir secret sharing@src/main.ts:291"
             data-references="FROST | Feldman VSS | Fiat-Shamir | Paillier | Pedersen commitment"
             data-standards="NIST"
@@ -9013,7 +9080,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-j-uniward/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-j-uniward/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/stc-keys.ts:37 | AES-CTR@src/stc-keys.ts:37 | HKDF@src/kdf.ts:14 | HMAC@src/steg/Embedder.ts:168 | PBKDF2@src/kdf.ts:45 | SHA-256@src/kdf.ts:23"
             data-references="Private information retrieval"
             data-attacks="Brute force@README.md:9"
@@ -9101,7 +9168,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="AES@src/transcript.ts:121 | AES-GCM@src/transcript.ts:121 | Diffie-Hellman@src/transcript.ts:64 | HKDF@src/transcript.ts:113 | SHA-256@src/transcript.ts:98"
             data-references="BB84 | ChaCha20 | ChaCha20-Poly1305 | Dilithium | ECDH | ECDSA | Grover's algorithm | Kyber | LWE | ML-DSA | ML-KEM | P-256 | Poly1305 | RSA | Ring-LWE | SHA-384 | SHA-512 | SLH-DSA | Shor's algorithm | TLS 1.3 | X25519 | secp256k1"
             data-attacks="Brute force@README.md:70 | Chosen-plaintext attack@src/main.ts:785 | Discrete log@src/content.ts:68"
@@ -9193,7 +9260,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="CSIDH@src/graph.ts:22 | EC point arithmetic@src/ec.ts:106 | Isogeny walk@src/csidh.ts:92 | SIKE@src/main.ts:1193"
             data-references="Classic McEliece | HQC | Kyber | ML-DSA | ML-KEM | SLH-DSA | UOV"
             data-attacks="Brute force@src/csidh.ts:267 | Key recovery@README.md:32 | Lattice reduction@src/main.ts:363"
@@ -9285,7 +9352,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="Keccak@src/shake256.ts:41 | Kyber@src/timing.ts:88 | ML-DSA@src/loopabort.ts:37 | NTT@src/loopabort.ts:116 | SHAKE@src/shake256.ts:88"
             data-references="Dilithium | EC point arithmetic | Fujisaki-Okamoto transform | HQC | ML-KEM | Shamir secret sharing"
             data-attacks="Chosen-ciphertext attack@src/main.ts:180 | Chosen-plaintext attack@src/main.ts:40 | Fault injection@src/main.ts:40 | Key recovery@src/main.ts:254 | Lattice reduction@src/loopabort.ts:629 | Padding oracle@src/main.ts:618 | Power analysis@src/main.ts:17 | Side-channel (unspecified)@src/main.ts:171 | Timing side-channel@src/main.ts:40"
@@ -9377,7 +9444,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lll-break/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lll-break/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="LWE@src/bkz.ts:222"
             data-references="Dilithium | ECDSA | Falcon | FrodoKEM | Gaussian mechanism | Kyber | ML-DSA | ML-KEM | NTRU | RSA"
             data-attacks="Brute force@src/bkz.ts:310 | Factoring@docs/model-limitations.md:127 | Lattice reduction@playwright.a11y.config.ts:10 | Side-channel (unspecified)@README.md:48"
@@ -9454,7 +9521,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-mpcith-sign/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-mpcith-sign/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Fiat-Shamir@src/main.ts:460 | Merkle tree@src/sharing.ts:155 | SHA-256@src/mpcith.ts:160"
             data-references="AES | Dilithium | Falcon | ML-DSA | NTRU | SLH-DSA | SPHINCS+ | UOV"
             data-attacks="Side-channel (unspecified)@README.md:81"
@@ -9546,7 +9613,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-opaque-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="KEY EXCHANGE | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-opaque-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/kdf.ts:253 | AES-GCM@src/kdf.ts:253 | Diffie-Hellman@src/kdf.ts:209 | Hash-to-curve@src/oprf.ts:54 | HKDF@src/kdf.ts:82 | HMAC@src/kdf.ts:61 | OPRF@src/envelope.ts:102 | P-256@src/ake.ts:35 | scrypt@src/kdf.ts:138 | SHA-256@src/kdf.ts:56"
             data-protocol-partial="OPAQUE@src/ake.ts:77"
             data-references="EC point arithmetic | OPAQUE | Pairing | RSA | SHA-512 | SRP | WebAuthn | X25519 | X3DH | bcrypt | ristretto255"
@@ -9641,7 +9708,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-vrf-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-vrf-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="EC point arithmetic@src/utils/p256.ts:63 | ECDH@src/ecvrf.ts:272 | HMAC@src/ecvrf.ts:92 | P-256@src/ecvrf.ts:272 | SHA-256@src/beacon.ts:23"
             data-references="ECDSA | Hash-to-curve | RSA | Shamir secret sharing | Shor's algorithm"
             data-attacks="Factoring@src/main.ts:580"
@@ -9733,7 +9800,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-aegis-gate/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-aegis-gate/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="AEGIS-256@src/aegis.ts:239 | AES@src/aes-round-vis.ts:32 | AES-GCM@src/benchmark.ts:116"
             data-references="AES-CCM | AES-SIV | Ascon | Caesar cipher | ChaCha20 | ChaCha20-Poly1305 | GHASH | Poly1305 | TLS 1.3"
             data-attacks="Birthday bound@src/main.ts:319 | Known-plaintext attack@src/nonce-reuse.ts:63 | Nonce reuse@src/birthday.ts:24 | Padding oracle@src/main.ts:355"
@@ -9825,7 +9892,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-ascon/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-ascon/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/ui/benchmark.ts:103 | AES-GCM@src/ui/benchmark.ts:101 | Ascon@src/aead.ts:137 | SHA-256@src/ui/benchmark.ts:109"
             data-references="AEGIS-256 | ChaCha20 | ChaCha20-Poly1305 | GHASH | Poly1305 | SHA-3"
             data-attacks="Cache timing@src/ui/quiz.ts:64 | Nonce reuse@src/main.ts:33 | Side-channel (unspecified)@src/main.ts:63"
@@ -9917,7 +9984,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-curve448/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-curve448/" data-added="2026-04" data-updated="2026-09" data-level="school-18"
             data-implements="Ed25519@src/main.ts:846 | Ed448@src/main.ts:1021 | SHA-512@src/hashdemo.ts:34 | SHAKE@src/hashdemo.ts:52 | X25519@src/main.ts:914 | X448@src/main.ts:998"
             data-references="Diffie-Hellman | Dilithium | EC point arithmetic | ECDH | EdDSA | ML-DSA | ML-KEM | P-256 | SHA-3 | Shor's algorithm | TLS 1.3 | X3DH"
             data-attacks="Discrete log@src/main.ts:143"
@@ -10009,7 +10076,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-reject/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-reject/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="ML-DSA@src/mldsa-primitives.ts:6 | NTT@src/real-sign.ts:164 | SHA-256@src/mldsa-primitives.ts:74 | SHAKE@src/real-sign.ts:25"
             data-references="Dilithium | ECDSA | Ed25519 | Falcon | Fiat-Shamir | Kyber | LMS | ML-KEM | P-256 | SHA-3 | SLH-DSA | SPHINCS+"
             data-attacks="Side-channel (unspecified)@src/main.ts:105 | Timing side-channel@src/main.ts:105"
@@ -10101,7 +10168,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/" data-added="2026-04" data-updated="2026-10" data-level="school-18"
             data-implements="EC point arithmetic@src/ecdsa.ts:218 | ECDSA@src/attack.ts:13 | HMAC@src/rfc6979.ts:72 | P-256@src/ecdsa.ts:2 | secp256k1@src/ecdsa.ts:1 | SHA-256@src/rfc6979.ts:67"
             data-references="Ed25519 | RSA | RSA-PSS | WebAuthn"
             data-attacks="Discrete log@src/content.ts:40 | Fault injection@README.md:25 | Key recovery@README.md:5 | Lattice reduction@README.md:44 | Nonce reuse@src/attack.ts:36 | Side-channel (unspecified)@README.md:23 | Signature malleability@src/main.ts:505"
@@ -10193,7 +10260,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-schnorr-forge/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-schnorr-forge/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="Schnorr@src/ui/attackPanel.ts:2 | secp256k1@src/schnorr/field.ts:10 | SHA-256@src/schnorr/bip340.ts:46"
             data-references="EC point arithmetic | ECDSA | FROST | Schnorr identification | Shamir secret sharing"
             data-attacks="Key recovery@src/ui/attackPanel.ts:91 | Nonce reuse@src/ui/attackPanel.ts:91 | Side-channel (unspecified)@README.md:66 | Signature malleability@README.md:54"
@@ -10285,7 +10352,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-elgamal-plain/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION | HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-elgamal-plain/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="ElGamal@src/attacks.ts:1 | HMAC@src/authenticated.ts:81 | SHA-256@src/authenticated.ts:62"
             data-comment-only="Baby-step giant-step@src/attacks.ts:5"
             data-references="Baby-step giant-step | DSA | Diffie-Hellman | ECDSA | Paillier | RSA | RSA-OAEP | Shor's algorithm"
@@ -10378,7 +10445,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-timeline/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-timeline/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="AES@src/rekey.ts:197 | AES-GCM@src/rekey.ts:215 | Grover's algorithm@src/main.ts:1098 | RSA@src/rekey.ts:101 | SHA-256@src/rekey.ts:198"
             data-comment-only="Shor's algorithm@src/risk-engine.ts:106"
             data-references="Argon2 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | LMS | ML-DSA | ML-KEM | MLS | P-256 | P-384 | Pairing | SHA-384 | SLH-DSA | Shor's algorithm | TLS 1.3 | X25519 | XMSS"
@@ -10474,7 +10541,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-hawk/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-hawk/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Babai rounding@src/main.ts:958 | Falcon@src/gaussian.ts:222 | Gaussian mechanism@src/gaussian.ts:82 | ML-DSA@src/hawk.ts:968 | SHA-256@src/hawk.ts:136"
             data-references="AES | DES | Dilithium | Ed25519 | Fiat-Shamir | LMS | LWE | ML-KEM | NTRU | NTT | SHAKE | SLH-DSA | SPHINCS+ | UOV | XMSS"
             data-attacks="Chosen-plaintext attack@README.md:85 | Discrete log@src/main.ts:228 | Factoring@src/main.ts:227 | Fault injection@src/main.ts:150 | Key recovery@src/main.ts:125 | Lattice reduction@src/lip-attack.ts:406 | Side-channel (unspecified)@src/main.ts:151 | Timing side-channel@src/main.ts:188"
@@ -10566,7 +10633,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Repetition code@src/engine.ts:163"
             data-comment-only="Information-set decoding@src/engine.ts:68"
             data-references="BCH | HQC | Information-set decoding | Kyber | ML-DSA | ML-KEM | Reed-Muller | STARK"
@@ -10646,7 +10713,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-hybrid-sign/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-hybrid-sign/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="Ed25519@src/composite.ts:181 | ML-DSA@src/composite.ts:171 | SHA-512@src/primitives.ts:6"
             data-references="Diffie-Hellman | Dilithium | ECDH | ECDSA | Grover's algorithm | Kyber | LWE | ML-KEM | P-256 | Pairing | RSA | SHA-256 | Shor's algorithm | TLS 1.3 | X25519 | X3DH"
             data-attacks="Discrete log@src/breaks.ts:202 | Factoring@src/main.ts:415 | Side-channel (unspecified)@README.md:36 | Timing side-channel@README.md:36"
@@ -10738,7 +10805,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-ibe-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-ibe-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="BLS signatures@src/pairing.ts:11 | BLS12-381@src/pairing.ts:11 | Boneh-Franklin IBE@src/main.ts:583 | Hash-to-curve@src/pairing.ts:58 | Pairing@src/ibe.ts:176 | SHA-256@src/pairing.ts:79"
             data-comment-only="AES@src/ibe.ts:21"
             data-references="Diffie-Hellman | EC point arithmetic | FROST | Fujisaki-Okamoto transform | RSA | RSA-OAEP | Shamir secret sharing"
@@ -10834,7 +10901,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kyberslash/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kyberslash/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="Kyber@src/timing-model.ts:200"
             data-references="Fujisaki-Okamoto transform | HQC | ML-DSA | ML-KEM | RSA | TLS 1.3"
             data-attacks="Fault injection@src/main.ts:205 | Key recovery@src/main.ts:1551 | Padding oracle@src/main.ts:217 | Power analysis@README.md:32 | Side-channel (unspecified)@src/main.ts:172 | Timing side-channel@src/main.ts:210"
@@ -10926,7 +10993,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-lms-xmss/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-lms-xmss/" data-added="2026-04" data-updated="2026-10" data-level="school-18"
             data-implements="LMS@src/forge.ts:51 | SHA-256@src/lmots.ts:22"
             data-comment-only="Winternitz@src/forge.ts:24"
             data-references="Dilithium | Falcon | ML-DSA | Merkle tree | NTRU | SLH-DSA | SPHINCS+ | Winternitz | XMSS"
@@ -11007,7 +11074,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-ntru-classic/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-ntru-classic/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="NTRU@src/main.ts:14"
             data-references="Dilithium | Falcon | FrodoKEM | Kyber | LWE | ML-KEM | NTT | RSA | Ring-LWE"
             data-attacks="Chosen-ciphertext attack@README.md:59 | Chosen-plaintext attack@README.md:59 | Lattice reduction@src/main.ts:215"
@@ -11084,7 +11151,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oram-vault/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oram-vault/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/client/encryption.ts:27 | AES-GCM@src/client/encryption.ts:27"
             data-references="FRI | Merkle tree | OPAQUE | Oblivious transfer | Private information retrieval | Private set intersection | Shamir secret sharing"
             data-attacks="Cache timing@src/main.ts:419 | Side-channel (unspecified)@src/main.ts:419 | Timing side-channel@src/main.ts:415"
@@ -11176,7 +11243,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HOMOMORPHIC | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-paillier-gate/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HOMOMORPHIC | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-paillier-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="HMAC@src/ballots.ts:31 | Paillier@src/aggregation.ts:1 | SHA-256@src/ballots.ts:31"
             data-references="BFV | BGV | EC point arithmetic | ECDSA | ElGamal | Shamir secret sharing"
             data-attacks="Ciphertext malleability@src/main.ts:1285 | Discrete log@src/main.ts:144 | Factoring@src/factor.worker.ts:44 | Side-channel (unspecified)@README.md:36"
@@ -11267,7 +11334,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-pq-rotation/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-pq-rotation/" data-added="2026-04" data-updated="2026-08" data-level="school-18"
             data-implements="ML-DSA@src/hybrid-cert.ts:2 | P-256@src/hybrid-cert.ts:1 | SHA-256@src/hybrid-cert.ts:70"
             data-references="AES | DSA | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | ML-KEM | Pairing | RSA | TLS 1.3 | X25519"
             data-standards="NIST"
@@ -11344,7 +11411,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="HKDF@src/primitives.ts:116 | HMAC@src/primitives.ts:71 | ML-KEM@src/primitives.ts:92 | SHA-256@src/primitives.ts:66 | TLS 1.3@src/handshake.ts:27 | X25519@src/primitives.ts:77"
             data-references="AES | Diffie-Hellman | ECDH | Ed25519 | Kyber | RSA | Shor's algorithm"
             data-attacks="Discrete log@src/main.ts:416 | Side-channel (unspecified)@README.md:61"
@@ -11436,7 +11503,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-psi-gate/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-psi-gate/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="EC point arithmetic@src/group.ts:166 | Hash-to-curve@src/group.ts:142 | OPRF@src/attacks.ts:384 | Private set intersection@src/oprf-psi.ts:86 | ristretto255@src/attacks.ts:348 | SHA-256@src/oprf-psi.ts:90"
             data-references="Bloom filter | Diffie-Hellman | Double Ratchet | Ed25519 | HKDF | OPAQUE | Oblivious transfer | Paillier | Private information retrieval | SHA-512 | TFHE | X25519"
             data-attacks="Replay attack@src/attacks.ts:121 | Side-channel (unspecified)@src/main.ts:1925 | Signature malleability@src/attacks.ts:293"
@@ -11528,7 +11595,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-scloud-vault/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-scloud-vault/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="FrodoKEM@src/crypto/params.ts:198 | Keccak@src/crypto/keccak.ts:44 | LWE@src/crypto/kem.ts:422 | ML-KEM@src/crypto/params.ts:204 | SHA-3@src/crypto/keccak.ts:151 | SHAKE@src/crypto/keccak.ts:139"
             data-references="Classic McEliece | Dilithium | ECDH | Falcon | Fujisaki-Okamoto transform | Garbled circuits | HQC | Kyber | NTRU | RSA | Reed-Muller | Ring-LWE | Shor's algorithm | TLS 1.3"
             data-attacks="Chosen-ciphertext attack@src/exhibits/exhibit6.ts:73 | Chosen-plaintext attack@src/exhibits/exhibit5.ts:18 | Key recovery@src/exhibits/references.ts:26 | Lattice reduction@src/exhibits/references.ts:46 | Power analysis@src/exhibits/references.ts:26 | Side-channel (unspecified)@src/exhibits/references.ts:26"
@@ -11620,7 +11687,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="ML-DSA@src/threshold-sign.ts:114 | SHAKE@src/toy-threshold.ts:58"
             data-references="BLS signatures | Dilithium | ECDSA | Ed25519 | FROST | SHA-3 | Schnorr | Shamir secret sharing"
             data-attacks="Nonce reuse@src/toy-threshold.ts:321 | Timing side-channel@README.md:67"
@@ -11712,7 +11779,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-envelope-kms/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-envelope-kms/" data-added="2026-04" data-updated="2026-10" data-level="school-18"
             data-implements="AES@src/crypto/aead.ts:9 | AES-CTR@src/security/properties.ts:90 | AES-GCM@src/crypto/aead.ts:9 | AES-KW@src/crypto/aes-kw.ts:78 | HKDF@src/crypto/kdf.ts:1 | SHA-256@src/crypto/kdf.ts:1"
             data-references="Argon2 | FF1 | PBKDF2 | RSA | scrypt"
             data-attacks="Side-channel (unspecified)@SECURITY.md:27"
@@ -11804,7 +11871,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-bulletproofs/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-bulletproofs/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="Bulletproofs@src/app.ts:760 | EC point arithmetic@src/crypto/ristretto.ts:66 | Pedersen commitment@src/app.ts:16 | ristretto255@src/crypto/ristretto.ts:53 | Schnorr@src/app.ts:764 | SHA-512@src/crypto/ristretto.ts:55"
             data-references="BLS12-381 | Ed25519 | Fiat-Shamir | Groth16 | PLONK | STARK | Shamir secret sharing"
             data-attacks="Discrete log@README.md:5 | Replay attack@src/app.ts:133"
@@ -11896,7 +11963,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-nonce-lattice/" data-added="2026-04" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-nonce-lattice/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
             data-implements="Babai rounding@src/lattice/babai.ts:37 | ECDSA@src/analysis.ts:3 | HMAC@src/crypto/biased-nonce.ts:26 | P-256@src/analysis.ts:5 | secp256k1@src/curves/secp256k1.ts:8 | SHA-256@src/crypto/biased-nonce.ts:26"
             data-unscanned="Python:1"
             data-references="EC point arithmetic | Kyber | LWE | ML-KEM | P-384"
@@ -11989,7 +12056,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kerberos/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="PROTOCOLS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kerberos/" data-added="2026-04" data-updated="2026-10" data-level="school-18"
             data-implements="AES@src/crypto/cts.ts:21 | AES-CBC@src/crypto/simplified-profile.ts:80 | HMAC@src/crypto/etype-aes256.ts:49 | Kerberos@src/app.ts:140 | PBKDF2@src/crypto/pbkdf2-string2key.ts:10 | RSA@src/attacks/lowe-attack.ts:26 | RSA-OAEP@src/attacks/lowe-attack.ts:26 | SHA-1@src/crypto/pbkdf2-string2key.ts:10 | SHA-256@src/protocols/needham-schroeder.ts:34"
             data-references="OPAQUE | WebAuthn"
             data-attacks="Man-in-the-middle@src/app.ts:26"
@@ -12081,7 +12148,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-mls-group/" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-mls-group/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/crypto/hpke.ts:32 | AES-GCM@src/crypto/hpke.ts:32 | Diffie-Hellman@src/crypto/hpke.ts:48 | HKDF@src/crypto/hkdf.ts:11 | HPKE@src/crypto/hpke.ts:65 | MLS@src/app.ts:471 | SHA-256@src/crypto/ciphersuite.ts:36 | X25519@src/crypto/hpke.ts:1 | X3DH@src/app.ts:469"
             data-references="DHKEM | Double Ratchet | EC point arithmetic | Ed25519 | Kerberos | ML-KEM | Noise protocol"
             data-standards="IETF | NIST"
@@ -12158,7 +12225,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-zk-arena/" data-added="2026-06" data-updated="2026-10"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-zk-arena/" data-added="2026-06" data-updated="2026-10" data-level="advanced"
             data-implements="Baby-step giant-step@src/pohlig.ts:71 | Fiat-Shamir@src/schnorr.ts:113 | Schnorr@src/ui.ts:1046 | SHA-256@src/schnorr.ts:121 | STARK@src/ui.ts:302"
             data-references="Bulletproofs | FRI | Groth16 | Halo2 | Merkle tree | PLONK | Pairing | Pedersen commitment | Schnorr identification | Shamir secret sharing | Sigma protocol | secp256k1"
             data-attacks="Discrete log@src/groups.ts:130 | Factoring@src/ui.ts:758 | Side-channel (unspecified)@src/ui.ts:600"
@@ -12250,7 +12317,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-jevil/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-jevil/" data-added="2026-06" data-updated="2026-08" data-level="school-18"
             data-implements="SHAKE@src/hash.ts:34"
             data-references="Dilithium | Kyber | LMS | ML-DSA | ML-KEM | Merkle tree | Poseidon | RSA | RSA-OAEP | RSA-PSS | SHA-3 | SLH-DSA | SPHINCS+ | STARK | Shamir secret sharing | XMSS"
             data-attacks="Brute force@KNOWN-GAPS.md:18"
@@ -12342,7 +12409,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/" data-added="2026-04" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="Keccak@src/lib/mlkem/sha3.ts:69 | ML-KEM@src/lib/mlkem/fips203.ts:304 | NTT@src/lib/mlkem/fips203.ts:55 | SHA-3@src/lib/mlkem/sha3.ts:172 | SHAKE@src/lib/mlkem/sha3.ts:180"
             data-references="Fujisaki-Okamoto transform | HQC | Kyber | ML-DSA | X25519"
             data-attacks="Chosen-ciphertext attack@src/cards/card-imperfect-df-oracle/view.ts:163 | Chosen-plaintext attack@src/cards/card-masked-comparison/view.ts:287 | Ciphertext malleability@src/components/DecapPrimer.ts:30 | Fault injection@src/cards/card-rnr-blinding/reality.ts:7 | Key recovery@src/cards/card-imperfect-df-oracle/reality.ts:7 | Power analysis@src/components/ConceptPrimer.ts:25 | Side-channel (unspecified)@src/cards/card-imperfect-df-oracle/reality.ts:15 | Timing side-channel@README.md:73"
@@ -12434,7 +12501,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
             data-implements="N/A"
             data-references="BCH | BIKE | Classic McEliece | Fujisaki-Okamoto transform | HMAC | HQC | Information-set decoding | ML-KEM | RSA | Reed-Muller | Reed-Solomon | STARK"
             data-attacks="Cache timing@src/data.ts:47 | Chosen-ciphertext attack@src/data.ts:17 | Key recovery@src/data.ts:27 | Side-channel (unspecified)@src/main.ts:6 | Timing side-channel@src/data.ts:17"
@@ -12513,7 +12580,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/" data-added="2026-06" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/" data-added="2026-06" data-updated="2026-10" data-level="advanced"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:55 | SHA-256@src/crypto.ts:35"
             data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | UOV | Winternitz | X25519 | XMSS"
             data-attacks="Birthday bound@src/data.ts:423 | Chosen-ciphertext attack@src/data.ts:192 | Chosen-plaintext attack@src/data.ts:868 | Differential cryptanalysis@src/data.ts:538 | Discrete log@src/data.ts:724 | Factoring@src/data.ts:724 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:155 | Side-channel (unspecified)@src/data.ts:229 | Timing side-channel@src/data.ts:297"
@@ -12606,7 +12673,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-key-exchange/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-key-exchange/" data-added="2026-06" data-updated="2026-09" data-level="advanced"
             data-implements="AES@src/engine.ts:181 | AES-GCM@src/engine.ts:181 | Diffie-Hellman@src/engine.ts:55 | EC point arithmetic@src/engine.ts:404 | ECDH@src/engine.ts:422 | Ed25519@src/engine.ts:24 | HKDF@src/engine.ts:164 | LWE@src/ui.ts:1859 | ML-KEM@src/engine.ts:476 | SHA-256@src/engine.ts:26 | Shor's algorithm@src/ui.ts:1490 | X25519@src/engine.ts:24"
             data-references="Double Ratchet | Grover's algorithm | Isogeny walk | Kyber | NTT | Noise protocol | P-256 | PQXDH | RSA | SIKE | TLS 1.3 | X3DH"
             data-attacks="Brute force@src/ui.ts:280 | Chosen-ciphertext attack@src/data.ts:324 | Discrete log@src/data.ts:29 | Factoring@src/data.ts:145 | Invalid curve attack@README.md:26 | Key recovery@src/data.ts:286 | Man-in-the-middle@src/engine.ts:99 | Side-channel (unspecified)@src/data.ts:63"
@@ -12698,7 +12765,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-web-of-trust/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-web-of-trust/" data-added="2026-06" data-updated="2026-08" data-level="school-18"
             data-implements="ECDSA@src/engine.ts:33 | Ed25519@src/engine.ts:24 | P-256@src/engine.ts:33 | SHA-256@src/engine.ts:34"
             data-references="Merkle tree | SHA-1"
             data-standards="IETF | NIST"
@@ -12776,7 +12843,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-webauthn/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-webauthn/" data-added="2026-06" data-updated="2026-08" data-level="school-18"
             data-implements="ECDSA@src/engine.ts:17 | P-256@src/engine.ts:17 | SHA-256@src/engine.ts:46 | WebAuthn@src/live.ts:300"
             data-references="Ed25519 | Kerberos | OPAQUE"
             data-standards="NIST | W3C"
@@ -12853,7 +12920,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ssh-handshake/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ssh-handshake/" data-added="2026-06" data-updated="2026-08" data-level="school-18"
             data-implements="ECDH@src/engine.ts:45 | ECDSA@src/ca.ts:25 | Ed25519@src/ca.ts:20 | P-256@src/ca.ts:25 | SHA-256@src/engine.ts:83 | X25519@src/engine.ts:37"
             data-protocol-partial="TLS 1.3@src/engine.ts:160"
             data-references="Ed448 | EdDSA | Kerberos | MD5 | RSA | SHA-512 | TLS 1.3 | X3DH"
@@ -12948,7 +13015,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/" data-added="2026-06" data-updated="2026-08" data-level="school-18"
             data-implements="HMAC@src/engine.ts:250 | PBKDF2@src/engine.ts:186 | secp256k1@src/engine.ts:9 | SHA-256@src/engine.ts:40 | SHA-512@src/engine.ts:191"
             data-references="BIKE | BLAKE3 | ECDH | ECDSA | FROST | Merkle tree | OPAQUE | P-256 | SHA-3 | X25519"
             data-attacks="Nonce reuse@src/ui.ts:1278"
@@ -13040,7 +13107,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HISTORICAL | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-enigma-forge/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="HISTORICAL | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-enigma-forge/" data-added="2026-06" data-updated="2026-09" data-level="school-14"
             data-implements="Enigma@src/break/bombe.ts:19"
             data-references="Vigenere cipher"
             data-attacks="Brute force@src/ui/controls.ts:216 | Differential cryptanalysis@README.md:77 | Frequency analysis@README.md:74 | Known-plaintext attack@src/ui/break-panel.ts:447"
@@ -13116,7 +13183,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HISTORICAL | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-vigenere-break/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="HISTORICAL | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-vigenere-break/" data-added="2026-06" data-updated="2026-08" data-level="school-14"
             data-implements="Vigenere cipher@src/samples/index.ts:6"
             data-references="AES | AES-GCM | Caesar cipher | ChaCha20 | ChaCha20-Poly1305 | Enigma | One-time pad | Poly1305 | Substitution cipher"
             data-attacks="Factoring@src/ui/transcript.ts:22 | Frequency analysis@src/main.ts:22 | Known-plaintext attack@README.md:24"
@@ -13193,7 +13260,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-otp-vault/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-otp-vault/" data-added="2026-06" data-updated="2026-09" data-level="school-18"
             data-implements="One-time pad@src/otp/challenges.ts:22"
             data-references="AES | AES-CTR | AES-GCM | AES-SIV | BB84 | ChaCha20 | Poly1305 | SNOW 2.0 | Vigenere cipher"
             data-attacks="Chosen-plaintext attack@src/ui/perfectSecrecyPanel.ts:63 | Frequency analysis@README.md:73 | Key recovery@src/ui/importPanel.ts:102 | Nonce reuse@src/ui/keystreamReusePanel.ts:113"
@@ -13270,7 +13337,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-collision-vault/" data-added="2026-06" data-updated="2026-10"
+          <a class="project-card" data-category="HASHING & KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-collision-vault/" data-added="2026-06" data-updated="2026-10" data-level="school-18"
             data-implements="MD5@demos/collision-vault/src/hashing/md5.ts:10 | SHA-1@demos/collision-vault/src/hashing/trace.ts:111 | SHA-256@demos/collision-vault/src/hashing/index.ts:79 | SHA-3@demos/collision-vault/src/hashing/sha3.ts:9 | SHA-512@demos/collision-vault/src/hashing/index.ts:81"
             data-references="BLAKE3 | CMAC | GHASH | HMAC | Keccak | Kupyna | Merkle tree | Poly1305 | Streebog"
             data-attacks="Birthday bound@README.md:62 | Brute force@demos/collision-vault/src/pairs/manifest.ts:64 | Collision attack@demos/collision-vault/src/hashing/index.ts:44 | Length extension@demos/collision-vault/src/main.ts:214"
@@ -13364,7 +13431,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-jwt-forge/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-jwt-forge/" data-added="2026-06" data-updated="2026-09" data-level="school-18"
             data-implements="ECDSA@src/jwt/keys.ts:58 | HMAC@src/jwt/sign.ts:66 | P-256@src/jwt/keys.ts:58 | RSA@src/jwt/keys.ts:46 | SHA-256@src/jwt/keys.ts:41"
             data-references="Ed25519 | RSA-OAEP | RSA-PSS"
             data-attacks="Brute force@README.md:50 | Nonce reuse@README.md:70 | Padding oracle@README.md:74 | Timing side-channel@README.md:73"
@@ -13455,7 +13522,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-e91/" data-added="2026-06" data-updated="2026-10"
+          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-e91/" data-added="2026-06" data-updated="2026-10" data-level="advanced"
             data-implements="BB84@src/data.ts:60"
             data-comment-only="E91@src/data.ts:48"
             data-references="E91 | Grover's algorithm | Shor's algorithm"
@@ -13536,7 +13603,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-guide/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-guide/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/engine.ts:99 | AES-GCM@src/engine.ts:115 | SHA-256@src/engine.ts:50"
             data-comment-only="ML-KEM@src/engine.ts:19 | X25519@src/engine.ts:18"
             data-references="Diffie-Hellman | Kyber | ML-KEM | PQXDH | SHA-3 | TLS 1.3 | X25519"
@@ -13632,7 +13699,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-multivariate/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-multivariate/" data-added="2026-06" data-updated="2026-09" data-level="advanced"
             data-implements="UOV@src/attack.ts:46"
             data-references="AES | ARIA | Dilithium | Falcon | ML-DSA | ML-KEM | NTRU | SHA-256 | SLH-DSA | SPHINCS+ | Shamir secret sharing"
             data-attacks="Key recovery@src/data.ts:19"
@@ -13709,7 +13776,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-mayo-seal/" data-added="2026-07" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-mayo-seal/" data-added="2026-07" data-updated="2026-10" data-level="advanced"
             data-implements="AES@src/mayo/prf.ts:23 | CTR-DRBG@src/mayo/nist-drbg.ts:11 | SHAKE@src/mayo/prf.ts:14 | UOV@src/mayo/uov.ts:169"
             data-references="Dilithium | Falcon | ML-DSA | SHA-3 | SLH-DSA | SPHINCS+"
             data-attacks="Fault injection@README.md:127 | Key recovery@README.md:50 | Side-channel (unspecified)@README.md:23"
@@ -13800,7 +13867,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lwe-hints/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lwe-hints/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
             data-implements="LWE@src/attack.ts:103"
             data-references="BFV | BGV | CKKS | Dilithium | FrodoKEM | Kyber | ML-DSA | ML-KEM | NTT"
             data-attacks="Chosen-plaintext attack@index.html:594 | Lattice reduction@README.md:26 | Power analysis@src/main.ts:571 | Side-channel (unspecified)@src/main.ts:539"
@@ -13876,7 +13943,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-syndrome-drain/" data-added="2026-06" data-updated="2026-10"
+          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-syndrome-drain/" data-added="2026-06" data-updated="2026-10" data-level="advanced"
             data-implements="N/A"
             data-comment-only="BIKE@src/model.ts:110 | Classic McEliece@src/model.ts:123 | HQC@src/model.ts:97"
             data-references="BCH | BIKE | Classic McEliece | HPKE | HQC | Hamming code | Information-set decoding | Kyber | ML-KEM | Pairing | Reed-Muller | Reed-Solomon"
@@ -13959,7 +14026,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-broken-trust/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-broken-trust/" data-added="2026-06" data-updated="2026-09" data-level="advanced"
             data-implements="ML-DSA@src/paperData.ts:98"
             data-references="Dilithium | Ed25519 | Fiat-Shamir | LWE | ML-KEM | RSA"
             data-attacks="Brute force@src/main.ts:1462 | Fault injection@src/main.ts:1471 | Key recovery@src/paperData.ts:195 | Lattice reduction@README.md:23 | Side-channel (unspecified)@src/main.ts:1469"
@@ -14047,7 +14114,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-script/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-script/" data-added="2026-06" data-updated="2026-08" data-level="school-18"
             data-implements="HMAC@src/engine.ts:21 | secp256k1@src/engine.ts:13 | SHA-256@src/engine.ts:57"
             data-references="EC point arithmetic | ECDSA | Ed25519 | Merkle tree | Schnorr"
             data-attacks="Key recovery@README.md:50 | Nonce reuse@README.md:50 | Signature malleability@src/scenario.ts:239"
@@ -14139,7 +14206,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/" data-added="2026-06" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/engine.ts:396 | AES-GCM@src/engine.ts:396 | Baby-step giant-step@src/engine.ts:135 | Diffie-Hellman@src/engine.ts:99 | ECDSA@src/engine.ts:291 | P-256@src/engine.ts:291 | SHA-256@src/engine.ts:329"
             data-references="ECDH | OPAQUE | TLS 1.3 | X25519 | X3DH"
             data-attacks="Brute force@src/engine.ts:520 | Discrete log@src/engine.ts:135 | Man-in-the-middle@src/engine.ts:235"
@@ -14231,7 +14298,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/" data-added="2026-06" data-updated="2026-09" data-level="advanced"
             data-implements="Diffie-Hellman@src/crypto/kem.ts:76 | Ed25519@src/crypto/sign.ts:13 | HKDF@src/crypto/kem.ts:79 | ML-DSA@src/crypto/attack.ts:118 | ML-KEM@src/crypto/attack.ts:64 | SHA-256@src/crypto/kem.ts:19 | X25519@src/crypto/kem.ts:57"
             data-references="DHKEM | Dilithium | ECDH | Kyber | LWE | PQXDH | Pairing | SHA-512 | SLH-DSA | SPHINCS+ | Shor's algorithm | TLS 1.3 | X3DH"
             data-attacks="Discrete log@src/ui/securityModel.ts:76 | Key recovery@src/crypto/attack.ts:31 | Side-channel (unspecified)@src/data.ts:181 | Timing side-channel@src/data.ts:181"
@@ -14323,7 +14390,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-merkle-proofs/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-merkle-proofs/" data-added="2026-06" data-updated="2026-08" data-level="school-18"
             data-implements="Merkle tree@src/main.ts:10 | SHA-256@src/merkle/hash.ts:65"
             data-references="Argon2 | ECDSA | SHA-512"
             data-standards="NIST"
@@ -14400,7 +14467,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-pake-gate/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-pake-gate/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="CPace@src/pake/factories.ts:156 | Dragonfly@src/pake/dragonfly.ts:276 | HKDF@src/pake/hashes.ts:22 | HMAC@src/pake/hashes.ts:17 | J-PAKE@src/pake/factories.ts:100 | P-256@src/pake/groups.ts:139 | ristretto255@src/pake/factories.ts:131 | Schnorr@src/pake/schnorr-nizk.ts:27 | SHA-1@src/pake/hashes.ts:12 | SHA-256@src/pake/hashes.ts:22 | SHA-512@src/pake/hashes.ts:14 | SRP@src/pake/factories.ts:75"
             data-protocol-partial="TLS 1.3@src/pake/srp6a.ts:149"
             data-references="Diffie-Hellman | EC point arithmetic | Ed25519 | ML-KEM | OPAQUE | OPRF | Schnorr identification"
@@ -14495,7 +14562,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
             data-implements="Ed25519@src/frost/keygen.ts:4 | FROST@src/ui/risk-scenarios.ts:166 | HMAC@src/ui/shamir-panel.ts:539 | SHA-256@src/ui/shamir-panel.ts:539 | SHA-512@src/frost/keygen.ts:14 | Shamir secret sharing@src/frost/field.ts:80"
             data-references="Schnorr"
             data-attacks="Key recovery@src/ui/decision-guide.ts:22 | Nonce reuse@src/ui/decision-guide.ts:48 | Side-channel (unspecified)@src/ui/decision-guide.ts:39"
@@ -14586,7 +14653,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/crypto/aes.ts:48 | AES-GCM@src/crypto/aes.ts:48"
             data-references="RSA | SHA-256 | Shamir secret sharing"
             data-attacks="Factoring@src/ui/solve.ts:123"
@@ -14678,7 +14745,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
             data-implements="N/A"
             data-references="AES | Diffie-Hellman | HMAC | HQC | RSA"
             data-attacks="Brute force@src/ui.ts:216 | Cache timing@src/ui.ts:140 | Fault injection@src/timing/attack.ts:39 | Key recovery@src/ui.ts:140 | Padding oracle@src/ui.ts:303 | Side-channel (unspecified)@src/ui.ts:119 | Timing side-channel@src/ui.ts:119"
@@ -14757,7 +14824,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/" data-added="2026-06" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/primitives.ts:220 | AES-GCM@src/primitives.ts:220 | Ed25519@src/primitives.ts:124 | HKDF@src/primitives.ts:152 | HMAC@src/primitives.ts:88 | SHA-256@src/primitives.ts:83 | TLS 1.3@src/certs.ts:147 | X25519@src/primitives.ts:105"
             data-references="ECDH | ML-KEM | RC4 | RSA"
             data-attacks="Man-in-the-middle@src/handshake.ts:595 | Side-channel (unspecified)@src/main.ts:523"
@@ -14849,7 +14916,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-vdf/" data-added="2026-06" data-updated="2026-08"
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-vdf/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
             data-implements="SHA-256@src/vdf/wesolowski.ts:53"
             data-references="RSA | Shamir secret sharing"
             data-attacks="Factoring@src/ui/app.ts:152"
@@ -14941,7 +15008,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-chain-of-trust/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-chain-of-trust/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="ECDSA@src/pki/certgen.ts:11 | P-256@src/pki/certgen.ts:11 | SHA-256@src/pki/certgen.ts:12"
             data-standards="NIST"
             data-implementation="hand-rolled"
@@ -15004,7 +15071,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kem-trap/" data-added="2026-07" data-updated="2026-10"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kem-trap/" data-added="2026-07" data-updated="2026-10" data-level="advanced"
             data-implements="Fujisaki-Okamoto transform@src/ui/lab.ts:16 | HKDF@src/kem/callers.ts:33 | HMAC@src/kem/callers.ts:38 | ML-KEM@src/kem/callers.ts:24 | NTT@src/kem/fo-transform.ts:76 | SHA-256@src/kem/callers.ts:22 | SHAKE@src/kem/fo-transform.ts:93"
             data-references="Kyber | LWE | SHA-3 | TLS 1.3"
             data-attacks="Chosen-ciphertext attack@src/ui/lab.ts:400 | Key recovery@src/ui/lab.ts:400 | Side-channel (unspecified)@README.md:73 | Timing side-channel@src/ui/lab.ts:602"
@@ -15096,7 +15163,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-time-trust/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-time-trust/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="Ed25519@src/crypto/ed25519.ts:7 | HMAC@src/crypto/hmac.ts:10 | HOTP@src/otp/hotp.ts:28 | TOTP@src/otp/totp.ts:14"
             data-references="Kerberos | SHA-1 | SHA-256 | SHA-512"
             data-standards="IETF"
@@ -15173,7 +15240,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/" data-added="2026-07" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/" data-added="2026-07" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/crypto/aes.ts:78 | AES-CBC@src/crypto/aes.ts:94 | AES-CTR@src/crypto/aes.ts:78 | AES-GCM@src/crypto/aes.ts:136 | ChaCha20@src/crypto/chacha20.ts:44 | GHASH@src/crypto/aes.ts:183 | Poly1305@src/crypto/aead.ts:48"
             data-references="AES-SIV | ChaCha20-Poly1305"
             data-attacks="Birthday bound@README.md:28 | IV reuse@README.md:50 | Key recovery@src/crypto/aead.ts:96 | Nonce reuse@src/crypto/aes.ts:242 | Padding oracle@README.md:69"
@@ -15264,7 +15331,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-signed-bytes/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-signed-bytes/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="Ed25519@src/crypto/ed25519.ts:16 | SHA-256@src/core/hash.ts:6 | SHA-512@src/crypto/ed25519.ts:20"
             data-references="WebAuthn"
             data-attacks="Side-channel (unspecified)@README.md:30 | Signature malleability@README.md:67"
@@ -15355,7 +15422,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hpke-envelope/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hpke-envelope/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="AES@src/hpke/aead.ts:35 | AES-GCM@src/hpke/aead.ts:54 | ChaCha20@src/hpke/aead.ts:51 | ChaCha20-Poly1305@src/hpke/aead.ts:51 | DHKEM@src/hpke/hpke.ts:14 | Diffie-Hellman@src/hpke/dhkem.ts:22 | HKDF@src/hpke/kdf.ts:7 | HPKE@src/hpke/consts.ts:62 | Poly1305@src/hpke/aead.ts:51 | SHA-256@src/hpke/kdf.ts:8 | X25519@src/hpke/dhkem.ts:10"
             data-comment-only="Encrypted Client Hello@src/ui/links.ts:15"
             data-references="AEGIS-256 | Ascon | Ed25519 | Encrypted Client Hello | Kyber | ML-KEM | MLS"
@@ -15451,7 +15518,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-blind-hello/" data-added="2026-07" data-updated="2026-09"
+          <a class="project-card" data-category="PROTOCOLS | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-blind-hello/" data-added="2026-07" data-updated="2026-09" data-level="school-18"
             data-implements="DHKEM@src/ech/hub.ts:22 | Encrypted Client Hello@src/ech/ech.ts:44 | HPKE@src/ech/ech.ts:196"
             data-protocol-partial="TLS 1.3@src/ech/clienthello.ts:32"
             data-references="AES | ChaCha20 | ChaCha20-Poly1305 | HKDF | OPAQUE | Poly1305 | SHA-256 | TLS 1.3 | X25519"
@@ -15531,7 +15598,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-blind-relay/" data-added="2026-07" data-updated="2026-09"
+          <a class="project-card" data-category="PRIVACY | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-blind-relay/" data-added="2026-07" data-updated="2026-09" data-level="advanced"
             data-implements="ChaCha20@src/main.ts:3 | ChaCha20-Poly1305@src/main.ts:3 | DHKEM@src/main.ts:2 | HKDF@src/ohttp/response.ts:22 | HPKE@vite.config.ts:15 | Poly1305@src/main.ts:3 | SHA-256@src/ohttp/response.ts:23"
             data-comment-only="AES@src/relay/exchange.ts:103"
             data-references="AES | Diffie-Hellman | Encrypted Client Hello | Privacy Pass | Private information retrieval | X25519"
@@ -15627,7 +15694,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-key-mirror/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-key-mirror/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="AES@src/e2ee/box.ts:35 | AES-GCM@src/e2ee/box.ts:63 | Diffie-Hellman@src/e2ee/box.ts:30 | Ed25519@src/directory/client.ts:11 | HKDF@src/e2ee/box.ts:40 | Merkle tree@src/merkle/tree.ts:38 | SHA-256@src/core/sha256.ts:3 | SHA-512@src/vrf/ecvrf.ts:27 | X25519@src/e2ee/box.ts:10"
             data-references="ECDH | Hash-to-curve | MLS | OPAQUE | X3DH"
             data-standards="IETF | NIST"
@@ -15704,7 +15771,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-spake-gate/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-spake-gate/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="HKDF@src/spake/transcript.ts:52 | HMAC@src/spake/transcript.ts:41 | P-256@src/spake/group.ts:10 | PBKDF2@src/spake/password.ts:49 | SHA-256@src/spake/transcript.ts:37 | SPAKE2@src/attack/offline.ts:45"
             data-references="CPace | Diffie-Hellman | Dragonfly | EC point arithmetic | Hash-to-curve | J-PAKE | Kerberos | OPAQUE | OPRF | Pairing | SRP"
             data-attacks="Discrete log@src/main.ts:97 | Man-in-the-middle@src/ui/constants.ts:60 | Side-channel (unspecified)@README.md:72"
@@ -15796,7 +15863,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-reshare-circle/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-reshare-circle/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="Feldman VSS@src/reuse/vss.ts:228 | Pedersen commitment@src/reuse/vss.ts:261 | Shamir secret sharing@src/reuse/vss.ts:370"
             data-references="ECDSA | EdDSA | FROST | ML-DSA | RSA"
             data-attacks="Discrete log@src/ui/intro.ts:24 | Side-channel (unspecified)@README.md:38"
@@ -15873,7 +15940,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-entropy-collapse/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-entropy-collapse/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="HMAC@src/crypto/hmac.ts:6 | HMAC-DRBG@src/crypto/hmac_drbg.ts:27 | SHA-256@src/crypto/hmac.ts:6"
             data-references="DSA | ECDSA | RSA"
             data-attacks="Brute force@src/ui/entropyPanel.ts:108 | Nonce reuse@src/ui/clonePanel.ts:302"
@@ -15965,7 +16032,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-salamander/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-salamander/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/crypto/aes.ts:25 | AES-CTR@src/crypto/aes.ts:28 | AES-GCM@src/crypto/aes.ts:83 | GHASH@src/crypto/ghash.ts:35 | HMAC@src/crypto/aes.ts:104 | SHA-256@src/crypto/aes.ts:104"
             data-references="AES-SIV | Ascon | ChaCha20 | ChaCha20-Poly1305 | OPAQUE | Pedersen commitment | Poly1305"
             data-attacks="Brute force@src/ui/mathstep.ts:132 | Nonce reuse@src/ui/affected.ts:40"
@@ -16057,7 +16124,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-frozen-heart/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-frozen-heart/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="Ed25519@src/schnorr/group.ts:17 | Fiat-Shamir@src/main.ts:14 | ristretto255@src/schnorr/group.ts:17 | Schnorr@src/main.ts:11 | SHA-512@src/schnorr/group.ts:113"
             data-references="Bulletproofs | EC point arithmetic | EdDSA | FROST | Groth16 | PLONK | STARK | Schnorr identification | Shamir secret sharing | Sigma protocol"
             data-attacks="Discrete log@src/main.ts:258 | Key recovery@src/main.ts:759 | Side-channel (unspecified)@README.md:72"
@@ -16149,7 +16216,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="BLS signatures@src/bbs/bbs.ts:6 | BLS12-381@src/bbs/bbs.ts:6 | Ed25519@src/baseline/ed25519.ts:24 | Hash-to-curve@src/bbs/generators.ts:18 | Pairing@src/bbs/ciphersuite.ts:145 | Pedersen commitment@src/predicate/ageProof.ts:63 | SHA-256@src/bbs/ciphersuite.ts:15"
             data-references="Bulletproofs | EC point arithmetic | Private information retrieval | RSA | Schnorr | Schnorr identification | Shamir secret sharing | Sigma protocol"
             data-attacks="Discrete log@docs/design-note.md:69 | Side-channel (unspecified)@README.md:15"
@@ -16240,7 +16307,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-power-trace/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-power-trace/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/attack/cpa.ts:15"
             data-comment-only="Gaussian mechanism@src/leakage/traces.ts:25"
             data-references="NTT | RSA"
@@ -16333,7 +16400,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/" data-added="2026-07" data-updated="2026-10"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/" data-added="2026-07" data-updated="2026-10" data-level="advanced"
             data-implements="Diffie-Hellman@src/symbolic/protocol.ts:141"
             data-comment-only="Kerberos@src/ui.ts:261"
             data-references="Kerberos | OPAQUE | TLS 1.3"
@@ -16429,7 +16496,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-quantum-entropy/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-quantum-entropy/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="Toeplitz extractor@src/entropy/toeplitz.ts:21 | von Neumann extractor@src/entropy/vonneumann.ts:15"
             data-references="BB84 | E91 | Pairing"
             data-implementation="hand-rolled"
@@ -16493,7 +16560,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="SHA-256@src/spdz/transcript.ts:67"
             data-references="Garbled circuits | Oblivious transfer | One-time pad | Shamir secret sharing"
             data-standards="NIST"
@@ -16570,7 +16637,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-traitor-trace/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-traitor-trace/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/core/primitives.ts:17 | AES-GCM@src/core/primitives.ts:64 | HKDF@src/core/primitives.ts:27 | HMAC@src/core/primitives.ts:43 | SHA-256@src/core/primitives.ts:27"
             data-references="MLS | OPAQUE | Shamir secret sharing"
             data-attacks="Side-channel (unspecified)@SECURITY.md:18"
@@ -16661,7 +16728,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="CGL hash@src/math/walk.ts:203"
             data-references="CSIDH | Isogeny walk | SIKE"
             data-attacks="Brute force@src/main.ts:604 | Factoring@README.md:28"
@@ -16738,7 +16805,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-syndrome-hints/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-syndrome-hints/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="Information-set decoding@src/sdp/isd.ts:4 | Stern decoding@src/sdp/stern.ts:2"
             data-references="Classic McEliece | HQC | Hamming code | LWE"
             data-attacks="Fault injection@src/main.ts:605 | Key recovery@src/main.ts:1078 | Power analysis@src/main.ts:603 | Side-channel (unspecified)@src/main.ts:830"
@@ -16817,7 +16884,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/" data-added="2026-07" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/" data-added="2026-07" data-updated="2026-09" data-level="advanced"
             data-implements="Babai rounding@src/lattice/vec2.ts:81 | Dilithium@src/ui/exhibitSchemes.ts:437 | Kyber@src/ui/exhibitSchemes.ts:118 | LWE@src/fq/lwe.ts:51 | SHA-256@src/dilithium/toyDilithium.ts:81"
             data-references="ECDSA | Fujisaki-Okamoto transform | ML-DSA | ML-KEM | PQXDH | RSA | SHA-3 | SHAKE | Shamir secret sharing | X25519"
             data-attacks="Brute force@src/ui/exhibitSchemes.ts:426 | Lattice reduction@src/lattice/lll.ts:115 | Side-channel (unspecified)@README.md:32"
@@ -16909,7 +16976,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-encrochat/" data-added="2026-07" data-updated="2026-10"
+          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-encrochat/" data-added="2026-07" data-updated="2026-10" data-level="advanced"
             data-implements="AES@src/crypto/primitives.ts:107 | AES-GCM@src/crypto/primitives.ts:107 | Diffie-Hellman@src/crypto/double-ratchet.ts:160 | Double Ratchet@src/session.ts:22 | ECDSA@src/endpoint/architecture.ts:6 | HKDF@src/crypto/primitives.ts:85 | HMAC@src/crypto/primitives.ts:66 | P-256@src/endpoint/architecture.ts:7 | SHA-256@src/crypto/primitives.ts:66 | X25519@src/crypto/types.ts:2"
             data-references="Ed25519 | OPAQUE | X3DH"
             data-standards="IETF | NIST"
@@ -16986,7 +17053,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="MPC & THRESHOLD | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-icy-dvrf/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="MPC & THRESHOLD | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-icy-dvrf/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
             data-implements="Hash-to-curve@src/dvrf/group.ts:60 | ristretto255@src/dvrf/group.ts:13 | SHA-512@src/dvrf/group.ts:77 | Shamir secret sharing@src/dvrf/protocol.ts:50"
             data-references="BLS12-381 | Ed25519 | FROST | Pairing | Pedersen commitment"
             data-attacks="Nonce reuse@README.md:80 | Side-channel (unspecified)@README.md:68"
@@ -17077,7 +17144,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-musig-gate/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-musig-gate/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="EC point arithmetic@src/musig/toycurve.ts:53 | Schnorr@src/musig/bip340.ts:14 | secp256k1@src/musig/field.ts:16 | SHA-256@src/musig/field.ts:176"
             data-references="BLS signatures | FROST | Pairing"
             data-attacks="Discrete log@src/ui/roguePanel.ts:65 | Key recovery@README.md:104 | Nonce reuse@src/ui/noncePanel.ts:628 | Side-channel (unspecified)@src/ui/sessionPanel.ts:963 | Timing side-channel@src/ui/vectorsPanel.ts:131"
@@ -17169,7 +17236,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-ablation-wire/" data-added="2026-07" data-updated="2026-09"
+          <a class="project-card" data-category="PROTOCOLS | ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-ablation-wire/" data-added="2026-07" data-updated="2026-09" data-level="school-18"
             data-implements="AES-GCM@codetalker-core/src/aead.rs:5 | ChaCha20-Poly1305@codetalker-core/src/aead.rs:6 | Ed25519@codetalker-core/src/identity.rs:172 | HKDF@codetalker-core/src/kdf.rs:4 | ML-DSA@codetalker-core/src/identity.rs:221 | ML-KEM@codetalker-core/src/kem.rs:253 | SHA-256@codetalker-core/src/kdf.rs:5 | X25519@codetalker-core/src/kem.rs:97"
             data-references="AES | ChaCha20 | DHKEM | Diffie-Hellman | Double Ratchet | EC point arithmetic | Pairing | Poly1305"
             data-attacks="Discrete log@TEACHING.md:243 | Known-plaintext attack@README.md:298 | Man-in-the-middle@web/index.html:2493 | Nonce reuse@web/index.html:1344 | Side-channel (unspecified)@README.md:278"
@@ -17260,7 +17327,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-accumulator/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-accumulator/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="Merkle tree@src/merkle/merkle.ts:53 | SHA-256@src/core/hashToPrime.ts:58"
             data-references="Pairing | RSA | Shor's algorithm"
             data-attacks="Factoring@src/accumulator/accumulator.ts:109 | Side-channel (unspecified)@src/ui/scope.ts:33"
@@ -17352,7 +17419,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-beacon-lock/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-beacon-lock/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/core/envelope.ts:46 | AES-GCM@src/core/envelope.ts:46 | BLS signatures@src/core/beacon.ts:37 | BLS12-381@src/core/bls.ts:24 | Hash-to-curve@src/core/bls.ts:63 | Kyber@src/core/bls.ts:90 | Pairing@src/core/bls.ts:66 | RSA@src/ui/compare.ts:145 | SHA-256@src/core/beacon.ts:92"
             data-references="Boneh-Franklin IBE | ChaCha20 | ChaCha20-Poly1305 | EC point arithmetic | Fujisaki-Okamoto transform | HKDF | One-time pad | Poly1305 | Shamir secret sharing | Shor's algorithm"
             data-attacks="Brute force@src/ui/outage.ts:108 | Chosen-ciphertext attack@src/ui/mechanism.ts:441 | Ciphertext malleability@src/ui/attack.ts:138 | Discrete log@src/ui/mechanism.ts:447 | Side-channel (unspecified)@src/ui/scope.ts:72"
@@ -17444,7 +17511,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC &amp; THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-card-trick/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC &amp; THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-card-trick/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="Five-card trick@src/cards/protocol.ts:2"
             data-comment-only="Five-card trick@src/cards/protocol.ts:88"
             data-references="Garbled circuits | Grover's algorithm | Oblivious transfer | One-time pad | Private set intersection | SHA-1 | Shamir secret sharing"
@@ -17524,7 +17591,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-dp-noise/" data-added="2026-07" data-updated="2026-09"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-dp-noise/" data-added="2026-07" data-updated="2026-09" data-level="advanced"
             data-implements="Gaussian mechanism@src/dp/discrete.ts:40 | Laplace mechanism@src/dp/laplace.ts:45"
             data-references="Bloom filter | CKKS"
             data-implementation="hand-rolled"
@@ -17588,7 +17655,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-matsui-line/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-matsui-line/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="Toy SPN@src/crypto/spn.ts:66"
             data-references="AES | ChaCha20 | DES | Enigma | Serpent | Shamir secret sharing | Vigenere cipher"
             data-attacks="Brute force@README.md:91 | Chosen-plaintext attack@index.html:520 | Differential cryptanalysis@README.md:11 | Key recovery@README.md:47 | Known-plaintext attack@src/ui/piling.ts:105 | Linear cryptanalysis@src/main.ts:264"
@@ -17667,7 +17734,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-search-vault/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-search-vault/" data-added="2026-08" data-updated="2026-08" data-level="school-18"
             data-implements="AES@src/core/aead.ts:14 | HMAC@src/core/prf.ts:25 | SHA-256@src/core/prf.ts:37"
             data-references="AES-GCM | OPAQUE | Private information retrieval | Private set intersection"
             data-attacks="Fault injection@src/sse/attack.ts:29"
@@ -17759,7 +17826,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-simon-period/" data-added="2026-08" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-simon-period/" data-added="2026-08" data-updated="2026-09" data-level="advanced"
             data-implements="SHA-256@src/crypto/prp.ts:36 | Simon@src/quantum/simon.ts:66"
             data-references="AES | Diffie-Hellman | Grover's algorithm | HMAC | RSA | Shor's algorithm | TLS 1.3"
             data-attacks="Birthday bound@src/classical/race.ts:155 | Brute force@src/crypto/targets.ts:123 | Key recovery@src/crypto/targets.ts:231"
@@ -17850,7 +17917,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-stream-ward/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-stream-ward/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="ChaCha20@src/stream/chained.ts:119 | Poly1305@src/stream/chained.ts:119 | SHA-256@src/stream/chained.ts:80 | XChaCha20-Poly1305@src/stream/chained.ts:119"
             data-references="AES | AES-CTR | AES-GCM | AES-XTS | ChaCha20-Poly1305 | HKDF | HMAC | HPKE | MLS | Merkle tree | TLS 1.3"
             data-attacks="Nonce reuse@README.md:143"
@@ -17941,7 +18008,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-kmac-gate/" data-added="2026-08" data-updated="2026-10"
+          <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-kmac-gate/" data-added="2026-08" data-updated="2026-10" data-level="advanced"
             data-implements="Keccak@src/keccak/keccak-f1600.ts:127 | KMAC@src/demo/naive-mac.ts:70 | SHA-256@src/demo/naive-mac.ts:22 | SHA-3@src/demo/trace.ts:84 | SHAKE@src/demo/trace.ts:88"
             data-references="HMAC | ML-DSA | ML-KEM | Merkle tree"
             data-attacks="Key recovery@KNOWN-GAPS.md:24 | Length extension@src/ui/panels.ts:673 | Side-channel (unspecified)@KNOWN-GAPS.md:31"
@@ -18033,7 +18100,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-token-tell/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="SIGNATURES | STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-token-tell/" data-added="2026-08" data-updated="2026-08" data-level="school-18"
             data-implements="ECDSA@src/c2pa/sign.ts:25 | P-256@src/c2pa/sign.ts:25 | SHA-256@src/c2pa/manifest.ts:97"
             data-attacks="Brute force@verification/claims.mjs:847"
             data-standards="NIST"
@@ -18122,7 +18189,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-context-ward/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-context-ward/" data-added="2026-08" data-updated="2026-08" data-level="school-18"
             data-implements="Ed25519@src/primitives.ts:43 | HKDF@src/primitives.ts:28 | HMAC@src/primitives.ts:16 | SHA-256@src/primitives.ts:12"
             data-references="AES | Pairing | TLS 1.3"
             data-attacks="Side-channel (unspecified)@docs/THREAT-MODEL.md:109"
@@ -18226,7 +18293,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="STEGANOGRAPHY | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-fte/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="STEGANOGRAPHY | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-fte/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/ff1.ts:86 | AES-CBC@src/ff1.ts:90 | AES-CTR@src/keys.ts:106 | ECDH@src/handshake.ts:75 | FF1@src/aead.ts:54 | Format-transforming encryption@src/aead.ts:45 | HKDF@src/schedule.ts:76 | HMAC@src/schedule.ts:156 | P-256@src/handshake.ts:75 | PBKDF2@src/schedule.ts:42 | SHA-256@src/handshake.ts:143 | X25519@src/handshake.ts:75"
             data-references="EC point arithmetic | MD5 | SHA-384"
             data-attacks="Brute force@README.md:402 | Known-plaintext attack@README.md:532 | Side-channel (unspecified)@README.md:235"
@@ -18319,7 +18386,7 @@
           </a>
 
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-shelf-oracle/" data-added="2026-08" data-updated="2026-09"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-shelf-oracle/" data-added="2026-08" data-updated="2026-09" data-level="advanced"
             data-implements="BFV@src/pir/pir.ts:8 | ChaCha20@src/pir/chacha20.ts:123 | Private information retrieval@src/pir/errors.ts:57 | SHA-256@src/pir/records.ts:80"
             data-references="BGV | DES | NTT | OPAQUE | Poly1305 | Private set intersection | Ring-LWE"
             data-attacks="Side-channel (unspecified)@README.md:88"
@@ -18411,7 +18478,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-feistel-forge/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-feistel-forge/" data-added="2026-08" data-updated="2026-08" data-level="school-18"
             data-implements="DES@src/attacks/mitm.ts:80"
             data-references="3DES | AES | AES-GCM | Blowfish | Camellia | FF1 | KASUMI | MISTY1 | SHA-256 | Serpent | Simon | Speck | Toy SPN | Twofish"
             data-attacks="Birthday bound@src/ui/mitmPanel.ts:296 | Brute force@src/attacks/complement.ts:138 | Chosen-plaintext attack@src/ui/complementPanel.ts:71 | Differential cryptanalysis@README.md:276 | Key recovery@README.md:303 | Known-plaintext attack@src/attacks/sweet32.ts:351 | Linear cryptanalysis@README.md:200 | Man-in-the-middle@src/main.ts:28 | Nonce reuse@src/ui/sweet32Panel.ts:590 | Padding oracle@README.md:203 | Side-channel (unspecified)@README.md:204"
@@ -18503,7 +18570,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-rekey-relay/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-rekey-relay/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/crypto/kem.ts:76 | AES-GCM@src/crypto/kem.ts:76 | BLS signatures@src/crypto/group.ts:1 | BLS12-381@src/crypto/group.ts:1 | HKDF@src/ui/vectors.ts:185 | Pairing@src/crypto/group.ts:41 | SHA-256@src/crypto/kem.ts:46"
             data-references="Boneh-Franklin IBE | Diffie-Hellman | EC point arithmetic | ElGamal | Schnorr"
             data-attacks="Chosen-ciphertext attack@src/main.ts:192 | Discrete log@src/main.ts:189"
@@ -18595,7 +18662,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-polynomial-forge/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-polynomial-forge/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="BLS signatures@src/crypto/bls.ts:15 | BLS12-381@src/crypto/bls.ts:15 | FRI@src/crypto/fri.ts:83 | Groth16@src/ui/act-compare.ts:170 | Hash-to-curve@src/crypto/bls.ts:171 | KZG commitment@src/crypto/compare.ts:108 | Merkle tree@src/crypto/compare.ts:30 | Pairing@src/crypto/bls.ts:83 | SHA-256@src/crypto/kzg.ts:115"
             data-references="Bulletproofs | EC point arithmetic | Fiat-Shamir | Grover's algorithm | Halo2 | NTT | PLONK | Pedersen commitment | Reed-Solomon | STARK | Shor's algorithm"
             data-attacks="Discrete log@src/crypto/compare.ts:159"
@@ -18687,7 +18754,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-dnssec-chain/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-dnssec-chain/" data-added="2026-08" data-updated="2026-08" data-level="school-18"
             data-implements="ECDSA@src/dnssec/crypto.ts:221 | Ed25519@src/dnssec/crypto.ts:244 | Ed448@src/vectors/rfc.ts:88 | P-256@src/dnssec/crypto.ts:160 | RSA@src/dnssec/crypto.ts:78 | SHA-1@src/dnssec/crypto.ts:51 | SHA-256@src/dnssec/crypto.ts:53 | SHA-384@src/dnssec/crypto.ts:55"
             data-references="Encrypted Client Hello | Kerberos | MD5 | Merkle tree | P-384 | RSA-OAEP | SHA-512"
             data-standards="IETF | NIST"
@@ -18778,7 +18845,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-masked-core/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-masked-core/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/attack/cpa.ts:23"
             data-references="Pairing"
             data-attacks="Chosen-plaintext attack@src/attack/dpa.ts:24 | Power analysis@src/claims/bands.ts:150 | Side-channel (unspecified)@src/main.ts:60 | Timing side-channel@README.md:18"
@@ -18870,7 +18937,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sector-vault/" data-added="2026-08" data-updated="2026-10"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sector-vault/" data-added="2026-08" data-updated="2026-10" data-level="advanced"
             data-implements="AES@src/crypto/xts.ts:156 | AES-GCM@src/crypto/gcm.ts:78 | AES-XTS@src/crypto/xts.ts:33"
             data-references="AES-CBC | Merkle tree"
             data-attacks="Chosen-plaintext attack@src/ui/panelRelocate.ts:25 | Ciphertext malleability@src/ui/panelScope.ts:90 | Nonce reuse@src/ui/panelComparison.ts:57 | Padding oracle@README.md:219"
@@ -18962,7 +19029,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-attribute-gate/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-attribute-gate/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/fame/kem.ts:81 | AES-GCM@src/fame/kem.ts:107 | BLS signatures@src/fame/bls.ts:17 | BLS12-381@src/fame/bls.ts:17 | Hash-to-curve@src/fame/bls.ts:368 | HKDF@src/fame/kem.ts:56 | Pairing@src/fame/bls.ts:183 | SHA-256@src/fame/kem.ts:56"
             data-references="Boneh-Franklin IBE | Diffie-Hellman | HPKE | Shamir secret sharing"
             data-attacks="Side-channel (unspecified)@src/ui/app.ts:591"
@@ -19054,7 +19121,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-sphinx-mix/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-sphinx-mix/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="ChaCha20@src/sphinx/kat/vectors.ts:57 | HMAC@src/sphinx/kdf.ts:19 | ristretto255@src/sphinx/kat/vectors.ts:23 | SHA-256@src/sphinx/kdf.ts:14 | SHA-512@src/sphinx/kat/vectors.ts:138"
             data-references="DES | Diffie-Hellman | EC point arithmetic | Ed25519 | FF1 | Schnorr | X25519"
             data-attacks="Ciphertext malleability@README.md:58"
@@ -19146,7 +19213,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-attestation-gate/" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-attestation-gate/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-implements="AES@src/tpm/credential.ts:43 | ECDH@src/tpm/credential.ts:87 | HMAC@src/core/hmac.ts:15 | P-256@src/tpm/credential.ts:44 | SHA-256@src/core/hmac.ts:15"
             data-references="ECDSA | Merkle tree | OPAQUE | RSA | SHA-1 | SHA-384 | SHA-512"
             data-standards="IETF | NIST"
@@ -19237,7 +19304,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ggh-trapdoor/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ggh-trapdoor/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="GGH@src/lattice/keygen.ts:72"
             data-references="Babai rounding | Falcon | Gaussian mechanism | MD5 | ML-DSA | ML-KEM | NTRU"
             data-attacks="Brute force@README.md:132 | Lattice reduction@src/attack/baseline.ts:87 | Side-channel (unspecified)@SECURITY.md:24"
@@ -19314,7 +19381,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-factor-forge/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-factor-forge/" data-added="2026-09" data-updated="2026-09" data-level="school-18"
             data-implements="Shor's algorithm@src/ui/shor.ts:98"
             data-references="EC point arithmetic | RSA"
             data-attacks="Birthday bound@src/ui/ladder.ts:93 | Brute force@README.md:210 | Discrete log@src/factor/types.ts:195 | Factoring@src/factor/ecm.ts:201"
@@ -19391,7 +19458,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-privacy-pass/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="PRIVACY | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-privacy-pass/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="Hash-to-curve@src/oprf/voprf.ts:47 | OPRF@src/main.ts:3 | P-384@src/oprf/voprf.ts:1 | Privacy Pass@src/main.ts:4 | SHA-256@src/oprf/voprf.ts:25 | SHA-384@src/oprf/voprf.ts:64"
             data-references="EC point arithmetic | OPAQUE | RSA"
             data-attacks="Factoring@src/main.ts:77"
@@ -19483,7 +19550,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-order-leak/" data-added="2026-09" data-updated="2026-10"
+          <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-order-leak/" data-added="2026-09" data-updated="2026-10" data-level="school-18"
             data-implements="AES@src/ppe/dte.ts:28 | AES-GCM@src/ppe/dte.ts:28 | AES-SIV@src/ppe/dte.ts:28 | HMAC@src/ppe/ope-bclo.ts:31 | SHA-256@src/ppe/ope-bclo.ts:2"
             data-references="FF1"
             data-attacks="Frequency analysis@src/app.ts:243"
@@ -19574,7 +19641,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-split-point/" data-added="2026-09" data-updated="2026-10"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-split-point/" data-added="2026-09" data-updated="2026-10" data-level="advanced"
             data-implements="AES@src/dpf/prg.ts:1 | Private information retrieval@src/ui/app.ts:9"
             data-attacks="Side-channel (unspecified)@README.md:7"
             data-standards="NIST"
@@ -19664,7 +19731,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="MPC & THRESHOLD | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-proof-tally/" data-added="2026-09" data-updated="2026-10"
+          <a class="project-card" data-category="MPC & THRESHOLD | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-proof-tally/" data-added="2026-09" data-updated="2026-10" data-level="advanced"
             data-implements="NTT@src/field/field64.ts:95 | SHA-3@src/xof/turboshake.ts:1 | SHAKE@src/xof/turboshake.ts:33"
             data-references="MD5 | SHA-256"
             data-standards="NIST"
@@ -19755,7 +19822,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-fold-gate/" data-added="2026-09" data-updated="2026-10"
+          <a class="project-card" data-category="PROTOCOLS | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-fold-gate/" data-added="2026-09" data-updated="2026-10" data-level="advanced"
             data-implements="Hash-to-curve@src/commit/pedersen.ts:10 | Pedersen commitment@src/attack/r-first.ts:1 | ristretto255@src/commit/pedersen.ts:1 | SHA-512@src/nifs/transcript.ts:26"
             data-references="EC point arithmetic | Ed25519 | Fiat-Shamir | OPAQUE | STARK | Shamir secret sharing"
             data-standards="IETF | NIST"
@@ -19846,7 +19913,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="AES@src/schemes/aes-modes.ts:10 | AES-CBC@src/schemes/aes-modes.ts:37 | AES-CTR@src/schemes/aes-modes.ts:47 | AES-GCM@src/schemes/aes-modes.ts:59 | Diffie-Hellman@src/reduction/ddh.ts:87 | ECDSA@src/schemes/ecdsa.ts:10 | Ed25519@src/schemes/ed25519.ts:3 | ElGamal@src/game/cca.ts:34 | Hash-to-curve@src/schemes/elgamal.ts:29 | P-256@src/kats.ts:3 | ristretto255@src/schemes/elgamal.ts:22 | RSA@src/game/cca.ts:84 | RSA-OAEP@src/game/cca.ts:84 | RSA-PSS@src/schemes/rsa-pss.ts:4 | secp256k1@src/schemes/ecdsa.ts:1 | SHA-256@src/schemes/rsa-textbook.ts:52"
             data-references="AES-ECB | ML-KEM | SHA-512 | Simon"
             data-attacks="Chosen-ciphertext attack@src/game/cca.ts:1 | Chosen-plaintext attack@src/game/challenger.ts:18 | Ciphertext malleability@README.md:41 | Side-channel (unspecified)@README.md:48 | Signature malleability@README.md:43"
@@ -19938,7 +20005,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="KEY EXCHANGE | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="AES@src/crypto/aead.ts:20 | AES-GCM@src/crypto/aead.ts:20 | Diffie-Hellman@src/model/ratchet-step.ts:74 | Ed25519@src/pqxdh/bundle.ts:1 | HKDF@src/model/ratchet-step.ts:11 | ML-KEM@src/pqxdh/alice.ts:2 | PQXDH@src/pqxdh/kdf.ts:6 | SHA-512@src/model/ratchet-step.ts:3 | X25519@src/model/quantum.ts:1 | X3DH@src/main.ts:17"
             data-references="Double Ratchet | EdDSA | Kyber | OPAQUE | Shor's algorithm"
             data-attacks="Side-channel (unspecified)@README.md:25"
@@ -20030,7 +20097,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sleeve-check/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sleeve-check/" data-added="2026-09" data-updated="2026-09" data-level="school-18"
             data-implements="AES@src/gost/aes.ts:31 | Kuznyechik@src/gost/kuznyechik.ts:18"
             data-references="Camellia | Kupyna | SHA-256 | SHA-3 | Streebog"
             data-attacks="Discrete log@src/ui/tablePane.ts:255 | Side-channel (unspecified)@README.md:76"
@@ -20122,7 +20189,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-ghost-commit/" data-added="2026-07" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-ghost-commit/" data-added="2026-07" data-updated="2026-08" data-level="school-18"
             data-implements="SHA-1@src/git/objects.ts:16 | SHA-256@src/git/objects.ts:16"
             data-references="Merkle tree"
             data-standards="NIST"
@@ -20187,7 +20254,7 @@
             </div>
           </a>
 
-<a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-builder/" data-added="2026-08" data-updated="2026-10"
+<a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-builder/" data-added="2026-08" data-updated="2026-10" data-level="advanced"
             data-implements="Babai rounding@src/basis.ts:74 | Keccak@src/keccak.ts:46 | ML-KEM@src/AdvancedMode.tsx:14 | NTT@src/mlkem-poly.ts:133 | SHA-3@src/keccak.ts:227 | SHAKE@src/keccak.ts:235"
             data-references="AES | LWE | SHA-256"
             data-attacks="Brute force@src/AdvancedMode.tsx:368 | Lattice reduction@src/AdvancedMode.tsx:369"
@@ -20279,7 +20346,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="STEGANOGRAPHY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-covert-channel-studio/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="STEGANOGRAPHY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-covert-channel-studio/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="N/A"
             data-references="AES | LMS | OPAQUE | Pairing | RSA | SHA-256 | Shamir secret sharing"
             data-attacks="Cache timing@js/content/atlas.js:308 | Frequency analysis@js/content/references.js:123 | Side-channel (unspecified)@js/content/atlas.js:305 | Timing side-channel@js/content/atlas.js:313"
@@ -20358,7 +20425,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-point-ledger/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-point-ledger/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="SHA-256@src/fuzz.ts:111 | SHAKE@src/fuzz.ts:2"
             data-references="EC point arithmetic | ECDSA | Fiat-Shamir | Groth16 | Pairing | SHA-3 | STARK | Shor's algorithm | secp256k1"
             data-attacks="Discrete log@src/sources.ts:76"
@@ -20383,7 +20450,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-mgm-mode/" data-added="2026-10" data-updated="2026-10"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-mgm-mode/" data-added="2026-10" data-updated="2026-10" data-level="advanced"
             data-implements="Kuznyechik@src/cipher/kuznyechik.ts:140 | Magma@src/cipher/magma.ts:33 | MGM@src/mgm/mgm.ts:53"
             data-references="AES | AES-GCM | Camellia | GHASH | SHA-256 | Streebog | TLS 1.3"
             data-attacks="Birthday bound@README.md:92 | Nonce reuse@README.md:70 | Side-channel (unspecified)@index.html:188"
@@ -20404,7 +20471,7 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-drift-key/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-drift-key/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="BCH@src/crypto/bch.ts:62 | Fuzzy extractor@src/crypto/sketch.ts:53 | HKDF@src/crypto/kdf.ts:34 | SHA-256@src/crypto/kdf.ts:34"
             data-references="Classic McEliece | HMAC | Repetition code"
             data-attacks="Brute force@src/ui/panels/context.ts:72 | Key recovery@src/ui/panels/guided.ts:606 | Side-channel (unspecified)@src/ui/panels/context.ts:100"
@@ -20425,7 +20492,7 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/" data-added="2026-10" data-updated="2026-10"
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/" data-added="2026-10" data-updated="2026-10" data-level="advanced"
             data-implements="Keccak@src/entropy/keccak.ts:49 | SHA-256@src/entropy/counter-hash.ts:85 | SHA-3@src/entropy/keccak.ts:227"
             data-references="CTR-DRBG | DSA | HMAC-DRBG | MD5 | One-time pad | Toeplitz extractor | von Neumann extractor"
             data-standards="NIST"
@@ -20445,7 +20512,7 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="RANDOMNESS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pulse-chain/" data-added="2026-10" data-updated="2026-10"
+          <a class="project-card" data-category="RANDOMNESS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pulse-chain/" data-added="2026-10" data-updated="2026-10" data-level="advanced"
             data-implements="BLS signatures@src/drand/verify.ts:25 | BLS12-381@src/drand/verify.ts:25 | Hash-to-curve@src/drand/verify.ts:85 | Pairing@src/drand/verify.ts:86 | RSA@src/core/der.ts:114 | SHA-256@src/drand/verify.ts:48 | SHA-512@src/nist/verify.ts:61"
             data-references="Pedersen commitment | Schnorr"
             data-standards="IETF | NIST"
@@ -20465,7 +20532,7 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-glass-box/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-glass-box/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="AES@src/aes/aes-ref.ts:162 | White-box AES@src/lab.worker.ts:64"
             data-references="AES-CBC | DES | Encrypted Client Hello"
             data-attacks="BGE attack@src/lab.worker.ts:26 | Brute force@src/main.ts:1755 | Chosen-plaintext attack@src/ui/diagram.ts:87 | Collision attack@src/main.ts:1984 | Differential computation analysis@src/attack/dca.ts:407 | Fault injection@README.md:171 | Power analysis@src/main.ts:1739 | Side-channel (unspecified)@README.md:60 | Timing side-channel@README.md:293"
@@ -20486,7 +20553,7 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-return-path/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-return-path/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="Toy SPN@src/crypto/experiments.ts:23"
             data-references="AES | DES | KASUMI | MISTY1 | Shamir secret sharing"
             data-attacks="Boomerang attack@src/crypto/failures.ts:40 | Brute force@src/ui/switchPanel.ts:418 | Chosen-ciphertext attack@src/ui/boomerangPanel.ts:278 | Chosen-plaintext attack@src/ui/boomerangPanel.ts:278 | Differential cryptanalysis@src/main.ts:44 | Impossible differential@src/main.ts:33 | Linear cryptanalysis@src/ui/cipherPanel.ts:134"
@@ -20507,7 +20574,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sm9-forge/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="SIGNATURES | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sm9-forge/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="EC point arithmetic@src/attack/nonce-reuse.ts:92 | Pairing@src/sm9/encrypt.ts:223 | SM9@src/sm9/pairing.ts:57"
             data-references="BLS signatures | BLS12-381 | Boneh-Franklin IBE | DSA | ECDSA | Hash-to-curve | MD5 | One-time pad | SHA-256 | SM4"
             data-attacks="Discrete log@src/main.ts:54 | Nonce reuse@src/ui/pane5-break.ts:44"
@@ -20532,7 +20599,7 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pq-chooser/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pq-chooser/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="ECDSA@src/bench/runner.ts:324 | Falcon@src/derive/adapters.ts:30 | ML-DSA@src/derive/adapters.ts:16 | ML-KEM@src/derive/adapters.ts:15 | P-256@src/bench/runner.ts:329 | RSA@src/bench/runner.ts:374 | SHA-256@src/bench/runner.ts:330 | SLH-DSA@src/derive/adapters.ts:24 | X25519@src/bench/runner.ts:250"
             data-references="Dilithium | ECDH | Kyber | NTRU | P-384 | Pairing | SPHINCS+ | TLS 1.3 | UOV"
             data-attacks="Key recovery@src/data/risk.ts:43 | Side-channel (unspecified)@src/choose/rules.ts:63 | Timing side-channel@src/data/risk.ts:80"
@@ -20555,7 +20622,7 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-adaptor-gate/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-adaptor-gate/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="Schnorr@src/crypto/attacks.ts:8 | secp256k1@src/crypto/adaptor.ts:156 | SHA-256@src/crypto/vectors.ts:23"
             data-references="EC point arithmetic | ECDSA | FROST"
             data-attacks="Discrete log@src/ui/honesty.ts:109 | Key recovery@src/ui/honesty.ts:50 | Nonce reuse@src/crypto/attacks.ts:65"
@@ -20578,7 +20645,7 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-function-key/" data-added="2026-09" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-function-key/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
             data-implements="ABDP15 IPFE@src/crypto/attacks.ts:24 | Baby-step giant-step@src/crypto/dlog.ts:130 | EC point arithmetic@src/crypto/ristretto.ts:80 | ristretto255@src/crypto/dlog.ts:25 | SHA-512@src/crypto/prng.ts:47"
             data-references="BLS signatures | BLS12-381 | CKKS | Ed25519 | ElGamal | FROST | Hash-to-curve | LWE | MD5 | Paillier | RSA | SHA-256 | Schnorr | Shamir secret sharing | X3DH"
             data-attacks="Ciphertext malleability@src/ui/stages.ts:1087"
@@ -20975,6 +21042,7 @@
     if (exhibitCountEl) exhibitCountEl.textContent = total;
     var activeCategory = '';
     var activeSet = null;
+    var activeLevel = '';
 
     var searchEngine = window.CryptoLabSearch;
     if (!searchEngine) throw new Error('catalog-search.js failed to load');
@@ -21046,6 +21114,7 @@
         section: section,
         added: card.getAttribute('data-added') || '',
         updated: card.getAttribute('data-updated') || '',
+        level: card.getAttribute('data-level') || '',
         searchScore: 0
       };
     });
@@ -21094,6 +21163,14 @@
        for citation years. */
     var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+    /* Written onto each card as data-level by tools/level-sync.js. A card with no
+       level renders no badge rather than guessing one. */
+    var LEVEL_LABEL = {
+      'school-14': 'Up to 14',
+      'school-18': 'Up to 18',
+      'advanced': 'Advanced',
+    };
+
     function monthLabel(ym) {
       var m = /^(\d{4})-(\d{2})$/.exec(ym || '');
       if (!m) return '';
@@ -21138,6 +21215,16 @@
         var u = document.createElement('span');
         u.textContent = 'Updated ' + updated;
         row.appendChild(u);
+      }
+      /* The level sits in the same footer row as the dates: both are metadata
+         about the lab rather than claims about its cryptography, and one row
+         keeps the card from growing a second strip. */
+      if (d.level && LEVEL_LABEL[d.level]) {
+        var lvl = document.createElement('span');
+        lvl.className = 'card-level';
+        lvl.setAttribute('data-level', d.level);
+        lvl.textContent = LEVEL_LABEL[d.level];
+        row.appendChild(lvl);
       }
       if (monthsAgo(d.added) < NEW_WINDOW_MONTHS) {
         var badge = document.createElement('span');
@@ -21441,7 +21528,10 @@
         var matchSet = !activeSet || activeSet.indexOf(d.title) !== -1;
         var matchCat = !activeCategory || d.categories.includes(activeCategory);
         var matchText = !q || d.searchScore >= 0;
-        if (matchSet && matchCat && matchText) {
+        /* AND, not OR: a level narrows whatever the category and the search have
+           already chosen, so "Advanced" inside "PRIVACY" means both. */
+        var matchLevel = !activeLevel || d.level === activeLevel;
+        if (matchSet && matchCat && matchText && matchLevel) {
           visible++;
           if (d.section) sectionCounts[d.section] = (sectionCounts[d.section] || 0) + 1;
         }
@@ -21465,7 +21555,10 @@
         var matchSet = !activeSet || activeSet.indexOf(d.title) !== -1;
         var matchCat = !activeCategory || d.categories.includes(activeCategory);
         var matchText = !q || d.searchScore >= 0;
-        (d.cell || d.el).style.display = (matchSet && matchCat && matchText) ? '' : 'none';
+        /* AND, not OR: a level narrows whatever the category and the search have
+           already chosen, so "Advanced" inside "PRIVACY" means both. */
+        var matchLevel = !activeLevel || d.level === activeLevel;
+        (d.cell || d.el).style.display = (matchSet && matchCat && matchText && matchLevel) ? '' : 'none';
       });
 
       SECTIONS.forEach(function (s) {
@@ -21499,11 +21592,34 @@
       updateClear();
       activeCategory = '';
       activeSet = null;
+      activeLevel = '';
+      var lb = document.querySelector('.level-bar');
+      if (lb) Array.prototype.forEach.call(lb.querySelectorAll('.level-btn'), function (b) {
+        b.setAttribute('aria-pressed', String(!b.getAttribute('data-level')));
+      });
       clearTreeActive();
       Array.from(chipsEl.querySelectorAll('.filter-chip')).forEach(function (c) {
         c.classList.toggle('active', c.getAttribute('data-category') === '');
       });
       filter();
+    }
+
+    /* Audience level. Native <button>s in a labelled group: each is tabbable and
+       Enter/Space activate it with no key handling of our own, and aria-pressed
+       carries the state a sighted user reads from the accent colour. A listbox
+       or a roving-tabindex radiogroup would need that keyboard code written and
+       tested; three buttons do not. */
+    var levelBar = document.querySelector('.level-bar');
+    if (levelBar) {
+      levelBar.addEventListener('click', function (e) {
+        var btn = e.target.closest('.level-btn');
+        if (!btn) return;
+        activeLevel = btn.getAttribute('data-level') || '';
+        Array.prototype.forEach.call(levelBar.querySelectorAll('.level-btn'), function (b) {
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+        filter();
+      });
     }
 
     filterClearBtn.addEventListener('click', function () {
@@ -21852,7 +21968,7 @@
         <blockquote>So whether you eat or drink or whatever you do, do it all for the glory of God.</blockquote>
         <cite>1 Corinthians 10:31</cite>
       </div>
-      <p class="footer-links"><a href="teach/">Teach with Crypto Lab</a> · Related learning: <a href="https://www.cryptool.org/en/">CrypTool</a> · <a href="https://www.cryptool.org/en/cto/">CrypTool-Online</a></p>
+      <p class="footer-links"><a href="about/">About &amp; Contact</a> · <a href="teach/">Teach with Crypto Lab</a> · Related learning: <a href="https://www.cryptool.org/en/">CrypTool</a> · <a href="https://www.cryptool.org/en/cto/">CrypTool-Online</a></p>
     </div>
   </footer>
 </body>

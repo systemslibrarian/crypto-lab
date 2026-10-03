@@ -1,0 +1,1330 @@
+{
+ "note": "Audience level per lab. HAND-JUDGED from each lab's own README and card copy, never from its name. Levels: school-14 (classical/visual, arithmetic only), school-18 (modular arithmetic, hashing, symmetric/asymmetric basics, simple attacks), advanced (lattices, ZK, FHE, MPC, PQC internals, side channels, formal games). Edit this file, then run `node tools/level-sync.js` to stamp the cards and regenerate LEVELS-REVIEW.md.",
+ "generated": "2026-10-02",
+ "levels": [
+  "school-14",
+  "school-18",
+  "advanced"
+ ],
+ "labs": {
+  "crypto-lab-quantum-vault-kpqc": {
+   "title": "Quantum Vault KpqC",
+   "level": "advanced",
+   "why": "needs specialist background: HAETAE, SMAUG, secret sharing",
+   "reviewed": "rule"
+  },
+  "crypto-lab-phantom-vault": {
+   "title": "Phantom Vault",
+   "level": "advanced",
+   "why": "needs specialist background: zero-knowledge, DRBG",
+   "reviewed": "rule"
+  },
+  "crypto-lab-corrupted-oracle": {
+   "title": "Corrupted Oracle",
+   "level": "advanced",
+   "why": "needs specialist background: DRBG",
+   "reviewed": "rule"
+  },
+  "crypto-lab-air-stream": {
+   "title": "Air Stream",
+   "level": "school-18",
+   "why": "school-level primitives: AES",
+   "reviewed": "rule"
+  },
+  "crypto-lab-kpqc-pair": {
+   "title": "KpqC Pair",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, NTRU, AIMer",
+   "reviewed": "rule"
+  },
+  "crypto-lab-tc26-pair": {
+   "title": "TC26 Pair",
+   "level": "advanced",
+   "why": "needs specialist background: Hypericum, Shipovnik, code-based",
+   "reviewed": "rule"
+  },
+  "crypto-lab-sm2-forge": {
+   "title": "SM2 Forge",
+   "level": "school-18",
+   "why": "sign/encrypt under a national standard plus a reused-nonce key recovery: asymmetric basics and a simple attack",
+   "reviewed": "hand",
+   "uncertain": "a national standard with an identity digest and two ciphertext orders \u2014 arguably specialist"
+  },
+  "crypto-lab-misty-lens": {
+   "title": "Misty Lens",
+   "level": "advanced",
+   "why": "needs specialist background: Shamir, differential cryptanalysis, related-key",
+   "reviewed": "rule"
+  },
+  "crypto-lab-export-grade": {
+   "title": "Export Grade",
+   "level": "school-18",
+   "why": "school-level primitives: AES, stream cipher",
+   "reviewed": "rule"
+  },
+  "crypto-lab-drbg-arena": {
+   "title": "DRBG Arena",
+   "level": "advanced",
+   "why": "needs specialist background: DRBG",
+   "reviewed": "rule"
+  },
+  "crypto-lab-bb84": {
+   "title": "BB84",
+   "level": "advanced",
+   "why": "needs specialist background: quantum, QKD, BB84",
+   "reviewed": "rule"
+  },
+  "crypto-lab-shor": {
+   "title": "Shor",
+   "level": "advanced",
+   "why": "needs specialist background: Shor, Grover, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-grover": {
+   "title": "Grover",
+   "level": "advanced",
+   "why": "needs specialist background: Shor, Grover, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-model-breach": {
+   "title": "Model Breach",
+   "level": "school-18",
+   "why": "school-level primitives: MITM",
+   "reviewed": "rule"
+  },
+  "crypto-lab-iron-letter": {
+   "title": "Iron Letter",
+   "level": "school-18",
+   "why": "school-level primitives: HKDF, AES, symmetric",
+   "reviewed": "rule"
+  },
+  "crypto-lab-shadow-vault": {
+   "title": "Shadow Vault",
+   "level": "school-18",
+   "why": "Argon2id + ChaCha20-Poly1305 in a deniable container \u2014 school-level primitives, one security-model idea on top",
+   "reviewed": "hand",
+   "uncertain": "deniable encryption is a security-model idea; the primitives are school-level but the point may not be"
+  },
+  "crypto-lab-zk-proof-lab": {
+   "title": "ZK Proof Lab",
+   "level": "advanced",
+   "why": "needs specialist background: zero-knowledge, SNARK, Fiat-Shamir",
+   "reviewed": "rule"
+  },
+  "crypto-lab-stark-tower": {
+   "title": "STARK Tower",
+   "level": "advanced",
+   "why": "needs specialist background: zero-knowledge, STARK, Groth16",
+   "reviewed": "rule"
+  },
+  "crypto-lab-snark-arena": {
+   "title": "SNARK Arena",
+   "level": "advanced",
+   "why": "needs specialist background: zero-knowledge, SNARK, Groth16",
+   "reviewed": "rule"
+  },
+  "crypto-lab-blind-oracle": {
+   "title": "Blind Oracle",
+   "level": "advanced",
+   "why": "needs specialist background: homomorphic, FHE, TFHE",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ckks-lab": {
+   "title": "CKKS Lab",
+   "level": "advanced",
+   "why": "needs specialist background: homomorphic, FHE, BFV",
+   "reviewed": "rule"
+  },
+  "crypto-lab-fhe-arena": {
+   "title": "FHE Arena",
+   "level": "advanced",
+   "why": "needs specialist background: homomorphic, FHE, BFV",
+   "reviewed": "rule"
+  },
+  "crypto-lab-patron-shield": {
+   "title": "Patron Shield",
+   "level": "advanced",
+   "why": "needs specialist background: private information retrieval, secret sharing",
+   "reviewed": "rule"
+  },
+  "crypto-lab-vss-gate": {
+   "title": "VSS Gate",
+   "level": "advanced",
+   "why": "needs specialist background: secret sharing, Shamir, FROST",
+   "reviewed": "rule"
+  },
+  "crypto-lab-dkg-gate": {
+   "title": "DKG Gate",
+   "level": "advanced",
+   "why": "needs specialist background: secret sharing, DKG, distributed key generation",
+   "reviewed": "rule"
+  },
+  "crypto-lab-garbled-gate": {
+   "title": "Garbled Gate",
+   "level": "advanced",
+   "why": "needs specialist background: MPC, garbled circuit, oblivious transfer",
+   "reviewed": "rule"
+  },
+  "crypto-lab-silent-tally": {
+   "title": "Silent Tally",
+   "level": "advanced",
+   "why": "needs specialist background: homomorphic, multi-party computation, MPC",
+   "reviewed": "rule"
+  },
+  "crypto-lab-frost-threshold": {
+   "title": "FROST Threshold",
+   "level": "advanced",
+   "why": "needs specialist background: FROST, VSS",
+   "reviewed": "rule"
+  },
+  "crypto-lab-dilithium-seal": {
+   "title": "Dilithium Seal",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, LWE, ML-DSA",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ratchet-wire": {
+   "title": "Ratchet Wire",
+   "level": "school-18",
+   "why": "school-level primitives: HKDF, AES, symmetric",
+   "reviewed": "rule"
+  },
+  "crypto-lab-kyber-vault": {
+   "title": "Kyber Vault",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, ML-KEM, Kyber",
+   "reviewed": "rule"
+  },
+  "crypto-lab-iron-serpent": {
+   "title": "Iron Serpent",
+   "level": "school-18",
+   "why": "school-level primitives: HMAC, password, AES",
+   "reviewed": "rule"
+  },
+  "crypto-lab-world-ciphers": {
+   "title": "World Ciphers",
+   "level": "school-18",
+   "why": "compares national cipher families as designs; no specialist machinery is required of the reader",
+   "reviewed": "hand"
+  },
+  "crypto-lab-shamir-gate": {
+   "title": "Shamir Gate",
+   "level": "advanced",
+   "why": "needs specialist background: secret sharing, Shamir, FROST",
+   "reviewed": "rule"
+  },
+  "crypto-lab-dead-sea-cipher": {
+   "title": "Dead Sea Cipher",
+   "level": "school-14",
+   "why": "classical cipher work, arithmetic only: Caesar, Vigen, polyalphabetic",
+   "reviewed": "rule"
+  },
+  "crypto-lab-sphincs-ledger": {
+   "title": "SPHINCS+ Ledger",
+   "level": "advanced",
+   "why": "needs specialist background: SPHINCS, SLH-DSA, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-biham-lens": {
+   "title": "Biham Lens",
+   "level": "advanced",
+   "why": "needs specialist background: Shamir, differential cryptanalysis",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hybrid-wire": {
+   "title": "Hybrid Wire",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, Kyber, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-downgrade-wire": {
+   "title": "Downgrade Wire",
+   "level": "school-18",
+   "why": "protocol downgrade and version negotiation; \"quantum\" appears as context, not content",
+   "reviewed": "hand"
+  },
+  "crypto-lab-babel-hash": {
+   "title": "Babel Hash",
+   "level": "school-18",
+   "why": "compares SHA-256, SHA3-256 and BLAKE3 with avalanche, length extension and HMAC \u2014 \"sponge\" is how SHA-3 is built, not what the lab asks of you",
+   "reviewed": "hand"
+  },
+  "crypto-lab-aes-modes": {
+   "title": "AES Modes",
+   "level": "school-18",
+   "why": "school-level primitives: AES, block cipher, symmetric",
+   "reviewed": "rule"
+  },
+  "crypto-lab-rsa-educational": {
+   "title": "Educational RSA",
+   "level": "school-18",
+   "why": "school-level primitives: RSA, public key, public-key",
+   "reviewed": "rule"
+  },
+  "crypto-lab-rsa-forge": {
+   "title": "RSA Forge",
+   "level": "school-18",
+   "why": "its own README opens with \"a plain-language, no-math on-ramp \u2014 a padlock analogy\"; RSA, OAEP/PSS and padding-oracle attacks",
+   "reviewed": "hand",
+   "uncertain": "kept at 18 for its explicit no-math on-ramp, but it also runs a Bleichenbacher padding oracle"
+  },
+  "crypto-lab-curve-lens": {
+   "title": "Curve Lens",
+   "level": "school-18",
+   "why": "school-level primitives: Diffie-Hellman, X25519",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ec-point-arithmetic": {
+   "title": "Point Arithmetic",
+   "level": "advanced",
+   "why": "needs specialist background: finite field",
+   "reviewed": "rule",
+   "uncertain": "elliptic-curve group law is foundational here but is past most 18-year-old syllabuses"
+  },
+  "crypto-lab-x3dh-wire": {
+   "title": "X3DH Wire",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, HKDF, Diffie-Hellman",
+   "reviewed": "rule"
+  },
+  "crypto-lab-noise-pipe": {
+   "title": "Noise Pipe",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, HKDF, AES",
+   "reviewed": "rule"
+  },
+  "crypto-lab-mac-race": {
+   "title": "MAC Race",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, HMAC, AES",
+   "reviewed": "rule"
+  },
+  "crypto-lab-kdf-chain": {
+   "title": "KDF Chain",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, HMAC, scrypt",
+   "reviewed": "rule"
+  },
+  "crypto-lab-format-ward": {
+   "title": "Format Ward",
+   "level": "advanced",
+   "why": "needs specialist background: linear cryptanalysis",
+   "reviewed": "rule"
+  },
+  "crypto-lab-padding-oracle": {
+   "title": "Padding Oracle",
+   "level": "school-18",
+   "why": "school-level primitives: AES, symmetric, padding",
+   "reviewed": "rule"
+  },
+  "crypto-lab-timing-oracle": {
+   "title": "Timing Oracle",
+   "level": "advanced",
+   "why": "needs specialist background: side-channel, constant-time, timing side",
+   "reviewed": "rule"
+  },
+  "crypto-lab-mceliece-gate": {
+   "title": "McEliece Gate",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, code-based, Goppa",
+   "reviewed": "rule"
+  },
+  "crypto-lab-frodo-vault": {
+   "title": "Frodo Vault",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, LWE, learning with errors",
+   "reviewed": "rule"
+  },
+  "crypto-lab-bike-vault": {
+   "title": "BIKE Vault",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, ML-KEM, code-based",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hqc-vault": {
+   "title": "HQC Vault",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, code-based, BIKE",
+   "reviewed": "rule"
+  },
+  "crypto-lab-falcon-seal": {
+   "title": "Falcon Seal",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, NTRU, ML-DSA",
+   "reviewed": "rule"
+  },
+  "crypto-lab-chacha20-stream": {
+   "title": "ChaCha20 Stream",
+   "level": "school-18",
+   "why": "stream cipher as XOR with a keystream, quarter-round stepper and nonce reuse; \"constant-time\" is a passing note",
+   "reviewed": "hand"
+  },
+  "crypto-lab-ed25519-forge": {
+   "title": "Ed25519 Forge",
+   "level": "school-18",
+   "why": "school-level primitives: digital signature, Ed25519, signature",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hash-zoo": {
+   "title": "Hash Zoo",
+   "level": "school-18",
+   "why": "a tour of hash families side by side; the sponge is named, not derived",
+   "reviewed": "hand"
+  },
+  "crypto-lab-world-hashes": {
+   "title": "World Hashes",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, hashing",
+   "reviewed": "rule"
+  },
+  "crypto-lab-kdf-arena": {
+   "title": "KDF Arena",
+   "level": "school-18",
+   "why": "school-level primitives: password, scrypt, PBKDF2",
+   "reviewed": "rule"
+  },
+  "crypto-lab-poly1305-mac": {
+   "title": "Poly1305 MAC",
+   "level": "advanced",
+   "why": "needs specialist background: constant-time, GF(2",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ot-gate": {
+   "title": "OT Gate",
+   "level": "advanced",
+   "why": "needs specialist background: MPC, oblivious transfer",
+   "reviewed": "rule"
+  },
+  "crypto-lab-lms-ledger": {
+   "title": "LMS Ledger",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, Merkle, public key",
+   "reviewed": "rule"
+  },
+  "crypto-lab-merkle-vault": {
+   "title": "Merkle Vault",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, Merkle, certificate",
+   "reviewed": "rule"
+  },
+  "crypto-lab-nonce-guard": {
+   "title": "Nonce Guard",
+   "level": "school-18",
+   "why": "school-level primitives: AES, symmetric, nonce",
+   "reviewed": "rule"
+  },
+  "crypto-lab-pairing-gate": {
+   "title": "Pairing Gate",
+   "level": "advanced",
+   "why": "needs specialist background: pairing, BLS12, bilinear",
+   "reviewed": "rule"
+  },
+  "crypto-lab-oblivious-shelf": {
+   "title": "Oblivious Shelf",
+   "level": "advanced",
+   "why": "needs specialist background: private information retrieval",
+   "reviewed": "rule"
+  },
+  "crypto-lab-stego-suite": {
+   "title": "Stego Suite",
+   "level": "advanced",
+   "why": "needs specialist background: adaptive embedding, steganalysis",
+   "reviewed": "rule"
+  },
+  "crypto-lab-gg20-wallet": {
+   "title": "GG20 Wallet",
+   "level": "advanced",
+   "why": "needs specialist background: homomorphic, Paillier, MPC",
+   "reviewed": "rule"
+  },
+  "crypto-lab-bcrypt-forge": {
+   "title": "Bcrypt Forge",
+   "level": "school-18",
+   "why": "school-level primitives: hashing, password, bcrypt",
+   "reviewed": "rule"
+  },
+  "crypto-lab-blind-sign": {
+   "title": "Blind Sign",
+   "level": "advanced",
+   "why": "needs specialist background: blind signature",
+   "reviewed": "rule"
+  },
+  "crypto-lab-commit-gate": {
+   "title": "Commit Gate",
+   "level": "advanced",
+   "why": "needs specialist background: homomorphic, MPC, VSS",
+   "reviewed": "rule"
+  },
+  "crypto-lab-pki-chain": {
+   "title": "PKI Chain",
+   "level": "advanced",
+   "why": "needs specialist background: ML-DSA, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-protocol-compose": {
+   "title": "Protocol Compose",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, HMAC, AES",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ring-sign": {
+   "title": "Ring Sign",
+   "level": "school-18",
+   "why": "school-level primitives: ECDSA, Ed25519, signature",
+   "reviewed": "rule"
+  },
+  "crypto-lab-threshold-decrypt": {
+   "title": "Threshold Decrypt",
+   "level": "advanced",
+   "why": "needs specialist background: Shamir, distributed key generation",
+   "reviewed": "rule"
+  },
+  "crypto-lab-j-uniward": {
+   "title": "J-UNIWARD",
+   "level": "advanced",
+   "why": "needs specialist background: wavelet, adaptive embedding",
+   "reviewed": "rule"
+  },
+  "crypto-lab-harvest-vault": {
+   "title": "Harvest Vault",
+   "level": "school-18",
+   "why": "harvest-now-decrypt-later as a long-term confidentiality argument, not PQC internals",
+   "reviewed": "hand",
+   "uncertain": "conceptual rather than technical, but the subject is post-quantum risk"
+  },
+  "crypto-lab-isogeny-gate": {
+   "title": "Isogeny Gate",
+   "level": "advanced",
+   "why": "needs specialist background: isogeny, SIDH, CSIDH",
+   "reviewed": "rule"
+  },
+  "crypto-lab-lattice-fault": {
+   "title": "Lattice Fault",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, ML-KEM, ML-DSA",
+   "reviewed": "rule"
+  },
+  "crypto-lab-lll-break": {
+   "title": "LLL Break",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, LWE, learning with errors",
+   "reviewed": "rule"
+  },
+  "crypto-lab-mpcith-sign": {
+   "title": "MPCitH Sign",
+   "level": "advanced",
+   "why": "needs specialist background: Fiat-Shamir, MPC, secret sharing",
+   "reviewed": "rule"
+  },
+  "crypto-lab-opaque-gate": {
+   "title": "OPAQUE Gate",
+   "level": "advanced",
+   "why": "needs specialist background: OPAQUE, OPRF",
+   "reviewed": "rule"
+  },
+  "crypto-lab-vrf-gate": {
+   "title": "VRF Gate",
+   "level": "advanced",
+   "why": "needs specialist background: quantum, VDF",
+   "reviewed": "rule"
+  },
+  "crypto-lab-aegis-gate": {
+   "title": "AEGIS Gate",
+   "level": "advanced",
+   "why": "needs specialist background: sponge",
+   "reviewed": "rule",
+   "uncertain": "an AEAD design built on the AES round function: kept advanced for the internals"
+  },
+  "crypto-lab-ascon": {
+   "title": "Ascon",
+   "level": "advanced",
+   "why": "needs specialist background: sponge",
+   "reviewed": "rule"
+  },
+  "crypto-lab-curve448": {
+   "title": "Curve448",
+   "level": "school-18",
+   "why": "school-level primitives: Diffie-Hellman, Ed25519, key exchange",
+   "reviewed": "rule"
+  },
+  "crypto-lab-dilithium-reject": {
+   "title": "Dilithium Reject",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, ML-DSA, Dilithium",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ecdsa-forge": {
+   "title": "ECDSA Forge",
+   "level": "school-18",
+   "why": "school-level primitives: digital signature, ECDSA, signature",
+   "reviewed": "rule"
+  },
+  "crypto-lab-schnorr-forge": {
+   "title": "Schnorr Forge",
+   "level": "school-18",
+   "why": "school-level primitives: ECDSA, signature, nonce",
+   "reviewed": "rule"
+  },
+  "crypto-lab-elgamal-plain": {
+   "title": "ElGamal Plain",
+   "level": "school-18",
+   "why": "school-level primitives: public-key, modular arithmetic, modular exponentiation",
+   "reviewed": "rule"
+  },
+  "crypto-lab-harvest-timeline": {
+   "title": "Harvest Timeline",
+   "level": "school-18",
+   "why": "a migration timeline; the reasoning is calendar and risk, not cryptanalysis",
+   "reviewed": "hand",
+   "uncertain": "same: planning content about a specialist subject"
+  },
+  "crypto-lab-hawk": {
+   "title": "HAWK",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, Falcon, constant-time",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hqc-timing-break": {
+   "title": "HQC Timing Break",
+   "level": "advanced",
+   "why": "needs specialist background: side-channel, constant-time, code-based",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hybrid-sign": {
+   "title": "Hybrid Sign",
+   "level": "advanced",
+   "why": "needs specialist background: ML-DSA, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ibe-gate": {
+   "title": "IBE Gate",
+   "level": "advanced",
+   "why": "needs specialist background: pairing, BLS12, bilinear",
+   "reviewed": "rule"
+  },
+  "crypto-lab-kyberslash": {
+   "title": "KyberSlash",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, Kyber, side-channel",
+   "reviewed": "rule"
+  },
+  "crypto-lab-lms-xmss": {
+   "title": "LMS/XMSS",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, hashing, Merkle",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ntru-classic": {
+   "title": "NTRU Classic",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, NTRU, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-oram-vault": {
+   "title": "ORAM Vault",
+   "level": "advanced",
+   "why": "needs specialist background: oblivious RAM, ORAM",
+   "reviewed": "rule"
+  },
+  "crypto-lab-paillier-gate": {
+   "title": "Paillier Gate",
+   "level": "advanced",
+   "why": "needs specialist background: homomorphic, Paillier",
+   "reviewed": "rule"
+  },
+  "crypto-lab-pq-rotation": {
+   "title": "PQ Rotation",
+   "level": "school-18",
+   "why": "key-rotation policy planning; names PQC schemes without deriving any",
+   "reviewed": "hand",
+   "uncertain": "same: policy reasoning about PQC without PQC internals"
+  },
+  "crypto-lab-pq-tls-handshake": {
+   "title": "PQ TLS Handshake",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-psi-gate": {
+   "title": "PSI Gate",
+   "level": "advanced",
+   "why": "needs specialist background: private set intersection",
+   "reviewed": "rule"
+  },
+  "crypto-lab-scloud-vault": {
+   "title": "Scloud+ Vault",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, LWE, learning with errors",
+   "reviewed": "rule"
+  },
+  "crypto-lab-threshold-mldsa": {
+   "title": "Threshold ML-DSA",
+   "level": "advanced",
+   "why": "needs specialist background: ML-DSA, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-envelope-kms": {
+   "title": "Envelope KMS",
+   "level": "school-18",
+   "why": "school-level primitives: AES, random",
+   "reviewed": "rule"
+  },
+  "crypto-lab-bulletproofs": {
+   "title": "Bulletproofs",
+   "level": "advanced",
+   "why": "needs specialist background: zero-knowledge, Groth16, Fiat-Shamir",
+   "reviewed": "rule"
+  },
+  "crypto-lab-nonce-lattice": {
+   "title": "Nonce Lattice",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, lattice reduction, LLL",
+   "reviewed": "rule"
+  },
+  "crypto-lab-kerberos": {
+   "title": "Kerberos v5",
+   "level": "school-18",
+   "why": "school-level primitives: HMAC, AES, Kerberos",
+   "reviewed": "rule"
+  },
+  "crypto-lab-mls-group": {
+   "title": "MLS Group",
+   "level": "advanced",
+   "why": "needs specialist background: ratchet tree, TreeKEM",
+   "reviewed": "rule"
+  },
+  "crypto-lab-zk-arena": {
+   "title": "ZK Arena",
+   "level": "advanced",
+   "why": "needs specialist background: zero-knowledge, SNARK, STARK",
+   "reviewed": "rule"
+  },
+  "crypto-lab-jevil": {
+   "title": "Jevil",
+   "level": "school-18",
+   "why": "school-level primitives: public key, digital signature, signature",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ciphertext-mirror": {
+   "title": "Ciphertext Mirror",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, side-channel, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hqc-timing": {
+   "title": "HQC Timing",
+   "level": "advanced",
+   "why": "needs specialist background: side-channel, constant-time, timing side",
+   "reviewed": "rule"
+  },
+  "crypto-lab-pq-families": {
+   "title": "PQ Families",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, isogeny, SIKE",
+   "reviewed": "rule"
+  },
+  "crypto-lab-key-exchange": {
+   "title": "Key Exchange",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, LWE, ML-KEM",
+   "reviewed": "rule"
+  },
+  "crypto-lab-web-of-trust": {
+   "title": "Web of Trust",
+   "level": "school-18",
+   "why": "school-level primitives: ECDSA, Ed25519",
+   "reviewed": "rule"
+  },
+  "crypto-lab-webauthn": {
+   "title": "WebAuthn",
+   "level": "school-18",
+   "why": "school-level primitives: ECDSA, signature, WebAuthn",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ssh-handshake": {
+   "title": "SSH Handshake",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, public key, ECDSA",
+   "reviewed": "rule"
+  },
+  "crypto-lab-bitcoin-wallet": {
+   "title": "Bitcoin Wallet",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, PBKDF2, public key",
+   "reviewed": "rule"
+  },
+  "crypto-lab-enigma-forge": {
+   "title": "Enigma Forge",
+   "level": "school-14",
+   "why": "classical cipher work, arithmetic only: polyalphabetic, Enigma, rotor",
+   "reviewed": "rule"
+  },
+  "crypto-lab-vigenere-break": {
+   "title": "Vigen\u00e8re Break",
+   "level": "school-14",
+   "why": "classical cipher work, arithmetic only: Caesar, Vigen, substitution cipher",
+   "reviewed": "rule",
+   "uncertain": "Kasiski and the index of coincidence are statistics; the cipher work is school-14 but that analysis may belong at 18"
+  },
+  "crypto-lab-otp-vault": {
+   "title": "OTP Vault",
+   "level": "school-18",
+   "why": "school-level primitives: symmetric, random, XOR",
+   "reviewed": "rule"
+  },
+  "crypto-lab-collision-vault": {
+   "title": "Collision Vault",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, SHA-1, SHA3",
+   "reviewed": "rule"
+  },
+  "crypto-lab-jwt-forge": {
+   "title": "JWT Forge",
+   "level": "school-18",
+   "why": "school-level primitives: HMAC, symmetric, ECDSA",
+   "reviewed": "rule"
+  },
+  "crypto-lab-e91": {
+   "title": "E91",
+   "level": "advanced",
+   "why": "needs specialist background: quantum, QKD, BB84",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hybrid-guide": {
+   "title": "Hybrid Guide",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-multivariate": {
+   "title": "Multivariate UOV",
+   "level": "advanced",
+   "why": "needs specialist background: UOV, quantum, finite field",
+   "reviewed": "rule"
+  },
+  "crypto-lab-mayo-seal": {
+   "title": "MAYO Seal",
+   "level": "advanced",
+   "why": "needs specialist background: MAYO, UOV, finite field",
+   "reviewed": "rule"
+  },
+  "crypto-lab-lwe-hints": {
+   "title": "LWE Hints",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, LWE, learning with errors",
+   "reviewed": "rule"
+  },
+  "crypto-lab-syndrome-drain": {
+   "title": "Syndrome Drain",
+   "level": "advanced",
+   "why": "needs specialist background: code-based, syndrome decoding",
+   "reviewed": "rule"
+  },
+  "crypto-lab-broken-trust": {
+   "title": "Broken Trust",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, ML-DSA, lattice reduction",
+   "reviewed": "rule"
+  },
+  "crypto-lab-bitcoin-script": {
+   "title": "Bitcoin Script",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, public-key, ECDSA",
+   "reviewed": "rule"
+  },
+  "crypto-lab-diffie-hellman-mitm": {
+   "title": "DH MITM",
+   "level": "school-18",
+   "why": "school-level primitives: Diffie-Hellman, modular arithmetic, key exchange",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hybrid-pqc": {
+   "title": "Hybrid PQC",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, ML-DSA, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-merkle-proofs": {
+   "title": "Merkle Proofs",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, hashing, Merkle",
+   "reviewed": "rule"
+  },
+  "crypto-lab-pake-gate": {
+   "title": "PAKE Gate",
+   "level": "advanced",
+   "why": "needs specialist background: side-channel, PAKE",
+   "reviewed": "rule"
+  },
+  "crypto-lab-shamir-vs-frost": {
+   "title": "Shamir vs FROST",
+   "level": "advanced",
+   "why": "needs specialist background: secret sharing, Shamir, FROST",
+   "reviewed": "rule"
+  },
+  "crypto-lab-time-lock-puzzle": {
+   "title": "Time-Lock Puzzle",
+   "level": "advanced",
+   "why": "needs specialist background: Shamir, VDF",
+   "reviewed": "rule"
+  },
+  "crypto-lab-timing-sidechannel": {
+   "title": "Timing Side-Channel",
+   "level": "advanced",
+   "why": "needs specialist background: side-channel, constant-time, timing side",
+   "reviewed": "rule"
+  },
+  "crypto-lab-tls-handshake": {
+   "title": "TLS Handshake",
+   "level": "school-18",
+   "why": "school-level primitives: HMAC, HKDF, AES",
+   "reviewed": "rule"
+  },
+  "crypto-lab-vdf": {
+   "title": "VDF",
+   "level": "advanced",
+   "why": "needs specialist background: Shamir, verifiable delay, VDF",
+   "reviewed": "rule"
+  },
+  "crypto-lab-chain-of-trust": {
+   "title": "Chain of Trust",
+   "level": "school-18",
+   "why": "school-level primitives: ECDSA, X.509, PKI",
+   "reviewed": "rule"
+  },
+  "crypto-lab-kem-trap": {
+   "title": "KEM Trap",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-time-trust": {
+   "title": "Time Trust",
+   "level": "school-18",
+   "why": "school-level primitives: HMAC, Ed25519, signature",
+   "reviewed": "rule"
+  },
+  "crypto-lab-nonce-collision": {
+   "title": "Nonce Collision",
+   "level": "school-18",
+   "why": "school-level primitives: AES, ChaCha20, nonce",
+   "reviewed": "rule"
+  },
+  "crypto-lab-signed-bytes": {
+   "title": "Signed Bytes",
+   "level": "school-18",
+   "why": "school-level primitives: Ed25519, signature",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hpke-envelope": {
+   "title": "HPKE Envelope",
+   "level": "school-18",
+   "why": "school-level primitives: HKDF, AES, ChaCha20",
+   "reviewed": "rule"
+  },
+  "crypto-lab-blind-hello": {
+   "title": "Blind Hello",
+   "level": "school-18",
+   "why": "school-level primitives: TLS, certificate",
+   "reviewed": "rule"
+  },
+  "crypto-lab-blind-relay": {
+   "title": "Blind Relay",
+   "level": "advanced",
+   "why": "Oblivious HTTP (RFC 9458) and HPKE: a three-party privacy argument about who learns what",
+   "reviewed": "hand"
+  },
+  "crypto-lab-key-mirror": {
+   "title": "Key Mirror",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, Merkle, HKDF",
+   "reviewed": "rule"
+  },
+  "crypto-lab-spake-gate": {
+   "title": "SPAKE Gate",
+   "level": "advanced",
+   "why": "needs specialist background: PAKE",
+   "reviewed": "rule"
+  },
+  "crypto-lab-reshare-circle": {
+   "title": "Reshare Circle",
+   "level": "advanced",
+   "why": "needs specialist background: secret sharing, Shamir, VSS",
+   "reviewed": "rule"
+  },
+  "crypto-lab-entropy-collapse": {
+   "title": "Entropy Collapse",
+   "level": "school-18",
+   "why": "school-level primitives: entropy, nonce",
+   "reviewed": "rule"
+  },
+  "crypto-lab-salamander": {
+   "title": "Salamander",
+   "level": "advanced",
+   "why": "needs specialist background: GF(2",
+   "reviewed": "rule"
+  },
+  "crypto-lab-frozen-heart": {
+   "title": "Frozen Heart",
+   "level": "advanced",
+   "why": "needs specialist background: zero-knowledge, Fiat-Shamir, Shamir",
+   "reviewed": "rule"
+  },
+  "crypto-lab-credential-veil": {
+   "title": "Credential Veil",
+   "level": "advanced",
+   "why": "needs specialist background: BLS12",
+   "reviewed": "rule"
+  },
+  "crypto-lab-power-trace": {
+   "title": "Power Trace",
+   "level": "advanced",
+   "why": "needs specialist background: side channel, side-channel, constant-time",
+   "reviewed": "rule"
+  },
+  "crypto-lab-protocol-checker": {
+   "title": "Protocol Checker",
+   "level": "advanced",
+   "why": "needs specialist background: OPAQUE",
+   "reviewed": "rule"
+  },
+  "crypto-lab-quantum-entropy": {
+   "title": "Quantum Entropy",
+   "level": "advanced",
+   "why": "needs specialist background: quantum, GF(2, min-entropy",
+   "reviewed": "rule"
+  },
+  "crypto-lab-spdz-forge": {
+   "title": "SPDZ Forge",
+   "level": "advanced",
+   "why": "needs specialist background: MPC, SPDZ, secret sharing",
+   "reviewed": "rule"
+  },
+  "crypto-lab-traitor-trace": {
+   "title": "Traitor Trace",
+   "level": "advanced",
+   "why": "needs specialist background: broadcast encryption, traitor tracing",
+   "reviewed": "rule"
+  },
+  "crypto-lab-isogeny-atlas": {
+   "title": "Isogeny Atlas",
+   "level": "advanced",
+   "why": "needs specialist background: isogeny, CSIDH, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-syndrome-hints": {
+   "title": "Syndrome Hints",
+   "level": "advanced",
+   "why": "needs specialist background: side-channel, syndrome decoding",
+   "reviewed": "rule"
+  },
+  "crypto-lab-lattice-gentle": {
+   "title": "Lattice Gentle",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, LWE, ML-KEM",
+   "reviewed": "rule"
+  },
+  "crypto-lab-encrochat": {
+   "title": "Encrochat",
+   "level": "advanced",
+   "why": "needs specialist background: OPAQUE",
+   "reviewed": "rule"
+  },
+  "crypto-lab-icy-dvrf": {
+   "title": "Icy DVRF",
+   "level": "advanced",
+   "why": "needs specialist background: Shamir, FROST",
+   "reviewed": "rule"
+  },
+  "crypto-lab-musig-gate": {
+   "title": "MuSig Gate",
+   "level": "school-18",
+   "why": "school-level primitives: signature, nonce",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ablation-wire": {
+   "title": "Ablation Wire",
+   "level": "school-18",
+   "why": "school-level primitives: AES",
+   "reviewed": "rule"
+  },
+  "crypto-lab-accumulator": {
+   "title": "Accumulator",
+   "level": "advanced",
+   "why": "needs specialist background: accumulator",
+   "reviewed": "rule"
+  },
+  "crypto-lab-beacon-lock": {
+   "title": "Beacon Lock",
+   "level": "advanced",
+   "why": "needs specialist background: BLS12, identity-based, IBE",
+   "reviewed": "rule"
+  },
+  "crypto-lab-card-trick": {
+   "title": "Card Trick",
+   "level": "advanced",
+   "why": "needs specialist background: multi-party computation, MPC",
+   "reviewed": "rule"
+  },
+  "crypto-lab-dp-noise": {
+   "title": "DP Noise",
+   "level": "advanced",
+   "why": "needs specialist background: advantage, differential privacy",
+   "reviewed": "rule"
+  },
+  "crypto-lab-matsui-line": {
+   "title": "Matsui Line",
+   "level": "advanced",
+   "why": "needs specialist background: linear cryptanalysis",
+   "reviewed": "rule"
+  },
+  "crypto-lab-search-vault": {
+   "title": "Search Vault",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, HMAC, AES",
+   "reviewed": "rule"
+  },
+  "crypto-lab-simon-period": {
+   "title": "Simon's Period",
+   "level": "advanced",
+   "why": "needs specialist background: Shor, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-stream-ward": {
+   "title": "Stream Ward",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256",
+   "reviewed": "rule"
+  },
+  "crypto-lab-kmac-gate": {
+   "title": "KMAC Gate",
+   "level": "advanced",
+   "why": "needs specialist background: sponge",
+   "reviewed": "rule",
+   "uncertain": "KMAC is a MAC from Keccak; kept advanced for the permutation, but it is used as a primitive"
+  },
+  "crypto-lab-token-tell": {
+   "title": "Token Tell",
+   "level": "school-18",
+   "why": "school-level primitives: ECDSA, signature",
+   "reviewed": "rule"
+  },
+  "crypto-lab-context-ward": {
+   "title": "Context Ward",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, HMAC, HKDF",
+   "reviewed": "rule"
+  },
+  "crypto-lab-fte": {
+   "title": "Regex Veil \u2014 FTE",
+   "level": "advanced",
+   "why": "needs specialist background: format-transforming, DFA ranking",
+   "reviewed": "rule"
+  },
+  "crypto-lab-shelf-oracle": {
+   "title": "Shelf Oracle",
+   "level": "advanced",
+   "why": "needs specialist background: BFV, private information retrieval",
+   "reviewed": "rule"
+  },
+  "crypto-lab-feistel-forge": {
+   "title": "Feistel Forge",
+   "level": "school-18",
+   "why": "school-level primitives: birthday",
+   "reviewed": "rule"
+  },
+  "crypto-lab-rekey-relay": {
+   "title": "Rekey Relay",
+   "level": "advanced",
+   "why": "needs specialist background: BLS12",
+   "reviewed": "rule"
+  },
+  "crypto-lab-polynomial-forge": {
+   "title": "Polynomial Forge",
+   "level": "advanced",
+   "why": "needs specialist background: zero-knowledge, polynomial commitment, BLS12",
+   "reviewed": "rule"
+  },
+  "crypto-lab-dnssec-chain": {
+   "title": "DNSSEC Chain",
+   "level": "school-18",
+   "why": "school-level primitives: TLS, certificate, X.509",
+   "reviewed": "rule"
+  },
+  "crypto-lab-masked-core": {
+   "title": "Masked Core",
+   "level": "advanced",
+   "why": "needs specialist background: power analysis",
+   "reviewed": "rule"
+  },
+  "crypto-lab-sector-vault": {
+   "title": "Sector Vault",
+   "level": "advanced",
+   "why": "needs specialist background: GF(2",
+   "reviewed": "rule"
+  },
+  "crypto-lab-attribute-gate": {
+   "title": "Attribute Gate",
+   "level": "advanced",
+   "why": "needs specialist background: BLS12, attribute-based",
+   "reviewed": "rule"
+  },
+  "crypto-lab-sphinx-mix": {
+   "title": "Sphinx Mix",
+   "level": "advanced",
+   "why": "Sphinx mix-network packet format with per-hop ristretto255 blinding and LIONESS",
+   "reviewed": "hand"
+  },
+  "crypto-lab-attestation-gate": {
+   "title": "Attestation Gate",
+   "level": "advanced",
+   "why": "TPM 2.0 measured boot, TPMS_ATTEST quotes and RATS verification",
+   "reviewed": "hand",
+   "uncertain": "systems security rather than cryptography; advanced on the trust reasoning"
+  },
+  "crypto-lab-ggh-trapdoor": {
+   "title": "GGH Trapdoor",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, LLL, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-factor-forge": {
+   "title": "Factor Forge",
+   "level": "school-18",
+   "why": "school-level primitives: RSA",
+   "reviewed": "rule"
+  },
+  "crypto-lab-privacy-pass": {
+   "title": "Privacy Pass",
+   "level": "advanced",
+   "why": "needs specialist background: VOPRF",
+   "reviewed": "rule"
+  },
+  "crypto-lab-order-leak": {
+   "title": "Order Leak",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, HMAC, AES",
+   "reviewed": "rule"
+  },
+  "crypto-lab-split-point": {
+   "title": "Split Point",
+   "level": "advanced",
+   "why": "needs specialist background: private information retrieval, secret sharing",
+   "reviewed": "rule"
+  },
+  "crypto-lab-proof-tally": {
+   "title": "Proof Tally",
+   "level": "advanced",
+   "why": "needs specialist background: secret sharing",
+   "reviewed": "rule"
+  },
+  "crypto-lab-fold-gate": {
+   "title": "Fold Gate",
+   "level": "advanced",
+   "why": "needs specialist background: R1CS, Fiat-Shamir, folding scheme",
+   "reviewed": "rule"
+  },
+  "crypto-lab-hidden-bit": {
+   "title": "Hidden Bit",
+   "level": "advanced",
+   "why": "needs specialist background: IND-CPA, EUF-CMA, advantage",
+   "reviewed": "rule"
+  },
+  "crypto-lab-pqxdh-wire": {
+   "title": "PQXDH Wire",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, ML-KEM, quantum",
+   "reviewed": "rule"
+  },
+  "crypto-lab-sleeve-check": {
+   "title": "Sleeve Check",
+   "level": "school-18",
+   "why": "school-level primitives: hash function, AES, block cipher",
+   "reviewed": "rule"
+  },
+  "crypto-lab-ghost-commit": {
+   "title": "Ghost Commit",
+   "level": "school-18",
+   "why": "school-level primitives: SHA-256, SHA-1, entropy",
+   "reviewed": "rule"
+  },
+  "crypto-lab-lattice-builder": {
+   "title": "Lattice Builder",
+   "level": "advanced",
+   "why": "needs specialist background: lattice, LWE, ML-KEM",
+   "reviewed": "rule"
+  },
+  "crypto-lab-covert-channel-studio": {
+   "title": "Covert Channel Studio",
+   "level": "advanced",
+   "why": "needs specialist background: Flush+Reload, covert channel",
+   "reviewed": "rule"
+  },
+  "crypto-lab-point-ledger": {
+   "title": "Point Ledger",
+   "level": "advanced",
+   "why": "needs specialist background: Fiat-Shamir, Shamir, Shor",
+   "reviewed": "rule"
+  },
+  "crypto-lab-mgm-mode": {
+   "title": "MGM Mode",
+   "level": "advanced",
+   "why": "needs specialist background: GF(2",
+   "reviewed": "rule"
+  },
+  "crypto-lab-drift-key": {
+   "title": "Drift Key",
+   "level": "advanced",
+   "why": "needs specialist background: BCH, fuzzy extractor",
+   "reviewed": "rule"
+  },
+  "crypto-lab-noise-to-numbers": {
+   "title": "Noise to Numbers",
+   "level": "advanced",
+   "why": "needs specialist background: min-entropy",
+   "reviewed": "rule"
+  },
+  "crypto-lab-pulse-chain": {
+   "title": "Pulse Chain",
+   "level": "advanced",
+   "why": "needs specialist background: pairing, BLS12",
+   "reviewed": "rule"
+  },
+  "crypto-lab-glass-box": {
+   "title": "Glass Box",
+   "level": "advanced",
+   "why": "needs specialist background: white-box",
+   "reviewed": "rule"
+  },
+  "crypto-lab-return-path": {
+   "title": "Return Path",
+   "level": "advanced",
+   "why": "needs specialist background: differential cryptanalysis, boomerang, impossible differential",
+   "reviewed": "rule"
+  },
+  "crypto-lab-sm9-forge": {
+   "title": "SM9 Forge",
+   "level": "advanced",
+   "why": "needs specialist background: pairing, identity-based",
+   "reviewed": "rule"
+  },
+  "crypto-lab-pq-chooser": {
+   "title": "PQ Chooser",
+   "level": "advanced",
+   "why": "needs specialist background: ML-KEM, ML-DSA, Falcon",
+   "reviewed": "rule"
+  },
+  "crypto-lab-adaptor-gate": {
+   "title": "Adaptor Gate",
+   "level": "advanced",
+   "why": "needs specialist background: adaptor signature",
+   "reviewed": "rule"
+  },
+  "crypto-lab-function-key": {
+   "title": "Function Key",
+   "level": "advanced",
+   "why": "needs specialist background: functional encryption, inner-product",
+   "reviewed": "rule"
+  }
+ }
+}

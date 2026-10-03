@@ -10,11 +10,11 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 3 · Intermediate — 76 · Advanced — 140. Total 219.
+**Counts:** Beginner — 25 · Intermediate — 54 · Advanced — 140. Total 219.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
-## Flagged for your review first (11)
+## Flagged for your review first (10)
 
 These are the ones I am least sure about. Each is assigned, and each could reasonably go the other way.
 
@@ -25,22 +25,43 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | `intermediate` | kept at 18 for its explicit no-math on-ramp, but it also runs a Bleichenbacher padding oracle |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | `intermediate` | conceptual rather than technical, but the subject is post-quantum risk |
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | `advanced` | an AEAD design built on the AES round function: kept advanced for the internals |
-| [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | `intermediate` | same: planning content about a specialist subject |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | `intermediate` | same: policy reasoning about PQC without PQC internals |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | `beginner` | Kasiski and the index of coincidence are statistics; the cipher work needs no algebra but that analysis may ask for some |
 | [KMAC Gate](https://systemslibrarian.github.io/crypto-lab-kmac-gate/) | `advanced` | KMAC is a MAC from Keccak; kept advanced for the permutation, but it is used as a primitive |
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | `advanced` | systems security rather than cryptography; advanced on the trust reasoning |
 | [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | `intermediate` | The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience. |
 
-## Beginner — `beginner` (3)
+## Beginner — `beginner` (25)
 
 | Lab | Source | Reason |
 |---|---|---|
+| [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) | hand | the cost factor is doubling; the rest is the anatomy of a stored hash string |
+| [Blind Hello](https://systemslibrarian.github.io/crypto-lab-blind-hello/) | hand | starts from "when your browser opens a secure connection" and stays there |
+| [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) | hand | says outright that only a small part of the checklist is cryptography |
+| [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) | hand | two different files, one digest; the reader computes nothing |
 | [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | rule | classical cipher work, arithmetic only: Caesar, Vigen, polyalphabetic |
+| [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) | hand | its first section is titled "What this is, in plain language" |
+| [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) | hand | negotiation stripping explained in plain words before anything is stripped |
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | rule | classical cipher work, arithmetic only: polyalphabetic, Enigma, rotor |
+| [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | hand | the paper-key-inside-a-safe analogy carries the entire lab |
+| [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) | hand | the whole trick is stated in four plain sentences before anything runs |
+| [Ghost Commit](https://systemslibrarian.github.io/crypto-lab-ghost-commit/) | hand | git objects and a leaked credential; there is no maths anywhere in it |
+| [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | hand | Mosca's X + Y > Z is adding two numbers of years and comparing to a third |
+| [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | hand | opens "Start here - What is a hash?" with three plain rules and a type-anything box |
+| [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) | hand | 90-second guided tour: decode, forge, compare a correct verifier with a broken one |
+| [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) | hand | one benchmark, one control, a jargon glossary, and the tension stated in plain words |
+| [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) | hand | "Start Here - a Guided Path" numbers six steps; parameters are powers of two |
+| [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) | hand | the structure half of the Merkle pair, by the two labs’ own stated split |
+| [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | hand | XOR is introduced from scratch and crib-dragging is a word puzzle, not algebra |
+| [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) | hand | same meaning, different bytes - a parsing lesson, not a maths one |
+| [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) | hand | truncate, reorder and drop chunks; the failure is visible without theory |
+| [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) | hand | one clock slider; the reader moves time and watches verdicts move |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | rule | classical cipher work, arithmetic only: Caesar, Vigen, substitution cipher **(flagged)** |
+| [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) | hand | "the whole concept in one picture"; the signature is used, never computed |
+| [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
+| [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (76)
+## Intermediate — `intermediate` (54)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -48,54 +69,38 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) | rule | school-level primitives: AES, block cipher, symmetric |
 | [Air Stream](https://systemslibrarian.github.io/crypto-lab-air-stream/) | rule | school-level primitives: AES |
 | [Babel Hash](https://systemslibrarian.github.io/crypto-lab-babel-hash/) | hand | compares SHA-256, SHA3-256 and BLAKE3 with avalanche, length extension and HMAC — "sponge" is how SHA-3 is built, not what the lab asks of you |
-| [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) | rule | school-level primitives: hashing, password, bcrypt |
 | [Bitcoin Script](https://systemslibrarian.github.io/crypto-lab-bitcoin-script/) | rule | school-level primitives: SHA-256, public-key, ECDSA |
 | [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | rule | school-level primitives: SHA-256, PBKDF2, public key |
-| [Blind Hello](https://systemslibrarian.github.io/crypto-lab-blind-hello/) | rule | school-level primitives: TLS, certificate |
 | [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) | hand | stream cipher as XOR with a keystream, quarter-round stepper and nonce reuse; "constant-time" is a passing note |
-| [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) | rule | school-level primitives: ECDSA, X.509, PKI |
-| [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) | rule | school-level primitives: SHA-256, SHA-1, SHA3 |
 | [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) | rule | school-level primitives: SHA-256, HMAC, HKDF |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | rule | school-level primitives: Diffie-Hellman, X25519 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | rule | school-level primitives: Diffie-Hellman, Ed25519, key exchange |
 | [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) | rule | school-level primitives: Diffie-Hellman, modular arithmetic, key exchange |
-| [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) | rule | school-level primitives: TLS, certificate, X.509 |
-| [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) | hand | protocol downgrade and version negotiation; "quantum" appears as context, not content |
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | rule | school-level primitives: digital signature, ECDSA, signature |
 | [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | rule | school-level primitives: digital signature, Ed25519, signature |
 | [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) | rule | school-level primitives: RSA, public key, public-key |
 | [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) | rule | school-level primitives: public-key, modular arithmetic, modular exponentiation |
 | [Entropy Collapse](https://systemslibrarian.github.io/crypto-lab-entropy-collapse/) | rule | school-level primitives: entropy, nonce |
-| [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | rule | school-level primitives: AES, random |
 | [Export Grade](https://systemslibrarian.github.io/crypto-lab-export-grade/) | rule | school-level primitives: AES, stream cipher |
 | [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) | rule | school-level primitives: RSA |
-| [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) | rule | school-level primitives: birthday |
-| [Ghost Commit](https://systemslibrarian.github.io/crypto-lab-ghost-commit/) | rule | school-level primitives: SHA-256, SHA-1, entropy |
-| [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | hand | a migration timeline; the reasoning is calendar and risk, not cryptanalysis **(flagged)** |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | hand | harvest-now-decrypt-later as a long-term confidentiality argument, not PQC internals **(flagged)** |
-| [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | hand | a tour of hash families side by side; the sponge is named, not derived |
 | [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) | rule | school-level primitives: HKDF, AES, ChaCha20 |
 | [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) | hand | a guide to why a KEM combiner pairs X25519 with ML-KEM-768 and what breaking either half costs; it implements AES-GCM and SHA-256 and derives no PQC, so it sits with PQ Rotation, which implements ML-DSA and is also at this level |
 | [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) | rule | school-level primitives: HKDF, AES, symmetric |
 | [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) | rule | school-level primitives: HMAC, password, AES |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | rule | school-level primitives: public key, digital signature, signature |
-| [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) | rule | school-level primitives: HMAC, symmetric, ECDSA |
-| [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) | rule | school-level primitives: password, scrypt, PBKDF2 |
-| [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) | rule | school-level primitives: SHA-256, HMAC, scrypt |
 | [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) | rule | school-level primitives: HMAC, AES, Kerberos |
 | [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) | rule | school-level primitives: SHA-256, Merkle, HKDF |
 | [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | rule | school-level primitives: SHA-256, Merkle, public key |
 | [LMS/XMSS](https://systemslibrarian.github.io/crypto-lab-lms-xmss/) | rule | school-level primitives: SHA-256, hashing, Merkle |
 | [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) | rule | school-level primitives: SHA-256, HMAC, AES |
 | [Merkle Proofs](https://systemslibrarian.github.io/crypto-lab-merkle-proofs/) | rule | school-level primitives: SHA-256, hashing, Merkle |
-| [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) | rule | school-level primitives: SHA-256, Merkle, certificate |
 | [Model Breach](https://systemslibrarian.github.io/crypto-lab-model-breach/) | rule | school-level primitives: MITM |
 | [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) | rule | school-level primitives: signature, nonce |
 | [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) | rule | school-level primitives: SHA-256, HKDF, AES |
 | [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) | rule | school-level primitives: AES, ChaCha20, nonce |
 | [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) | rule | school-level primitives: AES, symmetric, nonce |
 | [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) | rule | school-level primitives: SHA-256, HMAC, AES |
-| [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | rule | school-level primitives: symmetric, random, XOR |
 | [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) | rule | school-level primitives: AES, symmetric, padding |
 | [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | hand | the chord-and-tangent group law is introduced visually over the reals before the finite field, the same on-ramp shape that keeps RSA Forge at this level |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | hand | key-rotation policy planning; names PQC schemes without deriving any **(flagged)** |
@@ -106,19 +111,13 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) | rule | school-level primitives: ECDSA, signature, nonce |
 | [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) | rule | school-level primitives: SHA-256, HMAC, AES |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | hand | Argon2id + ChaCha20-Poly1305 in a deniable container — school-level primitives, one security-model idea on top **(flagged)** |
-| [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) | rule | school-level primitives: Ed25519, signature |
 | [Sleeve Check](https://systemslibrarian.github.io/crypto-lab-sleeve-check/) | rule | school-level primitives: hash function, AES, block cipher |
 | [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) | hand | sign/encrypt under a national standard plus a reused-nonce key recovery: asymmetric basics and a simple attack **(flagged)** |
 | [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | rule | school-level primitives: SHA-256, public key, ECDSA |
-| [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) | rule | school-level primitives: SHA-256 |
-| [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) | rule | school-level primitives: HMAC, Ed25519, signature |
 | [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) | rule | school-level primitives: HMAC, HKDF, AES |
 | [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) | rule | school-level primitives: ECDSA, signature |
 | [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | hand | Positive and hostile Ed25519 cases, one modular scalar-range predicate, and a guided comparison of what each test establishes. **(flagged)** |
 | [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) | rule | school-level primitives: ECDSA, Ed25519 |
-| [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) | rule | school-level primitives: ECDSA, signature, WebAuthn |
-| [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | compares national cipher families as designs; no specialist machinery is required of the reader |
-| [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | rule | school-level primitives: SHA-256, hashing |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
 ## Advanced — `advanced` (140)

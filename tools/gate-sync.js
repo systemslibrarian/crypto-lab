@@ -145,6 +145,12 @@
  *   DISPATCH-403     a dispatch whose effective permissions lack `actions:
  *                    write`. `gh workflow run` returns HTTP 403 every single
  *                    time, and the `|| echo` below keeps the job green.
+ *   ENV-ON-PR        a deploy job that names a protected `environment:` on a
+ *                    workflow that also triggers on pull_request, with no `if`
+ *                    excluding them. The environment's branch policy rejects
+ *                    the job at startup, so it fails with ZERO steps run and
+ *                    the auto-merge that `needs:` it can never go green.
+ *
  *   CONCURRENCY-PR   a `cancel-in-progress` group that is not ref-scoped on a
  *                    workflow that also triggers on pull_request. A PR run then
  *                    shares the group with main and cancels a live deploy —
@@ -856,6 +862,32 @@ function analyse(repo, lab) {
         + `(${[...own].sort().map((t) => `\`${t}\``).join(', ')}) and deploys, and is gated `
         + `\`if: ${String(d.job.if).trim()}\` — so a pull request runs nothing at all. Split build from deploy`);
     }
+    /* ENV-ON-PR. The mirror image of FUSED-GATE-OFF above, and quieter.
+     *
+     * A job that names `environment:` is evaluated against that environment's
+     * protection rules BEFORE any step runs. `github-pages` carries a
+     * deployment branch policy, so on a pull request branch the job is rejected
+     * at startup: it fails in seconds having executed ZERO steps. Step-level
+     * `if: github.event_name != 'pull_request'` guards inside it never get the
+     * chance to run -- they are guarding steps in a job that never started.
+     *
+     * Nothing else here catches it. The job needs the same gate the deploy
+     * needs, so the SPLIT-GATE and FUSED-GATE-OFF rules both read it as
+     * consistent, and the auto-merge job legitimately `needs:` it. The only
+     * symptom is a red check on every bump the lab ever receives.
+     *
+     * Found on 2026-10-03 in bcrypt-forge, iron-letter and scloud-vault, whose
+     * Dependabot PRs had been unmergeable since 2026-09-10 for this reason. */
+    const env = d.job.environment;
+    const envName = typeof env === 'string' ? env : (env && typeof env === 'object' ? env.name : null);
+    if (envName && hasTrigger(d.wf, 'pull_request') && !excludesPullRequests(d.job.if)) {
+      add('fail', 'ENV-ON-PR', `${d.file}:${d.name} names \`environment: ${envName}\` and its `
+        + 'workflow triggers on pull_request, with no `if` excluding them. A protected environment '
+        + 'rejects the job before any step runs, so every pull request shows this job failing with '
+        + 'zero steps and no bump can ever merge. Move the publish into its own job with '
+        + "`needs:` the gate and `if: github.event_name != 'pull_request'`");
+    }
+
     const conc = d.wf.concurrency;
     const group = conc && typeof conc === 'object' ? conc.group : null;
     const cancels = conc && typeof conc === 'object' && conc['cancel-in-progress'] === true;
@@ -949,11 +981,53 @@ function unseenCarded(carded, repos) {
 }
 
 const ORDER = ['DEPLOY-UNRECOGNISED', 'GATE-WEAKER', 'PUSH-GATED', 'FUSED-GATE-OFF', 'NO-PR-GATE', 'DISPATCH-MISSING',
-  'DISPATCH-404', 'DISPATCH-INERT', 'DISPATCH-403', 'CONCURRENCY-PR',
+  'DISPATCH-404', 'DISPATCH-INERT', 'DISPATCH-403', 'CONCURRENCY-PR', 'ENV-ON-PR',
   'SPLIT-GATE', 'CONCURRENCY-BARE', 'DISPATCH-ELSEWHERE'];
+
+/* ------------------------------------------------------------------ *
+ * Selftest. Offline: two fixture labs under tools/fixtures/gate, run
+ * through the real loadLab() + analyse() rather than a reimplementation.
+ *
+ * Both directions, because a rule that always fires is as useless as none:
+ * the fixture carrying the defect must FAIL with ENV-ON-PR, and the same
+ * lab after the §6 split must be SILENT about it. The pair is the mutation --
+ * env-split is env-on-pr with the publish moved into its own job, which is
+ * exactly the edit the rule exists to demand.
+ * ------------------------------------------------------------------ */
+function selftest() {
+  const dir = path.join(__dirname, 'fixtures', 'gate');
+  const cases = [
+    ['env-on-pr', true, 'one job gates, publishes and names a protected environment on a PR trigger'],
+    ['env-split', false, 'the same lab after the split, which must stay quiet'],
+  ];
+  const fail = [];
+  let pass = 0;
+  for (const [name, wantFinding, why] of cases) {
+    const lab = loadLab(path.join(dir, name));
+    if (!lab || lab.unparsed) { fail.push(`${name}: fixture did not load (${lab && lab.unparsed})`); continue; }
+    const res = analyse(name, lab);
+    if (res.skip) { fail.push(`${name}: analyse skipped it as "${res.skip}" — the fixture no longer looks like a lab`); continue; }
+    const got = (res.findings || []).some((f) => f.code === 'ENV-ON-PR' && f.level === 'fail');
+    if (got !== wantFinding) {
+      fail.push(`${name}: expected ENV-ON-PR=${wantFinding}, got ${got}`
+        + ` (findings: ${(res.findings || []).map((f) => f.code).join(', ') || 'none'})`);
+    } else {
+      pass++;
+      console.log(`  ok  ${name} — ${why}`);
+    }
+  }
+  if (!cases.some(([, w]) => w)) fail.push('no fixture exercises the rule');
+  if (!cases.some(([, w]) => !w)) fail.push('no clean fixture: the rule is never shown staying quiet');
+  console.log(fail.length ? `\n${pass} passed, ${fail.length} FAILED` : `\n${pass} passed, 0 failed`);
+  for (const m of fail) console.log(`  FAIL  ${m}`);
+  return fail.length ? 1 : 0;
+}
 
 function main() {
   const check = process.argv[2] === 'check';
+  /* Offline by design -- fixtures only, no clones -- so it runs before the
+   * fleet floor below. */
+  if (process.argv[2] === 'selftest') process.exit(selftest());
   /* A checker that cannot see the clones must not report them clean. Four of
    * these reported a clean pass over zero labs until 2026-10-02 -- see the
    * measurements in tools/sibling-labs.js. The floor is the census, so it moves
@@ -1110,6 +1184,6 @@ function main() {
  * copy of a set is how two checkers come to disagree about the fleet.
  *
  * Guarded, because requiring this file must not run the whole fleet check. */
-module.exports = { PAGES_PUBLISHERS };
+module.exports = { PAGES_PUBLISHERS, loadLab, analyse };
 
 if (require.main === module) process.exit(main());

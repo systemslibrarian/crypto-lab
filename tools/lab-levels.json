@@ -1,9 +1,9 @@
 {
- "note": "Audience level per lab. HAND-JUDGED from each lab's own README and card copy, never from its name. Levels: school-14 (classical/visual, arithmetic only), school-18 (modular arithmetic, hashing, symmetric/asymmetric basics, simple attacks), advanced (lattices, ZK, FHE, MPC, PQC internals, side channels, formal games). Edit this file, then run `node tools/level-sync.js` to stamp the cards and regenerate LEVELS-REVIEW.md.",
+ "note": "Audience level per lab. HAND-JUDGED from each lab's own README and card copy, never from its name. Levels: beginner (no maths beyond arithmetic), intermediate (comfortable with algebra and basic modular arithmetic), advanced (expects the underlying maths: groups, fields, lattices). Renamed from school-14/school-18 on 2026-10-03; the ASSIGNMENTS did not change, only what they are called. Edit this file, then run `node tools/level-sync.js` to stamp the cards and regenerate LEVELS-REVIEW.md.",
  "generated": "2026-10-03",
  "levels": [
-  "school-14",
-  "school-18",
+  "beginner",
+  "intermediate",
   "advanced"
  ],
  "labs": {
@@ -27,7 +27,7 @@
   },
   "crypto-lab-air-stream": {
    "title": "Air Stream",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: AES",
    "reviewed": "rule"
   },
@@ -45,7 +45,7 @@
   },
   "crypto-lab-sm2-forge": {
    "title": "SM2 Forge",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "sign/encrypt under a national standard plus a reused-nonce key recovery: asymmetric basics and a simple attack",
    "reviewed": "hand",
    "uncertain": "a national standard with an identity digest and two ciphertext orders \u2014 arguably specialist"
@@ -58,7 +58,7 @@
   },
   "crypto-lab-export-grade": {
    "title": "Export Grade",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: AES, stream cipher",
    "reviewed": "rule"
   },
@@ -88,19 +88,19 @@
   },
   "crypto-lab-model-breach": {
    "title": "Model Breach",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: MITM",
    "reviewed": "rule"
   },
   "crypto-lab-iron-letter": {
    "title": "Iron Letter",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: HKDF, AES, symmetric",
    "reviewed": "rule"
   },
   "crypto-lab-shadow-vault": {
    "title": "Shadow Vault",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "Argon2id + ChaCha20-Poly1305 in a deniable container \u2014 school-level primitives, one security-model idea on top",
    "reviewed": "hand",
    "uncertain": "deniable encryption is a security-model idea; the primitives are school-level but the point may not be"
@@ -185,7 +185,7 @@
   },
   "crypto-lab-ratchet-wire": {
    "title": "Ratchet Wire",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: HKDF, AES, symmetric",
    "reviewed": "rule"
   },
@@ -197,13 +197,13 @@
   },
   "crypto-lab-iron-serpent": {
    "title": "Iron Serpent",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: HMAC, password, AES",
    "reviewed": "rule"
   },
   "crypto-lab-world-ciphers": {
    "title": "World Ciphers",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "compares national cipher families as designs; no specialist machinery is required of the reader",
    "reviewed": "hand"
   },
@@ -215,7 +215,7 @@
   },
   "crypto-lab-dead-sea-cipher": {
    "title": "Dead Sea Cipher",
-   "level": "school-14",
+   "level": "beginner",
    "why": "classical cipher work, arithmetic only: Caesar, Vigen, polyalphabetic",
    "reviewed": "rule"
   },
@@ -239,68 +239,68 @@
   },
   "crypto-lab-downgrade-wire": {
    "title": "Downgrade Wire",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "protocol downgrade and version negotiation; \"quantum\" appears as context, not content",
    "reviewed": "hand"
   },
   "crypto-lab-babel-hash": {
    "title": "Babel Hash",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "compares SHA-256, SHA3-256 and BLAKE3 with avalanche, length extension and HMAC \u2014 \"sponge\" is how SHA-3 is built, not what the lab asks of you",
    "reviewed": "hand"
   },
   "crypto-lab-aes-modes": {
    "title": "AES Modes",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: AES, block cipher, symmetric",
    "reviewed": "rule"
   },
   "crypto-lab-rsa-educational": {
    "title": "Educational RSA",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: RSA, public key, public-key",
    "reviewed": "rule"
   },
   "crypto-lab-rsa-forge": {
    "title": "RSA Forge",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "its own README opens with \"a plain-language, no-math on-ramp \u2014 a padlock analogy\"; RSA, OAEP/PSS and padding-oracle attacks",
    "reviewed": "hand",
    "uncertain": "kept at 18 for its explicit no-math on-ramp, but it also runs a Bleichenbacher padding oracle"
   },
   "crypto-lab-curve-lens": {
    "title": "Curve Lens",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: Diffie-Hellman, X25519",
    "reviewed": "rule"
   },
   "crypto-lab-ec-point-arithmetic": {
    "title": "Point Arithmetic",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "the chord-and-tangent group law is introduced visually over the reals before the finite field, the same on-ramp shape that keeps RSA Forge at this level",
    "reviewed": "hand"
   },
   "crypto-lab-x3dh-wire": {
    "title": "X3DH Wire",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, HKDF, Diffie-Hellman",
    "reviewed": "rule"
   },
   "crypto-lab-noise-pipe": {
    "title": "Noise Pipe",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, HKDF, AES",
    "reviewed": "rule"
   },
   "crypto-lab-mac-race": {
    "title": "MAC Race",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, HMAC, AES",
    "reviewed": "rule"
   },
   "crypto-lab-kdf-chain": {
    "title": "KDF Chain",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, HMAC, scrypt",
    "reviewed": "rule"
   },
@@ -312,7 +312,7 @@
   },
   "crypto-lab-padding-oracle": {
    "title": "Padding Oracle",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: AES, symmetric, padding",
    "reviewed": "rule"
   },
@@ -354,31 +354,31 @@
   },
   "crypto-lab-chacha20-stream": {
    "title": "ChaCha20 Stream",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "stream cipher as XOR with a keystream, quarter-round stepper and nonce reuse; \"constant-time\" is a passing note",
    "reviewed": "hand"
   },
   "crypto-lab-ed25519-forge": {
    "title": "Ed25519 Forge",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: digital signature, Ed25519, signature",
    "reviewed": "rule"
   },
   "crypto-lab-hash-zoo": {
    "title": "Hash Zoo",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "a tour of hash families side by side; the sponge is named, not derived",
    "reviewed": "hand"
   },
   "crypto-lab-world-hashes": {
    "title": "World Hashes",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, hashing",
    "reviewed": "rule"
   },
   "crypto-lab-kdf-arena": {
    "title": "KDF Arena",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: password, scrypt, PBKDF2",
    "reviewed": "rule"
   },
@@ -396,19 +396,19 @@
   },
   "crypto-lab-lms-ledger": {
    "title": "LMS Ledger",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, Merkle, public key",
    "reviewed": "rule"
   },
   "crypto-lab-merkle-vault": {
    "title": "Merkle Vault",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, Merkle, certificate",
    "reviewed": "rule"
   },
   "crypto-lab-nonce-guard": {
    "title": "Nonce Guard",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: AES, symmetric, nonce",
    "reviewed": "rule"
   },
@@ -438,7 +438,7 @@
   },
   "crypto-lab-bcrypt-forge": {
    "title": "Bcrypt Forge",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: hashing, password, bcrypt",
    "reviewed": "rule"
   },
@@ -462,13 +462,13 @@
   },
   "crypto-lab-protocol-compose": {
    "title": "Protocol Compose",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, HMAC, AES",
    "reviewed": "rule"
   },
   "crypto-lab-ring-sign": {
    "title": "Ring Sign",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: ECDSA, Ed25519, signature",
    "reviewed": "rule"
   },
@@ -486,7 +486,7 @@
   },
   "crypto-lab-harvest-vault": {
    "title": "Harvest Vault",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "harvest-now-decrypt-later as a long-term confidentiality argument, not PQC internals",
    "reviewed": "hand",
    "uncertain": "conceptual rather than technical, but the subject is post-quantum risk"
@@ -542,7 +542,7 @@
   },
   "crypto-lab-curve448": {
    "title": "Curve448",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: Diffie-Hellman, Ed25519, key exchange",
    "reviewed": "rule"
   },
@@ -554,25 +554,25 @@
   },
   "crypto-lab-ecdsa-forge": {
    "title": "ECDSA Forge",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: digital signature, ECDSA, signature",
    "reviewed": "rule"
   },
   "crypto-lab-schnorr-forge": {
    "title": "Schnorr Forge",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: ECDSA, signature, nonce",
    "reviewed": "rule"
   },
   "crypto-lab-elgamal-plain": {
    "title": "ElGamal Plain",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: public-key, modular arithmetic, modular exponentiation",
    "reviewed": "rule"
   },
   "crypto-lab-harvest-timeline": {
    "title": "Harvest Timeline",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "a migration timeline; the reasoning is calendar and risk, not cryptanalysis",
    "reviewed": "hand",
    "uncertain": "same: planning content about a specialist subject"
@@ -609,7 +609,7 @@
   },
   "crypto-lab-lms-xmss": {
    "title": "LMS/XMSS",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, hashing, Merkle",
    "reviewed": "rule"
   },
@@ -633,7 +633,7 @@
   },
   "crypto-lab-pq-rotation": {
    "title": "PQ Rotation",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "key-rotation policy planning; names PQC schemes without deriving any",
    "reviewed": "hand",
    "uncertain": "same: policy reasoning about PQC without PQC internals"
@@ -664,7 +664,7 @@
   },
   "crypto-lab-envelope-kms": {
    "title": "Envelope KMS",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: AES, random",
    "reviewed": "rule"
   },
@@ -682,7 +682,7 @@
   },
   "crypto-lab-kerberos": {
    "title": "Kerberos v5",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: HMAC, AES, Kerberos",
    "reviewed": "rule"
   },
@@ -700,7 +700,7 @@
   },
   "crypto-lab-jevil": {
    "title": "Jevil",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: public key, digital signature, signature",
    "reviewed": "rule"
   },
@@ -730,56 +730,56 @@
   },
   "crypto-lab-web-of-trust": {
    "title": "Web of Trust",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: ECDSA, Ed25519",
    "reviewed": "rule"
   },
   "crypto-lab-webauthn": {
    "title": "WebAuthn",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: ECDSA, signature, WebAuthn",
    "reviewed": "rule"
   },
   "crypto-lab-ssh-handshake": {
    "title": "SSH Handshake",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, public key, ECDSA",
    "reviewed": "rule"
   },
   "crypto-lab-bitcoin-wallet": {
    "title": "Bitcoin Wallet",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, PBKDF2, public key",
    "reviewed": "rule"
   },
   "crypto-lab-enigma-forge": {
    "title": "Enigma Forge",
-   "level": "school-14",
+   "level": "beginner",
    "why": "classical cipher work, arithmetic only: polyalphabetic, Enigma, rotor",
    "reviewed": "rule"
   },
   "crypto-lab-vigenere-break": {
    "title": "Vigen\u00e8re Break",
-   "level": "school-14",
+   "level": "beginner",
    "why": "classical cipher work, arithmetic only: Caesar, Vigen, substitution cipher",
    "reviewed": "rule",
-   "uncertain": "Kasiski and the index of coincidence are statistics; the cipher work is school-14 but that analysis may belong at 18"
+   "uncertain": "Kasiski and the index of coincidence are statistics; the cipher work needs no algebra but that analysis may ask for some"
   },
   "crypto-lab-otp-vault": {
    "title": "OTP Vault",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: symmetric, random, XOR",
    "reviewed": "rule"
   },
   "crypto-lab-collision-vault": {
    "title": "Collision Vault",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, SHA-1, SHA3",
    "reviewed": "rule"
   },
   "crypto-lab-jwt-forge": {
    "title": "JWT Forge",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: HMAC, symmetric, ECDSA",
    "reviewed": "rule"
   },
@@ -791,7 +791,7 @@
   },
   "crypto-lab-hybrid-guide": {
    "title": "Hybrid Guide",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "a guide to why a KEM combiner pairs X25519 with ML-KEM-768 and what breaking either half costs; it implements AES-GCM and SHA-256 and derives no PQC, so it sits with PQ Rotation, which implements ML-DSA and is also at this level",
    "reviewed": "hand"
   },
@@ -827,13 +827,13 @@
   },
   "crypto-lab-bitcoin-script": {
    "title": "Bitcoin Script",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, public-key, ECDSA",
    "reviewed": "rule"
   },
   "crypto-lab-diffie-hellman-mitm": {
    "title": "DH MITM",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: Diffie-Hellman, modular arithmetic, key exchange",
    "reviewed": "rule"
   },
@@ -845,7 +845,7 @@
   },
   "crypto-lab-merkle-proofs": {
    "title": "Merkle Proofs",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, hashing, Merkle",
    "reviewed": "rule"
   },
@@ -875,7 +875,7 @@
   },
   "crypto-lab-tls-handshake": {
    "title": "TLS Handshake",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: HMAC, HKDF, AES",
    "reviewed": "rule"
   },
@@ -887,7 +887,7 @@
   },
   "crypto-lab-chain-of-trust": {
    "title": "Chain of Trust",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: ECDSA, X.509, PKI",
    "reviewed": "rule"
   },
@@ -899,31 +899,31 @@
   },
   "crypto-lab-time-trust": {
    "title": "Time Trust",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: HMAC, Ed25519, signature",
    "reviewed": "rule"
   },
   "crypto-lab-nonce-collision": {
    "title": "Nonce Collision",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: AES, ChaCha20, nonce",
    "reviewed": "rule"
   },
   "crypto-lab-signed-bytes": {
    "title": "Signed Bytes",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: Ed25519, signature",
    "reviewed": "rule"
   },
   "crypto-lab-hpke-envelope": {
    "title": "HPKE Envelope",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: HKDF, AES, ChaCha20",
    "reviewed": "rule"
   },
   "crypto-lab-blind-hello": {
    "title": "Blind Hello",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: TLS, certificate",
    "reviewed": "rule"
   },
@@ -935,7 +935,7 @@
   },
   "crypto-lab-key-mirror": {
    "title": "Key Mirror",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, Merkle, HKDF",
    "reviewed": "rule"
   },
@@ -953,7 +953,7 @@
   },
   "crypto-lab-entropy-collapse": {
    "title": "Entropy Collapse",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: entropy, nonce",
    "reviewed": "rule"
   },
@@ -1037,13 +1037,13 @@
   },
   "crypto-lab-musig-gate": {
    "title": "MuSig Gate",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: signature, nonce",
    "reviewed": "rule"
   },
   "crypto-lab-ablation-wire": {
    "title": "Ablation Wire",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: AES",
    "reviewed": "rule"
   },
@@ -1079,7 +1079,7 @@
   },
   "crypto-lab-search-vault": {
    "title": "Search Vault",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, HMAC, AES",
    "reviewed": "rule"
   },
@@ -1091,7 +1091,7 @@
   },
   "crypto-lab-stream-ward": {
    "title": "Stream Ward",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256",
    "reviewed": "rule"
   },
@@ -1104,13 +1104,13 @@
   },
   "crypto-lab-token-tell": {
    "title": "Token Tell",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: ECDSA, signature",
    "reviewed": "rule"
   },
   "crypto-lab-context-ward": {
    "title": "Context Ward",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, HMAC, HKDF",
    "reviewed": "rule"
   },
@@ -1128,7 +1128,7 @@
   },
   "crypto-lab-feistel-forge": {
    "title": "Feistel Forge",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: birthday",
    "reviewed": "rule"
   },
@@ -1146,7 +1146,7 @@
   },
   "crypto-lab-dnssec-chain": {
    "title": "DNSSEC Chain",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: TLS, certificate, X.509",
    "reviewed": "rule"
   },
@@ -1189,7 +1189,7 @@
   },
   "crypto-lab-factor-forge": {
    "title": "Factor Forge",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: RSA",
    "reviewed": "rule"
   },
@@ -1201,7 +1201,7 @@
   },
   "crypto-lab-order-leak": {
    "title": "Order Leak",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, HMAC, AES",
    "reviewed": "rule"
   },
@@ -1237,13 +1237,13 @@
   },
   "crypto-lab-sleeve-check": {
    "title": "Sleeve Check",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: hash function, AES, block cipher",
    "reviewed": "rule"
   },
   "crypto-lab-ghost-commit": {
    "title": "Ghost Commit",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "school-level primitives: SHA-256, SHA-1, entropy",
    "reviewed": "rule"
   },
@@ -1327,7 +1327,7 @@
   },
   "crypto-lab-vector-gate": {
    "title": "Vector Gate",
-   "level": "school-18",
+   "level": "intermediate",
    "why": "Positive and hostile Ed25519 cases, one modular scalar-range predicate, and a guided comparison of what each test establishes.",
    "reviewed": "hand",
    "uncertain": "The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience."

@@ -1,6 +1,15 @@
 # Beginner on-ramp: a re-level pass and seven candidate labs
 
-**2026-10-03. Report only — nothing was changed, and nothing was built.**
+**2026-10-03. Written as a report; the maintainer's decisions on it are recorded below.**
+
+> **Decided 2026-10-03.** The **22 high-confidence re-levels were applied** — `tools/lab-levels.json`,
+> the cards, and `LEVELS-REVIEW.md`. The **5 flagged labs stay at Intermediate**: Export Grade,
+> Entropy Collapse, Search Vault, Key Mirror, Iron Serpent. The **"Start here" path shipped** with the
+> five steps whose labs exist, in this file's ordering. **Ed25519 Forge** gets a beginner front-section
+> and is re-levelled only if that makes its opening genuinely Beginner. Build briefs were written for
+> the three new labs; the repositories are the maintainer's to create.
+>
+> Catalog after the re-level: **25 Beginner / 54 Intermediate / 140 Advanced.**
 
 The catalog ships 219 cards at three levels: **3 Beginner, 76 Intermediate, 140 Advanced.**
 Three beginner labs is too few for a site meant to be usable by universities and by
@@ -108,13 +117,13 @@ These were examined and **not** proposed, so the decision is on record rather th
 
 ### What this would do to the shape of the catalog
 
-| | now | with the 22 | with all 27 |
+| | before | **applied (the 22)** | had the 5 gone too |
 |---|---|---|---|
-| Beginner | 3 | 25 | 30 |
-| Intermediate | 76 | 54 | 49 |
-| Advanced | 140 | 140 | 140 |
+| Beginner | 3 | **25** | 30 |
+| Intermediate | 76 | **54** | 49 |
+| Advanced | 140 | **140** | 140 |
 
-**No assignment has been changed.** This is a list to decide on.
+**Decided and applied** — the 22 above only; the 5 flagged stay at Intermediate.
 
 ---
 
@@ -246,22 +255,27 @@ need no build — only the re-level in Part 1.
 
 | # | Step | Lab | State |
 |---|---|---|---|
-| 0 | Codes before computers | Dead Sea Cipher → Vigenère Break → Enigma Forge | *(exists, already Beginner)* |
-| 1 | What a hash is | Hash Zoo | *(exists)* — re-level |
-| 2 | Locks and keys | **new** | build |
-| 3 | Signatures in plain English | Ed25519 Forge front-section | build (small) |
-| 4 | The HTTPS padlock | **new** | build |
-| 5 | Passwords done right | Bcrypt Forge | *(exists)* — re-level + front-section |
-| 6 | What is PQC? | **new** | build |
-| 7 | Harvest now, decrypt later | Harvest Timeline | *(exists)* — re-level |
+| 0 | Codes before computers | Dead Sea Cipher → Vigenère Break → Enigma Forge | **shipped** — already Beginner |
+| 1 | What a hash is | Hash Zoo | **shipped** — re-levelled |
+| 2 | Locks and keys | **new** | brief written, repo pending |
+| 3 | Signatures in plain English | Ed25519 Forge | **shipped in the path**; front-section queued |
+| 4 | The HTTPS padlock | **new** | brief written, repo pending — Chain of Trust stands in |
+| 5 | Passwords done right | Bcrypt Forge | **shipped** — re-levelled |
+| 6 | What is PQC? | **new** | brief written, repo pending |
+| 7 | Harvest now, decrypt later | Harvest Timeline | **shipped** — re-levelled |
+
+**What actually shipped in the path**, in this order: Dead Sea Cipher, Vigenère Break, Enigma
+Forge, Hash Zoo, Ed25519 Forge, Chain of Trust, Bcrypt Forge, Harvest Timeline. Chain of Trust
+occupies the padlock position until `crypto-lab-https-padlock` exists — it is the existing lab
+closest to the question and is now Beginner. Locks and Keys and What is PQC? have no stand-in,
+so the path simply does not claim those steps yet.
 
 Step 0 is optional and deliberately placed first: the three classical-cipher labs are
 already Beginner, already built, and they establish *what a cipher is* without a single
 modern primitive. A newcomer who stops after step 1 has still learned something complete.
 
-Implemented as a `LEARNING_PATHS` entry in `index.html` with `id: 'start-here'`, it
-would be the first path on the page. Three of its eight steps need building; four need
-only a level change.
+It is a `LEARNING_PATHS` entry in `index.html` with `id: 'start-here'`, and it is the first
+path on the page.
 
 ---
 

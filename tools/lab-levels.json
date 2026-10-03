@@ -1,5 +1,5 @@
 {
- "note": "Audience level per lab. HAND-JUDGED from each lab's own README and card copy, never from its name. Levels: beginner (no maths beyond arithmetic), intermediate (comfortable with algebra and basic modular arithmetic), advanced (expects the underlying maths: groups, fields, lattices). Renamed from school-14/school-18 on 2026-10-03; the ASSIGNMENTS did not change, only what they are called. Edit this file, then run `node tools/level-sync.js` to stamp the cards and regenerate LEVELS-REVIEW.md.",
+ "note": "Audience level per lab. HAND-JUDGED from each lab's own README and card copy, never from its name. Levels: beginner (no maths beyond arithmetic), intermediate (comfortable with algebra and basic modular arithmetic), advanced (expects the underlying maths: groups, fields, lattices). Renamed from school-14/school-18 on 2026-10-03; the ASSIGNMENTS did not change, only what they are called. On 2026-10-03 a second pass read the LIVE PAGE of all 76 intermediate labs -- intro and first exhibit, as a visitor sees them -- and moved 22 to beginner; the reading, the test applied and the 16 near misses that stayed are in audits/BEGINNER-ONRAMP-2026-10-03.md. Edit this file, then run `node tools/level-sync.js` to stamp the cards and regenerate LEVELS-REVIEW.md.",
  "generated": "2026-10-03",
  "levels": [
   "beginner",
@@ -203,8 +203,8 @@
   },
   "crypto-lab-world-ciphers": {
    "title": "World Ciphers",
-   "level": "intermediate",
-   "why": "compares national cipher families as designs; no specialist machinery is required of the reader",
+   "level": "beginner",
+   "why": "\"Start Here - The Vocabulary in One Panel\" defines every term in one sentence",
    "reviewed": "hand"
   },
   "crypto-lab-shamir-gate": {
@@ -239,8 +239,8 @@
   },
   "crypto-lab-downgrade-wire": {
    "title": "Downgrade Wire",
-   "level": "intermediate",
-   "why": "protocol downgrade and version negotiation; \"quantum\" appears as context, not content",
+   "level": "beginner",
+   "why": "negotiation stripping explained in plain words before anything is stripped",
    "reviewed": "hand"
   },
   "crypto-lab-babel-hash": {
@@ -300,9 +300,9 @@
   },
   "crypto-lab-kdf-chain": {
    "title": "KDF Chain",
-   "level": "intermediate",
-   "why": "school-level primitives: SHA-256, HMAC, scrypt",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "\"Start Here - a Guided Path\" numbers six steps; parameters are powers of two",
+   "reviewed": "hand"
   },
   "crypto-lab-format-ward": {
    "title": "Format Ward",
@@ -366,21 +366,21 @@
   },
   "crypto-lab-hash-zoo": {
    "title": "Hash Zoo",
-   "level": "intermediate",
-   "why": "a tour of hash families side by side; the sponge is named, not derived",
+   "level": "beginner",
+   "why": "opens \"Start here - What is a hash?\" with three plain rules and a type-anything box",
    "reviewed": "hand"
   },
   "crypto-lab-world-hashes": {
    "title": "World Hashes",
-   "level": "intermediate",
-   "why": "school-level primitives: SHA-256, hashing",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "opens \"Start here - what is a cryptographic hash?\" and states four properties in plain sentences",
+   "reviewed": "hand"
   },
   "crypto-lab-kdf-arena": {
    "title": "KDF Arena",
-   "level": "intermediate",
-   "why": "school-level primitives: password, scrypt, PBKDF2",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "one benchmark, one control, a jargon glossary, and the tension stated in plain words",
+   "reviewed": "hand"
   },
   "crypto-lab-poly1305-mac": {
    "title": "Poly1305 MAC",
@@ -402,9 +402,9 @@
   },
   "crypto-lab-merkle-vault": {
    "title": "Merkle Vault",
-   "level": "intermediate",
-   "why": "school-level primitives: SHA-256, Merkle, certificate",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "the structure half of the Merkle pair, by the two labs\u2019 own stated split",
+   "reviewed": "hand"
   },
   "crypto-lab-nonce-guard": {
    "title": "Nonce Guard",
@@ -438,9 +438,9 @@
   },
   "crypto-lab-bcrypt-forge": {
    "title": "Bcrypt Forge",
-   "level": "intermediate",
-   "why": "school-level primitives: hashing, password, bcrypt",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "the cost factor is doubling; the rest is the anatomy of a stored hash string",
+   "reviewed": "hand"
   },
   "crypto-lab-blind-sign": {
    "title": "Blind Sign",
@@ -572,10 +572,9 @@
   },
   "crypto-lab-harvest-timeline": {
    "title": "Harvest Timeline",
-   "level": "intermediate",
-   "why": "a migration timeline; the reasoning is calendar and risk, not cryptanalysis",
-   "reviewed": "hand",
-   "uncertain": "same: planning content about a specialist subject"
+   "level": "beginner",
+   "why": "Mosca's X + Y > Z is adding two numbers of years and comparing to a third",
+   "reviewed": "hand"
   },
   "crypto-lab-hawk": {
    "title": "HAWK",
@@ -664,9 +663,9 @@
   },
   "crypto-lab-envelope-kms": {
    "title": "Envelope KMS",
-   "level": "intermediate",
-   "why": "school-level primitives: AES, random",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "the paper-key-inside-a-safe analogy carries the entire lab",
+   "reviewed": "hand"
   },
   "crypto-lab-bulletproofs": {
    "title": "Bulletproofs",
@@ -736,9 +735,9 @@
   },
   "crypto-lab-webauthn": {
    "title": "WebAuthn",
-   "level": "intermediate",
-   "why": "school-level primitives: ECDSA, signature, WebAuthn",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "\"the whole concept in one picture\"; the signature is used, never computed",
+   "reviewed": "hand"
   },
   "crypto-lab-ssh-handshake": {
    "title": "SSH Handshake",
@@ -767,21 +766,21 @@
   },
   "crypto-lab-otp-vault": {
    "title": "OTP Vault",
-   "level": "intermediate",
-   "why": "school-level primitives: symmetric, random, XOR",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "XOR is introduced from scratch and crib-dragging is a word puzzle, not algebra",
+   "reviewed": "hand"
   },
   "crypto-lab-collision-vault": {
    "title": "Collision Vault",
-   "level": "intermediate",
-   "why": "school-level primitives: SHA-256, SHA-1, SHA3",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "two different files, one digest; the reader computes nothing",
+   "reviewed": "hand"
   },
   "crypto-lab-jwt-forge": {
    "title": "JWT Forge",
-   "level": "intermediate",
-   "why": "school-level primitives: HMAC, symmetric, ECDSA",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "90-second guided tour: decode, forge, compare a correct verifier with a broken one",
+   "reviewed": "hand"
   },
   "crypto-lab-e91": {
    "title": "E91",
@@ -887,9 +886,9 @@
   },
   "crypto-lab-chain-of-trust": {
    "title": "Chain of Trust",
-   "level": "intermediate",
-   "why": "school-level primitives: ECDSA, X.509, PKI",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "says outright that only a small part of the checklist is cryptography",
+   "reviewed": "hand"
   },
   "crypto-lab-kem-trap": {
    "title": "KEM Trap",
@@ -899,9 +898,9 @@
   },
   "crypto-lab-time-trust": {
    "title": "Time Trust",
-   "level": "intermediate",
-   "why": "school-level primitives: HMAC, Ed25519, signature",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "one clock slider; the reader moves time and watches verdicts move",
+   "reviewed": "hand"
   },
   "crypto-lab-nonce-collision": {
    "title": "Nonce Collision",
@@ -911,9 +910,9 @@
   },
   "crypto-lab-signed-bytes": {
    "title": "Signed Bytes",
-   "level": "intermediate",
-   "why": "school-level primitives: Ed25519, signature",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "same meaning, different bytes - a parsing lesson, not a maths one",
+   "reviewed": "hand"
   },
   "crypto-lab-hpke-envelope": {
    "title": "HPKE Envelope",
@@ -923,9 +922,9 @@
   },
   "crypto-lab-blind-hello": {
    "title": "Blind Hello",
-   "level": "intermediate",
-   "why": "school-level primitives: TLS, certificate",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "starts from \"when your browser opens a secure connection\" and stays there",
+   "reviewed": "hand"
   },
   "crypto-lab-blind-relay": {
    "title": "Blind Relay",
@@ -1091,9 +1090,9 @@
   },
   "crypto-lab-stream-ward": {
    "title": "Stream Ward",
-   "level": "intermediate",
-   "why": "school-level primitives: SHA-256",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "truncate, reorder and drop chunks; the failure is visible without theory",
+   "reviewed": "hand"
   },
   "crypto-lab-kmac-gate": {
    "title": "KMAC Gate",
@@ -1128,9 +1127,9 @@
   },
   "crypto-lab-feistel-forge": {
    "title": "Feistel Forge",
-   "level": "intermediate",
-   "why": "school-level primitives: birthday",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "the whole trick is stated in four plain sentences before anything runs",
+   "reviewed": "hand"
   },
   "crypto-lab-rekey-relay": {
    "title": "Rekey Relay",
@@ -1146,9 +1145,9 @@
   },
   "crypto-lab-dnssec-chain": {
    "title": "DNSSEC Chain",
-   "level": "intermediate",
-   "why": "school-level primitives: TLS, certificate, X.509",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "its first section is titled \"What this is, in plain language\"",
+   "reviewed": "hand"
   },
   "crypto-lab-masked-core": {
    "title": "Masked Core",
@@ -1243,9 +1242,9 @@
   },
   "crypto-lab-ghost-commit": {
    "title": "Ghost Commit",
-   "level": "intermediate",
-   "why": "school-level primitives: SHA-256, SHA-1, entropy",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "git objects and a leaked credential; there is no maths anywhere in it",
+   "reviewed": "hand"
   },
   "crypto-lab-lattice-builder": {
    "title": "Lattice Builder",

@@ -10,11 +10,11 @@ Three levels, as the hub filters on them:
 | `school-18` | pupils up to ~18 | modular arithmetic, hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | university and specialist | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Up to 14 — 3 · Up to 18 — 73 · Advanced — 142. Total 218.
+**Counts:** Up to 14 — 3 · Up to 18 — 74 · Advanced — 141. Total 218.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
-## Flagged for your review first (11)
+## Flagged for your review first (10)
 
 These are the ones I am least sure about. Each is assigned, and each could reasonably go the other way.
 
@@ -23,7 +23,6 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) | `school-18` | a national standard with an identity digest and two ciphertext orders — arguably specialist |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | `school-18` | deniable encryption is a security-model idea; the primitives are school-level but the point may not be |
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | `school-18` | kept at 18 for its explicit no-math on-ramp, but it also runs a Bleichenbacher padding oracle |
-| [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | `advanced` | elliptic-curve group law is foundational here but is past most 18-year-old syllabuses |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | `school-18` | conceptual rather than technical, but the subject is post-quantum risk |
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | `advanced` | an AEAD design built on the AES round function: kept advanced for the internals |
 | [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | `school-18` | same: planning content about a specialist subject |
@@ -40,7 +39,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | rule | classical cipher work, arithmetic only: polyalphabetic, Enigma, rotor |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | rule | classical cipher work, arithmetic only: Caesar, Vigen, substitution cipher **(flagged)** |
 
-## Up to 18 — `school-18` (73)
+## Up to 18 — `school-18` (74)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -96,6 +95,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) | rule | school-level primitives: SHA-256, HMAC, AES |
 | [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | rule | school-level primitives: symmetric, random, XOR |
 | [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) | rule | school-level primitives: AES, symmetric, padding |
+| [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | hand | the chord-and-tangent group law is introduced visually over the reals before the finite field, the same on-ramp shape that keeps RSA Forge at this level |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | hand | key-rotation policy planning; names PQC schemes without deriving any **(flagged)** |
 | [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) | rule | school-level primitives: SHA-256, HMAC, AES |
 | [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) | rule | school-level primitives: HKDF, AES, symmetric |
@@ -118,7 +118,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | rule | school-level primitives: SHA-256, hashing |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (142)
+## Advanced — `advanced` (141)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -212,7 +212,6 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) | rule | needs specialist background: private information retrieval, secret sharing |
 | [Phantom Vault](https://systemslibrarian.github.io/crypto-lab-phantom-vault/) | rule | needs specialist background: zero-knowledge, DRBG |
 | [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) | rule | needs specialist background: ML-DSA, quantum |
-| [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | rule | needs specialist background: finite field **(flagged)** |
 | [Point Ledger](https://systemslibrarian.github.io/crypto-lab-point-ledger/) | rule | needs specialist background: Fiat-Shamir, Shamir, Shor |
 | [Poly1305 MAC](https://systemslibrarian.github.io/crypto-lab-poly1305-mac/) | rule | needs specialist background: constant-time, GF(2 |
 | [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) | rule | needs specialist background: zero-knowledge, polynomial commitment, BLS12 |

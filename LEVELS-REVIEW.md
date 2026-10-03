@@ -14,7 +14,7 @@ Three levels, as the hub filters on them:
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
-## Flagged for your review first (11)
+## Flagged for your review first (10)
 
 These are the ones I am least sure about. Each is assigned, and each could reasonably go the other way.
 
@@ -23,7 +23,6 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) | `intermediate` | a national standard with an identity digest and two ciphertext orders — arguably specialist |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | `intermediate` | deniable encryption is a security-model idea; the primitives are school-level but the point may not be |
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | `intermediate` | kept at 18 for its explicit no-math on-ramp, but it also runs a Bleichenbacher padding oracle |
-| [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | `beginner` | the hero above the front-section still leads with "EdDSA - Curve25519 - RFC 8032" and cofactor-8 malleability; the opening a newcomer works through is Beginner, the lab it opens onto is not |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | `intermediate` | conceptual rather than technical, but the subject is post-quantum risk |
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | `advanced` | an AEAD design built on the AES round function: kept advanced for the internals |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | `intermediate` | same: policy reasoning about PQC without PQC internals |
@@ -43,7 +42,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | rule | classical cipher work, arithmetic only: Caesar, Vigen, polyalphabetic |
 | [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) | hand | its first section is titled "What this is, in plain language" |
 | [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) | hand | negotiation stripping explained in plain words before anything is stripped |
-| [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | hand | opens with a three-button front-section -- make keys, sign a note, change one character and the check fails -- in plain language with no hex until a <details> is opened **(flagged)** |
+| [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | hand | opens with a three-button front-section -- make keys, sign a note, change one character and the check fails -- and the hero now leads in the same plain language |
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | rule | classical cipher work, arithmetic only: polyalphabetic, Enigma, rotor |
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | hand | the paper-key-inside-a-safe analogy carries the entire lab |
 | [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) | hand | the whole trick is stated in four plain sentences before anything runs |

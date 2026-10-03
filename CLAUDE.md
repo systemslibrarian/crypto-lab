@@ -1130,6 +1130,25 @@ the squash left the original commits as non-ancestors. The fix is `git rebase --
 origin/main <old-base>`, and the check is to read `git diff --stat origin/main...HEAD` before
 opening the PR and confirm every file in it is yours.
 
+**Force-pushing: allowed on your own unmerged branch, never anywhere else.** The rule used
+to be "never force-push without asking", which was too broad to survive contact with a rebase:
+`git rebase origin/main` on a feature branch makes a force-push the only way to publish the
+result, and the prohibition was broken twice in one session on branches that were minutes old
+and merged immediately. A rule that is routinely broken for good reasons teaches that the rule
+does not mean anything, so it is narrowed to the cases where force-pushing actually destroys
+work:
+
+- **Fine, no need to ask** — `--force-with-lease` on a branch you created, that is not yet
+  merged, that no one else has checked out. Use `--force-with-lease`, never bare `--force`:
+  the lease is what makes it refuse when someone else has pushed in the meantime.
+- **Never** — `main`, any protected branch, any branch whose pull request has already merged,
+  and any branch owned by another lane, another agent, or Dependabot. A Dependabot branch in
+  particular looks abandoned and is not: force-pushing it desynchronises Dependabot from its
+  own PR, and `@dependabot rebase` is the way to move it.
+
+If a force-push would discard a commit you did not write, it is the second case whatever the
+branch is called.
+
 **Never merge on a check you have not watched to completion, and never trust a local check run
 against a main that has since moved.** Two rules, one incident, 2026-09-29: PR #59 was merged
 while `tools-sync check` was red, and main stayed broken for four minutes until #60 fixed it.

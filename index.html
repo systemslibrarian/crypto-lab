@@ -1776,6 +1776,37 @@
     @media (max-width: 760px) {
       .featured { padding-top: 12px; }
     }
+    .featured-grid-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin: 22px 0 12px;
+    }
+    .featured-grid-label {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+    .featured-start-here {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(53, 214, 187, 0.45);
+      padding-bottom: 2px;
+    }
+    .featured-start-here:hover,
+    .featured-start-here:focus-visible {
+      border-bottom-color: var(--teal);
+    }
     .featured-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2109,7 +2140,7 @@
               </span>
             </a>
           </div>
-          <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math. New here? Start with the picks below.</p>
+          <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math.</p>
         </div>
         <section class="teach-band" aria-labelledby="teach-band-title">
           <div class="teach-band-main">
@@ -2130,7 +2161,15 @@
           </ul>
           <!-- teach-build:modules:end -->
         </section>
-        <div class="featured-grid" id="featured-grid"></div>
+        <div class="featured-grid-head">
+          <h2 class="featured-grid-label" id="featured-demos-title">Featured demos</h2>
+          <!-- The strip is a rotating editorial pick and is not ordered by level:
+               today three of its four are Advanced. Sending a newcomer "below" was
+               therefore sending them into the deep end, so the on-ramp is its own
+               link to the Start Here path rather than a sentence about the strip. -->
+          <a class="featured-start-here" id="featured-start-here" href="#path-start-here">New here? Start here <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="featured-grid" id="featured-grid" aria-labelledby="featured-demos-title"></div>
       </div>
     </section>
     <section class="content" id="catalog">
@@ -21593,6 +21632,25 @@
         details.appendChild(ol);
         pathsContainer.appendChild(details);
       });
+
+      /* The newcomer link in the featured strip. It has to do THREE things, and
+         the first one is easy to miss: #learning-paths lives inside .nav-menu,
+         which is translated off-screen until the menu is opened. A handler that
+         only scrolled would scroll to a panel nobody can see -- measured, on the
+         first version of this link: the card opened, the page did not move and
+         focus stayed on <body>. So open the menu, open the card, then focus it. */
+      var startHereLink = document.getElementById('featured-start-here');
+      var startHerePath = document.getElementById('path-start-here');
+      if (startHereLink && startHerePath) {
+        startHereLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          setMenuOpen(true);
+          startHerePath.open = true;
+          var summary = startHerePath.querySelector('summary');
+          if (summary) summary.focus();
+          startHerePath.scrollIntoView({ block: 'center' });
+        });
+      }
 
       pathsContainer.addEventListener('click', function (e) {
         var a = e.target.closest('a[data-step-target]');

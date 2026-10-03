@@ -211,6 +211,12 @@ options are the same two: widen it to name the computational model alongside the
 split provable security out as **§31b** on the §23b precedent. Recorded, not acted on —
 renaming a concept is a boundary move and is the user's call.*
 
+*Version 23 — files Vector Gate under §32: named verifier cases do not exercise every
+required rejection predicate, and algorithm and module validation concern different objects.
+The repository and served build were observed on 3 October 2026. This extends the existing
+limits-of-evidence arc without creating a new concept or changing its status. Catalogued
+total moves to 219.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -845,7 +851,8 @@ Model Breach (assumptions drifting from deployment) · Encrochat (endpoint compr
 sound E2EE) · Token Tell (a keyed detector's evidence is only as good as the key, and a
 signature binds bytes rather than authorship) · Context Ward (every check passes honestly
 and the agent is compromised anyway, because integrity is orthogonal to whether content
-should be obeyed). Was `PARTIAL` in v1–v3 only because Encrochat had no card; carding it finishes
+should be obeyed) · Vector Gate (named verifier cases leave a required rejection rule
+untested; algorithm and module validation concern different objects). Was `PARTIAL` in v1–v3 only because Encrochat had no card; carding it finishes
 the arc — the assumption breaks, then the deployment breaks around an intact primitive. Still
 the most contestable concept boundary in the list; some would fold it into §30.
 
@@ -1013,7 +1020,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 218.**
+**Catalogued total: 219.**
 
 ---
 

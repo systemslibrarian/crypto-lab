@@ -48,6 +48,10 @@
   "lab": "crypto-lab-falcon-seal"
  },
  {
+  "port": 4211,
+  "lab": "crypto-lab-vector-gate"
+ },
+ {
   "port": 4214,
   "lab": "crypto-lab-ssh-handshake"
  },

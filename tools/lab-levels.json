@@ -1,6 +1,6 @@
 {
  "note": "Audience level per lab. HAND-JUDGED from each lab's own README and card copy, never from its name. Levels: school-14 (classical/visual, arithmetic only), school-18 (modular arithmetic, hashing, symmetric/asymmetric basics, simple attacks), advanced (lattices, ZK, FHE, MPC, PQC internals, side channels, formal games). Edit this file, then run `node tools/level-sync.js` to stamp the cards and regenerate LEVELS-REVIEW.md.",
- "generated": "2026-10-02",
+ "generated": "2026-10-03",
  "levels": [
   "school-14",
   "school-18",
@@ -1324,6 +1324,13 @@
    "level": "advanced",
    "why": "needs specialist background: functional encryption, inner-product",
    "reviewed": "rule"
+  },
+  "crypto-lab-vector-gate": {
+   "title": "Vector Gate",
+   "level": "school-18",
+   "why": "Positive and hostile Ed25519 cases, one modular scalar-range predicate, and a guided comparison of what each test establishes.",
+   "reviewed": "hand",
+   "uncertain": "The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience."
   }
  }
 }

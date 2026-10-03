@@ -10,11 +10,11 @@ Three levels, as the hub filters on them:
 | `school-18` | pupils up to ~18 | modular arithmetic, hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | university and specialist | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Up to 14 — 3 · Up to 18 — 75 · Advanced — 140. Total 218.
+**Counts:** Up to 14 — 3 · Up to 18 — 76 · Advanced — 140. Total 219.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
-## Flagged for your review first (10)
+## Flagged for your review first (11)
 
 These are the ones I am least sure about. Each is assigned, and each could reasonably go the other way.
 
@@ -30,6 +30,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | `school-14` | Kasiski and the index of coincidence are statistics; the cipher work is school-14 but that analysis may belong at 18 |
 | [KMAC Gate](https://systemslibrarian.github.io/crypto-lab-kmac-gate/) | `advanced` | KMAC is a MAC from Keccak; kept advanced for the permutation, but it is used as a primitive |
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | `advanced` | systems security rather than cryptography; advanced on the trust reasoning |
+| [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | `school-18` | The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience. |
 
 ## Up to 14 — `school-14` (3)
 
@@ -39,7 +40,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | rule | classical cipher work, arithmetic only: polyalphabetic, Enigma, rotor |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | rule | classical cipher work, arithmetic only: Caesar, Vigen, substitution cipher **(flagged)** |
 
-## Up to 18 — `school-18` (75)
+## Up to 18 — `school-18` (76)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -113,6 +114,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) | rule | school-level primitives: HMAC, Ed25519, signature |
 | [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) | rule | school-level primitives: HMAC, HKDF, AES |
 | [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) | rule | school-level primitives: ECDSA, signature |
+| [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | hand | Positive and hostile Ed25519 cases, one modular scalar-range predicate, and a guided comparison of what each test establishes. **(flagged)** |
 | [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) | rule | school-level primitives: ECDSA, Ed25519 |
 | [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) | rule | school-level primitives: ECDSA, signature, WebAuthn |
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | compares national cipher families as designs; no specialist machinery is required of the reader |

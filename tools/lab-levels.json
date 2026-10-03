@@ -791,9 +791,9 @@
   },
   "crypto-lab-hybrid-guide": {
    "title": "Hybrid Guide",
-   "level": "advanced",
-   "why": "needs specialist background: ML-KEM, quantum",
-   "reviewed": "rule"
+   "level": "school-18",
+   "why": "a guide to why a KEM combiner pairs X25519 with ML-KEM-768 and what breaking either half costs; it implements AES-GCM and SHA-256 and derives no PQC, so it sits with PQ Rotation, which implements ML-DSA and is also at this level",
+   "reviewed": "hand"
   },
   "crypto-lab-multivariate": {
    "title": "Multivariate UOV",

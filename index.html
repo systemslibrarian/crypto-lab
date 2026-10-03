@@ -292,6 +292,12 @@
       line-height: 1.5;
     }
 
+    /* Each date is one unbreakable phrase, so the only place the line can break
+       is the separator between them. Without this the wrap lands inside a date
+       -- "ADDED SEP / 2026 . UPDATED OCT / 2026", three lines saying two things
+       -- which is what 178 of 218 footers did at 1280px and above. */
+    .card-date-text > span { white-space: nowrap; }
+
     .card-level, .card-new { flex: 0 0 auto; margin-left: auto; }
     .card-new + .card-level, .card-level + .card-new { margin-left: 6px; }
 
@@ -21300,21 +21306,29 @@
          and was worse: it hid the month. */
       var dateText = document.createElement('span');
       dateText.className = 'card-date-text';
+      var addedSpan = null;
       if (added) {
-        var a = document.createElement('span');
-        a.textContent = 'Added ' + added;
-        dateText.appendChild(a);
+        addedSpan = document.createElement('span');
+        addedSpan.textContent = 'Added ' + added;
+        dateText.appendChild(addedSpan);
       }
       /* Only show "Updated" when it is a different month from "Added". Otherwise
          every card built and last touched in one month claims an update that is
          really its creation -- two labels for one fact. */
       if (updated && updated !== added) {
-        if (added) {
+        if (addedSpan) {
+          /* The separator goes INSIDE the first date, and the only thing between
+             the two dates is a text node. Both details are about where the line
+             may break. Two adjacent inline boxes with nothing between them offer
+             no break opportunity at all, so the wrap landed inside a date; and a
+             separator of its own is a third atom, which on the narrowest card
+             took a whole line to say nothing. */
           var sep = document.createElement('span');
           sep.className = 'card-date-sep';
           sep.setAttribute('aria-hidden', 'true');
-          sep.textContent = '·';
-          dateText.appendChild(sep);
+          sep.textContent = ' ·';
+          addedSpan.appendChild(sep);
+          dateText.appendChild(document.createTextNode(' '));
         }
         var u = document.createElement('span');
         u.textContent = 'Updated ' + updated;

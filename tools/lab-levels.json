@@ -360,9 +360,10 @@
   },
   "crypto-lab-ed25519-forge": {
    "title": "Ed25519 Forge",
-   "level": "intermediate",
-   "why": "school-level primitives: digital signature, Ed25519, signature",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "opens with a three-button front-section -- make keys, sign a note, change one character and the check fails -- in plain language with no hex until a <details> is opened",
+   "reviewed": "hand",
+   "uncertain": "the hero above the front-section still leads with \"EdDSA - Curve25519 - RFC 8032\" and cofactor-8 malleability; the opening a newcomer works through is Beginner, the lab it opens onto is not"
   },
   "crypto-lab-hash-zoo": {
    "title": "Hash Zoo",

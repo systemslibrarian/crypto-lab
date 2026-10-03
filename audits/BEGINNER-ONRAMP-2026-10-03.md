@@ -9,7 +9,13 @@
 > and is re-levelled only if that makes its opening genuinely Beginner. Build briefs were written for
 > the three new labs; the repositories are the maintainer's to create.
 >
-> Catalog after the re-level: **25 Beginner / 54 Intermediate / 140 Advanced.**
+> Catalog after the first re-level: **25 Beginner / 54 Intermediate / 140 Advanced.**
+>
+> **Then Ed25519 Forge shipped its front-section** (`crypto-lab-ed25519-forge#19`) and was
+> re-levelled to Beginner, flagged: the opening a newcomer works through is Beginner, the hero
+> above it still leads with "EdDSA - Curve25519 - RFC 8032". **26 / 53 / 140.** The three build
+> briefs are `audits/BRIEF-https-padlock.md`, `audits/BRIEF-locks-and-keys.md` and
+> `audits/BRIEF-what-is-pqc.md`.
 
 The catalog ships 219 cards at three levels: **3 Beginner, 76 Intermediate, 140 Advanced.**
 Three beginner labs is too few for a site meant to be usable by universities and by

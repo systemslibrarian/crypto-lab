@@ -10,11 +10,11 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 25 · Intermediate — 54 · Advanced — 140. Total 219.
+**Counts:** Beginner — 26 · Intermediate — 53 · Advanced — 140. Total 219.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
-## Flagged for your review first (10)
+## Flagged for your review first (11)
 
 These are the ones I am least sure about. Each is assigned, and each could reasonably go the other way.
 
@@ -23,6 +23,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) | `intermediate` | a national standard with an identity digest and two ciphertext orders — arguably specialist |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | `intermediate` | deniable encryption is a security-model idea; the primitives are school-level but the point may not be |
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | `intermediate` | kept at 18 for its explicit no-math on-ramp, but it also runs a Bleichenbacher padding oracle |
+| [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | `beginner` | the hero above the front-section still leads with "EdDSA - Curve25519 - RFC 8032" and cofactor-8 malleability; the opening a newcomer works through is Beginner, the lab it opens onto is not |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | `intermediate` | conceptual rather than technical, but the subject is post-quantum risk |
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | `advanced` | an AEAD design built on the AES round function: kept advanced for the internals |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | `intermediate` | same: policy reasoning about PQC without PQC internals |
@@ -31,7 +32,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | `advanced` | systems security rather than cryptography; advanced on the trust reasoning |
 | [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | `intermediate` | The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience. |
 
-## Beginner — `beginner` (25)
+## Beginner — `beginner` (26)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -42,6 +43,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) | rule | classical cipher work, arithmetic only: Caesar, Vigen, polyalphabetic |
 | [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) | hand | its first section is titled "What this is, in plain language" |
 | [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) | hand | negotiation stripping explained in plain words before anything is stripped |
+| [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | hand | opens with a three-button front-section -- make keys, sign a note, change one character and the check fails -- in plain language with no hex until a <details> is opened **(flagged)** |
 | [Enigma Forge](https://systemslibrarian.github.io/crypto-lab-enigma-forge/) | rule | classical cipher work, arithmetic only: polyalphabetic, Enigma, rotor |
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | hand | the paper-key-inside-a-safe analogy carries the entire lab |
 | [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) | hand | the whole trick is stated in four plain sentences before anything runs |
@@ -61,7 +63,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (54)
+## Intermediate — `intermediate` (53)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -77,7 +79,6 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | rule | school-level primitives: Diffie-Hellman, Ed25519, key exchange |
 | [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) | rule | school-level primitives: Diffie-Hellman, modular arithmetic, key exchange |
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | rule | school-level primitives: digital signature, ECDSA, signature |
-| [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) | rule | school-level primitives: digital signature, Ed25519, signature |
 | [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) | rule | school-level primitives: RSA, public key, public-key |
 | [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) | rule | school-level primitives: public-key, modular arithmetic, modular exponentiation |
 | [Entropy Collapse](https://systemslibrarian.github.io/crypto-lab-entropy-collapse/) | rule | school-level primitives: entropy, nonce |

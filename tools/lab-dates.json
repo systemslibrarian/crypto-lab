@@ -426,10 +426,10 @@
   },
   "crypto-lab-ed25519-forge": {
    "added": "2026-04",
-   "updated": "2026-09",
+   "updated": "2026-10",
    "addedFrom": "2026-04-08T06:37:28Z",
-   "updatedFrom": "2026-09-26T10:32:12-04:00",
-   "updatedCommit": "9716a9451de3a42a6a6779c0975410c0d852cd5c"
+   "updatedFrom": "2026-10-03T19:19:51-04:00",
+   "updatedCommit": "7ed5ecc05800d37943205e8778ac8246e6d4f89a"
   },
   "crypto-lab-hash-zoo": {
    "added": "2026-04",
@@ -1548,8 +1548,8 @@
    "added": "2026-10",
    "updated": "2026-10",
    "addedFrom": "2026-10-03T11:11:34Z",
-   "updatedFrom": "2026-10-03T07:25:05-04:00",
-   "updatedCommit": "26addbe5c9532409a666a8523877160210b32491"
+   "updatedFrom": "2026-10-03T16:31:30-04:00",
+   "updatedCommit": "3a0baa9629ca4a467a668d664b17aea428fe2af3"
   }
  }
 }

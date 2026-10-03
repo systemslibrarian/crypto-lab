@@ -1,0 +1,60 @@
+# FIXTURE: the defect. One job runs the gate AND publishes, and names a
+# protected environment, on a workflow that triggers on pull_request with no
+# `if` excluding them. A protected environment rejects the job at startup, so
+# every pull request shows this job failing with zero steps executed and the
+# auto-merge below can never see a green `needs:`.
+#
+# Taken from crypto-lab-bcrypt-forge at the commit before it was split.
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run test:a11y
+      - uses: actions/upload-pages-artifact@v5
+        if: github.event_name != 'pull_request'
+        with:
+          path: ./dist
+      - id: deployment
+        if: github.event_name != 'pull_request'
+        uses: actions/deploy-pages@v5
+  dependabot-auto-merge:
+    needs: deploy
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+      - name: Merge any bump whose gate went green
+        run: |
+          merged=""
+          if gh pr merge --squash --delete-branch "$PR_URL"; then merged=1; fi
+          [ -n "$merged" ] || exit 0
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

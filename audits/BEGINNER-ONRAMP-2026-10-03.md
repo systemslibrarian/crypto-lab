@@ -295,3 +295,58 @@ path on the page.
 - The level proposals are a reading of each lab's intro and first exhibit, not of its whole
   page. A lab whose later panels turn mathematical is still proposed on the strength of
   what a newcomer meets first, and five such cases are named above rather than hidden.
+
+---
+
+## Round 2 — six more briefs, 2026-10-04
+
+Six further beginner briefs were written against `audits/_MASTER-TEMPLATE.md`. **Five want a
+new repository; one is a front-section on a lab that already has the machinery.**
+
+| Brief | Verdict | Overlap I read |
+|---|---|---|
+| `BRIEF-authenticator-app.md` | **new repo** | Time Trust |
+| `BRIEF-agreeing-in-public.md` | **new repo** | DH MITM, Key Exchange |
+| `BRIEF-end-to-end-explained.md` | **new repo** | X3DH Wire, Ratchet Wire, Encrochat |
+| `BRIEF-good-randomness.md` | **new repo** | DRBG Arena, Entropy Collapse, Noise to Numbers, Corrupted Oracle |
+| `BRIEF-hidden-in-plain-sight.md` | **front-section on `crypto-lab-stego-suite`** | Stego Suite, J-UNIWARD |
+| `BRIEF-password-strength.md` | **new repo** | Bcrypt Forge |
+
+Every citation in the six was checked against its primary source: RFC 6238 §4.2 and §5.2,
+RFC 4226 §5.2 and §5.3, RFC 7748 §5.2 and §6.1, NIST SP 800-63B Rev. 4 §3.1.1.2, and the EFF
+large wordlist's published size and per-word figure.
+
+### The proposed Start Here spine
+
+Steps marked **(brief)** have a brief and no repository yet.
+
+| # | Step | Lab |
+|---|---|---|
+| 1 | What a hash is | Hash Zoo |
+| 2 | Good randomness | **(brief)** |
+| 3 | Locks and keys | **(brief)** |
+| 4 | Agreeing on a secret in public | **(brief)** |
+| 5 | Signatures in plain English | Ed25519 Forge |
+| 6 | The HTTPS padlock | **(brief)** |
+| 7 | Who can read this | **(brief)** |
+| 8 | Your authenticator app | **(brief)** |
+| 9 | How strong is my password | **(brief)** |
+| 10 | Passwords done right | Bcrypt Forge |
+| 11 | What is PQC | **(brief)** |
+| 12 | Harvest now, decrypt later | Harvest Timeline |
+
+Two placement decisions worth stating rather than burying.
+
+**Good Randomness goes early, at step 2.** Every step after it generates a key, and it is the
+one that says why that is not a formality.
+
+**Hidden in Plain Sight is deliberately OFF the spine.** Steganography hides the existence of a
+message rather than its content, which is a different goal from everything else in the line
+running from hashes through keys to the padlock. It belongs where a curious reader finds it,
+not where everyone is walked through it.
+
+**The three classical ciphers move from steps to a warm-up note.** The spine above is already
+twelve steps, which is the ceiling `CLAUDE.md` gives for readability; adding Dead Sea Cipher,
+Vigenère Break and Enigma Forge as steps makes fifteen. They are already Beginner, already
+built, and they read better as "if you want to see where this started, begin here" than as
+three mandatory steps in front of the hash.

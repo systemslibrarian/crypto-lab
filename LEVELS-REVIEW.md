@@ -10,11 +10,11 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 26 · Intermediate — 53 · Advanced — 140. Total 219.
+**Counts:** Beginner — 27 · Intermediate — 53 · Advanced — 139. Total 219.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
-## Flagged for your review first (10)
+## Flagged for your review first (11)
 
 These are the ones I am least sure about. Each is assigned, and each could reasonably go the other way.
 
@@ -23,6 +23,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) | `intermediate` | a national standard with an identity digest and two ciphertext orders — arguably specialist |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | `intermediate` | deniable encryption is a security-model idea; the primitives are school-level but the point may not be |
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | `intermediate` | kept at 18 for its explicit no-math on-ramp, but it also runs a Bleichenbacher padding oracle |
+| [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) | `beginner` | the opening a newcomer works through is Beginner; the lab it opens onto is not -- DCT, adaptive embedding and chi-squared steganalysis are still the body, and the hero still names them |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | `intermediate` | conceptual rather than technical, but the subject is post-quantum risk |
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | `advanced` | an AEAD design built on the AES round function: kept advanced for the internals |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | `intermediate` | same: policy reasoning about PQC without PQC internals |
@@ -31,7 +32,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | `advanced` | systems security rather than cryptography; advanced on the trust reasoning |
 | [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | `intermediate` | The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience. |
 
-## Beginner — `beginner` (26)
+## Beginner — `beginner` (27)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -55,6 +56,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) | hand | the structure half of the Merkle pair, by the two labs’ own stated split |
 | [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | hand | XOR is introduced from scratch and crib-dragging is a word puzzle, not algebra |
 | [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) | hand | same meaning, different bytes - a parsing lesson, not a maths one |
+| [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) | hand | opens with a five-button front-section -- hide a sentence in a picture, look, read it back, check both pictures, fill it up -- with no hex or statistics on screen, asserted by a test **(flagged)** |
 | [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) | hand | truncate, reorder and drop chunks; the failure is visible without theory |
 | [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) | hand | one clock slider; the reader moves time and watches verdicts move |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | rule | classical cipher work, arithmetic only: Caesar, Vigen, substitution cipher **(flagged)** |
@@ -120,7 +122,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) | rule | school-level primitives: ECDSA, Ed25519 |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (140)
+## Advanced — `advanced` (139)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -249,7 +251,6 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) | hand | Sphinx mix-network packet format with per-hop ristretto255 blinding and LIONESS |
 | [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) | rule | needs specialist background: private information retrieval, secret sharing |
 | [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) | rule | needs specialist background: zero-knowledge, STARK, Groth16 |
-| [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) | rule | needs specialist background: adaptive embedding, steganalysis |
 | [Syndrome Drain](https://systemslibrarian.github.io/crypto-lab-syndrome-drain/) | rule | needs specialist background: code-based, syndrome decoding |
 | [Syndrome Hints](https://systemslibrarian.github.io/crypto-lab-syndrome-hints/) | rule | needs specialist background: side-channel, syndrome decoding |
 | [TC26 Pair](https://systemslibrarian.github.io/crypto-lab-tc26-pair/) | rule | needs specialist background: Hypericum, Shipovnik, code-based |

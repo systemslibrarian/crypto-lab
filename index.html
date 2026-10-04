@@ -1142,6 +1142,30 @@
       .path-band-grid { grid-template-columns: 1fr; }
     }
 
+    .path-aside {
+      margin: 10px 0 0;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+
+    .path-aside-label {
+      display: inline-block;
+      margin-right: 8px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .path-aside a {
+      color: var(--teal);
+      text-underline-offset: 2px;
+    }
+
     .path-card {
       border: 1px solid var(--border);
       background: rgba(8, 17, 24, 0.6);
@@ -8561,7 +8585,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-stego-suite/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-stego-suite/" data-added="2026-04" data-updated="2026-10" data-level="beginner"
             data-implements="AES@src/lib/crypto.ts:8 | AES-GCM@src/lib/crypto.ts:8 | PBKDF2@src/lib/crypto.ts:13 | SHA-256@src/lib/crypto.ts:13"
             data-references="SNOW 2.0"
             data-attacks="Power analysis@src/main.ts:248"
@@ -21037,6 +21061,11 @@
         label: 'Start Here',
         focus: 'No cryptography assumed. Eight Beginner labs, in order.',
         blurb: 'For a first visit, with no cryptography assumed: ciphers you can do on paper, then the fingerprint, the signature, the padlock, the password and the quantum clock. Every step is a Beginner lab -- no maths beyond arithmetic. Three more steps are planned (public and private keys, what PQC is, and the padlock question answered in one place) and will be added as those labs land.',
+        /* Off the numbered line on purpose. Steganography hides the EXISTENCE of
+           a message rather than its content, which is a different goal from
+           everything on this path; putting it in the sequence would break the
+           thread running from hashes through keys to the padlock. */
+        sideTrip: { title: 'Stego Suite', why: 'a different goal entirely \u2014 hiding that a message was sent at all. Sits beside the classical ciphers; take it or skip it.' },
         steps: [
           { title: 'Dead Sea Cipher' },
           { title: 'Vigenère Break' },
@@ -21782,6 +21811,25 @@
           ol.appendChild(li);
         });
         details.appendChild(ol);
+
+        /* An optional branch off the path, rendered after the numbered steps so
+           it reads as a detour rather than a step nobody numbered. */
+        if (path.sideTrip && titleToCard[path.sideTrip.title]) {
+          var aside = document.createElement('p');
+          aside.className = 'path-aside';
+          var asideLabel = document.createElement('span');
+          asideLabel.className = 'path-aside-label';
+          asideLabel.textContent = 'Optional side-trip';
+          aside.appendChild(asideLabel);
+          var asideLink = document.createElement('a');
+          asideLink.href = '#';
+          asideLink.setAttribute('data-step-target', path.sideTrip.title);
+          asideLink.textContent = path.sideTrip.title;
+          aside.appendChild(asideLink);
+          aside.appendChild(document.createTextNode(' \u2014 ' + path.sideTrip.why));
+          details.appendChild(aside);
+        }
+
         pathsContainer.appendChild(details);
       });
 

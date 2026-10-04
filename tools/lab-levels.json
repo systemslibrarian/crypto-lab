@@ -427,9 +427,8 @@
   "crypto-lab-stego-suite": {
    "title": "Stego Suite",
    "level": "beginner",
-   "why": "opens with a five-button front-section -- hide a sentence in a picture, look, read it back, check both pictures, fill it up -- with no hex or statistics on screen, asserted by a test",
-   "reviewed": "hand",
-   "uncertain": "the opening a newcomer works through is Beginner; the lab it opens onto is not -- DCT, adaptive embedding and chi-squared steganalysis are still the body, and the hero still names them"
+   "why": "opens with a five-button front-section -- hide a sentence in a picture, look, read it back, check both pictures, fill it up -- with no hex or statistics on screen, asserted by a test, and the hero now leads in the same plain language",
+   "reviewed": "hand"
   },
   "crypto-lab-gg20-wallet": {
    "title": "GG20 Wallet",

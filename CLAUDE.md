@@ -1162,9 +1162,35 @@ gh pr checks <n> --watch --fail-fast && gh pr merge <n> --squash --delete-branch
 ```
 
 `--watch` blocks until every check settles and `--fail-fast` exits non-zero on the first
-failure, so the `&&` is the whole guard. `gh pr merge --auto --squash` is the stronger form —
-GitHub itself refuses to merge until the checks pass, and it survives you losing the terminal —
-and it is the right choice when the branch is not urgent.
+failure, so the `&&` looks like the whole guard. **It is not, and the hole is a merge with no
+check watched at all.** `gh pr checks` exits **0** when no checks have REGISTERED yet — it
+prints `no checks reported on the '<branch>' branch` and returns — so on a freshly pushed
+branch the `&&` fires immediately and merges. Seen on 2026-10-04, PR #116: the watch returned
+at once with that line and the merge went through before either workflow existed. Main happened
+to come out green, which is the only reason it reads as a near miss rather than a second #59.
+
+**Wait for the checks to EXIST, then watch them:**
+
+```sh
+until gh pr checks <n> 2>&1 | grep -qv 'no checks reported'; do sleep 5; done
+gh pr checks <n> --watch --fail-fast && gh pr merge <n> --squash --delete-branch
+```
+
+**`gh pr merge --auto --squash` is NOT the answer on this fleet, and the reason is worth
+knowing before someone reaches for it again.** This paragraph recommended it for weeks as "the
+stronger form — GitHub itself refuses to merge until the checks pass". Measured 2026-10-04:
+every repository checked has **`allow_auto_merge: false`**, so the command is refused outright
+with `Auto merge is not allowed for this repository`; and `crypto-lab`'s `main` carries **no
+branch protection and zero rulesets**, so there are **no required status checks for GitHub to
+hold a merge against**. Enabling the flag without also requiring checks would produce a `--auto`
+that merges immediately and guards nothing — worse than the `until` loop above, because it
+would look like a guard.
+
+Two `gh pr merge --auto` calls in that same session were silently refused this way, their
+output swallowed by a `| tail`, and the pull requests were reported as auto-merging when they
+had not been. **Read the output of a merge command, not just its exit path.** Making `--auto`
+real is a per-repository settings change — `allow_auto_merge` plus required checks on the
+default branch — and is the maintainer's call, not an agent's.
 
 The deeper cause was a **generator race, and it is not fixed by watching checks**. #58 and #59
 each added a tool and each regenerated `README.md`'s tools block against a main that did not yet

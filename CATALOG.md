@@ -4211,9 +4211,9 @@ Repeated modular squaring in an RSA group with a Wesolowski short proof — watc
 
 ### Vector Gate
 
-[`crypto-lab-vector-gate`](https://systemslibrarian.github.io/crypto-lab-vector-gate/) · Scope of Cryptographic Evidence · SIGNATURES, ATTACKS
+[`crypto-lab-vector-gate`](https://systemslibrarian.github.io/crypto-lab-vector-gate/) · A Verifier That Accepts a Forgery · SIGNATURES, ATTACKS
 
-Run five RFC vectors, accept an S + L signature with one required check omitted, then enforce that check and distinguish test evidence from algorithm and module validation.
+Switch off Ed25519's required scalar-range check and watch the verifier accept a signature nobody signed, while all five RFC vectors still pass — then ask what passing them proved.
 
 - **Implements:** Ed25519 `src/crypto/ed25519.ts:74`, SHA-512 `src/crypto/ed25519.ts:85`
 - **Source review:** [21a131661f74](https://github.com/systemslibrarian/crypto-lab-vector-gate/commit/21a131661f74b4c14bdc3d863706d6728bff1c94) — Read src/crypto/ed25519.ts, src/main.ts and tools/check-oracles.py. The browser performs real Ed25519 verification with extended-coordinate BigInt arithmetic and WebCrypto SHA-512; both modes share decoder, challenge and equation, and differ only on S < L enforcement. The Ed25519 anchor is its verifier entry rather than the UI import. The Python file only cross-checks frozen fixtures with OpenSSL and libsodium; it is not hidden browser crypto. The derived side-channel attack is removed: src/main.ts mentions side-channel resistance only as evidence not established, and mounts no side-channel attack. Signature malleability is the actual one-predicate experiment. No ZIP215 comparison, ECDSA or ML-KEM computation is implemented here.

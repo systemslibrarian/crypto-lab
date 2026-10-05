@@ -22474,12 +22474,11 @@
       updateClear();
       filter();
       closeSuggestions();
-      input.focus();
+      input.focus({ preventScroll: true });
 
       if (kind === 'Lab') {
         var hit = cardData.find(function (d) { return d.title === value; });
         if (hit) {
-          hit.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
           hit.el.classList.remove('flash');
           void hit.el.offsetWidth;
           hit.el.classList.add('flash');

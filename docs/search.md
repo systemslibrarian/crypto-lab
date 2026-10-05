@@ -174,3 +174,5 @@ NODE
 The earlier examples are no longer limitations: `rsa` rejects `adversary`, unquoted `ml kem` finds `Kyber`, and `-kyber` excludes `Kyber`. Their checks are in `catalog-search.test.js`.
 
 When a filter changes while the filter bar is sticky, the runtime checks the first visible result after scroll anchoring and scrolls upward only if the bar covers it. The clearance uses the bar’s measured height plus an 18px gap, so wrapped controls and mobile layouts do not rely on a fixed pixel offset. Normal scrolling does not trigger this adjustment.
+
+Selecting a lab suggestion uses the same filter clearance adjustment. It highlights the matching card without starting a competing center scroll, and restores search focus without moving the viewport.

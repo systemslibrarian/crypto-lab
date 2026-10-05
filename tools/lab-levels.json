@@ -1330,6 +1330,24 @@
    "why": "Positive and hostile Ed25519 cases, one modular scalar-range predicate, and a guided comparison of what each test establishes.",
    "reviewed": "hand",
    "uncertain": "The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience."
+  },
+  "crypto-lab-locks-and-keys": {
+   "title": "Locks and Keys",
+   "level": "beginner",
+   "why": "one real key pair, four button presses: lock a note to the public half, open it with the private half, watch a different key fail, then run the same pair backwards to sign. No modulus or exponent on screen.",
+   "reviewed": "hand"
+  },
+  "crypto-lab-what-is-pqc": {
+   "title": "What Is PQC",
+   "level": "beginner",
+   "why": "two symmetrical panels and a size comparison; the words lattice, LWE and polynomial appear nowhere on the page",
+   "reviewed": "hand"
+  },
+  "crypto-lab-https-padlock": {
+   "title": "HTTPS Padlock",
+   "level": "beginner",
+   "why": "a five-step lesson about what a padlock checks, with four plain verdicts and no notation; the certificate internals are one disclosure away",
+   "reviewed": "hand"
   }
  }
 }

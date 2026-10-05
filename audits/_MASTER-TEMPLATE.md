@@ -196,6 +196,12 @@ Directly below the top bar. The hero carries **three distinct text roles** (keep
 
 - **Title split:** big title = the concise scheme/primitive/brand name only (`OPAQUE`, `KDF Arena`, `X3DH`, `Paillier`; branded demos like `Iron Letter` keep the brand). Subtitle = the qualifier/spec/expansion, one line, **preserving technical casing** (`aPAKE · RFC 9807`, never `APAKE`). Separator `·`.
 - **Size is capped at `clamp(1.6rem, 3.8vw, 2.7rem)`** — the `crypto-lab-x3dh-wire` scale, the maximum. Do not exceed it. This is what makes verbose and terse names read as siblings.
+- **The mobile query has to reset `.cl-hero-main`, not only `.cl-hero-why`.** `flex: 1 1 22rem`
+  and `min-width: min(100%, 20rem)` are a ROW basis; once `flex-direction` becomes `column`
+  that 22rem is read as a height, and the title block reserves dead space under itself at
+  every width below 640px. The query above now sets `.cl-hero-main{flex-basis:auto;min-width:0}`
+  alongside the `.cl-hero-why` reset it always had. Labs built from an earlier copy of this
+  snippet inherited the gap; it is a one-line fix in each.
 
 Standard CSS (map colors to the demo's own theme vars so it passes AA; do not wrap it in `BEGIN/END cl-hero standard` marker comments — those belonged to the retired sync tooling and were removed fleet-wide):
 
@@ -208,7 +214,7 @@ Standard CSS (map colors to the demo's own theme vars so it passes AA; do not wr
 .cl-hero-why{flex:0 1 min(40%,26rem);min-width:min(100%,15rem);border:1px solid var(--border);border-radius:10px;padding:.85rem 1.05rem;background:color-mix(in oklab,var(--accent) 6%,transparent);}
 .cl-hero-why-label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.14em;}
 .cl-hero-why-text{margin:.35rem 0 0;font-size:.95rem;line-height:1.5;}
-@media (max-width:640px){.cl-hero{flex-direction:column;}.cl-hero-why{flex-basis:auto;width:100%;}}
+@media (max-width:640px){.cl-hero{flex-direction:column;}.cl-hero-main{flex-basis:auto;min-width:0;}.cl-hero-why{flex-basis:auto;width:100%;}}
 ```
 
 ### 3.2 Theme contract (anti-flash)

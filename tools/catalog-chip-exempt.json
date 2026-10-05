@@ -6,7 +6,7 @@
       "slug": "crypto-lab-kpqc-pair",
       "chip": "KpqC",
       "dependency": "@killd21/kpqc",
-      "why": "KpqC is Korea's post-quantum standardisation PROGRAMME, not an algorithm. The algorithms it selected — SMAUG-T, HAETAE, AIMer, NTRU+ — are the indexable things, and the first two already have terms. A term named for the competition would credit a lab with implementing a committee."
+      "why": "KpqC is Korea's post-quantum standardisation PROGRAMME, not an algorithm. The algorithms it selected \u2014 SMAUG-T, HAETAE, AIMer, NTRU+ \u2014 are the indexable things, and the first two already have terms. A term named for the competition would credit a lab with implementing a committee."
     },
     {
       "slug": "crypto-lab-threshold-mldsa",
@@ -18,7 +18,13 @@
       "slug": "crypto-lab-chain-of-trust",
       "chip": "X.509",
       "dependency": "@peculiar/x509",
-      "why": "A certificate FORMAT, not an algorithm. The algorithms inside a certificate — RSA, ECDSA, SHA-256 — are indexed separately and are what the reverse index is asked about. Indexing the container would put every PKI lab under a term that answers no question about which primitive it builds."
+      "why": "A certificate FORMAT, not an algorithm. The algorithms inside a certificate \u2014 RSA, ECDSA, SHA-256 \u2014 are indexed separately and are what the reverse index is asked about. Indexing the container would put every PKI lab under a term that answers no question about which primitive it builds."
+    },
+    {
+      "slug": "crypto-lab-https-padlock",
+      "chip": "X.509",
+      "dependency": "@peculiar/x509",
+      "why": "The same decision already recorded for crypto-lab-chain-of-trust, applied to the second lab that parses certificates with the same package: X.509 is a certificate FORMAT, not an algorithm. What this lab actually computes inside that format -- ECDSA over P-256 and P-384 signature verification in WebCrypto -- is indexable on its own terms, and indexing the container would put a PKI lab under a term that answers no question about which primitive it builds."
     }
   ]
 }

@@ -1039,6 +1039,7 @@
     }
 
     .path-band-summary {
+      min-height: var(--path-summary-height, 0px);
       cursor: pointer;
       list-style: none;
       display: flex;
@@ -1070,6 +1071,7 @@
     }
 
     .path-band-name {
+      min-height: var(--path-name-height, 0px);
       margin: 0;
       font-family: var(--serif);
       font-size: 1.05rem;
@@ -1086,6 +1088,7 @@
     }
 
     .path-band-meta {
+      min-height: var(--path-meta-height, 0px);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -22222,6 +22225,22 @@
 
           bandGrid.appendChild(li);
         });
+
+        // Match natural header heights without truncating text at any viewport.
+        function sizePathSummaries() {
+          ['summary', 'name', 'meta'].forEach(function (part) {
+            bandGrid.style.removeProperty('--path-' + part + '-height');
+          });
+          ['name', 'meta', 'summary'].forEach(function (part) {
+            var height = Math.max.apply(null, Array.from(bandGrid.querySelectorAll('.path-band-' + part)).map(function (el) {
+              return el.getBoundingClientRect().height;
+            }));
+            bandGrid.style.setProperty('--path-' + part + '-height', Math.ceil(height) + 'px');
+          });
+        }
+        sizePathSummaries();
+        window.addEventListener('resize', sizePathSummaries);
+        if (document.fonts) document.fonts.ready.then(sizePathSummaries);
       }
 
       /* The newcomer link above the catalog scrolls to the band on the page, not

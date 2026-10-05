@@ -7,3 +7,5 @@ The menu builds `.path-card` disclosures. Its step links clear category, search,
 The homepage builds `.path-band-card` entries containing native `details` / `summary` disclosures. Clicking a summary, or using Enter or Space while it has focus, reveals the ordered lab list. Those links open the labs themselves. Descriptions, step lists, and side trips reuse the menu's generated content; level ranges derive from the referenced cards. “New here? Start here” expands the first path, scrolls to it, and focuses its summary.
 
 Course-linked catalog cards live in `.card-cell` wrappers. The card stays in normal layout and fills the wrapper; only its sibling `.module-links` footer is absolutely positioned. Making the card absolute collapses the wrapper and makes cards overlap section headings.
+
+Homepage path summaries share measured heading, metadata, and total heights, recalculated after fonts load and on resize. This aligns the collapsed cards and their controls without clipping text. Expanded lists grow independently.

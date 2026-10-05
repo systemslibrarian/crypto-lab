@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 27 · Intermediate — 53 · Advanced — 139. Total 219.
+**Counts:** Beginner — 30 · Intermediate — 53 · Advanced — 139. Total 222.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -31,7 +31,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | `advanced` | systems security rather than cryptography; advanced on the trust reasoning |
 | [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | `intermediate` | The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience. |
 
-## Beginner — `beginner` (27)
+## Beginner — `beginner` (30)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -49,9 +49,11 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Ghost Commit](https://systemslibrarian.github.io/crypto-lab-ghost-commit/) | hand | git objects and a leaked credential; there is no maths anywhere in it |
 | [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | hand | Mosca's X + Y > Z is adding two numbers of years and comparing to a third |
 | [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | hand | opens "Start here - What is a hash?" with three plain rules and a type-anything box |
+| [HTTPS Padlock](https://systemslibrarian.github.io/crypto-lab-https-padlock/) | hand | a five-step lesson about what a padlock checks, with four plain verdicts and no notation; the certificate internals are one disclosure away |
 | [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) | hand | 90-second guided tour: decode, forge, compare a correct verifier with a broken one |
 | [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) | hand | one benchmark, one control, a jargon glossary, and the tension stated in plain words |
 | [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) | hand | "Start Here - a Guided Path" numbers six steps; parameters are powers of two |
+| [Locks and Keys](https://systemslibrarian.github.io/crypto-lab-locks-and-keys/) | hand | one real key pair, four button presses: lock a note to the public half, open it with the private half, watch a different key fail, then run the same pair backwards to sign. No modulus or exponent on screen. |
 | [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) | hand | the structure half of the Merkle pair, by the two labs’ own stated split |
 | [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | hand | XOR is introduced from scratch and crib-dragging is a word puzzle, not algebra |
 | [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) | hand | same meaning, different bytes - a parsing lesson, not a maths one |
@@ -60,6 +62,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) | hand | one clock slider; the reader moves time and watches verdicts move |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | rule | classical cipher work, arithmetic only: Caesar, Vigen, substitution cipher **(flagged)** |
 | [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) | hand | "the whole concept in one picture"; the signature is used, never computed |
+| [What Is PQC](https://systemslibrarian.github.io/crypto-lab-what-is-pqc/) | hand | two symmetrical panels and a size comparison; the words lattice, LWE and polynomial appear nowhere on the page |
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 

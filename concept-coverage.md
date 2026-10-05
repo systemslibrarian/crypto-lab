@@ -217,6 +217,18 @@ The repository and served build were observed on 3 October 2026. This extends th
 limits-of-evidence arc without creating a new concept or changing its status. Catalogued
 total moves to 219.*
 
+*Version 24 — files three beginner on-ramps, each at the point where its concept previously
+started one step past a newcomer. Locks and Keys under §7 Factoring: RSAES-OAEP and RSASSA-PSS
+on one real pair, with the trapdoor kept off the screen and the two halves shown not to be
+interchangeable. What Is PQC under §35 Post-quantum migration: a real ML-KEM-768 exchange
+beside a real X25519 one in matching panels, measuring size rather than implying strength,
+which is the step a migration planner assumes its reader has already taken. HTTPS Padlock
+under §25 Trust distribution and transparency: four checks and four non-promises, with a
+lookalike certificate passing every check as correct behaviour rather than a defect. Each lab
+was read at a pinned commit, and the reading is recorded in tools/catalog-reviewed.json. No
+status changes — §7 and §25 were already `COVERED`, §35 already `DEEP`. Catalogued total moves
+to 222.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -349,8 +361,18 @@ KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault · Drift Key.
 ## II. Hardness assumptions (the trapdoor families)
 
 **7. Factoring — `COVERED`**
-Educational RSA · RSA Forge · Iron Letter · Factor Forge. Trapdoor, padding (OAEP/PSS), and
-RSA-OAEP measured against an elliptic-curve alternative.
+Educational RSA · RSA Forge · Iron Letter · Factor Forge · Locks and Keys. Trapdoor, padding
+(OAEP/PSS), and RSA-OAEP measured against an elliptic-curve alternative.
+
+Locks and Keys is the way in to this concept for someone who has not met a key pair. It files
+here because its primitives are RSAES-OAEP and RSASSA-PSS on one real 2048-bit pair, and it
+keeps the trapdoor off the screen entirely: no modulus, no exponent, no `mod`. What it adds to
+the concept is the thing the other demos here assume you already accept — that the two halves
+are not interchangeable, and that the SAME pair run the other way round is what a signature
+is. It carries two negative claims in the page rather than leaving them to be inferred: a
+decryption that succeeds says nothing about who encrypted, and a signature that verifies ties
+a note to a key rather than to a person. Correctness rests on 12 pinned Project Wycheproof
+cases, four of which must be refused.
 
 Factor Forge is the first demo here to attack the assumption instead of the scheme. Seven
 real algorithms over a BigInt `N` — trial division, Fermat, Pollard rho (Brent), Pollard
@@ -743,7 +765,16 @@ anonymous e-cash would each still add an axis rather than repeat one.
 
 **25. Trust distribution and transparency — `COVERED`**
 PKI Chain · Chain of Trust · Web of Trust · Key Mirror · Merkle Vault · Merkle Proofs ·
-Accumulator · DNSSEC Chain.
+Accumulator · DNSSEC Chain · HTTPS Padlock.
+
+HTTPS Padlock enters this concept at the question a newcomer actually arrives with — what does
+the padlock mean — and answers it as four checks and four non-promises. Its contribution is the
+boundary rather than the mechanism: a certificate for a lookalike domain passes every check the
+page performs, and the page is built so that this reads as correct behaviour rather than a
+failure. It reads certificates captured earlier and makes no network connection, so it never
+claims to have observed encryption; its RFC 5280 validation is a stated teaching subset, and it
+says on the page that trust terminates in its own committed copy of a root list rather than the
+reader's device. Chain of Trust remains the deeper and narrower treatment of path building.
 
 DNSSEC Chain adds the second trust hierarchy — one that shares no keys, no CAs and no
 revocation machinery with the X.509 world the other PKI demos teach — and the mechanism that
@@ -880,7 +911,15 @@ BB84 · E91 · Quantum Entropy.
 
 **35. Post-quantum migration — `DEEP`**
 PQ Families · Harvest Vault · Harvest Timeline · PQ Rotation · Hybrid Guide · Hybrid PQC ·
-Hybrid Sign · Downgrade Wire · PQ Chooser.
+Hybrid Sign · Downgrade Wire · PQ Chooser · What Is PQC.
+
+What Is PQC is the entry point this concept did not have: a reader who does not yet know what
+post-quantum means cannot use a migration planner. It runs a real ML-KEM-768 exchange and a
+real X25519 exchange in deliberately matching panels, so that the comparison carries no
+suggestion that one is simply stronger, and the difference it does measure is size on the wire
+— 2,272 bytes against 64, drawn to scale. The words lattice, LWE and polynomial appear nowhere
+on the page. It also shows the failure mode that makes ML-KEM unlike a signature check: change
+one ciphertext byte and the two sides derive different secrets with nothing raising an error.
 
 PQ Chooser is the selection step this concept leads to, and it is separated from PQ Families
 by granularity rather than subject. Families compares the five FAMILIES with one
@@ -1020,7 +1059,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 219.**
+**Catalogued total: 222.**
 
 ---
 

@@ -52,6 +52,10 @@
   "lab": "crypto-lab-vector-gate"
  },
  {
+  "port": 4212,
+  "lab": "crypto-lab-what-is-pqc"
+ },
+ {
   "port": 4214,
   "lab": "crypto-lab-ssh-handshake"
  },
@@ -818,5 +822,13 @@
  {
   "port": 4720,
   "lab": "crypto-lab-tc26-pair"
+ },
+ {
+  "port": 4721,
+  "lab": "crypto-lab-locks-and-keys"
+ },
+ {
+  "port": 4730,
+  "lab": "crypto-lab-https-padlock"
  }
 ]

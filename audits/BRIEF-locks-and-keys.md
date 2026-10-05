@@ -1,9 +1,22 @@
 # Build brief — `crypto-lab-locks-and-keys`
 
-**2026-10-03. Brief only; no repository exists yet.** Written against
+**2026-10-03. BUILT and live.** Written against
 `audits/_MASTER-TEMPLATE.md`; §0 principles, §1 build, §2 teach, §3 look, §4 accessibility,
 §5 README and §6 deploy all apply unchanged. Decided in
 `audits/BEGINNER-ONRAMP-2026-10-03.md`.
+
+> **Corrected 2026-10-04, from the built lab.** The testing section below asked for "a pinned
+> RSA-OAEP / RSA-PSS vector from RFC 8017's test data". **RFC 8017 publishes no test data.** It
+> specifies the schemes and nothing more, so there was no such vector to pin: the brief was
+> asking for something that does not exist.
+>
+> What the lab does instead is stronger, and is what the pinned review records: **12 Project
+> Wycheproof cases — 6 RSAES-OAEP and 6 RSASSA-PSS, of which 4 must be REFUSED** — from
+> `rsa_oaep_2048_sha256_mgf1sha256_test.json` and `rsa_pss_2048_sha256_mgf1_32_test.json`, run
+> in the reader's own browser rather than in CI. RFC 8017 is cited for the SCHEMES only
+> (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS), and `src/crypto/vectors.test.ts` carries a test named
+> *"cites RFC 8017 for the schemes and not for the numbers"* so the attribution cannot drift
+> back. The original line is struck through below rather than deleted.
 
 ```
 NEW DEMO BRIEF
@@ -75,8 +88,11 @@ Reserve alarm colouring for a state where something that should have failed did 
 - KATs are not available for a random key pair, so correctness is asserted by round-trip plus
   **cross-pair rejection**: a message encrypted to pair A never decrypts under pair B, and a
   signature from pair A never verifies under pair B, over many generated pairs.
-- A pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data verifies in the browser, so the
-  lab has at least one check against the publication rather than against itself.
+- ~~A pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data verifies in the browser, so the
+  lab has at least one check against the publication rather than against itself.~~
+  **AS BUILT:** RFC 8017 publishes no test data. 12 pinned Project Wycheproof cases verify in
+  the browser instead — 6 OAEP, 6 PSS, 4 of them must-refuse — which is a check against someone
+  else's numbers rather than against the lab's own.
 - `e2e/claims.spec.ts` asserts each panel's verdict from the computed result (§4.1b).
 - §4.1c mutations per verdict — decryption that always returns the plaintext, verification that
   always accepts, the wrong-key path silently reusing the right key — each required to turn a

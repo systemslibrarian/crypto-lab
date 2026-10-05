@@ -1025,6 +1025,7 @@
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 18px;
+      align-items: start;
     }
 
     .path-band-card {
@@ -1037,12 +1038,27 @@
       transition: border-color 0.2s ease, background 0.2s ease;
     }
 
+    .path-band-summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .path-band-summary::-webkit-details-marker { display: none; }
+    .path-band-summary:focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 4px;
+    }
+    .path-band-summary .path-band-start::after { content: " +"; }
+    .path-band-card details[open] .path-band-start::after { content: " \2212"; }
+    .path-band-card .path-steps { margin-top: 12px; }
+
     .path-band-card:hover {
       border-color: rgba(53, 214, 187, 0.4);
     }
 
-    /* The card is the scroll target for "New here? Start here", so it takes
-       focus programmatically. No visible ring until it actually has focus. */
+    /* The summary receives keyboard and newcomer-link focus. */
     .path-band-card:focus-visible {
       outline: 2px solid var(--teal);
       outline-offset: 3px;
@@ -2046,8 +2062,14 @@
       position: relative;
       display: flex;
     }
-    .card-cell > .project-card,
-    .card-cell:hover > .project-card,
+    .card-cell > .project-card {
+      flex: 1 1 auto;
+    }
+    .card-cell:hover > .project-card {
+      transform: translateY(-3px);
+      border-color: rgba(242, 248, 251, 0.24);
+      background: rgba(12, 23, 31, 0.98);
+    }
     .module-links {
       position: absolute;
       left: 26px;
@@ -22148,22 +22170,23 @@
           var li = document.createElement('li');
           li.className = 'path-band-card' + (i === 0 ? ' is-first' : '');
           li.id = 'path-band-' + path.id;
-          /* Focusable only programmatically: it is the scroll target for the
-             "New here? Start here" link, and adding it to the tab order would
-             put five dead stops in front of the links that actually do things. */
-          li.tabIndex = -1;
+          var disclosure = document.createElement('details');
+          var summary = document.createElement('summary');
+          summary.className = 'path-band-summary';
+          disclosure.appendChild(summary);
+          li.appendChild(disclosure);
 
-          var name = document.createElement('h3');
+          var name = document.createElement('span');
           name.className = 'path-band-name';
           name.textContent = path.label;
-          li.appendChild(name);
+          summary.appendChild(name);
 
-          var focus = document.createElement('p');
+          var focus = document.createElement('span');
           focus.className = 'path-band-focus';
           focus.textContent = path.focus || path.blurb;
-          li.appendChild(focus);
+          summary.appendChild(focus);
 
-          var meta = document.createElement('p');
+          var meta = document.createElement('span');
           meta.className = 'path-band-meta';
           var steps = document.createElement('span');
           steps.textContent = path.steps.length + ' steps';
@@ -22179,27 +22202,30 @@
             lvl.textContent = range;
             meta.appendChild(lvl);
           }
-          li.appendChild(meta);
+          summary.appendChild(meta);
 
-          /* "Start" goes to the first step's own lab. The link text names that
-             lab, because five links all reading "Start" would be five links a
-             screen-reader user cannot tell apart (WCAG 2.4.4) -- and two paths
-             legitimately begin at the same lab, so the accessible name carries
-             the path as well. It OPENS with the visible text rather than adding
-             it on the end, so the visible label is still a prefix of the
-             accessible name (WCAG 2.5.3, Label in Name). */
-          var first = path.steps[0];
-          var firstCard = first && titleToCard[first.title];
-          var href = (first && first.url) || (firstCard && firstCard.getAttribute('href'));
-          if (href) {
-            var start = document.createElement('a');
-            start.className = 'path-band-start';
-            start.href = href;
-            start.target = '_blank';
-            start.rel = 'noopener';
-            start.textContent = 'Start: ' + first.title;
-            start.setAttribute('aria-label', 'Start: ' + first.title + ' \u2014 ' + path.label);
-            li.appendChild(start);
+          var cue = document.createElement('span');
+          cue.className = 'path-band-start';
+          cue.textContent = 'Labs';
+          summary.appendChild(cue);
+
+          var menuPath = document.getElementById('path-' + path.id);
+          var blurb = menuPath.querySelector('.path-blurb').cloneNode(true);
+          disclosure.appendChild(blurb);
+          var list = menuPath.querySelector('.path-steps').cloneNode(true);
+          Array.from(list.querySelectorAll('a[data-step-target]')).forEach(function (link) {
+            var card = titleToCard[link.getAttribute('data-step-target')];
+            link.href = card.getAttribute('href');
+            link.removeAttribute('data-step-target');
+          });
+          disclosure.appendChild(list);
+          var detour = menuPath.querySelector('.path-aside');
+          if (detour) {
+            detour = detour.cloneNode(true);
+            var detourLink = detour.querySelector('a[data-step-target]');
+            detourLink.href = titleToCard[detourLink.getAttribute('data-step-target')].getAttribute('href');
+            detourLink.removeAttribute('data-step-target');
+            disclosure.appendChild(detour);
           }
 
           bandGrid.appendChild(li);
@@ -22212,14 +22238,15 @@
          the page did not move, since #learning-paths sits inside .nav-menu at
          document y = -287 until the menu opens. The band is on the page, so the
          link is an ordinary in-page jump again and the href alone works with no
-         JS at all. */
+         JS at all. The handler also expands its list and focuses the summary. */
       var startHereLink = document.getElementById('start-here-link');
       var startHereCard = document.getElementById('path-band-start-here');
       if (startHereLink && startHereCard) {
         startHereLink.addEventListener('click', function (e) {
           e.preventDefault();
-          startHereCard.scrollIntoView({ block: 'center' });
-          startHereCard.focus({ preventScroll: true });
+          startHereCard.querySelector('details').open = true;
+          startHereCard.scrollIntoView({ block: 'start' });
+          startHereCard.querySelector('summary').focus({ preventScroll: true });
         });
       }
 
@@ -22501,7 +22528,11 @@
 
         var value = document.createElement('span');
         value.className = 'search-suggestion-value';
-        value.textContent = s.value;
+        // Category metadata stays canonical; only its displayed label changes.
+        value.textContent = s.kind === 'Category'
+          ? s.value.toLowerCase().replace(/^./, function (c) { return c.toUpperCase(); })
+              .replace(/\bmpc\b/g, 'MPC').replace(/\bkdfs\b/g, 'KDFs')
+          : s.value;
 
         var kind = document.createElement('span');
         kind.className = 'search-suggestion-kind';

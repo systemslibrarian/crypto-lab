@@ -17,7 +17,7 @@ each has a checker that fails when it drifts:
 
 | File | Holds | Checker |
 |---|---|---|
-| `README.md` | Featured / Learning Paths / All Demos tables | `node tools/readme-sync.js check` |
+| `README.md` | Learning Paths / All Demos tables | `node tools/readme-sync.js check` |
 | `README.md` | the "Maintaining the fleet" table | `node tools/tools-sync.js check` |
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
 | `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
@@ -706,10 +706,8 @@ mistake rather than a choice, and the 10 are the only genuine drift.
 
 ### 3. Regenerate `README.md`'s tables
 
-The Featured and All Demos tables are **generated from the cards**, with the
-` *(WIP)*` suffix derived from the card class. Featured keeps the demos and order
-already in its table (Category mirrors the kicker, Stack the chips). All Demos
-mirrors the live catalog: one table per `SECTIONS` entry, in the page's own order,
+The All Demos table is **generated from the cards**, with the ` *(WIP)*` suffix
+derived from the card class. It mirrors the live catalog: one table per `SECTIONS` entry, in the page's own order,
 each row carrying the card's description, its live demo, its source repo and its
 chips, between the `readme-sync:all-demos` markers. A card missing from
 `TITLE_TO_SECTION` fails the run. Never hand-edit the rows; after any card change run:
@@ -1533,7 +1531,7 @@ docs/ explains how each subsystem works. When a change alters how a subsystem do
 - One concept per demo. Don't bundle.
 - Demos link to their own GitHub Pages site (`https://systemslibrarian.github.io/crypto-lab-<slug>/`), not the source repo. Source lives at `https://github.com/systemslibrarian/crypto-lab-<slug>`.
 - No emojis in markdown or HTML unless the user explicitly asks for them.
-- Featured cards (`.feature-card`) are folded into their curriculum section at runtime, so the catalog always starts with Foundations.
+- There is no featured strip. It was removed on 2026-10-05: the picks were an editorial rotation that was not ordered by level, three of its last four were Advanced, and the learning paths now do the where-to-start job on the page body. Every card is a `.project-card` in its curriculum section, so the catalog starts with Foundations.
 - Per-demo build/teach/look/a11y standard: see `audits/_MASTER-TEMPLATE.md`. It governs how a demo repo is built; this file governs the catalog.
 
 ---

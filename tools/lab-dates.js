@@ -118,7 +118,7 @@ function monthOf(iso) {
  * hrefs rather than from a list anyone maintains by hand. */
 function cardedSlugs(html) {
   const slugs = [];
-  const re = /<a class="(?:feature|project)-card[^>]*?href="https:\/\/systemslibrarian\.github\.io\/(crypto-lab-[a-z0-9-]+)\//g;
+  const re = /<a class="project-card[^>]*?href="https:\/\/systemslibrarian\.github\.io\/(crypto-lab-[a-z0-9-]+)\//g;
   let m;
   while ((m = re.exec(html)) !== null) if (!slugs.includes(m[1])) slugs.push(m[1]);
   return slugs;
@@ -213,7 +213,7 @@ function derive() {
  * The position is not cosmetic. `readme-sync` and `catalog-sync` both match a
  * card with `data-category="..." href="..."` ADJACENT:
  *
- *   /<a class="((?:project|feature)-card[^"]*)" data-category="[^"]*" href="(...)"/
+ *   /<a class="(project-card[^"]*)" data-category="[^"]*" href="(...)"/
  *
  * so inserting anything between those two attributes takes catalog-sync to
  * "0 cards" and readme-sync to "Featured slug has no card" — two generators
@@ -223,7 +223,7 @@ function derive() {
  *
  * A null date writes NO attribute and REMOVES one left by a previous run, so a
  * date can never outlive the fact it came from. */
-const CARD_HEAD = /(<a class="(?:feature|project)-card[^"]*" data-category="[^"]*" href="https:\/\/systemslibrarian\.github\.io\/(crypto-lab-[a-z0-9-]+)\/")((?:\s+data-(?:added|updated)="[^"]*")*)/g;
+const CARD_HEAD = /(<a class="project-card[^"]*" data-category="[^"]*" href="https:\/\/systemslibrarian\.github\.io\/(crypto-lab-[a-z0-9-]+)\/")((?:\s+data-(?:added|updated)="[^"]*")*)/g;
 
 function stamp(html, labs) {
   return html.replace(CARD_HEAD, (whole, head, slug) => {

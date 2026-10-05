@@ -81,7 +81,6 @@
       padding: 42px 0 30px;
     }
 
-    .feature-card,
     .project-card,
     .footer-quote {
       border: 1px solid var(--border);
@@ -187,21 +186,7 @@
       display: contents;
     }
 
-    .feature-card {
-      position: relative;
-      overflow: hidden;
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      min-height: 260px;
-      text-decoration: none;
-      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
-      background:
-        linear-gradient(160deg, rgba(255, 255, 255, 0.03), transparent 38%),
-        rgba(9, 18, 24, 0.9);
-    }
 
-    .feature-card::after,
     .project-card::after {
       content: '';
       position: absolute;
@@ -211,14 +196,12 @@
       opacity: 0.9;
     }
 
-    .feature-card:hover,
     .project-card:hover {
       transform: translateY(-3px);
       border-color: rgba(242, 248, 251, 0.24);
       background: rgba(12, 23, 31, 0.98);
     }
 
-    .feature-title,
     .project-title {
       font-family: var(--serif);
       font-size: 1.65rem;
@@ -228,7 +211,6 @@
       margin: 14px 0 12px;
     }
 
-    .feature-copy,
     .project-copy {
       color: var(--text);
       font-size: 12.5px;
@@ -239,14 +221,7 @@
        `justify-content: space-between`, so its height moved with the number of
        chip lines and no two cards in a row agreed on where it was. */
     .project-card > .project-meta > .arrow,
-    .feature-card > .feature-meta > .arrow {
-      position: absolute;
-      right: 26px;
-      bottom: 20px;
-      margin: 0;
-    }
 
-    .feature-meta,
     .project-meta {
       /* Pins the whole footer block -- chips, dates, level -- to the bottom, so
          it aligns across a row however long the title or description ran. */
@@ -447,8 +422,7 @@
       transition: transform 0.2s ease;
     }
 
-    .feature-card:hover .arrow,
-    .project-card:hover .arrow {
+        .project-card:hover .arrow {
       transform: translateX(4px);
     }
 
@@ -533,8 +507,7 @@
       }
 
       .hero-main,
-      .feature-card,
-      .project-card,
+        .project-card,
       .footer-quote {
         padding: 22px;
       }
@@ -1285,15 +1258,8 @@
     }
 
     .project-card.wip-card,
-    .feature-card.wip-card {
-      opacity: 0.78;
-      border-style: dashed;
-    }
 
     .project-card.wip-card:hover,
-    .feature-card.wip-card:hover {
-      opacity: 1;
-    }
 
     .wip-card-badge {
       position: absolute;
@@ -1316,9 +1282,6 @@
     }
 
     .project-card.flash,
-    .feature-card.flash {
-      animation: cardFlash 700ms ease-out;
-    }
 
     @media (max-width: 1120px) {
       .learning-paths {
@@ -1493,11 +1456,7 @@
       background: linear-gradient(145deg, rgba(26, 171, 148, 0.06), transparent 30%), rgba(255, 255, 255, 0.88);
     }
 
-    html.light .feature-card {
-      background: linear-gradient(160deg, rgba(0, 0, 0, 0.02), transparent 38%), rgba(255, 255, 255, 0.94);
-    }
 
-    html.light .feature-card:hover,
     html.light .project-card:hover {
       background: #ffffff;
     }
@@ -1852,21 +1811,21 @@
     }
     /* ────────────────────────────────────────────────────── */
 
-    /* ── Featured header + folded-in homepage intro ─────────── */
-    .featured {
+    /* ── Site intro: heading, award, teaching band ─────────── */
+    .site-intro {
       position: relative;
       z-index: 1;
       padding: 16px 0 6px;
     }
-    .featured .wrap {
+    .site-intro .wrap {
       width: min(1280px, calc(100% - 40px));
     }
-    .featured-head {
+    .intro-head {
       margin-bottom: 14px;
     }
     /* Headline runs full width across the top: the text sits left and a hairline
        rule fills the remaining width to the right edge. Lede sits directly under. */
-    .featured-heading {
+    .intro-heading {
       display: flex;
       align-items: center;
       gap: clamp(14px, 2vw, 26px);
@@ -1878,10 +1837,10 @@
       line-height: 1.12;
       color: var(--text-hi);
     }
-    .featured-heading-text {
+    .intro-heading-text {
       flex: 0 1 auto;
     }
-    .featured-heading::after {
+    .intro-heading::after {
       content: "";
       flex: 1 1 auto;
       min-width: 24px;
@@ -1892,40 +1851,40 @@
         color-mix(in srgb, var(--teal) 18%, transparent) 88%,
         transparent);
     }
-    .featured-heading .intro-count {
+    .intro-heading .intro-count {
       color: var(--teal);
       font-variant-numeric: tabular-nums;
     }
     /* Headline and award badge sit side by side; the headline's trailing rule
        fills the gap between them. */
-    .featured-headline-row {
+    .intro-headline-row {
       display: flex;
       align-items: center;
       gap: clamp(16px, 3vw, 40px);
     }
-    .featured-headline-row .featured-heading {
+    .intro-headline-row .intro-heading {
       flex: 1 1 auto;
       min-width: 0;
     }
-    .featured-headline-row .award-banner {
+    .intro-headline-row .award-banner {
       flex: 0 0 auto;
       margin: 0;
       padding: 0;
       max-width: none;
       gap: 12px;
     }
-    .featured-headline-row .award-banner img {
+    .intro-headline-row .award-banner img {
       width: 60px;
       height: 60px;
     }
     @media (max-width: 760px) {
-      .featured-headline-row {
+      .intro-headline-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
       }
     }
-    .featured-sub {
+    .intro-sub {
       margin-top: 6px;
       max-width: 96ch;
       color: var(--text-dim);
@@ -1933,26 +1892,9 @@
       line-height: 1.5;
     }
     @media (max-width: 760px) {
-      .featured { padding-top: 12px; }
+      .site-intro { padding-top: 12px; }
     }
-    .featured-grid-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin: 22px 0 12px;
-    }
-    .featured-grid-label {
-      margin: 0;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      font-weight: 600;
-    }
-    .featured-start-here {
+    .start-here-link {
       font-family: var(--mono);
       font-size: 11.5px;
       letter-spacing: 0.1em;
@@ -1962,40 +1904,13 @@
       border-bottom: 1px solid rgba(53, 214, 187, 0.45);
       padding-bottom: 2px;
     }
-    .featured-start-here:hover,
-    .featured-start-here:focus-visible {
+    .start-here-link:hover,
+    .start-here-link:focus-visible {
       border-bottom-color: var(--teal);
     }
-    .featured-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-    .featured-grid .project-card {
-      animation: fadeUp 0.6s ease both;
-    }
-    .featured-badge {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      padding: 3px 8px;
-      font-size: 9.5px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--teal);
-      border: 1px solid var(--teal);
-      background: rgba(53, 214, 187, 0.10);
-      z-index: 2;
-    }
-    @media (min-width: 761px) and (max-width: 1120px) {
-      .featured-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
     @media (max-width: 760px) {
-      .featured-grid { grid-template-columns: 1fr; }
-      /* Only the first featured card on mobile — four stacked cards eat too much space. */
-      .featured-grid > *:nth-child(n+2) { display: none; }
-      .featured .wrap { width: min(100% - 24px, 1280px); }
-      .featured { padding-top: 22px; }
+      .site-intro .wrap { width: min(100% - 24px, 1280px); }
+      .site-intro { padding-top: 22px; }
     }
 
     /* Exception note — Blind Oracle, the lab's one live-server demo */
@@ -2132,15 +2047,7 @@
       display: flex;
     }
     .card-cell > .project-card,
-    .card-cell > .feature-card {
-      flex: 1 1 auto;
-    }
     .card-cell:hover > .project-card,
-    .card-cell:hover > .feature-card {
-      transform: translateY(-3px);
-      border-color: rgba(242, 248, 251, 0.24);
-      background: rgba(12, 23, 31, 0.98);
-    }
     .module-links {
       position: absolute;
       left: 26px;
@@ -2193,11 +2100,7 @@
       .feature-grid,
       .project-grid,
       .footer-quote,
-      .featured-grid .project-card,
       .project-card.flash,
-      .feature-card.flash {
-        animation: none;
-      }
       *,
       *::before,
       *::after {
@@ -2280,11 +2183,11 @@
   </div>
 
   <main>
-    <section class="featured" id="featured" aria-labelledby="site-intro-title">
+    <section class="site-intro" id="site-intro" aria-labelledby="site-intro-title">
       <div class="wrap">
-        <div class="featured-head">
-          <div class="featured-headline-row">
-            <h1 class="featured-heading" id="site-intro-title"><span class="featured-heading-text">Explore <span class="intro-count" id="exhibit-count">222</span> interactive cryptography exhibits</span></h1>
+        <div class="intro-head">
+          <div class="intro-headline-row">
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">222</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -2299,7 +2202,7 @@
               </span>
             </a>
           </div>
-          <p class="featured-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math.</p>
+          <p class="intro-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math.</p>
         </div>
         <section class="teach-band" aria-labelledby="teach-band-title">
           <div class="teach-band-main">
@@ -2320,15 +2223,13 @@
           </ul>
           <!-- teach-build:modules:end -->
         </section>
-        <div class="featured-grid-head">
-          <h2 class="featured-grid-label" id="featured-demos-title">Featured demos</h2>
-          <!-- The strip is a rotating editorial pick and is not ordered by level:
-               today three of its four are Advanced. Sending a newcomer "below" was
-               therefore sending them into the deep end, so the on-ramp is its own
-               link to the Start Here path rather than a sentence about the strip. -->
-          <a class="featured-start-here" id="featured-start-here" href="#path-band-start-here">New here? Start here <span aria-hidden="true">&rarr;</span></a>
+        <!-- The editorial strip that used to sit here is gone. It was a rotating
+             pick that was not ordered by level -- three of its last four were
+             Advanced -- and the learning paths below now do the where-to-start
+             job properly. The newcomer link survives it and points there. -->
+        <div class="start-here-row">
+          <a class="start-here-link" id="start-here-link" href="#path-band-start-here">New here? Start here <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <div class="featured-grid" id="featured-grid" aria-labelledby="featured-demos-title"></div>
       </div>
     </section>
     <!-- The paths also render inside the nav menu, which is translated off-screen
@@ -2390,105 +2291,12 @@
         <div class="no-results" id="no-results" hidden></div>
         <div class="feature-grid">
 
-          <a class="feature-card secondary" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" data-added="2026-03" data-updated="2026-08" data-level="advanced"
-            data-implements="AES@web-demo/src/crypto/aes.ts:9 | AES-GCM@web-demo/src/crypto/aes.ts:10 | HAETAE@wasm/src/haetae_exports.c:2 | HKDF@crates/qv-core/src/encrypt.rs:20 | PBKDF2@web-demo/src/crypto/keywrap.ts:40 | SHA-256@web-demo/src/crypto/keywrap.ts:40 | Shamir secret sharing@web-demo/src/crypto/pipeline.ts:16 | SMAUG-T@wasm/src/smaug_exports.c:2"
-            data-unscanned="WebAssembly:3"
-            data-comment-only="SMAUG-T@web-demo/src/crypto/keywrap.ts:22"
-            data-references="AES-CBC | AES-CCM | AES-ECB | Argon2 | CTR-DRBG | ChaCha20 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Fiat-Shamir | Fujisaki-Okamoto transform | Gaussian mechanism | Grover's algorithm | HMAC | Keccak | Kyber | LWE | MD5 | ML-DSA | ML-KEM | NTT | OPAQUE | Pairing | Poly1305 | RSA | RSA-PSS | SHA-3 | SHAKE | Schnorr | Shor's algorithm | TLS 1.3 | XChaCha20-Poly1305 | bcrypt"
-            data-attacks="Brute force@docs/implementation-notes.md:300 | Chosen-ciphertext attack@SECURITY.md:16 | Chosen-plaintext attack@docs/CRYPTO-DECISIONS.md:216 | Ciphertext malleability@docs/CRYPTO-DECISIONS.md:96 | Downgrade attack@docs/specification.md:204 | Key recovery@README.md:40 | Length extension@docs/security-audit-checklist.md:71 | Man-in-the-middle@docs/threat-model.md:24 | Nonce reuse@README.md:34 | Padding oracle@docs/CRYPTO-DECISIONS.md:43 | Side-channel (unspecified)@SECURITY.md:36 | Signature malleability@docs/security-audit-checklist.md:172 | Timing side-channel@AUDIT-VERIFICATION-REPORT.md:27"
-            data-standards="IETF | NIST"
-            data-implementation="Rust/C wrappers and WASM"
-            data-review-commit="c0c067dba8dc942924fe754949ad4ceb26ec49a6"
-            data-review-note="Rust and C source reviewed; three compiled WASM binaries remain opaque"
-            data-added="2026-03" data-updated="2026-08" data-level="advanced"
-            data-added="2026-03" data-updated="2026-08" data-level="advanced"
-            data-added="2026-03" data-updated="2026-08"
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" data-added="2026-03" data-updated="2026-08" data-level="advanced" data-implements="AES@web-demo/src/crypto/aes.ts:9 | AES-GCM@web-demo/src/crypto/aes.ts:10 | HAETAE@wasm/src/haetae_exports.c:2 | HKDF@crates/qv-core/src/encrypt.rs:20 | PBKDF2@web-demo/src/crypto/keywrap.ts:40 | SHA-256@web-demo/src/crypto/keywrap.ts:40 | Shamir secret sharing@web-demo/src/crypto/pipeline.ts:16 | SMAUG-T@wasm/src/smaug_exports.c:2" data-unscanned="WebAssembly:3" data-comment-only="SMAUG-T@web-demo/src/crypto/keywrap.ts:22" data-references="AES-CBC | AES-CCM | AES-ECB | Argon2 | CTR-DRBG | ChaCha20 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Fiat-Shamir | Fujisaki-Okamoto transform | Gaussian mechanism | Grover's algorithm | HMAC | Keccak | Kyber | LWE | MD5 | ML-DSA | ML-KEM | NTT | OPAQUE | Pairing | Poly1305 | RSA | RSA-PSS | SHA-3 | SHAKE | Schnorr | Shor's algorithm | TLS 1.3 | XChaCha20-Poly1305 | bcrypt" data-attacks="Brute force@docs/implementation-notes.md:300 | Chosen-ciphertext attack@SECURITY.md:16 | Chosen-plaintext attack@docs/CRYPTO-DECISIONS.md:216 | Ciphertext malleability@docs/CRYPTO-DECISIONS.md:96 | Downgrade attack@docs/specification.md:204 | Key recovery@README.md:40 | Length extension@docs/security-audit-checklist.md:71 | Man-in-the-middle@docs/threat-model.md:24 | Nonce reuse@README.md:34 | Padding oracle@docs/CRYPTO-DECISIONS.md:43 | Side-channel (unspecified)@SECURITY.md:36 | Signature malleability@docs/security-audit-checklist.md:172 | Timing side-channel@AUDIT-VERIFICATION-REPORT.md:27" data-standards="IETF | NIST" data-implementation="Rust/C wrappers and WASM" data-review-commit="c0c067dba8dc942924fe754949ad4ceb26ec49a6" data-review-note="Rust and C source reviewed; three compiled WASM binaries remain opaque"
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Post-Quantum</div>
-            <div class="feature-title">Quantum Vault KpqC</div>
-            <div class="feature-copy">Threshold short-secret encryption using secret sharing and Korean post-quantum cryptography, compiled to WASM for direct browser use.</div>
-            <div class="feature-meta">
+            <div class="project-title">Quantum Vault KpqC</div>
+            <div class="project-copy">Threshold short-secret encryption using secret sharing and Korean post-quantum cryptography, compiled to WASM for direct browser use.</div>
+            <div class="project-meta">
               <div class="stack">
                 <span class="chip">AES-256-GCM</span>
                 <span class="chip">Shamir SSS</span>
@@ -21525,17 +21333,7 @@
   <script src="catalog-search.js"></script>
   <script>
   (function () {
-    /* Featured demos shown in the "Start Here" strip, by repo slug.
-       Edit this list to change the strip — cards are cloned from the grid
-       below so their title/copy/primitives stay in sync automatically. */
-    var FEATURED_SLUGS = [
-      'crypto-lab-quantum-vault-kpqc',
-      'crypto-lab-corrupted-oracle',
-      'crypto-lab-padding-oracle',
-      'crypto-lab-nonce-lattice'
-    ];
-
-    var CATEGORIES = [
+        var CATEGORIES = [
       'FOUNDATIONS',
       'ENCRYPTION',
       'SIGNATURES',
@@ -21891,7 +21689,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && navMenu && navMenu.classList.contains('open')) setMenuOpen(false);
     });
-    var cards = Array.from(document.querySelectorAll('.feature-card, .project-card'));
+    var cards = Array.from(document.querySelectorAll('.project-card'));
     var total = cards.length;
     var exhibitCountEl = document.getElementById('exhibit-count');
     if (exhibitCountEl) exhibitCountEl.textContent = total;
@@ -21911,8 +21709,8 @@
     }
 
     var cardData = cards.map(function (card) {
-      var title = ((card.querySelector('.feature-title, .project-title') || {}).textContent || '').trim();
-      var copy = (card.querySelector('.feature-copy, .project-copy') || {}).textContent || '';
+      var title = ((card.querySelector('.project-title') || {}).textContent || '').trim();
+      var copy = (card.querySelector('.project-copy') || {}).textContent || '';
       var kicker = (card.querySelector('.card-kicker') || {}).textContent || '';
       var chipValues = Array.from(card.querySelectorAll('.chip')).map(function (c) { return c.textContent.trim(); }).filter(Boolean);
       var raw = card.getAttribute('data-category') || '';
@@ -22151,9 +21949,8 @@
       Array.from(treeEl.querySelectorAll('a')).forEach(function (a) { a.classList.remove('active'); });
     }
 
-    /* Group cards by section, insert section H2 headers into the project-grid.
-       Featured cards are folded into their section so the curriculum starts
-       at the top of the catalog. */
+    /* Group cards by section, insert section H2 headers into the project-grid,
+       so the curriculum starts at the top of the catalog. */
     var projectGrid = document.querySelector('.project-grid');
     var sectionHeaderEls = {};
     if (projectGrid) {
@@ -22231,39 +22028,11 @@
 
     layout();
 
-    /* Build the Featured "Start Here" strip by cloning the matching catalog
-       cards (single source of truth — no retyped content). A feature-card
-       clone is normalized to project-card markup so all four match the grid. */
-    var featuredGrid = document.getElementById('featured-grid');
-    if (featuredGrid) {
-      FEATURED_SLUGS.forEach(function (slug) {
-        var sel = '[href*="/' + slug + '/"]';
-        var orig = document.querySelector('.feature-card' + sel + ', .project-card' + sel);
-        if (!orig) return;
-        var clone = orig.cloneNode(true);
-        var isFeature = clone.classList.contains('feature-card');
-        clone.classList.remove('feature-card', 'secondary');
-        clone.classList.add('project-card');
-        if (isFeature) {
-          ['title', 'copy', 'meta'].forEach(function (part) {
-            var el = clone.querySelector('.feature-' + part);
-            if (el) el.classList.replace('feature-' + part, 'project-' + part);
-          });
-        }
-        var badge = document.createElement('span');
-        badge.className = 'featured-badge';
-        badge.textContent = 'Featured';
-        clone.insertBefore(badge, clone.firstChild);
-        featuredGrid.appendChild(clone);
-        attachModuleLinks(clone);
-      });
-    }
-
     /* Build Learning Paths panel. Jump-only behavior: clicking a step
        clears any active filter and smooth-scrolls to that card. */
     var titleToCard = {};
     cardData.forEach(function (d) {
-      var t = (d.el.querySelector('.feature-title, .project-title') || {}).textContent;
+      var t = (d.el.querySelector('.project-title') || {}).textContent;
       if (t) titleToCard[t.trim()] = d.el;
     });
 
@@ -22437,14 +22206,14 @@
         });
       }
 
-      /* The newcomer link in the featured strip scrolls to the band, not to the
-         menu. The first version of this link opened the menu copy, because that
+      /* The newcomer link above the catalog scrolls to the band on the page, not
+         to the menu copy. The first version of this link opened the menu copy, because that
          was the only copy there was: measured at six widths, the card opened and
          the page did not move, since #learning-paths sits inside .nav-menu at
          document y = -287 until the menu opens. The band is on the page, so the
          link is an ordinary in-page jump again and the href alone works with no
          JS at all. */
-      var startHereLink = document.getElementById('featured-start-here');
+      var startHereLink = document.getElementById('start-here-link');
       var startHereCard = document.getElementById('path-band-start-here');
       if (startHereLink && startHereCard) {
         startHereLink.addEventListener('click', function (e) {

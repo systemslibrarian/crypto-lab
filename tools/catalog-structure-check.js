@@ -10,7 +10,7 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const footer = html.indexOf('<footer class="footer">');
 assert(footer >= 0, 'catalog footer is missing');
 
-const cards = [...html.matchAll(/<a class="[^"]*(?:feature-card|project-card)[^"]*"/g)];
+const cards = [...html.matchAll(/<a class="[^"]*project-card[^"]*"/g)];
 assert(cards.length >= 200, 'catalog unexpectedly has fewer than 200 cards');
 assert.strictEqual(cards.filter(m => m.index > footer).length, 0, 'catalog cards must not appear after the footer opens');
 assert(html.includes('src="catalog-search.js"'), 'catalog-search.js is not loaded');

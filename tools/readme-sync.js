@@ -1,15 +1,15 @@
-// readme-sync.js — regenerate README.md's Featured, Learning Paths, and All
+// readme-sync.js — regenerate README.md's Learning Paths and All
 // Demos tables from index.html, so the site is the single source of truth.
 //
 // Run: node tools/readme-sync.js check
 // Prevents: this README’s tables drifting from the cards they are generated from
-// Reads: index.html's cards, its SECTIONS / TITLE_TO_SECTION / LEARNING_PATHS literals and #exhibit-count, plus README.md's Featured rows
+// Reads: index.html's cards, its SECTIONS / TITLE_TO_SECTION / LEARNING_PATHS literals and #exhibit-count
 //   node tools/readme-sync.js        rewrite README.md and index.html's hero count
 //   node tools/readme-sync.js check  exit 1 if either differs from generated
 //
 // All Demos mirrors the live catalog: the same sections (SECTIONS), in the same
 // order, and within each section the cards in the order the page shows them —
-// featured cards first, then document order, exactly as the page's grouping code
+// document order, exactly as the page's grouping code
 // appends them. Each row carries the card's own description, its live demo, its
 // source repository and its primitive chips. The section sits between the
 // readme-sync:all-demos markers; everything between them is regenerated.
@@ -19,7 +19,7 @@
 // catalog page would not show it under any heading either.
 //
 // It also owns the hero count in index.html's <h1> (#exhibit-count). That number
-// IS written at runtime — the JS counts .feature-card/.project-card and sets
+// IS written at runtime — the JS counts .project-card and sets
 // textContent — so a browser always sees the truth and the stale literal is
 // invisible in the one place anybody checks. Everything that reads the raw HTML
 // instead sees the literal: crawlers, link-preview cards, anything fetching the
@@ -54,14 +54,13 @@ let m;
 while ((m = cardRe.exec(html)) !== null) {
   const block = m[0];
   const kicker = /card-kicker">([^<]+)</.exec(block);
-  const title = /(?:project|feature)-title">([^<]+)</.exec(block);
-  const copy = /(?:project|feature)-copy">([^<]+)</.exec(block);
+  const title = /project-title">([^<]+)</.exec(block);
+  const copy = /project-copy">([^<]+)</.exec(block);
   const chips = [...block.matchAll(/class="chip">([^<]+)</g)].map(x => decode(x[1].trim()));
   cards.push({
     href: m[2],
     slug: m[3],
     wip: m[1].includes('wip-card'),
-    featured: m[1].startsWith('feature-card'),
     kicker: kicker ? decode(kicker[1].trim()) : '',
     title: title ? decode(title[1].trim()) : '',
     copy: copy ? decode(copy[1].trim().replace(/\s+/g, ' ')) : '',
@@ -92,7 +91,9 @@ if (unsectioned.length) {
     + unsectioned.map(c => c.title).join(', '));
   process.exit(1);
 }
-const ordered = [...cards.filter(c => c.featured), ...cards.filter(c => !c.featured)];
+/* Document order. The editorial strip that used to float four cards to the
+   front of this list is gone, so there is nothing to hoist. */
+const ordered = cards;
 const demoRow = c =>
   '| [' + cell(c.title) + '](' + c.href + ')' + (c.wip ? ' *(WIP)*' : '') +
   ' | ' + cell(c.copy) +
@@ -111,15 +112,6 @@ SECTIONS.forEach(s => {
 allDemos.push('<!-- readme-sync:all-demos:end -->');
 const allBlock = allDemos.join(eol);
 
-// Featured: keep the demos and order already listed in the README's Featured table.
-const featBody = /## Featured\r?\n\r?\n\|[^\n]*\r?\n\|---\|---\|---\|\r?\n([\s\S]*?)\r?\n\r?\n---/.exec(md);
-if (!featBody) { console.error('Featured table not found'); process.exit(1); }
-const featSlugs = [...featBody[1].matchAll(/github\.io\/([^\/)]+)\//g)].map(x => x[1]);
-const featRows = featSlugs.map(s => {
-  if (!bySlug[s]) { console.error('Featured slug has no card: ' + s); process.exit(1); }
-  return row(bySlug[s]);
-}).join(eol);
-
 // Learning Paths: from the LEARNING_PATHS array in the page's JS.
 const paths = literal('LEARNING_PATHS', '[', ']');
 const pathRows = paths.map(p =>
@@ -133,9 +125,6 @@ if (!allRe.test(md)) {
 }
 
 let out = md.replace(
-  /(## Featured\r?\n\r?\n\|[^\n]*\r?\n\|---\|---\|---\|\r?\n)[\s\S]*?(\r?\n\r?\n---)/,
-  (_, head, tail) => head + featRows + tail);
-out = out.replace(
   /(\| Path \| Focus \| Journey \|\r?\n\|---\|---\|---\|\r?\n)[\s\S]*?(\r?\n\r?\n---)/,
   (_, head, tail) => head + pathRows + tail);
 out = out.replace(allRe, () => allBlock);
@@ -173,6 +162,6 @@ if (process.argv[2] === 'check') {
   fs.writeFileSync(mdPath, out);
   if (heroHtml !== html) fs.writeFileSync(htmlPath, heroHtml);
   console.log('README.md regenerated: ' + cards.length + ' cards in ' + SECTIONS.length + ' sections, '
-    + featSlugs.length + ' featured, ' + paths.length + ' learning paths.'
+    + paths.length + ' learning paths.'
     + (heroHtml !== html ? ' Hero count ' + heroWas + ' -> ' + cards.length + '.' : ''));
 }

@@ -229,6 +229,15 @@ was read at a pinned commit, and the reading is recorded in tools/catalog-review
 status changes — §7 and §25 were already `COVERED`, §35 already `DEEP`. Catalogued total moves
 to 222.*
 
+*Version 25 — files the two beginner on-ramps that were built and live with no card. Good
+Randomness under §2 Randomness, entropy and generator failure: that concept was already `DEEP`
+in its failure cases and had no step establishing why an unguessable number matters at all.
+Agreeing in Public under §16 Key exchange and forward secrecy: the arc there runs classical to
+hybrid and began one step past a reader who has not met key agreement. Both labs were read at a
+pinned commit and the reading is in tools/catalog-reviewed.json; in both, the scanner's anchor
+pointed at an import line and the pin moves it to the operation. No status changes — §2 and §16
+were both already `DEEP`. Catalogued total moves to 224.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -294,9 +303,18 @@ OTP Vault. Information-theoretic security plus the two-time-pad break that shows
 guarantee actually costs.
 
 **2. Randomness, entropy, and generator failure — `DEEP`**
-DRBG Arena · Corrupted Oracle · Entropy Collapse · Quantum Entropy · VRF Gate · Noise to Numbers · Pulse Chain. Correct
+DRBG Arena · Corrupted Oracle · Entropy Collapse · Quantum Entropy · VRF Gate · Noise to Numbers · Pulse Chain · Good Randomness. Correct
 case, backdoored case, seed-provenance case, physical extraction, and output anyone can
 verify was not ground out to order.
+
+Good Randomness is where this concept starts for someone who has not yet accepted its premise.
+It puts two 32-byte keys side by side — one from the browser's own generator, one from a
+hand-rolled ChaCha20 stream started at a four-digit PIN — and shows them passing the same
+look-random checks, because that is the whole difficulty: the failure is invisible in exactly
+the place people look for it. It then rebuilds the second key by trying ten thousand seeds,
+which is counting rather than cryptanalysis, while every check on the page still reports
+success. The cipher is hand-rolled rather than imported so a reader can open the file and see
+that nothing is pretending.
 
 **3. One-way functions and hashing — `COVERED`**
 Babel Hash · Hash Zoo · World Hashes · Collision Vault. Construction, comparison,
@@ -551,7 +569,16 @@ neighbour to cross-link, not a component to import.
 **16. Key exchange and forward secrecy — `DEEP`**
 Key Exchange · Curve Lens · DH MITM · X3DH Wire · Ratchet Wire · Noise Pipe · MLS Group ·
 SSH Handshake · TLS Handshake · Hybrid Wire · PQ TLS Handshake · Downgrade Wire · HPKE
-Envelope · PQXDH Wire. The classical → KEM → hybrid arc is complete.
+Envelope · PQXDH Wire · Agreeing in Public. The classical → KEM → hybrid arc is complete.
+
+Agreeing in Public is the entry point to that arc. It opens on a paint-mixing picture, then runs
+one real X25519 exchange and compares the two independently computed secrets byte for byte, with
+RFC 7748's published vectors checked in the browser before anything is pressed. Two things make
+it more than a gentler DH MITM. It states in the mixing panel what the picture does NOT show —
+averaging is reversible, so a watcher can recover the private colours, and a test asserts she
+can, which is the reason the real exchange is not optional. And its closing panel is an exhibit
+rather than a disclaimer: a stranger answers in Bob's place, every check still passes, and that
+is what key agreement without authentication actually buys.
 
 PQXDH Wire extends that arc past confidentiality. Every other hybrid here treats "hybrid" as a
 property of the whole handshake; PQXDH is hybrid in one half only, and the lab is built around the
@@ -1059,7 +1086,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 222.**
+**Catalogued total: 224.**
 
 ---
 

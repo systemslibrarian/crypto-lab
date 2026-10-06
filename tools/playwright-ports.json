@@ -56,6 +56,10 @@
   "lab": "crypto-lab-what-is-pqc"
  },
  {
+  "port": 4213,
+  "lab": "crypto-lab-good-randomness"
+ },
+ {
   "port": 4214,
   "lab": "crypto-lab-ssh-handshake"
  },
@@ -830,5 +834,9 @@
  {
   "port": 4730,
   "lab": "crypto-lab-https-padlock"
+ },
+ {
+  "port": 4731,
+  "lab": "crypto-lab-agreeing-in-public"
  }
 ]

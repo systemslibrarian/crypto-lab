@@ -42,8 +42,9 @@
  *
  * A deploy job is one that uses a publisher in PAGES_PUBLISHERS below. Until
  * 2026-09-10 that meant the single literal `actions/deploy-pages`, and the two
- * labs that publish with `peaceiris/actions-gh-pages` — dilithium-reject and
- * elgamal-plain — had no deploy job as far as this file was concerned. They were
+ * labs that published with `peaceiris/actions-gh-pages` at the time —
+ * dilithium-reject and elgamal-plain, both since migrated — had no deploy job as
+ * far as this file was concerned. They were
  * not merely exempt from the dispatch rule; they were counted in the "N with no
  * Pages deploy" line and every rule here skipped them in silence, which is the
  * exact failure this tool exists to end. Both were real defects behind that skip:
@@ -496,11 +497,29 @@ const INFRA_USES = new Set([
 ]);
 
 /* Every action in the fleet that publishes a GitHub Pages site, and the ones a
- * lab is most likely to reach for next. Surveyed across all 248 workflow files
- * on 2026-09-10: only two are actually in use — actions/deploy-pages in 193
- * files, peaceiris/actions-gh-pages in two (dilithium-reject, elgamal-plain).
- * The other three are here so that a lab adopting one gets judged by every rule
- * below rather than by DEPLOY-UNRECOGNISED alone.
+ * lab is most likely to reach for next.
+ *
+ * ONE of the five is in use. Re-derived 2026-10-06 from the `uses:` lines on each
+ * repo's own origin/main, across 231 repos: actions/deploy-pages in 227,
+ * peaceiris/actions-gh-pages in ZERO. One repo is read as having no publisher at
+ * all (crypto-lab-blind-oracle-api, a Rust service with no page) and three are
+ * UNREAD rather than counted as non-users — crypto-lab-lfsr-forge,
+ * crypto-lab-rsa-small-roots and crypto-lab-sat-break are empty repositories with
+ * no origin/main, so nothing was looked at and nothing may be concluded.
+ *
+ * The earlier survey said two were in use — actions/deploy-pages in 193 files and
+ * peaceiris/actions-gh-pages in two (dilithium-reject, elgamal-plain), across all
+ * 248 workflow files on 2026-09-10. That was true then. Both of those labs moved
+ * to actions/upload-pages-artifact + actions/deploy-pages on 2026-10-01, in
+ * dilithium-reject#18 and elgamal-plain#17, after PUBLISH-UNSERVED found each one
+ * serving a build from 2026-07-11.
+ *
+ * PEACEIRIS STAYS IN THIS SET AT ZERO USERS, and that is the whole point of the
+ * set: it exists so a lab ADOPTING a publisher is judged by every rule below
+ * rather than skipped by all of them. Deleting an entry because nobody uses it
+ * today would rebuild the precise blindness this set was added to end, at the
+ * moment the argument for keeping it looks weakest. The remaining four are here
+ * for labs that have not adopted them yet.
  *
  * This set does two jobs at once, and both matter. It is what isDeployJob looks
  * for, and it is also plumbing on the check side: a publisher counted as a check

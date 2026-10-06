@@ -348,9 +348,9 @@ but are one edit from failing (two equal gates in separate files, an unscoped
 
 **It finds a lab's deploy job by the publisher action that job uses**, and until
 2026-09-10 the only publisher it knew was the literal `actions/deploy-pages`.
-`crypto-lab-dilithium-reject` and `crypto-lab-elgamal-plain` publish with
-`peaceiris/actions-gh-pages@v4`, so they had no deploy job as far as the checker was
-concerned — not exempt from one rule, invisible to all of them, counted in the
+`crypto-lab-dilithium-reject` and `crypto-lab-elgamal-plain` published with
+`peaceiris/actions-gh-pages@v4` at the time, so they had no deploy job as far as the
+checker was concerned — not exempt from one rule, invisible to all of them, counted in the
 placid-looking *"3 with no Pages deploy"* line. Behind that skip both were already
 broken: each auto-merges with `gh pr merge --squash` and dispatches nothing, so the
 `GITHUB_TOKEN` merge raises no push event and `on: push` never fires, and each still
@@ -358,10 +358,30 @@ carries the `actions: write   # required by the deploy dispatch` comment naming 
 dispatch that was never written. Making them visible moved the fleet from 193 judged
 labs / 15 failing to 195 / 17, with no other lab's output changing by a byte.
 
-The publisher set is now `PAGES_PUBLISHERS` in that file. Only two of its five
-entries are in use here — `actions/deploy-pages` in 193 workflow files,
+The publisher set is now `PAGES_PUBLISHERS` in that file. Two of its five entries
+were in use when it was written — `actions/deploy-pages` in 193 workflow files,
 `peaceiris/actions-gh-pages` in two, surveyed across all 248 on 2026-09-10; the other
-three are there so a lab adopting one gets judged rather than skipped. A publisher
+three are there so a lab adopting one gets judged rather than skipped.
+
+**Both labs have since migrated, and the publisher count is now ONE.** Re-derived
+2026-10-06 from the `uses:` lines on each repo's own `origin/main` rather than from
+this paragraph: `actions/deploy-pages` in **227** repos, `peaceiris/actions-gh-pages`
+in **zero**. `crypto-lab-elgamal-plain` moved in its #17 (`6d5f308`) and
+`crypto-lab-dilithium-reject` in its #18 (`c73dcd1`), both on 2026-10-01, each to
+`actions/upload-pages-artifact` + `actions/deploy-pages`; each lab's `deploy.yml`
+opens with a comment saying what it used to do and why that broke. One repo has no
+publisher and is read as having none — `crypto-lab-blind-oracle-api`, the Rust
+service with no page — and **three are UNREAD rather than counted as non-users**:
+`crypto-lab-lfsr-forge`, `crypto-lab-rsa-small-roots` and `crypto-lab-sat-break`
+are empty repositories with no `origin/main`, so nothing was looked at and nothing
+may be concluded.
+
+**`peaceiris/actions-gh-pages` stays in `PAGES_PUBLISHERS` at zero users, and that
+is the point of the set.** It is there so a lab ADOPTING a publisher gets judged by
+every rule rather than skipped by all of them. Deleting the entry because nobody
+uses it today would rebuild the exact blindness described above, and would do it at
+the moment the evidence for keeping it looks weakest.
+ A publisher
 outside that set is still not recognised, so one further rule closes the loop:
 **DEPLOY-UNRECOGNISED** fails a lab that auto-merges, has no publisher the checker
 knows, *and* whose repo slug a card in `index.html` links to as a live github.io page
@@ -1364,7 +1384,7 @@ checkers still see the fleet. Keep using `../crypto-lab-lane-<name>`.
 
 **The sixth one is the worst kind: a checker that reported nothing.** `deploy-sync` exists to
 catch a lab serving a build older than its own `main`, and it kept a lab only if one of its
-workflows mentioned the literal `deploy-pages`. The two labs publishing with
+workflows mentioned the literal `deploy-pages`. The two labs then publishing with
 `peaceiris/actions-gh-pages` were therefore not judged current, not judged stale, and not
 counted — absent. Both were serving a build from 2026-07-11, and
 `crypto-lab-dilithium-reject`'s live CSS was missing an accessibility fix its own `main` had

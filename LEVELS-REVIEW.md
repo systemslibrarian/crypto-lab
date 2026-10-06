@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 30 · Intermediate — 53 · Advanced — 139. Total 222.
+**Counts:** Beginner — 32 · Intermediate — 53 · Advanced — 139. Total 224.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -31,10 +31,11 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | `advanced` | systems security rather than cryptography; advanced on the trust reasoning |
 | [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | `intermediate` | The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience. |
 
-## Beginner — `beginner` (30)
+## Beginner — `beginner` (32)
 
 | Lab | Source | Reason |
 |---|---|---|
+| [Agreeing in Public](https://systemslibrarian.github.io/crypto-lab-agreeing-in-public/) | hand | a paint-mixing picture before any bytes; the page carries no modulus, no exponent and never says discrete logarithm |
 | [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) | hand | the cost factor is doubling; the rest is the anatomy of a stored hash string |
 | [Blind Hello](https://systemslibrarian.github.io/crypto-lab-blind-hello/) | hand | starts from "when your browser opens a secure connection" and stays there |
 | [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) | hand | says outright that only a small part of the checklist is cryptography |
@@ -47,6 +48,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) | hand | the paper-key-inside-a-safe analogy carries the entire lab |
 | [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) | hand | the whole trick is stated in four plain sentences before anything runs |
 | [Ghost Commit](https://systemslibrarian.github.io/crypto-lab-ghost-commit/) | hand | git objects and a leaked credential; there is no maths anywhere in it |
+| [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) | hand | two keys that look alike, one of them rebuilt by counting to ten thousand; the arithmetic is a count of tries and nothing more |
 | [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) | hand | Mosca's X + Y > Z is adding two numbers of years and comparing to a third |
 | [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) | hand | opens "Start here - What is a hash?" with three plain rules and a type-anything box |
 | [HTTPS Padlock](https://systemslibrarian.github.io/crypto-lab-https-padlock/) | hand | a five-step lesson about what a padlock checks, with four plain verdicts and no notation; the certificate internals are one disclosure away |

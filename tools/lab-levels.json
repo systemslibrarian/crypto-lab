@@ -1348,6 +1348,18 @@
    "level": "beginner",
    "why": "a five-step lesson about what a padlock checks, with four plain verdicts and no notation; the certificate internals are one disclosure away",
    "reviewed": "hand"
+  },
+  "crypto-lab-good-randomness": {
+   "title": "Good Randomness",
+   "level": "beginner",
+   "why": "two keys that look alike, one of them rebuilt by counting to ten thousand; the arithmetic is a count of tries and nothing more",
+   "reviewed": "hand"
+  },
+  "crypto-lab-agreeing-in-public": {
+   "title": "Agreeing in Public",
+   "level": "beginner",
+   "why": "a paint-mixing picture before any bytes; the page carries no modulus, no exponent and never says discrete logarithm",
+   "reviewed": "hand"
   }
  }
 }

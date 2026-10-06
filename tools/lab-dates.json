@@ -664,10 +664,10 @@
   },
   "crypto-lab-elgamal-plain": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-19T00:36:26Z",
-   "updatedFrom": "2026-08-19T01:02:35-04:00",
-   "updatedCommit": "fa206dae4463858aa31e3b3bc6fafac87540e6d5"
+   "updatedFrom": "2026-10-06T07:57:45-04:00",
+   "updatedCommit": "72048d72698576789fe22e8366f5e07b6b7278b3"
   },
   "crypto-lab-harvest-timeline": {
    "added": "2026-04",

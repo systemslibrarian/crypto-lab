@@ -70,7 +70,9 @@ function sh(cmd, args, cwd) {
  *
  * IT USED TO MATCH THE LITERAL `deploy-pages` AND NOTHING ELSE, which is the same
  * defect gate-sync had until 2026-09-10 and fixed with PAGES_PUBLISHERS. The two
- * labs publishing with `peaceiris/actions-gh-pages` were therefore not in this
+ * labs then publishing with `peaceiris/actions-gh-pages` -- dilithium-reject and
+ * elgamal-plain, both of which have since migrated to an uploaded artifact, so no
+ * repo in the fleet uses that publisher now -- were therefore not in this
  * checker's denominator at all: not judged current, not judged stale, absent. On
  * 2026-10-01 both were found serving a build from 2026-07-11 -- nearly three
  * months -- with every check in the fleet green, and crypto-lab-dilithium-reject's

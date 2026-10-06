@@ -386,8 +386,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-07T19:55:04Z",
-   "updatedFrom": "2026-10-02T13:10:28-04:00",
-   "updatedCommit": "f545c4bc92956874133c240787808a6be3abf856"
+   "updatedFrom": "2026-10-06T05:24:51-04:00",
+   "updatedCommit": "dedf37617b897f6aaf711005de8a29d0dfef7e07"
   },
   "crypto-lab-frodo-vault": {
    "added": "2026-04",
@@ -412,10 +412,10 @@
   },
   "crypto-lab-falcon-seal": {
    "added": "2026-04",
-   "updated": "2026-09",
+   "updated": "2026-10",
    "addedFrom": "2026-04-07T18:56:04Z",
-   "updatedFrom": "2026-09-30T03:46:56-04:00",
-   "updatedCommit": "993bb7ac0a0ae9d4dfe40d8db8dd1b694df76f3a"
+   "updatedFrom": "2026-10-05T09:19:33-04:00",
+   "updatedCommit": "8a2f6533073ceebdd15bc720511466437b5a2a5c"
   },
   "crypto-lab-chacha20-stream": {
    "added": "2026-04",
@@ -841,8 +841,8 @@
    "added": "2026-06",
    "updated": "2026-10",
    "addedFrom": "2026-06-06T16:00:29Z",
-   "updatedFrom": "2026-10-02T13:10:51-04:00",
-   "updatedCommit": "049f3f8ab5edb07f3d2a82aa6da6283e34f82783"
+   "updatedFrom": "2026-10-06T05:25:05-04:00",
+   "updatedCommit": "e2d0b14553a6a759e343094afde3701947a286ad"
   },
   "crypto-lab-key-exchange": {
    "added": "2026-06",

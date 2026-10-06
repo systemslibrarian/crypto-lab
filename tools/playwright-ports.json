@@ -838,5 +838,9 @@
  {
   "port": 4731,
   "lab": "crypto-lab-agreeing-in-public"
+ },
+ {
+  "port": 4732,
+  "lab": "crypto-lab-wep-crack"
  }
 ]

@@ -3,9 +3,9 @@
   "generated": "2026-10-06",
   "root": "..",
   "totals": {
-    "labs": 228,
-    "autoMergeJobs": 227,
-    "dispatchSites": 226
+    "labs": 229,
+    "autoMergeJobs": 228,
+    "dispatchSites": 227
   },
   "withDispatchSite": [
     "crypto-compare",
@@ -228,6 +228,7 @@
     "crypto-lab-vss-gate",
     "crypto-lab-web-of-trust",
     "crypto-lab-webauthn",
+    "crypto-lab-wep-crack",
     "crypto-lab-what-is-pqc",
     "crypto-lab-world-ciphers",
     "crypto-lab-world-hashes",

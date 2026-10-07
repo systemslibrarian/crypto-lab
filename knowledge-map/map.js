@@ -159,6 +159,12 @@ function spineItem(title, opts = {}) {
   </li>`;
 }
 
+function conceptsByTitle() {
+  return catalog.concepts
+    .slice()
+    .sort((a, b) => a.title.localeCompare(b.title, "en", { sensitivity: "base" }));
+}
+
 function renderScope() {
   const host = $("scope");
   if (state.lens === "depth") {
@@ -192,22 +198,12 @@ function renderScope() {
       .join("")}</div>`;
     return;
   }
-  const groups = [];
-  for (const concept of catalog.concepts) {
-    const last = groups[groups.length - 1];
-    if (!last || last[0] !== concept.group) groups.push([concept.group, [concept]]);
-    else last[1].push(concept);
-  }
+  const ordered = conceptsByTitle();
   host.innerHTML = `<label class="stack"><span class="kicker">Concept</span>
-    <select id="concept-pick">${groups
+    <select id="concept-pick">${ordered
       .map(
-        ([group, items]) =>
-          `<optgroup label="${esc(group)}">${items
-            .map(
-              (concept) =>
-                `<option value="${esc(concept.id)}"${concept.id === state.scope ? " selected" : ""}>§${esc(concept.number)} ${esc(concept.title)} · ${esc(concept.status.toLowerCase())} · ${concept.exhibits.length}</option>`,
-            )
-            .join("")}</optgroup>`,
+        (concept) =>
+          `<option value="${esc(concept.id)}"${concept.id === state.scope ? " selected" : ""}>${esc(concept.title)} · §${esc(concept.number)} · ${esc(concept.status.toLowerCase())} · ${concept.exhibits.length}</option>`,
       )
       .join("")}</select></label>`;
 }
@@ -227,7 +223,7 @@ function renderSpine() {
     return;
   }
   if (state.lens === "concept") {
-    const concept = catalog.concepts.find((item) => item.id === state.scope) ?? catalog.concepts[0];
+    const concept = conceptsByTitle().find((item) => item.id === state.scope) ?? conceptsByTitle()[0];
     const depth =
       concept.status === "COVERED"
         ? " Covered means filed, not that the arc is taught in depth."
@@ -467,7 +463,7 @@ function boot(data) {
     if (target.dataset.lens) {
       state.lens = target.dataset.lens;
       if (state.lens === "path") state.scope = "start-here";
-      if (state.lens === "concept") state.scope = catalog.concepts[0].id;
+      if (state.lens === "concept") state.scope = conceptsByTitle()[0].id;
       if (state.lens === "module") state.scope = catalog.modules[0].id;
       if (state.lens === "section") state.scope = catalog.sections[0].id;
       paint(false);

@@ -110,11 +110,13 @@ function readTool(file) {
  * the last. Reading the workflow's triggers gave every tool in the file all three, so
  * teach-drift read "every PR and push" when it only ever runs daily — a wrong cadence
  * published in the table whose whole purpose is the cadence. */
-function cadence() {
+function cadence({workflows = WORKFLOWS, tools = TOOLS} = {}) {
   const byTool = new Map();
-  if (!fs.existsSync(WORKFLOWS)) return byTool;
-  for (const wf of fs.readdirSync(WORKFLOWS).filter((f) => /\.ya?ml$/.test(f))) {
-    const text = fs.readFileSync(path.join(WORKFLOWS, wf), 'utf8');
+  const selftests = new Map();
+  byTool.selftests = selftests;
+  if (!fs.existsSync(workflows)) return byTool;
+  for (const wf of fs.readdirSync(workflows).filter((f) => /\.ya?ml$/.test(f))) {
+    const text = fs.readFileSync(path.join(workflows, wf), 'utf8');
     const on = /^on:([\s\S]*?)^\w/m.exec(text);
     const trig = on ? on[1] : '';
     const hasPR = /^\s*(pull_request|push):/m.test(trig);
@@ -153,11 +155,14 @@ function cadence() {
          it — and counting that as an invocation put the tool back in the table as
          weekly, which is precisely the claim the block exists to say is not true. */
       const executable = job.split('\n').filter((l) => !/^\s*#/.test(l)).join('\n');
-      for (const m of executable.matchAll(/node (tools\/[\w.-]+)/g)) {
+      for (const m of executable.matchAll(/node (tools\/[\w.-]+)([^\n]*)/g)) {
         const name = path.basename(m[1]);
-        const said = byTool.get(name) || new Set();
+        // A fixture invocation does not run the tool's fleet/check mode and
+        // must not propagate that cadence to its normal CLI subprocesses.
+        const target = /^\s+(?:selftest|--check-fixtures)(?:\s|$)/.test(m[2]) ? selftests : byTool;
+        const said = target.get(name) || new Set();
         words.forEach((w) => said.add(w));
-        byTool.set(name, said);
+        target.set(name, said);
       }
     }
   }
@@ -167,7 +172,7 @@ function cadence() {
      would still read "manual" in a table whose whole subject is what runs unattended.
      Only executable references count — comments are stripped first, because half these
      headers name each other in prose. */
-  const code = (file) => fs.readFileSync(path.join(TOOLS, file), 'utf8')
+  const code = (file) => fs.readFileSync(path.join(tools, file), 'utf8')
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .split('\n').filter((l) => !l.trim().startsWith('//')).join('\n');
   let changed = true;
@@ -220,7 +225,9 @@ function rows() {
        what that reader checks against, so it is required. */
     if (!t.reads) fail(`${file}: is runnable but its header does not say what it opens — add a "Reads:" line naming the exact paths, endpoints, refs or commands`);
     const said = [...(when.get(file) || [])];
-    listed.push({ ...t, when: said.length ? said.join(', ') : 'manual' });
+    const fixtures = [...(when.selftests.get(file) || [])];
+    listed.push({ ...t, manual: !said.length, when: (said.length ? said.join(', ') : 'manual')
+      + (fixtures.length ? '; selftest only: ' + fixtures.join(', ') : '') });
   }
   return { listed, notRun, untracked: fs.readdirSync(TOOLS).filter((f) => /\.(js|mjs)$/.test(f) && !keep.has(f)).sort() };
 }
@@ -235,9 +242,9 @@ function block() {
     out.push(`| \`${esc(t.run)}\` | ${esc(t.prevents)} | ${esc(t.when)} |`);
   }
   out.push('');
-  const manual = listed.filter((t) => t.when === 'manual').length;
-  out.push(`${manual} of these ${listed.length} run only when someone runs them. The rest run in CI, on the `
-    + 'cadence shown. A checker nobody runs reports nothing, which is the failure every one of these was written after.');
+  const manual = listed.filter((t) => t.manual).length;
+  out.push(`${manual} of these ${listed.length} listed commands run only when someone runs them. The rest run in CI, on the `
+    + 'cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.');
   if (notRun.length) {
     out.push('');
     out.push(`Not listed above: ${notRun.map((f) => `\`${f}\``).join(', ')} — support code, fixtures, and `
@@ -297,4 +304,5 @@ function main() {
   if (loose.length) console.log(`  untracked in tools/, deliberately not listed in the table: ${loose.join(', ')}`);
 }
 
-main();
+module.exports = {cadence};
+if (require.main === module) main();

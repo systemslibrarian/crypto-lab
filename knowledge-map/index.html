@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Crypto Lab knowledge map</title>
+  <meta name="description" content="Student map of Crypto Lab learning paths, course modules, and concept filings. Unlinked draft.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./map.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <div class="brand">
+        <span class="mark" aria-hidden="true">CL</span>
+        <div>
+          <p class="kicker">Crypto Lab · student map · direct address only</p>
+          <h1>Knowledge map</h1>
+        </div>
+      </div>
+      <p class="lede">Authored edges only: learning-path order, course-module roles, and the forty concept filings. Chip overlap is not a link. Not linked from the catalog yet. <a href="https://crypto-lab.systemslibrarian.dev/">Open the catalog</a>.</p>
+      <dl class="stats">
+        <div class="stat"><dt class="kicker">Exhibits</dt><dd id="n-exhibits">—</dd></div>
+        <div class="stat"><dt class="kicker">On a path</dt><dd id="n-path">—</dd></div>
+        <div class="stat"><dt class="kicker">In a module</dt><dd id="n-module">—</dd></div>
+        <div class="stat"><dt class="kicker">Neither</dt><dd id="n-neither">—</dd></div>
+      </dl>
+    </div>
+  </header>
+  <main class="wrap layout">
+    <section class="stack">
+      <div class="search">
+        <label class="sr" for="q">Find an exhibit</label>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Find an exhibit" autocomplete="off">
+        <ul id="hits" class="hits" hidden></ul>
+      </div>
+      <div id="tabs" class="tabs" role="tablist" aria-label="Map lens"></div>
+      <div id="scope"></div>
+      <div id="spine" class="stack"></div>
+    </section>
+    <aside id="detail"></aside>
+  </main>
+  <script src="./map.js"></script>
+</body>
+</html>

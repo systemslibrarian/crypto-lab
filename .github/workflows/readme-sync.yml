@@ -18,6 +18,48 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  checker-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      # Fixture checks exercise the detectors themselves. They do not inspect
+      # today's fleet; that remains the separate, clone-backed weekly job.
+      # Continue after a failed assertion so every suite produces a result.
+      - name: Catalog evidence regression fixtures
+        if: ${{ !cancelled() }}
+        run: node tools/catalog-evidence.js selftest
+      - name: Algorithm evidence positive and negative controls
+        if: ${{ !cancelled() }}
+        run: node tools/evidence-shape-proof.js
+      - name: Dirty clone and torn snapshot controls
+        if: ${{ !cancelled() }}
+        run: node tools/clone-guard-proof.js
+      - name: Workflow gate regression fixtures
+        if: ${{ !cancelled() }}
+        run: node tools/gate-sync.js selftest
+      - name: Fleet discovery regression fixtures
+        if: ${{ !cancelled() }}
+        run: node tools/fleet-sync.js selftest
+      - name: Deployment regression fixtures
+        if: ${{ !cancelled() }}
+        run: node tools/deploy-sync.js selftest
+      - name: Corpus freshness regression fixtures
+        if: ${{ !cancelled() }}
+        run: node tools/corpus-freshness.js selftest
+      - name: Demo date regression fixtures
+        if: ${{ !cancelled() }}
+        run: node tools/lab-dates.js selftest
+      - name: Port and fleet denominator regression fixtures
+        if: ${{ !cancelled() }}
+        run: node tools/port-sync.js selftest
+      - name: Tool cadence preserves fixture-only scope
+        if: ${{ !cancelled() }}
+        run: node --test tests/tools-cadence.test.cjs
+
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 10

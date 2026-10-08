@@ -118,3 +118,11 @@ increase a tool-run count.
 The renderers and migration helper are not evidence detectors. Their absence of a
 nightly run is not a lab defect. Lack of a recent result for a real checker remains
 a coverage question, and retaining its file does not answer it.
+
+During anchor verification, a current remote commit absent from the local clone
+is `CLONE-BEHIND`, even when the review pin differs from remote HEAD. Fetch and
+update the checkout before deciding whether reviewed source changed. A failed
+diff against an unfetched remote object must not create a `STALE-REVIEW` request.
+Dependency-only movement preserves the source review after fetch; actual source
+movement still requires review, and verification remains nonzero until the clone
+can establish the comparison.

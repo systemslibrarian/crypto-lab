@@ -224,6 +224,12 @@ function hasCommit(dir, sha) {
   } catch { return false; }
 }
 
+// A remote HEAD may move after this clone was fetched. Until that object is
+// present, a failed diff says nothing about movement of the reviewed source.
+function cloneNeedsFetch(dir, pin, head, remote) {
+  return (remote === pin && head !== pin) || !hasCommit(dir, remote);
+}
+
 /* Labs whose pin could not be judged because the clone is shallow. Module level
  * because the derivation fills it per lab and the reports read it once. */
 const pinUnreadable = new Set();
@@ -1279,11 +1285,10 @@ function verifyAnchors(all) {
         const remote = remoteHeadOf(dir);
         if (remote === null) {
           if (!unreadable.includes(c.slug)) unreadable.push(c.slug);
-        } else if (remote === review.commit && head !== review.commit) {
-          /* The pin is CURRENT; this working copy is behind. Not a re-review, and
-             not the lab's problem - but it does mean every anchor derived here
-             came from source the lab has moved past, so it is a finding about
-             this checkout and it says which command clears it. */
+        } else if (cloneNeedsFetch(dir, review.commit, head, remote)) {
+          /* The remote revision is unfetched, or the pin matches the remote
+             while this checkout is behind. Refresh the clone before asking
+             whether the reviewed source changed. */
           behind.push({ slug: c.slug, clone: head, actual: remote });
         } else if (remote !== review.commit) {
           /* Same substantive scope as the derivation above and as
@@ -1403,7 +1408,7 @@ function verifyAnchors(all) {
     console.log('');
   }
   if (behind.length) {
-    console.log(`CLONE-BEHIND (${behind.length}) — the pin matches the lab, but this checkout does not.`);
+    console.log(`CLONE-BEHIND (${behind.length}) — this checkout is behind or lacks the current remote commit.`);
     console.log('Not a re-review and not the lab\'s problem: every anchor derived here came from source');
     console.log('the lab has moved past. Fetch these and re-derive.');
     for (const b of behind) console.log(`  ${b.slug.padEnd(34)} clone ${b.clone.slice(0, 12)}, lab ${b.actual.slice(0, 12)}`);
@@ -1427,7 +1432,7 @@ function verifyAnchors(all) {
       console.log('For a stale review: inspect the current lab source and update the pin in tools/catalog-reviewed.json.');
     }
     if (behind.length) {
-      console.log('For a clone behind its lab: `git -C ../<lab> pull --ff-only`, then re-derive.');
+      console.log('For a clone behind its lab: fetch the current default branch, update the checkout, then re-derive.');
     }
     if (unreadable.length) console.log('For an unreadable lab: clone it next to this repository.');
     if (shallowPins.length) {
@@ -1584,6 +1589,32 @@ function selftest() {
     if (movedSubstantively(tmp, 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeef', 'HEAD') !== 'moved') {
       fail.push('an unreadable range was not treated as moved');
     } else { pass++; console.log('  ok  a range git cannot read counts as moved, never as unchanged'); }
+
+    // Reproduce a remote update arriving between clone refresh and verification.
+    // Fetching must unblock the comparison, including real source movement.
+    {
+      const clone = fs.mkdtempSync(path.join(os.tmpdir(), 'cl-remote-race-'));
+      try {
+        execFileSync('git', ['clone', '--quiet', `file://${tmp}`, clone], {stdio:'ignore'});
+        const pin = git('rev-parse', 'HEAD').trim();
+        fs.writeFileSync(path.join(tmp, 'package.json'), '{"devDependencies":{"vite":"^8.3.2"}}\n');
+        git('add', 'package.json'); git('commit', '-qm', 'dependency update after clone');
+        const remote = remoteHeadOf(clone);
+        if (!cloneNeedsFetch(clone, pin, pin, remote)) fail.push('an unfetched dependency-only remote revision was not classified as clone-behind');
+        else { pass++; console.log('  ok  an unfetched remote revision requires a clone refresh, not a source review'); }
+        execFileSync('git', ['-C', clone, 'fetch', '--quiet', 'origin'], {stdio:'ignore'});
+        if (cloneNeedsFetch(clone, pin, pin, remote) || movedSubstantively(clone, pin, remote) !== 'not-moved') fail.push('fetched dependency-only movement did not preserve the source review');
+        else { pass++; console.log('  ok  fetched dependency-only movement preserves the source review'); }
+        fs.writeFileSync(path.join(tmp, 'src', 'main.ts'), 'export function sha512() { return 3 }\n');
+        git('add', 'src/main.ts'); git('commit', '-qm', 'source update after clone');
+        const changed = remoteHeadOf(clone);
+        execFileSync('git', ['-C', clone, 'fetch', '--quiet', 'origin'], {stdio:'ignore'});
+        if (cloneNeedsFetch(clone, pin, pin, changed) || movedSubstantively(clone, pin, changed) !== 'moved') fail.push('a fetched real source change escaped review');
+        else { pass++; console.log('  ok  fetched real source movement still requires review'); }
+        if (!cloneNeedsFetch(clone, changed, pin, changed)) fail.push('a remote-matching pin hid a checkout behind it');
+        else { pass++; console.log('  ok  a remote-matching pin still reports a checkout behind it'); }
+      } finally { fs.rmSync(clone, {recursive:true, force:true}); }
+    }
 
     /* A SHALLOW clone is the one case where "could not look" is the whole answer,
        and it has to be told apart from the line above. Both are a commit git

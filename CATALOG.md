@@ -3577,7 +3577,7 @@ A guided tour of the five post-quantum problem families — lattice, code-based,
 
 [`crypto-lab-pq-rotation`](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) · Migration Operations · POST-QUANTUM, PRIVACY
 
-A post-quantum migration planner for hybrid certificates, multi-jurisdiction timelines, rolling key rotation, canary deployment, and rollback strategy.
+A post-quantum migration planner for composite-style hybrid certificate models with mandatory AND verification, multi-jurisdiction timelines, rolling key rotation, canary deployment, and rollback strategy.
 
 - **Implements:** ML-DSA `src/hybrid-cert.ts:2`, P-256 `src/hybrid-cert.ts:1`, SHA-256 `src/hybrid-cert.ts:70`
 - **References:** AES, DSA, Diffie-Hellman, Dilithium, ECDH, ECDSA, Ed25519, Kyber, ML-KEM, Pairing, RSA, TLS 1.3, X25519

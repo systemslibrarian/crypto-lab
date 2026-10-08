@@ -909,8 +909,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Shamir secret sharing
 
-- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:111`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:291`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`
-- **Also referenced by:** *KpqC Pair*, *Misty Lens*, *Patron Shield*, *DKG Gate*, *Garbled Gate*, *FROST Threshold*, *Iron Serpent*, *Biham Lens*, *Babel Hash*, *OT Gate*, *Oblivious Shelf*, *GG20 Wallet*, *Ring Sign*, *Lattice Fault*, *VRF Gate*, *Schnorr Forge*, *IBE Gate*, *ORAM Vault*, *Paillier Gate*, *Threshold ML-DSA*, *Bulletproofs*, *ZK Arena*, *Jevil*, *PQ Families*, *Multivariate UOV*, *Time-Lock Puzzle*, *VDF*, *Frozen Heart*, *Credential Veil*, *SPDZ Forge*, *Traitor Trace*, *Lattice Gentle*, *Beacon Lock*, *Card Trick*, *Matsui Line*, *Attribute Gate*, *Fold Gate*, *Covert Channel Studio*, *Return Path*, *Function Key*
+- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:111`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:108`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:291`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`
+- **Also referenced by:** *KpqC Pair*, *Misty Lens*, *Patron Shield*, *DKG Gate*, *Garbled Gate*, *Iron Serpent*, *Biham Lens*, *Babel Hash*, *OT Gate*, *Oblivious Shelf*, *GG20 Wallet*, *Ring Sign*, *Lattice Fault*, *VRF Gate*, *Schnorr Forge*, *IBE Gate*, *ORAM Vault*, *Paillier Gate*, *Threshold ML-DSA*, *Bulletproofs*, *ZK Arena*, *Jevil*, *PQ Families*, *Multivariate UOV*, *Time-Lock Puzzle*, *VDF*, *Frozen Heart*, *Credential Veil*, *SPDZ Forge*, *Traitor Trace*, *Lattice Gentle*, *Beacon Lock*, *Card Trick*, *Matsui Line*, *Attribute Gate*, *Fold Gate*, *Covert Channel Studio*, *Return Path*, *Function Key*
 
 ### signature
 
@@ -1222,7 +1222,7 @@ disagree about who owns SHA-256.
 | Repetition code | — | 1 |
 | Schnorr | — | 9 |
 | Serpent | — | 1 |
-| Shamir secret sharing | — | 8 |
+| Shamir secret sharing | — | 9 |
 | Shipovnik | — | 1 |
 | Shor's algorithm | — | 3 |
 | Simon | — | 1 |
@@ -1280,6 +1280,11 @@ that asks for a decision.
 - **Shared:** Argon2, HKDF, PBKDF2, scrypt, SHA-256
 - **Stated difference:** kdf-chain teaches what problem each KDF solves and walks a decision tree for choosing one; kdf-arena benchmarks the same four side by side and reports attacker cost against wall-clock time
 
+**FROST Threshold / Shamir vs FROST**
+
+- **Shared:** Ed25519, FROST, SHA-512, Shamir secret sharing
+- **Stated difference:** **none stated**
+
 **Ratchet Wire / Encrochat**
 
 - **Shared:** AES, AES-GCM, Diffie-Hellman, Double Ratchet, HKDF, SHA-256, X25519
@@ -1308,11 +1313,6 @@ that asks for a decision.
 **HPKE Envelope / Blind Hello**
 
 - **Shared:** DHKEM, HPKE
-- **Stated difference:** **none stated**
-
-**FROST Threshold / Shamir vs FROST**
-
-- **Shared:** Ed25519, FROST, SHA-512
 - **Stated difference:** **none stated**
 
 **Falcon Seal / HAWK**
@@ -2485,9 +2485,9 @@ Conservative post-quantum KEM using plain LWE with no ring structure. LWE from f
 
 A browser-based FROST (RFC 9591) walkthrough where any qualified signer subset can produce one standard Ed25519 signature without key reassembly.
 
-- **Implements:** Ed25519 `src/exhibits/attacks.ts:34`, FROST `crate/src/round2.rs:54`, SHA-512 `src/exhibits/attacks.ts:78`
-- **Source review:** [6908f85dbc1e](https://github.com/systemslibrarian/crypto-lab-frost-threshold/commit/6908f85dbc1ebaaa2a87bab5eb093fa350ebde66) — Rust keygen, signing rounds and aggregation reviewed
-- **References:** ECDSA, Feldman VSS, ML-DSA, Pedersen commitment, Schnorr, Shamir secret sharing, secp256k1
+- **Implements:** Ed25519 `src/exhibits/attacks.ts:34`, FROST `crate/src/round2.rs:54`, SHA-512 `src/exhibits/attacks.ts:78`, Shamir secret sharing `src/exhibits/attacks.ts:108`
+- **Source review:** [6908f85dbc1e](https://github.com/systemslibrarian/crypto-lab-frost-threshold/commit/6908f85dbc1ebaaa2a87bab5eb093fa350ebde66) — Rust keygen, signing rounds and aggregation reviewed; TS src/exhibits/attacks.ts:108 keygen samples scalar coefficients and evaluates f(id) to generate Shamir shares; lagrangeCoeff computes reconstruction weights. This is computation evidence, distinct from renderShamirPlot, and not a cryptographic correctness audit.
+- **References:** ECDSA, Feldman VSS, ML-DSA, Pedersen commitment, Schnorr, secp256k1
 - **Attacks shown:** Key recovery `src/exhibits/round1.ts:60`, Nonce reuse `src/exhibits/attacks-view.ts:2`, Side-channel (unspecified) `THREAT_MODEL.md:47`
 - **Standards body:** IETF, NIST
 - **Implementation:** Rust FROST crate / WASM

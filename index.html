@@ -4683,14 +4683,14 @@
           </a>
 
           <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/"
-            data-implements="Ed25519@src/exhibits/attacks.ts:34 | FROST@crate/src/round2.rs:54 | SHA-512@src/exhibits/attacks.ts:78"
+            data-implements="Ed25519@src/exhibits/attacks.ts:34 | FROST@crate/src/round2.rs:54 | SHA-512@src/exhibits/attacks.ts:78 | Shamir secret sharing@src/exhibits/attacks.ts:108"
             data-comment-only="Shamir secret sharing@src/exhibits/attacks.ts:97"
-            data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | Schnorr | Shamir secret sharing | secp256k1"
+            data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | Schnorr | secp256k1"
             data-attacks="Key recovery@src/exhibits/round1.ts:60 | Nonce reuse@src/exhibits/attacks-view.ts:2 | Side-channel (unspecified)@THREAT_MODEL.md:47"
             data-standards="IETF | NIST"
             data-implementation="Rust FROST crate / WASM"
             data-review-commit="6908f85dbc1ebaaa2a87bab5eb093fa350ebde66"
-            data-review-note="Rust keygen, signing rounds and aggregation reviewed"
+            data-review-note="Rust keygen, signing rounds and aggregation reviewed; TS src/exhibits/attacks.ts:108 keygen samples scalar coefficients and evaluates f(id) to generate Shamir shares; lagrangeCoeff computes reconstruction weights. This is computation evidence, distinct from renderShamirPlot, and not a cryptographic correctness audit."
             data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-added="2026-04" data-updated="2026-10" data-level="advanced"

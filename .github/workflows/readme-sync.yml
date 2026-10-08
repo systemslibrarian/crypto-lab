@@ -32,6 +32,9 @@ jobs:
       - name: Catalog evidence regression fixtures
         if: ${{ !cancelled() }}
         run: node tools/catalog-evidence.js selftest
+      - name: Standards metadata positive and negative controls
+        if: ${{ !cancelled() }}
+        run: node --test tests/catalog-standards.test.cjs
       - name: Algorithm evidence positive and negative controls
         if: ${{ !cancelled() }}
         run: node tools/evidence-shape-proof.js

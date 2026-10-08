@@ -242,6 +242,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### SIKE
 
+- **Historical status:** broken 2022
 - **Implemented by:** [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) `src/main.ts:1193`
 - **Also referenced by:** *BIKE Vault*, *PQ Families*, *Key Exchange*, *Isogeny Atlas*
 
@@ -1019,12 +1020,6 @@ The body that DEFINES each algorithm, not one that merely permits it. Taken from
 `tools/catalog-vocab.js`, so it travels with the algorithm and no two cards can
 disagree about who owns SHA-256.
 
-### broken 2022
-
-| Algorithm | Document | Labs |
-|---|---|---|
-| SIKE | — | 1 |
-
 ### DSTU
 
 | Algorithm | Document | Labs |
@@ -1225,6 +1220,7 @@ disagree about who owns SHA-256.
 | Shamir secret sharing | — | 9 |
 | Shipovnik | — | 1 |
 | Shor's algorithm | — | 3 |
+| SIKE | — | 1 |
 | Simon | — | 1 |
 | SMAUG-T | — | 1 |
 | STARK | — | 2 |
@@ -2841,7 +2837,7 @@ Elliptic-curve isogenies with a toy CSIDH over GF(419), supersingular graph walk
 - **Implements:** CSIDH `src/graph.ts:22`, EC point arithmetic `src/ec.ts:106`, Isogeny walk `src/csidh.ts:92`, SIKE `src/main.ts:1193`
 - **References:** Classic McEliece, HQC, Kyber, ML-DSA, ML-KEM, SLH-DSA, UOV
 - **Attacks shown:** Brute force `src/csidh.ts:267`, Key recovery `README.md:32`, Lattice reduction `src/main.ts:363`
-- **Standards body:** broken 2022
+- **Standards body:** —
 - **Implementation:** hand-rolled
 
 ### J-UNIWARD

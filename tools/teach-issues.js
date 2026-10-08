@@ -136,8 +136,9 @@ async function checkNote(rec) {
   const engines = ['chromium', 'firefox', 'webkit'];
   const seen = {};
   for (const eng of engines) {
-    const browser = await playwright[eng].launch();
+    let browser;
     try {
+      browser = await playwright[eng].launch();
       const page = await browser.newPage({ viewport: { width: 1400, height: 1000 } });
       await page.goto(rec.url, { waitUntil: 'load', timeout: 60000 });
       await page.waitForTimeout(1200);
@@ -151,7 +152,7 @@ async function checkNote(rec) {
     } catch (e) {
       seen[eng] = `error: ${String(e.message).split('\n')[0]}`;
     } finally {
-      await browser.close();
+      if (browser) await browser.close();
     }
   }
   return seen;
@@ -189,8 +190,9 @@ async function measureOverflow(rec) {
   /* An overflow is recorded at the narrow width, so judge the narrowest one named. */
   const vp = vps.reduce((a, b) => (b.width < a.width ? b : a));
 
-  const browser = await launch.launch();
+  let browser;
   try {
+    browser = await launch.launch();
     for (let attempt = 1; attempt <= ATTEMPTS; attempt += 1) {
       const page = await browser.newPage({ viewport: vp });
       try {
@@ -208,8 +210,10 @@ async function measureOverflow(rec) {
       }
     }
     return { error: 'unreachable' };
+  } catch (e) {
+    return { error: String(e.message).split('\n')[0] };
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
   }
 }
 
@@ -332,4 +336,5 @@ async function main() {
   process.exit(stale.length ? 1 : 0);
 }
 
-main().catch((e) => { console.error(e); process.exit(2); });
+module.exports = { checkNote, measureOverflow };
+if (require.main === module) main().catch((e) => { console.error(e); process.exit(2); });

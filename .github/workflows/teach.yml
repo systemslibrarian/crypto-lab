@@ -50,6 +50,8 @@ jobs:
           cache-dependency-path: tools/package-lock.json
       - run: npm ci
         working-directory: tools
+      - name: Issue checker preserves unreadable launch failures
+        run: node --test tests/teach-issues.test.cjs
       # No --with-deps: that apt step has wedged CI across this fleet (audits/kickoff.md).
       - run: npx playwright install chromium
         working-directory: tools
@@ -78,6 +80,14 @@ jobs:
       # No --with-deps: that apt step has wedged CI across this fleet (audits/kickoff.md).
       # Recorded issues name the engine they were seen in, so re-deriving them needs
       # each of those engines, not only the one the drift check uses.
+      # Browser downloads do not install WebKit/Firefox host libraries. The
+      # 2026-10-06 drift run aborted at launch before reporting issue results.
+      # Bound apt separately so a stalled install fails visibly rather than
+      # wedging the whole job; keep the browser download a separate step.
+      - name: Install host libraries for the three issue-check engines
+        timeout-minutes: 5
+        run: npx playwright install-deps chromium firefox webkit
+        working-directory: tools
       - run: npx playwright install chromium firefox webkit
         working-directory: tools
       - name: Every control a worksheet names is still on its live exhibit

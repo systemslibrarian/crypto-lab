@@ -87,15 +87,16 @@
   },
   "crypto-lab-frost-threshold": {
     "commit": "6908f85dbc1ebaaa2a87bab5eb093fa350ebde66",
-    "reviewed": "2026-10-01",
+    "reviewed": "2026-10-08",
     "add": [
-      "FROST@crate/src/round2.rs:54"
+      "FROST@crate/src/round2.rs:54",
+      "Shamir secret sharing@src/exhibits/attacks.ts:108"
     ],
     "covered": [
       "Rust"
     ],
     "implementation": "Rust FROST crate / WASM",
-    "note": "Rust keygen, signing rounds and aggregation reviewed"
+    "note": "Rust keygen, signing rounds and aggregation reviewed; TS src/exhibits/attacks.ts:108 keygen samples scalar coefficients and evaluates f(id) to generate Shamir shares; lagrangeCoeff computes reconstruction weights. This is computation evidence, distinct from renderShamirPlot, and not a cryptographic correctness audit."
   },
   "crypto-lab-function-key": {
     "commit": "f6628c00c2b70ddde2efd7462f0b9494e8c00d7d",

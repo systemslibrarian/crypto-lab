@@ -121,7 +121,7 @@ const ALGORITHMS = [
   { name: 'Toeplitz extractor', kind: 'algorithm', family: 'randomness extractor', re: /toeplitz/i, std: null },
   { name: 'von Neumann extractor', kind: 'algorithm', family: 'randomness extractor', re: /von[-_ ]?neumann/i, std: null },
   { name: 'Laplace mechanism', kind: 'algorithm', family: 'differential privacy', re: /laplace/i, std: null },
-  { name: 'Gaussian mechanism', kind: 'algorithm', family: 'differential privacy', re: /gaussian[-_ ]?mechanism|discrete[-_ ]?gaussian|gaussian[-_ ]?sigma/i, std: null },
+  { name: 'Gaussian mechanism', kind: 'algorithm', family: 'differential privacy', re: /gaussian[-_ ]?mechanism|discrete[-_ ]?gaussian/i, std: null },
   { name: 'bcrypt', kind: 'algorithm', family: 'password KDF', re: /\bbcrypt\b/i, std: null },
   { name: 'Balloon', kind: 'algorithm', family: 'password KDF', re: /balloon[-_ ]?hash/i, chipRe: /^balloon(?:[-_ ]?hash(?:ing)?)?$/i, std: null },
 

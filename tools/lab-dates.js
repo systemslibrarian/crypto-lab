@@ -223,14 +223,16 @@ function derive() {
  *
  * A null date writes NO attribute and REMOVES one left by a previous run, so a
  * date can never outlive the fact it came from. */
-const CARD_HEAD = /(<a class="project-card[^"]*" data-category="[^"]*" href="https:\/\/systemslibrarian\.github\.io\/(crypto-lab-[a-z0-9-]+)\/")((?:\s+data-(?:added|updated)="[^"]*")*)/g;
+const CARD_HEAD = /(<a class="project-card[^"]*" data-category="[^"]*" href="https:\/\/systemslibrarian\.github\.io\/(crypto-lab-[a-z0-9-]+)\/")([^>]*)(>)/g;
 
 function stamp(html, labs) {
-  return html.replace(CARD_HEAD, (whole, head, slug) => {
+  return html.replace(CARD_HEAD, (whole, head, slug, tail, close) => {
     const rec = labs[slug] || {};
     const added = rec.added ? ` data-added="${rec.added}"` : '';
     const updated = rec.updated ? ` data-updated="${rec.updated}"` : '';
-    return `${head}${added}${updated}`;
+    // Remove every occurrence, including attributes separated by other fields.
+    const clean = tail.replace(/\s+data-(?:added|updated)="[^"]*"/g, '');
+    return `${head}${added}${updated}${clean}${close}`;
   });
 }
 
@@ -239,11 +241,13 @@ function readAttrs(html) {
   let m;
   CARD_HEAD.lastIndex = 0;
   while ((m = CARD_HEAD.exec(html)) !== null) {
-    const slug = m[2];
     const tail = m[3] || '';
-    const added = /data-added="([^"]*)"/.exec(tail);
-    const updated = /data-updated="([^"]*)"/.exec(tail);
-    out[slug] = { added: added ? added[1] : null, updated: updated ? updated[1] : null };
+    const values = (name) => [...tail.matchAll(new RegExp(`data-${name}="([^"]*)"`, 'g'))].map(v => v[1]);
+    const added = values('added');
+    const updated = values('updated');
+    out[m[2]] = { added: added[0] || null, updated: updated[0] || null,
+      duplicates: ['added', 'updated'].filter((name) => values(name).length > 1),
+      conflicts: ['added', 'updated'].filter((name) => new Set(values(name)).size > 1) };
   }
   return out;
 }
@@ -282,6 +286,20 @@ function selftest() {
     if (got !== want) fail.push(`${file}: expected excluded=${want}, got ${got}`);
     else { pass++; console.log(`  ok  ${file} — ${why}`); }
   }
+  const head = '<a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-fixture/"';
+  const pins = { 'crypto-lab-fixture': { added: '2026-04', updated: '2026-10' } };
+  const dirty = `${head} data-added="2026-04" data-updated="2026-10" data-level="advanced"\n data-updated="2026-09" data-added="2026-04">body</a>`;
+  const clean = stamp(dirty, pins);
+  const checks = [
+    ['separated conflicting duplicates detected', readAttrs(dirty)['crypto-lab-fixture'].conflicts.includes('updated')],
+    ['matching duplicates detected', readAttrs(dirty.replace('2026-09', '2026-10'))['crypto-lab-fixture'].duplicates.length === 2 && readAttrs(dirty.replace('2026-09', '2026-10'))['crypto-lab-fixture'].conflicts.length === 0],
+    ['writer removes all duplicates', readAttrs(clean)['crypto-lab-fixture'].duplicates.length === 0],
+    ['writer preserves unrelated attributes and body', clean.includes('data-level="advanced"') && clean.endsWith('>body</a>')],
+    ['writer is idempotent', stamp(clean, pins) === clean],
+    ['null dates remove every occurrence', !/data-(?:added|updated)=/.test(stamp(dirty, {}))],
+    ['valid card stays quiet', readAttrs(`${head} data-added="2026-04" data-updated="2026-10">`)['crypto-lab-fixture'].duplicates.length === 0],
+  ];
+  for (const [why, ok] of checks) { if (ok) { pass++; console.log(`  ok  ${why}`); } else fail.push(why); }
   if (!cases.some(([, w]) => w)) fail.push('no case exercises an exclusion');
   if (!cases.some(([, w]) => !w)) fail.push('no case is a content change: the rule is never shown staying quiet');
   console.log(fail.length ? `\n${pass} passed, ${fail.length} FAILED` : `\n${pass} passed, 0 failed`);
@@ -308,6 +326,7 @@ function main() {
       const pin = pins.labs[slug];
       if (!pin) { problems.push(`${slug} — carded, absent from tools/lab-dates.json`); continue; }
       const card = onCards[slug] || {};
+      if (card.conflicts && card.conflicts.length) problems.push(`${slug} — conflicting date attributes: ${card.conflicts.join(', ')}`);
       if ((pin.added || null) !== (card.added || null)) {
         problems.push(`${slug} — card says added=${card.added || 'none'}, pin says ${pin.added || 'none'}`);
       }

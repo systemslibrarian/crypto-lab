@@ -1,3 +1,11 @@
+/*
+ * render-verification.mjs — render mathematical-verification documents from a claim manifest.
+ *
+ * Run: node tools/render-verification.mjs <manifest.yaml> [lab-dir]
+ * Prevents: generated verification documents drifting from their claim-manifest input
+ * Reads: the supplied manifest and the lab README; writes verification/MATH.md and the README verification section
+ * This publishing helper preserves recorded statuses; it does not validate or execute claims.
+ */
 import fs from 'fs';
 import path from 'path';
 import { createRequire } from 'module';

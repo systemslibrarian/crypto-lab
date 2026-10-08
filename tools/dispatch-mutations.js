@@ -2,6 +2,11 @@
 /*
  * dispatch-mutations.js — the permanent mutation set for the dispatch checkers.
  *
+ * Run: node tools/dispatch-mutations.js
+ * Prevents: dispatch checker regressions surviving without a named failing mutation and a clean control
+ * Reads: tools/fixtures/dispatch/mutations, dispatch checker modules and sibling workflow sources for baseline evidence
+ * This regression requires a populated sibling fleet; it is also called by dispatch-proof.js.
+ *
  * Every fix in this family was made because a checker reported clean over
  * something it could not see. The only durable defence against that is a set of
  * edits that MUST be caught, replayed on every run, so a later refactor that

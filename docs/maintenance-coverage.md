@@ -2,7 +2,6 @@
 
 The tools in `tools/` answer different questions. A successful catalog refresh is
 not a cryptographic audit, a test run of every lab, or proof that a build shipped.
-
 | Check layer | Automatic execution | What it establishes |
 | --- | --- | --- |
 | Detector regression fixtures | `README catalog` workflow on pull requests, main pushes, and manual dispatch | Nine detector suites plus a cadence regression check known defects, clean controls, source-evidence shapes, and clone guards. Each suite continues after another fails. |
@@ -69,7 +68,6 @@ commands, four specialized helpers, and four support modules**. The eight
 regression/helper commands are useful but should not be presented as eight extra
 checks of today's labs. Do not schedule both a wrapper and its children just to
 increase a tool-run count.
-
 | File in `tools/` | Disposition | Distinct responsibility or dependency |
 | --- | --- | --- |
 | `catalog-evidence.js` | Keep | Derives implementation evidence; verifies anchors and pinned reviews. |
@@ -118,3 +116,11 @@ increase a tool-run count.
 The renderers and migration helper are not evidence detectors. Their absence of a
 nightly run is not a lab defect. Lack of a recent result for a real checker remains
 a coverage question, and retaining its file does not answer it.
+
+During anchor verification, a current remote commit absent from the local clone
+is `CLONE-BEHIND`, even when the review pin differs from remote HEAD. Fetch and
+update the checkout before deciding whether reviewed source changed. A failed
+diff against an unfetched remote object must not create a `STALE-REVIEW` request.
+Dependency-only movement preserves the source review after fetch; actual source
+movement still requires review, and verification remains nonzero until the clone
+can establish the comparison.

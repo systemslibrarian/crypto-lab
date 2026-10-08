@@ -72,6 +72,21 @@ const shape = (src, name) => {
 };
 
 const CASES = [
+  ['Reviewed interpretation false matches', [
+    ['const description = \'Moves from "repeated squaring in an RSA group" toward a beacon\';', 'RSA', null, 'prose inside a string is not import syntax'],
+    ["import { renderModuleLWE } from './module-lwe';", 'LWE', null, 'a drawing import does not implement its subject'],
+    ["import { renderFiatShamir } from './fiat-shamir';", 'Fiat-Shamir', null, 'presentation-only bindings also block path fallback'],
+    ["import { renderModuleLWE as lwe } from './module-lwe';", 'LWE', null, 'a local alias does not change the imported symbol'],
+    ["export { renderModuleLWE } from './module-lwe';", 'LWE', null, 'presentation re-exports do not establish computation'],
+    ["import { rsaEncrypt } from '../rsa/textbook';", 'RSA', 'import', 'real computation imported by UI remains evidence'],
+    ["import { rsaEncrypt as encrypt } from '../rsa/textbook';", 'RSA', 'import', 'a real computation remains evidence under an alias'],
+    ["import { encap as dhkemEncap } from '@hub/hpke';", 'DHKEM', 'import', 'an algorithm-qualified alias for a generic crypto export remains evidence'],
+    ["const { rsaEncrypt } = require('./rsa');", 'RSA', 'import', 'require bindings remain evidence'],
+    ["const rsa = await import('./rsa');", 'RSA', 'import', 'dynamic imports remain evidence'],
+    ["} from './dhkem';", 'DHKEM', 'import', 'the closing line of a multiline crypto import remains evidence'],
+    ['const gaussianSigma = noiseLevel;', 'Gaussian mechanism', null, 'measurement noise is not differential privacy'],
+    ['function gaussianMechanism(value) { return value + noise(); }', 'Gaussian mechanism', 'decl', 'explicit Gaussian mechanism remains evidence'],
+  ]],
   ['MODELS — a projection named for an algorithm', [
     ["const aes128 = extrapolate(128, rate.candidatesPerSecond, multiplier);", 'AES', null,
       'the export-grade line: a rate projection named for the algorithm'],

@@ -26,6 +26,17 @@ not a cryptographic audit, a test run of every lab, or proof that a build shippe
 
 ## Remaining limits
 
+Import evidence requires executable import/require syntax before reading quoted
+module paths. Presentation and projection bindings do not establish their
+subject's implementation, including through path fallback. UI location alone
+does not invalidate a real computation import. Gaussian measurement sigma is
+not an alias for the differential-privacy Gaussian mechanism. Regression cases
+keep the reviewed false matches and real imports/mechanisms as paired controls.
+
+Protocol identity still requires multiple distinct structures and rejects a
+dominant foreign prefix; single borrowed message names remain partial evidence.
+These rules improve precision, rather than asserting cryptographic conformance.
+
 `dispatch-proof.js` and its mutation set need a populated sibling fleet. They are
 not part of the offline regression job. Tools such as `test-invocation.js`,
 `depth-audit.js`, and `corpus-freshness.js` also need their own relevant inputs and

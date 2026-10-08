@@ -550,10 +550,17 @@ function structuresNamed(code, term) {
    `symbolRe` is therefore tested against the imported NAME and never against the
    path, and terms without one are unaffected. */
 function importedSymbols(line) {
-  if (!/\b(?:import|require)\b/.test(line)) return [];
+  if (!/\b(?:import|export|require)\b/.test(lex(line).code)) return [];
   const braces = /\{([^}]*)\}/.exec(line);
   if (!braces) return [];
-  return braces[1].split(',').flatMap((b) => b.split(/\s+as\s+/)).map((b) => b.trim()).filter(Boolean);
+  // Aliases can qualify generic computation exports (encap as dhkemEncap),
+  // but cannot turn a presentation, projection or attack into implementation.
+  return braces[1].split(',').flatMap((b) => {
+    const names = b.split(/\s+as\s+|:/).map((n) => n.trim()).filter(Boolean);
+    const original = names[0] || '';
+    return PRESENTS.test(original) || MODELS.test(original) || ATTACKS_IT.test(lastWord(original))
+      ? names.slice(0, 1) : names;
+  });
 }
 
 /* Does this line name the term at all? The gate in front of shapeOf. A term with
@@ -580,7 +587,10 @@ function shapeOf(line, code, term, wide) {
      lives. When the line says which symbols it took, that list is the evidence
      and the path is not consulted. A default, namespace or side-effect import
      names no symbols, and there the path is all there is. */
-  const imports = [...line.matchAll(/(?:from\s*|require\(\s*|import\(\s*)['"]([^'"]+)['"]/g)].map((x) => x[1]);
+  // A quoted explanation can contain `from "RSA"` without importing anything.
+  // Strings supply paths only after executable syntax establishes an import.
+  const importing = /(?:^|[;\s])(?:import|export)\s|\b(?:require|import)\s*\(|^\s*}\s*from\b/.test(code);
+  const imports = importing ? [...line.matchAll(/(?:from\s*|require\(\s*|import\(\s*)['"]([^'"]+)['"]/g)].map((x) => x[1]) : [];
   /* Importing an ATTACK is not importing an implementation. crypto-lab-multivariate
      suppressed `export function kipnisShamirAttack(` at its declaration and was
      then credited with Shamir secret sharing anyway, from
@@ -589,7 +599,8 @@ function shapeOf(line, code, term, wide) {
      an attack is excluded from BOTH tests below: it cannot credit its term, and
      it cannot make the bindings informative enough to override the path, because
      it identifies no implementation either way. */
-  const names = importedSymbols(line).filter((n) => !ATTACKS_IT.test(lastWord(n)));
+  const allNames = importing ? importedSymbols(line) : [];
+  const names = allNames.filter((n) => !ATTACKS_IT.test(lastWord(n)) && !PRESENTS.test(n) && !MODELS.test(n));
   const binds = (t) => names.some((n) => t.re.test(n) || t.re.test(camelSplit(n))
     || (t.symbolRe && t.symbolRe.test(n)));
   if (binds(term)) return 'import';
@@ -607,7 +618,8 @@ function shapeOf(line, code, term, wide) {
      still all there is. */
   const informative = names.some((n) => ALGORITHMS.some((t) => t.re.test(n)
     || t.re.test(camelSplit(n)) || (t.symbolRe && t.symbolRe.test(n))));
-  if (!informative && imports.some((p) => term.re.test(p) || term.re.test(camelSplit(p)))) return 'import';
+  if (!informative && !(allNames.length && !names.length)
+    && imports.some((p) => term.re.test(p) || term.re.test(camelSplit(p)))) return 'import';
   /* WebCrypto: the term is a quoted algorithm name anywhere on a subtle line, or
      on the `name:` of an algorithm object. */
   /* A WebCrypto call is often written across four lines, and the algorithm name

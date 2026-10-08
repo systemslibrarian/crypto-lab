@@ -160,7 +160,7 @@ const ALGORITHMS = [
   { name: 'BIKE', kind: 'algorithm', family: 'PQ KEM', re: /\bbike\b/i, std: null },
   { name: 'NTRU', kind: 'algorithm', family: 'PQ KEM', re: /\bntru\b/i, std: null },
   { name: 'FrodoKEM', kind: 'algorithm', family: 'PQ KEM', re: /frodo/i, std: 'ISO:ISO/IEC 18033-2 amendment' },
-  { name: 'SIKE', kind: 'algorithm', family: 'PQ KEM', re: /\bsike\b|\bsidh\b/i, std: 'broken 2022' },
+  { name: 'SIKE', kind: 'algorithm', family: 'PQ KEM', re: /\bsike\b|\bsidh\b/i, std: null, status: 'broken 2022' },
   { name: 'XMSS', kind: 'algorithm', family: 'hash-based signature', re: /\bxmss\b/i, std: 'IETF:RFC 8391' },
   { name: 'LMS', kind: 'algorithm', family: 'hash-based signature', re: /\blms\b/i, std: 'IETF:RFC 8554' },
   { name: 'Lamport', kind: 'algorithm', family: 'hash-based signature', re: /lamport/i, std: null },
@@ -548,4 +548,13 @@ const IMPLEMENTATION_SHAPES = [
    string `'sm-crypto'` is not. Keeping the two apart is the whole distinction,
    and `catalog-sync.js vocab` re-derives it against the fleet's real dependency
    list rather than trusting anyone to remember it. */
-module.exports = { ALGORITHMS, ATTACKS, IMPLEMENTATION_SHAPES };
+// This validates the body:document shape, not the document's existence or
+// current status. Historical warnings belong in `status`, never in `std`.
+function standardMetadataProblems(terms = ALGORITHMS) {
+  return terms.filter((t) => t.std != null &&
+    (typeof t.std !== 'string' || !/^[A-Z][A-Z0-9-]*:\S.*\S$/.test(t.std)))
+    .map((t) => ({ kind: 'STANDARD-IDENTIFIER', what: t.name,
+      why: `std must be null or a body:document identifier; received ${JSON.stringify(t.std)}. Put historical status in status.` }));
+}
+
+module.exports = { ALGORITHMS, ATTACKS, IMPLEMENTATION_SHAPES, standardMetadataProblems };

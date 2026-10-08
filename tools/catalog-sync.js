@@ -52,7 +52,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const { ALGORITHMS } = require('./catalog-vocab.js');
+const { ALGORITHMS, standardMetadataProblems } = require('./catalog-vocab.js');
 const REVIEWS = require('./catalog-reviewed.json');
 const { sourceRoot, summary: cloneSummary } = require('./clone-source.js');
 
@@ -245,6 +245,8 @@ function build(list) {
       const alsoRef = (refs.get(name) || []).map((c) => `*${c.title}*`).join(', ');
       L.push(`#### ${name}`);
       L.push('');
+      const status = VOCAB.get(name)?.status;
+      if (status) L.push(`- **Historical status:** ${status}`);
       L.push(`- **Implemented by:** ${who}`);
       L.push(`- **Also referenced by:** ${alsoRef || '—'}`);
       L.push('');
@@ -542,7 +544,7 @@ function literals(alt) {
 }
 
 function vocabChecks(list, opts = {}) {
-  const bad = [];
+  const bad = standardMetadataProblems();
   for (const t of ALGORITHMS) {
     if (!namesChip(t, t.name)) {
       bad.push({ kind: 'NAME-UNMATCHED', what: t.name, why: `its own name matches neither its re nor its chipRe, so no card can name it the obvious way. Give it a chipRe.` });

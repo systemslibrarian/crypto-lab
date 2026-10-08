@@ -4189,11 +4189,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-fhe-arena/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-fhe-arena/"
             data-implements="BFV@src/toyFhe.ts:132"
             data-references="BGV | CKKS | ElGamal | NTT | Paillier | Private information retrieval | Ring-LWE | TFHE"
-            data-attacks="Chosen-ciphertext attack@README.md:42 | Chosen-plaintext attack@src/main.ts:146 | Ciphertext malleability@README.md:42"
+            data-attacks="Chosen-ciphertext attack@README.md:42 | Chosen-plaintext attack@src/main.ts:147 | Ciphertext malleability@README.md:42"
             data-implementation="hand-rolled"
+            data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-added="2026-04" data-updated="2026-08" data-level="advanced"
             data-added="2026-04" data-updated="2026-08" data-level="advanced"
@@ -4681,14 +4682,16 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
-            data-implements="Ed25519@src/exhibits/attacks.ts:34 | FROST@crate/src/round2.rs:54 | SHA-512@src/exhibits/attacks.ts:78 | Shamir secret sharing@src/exhibits/keygen.ts:2"
-            data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | Schnorr | secp256k1"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/"
+            data-implements="Ed25519@src/exhibits/attacks.ts:34 | FROST@crate/src/round2.rs:54 | SHA-512@src/exhibits/attacks.ts:78"
+            data-comment-only="Shamir secret sharing@src/exhibits/attacks.ts:97"
+            data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | Schnorr | Shamir secret sharing | secp256k1"
             data-attacks="Key recovery@src/exhibits/round1.ts:60 | Nonce reuse@src/exhibits/attacks-view.ts:2 | Side-channel (unspecified)@THREAT_MODEL.md:47"
             data-standards="IETF | NIST"
             data-implementation="Rust FROST crate / WASM"
             data-review-commit="6908f85dbc1ebaaa2a87bab5eb093fa350ebde66"
             data-review-note="Rust keygen, signing rounds and aggregation reviewed"
+            data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-added="2026-04" data-updated="2026-10" data-level="advanced"
@@ -4789,12 +4792,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
-            data-implements="Ed25519@src/bench/runner.ts:111 | Fiat-Shamir@src/ui/tab3-how-it-works.ts:10 | LWE@src/ui/tab3-how-it-works.ts:10 | ML-DSA@src/crypto/mldsa.ts:47 | SHA-256@src/crypto/seal.ts:43"
-            data-references="AES | Dilithium | ECDSA | Falcon | Grover's algorithm | Kyber | ML-KEM | NTT | P-256 | Pairing | RSA | RSA-PSS | SHAKE | SLH-DSA | SPHINCS+ | Schnorr | Shor's algorithm"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/"
+            data-implements="Ed25519@src/bench/runner.ts:111 | Fiat-Shamir@src/ui/viz-render.ts:10 | ML-DSA@src/crypto/mldsa.ts:47 | SHA-256@src/crypto/seal.ts:43"
+            data-references="AES | Dilithium | ECDSA | Falcon | Grover's algorithm | Kyber | LWE | ML-KEM | NTT | P-256 | Pairing | RSA | RSA-PSS | SHAKE | SLH-DSA | SPHINCS+ | Schnorr | Shor's algorithm"
             data-attacks="Discrete log@src/ui/tab3-how-it-works.ts:129 | Factoring@src/ui/tab2-compare.ts:20 | Fault injection@README.md:491 | Key recovery@src/ui/timing-variability.ts:242 | Side-channel (unspecified)@src/data/runtime.ts:118 | Timing side-channel@src/data/runtime.ts:90"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-added="2026-04" data-updated="2026-10" data-level="advanced"
@@ -18035,12 +18039,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-beacon-lock/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
-            data-implements="AES@src/core/envelope.ts:46 | AES-GCM@src/core/envelope.ts:46 | BLS signatures@src/core/beacon.ts:37 | BLS12-381@src/core/bls.ts:24 | Hash-to-curve@src/core/bls.ts:63 | Kyber@src/core/bls.ts:90 | Pairing@src/core/bls.ts:66 | RSA@src/ui/compare.ts:145 | SHA-256@src/core/beacon.ts:92"
-            data-references="Boneh-Franklin IBE | ChaCha20 | ChaCha20-Poly1305 | EC point arithmetic | Fujisaki-Okamoto transform | HKDF | One-time pad | Poly1305 | Shamir secret sharing | Shor's algorithm"
+          <a class="project-card" data-category="ENCRYPTION | RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-beacon-lock/"
+            data-implements="AES@src/core/envelope.ts:46 | AES-GCM@src/core/envelope.ts:46 | BLS signatures@src/core/beacon.ts:37 | BLS12-381@src/core/bls.ts:24 | Hash-to-curve@src/core/bls.ts:63 | Kyber@src/core/bls.ts:90 | Pairing@src/core/bls.ts:66 | SHA-256@src/core/beacon.ts:92"
+            data-references="Boneh-Franklin IBE | ChaCha20 | ChaCha20-Poly1305 | EC point arithmetic | Fujisaki-Okamoto transform | HKDF | One-time pad | Poly1305 | RSA | Shamir secret sharing | Shor's algorithm"
             data-attacks="Brute force@src/ui/outage.ts:108 | Chosen-ciphertext attack@src/ui/mechanism.ts:441 | Ciphertext malleability@src/ui/attack.ts:138 | Discrete log@src/ui/mechanism.ts:447 | Side-channel (unspecified)@src/ui/scope.ts:72"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-added="2026-08" data-updated="2026-08" data-level="advanced"
             data-added="2026-08" data-updated="2026-08" data-level="advanced"

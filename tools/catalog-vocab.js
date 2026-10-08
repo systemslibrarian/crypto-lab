@@ -61,6 +61,30 @@ const ALGORITHMS = [
      neutral absence; it is a card whose strongest claim nothing is checking. */
   { name: 'ZUC', kind: 'algorithm', family: 'stream cipher', re: /\bzuc\b|\bzuc[-_](?:d|s0|s1|256|eea3|eia3)\b|\b128[-_ ]?e[ei]a3\b/i, std: 'ETSI:3GPP TS 35.221 / GM/T 0001-2012' },
   { name: 'RC4', kind: 'algorithm', family: 'stream cipher', re: /\brc4\b/i, std: null },
+
+  /* CRC-32 and PTW were both absent until 2026-10-06, and `crypto-lab-wep-crack`
+     is the lab that found it: it HAND-ROLLS the reflected IEEE CRC-32 in
+     src/wep/crc32.ts because the checksum is the teaching subject, and implements
+     PTW for real in src/wep/attack/ptw.ts. Because no term could NAME either, the
+     card was invisible in both directions -- never credited, and its `CRC-32` and
+     `PTW` chips never judged by the chip rule. Worse than the ZUC case in one
+     respect: `catalog-evidence` validates every reviewed `add` entry against
+     ALGORITHMS and THROWS on an unknown name, so a human review could not assert
+     them either. The escape hatch for "source shapes the scanner cannot
+     establish" was closed for exactly the two things the lab is about.
+
+     CRC-32 is a CHECKSUM, not a hash, and the family says so. Filing it under
+     `hash` would have the index implying a cryptographic property it has never
+     had -- which is the claim WEP's failure is a lesson about. */
+  { name: 'CRC-32', kind: 'algorithm', family: 'checksum', re: /\bcrc[-_ ]?32\b/i, std: 'IEEE:802.3 / ITU-T:V.42' },
+
+  /* PTW sits in ALGORITHMS rather than ATTACKS, and that is a judgement worth
+     flagging rather than burying. It IS an attack -- Tews, Weinmann and Pyshkin
+     2007 -- but `add` validates only against ALGORITHMS, so a term in ATTACKS
+     could never be asserted by a reviewed pin. It is also a real computation a
+     lab can implement, which is what `data-implements` records. `pathRe` carries
+     the detection because the implementation lives in a file named for it. */
+  { name: 'PTW', kind: 'algorithm', family: 'key-recovery attack', re: /\bptw\b/i, pathRe: /(^|\/)ptw(\.|\/|$)/i, std: null },
   { name: 'DES', kind: 'algorithm', family: 'block cipher', re: /\bdes\b(?!ign|crip|tin)/i, std: 'NIST:FIPS 46-3 (withdrawn)' },
   { name: '3DES', kind: 'algorithm', family: 'block cipher', re: /(?<![a-z0-9])(?:3des|triple[-_ ]?des)(?![a-z0-9])/i, std: 'NIST:SP 800-67' },
   { name: 'Blowfish', kind: 'algorithm', family: 'block cipher', re: /blowfish/i, std: null },

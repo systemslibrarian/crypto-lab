@@ -326,6 +326,7 @@ function main() {
       const pin = pins.labs[slug];
       if (!pin) { problems.push(`${slug} — carded, absent from tools/lab-dates.json`); continue; }
       const card = onCards[slug] || {};
+      if (card.duplicates && card.duplicates.length) problems.push(`${slug} — duplicate date attributes: ${card.duplicates.join(', ')}`);
       if (card.conflicts && card.conflicts.length) problems.push(`${slug} — conflicting date attributes: ${card.conflicts.join(', ')}`);
       if ((pin.added || null) !== (card.added || null)) {
         problems.push(`${slug} — card says added=${card.added || 'none'}, pin says ${pin.added || 'none'}`);
@@ -404,4 +405,5 @@ function main() {
   return 0;
 }
 
-process.exit(main());
+module.exports = { stamp, readAttrs };
+if (require.main === module) process.exit(main());

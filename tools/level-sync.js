@@ -66,16 +66,18 @@ const BLURBS = {
 /* Same position rule as lab-dates: AFTER the href. readme-sync and catalog-sync
  * both match `data-category="…" href="…"` adjacent, so anything inserted between
  * them takes catalog-sync to "0 cards". */
-const CARD_HEAD = /(<a class="(?:feature|project)-card[^"]*" data-category="[^"]*" href="https:\/\/systemslibrarian\.github\.io\/(crypto-lab-[a-z0-9-]+)\/"(?:\s+data-(?:added|updated)="[^"]*")*)((?:\s+data-level="[^"]*")*)/g;
+const CARD_HEAD = /(<a class="(?:feature|project)-card[^"]*" data-category="[^"]*" href="https:\/\/systemslibrarian\.github\.io\/(crypto-lab-[a-z0-9-]+)\/")([^>]*)(>)/g;
 
 function pins() {
   return JSON.parse(fs.readFileSync(PINS, 'utf8'));
 }
 
 function stamp(html, labs) {
-  return html.replace(CARD_HEAD, (whole, head, slug) => {
+  return html.replace(CARD_HEAD, (whole, head, slug, tail, close) => {
     const rec = labs[slug];
-    return rec && rec.level ? `${head} data-level="${rec.level}"` : head;
+    const clean = tail.replace(/\s+data-level="[^"]*"/g, '');
+    const level = rec && rec.level ? ` data-level="${rec.level}"` : '';
+    return `${head}${level}${clean}${close}`;
   });
 }
 
@@ -84,8 +86,9 @@ function readLevels(html) {
   CARD_HEAD.lastIndex = 0;
   let m;
   while ((m = CARD_HEAD.exec(html)) !== null) {
-    const got = /data-level="([^"]*)"/.exec(m[3] || '');
-    out[m[2]] = got ? got[1] : null;
+    const levels = [...(m[3] || '').matchAll(/data-level="([^"]*)"/g)].map(v => v[1]);
+    out[m[2]] = { level: levels[0] || null, duplicates: levels.length > 1,
+      conflicts: new Set(levels).size > 1 };
   }
   return out;
 }
@@ -150,7 +153,9 @@ function main() {
       const pin = p.labs[slug];
       if (!pin) { problems.push(`${slug} — carded, absent from tools/lab-levels.json`); continue; }
       if (!p.levels.includes(pin.level)) problems.push(`${slug} — level "${pin.level}" is not one of ${p.levels.join(', ')}`);
-      if (onCards[slug] !== pin.level) problems.push(`${slug} — card says ${onCards[slug] || 'no level'}, pin says ${pin.level}`);
+      const card = onCards[slug];
+      if (card.duplicates) problems.push(`${slug} — ${card.conflicts ? 'conflicting' : 'duplicate'} level attributes`);
+      if (card.level !== pin.level) problems.push(`${slug} — card says ${card.level || 'no level'}, pin says ${pin.level}`);
     }
     for (const slug of Object.keys(p.labs)) {
       if (!slugs.includes(slug)) problems.push(`${slug} — levelled, but no card links to it`);
@@ -184,4 +189,5 @@ function main() {
   return 0;
 }
 
-process.exit(main());
+module.exports = { stamp, readLevels };
+if (require.main === module) process.exit(main());

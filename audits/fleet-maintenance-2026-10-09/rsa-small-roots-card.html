@@ -1,0 +1,15 @@
+<!-- Integrated into the proposed hub after existing deployment and served-byte verification. -->
+<a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-rsa-small-roots/"
+            data-implements="RSA@src/simulator/oracle.ts:23"
+            data-references="GGH | ML-KEM | RSA-OAEP | SHA-256 | Schnorr"
+            data-attacks="Factoring@README.md:57 | Lattice reduction@src/attacks/public.ts:3"
+            data-standards="IETF"
+            data-implementation="hand-rolled"
+            data-review-commit="71e571b0b8524400a2c0e1f299adff8c46ee1087"
+            data-review-note="Read exact public challenge, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, strict finite/norm bounds, bounded Sturm search, worker allowlists and simulator acceptance at this SHA. Implements textbook exponent-3 RSA and larger-prime high-bit leakage attacks, not RSA-OAEP or RSA-PSS. Prediction, certificate, recovery and incomplete search remain distinct; not arbitrary RSA decryption. 43 unit/fixture and 14 browser/claim tests executed successfully. The inspected source is unchanged from the tested implementation; this SHA adds a JSON-report unit-count gate. Existing main run 37894238587 passed and published; live JavaScript and CSS matched the inspected build byte for byte. Publication was observed, not triggered by this maintenance session."
+            data-added="2026-10" data-updated="2026-10" data-level="advanced" target="_blank" rel="noopener" style="--accent: #c4a3ff;" data-overlaps="crypto-lab-rsa-forge: RSA Forge teaches CRT broadcast and other textbook-RSA failures; RSA Small Roots uses a known prefix or larger-prime high bits through exact integer lattices. crypto-lab-lll-break: LLL Break teaches reduction and toy attacks; RSA Small Roots separates a finite bound, a norm certificate and public verification in two RSA leakage models.">
+            <div class="card-kicker">Small Unknown · Exact Lattice Attack</div>
+            <div class="project-title">RSA Small Roots</div>
+            <div class="project-copy">Recover a known-prefix textbook RSA message suffix or a larger prime from its high bits, then inspect exact lattice reduction, bounded integer-root search and public verification.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Textbook RSA</span><span class="chip">Coppersmith</span><span class="chip">Exact LLL</span><span class="chip">Sturm Search</span></div><span class="arrow">&rarr;</span></div>
+          </a>

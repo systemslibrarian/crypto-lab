@@ -1,0 +1,23 @@
+[
+  {
+    "command": "git -C /Users/gmcas/repos/crypto-lab-wep-crack merge-base --is-ancestor fad33459d2f9a0304a1c0b08810f375a6c1c9f51 origin/main",
+    "exit": 0,
+    "result": "passed"
+  },
+  {
+    "command": "git -C /Users/gmcas/repos/crypto-lab-lfsr-forge merge-base --is-ancestor 2a9848eee885039dfda5d576b0727233624bee7f origin/main",
+    "exit": 0,
+    "result": "passed"
+  },
+  {
+    "command": "git -C /Users/gmcas/repos/crypto-lab-rsa-small-roots merge-base --is-ancestor 71e571b0b8524400a2c0e1f299adff8c46ee1087 origin/main",
+    "exit": 0,
+    "result": "passed"
+  },
+  {
+    "command": "CRYPTO_COMPARE_DIR=/Users/gmcas/repos/.fleet-maintenance-20261009/crypto-compare node scripts/validate.mjs",
+    "exit": 0,
+    "result": "passed",
+    "output": "\u2713 validation passed \u2014 328 corpus entries, 229 demos (228 crypto-lab + 1 standalone), 17 categories, model openai/gpt-oss-120b\n  reviewed commits verified against origin/main: 0, not verifiable here: 44\n"
+  }
+]

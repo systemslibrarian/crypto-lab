@@ -1,0 +1,58 @@
+[
+  {
+    "command": "node tools/catalog-evidence.js verify --lab crypto-lab-biham-lens",
+    "cwd": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-sandbox/crypto-lab",
+    "exit": 0,
+    "sourceSha": "eea1f7a1568079783d617050ca25bde7e1229cc7",
+    "output": "Anchors checked: 9.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify --lab crypto-lab-elgamal-plain",
+    "cwd": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-sandbox/crypto-lab",
+    "exit": 0,
+    "sourceSha": "7424411c18f1478281d3052336dc30046fe9c145",
+    "output": "Read from committed HEAD, working tree dirty (1): elgamal-plain (1)\nAnchors checked: 12.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify --lab crypto-lab-fhe-arena",
+    "cwd": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-sandbox/crypto-lab",
+    "exit": 0,
+    "sourceSha": "1c9e05318da24fc991e960f00b5e6eb597c744b2",
+    "output": "Anchors checked: 4.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify --lab crypto-lab-mac-race",
+    "cwd": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-sandbox/crypto-lab",
+    "exit": 0,
+    "sourceSha": "2029bcd2714788ba8bc01f5e320fe437a4dceb92",
+    "output": "Anchors checked: 13.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify --lab crypto-lab-blind-sign",
+    "cwd": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-sandbox/crypto-lab",
+    "exit": 0,
+    "sourceSha": "a4d62330cd056d18a8d821610c9462b638d5352c",
+    "output": "Anchors checked: 10.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify --lab crypto-lab-sat-break",
+    "cwd": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-sandbox/crypto-lab",
+    "exit": 0,
+    "sourceSha": "dbbdf566f62d16a7f8cf228b96339af319426772",
+    "output": "Anchors checked: 1.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify --lab crypto-lab-wep-crack",
+    "cwd": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-sandbox/crypto-lab",
+    "exit": 0,
+    "sourceSha": "fad33459d2f9a0304a1c0b08810f375a6c1c9f51",
+    "output": "Anchors checked: 7.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify --lab crypto-lab-lfsr-forge",
+    "cwd": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-sandbox/crypto-lab",
+    "exit": 0,
+    "sourceSha": "2a9848eee885039dfda5d576b0727233624bee7f",
+    "output": "Anchors checked: 2.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  }
+]

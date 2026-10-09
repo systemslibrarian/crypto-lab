@@ -1,0 +1,56 @@
+[
+  {
+    "command": "npm run audit:dependencies",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/compare-patched-0.log",
+    "outputTail": "\n> crypto-compare@1.2.0 audit:dependencies\n> npm audit --omit=dev --audit-level=low\n\nfound 0 vulnerabilities\n"
+  },
+  {
+    "command": "npm run type-check",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/compare-patched-1.log",
+    "outputTail": "\n> crypto-compare@1.2.0 type-check\n> tsc --noEmit\n\n"
+  },
+  {
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/compare-patched-2.log",
+    "outputTail": "\n> crypto-compare@1.2.0 test\n> vitest run\n\n\n RUN  v5.0.3 /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-compare\n\n\n Test Files  38 passed (38)\n      Tests  257 passed (257)\n   Start at  02:28:48\n   Duration  6.53s (environment 60%, tests 23%, setup 8%, transform 5%, import 4%, worker 1%)\n\nEnvironment  jsdom was created 38 times \u00b7 29.01s total, 60% of tracked time\n             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)\n             learn more: https://vitest.dev/guide/improving-performance#test-environments\n\n(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:\n  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `\"type\": \"module\"` in the closest package.json\nSet `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.\n"
+  },
+  {
+    "command": "npm run lint",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/compare-patched-3.log",
+    "outputTail": "\n> crypto-compare@1.2.0 lint\n> eslint . --ext .js,.jsx,.ts,.tsx --max-warnings=0 --ignore-pattern .next --ignore-pattern out\n\n"
+  },
+  {
+    "command": "npm run build",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/compare-patched-4.log",
+    "outputTail": "..\n   Collecting page data ...\n   Generating static pages (0/15) ...\n   Generating static pages (3/15) \n   Generating static pages (7/15) \n   Generating static pages (11/15) \n \u2713 Generating static pages (15/15)\n   Finalizing page optimization ...\n   Collecting build traces ...\n   Exporting (0/2) ...\n \u2713 Exporting (2/2)\n\nRoute (app)                                 Size  First Load JS\n\u250c \u25cb /                                    17.9 kB         204 kB\n\u251c \u25cb /_not-found                            995 B         104 kB\n\u251c \u25cb /about                               3.99 kB         209 kB\n\u251c \u25cb /advisor                             16.6 kB         188 kB\n\u251c \u25cb /checklist                           5.19 kB         112 kB\n\u251c \u25cb /implementations                     3.05 kB         114 kB\n\u251c \u25cb /labs                                2.65 kB         197 kB\n\u251c \u25cb /migrate                              6.8 kB         113 kB\n\u251c \u25cb /robots.txt                            124 B         103 kB\n\u251c \u25cb /safe-defaults                       7.88 kB         114 kB\n\u251c \u25cb /sitemap.xml                           124 B         103 kB\n\u251c \u25cb /stacks                              5.22 kB         112 kB\n\u2514 \u25cb /visuals                             7.77 kB         175 kB\n+ First Load JS shared by all             103 kB\n  \u251c chunks/255-09fb0d129bb12f51.js       46.6 kB\n  \u251c chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB\n  \u2514 other shared chunks (total)          2.15 kB\n\n\n\u25cb  (Static)  prerendered as static content\n\n\n> crypto-compare@1.2.0 postbuild\n> node --import tsx scripts/finalize-static-html.ts\n\nPlaced CSP first in <head> for 12 exported HTML files.\n"
+  },
+  {
+    "command": "npm run check:stats",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/compare-patched-5.log",
+    "outputTail": "\n> crypto-compare@1.2.0 check:stats\n> node --import tsx scripts/sync-stats.ts --check\n\nDerived stats: 100 algorithms, 17 categories, 227 linked labs (6 generated literals across 2 files)\n  ok     README.md\n  ok     package.json\nAll generated stat literals are in sync.\n"
+  },
+  {
+    "command": "npm run test:demos",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/compare-patched-6.log",
+    "outputTail": "\n> crypto-compare@1.2.0 test:demos\n> vitest run src/__tests__/demo-resources.test.ts src/__tests__/demo-sync-lib.test.ts src/__tests__/check-demo-sync-script.test.ts\n\n\n RUN  v5.0.3 /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-compare\n\n\n Test Files  3 passed (3)\n      Tests  15 passed (15)\n   Start at  02:29:14\n   Duration  1.57s (environment 56%, tests 27%, setup 8%, transform 7%, import 1%, worker 1%)\n\n(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:\n  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `\"type\": \"module\"` in the closest package.json\nSet `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.\n"
+  },
+  {
+    "command": "npm run check:demos:strict -- --live-html-path=/Users/gmcas/repos/crypto-lab-lane-fleet-maintenance-2026-10-09/index.html",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/compare-patched-7.log",
+    "outputTail": "\n> crypto-compare@1.2.0 check:demos:strict\n> node --import tsx scripts/check-demo-sync.ts --strict --live-html-path=/Users/gmcas/repos/crypto-lab-lane-fleet-maintenance-2026-10-09/index.html\n\n\nDemo catalog sync check\nLive slugs:  227\nLocal slugs: 227\n\nAll demo slugs are in sync with the live catalog.\n"
+  },
+  {
+    "command": "npm run test:e2e",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/compare-patched-8.log",
+    "outputTail": "re the warning was created)\n[WebServer] (node:70252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] (node:71402) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] (node:71577) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] (node:71691) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n(node:71759) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:71757) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:71760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:71756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:71758) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "sourceSha": "71e571b0b8524400a2c0e1f299adff8c46ee1087",
+  "run": 37894238587,
+  "buildJob": 113701802721,
+  "deployJob": 113702565020,
+  "url": "https://systemslibrarian.github.io/crypto-lab-rsa-small-roots/",
+  "assets": [
+    {
+      "asset": "/crypto-lab-rsa-small-roots/assets/index-DBh-f0BC.js",
+      "localSha256": "052987122eb7d49c26f60de4719d52154f06ec52e9e5770ae0837b18fef183c2",
+      "liveSha256": "052987122eb7d49c26f60de4719d52154f06ec52e9e5770ae0837b18fef183c2",
+      "match": true
+    },
+    {
+      "asset": "/crypto-lab-rsa-small-roots/assets/index-D8MTxCl9.css",
+      "localSha256": "d021e6e9b3343c32d0feff0082bea09efc57946f092d4f83507980c0e791a8ec",
+      "liveSha256": "d021e6e9b3343c32d0feff0082bea09efc57946f092d4f83507980c0e791a8ec",
+      "match": true
+    }
+  ]
+}

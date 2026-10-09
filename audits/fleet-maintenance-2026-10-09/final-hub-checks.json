@@ -1,0 +1,72 @@
+[
+  {
+    "command": "node tools/catalog-structure-check.js",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.05,
+    "output": "Catalog search/structure: PASS (228 cards; metadata, typo and proximity search verified)\n"
+  },
+  {
+    "command": "node tools/lab-dates.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 11.23,
+    "output": "Cards dated: 228 | pinned: 228 | pinned 2026-10-09\n\nEvery card's dates match the repository they describe.\n"
+  },
+  {
+    "command": "node tools/catalog-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 3.06,
+    "output": "Read from committed HEAD (dirty working tree): biham-lens, mac-race, elgamal-plain, ablation-wire, sat-break, adaptor-gate, function-key, lfsr-forge\nVocabulary invariants hold over 210 terms and 228 cards:\n  every term matches its own name, no two terms index the same algorithm,\n  no term is credited by a package name alone,\n  and every chip with a dependency behind it resolves to a term (4 declared\n  exemptions in tools/catalog-chip-exempt.json).\nCATALOG.md in step with index.html (228 labs).\n"
+  },
+  {
+    "command": "node tools/readme-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.05,
+    "output": "README tables in sync with index.html cards (228 cards); hero count reads 228.\n"
+  },
+  {
+    "command": "node tools/concept-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.04,
+    "output": "concept-coverage.md v28 \u2014 40 concepts (DEEP 9 \u00b7 COVERED 31 \u00b7 PARTIAL 0 \u00b7 GAP 0)\nCards in index.html: 228 | cited in map: 228\nCited but no card (0): []\nCarded but unmapped (0): []\nUncatalogued backlog (0): []\nIn flight (0): []\nOpen gaps (0): []\nCatalogued total line: 228 (matches)\n\nconcept-coverage.md in step with index.html.\n"
+  },
+  {
+    "command": "node tools/level-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.05,
+    "output": "Cards levelled: 228 | beginner=32 intermediate=55 advanced=141\nFlagged for review: 10 \u2014 listed first in LEVELS-REVIEW.md\n\nEvery card carries a level, and the review sheet matches it.\n"
+  },
+  {
+    "command": "node tools/teach-build.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.08,
+    "output": "Teach pages in sync: 5 module(s), 44 generated file(s); count lint clean.\n"
+  },
+  {
+    "command": "node tools/tools-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.07,
+    "output": "README.md tools block in step with tools/ (37 tools listed).\n"
+  },
+  {
+    "command": "node tools/corpus-sync.js check /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-counsel/corpus.json",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.05,
+    "output": "Corpus: /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-counsel/corpus.json\nCatalog demos: 228 | Corpus demo entries: 228\nMissing from corpus (0): []\nStale in corpus (0): []\n"
+  },
+  {
+    "command": "node --test tests/card-metadata.test.cjs tests/catalog-standards.test.cjs tests/deploy-report.test.cjs",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 2.85,
+    "output": "\u2714 metadata reads the whole tag and detects matching and conflicting duplicates (0.804792ms)\n\u2714 both metadata writers remove separated duplicates and remain stable in either order (0.30175ms)\n\u2714 all published cards carry one value per metadata field matching the existing pins (4.481917ms)\n\u2714 historical warnings cannot become standards-body identifiers (0.848833ms)\n\u2714 SIKE status is retained separately; CSIDH is not marked broken (0.090333ms)\n\u2714 deployment report: current (649.657666ms)\n\u2714 deployment report: api-error (414.411834ms)\n\u2714 deployment report: pages-unread (394.022ms)\n\u2714 deployment report: pending (492.576167ms)\n\u2714 deployment report: no-main (255.776458ms)\n\u2714 deployment report: unnamed (45.813667ms)\n\u2714 deployment report: diff-unread (500.729583ms)\n\u2139 tests 12\n\u2139 suites 0\n\u2139 pass 12\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 2805.729708\n"
+  }
+]

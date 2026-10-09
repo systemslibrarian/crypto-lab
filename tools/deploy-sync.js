@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /*
- * deploy-sync.js — assert that what is on each lab's main is what the live site serves.
+ * deploy-sync.js — verify deployment runs and Pages configuration at fetched main.
  *
  * Run: node tools/deploy-sync.js check
  * Prevents: a lab serving a build older than its own main, with nothing anywhere going red
  * Reads: sibling clones' .github/workflows/*.yml, origin/main after a git fetch in each clone, and gh run list --repo systemslibrarian/<lab>
  *
- * Every other checker here compares files to files. This one compares main to
- * reality, because that is where this fleet actually drifts, and it drifts
+ * This checker compares main to observed publication records. Live HTML and
+ * asset bytes require a separate check. Deployment records can drift
  * silently: on 2026-08-20 nine labs were serving a build older than their main
  * and nothing anywhere was red.
  *
@@ -29,8 +29,9 @@
  * None of those turn a run red. Four of the five were found only by asking this
  * question directly, which is why it is now a check rather than a habit.
  *
- * What it asserts, per lab: the current origin/main sha has a COMPLETED,
- * SUCCESSFUL run of a deploying workflow. A run that was cancelled, or that
+ * What it asserts, per lab: the fetched origin/main sha has a completed run,
+ * readable successful publisher jobs/steps and compatible Pages configuration.
+ * A run that was cancelled, or that
  * succeeded while skipping its deploy job, does not count — those are exactly
  * the shapes that hid the bugs above.
  *
@@ -43,8 +44,8 @@
  * it after any cross-repo pass, and after anything that changes a workflow.
  *
  * Usage (from the crypto-lab repo root):
- *   node tools/deploy-sync.js          Report; exit 0 always.
- *   node tools/deploy-sync.js check    Same report; exit 1 on any lab that is stale.
+ *   node tools/deploy-sync.js          Report; exit 1 for unavailable or pending verification.
+ *   node tools/deploy-sync.js check    Same report; exit 1 on stale, pending or unreadable evidence.
  *   node tools/deploy-sync.js selftest Offline: the stale-cause classifier against fixtures.
  */
 'use strict';
@@ -84,7 +85,7 @@ function sh(cmd, args, cwd) {
  *
  * And the skipped repos are NAMED. A count of what a checker recognised, with no
  * list of what it did not, is how both of these hid for three months. */
-const { PAGES_PUBLISHERS } = require('./gate-sync.js');
+const { PAGES_PUBLISHERS, parseYaml } = require('./gate-sync.js');
 
 const USES_RE = /^\s*-?\s*uses:\s*([A-Za-z0-9._-]+\/[A-Za-z0-9._-]+)/gm;
 
@@ -95,31 +96,69 @@ function usesIn(text) {
   return out;
 }
 
-function deployingLabs() {
-  const out = [];
-  const skipped = [];
-  for (const repo of fs.readdirSync(FLEET_ROOT).sort()) {
-    if (!/^crypto-(lab|compare|counsel)/.test(repo)) continue;
+async function deployingLabs() {
+  const repos = fs.readdirSync(FLEET_ROOT).sort().filter((repo) => {
+    if (!/^crypto-(lab|compare|counsel)/.test(repo)) return false;
+    try { return fs.statSync(path.join(FLEET_ROOT, repo, '.git')).isDirectory(); }
+    catch { return false; }
+  });
+  const rows = await pooled(repos, async (repo) => {
     const dir = path.join(FLEET_ROOT, repo);
-    /* A linked git worktree is a second working copy of a repository already in
-       this list -- see tools/sibling-labs.js. */
-    try { if (fs.statSync(path.join(dir, '.git')).isFile()) continue; } catch { /* a clone */ }
-    const wfDir = path.join(dir, '.github', 'workflows');
-    let files;
-    try { files = fs.readdirSync(wfDir); } catch { continue; }
-    let found = null;
-    const publishers = new Set();
-    for (const f of files.filter((x) => /\.ya?ml$/.test(x))) {
-      const text = fs.readFileSync(path.join(wfDir, f), 'utf8');
-      for (const u of usesIn(text)) {
-        if (PAGES_PUBLISHERS.has(u)) { publishers.add(u); if (!found) found = f; }
-      }
+    if (await sh('git', ['fetch', '-q', 'origin'], dir) === null) return { repo, verdict: 'API-ERROR', detail: 'git fetch failed; tracking ref is not current evidence' };
+    const head = await sh('git', ['rev-parse', 'origin/main'], dir);
+    if (!head) return { repo, verdict: 'NO-MAIN' };
+    const tree = await sh('git', ['ls-tree', '-r', '--name-only', head, '.github/workflows'], dir);
+    if (tree === null) return { repo, verdict: 'API-ERROR', detail: 'workflow tree unreadable' };
+    for (const file of tree.split('\n').filter((f) => /\.ya?ml$/.test(f))) {
+      const text = await sh('git', ['show', `${head}:${file}`], dir);
+      if (text === null) return { repo, verdict: 'API-ERROR', detail: 'committed workflow unreadable' };
+      const publishers = [...usesIn(text)].filter((u) => PAGES_PUBLISHERS.has(u));
+      if (!publishers.length) continue;
+      let wf;
+      try { wf = parseYaml(text); } catch { return { repo, verdict: 'API-ERROR', detail: 'workflow cannot be parsed' }; }
+      return { repo, workflow: file, head, wf, publishers };
     }
-    if (found) out.push({ repo, workflow: found, publishers: [...publishers] });
-    else skipped.push(repo);
-  }
-  out.skipped = skipped;
+    return { repo, skipped: true };
+  }, 8);
+  const out = rows.filter((r) => !r.skipped);
+  out.skipped = rows.filter((r) => r.skipped).map((r) => r.repo);
   return out;
+}
+
+// A run summary is not proof that its publish action executed. Match the
+// committed job and action-step names to the job API, and fail closed on
+// missing, ambiguous, skipped or inconsistent evidence.
+function verifyPublishJobs(wf, jobs) {
+  if (!Array.isArray(jobs) || !jobs.length) return false;
+  if (jobs.some((j) => !['success', 'skipped'].includes(j.conclusion))) return false;
+  if (jobs.some((j) => j.conclusion === 'success' && (!Array.isArray(j.steps) || !j.steps.length || j.steps.some((st) => !['success', 'skipped'].includes(st.conclusion))))) return false;
+  let publishers = 0;
+  for (const [id, job] of Object.entries(wf.jobs || {})) {
+    const expected = (job.steps || []).filter((st) => st.uses && PAGES_PUBLISHERS.has(String(st.uses).split('@')[0].toLowerCase()));
+    if (!expected.length) continue;
+    publishers++;
+    const name = job.name || id;
+    if (/\$\{\{/.test(name)) return false;
+    const matched = jobs.filter((j) => j.name === name);
+    if (matched.length !== 1 || matched[0].conclusion !== 'success') return false;
+    const steps = matched[0].steps;
+    // A skipped artifact download or verification stage in the publishing job
+    // is incomplete publication evidence, even if its action reports success.
+    if (!Array.isArray(steps) || !steps.length || steps.some((st) => st.conclusion !== 'success')) return false;
+    const needs = typeof job.needs === 'string' ? [job.needs] : job.needs || [];
+    for (const dependency of needs) {
+      const configured = wf.jobs[dependency];
+      if (!configured) return false;
+      const matches = jobs.filter((j) => j.name === (configured.name || dependency));
+      if (matches.length !== 1 || matches[0].conclusion !== 'success') return false;
+    }
+    for (const st of expected) {
+      const name = st.name || `Run ${st.uses}`;
+      const found = steps.filter((x) => x.name === name);
+      if (found.length !== 1 || found[0].conclusion !== 'success') return false;
+    }
+  }
+  return publishers > 0;
 }
 
 /* Does this lab's publish actually reach the site?
@@ -215,33 +254,25 @@ function failingStep(jobs) {
   return null;
 }
 
-async function inspect({ repo, workflow, publishers = [] }) {
+async function inspect({ repo, workflow, publishers = [], head, wf, verdict, detail }) {
+  if (verdict) return { repo, verdict, detail };
   const dir = path.join(FLEET_ROOT, repo);
-  // `name:` at the top of the deploying workflow is what shows up as run.name.
-  let deployName = null;
-  try {
-    const wf = fs.readFileSync(path.join(dir, '.github', 'workflows', workflow), 'utf8');
-    const m = /^name:\s*(.+)$/m.exec(wf);
-    deployName = m ? m[1].trim().replace(/^['"]|['"]$/g, '') : null;
-  } catch { /* fall through */ }
-  if (!deployName) return { repo, verdict: 'NO-WORKFLOW-NAME' };
-  await sh('git', ['fetch', '-q', 'origin'], dir);
-  const head = await sh('git', ['rev-parse', 'origin/main'], dir);
-  if (!head) return { repo, verdict: 'NO-MAIN' };
-
+  const deployName = wf.name;
+  if (!deployName || typeof deployName !== 'string') return { repo, verdict: 'NO-WORKFLOW-NAME' };
   /* Asked of Pages itself, because every other signal here is about the RUN and
      the run can succeed into nothing. A null answer is UNREAD, never a verdict. */
   const pagesRaw = await sh('gh', ['api', `repos/systemslibrarian/${repo}/pages`,
     '--jq', '.build_type'], dir);
   const buildType = pagesRaw ? pagesRaw.trim() : null;
+  if (!['workflow', 'legacy'].includes(buildType)) return { repo, verdict: 'API-ERROR' };
   const unserved = judgePublishPath(buildType, publishers);
-  if (unserved) {
+  if (unserved && !unserved.note) {
     return { repo, verdict: 'UNSERVED', head, buildType, publishers,
       cause: unserved.cause, detail: unserved.detail };
   }
 
   const raw = await sh('gh', ['run', 'list', '--repo', `systemslibrarian/${repo}`, '--limit', '60',
-    '--json', 'databaseId,headSha,event,status,conclusion,name'], dir);
+    '--json', 'databaseId,headSha,event,status,conclusion,name,updatedAt'], dir);
   if (!raw) return { repo, verdict: 'API-ERROR' };
 
   let runs;
@@ -251,27 +282,48 @@ async function inspect({ repo, workflow, publishers = [] }) {
   // Match on the workflow NAME the deploying file declares, not on a guess like
   // /deploy|pages/. ablation-wire deploys from a workflow called "ci", so the
   // guess reported it as never-deployed while its runs were green all along.
-  const real = runs.filter((r) => r.event !== 'dynamic' && r.name === deployName);
+  if (!Array.isArray(runs)) return { repo, verdict: 'API-ERROR' };
+  const real = runs.filter((r) => r.event !== 'dynamic' && r.name === deployName && r.event !== 'pull_request');
+  if (real.every((r) => r.updatedAt)) real.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   const shipped = real.filter((r) => r.status === 'completed' && r.conclusion === 'success');
 
-  if (shipped.some((r) => r.headSha === head)) return { repo, verdict: 'CURRENT', head };
-
   const atHead = real.filter((r) => r.headSha === head);
-  if (atHead.some((r) => r.status !== 'completed')) return { repo, verdict: 'PENDING', head };
+  const latest = atHead[0];
+  if (latest && latest.status !== 'completed') return { repo, verdict: 'PENDING', head };
+  if (latest && ['failure', 'timed_out', 'action_required'].includes(latest.conclusion)) return { repo, verdict: 'CHECK-FAILED', head, detail: `newest run ${latest.databaseId} concluded ${latest.conclusion}` };
 
-  if (!shipped.length) {
-    return { repo, verdict: 'NEVER-DEPLOYED', head, ...classifyStaleCause(real, head),
-      detail: atHead.length ? `newest run at head concluded ${atHead[0].conclusion}` : 'no successful deploy on record' };
+  async function published(run) {
+    const raw = await sh('gh', ['run', 'view', String(run.databaseId), '--repo', `systemslibrarian/${repo}`, '--json', 'jobs'], dir);
+    let jobs;
+    try { jobs = JSON.parse(raw).jobs; } catch { return false; }
+    if (!verifyPublishJobs(wf, jobs)) return false;
+    if (buildType === 'legacy') {
+      const built = await sh('gh', ['api', `repos/systemslibrarian/${repo}/pages/builds/latest`], dir);
+      let value;
+      try { value = JSON.parse(built); } catch { return false; }
+      if (value.status !== 'built' || value.commit !== run.headSha) return false;
+    }
+    return true;
   }
+  const current = shipped.find((r) => r.headSha === head);
+  if (current) return { repo, verdict: await published(current) ? 'CURRENT' : 'API-ERROR', head,
+    detail: 'Publish-job evidence is separate from a live-byte verification' };
+  if (!shipped.length) return { repo, verdict: 'NEVER-DEPLOYED', head, ...classifyStaleCause(real, head) };
 
-  // An older green deploy still counts if nothing outside .github/ changed since.
-  const last = shipped[0].headSha;
-  const changed = (await sh('git', ['diff', '--name-only', last, head], dir) || '')
-    .split('\n').filter((f) => f && !f.startsWith('.github/'));
-  if (!changed.length) return { repo, verdict: 'CURRENT', head, detail: 'only .github/ changed since the last deploy' };
+  const previous = shipped[0];
+  const diff = await sh('git', ['diff', '--name-only', previous.headSha, head], dir);
+  if (diff === null) return { repo, verdict: 'API-ERROR', head };
+  const changed = diff.split('\n').filter((f) => f && !f.startsWith('.github/'));
+  if (!changed.length) {
+    // Empty tree diff across unrelated commits is not source ancestry.
+    if (await sh('git', ['merge-base', '--is-ancestor', previous.headSha, head], dir) === null) return { repo, verdict: 'API-ERROR', head };
+    return { repo, verdict: await published(previous) ? 'CURRENT' : 'API-ERROR', head,
+      detail: 'Only .github/ changed after an ancestor with a verified publish job; live bytes not checked' };
+  }
+  const last = previous.headSha;
 
   return { repo, verdict: 'STALE', head, ...classifyStaleCause(real, head),
-    detail: `live site built at ${last.slice(0, 7)}; since then ${changed.slice(0, 3).join(', ')}${changed.length > 3 ? ` (+${changed.length - 3} more)` : ''}` };
+    detail: `last successful run at ${last.slice(0, 7)}; since then ${changed.slice(0, 3).join(', ')}${changed.length > 3 ? ` (+${changed.length - 3} more)` : ''}; live bytes not checked` };
 }
 
 // ~180 labs, each needing a fetch and an API call. Serial takes minutes, which
@@ -346,7 +398,7 @@ async function main() {
     const unread = fleetUnreadLine(siblingLabsForFloor(FLEET_ROOT));
     if (unread) { console.log(unread); return 1; }
   }
-  const labs = deployingLabs();
+  const labs = await deployingLabs();
   const rows = await pooled(labs, inspect, 12);
 
   const by = (v) => rows.filter((r) => r.verdict === v);
@@ -355,7 +407,7 @@ async function main() {
   const notes = unservedAll.filter((r) => r.cause === 'ARTIFACT-UNUSED');
   const stale = [...by('STALE'), ...by('NEVER-DEPLOYED')];
   const pending = by('PENDING');
-  const broken = [...by('API-ERROR'), ...by('NO-MAIN')];
+  const broken = [...by('API-ERROR'), ...by('NO-MAIN'), ...by('NO-WORKFLOW-NAME'), ...by('CHECK-FAILED')];
 
   console.log(`Deploying labs checked: ${rows.length} ` +
     `(${by('CURRENT').length} current, ${stale.length} stale, ${pending.length} pending`
@@ -400,8 +452,8 @@ async function main() {
     for (const r of broken) console.log(`  ${r.repo}  ${r.verdict}`);
   }
   if (!stale.length) {
-    if (unserved.length) return 1;
-    console.log('\nEvery lab\'s live site is built from the sha on its main.');
+    if (!rows.length || unserved.length || broken.length || pending.length) return 1;
+    console.log('\nAll inspected deployment runs have verified publish jobs and Pages configuration. Live bytes require separate verification.');
     return 0;
   }
 
@@ -450,7 +502,8 @@ async function main() {
     console.log('NO-DEPLOY-JOB: the run went green while its deploy job was skipped — an `if:` gate');
     console.log('        that excludes the event that triggered it. _MASTER-TEMPLATE.md §6.2.');
   }
-  return check ? 1 : 0;
+  return 1;
 }
 
-main().then((code) => process.exit(code));
+module.exports = { verifyPublishJobs };
+if (require.main === module) main().then((code) => process.exit(code)).catch((e) => { console.error('Deployment verification incomplete:', e.message); process.exitCode = 1; });

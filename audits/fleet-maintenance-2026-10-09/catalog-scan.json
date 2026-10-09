@@ -1,0 +1,7 @@
+{
+  "command": "node tools/catalog-evidence.js verify",
+  "cwd": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-sandbox/crypto-lab",
+  "exit": 0,
+  "scope": "All 227 hub entries scanned from committed local source. Twenty-one stale original clones replaced in the scan with separately fetched remote-default worktrees; original work preserved. This scan does not assert source readability or completeness beyond the writer classifications.",
+  "output": "Read from committed HEAD, working tree dirty (1): elgamal-plain (1)\nAnchors checked: 1598.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+}

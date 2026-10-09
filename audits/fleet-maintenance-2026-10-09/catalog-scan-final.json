@@ -1,0 +1,16 @@
+[
+  {
+    "command": "node tools/catalog-evidence.js verify",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 22.36,
+    "output": "Read from committed HEAD, working tree dirty (1): elgamal-plain (1)\nAnchors checked: 1601.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify --lab crypto-lab-rsa-small-roots",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.43,
+    "output": "Anchors checked: 3.\n\nEvery anchor still resolves and every pinned source review matches its lab clone.\n"
+  }
+]

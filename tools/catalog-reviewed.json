@@ -27,7 +27,7 @@
     "note": "secp256k1 is added by review because the scanner now reads `import { schnorr } from '@noble/curves/secp256k1.js'` as a module path rather than an implementation, which is right in general and wrong here: src/crypto/secp.ts wraps that import into the lab's own point and scalar layer (N, G, mulG, mul, liftX, invModN) and src/crypto/adaptor.ts computes the adaptor construction on it directly. The anchor is the defining point addition, R + T, not the import. Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
   },
   "crypto-lab-biham-lens": {
-    "commit": "eea1f7a1568079783d617050ca25bde7e1229cc7",
+    "commit": "a106bf8a64ece57b6944e2dfece9b7ed785e4861",
     "reviewed": "2026-10-09",
     "add": [
       "Toy SPN@src/crypto/spn.ts:95"

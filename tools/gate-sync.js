@@ -1203,6 +1203,6 @@ function main() {
  * copy of a set is how two checkers come to disagree about the fleet.
  *
  * Guarded, because requiring this file must not run the whole fleet check. */
-module.exports = { PAGES_PUBLISHERS, loadLab, analyse };
+module.exports = { PAGES_PUBLISHERS, loadLab, analyse, parseYaml };
 
 if (require.main === module) process.exit(main());

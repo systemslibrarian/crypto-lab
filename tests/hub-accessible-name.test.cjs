@@ -16,14 +16,16 @@ test('award link can be addressed by its visible words on desktop and mobile', a
         await page.goto(pathToFileURL(path.join(__dirname, '../index.html')).href);
         const link = page.locator('.award-banner');
         const visibleWords = (await link.innerText()).replace(/\s+/g, ' ').trim();
-        assert.equal(visibleWords, 'Gold Winner 2026 Cybersecurity Excellence Awards');
-        assert.equal(await page.getByRole('link', { name: visibleWords, exact: true }).count(), 1);
+        assert.equal(visibleWords.toLowerCase(), 'gold winner 2026 cybersecurity excellence awards');
+        // CSS text-transform changes case, not the words a user speaks.
+        const spokenWords = new RegExp('^' + visibleWords + '$', 'i');
+        assert.equal(await page.getByRole('link', { name: spokenWords }).count(), 1);
 
         // The previous reversed aria-label breaks speech-input matching even
         // though the link remains clickable and looks identical.
         await link.evaluate(element => element.setAttribute('aria-label',
           '2026 Cybersecurity Excellence Awards — Gold Winner'));
-        assert.equal(await page.getByRole('link', { name: visibleWords, exact: true }).count(), 0);
+        assert.equal(await page.getByRole('link', { name: spokenWords }).count(), 0);
       } finally {
         await page.close();
       }

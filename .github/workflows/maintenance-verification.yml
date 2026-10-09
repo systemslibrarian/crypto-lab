@@ -103,6 +103,7 @@ jobs:
         run: |
           mkdir -p maintenance-evidence
           node tools/teach-issues.js --json | tee maintenance-evidence/teach-issues.json
+          node -e "JSON.parse(require('fs').readFileSync('maintenance-evidence/teach-issues.json', 'utf8'))"
       - name: Observe AES Modes page-load contacts in Chromium
         id: observe
         continue-on-error: true

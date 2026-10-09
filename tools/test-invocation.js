@@ -247,11 +247,12 @@ function classify(lab) {
 }
 
 function labs() {
-  if (!fs.existsSync(SCRATCH)) {
-    console.error('No .scratch/ exports. Run: node tools/depth-audit.js export');
+  try {
+    return [...require('./depth-exports.js').readExports(SCRATCH).keys()].sort();
+  } catch (err) {
+    console.error(err.message);
     process.exit(2);
   }
-  return fs.readdirSync(SCRATCH).filter((d) => fs.statSync(path.join(SCRATCH, d)).isDirectory()).sort();
 }
 
 /** Labs a teach module names, so the report can lead with them. */

@@ -41,6 +41,10 @@ if ! gh repo list "$OWNER" --limit 400 --json name,defaultBranchRef \
   echo 'UNREAD: repository discovery failed; prior exports were preserved.' >&2
   exit 1
 fi
+if [ ! -s "$listing" ]; then
+  echo 'UNREAD: repository discovery returned no labs; prior exports were preserved.' >&2
+  exit 1
+fi
 mkdir -p "$DEST"
 mv "$listing" "$DEST/.to-export.tsv"
 : > "$DEST/.exported.tsv"
@@ -49,7 +53,13 @@ mv "$listing" "$DEST/.to-export.tsv"
 one() {
   lab="$1"; branch="$2"
   tmp=$(mktemp -d)
-  if ! gh api "repos/$OWNER/$lab/tarball/$branch" > "$tmp/a.tgz" 2>"$tmp/err"; then
+  # Pin before downloading: the branch can move while the fleet is exported.
+  if ! sha=$(gh api "repos/$OWNER/$lab/commits/$branch" --jq .sha 2>"$tmp/err") \
+    || [[ ! "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+    printf '%s\t%s\t%s\n' "$lab" "$branch" "unreadable full commit SHA: $(head -c 200 "$tmp/err" | tr '\n' ' ')" >> "$DEST/.export-failed.tsv"
+    rm -rf "$tmp"; return
+  fi
+  if ! gh api "repos/$OWNER/$lab/tarball/$sha" > "$tmp/a.tgz" 2>"$tmp/err"; then
     printf '%s\t%s\t%s\n' "$lab" "$branch" "$(head -c 200 "$tmp/err" | tr '\n' ' ')" >> "$DEST/.export-failed.tsv"
     rm -rf "$tmp"; return
   fi
@@ -67,7 +77,7 @@ one() {
     printf '%s\t%s\t%s\n' "$lab" "$branch" "export copy failed" >> "$DEST/.export-failed.tsv"
     rm -rf "$tmp"; return
   fi
-  printf '%s\t%s\t%s\n' "$lab" "$branch" "${top##*-}" >> "$DEST/.exported.tsv"
+  printf '%s\t%s\t%s\n' "$lab" "$branch" "$sha" >> "$DEST/.exported.tsv"
   rm -rf "$tmp"
 }
 

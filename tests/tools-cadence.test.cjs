@@ -46,3 +46,29 @@ jobs:
     assert.deepEqual([...result.selftests.get('outer.js')], ['every PR and push']);
   } finally { fs.rmSync(root, {recursive: true, force: true}); }
 });
+
+test('path-filtered PR verification does not advertise push coverage', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tool-cadence-'));
+  try {
+    const workflows = path.join(root, 'workflows'), tools = path.join(root, 'tools');
+    fs.mkdirSync(workflows); fs.mkdirSync(tools);
+    fs.writeFileSync(path.join(tools, 'probe.js'), 'module.exports = {};\n');
+    fs.writeFileSync(path.join(workflows, 'verify.yml'), `name: verify
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'tools/probe.js'
+permissions:
+  contents: read
+jobs:
+  check:
+    steps:
+      - name: Conditional step is not the job gate
+        if: github.event_name == 'pull_request'
+        run: node tools/probe.js check
+`);
+    const result = cadence({workflows, tools});
+    assert.deepEqual([...result.get('probe.js')], ['selected PRs', 'on demand']);
+  } finally { fs.rmSync(root, {recursive: true, force: true}); }
+});

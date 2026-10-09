@@ -636,23 +636,16 @@ function classify(lab, files) {
 }
 
 function labs() {
-  if (!fs.existsSync(SCRATCH)) {
-    console.error('No .scratch/ exports. Run: node tools/depth-audit.js export');
+  try {
+    return [...require('./depth-exports.js').readExports(SCRATCH).keys()].sort();
+  } catch (err) {
+    console.error(err.message);
     process.exit(2);
   }
-  return fs.readdirSync(SCRATCH).filter((d) => fs.statSync(path.join(SCRATCH, d)).isDirectory()).sort();
 }
 
 function shas() {
-  const map = new Map();
-  const f = path.join(SCRATCH, '.exported.tsv');
-  if (fs.existsSync(f)) {
-    for (const line of fs.readFileSync(f, 'utf8').split('\n').filter(Boolean)) {
-      const [lab, branch, sha] = line.split('\t');
-      map.set(lab, { branch, sha });
-    }
-  }
-  return map;
+  return require('./depth-exports.js').readExports(SCRATCH);
 }
 
 module.exports = { classify, walk, labs, shas, WEIGHTS };

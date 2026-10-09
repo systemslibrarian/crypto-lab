@@ -119,7 +119,12 @@ function cadence({workflows = WORKFLOWS, tools = TOOLS} = {}) {
     const text = fs.readFileSync(path.join(workflows, wf), 'utf8');
     const on = /^on:([\s\S]*?)^\w/m.exec(text);
     const trig = on ? on[1] : '';
-    const hasPR = /^\s*(pull_request|push):/m.test(trig);
+    const event = name => {
+      const m = new RegExp(`^ {2}${name}:([^]*?)(?=^ {2}\\w+:|(?![^]))`, 'm').exec(trig);
+      return m ? { present: true, filtered: /^ {4}(paths|paths-ignore):/m.test(m[1]) } : { present: false };
+    };
+    const pr = event('pull_request'), push = event('push');
+    const hasDispatch = /^ {2}workflow_dispatch:/m.test(trig);
     /* A cron is not automatically "daily". `41 7 * * 1` runs on Mondays, and calling
        that daily in the table would be the same class of error as the per-workflow
        cadence bug: a number read from the right place and reported as the wrong fact. */
@@ -143,13 +148,20 @@ function cadence({workflows = WORKFLOWS, tools = TOOLS} = {}) {
       const from = starts[k].index;
       const to = k + 1 < starts.length ? starts[k + 1].index : body.length;
       const job = body.slice(from, to);
-      const cond = /^\s*if:\s*(.+)$/m.exec(job);
+      const cond = /^ {4}if:\s*(.+)$/m.exec(job);
       const gate = cond ? cond[1] : '';
       const words = new Set();
       const gatedToSchedule = /schedule|workflow_dispatch/.test(gate) && !/pull_request|push/.test(gate);
       const gatedToPR = /pull_request|push/.test(gate) && !/schedule/.test(gate);
-      if (hasPR && !gatedToSchedule) words.add('every PR and push');
+      if (!gatedToSchedule) {
+        if (pr.present && push.present && !pr.filtered && !push.filtered) words.add('every PR and push');
+        else {
+          if (pr.present) words.add(pr.filtered ? 'selected PRs' : 'every PR');
+          if (push.present) words.add(push.filtered ? 'selected pushes' : 'every push');
+        }
+      }
       if (hasCron && !gatedToPR) cronWords.forEach((w) => words.add(w));
+      if (hasDispatch && !gatedToPR) words.add('on demand');
       /* Comments do not run. This workflow carries a block explaining what
          protection-census would need to be scheduled, quoting the step that would run
          it — and counting that as an invocation put the tool back in the table as

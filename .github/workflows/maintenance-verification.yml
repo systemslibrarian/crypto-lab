@@ -70,6 +70,7 @@ jobs:
           DEPTH: ${{ steps.depth.outcome }}
           INVOCATION: ${{ steps.invocation.outcome }}
         run: |
+          cat .scratch/.export-failed.tsv 2>/dev/null || true
           printf 'export=%s depth=%s invocation=%s\n' "$EXPORT" "$DEPTH" "$INVOCATION"
           [ "$EXPORT" = success ] && [ "$DEPTH" = success ] && [ "$INVOCATION" = success ]
 
@@ -101,13 +102,13 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p maintenance-evidence
-          node tools/teach-issues.js --json > maintenance-evidence/teach-issues.json
+          node tools/teach-issues.js --json | tee maintenance-evidence/teach-issues.json
       - name: Observe AES Modes page-load contacts in Chromium
         id: observe
         continue-on-error: true
         run: |
           mkdir -p maintenance-evidence
-          node tools/teach-observe.js https://systemslibrarian.github.io/crypto-lab-aes-modes/ chromium > maintenance-evidence/teach-observe.json
+          node tools/teach-observe.js https://systemslibrarian.github.io/crypto-lab-aes-modes/ chromium | tee maintenance-evidence/teach-observe.json
       - name: Save live teaching evidence
         if: always()
         uses: actions/upload-artifact@v7

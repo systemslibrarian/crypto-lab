@@ -65,6 +65,9 @@ jobs:
       - name: Tool cadence preserves fixture-only scope
         if: ${{ !cancelled() }}
         run: node --test tests/tools-cadence.test.cjs
+      - name: Depth export rejects unreadable discovery and archives
+        if: ${{ !cancelled() }}
+        run: node --test tests/depth-export.test.cjs
 
   check:
     runs-on: ubuntu-latest

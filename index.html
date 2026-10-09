@@ -2316,7 +2316,7 @@
         <div class="no-results" id="no-results" hidden></div>
         <div class="feature-grid">
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" data-level="advanced" data-added="2026-03" data-updated="2026-08"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" data-level="advanced" data-added="2026-03" data-updated="2026-10"
             data-implements="AES@web-demo/src/crypto/aes.ts:9 | AES-GCM@web-demo/src/crypto/aes.ts:10 | HAETAE@wasm/src/haetae_exports.c:2 | HKDF@crates/qv-core/src/encrypt.rs:20 | PBKDF2@web-demo/src/crypto/keywrap.ts:40 | SHA-256@web-demo/src/crypto/keywrap.ts:40 | Shamir secret sharing@web-demo/src/crypto/pipeline.ts:16 | SMAUG-T@wasm/src/smaug_exports.c:2"
             data-unscanned="WebAssembly:3"
             data-comment-only="SMAUG-T@web-demo/src/crypto/keywrap.ts:22"
@@ -4772,7 +4772,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-ratchet-wire/" data-level="intermediate" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-ratchet-wire/" data-level="intermediate" data-added="2026-04" data-updated="2026-10"
             data-implements="AES@ratchet-wire/src/crypto/double-ratchet.ts:257 | AES-GCM@ratchet-wire/src/crypto/double-ratchet.ts:248 | Diffie-Hellman@ratchet-wire/src/crypto/dh-ratchet.ts:70 | Double Ratchet@ratchet-wire/src/main.ts:8 | Ed25519@ratchet-wire/src/crypto/ed25519.ts:24 | HKDF@ratchet-wire/src/crypto/hkdf.ts:32 | SHA-256@ratchet-wire/src/crypto/hkdf.ts:53 | X25519@ratchet-wire/src/crypto/dh-ratchet.ts:20 | X3DH@ratchet-wire/src/crypto/session-init.ts:131"
             data-references="ECDH | EdDSA | MLS | Noise protocol | X448"
             data-attacks="Man-in-the-middle@ratchet-wire/src/crypto/session-init.ts:138 | Nonce reuse@README.md:24 | Side-channel (unspecified)@ratchet-wire/README.md:10"
@@ -4955,7 +4955,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-serpent/" data-level="intermediate" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-serpent/" data-level="intermediate" data-added="2026-04" data-updated="2026-10"
             data-implements="AES@demos/iron-serpent/src/benchmark.ts:86 | AES-GCM@demos/iron-serpent/src/benchmark.ts:82 | Argon2@demos/iron-serpent/src/kdf.ts:48 | HKDF@demos/iron-serpent/src/mac.ts:17 | HMAC@demos/iron-serpent/src/mac.ts:42 | Serpent@demos/iron-serpent/src/serpent-ctr.ts:13 | SHA-256@demos/iron-serpent/src/mac.ts:25"
             data-unscanned="WebAssembly:1"
             data-references="Camellia | ChaCha20 | ChaCha20-Poly1305 | DES | Kuznyechik | PBKDF2 | Poly1305 | RSA | Shamir secret sharing | Twofish | scrypt"
@@ -20501,8 +20501,8 @@
             data-unscanned="WebAssembly:1 | C/C++:1"
             data-references="AES | SHA-256"
             data-implementation="WASM"
-            data-review-commit="5f3fee3618f2d218b2213063a74fdcfa0d903686"
-            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary."
+            data-review-commit="dbbdf566f62d16a7f8cf228b96339af319426772"
+            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped."
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Constraint-Based Cryptanalysis</div>
             <div class="project-title">SAT Break</div>

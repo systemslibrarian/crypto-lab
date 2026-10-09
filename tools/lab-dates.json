@@ -20,10 +20,10 @@
  "labs": {
   "crypto-lab-quantum-vault-kpqc": {
    "added": "2026-03",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-03-14T01:06:39Z",
-   "updatedFrom": "2026-08-19T00:52:28-04:00",
-   "updatedCommit": "0426ccf1c30a1b9fd9e980bf3bcb13087349b8ed"
+   "updatedFrom": "2026-10-08T21:48:22Z",
+   "updatedCommit": "1c1d529613cacd31b6cada53f8454fed6e28d87e"
   },
   "crypto-lab-phantom-vault": {
    "added": "2026-04",
@@ -223,10 +223,10 @@
   },
   "crypto-lab-ratchet-wire": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-06T15:43:30Z",
-   "updatedFrom": "2026-08-15T21:19:52-04:00",
-   "updatedCommit": "4d94ace413f06eb14be64d24a4a80592f8b67f9a"
+   "updatedFrom": "2026-10-07T16:49:23Z",
+   "updatedCommit": "7f7dbd3a3d2ef2ccaf78d3090351d9215820c2b1"
   },
   "crypto-lab-kyber-vault": {
    "added": "2026-04",
@@ -237,10 +237,10 @@
   },
   "crypto-lab-iron-serpent": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-06T02:05:22Z",
-   "updatedFrom": "2026-08-15T21:19:50-04:00",
-   "updatedCommit": "ec12e2c9e466a8a18f28a0042b290b837d145116"
+   "updatedFrom": "2026-10-07T17:06:57Z",
+   "updatedCommit": "19194ac7948a743ee67c676250bf9ebdd03a9021"
   },
   "crypto-lab-world-ciphers": {
    "added": "2026-04",
@@ -1520,8 +1520,8 @@
    "added": "2026-10",
    "updated": "2026-10",
    "addedFrom": "2026-10-06T11:20:52Z",
-   "updatedFrom": "2026-10-09T01:36:16-04:00",
-   "updatedCommit": "5f3fee3618f2d218b2213063a74fdcfa0d903686"
+   "updatedFrom": "2026-10-09T01:42:18-04:00",
+   "updatedCommit": "dbbdf566f62d16a7f8cf228b96339af319426772"
   },
   "crypto-lab-sm9-forge": {
    "added": "2026-09",

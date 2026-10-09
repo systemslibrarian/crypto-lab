@@ -21,6 +21,14 @@ report. The workflow retains these diagnostic artifacts even when the full scan
 cannot run; its overall result remains failed/incomplete. Never describe a partial
 report or its readable subset as a complete fleet scan.
 
+Partial diagnostics run at most four isolated classifier workers at once. Each
+repository gets a 20-second classification budget and a 256 MiB old-generation
+heap limit. Progress goes to stderr, leaving JSON intact. A timeout, worker error
+or exit without a result is recorded under `scan.unreadable` with the repository
+and source SHA. Export completeness (`scope`) and classification completeness
+(`scan`) are separate: either gap produces exit 2. A timed-out classifier is not
+evidence that the lab's cryptography failed.
+
 The teaching job installs Chromium, Firefox and WebKit plus their host libraries.
 It runs worksheet drift, the published issue-note check, and a scoped AES Modes
 page-load observation. Missing browsers remain unreadable. Manual teaching claims

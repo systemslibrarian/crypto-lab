@@ -272,19 +272,17 @@ function moduleLabs() {
   return found;
 }
 
-function main() {
+async function main() {
   if (process.argv.includes('--partial-json')) {
     try {
       const { exported, scope } = require('./depth-exports.js').readExportSnapshot(SCRATCH);
-      const rows = [...exported].sort(([a], [b]) => a.localeCompare(b)).map(([lab, source]) => ({
-        ...classify(lab), sourceSha: source.sha,
-      }));
-      console.log(JSON.stringify({ scope, checked: rows.length,
+      const { rows, scan } = await require('./depth-bounded.js').classifyExports(exported, 'invocation');
+      console.log(JSON.stringify({ scope, scan, checked: rows.length,
         findings: rows.filter(r => r.determined && r.uninvoked.length),
         undetermined: rows.filter(r => !r.determined),
         sources: Object.fromEntries([...exported].map(([lab, s]) => [lab, s.sha])),
       }, null, 2));
-      process.exitCode = scope.complete ? 0 : 2;
+      process.exitCode = scope.complete && scan.complete ? 0 : 2;
     } catch (error) { console.error(error.message); process.exitCode = 2; }
     return;
   }
@@ -332,4 +330,5 @@ function main() {
   for (const r of undetermined) console.log(`  ${r.lab.replace('crypto-lab-', '').padEnd(26)} ${r.reasons.join('; ')}`);
 }
 
+module.exports = { classify };
 if (require.main === module) main();

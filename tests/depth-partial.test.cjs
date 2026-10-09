@@ -29,6 +29,9 @@ test('both diagnostic CLIs retain unreadable scope and never write assurance rep
     assert.equal(report.scope.exported, 1);
     assert.equal(report.scope.unreadable[0].lab, 'crypto-lab-empty');
     assert.equal(report.scope.unreadable[0].state, 'UNREAD');
+    assert.equal(report.scan.complete, true);
+    assert.equal(report.scan.attempted, 1);
+    assert.equal(report.scan.classified, 1);
     if (tool === 'depth-audit.js') {
       assert.equal(report.assurance, 'not-established');
       assert.equal(report.rows.length, 1);
@@ -43,4 +46,16 @@ test('both diagnostic CLIs retain unreadable scope and never write assurance rep
     assert.match(strict.stderr, /UNREAD/);
   }
   assert.equal(fs.existsSync(path.join(root, 'audits')), false);
+});
+
+test('a stuck worker becomes unreadable while another classifier can finish', async () => {
+  const { Worker } = require('node:worker_threads');
+  const { waitForClassification } = require('../tools/depth-bounded.js');
+  const stuck = new Worker('setInterval(() => {}, 1000)', { eval: true });
+  const healthy = new Worker('require("worker_threads").parentPort.postMessage({row:{lab:"healthy"}})', { eval: true });
+  const [failed, passed] = await Promise.all([
+    waitForClassification(stuck, 200), waitForClassification(healthy, 2000),
+  ]);
+  assert.match(failed.error, /timed out/);
+  assert.equal(passed.row.lab, 'healthy');
 });

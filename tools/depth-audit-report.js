@@ -428,18 +428,16 @@ function doExport() {
   execFileSync('bash', [script], { cwd: ROOT, stdio: 'inherit' });
 }
 
-function main() {
+async function main() {
   const mode = process.argv[2];
   if (mode === 'export') return doExport();
   if (process.argv.includes('--partial-json')) {
     // Diagnostic only: never write/update the complete assurance report.
     try {
       const { exported, scope } = require('./depth-exports.js').readExportSnapshot(SCRATCH);
-      const rows = [...exported].sort(([a], [b]) => a.localeCompare(b)).map(([lab, source]) => ({
-        ...classify(lab, walk(path.join(SCRATCH, lab))), sourceSha: source.sha,
-      }));
-      console.log(JSON.stringify({ scope, assurance: 'not-established', rows }, null, 2));
-      process.exitCode = scope.complete ? 0 : 2;
+      const { rows, scan } = await require('./depth-bounded.js').classifyExports(exported, 'depth');
+      console.log(JSON.stringify({ scope, scan, assurance: 'not-established', rows }, null, 2));
+      process.exitCode = scope.complete && scan.complete ? 0 : 2;
     } catch (error) { console.error(error.message); process.exitCode = 2; }
     return;
   }

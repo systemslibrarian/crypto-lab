@@ -82,6 +82,7 @@ jobs:
           for (const file of ['depth-partial', 'test-invocation-partial']) {
             const report = JSON.parse(fs.readFileSync(`maintenance-evidence/${file}.json`, 'utf8'));
             console.log(JSON.stringify({ report: file, scope: report.scope,
+              scan: report.scan,
               rows: report.rows?.length, checked: report.checked,
               selected: report.rows?.filter(row => selected.has(row.lab)),
               findings: report.findings, undetermined: report.undetermined,

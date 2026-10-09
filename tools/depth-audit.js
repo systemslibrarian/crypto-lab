@@ -73,6 +73,7 @@
  *   node tools/depth-audit.js          write the dated report under audits/
  *   node tools/depth-audit.js check    exit 1 if the report drifts from .scratch/
  *   node tools/depth-audit.js --json   machine-readable
+ *   node tools/depth-audit.js --partial-json   pinned readable-source diagnostics; incomplete scope exits 2
  */
 'use strict';
 const fs = require('fs');

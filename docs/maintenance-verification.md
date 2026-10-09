@@ -12,6 +12,15 @@ abbreviated-SHA or mismatched exports are unreadable; old folders outside the
 manifest do not contribute to the report. Refresh older exports before running
 these scanners.
 
+An incomplete export need not hide diagnostics from readable sources. The opt-in
+`--partial-json` mode on both scanners preserves the discovered denominator,
+named UNREAD rows and full per-repository SHAs in a scope envelope. It inspects only
+valid pinned exports, rejects malformed or contradictory manifests, and exits 2
+when scope is incomplete. It does not update the complete Markdown assurance
+report. The workflow retains these diagnostic artifacts even when the full scan
+cannot run; its overall result remains failed/incomplete. Never describe a partial
+report or its readable subset as a complete fleet scan.
+
 The teaching job installs Chromium, Firefox and WebKit plus their host libraries.
 It runs worksheet drift, the published issue-note check, and a scoped AES Modes
 page-load observation. Missing browsers remain unreadable. Manual teaching claims

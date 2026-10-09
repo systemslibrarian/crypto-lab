@@ -5,7 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 
-function readExports(root) {
+function readExportSnapshot(root) {
   const unread = why => { throw new Error(`UNREAD: ${why}. Run: node tools/depth-audit.js export`); };
   const lines = file => {
     const p = path.join(root, file);
@@ -19,17 +19,36 @@ function readExports(root) {
     wanted.set(lab, branch);
   }
   if (!wanted.size) unread('empty discovered fleet');
-  const failed = lines('.export-failed.tsv');
-  if (failed.length) unread(`${failed.length} failed exports (${failed.map(l => l.split('\t')[0]).join(', ')})`);
+  const failed = new Map();
+  for (const line of lines('.export-failed.tsv')) {
+    const [lab, branch, ...reason] = line.split('\t');
+    if (!wanted.has(lab) || wanted.get(lab) !== branch || !reason.join('\t') || failed.has(lab)) unread('invalid or duplicate failed-export row');
+    failed.set(lab, reason.join('\t'));
+  }
   const exported = new Map();
+  const absent = new Map();
   for (const line of lines('.exported.tsv')) {
     const [lab, branch, sha, extra] = line.split('\t');
-    if (!wanted.has(lab) || wanted.get(lab) !== branch || !/^[0-9a-f]{40}$/.test(sha || '') || extra !== undefined || exported.has(lab)) unread('invalid, unpinned or duplicate export row');
+    if (!wanted.has(lab) || wanted.get(lab) !== branch || !/^[0-9a-f]{40}$/.test(sha || '') || extra !== undefined || exported.has(lab) || absent.has(lab) || failed.has(lab)) unread('invalid, unpinned, contradictory or duplicate export row');
     const dir = path.join(root, lab);
-    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) unread(`missing exported source for ${lab}`);
+    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+      absent.set(lab, { sha, reason: 'recorded export source directory is absent' });
+      continue;
+    }
     exported.set(lab, { branch, sha });
   }
-  if (exported.size !== wanted.size) unread(`partial export: ${exported.size} of ${wanted.size} discovered labs`);
-  return exported;
+  const unreadable = [...wanted].filter(([lab]) => !exported.has(lab)).map(([lab, branch]) => ({
+    lab, branch, sourceSha: absent.get(lab)?.sha || null, state: 'UNREAD',
+    reason: failed.get(lab) || absent.get(lab)?.reason || 'no successful export or failure record',
+  }));
+  return { exported, scope: {
+    complete: unreadable.length === 0, discovered: wanted.size,
+    exported: exported.size, unreadable,
+  } };
 }
-module.exports = { readExports };
+function readExports(root) {
+  const snapshot = readExportSnapshot(root);
+  if (!snapshot.scope.complete) throw new Error(`UNREAD: partial export: ${snapshot.scope.exported} of ${snapshot.scope.discovered} discovered labs (${snapshot.scope.unreadable.map(r => r.lab).join(', ')}). Run: node tools/depth-audit.js export`);
+  return snapshot.exported;
+}
+module.exports = { readExports, readExportSnapshot };

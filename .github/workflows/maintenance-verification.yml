@@ -8,6 +8,7 @@ on:
       - '.github/workflows/maintenance-verification.yml'
       - 'tools/depth-*'
       - 'tools/test-invocation.js'
+      - 'tools/package*.json'
       - 'tests/depth-*'
 
 # Observation only: no issue writes, merges, Pages environments or deploy actions.
@@ -27,8 +28,10 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
+      - run: npm ci
+        working-directory: tools
       - name: Export regression and scope controls
-        run: node --test tests/depth-export.test.cjs tests/depth-manifest.test.cjs
+        run: node --test tests/depth-export.test.cjs tests/depth-manifest.test.cjs tests/depth-partial.test.cjs
       - name: Export complete remote default branches at full SHAs
         id: export
         continue-on-error: true
@@ -52,6 +55,39 @@ jobs:
         run: |
           mkdir -p maintenance-evidence
           node tools/test-invocation.js --json > maintenance-evidence/test-invocation.json
+      - name: Diagnose pinned readable sources with explicit scope gaps
+        id: partialdepth
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p maintenance-evidence
+          node tools/depth-audit.js --partial-json > maintenance-evidence/depth-partial.json
+      - name: Diagnose test invocation with explicit scope gaps
+        id: partialinvocation
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p maintenance-evidence
+          node tools/test-invocation.js --partial-json > maintenance-evidence/test-invocation-partial.json
+      - name: Validate and summarize diagnostic evidence
+        id: diagnostics
+        if: always()
+        continue-on-error: true
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const selected = new Set(['quantum-vault-kpqc', 'tc26-pair', 'snark-arena', 'silent-tally',
+            'ratchet-wire', 'iron-serpent', 'card-trick', 'context-ward', 'ghost-commit', 'point-ledger']
+            .map(name => `crypto-lab-${name}`));
+          for (const file of ['depth-partial', 'test-invocation-partial']) {
+            const report = JSON.parse(fs.readFileSync(`maintenance-evidence/${file}.json`, 'utf8'));
+            console.log(JSON.stringify({ report: file, scope: report.scope,
+              rows: report.rows?.length, checked: report.checked,
+              selected: report.rows?.filter(row => selected.has(row.lab)),
+              findings: report.findings, undetermined: report.undetermined,
+            }, null, 2));
+          }
+          NODE
       - name: Save source manifests and derived evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -69,10 +105,14 @@ jobs:
           EXPORT: ${{ steps.export.outcome }}
           DEPTH: ${{ steps.depth.outcome }}
           INVOCATION: ${{ steps.invocation.outcome }}
+          PARTIALDEPTH: ${{ steps.partialdepth.outcome }}
+          PARTIALINVOCATION: ${{ steps.partialinvocation.outcome }}
+          DIAGNOSTICS: ${{ steps.diagnostics.outcome }}
         run: |
           cat .scratch/.export-failed.tsv 2>/dev/null || true
           printf 'export=%s depth=%s invocation=%s\n' "$EXPORT" "$DEPTH" "$INVOCATION"
-          [ "$EXPORT" = success ] && [ "$DEPTH" = success ] && [ "$INVOCATION" = success ]
+          [ "$EXPORT" = success ] && [ "$DEPTH" = success ] && [ "$INVOCATION" = success ] &&
+            [ "$PARTIALDEPTH" = success ] && [ "$PARTIALINVOCATION" = success ] && [ "$DIAGNOSTICS" = success ]
 
   teaching:
     runs-on: ubuntu-latest

@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const os = require('node:os');
-const { readExports } = require('../tools/depth-exports.js');
+const { readExports, readExportSnapshot } = require('../tools/depth-exports.js');
 const sha = 'abcdef1000000000000000000000000000000000';
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'depth-manifest-'));
@@ -33,4 +33,36 @@ test('empty, partial, failed and unpinned snapshots cannot produce assurance', a
     fs.writeFileSync(path.join(root, file), value);
     assert.throws(() => readExports(root), /UNREAD/);
   });
+});
+
+test('partial diagnostics preserve denominator and named unreadable sources', t => {
+  const root = fixture(t);
+  fs.appendFileSync(path.join(root, '.to-export.tsv'), 'crypto-lab-empty\tmain\n');
+  fs.writeFileSync(path.join(root, '.export-failed.tsv'), 'crypto-lab-empty\tmain\tHTTP409 empty repository\n');
+  const result = readExportSnapshot(root);
+  assert.deepEqual([...result.exported.keys()], ['crypto-lab-live']);
+  assert.equal(result.scope.complete, false);
+  assert.equal(result.scope.discovered, 2);
+  assert.equal(result.scope.exported, 1);
+  assert.deepEqual(result.scope.unreadable, [{ lab: 'crypto-lab-empty', branch: 'main',
+    sourceSha: null, state: 'UNREAD', reason: 'HTTP409 empty repository' }]);
+  assert.throws(() => readExports(root), /partial export/);
+  // Contradictory, invalid or duplicate failed records must not authorize partial scoring.
+  fs.writeFileSync(path.join(root, '.export-failed.tsv'), 'crypto-lab-live\tmain\tfailed\n');
+  assert.throws(() => readExportSnapshot(root), /UNREAD/);
+  fs.writeFileSync(path.join(root, '.export-failed.tsv'), 'crypto-lab-unknown\tmain\tfailed\n');
+  assert.throws(() => readExportSnapshot(root), /UNREAD/);
+});
+
+test('missing source and unrecorded exports remain named gaps', t => {
+  const root = fixture(t);
+  fs.rmSync(path.join(root, 'crypto-lab-live'), { recursive: true });
+  let result = readExportSnapshot(root);
+  assert.equal(result.scope.exported, 0);
+  assert.equal(result.scope.unreadable[0].sourceSha, sha);
+  fs.writeFileSync(path.join(root, '.exported.tsv'), '');
+  result = readExportSnapshot(root);
+  assert.equal(result.scope.complete, false);
+  assert.match(result.scope.unreadable[0].reason, /no successful export/);
+  assert.throws(() => readExports(root), /UNREAD/);
 });

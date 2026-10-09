@@ -67,6 +67,7 @@
  * Usage (from the repo root):
  *   node tools/test-invocation.js            report
  *   node tools/test-invocation.js --json     machine-readable
+ *   node tools/test-invocation.js --partial-json   readable-source diagnostics with named gaps; incomplete scope exits 2
  *   node tools/test-invocation.js --issue    markdown for an issue body
  */
 'use strict';
@@ -272,6 +273,21 @@ function moduleLabs() {
 }
 
 function main() {
+  if (process.argv.includes('--partial-json')) {
+    try {
+      const { exported, scope } = require('./depth-exports.js').readExportSnapshot(SCRATCH);
+      const rows = [...exported].sort(([a], [b]) => a.localeCompare(b)).map(([lab, source]) => ({
+        ...classify(lab), sourceSha: source.sha,
+      }));
+      console.log(JSON.stringify({ scope, checked: rows.length,
+        findings: rows.filter(r => r.determined && r.uninvoked.length),
+        undetermined: rows.filter(r => !r.determined),
+        sources: Object.fromEntries([...exported].map(([lab, s]) => [lab, s.sha])),
+      }, null, 2));
+      process.exitCode = scope.complete ? 0 : 2;
+    } catch (error) { console.error(error.message); process.exitCode = 2; }
+    return;
+  }
   const rows = labs().map(classify);
   const mods = moduleLabs();
   const findings = rows.filter((r) => r.determined && r.uninvoked.length);
@@ -316,4 +332,4 @@ function main() {
   for (const r of undetermined) console.log(`  ${r.lab.replace('crypto-lab-', '').padEnd(26)} ${r.reasons.join('; ')}`);
 }
 
-main();
+if (require.main === module) main();

@@ -5724,7 +5724,7 @@
            
            
            
-            data-overlaps="crypto-lab-hash-zoo: DUPLICATION - both compare the same three hash functions (SHA-256 Merkle-Damgard, SHA3-256 sponge, BLAKE3 tree) and both compute every digest in-browser from the real primitives. The only separation the two READMEs support is that babel-hash sits in the crypto-compare portfolio, which is where a lab lives rather than what it teaches. Needs a decision on whether one absorbs the other, not a sentence."
+            data-overlaps="crypto-lab-hash-zoo: Both teach SHA-256/SHA3-256/BLAKE3, avalanche and real length-extension, so substantial overlap remains. Choose Babel Hash for the attack-to-defense sequence: sweep secret-length guesses, then test HMAC-SHA256 against the same attack. Choose Hash Zoo for construction inspection: examine SHA-256 padding and the SHA-3 rate/capacity split beside the Merkle-Damgard, sponge and tree views. Portfolio membership is not the distinction."
            
            
            
@@ -8020,7 +8020,8 @@
            
            
            
-            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;"
+            data-overlaps="crypto-lab-lms-xmss: Both implement LMS/HSS and demonstrate state consumption and index-reuse forgery; this is substantial overlap, not an LMS-versus-XMSS comparison. Choose LMS Ledger to consume the small two-level HSS instance and observe leaf-tree rollover and exhaustion during a short lesson. Choose LMS/XMSS to inspect Winternitz-chain depth and the authentication path, then vary leaked-signature count to study the reachable forgery depths. Its repository name does not establish an implemented XMSS path.">
             <div class="card-kicker">Stateful Hash-Based Signatures</div>
             <div class="project-title">LMS Ledger</div>
             <div class="project-copy">LMS/HSS stateful hash-based signatures (NIST SP 800-208) — LM-OTS key state grid, one-time key reuse attack with real forgery demo, and CNSA 2.0 firmware signing context.</div>

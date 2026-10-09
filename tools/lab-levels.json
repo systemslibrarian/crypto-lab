@@ -1360,6 +1360,12 @@
    "level": "beginner",
    "why": "a paint-mixing picture before any bytes; the page carries no modulus, no exponent and never says discrete logarithm",
    "reviewed": "hand"
+  },
+  "crypto-lab-sat-break": {
+   "title": "SAT Break",
+   "level": "advanced",
+   "why": "reads a cipher as a Boolean circuit, inspects CNF clauses, interprets solver models and blocking clauses, and distinguishes observed-pair consistency from complete function equivalence",
+   "reviewed": "hand"
   }
  }
 }

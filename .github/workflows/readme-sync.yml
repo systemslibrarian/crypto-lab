@@ -50,6 +50,9 @@ jobs:
       - name: Deployment regression fixtures
         if: ${{ !cancelled() }}
         run: node tools/deploy-sync.js selftest
+      - name: Deployment CLI rejects incomplete evidence
+        if: ${{ !cancelled() }}
+        run: node --test tests/deploy-report.test.cjs
       - name: Corpus freshness regression fixtures
         if: ${{ !cancelled() }}
         run: node tools/corpus-freshness.js selftest

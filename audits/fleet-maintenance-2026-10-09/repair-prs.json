@@ -1,0 +1,520 @@
+{
+  "capturedAt": "2026-10-09T06:41:52.699Z",
+  "originalHubStartSha": "975a59b956c82c6205f53632bb3738c81a346012",
+  "observedConcurrentHubMain": "f9ceb0c3e5d343b01137404413a309250f17a88c",
+  "repairs": [
+    {
+      "repository": "systemslibrarian/crypto-lab-biham-lens",
+      "slug": "biham-lens",
+      "pr": 15,
+      "url": "https://github.com/systemslibrarian/crypto-lab-biham-lens/pull/15",
+      "startSha": "eea1f7a1568079783d617050ca25bde7e1229cc7",
+      "endSha": "32cd0521d78323b634dc90ac884e56c0972502b3",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-merkle-proofs",
+      "slug": "merkle-proofs",
+      "pr": 30,
+      "url": "https://github.com/systemslibrarian/crypto-lab-merkle-proofs/pull/30",
+      "startSha": "46b1977db0b66b7c2e5feada3dc8acbbcee36e00",
+      "endSha": "1917af8abcfac7fce73c8e4dda0226d59c606d3e",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-chacha20-stream",
+      "slug": "chacha20-stream",
+      "pr": 23,
+      "url": "https://github.com/systemslibrarian/crypto-lab-chacha20-stream/pull/23",
+      "startSha": "da53dc7595283158af55d742c117f7068262168b",
+      "endSha": "e351adecaab5b7ad602f583241a4849bcbc793ce",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-isogeny-gate",
+      "slug": "isogeny-gate",
+      "pr": 29,
+      "url": "https://github.com/systemslibrarian/crypto-lab-isogeny-gate/pull/29",
+      "startSha": "65ed1ac31118fe10af0d5171022df6ed99ac3027",
+      "endSha": "0893891b6a41d24af4d6ef39926c20f81fe9a7f8",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-falcon-seal",
+      "slug": "falcon-seal",
+      "pr": 23,
+      "url": "https://github.com/systemslibrarian/crypto-lab-falcon-seal/pull/23",
+      "startSha": "dce7c3bd204a4614654578a5b7abc4ac473f4b40",
+      "endSha": "61ae82f089b38829eb1e054a66cfe3dd14b15c27",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-poly1305-mac",
+      "slug": "poly1305-mac",
+      "pr": 23,
+      "url": "https://github.com/systemslibrarian/crypto-lab-poly1305-mac/pull/23",
+      "startSha": "c75eae3af7c288d210f83c66170e8d244e706086",
+      "endSha": "9010678995a45582dd02057426f9d01954abf152",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-mceliece-gate",
+      "slug": "mceliece-gate",
+      "pr": 28,
+      "url": "https://github.com/systemslibrarian/crypto-lab-mceliece-gate/pull/28",
+      "startSha": "7f5362538dbdde4e474f2733af3ff17fdf191965",
+      "endSha": "ba05c5680c0e4720a8d7c5afaa94da92b86aa54b",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-stego-suite",
+      "slug": "stego-suite",
+      "pr": 26,
+      "url": "https://github.com/systemslibrarian/crypto-lab-stego-suite/pull/26",
+      "startSha": "4a67502ff2287abb55389a91e3ee4027949a5921",
+      "endSha": "64251db52fd147f582bb266c6486da00976c022e",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-rsa-small-roots",
+      "slug": "rsa-small-roots",
+      "pr": 1,
+      "url": "https://github.com/systemslibrarian/crypto-lab-rsa-small-roots/pull/1",
+      "startSha": "71e571b0b8524400a2c0e1f299adff8c46ee1087",
+      "endSha": "37d70da750d1ed7872bbfd74f4c8fe3c7d20be77",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review PR1; approve main integration/deployment separately, then verify served bytes before applying staged hub card."
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-tc26-pair",
+      "slug": "tc26-pair",
+      "pr": 5,
+      "url": "https://github.com/systemslibrarian/crypto-lab-tc26-pair/pull/5",
+      "startSha": "ea452d1b4aec23104cda3ea7a8b7149ed013830d",
+      "endSha": "d8edae3d16e9834ce9be426d0c7ad608b1379b39",
+      "draft": false,
+      "outcome": "awaiting review",
+      "nextAction": "Review the actual-compiler report and Mac byte reproduction; retain originalCompiler unknown and the selected 4.0.23 CI mismatch."
+    },
+    {
+      "repository": "systemslibrarian/crypto-compare",
+      "slug": "crypto-compare",
+      "pr": 38,
+      "url": "https://github.com/systemslibrarian/crypto-compare/pull/38",
+      "startSha": "fb0e9032f7f3b7972b2c4671c1c7e9b0afbd7582",
+      "endSha": "f1b95723a1d4812f3f78a399e7d73f85033e1b93",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    },
+    {
+      "repository": "systemslibrarian/crypto-counsel",
+      "slug": "crypto-counsel",
+      "pr": 10,
+      "url": "https://github.com/systemslibrarian/crypto-counsel/pull/10",
+      "startSha": "3d3fa686103ea17f599c39b0712ada3954f0c00c",
+      "endSha": "65721c07fe40be9a2236b000de6a3cfd3e78def2",
+      "draft": true,
+      "outcome": "awaiting review",
+      "nextAction": "Review the focused repair PR and its exact-head checks; no merge or deployment was performed."
+    }
+  ],
+  "checkObservations": [
+    {
+      "slug": "biham-lens",
+      "pr": 15,
+      "url": "https://github.com/systemslibrarian/crypto-lab-biham-lens/pull/15",
+      "head": "32cd0521d78323b634dc90ac884e56c0972502b3",
+      "checks": [
+        {
+          "name": "deploy",
+          "head": "32cd0521d78323b634dc90ac884e56c0972502b3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113694933040,
+          "url": "https://github.com/systemslibrarian/crypto-lab-biham-lens/actions/runs/37891908672/job/113694933040"
+        },
+        {
+          "name": "dependabot-auto-merge",
+          "head": "32cd0521d78323b634dc90ac884e56c0972502b3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113694932321,
+          "url": "https://github.com/systemslibrarian/crypto-lab-biham-lens/actions/runs/37891908672/job/113694932321"
+        },
+        {
+          "name": "build",
+          "head": "32cd0521d78323b634dc90ac884e56c0972502b3",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113694493762,
+          "url": "https://github.com/systemslibrarian/crypto-lab-biham-lens/actions/runs/37891908672/job/113694493762"
+        }
+      ],
+      "total": 3
+    },
+    {
+      "slug": "merkle-proofs",
+      "pr": 30,
+      "url": "https://github.com/systemslibrarian/crypto-lab-merkle-proofs/pull/30",
+      "head": "1917af8abcfac7fce73c8e4dda0226d59c606d3e",
+      "checks": [
+        {
+          "name": "dependabot-auto-merge",
+          "head": "1917af8abcfac7fce73c8e4dda0226d59c606d3e",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696743586,
+          "url": "https://github.com/systemslibrarian/crypto-lab-merkle-proofs/actions/runs/37892531571/job/113696743586"
+        },
+        {
+          "name": "deploy",
+          "head": "1917af8abcfac7fce73c8e4dda0226d59c606d3e",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696743568,
+          "url": "https://github.com/systemslibrarian/crypto-lab-merkle-proofs/actions/runs/37892531571/job/113696743568"
+        },
+        {
+          "name": "build",
+          "head": "1917af8abcfac7fce73c8e4dda0226d59c606d3e",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113696434689,
+          "url": "https://github.com/systemslibrarian/crypto-lab-merkle-proofs/actions/runs/37892531571/job/113696434689"
+        }
+      ],
+      "total": 3
+    },
+    {
+      "slug": "chacha20-stream",
+      "pr": 23,
+      "url": "https://github.com/systemslibrarian/crypto-lab-chacha20-stream/pull/23",
+      "head": "e351adecaab5b7ad602f583241a4849bcbc793ce",
+      "checks": [
+        {
+          "name": "deploy",
+          "head": "e351adecaab5b7ad602f583241a4849bcbc793ce",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696920305,
+          "url": "https://github.com/systemslibrarian/crypto-lab-chacha20-stream/actions/runs/37892533184/job/113696920305"
+        },
+        {
+          "name": "dependabot-auto-merge",
+          "head": "e351adecaab5b7ad602f583241a4849bcbc793ce",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696919762,
+          "url": "https://github.com/systemslibrarian/crypto-lab-chacha20-stream/actions/runs/37892533184/job/113696919762"
+        },
+        {
+          "name": "build",
+          "head": "e351adecaab5b7ad602f583241a4849bcbc793ce",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113696440660,
+          "url": "https://github.com/systemslibrarian/crypto-lab-chacha20-stream/actions/runs/37892533184/job/113696440660"
+        }
+      ],
+      "total": 3
+    },
+    {
+      "slug": "isogeny-gate",
+      "pr": 29,
+      "url": "https://github.com/systemslibrarian/crypto-lab-isogeny-gate/pull/29",
+      "head": "0893891b6a41d24af4d6ef39926c20f81fe9a7f8",
+      "checks": [
+        {
+          "name": "dependabot-auto-merge",
+          "head": "0893891b6a41d24af4d6ef39926c20f81fe9a7f8",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113697308023,
+          "url": "https://github.com/systemslibrarian/crypto-lab-isogeny-gate/actions/runs/37892648655/job/113697308023"
+        },
+        {
+          "name": "e2e",
+          "head": "0893891b6a41d24af4d6ef39926c20f81fe9a7f8",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113696787562,
+          "url": "https://github.com/systemslibrarian/crypto-lab-isogeny-gate/actions/runs/37892648655/job/113696787562"
+        },
+        {
+          "name": "test",
+          "head": "0893891b6a41d24af4d6ef39926c20f81fe9a7f8",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113696787245,
+          "url": "https://github.com/systemslibrarian/crypto-lab-isogeny-gate/actions/runs/37892648655/job/113696787245"
+        },
+        {
+          "name": "dependabot-auto-merge",
+          "head": "0893891b6a41d24af4d6ef39926c20f81fe9a7f8",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696419155,
+          "url": "https://github.com/systemslibrarian/crypto-lab-isogeny-gate/actions/runs/37892402903/job/113696419155"
+        },
+        {
+          "name": "e2e",
+          "head": "0893891b6a41d24af4d6ef39926c20f81fe9a7f8",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113696026316,
+          "url": "https://github.com/systemslibrarian/crypto-lab-isogeny-gate/actions/runs/37892402903/job/113696026316"
+        },
+        {
+          "name": "test",
+          "head": "0893891b6a41d24af4d6ef39926c20f81fe9a7f8",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113696025934,
+          "url": "https://github.com/systemslibrarian/crypto-lab-isogeny-gate/actions/runs/37892402903/job/113696025934"
+        }
+      ],
+      "total": 6
+    },
+    {
+      "slug": "falcon-seal",
+      "pr": 23,
+      "url": "https://github.com/systemslibrarian/crypto-lab-falcon-seal/pull/23",
+      "head": "61ae82f089b38829eb1e054a66cfe3dd14b15c27",
+      "checks": [
+        {
+          "name": "dependabot-auto-merge",
+          "head": "61ae82f089b38829eb1e054a66cfe3dd14b15c27",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113699513901,
+          "url": "https://github.com/systemslibrarian/crypto-lab-falcon-seal/actions/runs/37893321085/job/113699513901"
+        },
+        {
+          "name": "test-and-build",
+          "head": "61ae82f089b38829eb1e054a66cfe3dd14b15c27",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113698912399,
+          "url": "https://github.com/systemslibrarian/crypto-lab-falcon-seal/actions/runs/37893321085/job/113698912399"
+        }
+      ],
+      "total": 2
+    },
+    {
+      "slug": "poly1305-mac",
+      "pr": 23,
+      "url": "https://github.com/systemslibrarian/crypto-lab-poly1305-mac/pull/23",
+      "head": "9010678995a45582dd02057426f9d01954abf152",
+      "checks": [
+        {
+          "name": "deploy",
+          "head": "9010678995a45582dd02057426f9d01954abf152",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113699257137,
+          "url": "https://github.com/systemslibrarian/crypto-lab-poly1305-mac/actions/runs/37893322645/job/113699257137"
+        },
+        {
+          "name": "dependabot-auto-merge",
+          "head": "9010678995a45582dd02057426f9d01954abf152",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113699256935,
+          "url": "https://github.com/systemslibrarian/crypto-lab-poly1305-mac/actions/runs/37893322645/job/113699256935"
+        },
+        {
+          "name": "build",
+          "head": "9010678995a45582dd02057426f9d01954abf152",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113698917253,
+          "url": "https://github.com/systemslibrarian/crypto-lab-poly1305-mac/actions/runs/37893322645/job/113698917253"
+        }
+      ],
+      "total": 3
+    },
+    {
+      "slug": "mceliece-gate",
+      "pr": 28,
+      "url": "https://github.com/systemslibrarian/crypto-lab-mceliece-gate/pull/28",
+      "head": "ba05c5680c0e4720a8d7c5afaa94da92b86aa54b",
+      "checks": [
+        {
+          "name": "dependabot-auto-merge",
+          "head": "ba05c5680c0e4720a8d7c5afaa94da92b86aa54b",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113699345642,
+          "url": "https://github.com/systemslibrarian/crypto-lab-mceliece-gate/actions/runs/37893326097/job/113699345642"
+        },
+        {
+          "name": "deploy",
+          "head": "ba05c5680c0e4720a8d7c5afaa94da92b86aa54b",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113699345288,
+          "url": "https://github.com/systemslibrarian/crypto-lab-mceliece-gate/actions/runs/37893326097/job/113699345288"
+        },
+        {
+          "name": "build",
+          "head": "ba05c5680c0e4720a8d7c5afaa94da92b86aa54b",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113698926975,
+          "url": "https://github.com/systemslibrarian/crypto-lab-mceliece-gate/actions/runs/37893326097/job/113698926975"
+        }
+      ],
+      "total": 3
+    },
+    {
+      "slug": "stego-suite",
+      "pr": 26,
+      "url": "https://github.com/systemslibrarian/crypto-lab-stego-suite/pull/26",
+      "head": "64251db52fd147f582bb266c6486da00976c022e",
+      "checks": [
+        {
+          "name": "build",
+          "head": "64251db52fd147f582bb266c6486da00976c022e",
+          "status": "in_progress",
+          "conclusion": null,
+          "job": 113699571130,
+          "url": "https://github.com/systemslibrarian/crypto-lab-stego-suite/actions/runs/37893528620/job/113699571130"
+        }
+      ],
+      "total": 1
+    },
+    {
+      "slug": "tc26-pair",
+      "pr": 5,
+      "url": "https://github.com/systemslibrarian/crypto-lab-tc26-pair/pull/5",
+      "head": "d8edae3d16e9834ce9be426d0c7ad608b1379b39",
+      "checks": [
+        {
+          "name": "dependabot-auto-merge",
+          "head": "d8edae3d16e9834ce9be426d0c7ad608b1379b39",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696411556,
+          "url": "https://github.com/systemslibrarian/crypto-lab-tc26-pair/actions/runs/37892405653/job/113696411556"
+        },
+        {
+          "name": "deploy",
+          "head": "d8edae3d16e9834ce9be426d0c7ad608b1379b39",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696411441,
+          "url": "https://github.com/systemslibrarian/crypto-lab-tc26-pair/actions/runs/37892405653/job/113696411441"
+        },
+        {
+          "name": "build",
+          "head": "d8edae3d16e9834ce9be426d0c7ad608b1379b39",
+          "status": "completed",
+          "conclusion": "success",
+          "job": 113696034867,
+          "url": "https://github.com/systemslibrarian/crypto-lab-tc26-pair/actions/runs/37892405653/job/113696034867"
+        },
+        {
+          "name": "rebuild",
+          "head": "d8edae3d16e9834ce9be426d0c7ad608b1379b39",
+          "status": "completed",
+          "conclusion": "failure",
+          "job": 113696034114,
+          "url": "https://github.com/systemslibrarian/crypto-lab-tc26-pair/actions/runs/37892405640/job/113696034114"
+        }
+      ],
+      "total": 4
+    },
+    {
+      "slug": "crypto-compare",
+      "pr": 38,
+      "url": "https://github.com/systemslibrarian/crypto-compare/pull/38",
+      "head": "7796e8603a3c42d42c438b0f35bc0d1a957b8980",
+      "checks": [
+        {
+          "name": "dependabot-auto-merge",
+          "head": "7796e8603a3c42d42c438b0f35bc0d1a957b8980",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696560955,
+          "url": "https://github.com/systemslibrarian/crypto-compare/actions/runs/37892534369/job/113696560955"
+        },
+        {
+          "name": "e2e",
+          "head": "7796e8603a3c42d42c438b0f35bc0d1a957b8980",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696560602,
+          "url": "https://github.com/systemslibrarian/crypto-compare/actions/runs/37892534369/job/113696560602"
+        },
+        {
+          "name": "lighthouse",
+          "head": "7796e8603a3c42d42c438b0f35bc0d1a957b8980",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696560501,
+          "url": "https://github.com/systemslibrarian/crypto-compare/actions/runs/37892534369/job/113696560501"
+        },
+        {
+          "name": "build",
+          "head": "7796e8603a3c42d42c438b0f35bc0d1a957b8980",
+          "status": "completed",
+          "conclusion": "failure",
+          "job": 113696442877,
+          "url": "https://github.com/systemslibrarian/crypto-compare/actions/runs/37892534369/job/113696442877"
+        }
+      ],
+      "total": 4
+    },
+    {
+      "slug": "crypto-counsel",
+      "pr": 10,
+      "url": "https://github.com/systemslibrarian/crypto-counsel/pull/10",
+      "head": "65721c07fe40be9a2236b000de6a3cfd3e78def2",
+      "checks": [
+        {
+          "name": "dependabot-auto-merge",
+          "head": "65721c07fe40be9a2236b000de6a3cfd3e78def2",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696524804,
+          "url": "https://github.com/systemslibrarian/crypto-counsel/actions/runs/37892535970/job/113696524804"
+        },
+        {
+          "name": "deploy",
+          "head": "65721c07fe40be9a2236b000de6a3cfd3e78def2",
+          "status": "completed",
+          "conclusion": "skipped",
+          "job": 113696524565,
+          "url": "https://github.com/systemslibrarian/crypto-counsel/actions/runs/37892535970/job/113696524565"
+        },
+        {
+          "name": "validate",
+          "head": "65721c07fe40be9a2236b000de6a3cfd3e78def2",
+          "status": "completed",
+          "conclusion": "failure",
+          "job": 113696448912,
+          "url": "https://github.com/systemslibrarian/crypto-counsel/actions/runs/37892535970/job/113696448912"
+        }
+      ],
+      "total": 3
+    }
+  ]
+}

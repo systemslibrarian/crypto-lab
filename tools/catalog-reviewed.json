@@ -27,12 +27,12 @@
     "note": "secp256k1 is added by review because the scanner now reads `import { schnorr } from '@noble/curves/secp256k1.js'` as a module path rather than an implementation, which is right in general and wrong here: src/crypto/secp.ts wraps that import into the lab's own point and scalar layer (N, G, mulG, mul, liftX, invModN) and src/crypto/adaptor.ts computes the adaptor construction on it directly. The anchor is the defining point addition, R + T, not the import. Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
   },
   "crypto-lab-biham-lens": {
-    "commit": "27249921456d250cb3955f89b2c43bdbc1c5a577",
-    "reviewed": "2026-09-10",
+    "commit": "eea1f7a1568079783d617050ca25bde7e1229cc7",
+    "reviewed": "2026-10-09",
     "add": [
-      "Toy SPN@demos/biham-lens/src/crypto/spn.ts:95"
+      "Toy SPN@src/crypto/spn.ts:95"
     ],
-    "note": "Executes a toy SPN, not DES"
+    "note": "Re-read root source after relocation and FEAL-4 extension. Executes an 8-bit, four-round toy SPN, not DES. The independent FEAL-4 engine implements its published key schedule; the worker attacks only oracle observations and recovers equivalent round-key/whitening material, not the master key. FEAL-8 exists only in a test wrapper and is not a shipped implementation. Unit vectors and fresh-block/negative verification tests inspected; browser gates run separately. FEAL-4 is presently outside the algorithm vocabulary and is described in card prose rather than credited as DES."
   },
   "crypto-lab-card-trick": {
     "commit": "126579c282efcf5ea58228252b2ee646c25ec8b4",
@@ -299,7 +299,7 @@
       "SM3",
       "SM4"
     ],
-    "note": "Implements the SM9 family in src/sm9/ \u2014 extraction for both master key pairs, signature, key exchange, KEM and public key encryption \u2014 over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
+    "note": "Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
   },
   "crypto-lab-vector-gate": {
     "commit": "ef85d2adf408b905b194956b25996c4b7dddcd01",
@@ -319,7 +319,7 @@
   "crypto-lab-locks-and-keys": {
     "commit": "6b23b1fa6cde4f39c3f20a6e0468da2c913eb430",
     "reviewed": "2026-10-04",
-    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public half could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (\u00a77.1 RSAES-OAEP, \u00a78.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md."
+    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public half could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md."
   },
   "crypto-lab-what-is-pqc": {
     "commit": "193e2248a9530e88a0b88ebcd78537cce20832c3",
@@ -361,7 +361,7 @@
     "note": "Read src/x25519/agree.ts, src/eavesdrop/attempt.ts, src/ui/mixing.ts and src/main.ts. The exchange is real @noble/curves X25519 and the lab checks RFC 7748 5.2's published vectors in the browser before anything is pressed. The scanner anchored X25519 at src/eavesdrop/attempt.ts:1, an import line in the eavesdropper module; the pin moves it to getSharedSecret in the agreement module. 'Discrete log' was derived from README prose explaining what is NOT taught here and is removed: the lab says outright that it never uses the words, and hands the mathematics to DH MITM and Key Exchange. The man-in-the-middle anchor stays -- panel 4 really does run a stranger answering in Bob's place, and every check on the page still passes, which is the lab's negative claim rather than a disclaimer."
   },
   "crypto-lab-sat-break": {
-    "commit": "5f3fee3618f2d218b2213063a74fdcfa0d903686",
+    "commit": "dbbdf566f62d16a7f8cf228b96339af319426772",
     "reviewed": "2026-10-09",
     "add": [
       "Toy SPN@src/crypto/spn.ts:99"
@@ -371,6 +371,24 @@
       "Impossible differential",
       "Linear cryptanalysis"
     ],
-    "note": "Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary."
+    "note": "Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped."
+  },
+  "crypto-lab-lfsr-forge": {
+    "commit": "2a9848eee885039dfda5d576b0727233624bee7f",
+    "reviewed": "2026-10-09",
+    "state": "N/A",
+    "note": "Source review of src/lfsr/lfsr.ts and bm.ts, src/geffe/geffe.ts and correlation.ts, worker contract, UI verification and tests: computes binary Fibonacci LFSRs, Berlekamp-Massey synthesis over GF(2), and a fixed 7/11/13 Geffe combiner. These are outside the current algorithm vocabulary; N/A means no named algorithm in this index, not no computation. BCH, ChaCha20, SNOW 3G and ZUC are comparisons, not implemented. Attack receives copied known keystream and budgets; its frozen forecast is checked separately from exact original-state confirmation. 13 unit and 8 browser tests passed at this SHA."
+  },
+  "crypto-lab-wep-crack": {
+    "commit": "fad33459d2f9a0304a1c0b08810f375a6c1c9f51",
+    "reviewed": "2026-10-09",
+    "add": [
+      "RC4@src/rc4/rc4.ts:131"
+    ],
+    "remove": [
+      "Chosen-ciphertext attack",
+      "Padding oracle"
+    ],
+    "note": "Read RC4 KSA/PRGA, WEP protected-body/CRC-32 and PTW engines, public attacker contracts, receiver/secret validation, README and tests at this SHA. Generated traffic only, not complete 802.11 frames or a real-network capture tool. The RC4 anchor points to the keystream engine rather than a UI type. Chosen-ciphertext attack was picked from a build brief and Padding oracle from a sibling link, neither a demonstrated oracle attack here; remove those credits. CRC-32 ciphertext forgery and bounded probabilistic PTW recovery are actual computations; exact key equality is checked separately. 149 unit, 2 accessibility and 49 claims/interaction tests passed."
   }
 }

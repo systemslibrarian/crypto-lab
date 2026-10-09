@@ -245,6 +245,8 @@ shows that recovering an equivalent encryption function can still leave the orig
 bits unidentified. The concept was already `COVERED`, so there is no status change.
 Catalogued total moves to 225.*
 
+*Version 27 — files WEP Crack under §4 and §5 for RC4 protocol composition and the failure of an unkeyed ICV, and LFSR Forge under §4 and §30 for recurrence synthesis and bounded known-keystream correlation. WEP uses generated protected bodies rather than radio captures; LFSR prediction and original-state confirmation are distinct. These deepen covered concepts without declaring a gap closed. Catalogued total moves to 227.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -329,7 +331,7 @@ sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
 Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Format Ward ·
-Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream.
+Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream · WEP Crack · LFSR Forge.
 SPN, ARX, sponge, stream, lightweight, and Feistel.
 
 Export Grade adds key loading as cipher structure. Real TEA1 passes its known-answer tests
@@ -372,7 +374,7 @@ out to be structured and, so far as anyone has shown, harmless. Provenance is ch
 cases; the verdict is not the same, and that is the point.
 
 **5. Message authentication — `COVERED`**
-MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward · KMAC Gate · MGM Mode. Polynomial MACs, AEAD, and
+MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward · WEP Crack · KMAC Gate · MGM Mode. Polynomial MACs, AEAD, and
 misuse-resistant AEAD. Stream Ward extends the arc past the single message: chained streaming
 AEAD, where each segment's tag covers a rolling chain state plus its sequence number, so
 reordering or truncating intact valid frames is caught. One-shot AEAD authenticates *content*;
@@ -867,7 +869,7 @@ guarantee is the lesson; the mode is not broken.
 
 **30. Classical cryptanalytic technique — `COVERED`**
 Biham Lens (differential) · Matsui Line (linear) · Vigenère Break · Collision Vault ·
-Model Breach · LLL Break · Misty Lens · Return Path · SAT Break.
+Model Breach · LLL Break · Misty Lens · Return Path · SAT Break · LFSR Forge.
 
 Matsui Line completes the canonical pair. It is genuinely different mathematics —
 approximation *bias* and the piling-up lemma rather than difference propagation — and it
@@ -1093,7 +1095,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 225.**
+**Catalogued total: 227.**
 
 ---
 

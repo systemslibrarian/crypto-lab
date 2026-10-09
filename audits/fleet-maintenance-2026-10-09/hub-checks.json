@@ -1,0 +1,92 @@
+[
+  {
+    "command": "node tools/catalog-sync.js check",
+    "exit": 0,
+    "output": "Read from committed HEAD (dirty working tree): biham-lens, mac-race, elgamal-plain, ablation-wire, sat-break, adaptor-gate, function-key, lfsr-forge\nVocabulary invariants hold over 210 terms and 227 cards:\n  every term matches its own name, no two terms index the same algorithm,\n  no term is credited by a package name alone,\n  and every chip with a dependency behind it resolves to a term (4 declared\n  exemptions in tools/catalog-chip-exempt.json).\nCATALOG.md in step with index.html (227 labs).\n"
+  },
+  {
+    "command": "node tools/readme-sync.js check",
+    "exit": 0,
+    "output": "README tables in sync with index.html cards (227 cards); hero count reads 227.\n"
+  },
+  {
+    "command": "node tools/catalog-structure-check.js",
+    "exit": 0,
+    "output": "Catalog search/structure: PASS (227 cards; metadata, typo and proximity search verified)\n"
+  },
+  {
+    "command": "node tools/concept-sync.js check",
+    "exit": 0,
+    "output": "concept-coverage.md v27 \u2014 40 concepts (DEEP 9 \u00b7 COVERED 31 \u00b7 PARTIAL 0 \u00b7 GAP 0)\nCards in index.html: 227 | cited in map: 227\nCited but no card (0): []\nCarded but unmapped (0): []\nUncatalogued backlog (0): []\nIn flight (0): []\nOpen gaps (0): []\nCatalogued total line: 227 (matches)\n\nconcept-coverage.md in step with index.html.\n"
+  },
+  {
+    "command": "node tools/level-sync.js check",
+    "exit": 0,
+    "output": "Cards levelled: 227 | beginner=32 intermediate=55 advanced=140\nFlagged for review: 10 \u2014 listed first in LEVELS-REVIEW.md\n\nEvery card carries a level, and the review sheet matches it.\n"
+  },
+  {
+    "command": "node tools/teach-build.js check",
+    "exit": 0,
+    "output": "Teach pages in sync: 5 module(s), 44 generated file(s); count lint clean.\n"
+  },
+  {
+    "command": "node tools/teach-build.js lint",
+    "exit": 0,
+    "output": "Count lint: clean.\n"
+  },
+  {
+    "command": "node tools/tools-sync.js check",
+    "exit": 0,
+    "output": "README.md tools block in step with tools/ (37 tools listed).\n"
+  },
+  {
+    "command": "node tools/lab-dates.js check",
+    "exit": 1,
+    "output": "Cards dated: 227 | pinned: 227 | pinned 2026-10-09\n\nSTALE (1) \u2014 the demo changed after the pin. Fix with: node tools/lab-dates.js\n  crypto-lab-fhe-arena \u2014 pinned 2026-08, lab now 2026-10\n"
+  },
+  {
+    "command": "node tools/corpus-sync.js check /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-counsel/corpus.json",
+    "exit": 0,
+    "output": "Corpus: /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-counsel/corpus.json\nCatalog demos: 227 | Corpus demo entries: 227\nMissing from corpus (0): []\nStale in corpus (0): []\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js selftest",
+    "exit": 0,
+    "output": "  ok  an ignored file on disk does not change the file list\n  ok  neither ignored file appears in the list\n  ok  git status reports the clone CLEAN with both ignored files present\n  ok  an untracked file does not reach the list either\n  ok  a tracked file is still read\n  ok  a .gitignore-only commit does NOT invalidate a pin\n  ok  a src/ change DOES invalidate a pin\n  ok  a README.md change DOES invalidate a pin\n  ok  a range git cannot read counts as moved, never as unchanged\n  ok  an unfetched remote revision requires a clone refresh, not a source review\n  ok  fetched dependency-only movement preserves the source review\n  ok  fetched real source movement still requires review\n  ok  a remote-matching pin still reports a checkout behind it\n  ok  a shallow clone missing the pin is 'unreadable', never a stale review\n  ok  a shallow clone still answers about a range it does contain\n  ok  fifteen build documents, CI, config and non-demo pages are excluded\n  ok  eleven of the lab's own documents, pages and sources are still scanned\n  ok  Signature malleability     crypto-lab-rsa-forge\n  ok  Signature malleability     crypto-lab-ecdsa-forge\n  ok  Signature malleability     crypto-lab-ed25519-forge\n  ok  Ciphertext malleability    crypto-lab-fhe-arena\n  ok  Ciphertext malleability    crypto-lab-chacha20-stream\n  ok  Ciphertext malleability    crypto-lab-beacon-lock\n  ok  Malleability (unspecified) crypto-lab-merkle-vault\n  ok  Malleability (unspecified) crypto-lab-paillier-gate\n  ok  Malleability (unspecified) crypto-lab-elgamal-plain\n  ok  an anchor on a multi-line WebCrypto call reads the lines it spans\n  ok  and does not read that window on any other line\n  ok  an algorithm anchor resolves against the shared term map\n  ok  an attack anchor resolves against the shared term map\n  ok  a name in neither vocabulary is still refused\n  ok  MUTATION algorithm-only map: attack anchor refused, algorithm anchor kept - the fixture discriminates\n  ok  a first write on a one-line card emits each derived attribute once\n  ok  re-writing a newly carded lab does NOT duplicate the last attribute\n  ok  writing the same card twice is byte-identical\n  ok  the tag tail and the card body survive the rewrite\n  ok  a settled card is stable across writes\n  ok  a field that stops being derived is removed, not orphaned\n  ok  a card already in the pre-fix shape is repaired, not duplicated\n  ok  repairing it keeps the tail attributes it shared a line with\n  ok  a reviewed remove deletes an implementation\n  ok  a reviewed remove deletes an attack\n  ok  it deletes only the names it was given\n  ok  a remove naming neither vocabulary throws instead of no-opping\n\n68 passed, 0 failed\n"
+  },
+  {
+    "command": "node --test tests/catalog-standards.test.cjs tests/card-metadata.test.cjs tests/tools-cadence.test.cjs tests/depth-export.test.cjs",
+    "exit": 0,
+    "output": "\u2714 metadata reads the whole tag and detects matching and conflicting duplicates (1.336208ms)\n\u2714 both metadata writers remove separated duplicates and remain stable in either order (0.352584ms)\n\u2714 all published cards carry one value per metadata field matching the existing pins (5.388041ms)\n\u2714 historical warnings cannot become standards-body identifiers (1.144583ms)\n\u2714 SIKE status is retained separately; CSIDH is not marked broken (0.163333ms)\n\u25b6 unreadable discovery fails and preserves prior export manifests\n  \u2714 missing CLI (14.888ms)\n  \u2714 failed API with valid JSON (323.046417ms)\n  \u2714 malformed JSON (165.096166ms)\n  \u2714 wrong response shape (236.249792ms)\n  \u2714 missing repository name (165.907833ms)\n\u2714 unreadable discovery fails and preserves prior export manifests (906.123542ms)\n\u2714 a discovered repository with unreadable tarball is named and fails (186.411209ms)\n\u2714 a valid archive exports normal and hidden files with its commit (274.358708ms)\n\u2714 fixture-only invocations never advertise or propagate a fleet-check cadence (3.614083ms)\n\u2139 tests 14\n\u2139 suites 0\n\u2139 pass 14\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 1442.013208\n"
+  },
+  {
+    "command": "node tools/catalog-sync.js check",
+    "exit": 0,
+    "output": "Read from committed HEAD (dirty working tree): biham-lens, mac-race, elgamal-plain, ablation-wire, sat-break, adaptor-gate, function-key, lfsr-forge\nVocabulary invariants hold over 210 terms and 227 cards:\n  every term matches its own name, no two terms index the same algorithm,\n  no term is credited by a package name alone,\n  and every chip with a dependency behind it resolves to a term (4 declared\n  exemptions in tools/catalog-chip-exempt.json).\nCATALOG.md in step with index.html (227 labs).\n",
+    "stage": "final after corrections"
+  },
+  {
+    "command": "node tools/readme-sync.js check",
+    "exit": 0,
+    "output": "README tables in sync with index.html cards (227 cards); hero count reads 227.\n",
+    "stage": "final after corrections"
+  },
+  {
+    "command": "node tools/catalog-structure-check.js",
+    "exit": 0,
+    "output": "Catalog search/structure: PASS (227 cards; metadata, typo and proximity search verified)\n",
+    "stage": "final after corrections"
+  },
+  {
+    "command": "node tools/lab-dates.js check",
+    "exit": 0,
+    "output": "Cards dated: 227 | pinned: 227 | pinned 2026-10-09\n\nEvery card's dates match the repository they describe.\n",
+    "stage": "final after corrections"
+  },
+  {
+    "command": "node tools/corpus-sync.js check /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-counsel/corpus.json",
+    "exit": 0,
+    "output": "Corpus: /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-counsel/corpus.json\nCatalog demos: 227 | Corpus demo entries: 227\nMissing from corpus (0): []\nStale in corpus (0): []\n",
+    "stage": "final after corrections"
+  }
+]

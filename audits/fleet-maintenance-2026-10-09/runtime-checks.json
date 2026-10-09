@@ -1,0 +1,394 @@
+[
+  {
+    "repository": "falcon-seal",
+    "variant": "current-default",
+    "sha": "dce7c3bd204a4614654578a5b7abc4ac473f4b40",
+    "command": "npm ci",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/falcon-seal/base-/0.log",
+    "logSha256": "9ac6145c1c0fc6faefed455f031fd8d7266e763e509f0d66d9d6903314a5b0d0",
+    "testSummary": []
+  },
+  {
+    "repository": "falcon-seal",
+    "variant": "current-default",
+    "sha": "dce7c3bd204a4614654578a5b7abc4ac473f4b40",
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/falcon-seal/base-/1.log",
+    "logSha256": "e6d6cd9295635889982570d5b18888e4fc8755adc408be762b6cb8d12724ee0d",
+    "testSummary": [
+      "Test Files  6 passed (6)",
+      "Tests  41 passed (41)"
+    ]
+  },
+  {
+    "repository": "falcon-seal",
+    "variant": "current-default",
+    "sha": "dce7c3bd204a4614654578a5b7abc4ac473f4b40",
+    "command": "npm run build",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/falcon-seal/base-/2.log",
+    "logSha256": "6ff974e8180ff1b3595e12133230b274400727ada6b0ea2b2f223aa154f101d2",
+    "testSummary": []
+  },
+  {
+    "repository": "falcon-seal",
+    "variant": "current-default",
+    "sha": "dce7c3bd204a4614654578a5b7abc4ac473f4b40",
+    "command": "npm run test:e2e",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/falcon-seal/base-/3.log",
+    "logSha256": "0ea0a2ce5d1864fb35cfb103e6507a1eba348f0d2d2cbfd53e6c070f2f6fd303",
+    "testSummary": [
+      "11 passed (2.5m)"
+    ]
+  },
+  {
+    "repository": "falcon-seal",
+    "variant": "exact-update-head",
+    "sha": "d08741ca3a6b4d269186dcb03c9310b6f1c00af3",
+    "command": "npm ci",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/falcon-seal/proposed-/0.log",
+    "logSha256": "a6ec608ba156cea6f536ff8965b37ba778d1218481ae258b9b7ce6cea29dcc02",
+    "testSummary": []
+  },
+  {
+    "repository": "falcon-seal",
+    "variant": "exact-update-head",
+    "sha": "d08741ca3a6b4d269186dcb03c9310b6f1c00af3",
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/falcon-seal/proposed-/1.log",
+    "logSha256": "3323ec2805beffca55de2703501b0d4d4433cfcdd90cd0373a641c2b15543da9",
+    "testSummary": [
+      "Test Files  6 passed (6)",
+      "Tests  41 passed (41)"
+    ]
+  },
+  {
+    "repository": "falcon-seal",
+    "variant": "exact-update-head",
+    "sha": "d08741ca3a6b4d269186dcb03c9310b6f1c00af3",
+    "command": "npm run build",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/falcon-seal/proposed-/2.log",
+    "logSha256": "35841a4b1a0405e4314f2256d0ca8e7b30bbe382423a185559db2524c7cadff6",
+    "testSummary": []
+  },
+  {
+    "repository": "falcon-seal",
+    "variant": "exact-update-head",
+    "sha": "d08741ca3a6b4d269186dcb03c9310b6f1c00af3",
+    "command": "npm run test:e2e",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/falcon-seal/proposed-/3.log",
+    "logSha256": "987fbaba26f83afa44f5d7c63082547901040eb3c8970d75a0ecf5a374689905",
+    "testSummary": [
+      "11 passed (2.0m)"
+    ]
+  },
+  {
+    "repository": "poly1305-mac",
+    "variant": "current-default",
+    "sha": "c75eae3af7c288d210f83c66170e8d244e706086",
+    "command": "npm ci",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/poly1305-mac/base-/0.log",
+    "logSha256": "5774f976a8f5990f5ae7662cdb876b473bca034e0cc598422c96042f6f2580f1",
+    "testSummary": []
+  },
+  {
+    "repository": "poly1305-mac",
+    "variant": "current-default",
+    "sha": "c75eae3af7c288d210f83c66170e8d244e706086",
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/poly1305-mac/base-/1.log",
+    "logSha256": "c06ce554a9da37b9f06b6e1b01d41652cdc5e80e0c68a953a2ec6776002ac634",
+    "testSummary": [
+      "Test Files  2 passed (2)",
+      "Tests  18 passed (18)"
+    ]
+  },
+  {
+    "repository": "poly1305-mac",
+    "variant": "current-default",
+    "sha": "c75eae3af7c288d210f83c66170e8d244e706086",
+    "command": "npm run build",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/poly1305-mac/base-/2.log",
+    "logSha256": "5cbeee58b370612e92b320c039c067b91e42f4951f6c7644df9e997b398f63de",
+    "testSummary": []
+  },
+  {
+    "repository": "poly1305-mac",
+    "variant": "current-default",
+    "sha": "c75eae3af7c288d210f83c66170e8d244e706086",
+    "command": "npm run test:a11y",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/poly1305-mac/base-/3.log",
+    "logSha256": "99c4aff167184e417c60f5414d61d85c17c096fd58f9d42952a4fc77697b84de",
+    "testSummary": [
+      "15 passed (32.6s)"
+    ]
+  },
+  {
+    "repository": "poly1305-mac",
+    "variant": "exact-update-head",
+    "sha": "0f7c1781bef5958e9f053db4d2ca57abe062c62e",
+    "command": "npm ci",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/poly1305-mac/proposed-/0.log",
+    "logSha256": "a0061a72281f6537b0785a3c60f911323c1c72ab4236df5bc812a1458b4efb7f",
+    "testSummary": []
+  },
+  {
+    "repository": "poly1305-mac",
+    "variant": "exact-update-head",
+    "sha": "0f7c1781bef5958e9f053db4d2ca57abe062c62e",
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/poly1305-mac/proposed-/1.log",
+    "logSha256": "7a62d9aee711af74853037929d4752bd06d0237ce8ca22d88f8e70bca0d87f54",
+    "testSummary": [
+      "Test Files  2 passed (2)",
+      "Tests  18 passed (18)"
+    ]
+  },
+  {
+    "repository": "poly1305-mac",
+    "variant": "exact-update-head",
+    "sha": "0f7c1781bef5958e9f053db4d2ca57abe062c62e",
+    "command": "npm run build",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/poly1305-mac/proposed-/2.log",
+    "logSha256": "57751b009c7731556170527a6ffc6df5e95733ea9898359877cf5dcd0634c05e",
+    "testSummary": []
+  },
+  {
+    "repository": "poly1305-mac",
+    "variant": "exact-update-head",
+    "sha": "0f7c1781bef5958e9f053db4d2ca57abe062c62e",
+    "command": "npm run test:a11y",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/poly1305-mac/proposed-/3.log",
+    "logSha256": "2ca23cb6422dda21ebc1443498850e8a67e86caaef610efd57dd30dcf65e8f5b",
+    "testSummary": [
+      "15 passed (31.4s)"
+    ]
+  },
+  {
+    "repository": "mceliece-gate",
+    "variant": "current-default",
+    "sha": "7f5362538dbdde4e474f2733af3ff17fdf191965",
+    "command": "npm ci",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/mceliece-gate/base-/0.log",
+    "logSha256": "6a87b8d89ccf6165fd03fef4afb20ac931e6b6d7ed4ad9cdbe140e81aad6a0a9",
+    "testSummary": []
+  },
+  {
+    "repository": "mceliece-gate",
+    "variant": "current-default",
+    "sha": "7f5362538dbdde4e474f2733af3ff17fdf191965",
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/mceliece-gate/base-/1.log",
+    "logSha256": "95269ab2fbeb282badb89b062d9a0c47b93db2567cce930f0a58f3900340e335",
+    "testSummary": [
+      "Test Files  3 passed (3)",
+      "Tests  34 passed (34)"
+    ]
+  },
+  {
+    "repository": "mceliece-gate",
+    "variant": "current-default",
+    "sha": "7f5362538dbdde4e474f2733af3ff17fdf191965",
+    "command": "npm run build",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/mceliece-gate/base-/2.log",
+    "logSha256": "c11165a2905752529282f192fa646eda5aa6ce128820df9bde645046c0ba40d0",
+    "testSummary": []
+  },
+  {
+    "repository": "mceliece-gate",
+    "variant": "current-default",
+    "sha": "7f5362538dbdde4e474f2733af3ff17fdf191965",
+    "command": "npm run test:a11y",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/mceliece-gate/base-/3.log",
+    "logSha256": "19cd087f70263d289fc50d5ca56b96164ec1ab4324e2101d0689eceafcec781d",
+    "testSummary": [
+      "7 passed (1.1m)"
+    ]
+  },
+  {
+    "repository": "mceliece-gate",
+    "variant": "exact-update-head",
+    "sha": "10efa0b6e4281af74e9fcb58972f2f3bb2c55c31",
+    "command": "npm ci",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/mceliece-gate/proposed-/0.log",
+    "logSha256": "f54c5502a12e451740d7f380c795c01004a36b080a735cbd1913d6fe05f381c8",
+    "testSummary": []
+  },
+  {
+    "repository": "mceliece-gate",
+    "variant": "exact-update-head",
+    "sha": "10efa0b6e4281af74e9fcb58972f2f3bb2c55c31",
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/mceliece-gate/proposed-/1.log",
+    "logSha256": "6a7a6d4e8b867610a00fce0886ad2055cc06b24c4bb86204ae632af5c90008a1",
+    "testSummary": [
+      "Test Files  3 passed (3)",
+      "Tests  34 passed (34)"
+    ]
+  },
+  {
+    "repository": "mceliece-gate",
+    "variant": "exact-update-head",
+    "sha": "10efa0b6e4281af74e9fcb58972f2f3bb2c55c31",
+    "command": "npm run build",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/mceliece-gate/proposed-/2.log",
+    "logSha256": "39214622cfefb990107c46af6b265509febefd59dbafecf08ba98b1452562695",
+    "testSummary": []
+  },
+  {
+    "repository": "mceliece-gate",
+    "variant": "exact-update-head",
+    "sha": "10efa0b6e4281af74e9fcb58972f2f3bb2c55c31",
+    "command": "npm run test:a11y",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/mceliece-gate/proposed-/3.log",
+    "logSha256": "0f7609c28c415a9ad359aae9e9c6e7f4c1bf6043b5b6608f3a9a0107aaadf863",
+    "testSummary": [
+      "7 passed (1.1m)"
+    ]
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "current-default",
+    "sha": "4a67502ff2287abb55389a91e3ee4027949a5921",
+    "command": "npm ci",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/base-/0.log",
+    "logSha256": "fb0ed38dac7bde742fad593e54daf5572be821a22fa1eb0d701660a056f4d868",
+    "testSummary": []
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "current-default",
+    "sha": "4a67502ff2287abb55389a91e3ee4027949a5921",
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/base-/1.log",
+    "logSha256": "554665ff88017e08d23296ac42b3d94bbd4162053a1dac0de5fada46ba936f79",
+    "testSummary": [
+      "Test Files  8 passed (8)",
+      "Tests  46 passed (46)"
+    ]
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "current-default",
+    "sha": "4a67502ff2287abb55389a91e3ee4027949a5921",
+    "command": "npm run build",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/base-/2.log",
+    "logSha256": "47df51b5062a43ee28d778ebdf1698c81ea7232753f454b0b9469c7fef71009b",
+    "testSummary": []
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "current-default",
+    "sha": "4a67502ff2287abb55389a91e3ee4027949a5921",
+    "command": "npm run test:a11y",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/base-/3.log",
+    "logSha256": "1a1d9f7a0a7e2656a5278805b8e67b8ee8aebc9b677c3fbf00207802a3fe16b3",
+    "testSummary": [
+      "35 passed (1.3m)"
+    ]
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "current-default",
+    "sha": "4a67502ff2287abb55389a91e3ee4027949a5921",
+    "command": "npm run test:mutations",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/base-/4.log",
+    "logSha256": "9d1d18010ceadec6e576939226df070f46c9c294184cc3d8e4aaf19319cd6bea",
+    "testSummary": [
+      "M1 KILLED; baseline passed, build succeeded, bundle changed, \"step 3 control: the same read of the untouched original returns nothing\" failed, source and bundle restored.",
+      "M2 KILLED; baseline passed, build succeeded, bundle changed, \"step 4: the detector reports nothing found on both pictures\" failed, source and bundle restored.",
+      "M3 KILLED; baseline passed, build succeeded, bundle changed, \"step 5: filling the picture to capacity IS reported\" failed, source and bundle restored.",
+      "M4 KILLED; baseline passed, build succeeded, bundle changed, \"step 1: hiding the sentence really changes the picture\" failed, source and bundle restored.",
+      "M5 KILLED; baseline passed, build succeeded, bundle changed, \"step 3: the sentence comes back out of the picture\" failed, source and bundle restored."
+    ]
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "exact-update-head",
+    "sha": "17e077197f709c1775932c8fdefe48c347c3202a",
+    "command": "npm ci",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/proposed-/0.log",
+    "logSha256": "754455db6d355c311bc1ed8c9e568cb336ae43ecbdf18a22896d0263fb59fdb8",
+    "testSummary": []
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "exact-update-head",
+    "sha": "17e077197f709c1775932c8fdefe48c347c3202a",
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/proposed-/1.log",
+    "logSha256": "2a8d7197e5563249901d7e6c5450d43a3e5c4d82c188075f97097e6091ae6d6f",
+    "testSummary": [
+      "Test Files  8 passed (8)",
+      "Tests  46 passed (46)"
+    ]
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "exact-update-head",
+    "sha": "17e077197f709c1775932c8fdefe48c347c3202a",
+    "command": "npm run build",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/proposed-/2.log",
+    "logSha256": "093c8d652885d59d013654a7efaea1e4fc9aeb921bdb8f9098cbab8aca5e1a2a",
+    "testSummary": []
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "exact-update-head",
+    "sha": "17e077197f709c1775932c8fdefe48c347c3202a",
+    "command": "npm run test:a11y",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/proposed-/3.log",
+    "logSha256": "7d8ea9d576d1619f289802ec1c523fcf0989c6536009904cb581ff68cdce56c7",
+    "testSummary": [
+      "35 passed (42.6s)"
+    ]
+  },
+  {
+    "repository": "stego-suite",
+    "variant": "exact-update-head",
+    "sha": "17e077197f709c1775932c8fdefe48c347c3202a",
+    "command": "npm run test:mutations",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/runtime-evidence/stego-suite/proposed-/4.log",
+    "logSha256": "9d1d18010ceadec6e576939226df070f46c9c294184cc3d8e4aaf19319cd6bea",
+    "testSummary": [
+      "M1 KILLED; baseline passed, build succeeded, bundle changed, \"step 3 control: the same read of the untouched original returns nothing\" failed, source and bundle restored.",
+      "M2 KILLED; baseline passed, build succeeded, bundle changed, \"step 4: the detector reports nothing found on both pictures\" failed, source and bundle restored.",
+      "M3 KILLED; baseline passed, build succeeded, bundle changed, \"step 5: filling the picture to capacity IS reported\" failed, source and bundle restored.",
+      "M4 KILLED; baseline passed, build succeeded, bundle changed, \"step 1: hiding the sentence really changes the picture\" failed, source and bundle restored.",
+      "M5 KILLED; baseline passed, build succeeded, bundle changed, \"step 3: the sentence comes back out of the picture\" failed, source and bundle restored."
+    ]
+  }
+]

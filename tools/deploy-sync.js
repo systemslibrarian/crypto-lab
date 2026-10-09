@@ -43,8 +43,8 @@
  * it after any cross-repo pass, and after anything that changes a workflow.
  *
  * Usage (from the crypto-lab repo root):
- *   node tools/deploy-sync.js          Report; exit 0 always.
- *   node tools/deploy-sync.js check    Same report; exit 1 on any lab that is stale.
+ *   node tools/deploy-sync.js          Report; exit 1 for unavailable or pending verification.
+ *   node tools/deploy-sync.js check    Same report; exit 1 on stale, pending or unreadable evidence.
  *   node tools/deploy-sync.js selftest Offline: the stale-cause classifier against fixtures.
  */
 'use strict';
@@ -234,6 +234,7 @@ async function inspect({ repo, workflow, publishers = [] }) {
   const pagesRaw = await sh('gh', ['api', `repos/systemslibrarian/${repo}/pages`,
     '--jq', '.build_type'], dir);
   const buildType = pagesRaw ? pagesRaw.trim() : null;
+  if (!buildType) return { repo, verdict: 'API-ERROR' };
   const unserved = judgePublishPath(buildType, publishers);
   if (unserved) {
     return { repo, verdict: 'UNSERVED', head, buildType, publishers,
@@ -266,8 +267,9 @@ async function inspect({ repo, workflow, publishers = [] }) {
 
   // An older green deploy still counts if nothing outside .github/ changed since.
   const last = shipped[0].headSha;
-  const changed = (await sh('git', ['diff', '--name-only', last, head], dir) || '')
-    .split('\n').filter((f) => f && !f.startsWith('.github/'));
+  const diff = await sh('git', ['diff', '--name-only', last, head], dir);
+  if (diff === null) return { repo, verdict: 'API-ERROR' };
+  const changed = diff.split('\n').filter((f) => f && !f.startsWith('.github/'));
   if (!changed.length) return { repo, verdict: 'CURRENT', head, detail: 'only .github/ changed since the last deploy' };
 
   return { repo, verdict: 'STALE', head, ...classifyStaleCause(real, head),
@@ -355,7 +357,7 @@ async function main() {
   const notes = unservedAll.filter((r) => r.cause === 'ARTIFACT-UNUSED');
   const stale = [...by('STALE'), ...by('NEVER-DEPLOYED')];
   const pending = by('PENDING');
-  const broken = [...by('API-ERROR'), ...by('NO-MAIN')];
+  const broken = [...by('API-ERROR'), ...by('NO-MAIN'), ...by('NO-WORKFLOW-NAME')];
 
   console.log(`Deploying labs checked: ${rows.length} ` +
     `(${by('CURRENT').length} current, ${stale.length} stale, ${pending.length} pending`
@@ -400,7 +402,7 @@ async function main() {
     for (const r of broken) console.log(`  ${r.repo}  ${r.verdict}`);
   }
   if (!stale.length) {
-    if (unserved.length) return 1;
+    if (unserved.length || broken.length || pending.length) return 1;
     console.log('\nEvery lab\'s live site is built from the sha on its main.');
     return 0;
   }

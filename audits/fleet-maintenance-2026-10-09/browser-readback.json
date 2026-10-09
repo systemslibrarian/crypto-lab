@@ -1,0 +1,36 @@
+[
+  {
+    "width": 1366,
+    "cards": 227,
+    "unique": 227,
+    "overflow": false,
+    "newCards": [
+      {
+        "text": "A CIPHER INSIDE A BROKEN PROTOCOL\nWEP Crack\nRun real RC4 inside WEP protected bodies, observe IV reuse, forge a message by repairing its CRC-32, and attempt bounded PTW key recovery using only traffic generated in the browser.\nRC4\nWEP PROTECTED BODIES\nCRC-32\nPTW\n→\nADDED OCT 2026\nINTERMEDIATE\nNEW",
+        "visible": true
+      },
+      {
+        "text": "FIT, FORECAST, THEN VERIFY\nLFSR Forge\nStep binary LFSRs, synthesize a recurrence with Berlekamp–Massey, freeze an unseen forecast, and recover tiny Geffe generator states with a bounded correlation attack on known keystream.\nLFSR\nBERLEKAMP–MASSEY\nGEFFE GENERATOR\nKNOWN KEYSTREAM\n→\nADDED OCT 2026\nINTERMEDIATE\nNEW",
+        "visible": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "cards": 227,
+    "unique": 227,
+    "overflow": false,
+    "newCards": [
+      {
+        "text": "A CIPHER INSIDE A BROKEN PROTOCOL\nWEP Crack\nRun real RC4 inside WEP protected bodies, observe IV reuse, forge a message by repairing its CRC-32, and attempt bounded PTW key recovery using only traffic generated in the browser.\nRC4\nWEP PROTECTED BODIES\nCRC-32\nPTW\n→\nADDED OCT 2026\nINTERMEDIATE\nNEW",
+        "visible": true
+      },
+      {
+        "text": "FIT, FORECAST, THEN VERIFY\nLFSR Forge\nStep binary LFSRs, synthesize a recurrence with Berlekamp–Massey, freeze an unseen forecast, and recover tiny Geffe generator states with a bounded correlation attack on known keystream.\nLFSR\nBERLEKAMP–MASSEY\nGEFFE GENERATOR\nKNOWN KEYSTREAM\n→\nADDED OCT 2026\nINTERMEDIATE\nNEW",
+        "visible": true
+      }
+    ],
+    "errors": []
+  }
+]

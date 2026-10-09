@@ -1,6 +1,6 @@
 # Source-backed choices between overlapping exhibits
 
-These descriptions retain both labs and acknowledge shared learning content. They offer different lesson paths through features that already exist; they do not establish disjoint implementations or a cryptographic correctness audit. Current catalog changes remain proposed until approved and merged.
+These descriptions retain both labs and acknowledge shared learning content. They offer different lesson paths through features that already exist; they do not establish disjoint implementations or a cryptographic correctness audit. The authored catalog guidance is reviewed separately from application correctness and deployment evidence.
 
 ## Babel Hash / Hash Zoo
 
@@ -20,4 +20,4 @@ Reviewed source:
 - [LMS Ledger](https://github.com/systemslibrarian/crypto-lab-lms-ledger/tree/360d7c6da3407c130648d58926c40384d3be8f09): README and `src/lms.ts` (small HSS rollover and reuse forgery).
 - [LMS/XMSS](https://github.com/systemslibrarian/crypto-lab-lms-xmss/tree/a9d82427ffa5093782ab84375a8e22ae80d14e0d): README and `src/main.ts`, `src/forge.ts`, `src/lmots.ts`. The change from previously reviewed 6377466a1d70008df74aad70bde01cd8b28868ef is dependency metadata only.
 
-No lab merge, removal, renaming, runtime change or deployment is proposed. These source reviews are separate from live-browser evidence and binary provenance.
+This catalog update preserves both labs and changes no lab runtime code, name or deployment. These source reviews are separate from live-browser evidence and binary provenance.

@@ -57,6 +57,8 @@ jobs:
         working-directory: tools
       - name: No page scrolls sideways, overflows its container, or crushes prose
         run: node tools/teach-layout.js
+      - name: Hub award link preserves its visible accessible name
+        run: node --test tests/hub-accessible-name.test.cjs
 
   drift:
     # Opens each worksheet's live exhibit and confirms every control it names is still

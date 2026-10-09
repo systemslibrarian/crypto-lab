@@ -2222,7 +2222,7 @@ CRYSTALS-Dilithium (ML-DSA) digital signatures in the browser. Generate lattice-
 
 - **Implements:** Ed25519 `src/bench/runner.ts:111`, Fiat-Shamir `src/ui/viz-render.ts:10`, ML-DSA `src/crypto/mldsa.ts:47`, SHA-256 `src/crypto/seal.ts:43`
 - **References:** AES, Dilithium, ECDSA, Falcon, Grover's algorithm, Kyber, LWE, ML-KEM, NTT, P-256, Pairing, RSA, RSA-PSS, SHAKE, SLH-DSA, SPHINCS+, Schnorr, Shor's algorithm
-- **Attacks shown:** Discrete log `src/ui/tab3-how-it-works.ts:129`, Factoring `src/ui/tab2-compare.ts:20`, Fault injection `README.md:491`, Key recovery `src/ui/timing-variability.ts:242`, Side-channel (unspecified) `src/data/runtime.ts:118`, Timing side-channel `src/data/runtime.ts:90`
+- **Attacks shown:** Discrete log `src/ui/tab3-how-it-works.ts:129`, Factoring `src/ui/tab2-compare.ts:20`, Fault injection `README.md:502`, Key recovery `src/ui/timing-variability.ts:242`, Side-channel (unspecified) `src/data/runtime.ts:118`, Timing side-channel `src/data/runtime.ts:90`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 

@@ -910,7 +910,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Shamir secret sharing
 
-- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:111`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:108`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:291`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`
+- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:123`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:108`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:291`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`
 - **Also referenced by:** *KpqC Pair*, *Misty Lens*, *Patron Shield*, *DKG Gate*, *Garbled Gate*, *Iron Serpent*, *Biham Lens*, *Babel Hash*, *OT Gate*, *Oblivious Shelf*, *GG20 Wallet*, *Ring Sign*, *Lattice Fault*, *VRF Gate*, *Schnorr Forge*, *IBE Gate*, *ORAM Vault*, *Paillier Gate*, *Threshold ML-DSA*, *Bulletproofs*, *ZK Arena*, *Jevil*, *PQ Families*, *Multivariate UOV*, *Time-Lock Puzzle*, *VDF*, *Frozen Heart*, *Credential Veil*, *SPDZ Forge*, *Traitor Trace*, *Lattice Gentle*, *Beacon Lock*, *Card Trick*, *Matsui Line*, *Attribute Gate*, *Fold Gate*, *Covert Channel Studio*, *Return Path*, *Function Key*
 
 ### signature
@@ -3937,8 +3937,8 @@ Real Ed25519 over JSON — a signature binds an exact byte string, never the par
 
 Five hospitals compute a combined enrollment total without revealing any individual counts, demonstrating additive-homomorphic MPC in the browser.
 
-- **Implements:** Shamir secret sharing `src/lib.rs:111`
-- **Source review:** [14e5c0d540be](https://github.com/systemslibrarian/crypto-lab-silent-tally/commit/14e5c0d540be889d414498e74d8f61b951ef639e) — Rust field arithmetic and Shamir share generation/reconstruction reviewed
+- **Implements:** Shamir secret sharing `src/lib.rs:123`
+- **Source review:** [278c43220ce1](https://github.com/systemslibrarian/crypto-lab-silent-tally/commit/278c43220ce1a977acdfdd2d1314f4bbb07e268a) — Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses
 - **References:** Ed25519, ElGamal, FROST, Feldman VSS, Paillier, Pedersen commitment
 - **Attacks shown:** Brute force `src-ts/exhibits/exhibit6.ts:260`
 - **Standards body:** —

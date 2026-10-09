@@ -216,16 +216,16 @@
     "note": "Rust crypto core reviewed; bundled WASM is built from that core"
   },
   "crypto-lab-silent-tally": {
-    "commit": "14e5c0d540be889d414498e74d8f61b951ef639e",
-    "reviewed": "2026-09-17",
+    "commit": "278c43220ce1a977acdfdd2d1314f4bbb07e268a",
+    "reviewed": "2026-10-08",
     "add": [
-      "Shamir secret sharing@src/lib.rs:111"
+      "Shamir secret sharing@src/lib.rs:123"
     ],
     "covered": [
       "Rust"
     ],
     "implementation": "Rust/WASM",
-    "note": "Rust field arithmetic and Shamir share generation/reconstruction reviewed"
+    "note": "Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses"
   },
   "crypto-lab-snark-arena": {
     "commit": "9a72143f2668bb590cde2e2296b4460e2e4928bb",

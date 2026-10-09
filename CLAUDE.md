@@ -599,15 +599,13 @@ is the case to know — its vectors file cites FIPS 203 and ACVP beside pinned h
 in its own header that the bytes come from `@noble/post-quantum`, "which passes the NIST
 ACVP ML-KEM test suite". A strong provenance chain, and not a published vector.
 
-**Nine tracked files under `tools/` are not checkers and are not run in the loop**, and the
-authoritative list is the generated footnote under README.md's table rather than a count
-here — this sentence said "three" until 2026-10-02 and named three, while the footnote
-`tools-sync` writes named nine: `catalog-vocab.js`, `clone-source.js`,
-`depth-audit-report.js`, `dispatch-mutations.js`, `render-registry.mjs`,
-`render-verification.mjs`, `sibling-labs.js`, `transform.mjs`, `validate-manifest.mjs`.
-A hand-kept count beside a generated one is the drift this file keeps re-finding; read the
-footnote. The three below are here because their REASONING is worth carrying, not because
-they are the whole set:
+**A runnable tool is not necessarily a routine checker.** The generated README table
+lists commands with declared inputs and purposes; its footnote names support modules
+without standalone commands. Renderers and the migration helper now declare their
+invocations too, so table membership must not be read as live-fleet coverage. Read
+`docs/maintenance-coverage.md` for each tool's disposition and its header for the
+specific inputs and effects. The three below are here because their REASONING is
+worth carrying, not because they are the whole set:
 
 
 | File | What it is |

@@ -1,4 +1,12 @@
 #!/usr/bin/env node
+/*
+ * catalog-structure-check.js — check catalog document structure and search behavior.
+ *
+ * Run: node tools/catalog-structure-check.js
+ * Prevents: misplaced catalog cards, missing search semantics and broken metadata, alias or proximity queries
+ * Reads: index.html, catalog-search.js and the query fixtures declared in this script
+ * This source and fixture check does not exercise browser rendering.
+ */
 'use strict';
 
 const fs = require('fs');

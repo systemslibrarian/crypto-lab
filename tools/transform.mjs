@@ -4,6 +4,11 @@
  * attestation-gate shape: the merge's own exit status sets a flag, and the
  * deploy dispatch reads that flag. Nothing re-queries the API.
  *
+ * Run: node tools/transform.mjs --dry-run <workflow.yml>
+ * Prevents: a workflow repair discarding merge status or changing repository-specific dispatch behavior
+ * Reads: the supplied workflow YAML and dispatch-comment-sync.js's rationale normalizer
+ * This is an on-demand migration helper; omit --dry-run only after reviewing its output.
+ *
  * WHAT IS BEING REPLACED, AND WHY IT IS NOT A STYLE FIX
  *
  *   - name: Merge any bump whose gate went green

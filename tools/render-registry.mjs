@@ -1,3 +1,11 @@
+/*
+ * render-registry.mjs — render the verification portfolio from recorded manifest statuses.
+ *
+ * Run: node tools/render-registry.mjs [catalog-dir]
+ * Prevents: the generated verification portfolio drifting from its registry and manifest inputs
+ * Reads: verification/registry.yaml and sibling labs' verification/manifest.yaml; writes verification/README.md
+ * This publishing helper renders recorded statuses; it does not independently verify claims.
+ */
 import fs from 'fs';
 import path from 'path';
 import { createRequire } from 'module';

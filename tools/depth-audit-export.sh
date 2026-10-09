@@ -1,6 +1,11 @@
 #!/bin/bash
 # depth-audit-export.sh — export every lab's remote default branch into .scratch/.
 #
+# Run: node tools/depth-audit.js export
+# Prevents: assurance reports inheriting uncommitted or stale local clone contents
+# Reads: GitHub repository/default-branch listings and tarball endpoints through gh; records exports and read failures under .scratch/
+# This helper is invoked by depth-audit.js export, not scheduled as a second audit.
+#
 # Called by `node tools/depth-audit.js export`. Read-only against GitHub: it asks
 # for a tarball and writes nothing to any lab repository. It deliberately does NOT
 # use the local clones — those carry uncommitted work and stale branches, and the

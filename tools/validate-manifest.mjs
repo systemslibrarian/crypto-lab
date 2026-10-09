@@ -1,3 +1,11 @@
+/*
+ * validate-manifest.mjs — validate claim manifests against their schema and source evidence.
+ *
+ * Run: node tools/validate-manifest.mjs <manifest.yaml> [lab-dir] [catalog-dir]
+ * Prevents: unsupported, inconsistent or stale claim-manifest evidence passing validation
+ * Reads: the supplied manifest, lab source files, verification/schema.json and verification/reference-packs; --check-fixtures reads verification/fixtures
+ * Validation does not execute the claims' cryptographic verification procedures.
+ */
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';

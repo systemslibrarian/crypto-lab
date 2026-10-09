@@ -1,0 +1,146 @@
+[
+  {
+    "slug": "crypto-lab-silent-tally",
+    "previous": {
+      "added": "2026-04",
+      "updated": "2026-08",
+      "addedFrom": "2026-04-05T15:57:06Z",
+      "updatedFrom": "2026-08-15T21:19:53-04:00",
+      "updatedCommit": "a5c3e60b918d749b090b5e1bc7f13569d63ddaaa"
+    },
+    "current": {
+      "added": "2026-04",
+      "updated": "2026-10",
+      "addedFrom": "2026-04-05T15:57:06Z",
+      "updatedFrom": "2026-10-08T16:44:22-04:00",
+      "updatedCommit": "c220c9eb9c9eae5b48e15b36322c0cf92884cd64"
+    },
+    "sourceDiff": "commit c220c9eb9c9eae5b48e15b36322c0cf92884cd64\nAuthor:     Paul Clark <paul@systemslibrarian.dev>\nAuthorDate: Thu Oct 8 16:44:22 2026 -0400\nCommit:     Paul Clark <paul@systemslibrarian.dev>\nCommitDate: Thu Oct 8 16:44:22 2026 -0400\n\n    fix: sample Shamir coefficients uniformly with rejection\n\n README.md  |  4 +++-\n src/lib.rs | 44 ++++++++++++++++++++++++++++++++++++++++----\n 2 files changed, 43 insertions(+), 5 deletions(-)\n"
+  },
+  {
+    "slug": "crypto-lab-shamir-gate",
+    "previous": {
+      "added": "2026-04",
+      "updated": "2026-08",
+      "addedFrom": "2026-04-06T12:59:25Z",
+      "updatedFrom": "2026-08-19T03:47:38-04:00",
+      "updatedCommit": "def26b446e458bca1d7f755fe6831e032480dd06"
+    },
+    "current": {
+      "added": "2026-04",
+      "updated": "2026-10",
+      "addedFrom": "2026-04-06T12:59:25Z",
+      "updatedFrom": "2026-10-08T15:57:17Z",
+      "updatedCommit": "3f3245c84e087a32dda3fd39ee4f541d2091fed0"
+    },
+    "sourceDiff": "commit 3f3245c84e087a32dda3fd39ee4f541d2091fed0\nAuthor:     dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nAuthorDate: Thu Oct 8 15:57:17 2026 +0000\nCommit:     GitHub <noreply@github.com>\nCommitDate: Thu Oct 8 15:57:17 2026 +0000\n\n    chore(deps-dev): bump @types/node in /demos/shamir-gate (#14)\n    \n    Bumps [@types/node](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/types/node) from 20.19.39 to 26.6.4.\n    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)\n    - [Commits](https://github.com/DefinitelyTyped/DefinitelyTyped/commits/HEAD/types/node)\n    \n    ---\n    updated-dependencies:\n    - dependency-name: \"@types/node\"\n      dependency-version: 26.6.4\n      dependency-type: direct:development\n      update-type: version-update:semver-major\n    ...\n    \n    Signed-off-by: dependabot[bot] <support@github.com>\n    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n\n demos/shamir-gate/package-lock.json | 16 ++++++++--------\n demos/shamir-gate/package.json      |  2 +-\n 2 files changed, 9 insertions(+), 9 deletions(-)\n"
+  },
+  {
+    "slug": "crypto-lab-dead-sea-cipher",
+    "previous": {
+      "added": "2026-04",
+      "updated": "2026-08",
+      "addedFrom": "2026-04-06T11:08:46Z",
+      "updatedFrom": "2026-08-19T01:02:37-04:00",
+      "updatedCommit": "ccb69571087d29782af8929c2e6defbf1010ee59"
+    },
+    "current": {
+      "added": "2026-04",
+      "updated": "2026-10",
+      "addedFrom": "2026-04-06T11:08:46Z",
+      "updatedFrom": "2026-10-08T17:07:32Z",
+      "updatedCommit": "535b7d62d7b17dc3b5021958bcd5abdbc809e063"
+    },
+    "sourceDiff": "commit 535b7d62d7b17dc3b5021958bcd5abdbc809e063\nAuthor:     dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nAuthorDate: Thu Oct 8 17:07:32 2026 +0000\nCommit:     GitHub <noreply@github.com>\nCommitDate: Thu Oct 8 17:07:32 2026 +0000\n\n    chore(deps-dev): bump the npm-minor-and-patch group across 1 directory with 3 updates (#8)\n    \n    Bumps the npm-minor-and-patch group with 3 updates in the /demos/dead-sea-cipher directory: [@axe-core/playwright](https://github.com/dequelabs/axe-core-npm), [@playwright/test](https://github.com/microsoft/playwright) and [vite](https://github.com/vitejs/vite/tree/HEAD/packages/vite).\n    \n    \n    Updates `@axe-core/playwright` from 4.12.1 to 4.13.0\n    - [Release notes](https://github.com/dequelabs/axe-core-npm/releases)\n    - [Changelog](https://github.com/dequelabs/axe-core-npm/blob/develop/CHANGELOG.md)\n    - [Commits](https://github.com/dequelabs/axe-core-npm/commits/v4.13.0)\n    \n    Updates `@playwright/test` from 1.61.1 to 1.63.0\n    - [Release notes](https://github.com/microsoft/playwright/releases)\n    - [Commits](https://github.com/microsoft/playwright/compare/v1.61.1...v1.63.0)\n    \n    Updates `vite` from 8.0.16 to 8.3.2\n    - [Release notes](https://github.com/vitejs/vite/releases)\n    - [Changelog](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md)\n    - [Commits](https://github.com/vitejs/vite/commits/v8.3.2/packages/vite)\n    \n    ---\n    updated-dependencies:\n    - dependency-name: \"@axe-core/playwright\"\n      dependency-version: 4.13.0\n      dependency-type: direct:development\n      update-type: version-update:semver-minor\n      dependency-group: npm-minor-and-patch\n    - dependency-name: \"@playwright/test\"\n      dependency-version: 1.63.0\n      dependency-type: direct:development\n      update-type: version-update:semver-minor\n      dependency-group: npm-minor-and-patch\n    - dependency-name: vite\n      dependency-version: 8.3.2\n      dependency-type: direct:development\n      update-type: version-update:semver-minor\n      dependency-group: npm-minor-and-patch\n    ...\n    \n    Signed-off-by: dependabot[bot] <support@github.com>\n    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n\n demos/dead-sea-cipher/package-lock.json | 442 +++++++++++++-------------------\n demos/dead-sea-cipher/package.json      |   6 +-\n 2 files changed, 178 insertions(+), 270 deletions(-)\n"
+  },
+  {
+    "slug": "crypto-lab-sphincs-ledger",
+    "previous": {
+      "added": "2026-04",
+      "updated": "2026-08",
+      "addedFrom": "2026-04-06T10:15:14Z",
+      "updatedFrom": "2026-08-15T21:19:53-04:00",
+      "updatedCommit": "13ba5b97cb7810a6ddee56804ffae869956bf651"
+    },
+    "current": {
+      "added": "2026-04",
+      "updated": "2026-10",
+      "addedFrom": "2026-04-06T10:15:14Z",
+      "updatedFrom": "2026-10-07T17:05:55Z",
+      "updatedCommit": "58d2aa0c020f6e29feb1aea75af7bc41cb01fc23"
+    },
+    "sourceDiff": "commit 58d2aa0c020f6e29feb1aea75af7bc41cb01fc23\nAuthor:     dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nAuthorDate: Wed Oct 7 17:05:55 2026 +0000\nCommit:     GitHub <noreply@github.com>\nCommitDate: Wed Oct 7 17:05:55 2026 +0000\n\n    build(deps-dev): bump vitest in /demos/sphincs-ledger (#8)\n    \n    Bumps [vitest](https://github.com/vitest-dev/vitest/tree/HEAD/packages/vitest) from 3.2.7 to 5.0.3.\n    - [Release notes](https://github.com/vitest-dev/vitest/releases)\n    - [Changelog](https://github.com/vitest-dev/vitest/blob/main/docs/releases.md)\n    - [Commits](https://github.com/vitest-dev/vitest/commits/v5.0.3/packages/vitest)\n    \n    ---\n    updated-dependencies:\n    - dependency-name: vitest\n      dependency-version: 5.0.3\n      dependency-type: direct:development\n      update-type: version-update:semver-major\n    ...\n    \n    Signed-off-by: dependabot[bot] <support@github.com>\n    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n\n demos/sphincs-ledger/package-lock.json | 1939 ++++++--------------------------\n demos/sphincs-ledger/package.json      |    2 +-\n 2 files changed, 335 insertions(+), 1606 deletions(-)\n"
+  },
+  {
+    "slug": "crypto-lab-babel-hash",
+    "previous": {
+      "added": "2026-04",
+      "updated": "2026-08",
+      "addedFrom": "2026-04-06T20:51:13Z",
+      "updatedFrom": "2026-08-19T00:45:28-04:00",
+      "updatedCommit": "e2612adcd48c22d076c4a6fcf2f7e41833687c54"
+    },
+    "current": {
+      "added": "2026-04",
+      "updated": "2026-10",
+      "addedFrom": "2026-04-06T20:51:13Z",
+      "updatedFrom": "2026-10-08T11:22:10Z",
+      "updatedCommit": "61b037bbbf103fdfbcf9f1e1b4862ddfe2ccafae"
+    },
+    "sourceDiff": "commit 61b037bbbf103fdfbcf9f1e1b4862ddfe2ccafae\nAuthor:     dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nAuthorDate: Thu Oct 8 11:22:10 2026 +0000\nCommit:     GitHub <noreply@github.com>\nCommitDate: Thu Oct 8 11:22:10 2026 +0000\n\n    chore(deps-dev): bump vitest from 2.1.9 to 5.0.3 in /demos/babel-hash (#8)\n    \n    Bumps [vitest](https://github.com/vitest-dev/vitest/tree/HEAD/packages/vitest) from 2.1.9 to 5.0.3.\n    - [Release notes](https://github.com/vitest-dev/vitest/releases)\n    - [Changelog](https://github.com/vitest-dev/vitest/blob/main/docs/releases.md)\n    - [Commits](https://github.com/vitest-dev/vitest/commits/v5.0.3/packages/vitest)\n    \n    ---\n    updated-dependencies:\n    - dependency-name: vitest\n      dependency-version: 5.0.3\n      dependency-type: direct:development\n      update-type: version-update:semver-major\n    ...\n    \n    Signed-off-by: dependabot[bot] <support@github.com>\n    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n\n demos/babel-hash/package-lock.json | 2853 ++++++++----------------------------\n demos/babel-hash/package.json      |    2 +-\n 2 files changed, 651 insertions(+), 2204 deletions(-)\n"
+  },
+  {
+    "slug": "crypto-lab-aes-modes",
+    "previous": {
+      "added": "2026-04",
+      "updated": "2026-09",
+      "addedFrom": "2026-04-07T16:09:14Z",
+      "updatedFrom": "2026-09-23T06:12:21-04:00",
+      "updatedCommit": "648fdbf6b3a32534254af483f6011eb87379d2b2"
+    },
+    "current": {
+      "added": "2026-04",
+      "updated": "2026-10",
+      "addedFrom": "2026-04-07T16:09:14Z",
+      "updatedFrom": "2026-10-08T16:50:50-04:00",
+      "updatedCommit": "9858d25c8f8a050d5b74b699f0f82e3db233d837"
+    },
+    "sourceDiff": "commit 9858d25c8f8a050d5b74b699f0f82e3db233d837\nAuthor:     Paul Clark <paul@systemslibrarian.dev>\nAuthorDate: Thu Oct 8 16:50:50 2026 -0400\nCommit:     Paul Clark <paul@systemslibrarian.dev>\nCommitDate: Thu Oct 8 16:50:50 2026 -0400\n\n    fix: reject zero padding in CBC oracle and keep glossary in viewport\n\n README.md              |  5 +++++\n e2e/functional.spec.ts | 43 ++++++++++++++++++++-----------------\n e2e/glossary.spec.ts   | 21 ++++++++++++++++++\n src/helpers.ts         | 24 +++++++++++++++++++++\n src/oracle.test.ts     | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++\n src/oracle.ts          | 26 ++++++++++++----------\n styles/main.css        |  8 +++----\n 7 files changed, 150 insertions(+), 35 deletions(-)\n"
+  },
+  {
+    "slug": "crypto-lab-pki-chain",
+    "previous": {
+      "added": "2026-04",
+      "updated": "2026-10",
+      "addedFrom": "2026-04-12T23:03:40Z",
+      "updatedFrom": "2026-10-02T16:06:53-04:00",
+      "updatedCommit": "f718b44460ef6e66177af5fdeecd450e40fabbb1"
+    },
+    "current": {
+      "added": "2026-04",
+      "updated": "2026-10",
+      "addedFrom": "2026-04-12T23:03:40Z",
+      "updatedFrom": "2026-10-07T06:12:32-04:00",
+      "updatedCommit": "330a9265f31d1734ca3033ae2656ff6c033c50b3"
+    },
+    "sourceDiff": "commit 330a9265f31d1734ca3033ae2656ff6c033c50b3\nAuthor:     Paul Clark <paul@systemslibrarian.dev>\nAuthorDate: Wed Oct 7 06:12:32 2026 -0400\nCommit:     GitHub <noreply@github.com>\nCommitDate: Wed Oct 7 06:12:32 2026 -0400\n\n    Explain unauthorized TLS issuance with the October 2026 registry hijack case (#19)\n\n README.md   | 15 +++++++++++++++\n src/main.ts | 14 +++++++++++++-\n 2 files changed, 28 insertions(+), 1 deletion(-)\n"
+  },
+  {
+    "slug": "crypto-lab-pq-rotation",
+    "previous": {
+      "added": "2026-04",
+      "updated": "2026-08",
+      "addedFrom": "2026-04-19T19:52:51Z",
+      "updatedFrom": "2026-08-15T21:19:52-04:00",
+      "updatedCommit": "468759e55f793b7e8d334b198df2c95d926566fc"
+    },
+    "current": {
+      "added": "2026-04",
+      "updated": "2026-10",
+      "addedFrom": "2026-04-19T19:52:51Z",
+      "updatedFrom": "2026-10-08T09:55:45-04:00",
+      "updatedCommit": "e4ed05ac4184df5b5b5987a0747d0edbcae8b833"
+    },
+    "sourceDiff": "commit e4ed05ac4184df5b5b5987a0747d0edbcae8b833\nAuthor:     Paul Clark <paul@systemslibrarian.dev>\nAuthorDate: Thu Oct 8 09:55:45 2026 -0400\nCommit:     Paul Clark <paul@systemslibrarian.dev>\nCommitDate: Thu Oct 8 09:55:45 2026 -0400\n\n    Fix research citation contrast so Pages deployment passes\n\n src/style.css | 6 ++++++\n 1 file changed, 6 insertions(+)\n"
+  }
+]

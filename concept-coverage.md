@@ -247,6 +247,8 @@ Catalogued total moves to 225.*
 
 *Version 27 — files WEP Crack under §4 and §5 for RC4 protocol composition and the failure of an unkeyed ICV, and LFSR Forge under §4 and §30 for recurrence synthesis and bounded known-keystream correlation. WEP uses generated protected bodies rather than radio captures; LFSR prediction and original-state confirmation are distinct. These deepen covered concepts without declaring a gap closed. Catalogued total moves to 227.*
 
+*Version 28 — files RSA Small Roots under §7 for larger-prime high-bit leakage and §10 for exact integer lattice reduction. Its known-prefix exponent-3 RSA mode and factoring mode distinguish a finite bound, norm certificate, bounded root search and independent public verification. Source and served assets are verified; no concept status changes. Catalogued total moves to 228.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -388,7 +390,7 @@ KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault · Drift Key.
 ## II. Hardness assumptions (the trapdoor families)
 
 **7. Factoring — `COVERED`**
-Educational RSA · RSA Forge · Iron Letter · Factor Forge · Locks and Keys. Trapdoor, padding
+Educational RSA · RSA Forge · Iron Letter · Factor Forge · Locks and Keys · RSA Small Roots. Trapdoor, padding
 (OAEP/PSS), and RSA-OAEP measured against an elliptic-curve alternative.
 
 Locks and Keys is the way in to this concept for someone who has not met a key pair. It files
@@ -469,7 +471,7 @@ conformance.
 **10. Lattices (LWE / SIS / NTRU) — `DEEP`**
 Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · GGH Trapdoor · Dilithium Seal ·
 Dilithium Reject · Falcon Seal · HAWK · LLL Break · LWE Hints · Quantum Vault KpqC ·
-Lattice Gentle · Lattice Builder · KpqC Pair.
+Lattice Gentle · Lattice Builder · KpqC Pair · RSA Small Roots.
 Lattice Gentle is the entry point by hand — SVP/CVP and LLL worked through before any named
 scheme appears — and Lattice Builder is the entry point by eye, two dials straightening a
 scrambled field until the shortest vector is readable.
@@ -1095,7 +1097,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 227.**
+**Catalogued total: 228.**
 
 ---
 

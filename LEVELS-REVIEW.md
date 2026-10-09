@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 32 · Intermediate — 55 · Advanced — 140. Total 227.
+**Counts:** Beginner — 32 · Intermediate — 55 · Advanced — 141. Total 228.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -128,7 +128,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (140)
+## Advanced — `advanced` (141)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -240,6 +240,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) | rule | needs specialist background: BLS12 |
 | [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) | rule | needs specialist background: secret sharing, Shamir, VSS |
 | [Return Path](https://systemslibrarian.github.io/crypto-lab-return-path/) | rule | needs specialist background: differential cryptanalysis, boomerang, impossible differential |
+| [RSA Small Roots](https://systemslibrarian.github.io/crypto-lab-rsa-small-roots/) | hand | Exact integer lattice reduction, finite bound/norm certificate and independent public verification in two restricted RSA leakage models. |
 | [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) | rule | needs specialist background: GF(2 |
 | [SAT Break](https://systemslibrarian.github.io/crypto-lab-sat-break/) | hand | reads a cipher as a Boolean circuit, inspects CNF clauses, interprets solver models and blocking clauses, and distinguishes observed-pair consistency from complete function equivalence |
 | [Scloud+ Vault](https://systemslibrarian.github.io/crypto-lab-scloud-vault/) | rule | needs specialist background: lattice, LWE, learning with errors |

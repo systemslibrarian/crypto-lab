@@ -299,7 +299,7 @@
       "SM3",
       "SM4"
     ],
-    "note": "Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
+    "note": "Implements the SM9 family in src/sm9/ \u2014 extraction for both master key pairs, signature, key exchange, KEM and public key encryption \u2014 over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
   },
   "crypto-lab-vector-gate": {
     "commit": "ef85d2adf408b905b194956b25996c4b7dddcd01",
@@ -319,7 +319,7 @@
   "crypto-lab-locks-and-keys": {
     "commit": "6b23b1fa6cde4f39c3f20a6e0468da2c913eb430",
     "reviewed": "2026-10-04",
-    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public half could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md."
+    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public half could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (\u00a77.1 RSAES-OAEP, \u00a78.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md."
   },
   "crypto-lab-what-is-pqc": {
     "commit": "193e2248a9530e88a0b88ebcd78537cce20832c3",
@@ -390,5 +390,17 @@
       "Padding oracle"
     ],
     "note": "Read RC4 KSA/PRGA, WEP protected-body/CRC-32 and PTW engines, public attacker contracts, receiver/secret validation, README and tests at this SHA. Generated traffic only, not complete 802.11 frames or a real-network capture tool. The RC4 anchor points to the keystream engine rather than a UI type. Chosen-ciphertext attack was picked from a build brief and Padding oracle from a sibling link, neither a demonstrated oracle attack here; remove those credits. CRC-32 ciphertext forgery and bounded probabilistic PTW recovery are actual computations; exact key equality is checked separately. 149 unit, 2 accessibility and 49 claims/interaction tests passed."
+  },
+  "crypto-lab-rsa-small-roots": {
+    "commit": "71e571b0b8524400a2c0e1f299adff8c46ee1087",
+    "reviewed": "2026-10-09",
+    "add": [
+      "RSA@src/simulator/oracle.ts:23"
+    ],
+    "remove": [
+      "RSA-OAEP",
+      "RSA-PSS"
+    ],
+    "note": "Read exact public challenge, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, strict finite/norm bounds, bounded Sturm search, worker allowlists and simulator acceptance at this SHA. Implements textbook exponent-3 RSA and larger-prime high-bit leakage attacks, not RSA-OAEP or RSA-PSS. Prediction, certificate, recovery and incomplete search remain distinct; not arbitrary RSA decryption. 43 unit/fixture and 14 browser/claim tests executed successfully. The inspected source is unchanged from the tested implementation; this SHA adds a JSON-report unit-count gate. Existing main run 37894238587 passed and published; live JavaScript and CSS matched the inspected build byte for byte. Publication was observed, not triggered by this maintenance session."
   }
 }

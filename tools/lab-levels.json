@@ -1378,6 +1378,12 @@
    "level": "intermediate",
    "why": "binary polynomial recurrences, finite-prefix synthesis and conditional state recovery; forecast verification is separate from original-state confirmation",
    "reviewed": "hand"
+  },
+  "crypto-lab-rsa-small-roots": {
+   "title": "RSA Small Roots",
+   "level": "advanced",
+   "why": "Exact integer lattice reduction, finite bound/norm certificate and independent public verification in two restricted RSA leakage models.",
+   "reviewed": "hand"
   }
  }
 }

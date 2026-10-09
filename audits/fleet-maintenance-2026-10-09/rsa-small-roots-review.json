@@ -1,5 +1,5 @@
 {
-  "commit": "1ce5a8ca665b7946bb01958cbf2a9a9295fe7a84",
+  "commit": "71e571b0b8524400a2c0e1f299adff8c46ee1087",
   "reviewed": "2026-10-09",
   "add": [
     "RSA@src/simulator/oracle.ts:23"
@@ -8,5 +8,5 @@
     "RSA-OAEP",
     "RSA-PSS"
   ],
-  "note": "Read exact public challenge, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, strict finite/norm bounds, bounded Sturm search, worker allowlists and simulator acceptance at this SHA. Implements textbook exponent-3 RSA and larger-prime high-bit leakage attacks, not RSA-OAEP or RSA-PSS. Prediction, certificate, recovery and incomplete search remain distinct; not arbitrary RSA decryption. 43 unit/fixture and 14 browser/claim tests executed successfully. Current-main publication gate failed on ANSI-colored test-count parsing; repair PR1 is awaiting review. This card is staged until deployment and served-byte evidence are verified."
+  "note": "Read exact public challenge, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, strict finite/norm bounds, bounded Sturm search, worker allowlists and simulator acceptance at this SHA. Implements textbook exponent-3 RSA and larger-prime high-bit leakage attacks, not RSA-OAEP or RSA-PSS. Prediction, certificate, recovery and incomplete search remain distinct; not arbitrary RSA decryption. 43 unit/fixture and 14 browser/claim tests executed successfully. The inspected source is unchanged from the tested implementation; this SHA adds a JSON-report unit-count gate. Existing main run 37894238587 passed and published; live JavaScript and CSS matched the inspected build byte for byte. Publication was observed, not triggered by this maintenance session."
 }

@@ -57,6 +57,17 @@ class VerificationPolicyTests(unittest.TestCase):
         checks.append({'name': 'browser-quality', 'status': 'completed', 'conclusion': 'success'})
         self.assertTrue(required_jobs_passed(checks, ['build', 'browser-quality']))
 
+    def test_quantum_native_and_browser_gates_are_independent_and_pr_fuzz_build_is_required(self):
+        slug = 'crypto-lab-quantum-vault-kpqc'
+        good = [{'name': name, 'status': 'completed', 'conclusion': 'success'}
+                for name in required_pr_jobs(slug)]
+        self.assertTrue(required_jobs_passed(good, required_pr_jobs(slug)))
+        for name in required_pr_jobs(slug):
+            self.assertFalse(required_jobs_passed([j for j in good if j['name'] != name], required_pr_jobs(slug)))
+        self.assertFalse(required_jobs_passed([good[1]], required_main_jobs(slug)))
+        self.assertEqual(optional_main_step_skips(slug),
+                         {'Build Vite static bundle': ['Upload Playwright report on failure']})
+
     def test_timing_quality_is_required_without_changing_deploy_dependencies(self):
         required = required_main_jobs('crypto-lab-timing-oracle')
         checks = [{'name': 'build', 'status': 'completed', 'conclusion': 'success'}]
@@ -133,6 +144,26 @@ class VerificationPolicyTests(unittest.TestCase):
         diagnostic['steps'][1]['name'] = 'Run actions/upload-pages-artifact@v5'
         self.assertFalse(required_jobs_have_successful_steps([{'jobs': [diagnostic]}], ['e2e'],
                                                            optional_main_step_skips('crypto-lab-musig-gate')))
+
+    def test_later_rerun_of_an_older_id_is_selected_for_every_outcome(self):
+        old = dict(workflow_id=7, id=1, created_at='2026-10-09T01:00:00Z',
+                   run_started_at='2026-10-09T01:00:00Z', run_attempt=1,
+                   conclusion='failure', updated_at='2026-10-09T05:00:00Z')
+        new = dict(old, id=2, created_at='2026-10-09T02:00:00Z',
+                   run_started_at='2026-10-09T02:00:00Z', conclusion='success',
+                   updated_at='2026-10-09T04:00:00Z')
+        for inputs in [[old, new], [new, old]]:
+            self.assertEqual(latest_workflow_runs(inputs), [new])
+        for outcome in ['success', 'failure', 'cancelled', None]:
+            retry = dict(old, run_started_at='2026-10-09T03:00:00Z',
+                         run_attempt=2, conclusion=outcome)
+            for inputs in [[old, new, retry], [retry, new, old]]:
+                with self.subTest(outcome=outcome):
+                    self.assertEqual(latest_workflow_runs(inputs), [retry])
+        # Null attempt-start data uses the same explicit legacy fallback as
+        # absent data, rather than completion time or an invented success.
+        legacy = dict(new, run_started_at=None)
+        self.assertEqual(latest_workflow_runs([legacy, old]), [legacy])
 
 
 if __name__ == '__main__':

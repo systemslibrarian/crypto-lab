@@ -299,7 +299,7 @@
       "SM3",
       "SM4"
     ],
-    "note": "Implements the SM9 family in src/sm9/ \u2014 extraction for both master key pairs, signature, key exchange, KEM and public key encryption \u2014 over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
+    "note": "Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
   },
   "crypto-lab-vector-gate": {
     "commit": "ef85d2adf408b905b194956b25996c4b7dddcd01",
@@ -421,5 +421,14 @@
       "Side-channel (unspecified)"
     ],
     "note": "Read README.md, renderScopePanel in src/ui/panels.ts and the naive-MAC/Keccak implementation at this source SHA. The scope panel explicitly lists the length-extension attack itself as deliberately not built and links to Mac Race and Babel Hash; it is a contrast to the sponge/KMAC mechanisms, not an executed attack in this lab. Remove that prose-derived attack credit. Preserve actual computations and sibling links. The October8 NIST SP800185 Revision1 initial public draft is documented as a draft; this lab follows final SP800185 and does not establish draft streaming-API conformance. Also read KNOWN-GAPS.md: line24 explicitly says the append forgery is never key recovery, and line31 states lack of side-channel hardening rather than demonstrating a side-channel attack. Those two negated-limit credits are removed as well."
+  },
+  "crypto-lab-frodo-vault": {
+    "commit": "54665d57569765018c17caa552ad07a1d76507fb",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Side-channel (unspecified)"
+    ],
+    "note": "Read README.md, src/math.ts, src/frodo-kem.ts and src/main.ts including all actual toy-LWE, KEM, comparison, hybrid and failure handlers at this exact source SHA. README28 discusses raw LWE CPA security and the FO transform; it does not execute a chosen-plaintext attack. The source side-channel matches explicitly disclaim constant-time or side-channel guarantees and link related experiments; neither benchmarks nor missing hardening demonstrate a secret-dependent oracle or attack. Remove only those two prose-derived credits. Retain the real chosen-ciphertext tamper experiment: kemTamper flips an actual ciphertext bit and kemDecap calls the real KEM with the stored secret key, showing an unrelated implicit-rejection secret. This is a bounded tamper/rejection lesson, not adaptive-oracle exploitation or key recovery. No new algorithm names, categories or source/compiler provenance are inferred; opaque third-party WASM remains a separate evidence boundary."
   }
 }

@@ -391,10 +391,10 @@
   },
   "crypto-lab-frodo-vault": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-12T19:38:03Z",
-   "updatedFrom": "2026-08-15T21:19:49-04:00",
-   "updatedCommit": "3abbb72284acb4dd45e2a07281a430657b7035a5"
+   "updatedFrom": "2026-10-09T16:53:56-04:00",
+   "updatedCommit": "63360a86896297ea04fea4d90c72cb3ee9740e1d"
   },
   "crypto-lab-bike-vault": {
    "added": "2026-04",

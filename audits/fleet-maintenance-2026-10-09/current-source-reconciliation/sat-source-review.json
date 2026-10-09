@@ -1,0 +1,82 @@
+{
+  "previousPin": "dbbdf566f62d16a7f8cf228b96339af319426772",
+  "inspectedSha": "22cf78e9dd3e1f1d3dcd9901b0dbed3bd1972508",
+  "sourceRead": [
+    "SPN encrypt/decrypt and key schedule",
+    "CNF gate constraints and validation",
+    "native solver loading, query/model validation, blocking and cancellation states",
+    "independent exhaustive worker",
+    "direct pair/codebook verifier",
+    "teaching UI status, benchmarking and stop handling",
+    "README and owner checksum test/docs diff"
+  ],
+  "protected": [
+    {
+      "file": "src/crypto/spn.ts",
+      "oldBlob": "d3687258f9a5cf115425c16935bcbf697e0e3d54",
+      "currentBlob": "d3687258f9a5cf115425c16935bcbf697e0e3d54",
+      "unchanged": true
+    },
+    {
+      "file": "src/cnf/encode.ts",
+      "oldBlob": "2b8c8bf74ac46b8c8d6ef60904bf3d132f7fb290",
+      "currentBlob": "2b8c8bf74ac46b8c8d6ef60904bf3d132f7fb290",
+      "unchanged": true
+    },
+    {
+      "file": "src/workers/solve.ts",
+      "oldBlob": "66a09283be597ef01a4fa809cc618e0a69430605",
+      "currentBlob": "66a09283be597ef01a4fa809cc618e0a69430605",
+      "unchanged": true
+    },
+    {
+      "file": "src/workers/exhaustive.ts",
+      "oldBlob": "2050036eced41db6be4ebf8895cea8213f5e4af2",
+      "currentBlob": "2050036eced41db6be4ebf8895cea8213f5e4af2",
+      "unchanged": true
+    },
+    {
+      "file": "src/verify.ts",
+      "oldBlob": "8306d7dba9fd869d7948227c83d3f7950ec5918a",
+      "currentBlob": "8306d7dba9fd869d7948227c83d3f7950ec5918a",
+      "unchanged": true
+    },
+    {
+      "file": "src/main.ts",
+      "oldBlob": "e05709d8db1268b4c27576ca50a4957e43f78760",
+      "currentBlob": "e05709d8db1268b4c27576ca50a4957e43f78760",
+      "unchanged": true
+    },
+    {
+      "file": "README.md",
+      "oldBlob": "9abe8145eb27258acabdcffc390654f2b3096962",
+      "currentBlob": "9abe8145eb27258acabdcffc390654f2b3096962",
+      "unchanged": true
+    },
+    {
+      "file": "solver/wrapper.cpp",
+      "oldBlob": "dc86352b0c9c0960a27ab71745dcb06a04104413",
+      "currentBlob": "dc86352b0c9c0960a27ab71745dcb06a04104413",
+      "unchanged": true
+    },
+    {
+      "file": "solver/build.sh",
+      "oldBlob": "6fe54b16001072a2bb87b6a8627c383b67f31e26",
+      "currentBlob": "6fe54b16001072a2bb87b6a8627c383b67f31e26",
+      "unchanged": true
+    },
+    {
+      "file": "public/cadical.mjs",
+      "oldBlob": "458ce044aa42dcb1eee00d8f113697ff85e66812",
+      "currentBlob": "458ce044aa42dcb1eee00d8f113697ff85e66812",
+      "unchanged": true
+    },
+    {
+      "file": "public/cadical.wasm",
+      "oldBlob": "d89d5d0fc2dea7dc7101b2592dd36f0445b88e7d",
+      "currentBlob": "d89d5d0fc2dea7dc7101b2592dd36f0445b88e7d",
+      "unchanged": true
+    }
+  ],
+  "boundary": "Owner source unchanged except new hash documentation controls. Source/binary digest consistency does not establish compiler reproduction. Partial f5076bf0 preserved."
+}

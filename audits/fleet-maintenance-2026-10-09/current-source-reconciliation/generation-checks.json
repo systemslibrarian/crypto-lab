@@ -1,0 +1,68 @@
+[
+  {
+    "command": "node tools/catalog-evidence.js write --lab crypto-lab-aes-modes",
+    "startingHubSha": "66757e8f069bd4f70995d0dfe74d21dd85b2dae4",
+    "sourceState": "working branch before final metadata commit",
+    "startedAt": "2026-10-09T20:48:11.855629+00:00",
+    "finishedAt": "2026-10-09T20:48:13.905437+00:00",
+    "exit": 0,
+    "result": "passed",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/generation-0.log",
+    "logSha256": "d3f9fa0f358a301e2073348cf16e35b33cc62fc5b3dab295268f13449c27915a"
+  },
+  {
+    "command": "node tools/catalog-evidence.js write --lab crypto-lab-blind-sign",
+    "startingHubSha": "66757e8f069bd4f70995d0dfe74d21dd85b2dae4",
+    "sourceState": "working branch before final metadata commit",
+    "startedAt": "2026-10-09T20:48:13.905941+00:00",
+    "finishedAt": "2026-10-09T20:48:15.455173+00:00",
+    "exit": 0,
+    "result": "passed",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/generation-1.log",
+    "logSha256": "d3f9fa0f358a301e2073348cf16e35b33cc62fc5b3dab295268f13449c27915a"
+  },
+  {
+    "command": "node tools/catalog-evidence.js write --lab crypto-lab-sat-break",
+    "startingHubSha": "66757e8f069bd4f70995d0dfe74d21dd85b2dae4",
+    "sourceState": "working branch before final metadata commit",
+    "startedAt": "2026-10-09T20:48:15.455518+00:00",
+    "finishedAt": "2026-10-09T20:48:17.925473+00:00",
+    "exit": 0,
+    "result": "passed",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/generation-2.log",
+    "logSha256": "d3f9fa0f358a301e2073348cf16e35b33cc62fc5b3dab295268f13449c27915a"
+  },
+  {
+    "command": "node tools/catalog-sync.js",
+    "startingHubSha": "66757e8f069bd4f70995d0dfe74d21dd85b2dae4",
+    "sourceState": "working branch before final metadata commit",
+    "startedAt": "2026-10-09T20:48:17.925908+00:00",
+    "finishedAt": "2026-10-09T20:48:18.133260+00:00",
+    "exit": 0,
+    "result": "passed",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/generation-3.log",
+    "logSha256": "84dcffb225ba4a79cd5152fea4fedca8454781cfcb62fb6d4d48091cbf1b2c0c"
+  },
+  {
+    "command": "node tools/readme-sync.js",
+    "startingHubSha": "66757e8f069bd4f70995d0dfe74d21dd85b2dae4",
+    "sourceState": "working branch before final metadata commit",
+    "startedAt": "2026-10-09T20:48:18.133564+00:00",
+    "finishedAt": "2026-10-09T20:48:18.205980+00:00",
+    "exit": 0,
+    "result": "passed",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/generation-4.log",
+    "logSha256": "a0b5c65341b5a200af56d2b096624a6f6f64d0029352842a111ac33e898f15d8"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify",
+    "startingHubSha": "66757e8f069bd4f70995d0dfe74d21dd85b2dae4",
+    "sourceState": "working branch before final metadata commit",
+    "startedAt": "2026-10-09T20:48:18.206259+00:00",
+    "finishedAt": "2026-10-09T20:49:06.756318+00:00",
+    "exit": 0,
+    "result": "passed",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/generation-5.log",
+    "logSha256": "367b6184b800e2fdd6bca350c11bc483990fa7a2b64f0293a8125f6350147c1e"
+  }
+]

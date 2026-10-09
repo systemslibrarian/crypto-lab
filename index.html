@@ -6957,12 +6957,16 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-frodo-vault/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-frodo-vault/"
             data-implements="FrodoKEM@src/frodo-kem.ts:54 | LWE@src/math.ts:173 | ML-KEM@src/frodo-kem.ts:63 | SHA-256@src/main.ts:243"
             data-references="AES | BIKE | Classic McEliece | Dilithium | ECDH | Falcon | Fujisaki-Okamoto transform | Gaussian mechanism | HQC | Kyber | ML-DSA | NTT | Ring-LWE | SHAKE | SLH-DSA"
-            data-attacks="Chosen-ciphertext attack@src/main.ts:163 | Chosen-plaintext attack@README.md:26 | Side-channel (unspecified)@src/main.ts:732"
+            data-attacks="Chosen-ciphertext attack@src/main.ts:163"
             data-standards="ISO | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="54665d57569765018c17caa552ad07a1d76507fb"
+            data-review-note="Read README.md, src/math.ts, src/frodo-kem.ts and src/main.ts including all actual toy-LWE, KEM, comparison, hybrid and failure handlers at this exact source SHA. README28 discusses raw LWE CPA security and the FO transform; it does not execute a chosen-plaintext attack. The source side-channel matches explicitly disclaim constant-time or side-channel guarantees and link related experiments; neither benchmarks nor missing hardening demonstrate a secret-dependent oracle or attack. Remove only those two prose-derived credits. Retain the real chosen-ciphertext tamper experiment: kemTamper flips an actual ciphertext bit and kemDecap calls the real KEM with the stored secret key, showing an unrelated implicit-rejection secret. This is a bounded tamper/rejection lesson, not adaptive-oracle exploitation or key recovery. No new algorithm names, categories or source/compiler provenance are inferred; opaque third-party WASM remains a separate evidence boundary."
+            data-added="2026-04" data-updated="2026-10"
+            data-level="advanced"
            
            
            

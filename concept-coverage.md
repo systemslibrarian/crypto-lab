@@ -238,6 +238,13 @@ pinned commit and the reading is in tools/catalog-reviewed.json; in both, the sc
 pointed at an import line and the pin moves it to the operation. No status changes — §2 and §16
 were both already `DEEP`. Catalogued total moves to 224.*
 
+*Version 26 — files SAT Break under §30. It encodes the same small SPN used by the
+cryptanalysis labs as Boolean clauses, asks a real CDCL solver for consistent keys, and
+checks each model against withheld pairs and the complete codebook. Its one-round fixture
+shows that recovering an equivalent encryption function can still leave the original key
+bits unidentified. The concept was already `COVERED`, so there is no status change.
+Catalogued total moves to 225.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -860,7 +867,7 @@ guarantee is the lesson; the mode is not broken.
 
 **30. Classical cryptanalytic technique — `COVERED`**
 Biham Lens (differential) · Matsui Line (linear) · Vigenère Break · Collision Vault ·
-Model Breach · LLL Break · Misty Lens · Return Path.
+Model Breach · LLL Break · Misty Lens · Return Path · SAT Break.
 
 Matsui Line completes the canonical pair. It is genuinely different mathematics —
 approximation *bias* and the piling-up lemma rather than difference propagation — and it
@@ -1086,7 +1093,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 224.**
+**Catalogued total: 225.**
 
 ---
 

@@ -2212,7 +2212,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">224</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">225</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -20496,6 +20496,28 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sat-break/" data-added="2026-10" data-updated="2026-10" data-level="advanced"
+            data-implements="Toy SPN@src/crypto/spn.ts:99"
+            data-unscanned="WebAssembly:1 | C/C++:1"
+            data-references="AES | SHA-256"
+            data-implementation="WASM"
+            data-review-commit="61d3fa5ef9a0e8196dffaf8d39e8ce3a7d46abdb"
+            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts and README.md. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set."
+            target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Constraint-Based Cryptanalysis</div>
+            <div class="project-title">SAT Break</div>
+            <div class="project-copy">Encode a toy cipher as Boolean clauses, recover consistent keys with a real SAT solver, and test how observations, withheld pairs, and equivalent keys limit the claim.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">SAT</span>
+                <span class="chip">CNF</span>
+                <span class="chip">CaDiCaL</span>
+                <span class="chip">Toy SPN</span>
+              </div>
+              <span class="arrow">&rarr;</span>
+            </div>
+          </a>
+
           <a class="project-card" data-category="SIGNATURES | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sm9-forge/" data-level="advanced" data-added="2026-09" data-updated="2026-09"
             data-implements="EC point arithmetic@src/attack/nonce-reuse.ts:92 | Pairing@src/sm9/encrypt.ts:223 | SM9@src/sm9/pairing.ts:57"
             data-references="BLS signatures | BLS12-381 | Boneh-Franklin IBE | DSA | ECDSA | Hash-to-curve | MD5 | One-time pad | SHA-256 | SM4"
@@ -20907,7 +20929,7 @@
       'World Ciphers': 'symmetric', 'AES Modes': 'symmetric',
       'MGM Mode': 'symmetric',
       'Drift Key': 'foundations', 'Noise to Numbers': 'foundations', 'Pulse Chain': 'foundations',
-      'Glass Box': 'cryptanalysis', 'Return Path': 'cryptanalysis',
+      'Glass Box': 'cryptanalysis', 'Return Path': 'cryptanalysis', 'SAT Break': 'cryptanalysis',
       'ChaCha20 Stream': 'symmetric', 'Format Ward': 'symmetric',
       'AEGIS Gate': 'symmetric', 'Ascon': 'symmetric',
       'Shadow Vault': 'symmetric',

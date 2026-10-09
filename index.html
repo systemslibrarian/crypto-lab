@@ -4487,13 +4487,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-silent-tally/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-silent-tally/" data-added="2026-04" data-updated="2026-10"
             data-implements="Shamir secret sharing@src/lib.rs:123"
             data-references="Ed25519 | ElGamal | FROST | Feldman VSS | Paillier | Pedersen commitment"
             data-attacks="Brute force@src-ts/exhibits/exhibit6.ts:260"
             data-implementation="Rust/WASM"
-            data-review-commit="278c43220ce1a977acdfdd2d1314f4bbb07e268a"
-            data-review-note="Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses"
+            data-review-commit="390d3dc54422f5abdfb194131049410bc6c960c9"
+            data-review-note="Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses Re-read current Rust field/sampler/sharing/reconstruction and README at this exact SHA after Vitest/publisher integrations; implementation unchanged from prior reviewed pin. Current18Rust/18TypeScript/12browser gates and published artifact checks retained; no compiler reproduction claim." data-level="advanced"
            
            
            
@@ -4576,15 +4576,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
-            data-implements="Ed25519@src/exhibits/attacks.ts:34 | FROST@crate/src/round2.rs:54 | SHA-512@src/exhibits/attacks.ts:78 | Shamir secret sharing@src/exhibits/attacks.ts:108"
-            data-comment-only="Shamir secret sharing@src/exhibits/attacks.ts:97"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/" data-added="2026-04" data-updated="2026-10"
+            data-implements="Ed25519@src/exhibits/attacks.ts:31 | FROST@crate/src/round2.rs:54 | SHA-512@src/exhibits/attacks.ts:75 | Shamir secret sharing@src/exhibits/attacks.ts:105"
+            data-comment-only="Shamir secret sharing@src/exhibits/attacks.ts:94"
             data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | Schnorr | secp256k1"
             data-attacks="Key recovery@src/exhibits/round1.ts:60 | Nonce reuse@src/exhibits/attacks-view.ts:2 | Side-channel (unspecified)@THREAT_MODEL.md:47"
             data-standards="IETF | NIST"
             data-implementation="Rust FROST crate / WASM"
-            data-review-commit="6908f85dbc1ebaaa2a87bab5eb093fa350ebde66"
-            data-review-note="Rust keygen, signing rounds and aggregation reviewed; TS src/exhibits/attacks.ts:108 keygen samples scalar coefficients and evaluates f(id) to generate Shamir shares; lagrangeCoeff computes reconstruction weights. This is computation evidence, distinct from renderShamirPlot, and not a cryptographic correctness audit."
+            data-review-commit="7fe5f800feb477b4d9ea47c784dc4039afb592c4"
+            data-review-note="Re-read Rust round2 bridge, TypeScript keygen/signing/binding transcript and honest-response consistency experiment after verified PR23 at this exact SHA. Rust FROST/WASM signing remains distinct from the local RFC9591 Ed25519 teaching engine; SHA-512 is computed by WebCrypto. Shamir samples scalar coefficients and evaluates f(id); Lagrange weights reconstruct. AppendixE.1 transcript/rho/share/signature controls and real nonce-reuse forgery inspected; the rho=1 honest control and R-only inconsistency rejection do not mount a concurrent ROS/Drijvers forgery. Prior successful10Rust/9unit/7browser gates and exact published artifact byte checks retained, not independent compiler reproduction." data-level="advanced"
            
            
            
@@ -4681,13 +4681,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/" data-added="2026-04" data-updated="2026-10"
             data-implements="Ed25519@src/bench/runner.ts:111 | Fiat-Shamir@src/ui/viz-render.ts:10 | ML-DSA@src/crypto/mldsa.ts:47 | SHA-256@src/crypto/seal.ts:43"
             data-references="AES | Dilithium | ECDSA | Falcon | Grover's algorithm | Kyber | LWE | ML-KEM | NTT | P-256 | Pairing | RSA | RSA-PSS | SHAKE | SLH-DSA | SPHINCS+ | Schnorr | Shor's algorithm"
             data-attacks="Discrete log@src/ui/tab3-how-it-works.ts:129 | Factoring@src/ui/tab2-compare.ts:20 | Fault injection@README.md:502 | Key recovery@src/ui/timing-variability.ts:242 | Side-channel (unspecified)@src/data/runtime.ts:118 | Timing side-channel@src/data/runtime.ts:90"
             data-standards="IETF | NIST"
-            data-implementation="WebCrypto"
-            data-added="2026-04" data-updated="2026-10" data-level="advanced"
+            data-implementation="WebCrypto" data-level="advanced"
            
            
            
@@ -7050,12 +7049,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-bike-vault/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-bike-vault/" data-added="2026-04" data-updated="2026-10"
             data-implements="AES@src/bike.ts:775 | AES-GCM@src/bike.ts:791 | BIKE@src/bike.ts:248 | SHA-256@src/bike.ts:240"
             data-references="Classic McEliece | Dilithium | Fujisaki-Okamoto transform | HQC | Isogeny walk | Kyber | LWE | ML-DSA | ML-KEM | NTRU | RSA | SIKE | SLH-DSA | SPHINCS+"
-            data-attacks="Chosen-ciphertext attack@src/main.ts:217 | Factoring@src/keyviz.ts:67"
+            data-attacks="Chosen-ciphertext attack@src/main.ts:246 | Factoring@src/keyviz.ts:67"
             data-standards="NIST"
-            data-implementation="WebCrypto"
+            data-implementation="WebCrypto" data-level="advanced"
            
            
            
@@ -9668,7 +9667,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-opaque-gate/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="KEY EXCHANGE | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-opaque-gate/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
             data-implements="AES@src/kdf.ts:253 | AES-GCM@src/kdf.ts:253 | Diffie-Hellman@src/kdf.ts:209 | Hash-to-curve@src/oprf.ts:54 | HKDF@src/kdf.ts:82 | HMAC@src/kdf.ts:61 | OPRF@src/envelope.ts:102 | P-256@src/ake.ts:35 | scrypt@src/kdf.ts:138 | SHA-256@src/kdf.ts:56"
             data-protocol-partial="OPAQUE@src/ake.ts:77"
             data-references="EC point arithmetic | OPAQUE | Pairing | RSA | SHA-512 | SRP | WebAuthn | X25519 | X3DH | bcrypt | ristretto255"
@@ -14745,13 +14744,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/" data-added="2026-06" data-updated="2026-10"
             data-implements="N/A"
             data-references="AES | Diffie-Hellman | HMAC | HQC | RSA"
             data-attacks="Brute force@src/ui.ts:216 | Cache timing@src/ui.ts:140 | Fault injection@src/timing/attack.ts:39 | Key recovery@src/ui.ts:140 | Padding oracle@src/ui.ts:303 | Side-channel (unspecified)@src/ui.ts:119 | Timing side-channel@src/ui.ts:119"
             data-implementation="N/A (model or attack)"
-            data-review-commit="0351f083727575530f3691a8cfb773e01f74f6e6"
-            data-review-note="Runs early-exit comparison timing attack; no named cryptographic primitive"
+            data-review-commit="c6ea44e5a4ac6bd5ac23d800c134cf5f03ca3a2f"
+            data-review-note="Runs early-exit comparison timing attack; no named cryptographic primitive Re-read current early-exit/all-byte comparators, timing probes and README; no named cryptographic primitive added. Source files unchanged from prior review; dependency/publisher-only integrations separately passed31unit/17browser gates. N/A preserved, not a constant-time browser-engine guarantee." data-level="advanced"
            
            
            
@@ -16199,7 +16198,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/" data-added="2026-07" data-updated="2026-10" data-level="advanced"
             data-implements="BLS signatures@src/bbs/bbs.ts:6 | BLS12-381@src/bbs/bbs.ts:6 | Ed25519@src/baseline/ed25519.ts:24 | Hash-to-curve@src/bbs/generators.ts:18 | Pairing@src/bbs/ciphersuite.ts:145 | Pedersen commitment@src/predicate/ageProof.ts:63 | SHA-256@src/bbs/ciphersuite.ts:15"
             data-references="Bulletproofs | EC point arithmetic | Private information retrieval | RSA | Schnorr | Schnorr identification | Shamir secret sharing | Sigma protocol"
             data-attacks="Discrete log@docs/design-note.md:69 | Side-channel (unspecified)@README.md:15"
@@ -17116,7 +17115,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-musig-gate/" data-added="2026-07" data-updated="2026-08" data-level="intermediate"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-musig-gate/" data-added="2026-07" data-updated="2026-10" data-level="intermediate"
             data-implements="EC point arithmetic@src/musig/toycurve.ts:53 | Schnorr@src/musig/bip340.ts:14 | secp256k1@src/musig/field.ts:16 | SHA-256@src/musig/field.ts:176"
             data-references="BLS signatures | FROST | Pairing"
             data-attacks="Discrete log@src/ui/roguePanel.ts:65 | Key recovery@README.md:104 | Nonce reuse@src/ui/noncePanel.ts:628 | Side-channel (unspecified)@src/ui/sessionPanel.ts:963 | Timing side-channel@src/ui/vectorsPanel.ts:131"

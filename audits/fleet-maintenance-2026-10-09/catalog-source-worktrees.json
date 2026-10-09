@@ -1,0 +1,149 @@
+[
+  {
+    "repository": "crypto-lab-model-breach",
+    "preservedOriginalHead": "ec6d6b850adfd33c2aa285742304b950daa26662",
+    "inspectedRemoteDefault": "070c2b4a84174057fb3bf5f03564b66b4d5517c1",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-model-breach",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-shadow-vault",
+    "preservedOriginalHead": "43eac0593a1377caf1dd126930095f9609d41a3d",
+    "inspectedRemoteDefault": "c0aae77cef5601fefb4d609eb0015bee287a6776",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-shadow-vault",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-snark-arena",
+    "preservedOriginalHead": "ba2de278c6c9aa0179a57013729ab230bafbf4f3",
+    "inspectedRemoteDefault": "307c5fd23a1651abaa8a9e881fc9f398042dcd6d",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-snark-arena",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-silent-tally",
+    "preservedOriginalHead": "e9ef1e0e634d97328f3cec36b920b096641ed4c0",
+    "inspectedRemoteDefault": "278c43220ce1a977acdfdd2d1314f4bbb07e268a",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-silent-tally",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-frost-threshold",
+    "preservedOriginalHead": "6908f85dbc1ebaaa2a87bab5eb093fa350ebde66",
+    "inspectedRemoteDefault": "0dd6d6b854ab16f2b550b7b7352408185a014861",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-frost-threshold",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-rsa-educational",
+    "preservedOriginalHead": "e360321cf996ddfb7f8cc8193b6504d79a6cc43f",
+    "inspectedRemoteDefault": "c3991bc598edb64f60c23922647e93df8fc669d6",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-rsa-educational",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-hqc-timing-break",
+    "preservedOriginalHead": "113f1a47efbaefbe154258931313d82fad8ab1d6",
+    "inspectedRemoteDefault": "5778b81518ed9433b329b1134549b7b27c7e5b2f",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-hqc-timing-break",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-hqc-timing",
+    "preservedOriginalHead": "5ccaa5f97391be6d6b45d17ca5fa5295e313be94",
+    "inspectedRemoteDefault": "8c259bf028ef96b9fb9b9a05e6938a4f72f474d6",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-hqc-timing",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-timing-sidechannel",
+    "preservedOriginalHead": "6b4b63829aff64802734a49eabac750dbdd6817a",
+    "inspectedRemoteDefault": "139701959aebeaef5221e5aae72df954d02a10f0",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-timing-sidechannel",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-quantum-entropy",
+    "preservedOriginalHead": "0cba614482adca2ee7f56668533786ba3f39fbda",
+    "inspectedRemoteDefault": "f907df9e671624b54c6a4b3ef3f79923eb928aae",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-quantum-entropy",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-syndrome-hints",
+    "preservedOriginalHead": "8612c3244de7992b520db3ae130f650f61b81a29",
+    "inspectedRemoteDefault": "2cf409619c181f40a302e64f21d2cac031584db1",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-syndrome-hints",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-ablation-wire",
+    "preservedOriginalHead": "0d542da9089393d348d21abf5289df425449b7cb",
+    "inspectedRemoteDefault": "2490d8c355f36fe07630919567f8b97269509b03",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-ablation-wire",
+    "preservedStatus": "?? .claude/\n"
+  },
+  {
+    "repository": "crypto-lab-card-trick",
+    "preservedOriginalHead": "345828aee06426e357f344c70099e4e4eae73d42",
+    "inspectedRemoteDefault": "234671b6bf30cfe6c67994d92691154687e73968",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-card-trick",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-dp-noise",
+    "preservedOriginalHead": "80e38fceb3b3e7c6d3f61e49a5d1c50033146f18",
+    "inspectedRemoteDefault": "a1b63c2d51f052c42ab6c81b245064818db7ffc6",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-dp-noise",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-matsui-line",
+    "preservedOriginalHead": "ba2af7434ef7ff8a347303cb7d7ebf2afe44840f",
+    "inspectedRemoteDefault": "b8bdc6266f36e4f2f95fcdc033e2092125558f70",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-matsui-line",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-token-tell",
+    "preservedOriginalHead": "95251b4c2a1110fab4788938627a2aaac69ef0ea",
+    "inspectedRemoteDefault": "28c1b4fc51a4d2a0d2904b33afc9abd30ee7d3f6",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-token-tell",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-context-ward",
+    "preservedOriginalHead": "27b348ad69dffeabe0a1778d5fe838e2573f91fd",
+    "inspectedRemoteDefault": "ffcae4498645f7a568563f6891a23e726a78396f",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-context-ward",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-ghost-commit",
+    "preservedOriginalHead": "84329058dc6d43009456856df6f16156efe934f0",
+    "inspectedRemoteDefault": "ca43b70202a97d3d7363eb814f28a5310d5e29a3",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-ghost-commit",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-point-ledger",
+    "preservedOriginalHead": "9740c3657688eeb099babd4a5347f3ac5eef3c8f",
+    "inspectedRemoteDefault": "ab8d4b0de85bdd308cf81ceb2a7725bb466bd720",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-point-ledger",
+    "preservedStatus": ""
+  },
+  {
+    "repository": "crypto-lab-adaptor-gate",
+    "preservedOriginalHead": "726de357815252bccf8b1c0500af966922b726eb",
+    "inspectedRemoteDefault": "3d57ed7212f586757c9e3739ed7ea6e56bdd4618",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-adaptor-gate",
+    "preservedStatus": "?? brief.md\n"
+  },
+  {
+    "repository": "crypto-lab-function-key",
+    "preservedOriginalHead": "f6628c00c2b70ddde2efd7462f0b9494e8c00d7d",
+    "inspectedRemoteDefault": "6200677be209faba51f91d9e2a0f9865047fff6c",
+    "worktree": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current/crypto-lab-function-key",
+    "preservedStatus": "?? brief.md\n"
+  }
+]

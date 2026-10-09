@@ -1,0 +1,20 @@
+[
+  {
+    "command": "npm ci",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/rsa-onboard-0.log",
+    "outputTail": "\nadded 45 packages, and audited 46 packages in 1s\n\n12 packages are looking for funding\n  run `npm fund` for details\n\nfound 0 vulnerabilities\nnpm warn install-scripts 1 package has install scripts not yet covered by allowScripts:\nnpm warn install-scripts   fsevents@2.3.3 (install: (install scripts present))\nnpm warn install-scripts\nnpm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.\n"
+  },
+  {
+    "command": "npm test",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/rsa-onboard-1.log",
+    "outputTail": "\n> crypto-lab-rsa-small-roots@1.0.0 test\n> npm run build && vitest run\n\n\n> crypto-lab-rsa-small-roots@1.0.0 build\n> tsc --noEmit && vite build\n\nvite v8.3.4 building client environment for production...\ntransforming...\n\u2713 15 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/assets/simulator.worker-BJvuWuPP.js   2.59 kB\ndist/assets/attack.worker-08KN7aln.js     11.97 kB\ndist/index.html                           15.55 kB \u2502 gzip:  6.14 kB\ndist/assets/index-D8MTxCl9.css            16.88 kB \u2502 gzip:  4.47 kB\ndist/assets/index-DBh-f0BC.js             27.46 kB \u2502 gzip: 10.06 kB\n\n\u2713 built in 457ms\n\n RUN  v5.0.3 /Users/gmcas/repos/.fleet-maintenance-20261009/rsa-small-roots\n\n\n Test Files  3 passed (3)\n      Tests  43 passed (43)\n   Start at  02:32:42\n   Duration  13.93s (tests 99%, transform 1%)\n\n"
+  },
+  {
+    "command": "npm run test:a11y",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/rsa-onboard-2.log",
+    "outputTail": "set, invalid input, and transcript export describe the actual state (3.7s)\n  \u2713   9 e2e/claims.spec.ts:65:1 \u203a the actual attack worker payload is public-only, and delayed stale results cannot restore a verdict (3.2s)\n  \u2713  10 e2e/claims.spec.ts:91:1 \u203a keyboard operation and 320px reflow keep all controls and inspectors reachable (3.0s)\n  \u2713  11 e2e/claims.spec.ts:96:1 \u203a resource limit remains an incomplete run and cannot be mistaken for a negative root verdict (304ms)\n  \u2713  12 e2e/claims.spec.ts:101:1 \u203a reduction stepper replays actual coefficient changes from the exported original basis (3.3s)\n  \u2713  13 e2e/claims.spec.ts:120:44 \u203a attack integrity failure withdraws the recovery verdict and disables export (3.6s)\n  \u2713  14 e2e/claims.spec.ts:120:44 \u203a simulator integrity failure withdraws the recovery verdict and disables export (3.6s)\n\n  14 passed (54.8s)\n[WebServer] (node:74647) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] (node:74751) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n(node:74935) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+  }
+]

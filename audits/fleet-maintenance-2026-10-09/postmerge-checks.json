@@ -1,0 +1,65 @@
+[
+  {
+    "command": "node tools/catalog-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 3.63,
+    "output": "Read from committed HEAD (dirty working tree): biham-lens, mac-race, elgamal-plain, ablation-wire, sat-break, adaptor-gate, function-key, lfsr-forge\nVocabulary invariants hold over 210 terms and 227 cards:\n  every term matches its own name, no two terms index the same algorithm,\n  no term is credited by a package name alone,\n  and every chip with a dependency behind it resolves to a term (4 declared\n  exemptions in tools/catalog-chip-exempt.json).\nCATALOG.md in step with index.html (227 labs).\n"
+  },
+  {
+    "command": "node tools/readme-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.05,
+    "output": "README tables in sync with index.html cards (227 cards); hero count reads 227.\n"
+  },
+  {
+    "command": "node tools/catalog-structure.js check",
+    "exit": 1,
+    "result": "failed",
+    "seconds": 0.04,
+    "output": "node:internal/modules/cjs/loader:1595\n  throw err;\n  ^\n\nError: Cannot find module '/Users/gmcas/repos/crypto-lab-lane-fleet-maintenance-2026-10-09/tools/catalog-structure.js'\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1591:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1145:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1169:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1196:12)\n    at Module._load (node:internal/modules/cjs/loader:1368:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v26.9.0\n"
+  },
+  {
+    "command": "node tools/concept-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.04,
+    "output": "concept-coverage.md v27 \u2014 40 concepts (DEEP 9 \u00b7 COVERED 31 \u00b7 PARTIAL 0 \u00b7 GAP 0)\nCards in index.html: 227 | cited in map: 227\nCited but no card (0): []\nCarded but unmapped (0): []\nUncatalogued backlog (0): []\nIn flight (0): []\nOpen gaps (0): []\nCatalogued total line: 227 (matches)\n\nconcept-coverage.md in step with index.html.\n"
+  },
+  {
+    "command": "node tools/level-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.05,
+    "output": "Cards levelled: 227 | beginner=32 intermediate=55 advanced=140\nFlagged for review: 10 \u2014 listed first in LEVELS-REVIEW.md\n\nEvery card carries a level, and the review sheet matches it.\n"
+  },
+  {
+    "command": "node tools/lab-dates.js check",
+    "exit": 1,
+    "result": "failed",
+    "seconds": 11.42,
+    "output": "Cards dated: 227 | pinned: 227 | pinned 2026-10-09\n\nSTALE (7) \u2014 the demo changed after the pin. Fix with: node tools/lab-dates.js\n  crypto-lab-silent-tally \u2014 pinned 2026-08, lab now 2026-10\n  crypto-lab-shamir-gate \u2014 pinned 2026-08, lab now 2026-10\n  crypto-lab-dead-sea-cipher \u2014 pinned 2026-08, lab now 2026-10\n  crypto-lab-sphincs-ledger \u2014 pinned 2026-08, lab now 2026-10\n  crypto-lab-babel-hash \u2014 pinned 2026-08, lab now 2026-10\n  crypto-lab-aes-modes \u2014 pinned 2026-09, lab now 2026-10\n  crypto-lab-pq-rotation \u2014 pinned 2026-08, lab now 2026-10\n"
+  },
+  {
+    "command": "node tools/tools-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.08,
+    "output": "README.md tools block in step with tools/ (37 tools listed).\n"
+  },
+  {
+    "command": "node tools/teach-build.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.08,
+    "output": "Teach pages in sync: 5 module(s), 44 generated file(s); count lint clean.\n"
+  },
+  {
+    "command": "node --test tests/deploy-report.test.cjs",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 3.12,
+    "output": "\u2714 deployment report: current (735.730708ms)\n\u2714 deployment report: api-error (420.653875ms)\n\u2714 deployment report: pages-unread (406.402417ms)\n\u2714 deployment report: pending (576.997625ms)\n\u2714 deployment report: no-main (309.639458ms)\n\u2714 deployment report: unnamed (42.4195ms)\n\u2714 deployment report: diff-unread (519.480041ms)\n\u2139 tests 7\n\u2139 suites 0\n\u2139 pass 7\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 3070.837625\n"
+  }
+]

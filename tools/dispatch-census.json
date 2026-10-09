@@ -3,9 +3,9 @@
   "generated": "2026-10-09",
   "root": "..",
   "totals": {
-    "labs": 231,
-    "autoMergeJobs": 230,
-    "dispatchSites": 229
+    "labs": 232,
+    "autoMergeJobs": 231,
+    "dispatchSites": 230
   },
   "withDispatchSite": [
     "crypto-compare",
@@ -184,6 +184,7 @@
     "crypto-lab-ring-sign",
     "crypto-lab-rsa-educational",
     "crypto-lab-rsa-forge",
+    "crypto-lab-rsa-small-roots",
     "crypto-lab-salamander",
     "crypto-lab-sat-break",
     "crypto-lab-schnorr-forge",

@@ -76,6 +76,10 @@
   "lab": "crypto-lab-lfsr-forge"
  },
  {
+  "port": 4218,
+  "lab": "crypto-lab-rsa-small-roots"
+ },
+ {
   "port": 4220,
   "lab": "crypto-lab-hybrid-pqc"
  },
@@ -714,6 +718,10 @@
  {
   "port": 4679,
   "lab": "crypto-lab-harvest-vault"
+ },
+ {
+  "port": 4680,
+  "lab": "crypto-lab-biham-lens"
  },
  {
   "port": 4682,

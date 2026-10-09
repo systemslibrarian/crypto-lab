@@ -56,6 +56,9 @@ jobs:
       - name: Demo date regression fixtures
         if: ${{ !cancelled() }}
         run: node tools/lab-dates.js selftest
+      - name: Card metadata duplicates and writer ordering
+        if: ${{ !cancelled() }}
+        run: node --test tests/card-metadata.test.cjs
       - name: Port and fleet denominator regression fixtures
         if: ${{ !cancelled() }}
         run: node tools/port-sync.js selftest

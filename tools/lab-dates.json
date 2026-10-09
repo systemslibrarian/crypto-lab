@@ -272,10 +272,10 @@
   },
   "crypto-lab-biham-lens": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-06T20:06:11Z",
-   "updatedFrom": "2026-08-15T21:19:48-04:00",
-   "updatedCommit": "dde5f1a0e37e086426b20502a57be8b33c50c706"
+   "updatedFrom": "2026-10-09T01:22:27-04:00",
+   "updatedCommit": "123b79199098e3f197113e8a09aee5a254648b07"
   },
   "crypto-lab-hybrid-wire": {
    "added": "2026-04",
@@ -349,10 +349,10 @@
   },
   "crypto-lab-mac-race": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-07T16:54:36Z",
-   "updatedFrom": "2026-08-19T19:33:41-04:00",
-   "updatedCommit": "4671d72935e172126e01f3dc8611bde84a4a4ae3"
+   "updatedFrom": "2026-10-09T01:22:21-04:00",
+   "updatedCommit": "2029bcd2714788ba8bc01f5e320fe437a4dceb92"
   },
   "crypto-lab-kdf-chain": {
    "added": "2026-04",
@@ -666,8 +666,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-19T00:36:26Z",
-   "updatedFrom": "2026-10-06T07:57:45-04:00",
-   "updatedCommit": "72048d72698576789fe22e8366f5e07b6b7278b3"
+   "updatedFrom": "2026-10-09T01:09:45-04:00",
+   "updatedCommit": "7424411c18f1478281d3052336dc30046fe9c145"
   },
   "crypto-lab-harvest-timeline": {
    "added": "2026-04",
@@ -1520,8 +1520,8 @@
    "added": "2026-10",
    "updated": "2026-10",
    "addedFrom": "2026-10-06T11:20:52Z",
-   "updatedFrom": "2026-10-09T01:06:35-04:00",
-   "updatedCommit": "61d3fa5ef9a0e8196dffaf8d39e8ce3a7d46abdb"
+   "updatedFrom": "2026-10-09T01:36:16-04:00",
+   "updatedCommit": "5f3fee3618f2d218b2213063a74fdcfa0d903686"
   },
   "crypto-lab-sm9-forge": {
    "added": "2026-09",

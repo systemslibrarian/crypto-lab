@@ -5425,7 +5425,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/" data-level="advanced" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/" data-level="advanced" data-added="2026-04" data-updated="2026-10"
             data-implements="Toy SPN@demos/biham-lens/src/crypto/spn.ts:95"
             data-references="AES | AES-CBC | Ascon | DES | Enigma | MD5 | PRESENT | RSA | SHA-1 | Serpent | Shamir secret sharing | Simon | Speck | Vigenere cipher"
             data-attacks="Brute force@README.md:12 | Chosen-ciphertext attack@README.md:56 | Chosen-plaintext attack@demos/biham-lens/src/main.ts:1091 | Collision attack@README.md:57 | Differential cryptanalysis@demos/biham-lens/src/main.ts:1082 | Impossible differential@demos/biham-lens/src/main.ts:783 | Key recovery@README.md:22 | Padding oracle@README.md:56"
@@ -6409,7 +6409,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-mac-race/" data-level="intermediate" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-mac-race/" data-level="intermediate" data-added="2026-04" data-updated="2026-10"
             data-implements="AES@src/cmac.ts:39 | AES-CBC@src/cmac.ts:73 | CMAC@src/cmac.ts:113 | GHASH@src/ghash.ts:97 | HMAC@src/hmac.ts:83 | Poly1305@src/poly1305.ts:110 | SHA-256@src/lengthext.ts:39"
             data-references="AES-GCM | BLAKE3 | ChaCha20 | ChaCha20-Poly1305 | MD5 | SHA-1 | SHA-3 | SHA-512 | TLS 1.3"
             data-attacks="Brute force@src/ui.ts:600 | Length extension@src/lengthext.ts:5 | Nonce reuse@src/ghash.ts:188 | Side-channel (unspecified)@src/ui.ts:467 | Timing side-channel@src/timing.ts:127"
@@ -20501,8 +20501,8 @@
             data-unscanned="WebAssembly:1 | C/C++:1"
             data-references="AES | SHA-256"
             data-implementation="WASM"
-            data-review-commit="61d3fa5ef9a0e8196dffaf8d39e8ce3a7d46abdb"
-            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts and README.md. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set."
+            data-review-commit="5f3fee3618f2d218b2213063a74fdcfa0d903686"
+            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary."
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Constraint-Based Cryptanalysis</div>
             <div class="project-title">SAT Break</div>

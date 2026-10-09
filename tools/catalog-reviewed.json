@@ -86,17 +86,17 @@
     "note": "Runs TETRA TEA1 and a bounded state-recovery demonstration. Exhibits 5 and 6 add no cryptography: src/attack/rate.ts is arithmetic over the search Exhibit 3 already runs, and src/data/attacks.ts is a sourced citation table. AES-128/192/256 are named throughout that table and implemented nowhere in this lab."
   },
   "crypto-lab-frost-threshold": {
-    "commit": "6908f85dbc1ebaaa2a87bab5eb093fa350ebde66",
-    "reviewed": "2026-10-08",
+    "commit": "7fe5f800feb477b4d9ea47c784dc4039afb592c4",
+    "reviewed": "2026-10-09",
     "add": [
       "FROST@crate/src/round2.rs:54",
-      "Shamir secret sharing@src/exhibits/attacks.ts:108"
+      "Shamir secret sharing@src/exhibits/attacks.ts:105"
     ],
     "covered": [
       "Rust"
     ],
     "implementation": "Rust FROST crate / WASM",
-    "note": "Rust keygen, signing rounds and aggregation reviewed; TS src/exhibits/attacks.ts:108 keygen samples scalar coefficients and evaluates f(id) to generate Shamir shares; lagrangeCoeff computes reconstruction weights. This is computation evidence, distinct from renderShamirPlot, and not a cryptographic correctness audit."
+    "note": "Re-read Rust round2 bridge, TypeScript keygen/signing/binding transcript and honest-response consistency experiment after verified PR23 at this exact SHA. Rust FROST/WASM signing remains distinct from the local RFC9591 Ed25519 teaching engine; SHA-512 is computed by WebCrypto. Shamir samples scalar coefficients and evaluates f(id); Lagrange weights reconstruct. AppendixE.1 transcript/rho/share/signature controls and real nonce-reuse forgery inspected; the rho=1 honest control and R-only inconsistency rejection do not mount a concurrent ROS/Drijvers forgery. Prior successful10Rust/9unit/7browser gates and exact published artifact byte checks retained, not independent compiler reproduction."
   },
   "crypto-lab-function-key": {
     "commit": "b145a348de0771eed22923c1da210c60e961bbf6",
@@ -216,8 +216,8 @@
     "note": "Rust crypto core reviewed; bundled WASM is built from that core"
   },
   "crypto-lab-silent-tally": {
-    "commit": "278c43220ce1a977acdfdd2d1314f4bbb07e268a",
-    "reviewed": "2026-10-08",
+    "commit": "390d3dc54422f5abdfb194131049410bc6c960c9",
+    "reviewed": "2026-10-09",
     "add": [
       "Shamir secret sharing@src/lib.rs:123"
     ],
@@ -225,7 +225,7 @@
       "Rust"
     ],
     "implementation": "Rust/WASM",
-    "note": "Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses"
+    "note": "Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses Re-read current Rust field/sampler/sharing/reconstruction and README at this exact SHA after Vitest/publisher integrations; implementation unchanged from prior reviewed pin. Current18Rust/18TypeScript/12browser gates and published artifact checks retained; no compiler reproduction claim."
   },
   "crypto-lab-snark-arena": {
     "commit": "9a72143f2668bb590cde2e2296b4460e2e4928bb",
@@ -273,10 +273,10 @@
     "note": "C wrappers and TS calls reviewed; two compiled reference WASM binaries remain opaque"
   },
   "crypto-lab-timing-sidechannel": {
-    "commit": "0351f083727575530f3691a8cfb773e01f74f6e6",
-    "reviewed": "2026-09-24",
+    "commit": "c6ea44e5a4ac6bd5ac23d800c134cf5f03ca3a2f",
+    "reviewed": "2026-10-09",
     "state": "N/A",
-    "note": "Runs early-exit comparison timing attack; no named cryptographic primitive"
+    "note": "Runs early-exit comparison timing attack; no named cryptographic primitive Re-read current early-exit/all-byte comparators, timing probes and README; no named cryptographic primitive added. Source files unchanged from prior review; dependency/publisher-only integrations separately passed31unit/17browser gates. N/A preserved, not a constant-time browser-engine guarantee."
   },
   "crypto-lab-token-tell": {
     "commit": "41100d93f8174cfce0b0be71989aebdde4d6b4db",

@@ -1245,16 +1245,11 @@ may teach the same primitive from different angles — but an overlap **with no 
 difference** is a question nobody has answered, and a visitor choosing between the
 two has nothing to go on.
 
-86 pairs: 7 with a stated difference, **1 examined and found to be duplication**, 78 nobody has looked at.
+86 pairs: 9 with a stated difference, **0 examined and found to be duplication**, 77 nobody has looked at.
 
 A pair marked DUPLICATION is a finding, not a description: someone read both and
 found no difference worth having. It is listed first because it is the only row here
 that asks for a decision.
-
-**Babel Hash / Hash Zoo**
-
-- **Shared:** BLAKE3, SHA-256, SHA-3
-- **Stated difference:** **DUPLICATION** — both compare the same three hash functions (SHA-256 Merkle-Damgard, SHA3-256 sponge, BLAKE3 tree) and both compute every digest in-browser from the real primitives. The only separation the two READMEs support is that babel-hash sits in the crypto-compare portfolio, which is where a lab lives rather than what it teaches. Needs a decision on whether one absorbs the other, not a sentence.
 
 **HPKE Envelope / Blind Relay**
 
@@ -1290,6 +1285,11 @@ that asks for a decision.
 
 - **Shared:** FRI, Merkle tree, SHA-256
 - **Stated difference:** stark-tower runs a whole STARK, prover and verifier, catching a cheating prover through a FRI low-degree test; polynomial-forge opens the commitment layer underneath and compares KZG, IPA and FRI as schemes in their own right
+
+**Babel Hash / Hash Zoo**
+
+- **Shared:** BLAKE3, SHA-256, SHA-3
+- **Stated difference:** Both teach SHA-256/SHA3-256/BLAKE3, avalanche and real length-extension, so substantial overlap remains. Choose Babel Hash for the attack-to-defense sequence: sweep secret-length guesses, then test HMAC-SHA256 against the same attack. Choose Hash Zoo for construction inspection: examine SHA-256 padding and the SHA-3 rate/capacity split beside the Merkle-Damgard, sponge and tree views. Portfolio membership is not the distinction.
 
 **Format Ward / Regex Veil — FTE**
 
@@ -1354,7 +1354,7 @@ that asks for a decision.
 **LMS Ledger / LMS/XMSS**
 
 - **Shared:** LMS, SHA-256
-- **Stated difference:** **none stated**
+- **Stated difference:** Both implement LMS/HSS and demonstrate state consumption and index-reuse forgery; this is substantial overlap, not an LMS-versus-XMSS comparison. Choose LMS Ledger to consume the small two-level HSS instance and observe leaf-tree rollover and exhaustion during a short lesson. Choose LMS/XMSS to inspect Winternitz-chain depth and the authentication path, then vary leaked-signature count to study the reachable forgery depths. Its repository name does not establish an implemented XMSS path.
 
 **SPHINCS+ Ledger / LMS Ledger**
 
@@ -1834,7 +1834,7 @@ SHA-256, SHA3-256, and BLAKE3 side by side with live avalanche visualization, le
 - **Attacks shown:** Brute force `demos/babel-hash/src/main.ts:821`, Length extension `demos/babel-hash/src/crypto/hmac.ts:7`, Timing side-channel `README.md:24`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Overlaps:** `crypto-lab-hash-zoo` — DUPLICATION - both compare the same three hash functions (SHA-256 Merkle-Damgard, SHA3-256 sponge, BLAKE3 tree) and both compute every digest in-browser from the real primitives. The only separation the two READMEs support is that babel-hash sits in the crypto-compare portfolio, which is where a lab lives rather than what it teaches. Needs a decision on whether one absorbs the other, not a sentence.
+- **Overlaps:** `crypto-lab-hash-zoo` — Both teach SHA-256/SHA3-256/BLAKE3, avalanche and real length-extension, so substantial overlap remains. Choose Babel Hash for the attack-to-defense sequence: sweep secret-length guesses, then test HMAC-SHA256 against the same attack. Choose Hash Zoo for construction inspection: examine SHA-256 padding and the SHA-3 rate/capacity split beside the Merkle-Damgard, sponge and tree views. Portfolio membership is not the distinction.
 
 ### BB84
 
@@ -3054,6 +3054,7 @@ LMS/HSS stateful hash-based signatures (NIST SP 800-208) — LM-OTS key state gr
 - **References:** Dilithium, Dragonfly, ECDSA, Ed25519, Falcon, Lamport, ML-DSA, Merkle tree, NTRU, RSA, SLH-DSA, SPHINCS+, XMSS
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
+- **Overlaps:** `crypto-lab-lms-xmss` — Both implement LMS/HSS and demonstrate state consumption and index-reuse forgery; this is substantial overlap, not an LMS-versus-XMSS comparison. Choose LMS Ledger to consume the small two-level HSS instance and observe leaf-tree rollover and exhaustion during a short lesson. Choose LMS/XMSS to inspect Winternitz-chain depth and the authentication path, then vary leaked-signature count to study the reachable forgery depths. Its repository name does not establish an implemented XMSS path.
 
 ### LMS/XMSS
 

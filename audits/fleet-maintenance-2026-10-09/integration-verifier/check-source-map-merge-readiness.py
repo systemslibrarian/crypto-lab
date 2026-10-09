@@ -15,7 +15,7 @@ def read(x):
  if repo.endswith('crypto-lab-lll-break'):required=['test']
  required=required_pr_jobs(repo.split('/')[-1]) or required
  checks=[{'name':y['name'],'conclusion':y['conclusion'],'status':y['status'],'url':y['html_url'],'appId':y.get('app',{}).get('id')} for y in c];passed=all(any(y['name']==n and y['status']=='completed' and y['conclusion']=='success' for y in checks) for n in required)
- pr_only_skips=['deploy','dependabot-auto-merge']+(['verify-deployment'] if repo.endswith('crypto-lab-dilithium-seal') else [])+(['smoke'] if repo.endswith('crypto-lab-pq-chooser') else [])
+ pr_only_skips=['deploy','dependabot-auto-merge']+(['Deploy to GitHub Pages','Fuzz smoke runs (30 s each)'] if repo.endswith('crypto-lab-quantum-vault-kpqc') else [])+(['verify-deployment'] if repo.endswith('crypto-lab-dilithium-seal') else [])+(['smoke'] if repo.endswith('crypto-lab-pq-chooser') else [])
  safe=all(y['status']=='completed' and (y['conclusion']=='success' or y['name'] in pr_only_skips and y['conclusion']=='skipped') for y in checks)
  protected_ok=protection=={'error':'HTTP 404'}
  if isinstance(protection,dict) and 'required_status_checks' in protection and 'error' not in protection:

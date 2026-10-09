@@ -1,0 +1,29 @@
+✖ catalog keeps sibling attacks and negated limits out of attacks shown (2.321875ms)
+✔ scope control detects reintroduced sibling and negated-limit credits (4.831667ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63.700917
+
+✖ failing tests:
+
+test at tests/catalog-teaching-scope.test.cjs:31:1
+✖ catalog keeps sibling attacks and negated limits out of attacks shown (2.321875ms)
+  AssertionError [ERR_ASSERTION]: CPA security discussion is not a chosen-plaintext experiment
+      at checkScope (/Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/catalog-teaching-scope.test.cjs:25:10)
+      at TestContext.<anonymous> (/Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/catalog-teaching-scope.test.cjs:32:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

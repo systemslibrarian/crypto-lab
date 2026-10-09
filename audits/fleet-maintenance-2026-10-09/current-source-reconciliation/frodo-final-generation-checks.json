@@ -1,0 +1,38 @@
+[
+  {
+    "command": "node tools/catalog-sync.js",
+    "sourceState": "Current repair branch after normal Frodo anchor rederivation",
+    "startedAt": "2026-10-09T21:09:42.073646+00:00",
+    "finishedAt": "2026-10-09T21:09:42.133902+00:00",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-final-generation-0.log",
+    "logSha256": "84dcffb225ba4a79cd5152fea4fedca8454781cfcb62fb6d4d48091cbf1b2c0c"
+  },
+  {
+    "command": "node tools/readme-sync.js",
+    "sourceState": "Current repair branch after normal Frodo anchor rederivation",
+    "startedAt": "2026-10-09T21:09:42.134094+00:00",
+    "finishedAt": "2026-10-09T21:09:42.165119+00:00",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-final-generation-1.log",
+    "logSha256": "a0b5c65341b5a200af56d2b096624a6f6f64d0029352842a111ac33e898f15d8"
+  },
+  {
+    "command": "node tools/lab-dates.js",
+    "sourceState": "Current repair branch after normal Frodo anchor rederivation",
+    "startedAt": "2026-10-09T21:09:42.165297+00:00",
+    "finishedAt": "2026-10-09T21:10:01.165104+00:00",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-final-generation-2.log",
+    "logSha256": "e77b6b6e0ef1b26f386ef06d5943b8f8f2477ad9c37134a0268f1191a45758ce"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify",
+    "sourceState": "Current repair branch after normal Frodo anchor rederivation",
+    "startedAt": "2026-10-09T21:10:01.165487+00:00",
+    "finishedAt": "2026-10-09T21:10:27.844947+00:00",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-final-generation-3.log",
+    "logSha256": "367b6184b800e2fdd6bca350c11bc483990fa7a2b64f0293a8125f6350147c1e"
+  }
+]

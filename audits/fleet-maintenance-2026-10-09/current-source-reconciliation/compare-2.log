@@ -1,0 +1,8 @@
+
+> crypto-compare@1.2.0 check:stats
+> node --import tsx scripts/sync-stats.ts --check
+
+Derived stats: 100 algorithms, 17 categories, 228 linked labs (6 generated literals across 2 files)
+  ok     README.md
+  ok     package.json
+All generated stat literals are in sync.

@@ -1,0 +1,8 @@
+{
+  "command": "node tools/catalog-evidence.js verify",
+  "sourceState": "Hub e5184a2 working branch with archived verifier update; source readers refreshed to actual merged defaults",
+  "startedAt": "2026-10-09T21:05:45.803092+00:00",
+  "finishedAt": "2026-10-09T21:06:22.971252+00:00",
+  "exit": 1,
+  "logSha256": "1ae06b1c4a4b42a6b301fe35200aa124493dfb016bf6c2b2b13561017664eb01"
+}

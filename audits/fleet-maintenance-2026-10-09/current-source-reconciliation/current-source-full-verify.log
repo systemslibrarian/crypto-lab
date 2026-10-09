@@ -1,0 +1,6 @@
+Anchors checked: 1596.
+
+STALE-ANCHOR (1) — a line number that no longer resolves.
+  crypto-lab-frodo-vault             Chosen-plaintext attack@README.md:26  — neither line 26 nor the path names it
+
+For a stale anchor: re-derive with `node tools/catalog-evidence.js write`.

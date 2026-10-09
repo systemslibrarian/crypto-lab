@@ -1,0 +1,10 @@
+
+> crypto-compare@1.2.0 check:demos:strict
+> node --import tsx scripts/check-demo-sync.ts --strict --live-html-path=/Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/index.html
+
+
+Demo catalog sync check
+Live slugs:  228
+Local slugs: 228
+
+All demo slugs are in sync with the live catalog.

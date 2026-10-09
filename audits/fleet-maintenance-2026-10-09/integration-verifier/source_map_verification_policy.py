@@ -38,6 +38,7 @@ def required_main_jobs(slug):
         'crypto-lab-musig-gate': ['build', 'e2e'],
         'crypto-lab-diffie-hellman-mitm': ['build', 'verify'],
         'crypto-lab-dilithium-seal': ['build', 'audit', 'lighthouse', 'verify-deployment'],
+        'crypto-lab-quantum-vault-kpqc': ['Build and test', 'Build Vite static bundle'],
     }.get(slug, ['build'])
 
 
@@ -55,6 +56,8 @@ def required_jobs_passed(checks, names):
 
 
 def required_pr_jobs(slug):
+    if slug == 'crypto-lab-quantum-vault-kpqc':
+        return ['Build and test', 'Build Vite static bundle', 'Build all fuzz targets (nightly)']
     if slug == 'crypto-lab-musig-gate':
         return ['build', 'e2e']
     if slug == 'crypto-lab-silent-tally':
@@ -89,12 +92,17 @@ def read_complete_collection(reader, endpoint, field):
 
 def latest_workflow_runs(runs):
     """A newer current-head run supersedes older attempts of that workflow."""
+    def order(run):
+        # A rerun keeps its original ID/creation time. Completion/update time
+        # also changes when a slow older attempt finishes, so cannot rank starts.
+        # Old saved reports explicitly fall back to creation time.
+        return (run.get('run_started_at') or run['created_at'], run['id'],
+                run.get('run_attempt', 1))
     latest = {}
     for run in runs:
         key = run['workflow_id']
-        order = (run['created_at'], run['id'], run.get('run_attempt', 1))
         previous = latest.get(key)
-        if previous is None or order > (previous['created_at'], previous['id'], previous.get('run_attempt', 1)):
+        if previous is None or order(run) > order(previous):
             latest[key] = run
     return list(latest.values())
 
@@ -119,4 +127,6 @@ def required_jobs_have_successful_steps(workflows, names, optional_skips=None):
 def optional_main_step_skips(slug):
     # Inspected MuSig source: this uploads diagnostics only on failure. It is
     # distinct from the mandatory upload-pages-artifact publication stage.
+    if slug == 'crypto-lab-quantum-vault-kpqc':
+        return {'Build Vite static bundle': ['Upload Playwright report on failure']}
     return {'e2e': ['Run actions/upload-artifact@v7']} if slug == 'crypto-lab-musig-gate' else {}

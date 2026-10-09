@@ -1,0 +1,25 @@
+{
+  "command": "latest_workflow_runs([older-created run with later failed rerun, newer-created successful run])",
+  "actualChosen": [
+    {
+      "workflow_id": 7,
+      "id": 2,
+      "created_at": "2026-10-09T02:00:00Z",
+      "run_started_at": "2026-10-09T02:00:00Z",
+      "run_attempt": 1,
+      "conclusion": "success"
+    }
+  ],
+  "expectedChosen": [
+    {
+      "workflow_id": 7,
+      "id": 1,
+      "created_at": "2026-10-09T01:00:00Z",
+      "run_started_at": "2026-10-09T03:00:00Z",
+      "run_attempt": 2,
+      "conclusion": "failure"
+    }
+  ],
+  "result": "verified incorrect newer-success selection",
+  "boundary": "Controlled same-head/workflow fixture; no actual workflow dispatched/re-run. Does not claim a specific real lab had this interleaving."
+}

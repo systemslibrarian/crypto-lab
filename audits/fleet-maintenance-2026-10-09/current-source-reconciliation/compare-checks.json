@@ -1,0 +1,32 @@
+[
+  {
+    "command": "npm run test:demos",
+    "sourceSha": "7b9177b2fd495ebe190b467bdd1e7451edb1f904",
+    "hubSourceSha": "e5184a2 working branch before verifier receipt commit",
+    "startedAt": "2026-10-09T21:04:06.872776+00:00",
+    "finishedAt": "2026-10-09T21:04:09.829806+00:00",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/compare-0.log",
+    "logSha256": "60f255fc03369d9f23cf9d71c29aaf2b94f779428ebcb51135a2c6f33810f6ca"
+  },
+  {
+    "command": "npm run check:demos:strict -- --live-html-path=/Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/index.html",
+    "sourceSha": "7b9177b2fd495ebe190b467bdd1e7451edb1f904",
+    "hubSourceSha": "e5184a2 working branch before verifier receipt commit",
+    "startedAt": "2026-10-09T21:04:09.830282+00:00",
+    "finishedAt": "2026-10-09T21:04:10.082707+00:00",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/compare-1.log",
+    "logSha256": "c8a0e3b9253202757c30774ebf86261231f3f6e580d318556424fe3316321c5f"
+  },
+  {
+    "command": "npm run check:stats",
+    "sourceSha": "7b9177b2fd495ebe190b467bdd1e7451edb1f904",
+    "hubSourceSha": "e5184a2 working branch before verifier receipt commit",
+    "startedAt": "2026-10-09T21:04:10.082978+00:00",
+    "finishedAt": "2026-10-09T21:04:10.861306+00:00",
+    "exit": 0,
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/compare-2.log",
+    "logSha256": "d5059b5731a7407f53245eb434cc16e7212ab7057f6d0beca30e9250f3511304"
+  }
+]

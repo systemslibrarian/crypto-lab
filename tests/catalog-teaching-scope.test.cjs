@@ -19,6 +19,13 @@ function checkScope(source) {
   assert.ok(!bitcoin.includes('Nonce reuse'), 'Sibling nonce reuse is not executed here');
   assert.deepEqual(attacksFor(source, 'crypto-lab-kmac-gate'), [],
     'KMAC scope contrasts and missing hardening are not demonstrated attacks');
+  const frodo = attacksFor(source, 'crypto-lab-frodo-vault');
+  assert.ok(frodo.includes('Chosen-ciphertext attack'),
+    'Keep the real ciphertext-tamper and implicit-rejection experiment');
+  assert.ok(!frodo.includes('Chosen-plaintext attack'),
+    'CPA security discussion is not a chosen-plaintext experiment');
+  assert.ok(!frodo.includes('Side-channel (unspecified)'),
+    'Missing side-channel guarantees are not a demonstrated attack');
 }
 
 test('catalog keeps sibling attacks and negated limits out of attacks shown', () => {
@@ -26,9 +33,14 @@ test('catalog keeps sibling attacks and negated limits out of attacks shown', ()
 });
 
 test('scope control detects reintroduced sibling and negated-limit credits', () => {
-  for (const slug of ['crypto-lab-bitcoin-script', 'crypto-lab-kmac-gate']) {
+  for (const [slug, attack] of [
+    ['crypto-lab-bitcoin-script', 'Key recovery'],
+    ['crypto-lab-kmac-gate', 'Length extension'],
+    ['crypto-lab-frodo-vault', 'Chosen-plaintext attack'],
+    ['crypto-lab-frodo-vault', 'Side-channel (unspecified)'],
+  ]) {
     const marker = `href="https://systemslibrarian.github.io/${slug}/"`;
-    const mutated = html.replace(marker, `${marker} data-attacks="Key recovery@README.md:1"`);
+    const mutated = html.replace(marker, `${marker} data-attacks="${attack}@README.md:1"`);
     assert.throws(() => checkScope(mutated), assert.AssertionError);
   }
 });

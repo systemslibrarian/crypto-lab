@@ -46,3 +46,7 @@ hub/Compare dependency installations and cohort paths in the evidence root.
 the first fixture path-handling failure and its correction. The integrated repair
 receipts record exact heads and bounded deployment checks; they do not claim that
 every remaining fleet finding is complete.
+
+The current verifier ranks current-head workflow attempts by `run_started_at`, falling back to creation time only for legacy reports without usable attempt-start data. A later rerun retains its old run ID and creation time; it can supersede a newer-created run with success, failure, cancellation or pending evidence. Slow old completions cannot determine freshness. `attempt-order-negative.json` retains the reproduced earlier false-success selection; the regression suite covers all four outcomes in both input orders. No real workflow was rerun for this control. Native work item:cfd720bc-7e6b-417c-883f-bcc34f44134e.
+
+Quantum integration requires independent native and web jobs and every mandatory step; its PR additionally requires the nightly fuzz build. A skipped failure-diagnostic upload is distinct from a missing/failed mandatory artifact or deploy stage. Public file comparisons and current-head deployment remain separate gates; application tests and matching committed WASM bytes do not establish reproducible compiler provenance.

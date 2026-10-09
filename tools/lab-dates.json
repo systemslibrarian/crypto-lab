@@ -22,8 +22,8 @@
    "added": "2026-03",
    "updated": "2026-10",
    "addedFrom": "2026-03-14T01:06:39Z",
-   "updatedFrom": "2026-10-08T21:48:22Z",
-   "updatedCommit": "1c1d529613cacd31b6cada53f8454fed6e28d87e"
+   "updatedFrom": "2026-10-09T16:02:07-04:00",
+   "updatedCommit": "5fc54f2ca1e135396034501237ca687fe1f62fbe"
   },
   "crypto-lab-phantom-vault": {
    "added": "2026-04",
@@ -260,8 +260,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-06T11:08:46Z",
-   "updatedFrom": "2026-10-08T17:07:32Z",
-   "updatedCommit": "535b7d62d7b17dc3b5021958bcd5abdbc809e063"
+   "updatedFrom": "2026-10-09T14:09:57-04:00",
+   "updatedCommit": "da6983f4aa86c770fdf3a931a28db9de21db5117"
   },
   "crypto-lab-sphincs-ledger": {
    "added": "2026-04",
@@ -302,8 +302,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-07T16:09:14Z",
-   "updatedFrom": "2026-10-08T16:50:50-04:00",
-   "updatedCommit": "9858d25c8f8a050d5b74b699f0f82e3db233d837"
+   "updatedFrom": "2026-10-09T14:52:25-04:00",
+   "updatedCommit": "406577e27916730ff73aedce20d9a179e98a9dfd"
   },
   "crypto-lab-rsa-educational": {
    "added": "2026-06",
@@ -377,10 +377,10 @@
   },
   "crypto-lab-timing-oracle": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-07T19:41:44Z",
-   "updatedFrom": "2026-08-21T00:01:21-04:00",
-   "updatedCommit": "8fad6ac9f85ebc4a4c0cd8a93684d5500a0d93b3"
+   "updatedFrom": "2026-10-09T14:47:42-04:00",
+   "updatedCommit": "fcbd5cb0ef47876d60c532dde3967f181f827578"
   },
   "crypto-lab-mceliece-gate": {
    "added": "2026-04",
@@ -391,10 +391,10 @@
   },
   "crypto-lab-frodo-vault": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-12T19:38:03Z",
-   "updatedFrom": "2026-08-15T21:19:49-04:00",
-   "updatedCommit": "3abbb72284acb4dd45e2a07281a430657b7035a5"
+   "updatedFrom": "2026-10-09T16:53:56-04:00",
+   "updatedCommit": "63360a86896297ea04fea4d90c72cb3ee9740e1d"
   },
   "crypto-lab-bike-vault": {
    "added": "2026-04",
@@ -526,8 +526,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-13T02:14:19Z",
-   "updatedFrom": "2026-10-03T07:18:40-04:00",
-   "updatedCommit": "5fecf47b9202d9b83b329c55f8b1cb302eaa600f"
+   "updatedFrom": "2026-10-09T15:32:37-04:00",
+   "updatedCommit": "0d9dc9ddc177fb7bfb7c276df84c27c1bd9f42c7"
   },
   "crypto-lab-commit-gate": {
    "added": "2026-04",
@@ -874,10 +874,10 @@
   },
   "crypto-lab-bitcoin-wallet": {
    "added": "2026-06",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-06-09T09:30:14Z",
-   "updatedFrom": "2026-08-15T21:19:48-04:00",
-   "updatedCommit": "8740753d10a9685dd8175a7043c255b8b351860d"
+   "updatedFrom": "2026-10-09T15:30:22-04:00",
+   "updatedCommit": "1a922c6751ad25fdea1c0d16668714f910c51a8a"
   },
   "crypto-lab-enigma-forge": {
    "added": "2026-06",
@@ -904,8 +904,8 @@
    "added": "2026-06",
    "updated": "2026-10",
    "addedFrom": "2026-06-27T12:51:10Z",
-   "updatedFrom": "2026-10-09T10:01:01Z",
-   "updatedCommit": "5399667ab5d69b5e43a15b96e1e19485526c45ec"
+   "updatedFrom": "2026-10-09T16:40:14-04:00",
+   "updatedCommit": "ee82fdf414b3941dab6215e67d31285edb9972f8"
   },
   "crypto-lab-jwt-forge": {
    "added": "2026-06",
@@ -1063,10 +1063,10 @@
   },
   "crypto-lab-signed-bytes": {
    "added": "2026-07",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-07-15T11:01:56Z",
-   "updatedFrom": "2026-08-15T21:19:53-04:00",
-   "updatedCommit": "67e8811c3291b138ee51ed135146ebd1c1fadcf8"
+   "updatedFrom": "2026-10-09T14:52:25-04:00",
+   "updatedCommit": "dd4b3611afc393c1dacda094fb516bb5c8b92526"
   },
   "crypto-lab-hpke-envelope": {
    "added": "2026-07",

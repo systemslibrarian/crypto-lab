@@ -1,0 +1,149 @@
+[
+  {
+    "command": "node --test /Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/card-metadata.test.cjs /Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/catalog-standards.test.cjs /Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/catalog-teaching-scope.test.cjs /Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/deploy-report.test.cjs /Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/depth-export.test.cjs /Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/hub-accessible-name.test.cjs /Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/teach-issues.test.cjs /Users/gmcas/repos/.fleet-maintenance-20261009/console-research-repos/hub-catalog-current-anchors/tests/tools-cadence.test.cjs",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 25.94,
+    "output": "\u2714 metadata reads the whole tag and detects matching and conflicting duplicates (2.984666ms)\n\u2714 both metadata writers remove separated duplicates and remain stable in either order (1.00425ms)\n\u2714 all published cards carry one value per metadata field matching the existing pins (12.373833ms)\n\u2714 historical warnings cannot become standards-body identifiers (1.140042ms)\n\u2714 SIKE status is retained separately; CSIDH is not marked broken (0.796583ms)\n\u2714 catalog keeps sibling attacks and negated limits out of attacks shown (3.587166ms)\n\u2714 scope control detects reintroduced sibling and negated-limit credits (13.994666ms)\n\u2714 deployment report: current (916.683792ms)\n\u2714 deployment report: prior-ancestor (782.329ms)\n\u2714 deployment report: legacy-current (799.413042ms)\n\u2714 deployment report: old-failure-new-success (619.004625ms)\n\u2714 deployment report: new-cancelled-prior-success (729.528416ms)\n\u2714 deployment report: optional-job-skipped (545.6485ms)\n\u2714 deployment report: failure-diagnostic-skipped (661.346959ms)\n\u2714 deployment report: api-error (725.556ms)\n\u2714 deployment report: pages-unread (643.050125ms)\n\u2714 deployment report: pages-invalid (489.432584ms)\n\u2714 deployment report: pending (550.247125ms)\n\u2714 deployment report: no-main (321.374833ms)\n\u2714 deployment report: unnamed (374.214625ms)\n\u2714 deployment report: diff-unread (790.547833ms)\n\u2714 deployment report: fetch-failed (250.194041ms)\n\u2714 deployment report: tree-unread (319.272083ms)\n\u2714 deployment report: workflow-unread (330.0915ms)\n\u2714 deployment report: workflow-malformed (487.880708ms)\n\u2714 deployment report: jobs-unread (596.751125ms)\n\u2714 deployment report: jobs-invalid (595.020292ms)\n\u2714 deployment report: jobs-empty (632.29275ms)\n\u2714 deployment report: publish-skipped (596.363833ms)\n\u2714 deployment report: publish-missing (618.895209ms)\n\u2714 deployment report: publish-step-skipped (617.884708ms)\n\u2714 deployment report: download-failed (646.731333ms)\n\u2714 deployment report: job-failed (659.42675ms)\n\u2714 deployment report: job-cancelled (659.630708ms)\n\u2714 deployment report: job-pending (664.594333ms)\n\u2714 deployment report: steps-unread (563.015333ms)\n\u2714 deployment report: new-failure-old-success (628.135875ms)\n\u2714 deployment report: prior-unrelated (781.744917ms)\n\u2714 deployment report: prior-jobs-unread (762.554875ms)\n\u2714 deployment report: legacy-build-unread (705.616042ms)\n\u2714 deployment report: legacy-build-failed (676.472125ms)\n\u2714 deployment report: legacy-wrong-commit (715.038375ms)\n\u2714 deployment report: pull-request-only (611.039875ms)\n\u2714 deployment report: download-skipped (762.4065ms)\n\u2714 deployment report: build-steps-unread (726.309417ms)\n\u2714 deployment report: build-step-failed (743.252291ms)\n\u2714 deployment report: build-step-skipped (753.4135ms)\n\u2714 deployment report: needed-job-skipped (734.111542ms)\n\u25b6 unreadable discovery fails and preserves prior export manifests\n  \u2714 missing CLI (29.982833ms)\n  \u2714 failed API with valid JSON (249.390208ms)\n  \u2714 malformed JSON (346.268458ms)\n  \u2714 wrong response shape (340.432042ms)\n  \u2714 missing repository name (375.146584ms)\n\u2714 unreadable discovery fails and preserves prior export manifests (1342.521333ms)\n\u2714 a discovered repository with unreadable tarball is named and fails (364.47325ms)\n\u2714 a valid archive exports normal and hidden files with its commit (248.270208ms)\n\u2714 award link can be addressed by its visible words on desktop and mobile (738.7655ms)\n\u2714 browser launch failures remain unreadable and do not hide other engines (1.630667ms)\n\u2714 fixture-only invocations never advertise or propagate a fleet-check cadence (6.8215ms)\n\u2139 tests 59\n\u2139 suites 0\n\u2139 pass 59\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 25895.828709\n"
+  },
+  {
+    "command": "node tools/catalog-evidence.js selftest",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 1.23,
+    "output": "  ok  an ignored file on disk does not change the file list\n  ok  neither ignored file appears in the list\n  ok  git status reports the clone CLEAN with both ignored files present\n  ok  an untracked file does not reach the list either\n  ok  a tracked file is still read\n  ok  a .gitignore-only commit does NOT invalidate a pin\n  ok  a src/ change DOES invalidate a pin\n  ok  a README.md change DOES invalidate a pin\n  ok  a range git cannot read counts as moved, never as unchanged\n  ok  an unfetched remote revision requires a clone refresh, not a source review\n  ok  fetched dependency-only movement preserves the source review\n  ok  fetched real source movement still requires review\n  ok  a remote-matching pin still reports a checkout behind it\n  ok  a shallow clone missing the pin is 'unreadable', never a stale review\n  ok  a shallow clone still answers about a range it does contain\n  ok  fifteen build documents, CI, config and non-demo pages are excluded\n  ok  eleven of the lab's own documents, pages and sources are still scanned\n  ok  Signature malleability     crypto-lab-rsa-forge\n  ok  Signature malleability     crypto-lab-ecdsa-forge\n  ok  Signature malleability     crypto-lab-ed25519-forge\n  ok  Ciphertext malleability    crypto-lab-fhe-arena\n  ok  Ciphertext malleability    crypto-lab-chacha20-stream\n  ok  Ciphertext malleability    crypto-lab-beacon-lock\n  ok  Malleability (unspecified) crypto-lab-merkle-vault\n  ok  Malleability (unspecified) crypto-lab-paillier-gate\n  ok  Malleability (unspecified) crypto-lab-elgamal-plain\n  ok  an anchor on a multi-line WebCrypto call reads the lines it spans\n  ok  and does not read that window on any other line\n  ok  an algorithm anchor resolves against the shared term map\n  ok  an attack anchor resolves against the shared term map\n  ok  a name in neither vocabulary is still refused\n  ok  MUTATION algorithm-only map: attack anchor refused, algorithm anchor kept - the fixture discriminates\n  ok  a first write on a one-line card emits each derived attribute once\n  ok  re-writing a newly carded lab does NOT duplicate the last attribute\n  ok  writing the same card twice is byte-identical\n  ok  the tag tail and the card body survive the rewrite\n  ok  a settled card is stable across writes\n  ok  a field that stops being derived is removed, not orphaned\n  ok  a card already in the pre-fix shape is repaired, not duplicated\n  ok  repairing it keeps the tail attributes it shared a line with\n  ok  a reviewed remove deletes an implementation\n  ok  a reviewed remove deletes an attack\n  ok  it deletes only the names it was given\n  ok  a remove naming neither vocabulary throws instead of no-opping\n\n68 passed, 0 failed\n"
+  },
+  {
+    "command": "node tools/gate-sync.js selftest",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.04,
+    "output": "  ok  env-on-pr \u2014 one job gates, publishes and names a protected environment on a PR trigger\n  ok  env-split \u2014 the same lab after the split, which must stay quiet\n\n2 passed, 0 failed\n"
+  },
+  {
+    "command": "node tools/fleet-sync.js selftest",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.04,
+    "output": "  ok  carded \u2014 a card with the stamped attributes after its href is counted\n  ok  prose-only-control \u2014 the superseded any-URL rule DID count crypto-lab-fixture-prose, so the fixture discriminates\n  ok  prose-only \u2014 a lab linked only from prose, with no card, is NOT counted as carded\n  ok  hrefless \u2014 a card anchor with no github.io href is named, not silently dropped\n  ok  attr-order \u2014 href before data-category still counts, so a reshuffle cannot shrink the denominator\n  ok  index.html \u2014 228 card slugs, 228 card titles, they agree\n\n6 passed, 0 failed.\n"
+  },
+  {
+    "command": "node tools/deploy-sync.js selftest",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.04,
+    "output": "  ok  cancelled \u2014 Superseded by a newer push under a concurrency group\n  ok  failed \u2014 The deploy fired and failed\n  ok  jobs-failing-step \u2014 Naming the failing job AND step is the point: 'Accessibility gate' and 'Check formatting' are different problems\n  ok  newest-attempt-wins \u2014 A failed retry after an earlier cancelled attempt at the same sha\n  ok  no-deploy-job \u2014 Green run that shipped nothing because its deploy job was skipped - the 'if: github\n  ok  no-run \u2014 An auto-merge landed a bump with GITHUB_TOKEN\n  ok  pending \u2014 Still in flight\n  ok  publish-artifact-unused-under-legacy \u2014 An artifact uploaded under build_type legacy is DEAD CONFIGURATION, not a broken site: Pages builds the branch whether or not an artifact arrived\n  ok  publish-both-publishers \u2014 Both publishers present and build_type workflow: an artifact IS uploaded, so Pages has something to serve and this is not the defect\n  ok  publish-pages-unread \u2014 The Pages API could not be read\n  ok  publish-served-artifact \u2014 The shape 193 labs in this fleet use, and the control\n  ok  publish-served-branch-into-legacy \u2014 A lab pushing a branch into a Pages that builds from a branch is correct, even though it is not the fleet's shape\n  ok  publish-unserved-branch \u2014 The real defect, 2026-10-01\n\n13 passed, 0 failed\n"
+  },
+  {
+    "command": "node tools/corpus-freshness.js selftest",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.34,
+    "output": "  ok  true           a commit on main is an ancestor of main\n  ok  false          a commit only on a side branch is NOT an ancestor of main\n  ok  null           an unknown sha is \"could not tell\", not \"not an ancestor\"\n  ok  NEVER-REVIEWED never reviewed is its own state, not a stale one\n  ok  UNREADABLE     git could not be asked; must never read as current\n  ok  CURRENT        nothing has landed at all since the review\n  ok  CURRENT        a grouped Dependabot bump is not a reason to re-read the prose\n  ok  CURRENT        e2e and config churn does not change what the page says\n  ok  STALE          a README rewrite is exactly what the prose was written from\n  ok  STALE          export-grade: two exhibits added under src/ while the entry described four panes\n  ok  STALE          one substantive file among noise still counts\n  ok  UNPUBLISHED-REVIEW reviewed at a commit outside origin/main: the record is wrong, not the lab\n  ok  UNPUBLISHED-REVIEW an unpublished review outranks STALE \u2014 fix the sha before re-reading the lab\n  ok  UNREADABLE     ancestry could not be determined; must not be read as published\n\n14 passed, 0 failed\n"
+  },
+  {
+    "command": "node tools/lab-dates.js selftest",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.04,
+    "output": "  ok  package-lock.json \u2014 a lockfile bump is not a content change\n  ok  .github/workflows/deploy.yml \u2014 a workflow edit is not a content change\n  ok  e2e/a11y.spec.ts \u2014 a test is not a content change\n  ok  README.md \u2014 a README refresh is not a demo change\n  ok  docs/threat-model.md \u2014 documentation is not a demo change\n  ok  src/main.ts \u2014 source IS a content change\n  ok  index.html \u2014 the demo page IS a content change\n  ok  demos/thing/src/app.ts \u2014 a nested demo source IS a content change\n  ok  web-demo/src/crypto/aes.ts \u2014 an unusual source layout IS a content change\n  ok  separated conflicting duplicates detected\n  ok  matching duplicates detected\n  ok  writer removes all duplicates\n  ok  writer preserves unrelated attributes and body\n  ok  writer is idempotent\n  ok  null dates remove every occurrence\n  ok  valid card stays quiet\n\n16 passed, 0 failed\n"
+  },
+  {
+    "command": "node tools/port-sync.js selftest",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.04,
+    "output": "  ok  factor-forge-prefix \u2014 real config at 2d00214: url 4200, command --port 4626\n  ok  sphinx-mix-prefix \u2014 real config at def321c: url 4203, command --port 4646\n  ok  stream-ward-prefix \u2014 real config at a5be1dd: url 4701, command --port 4671\n  ok  ssh-handshake-loopback \u2014 correct, and written 127.0.0.1 rather than localhost\n  ok  no-url-port \u2014 starts a server on 4321 and names no url to poll\n  ok  factor-forge-fixed \u2014 the same lab after the fix, which must stay quiet\n  ok  fleet-floor \u2014 refuses 0 and 231 clones, allows 232 and 233\n\n10 passed, 0 failed\n"
+  },
+  {
+    "command": "node tools/evidence-shape-proof.js",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.07,
+    "output": "EVIDENCE SHAPE \u2014 a name is not an implementation\n\nReviewed interpretation false matches\n  ok    prose inside a string is not import syntax\n  ok    a drawing import does not implement its subject\n  ok    presentation-only bindings also block path fallback\n  ok    a local alias does not change the imported symbol\n  ok    presentation re-exports do not establish computation\n  ok    real computation imported by UI remains evidence\n  ok    a real computation remains evidence under an alias\n  ok    an algorithm-qualified alias for a generic crypto export remains evidence\n  ok    require bindings remain evidence\n  ok    dynamic imports remain evidence\n  ok    the closing line of a multiline crypto import remains evidence\n  ok    measurement noise is not differential privacy\n  ok    explicit Gaussian mechanism remains evidence\n\nMODELS \u2014 a projection named for an algorithm\n  ok    the export-grade line: a rate projection named for the algorithm\n  ok    estimate() is a projection too\n  ok    NEGATIVE same identifier, real computation -> still credited\n  ok    a projection not named for an algorithm credits nothing either way\n\nPRESENTS \u2014 drawing it is not computing it\n  ok    suppressed at the declaration\n  ok    the dilithium-seal line: suppressed at the CALL SITE too\n  ok    and its LWE twin\n  ok    NEGATIVE an ordinary call is still credited\n  ok    NEGATIVE sampling an LWE instance IS computing with it\n\nATTACKS_IT \u2014 attacking it is not implementing it\n  ok    the multivariate line: an attack by Kipnis and Shamir\n  ok    NEGATIVE the real thing is still credited\n  ok    no algorithm named, nothing either way\n  ok    a break of it is not it\n  ok    multivariate again, one file away: importing the attack is not importing the scheme\n  ok    NEGATIVE importing the real thing still credits it\n\nMEASURES / HOLDS_DATA apply to what a VARIABLE holds, not to functions\n  ok    a function that computes a proof size, in the lab the term is named after\n  ok    its Schnorr twin\n  ok    pq-families computes Prange's work factor and implements the decoder\n  ok    beacon-lock\n  ok    HOLDS_DATA needs the VALUE to be data too: this is a live key object, not a vector\n  ok    while this one IS a vector, and stays suppressed\n\nMEASURES \u2014 a size is not an implementation\n  ok    the mceliece-gate line: a row of its own comparison table\n  ok    a key size is a size\n  ok    NEGATIVE an expansion is an operation\n\nHOLDS_DATA \u2014 a test vector is not the cipher\n  ok    the air-stream line: a known-answer-test input\n  ok    and its expected output\n  ok    NEGATIVE the cipher itself is credited\n  ok    NEGATIVE so is the operation\n\nSCALAR_INIT \u2014 a constant is a fact about it\n  ok    a key size\n  ok    a year\n  ok    the pq-chooser line\n  ok    a boolean UI flag\n  ok    NEGATIVE an S-box table IS part of an implementation\n  ok    PRE-EXISTING an ALL_CAPS_UNDERSCORE identifier reaches no term: \\baes\\b finds no boundary before \"_\", and camelSplit splits on case, not on underscores. True on origin/main too, recorded so it is not read as this rule\n  ok    NEGATIVE so is a parameter object\n  ok    NEGATIVE a computed value is not a literal\n\nimports \u2014 a binding overrides the path only by naming another algorithm\n  ok    split-point: `ctr` names no algorithm, so the path still says AES\n  ok    attestation-gate, same shape\n  ok    hpke-envelope: HKDF's own two operations name no algorithm\n  ok    blind-relay\n  ok    but `shake256` IS a term, so it overrides: importing SHAKE is not implementing SHA-3\n  ok    NEGATIVE and SHAKE itself is credited from the same line\n\nimports \u2014 the bindings decide when there are any\n  ok    the fold-gate line: every binding says ristretto255\n  ok    NEGATIVE the binding that IS named is credited\n  ok    NEGATIVE the case bindings-matching was added for\n  ok    NEGATIVE a namespace import names no symbols, so the path is all there is\n  ok    NEGATIVE a bare require names no symbols either, so its path is read\n  ok    PRE-EXISTING a side-effect `import 'x'` is read by nothing: the path pattern wants from / require( / import(. True on origin/main too\n\na WebCrypto call spanning lines is read with its own lines\n  ok    harvest-vault / kyber-vault: the operation is the anchor, not the importKey above it\n  ok    NEGATIVE the importKey is still key material, however many lines it spans\n  ok    NEGATIVE the window is only read when the anchor line IS an open WebCrypto call\n\nterm boundaries \u2014 a name inside a longer name is not the name\n  ok    the jwt-forge line: a key wrapper is not AES Key Wrap\n  ok    the quantum-vault-kpqc line: its keywrap module wraps shares with AES-GCM\n  ok    the feistel-forge line: a text field\n  ok    the shamir-vs-frost line: step 3, description\n  ok    the next one: triple-des needs a trailing boundary too\n  ok    NEGATIVE the envelope-kms line: RFC 3394 wrap is still credited\n  ok    NEGATIVE spelled out, still credited\n  ok    NEGATIVE the WebCrypto algorithm name is still credited\n  ok    NEGATIVE triple DES spelled as an identifier is still credited\n  ok    COST of the left boundary: a digit glued to the word before it is not seen. No lab in the fleet spelled 3DES this way when the boundary was added\n\nkeyimport and ZERO_IV \u2014 intent and the raw block\n  ok    the air-stream line: key material, ranked below every operation\n  ok    the air-stream zero-IV call: the raw block cipher, not the mode\n  ok    NEGATIVE AES itself still credits from that same line\n  ok    NEGATIVE a real IV is the real mode\n  ok    NEGATIVE an ordinary AEAD call is untouched\n\nterm patterns over raw and camel-split text\n  ok    does not name AES-KW: heldKeyWrapper\n  ok    does not name AES-KW: from './keywrap'\n  ok    does not name AES-KW: keyWrap\n  ok    does not name AES-KW: keywrap_key\n  ok    does not name 3DES: step3Desc\n  ok    does not name 3DES: tripleDescriptor\n  ok    names AES-KW: AES-KW\n  ok    names AES-KW: aes_kw\n  ok    names AES-KW: AES key wrap and DEK/KEK key rotation\n  ok    names AES-KW: aesKwUnwrap\n  ok    names 3DES: 3DES_EDE\n  ok    names 3DES: Triple-DES\n  ok    names 3DES: TripleDES\n\n92 passed, 0 failed.\n"
+  },
+  {
+    "command": "node tools/clone-guard-proof.js",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 1.32,
+    "output": "CLONE GUARD \u2014 a dirty sibling clone must not reach generated output\n\n  ok    C1  clean clone derives its committed content\n  ok    C2  a clean clone is read from the working tree, not exported\n  ok    C3  an uncommitted EDIT does not change generated output\n  ok    C4  and the dirty clone is reported as read from HEAD\n  ok    C5  an UNTRACKED file does not change generated output\n  ok    C6  a DELETED file does not change generated output\n  ok    C7  a COMMITTED change does change output (the guard is not a constant)\n  ok    C8  an empty repository with a stray file is REFUSED, not read\n  ok    C9  a clone read clean is not reported torn while it stays clean\n  ok    C10 a clone that goes dirty AFTER being read clean is reported as a TORN SNAPSHOT\n  ok    C11 after forget(), the same clone is now read from HEAD\n  ok    C12 and still derives its committed content\n\n12 passed, 0 failed.\n"
+  },
+  {
+    "command": "node tools/catalog-structure-check.js",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.04,
+    "output": "Catalog search/structure: PASS (228 cards; metadata, typo and proximity search verified)\n"
+  },
+  {
+    "command": "node tools/catalog-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 6.02,
+    "output": "Vocabulary invariants hold over 210 terms and 228 cards:\n  every term matches its own name, no two terms index the same algorithm,\n  no term is credited by a package name alone,\n  and every chip with a dependency behind it resolves to a term (4 declared\n  exemptions in tools/catalog-chip-exempt.json).\nCATALOG.md in step with index.html (228 labs).\n"
+  },
+  {
+    "command": "node tools/readme-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.06,
+    "output": "README tables in sync with index.html cards (228 cards); hero count reads 228.\n"
+  },
+  {
+    "command": "node tools/concept-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.05,
+    "output": "concept-coverage.md v28 \u2014 40 concepts (DEEP 9 \u00b7 COVERED 31 \u00b7 PARTIAL 0 \u00b7 GAP 0)\nCards in index.html: 228 | cited in map: 228\nCited but no card (0): []\nCarded but unmapped (0): []\nUncatalogued backlog (0): []\nIn flight (0): []\nOpen gaps (0): []\nCatalogued total line: 228 (matches)\n\nconcept-coverage.md in step with index.html.\n"
+  },
+  {
+    "command": "node tools/level-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.05,
+    "output": "Cards levelled: 228 | beginner=32 intermediate=55 advanced=141\nFlagged for review: 10 \u2014 listed first in LEVELS-REVIEW.md\n\nEvery card carries a level, and the review sheet matches it.\n"
+  },
+  {
+    "command": "node tools/teach-build.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.11,
+    "output": "Teach pages in sync: 5 module(s), 44 generated file(s); count lint clean.\n"
+  },
+  {
+    "command": "node tools/tools-sync.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.08,
+    "output": "README.md tools block in step with tools/ (37 tools listed).\n"
+  },
+  {
+    "command": "node tools/lab-dates.js check",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 19.02,
+    "output": "Cards dated: 228 | pinned: 228 | pinned 2026-10-09\n\nEvery card's dates match the repository they describe.\n"
+  },
+  {
+    "command": "node tools/validate-manifest.mjs --check-fixtures",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.25,
+    "output": "PASS passing-manifest.yaml \u2014 validates cleanly\nPASS failing-banned-word.yaml \u2014 trips \"Banned word\"\nPASS failing-commit-sha.yaml \u2014 trips \"commit_sha is missing\"\nPASS failing-conditional-attack.yaml \u2014 trips \"attack_model is required\"\nPASS failing-conditional-computable.yaml \u2014 trips \"computable block missing\"\nPASS failing-confidence-question.yaml \u2014 trips \"do not link an open_question\"\nPASS failing-coverage-missing.yaml \u2014 trips \"missing from coverage block\"\nPASS failing-depends-on.yaml \u2014 trips \"Unresolved depends_on\"\nPASS failing-hash.yaml \u2014 trips \"extraction_hash mismatch\"\nPASS failing-ordering.yaml \u2014 trips \"Claims out of order\"\nPASS failing-reference-anchor.yaml \u2014 trips \"Unresolved reference_anchor.ref\"\nPASS failing-self-reference.yaml \u2014 trips \"Banned self-reference\"\nPASS failing-snippet.yaml \u2014 trips \"Snippet mismatch\"\nPASS failing-unique-id.yaml \u2014 trips \"Duplicate ID found\"\nFixture check passed: 1 passing + 13 failing fixtures behaved as expected\n"
+  },
+  {
+    "command": "node tools/teach-layout.js",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 19.21,
+    "output": "Layout clean: 35 page(s) at 1280px and 390px \u2014 no sideways scrolling, nothing overflowing its container, no prose wrapping under 35 characters a line.\n"
+  },
+  {
+    "command": "node tools/corpus-sync.js check /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-counsel/corpus.json",
+    "exit": 0,
+    "result": "passed",
+    "seconds": 0.03,
+    "output": "Corpus: /Users/gmcas/repos/.fleet-maintenance-20261009/crypto-counsel/corpus.json\nCatalog demos: 228 | Corpus demo entries: 228\nMissing from corpus (0): []\nStale in corpus (0): []\n"
+  }
+]

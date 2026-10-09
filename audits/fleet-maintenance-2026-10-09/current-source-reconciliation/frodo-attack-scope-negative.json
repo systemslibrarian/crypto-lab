@@ -1,0 +1,12 @@
+{
+  "command": "node --test tests/catalog-teaching-scope.test.cjs",
+  "exit": 1,
+  "expected": "New source-scope assertion fails against existing prose-only CPA credit before metadata repair",
+  "sourceSha": "e5184a2e5060ce2824c3752d9e71cfc799107363",
+  "sourceState": "Existing generated attack credits; only regression assertions changed",
+  "inspectedLabSha": "54665d57569765018c17caa552ad07a1d76507fb",
+  "startedAt": "2026-10-09T21:21:21.718929+00:00",
+  "finishedAt": "2026-10-09T21:21:21.857200+00:00",
+  "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-attack-scope-negative.log",
+  "logSha256": "9b5326568f30ae2b6f34feac16a87f43e8839c9eb53fbaf0358a5747352f8b26"
+}

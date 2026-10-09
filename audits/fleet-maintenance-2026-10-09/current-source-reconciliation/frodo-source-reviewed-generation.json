@@ -1,0 +1,42 @@
+[
+  {
+    "command": "node tools/catalog-evidence.js write --lab crypto-lab-frodo-vault",
+    "exit": 0,
+    "startedAt": "2026-10-09T21:21:38.973687+00:00",
+    "finishedAt": "2026-10-09T21:21:39.679163+00:00",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-source-review-write.log",
+    "logSha256": "d3f9fa0f358a301e2073348cf16e35b33cc62fc5b3dab295268f13449c27915a"
+  },
+  {
+    "command": "node --test tests/catalog-teaching-scope.test.cjs",
+    "exit": 0,
+    "startedAt": "2026-10-09T21:21:39.679366+00:00",
+    "finishedAt": "2026-10-09T21:21:39.752300+00:00",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-scope-positive.log",
+    "logSha256": "9dbc31ac7235e0ea30dace63540f8efb7ebf8dc1d2e54711cbd9a02277a389a3"
+  },
+  {
+    "command": "node tools/catalog-sync.js",
+    "exit": 0,
+    "startedAt": "2026-10-09T21:21:39.752598+00:00",
+    "finishedAt": "2026-10-09T21:21:39.804973+00:00",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-catalog-generate.log",
+    "logSha256": "84dcffb225ba4a79cd5152fea4fedca8454781cfcb62fb6d4d48091cbf1b2c0c"
+  },
+  {
+    "command": "node tools/readme-sync.js",
+    "exit": 0,
+    "startedAt": "2026-10-09T21:21:39.805196+00:00",
+    "finishedAt": "2026-10-09T21:21:39.841186+00:00",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-readme-generate.log",
+    "logSha256": "a0b5c65341b5a200af56d2b096624a6f6f64d0029352842a111ac33e898f15d8"
+  },
+  {
+    "command": "node tools/catalog-evidence.js verify",
+    "exit": 0,
+    "startedAt": "2026-10-09T21:21:39.841367+00:00",
+    "finishedAt": "2026-10-09T21:22:06.489016+00:00",
+    "log": "/Users/gmcas/repos/.fleet-maintenance-20261009/catalog-current-anchor-evidence/frodo-final-anchors.log",
+    "logSha256": "84868e80a5e763f03d213ba660cc51a7b4d0f7195f3efbec67dff9c3ff0ca3d5"
+  }
+]

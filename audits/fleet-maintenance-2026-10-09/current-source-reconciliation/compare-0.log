@@ -1,0 +1,16 @@
+
+> crypto-compare@1.2.0 test:demos
+> vitest run src/__tests__/demo-resources.test.ts src/__tests__/demo-sync-lib.test.ts src/__tests__/check-demo-sync-script.test.ts
+
+
+ RUN  v5.0.3 /Users/gmcas/repos/.fleet-maintenance-20261009/compare-accessibility
+
+
+ Test Files  3 passed (3)
+      Tests  15 passed (15)
+   Start at  17:04:07
+   Duration  2.05s (environment 71%, tests 16%, setup 8%, transform 3%, worker 1%, import 1%)
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.

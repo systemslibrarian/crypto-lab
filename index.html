@@ -5779,12 +5779,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-aes-modes/" data-added="2026-04" data-updated="2026-10" data-level="intermediate"
-            data-implements="AES@src/ccm.ts:18 | AES-CBC@src/cbc.ts:30 | AES-CCM@src/ccm.ts:153 | AES-CTR@src/compare.ts:113 | AES-GCM@src/compare.ts:120 | GHASH@src/forbidden.ts:99"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-aes-modes/"
+            data-implements="AES@src/ccm.ts:32 | AES-CBC@src/cbc.ts:30 | AES-CCM@src/ccm.ts:174 | AES-CTR@src/compare.ts:113 | AES-GCM@src/compare.ts:120 | GHASH@src/forbidden.ts:99"
             data-references="3DES | Ascon | ChaCha20 | ChaCha20-Poly1305 | HMAC | Poly1305 | RC4 | Serpent | TLS 1.3"
             data-attacks="IV reuse@src/cbc.ts:97 | Key recovery@index.html:568 | Known-plaintext attack@index.html:567 | Nonce reuse@src/ctr.ts:113 | Padding oracle@src/cbc.ts:307"
             data-standards="NIST"
             data-implementation="WebCrypto"
+            data-added="2026-04" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -8637,12 +8638,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-blind-sign/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
-            data-implements="Ed25519@src/ecblind.ts:1 | RSA@src/blind.ts:39 | RSA-PSS@src/rfc9474.ts:83 | Schnorr@src/main.ts:1199 | SHA-256@src/blind.ts:265 | SHA-384@src/rfc9474.ts:53 | SHA-512@src/ecblind.ts:109"
+          <a class="project-card" data-category="SIGNATURES | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-blind-sign/"
+            data-implements="Ed25519@src/ecblind.ts:1 | RSA@src/blind.ts:39 | RSA-PSS@src/rfc9474.ts:83 | Schnorr@src/main.ts:1199 | SHA-256@src/blind.ts:265 | SHA-384@src/rfc9474.ts:53 | SHA-512@src/ecblind.ts:117"
             data-references="BLS signatures | EC point arithmetic | EdDSA | Pairing | Privacy Pass | RSA-OAEP | ristretto255"
             data-attacks="Discrete log@src/main.ts:433 | Factoring@src/main.ts:301 | Signature malleability@src/main.ts:290"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-added="2026-04" data-updated="2026-10" data-level="advanced"
            
            
            
@@ -20503,13 +20505,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sat-break/" data-added="2026-10" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sat-break/"
             data-implements="Toy SPN@src/crypto/spn.ts:99"
             data-unscanned="WebAssembly:1 | C/C++:1"
             data-references="AES | SHA-256"
             data-implementation="WASM"
-            data-review-commit="dbbdf566f62d16a7f8cf228b96339af319426772"
-            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped."
+            data-review-commit="22cf78e9dd3e1f1d3dcd9901b0dbed3bd1972508"
+            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain."
+            data-added="2026-10" data-updated="2026-10" data-level="advanced"
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Constraint-Based Cryptanalysis</div>
             <div class="project-title">SAT Break</div>

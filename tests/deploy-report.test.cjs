@@ -6,9 +6,9 @@ const os = require('node:os');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 
-const positive = ['current', 'prior-ancestor', 'legacy-current', 'old-failure-new-success', 'new-cancelled-prior-success', 'optional-job-skipped'];
+const positive = ['current', 'prior-ancestor', 'legacy-current', 'old-failure-new-success', 'new-cancelled-prior-success', 'optional-job-skipped', 'failure-diagnostic-skipped'];
 const negative = ['api-error', 'pages-unread', 'pages-invalid', 'pending', 'no-main', 'unnamed', 'diff-unread', 'fetch-failed', 'tree-unread', 'workflow-unread', 'workflow-malformed', 'jobs-unread', 'jobs-invalid', 'jobs-empty', 'publish-skipped', 'publish-missing', 'publish-step-skipped', 'download-failed', 'job-failed', 'job-cancelled', 'job-pending', 'steps-unread', 'new-failure-old-success', 'prior-unrelated', 'prior-jobs-unread', 'legacy-build-unread', 'legacy-build-failed', 'legacy-wrong-commit', 'pull-request-only'];
-negative.push('download-skipped', 'build-steps-unread', 'build-step-failed', 'needed-job-skipped');
+negative.push('download-skipped', 'build-steps-unread', 'build-step-failed', 'build-step-skipped', 'needed-job-skipped');
 for (const mode of [...positive, ...negative]) {
   test(`deployment report: ${mode}`, () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'deploy-report-'));
@@ -18,7 +18,8 @@ for (const mode of [...positive, ...negative]) {
       for (const dir of [tools, bin, path.join(hub, '.git'), path.join(lab, '.git'), path.join(lab, '.github/workflows')]) fs.mkdirSync(dir, { recursive: true });
       for (const name of ['deploy-sync.js', 'gate-sync.js', 'sibling-labs.js']) fs.copyFileSync(path.join(__dirname, '../tools', name), path.join(tools, name));
       fs.writeFileSync(path.join(tools, 'dispatch-census.json'), JSON.stringify({ totals: { labs: 2 } }));
-      const workflow = `${mode === 'unnamed' ? '' : 'name: Ship\n'}jobs:\n  deploy:\n${mode === 'needed-job-skipped' ? '    needs: build\n' : ''}    steps:\n      - name: Publish site\n        uses: actions/deploy-pages@v5\n${mode === 'needed-job-skipped' ? '  build:\n    steps:\n      - run: npm test\n' : ''}`;
+      const needsBuild = mode === 'needed-job-skipped' || mode === 'build-step-skipped' || mode === 'failure-diagnostic-skipped';
+      const workflow = `${mode === 'unnamed' ? '' : 'name: Ship\n'}jobs:\n  deploy:\n${needsBuild ? '    needs: build\n' : ''}    steps:\n      - name: Publish site\n        uses: actions/deploy-pages@v5\n${needsBuild ? '  build:\n    steps:\n      - name: Verify\n        run: npm test\n' : ''}${mode === 'failure-diagnostic-skipped' ? '      - name: Upload failure diagnostics\n        if: failure()\n        uses: actions/upload-artifact@v7\n' : ''}`;
       // Working-tree workflow bytes are deliberately different. Discovery and
       // job matching must read the fetched committed source, preserving local work.
       fs.writeFileSync(path.join(lab, '.github/workflows/deploy.yml'), 'name: Uncommitted\njobs: {}\n');
@@ -45,7 +46,8 @@ if(a[0]==='api'){
  if(m.startsWith('job-'))jobs.push({name:'Build',conclusion:m==='job-failed'?'failure':m==='job-cancelled'?'cancelled':null});
  if(m==='optional-job-skipped')jobs.push({name:'Auto merge',conclusion:'skipped',steps:[]});
  if(m==='needed-job-skipped')jobs.push({name:'build',conclusion:'skipped',steps:[]});
- if(m.startsWith('build-'))jobs.push({name:'Build',conclusion:'success',steps:m==='build-steps-unread'?null:[{name:'Verify',conclusion:'failure'}]});
+ if(m.startsWith('build-'))jobs.push({name:m==='build-step-skipped'?'build':'Build',conclusion:'success',steps:m==='build-steps-unread'?null:[{name:'Verify',conclusion:m==='build-step-skipped'?'skipped':'failure'}]});
+ if(m==='failure-diagnostic-skipped')jobs.push({name:'build',conclusion:'success',steps:[{name:'Verify',conclusion:'success'},{name:'Upload failure diagnostics',conclusion:'skipped'}]});
  console.log(JSON.stringify({jobs:m==='jobs-empty'?[]:jobs}));
 }else{
  let r={databaseId:1,headSha:(m.startsWith('prior-')||m==='diff-unread'?'b':'a').repeat(40),event:m==='pull-request-only'?'pull_request':'push',name:'Ship',status:m==='pending'?'in_progress':'completed',conclusion:m==='pending'?null:'success',updatedAt:'2026-10-09T01:00:00Z'};

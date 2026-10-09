@@ -131,7 +131,18 @@ async function deployingLabs() {
 function verifyPublishJobs(wf, jobs) {
   if (!Array.isArray(jobs) || !jobs.length) return false;
   if (jobs.some((j) => !['success', 'skipped'].includes(j.conclusion))) return false;
-  if (jobs.some((j) => j.conclusion === 'success' && (!Array.isArray(j.steps) || !j.steps.length || j.steps.some((st) => !['success', 'skipped'].includes(st.conclusion))))) return false;
+  const diagnosticSkip = (observedJob, observedStep) => {
+    const configured = Object.entries(wf.jobs || {}).filter(([id, job]) => (job.name || id) === observedJob.name);
+    if (configured.length !== 1) return false;
+    // Failure/cancellation-only artifact uploads are diagnostics. A skipped
+    // test, required download or Pages artifact upload is incomplete evidence.
+    return (configured[0][1].steps || []).some((step) =>
+      String(step.uses || '').split('@')[0].toLowerCase() === 'actions/upload-artifact'
+      && /^(?:\$\{\{\s*)?(?:failure\(\)|cancelled\(\))(?:\s*\}\})?$/.test(String(step.if || '').trim())
+      && observedStep.name === (step.name || `Run ${step.uses}`));
+  };
+  if (jobs.some((j) => j.conclusion === 'success' && (!Array.isArray(j.steps) || !j.steps.length || j.steps.some((st) =>
+    st.conclusion !== 'success' && !(st.conclusion === 'skipped' && diagnosticSkip(j, st)))))) return false;
   let publishers = 0;
   for (const [id, job] of Object.entries(wf.jobs || {})) {
     const expected = (job.steps || []).filter((st) => st.uses && PAGES_PUBLISHERS.has(String(st.uses).split('@')[0].toLowerCase()));

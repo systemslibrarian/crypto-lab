@@ -99,8 +99,8 @@
     "note": "Rust keygen, signing rounds and aggregation reviewed; TS src/exhibits/attacks.ts:108 keygen samples scalar coefficients and evaluates f(id) to generate Shamir shares; lagrangeCoeff computes reconstruction weights. This is computation evidence, distinct from renderShamirPlot, and not a cryptographic correctness audit."
   },
   "crypto-lab-function-key": {
-    "commit": "f6628c00c2b70ddde2efd7462f0b9494e8c00d7d",
-    "reviewed": "2026-09-30",
+    "commit": "b145a348de0771eed22923c1da210c60e961bbf6",
+    "reviewed": "2026-10-09",
     "add": [
       "Baby-step giant-step@src/crypto/dlog.ts:130"
     ],
@@ -111,7 +111,7 @@
       "Chosen-ciphertext attack",
       "Discrete log"
     ],
-    "note": "Browser TypeScript throughout, no other language and no WASM. Group operations are @noble/curves 2.4.0, pinned to RFC 9496 Appendix A (16 A.1 multiples both directions, 29 A.2 rejections, 8 A.3 map outputs) before any scheme code was written on it; ABDP15 Construction 3.1 and the baby-step giant-step, exact-rational and mod-l algebra are implemented in-repo. Five derived attacks are removed because none is an attack this lab shows, and each was matched by a different accident: Man-in-the-middle came from the string 'DH MITM' inside CATALOG-ENTRY.md, which is this catalog's own concept line quoted back in the lab's handoff doc and not lab source at all; Signature malleability from /malleab/i on a seed label, in a lab that has no signatures - what it demonstrates is CIPHERTEXT malleability, and its own source calls that 'not an attack and not a flaw in the proof'; Chosen-plaintext attack from CPA inside 'IND-FE-CPA', the security notion ABDP15 proves rather than an attack mounted; Chosen-ciphertext attack from CCA inside 'Any CCA security whatever', a line in the NOT-BUILT list; and Discrete log from 'baby step', which this lab pays as a decryption cost and never mounts. The two attacks it does show, key collusion and ciphertext malleability, have no term in the vocabulary. Baby-step giant-step is added by review: src/crypto/dlog.ts is a baby-step giant-step over a symmetric range, but it names the algorithm only in comments and in the local counters babySteps and giantSteps, and the exported function is called dlogSymmetric. The anchor is that function, not the counter a narrower shape used to read."
+    "note": "Browser TypeScript throughout, no other language and no WASM. Group operations are @noble/curves 2.4.0, pinned to RFC 9496 Appendix A (16 A.1 multiples both directions, 29 A.2 rejections, 8 A.3 map outputs) before any scheme code was written on it; ABDP15 Construction 3.1 and the baby-step giant-step, exact-rational and mod-l algebra are implemented in-repo. Five derived attacks are removed because none is an attack this lab shows, and each was matched by a different accident: Man-in-the-middle came from the string 'DH MITM' inside CATALOG-ENTRY.md, which is this catalog's own concept line quoted back in the lab's handoff doc and not lab source at all; Signature malleability from /malleab/i on a seed label, in a lab that has no signatures - what it demonstrates is CIPHERTEXT malleability, and its own source calls that 'not an attack and not a flaw in the proof'; Chosen-plaintext attack from CPA inside 'IND-FE-CPA', the security notion ABDP15 proves rather than an attack mounted; Chosen-ciphertext attack from CCA inside 'Any CCA security whatever', a line in the NOT-BUILT list; and Discrete log from 'baby step', which this lab pays as a decryption cost and never mounts. The two attacks it does show, key collusion and ciphertext malleability, have no term in the vocabulary. Baby-step giant-step is added by review: src/crypto/dlog.ts is a baby-step giant-step over a symmetric range, but it names the algorithm only in comments and in the local counters babySteps and giantSteps, and the exported function is called dlogSymmetric. The anchor is that function, not the counter a narrower shape used to read. Re-reviewed at b145a348de0771eed22923c1da210c60e961bbf6 on 2026-10-09: compared the prior pin to current source; the only implementation change preserves disclosures and focused summaries during worker-driven redraws in src/main.ts. Read the current README, IPFE setup/key derivation/encryption/decryption and symmetric bounded BSGS. The cryptographic implementation, selective IND-FE-CPA/DDH scope, no-integrity limitation, reviewed additions and five exclusions remain unchanged. Current lab tests and deployed resource identity are recorded separately in the fleet evidence."
   },
   "crypto-lab-ghost-commit": {
     "commit": "88abb12c24089a2606306816f54a575e58c723b0",
@@ -402,5 +402,24 @@
       "RSA-PSS"
     ],
     "note": "Read exact public challenge, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, strict finite/norm bounds, bounded Sturm search, worker allowlists and simulator acceptance at this SHA. Implements textbook exponent-3 RSA and larger-prime high-bit leakage attacks, not RSA-OAEP or RSA-PSS. Prediction, certificate, recovery and incomplete search remain distinct; not arbitrary RSA decryption. 43 unit/fixture and 14 browser/claim tests executed successfully. The inspected source is unchanged from the tested implementation; this SHA adds a JSON-report unit-count gate. Existing main run 37894238587 passed and published; live JavaScript and CSS matched the inspected build byte for byte. Publication was observed, not triggered by this maintenance session."
+  },
+  "crypto-lab-bitcoin-script": {
+    "commit": "7d525f9ad29424d232d4be19ea1205cd7f36dd9c",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Key recovery",
+      "Nonce reuse"
+    ],
+    "note": "Read README.md and src/script.ts, scenario.ts and engine.ts at this exact source SHA. The nonce-reuse and key-recovery matches are a README Related Demos link to ECDSA Forge, not attacks this Bitcoin Script lab computes. Its hand-written P2PKH/P2PK interpreter verifies genuine signatures and demonstrates valid, wrong-key, forged, transaction-tampered, high-S, malformed-DER and swapped-script scenarios; signature malleability remains an actual experiment. Remove only the two sibling-prose attack credits. Keep the sibling link and existing implementation/teaching relationships."
+  },
+  "crypto-lab-kmac-gate": {
+    "commit": "76659ca49090700fc4ac7eeea79f34d40dc3f503",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Length extension",
+      "Key recovery",
+      "Side-channel (unspecified)"
+    ],
+    "note": "Read README.md, renderScopePanel in src/ui/panels.ts and the naive-MAC/Keccak implementation at this source SHA. The scope panel explicitly lists the length-extension attack itself as deliberately not built and links to Mac Race and Babel Hash; it is a contrast to the sponge/KMAC mechanisms, not an executed attack in this lab. Remove that prose-derived attack credit. Preserve actual computations and sibling links. The October8 NIST SP800185 Revision1 initial public draft is documented as a draft; this lab follows final SP800185 and does not establish draft streaming-API conformance. Also read KNOWN-GAPS.md: line24 explicitly says the append forgery is never key recovery, and line31 states lack of side-channel hardening rather than demonstrating a side-channel attack. Those two negated-limit credits are removed as well."
   }
 }

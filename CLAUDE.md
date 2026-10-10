@@ -36,6 +36,14 @@ only at the recorded lab commit. `data-overlaps` is the exception: how two labs 
 derivable from either one, so it is judged, hand-written, and left alone by the
 writer.
 
+Attack names in biographies, explicit negations, assurance limits, or risk prose
+are not demonstrations. The scanner filters clear contexts; ambiguous cases use
+current-source exclusions in `tools/catalog-reviewed.json`. Review removals apply
+to both implementation and attack credits, and `catalog-sync check` checks both.
+Do not replace the stale-review guard with a timestamp or apply exclusions to an
+unread current revision. Run `node --test tests/catalog-teaching-scope.test.cjs`
+after changing this classification; its positive controls preserve real exhibits.
+
 **Every implemented algorithm carries a `file:line` anchor, and a claim without
 one fails `catalog-sync check`.** The anchor is what stops the index becoming a
 grep: every one of these labs is ABOUT cryptography, so every algorithm name

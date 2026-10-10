@@ -66,13 +66,14 @@
     "note": "Covert-channel encoders and detectors; no named cryptographic primitive implemented"
   },
   "crypto-lab-dp-noise": {
-    "commit": "5f45e293c0ba55f928eee1854933e149d08564d4",
-    "reviewed": "2026-09-24",
+    "commit": "85ca9a3bf809877cca008bd42018de4d0985074c",
+    "reviewed": "2026-10-09",
     "add": [
       "Laplace mechanism@src/dp/laplace.ts:45",
       "Gaussian mechanism@src/dp/discrete.ts:40"
     ],
-    "note": "Runs discrete and continuous differential-privacy noise mechanisms"
+    "note": "Read current README, exact discrete Laplace/Gaussian samplers and continuous Laplace source. Differential privacy bounds nonzero distinguishing advantage; it does not make neighbouring databases indistinguishable. Existing implementation anchors45/40 retained after current-source review.",
+    "remove": []
   },
   "crypto-lab-export-grade": {
     "commit": "b61f133b5e1392eb8d9809de0d9478097a4f0a43",
@@ -137,12 +138,16 @@
     "note": "Runs a repetition-code surrogate and majority recovery; no HQC decoder"
   },
   "crypto-lab-iron-serpent": {
-    "commit": "dabdded459f72d1bd8d58e7bf45f49b8cb9bdd2d",
-    "reviewed": "2026-09-10",
+    "commit": "ad43da5eefeeac37d662c939f208a62ca488d609",
+    "reviewed": "2026-10-09",
     "add": [
       "Argon2@demos/iron-serpent/src/kdf.ts:48"
     ],
-    "note": "Argon2id is invoked through a bundled external WASM binary; its source is absent"
+    "note": "Read current README, author biography, Argon2 worker/KDF and MAC/Serpent paths. Weak-passphrase risk and Eli Biham's biography are references, not executed attacks. Argon2id call at kdf.ts:48 remains verified; external WASM source/compiler provenance remains unresolved.",
+    "remove": [
+      "Brute force",
+      "Differential cryptanalysis"
+    ]
   },
   "crypto-lab-matsui-line": {
     "commit": "54ae594278d010249b2f72eb664567b0e28c3494",
@@ -194,12 +199,12 @@
     "note": "Rust and C source reviewed; three compiled WASM binaries remain opaque"
   },
   "crypto-lab-rsa-educational": {
-    "commit": "37ca24b0425a5ef953ae036702b8e03fa9464bce",
-    "reviewed": "2026-09-24",
+    "commit": "81e413b19edd40bf825dd654798ac397366ad5fc",
+    "reviewed": "2026-10-09",
     "covered": [
       "Python"
     ],
-    "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS"
+    "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS Re-read current textbook.ts/RSA tests/UI and focused encoding repair PR21: browser implements RSA, explicitly rejects non-ASCII/leading NUL instead of silently losing bytes; empty/internal/trailing zero handling and primitive mathematics preserved. Independent completed Dot report36870c37 review at this exact source SHA recorded separately."
   },
   "crypto-lab-shadow-vault": {
     "commit": "f094b96e6bd798867abbd3d2512476a3618cb010",
@@ -299,7 +304,7 @@
       "SM3",
       "SM4"
     ],
-    "note": "Implements the SM9 family in src/sm9/ \u2014 extraction for both master key pairs, signature, key exchange, KEM and public key encryption \u2014 over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
+    "note": "Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
   },
   "crypto-lab-vector-gate": {
     "commit": "ef85d2adf408b905b194956b25996c4b7dddcd01",
@@ -319,7 +324,7 @@
   "crypto-lab-locks-and-keys": {
     "commit": "6b23b1fa6cde4f39c3f20a6e0468da2c913eb430",
     "reviewed": "2026-10-04",
-    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public half could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (\u00a77.1 RSAES-OAEP, \u00a78.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md."
+    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public half could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md."
   },
   "crypto-lab-what-is-pqc": {
     "commit": "193e2248a9530e88a0b88ebcd78537cce20832c3",
@@ -430,5 +435,114 @@
       "Side-channel (unspecified)"
     ],
     "note": "Read README.md, src/math.ts, src/frodo-kem.ts and src/main.ts including all actual toy-LWE, KEM, comparison, hybrid and failure handlers at this exact source SHA. README28 discusses raw LWE CPA security and the FO transform; it does not execute a chosen-plaintext attack. The source side-channel matches explicitly disclaim constant-time or side-channel guarantees and link related experiments; neither benchmarks nor missing hardening demonstrate a secret-dependent oracle or attack. Remove only those two prose-derived credits. Retain the real chosen-ciphertext tamper experiment: kemTamper flips an actual ciphertext bit and kemDecap calls the real KEM with the stored secret key, showing an unrelated implicit-rejection secret. This is a bounded tamper/rejection lesson, not adaptive-oracle exploitation or key recovery. No new algorithm names, categories or source/compiler provenance are inferred; opaque third-party WASM remains a separate evidence boundary."
+  },
+  "crypto-lab-sphincs-ledger": {
+    "commit": "bd4ec08e10b1d543439c4d371f8daf9cb451cd35",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Discrete log",
+      "Factoring"
+    ],
+    "note": "Read current main.ts hash-only security panel and README: factoring/discrete-log assumptions are explicitly unnecessary, not attacks executed by this hash-based signature lab."
+  },
+  "crypto-lab-dead-sea-cipher": {
+    "commit": "f0bf09cc973e79eeabc7e1401b7ea66c36175094",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Side-channel (unspecified)"
+    ],
+    "note": "Read current README production limitation and classical cipher/AES source. Missing protection from side-channel extraction is a limitation; preserve real brute-force and frequency-analysis demonstrations."
+  },
+  "crypto-lab-kyber-vault": {
+    "commit": "394479e8df1e941e4618de5f407fe810bdc7ba26",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Brute force",
+      "Chosen-ciphertext attack",
+      "Side-channel (unspecified)"
+    ],
+    "note": "Read current LWE search-space helper, FO explanation and assurance/power-research panel. Search-space count is not enumeration; FO prevention and external side-channel research are references/limitations, not browser attacks. Preserve actual LWE/ML-KEM/AES and tests."
+  },
+  "crypto-lab-dilithium-seal": {
+    "commit": "cefaaacd854329b40ca70f25d844ad8b86ebc411",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Discrete log",
+      "Factoring",
+      "Fault injection",
+      "Key recovery",
+      "Side-channel (unspecified)"
+    ],
+    "note": "Read current comparison table, Shor explanation, README risks, timing-variability panel and runtime assurance limits. These five credits are references/negated claims/risks. Preserve measured signing-time variability (Timing side-channel); it is explicitly not key recovery or hardware trace validation."
+  },
+  "crypto-lab-zk-arena": {
+    "commit": "96f5ec88184aef25f7ed141e4dc35ccd83043b64",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "STARK"
+    ],
+    "note": "Read current proof-size visualizer and Schnorr prover. starkProofBytes estimates comparison sizes, not a STARK prover. Preserve actual Schnorr/Fiat-Shamir/BSGS and reference STARK."
+  },
+  "crypto-lab-broken-trust": {
+    "commit": "2f1cd8b5f8fab914ecc52971105b57c28e405818",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "ML-DSA"
+    ],
+    "note": "Read current README and paperData/model source. ML_DSA_SETS stores published parameters/results; the disclosed dimension-eight optimization model has no real ML-DSA key or signature. N/A applies to named primitive implementations, not absence of a working toy model.",
+    "state": "N/A"
+  },
+  "crypto-lab-kem-trap": {
+    "commit": "df1798af8fd289168cb06027c6aebcfaaa4223be",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Key recovery"
+    ],
+    "note": "Read current comparison model/paper explanation: schematic partial-ciphertext comparison does not reproduce the referenced key recovery or break correct ML-KEM. Preserve actual full ML-KEM decapsulation and comparison/oracle-surface teaching."
+  },
+  "crypto-lab-frozen-heart": {
+    "commit": "fbcafa21d97e27e1b62fa8b96efa55b2f205a79d",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Ed25519"
+    ],
+    "note": "Read current group.ts and Schnorr README/source: Ed25519 supplies a scalar-order constant; the proof uses Ristretto points, not Ed25519 signatures. Preserve real Ristretto/Schnorr/Fiat-Shamir and Ed25519 reference."
+  },
+  "crypto-lab-credential-veil": {
+    "commit": "9ac8fd5c499e11504aff79a96397abdbfa999e97",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "BLS signatures"
+    ],
+    "note": "Read current README naming note, CONTRIBUTING, bbs sign/verify/proof and ciphersuite. Implements CFRG draft BBS (A,e), not BBS+ (A,e,s); uses BLS12-381 group/pairing without BLS signing. Explicit BBS source anchor preserves genuine implementation, official draft vectors recorded separately.",
+    "add": [
+      "BBS signatures@src/bbs/bbs.ts:414"
+    ]
+  },
+  "crypto-lab-protocol-checker": {
+    "commit": "11afc3b81faf85dbcd70df4be6b24f42437b5a91",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Diffie-Hellman",
+      "Discrete log",
+      "Key recovery",
+      "Padding oracle",
+      "Side-channel (unspecified)",
+      "Timing side-channel"
+    ],
+    "note": "Read current symbolic protocol/terms and honesty panel. DH is symbolic term algebra; listed key recovery/discrete-log/padding/timing/side-channel attacks are blind spots, not executed. Preserve genuine bounded symbolic MITM/reachability; N/A means no named arithmetic primitive, not no model.",
+    "state": "N/A"
+  },
+  "crypto-lab-isogeny-atlas": {
+    "commit": "587e9b049f356597858564e56b163e442b026495",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "CGL hash",
+      "Factoring"
+    ],
+    "note": "Read current README/math/walk.ts: polynomial root factorization is not an integer factoring attack. cglWalk is a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference.",
+    "add": [
+      "Isogeny walk@src/math/walk.ts:203"
+    ]
   }
 }

@@ -378,6 +378,29 @@ function splitHtml(src) {
 /** Identifiers that present rather than compute. */
 const PRESENTS = /^(?:render|draw|paint|format|describe|explain|label|display|chart|plot|tooltip|caption|legend|summar|narrat|annotate)/i;
 
+/** Reject explicit non-demonstration contexts, not every mention of a risk.
+ * This is a bounded prose filter, not proof that an attack is implemented.
+ * Ambiguous cases still need a source-pinned review. An actual executable
+ * attack identifier survives a neighbouring prose warning or negative control.
+ */
+function attackContextAllows(term, line, code = '') {
+  if (!term.re.test(line)) return false;
+  if (code.trim() && shapeOf(line, code, term)) return true;
+  const text = line.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+  const occurrences = [...text.matchAll(new RegExp(term.re.source, term.re.flags.replace(/[gy]/g, '') + 'g'))];
+  return occurrences.some(hit => {
+    // Bound negation to this clause: "not production crypto" in a later
+    // sentence must not erase an earlier working attack demonstration.
+    const before = text.slice(0, hit.index).split(/[.;]/).at(-1);
+    const after = text.slice(hit.index + hit[0].length).split(/[.;]/)[0];
+    if (/\b(?:not|never|no|neither|without|cannot|can't|doesn't|don't)\b.{0,80}$/i.test(before)) return false;
+    if (/^.{0,45}\b(?:not demonstrated|not implemented|not measured|not reproduced|out of scope|blind spot)\b/i.test(after)) return false;
+    if (/\b(?:co-inventor|biography|born|studied under|assumptions?|risk|warning|production|hardened|prevent\w*|defend\w*|protect\w*|resistan\w*)\b/i.test(before + hit[0] + after)
+      && !/\b(?:demonstrat|execut|enumerat|crack|forge|run|measur)\w*/i.test(before + after)) return false;
+    return true;
+  });
+}
+
 /* A declaration whose VALUE is a projection does not compute the algorithm it is
    named after. PRESENTS catches the function that draws a thing; this catches the
    constant that models one.
@@ -878,7 +901,7 @@ function evidenceFor(slug) {
       }
       for (const atk of ATTACKS) {
         if (attackHits.has(atk.name)) continue;
-        if (atk.re.test(line)) record(attackHits, atk.name, `${rel}:${i + 1}`, 'code');
+        if (attackContextAllows(atk, line, codeLines[i])) record(attackHits, atk.name, `${rel}:${i + 1}`, 'code');
       }
     }
   }
@@ -897,7 +920,7 @@ function evidenceFor(slug) {
       }
       for (const atk of ATTACKS) {
         if (attackHits.has(atk.name)) continue;
-        if (atk.re.test(line)) record(attackHits, atk.name, `${rel}:${i + 1}`, 'prose');
+        if (attackContextAllows(atk, line)) record(attackHits, atk.name, `${rel}:${i + 1}`, 'prose');
       }
     }
   }
@@ -1903,6 +1926,7 @@ function main() {
    spanning four hundred lines - are exactly where they would drift. */
 module.exports = {
   lex,
+  attackContextAllows,
   camelSplit,
   verifyTerms,
   judgeAnchor,

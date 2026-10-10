@@ -141,6 +141,10 @@ const ALGORITHMS = [
   { name: 'secp256k1', kind: 'algorithm', family: 'elliptic curve', re: /secp256k1/i, std: 'SECG:SEC 2' },
   { name: 'BLS12-381', kind: 'algorithm', family: 'pairing curve', re: /bls12[-_]?381/i, std: null },
   { name: 'BLS signatures', kind: 'algorithm', family: 'signature', re: /\bbls\b(?![-_]?12)/i, std: 'IETF:draft-irtf-cfrg-bls-signature' },
+  /* The CFRG BBS scheme uses (A,e), not BBS+'s (A,e,s). The group's
+     BLS12-381 name is not evidence of BLS signing. Credential Veil computes
+     BBS sign/verify/proofs in src/bbs and checks official draft vectors. */
+  { name: 'BBS signatures', kind: 'algorithm', family: 'signature', re: /\bbbs\b(?!\s*\+)/i, std: 'IETF:draft-irtf-cfrg-bbs-signatures' },
   { name: 'Schnorr', kind: 'algorithm', family: 'signature', re: /schnorr/i, std: null },
   { name: 'ElGamal', kind: 'algorithm', family: 'public-key encryption', re: /el[-_ ]?gamal/i, std: null },
   { name: 'Paillier', kind: 'algorithm', family: 'homomorphic encryption', re: /paillier/i, std: null },

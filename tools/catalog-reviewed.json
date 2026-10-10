@@ -66,13 +66,14 @@
     "note": "Covert-channel encoders and detectors; no named cryptographic primitive implemented"
   },
   "crypto-lab-dp-noise": {
-    "commit": "5f45e293c0ba55f928eee1854933e149d08564d4",
-    "reviewed": "2026-09-24",
+    "commit": "85ca9a3bf809877cca008bd42018de4d0985074c",
+    "reviewed": "2026-10-09",
     "add": [
       "Laplace mechanism@src/dp/laplace.ts:45",
       "Gaussian mechanism@src/dp/discrete.ts:40"
     ],
-    "note": "Runs discrete and continuous differential-privacy noise mechanisms"
+    "note": "Read current README, exact discrete Laplace/Gaussian samplers and continuous Laplace source. Differential privacy bounds nonzero distinguishing advantage; it does not make neighbouring databases indistinguishable. Existing implementation anchors45/40 retained after current-source review.",
+    "remove": []
   },
   "crypto-lab-export-grade": {
     "commit": "b61f133b5e1392eb8d9809de0d9478097a4f0a43",
@@ -137,12 +138,16 @@
     "note": "Runs a repetition-code surrogate and majority recovery; no HQC decoder"
   },
   "crypto-lab-iron-serpent": {
-    "commit": "dabdded459f72d1bd8d58e7bf45f49b8cb9bdd2d",
-    "reviewed": "2026-09-10",
+    "commit": "ad43da5eefeeac37d662c939f208a62ca488d609",
+    "reviewed": "2026-10-09",
     "add": [
       "Argon2@demos/iron-serpent/src/kdf.ts:48"
     ],
-    "note": "Argon2id is invoked through a bundled external WASM binary; its source is absent"
+    "note": "Read current README, author biography, Argon2 worker/KDF and MAC/Serpent paths. Weak-passphrase risk and Eli Biham's biography are references, not executed attacks. Argon2id call at kdf.ts:48 remains verified; external WASM source/compiler provenance remains unresolved.",
+    "remove": [
+      "Brute force",
+      "Differential cryptanalysis"
+    ]
   },
   "crypto-lab-matsui-line": {
     "commit": "54ae594278d010249b2f72eb664567b0e28c3494",
@@ -194,12 +199,12 @@
     "note": "Rust and C source reviewed; three compiled WASM binaries remain opaque"
   },
   "crypto-lab-rsa-educational": {
-    "commit": "37ca24b0425a5ef953ae036702b8e03fa9464bce",
-    "reviewed": "2026-09-24",
+    "commit": "81e413b19edd40bf825dd654798ac397366ad5fc",
+    "reviewed": "2026-10-09",
     "covered": [
       "Python"
     ],
-    "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS"
+    "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS Re-read current textbook.ts/RSA tests/UI and focused encoding repair PR21: browser implements RSA, explicitly rejects non-ASCII/leading NUL instead of silently losing bytes; empty/internal/trailing zero handling and primitive mathematics preserved. Independent completed Dot report36870c37 review at this exact source SHA recorded separately."
   },
   "crypto-lab-shadow-vault": {
     "commit": "f094b96e6bd798867abbd3d2512476a3618cb010",
@@ -334,12 +339,12 @@
     ]
   },
   "crypto-lab-https-padlock": {
-    "commit": "28ad74791a7e904c41b74508c814189fbdbf33f2",
-    "reviewed": "2026-10-04",
+    "commit": "8065456c2dd118341ae3a30f59e9b3993ec2b09b",
+    "reviewed": "2026-10-10",
     "add": [
       "ECDSA@src/pki/path.ts:86"
     ],
-    "note": "Read src/pki/path.ts, parse.ts, assess.ts, break.ts and src/tls/clienthello.ts. The scanner found only X25519 in the ClientHello builder. The chain walk really does verify every signature: src/pki/path.ts:86 calls @peculiar/x509's verify with the parent's public key and the WebCrypto provider, over real DER TBS bytes, and the certificates this lab ships are ECDSA over P-256 and P-384 -- so ECDSA is pinned above. Scope that the card and chips are written to respect: the lab makes NO network connection and runs no handshake, so it never observes encryption; it reads certificates captured earlier. Its RFC 5280 path validation is a stated teaching subset, deliberately omitting revocation, name constraints, policy constraints and path length, so a chain this page accepts is not thereby a chain a browser would accept. The ClientHello is encoded byte for byte and never sent, and its X25519 private half is discarded unused -- which is why the chip is marked 'ClientHello Bytes Only' rather than claiming TLS 1.3. Trust terminates in the lab's own committed copy of a root list, not the reader's device trust store, and the page says so."
+    "note": "Read src/pki/path.ts, parse.ts, assess.ts, break.ts and src/tls/clienthello.ts. The scanner found only X25519 in the ClientHello builder. The chain walk really does verify every signature: src/pki/path.ts:86 calls @peculiar/x509's verify with the parent's public key and the WebCrypto provider, over real DER TBS bytes, and the certificates this lab ships are ECDSA over P-256 and P-384 -- so ECDSA is pinned above. Scope that the card and chips are written to respect: the lab makes NO network connection and runs no handshake, so it never observes encryption; it reads certificates captured earlier. Its RFC 5280 path validation is a stated teaching subset, deliberately omitting revocation, name constraints, policy constraints and path length, so a chain this page accepts is not thereby a chain a browser would accept. The ClientHello is encoded byte for byte and never sent, and its X25519 private half is discarded unused -- which is why the chip is marked 'ClientHello Bytes Only' rather than claiming TLS 1.3. Trust terminates in the lab's own committed copy of a root list, not the reader's device trust store, and the page says so. Re-read current hostname.ts, original PKI path and ClientHello at this exact SHA after PR4/5. Authority ends before path/query/fragment userinfo; 68 unit, 63 verdict, 3 full-state accessibility checks and 24 live URL/SNI/reflow controls verify the bounded repair. ECDSA anchor and captured-certificate/offline/partial-validation limitations remain unchanged; this review does not assert a live TLS handshake."
   },
   "crypto-lab-good-randomness": {
     "commit": "f995c87c1fe074dc57ee61b44c4c6df47a03de58",
@@ -430,5 +435,128 @@
       "Side-channel (unspecified)"
     ],
     "note": "Read README.md, src/math.ts, src/frodo-kem.ts and src/main.ts including all actual toy-LWE, KEM, comparison, hybrid and failure handlers at this exact source SHA. README28 discusses raw LWE CPA security and the FO transform; it does not execute a chosen-plaintext attack. The source side-channel matches explicitly disclaim constant-time or side-channel guarantees and link related experiments; neither benchmarks nor missing hardening demonstrate a secret-dependent oracle or attack. Remove only those two prose-derived credits. Retain the real chosen-ciphertext tamper experiment: kemTamper flips an actual ciphertext bit and kemDecap calls the real KEM with the stored secret key, showing an unrelated implicit-rejection secret. This is a bounded tamper/rejection lesson, not adaptive-oracle exploitation or key recovery. No new algorithm names, categories or source/compiler provenance are inferred; opaque third-party WASM remains a separate evidence boundary."
+  },
+  "crypto-lab-sphincs-ledger": {
+    "commit": "bd4ec08e10b1d543439c4d371f8daf9cb451cd35",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Discrete log",
+      "Factoring"
+    ],
+    "note": "Read current main.ts hash-only security panel and README: factoring/discrete-log assumptions are explicitly unnecessary, not attacks executed by this hash-based signature lab."
+  },
+  "crypto-lab-dead-sea-cipher": {
+    "commit": "f0bf09cc973e79eeabc7e1401b7ea66c36175094",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Side-channel (unspecified)"
+    ],
+    "note": "Read current README production limitation and classical cipher/AES source. Missing protection from side-channel extraction is a limitation; preserve real brute-force and frequency-analysis demonstrations."
+  },
+  "crypto-lab-kyber-vault": {
+    "commit": "394479e8df1e941e4618de5f407fe810bdc7ba26",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Brute force",
+      "Chosen-ciphertext attack",
+      "Side-channel (unspecified)"
+    ],
+    "note": "Read current LWE search-space helper, FO explanation and assurance/power-research panel. Search-space count is not enumeration; FO prevention and external side-channel research are references/limitations, not browser attacks. Preserve actual LWE/ML-KEM/AES and tests."
+  },
+  "crypto-lab-dilithium-seal": {
+    "commit": "cefaaacd854329b40ca70f25d844ad8b86ebc411",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Discrete log",
+      "Factoring",
+      "Fault injection",
+      "Key recovery",
+      "Side-channel (unspecified)"
+    ],
+    "note": "Read current comparison table, Shor explanation, README risks, timing-variability panel and runtime assurance limits. These five credits are references/negated claims/risks. Preserve measured signing-time variability (Timing side-channel); it is explicitly not key recovery or hardware trace validation."
+  },
+  "crypto-lab-zk-arena": {
+    "commit": "96f5ec88184aef25f7ed141e4dc35ccd83043b64",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "STARK"
+    ],
+    "note": "Read current proof-size visualizer and Schnorr prover. starkProofBytes estimates comparison sizes, not a STARK prover. Preserve actual Schnorr/Fiat-Shamir/BSGS and reference STARK."
+  },
+  "crypto-lab-broken-trust": {
+    "commit": "2f1cd8b5f8fab914ecc52971105b57c28e405818",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "ML-DSA"
+    ],
+    "note": "Read current README and paperData/model source. ML_DSA_SETS stores published parameters/results; the disclosed dimension-eight optimization model has no real ML-DSA key or signature. N/A applies to named primitive implementations, not absence of a working toy model.",
+    "state": "N/A"
+  },
+  "crypto-lab-kem-trap": {
+    "commit": "df1798af8fd289168cb06027c6aebcfaaa4223be",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Key recovery"
+    ],
+    "note": "Read current comparison model/paper explanation: schematic partial-ciphertext comparison does not reproduce the referenced key recovery or break correct ML-KEM. Preserve actual full ML-KEM decapsulation and comparison/oracle-surface teaching."
+  },
+  "crypto-lab-frozen-heart": {
+    "commit": "fbcafa21d97e27e1b62fa8b96efa55b2f205a79d",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Ed25519"
+    ],
+    "note": "Read current group.ts and Schnorr README/source: Ed25519 supplies a scalar-order constant; the proof uses Ristretto points, not Ed25519 signatures. Preserve real Ristretto/Schnorr/Fiat-Shamir and Ed25519 reference."
+  },
+  "crypto-lab-credential-veil": {
+    "commit": "9ac8fd5c499e11504aff79a96397abdbfa999e97",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "BLS signatures"
+    ],
+    "note": "Read current README naming note, CONTRIBUTING, bbs sign/verify/proof and ciphersuite. Implements CFRG draft BBS (A,e), not BBS+ (A,e,s); uses BLS12-381 group/pairing without BLS signing. Explicit BBS source anchor preserves genuine implementation, official draft vectors recorded separately.",
+    "add": [
+      "BBS signatures@src/bbs/bbs.ts:414"
+    ]
+  },
+  "crypto-lab-protocol-checker": {
+    "commit": "11afc3b81faf85dbcd70df4be6b24f42437b5a91",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "Diffie-Hellman",
+      "Discrete log",
+      "Key recovery",
+      "Padding oracle",
+      "Side-channel (unspecified)",
+      "Timing side-channel"
+    ],
+    "note": "Read current symbolic protocol/terms and honesty panel. DH is symbolic term algebra; listed key recovery/discrete-log/padding/timing/side-channel attacks are blind spots, not executed. Preserve genuine bounded symbolic MITM/reachability; N/A means no named arithmetic primitive, not no model.",
+    "state": "N/A"
+  },
+  "crypto-lab-isogeny-atlas": {
+    "commit": "587e9b049f356597858564e56b163e442b026495",
+    "reviewed": "2026-10-09",
+    "remove": [
+      "CGL hash",
+      "Factoring"
+    ],
+    "note": "Read current README/math/walk.ts: polynomial root factorization is not an integer factoring attack. cglWalk is a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference.",
+    "add": [
+      "Isogeny walk@src/math/walk.ts:203"
+    ]
+  },
+  "crypto-lab-e91": {
+    "commit": "1168cf259655710b12040982a83545c395f99326",
+    "reviewed": "2026-10-10",
+    "add": [
+      "E91@src/engine.ts:375"
+    ],
+    "remove": [
+      "BB84",
+      "Man-in-the-middle",
+      "Side-channel (unspecified)"
+    ],
+    "implementation": "idealized statistical simulation",
+    "note": "Read current engine.ts, data.ts comparison table, README and ui.ts honesty panel after independently tested CHSH interval repair. runE91 computes simulated singlet correlations, sifting, intercept-resend Eve, noise, misalignment and loss; no physical quantum channel or finite-key/device-independent proof. BB84 is a comparison table, not implemented. Side channels are explicitly not modelled, and unauthenticated-channel MITM is a README warning, not a demonstrated protocol attack. Preserve raw static coverage and real bounded simulation, not a cryptographic implementation claim."
   }
 }

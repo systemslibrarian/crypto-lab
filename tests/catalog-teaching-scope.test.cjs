@@ -2,6 +2,8 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const { attackContextAllows, lex } = require('../tools/catalog-evidence.js');
+const { ATTACKS } = require('../tools/catalog-vocab.js');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 
@@ -11,6 +13,40 @@ function attacksFor(source, slug) {
   return (card[0].match(/\bdata-attacks="([^"]*)"/)?.[1] ?? '')
     .split(' | ').filter(Boolean).map((value) => value.split('@')[0]);
 }
+
+function implementationsFor(source, slug) {
+  const card = source.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[^>]*>'));
+  assert.ok(card, `Missing ${slug} card`);
+  return (card[0].match(/\bdata-implements="([^"]*)"/)?.[1] ?? '')
+    .split(' | ').map(value => value.split('@')[0]);
+}
+
+test('comparison tables, parameter imports and symbolic terms are not primitive implementations', () => {
+  for (const [slug, term] of [
+    ['crypto-lab-zk-arena', 'STARK'],
+    ['crypto-lab-broken-trust', 'ML-DSA'],
+    ['crypto-lab-frozen-heart', 'Ed25519'],
+    ['crypto-lab-credential-veil', 'BLS signatures'],
+    ['crypto-lab-protocol-checker', 'Diffie-Hellman'],
+    ['crypto-lab-isogeny-atlas', 'CGL hash'],
+    ['crypto-lab-e91', 'BB84'],
+  ]) assert.ok(!implementationsFor(html, slug).includes(term), `${slug}: ${term} is only referenced/modelled`);
+  for (const [slug, term] of [
+    ['crypto-lab-zk-arena', 'Schnorr'],
+    ['crypto-lab-frozen-heart', 'ristretto255'],
+    ['crypto-lab-credential-veil', 'BBS signatures'],
+    ['crypto-lab-credential-veil', 'BLS12-381'],
+    ['crypto-lab-isogeny-atlas', 'Isogeny walk'],
+  ]) assert.ok(implementationsFor(html, slug).includes(term), `${slug}: preserve ${term}`);
+});
+
+test('visible catalog summaries distinguish BBS naming and bounded DP advantage', () => {
+  const card = slug => html.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[\\s\\S]*?</a>'))[0];
+  assert.match(card('crypto-lab-credential-veil'), /BBS selective disclosure/);
+  assert.doesNotMatch(card('crypto-lab-credential-veil'), /(?:project-copy|chip)">[^<]*BBS\+/);
+  assert.match(card('crypto-lab-dp-noise'), /distinguishing advantage.*bounded/);
+  assert.doesNotMatch(card('crypto-lab-dp-noise'), /become indistinguishable/);
+});
 
 function checkScope(source) {
   const bitcoin = attacksFor(source, 'crypto-lab-bitcoin-script');
@@ -26,6 +62,23 @@ function checkScope(source) {
     'CPA security discussion is not a chosen-plaintext experiment');
   assert.ok(!frodo.includes('Side-channel (unspecified)'),
     'Missing side-channel guarantees are not a demonstrated attack');
+  for (const [slug, rejected] of Object.entries({
+    'crypto-lab-iron-serpent': ['Brute force', 'Differential cryptanalysis'],
+    'crypto-lab-sphincs-ledger': ['Factoring', 'Discrete log'],
+    'crypto-lab-dead-sea-cipher': ['Side-channel (unspecified)'],
+    'crypto-lab-kyber-vault': ['Brute force', 'Chosen-ciphertext attack', 'Side-channel (unspecified)'],
+    'crypto-lab-dilithium-seal': ['Discrete log', 'Factoring', 'Fault injection', 'Key recovery', 'Side-channel (unspecified)'],
+    'crypto-lab-kem-trap': ['Key recovery'],
+    'crypto-lab-protocol-checker': ['Discrete log', 'Key recovery', 'Padding oracle', 'Side-channel (unspecified)', 'Timing side-channel'],
+    'crypto-lab-isogeny-atlas': ['Factoring'],
+    'crypto-lab-e91': ['Man-in-the-middle', 'Side-channel (unspecified)'],
+  })) {
+    for (const name of rejected) assert.ok(!attacksFor(source, slug).includes(name), `${slug}: reject ${name}`);
+  }
+  assert.ok(attacksFor(source, 'crypto-lab-dilithium-seal').includes('Timing side-channel'),
+    'Preserve the measured signing-time variability exhibit');
+  assert.ok(attacksFor(source, 'crypto-lab-dead-sea-cipher').includes('Brute force'));
+  assert.ok(attacksFor(source, 'crypto-lab-isogeny-atlas').includes('Brute force'));
 }
 
 test('catalog keeps sibling attacks and negated limits out of attacks shown', () => {
@@ -38,9 +91,42 @@ test('scope control detects reintroduced sibling and negated-limit credits', () 
     ['crypto-lab-kmac-gate', 'Length extension'],
     ['crypto-lab-frodo-vault', 'Chosen-plaintext attack'],
     ['crypto-lab-frodo-vault', 'Side-channel (unspecified)'],
+    ['crypto-lab-iron-serpent', 'Differential cryptanalysis'],
+    ['crypto-lab-sphincs-ledger', 'Factoring'],
+    ['crypto-lab-dilithium-seal', 'Key recovery'],
+    ['crypto-lab-protocol-checker', 'Padding oracle'],
   ]) {
     const marker = `href="https://systemslibrarian.github.io/${slug}/"`;
     const mutated = html.replace(marker, `${marker} data-attacks="${attack}@README.md:1"`);
     assert.throws(() => checkScope(mutated), assert.AssertionError);
+  }
+});
+
+test('scanner rejects negated claims, risk warnings and biographies as attack evidence', () => {
+  for (const [name, line] of [
+    ['Key recovery', 'This is not a key-recovery attack.'],
+    ['Key recovery', 'It does not reproduce key recovery or establish a break.'],
+    ['Side-channel (unspecified)', 'Keys are never protected against side-channel extraction.'],
+    ['Differential cryptanalysis', '<li>Co-inventor of differential cryptanalysis (with Adi Shamir).</li>'],
+    ['Chosen-ciphertext attack', 'The FO transform prevents chosen-ciphertext attacks.'],
+    ['Factoring', 'There are no number-theoretic assumptions (factoring, discrete log).'],
+    ['Key recovery', 'Encryption is opaque: no key recovery, no side channels.'],
+  ]) {
+    const term = ATTACKS.find(t => t.name === name);
+    assert.ok(term.re.test(line), `Fixture must actually match ${name}`);
+    assert.equal(attackContextAllows(term, line), false, line);
+  }
+});
+
+test('scanner retains computations and positive demonstrations beside bounded limits', () => {
+  for (const [name, line] of [
+    ['Key recovery', 'export function runKeyRecovery() { return recoverSecret(); }'],
+    ['Brute force', 'export function bruteForce() { return enumerateCandidates(); }'],
+    ['Key recovery', 'Run the key recovery demonstration; not production crypto.'],
+    ['Timing side-channel', 'Measure the timing side-channel in this demonstration.'],
+  ]) {
+    const term = ATTACKS.find(t => t.name === name);
+    assert.ok(term.re.test(line), `Fixture must actually match ${name}`);
+    assert.equal(attackContextAllows(term, line, lex(line).code), true, line);
   }
 });

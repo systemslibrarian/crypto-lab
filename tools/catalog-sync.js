@@ -387,6 +387,7 @@ function validate(list) {
       }
       for (const name of review.remove || []) {
         if (c.implements.some((x) => x.name === name)) errors.push(`${c.slug}: rejected ${name} remains on card`);
+        if (c.attacks.some((x) => x.name === name)) errors.push(`${c.slug}: rejected attack ${name} remains on card`);
       }
     } else if (c.reviewCommit || c.reviewNote || c.noNamedPrimitive) {
       errors.push(`${c.slug}: review or N/A claim without a source review record`);

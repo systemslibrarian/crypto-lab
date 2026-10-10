@@ -40,6 +40,54 @@ test('comparison tables, parameter imports and symbolic terms are not primitive 
   ]) assert.ok(implementationsFor(html, slug).includes(term), `${slug}: preserve ${term}`);
 });
 
+function checkLatticeModelScope(source) {
+  const slug = 'crypto-lab-lattice-fault';
+  // Inspected immutable source at 6b127eb85b647f573408f2e9a90cbe0fcca2c94b:
+  // src/timing.ts:88 counts a model's divide steps; src/loopabort.ts:37 is
+  // a parameter object. runLoopAbortAttack at :550 generates one polynomial
+  // relation, not a complete ML-DSA key/signature/verification implementation.
+  const implementations = implementationsFor(source, slug);
+  assert.deepEqual(implementations, ['Keccak', 'NTT', 'SHAKE'],
+    'Keep executed primitives without crediting complete Kyber or ML-DSA');
+  const attacks = attacksFor(source, slug);
+  // src/main.ts:40 uses CPA for correlation power analysis, not a chosen-
+  // plaintext attack; :618 is only a related padding-oracle lab name.
+  assert.ok(!attacks.includes('Chosen-plaintext attack'));
+  assert.ok(!attacks.includes('Padding oracle'));
+  for (const name of ['Fault injection', 'Key recovery', 'Lattice reduction',
+    'Power analysis', 'Timing side-channel']) {
+    assert.ok(attacks.includes(name), `Preserve the bounded ${name} exhibit`);
+  }
+  const card = source.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[\\s\\S]*?</a>'))[0];
+  assert.match(card, /Modelled ML-KEM decode/);
+  assert.match(card, /Modelled ML-DSA components/);
+  assert.match(card, /one secret polynomial in a signing model/);
+  assert.doesNotMatch(card, /whole ML-DSA secret/);
+}
+
+test('Lattice Fault separates component and cycle models from complete standards', () => {
+  checkLatticeModelScope(html);
+});
+
+test('Lattice Fault scope rejects false credits and loss of real computations', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/"';
+  for (const [attribute, value] of [
+    ['implements', 'Kyber@src/timing.ts:88'],
+    ['implements', 'ML-DSA@src/loopabort.ts:37'],
+    ['attacks', 'Chosen-plaintext attack@src/main.ts:40'],
+    ['attacks', 'Padding oracle@src/main.ts:618'],
+  ]) {
+    assert.throws(() => checkLatticeModelScope(html.replace(marker,
+      `${marker} data-${attribute}="${value}"`)), assert.AssertionError);
+  }
+  for (const name of ['Keccak', 'NTT', 'SHAKE']) {
+    const changed = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-lattice-fault\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${name}@src/(?:shake256|loopabort)\\.ts:\\d+`), ''));
+    assert.notEqual(changed, html, `${name} control must change the actual anchor`);
+    assert.throws(() => checkLatticeModelScope(changed), assert.AssertionError);
+  }
+});
+
 test('visible catalog summaries distinguish BBS naming and bounded DP advantage', () => {
   const card = slug => html.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[\\s\\S]*?</a>'))[0];
   assert.match(card('crypto-lab-credential-veil'), /BBS selective disclosure/);

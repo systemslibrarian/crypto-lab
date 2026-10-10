@@ -222,8 +222,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Kyber
 
-- **Implemented by:** [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/benchmark.ts:49`; [Lattice Fault](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) `src/timing.ts:88`; [KyberSlash](https://systemslibrarian.github.io/crypto-lab-kyberslash/) `src/timing-model.ts:200`; [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) `src/ui/exhibitSchemes.ts:118`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/bls.ts:90`
-- **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Shor*, *Dilithium Seal*, *Hybrid Wire*, *Educational RSA*, *RSA Forge*, *McEliece Gate*, *Frodo Vault*, *BIKE Vault*, *HQC Vault*, *Falcon Seal*, *Harvest Vault*, *Isogeny Gate*, *LLL Break*, *Dilithium Reject*, *Harvest Timeline*, *HQC Timing Break*, *Hybrid Sign*, *NTRU Classic*, *PQ Rotation*, *PQ TLS Handshake*, *Scloud+ Vault*, *Nonce Lattice*, *Jevil*, *Ciphertext Mirror*, *PQ Families*, *Key Exchange*, *Hybrid Guide*, *LWE Hints*, *Syndrome Drain*, *Hybrid PQC*, *KEM Trap*, *HPKE Envelope*, *PQXDH Wire*, *PQ Chooser*, *What Is PQC*, *Vector Gate*
+- **Implemented by:** [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/benchmark.ts:49`; [KyberSlash](https://systemslibrarian.github.io/crypto-lab-kyberslash/) `src/timing-model.ts:200`; [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) `src/ui/exhibitSchemes.ts:118`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/bls.ts:90`
+- **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Shor*, *Dilithium Seal*, *Hybrid Wire*, *Educational RSA*, *RSA Forge*, *McEliece Gate*, *Frodo Vault*, *BIKE Vault*, *HQC Vault*, *Falcon Seal*, *Harvest Vault*, *Isogeny Gate*, *Lattice Fault*, *LLL Break*, *Dilithium Reject*, *Harvest Timeline*, *HQC Timing Break*, *Hybrid Sign*, *NTRU Classic*, *PQ Rotation*, *PQ TLS Handshake*, *Scloud+ Vault*, *Nonce Lattice*, *Jevil*, *Ciphertext Mirror*, *PQ Families*, *Key Exchange*, *Hybrid Guide*, *LWE Hints*, *Syndrome Drain*, *Hybrid PQC*, *KEM Trap*, *HPKE Envelope*, *PQXDH Wire*, *PQ Chooser*, *What Is PQC*, *Vector Gate*
 
 #### ML-KEM
 
@@ -280,7 +280,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### ML-DSA
 
-- **Implemented by:** [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) `src/crypto/mldsa.ts:47`; [Lattice Fault](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) `src/loopabort.ts:37`; [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) `src/mldsa-primitives.ts:6`; [HAWK](https://systemslibrarian.github.io/crypto-lab-hawk/) `src/hawk.ts:968`; [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) `src/composite.ts:171`; [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) `src/hybrid-cert.ts:2`; [Threshold ML-DSA](https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/) `src/threshold-sign.ts:114`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/attack.ts:118`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/identity.rs:221`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/derive/adapters.ts:16`
+- **Implemented by:** [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) `src/crypto/mldsa.ts:47`; [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) `src/mldsa-primitives.ts:6`; [HAWK](https://systemslibrarian.github.io/crypto-lab-hawk/) `src/hawk.ts:968`; [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) `src/composite.ts:171`; [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) `src/hybrid-cert.ts:2`; [Threshold ML-DSA](https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/) `src/threshold-sign.ts:114`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/attack.ts:118`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/identity.rs:221`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/derive/adapters.ts:16`
 - **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Shor*, *Grover*, *FROST Threshold*, *Shamir Gate*, *SPHINCS+ Ledger*, *Educational RSA*, *RSA Forge*, *Frodo Vault*, *BIKE Vault*, *Falcon Seal*, *LMS Ledger*, *GG20 Wallet*, *PKI Chain*, *Harvest Vault*, *Isogeny Gate*, *LLL Break*, *MPCitH Sign*, *Curve448*, *Harvest Timeline*, *HQC Timing Break*, *KyberSlash*, *LMS/XMSS*, *Jevil*, *Ciphertext Mirror*, *PQ Families*, *Multivariate UOV*, *MAYO Seal*, *LWE Hints*, *Broken Trust*, *Reshare Circle*, *Lattice Gentle*, *KMAC Gate*, *GGH Trapdoor*
 
 #### SLH-DSA
@@ -1161,8 +1161,8 @@ disagree about who owns SHA-256.
 | HQC | selected 2025, FIPS pending | 1 |
 | Keccak | FIPS 202 | 6 |
 | KMAC | SP 800-185 | 1 |
-| Kyber | FIPS 203 (as ML-KEM) | 5 |
-| ML-DSA | FIPS 204 | 10 |
+| Kyber | FIPS 203 (as ML-KEM) | 4 |
+| ML-DSA | FIPS 204 | 9 |
 | ML-KEM | FIPS 203 | 15 |
 | P-256 | SP 800-186 | 27 |
 | P-384 | SP 800-186 | 1 |
@@ -1494,6 +1494,11 @@ that asks for a decision.
 - **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
 - **Stated difference:** **none stated**
 
+**HAWK / PQ Chooser**
+
+- **Shared:** Falcon, ML-DSA, SHA-256
+- **Stated difference:** **none stated**
+
 **Rekey Relay / Attribute Gate**
 
 - **Shared:** AES, AES-GCM, BLS signatures, BLS12-381, HKDF, Pairing, SHA-256
@@ -1512,11 +1517,6 @@ that asks for a decision.
 **RSA Forge / Locks and Keys**
 
 - **Shared:** RSA, RSA-OAEP, RSA-PSS, SHA-256
-- **Stated difference:** **none stated**
-
-**HAWK / PQ Chooser**
-
-- **Shared:** Falcon, ML-DSA, SHA-256
 - **Stated difference:** **none stated**
 
 **MAC Race / Nonce Collision**
@@ -1592,6 +1592,11 @@ that asks for a decision.
 **Scloud+ Vault / Lattice Builder**
 
 - **Shared:** Keccak, ML-KEM, SHA-3, SHAKE
+- **Stated difference:** **none stated**
+
+**Kyber Vault / Lattice Gentle**
+
+- **Shared:** Kyber, LWE, SHA-256
 - **Stated difference:** **none stated**
 
 **KDF Chain / OPAQUE Gate**
@@ -1672,11 +1677,6 @@ that asks for a decision.
 **Kerberos v5 / Hidden Bit**
 
 - **Shared:** AES, AES-CBC, RSA, RSA-OAEP, SHA-256
-- **Stated difference:** **none stated**
-
-**Kyber Vault / Lattice Gentle**
-
-- **Shared:** Kyber, LWE, SHA-256
 - **Stated difference:** **none stated**
 
 ## Labs
@@ -3012,13 +3012,14 @@ Two dials straighten a scrambled lattice until its shortest vector is readable b
 
 [`crypto-lab-lattice-fault`](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) · Post-Quantum Side-Channel · POST-QUANTUM, ATTACKS
 
-Implementation attacks on lattice PQC: NTT power leakage, rejection-sampling fault bypass, KyberSlash timing, and a loop-abort fault that recovers a whole ML-DSA secret from one signature. The math survives; sloppy implementations do not.
+Simulated implementation attacks on lattice PQC: NTT power leakage, rejection-sampling fault bypass, KyberSlash timing, and a loop-abort fault that recovers one secret polynomial in a signing model. Selected arithmetic is real; the exhibits do not implement complete ML-KEM or ML-DSA.
 
-- **Implements:** Keccak `src/shake256.ts:41`, Kyber `src/timing.ts:88`, ML-DSA `src/loopabort.ts:37`, NTT `src/loopabort.ts:116`, SHAKE `src/shake256.ts:88`
-- **References:** Dilithium, EC point arithmetic, Fujisaki-Okamoto transform, HQC, ML-KEM, Shamir secret sharing
-- **Attacks shown:** Chosen-ciphertext attack `src/main.ts:180`, Chosen-plaintext attack `src/main.ts:40`, Fault injection `src/main.ts:40`, Key recovery `src/main.ts:254`, Lattice reduction `src/loopabort.ts:629`, Padding oracle `src/main.ts:618`, Power analysis `src/main.ts:17`, Side-channel (unspecified) `src/main.ts:171`, Timing side-channel `src/main.ts:40`
+- **Implements:** Keccak `src/shake256.ts:41`, NTT `src/loopabort.ts:116`, SHAKE `src/shake256.ts:88`
+- **Source review:** [6b127eb85b64](https://github.com/systemslibrarian/crypto-lab-lattice-fault/commit/6b127eb85b647f573408f2e9a90cbe0fcca2c94b) — Read README.md, src/main.ts, timing.ts, timing.worker.ts, loopabort.ts, rejection.ts, ntt.ts, shake256.ts and relevant tests at this exact commit. Kyber@src/timing.ts:88 models software-divide cycle counts only, not a complete KEM. ML-DSA@src/loopabort.ts:37 is a parameter object; runLoopAbortAttack constructs one 256-coefficient secret polynomial and z=y+c*s1 with selected real FIPS 204 ring/sampling operations, independently randomized challenge/nonce seeds and toy signer assumptions, not full ML-DSA key generation, signing or verification. Preserve actual Keccak-f[1600]/SHAKE256 and NTT. CPA in src/main.ts:40 means correlation power analysis rather than chosen-plaintext attack; padding-oracle at line618 is a sibling name rather than an executed attack. Keep the disclosed bounded power, fault, timing, key-recovery and LLL computations. No constant-time target-hardware, standards-conformance or full signing-key recovery claim is established. Fleet interpretation work 4ad4a3db-52c4-428e-9b19-d0f63199ef6c; this review does not complete its pending hub integration.
+- **References:** Dilithium, EC point arithmetic, Fujisaki-Okamoto transform, HQC, Kyber, ML-KEM, Shamir secret sharing
+- **Attacks shown:** Chosen-ciphertext attack `src/main.ts:180`, Fault injection `src/main.ts:40`, Key recovery `src/main.ts:254`, Lattice reduction `src/loopabort.ts:629`, Power analysis `src/main.ts:17`, Side-channel (unspecified) `src/main.ts:171`, Timing side-channel `src/main.ts:40`
 - **Standards body:** NIST
-- **Implementation:** hand-rolled
+- **Implementation:** Hand-rolled Keccak/SHAKE256 and NTT; simulated physical attacks using ML-KEM decode and ML-DSA components
 
 ### Lattice Gentle
 

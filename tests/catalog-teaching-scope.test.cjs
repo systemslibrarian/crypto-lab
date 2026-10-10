@@ -29,6 +29,7 @@ test('comparison tables, parameter imports and symbolic terms are not primitive 
     ['crypto-lab-credential-veil', 'BLS signatures'],
     ['crypto-lab-protocol-checker', 'Diffie-Hellman'],
     ['crypto-lab-isogeny-atlas', 'CGL hash'],
+    ['crypto-lab-e91', 'BB84'],
   ]) assert.ok(!implementationsFor(html, slug).includes(term), `${slug}: ${term} is only referenced/modelled`);
   for (const [slug, term] of [
     ['crypto-lab-zk-arena', 'Schnorr'],
@@ -70,6 +71,7 @@ function checkScope(source) {
     'crypto-lab-kem-trap': ['Key recovery'],
     'crypto-lab-protocol-checker': ['Discrete log', 'Key recovery', 'Padding oracle', 'Side-channel (unspecified)', 'Timing side-channel'],
     'crypto-lab-isogeny-atlas': ['Factoring'],
+    'crypto-lab-e91': ['Man-in-the-middle', 'Side-channel (unspecified)'],
   })) {
     for (const name of rejected) assert.ok(!attacksFor(source, slug).includes(name), `${slug}: reject ${name}`);
   }

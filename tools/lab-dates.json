@@ -841,8 +841,8 @@
    "added": "2026-06",
    "updated": "2026-10",
    "addedFrom": "2026-06-06T16:00:29Z",
-   "updatedFrom": "2026-10-06T05:25:05-04:00",
-   "updatedCommit": "e2d0b14553a6a759e343094afde3701947a286ad"
+   "updatedFrom": "2026-10-09T22:02:21-04:00",
+   "updatedCommit": "61d59ce2f73a5bb91feaaf4b3dde7f81b43c24c6"
   },
   "crypto-lab-key-exchange": {
    "added": "2026-06",
@@ -860,17 +860,17 @@
   },
   "crypto-lab-webauthn": {
    "added": "2026-06",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-06-09T08:03:56Z",
-   "updatedFrom": "2026-08-15T21:19:54-04:00",
-   "updatedCommit": "ce7edaa4366537071c0b530c9a6210d6857a56b0"
+   "updatedFrom": "2026-10-09T21:44:59-04:00",
+   "updatedCommit": "2ca64926130658f0ac52c4a967367173286763a1"
   },
   "crypto-lab-ssh-handshake": {
    "added": "2026-06",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-06-09T08:43:30Z",
-   "updatedFrom": "2026-08-15T21:19:53-04:00",
-   "updatedCommit": "877c3ac3e0a0a36dc8544586239797faf2afe880"
+   "updatedFrom": "2026-10-10T06:26:18-04:00",
+   "updatedCommit": "97b47887d375ea8455a0803df9b2fe6233ac88bb"
   },
   "crypto-lab-bitcoin-wallet": {
    "added": "2026-06",
@@ -909,24 +909,24 @@
   },
   "crypto-lab-jwt-forge": {
    "added": "2026-06",
-   "updated": "2026-09",
+   "updated": "2026-10",
    "addedFrom": "2026-06-27T12:37:01Z",
-   "updatedFrom": "2026-09-29T22:33:50-04:00",
-   "updatedCommit": "66a0c6608fee666f7fb83793392fd1c317f193a0"
+   "updatedFrom": "2026-10-10T05:47:45-04:00",
+   "updatedCommit": "19a0cb9e54ee47ffeb5731ce0313d6c00339f14c"
   },
   "crypto-lab-e91": {
    "added": "2026-06",
    "updated": "2026-10",
    "addedFrom": "2026-06-09T11:07:24Z",
-   "updatedFrom": "2026-10-01T19:43:10-04:00",
-   "updatedCommit": "261a6db2f97ff3cd68803e19c50a80c0f0658a52"
+   "updatedFrom": "2026-10-10T05:51:49-04:00",
+   "updatedCommit": "60f8bb69a8649f3bf4b80e0f4bb87d21ac7a1f5e"
   },
   "crypto-lab-hybrid-guide": {
    "added": "2026-06",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-06-06T17:52:22Z",
-   "updatedFrom": "2026-08-15T21:19:50-04:00",
-   "updatedCommit": "764f938520f18f2dd9ebbaa97ebb17c2e3ce1160"
+   "updatedFrom": "2026-10-09T22:10:18-04:00",
+   "updatedCommit": "959df65cb9a00ab02a665888b2a03be5167a1e52"
   },
   "crypto-lab-multivariate": {
    "added": "2026-06",
@@ -1091,10 +1091,10 @@
   },
   "crypto-lab-key-mirror": {
    "added": "2026-07",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-07-15T23:04:57Z",
-   "updatedFrom": "2026-08-15T21:19:51-04:00",
-   "updatedCommit": "e60de2c2cb53f40fd9e8850d3f0b0e6e396c4d12"
+   "updatedFrom": "2026-10-10T05:31:37-04:00",
+   "updatedCommit": "115c80baa06e8ccd2b44811d7447a2fe50f2feeb"
   },
   "crypto-lab-spake-gate": {
    "added": "2026-07",
@@ -1121,8 +1121,8 @@
    "added": "2026-07",
    "updated": "2026-10",
    "addedFrom": "2026-07-15T23:07:08Z",
-   "updatedFrom": "2026-10-09T05:39:56-04:00",
-   "updatedCommit": "200af6865a16ada87087d7c979c808592cbc9af7"
+   "updatedFrom": "2026-10-09T22:21:10-04:00",
+   "updatedCommit": "75f6af314a1d84800b9559814ec6e3ea0b12f03a"
   },
   "crypto-lab-frozen-heart": {
    "added": "2026-07",
@@ -1273,10 +1273,10 @@
   },
   "crypto-lab-stream-ward": {
    "added": "2026-07",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-07-31T16:48:01Z",
-   "updatedFrom": "2026-08-22T09:36:48-04:00",
-   "updatedCommit": "3d47c30261d444c95b89add51d0c9573dd4a0e24"
+   "updatedFrom": "2026-10-09T22:13:12-04:00",
+   "updatedCommit": "40c5c1edbc36ff587274c429139b792254505907"
   },
   "crypto-lab-kmac-gate": {
    "added": "2026-08",
@@ -1569,8 +1569,8 @@
    "added": "2026-10",
    "updated": "2026-10",
    "addedFrom": "2026-10-04T19:44:59Z",
-   "updatedFrom": "2026-10-04T21:10:29-04:00",
-   "updatedCommit": "28ad74791a7e904c41b74508c814189fbdbf33f2"
+   "updatedFrom": "2026-10-10T06:50:23-04:00",
+   "updatedCommit": "8065456c2dd118341ae3a30f59e9b3993ec2b09b"
   },
   "crypto-lab-good-randomness": {
    "added": "2026-10",

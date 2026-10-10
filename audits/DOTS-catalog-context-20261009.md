@@ -60,3 +60,15 @@ Generation used `node tools/catalog-evidence.js write --lab <slug>` for the 13 r
 The initial full check found five stale demo dates; those were regenerated and the complete applicable suite then passed. The initial browser fixture attempted to open an already-open desktop filter panel; the final fixture uses the desktop/mobile visibility distinction. These local results establish neither a new production deployment nor a lab-code merge.
 
 The repair is intended for a reviewed branch/PR. Existing hub publication, lab source and unresolved binary/compiler provenance are outside this change.
+
+## Current integration review, 2026-10-10
+
+All 13 interpretation source SHAs in the table were fetched and independently confirmed unchanged. Subsequent Dot repairs moved HTTPS Padlock to `8065456c2dd118341ae3a30f59e9b3993ec2b09b` and E91 to `1168cf259655710b12040982a83545c395f99326`. A fresh anchor check exited 1: one HTTPS stale review and one moved E91 side-channel anchor. Those were preserved as failures, not waived.
+
+Re-read HTTPS hostname extraction, PKI signature verification, ClientHello construction and the complete source diff; refreshed that review after its verified bounded URL/SNI/reflow repair, preserving captured-certificate, offline, root-store and partial-validation limits.
+
+Re-read E91 engine, comparison data, README and the UI honesty panel. Its BB84 credit points to a comparison table, while the side-channel anchor is inside “Does not model”; the MITM anchor is an unauthenticated-channel warning. Neither is an executed attack. A scoped review removes those credits and anchors E91 at the actual `runE91` statistical simulator, explicitly distinguishing this from physical QKD or a finite-key security proof. Two new negative catalog controls fail on the prior card and pass after guarded regeneration; actual measured Dilithium timing, Dead Sea enumeration and isogeny collision demonstrations remain credited.
+
+Generation used the existing guarded catalog writer for only HTTPS Padlock and E91, followed by catalog, README and committed-history date generators. No stale-review guard was bypassed, no unknown or opaque source was reclassified as verified, and no lab code or workflow was changed in this follow-up. Local receipts retain exact negative and positive outputs and separately dated source checks.
+
+Final current candidate checks: all 24 commands above and their added anchor/browser/diff controls exited 0; 63 Node tests, zero skips; 1,564 anchors resolve and all scoped review pins match current source. Catalog membership remains 228 unique labs, now 176 named algorithms after replacing the comparison credit with the actual E91 model. The full 35-page teaching layout check passed, as did local hub browser search, sorting, filtering and layout controls. Exact stdout/stderr/exit codes are retained in the local maintenance progress directory. GitHub integration and public deployment are separate subsequent evidence states.

@@ -20,7 +20,7 @@ with `node tools/catalog-evidence.js verify`.
 
 ## Reverse index — which labs implement what
 
-175 algorithms are implemented somewhere in the fleet, grouped by family.
+176 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -307,8 +307,13 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### BB84
 
-- **Implemented by:** [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) `src/bb84.ts:198`; [E91](https://systemslibrarian.github.io/crypto-lab-e91/) `src/data.ts:60`
-- **Also referenced by:** *Shor*, *Grover*, *Harvest Vault*, *OTP Vault*, *Quantum Entropy*
+- **Implemented by:** [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) `src/bb84.ts:198`
+- **Also referenced by:** *Shor*, *Grover*, *Harvest Vault*, *OTP Vault*, *E91*, *Quantum Entropy*
+
+#### E91
+
+- **Implemented by:** [E91](https://systemslibrarian.github.io/crypto-lab-e91/) `src/engine.ts:375`
+- **Also referenced by:** *BB84*, *Quantum Entropy*
 
 ### XOF
 
@@ -1190,7 +1195,7 @@ disagree about who owns SHA-256.
 | AIMer | — | 1 |
 | Babai rounding | — | 5 |
 | Baby-step giant-step | — | 3 |
-| BB84 | — | 2 |
+| BB84 | — | 1 |
 | BCH | — | 1 |
 | bcrypt | — | 1 |
 | BFV | — | 2 |
@@ -1202,6 +1207,7 @@ disagree about who owns SHA-256.
 | CKKS | — | 1 |
 | CSIDH | — | 1 |
 | Double Ratchet | — | 2 |
+| E91 | — | 1 |
 | EC point arithmetic | — | 15 |
 | ElGamal | — | 3 |
 | Enigma | — | 1 |
@@ -2267,11 +2273,11 @@ Turn a noisy reading that never repeats into the same key every time: a code-off
 
 Ekert's entanglement-based QKD: measure entangled pairs, run the CHSH Bell test, and derive a key from aligned bases. |S|≈2.83 proves security; an eavesdropper drags it toward the classical bound, so the key is discarded.
 
-- **Implements:** BB84 `src/data.ts:60`
-- **References:** E91, Grover's algorithm, Shor's algorithm
-- **Attacks shown:** Man-in-the-middle `README.md:45`, Side-channel (unspecified) `src/ui.ts:864`
+- **Implements:** E91 `src/engine.ts:375`
+- **Source review:** [1168cf259655](https://github.com/systemslibrarian/crypto-lab-e91/commit/1168cf259655710b12040982a83545c395f99326) — Read current engine.ts, data.ts comparison table, README and ui.ts honesty panel after independently tested CHSH interval repair. runE91 computes simulated singlet correlations, sifting, intercept-resend Eve, noise, misalignment and loss; no physical quantum channel or finite-key/device-independent proof. BB84 is a comparison table, not implemented. Side channels are explicitly not modelled, and unauthenticated-channel MITM is a README warning, not a demonstrated protocol attack. Preserve raw static coverage and real bounded simulation, not a cryptographic implementation claim.
+- **References:** BB84, Grover's algorithm, Shor's algorithm
 - **Standards body:** —
-- **Implementation:** hand-rolled
+- **Implementation:** idealized statistical simulation
 
 ### ECDSA Forge
 
@@ -2707,7 +2713,7 @@ Hamming Quasi-Cyclic post-quantum KEM with Reed-Muller/Reed-Solomon decoding, an
 Takes apart a certificate a real site presented, lets you break each of its four checks in turn, then shows a flawless certificate for a lookalike domain that passes every one. Reads captured certificates; it never connects to a site.
 
 - **Implements:** ECDSA `src/pki/path.ts:86`, X25519 `src/tls/clienthello.ts:282`
-- **Source review:** [28ad74791a7e](https://github.com/systemslibrarian/crypto-lab-https-padlock/commit/28ad74791a7e904c41b74508c814189fbdbf33f2) — Read src/pki/path.ts, parse.ts, assess.ts, break.ts and src/tls/clienthello.ts. The scanner found only X25519 in the ClientHello builder. The chain walk really does verify every signature: src/pki/path.ts:86 calls @peculiar/x509's verify with the parent's public key and the WebCrypto provider, over real DER TBS bytes, and the certificates this lab ships are ECDSA over P-256 and P-384 -- so ECDSA is pinned above. Scope that the card and chips are written to respect: the lab makes NO network connection and runs no handshake, so it never observes encryption; it reads certificates captured earlier. Its RFC 5280 path validation is a stated teaching subset, deliberately omitting revocation, name constraints, policy constraints and path length, so a chain this page accepts is not thereby a chain a browser would accept. The ClientHello is encoded byte for byte and never sent, and its X25519 private half is discarded unused -- which is why the chip is marked 'ClientHello Bytes Only' rather than claiming TLS 1.3. Trust terminates in the lab's own committed copy of a root list, not the reader's device trust store, and the page says so.
+- **Source review:** [8065456c2dd1](https://github.com/systemslibrarian/crypto-lab-https-padlock/commit/8065456c2dd118341ae3a30f59e9b3993ec2b09b) — Read src/pki/path.ts, parse.ts, assess.ts, break.ts and src/tls/clienthello.ts. The scanner found only X25519 in the ClientHello builder. The chain walk really does verify every signature: src/pki/path.ts:86 calls @peculiar/x509's verify with the parent's public key and the WebCrypto provider, over real DER TBS bytes, and the certificates this lab ships are ECDSA over P-256 and P-384 -- so ECDSA is pinned above. Scope that the card and chips are written to respect: the lab makes NO network connection and runs no handshake, so it never observes encryption; it reads certificates captured earlier. Its RFC 5280 path validation is a stated teaching subset, deliberately omitting revocation, name constraints, policy constraints and path length, so a chain this page accepts is not thereby a chain a browser would accept. The ClientHello is encoded byte for byte and never sent, and its X25519 private half is discarded unused -- which is why the chip is marked 'ClientHello Bytes Only' rather than claiming TLS 1.3. Trust terminates in the lab's own committed copy of a root list, not the reader's device trust store, and the page says so. Re-read current hostname.ts, original PKI path and ClientHello at this exact SHA after PR4/5. Authority ends before path/query/fragment userinfo; 68 unit, 63 verdict, 3 full-state accessibility checks and 24 live URL/SNI/reflow controls verify the bounded repair. ECDSA anchor and captured-certificate/offline/partial-validation limitations remain unchanged; this review does not assert a live TLS handshake.
 - **References:** ChaCha20, ChaCha20-Poly1305, ECDH, Encrypted Client Hello, P-256, P-384, Poly1305, RSA, SHA-256, SHA-384, TLS 1.3
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto

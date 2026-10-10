@@ -393,7 +393,15 @@ function attackContextAllows(term, line, code = '') {
     // sentence must not erase an earlier working attack demonstration.
     const before = text.slice(0, hit.index).split(/[.;]/).at(-1);
     const after = text.slice(hit.index + hit[0].length).split(/[.;]/)[0];
-    if (/\b(?:not|never|no|neither|without|cannot|can't|doesn't|don't)\b.{0,80}$/i.test(before)) return false;
+    // A coordinated affirmative predicate has its own negation scope:
+    // "holds no key, ... , and frequency analysis recovers cells". Keep the
+    // full context for the risk filter below. Merely splitting at commas or
+    // "and" would instead credit a negated list such as "no key recovery,
+    // and frequency analysis". This remains a bounded prose heuristic.
+    const coordinated = before.match(/,\s*(?:and|but|yet)\s+([^,]*)$/i);
+    const negationBefore = coordinated && /^\s+(?:recovers?|reveals?|extracts?|enumerates?|forges?|measures?|demonstrates?|executes?)\b/i.test(after)
+      ? coordinated[1] : before;
+    if (/\b(?:not|never|no|neither|without|cannot|can't|doesn't|don't)\b.{0,80}$/i.test(negationBefore)) return false;
     if (/^.{0,45}\b(?:not demonstrated|not implemented|not measured|not reproduced|out of scope|blind spot)\b/i.test(after)) return false;
     if (/\b(?:co-inventor|biography|born|studied under|assumptions?|risk|warning|production|hardened|prevent\w*|defend\w*|protect\w*|resistan\w*)\b/i.test(before + hit[0] + after)
       && !/\b(?:demonstrat|execut|enumerat|crack|forge|run|measur)\w*/i.test(before + after)) return false;

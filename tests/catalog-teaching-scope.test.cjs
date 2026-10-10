@@ -79,6 +79,8 @@ function checkScope(source) {
     'Preserve the measured signing-time variability exhibit');
   assert.ok(attacksFor(source, 'crypto-lab-dead-sea-cipher').includes('Brute force'));
   assert.ok(attacksFor(source, 'crypto-lab-isogeny-atlas').includes('Brute force'));
+  assert.ok(attacksFor(source, 'crypto-lab-order-leak').includes('Frequency analysis'),
+    'Preserve actual ciphertext-frequency recovery against public counts');
 }
 
 test('catalog keeps sibling attacks and negated limits out of attacks shown', () => {
@@ -100,6 +102,12 @@ test('scope control detects reintroduced sibling and negated-limit credits', () 
     const mutated = html.replace(marker, `${marker} data-attacks="${attack}@README.md:1"`);
     assert.throws(() => checkScope(mutated), assert.AssertionError);
   }
+});
+
+test('scope control detects loss of the actual frequency-recovery exhibit', () => {
+  const mutated = html.replace(/Frequency analysis@src\/app.ts:\d+/, '');
+  assert.notEqual(mutated, html, 'The mutation must remove the real catalog anchor');
+  assert.throws(() => checkScope(mutated), assert.AssertionError);
 });
 
 test('scanner rejects negated claims, risk warnings and biographies as attack evidence', () => {
@@ -128,5 +136,31 @@ test('scanner retains computations and positive demonstrations beside bounded li
     const term = ATTACKS.find(t => t.name === name);
     assert.ok(term.re.test(line), `Fixture must actually match ${name}`);
     assert.equal(attackContextAllows(term, line, lex(line).code), true, line);
+  }
+});
+
+test('an independent recovery clause survives an earlier key-access negation', () => {
+  const term = ATTACKS.find(t => t.name === 'Frequency analysis');
+  // Actual learner-facing source, independently checked against the grouping /
+  // public-count recovery in src/attack/frequency.ts and its app.ts caller:
+  // https://github.com/systemslibrarian/crypto-lab-order-leak/blob/d7b852c6faf13305af98e6787fb7f05221e7e323/src/app.ts#L243
+  const source = '<section class="evidence"><h2>Authenticated, never decrypted, and recovered</h2><p>Every deterministic AES-GCM-SIV department ciphertext has a valid authentication tag: <strong data-verdict="dte-tags" data-result="${tagVerdict.result}">${tagVerdict.text}</strong>. The query module holds no key, equality still succeeds, and frequency analysis recovers cells from public counts.</p></section>';
+  assert.equal(attackContextAllows(term, source, lex('`' + source + '`').code), true);
+  assert.equal(attackContextAllows(term, source.replace('frequency analysis recovers', 'frequency analysis is not implemented')), false);
+  assert.equal(attackContextAllows(term, source.replace('and frequency analysis', 'and no frequency analysis')), false);
+});
+
+test('coordinated negation lists and risk prose remain excluded', () => {
+  const term = ATTACKS.find(t => t.name === 'Frequency analysis');
+  for (const source of [
+    'The module demonstrates no key recovery, and frequency analysis.',
+    'The module demonstrates neither key recovery nor frequency analysis.',
+    'The module demonstrates no key recovery, and frequency analysis recovery techniques.',
+    'No key recovery, and frequency analysis does not recover cells.',
+    'The query module holds no key, and never frequency analysis recovers cells.',
+    'Production risk: the module holds no key, and frequency analysis recovers cells.',
+  ]) {
+    assert.ok(term.re.test(source));
+    assert.equal(attackContextAllows(term, source), false, source);
   }
 });

@@ -46,9 +46,17 @@ test('visible catalog summaries distinguish BBS naming and bounded DP advantage'
   assert.doesNotMatch(card('crypto-lab-credential-veil'), /(?:project-copy|chip)">[^<]*BBS\+/);
   assert.match(card('crypto-lab-dp-noise'), /distinguishing advantage.*bounded/);
   assert.doesNotMatch(card('crypto-lab-dp-noise'), /become indistinguishable/);
+  assert.match(card('crypto-lab-rsa-educational'), /projected 2048-bit factoring cost/);
+  assert.doesNotMatch(card('crypto-lab-rsa-educational'), /while a 2048-bit key holds/);
 });
 
 function checkScope(source) {
+  // Educational RSA 81e413b19: factor.ts computes integer factors, not
+  // discrete logarithms; real-world.ts links to a sibling padding oracle.
+  assert.deepEqual(attacksFor(source, 'crypto-lab-rsa-educational'),
+    ['Ciphertext malleability', 'Factoring', 'Key recovery']);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-rsa-educational'),
+    ['RSA', 'RSA-OAEP']);
   const bitcoin = attacksFor(source, 'crypto-lab-bitcoin-script');
   assert.ok(bitcoin.includes('Signature malleability'), 'Keep the actual high-S experiment');
   assert.ok(!bitcoin.includes('Key recovery'), 'Sibling key recovery is not executed here');
@@ -97,6 +105,8 @@ test('scope control detects reintroduced sibling and negated-limit credits', () 
     ['crypto-lab-sphincs-ledger', 'Factoring'],
     ['crypto-lab-dilithium-seal', 'Key recovery'],
     ['crypto-lab-protocol-checker', 'Padding oracle'],
+    ['crypto-lab-rsa-educational', 'Discrete log'],
+    ['crypto-lab-rsa-educational', 'Padding oracle'],
   ]) {
     const marker = `href="https://systemslibrarian.github.io/${slug}/"`;
     const mutated = html.replace(marker, `${marker} data-attacks="${attack}@README.md:1"`);
@@ -108,6 +118,23 @@ test('scope control detects loss of the actual frequency-recovery exhibit', () =
   const mutated = html.replace(/Frequency analysis@src\/app.ts:\d+/, '');
   assert.notEqual(mutated, html, 'The mutation must remove the real catalog anchor');
   assert.throws(() => checkScope(mutated), assert.AssertionError);
+});
+
+test('scope control preserves Educational RSA arithmetic and executed attacks', () => {
+  for (const [field, name] of [
+    ['data-implements', 'RSA'], ['data-implements', 'RSA-OAEP'],
+    ['data-attacks', 'Ciphertext malleability'], ['data-attacks', 'Factoring'],
+    ['data-attacks', 'Key recovery'],
+  ]) {
+    const mutated = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-rsa-educational\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${field}="([^"]*)"`), (attribute, value) => {
+        const entries = value.split(' | ').filter(entry => entry.split('@')[0] !== name);
+        assert.notEqual(entries.length, value.split(' | ').length, `${name} mutation must apply`);
+        return `${field}="${entries.join(' | ')}"`;
+      }));
+    assert.notEqual(mutated, html, 'Mutate the actual card');
+    assert.throws(() => checkScope(mutated), assert.AssertionError);
+  }
 });
 
 test('scanner rejects negated claims, risk warnings and biographies as attack evidence', () => {

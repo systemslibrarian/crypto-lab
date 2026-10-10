@@ -216,11 +216,18 @@
   },
   "crypto-lab-rsa-educational": {
     "commit": "81e413b19edd40bf825dd654798ac397366ad5fc",
-    "reviewed": "2026-10-09",
+    "reviewed": "2026-10-10",
     "covered": [
       "Python"
     ],
-    "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS Re-read current textbook.ts/RSA tests/UI and focused encoding repair PR21: browser implements RSA, explicitly rejects non-ASCII/leading NUL instead of silently losing bytes; empty/internal/trailing zero handling and primitive mathematics preserved. Independent completed Dot report36870c37 review at this exact source SHA recorded separately."
+    "remove": [
+      "Discrete log",
+      "Padding oracle"
+    ],
+    "add": [
+      "RSA@src/rsa/textbook.ts:21"
+    ],
+    "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS Re-read current textbook.ts/RSA tests/UI and focused encoding repair PR21: browser implements RSA, explicitly rejects non-ASCII/leading NUL instead of silently losing bytes; empty/internal/trailing zero handling and primitive mathematics preserved. Independent completed Dot report36870c37 review at this exact source SHA recorded separately. Current catalogue interpretation review: textbook.ts:21 encrypt computes m^e mod n through modexpTraced and its decrypt/sign/verify operations are consumed by UI; use this implementation anchor instead of a UI import. oaep.ts implements separate real 2048-bit WebCrypto RSA-OAEP. factor.ts:52 is Pollard rho integer factorization via gcd, not a discrete-log solver; real-world.ts:91 discusses the sibling RSA Forge padding oracle, not an executed local oracle attack. Remove those two attack credits, preserving real ciphertext malleability, factoring and private-exponent recovery. Textbook signing uses a disclosed toy FNV-1a hash; realistic factoring time is a projection, not a 2048-bit benchmark. Preserve the existing bounded Python review and all prior findings; no production RSA assurance. Fleet work5259971f-74ae-40db-b33b-d97d2223021d."
   },
   "crypto-lab-shadow-vault": {
     "commit": "c6791de071d7cd6df4a67d5a48731c45a8441c72",

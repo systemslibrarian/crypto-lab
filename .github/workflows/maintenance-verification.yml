@@ -1,0 +1,168 @@
+name: Maintenance verification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/maintenance-verification.yml'
+      - 'tools/depth-*'
+      - 'tools/test-invocation.js'
+      - 'tools/package*.json'
+      - 'tests/depth-*'
+
+# Observation only: no issue writes, merges, Pages environments or deploy actions.
+permissions:
+  contents: read
+
+concurrency:
+  group: maintenance-verification-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  exports:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: npm ci
+        working-directory: tools
+      - name: Export regression and scope controls
+        run: node --test tests/depth-export.test.cjs tests/depth-manifest.test.cjs tests/depth-partial.test.cjs
+      - name: Export complete remote default branches at full SHAs
+        id: export
+        continue-on-error: true
+        run: node tools/depth-audit.js export
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Compare depth report with complete current exports
+        id: depth
+        if: steps.export.outcome == 'success'
+        continue-on-error: true
+        run: node tools/depth-audit.js check
+      - name: Derive depth dimensions for review
+        if: steps.export.outcome == 'success'
+        run: |
+          mkdir -p maintenance-evidence
+          node tools/depth-audit.js --json > maintenance-evidence/depth.json
+      - name: Derive test invocation coverage for review
+        id: invocation
+        if: steps.export.outcome == 'success'
+        continue-on-error: true
+        run: |
+          mkdir -p maintenance-evidence
+          node tools/test-invocation.js --json > maintenance-evidence/test-invocation.json
+      - name: Diagnose pinned readable sources with explicit scope gaps
+        id: partialdepth
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p maintenance-evidence
+          node tools/depth-audit.js --partial-json > maintenance-evidence/depth-partial.json
+      - name: Diagnose test invocation with explicit scope gaps
+        id: partialinvocation
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p maintenance-evidence
+          node tools/test-invocation.js --partial-json > maintenance-evidence/test-invocation-partial.json
+      - name: Validate and summarize diagnostic evidence
+        id: diagnostics
+        if: always()
+        continue-on-error: true
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const selected = new Set(['quantum-vault-kpqc', 'tc26-pair', 'snark-arena', 'silent-tally',
+            'ratchet-wire', 'iron-serpent', 'card-trick', 'context-ward', 'ghost-commit', 'point-ledger']
+            .map(name => `crypto-lab-${name}`));
+          for (const file of ['depth-partial', 'test-invocation-partial']) {
+            const report = JSON.parse(fs.readFileSync(`maintenance-evidence/${file}.json`, 'utf8'));
+            console.log(JSON.stringify({ report: file, scope: report.scope,
+              scan: report.scan,
+              rows: report.rows?.length, checked: report.checked,
+              selected: report.rows?.filter(row => selected.has(row.lab)),
+              findings: report.findings, undetermined: report.undetermined,
+            }, null, 2));
+          }
+          NODE
+      - name: Save source manifests and derived evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: default-branch-evidence
+          include-hidden-files: true
+          path: |
+            .scratch/.to-export.tsv
+            .scratch/.exported.tsv
+            .scratch/.export-failed.tsv
+            maintenance-evidence/
+      - name: Preserve failed or incomplete outcomes
+        if: always()
+        env:
+          EXPORT: ${{ steps.export.outcome }}
+          DEPTH: ${{ steps.depth.outcome }}
+          INVOCATION: ${{ steps.invocation.outcome }}
+          PARTIALDEPTH: ${{ steps.partialdepth.outcome }}
+          PARTIALINVOCATION: ${{ steps.partialinvocation.outcome }}
+          DIAGNOSTICS: ${{ steps.diagnostics.outcome }}
+        run: |
+          cat .scratch/.export-failed.tsv 2>/dev/null || true
+          printf 'export=%s depth=%s invocation=%s\n' "$EXPORT" "$DEPTH" "$INVOCATION"
+          [ "$EXPORT" = success ] && [ "$DEPTH" = success ] && [ "$INVOCATION" = success ] &&
+            [ "$PARTIALDEPTH" = success ] && [ "$PARTIALINVOCATION" = success ] && [ "$DIAGNOSTICS" = success ]
+
+  teaching:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+      - run: npm ci
+        working-directory: tools
+      - name: Install browser host libraries with a bounded timeout
+        timeout-minutes: 5
+        run: npx playwright install-deps chromium firefox webkit
+        working-directory: tools
+      - name: Install the three recorded browser engines
+        run: npx playwright install chromium firefox webkit
+        working-directory: tools
+      - name: Worksheet controls on live exhibits
+        id: drift
+        continue-on-error: true
+        run: node tools/teach-drift.js
+      - name: Recheck published issue notes in all three engines
+        id: issues
+        continue-on-error: true
+        run: |
+          mkdir -p maintenance-evidence
+          node tools/teach-issues.js --json | tee maintenance-evidence/teach-issues.json
+          node -e "JSON.parse(require('fs').readFileSync('maintenance-evidence/teach-issues.json', 'utf8'))"
+      - name: Observe AES Modes page-load contacts in Chromium
+        id: observe
+        continue-on-error: true
+        run: |
+          mkdir -p maintenance-evidence
+          node tools/teach-observe.js https://systemslibrarian.github.io/crypto-lab-aes-modes/ chromium | tee maintenance-evidence/teach-observe.json
+      - name: Save live teaching evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: live-teaching-evidence
+          path: maintenance-evidence/
+      - name: Preserve failed or incomplete outcomes
+        if: always()
+        env:
+          DRIFT: ${{ steps.drift.outcome }}
+          ISSUES: ${{ steps.issues.outcome }}
+          OBSERVE: ${{ steps.observe.outcome }}
+        run: |
+          printf 'drift=%s issues=%s observe=%s\n' "$DRIFT" "$ISSUES" "$OBSERVE"
+          [ "$DRIFT" = success ] && [ "$ISSUES" = success ] && [ "$OBSERVE" = success ]

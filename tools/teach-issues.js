@@ -333,8 +333,9 @@ async function main() {
     console.log('\nA recorded issue that no longer matches the live page is a claim the module page is'
       + '\nstill publishing to instructors. Update the support.results entry and its rederived date.');
   }
-  process.exit(stale.length ? 1 : 0);
+  // Allow buffered JSON/stdout to drain before terminating (including piped CI output).
+  process.exitCode = stale.length ? 1 : 0;
 }
 
 module.exports = { checkNote, measureOverflow };
-if (require.main === module) main().catch((e) => { console.error(e); process.exit(2); });
+if (require.main === module) main().catch((e) => { console.error(e); process.exitCode = 2; });

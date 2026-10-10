@@ -67,6 +67,7 @@
  * Usage (from the repo root):
  *   node tools/test-invocation.js            report
  *   node tools/test-invocation.js --json     machine-readable
+ *   node tools/test-invocation.js --partial-json   readable-source diagnostics with named gaps; incomplete scope exits 2
  *   node tools/test-invocation.js --issue    markdown for an issue body
  */
 'use strict';
@@ -247,11 +248,12 @@ function classify(lab) {
 }
 
 function labs() {
-  if (!fs.existsSync(SCRATCH)) {
-    console.error('No .scratch/ exports. Run: node tools/depth-audit.js export');
+  try {
+    return [...require('./depth-exports.js').readExports(SCRATCH).keys()].sort();
+  } catch (err) {
+    console.error(err.message);
     process.exit(2);
   }
-  return fs.readdirSync(SCRATCH).filter((d) => fs.statSync(path.join(SCRATCH, d)).isDirectory()).sort();
 }
 
 /** Labs a teach module names, so the report can lead with them. */
@@ -270,7 +272,20 @@ function moduleLabs() {
   return found;
 }
 
-function main() {
+async function main() {
+  if (process.argv.includes('--partial-json')) {
+    try {
+      const { exported, scope } = require('./depth-exports.js').readExportSnapshot(SCRATCH);
+      const { rows, scan } = await require('./depth-bounded.js').classifyExports(exported, 'invocation');
+      console.log(JSON.stringify({ scope, scan, checked: rows.length,
+        findings: rows.filter(r => r.determined && r.uninvoked.length),
+        undetermined: rows.filter(r => !r.determined),
+        sources: Object.fromEntries([...exported].map(([lab, s]) => [lab, s.sha])),
+      }, null, 2));
+      process.exitCode = scope.complete && scan.complete ? 0 : 2;
+    } catch (error) { console.error(error.message); process.exitCode = 2; }
+    return;
+  }
   const rows = labs().map(classify);
   const mods = moduleLabs();
   const findings = rows.filter((r) => r.determined && r.uninvoked.length);
@@ -315,4 +330,5 @@ function main() {
   for (const r of undetermined) console.log(`  ${r.lab.replace('crypto-lab-', '').padEnd(26)} ${r.reasons.join('; ')}`);
 }
 
-main();
+module.exports = { classify };
+if (require.main === module) main();

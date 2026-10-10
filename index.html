@@ -8366,12 +8366,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-stego-suite/" data-added="2026-04" data-updated="2026-10" data-level="beginner"
+          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-stego-suite/"
             data-implements="AES@src/lib/crypto.ts:8 | AES-GCM@src/lib/crypto.ts:8 | PBKDF2@src/lib/crypto.ts:13 | SHA-256@src/lib/crypto.ts:13"
             data-references="SNOW 2.0"
-            data-attacks="Power analysis@src/main.ts:326"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="145f8f49b6e0a5ec649704472722a41d8df34ea8"
+            data-review-note="Read current README, src/main.ts and crypto/bits/stego/DCT/chi/image modules plus tests at this SHA. src/main.ts:326 lists SPA among stronger image steganalysis detectors; this is not Simple Power Analysis or an executed physical-power attack. Remove that abbreviation-derived attack credit. AES/AES-GCM are real WebCrypto encryption/decryption, with PBKDF2 and SHA-256 key derivation in src/lib/crypto.ts; retain all four implementation credits. F5-inspired raw-block DCT embedding and WOW-inspired adaptive placement are disclosed models, not complete named production schemes. The old interpretation candidates arose from a timed-out scan, now independently completed. Review scope is catalogue classification, not a blanket covert-channel/security guarantee. Fleet work3a0b1565-7f73-4412-a3e9-ebf5de96d515."
+            data-added="2026-04" data-updated="2026-10" data-level="beginner"
            
            
            

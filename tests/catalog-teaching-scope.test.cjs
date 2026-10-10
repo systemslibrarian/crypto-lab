@@ -49,6 +49,12 @@ test('visible catalog summaries distinguish BBS naming and bounded DP advantage'
 });
 
 function checkScope(source) {
+  // Current Stego Suite 145f8f49b6e0a5ec649704472722a41d8df34ea8:
+  // src/main.ts:326 lists image detectors RS/SPA/ML, not physical power
+  // analysis. src/lib/crypto.ts performs the real encrypt-before-hide calls.
+  assert.deepEqual(attacksFor(source, 'crypto-lab-stego-suite'), []);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-stego-suite'),
+    ['AES', 'AES-GCM', 'PBKDF2', 'SHA-256']);
   const bitcoin = attacksFor(source, 'crypto-lab-bitcoin-script');
   assert.ok(bitcoin.includes('Signature malleability'), 'Keep the actual high-S experiment');
   assert.ok(!bitcoin.includes('Key recovery'), 'Sibling key recovery is not executed here');
@@ -97,10 +103,20 @@ test('scope control detects reintroduced sibling and negated-limit credits', () 
     ['crypto-lab-sphincs-ledger', 'Factoring'],
     ['crypto-lab-dilithium-seal', 'Key recovery'],
     ['crypto-lab-protocol-checker', 'Padding oracle'],
+    ['crypto-lab-stego-suite', 'Power analysis'],
   ]) {
     const marker = `href="https://systemslibrarian.github.io/${slug}/"`;
     const mutated = html.replace(marker, `${marker} data-attacks="${attack}@README.md:1"`);
     assert.throws(() => checkScope(mutated), assert.AssertionError);
+  }
+});
+
+test('scope control detects loss of Stego Suite encrypt-before-hide cryptography', () => {
+  for (const name of ['AES-GCM', 'PBKDF2', 'SHA-256']) {
+    const changed = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-stego-suite\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${name}@src/lib/crypto\\.ts:\\d+`), ''));
+    assert.notEqual(changed, html, `${name} mutation must change the actual card`);
+    assert.throws(() => checkScope(changed), assert.AssertionError);
   }
 });
 

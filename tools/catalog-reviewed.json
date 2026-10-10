@@ -580,5 +580,13 @@
     ],
     "implementation": "idealized statistical simulation",
     "note": "Read current engine.ts, data.ts comparison table, README and ui.ts honesty panel after independently tested CHSH interval repair. runE91 computes simulated singlet correlations, sifting, intercept-resend Eve, noise, misalignment and loss; no physical quantum channel or finite-key/device-independent proof. BB84 is a comparison table, not implemented. Side channels are explicitly not modelled, and unauthenticated-channel MITM is a README warning, not a demonstrated protocol attack. Preserve raw static coverage and real bounded simulation, not a cryptographic implementation claim."
+  },
+  "crypto-lab-stego-suite": {
+    "commit": "145f8f49b6e0a5ec649704472722a41d8df34ea8",
+    "reviewed": "2026-10-10",
+    "remove": [
+      "Power analysis"
+    ],
+    "note": "Read current README, src/main.ts and crypto/bits/stego/DCT/chi/image modules plus tests at this SHA. src/main.ts:326 lists SPA among stronger image steganalysis detectors; this is not Simple Power Analysis or an executed physical-power attack. Remove that abbreviation-derived attack credit. AES/AES-GCM are real WebCrypto encryption/decryption, with PBKDF2 and SHA-256 key derivation in src/lib/crypto.ts; retain all four implementation credits. F5-inspired raw-block DCT embedding and WOW-inspired adaptive placement are disclosed models, not complete named production schemes. The old interpretation candidates arose from a timed-out scan, now independently completed. Review scope is catalogue classification, not a blanket covert-channel/security guarantee. Fleet work3a0b1565-7f73-4412-a3e9-ebf5de96d515."
   }
 }

@@ -4120,8 +4120,8 @@ AIR constraints, FRI polynomial commitments, and end-to-end Fibonacci proof. No 
 LSB substitution, DCT-domain hiding, and adaptive embedding with live chi-squared steganalysis. Hide the message, not just the content.
 
 - **Implements:** AES `src/lib/crypto.ts:8`, AES-GCM `src/lib/crypto.ts:8`, PBKDF2 `src/lib/crypto.ts:13`, SHA-256 `src/lib/crypto.ts:13`
+- **Source review:** [145f8f49b6e0](https://github.com/systemslibrarian/crypto-lab-stego-suite/commit/145f8f49b6e0a5ec649704472722a41d8df34ea8) — Read current README, src/main.ts and crypto/bits/stego/DCT/chi/image modules plus tests at this SHA. src/main.ts:326 lists SPA among stronger image steganalysis detectors; this is not Simple Power Analysis or an executed physical-power attack. Remove that abbreviation-derived attack credit. AES/AES-GCM are real WebCrypto encryption/decryption, with PBKDF2 and SHA-256 key derivation in src/lib/crypto.ts; retain all four implementation credits. F5-inspired raw-block DCT embedding and WOW-inspired adaptive placement are disclosed models, not complete named production schemes. The old interpretation candidates arose from a timed-out scan, now independently completed. Review scope is catalogue classification, not a blanket covert-channel/security guarantee. Fleet work3a0b1565-7f73-4412-a3e9-ebf5de96d515.
 - **References:** SNOW 2.0
-- **Attacks shown:** Power analysis `src/main.ts:326`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 

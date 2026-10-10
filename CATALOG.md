@@ -2688,9 +2688,9 @@ The 2020 timing attack on HQC's BCH decoder — the parameterization predating t
 A full-decryption oracle on HQC, where compiler rewrites reintroduce cache timing into constant-time source. Substitutes a repetition code for HQC's Reed-Muller inner code so the soft-decoding step stays legible.
 
 - **Implements:** Repetition code `src/engine.ts:163`
-- **Source review:** [50c0b64a3597](https://github.com/systemslibrarian/crypto-lab-hqc-timing-break/commit/50c0b64a3597cfc9caf97eca16b69420e4f09f35) — Runs a repetition-code surrogate and majority recovery; no HQC decoder
+- **Source review:** [cc4305c70238](https://github.com/systemslibrarian/crypto-lab-hqc-timing-break/commit/cc4305c70238764212e04ef35fe36775f5e099d8) — Runs an abstract cache-channel simulation with repetition-code majority and reliability-weighted recovery, not an HQC decoder or full information-set decoding. The chosen-ciphertext timeline event and Lattice Fault sibling link describe other work, not attacks executed here.
 - **References:** BCH, HQC, Information-set decoding, Kyber, ML-DSA, ML-KEM, Reed-Muller, STARK
-- **Attacks shown:** Cache timing `src/data.ts:7`, Chosen-ciphertext attack `src/data.ts:66`, Fault injection `README.md:57`, Key recovery `src/data.ts:87`, Side-channel (unspecified) `src/data.ts:7`, Timing side-channel `src/data.ts:66`
+- **Attacks shown:** Cache timing `src/data.ts:7`, Key recovery `src/data.ts:87`, Side-channel (unspecified) `src/data.ts:7`, Timing side-channel `src/data.ts:66`
 - **Standards body:** —
 - **Implementation:** hand-rolled
 

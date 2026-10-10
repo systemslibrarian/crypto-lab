@@ -49,6 +49,13 @@ test('visible catalog summaries distinguish BBS naming and bounded DP advantage'
 });
 
 function checkScope(source) {
+  // HQC Timing Break cc4305c7: src/engine.ts runs a repetition-code cache
+  // model. data.ts's 2020 chosen-ciphertext event and README's Lattice Fault
+  // sibling link describe other work, not attacks executed by this model.
+  assert.deepEqual(attacksFor(source, 'crypto-lab-hqc-timing-break'),
+    ['Cache timing', 'Key recovery', 'Side-channel (unspecified)', 'Timing side-channel']);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-hqc-timing-break'),
+    ['Repetition code']);
   const bitcoin = attacksFor(source, 'crypto-lab-bitcoin-script');
   assert.ok(bitcoin.includes('Signature malleability'), 'Keep the actual high-S experiment');
   assert.ok(!bitcoin.includes('Key recovery'), 'Sibling key recovery is not executed here');
@@ -97,6 +104,8 @@ test('scope control detects reintroduced sibling and negated-limit credits', () 
     ['crypto-lab-sphincs-ledger', 'Factoring'],
     ['crypto-lab-dilithium-seal', 'Key recovery'],
     ['crypto-lab-protocol-checker', 'Padding oracle'],
+    ['crypto-lab-hqc-timing-break', 'Chosen-ciphertext attack'],
+    ['crypto-lab-hqc-timing-break', 'Fault injection'],
   ]) {
     const marker = `href="https://systemslibrarian.github.io/${slug}/"`;
     const mutated = html.replace(marker, `${marker} data-attacks="${attack}@README.md:1"`);
@@ -108,6 +117,22 @@ test('scope control detects loss of the actual frequency-recovery exhibit', () =
   const mutated = html.replace(/Frequency analysis@src\/app.ts:\d+/, '');
   assert.notEqual(mutated, html, 'The mutation must remove the real catalog anchor');
   assert.throws(() => checkScope(mutated), assert.AssertionError);
+});
+
+test('HQC scope control preserves the modeled cache channel, recovery and repetition code', () => {
+  for (const [field, name] of [
+    ['data-implements', 'Repetition code'],
+    ['data-attacks', 'Cache timing'], ['data-attacks', 'Key recovery'],
+  ]) {
+    const mutated = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hqc-timing-break\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${field}="([^"]*)"`), (attribute, value) => {
+        const entries = value.split(' | ').filter(entry => entry.split('@')[0] !== name);
+        assert.notEqual(entries.length, value.split(' | ').length, `${name} mutation must apply`);
+        return `${field}="${entries.join(' | ')}"`;
+      }));
+    assert.notEqual(mutated, html, 'Mutate the actual card');
+    assert.throws(() => checkScope(mutated), assert.AssertionError);
+  }
 });
 
 test('scanner rejects negated claims, risk warnings and biographies as attack evidence', () => {

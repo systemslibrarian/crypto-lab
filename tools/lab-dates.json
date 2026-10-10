@@ -22,22 +22,22 @@
    "added": "2026-03",
    "updated": "2026-10",
    "addedFrom": "2026-03-14T01:06:39Z",
-   "updatedFrom": "2026-10-09T16:02:07-04:00",
-   "updatedCommit": "5fc54f2ca1e135396034501237ca687fe1f62fbe"
+   "updatedFrom": "2026-10-10T13:01:53-04:00",
+   "updatedCommit": "263bf868df16937032f9bdd964c24e542d05eb89"
   },
   "crypto-lab-phantom-vault": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-04T03:50:35Z",
-   "updatedFrom": "2026-08-21T00:39:36-04:00",
-   "updatedCommit": "01b514bdeb3ea4298ef57df76117473c9ae7411b"
+   "updatedFrom": "2026-10-10T12:34:57-04:00",
+   "updatedCommit": "b4d4ef37ba412910c2bcdf80b767e3836431d7bd"
   },
   "crypto-lab-corrupted-oracle": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-04T03:41:47Z",
-   "updatedFrom": "2026-08-19T01:06:01-04:00",
-   "updatedCommit": "2dca46af846115aed4d4cfb6a043f300bfeb66cc"
+   "updatedFrom": "2026-10-10T12:12:31-04:00",
+   "updatedCommit": "6249d480b55cf420f48f276492c47adc14207146"
   },
   "crypto-lab-air-stream": {
    "added": "2026-09",
@@ -104,10 +104,10 @@
   },
   "crypto-lab-grover": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-17T09:02:21Z",
-   "updatedFrom": "2026-08-15T21:19:49-04:00",
-   "updatedCommit": "1c144f25594a8458af5b974f69f653574154d54b"
+   "updatedFrom": "2026-10-10T07:57:47-04:00",
+   "updatedCommit": "f4fd8da262d177332279227b327a75c7169981ae"
   },
   "crypto-lab-model-breach": {
    "added": "2026-04",
@@ -118,24 +118,24 @@
   },
   "crypto-lab-iron-letter": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-04T15:29:35Z",
-   "updatedFrom": "2026-08-15T21:19:50-04:00",
-   "updatedCommit": "001249a34e5b4456e2c782b538420a4f9ee385fe"
+   "updatedFrom": "2026-10-10T16:12:59-04:00",
+   "updatedCommit": "9e9910d66cf3baef5693c2b488ed90af49bf4999"
   },
   "crypto-lab-shadow-vault": {
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-04T04:06:43Z",
-   "updatedFrom": "2026-10-09T17:42:53-04:00",
-   "updatedCommit": "a0cd4708465c42924d265f068670db8a42c65128"
+   "updatedFrom": "2026-10-10T16:30:03-04:00",
+   "updatedCommit": "c6791de071d7cd6df4a67d5a48731c45a8441c72"
   },
   "crypto-lab-zk-proof-lab": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-03T00:57:33Z",
-   "updatedFrom": "2026-08-19T04:01:57-04:00",
-   "updatedCommit": "c6ddf0c621b4b6c823a60ea84162f1686abd4037"
+   "updatedFrom": "2026-10-10T14:41:03-04:00",
+   "updatedCommit": "0f412251c4c491739eaeeccc81a651198b50d371"
   },
   "crypto-lab-stark-tower": {
    "added": "2026-04",
@@ -146,17 +146,17 @@
   },
   "crypto-lab-snark-arena": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-12T18:58:27Z",
-   "updatedFrom": "2026-08-19T03:48:56-04:00",
-   "updatedCommit": "0a9e5e700fbe4936a8e3cc0462672d743b3170cd"
+   "updatedFrom": "2026-10-10T08:31:35-04:00",
+   "updatedCommit": "9c642947eae93032a558678a365b692ca276b798"
   },
   "crypto-lab-blind-oracle": {
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-02T17:17:37Z",
-   "updatedFrom": "2026-10-01T18:24:16-04:00",
-   "updatedCommit": "817b10e7298f05f16fc40fd27d3059078795a9a2"
+   "updatedFrom": "2026-10-10T14:17:17-04:00",
+   "updatedCommit": "84f0a44fdfaac52441948045643f5f86e89f17f6"
   },
   "crypto-lab-ckks-lab": {
    "added": "2026-04",
@@ -181,10 +181,10 @@
   },
   "crypto-lab-vss-gate": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-12T17:09:42Z",
-   "updatedFrom": "2026-08-15T21:19:54-04:00",
-   "updatedCommit": "c0a31fd019b4b3c5e6df0e53250d7e5cfc006b20"
+   "updatedFrom": "2026-10-10T08:39:35-04:00",
+   "updatedCommit": "88634e99772f17da2165cb87c93dc89fe6a64690"
   },
   "crypto-lab-dkg-gate": {
    "added": "2026-07",
@@ -218,8 +218,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-06T12:56:09Z",
-   "updatedFrom": "2026-10-09T09:59:27-04:00",
-   "updatedCommit": "1dbca455c7a12abb5c1940654f5aa89e81424246"
+   "updatedFrom": "2026-10-10T10:02:47-04:00",
+   "updatedCommit": "2e781154f101613e2ddada39d5e210adc2eb6b09"
   },
   "crypto-lab-ratchet-wire": {
    "added": "2026-04",
@@ -239,8 +239,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-06T02:05:22Z",
-   "updatedFrom": "2026-10-09T17:20:11-04:00",
-   "updatedCommit": "5cccbc648d4ac38a2cd1e92c91396e0ab03255a9"
+   "updatedFrom": "2026-10-10T10:54:27-04:00",
+   "updatedCommit": "cb656d854e1071b9c745a59342a27c60086f78e9"
   },
   "crypto-lab-world-ciphers": {
    "added": "2026-04",
@@ -267,8 +267,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-06T10:15:14Z",
-   "updatedFrom": "2026-10-09T17:25:14-04:00",
-   "updatedCommit": "e621e5486e82cd7c2d7e78803a3e3d1c972ef587"
+   "updatedFrom": "2026-10-10T10:34:28-04:00",
+   "updatedCommit": "c6ec3f5e305d346549e778de783a6ecba9041f57"
   },
   "crypto-lab-biham-lens": {
    "added": "2026-04",
@@ -351,8 +351,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-07T16:54:36Z",
-   "updatedFrom": "2026-10-09T01:22:21-04:00",
-   "updatedCommit": "2029bcd2714788ba8bc01f5e320fe437a4dceb92"
+   "updatedFrom": "2026-10-10T09:37:21-04:00",
+   "updatedCommit": "e8336a18551a582aabf24b52b1196c652f8608dd"
   },
   "crypto-lab-kdf-chain": {
    "added": "2026-04",
@@ -428,8 +428,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-08T06:37:28Z",
-   "updatedFrom": "2026-10-03T19:33:12-04:00",
-   "updatedCommit": "dfb9e5808c8ab7d339a7171349341a7fe9bec4c4"
+   "updatedFrom": "2026-10-10T09:01:35-04:00",
+   "updatedCommit": "25ad119110d16ab74070384c9538b3fad1272577"
   },
   "crypto-lab-hash-zoo": {
    "added": "2026-04",
@@ -468,10 +468,10 @@
   },
   "crypto-lab-lms-ledger": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-09T09:25:24Z",
-   "updatedFrom": "2026-08-15T21:19:51-04:00",
-   "updatedCommit": "9703c9c36d004c8a0973712a9e45e5465a9a37d1"
+   "updatedFrom": "2026-10-10T08:47:48-04:00",
+   "updatedCommit": "9cd0e21856a75724d52f6b20be0a988e821f97a5"
   },
   "crypto-lab-merkle-vault": {
    "added": "2026-04",
@@ -540,8 +540,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-12T23:03:40Z",
-   "updatedFrom": "2026-10-09T13:11:45-04:00",
-   "updatedCommit": "7be844a7f8ba3d1282def1482d0e006ab829795d"
+   "updatedFrom": "2026-10-10T08:16:01-04:00",
+   "updatedCommit": "14a2de9e63fefef698879118f91a54f16f60631b"
   },
   "crypto-lab-protocol-compose": {
    "added": "2026-04",
@@ -573,10 +573,10 @@
   },
   "crypto-lab-harvest-vault": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-17T10:19:49Z",
-   "updatedFrom": "2026-08-19T01:15:43-04:00",
-   "updatedCommit": "5fd9bf57cca1085ff96ca4638a2c778d3c9d7f46"
+   "updatedFrom": "2026-10-10T07:50:10-04:00",
+   "updatedCommit": "b3a1b202e3921ef09c89595e5527983ac7ba5500"
   },
   "crypto-lab-isogeny-gate": {
    "added": "2026-04",
@@ -601,10 +601,10 @@
   },
   "crypto-lab-mpcith-sign": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-18T11:08:45Z",
-   "updatedFrom": "2026-08-15T21:19:51-04:00",
-   "updatedCommit": "52b52e69d0891b85afec82c845b990be8a7f26f0"
+   "updatedFrom": "2026-10-10T07:36:21-04:00",
+   "updatedCommit": "89ac2fca1868c4e3b12f75e6a8d76ff1576de3ce"
   },
   "crypto-lab-opaque-gate": {
    "added": "2026-04",
@@ -671,10 +671,10 @@
   },
   "crypto-lab-harvest-timeline": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-19T20:30:34Z",
-   "updatedFrom": "2026-08-19T01:13:28-04:00",
-   "updatedCommit": "098e93a79a2fd545791af6341bf0ef468ed3625e"
+   "updatedFrom": "2026-10-10T07:20:18-04:00",
+   "updatedCommit": "6720a48db652d8324e1401e36b65dda00d37c24d"
   },
   "crypto-lab-hawk": {
    "added": "2026-04",
@@ -1140,10 +1140,10 @@
   },
   "crypto-lab-power-trace": {
    "added": "2026-07",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-07-16T23:09:28Z",
-   "updatedFrom": "2026-08-15T21:19:52-04:00",
-   "updatedCommit": "d7c0968ca43ac1a8f5188baec779c5dd37b07c6e"
+   "updatedFrom": "2026-10-09T18:44:46-04:00",
+   "updatedCommit": "9323347c18f90224ebbd286bd78da5af74672e68"
   },
   "crypto-lab-protocol-checker": {
    "added": "2026-07",

@@ -138,12 +138,12 @@
     "note": "Runs a repetition-code surrogate and majority recovery; no HQC decoder"
   },
   "crypto-lab-iron-serpent": {
-    "commit": "ad43da5eefeeac37d662c939f208a62ca488d609",
-    "reviewed": "2026-10-09",
+    "commit": "cb656d854e1071b9c745a59342a27c60086f78e9",
+    "reviewed": "2026-10-10",
     "add": [
       "Argon2@demos/iron-serpent/src/kdf.ts:48"
     ],
-    "note": "Read current README, author biography, Argon2 worker/KDF and MAC/Serpent paths. Weak-passphrase risk and Eli Biham's biography are references, not executed attacks. Argon2id call at kdf.ts:48 remains verified; external WASM source/compiler provenance remains unresolved.",
+    "note": "Read current Argon2id Worker/KDF call at kdf.ts:48, Serpent/HMAC paths, passphrase-strength uncertainty implementation, README and verified PR12 scope. Biography and weak-password risk prose are not executed brute-force/differential attacks. External embedded WASM vendor-source/compiler provenance remains unresolved; current dependency/source claims and unrelated nonce-risk wording are not a full security audit.",
     "remove": [
       "Brute force",
       "Differential cryptanalysis"
@@ -184,8 +184,8 @@
     "note": "Runs both extractors on generated bits; source QRNG is modeled"
   },
   "crypto-lab-quantum-vault-kpqc": {
-    "commit": "c0c067dba8dc942924fe754949ad4ceb26ec49a6",
-    "reviewed": "2026-09-10",
+    "commit": "263bf868df16937032f9bdd964c24e542d05eb89",
+    "reviewed": "2026-10-10",
     "add": [
       "SMAUG-T@wasm/src/smaug_exports.c:2",
       "HAETAE@wasm/src/haetae_exports.c:2",
@@ -196,7 +196,23 @@
       "C/C++"
     ],
     "implementation": "Rust/C wrappers and WASM",
-    "note": "Rust and C source reviewed; three compiled WASM binaries remain opaque"
+    "note": "Read immutable current Rust HKDF/encryption, C SMAUG-T/HAETAE wrappers and browser sealing/reconstruction/signature flow, README limits and verified PR16/17 controls. C wrapper algorithm identity is supported by the encapsulate/sign calls; vendor inputs and original compiler/source-to-three-WASM correspondence remain unresolved. Nonce reuse is risk/reference prose and normal threshold reconstruction is not an adversarial key-recovery exhibit. Also read every indexed attack context in implementation/security/design/audit documents and current browser pipeline: remaining excluded names are risk/threat, negated defence, historical audit or comparison references, not browser attack exhibits. Actual tamper rejection is signature/integrity behavior, not the adaptive chosen-ciphertext attacker model described in SECURITY.md; historical provider/audit claims are not current verification.",
+    "remove": [
+      "Nonce reuse",
+      "Key recovery",
+      "Brute force",
+      "Chosen-plaintext attack",
+      "Ciphertext malleability",
+      "Downgrade attack",
+      "Length extension",
+      "Man-in-the-middle",
+      "Padding oracle",
+      "Side-channel (unspecified)",
+      "Signature malleability",
+      "Timing side-channel",
+      "Malleability (unspecified)",
+      "Chosen-ciphertext attack"
+    ]
   },
   "crypto-lab-rsa-educational": {
     "commit": "81e413b19edd40bf825dd654798ac397366ad5fc",
@@ -207,18 +223,27 @@
     "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS Re-read current textbook.ts/RSA tests/UI and focused encoding repair PR21: browser implements RSA, explicitly rejects non-ASCII/leading NUL instead of silently losing bytes; empty/internal/trailing zero handling and primitive mathematics preserved. Independent completed Dot report36870c37 review at this exact source SHA recorded separately."
   },
   "crypto-lab-shadow-vault": {
-    "commit": "f094b96e6bd798867abbd3d2512476a3618cb010",
-    "reviewed": "2026-09-24",
+    "commit": "c6791de071d7cd6df4a67d5a48731c45a8441c72",
+    "reviewed": "2026-10-10",
     "add": [
       "ChaCha20-Poly1305@crate/src/lib.rs:13",
       "SHA-256@crate/src/lib.rs:17"
     ],
     "covered": [
-      "Rust",
-      "WebAssembly"
+      "Rust"
     ],
     "implementation": "RustCrypto / compiled WASM",
-    "note": "Rust crypto core reviewed; bundled WASM is built from that core"
+    "note": "Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22\u201326 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review.",
+    "remove": [
+      "Brute force",
+      "Cache timing",
+      "Ciphertext malleability",
+      "Key recovery",
+      "Nonce reuse",
+      "Side-channel (unspecified)",
+      "Timing side-channel",
+      "Malleability (unspecified)"
+    ]
   },
   "crypto-lab-silent-tally": {
     "commit": "390d3dc54422f5abdfb194131049410bc6c960c9",
@@ -233,18 +258,15 @@
     "note": "Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses Re-read current Rust field/sampler/sharing/reconstruction and README at this exact SHA after Vitest/publisher integrations; implementation unchanged from prior reviewed pin. Current18Rust/18TypeScript/12browser gates and published artifact checks retained; no compiler reproduction claim."
   },
   "crypto-lab-snark-arena": {
-    "commit": "9a72143f2668bb590cde2e2296b4460e2e4928bb",
-    "reviewed": "2026-09-24",
+    "commit": "9c642947eae93032a558678a365b692ca276b798",
+    "reviewed": "2026-10-10",
     "remove": [
       "PLONK"
     ],
     "add": [
       "Groth16@src/ui/realproof.ts:97"
     ],
-    "covered": [
-      "WebAssembly"
-    ],
-    "note": "Checked-in circuit source and real snarkjs Groth16 flow reviewed; PLONK is shown only as a comparison"
+    "note": "Read current realproof.ts Groth16 fullProve/verify calls, cubic.circom and changed README/UI/test diff. Groth16 proof mechanics are real; public cubic output reveals the bounded witness and demo ceremony secrets are public. PLONK remains a comparison. Circom source is readable; compiled WASM source/compiler reproduction is unverified and remains opaque."
   },
   "crypto-lab-syndrome-drain": {
     "commit": "7187714a9cadf1570726228f02e00dae48abc9df",
@@ -437,13 +459,13 @@
     "note": "Read README.md, src/math.ts, src/frodo-kem.ts and src/main.ts including all actual toy-LWE, KEM, comparison, hybrid and failure handlers at this exact source SHA. README28 discusses raw LWE CPA security and the FO transform; it does not execute a chosen-plaintext attack. The source side-channel matches explicitly disclaim constant-time or side-channel guarantees and link related experiments; neither benchmarks nor missing hardening demonstrate a secret-dependent oracle or attack. Remove only those two prose-derived credits. Retain the real chosen-ciphertext tamper experiment: kemTamper flips an actual ciphertext bit and kemDecap calls the real KEM with the stored secret key, showing an unrelated implicit-rejection secret. This is a bounded tamper/rejection lesson, not adaptive-oracle exploitation or key recovery. No new algorithm names, categories or source/compiler provenance are inferred; opaque third-party WASM remains a separate evidence boundary."
   },
   "crypto-lab-sphincs-ledger": {
-    "commit": "bd4ec08e10b1d543439c4d371f8daf9cb451cd35",
-    "reviewed": "2026-10-09",
+    "commit": "c6ec3f5e305d346549e778de783a6ecba9041f57",
+    "reviewed": "2026-10-10",
     "remove": [
       "Discrete log",
       "Factoring"
     ],
-    "note": "Read current main.ts hash-only security panel and README: factoring/discrete-log assumptions are explicitly unnecessary, not attacks executed by this hash-based signature lab."
+    "note": "Read current hash-only assumption/comparison panel, noble SLH-DSA adapter, selected-set params.ts equations and reduced complete-WOTS+ source, README/scaled-values limits, verified PR12/13 controls. Factoring/discrete-log remain comparisons/negations, not executed attacks. Standard 35/67-chain comparison is distinct from the real-hash reduced 8-chain teaching model; no FIPS-conformance claim for that model."
   },
   "crypto-lab-dead-sea-cipher": {
     "commit": "f0bf09cc973e79eeabc7e1401b7ea66c36175094",
@@ -464,8 +486,8 @@
     "note": "Read current LWE search-space helper, FO explanation and assurance/power-research panel. Search-space count is not enumeration; FO prevention and external side-channel research are references/limitations, not browser attacks. Preserve actual LWE/ML-KEM/AES and tests."
   },
   "crypto-lab-dilithium-seal": {
-    "commit": "cefaaacd854329b40ca70f25d844ad8b86ebc411",
-    "reviewed": "2026-10-09",
+    "commit": "2e781154f101613e2ddada39d5e210adc2eb6b09",
+    "reviewed": "2026-10-10",
     "remove": [
       "Discrete log",
       "Factoring",
@@ -473,7 +495,7 @@
       "Key recovery",
       "Side-channel (unspecified)"
     ],
-    "note": "Read current comparison table, Shor explanation, README risks, timing-variability panel and runtime assurance limits. These five credits are references/negated claims/risks. Preserve measured signing-time variability (Timing side-channel); it is explicitly not key recovery or hardware trace validation."
+    "note": "Re-read current ML-DSA/SHA-256 sealing, unsigned metadata disclosures, README and comparison/timing panels against verified PR40. Preserve five removals: risk/negated/comparison assertions are not executed attacks. Timing variability remains an actual measurement with no key-recovery/hardware-trace or constant-time claim."
   },
   "crypto-lab-zk-arena": {
     "commit": "96f5ec88184aef25f7ed141e4dc35ccd83043b64",

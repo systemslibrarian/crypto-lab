@@ -21,6 +21,39 @@ function implementationsFor(source, slug) {
     .split(' | ').map(value => value.split('@')[0]);
 }
 
+function checkAblationScope(source) {
+  // Inspected f0c5328848ca7de14af3df18751050352c556131:
+  // codetalker-core/src/threat.rs:144 marks A5 OutOfScope and explicitly
+  // unmeasured. README's side-channel warning is an assurance limit.
+  const slug = 'crypto-lab-ablation-wire';
+  assert.deepEqual(attacksFor(source, slug), [
+    'Discrete log', 'Known-plaintext attack', 'Man-in-the-middle', 'Nonce reuse',
+  ]);
+  // Keep the actual Rust/WASM primitives, not just the removal above.
+  assert.deepEqual(implementationsFor(source, slug), [
+    'AES-GCM', 'ChaCha20-Poly1305', 'Ed25519', 'HKDF', 'ML-DSA',
+    'ML-KEM', 'SHA-256', 'X25519',
+  ]);
+}
+
+test('Ablation Wire separates unmeasured side channels from real exhibits', () => {
+  checkAblationScope(html);
+});
+
+test('Ablation scope rejects an assurance-limit credit and loss of real attacks', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-ablation-wire/"';
+  const falseCredit = html.replace(marker,
+    `${marker} data-attacks="Side-channel (unspecified)@README.md:278"`);
+  assert.notEqual(falseCredit, html);
+  assert.throws(() => checkAblationScope(falseCredit), assert.AssertionError);
+  for (const name of ['Known-plaintext attack', 'Nonce reuse']) {
+    const changed = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-ablation-wire\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${name}@[^|" ]+`), ''));
+    assert.notEqual(changed, html, `${name} control must change an actual anchor`);
+    assert.throws(() => checkAblationScope(changed), assert.AssertionError);
+  }
+});
+
 test('comparison tables, parameter imports and symbolic terms are not primitive implementations', () => {
   for (const [slug, term] of [
     ['crypto-lab-zk-arena', 'STARK'],

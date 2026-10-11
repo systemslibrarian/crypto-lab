@@ -36,10 +36,13 @@ async function classifyExports(exported, kind, { timeoutMs = 20000, concurrency 
         workerData: { lab, kind }, resourceLimits: { maxOldGenerationSizeMb: 256 },
       });
       const result = await waitForClassification(worker, timeoutMs);
-      results[index] = result.error
-        ? { unreadable: { lab, sourceSha: source.sha, state: 'UNREAD', reason: result.error } }
+      const malformed = !result?.row || result.row.lab !== lab
+        || (kind === 'depth' && !['T', 'I', 'C', 'N', 'G', 'H'].every(k => ['+', '0', '?'].includes(result.row.dims?.[k])));
+      const error = result?.error || (malformed ? 'malformed or mismatched classifier result' : null);
+      results[index] = error
+        ? { unreadable: { lab, sourceSha: source.sha, state: 'UNREAD', reason: error } }
         : { row: { ...result.row, sourceSha: source.sha } };
-      console.error(`DIAGNOSTIC ${kind} ${result.error ? 'UNREAD: ' + result.error : 'done'} ${lab}`);
+      console.error(`DIAGNOSTIC ${kind} ${error ? 'UNREAD: ' + error : 'done'} ${lab}`);
     }
   }
   await Promise.all(Array.from({ length: Math.min(concurrency, ordered.length) }, consume));

@@ -696,4 +696,7 @@ function shas() {
 
 module.exports = { classify, walk, labs, shas, WEIGHTS, renderedLocals };
 
-if (require.main === module) require('./depth-audit-report.js').main();
+if (require.main === module) require('./depth-audit-report.js').main().catch(error => {
+  console.error(error.message);
+  process.exitCode = process.argv[2] === 'export' ? 1 : 2;
+});

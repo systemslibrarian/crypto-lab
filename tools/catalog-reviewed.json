@@ -142,12 +142,12 @@
     "note": "Runs an abstract cache-channel simulation with repetition-code majority and reliability-weighted recovery, not an HQC decoder or full information-set decoding. The chosen-ciphertext timeline event and Lattice Fault sibling link describe other work, not attacks executed here."
   },
   "crypto-lab-iron-serpent": {
-    "commit": "c6abd89ff9f86c0f28c88e7e58da9ba762e09d87",
+    "commit": "1afad909f8fe6fe3b876e78a8d39a8ac1c16b804",
     "reviewed": "2026-10-11",
     "add": [
       "Argon2@demos/iron-serpent/src/kdf.ts:48"
     ],
-    "note": "Read current Argon2id Worker/KDF call at kdf.ts:48, Serpent/HMAC paths, passphrase-strength uncertainty implementation, README and verified PR12 scope. Biography and weak-password risk prose are not executed brute-force/differential attacks. External embedded WASM vendor-source/compiler provenance remains unresolved; current dependency/source claims and unrelated nonce-risk wording are not a full security audit. Re-read the complete integrated PR8 at c6abd89ff9f86c0f28c88e7e58da9ba762e09d87: Leviathan 3.0.1 embedded Serpent WASM is explicitly initialized; the block byte-order adapter and JavaScript little-endian CTR framing preserve iron-serpent-v1 and the independent round model. Verified 384 official vectors, 128 prior-library CTR comparisons and real pre-migration Argon2 browser payload/tamper controls. Benchmark copy now includes JavaScript framing and byte conversion, without hardware or security-strength inference. Read changed runtime files, UI copy, both READMEs, manifests/lock and all added tests. The existing Argon2 caller and exclusions remain; opaque Argon2 and Serpent WASM compiler/vendor source correspondence are not established by functional checks. Separate provenance PR9 remains unresolved.",
+    "note": "Read current Argon2id Worker/KDF call at kdf.ts:48, Serpent/HMAC paths, passphrase-strength uncertainty implementation, README and verified PR12 scope. Biography and weak-password risk prose are not executed brute-force/differential attacks. External embedded WASM vendor-source/compiler provenance remains unresolved; current dependency/source claims and unrelated nonce-risk wording are not a full security audit. Re-read the complete integrated PR8 at c6abd89ff9f86c0f28c88e7e58da9ba762e09d87: Leviathan 3.0.1 embedded Serpent WASM is explicitly initialized; the block byte-order adapter and JavaScript little-endian CTR framing preserve iron-serpent-v1 and the independent round model. Verified 384 official vectors, 128 prior-library CTR comparisons and real pre-migration Argon2 browser payload/tamper controls. Benchmark copy now includes JavaScript framing and byte conversion, without hardware or security-strength inference. Read changed runtime files, UI copy, both READMEs, manifests/lock and all added tests. The existing Argon2 caller and exclusions remain; opaque Argon2 and Serpent WASM compiler/vendor source correspondence are not established by functional checks. Re-read the six integrated PR9 files at 1afad909f8fe6fe3b876e78a8d39a8ac1c16b804, including the complete artifact inventory, distribution checker, nine error controls, historical compiler report and read-only provenance workflow. Both Argon2 distribution artifacts match the integrity-pinned official package; SHA-512 identifies archive integrity, not a lab implementation claim. PR9 tooling is merged and deployed; the original compiler, exact bundler dependencies and upstream C-to-active-binary correspondence remain unresolved. Retain those unknowns and opaque-source coverage.",
     "remove": [
       "Brute force",
       "Differential cryptanalysis"
@@ -188,8 +188,8 @@
     "note": "Runs both extractors on generated bits; source QRNG is modeled"
   },
   "crypto-lab-quantum-vault-kpqc": {
-    "commit": "263bf868df16937032f9bdd964c24e542d05eb89",
-    "reviewed": "2026-10-10",
+    "commit": "a0a174e5783b94afe1b8d1775445725622b7d02f",
+    "reviewed": "2026-10-11",
     "add": [
       "SMAUG-T@wasm/src/smaug_exports.c:2",
       "HAETAE@wasm/src/haetae_exports.c:2",
@@ -200,7 +200,7 @@
       "C/C++"
     ],
     "implementation": "Rust/C wrappers and WASM",
-    "note": "Read immutable current Rust HKDF/encryption, C SMAUG-T/HAETAE wrappers and browser sealing/reconstruction/signature flow, README limits and verified PR16/17 controls. C wrapper algorithm identity is supported by the encapsulate/sign calls; vendor inputs and original compiler/source-to-three-WASM correspondence remain unresolved. Nonce reuse is risk/reference prose and normal threshold reconstruction is not an adversarial key-recovery exhibit. Also read every indexed attack context in implementation/security/design/audit documents and current browser pipeline: remaining excluded names are risk/threat, negated defence, historical audit or comparison references, not browser attack exhibits. Actual tamper rejection is signature/integrity behavior, not the adaptive chosen-ciphertext attacker model described in SECURITY.md; historical provider/audit claims are not current verification.",
+    "note": "Read immutable current Rust HKDF/encryption, C SMAUG-T/HAETAE wrappers and browser sealing/reconstruction/signature flow, README limits and verified PR16/17 controls. C wrapper algorithm identity is supported by the encapsulate/sign calls; vendor inputs and original compiler/source-to-three-WASM correspondence remain unresolved. Nonce reuse is risk/reference prose and normal threshold reconstruction is not an adversarial key-recovery exhibit. Also read every indexed attack context in implementation/security/design/audit documents and current browser pipeline: remaining excluded names are risk/threat, negated defence, historical audit or comparison references, not browser attack exhibits. Actual tamper rejection is signature/integrity behavior, not the adaptive chosen-ciphertext attacker model described in SECURITY.md; historical provider/audit claims are not current verification. Re-read all six integrated PR14 files at a0a174e5783b94afe1b8d1775445725622b7d02f, including unchanged C callers, historical candidate identities/mismatches, build preflight and thirteen positive/negative controls. A zero-exit compiler with missing, partial, empty or symlink outputs cannot report completion; existing outputs are preserved by refusal. These fixture controls do not rebuild cryptography. The three opaque WASM components, missing or modified vendor inputs, unknown original compiler and historical HAETAE byte mismatch remain explicit; application, deployment and dependency checks do not resolve them.",
     "remove": [
       "Nonce reuse",
       "Key recovery",

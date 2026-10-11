@@ -44,6 +44,9 @@ jobs:
       - name: Workflow gate regression fixtures
         if: ${{ !cancelled() }}
         run: node tools/gate-sync.js selftest
+      - name: Gate fixtures preserve real parsing without package execution
+        if: ${{ !cancelled() }}
+        run: node --test tests/gate-fixtures.test.cjs
       - name: Fleet discovery regression fixtures
         if: ${{ !cancelled() }}
         run: node tools/fleet-sync.js selftest

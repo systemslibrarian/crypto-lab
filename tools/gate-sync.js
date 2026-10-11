@@ -669,7 +669,14 @@ function stepTokens(step, scripts) {
 
 function jobTokens(job, scripts) {
   const out = new Set();
-  for (const s of stepsOf(job)) for (const t of stepTokens(s, scripts)) out.add(t);
+  // The invariant concerns checks BEFORE publication. A live-site comparison
+  // after deploy-pages cannot run on an unpublished pull request. Keep every
+  // preceding check, including checks in a fused build/publish job.
+  const steps = stepsOf(job);
+  const publisher = steps.findIndex((s) => PAGES_PUBLISHERS.has(actionName(s.uses)));
+  for (const s of publisher < 0 ? steps : steps.slice(0, publisher)) {
+    for (const t of stepTokens(s, scripts)) out.add(t);
+  }
   return out;
 }
 

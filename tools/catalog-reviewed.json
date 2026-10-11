@@ -166,13 +166,13 @@
     "note": "Executes a deliberately toy HiAE model, not the production cipher"
   },
   "crypto-lab-point-ledger": {
-    "commit": "49dfff0b098791f09e26ecccb53f04b8ad22f1ef",
-    "reviewed": "2026-09-23",
+    "commit": "abe44608d558561512e6783284fc16ef50623620",
+    "reviewed": "2026-10-11",
     "remove": [
       "ECDSA",
       "SHA-3"
     ],
-    "note": "Fresh clone inspected; ECDSA is a data table and SHA-3 is merely the module path exporting SHAKE"
+    "note": "Re-read current README, every tracked src module and relevant tests after integrated Lucide v1 repair PR15. Full prior review49dfff0 to this commit changes only the navigation icon Github to CodeXml in src/main.tsx; ledger/dialog/fuzz/toy computations and learner-facing claims are unchanged. ECDSA remains a cited resource-estimate data table, not an implementation; the noble/hashes sha3 module path exports the used SHAKE256, not SHA-3 execution. Preserve SHAKE and SHA-256 evidence and teaching-model limits. Actual36 unit,11 local and11 public browser/WCAG tests and immutable-lock npm audit zero passed at this exact SHA. Fleet dependency work39b11ea4-0958-4717-8cc8-faaabd45be07; source review is separate from deployment and dependency provider evidence."
   },
   "crypto-lab-quantum-entropy": {
     "commit": "58b690d875abea61f59a9cd89b8d53ea2d487e33",

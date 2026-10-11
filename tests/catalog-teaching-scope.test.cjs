@@ -319,3 +319,49 @@ test('coordinated negation lists and risk prose remain excluded', () => {
     assert.equal(attackContextAllows(term, source), false, source);
   }
 });
+
+
+function checkPowerScope(source) {
+  const slug = 'crypto-lab-power-trace';
+  const attacks = attacksFor(source, slug);
+  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel']) {
+    assert.ok(!attacks.includes(name), `Power Trace does not demonstrate ${name}`);
+  }
+  for (const name of ['Power analysis', 'Key recovery', 'Side-channel (unspecified)']) {
+    assert.ok(attacks.includes(name), `Preserve Power Trace's actual ${name} exhibit`);
+  }
+  assert.ok(implementationsFor(source, slug).includes('AES'));
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-power-trace\/"[\s\S]*?<\/a>/)[0];
+  const copy = card.match(/<div class="project-copy">([^<]*)<\/div>/)[1];
+  assert.match(card, /data-implements="AES@src\/aes\/aes\.ts:123"/,
+    'AES source evidence points to the tested encryption function, not a SBOX import');
+  assert.match(copy, /simulated power traces/i);
+  assert.match(copy, /Correlation and differential power analysis/i);
+  assert.match(copy, /JavaScript AES is not constant-time/);
+  assert.doesNotMatch(copy, /(?:cipher is correct and|JavaScript AES is) constant-time/);
+}
+
+test('Power Trace distinguishes correlation CPA, sibling attacks and simulated leakage', () => {
+  checkPowerScope(html);
+});
+
+test('Power Trace controls reject false attacks, timing guarantees and loss of actual analysis', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-power-trace/"';
+  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel']) {
+    assert.throws(() => checkPowerScope(html.replace(marker, `${marker} data-attacks="${name}@README.md:1"`)), assert.AssertionError);
+  }
+  for (const name of ['Power analysis', 'Key recovery', 'Side-channel (unspecified)']) {
+    const token = new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '@[^"|]+');
+    const markerAt = html.indexOf(marker);
+    const prefix = html.slice(0, markerAt);
+    const suffix = html.slice(markerAt).replace(token, '');
+    assert.notEqual(prefix + suffix, html);
+    assert.throws(() => checkPowerScope(prefix + suffix), assert.AssertionError);
+  }
+  const mutated = html.replace('the JavaScript AES is not constant-time.', 'the JavaScript AES is constant-time.');
+  assert.notEqual(mutated, html);
+  assert.throws(() => checkPowerScope(mutated), assert.AssertionError);
+  const importAnchor = html.replace('AES@src/aes/aes.ts:123', 'AES@src/attack/cpa.ts:15');
+  assert.notEqual(importAnchor, html, 'The negative control must replace the actual implementation anchor');
+  assert.throws(() => checkPowerScope(importAnchor), assert.AssertionError);
+});

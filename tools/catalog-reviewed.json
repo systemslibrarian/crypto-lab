@@ -621,5 +621,18 @@
       "Power analysis"
     ],
     "note": "Read current README, src/main.ts and crypto/bits/stego/DCT/chi/image modules plus tests at this SHA. src/main.ts:326 lists SPA among stronger image steganalysis detectors; this is not Simple Power Analysis or an executed physical-power attack. Remove that abbreviation-derived attack credit. AES/AES-GCM are real WebCrypto encryption/decryption, with PBKDF2 and SHA-256 key derivation in src/lib/crypto.ts; retain all four implementation credits. F5-inspired raw-block DCT embedding and WOW-inspired adaptive placement are disclosed models, not complete named production schemes. The old interpretation candidates arose from a timed-out scan, now independently completed. Review scope is catalogue classification, not a blanket covert-channel/security guarantee. Fleet work3a0b1565-7f73-4412-a3e9-ebf5de96d515."
+  },
+  "crypto-lab-power-trace": {
+    "commit": "9323347c18f90224ebbd286bd78da5af74672e68",
+    "reviewed": "2026-10-10",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Fault injection",
+      "Timing side-channel"
+    ],
+    "note": "Read current README, docs/TECHNICAL.md, src/attack/cpa.ts and dpa.ts, src/leakage/traces.ts and UI honesty/sibling panels at this exact SHA. CPA here means correlation power analysis, not chosen-plaintext attack: the code correlates known plaintext-byte leakage; no chosen-plaintext security game is demonstrated. Fault injection and timing attacks are explicitly sibling-only channels not covered here. Preserve real AES, encryption-key-byte recovery, power analysis and assumed simulated side-channel leakage. The model assumes constant-time execution; the shipped JavaScript AES has secret-dependent S-box lookups and GF branches and is explicitly not constant-time. Correct the hub description to match this distinction without asserting hardware/timing verification. Fleet work 41f92c93-e468-4ba8-ada6-4550accd9351. AES source anchor is encryptBlock at src/aes/aes.ts:123, exercised by three known-answer tests; browser traces use the real S-box intermediate rather than invoking full block encryption. An import of SBOX in cpa.ts is not the encryption implementation.",
+    "add": [
+      "AES@src/aes/aes.ts:123"
+    ]
   }
 }

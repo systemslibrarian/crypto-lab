@@ -130,12 +130,16 @@
     "note": "Synthetic timing model; explicitly no HQC or BCH decoder"
   },
   "crypto-lab-hqc-timing-break": {
-    "commit": "50c0b64a3597cfc9caf97eca16b69420e4f09f35",
-    "reviewed": "2026-09-24",
+    "commit": "cc4305c70238764212e04ef35fe36775f5e099d8",
+    "reviewed": "2026-10-10",
     "add": [
       "Repetition code@src/engine.ts:163"
     ],
-    "note": "Runs a repetition-code surrogate and majority recovery; no HQC decoder"
+    "remove": [
+      "Chosen-ciphertext attack",
+      "Fault injection"
+    ],
+    "note": "Runs an abstract cache-channel simulation with repetition-code majority and reliability-weighted recovery, not an HQC decoder or full information-set decoding. The chosen-ciphertext timeline event and Lattice Fault sibling link describe other work, not attacks executed here."
   },
   "crypto-lab-iron-serpent": {
     "commit": "cb656d854e1071b9c745a59342a27c60086f78e9",

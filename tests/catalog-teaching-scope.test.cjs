@@ -99,6 +99,13 @@ test('visible catalog summaries distinguish BBS naming and bounded DP advantage'
 });
 
 function checkScope(source) {
+  // HQC Timing Break cc4305c7: src/engine.ts runs a repetition-code cache
+  // model. data.ts's 2020 chosen-ciphertext event and README's Lattice Fault
+  // sibling link describe other work, not attacks executed by this model.
+  assert.deepEqual(attacksFor(source, 'crypto-lab-hqc-timing-break'),
+    ['Cache timing', 'Key recovery', 'Side-channel (unspecified)', 'Timing side-channel']);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-hqc-timing-break'),
+    ['Repetition code']);
   // Educational RSA 81e413b19: factor.ts computes integer factors, not
   // discrete logarithms; real-world.ts links to a sibling padding oracle.
   assert.deepEqual(attacksFor(source, 'crypto-lab-rsa-educational'),
@@ -159,6 +166,8 @@ test('scope control detects reintroduced sibling and negated-limit credits', () 
     ['crypto-lab-sphincs-ledger', 'Factoring'],
     ['crypto-lab-dilithium-seal', 'Key recovery'],
     ['crypto-lab-protocol-checker', 'Padding oracle'],
+    ['crypto-lab-hqc-timing-break', 'Chosen-ciphertext attack'],
+    ['crypto-lab-hqc-timing-break', 'Fault injection'],
     ['crypto-lab-rsa-educational', 'Discrete log'],
     ['crypto-lab-rsa-educational', 'Padding oracle'],
     ['crypto-lab-stego-suite', 'Power analysis'],
@@ -182,6 +191,44 @@ test('scope control detects loss of the actual frequency-recovery exhibit', () =
   const mutated = html.replace(/Frequency analysis@src\/app.ts:\d+/, '');
   assert.notEqual(mutated, html, 'The mutation must remove the real catalog anchor');
   assert.throws(() => checkScope(mutated), assert.AssertionError);
+});
+
+test('HQC scope control preserves the modeled cache channel, recovery and repetition code', () => {
+  for (const [field, name] of [
+    ['data-implements', 'Repetition code'],
+    ['data-attacks', 'Cache timing'], ['data-attacks', 'Key recovery'],
+  ]) {
+    const mutated = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hqc-timing-break\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${field}="([^"]*)"`), (attribute, value) => {
+        const entries = value.split(' | ').filter(entry => entry.split('@')[0] !== name);
+        assert.notEqual(entries.length, value.split(' | ').length, `${name} mutation must apply`);
+        return `${field}="${entries.join(' | ')}"`;
+      }));
+    assert.notEqual(mutated, html, 'Mutate the actual card');
+    assert.throws(() => checkScope(mutated), assert.AssertionError);
+  }
+});
+
+function checkHqcVisibleScope(source) {
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hqc-timing-break\/"[\s\S]*?<\/a>/)[0];
+  const copy = card.match(/<div class="project-copy">([^<]*)<\/div>/)[1];
+  assert.match(copy, /cache-channel simulation/);
+  assert.match(copy, /repetition-code stand-in/);
+  assert.match(copy, /majority and reliability-weighted bit recovery/);
+  assert.match(copy, /No full HQC decoder or target-hardware timing measurements/);
+  assert.doesNotMatch(copy, /A full-decryption oracle on HQC/);
+  assert.match(card, /chip">Reliability-Weighted Recovery<\/span>/);
+  assert.doesNotMatch(card, /chip">Soft-ISD<\/span>/);
+}
+
+test('HQC visible teaching scope describes a cache simulation, not a working HQC oracle', () => {
+  checkHqcVisibleScope(html);
+  const changed = html.replace(/cache-channel simulation inspired by HQC decryption-oracle attacks/, 'full-decryption oracle on HQC');
+  assert.notEqual(changed, html, 'The negative control must change visible learner-facing text');
+  assert.throws(() => checkHqcVisibleScope(changed), assert.AssertionError);
+  const unqualified = html.replace('chip">Reliability-Weighted Recovery</span>', 'chip">Soft-ISD</span>');
+  assert.notEqual(unqualified, html);
+  assert.throws(() => checkHqcVisibleScope(unqualified), assert.AssertionError);
 });
 
 test('scope control preserves Educational RSA arithmetic and executed attacks', () => {

@@ -10681,14 +10681,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/"
             data-implements="Repetition code@src/engine.ts:163"
             data-comment-only="Information-set decoding@src/engine.ts:68"
             data-references="BCH | HQC | Information-set decoding | Kyber | ML-DSA | ML-KEM | Reed-Muller | STARK"
-            data-attacks="Cache timing@src/data.ts:7 | Chosen-ciphertext attack@src/data.ts:66 | Fault injection@README.md:57 | Key recovery@src/data.ts:87 | Side-channel (unspecified)@src/data.ts:7 | Timing side-channel@src/data.ts:66"
+            data-attacks="Cache timing@src/data.ts:7 | Key recovery@src/data.ts:87 | Side-channel (unspecified)@src/data.ts:7 | Timing side-channel@src/data.ts:66"
             data-implementation="hand-rolled"
-            data-review-commit="50c0b64a3597cfc9caf97eca16b69420e4f09f35"
-            data-review-note="Runs a repetition-code surrogate and majority recovery; no HQC decoder"
+            data-review-commit="cc4305c70238764212e04ef35fe36775f5e099d8"
+            data-review-note="Runs an abstract cache-channel simulation with repetition-code majority and reliability-weighted recovery, not an HQC decoder or full information-set decoding. The chosen-ciphertext timeline event and Lattice Fault sibling link describe other work, not attacks executed here."
+            data-added="2026-04" data-updated="2026-08" data-level="advanced"
            
            
            
@@ -10748,12 +10749,12 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Post-Quantum Side-Channel</div>
             <div class="project-title">HQC Timing Break</div>
-            <div class="project-copy">A full-decryption oracle on HQC, where compiler rewrites reintroduce cache timing into constant-time source. Substitutes a repetition code for HQC&#39;s Reed-Muller inner code so the soft-decoding step stays legible.</div>
+            <div class="project-copy">A cache-channel simulation inspired by HQC decryption-oracle attacks, using a repetition-code stand-in to compare majority and reliability-weighted bit recovery. No full HQC decoder or target-hardware timing measurements.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">vs. HQC</span>
                 <span class="chip">Cache Timing</span>
-                <span class="chip">Soft-ISD</span>
+                <span class="chip">Reliability-Weighted Recovery</span>
                 <span class="chip">Repetition Stand-In</span>
               </div>
               <span class="arrow">→</span>

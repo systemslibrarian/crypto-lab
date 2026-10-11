@@ -10,6 +10,7 @@ on:
       - 'tools/test-invocation.js'
       - 'tools/package*.json'
       - 'tests/depth-*'
+      - 'tests/test-invocation.test.cjs'
 
 # Observation only: no issue writes, merges, Pages environments or deploy actions.
 permissions:
@@ -31,7 +32,7 @@ jobs:
       - run: npm ci
         working-directory: tools
       - name: Export regression and scope controls
-        run: node --test tests/depth-export.test.cjs tests/depth-manifest.test.cjs tests/depth-partial.test.cjs tests/depth-classifier.test.cjs
+        run: node --test tests/depth-export.test.cjs tests/depth-manifest.test.cjs tests/depth-partial.test.cjs tests/depth-classifier.test.cjs tests/test-invocation.test.cjs
       - name: Export complete remote default branches at full SHAs
         id: export
         continue-on-error: true

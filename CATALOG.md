@@ -3100,8 +3100,9 @@ A padlock anyone may close and only you can open &mdash; real RSA-OAEP and RSA-P
 Counts how many leakage hints collapse an LWE lattice problem on sparse ternary secrets, then recovers a toy secret from real hints and tests the Gaussian assumption against sampled data. ePrint 2026/1081.
 
 - **Implements:** LWE `src/attack.ts:103`
+- **Source review:** [8a307f49c5c8](https://github.com/systemslibrarian/crypto-lab-lwe-hints/commit/8a307f49c5c8031f6eb8a5f095ca650c83bbcf5f) — Read current README, root HTML and src/attack.ts with its regression tests. CPA in index.html:592 is paired with DPA under Power analysis: it means correlation power analysis, not a chosen-plaintext attack. The lab generates toy LWE samples and recovers a sparse ternary secret from perfect inner-product hints with adaptive group testing and finite-field linear algebra; the paper-scale estimate is separate and no chosen-plaintext encryption experiment is implemented. Remove only the ambiguous CPA credit; preserve LWE, power-analysis context, lattice-reduction references and source coverage distinctions. Fleet item f1096dc9-df29-470e-8d30-80baecc44c8a; review is limited to this catalog classification, not a full cryptographic audit.
 - **References:** BFV, BGV, CKKS, Dilithium, FrodoKEM, Kyber, ML-DSA, ML-KEM, NTT
-- **Attacks shown:** Chosen-plaintext attack `index.html:592`, Lattice reduction `README.md:42`, Power analysis `src/main.ts:571`, Side-channel (unspecified) `src/main.ts:539`
+- **Attacks shown:** Lattice reduction `README.md:42`, Power analysis `src/main.ts:571`, Side-channel (unspecified) `src/main.ts:539`
 - **Standards body:** —
 - **Implementation:** hand-rolled
 

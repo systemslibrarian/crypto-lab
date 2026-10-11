@@ -55,10 +55,10 @@
   },
   "crypto-lab-tc26-pair": {
    "added": "2026-09",
-   "updated": "2026-09",
+   "updated": "2026-10",
    "addedFrom": "2026-09-21T09:00:18Z",
-   "updatedFrom": "2026-09-22T19:47:26-04:00",
-   "updatedCommit": "1524136e52cb64e57adfcdfa3ccead7f320cf1b7"
+   "updatedFrom": "2026-10-11T00:50:34-04:00",
+   "updatedCommit": "a9b6f574d25bc87548accc495b3836baa7697ffd"
   },
   "crypto-lab-sm2-forge": {
    "added": "2026-09",

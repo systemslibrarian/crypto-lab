@@ -23,8 +23,8 @@ report or its readable subset as a complete fleet scan.
 
 Both complete depth reports and partial diagnostics run at most four isolated
 classifier workers at once. Each repository gets a 20-second classification
-budget and a 256 MiB old-generation
-heap limit. Progress goes to stderr, leaving JSON intact. A timeout, worker error
+budget and a 256 MiB old-generation heap limit. Progress goes to stderr, leaving
+JSON intact. A timeout, worker error
 or exit without a result is recorded under `scan.unreadable` with the repository
 and source SHA. Export completeness (`scope`) and classification completeness
 (`scan`) are separate: either gap produces exit 2. A timed-out classifier is not
@@ -44,6 +44,10 @@ The displayed-claim binding detector consumes simple local assignments without
 the overlapping whitespace regexp that previously exhausted Fold Gate's
 20-second budget. Computed-value and literal/non-page negative controls retain
 the dimension's meaning; timeout evidence and unread languages remain explicit.
+The shared catalog lexer removes trailing whitespace without repeatedly trying
+earlier blanked comment spans. Regex, division, Unicode whitespace and template
+controls preserve its existing decisions; the long-comment control checks that
+readable source finishes without increasing the classification budget.
 
 The teaching job installs Chromium, Firefox and WebKit plus their host libraries.
 It runs worksheet drift, the published issue-note check, and a scoped AES Modes

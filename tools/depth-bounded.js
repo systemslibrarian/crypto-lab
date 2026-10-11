@@ -1,5 +1,6 @@
 /* depth-bounded.js — bounded diagnostic classification of pinned exports.
- * Not runnable. Shared by the opt-in partial reports, never by assurance checks.
+ * Not runnable. Shared by strict assurance checks and opt-in partial reports;
+ * strict consumers reject the entire result if any source remains unreadable.
  */
 'use strict';
 const path = require('path');

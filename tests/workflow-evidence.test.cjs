@@ -3,7 +3,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('node:path');
 const { verifyPublishJobs } = require('../tools/deploy-sync.js');
-const { loadLab, analyse } = require('../tools/gate-sync.js');
+const { loadLab, analyse, withScriptFixture } = require('../tools/gate-sync.js');
 
 const step = (name, conclusion = 'success') => ({ name, conclusion });
 const job = (name, steps = [step('Verify')]) => ({ name, conclusion: 'success', steps });
@@ -118,7 +118,7 @@ test('malformed configured steps cannot throw or establish coverage', () => {
   }
 });
 function gateFixture() {
-  return loadLab(path.join(__dirname, '../tools/fixtures/gate/env-split'));
+  return withScriptFixture(path.join(__dirname, '../tools/fixtures/gate/env-split'), loadLab);
 }
 test('postpublication live checks are not unpublished-PR prerequisites', () => {
   const f = gateFixture();

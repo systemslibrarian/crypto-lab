@@ -2685,7 +2685,7 @@ The 2020 timing attack on HQC's BCH decoder — the parameterization predating t
 
 [`crypto-lab-hqc-timing-break`](https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/) · Post-Quantum Side-Channel · POST-QUANTUM, ATTACKS
 
-A full-decryption oracle on HQC, where compiler rewrites reintroduce cache timing into constant-time source. Substitutes a repetition code for HQC's Reed-Muller inner code so the soft-decoding step stays legible.
+A cache-channel simulation inspired by HQC decryption-oracle attacks, using a repetition-code stand-in to compare majority and reliability-weighted bit recovery. No full HQC decoder or target-hardware timing measurements.
 
 - **Implements:** Repetition code `src/engine.ts:163`
 - **Source review:** [cc4305c70238](https://github.com/systemslibrarian/crypto-lab-hqc-timing-break/commit/cc4305c70238764212e04ef35fe36775f5e099d8) — Runs an abstract cache-channel simulation with repetition-code majority and reliability-weighted recovery, not an HQC decoder or full information-set decoding. The chosen-ciphertext timeline event and Lattice Fault sibling link describe other work, not attacks executed here.

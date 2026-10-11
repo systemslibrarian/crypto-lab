@@ -23,7 +23,7 @@ function fixture(t) {
   const today = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
   const report = path.join(root, 'audits', `DEPTH-AUDIT-${today}.md`);
   return {root,sha,report,run: args => spawnSync(process.execPath,
-    [path.join(root, 'tools/depth-audit.js'), ...args], { encoding:'utf8',timeout:5000 })};
+    [path.join(root, 'tools/depth-audit.js'), ...args], { encoding:'utf8',timeout:15000 })};
 }
 
 test('complete bounded generation checks cleanly, preserves full SHA and rejects changed reports', t => {
@@ -52,8 +52,11 @@ test('strict modes retain timeout, unreadable and malformed worker gaps without 
   ]) await t.test(label, t => {
     const f = fixture(t);
     const bounded = path.join(f.root,'tools/depth-bounded.js');
-    // Shorten only this isolated fixture's budget; production remains20seconds.
-    fs.writeFileSync(bounded, fs.readFileSync(bounded,'utf8').replace('timeoutMs = 20000','timeoutMs = 100'));
+    // Shorten only the deliberately stuck fixture's budget. Immediate error
+    // controls keep production's20seconds so a busy host cannot misclassify
+    // their worker startup as the different timeout case.
+    if (label === 'timeout') fs.writeFileSync(bounded,
+      fs.readFileSync(bounded,'utf8').replace('timeoutMs = 20000','timeoutMs = 500'));
     fs.writeFileSync(path.join(f.root,'tools/depth-classify-worker.js'),worker);
     fs.writeFileSync(f.report,'existing report must survive unreadable evidence');
     for (const args of [[],['check'],['--json']]) {

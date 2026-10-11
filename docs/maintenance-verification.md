@@ -22,13 +22,14 @@ cannot run; its overall result remains failed/incomplete. Never describe a parti
 report or its readable subset as a complete fleet scan.
 
 Both complete depth reports and partial diagnostics run at most four isolated
-classifier workers at once. Each
-repository gets a 20-second classification budget and a 256 MiB old-generation
+classifier workers at once. Each repository gets a 20-second classification
+budget and a 256 MiB old-generation
 heap limit. Progress goes to stderr, leaving JSON intact. A timeout, worker error
 or exit without a result is recorded under `scan.unreadable` with the repository
 and source SHA. Export completeness (`scope`) and classification completeness
 (`scan`) are separate: either gap produces exit 2. A timed-out classifier is not
 evidence that the lab's cryptography failed.
+
 Complete depth generation, JSON output and report checking require every pinned
 source to finish classification. A timeout or worker error exits 2 before any
 report is written or any partial score is printed. The partial mode remains the

@@ -309,7 +309,10 @@
       "C/C++"
     ],
     "implementation": "C wrappers / WASM",
-    "note": "C wrappers and TS calls reviewed; two compiled reference WASM binaries remain opaque. Re-read integrated PR5 complete provenance/build/checker/workflow/report changes and unchanged C wrappers/TS callers/current shipped bytes at a9b6f574d25bc87548accc495b3836baa7697ffd. Clean pinned QAPP source builds with immutable official SDK6.0.10 source/release-map identity independently reproduced both WASM and both JS adapters on Mac and current CI; the checker now requires every input to match its recorded Git blob, separates mismatch from unreadable/partial evidence and never overwrites shipped artifacts. The repeatable workflow covers relevant main/PR source and WASM/JS changes. Original compiler remains unknown, historical SDK4.0.23 byte mismatches retained, and raw opaque-WASM scanner coverage is preserved; byte correspondence in the observed environment is not constant-time or full cryptographic assurance."
+    "note": "C wrappers and TS calls reviewed; two compiled reference WASM binaries remain opaque. Re-read integrated PR5 complete provenance/build/checker/workflow/report changes and unchanged C wrappers/TS callers/current shipped bytes at a9b6f574d25bc87548accc495b3836baa7697ffd. Clean pinned QAPP source builds with immutable official SDK6.0.10 source/release-map identity independently reproduced both WASM and both JS adapters on Mac and current CI; the checker now requires every input to match its recorded Git blob, separates mismatch from unreadable/partial evidence and never overwrites shipped artifacts. The repeatable workflow covers relevant main/PR source and WASM/JS changes. Original compiler remains unknown, historical SDK4.0.23 byte mismatches retained, and raw opaque-WASM scanner coverage is preserved; byte correspondence in the observed environment is not constant-time or full cryptographic assurance. The phrase opaque-WASM coverage in docs/wasm-provenance.md describes a scanner limitation, not the OPAQUE PAKE; exclude only that false algorithm reference at this inspected source pin.",
+    "removeReferences": [
+      "OPAQUE"
+    ]
   },
   "crypto-lab-timing-sidechannel": {
     "commit": "c6ea44e5a4ac6bd5ac23d800c134cf5f03ca3a2f",

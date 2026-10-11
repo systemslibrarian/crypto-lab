@@ -190,7 +190,7 @@ const read = (lab, rel, required = false) => {
   catch (error) {
     // Optional one-hop imports, configuration and README paths may be absent.
     // A discovered source file disappearing, or any denied read, is a scan gap.
-    if (!required && error.code === 'ENOENT') return null;
+    if (!required && ['ENOENT','ENOTDIR'].includes(error.code)) return null;
     throw new Error(`UNREAD: source file ${lab}/${rel}: ${error.code || error.message}`);
   }
 };
@@ -595,7 +595,7 @@ function classify(lab, files) {
     const configured = [];
     const cfg = src.find((f) => /^playwright\.config\.[tj]s$/.test(f));
     if (cfg) {
-      const c = read(lab, cfg) || '';
+      const c = read(lab, cfg, src.includes(cfg)) || '';
       for (const e of ENGINES) {
         const m = new RegExp(`name:\\s*['"\`]${e}`, 'i').exec(c);
         if (!m) continue;
@@ -633,7 +633,7 @@ function classify(lab, files) {
 
   /* ---- H: limits stated, and copy that reads as advice ---- */
   let H = '0';
-  const readme = read(lab, 'README.md');
+  const readme = read(lab, 'README.md', src.includes('README.md'));
   const guidance = [];
   if (readme === null) { H = '?'; note.H = 'no README.md in the export'; }
   else {
@@ -657,7 +657,7 @@ function classify(lab, files) {
   }
 
   /* ---- Z, structural only: an escape that lets a step report nothing ---- */
-  const pkgText = read(lab, 'package.json');
+  const pkgText = read(lab, 'package.json', src.includes('package.json'));
   let pkg = null;
   try { pkg = pkgText ? JSON.parse(pkgText) : null; } catch { pkg = null; }
   const testScript = pkg && pkg.scripts && pkg.scripts.test;

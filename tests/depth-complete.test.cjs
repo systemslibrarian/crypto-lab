@@ -109,10 +109,13 @@ test('an absent optional one-hop import stays an explicit ground-truth lead', t 
   const f = fixture(t);
   const directory = path.join(f.root,'.scratch/crypto-lab-live/tests');
   fs.mkdirSync(directory);
-  fs.writeFileSync(path.join(directory,'claims.test.js'),`// RFC 7748\nimport values from './missing-vector-module';`);
-  const result = f.run(['--json']);
-  assert.equal(result.status,0,result.stderr);
-  const row = JSON.parse(result.stdout)[0];
-  assert.equal(row.dims.T,'?');
-  assert.match(row.note.T,/lead, not a pinned vector/);
+  fs.writeFileSync(path.join(directory,'values.json'),'{}');
+  for (const imported of ['./missing-vector-module','./values.json']) {
+    fs.writeFileSync(path.join(directory,'claims.test.js'),`// RFC 7748\nimport values from '${imported}';`);
+    const result = f.run(['--json']);
+    assert.equal(result.status,0,result.stderr);
+    const row = JSON.parse(result.stdout)[0];
+    assert.equal(row.dims.T,'?');
+    assert.match(row.note.T,/lead, not a pinned vector/);
+  }
 });

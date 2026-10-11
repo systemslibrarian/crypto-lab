@@ -12604,13 +12604,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/" data-added="2026-06" data-updated="2026-10"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:55 | SHA-256@src/crypto.ts:35"
             data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | UOV | Winternitz | X25519 | XMSS"
             data-attacks="Birthday bound@src/data.ts:423 | Chosen-ciphertext attack@src/data.ts:192 | Chosen-plaintext attack@src/data.ts:882 | Differential cryptanalysis@src/data.ts:538 | Discrete log@src/data.ts:738 | Factoring@src/data.ts:738 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:155 | Side-channel (unspecified)@src/data.ts:229 | Timing side-channel@src/data.ts:297"
             data-standards="NIST"
-            data-implementation="WebCrypto"
-            data-added="2026-06" data-updated="2026-10" data-level="advanced"
+            data-implementation="WebCrypto" data-level="advanced"
            
            
            
@@ -17891,13 +17890,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-stream-ward/"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-stream-ward/" data-added="2026-07" data-updated="2026-10"
             data-implements="ChaCha20@src/stream/chained.ts:119 | Poly1305@src/stream/chained.ts:119 | SHA-256@src/stream/chained.ts:80 | XChaCha20-Poly1305@src/stream/chained.ts:119"
             data-references="AES | AES-CTR | AES-GCM | AES-XTS | ChaCha20-Poly1305 | HKDF | HMAC | HPKE | MLS | Merkle tree | TLS 1.3"
             data-attacks="Nonce reuse@README.md:150"
             data-standards="IETF | NIST"
-            data-implementation="@noble"
-            data-added="2026-07" data-updated="2026-10" data-level="beginner"
+            data-implementation="@noble" data-level="beginner"
            
            
            
@@ -20369,14 +20367,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-point-ledger/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
+          <a class="project-card" data-category="POST-QUANTUM | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-point-ledger/" data-added="2026-09" data-updated="2026-10"
             data-implements="SHA-256@src/fuzz.ts:111 | SHAKE@src/fuzz.ts:2"
             data-references="EC point arithmetic | ECDSA | Fiat-Shamir | Groth16 | Pairing | SHA-3 | STARK | Shor's algorithm | secp256k1"
             data-attacks="Discrete log@src/sources.ts:76"
             data-standards="NIST"
             data-implementation="@noble"
-            data-review-commit="49dfff0b098791f09e26ecccb53f04b8ad22f1ef"
-            data-review-note="Fresh clone inspected; ECDSA is a data table and SHA-3 is merely the module path exporting SHAKE"
+            data-review-commit="abe44608d558561512e6783284fc16ef50623620"
+            data-review-note="Re-read current README, every tracked src module and relevant tests after integrated Lucide v1 repair PR15. Full prior review49dfff0 to this commit changes only the navigation icon Github to CodeXml in src/main.tsx; ledger/dialog/fuzz/toy computations and learner-facing claims are unchanged. ECDSA remains a cited resource-estimate data table, not an implementation; the noble/hashes sha3 module path exports the used SHAKE256, not SHA-3 execution. Preserve SHAKE and SHA-256 evidence and teaching-model limits. Actual36 unit,11 local and11 public browser/WCAG tests and immutable-lock npm audit zero passed at this exact SHA. Fleet dependency work39b11ea4-0958-4717-8cc8-faaabd45be07; source review is separate from deployment and dependency provider evidence." data-level="advanced"
            
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Quantum Cost Accounting</div>
@@ -20511,14 +20509,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sat-break/"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sat-break/" data-added="2026-10" data-updated="2026-10"
             data-implements="Toy SPN@src/crypto/spn.ts:99"
             data-unscanned="WebAssembly:1 | C/C++:1"
             data-references="AES | SHA-256"
             data-implementation="WASM"
             data-review-commit="38b92b51cb4264c325824d9dd3dbafcfa725a769"
-            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain. Re-reviewed PR2 at integrated38b92b51cb4264c325824d9dd3dbafcfa725a769: the SPN, CNF encoder, solver and exhaustive workers, direct verifier, UI, README, C++ wrapper and both shipped assets are byte-identical to the preceding pin. The clean build recipe captures immutable CaDiCaL c60730422e758ef1cebe7aeddf2dda31c996bf04 source and fresh objects/caches, with fourteen offline hygiene/failure controls. Integrated workflow38102731905 independently reproduces both shipped assets using the pinned official SDK, establishing measured source-to-byte correspondence. The original compiler identity remains unknown; static C/C++ and WASM coverage limits and cryptographic/constant-time limits remain. Documentation hash checks alone still do not establish reproduction."
-            data-added="2026-10" data-updated="2026-10" data-level="advanced"
+            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain. Re-reviewed PR2 at integrated38b92b51cb4264c325824d9dd3dbafcfa725a769: the SPN, CNF encoder, solver and exhaustive workers, direct verifier, UI, README, C++ wrapper and both shipped assets are byte-identical to the preceding pin. The clean build recipe captures immutable CaDiCaL c60730422e758ef1cebe7aeddf2dda31c996bf04 source and fresh objects/caches, with fourteen offline hygiene/failure controls. Integrated workflow38102731905 independently reproduces both shipped assets using the pinned official SDK, establishing measured source-to-byte correspondence. The original compiler identity remains unknown; static C/C++ and WASM coverage limits and cryptographic/constant-time limits remain. Documentation hash checks alone still do not establish reproduction." data-level="advanced"
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Constraint-Based Cryptanalysis</div>
             <div class="project-title">SAT Break</div>

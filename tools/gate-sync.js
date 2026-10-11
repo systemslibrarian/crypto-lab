@@ -208,6 +208,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const FLEET_ROOT = path.join(__dirname, '..', '..');
 
@@ -1020,6 +1021,29 @@ const ORDER = ['DEPLOY-UNRECOGNISED', 'GATE-WEAKER', 'PUSH-GATED', 'FUSED-GATE-O
  * env-split is env-on-pr with the publish moved into its own job, which is
  * exactly the edit the rule exists to demand.
  * ------------------------------------------------------------------ */
+// These are parser inputs, not installable packages. Keep their script data
+// under an explicit fixture filename; construct package.json only in owned,
+// disposable scratch so loadLab still exercises the production reader.
+function withScriptFixture(fixtureDir, callback) {
+  const file = path.join(fixtureDir, 'scripts.fixture.json');
+  if (!fs.lstatSync(file).isFile()) throw new Error('Script fixture must be a regular file');
+  const bytes = fs.readFileSync(file);
+  const spec = JSON.parse(bytes);
+  if (!spec || Object.keys(spec).length !== 1 || !spec.scripts ||
+      typeof spec.scripts !== 'object' || Array.isArray(spec.scripts) ||
+      Object.values(spec.scripts).some(value => typeof value !== 'string')) {
+    throw new Error('Script fixture accepts only a scripts mapping, not package dependencies');
+  }
+  const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'crypto-lab-gate-fixture-'));
+  try {
+    fs.cpSync(path.join(fixtureDir, '.github'), path.join(scratch, '.github'), { recursive: true });
+    fs.writeFileSync(path.join(scratch, 'package.json'), bytes);
+    return callback(scratch);
+  } finally {
+    fs.rmSync(scratch, { recursive: true, force: true });
+  }
+}
+
 function selftest() {
   const dir = path.join(__dirname, 'fixtures', 'gate');
   const cases = [
@@ -1029,7 +1053,9 @@ function selftest() {
   const fail = [];
   let pass = 0;
   for (const [name, wantFinding, why] of cases) {
-    const lab = loadLab(path.join(dir, name));
+    let lab;
+    try { lab = withScriptFixture(path.join(dir, name), loadLab); }
+    catch (error) { fail.push(`${name}: fixture could not be materialized (${error.message})`); continue; }
     if (!lab || lab.unparsed) { fail.push(`${name}: fixture did not load (${lab && lab.unparsed})`); continue; }
     const res = analyse(name, lab);
     if (res.skip) { fail.push(`${name}: analyse skipped it as "${res.skip}" — the fixture no longer looks like a lab`); continue; }
@@ -1210,6 +1236,6 @@ function main() {
  * copy of a set is how two checkers come to disagree about the fleet.
  *
  * Guarded, because requiring this file must not run the whole fleet check. */
-module.exports = { PAGES_PUBLISHERS, loadLab, analyse, parseYaml };
+module.exports = { PAGES_PUBLISHERS, loadLab, analyse, parseYaml, withScriptFixture };
 
 if (require.main === module) process.exit(main());

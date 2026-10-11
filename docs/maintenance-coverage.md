@@ -13,6 +13,15 @@ not a cryptographic audit, a test run of every lab, or proof that a build shippe
 
 ## Reading a result
 
+The two workflow-gate examples are static parser inputs. Their
+`scripts.fixture.json` files contain script-presence strings, not package
+dependencies. The selftest materializes their exact bytes as `package.json`
+only in temporary scratch, reads them through the real `loadLab` parser, and
+removes that scratch on both success and error. It never invokes npm, installs
+dependencies, or executes fixture scripts or workflows. The real tools package
+retains its tracked manifest and lock. Security collection still enumerates all
+tracked npm manifests and locks; no fixture-directory exclusion is applied.
+
 - Keep the exact command, inspected commit, capture time, scope, and exit result.
   `catalog-evidence.js selftest` does not replace `catalog-evidence.js verify`.
 - A containing workflow's success is not an individual check's result. Scheduled

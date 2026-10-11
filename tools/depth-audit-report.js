@@ -394,15 +394,17 @@ function build(rows, meta) {
   return L.join('\n') + '\n';
 }
 
-function collect() {
-  const all = labs();
+async function collect() {
   const sha = shas();
   const std = standardsByLab();
   const course = courseLabs();
   const rows = [];
-  for (const lab of all) {
-    const files = walk(path.join(SCRATCH, lab));
-    const r = classify(lab, files);
+  const { rows: classified, scan } = await require('./depth-bounded.js').classifyExports(sha, 'depth');
+  if (!scan.complete) {
+    throw new Error(`UNREAD: incomplete depth classification: ${scan.classified} of ${scan.attempted} pinned sources (${scan.unreadable.map(r => `${r.lab} @ ${r.sourceSha}: ${r.reason}`).join('; ')}); no assurance report was written`);
+  }
+  for (const r of classified) {
+    const lab = r.lab;
     /* README claiming assurance the files do not show. */
     let overstated = null;
     const readme = (() => { try { return fs.readFileSync(path.join(SCRATCH, lab, 'README.md'), 'utf8'); } catch { return null; } })();
@@ -428,10 +430,20 @@ function doExport() {
   execFileSync('bash', [script], { cwd: ROOT, stdio: 'inherit' });
 }
 
-function main() {
+async function main() {
   const mode = process.argv[2];
   if (mode === 'export') return doExport();
-  const { rows, meta } = collect();
+  if (process.argv.includes('--partial-json')) {
+    // Diagnostic only: never write/update the complete assurance report.
+    try {
+      const { exported, scope } = require('./depth-exports.js').readExportSnapshot(SCRATCH);
+      const { rows, scan } = await require('./depth-bounded.js').classifyExports(exported, 'depth');
+      console.log(JSON.stringify({ scope, scan, assurance: 'not-established', rows }, null, 2));
+      process.exitCode = scope.complete && scan.complete ? 0 : 2;
+    } catch (error) { console.error(error.message); process.exitCode = 2; }
+    return;
+  }
+  const { rows, meta } = await collect();
   if (process.argv.includes('--json')) {
     console.log(JSON.stringify(rows, null, 2));
     return;

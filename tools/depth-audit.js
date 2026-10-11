@@ -73,6 +73,7 @@
  *   node tools/depth-audit.js          write the dated report under audits/
  *   node tools/depth-audit.js check    exit 1 if the report drifts from .scratch/
  *   node tools/depth-audit.js --json   machine-readable
+ *   node tools/depth-audit.js --partial-json   pinned readable-source diagnostics; incomplete scope exits 2
  */
 'use strict';
 const fs = require('fs');
@@ -172,7 +173,8 @@ const ENGINES = ['chromium', 'firefox', 'webkit'];
 
 function walk(dir, out = [], base = dir) {
   let entries;
-  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return out; }
+  try { entries = fs.readdirSync(dir, { withFileTypes: true }); }
+  catch (error) { throw new Error(`UNREAD: source directory ${path.relative(SCRATCH, dir)}: ${error.code || error.message}`); }
   for (const e of entries) {
     const p = path.join(dir, e.name);
     const rel = path.relative(base, p);
@@ -183,18 +185,25 @@ function walk(dir, out = [], base = dir) {
   return out;
 }
 
-const read = (lab, rel) => {
-  try { return fs.readFileSync(path.join(SCRATCH, lab, rel), 'utf8'); } catch { return null; }
+const read = (lab, rel, required = false) => {
+  try { return fs.readFileSync(path.join(SCRATCH, lab, rel), 'utf8'); }
+  catch (error) {
+    // Optional one-hop imports, configuration and README paths may be absent.
+    // A discovered source file disappearing, or any denied read, is a scan gap.
+    if (!required && ['ENOENT','ENOTDIR'].includes(error.code)) return null;
+    throw new Error(`UNREAD: source file ${lab}/${rel}: ${error.code || error.message}`);
+  }
 };
 
 /* Executable text only, comments blanked, line numbers preserved. Uses the
    lexer in catalog-evidence.js rather than a second copy. */
 const { blankComments } = require('./catalog-evidence.js');
 const readCode = (lab, rel) => {
-  const t = read(lab, rel);
+  const t = read(lab, rel, true);
   if (t === null) return null;
   if (!/\.(ts|tsx|js|jsx|mjs|cjs|rs)$/.test(rel)) return t;
-  try { return blankComments(t); } catch { return t; }
+  try { return blankComments(t); }
+  catch (error) { throw new Error(`UNREAD: source lexer ${lab}/${rel}: ${error.code || error.message}`); }
 };
 
 /** First line matching a pattern, 1-indexed. */
@@ -278,6 +287,54 @@ function isLiteralExpr(expr) {
     .replace(/[[\]{},:\s]/g, '') === '';
 }
 
+/* Find the simple local bindings this detector can attribute to a page read.
+   Consume each binding once: the old nested whitespace/binding regexp spent
+   over 99% of a 30-second Fold Gate profile backtracking across blanked comments.
+   This retains its bounded lexical scope (simple identifiers/destructuring and
+   a read on the assignment line), not an inference about arbitrary JS dataflow. */
+function renderedLocals(text) {
+  const names = new Set();
+  const declaration = /\b(?:const|let|var)\s+/g;
+  const identifier = /[$A-Z_a-z]/;
+  const identifierPart = /[$\w]/;
+  const pageRead = /textContent|innerText|innerHTML|allTextContents|inputValue/;
+  for (let match; (match = declaration.exec(text)) !== null;) {
+    let at = match.index + match[0].length;
+    const space = () => { while (at < text.length && /\s/.test(text[at])) at += 1; };
+    const name = () => {
+      if (!identifier.test(text[at] || '')) return null;
+      const start = at++;
+      while (at < text.length && identifierPart.test(text[at])) at += 1;
+      return text.slice(start, at);
+    };
+    const binding = [];
+    if (text[at] === '{') {
+      at += 1; space();
+      for (;;) {
+        const next = name();
+        if (!next) break;
+        binding.push(next); space();
+        if (text[at] !== ',') break;
+        at += 1; space();
+      }
+      if (text[at] !== '}') continue;
+      at += 1;
+    } else {
+      const next = name();
+      if (!next) continue;
+      binding.push(next);
+    }
+    space();
+    if (text[at] !== '=') continue;
+    at += 1; space();
+    const start = at;
+    while (at < text.length && text[at] !== ';' && text[at] !== '\n') at += 1;
+    if (pageRead.test(text.slice(start, at))) for (const next of binding) names.add(next);
+    declaration.lastIndex = at;
+  }
+  return names;
+}
+
 function classify(lab, files) {
   const src = files.filter((f) => !VENDORED.test(f));
   const tests = src.filter((f) => IS_TEST(f) && /\.(ts|tsx|js|jsx|mjs|cjs|rs|py)$/.test(f));
@@ -309,7 +366,7 @@ function classify(lab, files) {
     ...src.filter((f) => /(^|\/)(fixtures?|vectors?|kats?|test-?vectors?)(\.|\/|$)/i.test(f))];
   let leadOnly = null;
   for (const f of tCandidates) {
-    const text = read(lab, f);
+    const text = read(lab, f, true);
     if (!text) continue;
     const hit = PUBLISHED.find((p) => p.re.test(text));
     if (!hit) continue;
@@ -407,10 +464,7 @@ function classify(lab, files) {
       const text = readCode(lab, f);
       if (!text) continue;
       /* Locals holding something read off the page. */
-      const rendered = new Set();
-      for (const m of text.matchAll(/(?:const|let|var)\s+\{?\s*([\w,\s]+?)\s*\}?\s*=\s*[^;\n]*(?:textContent|innerText|innerHTML|allTextContents|inputValue)/g)) {
-        for (const n of m[1].split(',')) rendered.add(n.trim());
-      }
+      const rendered = renderedLocals(text);
       const lines = text.split('\n');
       for (let i = 0; i < lines.length; i += 1) {
         const line = lines[i];
@@ -490,7 +544,7 @@ function classify(lab, files) {
     return map;
   };
   for (const wf of workflows) {
-    const text = read(lab, wf);
+    const text = read(lab, wf, true);
     if (!text) continue;
     if (!/actions\/deploy-pages|peaceiris\/actions-gh-pages/.test(text)) continue;
     gate.workflow = wf;
@@ -542,7 +596,7 @@ function classify(lab, files) {
     const configured = [];
     const cfg = src.find((f) => /^playwright\.config\.[tj]s$/.test(f));
     if (cfg) {
-      const c = read(lab, cfg) || '';
+      const c = read(lab, cfg, src.includes(cfg)) || '';
       for (const e of ENGINES) {
         const m = new RegExp(`name:\\s*['"\`]${e}`, 'i').exec(c);
         if (!m) continue;
@@ -580,7 +634,7 @@ function classify(lab, files) {
 
   /* ---- H: limits stated, and copy that reads as advice ---- */
   let H = '0';
-  const readme = read(lab, 'README.md');
+  const readme = read(lab, 'README.md', src.includes('README.md'));
   const guidance = [];
   if (readme === null) { H = '?'; note.H = 'no README.md in the export'; }
   else {
@@ -594,7 +648,7 @@ function classify(lab, files) {
   }
   /* Page copy counts too: the reader sees it without opening the README. */
   for (const f of src.filter((x) => /^(src|demos|web|exhibits)\/.*\.(ts|tsx|js|jsx|html)$/.test(x)).slice(0, 400)) {
-    const text = read(lab, f);
+    const text = read(lab, f, true);
     if (!text) continue;
     for (const g of DEPLOY_GUIDANCE) {
       const l = lineOf(text, g.re);
@@ -604,7 +658,7 @@ function classify(lab, files) {
   }
 
   /* ---- Z, structural only: an escape that lets a step report nothing ---- */
-  const pkgText = read(lab, 'package.json');
+  const pkgText = read(lab, 'package.json', src.includes('package.json'));
   let pkg = null;
   try { pkg = pkgText ? JSON.parse(pkgText) : null; } catch { pkg = null; }
   const testScript = pkg && pkg.scripts && pkg.scripts.test;
@@ -612,7 +666,7 @@ function classify(lab, files) {
   if (pkg && !testScript) zHazard.push('package.json declares no test script');
   if (testScript && /--passWithNoTests/.test(testScript)) zHazard.push('test script passes with no tests');
   for (const wf of workflows) {
-    const text = read(lab, wf) || '';
+    const text = read(lab, wf, true) || '';
     if (/npm test --if-present/.test(text) && !testScript) zHazard.push(`${wf} runs npm test --if-present with no test script`);
   }
 
@@ -636,25 +690,21 @@ function classify(lab, files) {
 }
 
 function labs() {
-  if (!fs.existsSync(SCRATCH)) {
-    console.error('No .scratch/ exports. Run: node tools/depth-audit.js export');
+  try {
+    return [...require('./depth-exports.js').readExports(SCRATCH).keys()].sort();
+  } catch (err) {
+    console.error(err.message);
     process.exit(2);
   }
-  return fs.readdirSync(SCRATCH).filter((d) => fs.statSync(path.join(SCRATCH, d)).isDirectory()).sort();
 }
 
 function shas() {
-  const map = new Map();
-  const f = path.join(SCRATCH, '.exported.tsv');
-  if (fs.existsSync(f)) {
-    for (const line of fs.readFileSync(f, 'utf8').split('\n').filter(Boolean)) {
-      const [lab, branch, sha] = line.split('\t');
-      map.set(lab, { branch, sha });
-    }
-  }
-  return map;
+  return require('./depth-exports.js').readExports(SCRATCH);
 }
 
-module.exports = { classify, walk, labs, shas, WEIGHTS };
+module.exports = { classify, walk, labs, shas, WEIGHTS, renderedLocals };
 
-if (require.main === module) require('./depth-audit-report.js').main();
+if (require.main === module) require('./depth-audit-report.js').main().catch(error => {
+  console.error(error.message);
+  process.exitCode = process.argv[2] === 'export' ? 1 : 2;
+});

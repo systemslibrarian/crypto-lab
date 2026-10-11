@@ -27,6 +27,12 @@ tracked npm manifests and locks; no fixture-directory exclusion is applied.
 - A containing workflow's success is not an individual check's result. Scheduled
   jobs can differ from push jobs. A cancelled, timed-out, skipped, missing, or
   unreadable run must not become a success because an unrelated job passed.
+  `maintenance-verification.yml` declares explicit Bash with pipeline failure
+  handling, validates both captured teaching JSON files, and checks every
+  diagnostic stage's actual outcome. Its workflow-script regression controls
+  exercise successful and failing producers, malformed/absent output, failed
+  capture, and incomplete final-stage outcomes. These synthetic controls do not
+  substitute for the separately recorded current-source and live-page checks.
 - Missing clones, unknown algorithms, reviewed N/A models, opaque components, and
   incomplete executions answer different questions; preserve those distinctions.
 - The source scanner recognizes evidence shapes and vocabulary. Its recall

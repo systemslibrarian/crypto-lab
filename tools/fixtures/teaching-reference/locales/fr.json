@@ -1,0 +1,6 @@
+{
+  "warning": "Modèle simplifié : pas pour la production.",
+  "question": "Quelle hypothèse a changé ?",
+  "feedback": "Incorrect. Comparez les deux sorties.",
+  "rawEscape": "Exact source keeps \\n and \\u00e9."
+}

@@ -1,0 +1,18 @@
+<!doctype html>
+<html><head><title>Root teaching fixture</title>
+<style>.example::before { content: "CSS-only text is not HTML copy"; }</style></head>
+<body><section id="lesson">
+<h1>Exact A&amp;B explanation</h1>
+<p title="title" aria-label="Learner warning">A simplified model, not production crypto.</p>
+<p hidden>Conditional warning remains a source candidate.</p>
+<input placeholder="Enter a message" value="Try this">
+<!-- A comment is not learner-facing: "Fake question?" -->
+<script>
+const quiz = { question: "What changes when the nonce repeats?",
+  feedback: "Incorrect. Compare the two outputs.", choices: ["First choice", "Second choice"] };
+const warning = `The answer depends on ${selectedBranch}.`;
+const decoy = /["']Fake explanation["']/;
+// "A commented quiz answer is not extracted."
+document.querySelector('p').textContent = "Inspect the actual implementation.";
+</script>
+</section></body></html>

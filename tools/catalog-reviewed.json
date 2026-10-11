@@ -142,12 +142,12 @@
     "note": "Runs an abstract cache-channel simulation with repetition-code majority and reliability-weighted recovery, not an HQC decoder or full information-set decoding. The chosen-ciphertext timeline event and Lattice Fault sibling link describe other work, not attacks executed here."
   },
   "crypto-lab-iron-serpent": {
-    "commit": "cb656d854e1071b9c745a59342a27c60086f78e9",
-    "reviewed": "2026-10-10",
+    "commit": "c6abd89ff9f86c0f28c88e7e58da9ba762e09d87",
+    "reviewed": "2026-10-11",
     "add": [
       "Argon2@demos/iron-serpent/src/kdf.ts:48"
     ],
-    "note": "Read current Argon2id Worker/KDF call at kdf.ts:48, Serpent/HMAC paths, passphrase-strength uncertainty implementation, README and verified PR12 scope. Biography and weak-password risk prose are not executed brute-force/differential attacks. External embedded WASM vendor-source/compiler provenance remains unresolved; current dependency/source claims and unrelated nonce-risk wording are not a full security audit.",
+    "note": "Read current Argon2id Worker/KDF call at kdf.ts:48, Serpent/HMAC paths, passphrase-strength uncertainty implementation, README and verified PR12 scope. Biography and weak-password risk prose are not executed brute-force/differential attacks. External embedded WASM vendor-source/compiler provenance remains unresolved; current dependency/source claims and unrelated nonce-risk wording are not a full security audit. Re-read the complete integrated PR8 at c6abd89ff9f86c0f28c88e7e58da9ba762e09d87: Leviathan 3.0.1 embedded Serpent WASM is explicitly initialized; the block byte-order adapter and JavaScript little-endian CTR framing preserve iron-serpent-v1 and the independent round model. Verified 384 official vectors, 128 prior-library CTR comparisons and real pre-migration Argon2 browser payload/tamper controls. Benchmark copy now includes JavaScript framing and byte conversion, without hardware or security-strength inference. Read changed runtime files, UI copy, both READMEs, manifests/lock and all added tests. The existing Argon2 caller and exclusions remain; opaque Argon2 and Serpent WASM compiler/vendor source correspondence are not established by functional checks. Separate provenance PR9 remains unresolved.",
     "remove": [
       "Brute force",
       "Differential cryptanalysis"

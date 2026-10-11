@@ -3585,7 +3585,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-shadow-vault/"
+          <a class="project-card" data-category="ENCRYPTION | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-shadow-vault/" data-added="2026-04" data-updated="2026-10"
             data-implements="Argon2@public/shadow_vault_crypto.js:12 | ChaCha20-Poly1305@crate/src/lib.rs:13 | SHA-256@crate/src/lib.rs:17"
             data-unscanned="WebAssembly:1"
             data-comment-only="Poly1305@src/crypto/wasm.ts:161"
@@ -3594,7 +3594,6 @@
             data-implementation="RustCrypto / compiled WASM"
             data-review-commit="8b9fa363e0337d5e7647a004fdd72149a233da0b"
             data-review-note="Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22–26 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review. Re-reviewed integrated PR27 at 8b9fa363e0337d5e7647a004fdd72149a233da0b: only security workflow, SECURITY.md, Cargo license metadata, cargo-deny policy and five offline real-tool controls changed. Rust/TypeScript runtime sources and both dependency locks are byte-identical to the prior inspected revision. Read the complete changes, verify existing MIT license, preserve all cryptographic exclusions and opaque binary/compiler limits. The restored blocking cargo-deny gate and separate application/deployment checks do not establish original compiler provenance. The sole tracked Python file, verification/test_supply_chain_policy.py, is the fully read and executed five-case offline supply-chain policy fixture, not browser cryptography. Cover this exact file at this pin while retaining opaque WASM; raw scanner language counts remain separate."
-            data-added="2026-04" data-updated="2026-10"
             data-level="intermediate"
            
            
@@ -4956,15 +4955,17 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-serpent/" data-added="2026-04" data-updated="2026-10" data-level="intermediate"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-serpent/"
             data-implements="AES@demos/iron-serpent/src/benchmark.ts:86 | AES-GCM@demos/iron-serpent/src/benchmark.ts:82 | Argon2@demos/iron-serpent/src/kdf.ts:48 | HKDF@demos/iron-serpent/src/mac.ts:17 | HMAC@demos/iron-serpent/src/mac.ts:42 | Serpent@demos/iron-serpent/src/serpent-ctr.ts:13 | SHA-256@demos/iron-serpent/src/mac.ts:25"
             data-unscanned="WebAssembly:1"
             data-references="Camellia | ChaCha20 | ChaCha20-Poly1305 | DES | Kuznyechik | PBKDF2 | Poly1305 | RSA | Shamir secret sharing | Twofish | scrypt"
             data-attacks="Nonce reuse@README.md:33"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="cb656d854e1071b9c745a59342a27c60086f78e9"
-            data-review-note="Read current Argon2id Worker/KDF call at kdf.ts:48, Serpent/HMAC paths, passphrase-strength uncertainty implementation, README and verified PR12 scope. Biography and weak-password risk prose are not executed brute-force/differential attacks. External embedded WASM vendor-source/compiler provenance remains unresolved; current dependency/source claims and unrelated nonce-risk wording are not a full security audit."
+            data-review-commit="c6abd89ff9f86c0f28c88e7e58da9ba762e09d87"
+            data-review-note="Read current Argon2id Worker/KDF call at kdf.ts:48, Serpent/HMAC paths, passphrase-strength uncertainty implementation, README and verified PR12 scope. Biography and weak-password risk prose are not executed brute-force/differential attacks. External embedded WASM vendor-source/compiler provenance remains unresolved; current dependency/source claims and unrelated nonce-risk wording are not a full security audit. Re-read the complete integrated PR8 at c6abd89ff9f86c0f28c88e7e58da9ba762e09d87: Leviathan 3.0.1 embedded Serpent WASM is explicitly initialized; the block byte-order adapter and JavaScript little-endian CTR framing preserve iron-serpent-v1 and the independent round model. Verified 384 official vectors, 128 prior-library CTR comparisons and real pre-migration Argon2 browser payload/tamper controls. Benchmark copy now includes JavaScript framing and byte conversion, without hardware or security-strength inference. Read changed runtime files, UI copy, both READMEs, manifests/lock and all added tests. The existing Argon2 caller and exclusions remain; opaque Argon2 and Serpent WASM compiler/vendor source correspondence are not established by functional checks. Separate provenance PR9 remains unresolved."
+            data-added="2026-04" data-updated="2026-10"
+            data-level="intermediate"
            
            
            

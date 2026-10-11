@@ -31,14 +31,17 @@ jobs:
       - run: npm ci
         working-directory: tools
       - name: Export regression and scope controls
-        run: node --test tests/depth-export.test.cjs tests/depth-manifest.test.cjs tests/depth-partial.test.cjs
+        run: node --test tests/depth-export.test.cjs tests/depth-manifest.test.cjs tests/depth-partial.test.cjs tests/depth-classifier.test.cjs
       - name: Export complete remote default branches at full SHAs
         id: export
         continue-on-error: true
         run: node tools/depth-audit.js export
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Compare depth report with complete current exports
+      - name: Generate dated evidence from complete current exports
+        if: steps.export.outcome == 'success'
+        run: node tools/depth-audit.js
+      - name: Check generated depth evidence against the same pinned exports
         id: depth
         if: steps.export.outcome == 'success'
         continue-on-error: true
@@ -100,6 +103,7 @@ jobs:
             .scratch/.exported.tsv
             .scratch/.export-failed.tsv
             maintenance-evidence/
+            audits/DEPTH-AUDIT-*.md
       - name: Preserve failed or incomplete outcomes
         if: always()
         env:

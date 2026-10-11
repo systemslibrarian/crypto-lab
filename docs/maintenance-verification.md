@@ -29,6 +29,16 @@ and source SHA. Export completeness (`scope`) and classification completeness
 (`scan`) are separate: either gap produces exit 2. A timed-out classifier is not
 evidence that the lab's cryptography failed.
 
+The complete report is generated as dated run evidence, then checked against the
+same pinned exports and saved in the artifact. The workflow does not require an
+old committed report to have today's date, rewrite an earlier audit, commit the
+new report, or publish it. Generation/check agreement establishes reproducible
+classification of this capture; it does not establish independent lab testing.
+The displayed-claim binding detector consumes simple local assignments without
+the overlapping whitespace regexp that previously exhausted Fold Gate's
+20-second budget. Computed-value and literal/non-page negative controls retain
+the dimension's meaning; timeout evidence and unread languages remain explicit.
+
 The teaching job installs Chromium, Firefox and WebKit plus their host libraries.
 It runs worksheet drift, the published issue-note check, and a scoped AES Modes
 page-load observation. Missing browsers remain unreadable. Manual teaching claims

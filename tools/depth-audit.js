@@ -279,6 +279,54 @@ function isLiteralExpr(expr) {
     .replace(/[[\]{},:\s]/g, '') === '';
 }
 
+/* Find the simple local bindings this detector can attribute to a page read.
+   Consume each binding once: the old nested whitespace/binding regexp spent
+   over 99% of a 30-second Fold Gate profile backtracking across blanked comments.
+   This retains its bounded lexical scope (simple identifiers/destructuring and
+   a read on the assignment line), not an inference about arbitrary JS dataflow. */
+function renderedLocals(text) {
+  const names = new Set();
+  const declaration = /\b(?:const|let|var)\s+/g;
+  const identifier = /[$A-Z_a-z]/;
+  const identifierPart = /[$\w]/;
+  const pageRead = /textContent|innerText|innerHTML|allTextContents|inputValue/;
+  for (let match; (match = declaration.exec(text)) !== null;) {
+    let at = match.index + match[0].length;
+    const space = () => { while (at < text.length && /\s/.test(text[at])) at += 1; };
+    const name = () => {
+      if (!identifier.test(text[at] || '')) return null;
+      const start = at++;
+      while (at < text.length && identifierPart.test(text[at])) at += 1;
+      return text.slice(start, at);
+    };
+    const binding = [];
+    if (text[at] === '{') {
+      at += 1; space();
+      for (;;) {
+        const next = name();
+        if (!next) break;
+        binding.push(next); space();
+        if (text[at] !== ',') break;
+        at += 1; space();
+      }
+      if (text[at] !== '}') continue;
+      at += 1;
+    } else {
+      const next = name();
+      if (!next) continue;
+      binding.push(next);
+    }
+    space();
+    if (text[at] !== '=') continue;
+    at += 1; space();
+    const start = at;
+    while (at < text.length && text[at] !== ';' && text[at] !== '\n') at += 1;
+    if (pageRead.test(text.slice(start, at))) for (const next of binding) names.add(next);
+    declaration.lastIndex = at;
+  }
+  return names;
+}
+
 function classify(lab, files) {
   const src = files.filter((f) => !VENDORED.test(f));
   const tests = src.filter((f) => IS_TEST(f) && /\.(ts|tsx|js|jsx|mjs|cjs|rs|py)$/.test(f));
@@ -408,10 +456,7 @@ function classify(lab, files) {
       const text = readCode(lab, f);
       if (!text) continue;
       /* Locals holding something read off the page. */
-      const rendered = new Set();
-      for (const m of text.matchAll(/(?:const|let|var)\s+\{?\s*([\w,\s]+?)\s*\}?\s*=\s*[^;\n]*(?:textContent|innerText|innerHTML|allTextContents|inputValue)/g)) {
-        for (const n of m[1].split(',')) rendered.add(n.trim());
-      }
+      const rendered = renderedLocals(text);
       const lines = text.split('\n');
       for (let i = 0; i < lines.length; i += 1) {
         const line = lines[i];
@@ -649,6 +694,6 @@ function shas() {
   return require('./depth-exports.js').readExports(SCRATCH);
 }
 
-module.exports = { classify, walk, labs, shas, WEIGHTS };
+module.exports = { classify, walk, labs, shas, WEIGHTS, renderedLocals };
 
 if (require.main === module) require('./depth-audit-report.js').main();

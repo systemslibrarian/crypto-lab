@@ -38,7 +38,7 @@ test('dependency manifests and locks are inventoried without resolved-version/ke
  const agent=extractFile({path:'AGENTS.md',bytes:Buffer.from('Instructions for an agent, not the learner interface.')});assert.equal(agent.role,'config');assert.equal(agent.sections.length,0);assert.ok(agent.gaps.some(g=>g.kind==='maintainer-instructions'));
 });
 test('deterministic output, structural IDs and exact CRLF spans do not advance review pins',()=>{
- assert.equal(GENERATOR_VERSION,'teaching-extract-v2');const bytes=Buffer.from('<p title="title">Original wording.</p>\r\n<p>Second explanation.</p>\r\n');const input={path:'index.html',bytes,...pinned},first=extractFile(input);assert.deepEqual(first,extractFile(input));
+ assert.equal(GENERATOR_VERSION,'teaching-extract-v3');const bytes=Buffer.from('<p title="title">Original wording.</p>\r\n<p>Second explanation.</p>\r\n');const input={path:'index.html',bytes,...pinned},first=extractFile(input);assert.deepEqual(first,extractFile(input));
  const second=extractFile({...input,bytes:Buffer.from(bytes.toString().replace('Original wording.','Changed wording.'))});assert.deepEqual(first.sections.map(s=>s.id),second.sections.map(s=>s.id));assert.notEqual(first.sections.find(s=>s.kind==='markup-text').sha256,second.sections.find(s=>s.kind==='markup-text').sha256);assert.equal(first.lastReviewedSha,undefined);assert.equal(first.sourceSha,undefined);
  for(const s of first.sections)assert.ok(bytes.toString().split('\n').slice(s.startLine-1,s.endLine).join('\n').includes(s.sourceText));
 });
@@ -93,4 +93,17 @@ test('BOM, CRLF and literal backslashes in tracked path spelling remain exact so
  const file='src\\lesson.html',r=extractFile({path:file,bytes:Buffer.from(source)});
  assert.ok(r.sections.length);for(const s of r.sections){assert.equal(s.file,file);assert.ok(source.split('\n').slice(s.startLine-1,s.endLine).join('\n').includes(s.sourceText));assert.equal(s.sha256,hash(s.sourceText));}
  const other=extractFile({path:'src/lesson.html',bytes:Buffer.from(source)});assert.notEqual(r.sections[0].id,other.sections[0].id);
+});
+test('valid UTF-8 source NUL bytes preserve readable declarations and exact spans',()=>{
+ const source='const warning = "Exact A\0B warning";\nexport function hashAttribute(label: string) { return cached(`A\0${label}\0`, () => hashToG1(label)); }\n';
+ const r=extractFile({path:'src/fame/bls.ts',bytes:Buffer.from(source)});assert.equal(r.state,'readable');assert.ok(r.symbols.some(s=>s.name==='hashAttribute'));assert.ok(r.gaps.some(g=>g.kind==='nul-in-text'));
+ const warning=r.sections.find(s=>s.sourceText==='"Exact A\0B warning"');assert.ok(warning);assert.equal(warning.sha256,hash(warning.sourceText));
+ for(const s of r.sections)assert.ok(source.split('\n').slice(s.startLine-1,s.endLine).join('\n').includes(s.sourceText));
+ const many=extractFile({path:'src/ui.ts',bytes:Buffer.from('const text = "'+('A\0'.repeat(300))+'";')});assert.equal(many.state,'readable','NUL density alone must not misclassify actual source string data');
+});
+test('binary signatures, explicit non-UTF-8 BOMs and invalid bytes retain distinct coverage states',()=>{
+ const wasm=extractFile({path:'misnamed.ts',bytes:Buffer.from([0,97,115,109,1,0,0,0])});assert.equal(wasm.state,'opaque');assert.deepEqual(wasm.sections,[]);
+ const known=extractFile({path:'bundle.wasm',bytes:Buffer.from('valid UTF-8 bytes still describe a binary artifact path')});assert.equal(known.state,'opaque');
+ for(const bytes of [Buffer.from([0xff,0xfe,65,0,66,0]),Buffer.from([0xfe,0xff,0,65,0,66]),Buffer.from([0,0,0xfe,0xff,0,0,0,65])]){const r=extractFile({path:'source.ts',bytes});assert.equal(r.state,'unsupported');assert.ok(r.gaps.some(g=>g.kind==='unsupported-encoding'));assert.deepEqual(r.sections,[]);}
+ const invalid=extractFile({path:'source.ts',bytes:Buffer.from([0xc3,0x28])});assert.equal(invalid.state,'unreadable');assert.ok(invalid.gaps.some(g=>g.kind==='invalid-encoding'));
 });

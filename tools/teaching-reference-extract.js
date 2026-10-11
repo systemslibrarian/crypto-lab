@@ -10,12 +10,15 @@ const crypto = require('node:crypto');
 const { TextDecoder } = require('node:util');
 const { lex } = require('./catalog-evidence.js');
 
-const GENERATOR_VERSION = 'teaching-extract-v2';
+const GENERATOR_VERSION = 'teaching-extract-v3';
 const MAX_BYTES = 1500000, MAX_SECTIONS = 3000, MAX_LITERAL = 24000;
 const sha256 = value => crypto.createHash('sha256').update(value).digest('hex');
 const EXTENSIONS = {html:'html',htm:'html',svg:'html',vue:'html',svelte:'html',astro:'html',md:'markdown',markdown:'markdown',txt:'text',js:'javascript',mjs:'javascript',cjs:'javascript',jsx:'jsx',ts:'typescript',tsx:'tsx',json:'json',rs:'rust',c:'c',h:'c',cpp:'cpp',hpp:'cpp',cc:'cpp',css:'css'};
 const BINARY = /\.(?:wasm|png|jpe?g|gif|webp|ico|pdf|woff2?|ttf|otf|zip|gz|br|a|o|so|dylib|exe|bin)$/i;
 const LOCALIZATION_PATH = /(?:^|\/)(?:i18n|l10n|locales?|translations?|messages?)(?:\.|\/)/i;
+const BINARY_MAGIC = [Buffer.from([0,97,115,109]),Buffer.from([0x7f,69,76,70]),Buffer.from([0x50,0x4b,3,4]),Buffer.from([0x89,80,78,71,13,10,26,10]),Buffer.from('%PDF-'),Buffer.from('GIF87a'),Buffer.from('GIF89a')];
+const ENCODING_BOMS = [Buffer.from([0xff,0xfe]),Buffer.from([0xfe,0xff]),Buffer.from([0,0,0xfe,0xff])];
+const hasPrefix=(bytes,prefix)=>bytes.length>=prefix.length&&bytes.subarray(0,prefix.length).equals(prefix);
 
 function roleFor(file) {
   if (BINARY.test(file)) return 'opaque';
@@ -40,10 +43,12 @@ function extractFile({ path: file, bytes, sourceSha, repository } = {}) {
   const result = {state:'readable',language,role:roleFor(file),sections:[],symbols:[],citations:[],gaps:[]};
   const gap = (kind, reason) => { if(!result.gaps.some(g=>g.kind===kind&&g.reason===reason)) result.gaps.push({kind,file,reason}); };
   if (!Buffer.isBuffer(bytes)) { result.state='unreadable';gap('unreadable','No readable captured Buffer was supplied; no filesystem fallback is attempted.');return result; }
-  if (BINARY.test(file) || bytes.includes(0)) { result.state='opaque';gap('opaque','Opaque binary or unsupported NUL-bearing encoding; byte identity is not readable source or source-to-binary provenance.');return result; }
+  if (BINARY.test(file) || BINARY_MAGIC.some(prefix=>hasPrefix(bytes,prefix))) { result.state='opaque';gap('opaque','Known binary file type or format signature; byte identity is not readable source or source-to-binary provenance.');return result; }
+  if (ENCODING_BOMS.some(prefix=>hasPrefix(bytes,prefix))) { result.state='unsupported';gap('unsupported-encoding','A UTF-16/UTF-32 byte-order marker identifies an encoding this UTF-8 extractor does not decode; no transcoding or replacement wording is emitted.');return result; }
   let text;
   try { text=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(bytes); }
   catch { result.state='unreadable';gap('invalid-encoding','Captured bytes are not valid UTF-8; replacement decoding is refused.');return result; }
+  if(text.includes('\0'))gap('nul-in-text','NUL characters are retained in valid UTF-8 text and any exact source spans. They do not make the whole source opaque; presentation, source syntax and possible unrecognized encoding/binary content require review.');
   if (language==='unsupported') {result.state='unsupported';gap('unsupported-language','This file format is inventoried but its teaching text is not extracted.');return result;}
   if (bytes.length>MAX_BYTES) {gap('extraction-limit',`Readable source exceeds the explicit ${MAX_BYTES}-byte extraction bound; no partial wording is emitted.`);return result;}
   if (/\.(?:min|bundle|bundled)\.[cm]?js$/i.test(file)||/(?:^|\/)(?:vendor|vendored|third_party|third-party)(?:\/|$)/i.test(file)) {

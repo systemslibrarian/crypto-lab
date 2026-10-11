@@ -3578,7 +3578,7 @@ A guided tour of the five post-quantum problem families — lattice, code-based,
 
 - **Implements:** Information-set decoding `src/crypto.ts:240`, Lamport `src/crypto.ts:55`, SHA-256 `src/crypto.ts:35`
 - **References:** AES, ARIA, BIKE, CSIDH, Classic McEliece, Dilithium, ECDSA, Falcon, Fujisaki-Okamoto transform, Grover's algorithm, HQC, Isogeny walk, Kyber, LMS, LWE, ML-DSA, ML-KEM, Merkle tree, NTRU, P-256, Pairing, RSA, SHA-384, SHAKE, SIKE, SLH-DSA, SPHINCS+, Schnorr, Shamir secret sharing, Shor's algorithm, TLS 1.3, UOV, Winternitz, X25519, XMSS
-- **Attacks shown:** Birthday bound `src/data.ts:423`, Chosen-ciphertext attack `src/data.ts:192`, Chosen-plaintext attack `src/data.ts:868`, Differential cryptanalysis `src/data.ts:538`, Discrete log `src/data.ts:724`, Factoring `src/data.ts:724`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:155`, Side-channel (unspecified) `src/data.ts:229`, Timing side-channel `src/data.ts:297`
+- **Attacks shown:** Birthday bound `src/data.ts:423`, Chosen-ciphertext attack `src/data.ts:192`, Chosen-plaintext attack `src/data.ts:882`, Differential cryptanalysis `src/data.ts:538`, Discrete log `src/data.ts:738`, Factoring `src/data.ts:738`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:155`, Side-channel (unspecified) `src/data.ts:229`, Timing side-channel `src/data.ts:297`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 
@@ -4133,7 +4133,7 @@ Splitting a large file into individually authenticated segments fixes the memory
 
 - **Implements:** ChaCha20 `src/stream/chained.ts:119`, Poly1305 `src/stream/chained.ts:119`, SHA-256 `src/stream/chained.ts:80`, XChaCha20-Poly1305 `src/stream/chained.ts:119`
 - **References:** AES, AES-CTR, AES-GCM, AES-XTS, ChaCha20-Poly1305, HKDF, HMAC, HPKE, MLS, Merkle tree, TLS 1.3
-- **Attacks shown:** Nonce reuse `README.md:143`
+- **Attacks shown:** Nonce reuse `README.md:150`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
 

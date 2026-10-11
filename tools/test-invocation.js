@@ -4,7 +4,7 @@
  *
  * Run: node tools/test-invocation.js
  * Prevents: a lab carrying a full test suite that CI never executes, which reads as clean everywhere because nothing reports a test that was never attempted
- * Reads: .scratch/<lab>/ exports of remote default branches — workflows, every package.json, playwright.config, in-repo harness JS
+ * Reads: .scratch/<lab>/ pinned remote exports and scope manifests — parsed workflow run steps, every package.json, playwright.config, in-repo harness JS
  *
  * A DIFFERENT QUESTION FROM THE ZERO-TEST SWEEP. That one reads runs that
  * happened and asks whether any reported nothing. This one asks whether the run
@@ -89,7 +89,7 @@ const RUNNERS = {
   unit: /\bvitest\b|\bjest\b|\bnode\b[^\n]*\s--test\b|\bmocha\b|\bava\b|\btap\b(?!e)|\bnode:test\b/,
   browser: /playwright\s+test\b|\bcypress\s+run\b|\bwdio\b/,
   rust: /cargo\s+test\b|cargo\s+nextest\b/,
-  python: /\bpytest\b|python[0-9.]*\s+-m\s+unittest\b/,
+  python: /\bpytest\b|\bpython[0-9.]*\s+(?:-[A-Za-z]+\s+)*-m\s+unittest\b/,
 };
 
 /* Commands whose effect this tool cannot see. Their presence makes a lab
@@ -97,11 +97,12 @@ const RUNNERS = {
 /* A runner this tool cannot read. `node scripts/test.mjs` is a hand-written
    harness whose contents decide what runs; guessing either way about it would be
    a verdict about a file never opened, so the lab is undetermined instead. */
-const OPAQUE = /\bmake\b|\bbash\s+\S+\.sh|\bsh\s+\S+\.sh|\.\/\S+\.sh|\bjust\b\s|\btask\b\s|\bnx\b\s|\bturbo\b\s|\bnode\s+(?!--)[\w./-]+\.[cm]?js\b/;
+const OPAQUE = /\bmake\b|\bbash\s+\S+\.sh|\bsh\s+\S+\.sh|\.\/\S+\.sh|\bjust\b\s|\btask\b\s|\bnx\b\s|\bturbo\b\s|\bnode\s+(?!--)[\w./-]+\.[cm]?js\b|\b(?:bash|sh)\s+-c\b|\bnode\s+-[pe]\b|\bpython[0-9.]*\s+-c\b|\b(?:npm\s+run|node)\s*(?:\n|$)/;
 
 function walk(dir, out = [], base = dir) {
   let entries;
-  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return out; }
+  try { entries = fs.readdirSync(dir, { withFileTypes: true }); }
+  catch (err) { throw new Error(`UNREAD: cannot enumerate ${path.relative(SCRATCH, dir)} (${err.code || 'read error'})`); }
   for (const e of entries) {
     const p = path.join(dir, e.name);
     const rel = path.relative(base, p);
@@ -112,13 +113,60 @@ function walk(dir, out = [], base = dir) {
   return out;
 }
 
-const read = (lab, rel) => {
-  try { return fs.readFileSync(path.join(SCRATCH, lab, rel), 'utf8'); } catch { return null; }
+const read = (lab, rel, optional = false) => {
+  try { return fs.readFileSync(path.join(SCRATCH, lab, rel), 'utf8'); }
+  catch (err) {
+    if (optional && err.code === 'ENOENT') return null;
+    throw new Error(`UNREAD: cannot read ${lab}/${rel} (${err.code || 'read error'})`);
+  }
 };
 
-/** Executable lines of a workflow: comments stripped, block scalars kept. */
+/** Remove shell comments and quoted data, not command names in YAML prose.
+ * This remains a static caller check, not a shell interpreter: commands in
+ * quoted shell programs are not established by a textual runner mention. */
+function shellCommands(text) {
+  let out = '', quote = null, comment = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (comment) { if (c === '\n') { comment = false; out += c; } continue; }
+    if (quote) {
+      if (c === '\\' && quote === '"') { out += '  '; i++; continue; }
+      if (c === quote) quote = null;
+      out += c === '\n' ? '\n' : ' ';
+      continue;
+    }
+    if (c === '\\') { out += c + (text[++i] || ''); continue; }
+    if (c === '"' || c === "'") { quote = c; out += ' '; continue; }
+    if (c === '#' && (i === 0 || /\s/.test(text[i - 1]))) { comment = true; continue; }
+    out += c;
+  }
+  if (quote) throw new Error('unterminated quoted command');
+  return out.split(/\n|[;&|]+/).filter(s => !/^\s*(?:echo|printf)\b/.test(s)).join('\n');
+}
+
+/** Read the same loud YAML parser as the workflow-gate checker. Only run
+ * scalars can establish a command; display names, env, uses and comments cannot. */
 function commandsOf(text) {
-  return text.split('\n').filter((l) => !/^\s*#/.test(l)).join('\n');
+  const wf = require('./gate-sync.js').parseYaml(text);
+  if (!wf || typeof wf !== 'object' || Array.isArray(wf)
+      || !wf.jobs || typeof wf.jobs !== 'object' || Array.isArray(wf.jobs)) throw new Error('workflow jobs are not a mapping');
+  const runs = [];
+  for (const job of Object.values(wf.jobs)) {
+    if (!job || typeof job !== 'object' || Array.isArray(job)) throw new Error('workflow job is unreadable');
+    if (job.uses) {
+      if (typeof job.uses !== 'string') throw new Error('workflow call is unreadable');
+      continue;
+    }
+    if (!Array.isArray(job.steps)) throw new Error('workflow steps are unreadable');
+    for (const step of job.steps) {
+      if (!step || typeof step !== 'object' || Array.isArray(step)) throw new Error('workflow step is unreadable');
+      if (step.run !== undefined) {
+        if (typeof step.run !== 'string') throw new Error('workflow run is not a string');
+        runs.push(shellCommands(step.run));
+      }
+    }
+  }
+  return runs.join('\n');
 }
 
 /** Resolve `npm test` / `npm run X` through package.json, transitively. */
@@ -135,7 +183,7 @@ function resolveScripts(cmdText, scripts, seen = new Set()) {
     for (const n of names) {
       if (seen.has(n)) continue;
       seen.add(n);
-      if (scripts && typeof scripts[n] === 'string') { out += `\n${scripts[n]}`; changed = true; }
+      if (scripts && typeof scripts[n] === 'string') { out += `\n${shellCommands(scripts[n])}`; changed = true; }
       else if (n !== 'ci' && n !== 'install') unresolved.push(n);
     }
   }
@@ -145,6 +193,7 @@ function resolveScripts(cmdText, scripts, seen = new Set()) {
 function classify(lab) {
   const files = walk(path.join(SCRATCH, lab)).filter((f) => !VENDORED.test(f));
   const wf = files.filter((f) => /^\.github\/workflows\/.+\.ya?ml$/.test(f));
+  const sourceReasons = [];
 
   /* ---- what tests exist ---- */
   /* A browser test is whatever the PLAYWRIGHT CONFIG says it is, not whatever
@@ -160,8 +209,8 @@ function classify(lab) {
   const isE2E = (f) => /(^|\/)e2e(\/|$)/.test(f)
     || pwDirs.some((d) => f === d || f.startsWith(`${d}/`));
   const present = {
-    unit: files.filter((f) => /\.(test|spec)\.[tj]sx?$/.test(f) && !isE2E(f)),
-    browser: files.filter((f) => isE2E(f) && /\.[tj]sx?$/.test(f)),
+    unit: files.filter((f) => /\.(test|spec)\.[cm]?[tj]sx?$/.test(f) && !isE2E(f)),
+    browser: files.filter((f) => isE2E(f) && /\.[cm]?[tj]sx?$/.test(f)),
     rust: files.filter((f) => /(^|\/)tests\/.+\.rs$/.test(f))
       .concat(files.filter((f) => /\.rs$/.test(f) && /#\[test\]|#\[cfg\(test\)\]/.test(read(lab, f) || ''))),
     python: files.filter((f) => /(^|\/)test_.+\.py$|_test\.py$/.test(f)),
@@ -176,12 +225,19 @@ function classify(lab) {
   const scripts = {};
   for (const f of files.filter((x) => /(^|\/)package\.json$/.test(x))) {
     let pkg = null;
-    try { pkg = JSON.parse(read(lab, f) || 'null'); } catch { pkg = null; }
+    try {
+      pkg = JSON.parse(read(lab, f));
+      if (!pkg || typeof pkg !== 'object' || Array.isArray(pkg)) throw new Error('package metadata is not an object');
+      if (pkg.scripts !== undefined && (!pkg.scripts || typeof pkg.scripts !== 'object' || Array.isArray(pkg.scripts)
+          || Object.values(pkg.scripts).some(v => typeof v !== 'string'))) throw new Error('package scripts are unreadable');
+    }
+    catch { sourceReasons.push(`${f} is not readable package JSON`); }
     if (pkg && pkg.scripts) for (const [k, v] of Object.entries(pkg.scripts)) if (!(k in scripts)) scripts[k] = v;
   }
 
   let all = '';
   const unresolved = [];
+  const opaqueCalls = [];
   const seenWf = new Set();
   const queue = [...wf];
   while (queue.length) {
@@ -189,10 +245,15 @@ function classify(lab) {
     if (seenWf.has(f)) continue;
     seenWf.add(f);
     const text = read(lab, f);
-    if (text === null) continue;
-    const cmds = commandsOf(text);
+    if (text === null) { sourceReasons.push(`${f} is missing`); continue; }
+    let cmds;
+    try { cmds = commandsOf(text); }
+    catch (err) { sourceReasons.push(`${f} cannot be parsed: ${err.message}`); continue; }
     /* Follow local reusable workflows: a gate reached through one is still run. */
-    for (const m of cmds.matchAll(/uses:\s*\.\/(\.github\/workflows\/[\w.-]+\.ya?ml)/g)) queue.push(m[1]);
+    for (const job of Object.values(require('./gate-sync.js').parseYaml(text).jobs)) {
+      if (typeof job.uses === 'string' && /^\.\/\.github\/workflows\/[\w.-]+\.ya?ml$/.test(job.uses)) queue.push(job.uses.slice(2));
+      else if (job.uses) opaqueCalls.push(`${f} calls ${job.uses}, a workflow this tool cannot read`);
+    }
     const r = resolveScripts(cmds, scripts);
     all += `\n${r.text}`;
     unresolved.push(...r.unresolved);
@@ -203,8 +264,8 @@ function classify(lab) {
        exited 0 having loaded nothing. The lab that already fixed this class was
        the one this tool could not see. */
     for (const m of r.text.matchAll(/\bnode\s+(?!--)([\w./-]+\.[cm]?js)\b/g)) {
-      const body = read(lab, m[1]);
-      if (body !== null) all += `\n${body}`;
+      const body = read(lab, m[1], true);
+      if (body !== null) all += `\n${require('./catalog-evidence.js').blankComments(body)}`;
     }
   }
 
@@ -228,8 +289,9 @@ function classify(lab) {
      `node scripts/bundle-budget.mjs` is a size check, not a hidden test caller -
      and treating it as one made most of the fleet undetermined for reasons that
      had no bearing on the question. Reasons are weighed only against a gap. */
-  const reasons = [];
+  const reasons = [...sourceReasons];
   if (uninvoked.length) {
+    reasons.push(...opaqueCalls);
     if (!wf.length) reasons.push('no workflows in the repository');
     if (unresolved.length) reasons.push(`CI runs ${[...new Set(unresolved)].map((s) => `\`npm run ${s}\``).join(', ')}, which no package.json here defines`);
     const m = OPAQUE.exec(all);
@@ -331,4 +393,4 @@ async function main() {
 }
 
 module.exports = { classify };
-if (require.main === module) main();
+if (require.main === module) main().catch(error => { console.error(error.message); process.exitCode = 2; });

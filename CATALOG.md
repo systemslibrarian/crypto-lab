@@ -3549,11 +3549,12 @@ One polynomial committed three ways — KZG, IPA, FRI — then the failure nothi
 
 [`crypto-lab-power-trace`](https://systemslibrarian.github.io/crypto-lab-power-trace/) · Power Side-Channel · ATTACKS
 
-Recover an AES-128 key byte from power consumption alone. The cipher is correct and constant-time, yet CPA and DPA walk the key out through the power rail. Simulated traces, real statistics.
+Recover an AES-128 key byte from simulated power traces. Correlation and differential power analysis use real statistics on modelled leakage; the JavaScript AES is not constant-time.
 
 - **Implements:** AES `src/attack/cpa.ts:15`
+- **Source review:** [9323347c18f9](https://github.com/systemslibrarian/crypto-lab-power-trace/commit/9323347c18f90224ebbd286bd78da5af74672e68) — Read current README, docs/TECHNICAL.md, src/attack/cpa.ts and dpa.ts, src/leakage/traces.ts and UI honesty/sibling panels at this exact SHA. CPA here means correlation power analysis, not chosen-plaintext attack: the code correlates known plaintext-byte leakage; no chosen-plaintext security game is demonstrated. Fault injection and timing attacks are explicitly sibling-only channels not covered here. Preserve real AES, encryption-key-byte recovery, power analysis and assumed simulated side-channel leakage. The model assumes constant-time execution; the shipped JavaScript AES has secret-dependent S-box lookups and GF branches and is explicitly not constant-time. Correct the hub description to match this distinction without asserting hardware/timing verification. Fleet work 41f92c93-e468-4ba8-ada6-4550accd9351.
 - **References:** NTT, RSA
-- **Attacks shown:** Chosen-plaintext attack `src/attack/dpa.ts:112`, Fault injection `src/ui/ui.ts:868`, Key recovery `docs/TECHNICAL.md:64`, Power analysis `src/attack/dpa.ts:112`, Side-channel (unspecified) `src/ui/ui.ts:69`, Timing side-channel `src/ui/ui.ts:866`
+- **Attacks shown:** Key recovery `docs/TECHNICAL.md:64`, Power analysis `src/attack/dpa.ts:112`, Side-channel (unspecified) `src/ui/ui.ts:69`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
 

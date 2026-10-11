@@ -580,5 +580,15 @@
     ],
     "implementation": "idealized statistical simulation",
     "note": "Read current engine.ts, data.ts comparison table, README and ui.ts honesty panel after independently tested CHSH interval repair. runE91 computes simulated singlet correlations, sifting, intercept-resend Eve, noise, misalignment and loss; no physical quantum channel or finite-key/device-independent proof. BB84 is a comparison table, not implemented. Side channels are explicitly not modelled, and unauthenticated-channel MITM is a README warning, not a demonstrated protocol attack. Preserve raw static coverage and real bounded simulation, not a cryptographic implementation claim."
+  },
+  "crypto-lab-power-trace": {
+    "commit": "9323347c18f90224ebbd286bd78da5af74672e68",
+    "reviewed": "2026-10-10",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Fault injection",
+      "Timing side-channel"
+    ],
+    "note": "Read current README, docs/TECHNICAL.md, src/attack/cpa.ts and dpa.ts, src/leakage/traces.ts and UI honesty/sibling panels at this exact SHA. CPA here means correlation power analysis, not chosen-plaintext attack: the code correlates known plaintext-byte leakage; no chosen-plaintext security game is demonstrated. Fault injection and timing attacks are explicitly sibling-only channels not covered here. Preserve real AES, encryption-key-byte recovery, power analysis and assumed simulated side-channel leakage. The model assumes constant-time execution; the shipped JavaScript AES has secret-dependent S-box lookups and GF branches and is explicitly not constant-time. Correct the hub description to match this distinction without asserting hardware/timing verification. Fleet work 41f92c93-e468-4ba8-ada6-4550accd9351."
   }
 }

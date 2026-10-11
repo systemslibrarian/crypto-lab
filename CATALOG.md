@@ -931,12 +931,12 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### BBS signatures
 
-- **Implemented by:** [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/bbs.ts:414`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/ui/vectors.ts:296`
+- **Implemented by:** [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/bbs.ts:414`
 - **Also referenced by:** —
 
 #### BLS signatures
 
-- **Implemented by:** [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) `src/main.ts:14`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/pairing.ts:11`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/beacon.ts:37`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/group.ts:1`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:15`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:17`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:25`
+- **Implemented by:** [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) `src/main.ts:14`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/pairing.ts:11`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/beacon.ts:37`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:15`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:17`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:25`
 - **Also referenced by:** *VSS Gate*, *Ed25519 Forge*, *Blind Sign*, *Ring Sign*, *Threshold ML-DSA*, *MuSig Gate*, *SM9 Forge*, *Function Key*
 
 #### ECDSA
@@ -1081,8 +1081,8 @@ disagree about who owns SHA-256.
 | AES-SIV | RFC 5297 | 2 |
 | Argon2 | RFC 9106 | 4 |
 | ARIA | RFC 5794 | 1 |
-| BBS signatures | draft-irtf-cfrg-bbs-signatures | 2 |
-| BLS signatures | draft-irtf-cfrg-bls-signature | 7 |
+| BBS signatures | draft-irtf-cfrg-bbs-signatures | 1 |
+| BLS signatures | draft-irtf-cfrg-bls-signature | 6 |
 | Boneh-Franklin IBE | RFC 5091 | 1 |
 | Camellia | RFC 3713 | 1 |
 | ChaCha20 | RFC 8439 | 9 |
@@ -1278,7 +1278,7 @@ may teach the same primitive from different angles — but an overlap **with no 
 difference** is a question nobody has answered, and a visitor choosing between the
 two has nothing to go on.
 
-79 pairs: 9 with a stated difference, **0 examined and found to be duplication**, 70 nobody has looked at.
+72 pairs: 9 with a stated difference, **0 examined and found to be duplication**, 63 nobody has looked at.
 
 A pair marked DUPLICATION is a finding, not a description: someone read both and
 found no difference worth having. It is listed first because it is the only row here
@@ -1292,11 +1292,6 @@ that asks for a decision.
 **SNARK Arena / Polynomial Forge**
 
 - **Shared:** Groth16, KZG commitment
-- **Stated difference:** **none stated**
-
-**Credential Veil / Rekey Relay**
-
-- **Shared:** BBS signatures, BLS12-381, Pairing, SHA-256
 - **Stated difference:** **none stated**
 
 **Frodo Vault / Scloud+ Vault**
@@ -1369,6 +1364,11 @@ that asks for a decision.
 - **Shared:** Keccak, ML-KEM, NTT, SHA-3, SHAKE
 - **Stated difference:** **none stated**
 
+**Beacon Lock / Attribute Gate**
+
+- **Shared:** AES, AES-GCM, BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
+- **Stated difference:** **none stated**
+
 **DRBG Arena / MAYO Seal**
 
 - **Shared:** AES, CTR-DRBG
@@ -1419,36 +1419,6 @@ that asks for a decision.
 - **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-512, X25519, X3DH
 - **Stated difference:** **none stated**
 
-**Beacon Lock / Attribute Gate**
-
-- **Shared:** AES, AES-GCM, BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**RSA Forge / Hidden Bit**
-
-- **Shared:** AES, AES-GCM, RSA, RSA-OAEP, RSA-PSS, SHA-256
-- **Stated difference:** rsa-forge is about RSA itself, its padding schemes and the attacks on them; hidden-bit is about the security DEFINITIONS, running IND-CPA, IND-CCA2 and EUF-CMA experiments in which RSA and AES are merely the schemes under test
-
-**DKG Gate / Reshare Circle**
-
-- **Shared:** Feldman VSS, Pedersen commitment
-- **Stated difference:** **none stated**
-
-**VSS Gate / DKG Gate**
-
-- **Shared:** Feldman VSS, Pedersen commitment
-- **Stated difference:** **none stated**
-
-**Ratchet Wire / X3DH Wire**
-
-- **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-256, X25519, X3DH
-- **Stated difference:** **none stated**
-
-**Ratchet Wire / PQXDH Wire**
-
-- **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, X25519, X3DH
-- **Stated difference:** **none stated**
-
 **Attribute Gate / Pulse Chain**
 
 - **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
@@ -1494,14 +1464,34 @@ that asks for a decision.
 - **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
 - **Stated difference:** **none stated**
 
+**RSA Forge / Hidden Bit**
+
+- **Shared:** AES, AES-GCM, RSA, RSA-OAEP, RSA-PSS, SHA-256
+- **Stated difference:** rsa-forge is about RSA itself, its padding schemes and the attacks on them; hidden-bit is about the security DEFINITIONS, running IND-CPA, IND-CCA2 and EUF-CMA experiments in which RSA and AES are merely the schemes under test
+
+**DKG Gate / Reshare Circle**
+
+- **Shared:** Feldman VSS, Pedersen commitment
+- **Stated difference:** **none stated**
+
+**VSS Gate / DKG Gate**
+
+- **Shared:** Feldman VSS, Pedersen commitment
+- **Stated difference:** **none stated**
+
+**Ratchet Wire / X3DH Wire**
+
+- **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-256, X25519, X3DH
+- **Stated difference:** **none stated**
+
+**Ratchet Wire / PQXDH Wire**
+
+- **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, X25519, X3DH
+- **Stated difference:** **none stated**
+
 **HAWK / PQ Chooser**
 
 - **Shared:** Falcon, ML-DSA, SHA-256
-- **Stated difference:** **none stated**
-
-**Rekey Relay / Attribute Gate**
-
-- **Shared:** AES, AES-GCM, BLS signatures, BLS12-381, HKDF, Pairing, SHA-256
 - **Stated difference:** **none stated**
 
 **Blind Sign / DNSSEC Chain**
@@ -1554,11 +1544,6 @@ that asks for a decision.
 - **Shared:** AES, AES-GCM, Diffie-Hellman, HKDF, X25519, X3DH
 - **Stated difference:** **none stated**
 
-**Beacon Lock / Rekey Relay**
-
-- **Shared:** AES, AES-GCM, BLS signatures, BLS12-381, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
 **AES Modes / Nonce Collision**
 
 - **Shared:** AES, AES-CBC, AES-CTR, AES-GCM, GHASH
@@ -1594,42 +1579,12 @@ that asks for a decision.
 - **Shared:** Keccak, ML-KEM, SHA-3, SHAKE
 - **Stated difference:** **none stated**
 
-**Kyber Vault / Lattice Gentle**
-
-- **Shared:** Kyber, LWE, SHA-256
-- **Stated difference:** **none stated**
-
-**KDF Chain / OPAQUE Gate**
-
-- **Shared:** HKDF, HMAC, scrypt, SHA-256
-- **Stated difference:** **none stated**
-
-**IBE Gate / Rekey Relay**
-
-- **Shared:** BLS signatures, BLS12-381, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Rekey Relay / Polynomial Forge**
-
-- **Shared:** BLS signatures, BLS12-381, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Rekey Relay / Pulse Chain**
-
-- **Shared:** BLS signatures, BLS12-381, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
 **Pairing Gate / IBE Gate**
 
 - **Shared:** BLS signatures, BLS12-381, Pairing
 - **Stated difference:** **none stated**
 
 **Pairing Gate / Beacon Lock**
-
-- **Shared:** BLS signatures, BLS12-381, Pairing
-- **Stated difference:** **none stated**
-
-**Pairing Gate / Rekey Relay**
 
 - **Shared:** BLS signatures, BLS12-381, Pairing
 - **Stated difference:** **none stated**
@@ -1647,6 +1602,16 @@ that asks for a decision.
 **Pairing Gate / Pulse Chain**
 
 - **Shared:** BLS signatures, BLS12-381, Pairing
+- **Stated difference:** **none stated**
+
+**Kyber Vault / Lattice Gentle**
+
+- **Shared:** Kyber, LWE, SHA-256
+- **Stated difference:** **none stated**
+
+**KDF Chain / OPAQUE Gate**
+
+- **Shared:** HKDF, HMAC, scrypt, SHA-256
 - **Stated difference:** **none stated**
 
 **Iron Letter / Hidden Bit**
@@ -3746,9 +3711,9 @@ Compiles a regex to a minimal DFA, counts its length-n language exactly, and enc
 
 A semi-trusted relay turns Alice's ciphertext into Bob's without ever holding the plaintext. In BBS98, the scheme everyone starts with, the relay and Bob recover Alice's private key in one modular division.
 
-- **Implements:** AES `src/crypto/kem.ts:76`, AES-GCM `src/crypto/kem.ts:76`, BBS signatures `src/ui/vectors.ts:296`, BLS signatures `src/crypto/group.ts:1`, BLS12-381 `src/crypto/group.ts:1`, HKDF `src/ui/vectors.ts:185`, Pairing `src/crypto/group.ts:41`, SHA-256 `src/crypto/kem.ts:46`
+- **Implements:** AES `src/crypto/kem.ts:76`, AES-GCM `src/crypto/kem.ts:76`, BLS12-381 `src/crypto/group.ts:1`, HKDF `src/ui/vectors.ts:185`, Pairing `src/crypto/group.ts:41`, SHA-256 `src/crypto/kem.ts:46`
+- **Source review:** [5780db419dd5](https://github.com/systemslibrarian/crypto-lab-rekey-relay/commit/5780db419dd548127908286d19b146057329b301) — Bounded source review of README, proxy schemes, group/KEM bridge, vectors, undelegation and actual UI callers. BBS98 here is Blaze-Bleumer-Strauss proxy re-encryption, not the Boneh-Boyen-Shacham BBS credential-signature scheme: src/ui/vectors.ts:296 calls bbs98.encrypt. src/crypto/group.ts:1 imports the BLS12-381 namespace for G1/G2/GT and pairing operations, not BLS signing or verification. Exclude those two false signature credits and apparent signature references while preserving real BLS12-381, Pairing, HKDF, SHA-256 and AES-GCM operations. src/ui/undelegate.ts:96 cites another paper on chosen-ciphertext security; src/main.ts:189 describes an unreproduced discrete-log reduction. Neither is an executed attack. Preserve actual proxy collusion, key recovery, delegation composition and revocation-limit exhibits without inventing vocabulary entries for them. This review does not certify the Type-3 adaptation, constant-time execution, security or new test results; application source is unchanged. Fleet relationship finding relationship:crypto-lab-credential-veil:crypto-lab-rekey-relay, work719fceef-dd13-498a-9343-a55117c50e76.
 - **References:** Boneh-Franklin IBE, Diffie-Hellman, EC point arithmetic, ElGamal, Schnorr
-- **Attacks shown:** Chosen-ciphertext attack `src/ui/undelegate.ts:96`, Discrete log `src/main.ts:189`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 

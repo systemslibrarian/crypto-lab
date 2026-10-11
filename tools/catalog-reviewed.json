@@ -649,5 +649,20 @@
       "Baby-step giant-step@src/attacks.ts:35"
     ],
     "note": "Bounded Baby-step giant-step review at the exact current source commit. Read README Security Lab, src/attacks.ts, src/groups.ts, modular exponentiation/inverse helpers and src/attacks.test.ts. discreteLog builds g^j baby steps, then searches target times g^(-m*i) with m=ceil(sqrt(q)); the q guard refuses RFC 3526 Group 14. This is executable toy-group key recovery, not a reference-only mention. Its algorithm name appears only in comments, so add the implementation at the exported function through this reviewed supplement rather than reading comments as implementations globally. The attack implementation and tests are unchanged from the historical 72048d72 interpretation; the full 15-path change inventory was compared, and the solver and its tests remain byte-identical. The newer Cramer-Shoup exhibit is outside this bounded solver review. Actual current npm test passes 127 tests, including 300 toy-key recoveries, operation-count and large-group refusal controls. This review only adds the bounded solver credit; it does not claim constant-time execution, real-group key recovery, or full cryptographic conformance. Fleet finding lab:crypto-lab-elgamal-plain:interpretation, work 329ddccd-506a-4dab-84d1-4a3ede2b14f7."
+  },
+  "crypto-lab-rekey-relay": {
+    "commit": "5780db419dd548127908286d19b146057329b301",
+    "reviewed": "2026-10-11",
+    "remove": [
+      "BBS signatures",
+      "BLS signatures",
+      "Chosen-ciphertext attack",
+      "Discrete log"
+    ],
+    "removeReferences": [
+      "BBS signatures",
+      "BLS signatures"
+    ],
+    "note": "Bounded source review of README, proxy schemes, group/KEM bridge, vectors, undelegation and actual UI callers. BBS98 here is Blaze-Bleumer-Strauss proxy re-encryption, not the Boneh-Boyen-Shacham BBS credential-signature scheme: src/ui/vectors.ts:296 calls bbs98.encrypt. src/crypto/group.ts:1 imports the BLS12-381 namespace for G1/G2/GT and pairing operations, not BLS signing or verification. Exclude those two false signature credits and apparent signature references while preserving real BLS12-381, Pairing, HKDF, SHA-256 and AES-GCM operations. src/ui/undelegate.ts:96 cites another paper on chosen-ciphertext security; src/main.ts:189 describes an unreproduced discrete-log reduction. Neither is an executed attack. Preserve actual proxy collusion, key recovery, delegation composition and revocation-limit exhibits without inventing vocabulary entries for them. This review does not certify the Type-3 adaptation, constant-time execution, security or new test results; application source is unchanged. Fleet relationship finding relationship:crypto-lab-credential-veil:crypto-lab-rekey-relay, work719fceef-dd13-498a-9343-a55117c50e76."
   }
 }

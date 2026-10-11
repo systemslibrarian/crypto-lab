@@ -21,6 +21,56 @@ function implementationsFor(source, slug) {
     .split(' | ').map(value => value.split('@')[0]);
 }
 
+function checkRekeyScope(source) {
+  // Inspected5780db419dd548127908286d19b146057329b301: vectors.ts:296
+  // encrypts with BBS98 PRE; group.ts:1 uses curve/pairing arithmetic, not
+  // either signature scheme. undelegate.ts:96 is another paper's title;
+  // main.ts:189 explicitly says the discrete-log reduction is not reproduced.
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-rekey-relay'),
+    ['AES', 'AES-GCM', 'BLS12-381', 'HKDF', 'Pairing', 'SHA-256']);
+  assert.deepEqual(attacksFor(source, 'crypto-lab-rekey-relay'), []);
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-rekey-relay\/"[^>]*>/)[0];
+  const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
+  assert.ok(!references.includes('BBS signatures'));
+  assert.ok(!references.includes('BLS signatures'));
+  assert.ok(implementationsFor(source, 'crypto-lab-credential-veil').includes('BBS signatures'),
+    'Keep actual selective-disclosure signatures in their own lab');
+  assert.ok(implementationsFor(source, 'crypto-lab-pairing-gate').includes('BLS signatures'),
+    'Keep actual BLS signature callers in their own lab');
+}
+
+test('Rekey Relay distinguishes proxy encryption and pairing from signatures and cited attacks', () => {
+  checkRekeyScope(html);
+});
+
+test('Rekey scope catches false credits while retaining executed primitives', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-rekey-relay/"';
+  for (const [field, value] of [
+    ['implements', 'BBS signatures@src/ui/vectors.ts:296'],
+    ['implements', 'BLS signatures@src/crypto/group.ts:1'],
+    ['attacks', 'Chosen-ciphertext attack@src/ui/undelegate.ts:96'],
+    ['attacks', 'Discrete log@src/main.ts:189'],
+    ['references', 'BBS signatures'],
+    ['references', 'BLS signatures'],
+  ]) {
+    const changed = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-rekey-relay\/"[^>]*>/,
+      card => {
+        const attribute = new RegExp(`data-${field}="([^"]*)"`);
+        return attribute.test(card)
+          ? card.replace(attribute, (_, current) => `data-${field}="${current} | ${value}"`)
+          : card.replace(marker, `${marker} data-${field}="${value}"`);
+      });
+    assert.notEqual(changed, html, 'Negative control must change an actual card');
+    assert.throws(() => checkRekeyScope(changed), assert.AssertionError);
+  }
+  for (const name of ['AES-GCM', 'BLS12-381', 'Pairing']) {
+    const changed = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-rekey-relay\/"[^>]*>/,
+      card => card.replace(new RegExp(`${name}@[^|" ]+`), ''));
+    assert.notEqual(changed, html, `${name} control must remove an actual anchor`);
+    assert.throws(() => checkRekeyScope(changed), assert.AssertionError);
+  }
+});
+
 function checkAblationScope(source) {
   // Inspected f0c5328848ca7de14af3df18751050352c556131:
   // codetalker-core/src/threat.rs:144 marks A5 OutOfScope and explicitly

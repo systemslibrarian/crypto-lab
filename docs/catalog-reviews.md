@@ -18,6 +18,15 @@ protocol. Its source-pinned reference correction preserves `WebAssembly:2`, the
 unknown original compiler and the separately measured source reproduction.
 Other labs' OPAQUE references and implementations remain eligible for derivation.
 
+Rekey Relay's BBS98 is proxy re-encryption, not BBS credential signatures. Its
+BLS12-381 import supplies groups and pairings, not BLS signature operations.
+The exact inspected-source correction excludes those two signature claims and
+references, and two cited or unreproduced attacks. It preserves the executed
+group, pairing and WebCrypto primitives and the proxy collusion/revocation
+teaching. The existing source guard still governs this correction; it does not
+exclude signature detection in other labs. `tests/catalog-teaching-scope.test.cjs`
+checks both the exclusions and preservation with positive and negative controls.
+
 After reviewing current lab source, run `node tools/catalog-evidence.js write
 --lab <slug>`, then regenerate the catalog and README with their existing tools.
 Run `node --test tests/catalog-reference-review.test.cjs` for current/stale/unreadable,

@@ -17227,14 +17227,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-ablation-wire/" data-added="2026-07" data-updated="2026-09" data-level="intermediate"
+          <a class="project-card" data-category="PROTOCOLS | ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-ablation-wire/"
             data-implements="AES-GCM@codetalker-core/src/aead.rs:5 | ChaCha20-Poly1305@codetalker-core/src/aead.rs:6 | Ed25519@codetalker-core/src/identity.rs:172 | HKDF@codetalker-core/src/kdf.rs:4 | ML-DSA@codetalker-core/src/identity.rs:221 | ML-KEM@codetalker-core/src/kem.rs:253 | SHA-256@codetalker-core/src/kdf.rs:5 | X25519@codetalker-core/src/kem.rs:97"
             data-references="AES | ChaCha20 | DHKEM | Diffie-Hellman | Double Ratchet | EC point arithmetic | Pairing | Poly1305"
-            data-attacks="Discrete log@TEACHING.md:243 | Known-plaintext attack@README.md:298 | Man-in-the-middle@web/index.html:2493 | Nonce reuse@web/index.html:1344 | Side-channel (unspecified)@README.md:278"
+            data-attacks="Discrete log@TEACHING.md:243 | Known-plaintext attack@README.md:301 | Man-in-the-middle@web/index.html:2493 | Nonce reuse@web/index.html:1344"
             data-standards="IETF | NIST"
             data-implementation="Rust crates / WASM"
-            data-review-commit="8ad03c068a133660b27755ff0910e0391f8e0dcc"
-            data-review-note="Rust crypto core reviewed; WASM is built from that core"
+            data-review-commit="f0c5328848ca7de14af3df18751050352c556131"
+            data-review-note="Re-read Rust core, WASM callers, threat model and learner-facing limits at the integrated PR20 source. The eight primitive implementations remain; production Rust/WASM code is unchanged from the prior review, with malformed-input regression tests appended. Supported libcrux-kem 0.0.10 / ML-KEM 0.0.11 in both locks fix verified RustSec 0330/0331 input panics. The authenticated libcrux-platform 0.0.4 patch changes only three CPUID unsafe blocks and preserves Rust 1.85 on x86; source/hash controls and current root/WASM audits pass. WASM is built from that core. A5 is explicitly OutOfScope: timing/cache behavior is neither defended nor measured, so its side-channel warning is not an attack demonstration. Preserve executed known-plaintext/reused-nonce and active MITM exhibits. The optional typed-secret compiler check still fails upstream; neither secret independence nor constant-time behavior is established. Application, source correspondence, provider captures and deployment evidence remain separate."
+            data-added="2026-07" data-updated="2026-09" data-level="intermediate"
            
            
            

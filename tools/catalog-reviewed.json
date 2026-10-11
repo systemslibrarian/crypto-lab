@@ -1,7 +1,7 @@
 {
   "crypto-lab-ablation-wire": {
-    "commit": "8ad03c068a133660b27755ff0910e0391f8e0dcc",
-    "reviewed": "2026-09-10",
+    "commit": "f0c5328848ca7de14af3df18751050352c556131",
+    "reviewed": "2026-10-11",
     "add": [
       "AES-GCM@codetalker-core/src/aead.rs:5",
       "ChaCha20-Poly1305@codetalker-core/src/aead.rs:6",
@@ -16,7 +16,10 @@
       "Rust"
     ],
     "implementation": "Rust crates / WASM",
-    "note": "Rust crypto core reviewed; WASM is built from that core"
+    "note": "Re-read Rust core, WASM callers, threat model and learner-facing limits at the integrated PR20 source. The eight primitive implementations remain; production Rust/WASM code is unchanged from the prior review, with malformed-input regression tests appended. Supported libcrux-kem 0.0.10 / ML-KEM 0.0.11 in both locks fix verified RustSec 0330/0331 input panics. The authenticated libcrux-platform 0.0.4 patch changes only three CPUID unsafe blocks and preserves Rust 1.85 on x86; source/hash controls and current root/WASM audits pass. WASM is built from that core. A5 is explicitly OutOfScope: timing/cache behavior is neither defended nor measured, so its side-channel warning is not an attack demonstration. Preserve executed known-plaintext/reused-nonce and active MITM exhibits. The optional typed-secret compiler check still fails upstream; neither secret independence nor constant-time behavior is established. Application, source correspondence, provider captures and deployment evidence remain separate.",
+    "remove": [
+      "Side-channel (unspecified)"
+    ]
   },
   "crypto-lab-adaptor-gate": {
     "commit": "f838c41a6708ee52e70e395f394c53b513d31558",

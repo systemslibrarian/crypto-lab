@@ -46,6 +46,26 @@ run evidence; a regression fixture passing is not a live fleet check.
 workflow credential cannot read sibling administrative protection settings.
 The console should report that access gap, never infer protection from it.
 
+`fleet-sync.js` distinguishes readable page presence, readable page absence,
+and unreadable source. It verifies a sibling clone's origin before fetching the
+listed default branch and reading its immutable commit tree. Failed fetches do
+not authorize old tracking refs. API trees must be complete, untruncated JSON;
+request failures and malformed responses remain `UNREAD` and exit 2, including
+in report mode. Only an explicit empty-repository response means waiting for
+code. A readable backend without HTML remains outside the standalone catalog.
+An inventory at the configured 400-repository cap is incomplete, not a complete
+fleet census. Source collection runs at most eight reads concurrently. These
+guards are exercised by `node --test tests/fleet-sync-source.test.cjs` in the
+existing discovery workflow; fixture passes do not replace the actual
+authenticated `node tools/fleet-sync.js check`.
+
+`lab-dates.js` uses Git glob exclusion pathspecs so root documentation such as
+`AGENTS.md` and `README.md` is excluded just like nested Markdown. The actual
+Git-history controls in `tests/lab-dates-history.test.cjs` verify documentation
+and maintenance exclusions while preserving real HTML, nested demo, Rust, C,
+data and WASM content changes. A hand-written glob mirror alone cannot verify
+Git's matching semantics.
+
 Dispatch evidence reads every executable dispatch in an auto-merge job. A
 readable, dispatchable verification workflow may precede or follow the actual
 Pages publisher; its name alone does not establish its role. The deployment

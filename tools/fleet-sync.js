@@ -4,7 +4,7 @@
  *
  * Run: node tools/fleet-sync.js check
  * Prevents: a lab going live with no card, which every catalog checker then reads as consistent rather than missing
- * Reads: `gh repo list systemslibrarian`, index.html's CARD anchors and their github.io hrefs, each clone's origin/HEAD tree after a fetch, else gh api git/trees/HEAD, and tools/fixtures/fleet/ for selftest
+ * Reads: `gh repo list systemslibrarian` including defaultBranchRef, index.html's CARD anchors, each verified clone's fetched default-branch commit tree, else complete gh api git/trees/HEAD JSON, and tools/fixtures/fleet/ for selftest
  *
  * The other checkers all compare this repo to something derived from it:
  * readme-sync reads the cards, corpus-sync reads the cards, concept-sync reads
@@ -41,10 +41,11 @@
  * of the fast loop — run it after building a lab, and after any cross-repo pass.
  *
  * Usage (from the crypto-lab repo root):
- *   node tools/fleet-sync.js          Report; exit 0 always.
+ *   node tools/fleet-sync.js          Report; exit 2 if source coverage is unreadable.
  *   node tools/fleet-sync.js check    Same report; exit 1 if a lab has no card,
  *                                     a card points at no live repo, or a card
- *                                     anchor carries no resolvable href.
+ *                                     anchor carries no resolvable href; exit 2
+ *                                     if inventory or source coverage is unreadable.
  *   node tools/fleet-sync.js selftest Offline: assert that what counts as a card
  *                                     is a card. Fixtures only, no network.
  */
@@ -60,7 +61,10 @@ const OWNER = 'systemslibrarian';
 function sh(cmd, args, cwd) {
   return new Promise((resolve) => {
     execFile(cmd, args, { cwd, encoding: 'utf8', maxBuffer: 16 << 20 },
-      (err, stdout) => resolve(err ? null : String(stdout).trim()));
+      (err, stdout, stderr) => resolve({
+        ok: !err, stdout: String(stdout || '').trim(),
+        stderr: String(stderr || '').trim(),
+      }));
   });
 }
 
@@ -120,26 +124,54 @@ function cardedSlugs(html) {
   return { slugs, hrefless };
 }
 
-const INDEX_ANYWHERE = /(^|\/)index\.html$/m;
+const isIndexPath = file => file === 'index.html' || file.endsWith('/index.html');
 
-/* A repo is a browser demo if its default branch contains an index.html at any
- * depth. Read the tree from the local clone when there is one — `git ls-tree`
- * asks the REF, not the working tree, so a clone that has never been checked
- * out still answers correctly (which is exactly the state ggh-trapdoor and
- * factor-forge were in on the day this checker was written). Fall back to the
- * API for a lab that is not cloned here. */
-async function hasPage(repo) {
-  const dir = path.join(FLEET_ROOT, repo);
-  if (fs.existsSync(path.join(dir, '.git'))) {
-    await sh('git', ['fetch', '--quiet', 'origin'], dir);
-    for (const ref of ['origin/HEAD', 'origin/main', 'origin/master']) {
-      const tree = await sh('git', ['ls-tree', '-r', '--name-only', ref], dir);
-      if (tree !== null) return INDEX_ANYWHERE.test(tree);
+/* Presence, absence and unreadable source are separate answers. A failed fetch
+ * cannot make an old tracking ref current; a failed API read cannot make a lab
+ * a headless backend. Read committed trees only, preserving local edits. */
+async function hasPage(repo, { run = sh, exists = fs.existsSync } = {}) {
+  const unread = why => ({ state: 'unread', why });
+  const name = repo.name;
+  if (!/^crypto-lab-[A-Za-z0-9._-]+$/.test(name)) return unread('Invalid repository identity');
+  const dir = path.join(FLEET_ROOT, name);
+  const branch = repo.defaultBranchRef?.name;
+  if (exists(path.join(dir, '.git'))) {
+    const origin = await run('git', ['remote', 'get-url', 'origin'], dir);
+    const expected = `(?:https://github\\.com/|git@github\\.com:|ssh://git@github\\.com/)${OWNER}/${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\.git)?`;
+    if (!origin.ok || !new RegExp(`^${expected}$`).test(origin.stdout)) return unread('Clone origin does not verify the intended repository');
+    if (typeof branch === 'string' && branch && !branch.startsWith('-')) {
+      const ref = `refs/remotes/origin/${branch}`;
+      const fetched = await run('git', ['fetch', '--quiet', 'origin', `${branch}:${ref}`], dir);
+      if (!fetched.ok) return unread('Default-branch fetch failed; old clone evidence is stale');
+      const commit = await run('git', ['rev-parse', `${ref}^{commit}`], dir);
+      if (!commit.ok || !/^[a-f0-9]{40}$/.test(commit.stdout)) return unread('Fetched default-branch commit is unavailable');
+      const tree = await run('git', ['ls-tree', '-r', '--name-only', '-z', commit.stdout], dir);
+      if (!tree.ok) return unread('Fetched commit tree is unreadable');
+      return { state: tree.stdout.split('\0').some(isIndexPath) ? 'page' : 'no-page', sourceSha: commit.stdout };
     }
+    // A missing default branch may be an empty repository. Ask GitHub rather
+    // than guessing main/master or reading an unrelated old origin/HEAD.
   }
-  const tree = await sh('gh', ['api', `repos/${OWNER}/${repo}/git/trees/HEAD?recursive=1`,
-    '--jq', '.tree[].path']);
-  return tree !== null && INDEX_ANYWHERE.test(tree);
+  const response = await run('gh', ['api', `repos/${OWNER}/${name}/git/trees/HEAD?recursive=1`]);
+  let tree;
+  try { tree = JSON.parse(response.stdout); } catch { return unread('Repository tree response is unreadable or malformed'); }
+  if (!response.ok) {
+    if (/HTTP 409\b/.test(response.stderr) && tree?.message === 'Git Repository is empty.') return { state: 'no-page', waitingForCode: true };
+    return unread('Repository tree request failed; absence of a page is unverified');
+  }
+  if (!tree || tree.truncated !== false || !/^[a-f0-9]{40}$/.test(tree.sha || '') || !Array.isArray(tree.tree)
+      || tree.tree.some(entry => !entry || typeof entry.path !== 'string' || !['blob', 'tree', 'commit'].includes(entry.type))) {
+    return unread('Repository tree is incomplete, truncated or malformed');
+  }
+  return { state: tree.tree.some(entry => entry.type === 'blob' && isIndexPath(entry.path)) ? 'page' : 'no-page', sourceTreeSha: tree.sha };
+}
+
+async function mapLimited(items, fn) {
+  const results = new Array(items.length); let next = 0;
+  await Promise.all(Array.from({ length: Math.min(8, items.length) }, async () => {
+    while (next < items.length) { const i = next++; results[i] = await fn(items[i]); }
+  }));
+  return results;
 }
 
 /* Offline. Four fixtures in tools/fixtures/fleet/, each asserting what the
@@ -238,24 +270,29 @@ function selftest() {
   return fail.length ? 1 : 0;
 }
 
-async function main() {
-  const check = process.argv[2] === 'check';
+async function main({ run = sh, exists = fs.existsSync, html, log = console.log, error = console.error, check = process.argv[2] === 'check' } = {}) {
 
-  const raw = await sh('gh', ['repo', 'list', OWNER, '--limit', '400', '--json',
-    'name,description,isPrivate,isArchived']);
-  if (raw === null) {
-    console.error('fleet-sync: `gh repo list` failed. Is the gh CLI authenticated?');
-    process.exit(2);
+  const raw = await run('gh', ['repo', 'list', OWNER, '--limit', '400', '--json',
+    'name,description,isPrivate,isArchived,defaultBranchRef']);
+  if (!raw.ok) {
+    error('fleet-sync: `gh repo list` failed. Is the gh CLI authenticated?');
+    return 2;
   }
-
-  const repos = JSON.parse(raw).filter((r) =>
+  let listed;
+  try { listed = JSON.parse(raw.stdout); } catch { error('fleet-sync: repository inventory is malformed'); return 2; }
+  if (!Array.isArray(listed) || listed.length >= 400 || listed.some(r => !r || typeof r.name !== 'string' || typeof r.isPrivate !== 'boolean' || typeof r.isArchived !== 'boolean')
+      || new Set(listed.map(r => r.name)).size !== listed.length) {
+    error('fleet-sync: repository inventory is incomplete, malformed or reached its 400-repository limit'); return 2;
+  }
+  const repos = listed.filter((r) =>
     !r.isPrivate && !r.isArchived && /^crypto-lab-/.test(r.name));
 
-  const { slugs: carded, hrefless } = cardedSlugs();
-  const pages = await Promise.all(repos.map((r) => hasPage(r.name)));
+  const { slugs: carded, hrefless } = cardedSlugs(html);
+  const pages = await mapLimited(repos, repo => hasPage(repo, { run, exists }));
 
-  const demos = repos.filter((_, i) => pages[i]);
-  const notDemos = repos.filter((_, i) => !pages[i]);
+  const demos = repos.filter((_, i) => pages[i].state === 'page');
+  const notDemos = repos.filter((_, i) => pages[i].state === 'no-page');
+  const unread = repos.filter((_, i) => pages[i].state === 'unread');
   const uncarded = demos.filter((r) => !carded.has(r.name));
   const undescribed = demos.filter((r) => !r.description || !r.description.trim());
 
@@ -267,45 +304,53 @@ async function main() {
   const live = new Set(repos.map((r) => r.name));
   const dangling = [...carded].filter((s) => /^crypto-lab-/.test(s) && !live.has(s));
 
-  console.log(`Public crypto-lab-* repos: ${repos.length} `
-    + `(${demos.length} browser demos, ${notDemos.length} without an index.html)`);
-  console.log(`Cards in index.html: ${carded.size} | carded demos: ${demos.length - uncarded.length}`);
+  log(`Public crypto-lab-* repos: ${repos.length} `
+    + `(${demos.length} browser demos, ${notDemos.length} without an index.html, ${unread.length} unreadable)`);
+  log(`Cards in index.html: ${carded.size} | carded demos: ${demos.length - uncarded.length}`);
   if (hrefless.length) {
-    console.log(`\nCARD-HREFLESS (${hrefless.length}) — a card anchor with no github.io href, so this`);
-    console.log('checker cannot tell which lab it is for. Not counted either way:');
-    for (const a of hrefless) console.log(`  ${a}`);
+    log(`\nCARD-HREFLESS (${hrefless.length}) — a card anchor with no github.io href, so this`);
+    log('checker cannot tell which lab it is for. Not counted either way:');
+    for (const a of hrefless) log(`  ${a}`);
+  }
+  if (unread.length) {
+    log(`\nUNREAD (${unread.length}) — source coverage is incomplete, not evidence of absent pages:`);
+    for (const r of unread) log(`  ${r.name}: ${pages[repos.indexOf(r)].why}`);
   }
 
   if (notDemos.length) {
-    console.log(`\nNot browser demos, so not expected to have a card (${notDemos.length}):`);
-    for (const r of notDemos) console.log(`  ${r.name}`);
+    log(`\nNot browser demos, so not expected to have a card (${notDemos.length}):`);
+    for (const r of notDemos) log(`  ${r.name}${pages[repos.indexOf(r)].waitingForCode ? ' (empty repository; waiting for code)' : ''}`);
   }
 
   if (uncarded.length) {
-    console.log(`\nLIVE BUT UNCATALOGUED (${uncarded.length}) — no card, so no README row,`);
-    console.log('no corpus entry and no concept-coverage line either:');
-    for (const r of uncarded) console.log(`  ${r.name}`);
-    console.log('\nAdd each one with the "Adding a new demo" workflow in CLAUDE.md.');
+    log(`\nLIVE BUT UNCATALOGUED (${uncarded.length}) — no card, so no README row,`);
+    log('no corpus entry and no concept-coverage line either:');
+    for (const r of uncarded) log(`  ${r.name}`);
+    log('\nAdd each one with the "Adding a new demo" workflow in CLAUDE.md.');
   }
 
   if (dangling.length) {
-    console.log(`\nCARDS POINTING AT NOTHING (${dangling.length}) — repo gone, renamed or private:`);
-    for (const s of dangling) console.log(`  ${s}`);
+    log(`\nCARDS POINTING AT NOTHING (${dangling.length}) — repo gone, renamed or private:`);
+    for (const s of dangling) log(`  ${s}`);
   }
 
   if (undescribed.length) {
-    console.log(`\nNo GitHub description (${undescribed.length}) — not a catalog defect, but it is`);
-    console.log('what a visitor reads before they ever reach the demo:');
-    for (const r of undescribed) console.log(`  ${r.name}`);
+    log(`\nNo GitHub description (${undescribed.length}) — not a catalog defect, but it is`);
+    log('what a visitor reads before they ever reach the demo:');
+    for (const r of undescribed) log(`  ${r.name}`);
   }
 
   const failed = uncarded.length + dangling.length + hrefless.length;
-  if (!failed) console.log('\nEvery live lab has a card, and every card has a lab.');
-  if (check && failed) process.exit(1);
+  if (!failed && !unread.length) log('\nEvery live lab has a card, and every card has a lab.');
+  return unread.length ? 2 : check && failed ? 1 : 0;
 }
 
 /* selftest is offline by design -- fixtures only, no gh and no clones -- so it
  * must not fall through into main(), which needs both. */
-if (process.argv[2] === 'selftest') process.exit(selftest());
-
-main();
+if (require.main === module) {
+  if (process.argv[2] === 'selftest') process.exitCode = selftest();
+  else main().then(code => { process.exitCode = code; }).catch(err => {
+    console.error(`fleet-sync: collection failed: ${err.message}`); process.exitCode = 2;
+  });
+}
+module.exports = { cardedSlugs, hasPage, main };

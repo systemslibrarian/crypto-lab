@@ -285,7 +285,9 @@ function labFilePaths(clone, readRoot) {
  * bracket or paren — a slash is division. Anywhere else it opens a regex.
  */
 function regexCanStartHere(emitted) {
-  const prev = emitted.replace(/\s+$/, '').slice(-1);
+  /* The regexp tries every earlier blanked comment before finding the suffix.
+     trimEnd removes the same ECMAScript whitespace without that backtracking. */
+  const prev = emitted.trimEnd().slice(-1);
   if (!prev) return true;
   return !/[\w$)\]]/.test(prev);
 }

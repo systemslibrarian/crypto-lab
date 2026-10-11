@@ -40,6 +40,8 @@ test('unreadable discovery fails and preserves prior export manifests', async t 
     ['malformed JSON', 'printf "bad-json"'],
     ['wrong response shape', 'printf "{}"'],
     ['missing repository name', 'printf "[{}]"'],
+    ['empty successful discovery', 'printf "[]"'],
+    ['no lab-shaped repository', 'printf "[{\\"name\\":\\"unrelated\\"}]"'],
   ];
   for (const [name, body] of cases) await t.test(name, t => {
     const f = fixture(t, body); const r = f.run();
@@ -53,6 +55,8 @@ test('unreadable discovery fails and preserves prior export manifests', async t 
 test('a discovered repository with unreadable tarball is named and fails', t => {
   const f = fixture(t, `if [ "$1" = repo ]; then
     printf '%s' '[{"name":"crypto-lab-example","defaultBranchRef":{"name":"main"}}]'
+  elif [[ "$2" == */commits/* ]]; then
+    printf '%s' 'abcdef1000000000000000000000000000000000'
   else
     echo 'fixture API unavailable' >&2; exit 1
   fi`);
@@ -65,7 +69,10 @@ test('a discovered repository with unreadable tarball is named and fails', t => 
 test('a valid archive exports normal and hidden files with its commit', t => {
   const f = fixture(t, `if [ "$1" = repo ]; then
     printf '%s' '[{"name":"crypto-lab-example","defaultBranchRef":{"name":"main"}}]'
+  elif [[ "$2" == */commits/* ]]; then
+    printf '%s' 'abcdef1000000000000000000000000000000000'
   else
+    [[ "$2" == */tarball/abcdef1000000000000000000000000000000000 ]] || exit 1
     exec tar czf - -C "${'${FIXTURE_ARCHIVE}'}" systemslibrarian-example-abcdef1
   fi`);
   const archive = path.join(f.root, 'archive');
@@ -80,7 +87,19 @@ test('a valid archive exports normal and hidden files with its commit', t => {
   const r = f.run();
   assert.equal(r.status, 0, r.stderr);
   assert.match(r.stdout, /exported 1, unreadable 0/);
-  assert.equal(fs.readFileSync(path.join(f.dest, '.exported.tsv'), 'utf8'), 'crypto-lab-example\tmain\tabcdef1\n');
+  assert.equal(fs.readFileSync(path.join(f.dest, '.exported.tsv'), 'utf8'), 'crypto-lab-example\tmain\tabcdef1000000000000000000000000000000000\n');
   assert.equal(fs.readFileSync(path.join(f.dest, 'crypto-lab-example', 'README.md'), 'utf8'), 'fixture source');
   assert.equal(fs.readFileSync(path.join(f.dest, 'crypto-lab-example', '.github', 'fixture.yml'), 'utf8'), 'fixture workflow');
+});
+
+test('an abbreviated commit is unreadable rather than a pinned export', t => {
+  const f = fixture(t, `if [ "$1" = repo ]; then
+    printf '%s' '[{"name":"crypto-lab-example","defaultBranchRef":{"name":"main"}}]'
+  else
+    printf '%s' 'abcdef1'
+  fi`);
+  const r = f.run();
+  assert.equal(r.status, 1);
+  assert.match(fs.readFileSync(path.join(f.dest, '.export-failed.tsv'), 'utf8'), /unreadable full commit SHA/);
+  assert.equal(fs.readFileSync(path.join(f.dest, '.exported.tsv'), 'utf8'), '');
 });

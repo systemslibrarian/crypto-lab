@@ -18546,12 +18546,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-rekey-relay/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
-            data-implements="AES@src/crypto/kem.ts:76 | AES-GCM@src/crypto/kem.ts:76 | BBS signatures@src/ui/vectors.ts:296 | BLS signatures@src/crypto/group.ts:1 | BLS12-381@src/crypto/group.ts:1 | HKDF@src/ui/vectors.ts:185 | Pairing@src/crypto/group.ts:41 | SHA-256@src/crypto/kem.ts:46"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-rekey-relay/"
+            data-implements="AES@src/crypto/kem.ts:76 | AES-GCM@src/crypto/kem.ts:76 | BLS12-381@src/crypto/group.ts:1 | HKDF@src/ui/vectors.ts:185 | Pairing@src/crypto/group.ts:41 | SHA-256@src/crypto/kem.ts:46"
             data-references="Boneh-Franklin IBE | Diffie-Hellman | EC point arithmetic | ElGamal | Schnorr"
-            data-attacks="Chosen-ciphertext attack@src/ui/undelegate.ts:96 | Discrete log@src/main.ts:189"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="5780db419dd548127908286d19b146057329b301"
+            data-review-note="Bounded source review of README, proxy schemes, group/KEM bridge, vectors, undelegation and actual UI callers. BBS98 here is Blaze-Bleumer-Strauss proxy re-encryption, not the Boneh-Boyen-Shacham BBS credential-signature scheme: src/ui/vectors.ts:296 calls bbs98.encrypt. src/crypto/group.ts:1 imports the BLS12-381 namespace for G1/G2/GT and pairing operations, not BLS signing or verification. Exclude those two false signature credits and apparent signature references while preserving real BLS12-381, Pairing, HKDF, SHA-256 and AES-GCM operations. src/ui/undelegate.ts:96 cites another paper on chosen-ciphertext security; src/main.ts:189 describes an unreproduced discrete-log reduction. Neither is an executed attack. Preserve actual proxy collusion, key recovery, delegation composition and revocation-limit exhibits without inventing vocabulary entries for them. This review does not certify the Type-3 adaptation, constant-time execution, security or new test results; application source is unchanged. Fleet relationship finding relationship:crypto-lab-credential-veil:crypto-lab-rekey-relay, work719fceef-dd13-498a-9343-a55117c50e76."
+            data-added="2026-08" data-updated="2026-08" data-level="advanced"
            
            
            

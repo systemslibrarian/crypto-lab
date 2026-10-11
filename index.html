@@ -3876,14 +3876,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-snark-arena/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-snark-arena/"
             data-implements="Groth16@src/ui/realproof.ts:97 | KZG commitment@src/crypto/setup.ts:101"
             data-unscanned="WebAssembly:1"
-            data-references="BLS12-381 | Bulletproofs | Fiat-Shamir | Halo2 | PLONK | Pairing | STARK | Schnorr | Shor's algorithm"
+            data-references="BLS12-381 | Bulletproofs | Fiat-Shamir | Halo2 | PLONK | Pairing | SHA-256 | STARK | Schnorr | Shor's algorithm"
             data-attacks="Discrete log@src/ui/ceremony.ts:116"
             data-implementation="WASM"
-            data-review-commit="9c642947eae93032a558678a365b692ca276b798"
-            data-review-note="Read current realproof.ts Groth16 fullProve/verify calls, cubic.circom and changed README/UI/test diff. Groth16 proof mechanics are real; public cubic output reveals the bounded witness and demo ceremony secrets are public. PLONK remains a comparison. Circom source is readable; compiled WASM source/compiler reproduction is unverified and remains opaque."
+            data-review-commit="9e6e0c68b6bb0bfc1f7ecd74d4e2dff08a2cb220"
+            data-review-note="Read current Groth16 fullProve/verify calls, cubic.circom, setup explanations and complete PR21 diff; real proof mechanics disclose the bounded witness through public cubic output, while PLONK remains a comparison. Actual independent Mac and Linux builds from authenticated Circom2.2.3 source ad44e915 with selected Rust1.87 reproduce the exact shipped witness WASM45784cb8; CI retains source-bound receipts and negative controls. The original compiler, ceremony inputs and secret destruction remain unknown; published entropy alone does not establish a leak. Setup trust and vendored snarkjs source reproduction are unverified. Preserve raw WebAssembly scanner coverage separately. Fleet8b6b8411; labPR21."
+            data-added="2026-04" data-updated="2026-10" data-level="advanced"
            
            
            

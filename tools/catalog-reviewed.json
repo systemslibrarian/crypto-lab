@@ -270,15 +270,15 @@
     "note": "Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses Re-read current Rust field/sampler/sharing/reconstruction and README at this exact SHA after Vitest/publisher integrations; implementation unchanged from prior reviewed pin. Current18Rust/18TypeScript/12browser gates and published artifact checks retained; no compiler reproduction claim."
   },
   "crypto-lab-snark-arena": {
-    "commit": "9c642947eae93032a558678a365b692ca276b798",
-    "reviewed": "2026-10-10",
+    "commit": "9e6e0c68b6bb0bfc1f7ecd74d4e2dff08a2cb220",
+    "reviewed": "2026-10-11",
     "remove": [
       "PLONK"
     ],
     "add": [
       "Groth16@src/ui/realproof.ts:97"
     ],
-    "note": "Read current realproof.ts Groth16 fullProve/verify calls, cubic.circom and changed README/UI/test diff. Groth16 proof mechanics are real; public cubic output reveals the bounded witness and demo ceremony secrets are public. PLONK remains a comparison. Circom source is readable; compiled WASM source/compiler reproduction is unverified and remains opaque."
+    "note": "Read current Groth16 fullProve/verify calls, cubic.circom, setup explanations and complete PR21 diff; real proof mechanics disclose the bounded witness through public cubic output, while PLONK remains a comparison. Actual independent Mac and Linux builds from authenticated Circom2.2.3 source ad44e915 with selected Rust1.87 reproduce the exact shipped witness WASM45784cb8; CI retains source-bound receipts and negative controls. The original compiler, ceremony inputs and secret destruction remain unknown; published entropy alone does not establish a leak. Setup trust and vendored snarkjs source reproduction are unverified. Preserve raw WebAssembly scanner coverage separately. Fleet8b6b8411; labPR21."
   },
   "crypto-lab-syndrome-drain": {
     "commit": "7187714a9cadf1570726228f02e00dae48abc9df",

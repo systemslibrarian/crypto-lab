@@ -38,7 +38,7 @@ test('dependency manifests and locks are inventoried without resolved-version/ke
  const agent=extractFile({path:'AGENTS.md',bytes:Buffer.from('Instructions for an agent, not the learner interface.')});assert.equal(agent.role,'config');assert.equal(agent.sections.length,0);assert.ok(agent.gaps.some(g=>g.kind==='maintainer-instructions'));
 });
 test('deterministic output, structural IDs and exact CRLF spans do not advance review pins',()=>{
- assert.equal(GENERATOR_VERSION,'teaching-extract-v1');const bytes=Buffer.from('<p title="title">Original wording.</p>\r\n<p>Second explanation.</p>\r\n');const input={path:'index.html',bytes,...pinned},first=extractFile(input);assert.deepEqual(first,extractFile(input));
+ assert.equal(GENERATOR_VERSION,'teaching-extract-v2');const bytes=Buffer.from('<p title="title">Original wording.</p>\r\n<p>Second explanation.</p>\r\n');const input={path:'index.html',bytes,...pinned},first=extractFile(input);assert.deepEqual(first,extractFile(input));
  const second=extractFile({...input,bytes:Buffer.from(bytes.toString().replace('Original wording.','Changed wording.'))});assert.deepEqual(first.sections.map(s=>s.id),second.sections.map(s=>s.id));assert.notEqual(first.sections.find(s=>s.kind==='markup-text').sha256,second.sections.find(s=>s.kind==='markup-text').sha256);assert.equal(first.lastReviewedSha,undefined);assert.equal(first.sourceSha,undefined);
  for(const s of first.sections)assert.ok(bytes.toString().split('\n').slice(s.startLine-1,s.endLine).join('\n').includes(s.sourceText));
 });
@@ -60,4 +60,37 @@ test('JSX apostrophes survive while comment markup and typed generics do not bec
 test('framework interpolation is source evidence with an explicit runtime gap',()=>{
  const r=extractFile({path:'src/Lesson.svelte',bytes:Buffer.from('<p>{answer ? "Correct answer" : "Try again"}</p>')});
  assert.equal(r.state,'readable');assert.ok(r.sections.some(s=>s.sourceText.includes('answer ?')));assert.ok(r.gaps.some(g=>g.kind==='framework-markup'));assert.ok(r.sections.every(s=>s.verification.includes('unverified')));
+});
+test('small JS choices and JSON answers retain one-character, numeric and emoji learner candidates',()=>{
+ const js=extractFile({path:'src/quiz.ts',bytes:Buffer.from('const options = ["A", "B", "0", "✓"]; const correctAnswer = "0"; const unrelated = ["1", "2"];')});
+ for(const value of ['"A"','"B"','"0"','"✓"'])assert.ok(js.sections.some(s=>s.sourceText===value),value);
+ assert.ok(!js.sections.some(s=>s.sourceText==='"1"'||s.sourceText==='"2"'),'unrelated numerical data is not forced into teaching wording');
+ const json=extractFile({path:'quiz.json',bytes:Buffer.from('{"options":["A","B","0","✓"],"answer":"0","unrelated":["1","2"]}')});
+ for(const value of ['"A"','"B"','"0"','"✓"'])assert.ok(json.sections.some(s=>s.sourceText===value),value);
+ assert.ok(json.sections.every(s=>s.verification==='unverified-static-candidate'));
+ const labels=extractFile({path:'src/ui.ts',bytes:Buffer.from('const labels=["1","2"]; const button = { text: "×", label: "✓" };')});for(const value of ['"1"','"2"','"×"','"✓"'])assert.ok(labels.sections.some(s=>s.sourceText===value),value);
+});
+test('locale dictionaries and paired HTML locale attributes retain short translations without claiming reachability',()=>{
+ const js=extractFile({path:'web-demo/src/i18n.ts',bytes:Buffer.from('const strings = { cancelBtn: { en: "Cancel", ko: "취소" }, boxLabel: { en: "Box", ko: "보관함" }, sealedCheck: { en: "✓", ko: "✓" } }; const eventType = "click";')});
+ assert.equal(js.role,'teaching');for(const value of ['"Cancel"','"취소"','"Box"','"보관함"','"✓"'])assert.ok(js.sections.some(s=>s.sourceText===value),value);
+ assert.ok(!js.sections.some(s=>s.sourceText==='"click"'));assert.ok(js.gaps.some(g=>g.kind==='localization-binding'));
+ const html=extractFile({path:'web-demo/index.html',bytes:Buffer.from('<p data-en="A&amp;B" data-ko="정확한 설명">A&amp;B</p><p data-fr="Bonjour" data-es="Hola">Bonjour</p>')});
+ for(const value of ['A&amp;B','정확한 설명','Bonjour','Hola'])assert.ok(html.sections.some(s=>s.sourceText===value&&s.kind==='localization-attribute'),value);
+ assert.ok(html.gaps.some(g=>g.kind==='localization-binding'));assert.ok(html.sections.every(s=>s.verification.includes('unverified')));
+ const json=extractFile({path:'locales/ko.json',bytes:Buffer.from('{"cancel":"취소","confirmed":"✓"}')});assert.ok(json.sections.some(s=>s.sourceText==='"✓"'));
+});
+test('attribute boundary parsing rejects quoted fake attributes and false hidden classifications',()=>{
+ const source='<p data-note="hidden warning title=\'Fake label\'" title="Real title">Visible explanation.</p><template><p>Conditional explanation.</p></template><style>p::after{content:"Style fake"}</style><!-- <p>Comment fake</p> -->';
+ const r=extractFile({path:'index.html',bytes:Buffer.from(source)});
+ assert.ok(r.sections.some(s=>s.sourceText==='Real title'&&s.kind==='markup-attribute'));
+ assert.ok(r.sections.some(s=>s.sourceText==='Visible explanation.'&&s.surface==='static-markup-candidate'));
+ assert.ok(r.sections.some(s=>s.sourceText==='Conditional explanation.'&&s.surface==='hidden-or-template-candidate'));
+ assert.ok(!r.sections.some(s=>/Fake label|Style fake|Comment fake/.test(s.sourceText)));
+ for(const s of r.sections)assert.ok(source.split('\n').slice(s.startLine-1,s.endLine).join('\n').includes(s.sourceText));
+});
+test('BOM, CRLF and literal backslashes in tracked path spelling remain exact source identities',()=>{
+ const source='\uFEFF<p title="Exact label">Exact wording.</p>\r\n<p>Second line.</p>\r\n';
+ const file='src\\lesson.html',r=extractFile({path:file,bytes:Buffer.from(source)});
+ assert.ok(r.sections.length);for(const s of r.sections){assert.equal(s.file,file);assert.ok(source.split('\n').slice(s.startLine-1,s.endLine).join('\n').includes(s.sourceText));assert.equal(s.sha256,hash(s.sourceText));}
+ const other=extractFile({path:'src/lesson.html',bytes:Buffer.from(source)});assert.notEqual(r.sections[0].id,other.sections[0].id);
 });

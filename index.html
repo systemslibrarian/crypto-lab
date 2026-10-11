@@ -13881,11 +13881,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lwe-hints/" data-added="2026-06" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lwe-hints/"
             data-implements="LWE@src/attack.ts:103"
             data-references="BFV | BGV | CKKS | Dilithium | FrodoKEM | Kyber | ML-DSA | ML-KEM | NTT"
-            data-attacks="Chosen-plaintext attack@index.html:592 | Lattice reduction@README.md:42 | Power analysis@src/main.ts:571 | Side-channel (unspecified)@src/main.ts:539"
+            data-attacks="Side-channel (unspecified)@src/main.ts:539"
             data-implementation="hand-rolled"
+            data-review-commit="8a307f49c5c8031f6eb8a5f095ca650c83bbcf5f"
+            data-review-note="Read current README, root HTML and src/attack.ts with its regression tests, plus the model and UI threat calculator. CPA in index.html:592 is paired with DPA under Power analysis: it means correlation power analysis, not a chosen-plaintext attack. The lab generates toy LWE samples and recovers a sparse ternary secret from perfect inner-product hints with adaptive group testing and finite-field linear algebra. Lattice reduction is the referenced paper method, explicitly not run here; power capture is a discussed channel and illustrative arithmetic preset, not a measured or simulated power-analysis experiment. Remove those three attack credits; preserve the real LWE implementation and generic assumed side-channel hint setting. The physical channel is assumed, not implemented. Fleet item f1096dc9-df29-470e-8d30-80baecc44c8a; this classification review does not validate the paper or establish a full cryptographic audit."
+            data-added="2026-06" data-updated="2026-10" data-level="advanced"
            
            
            

@@ -141,6 +141,7 @@ function checkScope(source) {
     'crypto-lab-protocol-checker': ['Discrete log', 'Key recovery', 'Padding oracle', 'Side-channel (unspecified)', 'Timing side-channel'],
     'crypto-lab-isogeny-atlas': ['Factoring'],
     'crypto-lab-e91': ['Man-in-the-middle', 'Side-channel (unspecified)'],
+    'crypto-lab-lwe-hints': ['Chosen-plaintext attack', 'Lattice reduction', 'Power analysis'],
   })) {
     for (const name of rejected) assert.ok(!attacksFor(source, slug).includes(name), `${slug}: reject ${name}`);
   }
@@ -150,6 +151,10 @@ function checkScope(source) {
   assert.ok(attacksFor(source, 'crypto-lab-isogeny-atlas').includes('Brute force'));
   assert.ok(attacksFor(source, 'crypto-lab-order-leak').includes('Frequency analysis'),
     'Preserve actual ciphertext-frequency recovery against public counts');
+  assert.ok(attacksFor(source, 'crypto-lab-lwe-hints').includes('Side-channel (unspecified)'),
+    'Preserve the assumed inner-product leakage setting, without claiming a physical channel');
+  assert.ok(implementationsFor(source, 'crypto-lab-lwe-hints').includes('LWE'),
+    'Preserve the actual toy LWE instance and perfect-hint recovery');
 }
 
 test('catalog keeps sibling attacks and negated limits out of attacks shown', () => {
@@ -166,6 +171,9 @@ test('scope control detects reintroduced sibling and negated-limit credits', () 
     ['crypto-lab-sphincs-ledger', 'Factoring'],
     ['crypto-lab-dilithium-seal', 'Key recovery'],
     ['crypto-lab-protocol-checker', 'Padding oracle'],
+    ['crypto-lab-lwe-hints', 'Chosen-plaintext attack'],
+    ['crypto-lab-lwe-hints', 'Lattice reduction'],
+    ['crypto-lab-lwe-hints', 'Power analysis'],
     ['crypto-lab-hqc-timing-break', 'Chosen-ciphertext attack'],
     ['crypto-lab-hqc-timing-break', 'Fault injection'],
     ['crypto-lab-rsa-educational', 'Discrete log'],
@@ -191,6 +199,15 @@ test('scope control detects loss of the actual frequency-recovery exhibit', () =
   const mutated = html.replace(/Frequency analysis@src\/app.ts:\d+/, '');
   assert.notEqual(mutated, html, 'The mutation must remove the real catalog anchor');
   assert.throws(() => checkScope(mutated), assert.AssertionError);
+});
+
+test('LWE scope control detects loss of the real instance and assumed leakage context', () => {
+  for (const attr of ['implements', 'attacks']) {
+    const marker = 'href="https://systemslibrarian.github.io/crypto-lab-lwe-hints/"';
+    const mutated = html.replace(marker, `${marker} data-${attr}=""`);
+    assert.notEqual(mutated, html, 'The mutation must alter the selected card');
+    assert.throws(() => checkScope(mutated), assert.AssertionError);
+  }
 });
 
 test('HQC scope control preserves the modeled cache channel, recovery and repetition code', () => {

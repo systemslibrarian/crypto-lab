@@ -58,7 +58,20 @@ def run_target(slug):
       testdir=(pkg/match.group(1)).resolve();assert testdir.is_relative_to(pkg.resolve()) and testdir.is_dir()
       config=pkg/f'node_modules/.fleet-publisher-live-{attempt_stamp}-{index}.config.mjs'
       url=urls[slug].rstrip('/')+'/'
-      config.write_text("import original from '../"+config_name+"';\n"+
+      config.write_text("import * as source from '../"+config_name+"';\n"+
+        "import path from 'node:path';\n"+
+        "const object=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);\n"+
+        "let original=source.default;\n"+
+        "if(!object(original))throw Error('Unreadable original Playwright configuration');\n"+
+        "if(Object.hasOwn(original,'default')){\n"+
+        " const keys=Object.keys(original).filter(k=>k!=='__esModule');\n"+
+        " if(keys.length!==1||keys[0]!=='default')throw Error('Ambiguous original Playwright configuration export');\n"+
+        " original=original.default;\n}\n"+
+        "if(!object(original)||Object.hasOwn(original,'default'))throw Error('Malformed original Playwright configuration export');\n"+
+        "if(typeof original.testDir!=='string'||path.resolve("+json.dumps(str(pkg.resolve()))+",original.testDir)!=="+json.dumps(str(testdir))+" )throw Error('Original test directory differs from inspected source');\n"+
+        "if(original.globalSetup!==undefined||original.globalTeardown!==undefined)throw Error('Review original global lifecycle hooks');\n"+
+        "if(original.use!==undefined&&!object(original.use))throw Error('Malformed original shared device settings');\n"+
+        "if(original.projects!==undefined&&(!Array.isArray(original.projects)||original.projects.some(p=>!object(p)||(p.use!==undefined&&!object(p.use)))))throw Error('Malformed original project settings');\n"+
         "const baseURL="+json.dumps(url)+";\nexport default { ...original, " +
         "testDir:"+json.dumps(str(testdir))+", forbidOnly:true,retries:0,workers:1,reporter:'list',webServer:undefined,"+
         "use:{...original.use,baseURL},projects:original.projects?.map(p=>({...p,use:{...p.use,baseURL}})),"+
@@ -74,6 +87,8 @@ def run_target(slug):
       plain=re.sub(r'\x1b\[[0-9;]*m','',run.stdout)
       if run.returncode==0 and (not re.search(r'^\s*[1-9][0-9]* passed\b',plain,re.M) or re.search(r'^\s*[1-9][0-9]* failed\b',plain,re.M)):
         raise ValueError('Zero-exit browser output has no readable successful test result')
+      if run.returncode!=0 and not re.search(r'^\s*[1-9][0-9]* failed\b',plain,re.M):
+        raise ValueError('Browser command failed without a readable assertion result; configuration or execution evidence is incomplete')
       result={'slug':slug,'sourceSha':sha,'command':' '.join(args),'url':urls[slug],
         'startedAt':started,'finishedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),
         'exit':run.returncode,'result':'passed' if run.returncode==0 else 'failed','log':str(log),

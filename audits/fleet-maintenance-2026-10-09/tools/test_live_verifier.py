@@ -295,5 +295,115 @@ subprocess.run = fixture
                 self.assertEqual(self.canonical.read_bytes(), self.old)
 
 
+class RealConfigurationControls(unittest.TestCase):
+    """Load actual TS module shapes and run real Playwright assertions.
+
+    No npm substitute, browser download, page navigation or lifecycle command.
+    The locked existing tools package must be installed; absence is a failure.
+    """
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='real-live-config-control-')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.repo = self.root / 'fixture'; self.repo.mkdir()
+        self.out = self.root / 'control'; self.out.mkdir()
+        self.slug = 'crypto-lab-fixture'
+        modules = HELPER.resolve().parents[3] / 'tools/node_modules'
+        self.assertTrue((modules / 'playwright/cli.js').is_file(), 'Install the existing locked tools package before these controls')
+        installed = self.repo / 'node_modules'; installed.mkdir()
+        for name in ['playwright', 'playwright-core']:
+            (installed / name).symlink_to(modules / name, target_is_directory=True)
+        (installed / '.bin').mkdir()
+        (installed / '.bin/playwright').symlink_to(modules / 'playwright/cli.js')
+        (self.repo / '.gitignore').write_text('node_modules/\n')
+        (self.repo / 'e2e').mkdir()
+        (self.repo / 'e2e/config.spec.ts').write_text("""import {test,expect} from 'playwright/test';
+test('preserves named projects and their original settings',async ({baseURL},info)=>{
+expect(['fixture-desktop','fixture-mobile']).toContain(info.project.name);
+expect(info.project.timeout).toBe(12000);
+expect(baseURL).toBe('https://example.invalid/fixture/');
+expect(info.project.use.extraHTTPHeaders).toEqual({'x-fleet-fixture':'preserved'});
+expect(info.project.use.viewport.width).toBe(info.project.name==='fixture-mobile'?390:1366);
+expect(info.project.use.isMobile).toBe(info.project.name==='fixture-mobile');
+});
+""")
+        self.git('init', '-q'); self.git('config', 'user.name', 'Verification fixture')
+        self.git('config', 'user.email', 'fixture@example.invalid')
+        inventory = self.root / 'console-current-critical-20261009'; inventory.mkdir()
+        (inventory / 'fleet.json').write_text(json.dumps({'labs': [
+            {'slug': self.slug, 'demoUrl': 'https://example.invalid/fixture/'}]}))
+        (self.out / 'pushed.json').write_text(json.dumps([{
+            'slug': self.slug, 'path': str(self.repo), 'packagePath': str(self.repo)}]))
+        self.env = dict(os.environ, FLEET_MAINTENANCE_ROOT=str(self.root))
+
+    def git(self, *args):
+        return subprocess.check_output(['git', '-C', str(self.repo), *args], text=True).strip()
+
+    def capture(self, source, module_type='commonjs'):
+        (self.repo / 'package.json').write_text(json.dumps({'type': module_type, 'scripts': {
+            'preinstall': 'touch LIFECYCLE-RAN', 'install': 'touch LIFECYCLE-RAN'}}))
+        (self.repo / 'playwright.config.ts').write_text(source)
+        self.git('add', '.'); self.git('commit', '-qm', 'Synthetic configuration assertion')
+        self.sha = self.git('rev-parse', 'HEAD')
+        (self.out / (self.slug + '-postmerge.json')).write_text(json.dumps({
+            'verifiedScopedRepair': True, 'currentTreeMatchesReviewedHead': True,
+            'allApplicationResourcesVerified': True, 'currentSha': self.sha}))
+
+    def run_actual(self):
+        r = subprocess.run([sys.executable, '-B', str(HELPER), '--cohort=control', self.slug],
+                           env=self.env, capture_output=True, text=True, timeout=30)
+        record = json.loads((self.out / (self.slug + '-live-checks.json')).read_text())
+        self.assertFalse((self.repo / 'LIFECYCLE-RAN').exists())
+        self.assertEqual(self.git('rev-parse', 'HEAD'), self.sha)
+        self.assertEqual(self.git('status', '--porcelain', '--untracked-files=no'), '')
+        return r, record
+
+    def test_actual_commonjs_and_esm_retain_both_projects_and_devices(self):
+        source = """import {defineConfig,devices} from 'playwright/test';
+export default defineConfig({testDir:'./e2e',timeout:12000,
+use:{extraHTTPHeaders:{'x-fleet-fixture':'preserved'}},projects:[
+{name:'fixture-desktop',use:{...devices['Desktop Chrome'],viewport:{width:1366,height:768}}},
+{name:'fixture-mobile',use:{...devices['iPhone 13'],viewport:{width:390,height:844}}}
+]});
+"""
+        for kind in ['commonjs', 'module']:
+            with self.subTest(module_type=kind):
+                self.capture(source, kind)
+                r, record = self.run_actual()
+                self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+                self.assertEqual(record['result'], 'passed')
+                log = Path(record['log']).read_text()
+                for text in ['2 passed', '[fixture-desktop]', '[fixture-mobile]']:
+                    self.assertIn(text, log)
+
+    def test_actual_malformed_exports_and_settings_remain_incomplete(self):
+        cases = [
+            "export default {default:{testDir:'./e2e'},testDir:'./e2e'};",
+            "export default {testDir:'./e2e',projects:'not-an-array'};",
+            "export default {testDir:'./e2e',projects:[{name:'bad',use:null}]};",
+            "export default {testDir:'./e2e',use:['bad']};",
+            "const config=undefined; // testDir:'./e2e'\nexport default config;",
+        ]
+        for source in cases:
+            with self.subTest(source=source):
+                self.capture(source)
+                r, record = self.run_actual()
+                self.assertNotEqual(r.returncode, 0)
+                self.assertEqual(record['result'], 'incomplete')
+                self.assertIsNone(record['exit'])
+                self.assertNotEqual(record['commandExit'], 0)
+                self.assertTrue(Path(record['browserLog']).is_file())
+                self.assertIn('original', Path(record['browserLog']).read_text().lower())
+
+    def test_imported_global_lifecycle_hook_is_refused_before_execution(self):
+        (self.repo / 'hooks.ts').write_text("export default {globalSetup:'./hook-run.ts'};\n")
+        (self.repo / 'hook-run.ts').write_text("import fs from 'node:fs'; export default ()=>fs.writeFileSync('LIFECYCLE-RAN','unexpected');\n")
+        self.capture("import hooks from './hooks'; export default {...hooks,testDir:'./e2e'};\n")
+        r, record = self.run_actual()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertEqual(record['result'], 'incomplete')
+        self.assertIn('global lifecycle hooks', Path(record['browserLog']).read_text())
+
+
 if __name__ == '__main__':
     unittest.main()

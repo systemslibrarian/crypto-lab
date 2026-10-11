@@ -47,6 +47,12 @@ evidence destination remains an explicit error; it is never current success.
 
 The wrapper retains original projects, device settings, timeouts and assertions,
 removes the local web server, sets the actual public URL and disables retries.
+It accepts the actual ESM default object and the single CommonJS TypeScript
+default wrapper. Ambiguous nested exports, malformed project/device settings,
+a runtime test directory differing from the inspected source, and imported
+global lifecycle hooks require review and remain incomplete. Configuration or
+runner errors without a readable failed-test count are incomplete, rather than
+application assertion failures.
 `npm exec --no` uses already-installed tooling and refuses implicit installation.
 Zero exit without a readable positive browser test count is incomplete; a
 readable nonzero browser assertion result remains failed. Neither state is
@@ -77,8 +83,15 @@ python3 -B -m unittest discover \
 ```
 
 Sixteen live-reader tests execute the actual CLI, temporary Git repository and
-filesystem evidence. Only the external browser command is substituted; their
-synthetic successes are not public application checks. Sixteen policy tests
+filesystem evidence with the external browser command substituted. Three
+additional controls use the actual installed Playwright loader and runner:
+both CommonJS/ESM configurations preserve two named projects, devices, shared
+headers and timeouts; malformed exports/settings and an imported lifecycle
+hook fail closed. They navigate no page, install nothing and execute no
+repository lifecycle script. Install the existing locked tools with
+`npm ci --ignore-scripts --prefix tools` before these controls; missing tooling
+fails rather than silently skipping them. Their synthetic configuration
+assertions are not public application checks. Sixteen policy tests
 exercise source ancestry, complete collections, latest attempts and positive
 and negative job/step evidence. Existing hub CI runs these controls without
 changing its triggers or read-only permissions.

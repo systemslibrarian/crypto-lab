@@ -335,14 +335,58 @@ function normaliseBlock(block, pad) {
  * other side ("this job carries the rationale paragraph — does it still carry
  * the line the paragraph defends?"), and two copies of this matcher would be
  * two chances to disagree about what a dispatch is. */
-function findDispatchLine(lines, from, to) {
+function findDispatches(lines, from, to) {
+  const out = [];
   for (let i = from; i < to; i++) {
     const l = lines[i];
     if (/^\s*#/.test(l)) continue;
     const code = l.replace(/\s#.*$/, '');
-    if (/(^\s*|run:\s*|[;&|]\s*|\bthen\s+)gh workflow run\s/.test(code)) return i;
+    const re = /(^\s*|run:\s*|[;&|]\s*|\bthen\s+)gh workflow run\s+([^\s;&|]+)/g;
+    for (const m of code.matchAll(re)) out.push({ line: i, target: m[2] });
   }
-  return -1;
+  return out;
+}
+
+function findDispatchLine(lines, from, to) {
+  return findDispatches(lines, from, to)[0]?.line ?? -1;
+}
+
+/* Shared with the clause reader: use the actual executable commands, never a
+ * workflow filename or an action's display name, to recognize verification. */
+const TOOL_FIRST = /^(sudo\s+)?(npm|pnpm|yarn|npx|node|deno|bun|cargo|rustup|wasm-pack|python3?|pip3?|pytest|make|go|dotnet|mvn|gradle|swift|bash|sh|\.\/|\.github\/|scripts\/|tools\/)/;
+const TOOL_VERB = /(test|build|lint|check|audit|typecheck|type-check|clippy|fmt|a11y|e2e|playwright|vitest|jest|\bci\b|install|deny|validate|verif|coverage|fuzz|tsc|wasm-pack|vite)/i;
+const isGateCommand = (cmd) => TOOL_FIRST.test(cmd) && TOOL_VERB.test(cmd);
+
+function dispatchRole(repo, target, root) {
+  // Dynamic names, malformed source and calls outside the readable local
+  // workflow remain unknown. They must not disappear behind a valid publisher.
+  if (!/^[A-Za-z0-9_.-]+\.ya?ml$/.test(target)) return 'unknown';
+  try {
+    const text = fs.readFileSync(path.join(root, repo, '.github', 'workflows', target), 'utf8');
+    const wf = require('./gate-sync.js').parseYaml(text);
+    if (!wf?.jobs || typeof wf.jobs !== 'object' || Array.isArray(wf.jobs)) return 'unknown';
+    const jobs = Object.values(wf.jobs);
+    if (!jobs.length || jobs.some((j) => !j || typeof j !== 'object' || Array.isArray(j))) return 'unknown';
+    if (jobs.some((j) => j.steps?.some((s) => /^(actions\/deploy-pages|peaceiris\/actions-gh-pages)@/.test(s?.uses || '')))) return 'publisher';
+    // Reusable calls require their own derivation; a missing publisher in the
+    // calling file alone does not prove it is only a verification workflow.
+    if (jobs.some((j) => j.uses || !Array.isArray(j.steps) || j.steps.some((s) => !s || typeof s !== 'object'))) return 'unknown';
+    const dispatch = wf.on && typeof wf.on === 'object' && !Array.isArray(wf.on)
+      ? Object.hasOwn(wf.on, 'workflow_dispatch')
+      : Array.isArray(wf.on) ? wf.on.includes('workflow_dispatch') : wf.on === 'workflow_dispatch';
+    const runs = jobs.flatMap((j) => j.steps).flatMap((s) => typeof s.run === 'string' ? s.run.split('\n') : []);
+    return dispatch && runs.some((s) => {
+      const command = s.replace(/(^|\s)#.*$/, '$1').trim();
+      return isGateCommand(command) && /(test|build|lint|check|audit|typecheck|type-check|clippy|fmt|a11y|e2e|playwright|vitest|jest|deny|validate|verif|coverage|fuzz|tsc)/i.test(command);
+    }) ? 'verification' : 'unknown';
+  } catch { return 'unknown'; }
+}
+
+function deploymentDispatches(lines, from, to, repo, root = FLEET_ROOT) {
+  const all = findDispatches(lines, from, to).map((d) => ({ ...d, role: dispatchRole(repo, d.target, root) }));
+  // A verification dispatch cannot substitute for deployment. Only separate it
+  // when a real publisher also exists; retain every unknown target fail closed.
+  return all.some((d) => d.role === 'publisher') ? all.filter((d) => d.role !== 'verification') : all;
 }
 
 /* Every place in the fleet where this paragraph belongs: the comment run above
@@ -368,42 +412,42 @@ function sites(repo, root = FLEET_ROOT) {
       const body = lines.slice(job.start, job.end).join('\n');
       if (!isAutoMergeJob(job.name, body)) continue;
 
-      /* First dispatch line in the job, whatever it is nested in — see
-       * findDispatchLine above for why the match is that narrow. */
-      const disp = findDispatchLine(lines, job.start, job.end);
-      if (disp < 0) continue;
+      /* Each publishing dispatch owns its paragraph. An auxiliary CI dispatch
+       * before it must not acquire the deployment rationale or hide its target. */
+      for (const { line: disp, target } of deploymentDispatches(lines, job.start, job.end, repo, root)) {
 
-      /* Shape 1: comments sit immediately above the dispatch line. */
-      if (disp - 1 >= job.start && /^\s*#/.test(lines[disp - 1])) {
-        let k = disp - 1;
-        while (k > job.start && /^\s*#/.test(lines[k - 1])) k--;
-        out.push({ repo, file, job: job.name, disp, shape: 'in-run-script',
-          blockStart: k, block: lines.slice(k, disp), pad: ' '.repeat(indentOf(lines[k])) });
-        continue;
-      }
+        /* Shape 1: comments sit immediately above the dispatch line. */
+        if (disp - 1 >= job.start && /^\s*#/.test(lines[disp - 1])) {
+          let k = disp - 1;
+          while (k > job.start && /^\s*#/.test(lines[k - 1])) k--;
+          out.push({ repo, file, job: job.name, disp, target, shape: 'in-run-script',
+            blockStart: k, block: lines.slice(k, disp), pad: ' '.repeat(indentOf(lines[k])) });
+          continue;
+        }
 
-      /* Shape 2: walk up over the enclosing step's own keys to the comment run
-       * above its `- ` marker. Bounded, and only over keys a step may carry, so
-       * this cannot wander into an unrelated comment. */
-      let i = disp;
-      let steps = 0;
-      while (i > job.start && steps < 12 && (lines[i].trim() === '' || STEP_KEY.test(lines[i]))) {
-        const isMarker = /^\s*-\s+\S/.test(lines[i]);
-        i--; steps++;
-        if (isMarker) break;
-      }
-      if (i > job.start && /^\s*#/.test(lines[i])) {
-        let k = i;
-        while (k > job.start && /^\s*#/.test(lines[k - 1])) k--;
-        out.push({ repo, file, job: job.name, disp, shape: 'above-step',
-          blockStart: k, block: lines.slice(k, i + 1), pad: ' '.repeat(indentOf(lines[k])) });
-        continue;
-      }
+        /* Shape 2: walk up over the enclosing step's own keys to the comment run
+         * above its `- ` marker. Bounded, and only over keys a step may carry, so
+         * this cannot wander into an unrelated comment. */
+        let i = disp;
+        let steps = 0;
+        while (i > job.start && steps < 12 && (lines[i].trim() === '' || STEP_KEY.test(lines[i]))) {
+          const isMarker = /^\s*-\s+\S/.test(lines[i]);
+          i--; steps++;
+          if (isMarker) break;
+        }
+        if (i > job.start && /^\s*#/.test(lines[i])) {
+          let k = i;
+          while (k > job.start && /^\s*#/.test(lines[k - 1])) k--;
+          out.push({ repo, file, job: job.name, disp, target, shape: 'above-step',
+            blockStart: k, block: lines.slice(k, i + 1), pad: ' '.repeat(indentOf(lines[k])) });
+          continue;
+        }
 
-      /* No comment run in either place: restore one directly above the
-       * dispatch, at the dispatch's own indentation. */
-      out.push({ repo, file, job: job.name, disp, shape: 'in-run-script',
-        blockStart: disp, block: [], pad: ' '.repeat(indentOf(lines[disp])) });
+        /* No comment run in either place: restore one directly above the
+         * dispatch, at the dispatch's own indentation. */
+        out.push({ repo, file, job: job.name, disp, target, shape: 'in-run-script',
+          blockStart: disp, block: [], pad: ' '.repeat(indentOf(lines[disp])) });
+      }
     }
   }
   return out;
@@ -560,6 +604,6 @@ function main() {
 }
 
 module.exports = { CANONICAL, RATIONALE_RE, normaliseBlock, scan, sites, siblingLabs, DIRTY, FLEET_ROOT,
-  workflowFiles, jobBlocks, isAutoMergeJob, findDispatchLine, indentOf };
+  workflowFiles, jobBlocks, isAutoMergeJob, findDispatchLine, findDispatches, deploymentDispatches, isGateCommand, indentOf };
 
 if (require.main === module) process.exit(main());

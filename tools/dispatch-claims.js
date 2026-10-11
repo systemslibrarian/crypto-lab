@@ -183,9 +183,7 @@ function runCommands(lines, from, to) {
  * scripts, wasm-pack, pytest and its own shell checks, and a narrow lexicon
  * would report a real gate missing and invite someone to "fix" a true
  * sentence. */
-const TOOL_FIRST = /^(sudo\s+)?(npm|pnpm|yarn|npx|node|deno|bun|cargo|rustup|wasm-pack|python3?|pip3?|pytest|make|go|dotnet|mvn|gradle|swift|bash|sh|\.\/|\.github\/|scripts\/|tools\/)/;
-const TOOL_VERB = /(test|build|lint|check|audit|typecheck|type-check|clippy|fmt|a11y|e2e|playwright|vitest|jest|\bci\b|install|deny|validate|verif|coverage|fuzz|tsc|wasm-pack|vite)/i;
-const isGateCommand = (cmd) => TOOL_FIRST.test(cmd) && TOOL_VERB.test(cmd);
+const isGateCommand = comments.isGateCommand;
 
 /* --------------------------------------------------- three-valued `if:` eval
  *
@@ -266,11 +264,9 @@ function dispatchSites(root = FLEET_ROOT) {
       for (const job of comments.jobBlocks(lines)) {
         const body = lines.slice(job.start, job.end).join('\n');
         if (!comments.isAutoMergeJob(job.name, body)) continue;
-        const disp = comments.findDispatchLine(lines, job.start, job.end);
-        if (disp < 0) continue;
-        const m = /gh workflow run\s+(\S+)/.exec(lines[disp].replace(/\s#.*$/, ''));
-        if (!m) continue;
-        out.push({ repo, workflow: path.basename(file), job: job.name, target: m[1] });
+        for (const { target, role } of comments.deploymentDispatches(lines, job.start, job.end, repo, root)) {
+          out.push({ repo, workflow: path.basename(file), job: job.name, target, role });
+        }
       }
     }
   }
@@ -358,10 +354,11 @@ function jobCondition(lines, job) {
 function derive(root = FLEET_ROOT) {
   const sites = dispatchSites(root).map((s) => {
     const file = path.join(root, s.repo, '.github', 'workflows', s.target);
-    const row = { ...s, targetExists: fs.existsSync(file) };
+    const row = { ...s, targetExists: /^[A-Za-z0-9_.-]+\.ya?ml$/.test(s.target) && fs.existsSync(file), publishers: [] };
     if (!row.targetExists) return row;
 
     const lines = readLines(file);
+    if (!lines) return { ...row, targetReadError: 'Unreadable dispatch target' };
     const trig = triggersOf(lines);
     row.triggers = trig;
     row.acceptsDispatch = trig.includes('workflow_dispatch');

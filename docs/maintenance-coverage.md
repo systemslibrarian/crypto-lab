@@ -46,6 +46,18 @@ run evidence; a regression fixture passing is not a live fleet check.
 workflow credential cannot read sibling administrative protection settings.
 The console should report that access gap, never infer protection from it.
 
+Dispatch evidence reads every executable dispatch in an auto-merge job. A
+readable, dispatchable verification workflow may precede or follow the actual
+Pages publisher; its name alone does not establish its role. The deployment
+rationale and clause derivation follow the publishing target, while the merge
+guard check covers every dispatch. Verification alone, missing or malformed
+targets, unresolved reusable calls, and ungated publishers cannot establish a
+working deployment. Multiple publishers remain separate sites and must match
+the declared census. The shell guard reader covers the explicit bounded fleet
+dialects; unsupported control flow remains a review gap, not execution proof.
+`node --test tests/dispatch-targets.test.cjs` exercises these paths without
+requiring live sibling clones or dispatching any workflow.
+
 Dependency vulnerability checks, cryptographic known-answer and rejection tests,
 browser behavior, and research/standards review require their own observations.
 Use the per-tool source headers and observed command results to decide what was

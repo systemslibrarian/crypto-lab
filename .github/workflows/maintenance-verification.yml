@@ -13,10 +13,16 @@ on:
       - 'tests/depth-*'
       - 'tests/test-invocation.test.cjs'
       - 'tests/catalog-lexer.test.cjs'
+      - 'tests/maintenance-verification.test.cjs'
 
 # Observation only: no issue writes, merges, Pages environments or deploy actions.
 permissions:
   contents: read
+
+# Explicit Bash uses -eo pipefail on Actions, so tee cannot hide a failed tool.
+defaults:
+  run:
+    shell: bash
 
 concurrency:
   group: maintenance-verification-${{ github.ref }}
@@ -34,7 +40,7 @@ jobs:
       - run: npm ci
         working-directory: tools
       - name: Export regression and scope controls
-        run: node --test tests/depth-export.test.cjs tests/depth-manifest.test.cjs tests/depth-partial.test.cjs tests/depth-classifier.test.cjs tests/depth-complete.test.cjs tests/test-invocation.test.cjs tests/catalog-lexer.test.cjs
+        run: node --test tests/depth-export.test.cjs tests/depth-manifest.test.cjs tests/depth-partial.test.cjs tests/depth-classifier.test.cjs tests/depth-complete.test.cjs tests/test-invocation.test.cjs tests/catalog-lexer.test.cjs tests/maintenance-verification.test.cjs
       - name: Export complete remote default branches at full SHAs
         id: export
         continue-on-error: true
@@ -158,6 +164,7 @@ jobs:
         run: |
           mkdir -p maintenance-evidence
           node tools/teach-observe.js https://systemslibrarian.github.io/crypto-lab-aes-modes/ chromium | tee maintenance-evidence/teach-observe.json
+          node -e "JSON.parse(require('fs').readFileSync('maintenance-evidence/teach-observe.json', 'utf8'))"
       - name: Save live teaching evidence
         if: always()
         uses: actions/upload-artifact@v7

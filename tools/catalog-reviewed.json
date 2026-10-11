@@ -638,5 +638,13 @@
     "add": [
       "AES@src/aes/aes.ts:123"
     ]
+  },
+  "crypto-lab-elgamal-plain": {
+    "commit": "d12c20a76d97a869dedd34b655e3c2f4d49a8c19",
+    "reviewed": "2026-10-11",
+    "add": [
+      "Baby-step giant-step@src/attacks.ts:35"
+    ],
+    "note": "Bounded Baby-step giant-step review at the exact current source commit. Read README Security Lab, src/attacks.ts, src/groups.ts, modular exponentiation/inverse helpers and src/attacks.test.ts. discreteLog builds g^j baby steps, then searches target times g^(-m*i) with m=ceil(sqrt(q)); the q guard refuses RFC 3526 Group 14. This is executable toy-group key recovery, not a reference-only mention. Its algorithm name appears only in comments, so add the implementation at the exported function through this reviewed supplement rather than reading comments as implementations globally. The attack implementation and tests are unchanged from the historical 72048d72 interpretation; the full 15-path change inventory was compared, and the solver and its tests remain byte-identical. The newer Cramer-Shoup exhibit is outside this bounded solver review. Actual current npm test passes 127 tests, including 300 toy-key recoveries, operation-count and large-group refusal controls. This review only adds the bounded solver credit; it does not claim constant-time execution, real-group key recovery, or full cryptographic conformance. Fleet finding lab:crypto-lab-elgamal-plain:interpretation, work 329ddccd-506a-4dab-84d1-4a3ede2b14f7."
   }
 }

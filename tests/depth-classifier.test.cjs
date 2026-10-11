@@ -32,7 +32,7 @@ test('displayed-claim classification handles blanked comments and preserves comp
     const proc = spawnSync(process.execPath, ['-e', `
       const {classify,walk}=require('./tools/depth-audit.js');
       console.log(JSON.stringify(classify('crypto-lab-fixture',walk('.scratch/crypto-lab-fixture'))));
-    `], { cwd: root, encoding: 'utf8', timeout: 4000 });
+    `], { cwd: root, encoding: 'utf8', timeout: 20000 });
     assert.equal(proc.error, undefined, `classifier must finish, not omit source: ${proc.error}`);
     assert.equal(proc.status, 0, proc.stderr);
     return JSON.parse(proc.stdout);

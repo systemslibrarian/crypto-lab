@@ -72,14 +72,16 @@ test('strict modes retain timeout, unreadable and malformed worker gaps without 
 });
 
 test('actual source I/O failures remain unreadable rather than assessed absence', async t => {
-  for (const [operation,code] of [['readdirSync','EACCES'],['readFileSync','EACCES'],['readFileSync','ENOENT']]) {
+  for (const [operation,code] of [['readdirSync','EACCES'],['readFileSync','EACCES'],['readFileSync','ENOENT'],['blankComments','ELEX']]) {
     await t.test(`${operation} ${code}`, t => {
       const f = fixture(t);
       const directory = path.join(f.root,'.scratch/crypto-lab-live/tests');
       fs.mkdirSync(directory);
       fs.writeFileSync(path.join(directory,'claims.test.js'),'// RFC 7748\nconst expected="1234567890abcdef1234567890abcdef";');
       const worker = path.join(f.root,'tools/depth-classify-worker.js');
-      const preload = `const fs=require('node:fs');const original=fs.${operation};
+      const preload = operation==='blankComments'
+        ? `require('./catalog-evidence.js').blankComments=()=>{throw Object.assign(new Error('controlled lexer failure'),{code:'ELEX'});};\n`
+        : `const fs=require('node:fs');const original=fs.${operation};
         fs.${operation}=function(file,...args){
           if(String(file).includes('/.scratch/crypto-lab-live${operation==='readFileSync'?'/tests/claims.test.js':''}')){
             throw Object.assign(new Error('controlled source read failure'),{code:${JSON.stringify(code)}});

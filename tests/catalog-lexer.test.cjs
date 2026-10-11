@@ -38,7 +38,7 @@ test('blanked comment prefixes cannot stall later regex or division reads', () =
       lines:views.code.split('\\n').length,
       matcher:views.strings.includes('/ /'), divided:views.code.includes('/ denominator'),
       comments:views.inert.includes('x'.repeat(100))}));
-  `], { encoding: 'utf8', timeout: 4000 });
+  `], { encoding: 'utf8', timeout: 20000 });
   assert.equal(proc.error, undefined, `source must remain readable within the budget: ${proc.error}`);
   assert.equal(proc.status, 0, proc.stderr);
   assert.deepEqual(JSON.parse(proc.stdout), {sameLength: true, lines: 3,

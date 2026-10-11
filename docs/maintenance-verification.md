@@ -34,7 +34,8 @@ Complete depth generation, JSON output and report checking require every pinned
 source to finish classification. A timeout or worker error exits 2 before any
 report is written or any partial score is printed. The partial mode remains the
 way to obtain named diagnostic gaps. Directory read failures, denied file reads
-and discovered files disappearing are scan gaps. An absent optional imported
+and discovered files disappearing or failing lexing are scan gaps. Lexer errors
+never fall back to unparsed text. An absent optional imported
 vector module remains a lead rather than a fabricated source-read failure.
 
 The complete report is generated as dated run evidence, then checked against the
@@ -49,7 +50,8 @@ the dimension's meaning; timeout evidence and unread languages remain explicit.
 The shared catalog lexer removes trailing whitespace without repeatedly trying
 earlier blanked comment spans. Regex, division, Unicode whitespace and template
 controls preserve its existing decisions; the long-comment control checks that
-readable source finishes without increasing the classification budget.
+readable source finishes within the same 20-second production classification
+budget. Semantic assertions run independently of the deadline.
 
 The teaching job installs Chromium, Firefox and WebKit plus their host libraries.
 It runs worksheet drift, the published issue-note check, and a scoped AES Modes

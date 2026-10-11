@@ -202,7 +202,8 @@ const readCode = (lab, rel) => {
   const t = read(lab, rel, true);
   if (t === null) return null;
   if (!/\.(ts|tsx|js|jsx|mjs|cjs|rs)$/.test(rel)) return t;
-  try { return blankComments(t); } catch { return t; }
+  try { return blankComments(t); }
+  catch (error) { throw new Error(`UNREAD: source lexer ${lab}/${rel}: ${error.code || error.message}`); }
 };
 
 /** First line matching a pattern, 1-indexed. */

@@ -54,3 +54,16 @@ invokes all its tests. Review its findings and undetermined rows separately.
 Protection census is excluded. The repository-scoped `GITHUB_TOKEN` cannot prove
 protection on sibling repositories; that requires an appropriately authorized
 read credential. No credential is requested or added by this workflow.
+
+Test-invocation coverage reads parsed workflow `run` values with the existing
+workflow-gate YAML reader. Workflow names, environment values, shell comments and
+quoted diagnostics cannot establish a caller. JavaScript harness comments are
+blanked with the existing catalog lexer. The scan recognizes module/CommonJS
+test files and Python interpreter flags such as `python3 -B -m unittest`.
+Malformed workflow/package metadata stays undetermined; a source read failure
+is UNREAD and makes strict or partial execution incomplete. Quoted shell
+programs and unavailable external workflow calls remain undetermined when they
+could explain a missing caller. These are static caller observations: they do
+not establish actual test execution, branch reachability or runner-configured
+file coverage. Exercise the controls with
+`node --test tests/test-invocation.test.cjs`.

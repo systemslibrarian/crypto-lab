@@ -22,8 +22,8 @@
    "added": "2026-03",
    "updated": "2026-10",
    "addedFrom": "2026-03-14T01:06:39Z",
-   "updatedFrom": "2026-10-10T13:01:53-04:00",
-   "updatedCommit": "263bf868df16937032f9bdd964c24e542d05eb89"
+   "updatedFrom": "2026-10-11T05:26:43-04:00",
+   "updatedCommit": "81b55d486bde75b340516cd0462ab5a3ad03e755"
   },
   "crypto-lab-phantom-vault": {
    "added": "2026-04",
@@ -239,8 +239,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-06T02:05:22Z",
-   "updatedFrom": "2026-10-11T00:36:49-04:00",
-   "updatedCommit": "c6abd89ff9f86c0f28c88e7e58da9ba762e09d87"
+   "updatedFrom": "2026-10-11T03:58:43-04:00",
+   "updatedCommit": "23b7cdef9acc848d182992be1b863ac6db2da696"
   },
   "crypto-lab-world-ciphers": {
    "added": "2026-04",
@@ -1462,10 +1462,10 @@
   },
   "crypto-lab-covert-channel-studio": {
    "added": "2026-09",
-   "updated": "2026-09",
+   "updated": "2026-10",
    "addedFrom": "2026-09-06T18:03:56Z",
-   "updatedFrom": "2026-09-10T02:54:49-04:00",
-   "updatedCommit": "99a1285210e388256e54cd95971fea61a11df5db"
+   "updatedFrom": "2026-10-11T08:22:25-04:00",
+   "updatedCommit": "48158040d04223a1a778999fcec909d75a5e80e8"
   },
   "crypto-lab-point-ledger": {
    "added": "2026-09",

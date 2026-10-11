@@ -2316,7 +2316,7 @@
         <div class="no-results" id="no-results" hidden></div>
         <div class="feature-grid">
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/" data-added="2026-03" data-updated="2026-10"
             data-implements="AES@web-demo/src/crypto/aes.ts:9 | AES-GCM@web-demo/src/crypto/aes.ts:10 | HAETAE@wasm/src/haetae_exports.c:2 | HKDF@crates/qv-core/src/encrypt.rs:20 | PBKDF2@web-demo/src/crypto/keywrap.ts:40 | SHA-256@web-demo/src/crypto/keywrap.ts:40 | Shamir secret sharing@web-demo/src/crypto/pipeline.ts:16 | SMAUG-T@wasm/src/smaug_exports.c:2"
             data-unscanned="WebAssembly:3 | Python:1"
             data-comment-only="SMAUG-T@web-demo/src/crypto/keywrap.ts:22"
@@ -2324,8 +2324,7 @@
             data-standards="IETF | NIST"
             data-implementation="Rust/C wrappers and WASM"
             data-review-commit="81b55d486bde75b340516cd0462ab5a3ad03e755"
-            data-review-note="Read current Rust HKDF/encryption, C SMAUG-T/HAETAE wrappers, browser sealing/reconstruction/signature flow, README limits and PR16/17 trust controls. Algorithm identity is supported by the actual encapsulate/sign callers; normal threshold reconstruction is not an adversarial key-recovery exhibit, and signature/integrity rejection does not implement the adaptive chosen-ciphertext model discussed in SECURITY.md. Excluded attack names remain risk/threat, historical audit, negated defence or comparison references. Re-read all eleven PR18 files at 81b55d486bde75b340516cd0462ab5a3ad03e755, including complete source/wrapper/recipe inventories, bounded isolated compiler verification, 28 positive/negative controls, source-gated Rust/web/Pages workflow, corrected deployment zeroization notes and real-panel focus regression. Authenticated archived SMAUG 2c039df2 and HAETAE 743c31df source, immutable historical wrappers and digest-pinned actual Emscripten 5.0.3/285c424 cleanly reproduce BOTH active complete JS/WASM pairs without replacing expected bytes. All 33 C objects are freshly compiled; source and 1,913 compiler inputs remain unchanged. This establishes a reproducing source recipe, not the original publisher compiler or constant-time behavior. Historical newer-SMAUG missing-input and HAETAE 6.0.10/earlier 5.0.3 mismatches remain preserved. Current development HAETAE secure-zeroize wrapper is absent from the active restored O2 artifact; current TypeScript frees without claiming erasure. The third tracked WASM is a duplicate distribution artifact; raw WASM/Python static coverage limits remain explicit. Build/verification Python utilities are supporting tools, not browser crypto. Current panel preserves user focus and disconnected fields; real baseline control failed and fixed positive/negative browser controls passed. Application tests, provider captures and deployment remain separate from source correspondence."
-            data-added="2026-03" data-updated="2026-10" data-level="advanced"
+            data-review-note="Read current Rust HKDF/encryption, C SMAUG-T/HAETAE wrappers, browser sealing/reconstruction/signature flow, README limits and PR16/17 trust controls. Algorithm identity is supported by the actual encapsulate/sign callers; normal threshold reconstruction is not an adversarial key-recovery exhibit, and signature/integrity rejection does not implement the adaptive chosen-ciphertext model discussed in SECURITY.md. Excluded attack names remain risk/threat, historical audit, negated defence or comparison references. Re-read all eleven PR18 files at 81b55d486bde75b340516cd0462ab5a3ad03e755, including complete source/wrapper/recipe inventories, bounded isolated compiler verification, 28 positive/negative controls, source-gated Rust/web/Pages workflow, corrected deployment zeroization notes and real-panel focus regression. Authenticated archived SMAUG 2c039df2 and HAETAE 743c31df source, immutable historical wrappers and digest-pinned actual Emscripten 5.0.3/285c424 cleanly reproduce BOTH active complete JS/WASM pairs without replacing expected bytes. All 33 C objects are freshly compiled; source and 1,913 compiler inputs remain unchanged. This establishes a reproducing source recipe, not the original publisher compiler or constant-time behavior. Historical newer-SMAUG missing-input and HAETAE 6.0.10/earlier 5.0.3 mismatches remain preserved. Current development HAETAE secure-zeroize wrapper is absent from the active restored O2 artifact; current TypeScript frees without claiming erasure. The third tracked WASM is a duplicate distribution artifact; raw WASM/Python static coverage limits remain explicit. Build/verification Python utilities are supporting tools, not browser crypto. Current panel preserves user focus and disconnected fields; real baseline control failed and fixed positive/negative browser controls passed. Application tests, provider captures and deployment remain separate from source correspondence." data-level="advanced"
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Post-Quantum</div>
             <div class="project-title">Quantum Vault KpqC</div>
@@ -2704,7 +2703,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-tc26-pair/"
+          <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-tc26-pair/" data-added="2026-09" data-updated="2026-10"
             data-implements="Fiat-Shamir@src/shipovnik/stern.ts:167 | Hypericum@native/hypericum_wrapper.c:41 | SHA-256@src/fixtures.ts:65 | Shipovnik@native/shipovnik_wrapper.c:68 | Streebog@src/hypericum/streebog.ts:9"
             data-unscanned="WebAssembly:2"
             data-references="Merkle tree | SLH-DSA | SPHINCS+ | Winternitz | XMSS"
@@ -2712,7 +2711,6 @@
             data-implementation="C wrappers / WASM"
             data-review-commit="a9b6f574d25bc87548accc495b3836baa7697ffd"
             data-review-note="C wrappers and TS calls reviewed; two compiled reference WASM binaries remain opaque. Re-read integrated PR5 complete provenance/build/checker/workflow/report changes and unchanged C wrappers/TS callers/current shipped bytes at a9b6f574d25bc87548accc495b3836baa7697ffd. Clean pinned QAPP source builds with immutable official SDK6.0.10 source/release-map identity independently reproduced both WASM and both JS adapters on Mac and current CI; the checker now requires every input to match its recorded Git blob, separates mismatch from unreadable/partial evidence and never overwrites shipped artifacts. The repeatable workflow covers relevant main/PR source and WASM/JS changes. Original compiler remains unknown, historical SDK4.0.23 byte mismatches retained, and raw opaque-WASM scanner coverage is preserved; byte correspondence in the observed environment is not constant-time or full cryptographic assurance. The phrase opaque-WASM coverage in docs/wasm-provenance.md describes a scanner limitation, not the OPAQUE PAKE; exclude only that false algorithm reference at this inspected source pin."
-            data-added="2026-09" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -4958,7 +4956,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-serpent/"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-serpent/" data-added="2026-04" data-updated="2026-10"
             data-implements="AES@demos/iron-serpent/src/benchmark.ts:86 | AES-GCM@demos/iron-serpent/src/benchmark.ts:82 | Argon2@demos/iron-serpent/src/kdf.ts:48 | HKDF@demos/iron-serpent/src/mac.ts:17 | HMAC@demos/iron-serpent/src/mac.ts:42 | Serpent@demos/iron-serpent/src/serpent-ctr.ts:13 | SHA-256@demos/iron-serpent/src/mac.ts:25"
             data-unscanned="WebAssembly:1"
             data-references="Camellia | ChaCha20 | ChaCha20-Poly1305 | DES | Kuznyechik | PBKDF2 | Poly1305 | RSA | SHA-512 | Shamir secret sharing | Twofish | scrypt"
@@ -4967,7 +4965,6 @@
             data-implementation="WebCrypto"
             data-review-commit="23b7cdef9acc848d182992be1b863ac6db2da696"
             data-review-note="Reviewed current source and the complete six-file PR13 integrated at 23b7cdef9acc848d182992be1b863ac6db2da696. The Argon2id caller at kdf.ts:48, classic Worker, Serpent/HMAC paths, passphrase-strength uncertainty implementation and README retain their teaching scope; biography and weak-password risk prose are not executed brute-force or differential attacks. Historical PR8 at c6abd89ff9f86c0f28c88e7e58da9ba762e09d87 initialized Leviathan 3.0.1 and preserved iron-serpent-v1 with its block byte-order adapter and JavaScript little-endian CTR framing; 384 official vectors, 128 prior-library CTR comparisons and pre-migration Argon2 browser payload/tamper controls verified that functional compatibility, without establishing vendor source provenance. Historical PR9 at 1afad909f8fe6fe3b876e78a8d39a8ac1c16b804 verified official Argon2 archive integrity and distribution bytes only. PR13 now reproduces the unchanged active Argon2 bundle and decoded/retained WASM byte-for-byte from immutable publisher63cda65/C-submodule16d3, pinned Docker image5871ba43, actual Emscripten2.0.23/b15ca40, exact lock373c5138 and Node14.15.5/npm6.14.11. Its existing checker verifies all seven fresh C compile stages, complete build logs, unchanged compiler-system-library inventory and all three artifact comparisons, with16 offline controls and independent native current-head CI/source report. Earlier compiler/emulation failures remain historical evidence. Argon2 source-to-active-binary correspondence is established in this identified reproducing environment; the original publisher compiler remains unknown and no constant-time claim follows. Leviathan Serpent source-to-binary provenance and raw C/WASM scanner coverage remain unresolved outside this Argon2 closure. Runtime files, cryptographic bytes and lab dependency lock are unchanged; implementation exclusions and unrelated nonce-risk wording are not a full security audit."
-            data-added="2026-04" data-updated="2026-10"
             data-level="intermediate"
            
            
@@ -10406,7 +10403,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-elgamal-plain/"
+          <a class="project-card" data-category="ENCRYPTION | HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-elgamal-plain/" data-added="2026-04" data-updated="2026-10"
             data-implements="Baby-step giant-step@src/attacks.ts:35 | ElGamal@src/attacks.ts:1 | HMAC@src/authenticated.ts:83 | SHA-256@src/authenticated.ts:62"
             data-comment-only="Baby-step giant-step@src/attacks.ts:5"
             data-references="DSA | Diffie-Hellman | ECDSA | HPKE | Paillier | RSA | RSA-OAEP | Shor's algorithm"
@@ -10414,8 +10411,7 @@
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-review-commit="d12c20a76d97a869dedd34b655e3c2f4d49a8c19"
-            data-review-note="Bounded Baby-step giant-step review at the exact current source commit. Read README Security Lab, src/attacks.ts, src/groups.ts, modular exponentiation/inverse helpers and src/attacks.test.ts. discreteLog builds g^j baby steps, then searches target times g^(-m*i) with m=ceil(sqrt(q)); the q guard refuses RFC 3526 Group 14. This is executable toy-group key recovery, not a reference-only mention. Its algorithm name appears only in comments, so add the implementation at the exported function through this reviewed supplement rather than reading comments as implementations globally. The attack implementation and tests are unchanged from the historical 72048d72 interpretation; the full 15-path change inventory was compared, and the solver and its tests remain byte-identical. The newer Cramer-Shoup exhibit is outside this bounded solver review. Actual current npm test passes 127 tests, including 300 toy-key recoveries, operation-count and large-group refusal controls. This review only adds the bounded solver credit; it does not claim constant-time execution, real-group key recovery, or full cryptographic conformance. Fleet finding lab:crypto-lab-elgamal-plain:interpretation, work 329ddccd-506a-4dab-84d1-4a3ede2b14f7."
-            data-added="2026-04" data-updated="2026-10" data-level="intermediate"
+            data-review-note="Bounded Baby-step giant-step review at the exact current source commit. Read README Security Lab, src/attacks.ts, src/groups.ts, modular exponentiation/inverse helpers and src/attacks.test.ts. discreteLog builds g^j baby steps, then searches target times g^(-m*i) with m=ceil(sqrt(q)); the q guard refuses RFC 3526 Group 14. This is executable toy-group key recovery, not a reference-only mention. Its algorithm name appears only in comments, so add the implementation at the exported function through this reviewed supplement rather than reading comments as implementations globally. The attack implementation and tests are unchanged from the historical 72048d72 interpretation; the full 15-path change inventory was compared, and the solver and its tests remain byte-identical. The newer Cramer-Shoup exhibit is outside this bounded solver review. Actual current npm test passes 127 tests, including 300 toy-key recoveries, operation-count and large-group refusal controls. This review only adds the bounded solver credit; it does not claim constant-time execution, real-group key recovery, or full cryptographic conformance. Fleet finding lab:crypto-lab-elgamal-plain:interpretation, work 329ddccd-506a-4dab-84d1-4a3ede2b14f7." data-level="intermediate"
            
            
            
@@ -20302,7 +20298,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="STEGANOGRAPHY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-covert-channel-studio/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
+          <a class="project-card" data-category="STEGANOGRAPHY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-covert-channel-studio/" data-added="2026-09" data-updated="2026-10" data-level="advanced"
             data-implements="N/A"
             data-references="AES | LMS | OPAQUE | Pairing | RSA | SHA-256 | Shamir secret sharing"
             data-attacks="Cache timing@js/content/atlas.js:308 | Frequency analysis@js/content/references.js:123 | Side-channel (unspecified)@js/content/atlas.js:305 | Timing side-channel@js/content/quiz.js:265"

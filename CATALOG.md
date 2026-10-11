@@ -3515,7 +3515,7 @@ Drag P and Q to see the chord-and-tangent group law, flip ℝ↔𝔽ₚ to run t
 Quantum resource estimates for secp256k1, a classical multiplication dialog, and where fuzz-test evidence stops supporting a Fiat-Shamir soundness claim.
 
 - **Implements:** SHA-256 `src/fuzz.ts:111`, SHAKE `src/fuzz.ts:2`
-- **Source review:** [49dfff0b0987](https://github.com/systemslibrarian/crypto-lab-point-ledger/commit/49dfff0b098791f09e26ecccb53f04b8ad22f1ef) — Fresh clone inspected; ECDSA is a data table and SHA-3 is merely the module path exporting SHAKE
+- **Source review:** [abe44608d558](https://github.com/systemslibrarian/crypto-lab-point-ledger/commit/abe44608d558561512e6783284fc16ef50623620) — Re-read current README, every tracked src module and relevant tests after integrated Lucide v1 repair PR15. Full prior review49dfff0 to this commit changes only the navigation icon Github to CodeXml in src/main.tsx; ledger/dialog/fuzz/toy computations and learner-facing claims are unchanged. ECDSA remains a cited resource-estimate data table, not an implementation; the noble/hashes sha3 module path exports the used SHAKE256, not SHA-3 execution. Preserve SHAKE and SHA-256 evidence and teaching-model limits. Actual36 unit,11 local and11 public browser/WCAG tests and immutable-lock npm audit zero passed at this exact SHA. Fleet dependency work39b11ea4-0958-4717-8cc8-faaabd45be07; source review is separate from deployment and dependency provider evidence.
 - **References:** EC point arithmetic, ECDSA, Fiat-Shamir, Groth16, Pairing, SHA-3, STARK, Shor's algorithm, secp256k1
 - **Attacks shown:** Discrete log `src/sources.ts:76`
 - **Standards body:** NIST

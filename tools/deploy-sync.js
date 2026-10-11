@@ -115,8 +115,26 @@ async function deployingLabs() {
       const publishers = [...usesIn(text)].filter((u) => PAGES_PUBLISHERS.has(u));
       if (!publishers.length) continue;
       let wf;
-      try { wf = parseYaml(text); } catch { return { repo, verdict: 'API-ERROR', detail: 'workflow cannot be parsed' }; }
-      return { repo, workflow: file, head, wf, publishers };
+      try {
+        wf = parseYaml(text);
+        if (!wf || typeof wf !== 'object' || Array.isArray(wf)) throw new Error('Workflow object required');
+      } catch { return { repo, verdict: 'API-ERROR', detail: 'workflow cannot be parsed' }; }
+      // Local reusable workflows are resolved from this same fetched commit,
+      // never a dirty working file or an unrelated workflow version.
+      const workflowSources = {};
+      async function readCalls(value) {
+        for (const job of Object.values(value.jobs || {})) {
+          if (!job || typeof job !== 'object') continue;
+          if (typeof job.uses !== 'string' || !/^\.\/\.github\/workflows\/[A-Za-z0-9._-]+\.ya?ml$/.test(job.uses)) continue;
+          if (Object.hasOwn(workflowSources, job.uses)) continue;
+          const source = await sh('git', ['show', `${head}:${job.uses.slice(2)}`], dir);
+          try { workflowSources[job.uses] = source === null ? null : parseYaml(source); }
+          catch { workflowSources[job.uses] = null; }
+          if (workflowSources[job.uses]) await readCalls(workflowSources[job.uses]);
+        }
+      }
+      await readCalls(wf);
+      return { repo, workflow: file, head, wf, publishers, workflowSources };
     }
     return { repo, skipped: true };
   }, 8);
@@ -128,41 +146,138 @@ async function deployingLabs() {
 // A run summary is not proof that its publish action executed. Match the
 // committed job and action-step names to the job API, and fail closed on
 // missing, ambiguous, skipped or inconsistent evidence.
-function verifyPublishJobs(wf, jobs) {
+// GitHub reports each matrix cell and each called job separately. Derive their
+// exact names from finite committed configuration; unresolved expressions,
+// duplicate names and unreadable/cyclic calls are coverage gaps, not successes.
+function configuredJobInstances(wf, sources = {}, prefix = '', stack = []) {
+  if (!wf?.jobs || typeof wf.jobs !== 'object' || Array.isArray(wf.jobs)) return null;
+  const groups = new Map(), records = [];
+  const scalar = (v) => ['string', 'number', 'boolean'].includes(typeof v) && !String(v).includes('${{');
+  for (const [id, job] of Object.entries(wf.jobs)) {
+    if (!job || typeof job !== 'object' || Array.isArray(job)) return null;
+    if (typeof job.uses !== 'string' && (!Array.isArray(job.steps) || job.steps.some((step) => !step || typeof step !== 'object' || Array.isArray(step)))) return null;
+    const matrix = job.strategy?.matrix;
+    let combinations = [{}];
+    if (matrix !== undefined) {
+      if (!matrix || typeof matrix !== 'object' || Array.isArray(matrix)) return null;
+      const axes = Object.keys(matrix).filter((k) => k !== 'include' && k !== 'exclude');
+      for (const axis of axes) {
+        if (!Array.isArray(matrix[axis]) || !matrix[axis].length || combinations.length * matrix[axis].length > 256 || !matrix[axis].every(scalar)) return null;
+        combinations = combinations.flatMap((row) => matrix[axis].map((v) => ({ ...row, [axis]: v })));
+        if (combinations.length > 256) return null;
+      }
+      const entries = (key) => matrix[key] === undefined ? [] : matrix[key];
+      for (const key of ['include', 'exclude']) {
+        if (!Array.isArray(entries(key)) || entries(key).some((v) => !v || typeof v !== 'object' || Array.isArray(v) || !Object.values(v).every(scalar))) return null;
+      }
+      const originals = axes.length ? combinations.filter((row) => !entries('exclude').some((ex) => Object.entries(ex).every(([k, v]) => row[k] === v))) : [];
+      combinations = originals.map((row) => ({ ...row }));
+      for (const include of entries('include')) {
+        let applied = false;
+        originals.forEach((original, i) => {
+          if (axes.every((key) => !Object.hasOwn(include, key) || include[key] === original[key])) {
+            Object.assign(combinations[i], include); applied = true;
+          }
+        });
+        if (!applied) combinations.push({ ...include });
+      }
+      if (!combinations.length || combinations.length > 256) return null;
+    }
+    const own = [];
+    for (const combination of combinations) {
+      let name = job.name ?? id;
+      if (typeof name !== 'string') return null;
+      name = name.replace(/\$\{\{\s*matrix\.([A-Za-z0-9_-]+)\s*\}\}/g, (whole, key) => Object.hasOwn(combination, key) ? String(combination[key]) : whole);
+      if (name.includes('${{')) return null;
+      if (matrix !== undefined && job.name === undefined) name += ` (${Object.values(combination).join(', ')})`;
+      if (typeof job.uses === 'string') {
+        const source = sources[job.uses];
+        if (!source || stack.includes(job.uses) || stack.length >= 10) return null;
+        const children = configuredJobInstances(source, sources, `${prefix}${name} / `, [...stack, job.uses]);
+        if (!children?.length) return null;
+        own.push(...children);
+      } else own.push({ name: prefix + name, job, matrix: combination, required: [] });
+    }
+    groups.set(id, own);
+    records.push(...own);
+  }
+  for (const [id, own] of groups) {
+    const needs = wf.jobs[id].needs;
+    if (needs !== undefined && typeof needs !== 'string' && !Array.isArray(needs)) return null;
+    for (const dependency of typeof needs === 'string' ? [needs] : needs || []) {
+      if (typeof dependency !== 'string' || !groups.has(dependency) || dependency === id) return null;
+      for (const instance of own) instance.required.push(...groups.get(dependency).map((x) => x.name));
+    }
+  }
+  if (new Set(records.map((r) => r.name)).size !== records.length) return null;
+  return records;
+}
+
+function verifyPublishJobs(wf, jobs, workflowSources = {}) {
   if (!Array.isArray(jobs) || !jobs.length) return false;
+  if (jobs.some((j) => !j || typeof j !== 'object' || (j.conclusion === 'success' && (!Array.isArray(j.steps) || j.steps.some((s) => !s || typeof s !== 'object'))))) return false;
   if (jobs.some((j) => !['success', 'skipped'].includes(j.conclusion))) return false;
+  const configured = configuredJobInstances(wf, workflowSources);
+  if (!configured) return false;
+  // Missing standalone verification jobs are incomplete too, even when the
+  // publisher did not declare them in needs. Pagination/partial API responses
+  // must not silently remove a configured stage from global verification.
+  if (configured.some((entry) => jobs.filter((job) => job.name === entry.name).length !== 1)) return false;
   const diagnosticSkip = (observedJob, observedStep) => {
-    const configured = Object.entries(wf.jobs || {}).filter(([id, job]) => (job.name || id) === observedJob.name);
-    if (configured.length !== 1) return false;
+    const matches = configured.filter((entry) => entry.name === observedJob.name);
+    if (matches.length !== 1) return false;
     // Failure/cancellation-only artifact uploads are diagnostics. A skipped
     // test, required download or Pages artifact upload is incomplete evidence.
-    return (configured[0][1].steps || []).some((step) =>
+    return (matches[0].job.steps || []).some((step) =>
       String(step.uses || '').split('@')[0].toLowerCase() === 'actions/upload-artifact'
       && /^(?:\$\{\{\s*)?(?:failure\(\)|cancelled\(\))(?:\s*\}\})?$/.test(String(step.if || '').trim())
       && observedStep.name === (step.name || `Run ${step.uses}`));
   };
   if (jobs.some((j) => j.conclusion === 'success' && (!Array.isArray(j.steps) || !j.steps.length || j.steps.some((st) =>
     st.conclusion !== 'success' && !(st.conclusion === 'skipped' && diagnosticSkip(j, st)))))) return false;
+  for (const observed of jobs.filter((j) => j.conclusion === 'success')) {
+    const entry = configured.find((x) => x.name === observed.name);
+    if (!entry || !Array.isArray(entry.job.steps) || !entry.job.steps.length) return false;
+    const expectedNames = new Map();
+    for (const step of entry.job.steps) {
+      if (!step || typeof step !== 'object') return false;
+      let name = step.name || (step.uses ? `Run ${step.uses}` : typeof step.run === 'string' ? `Run ${step.run.trim().split('\n')[0]}` : null);
+      if (typeof name !== 'string') return false;
+      name = name.replace(/\$\{\{\s*matrix\.([A-Za-z0-9_-]+)\s*\}\}/g, (whole, key) => Object.hasOwn(entry.matrix, key) ? String(entry.matrix[key]) : whole);
+      if (name.includes('${{')) return false;
+      expectedNames.set(name, (expectedNames.get(name) || 0) + 1);
+    }
+    for (const [name, count] of expectedNames) {
+      if (observed.steps.filter((s) => s.name === name).length !== count) return false;
+    }
+  }
   let publishers = 0;
-  for (const [id, job] of Object.entries(wf.jobs || {})) {
+  // Check the complete prerequisite chain, including matrix cells and the
+  // configured jobs inside local reusable workflows. A prefix match alone
+  // cannot establish that every required cell/job was present.
+  function prerequisites(entry, seen = new Set()) {
+    if (seen.has(entry.name)) return false;
+    const next = new Set([...seen, entry.name]);
+    for (const name of entry.required) {
+      const expected = configured.find((x) => x.name === name);
+      const observed = jobs.filter((j) => j.name === name);
+      if (!expected || observed.length !== 1 || observed[0].conclusion !== 'success' || !prerequisites(expected, next)) return false;
+    }
+    return true;
+  }
+  for (const entry of configured) {
+    const job = entry.job;
     const expected = (job.steps || []).filter((st) => st.uses && PAGES_PUBLISHERS.has(String(st.uses).split('@')[0].toLowerCase()));
     if (!expected.length) continue;
     publishers++;
-    const name = job.name || id;
-    if (/\$\{\{/.test(name)) return false;
+    const name = entry.name;
     const matched = jobs.filter((j) => j.name === name);
     if (matched.length !== 1 || matched[0].conclusion !== 'success') return false;
     const steps = matched[0].steps;
     // A skipped artifact download or verification stage in the publishing job
     // is incomplete publication evidence, even if its action reports success.
     if (!Array.isArray(steps) || !steps.length || steps.some((st) => st.conclusion !== 'success')) return false;
-    const needs = typeof job.needs === 'string' ? [job.needs] : job.needs || [];
-    for (const dependency of needs) {
-      const configured = wf.jobs[dependency];
-      if (!configured) return false;
-      const matches = jobs.filter((j) => j.name === (configured.name || dependency));
-      if (matches.length !== 1 || matches[0].conclusion !== 'success') return false;
-    }
+    if (!prerequisites(entry)) return false;
     for (const st of expected) {
       const name = st.name || `Run ${st.uses}`;
       const found = steps.filter((x) => x.name === name);
@@ -265,7 +380,7 @@ function failingStep(jobs) {
   return null;
 }
 
-async function inspect({ repo, workflow, publishers = [], head, wf, verdict, detail }) {
+async function inspect({ repo, workflow, publishers = [], head, wf, workflowSources = {}, verdict, detail }) {
   if (verdict) return { repo, verdict, detail };
   const dir = path.join(FLEET_ROOT, repo);
   const deployName = wf.name;
@@ -303,11 +418,21 @@ async function inspect({ repo, workflow, publishers = [], head, wf, verdict, det
   if (latest && latest.status !== 'completed') return { repo, verdict: 'PENDING', head };
   if (latest && ['failure', 'timed_out', 'action_required'].includes(latest.conclusion)) return { repo, verdict: 'CHECK-FAILED', head, detail: `newest run ${latest.databaseId} concluded ${latest.conclusion}` };
 
+  let failedVerification = null;
   async function published(run) {
     const raw = await sh('gh', ['run', 'view', String(run.databaseId), '--repo', `systemslibrarian/${repo}`, '--json', 'jobs'], dir);
     let jobs;
     try { jobs = JSON.parse(raw).jobs; } catch { return false; }
-    if (!verifyPublishJobs(wf, jobs)) return false;
+    if (!verifyPublishJobs(wf, jobs, workflowSources)) {
+      if (Array.isArray(jobs)) {
+        const failed = jobs.find((job) => job && (job.conclusion === 'failure' || (Array.isArray(job.steps) && job.steps.some((step) => step?.conclusion === 'failure'))));
+        if (failed) {
+          const step = Array.isArray(failed.steps) ? failed.steps.find((value) => value?.conclusion === 'failure') : null;
+          failedVerification = `run ${run.databaseId}: observed verification ${failed.name}${step ? ' / ' + step.name : ''} failed; publisher success is not global verification success`;
+        }
+      }
+      return false;
+    }
     if (buildType === 'legacy') {
       const built = await sh('gh', ['api', `repos/systemslibrarian/${repo}/pages/builds/latest`], dir);
       let value;
@@ -317,8 +442,11 @@ async function inspect({ repo, workflow, publishers = [], head, wf, verdict, det
     return true;
   }
   const current = shipped.find((r) => r.headSha === head);
-  if (current) return { repo, verdict: await published(current) ? 'CURRENT' : 'API-ERROR', head,
-    detail: 'Publish-job evidence is separate from a live-byte verification' };
+  if (current) {
+    const ok = await published(current);
+    return { repo, verdict: ok ? 'CURRENT' : failedVerification ? 'CHECK-FAILED' : 'API-ERROR', head,
+      detail: failedVerification || 'Publish-job evidence is separate from a live-byte verification' };
+  }
   if (!shipped.length) return { repo, verdict: 'NEVER-DEPLOYED', head, ...classifyStaleCause(real, head) };
 
   const previous = shipped[0];
@@ -328,8 +456,9 @@ async function inspect({ repo, workflow, publishers = [], head, wf, verdict, det
   if (!changed.length) {
     // Empty tree diff across unrelated commits is not source ancestry.
     if (await sh('git', ['merge-base', '--is-ancestor', previous.headSha, head], dir) === null) return { repo, verdict: 'API-ERROR', head };
-    return { repo, verdict: await published(previous) ? 'CURRENT' : 'API-ERROR', head,
-      detail: 'Only .github/ changed after an ancestor with a verified publish job; live bytes not checked' };
+    const ok = await published(previous);
+    return { repo, verdict: ok ? 'CURRENT' : failedVerification ? 'CHECK-FAILED' : 'API-ERROR', head,
+      detail: failedVerification || 'Only .github/ changed after an ancestor with a verified publish job; live bytes not checked' };
   }
   const last = previous.headSha;
 
@@ -460,7 +589,10 @@ async function main() {
   }
   if (broken.length) {
     console.log(`\nCould not determine (${broken.length}):`);
-    for (const r of broken) console.log(`  ${r.repo}  ${r.verdict}`);
+    for (const r of broken) {
+      console.log(`  ${r.repo}  ${r.verdict}`);
+      if (r.detail) console.log(`      ${r.detail}`);
+    }
   }
   if (!stale.length) {
     if (!rows.length || unserved.length || broken.length || pending.length) return 1;

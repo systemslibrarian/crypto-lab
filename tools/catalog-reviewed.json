@@ -166,13 +166,13 @@
     "note": "Executes a deliberately toy HiAE model, not the production cipher"
   },
   "crypto-lab-point-ledger": {
-    "commit": "49dfff0b098791f09e26ecccb53f04b8ad22f1ef",
-    "reviewed": "2026-09-23",
+    "commit": "abe44608d558561512e6783284fc16ef50623620",
+    "reviewed": "2026-10-11",
     "remove": [
       "ECDSA",
       "SHA-3"
     ],
-    "note": "Fresh clone inspected; ECDSA is a data table and SHA-3 is merely the module path exporting SHAKE"
+    "note": "Re-read current README, every tracked src module and relevant tests after integrated Lucide v1 repair PR15. Full prior review49dfff0 to this commit changes only the navigation icon Github to CodeXml in src/main.tsx; ledger/dialog/fuzz/toy computations and learner-facing claims are unchanged. ECDSA remains a cited resource-estimate data table, not an implementation; the noble/hashes sha3 module path exports the used SHAKE256, not SHA-3 execution. Preserve SHAKE and SHA-256 evidence and teaching-model limits. Actual36 unit,11 local and11 public browser/WCAG tests and immutable-lock npm audit zero passed at this exact SHA. Fleet dependency work39b11ea4-0958-4717-8cc8-faaabd45be07; source review is separate from deployment and dependency provider evidence."
   },
   "crypto-lab-quantum-entropy": {
     "commit": "58b690d875abea61f59a9cd89b8d53ea2d487e33",
@@ -395,8 +395,8 @@
     "note": "Read src/x25519/agree.ts, src/eavesdrop/attempt.ts, src/ui/mixing.ts and src/main.ts. The exchange is real @noble/curves X25519 and the lab checks RFC 7748 5.2's published vectors in the browser before anything is pressed. The scanner anchored X25519 at src/eavesdrop/attempt.ts:1, an import line in the eavesdropper module; the pin moves it to getSharedSecret in the agreement module. 'Discrete log' was derived from README prose explaining what is NOT taught here and is removed: the lab says outright that it never uses the words, and hands the mathematics to DH MITM and Key Exchange. The man-in-the-middle anchor stays -- panel 4 really does run a stranger answering in Bob's place, and every check on the page still passes, which is the lab's negative claim rather than a disclaimer."
   },
   "crypto-lab-sat-break": {
-    "commit": "22cf78e9dd3e1f1d3dcd9901b0dbed3bd1972508",
-    "reviewed": "2026-10-09",
+    "commit": "38b92b51cb4264c325824d9dd3dbafcfa725a769",
+    "reviewed": "2026-10-10",
     "add": [
       "Toy SPN@src/crypto/spn.ts:99"
     ],
@@ -405,7 +405,7 @@
       "Impossible differential",
       "Linear cryptanalysis"
     ],
-    "note": "Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain."
+    "note": "Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain. Re-reviewed PR2 at integrated38b92b51cb4264c325824d9dd3dbafcfa725a769: the SPN, CNF encoder, solver and exhaustive workers, direct verifier, UI, README, C++ wrapper and both shipped assets are byte-identical to the preceding pin. The clean build recipe captures immutable CaDiCaL c60730422e758ef1cebe7aeddf2dda31c996bf04 source and fresh objects/caches, with fourteen offline hygiene/failure controls. Integrated workflow38102731905 independently reproduces both shipped assets using the pinned official SDK, establishing measured source-to-byte correspondence. The original compiler identity remains unknown; static C/C++ and WASM coverage limits and cryptographic/constant-time limits remain. Documentation hash checks alone still do not establish reproduction."
   },
   "crypto-lab-lfsr-forge": {
     "commit": "2a9848eee885039dfda5d576b0727233624bee7f",
@@ -587,5 +587,25 @@
     ],
     "implementation": "idealized statistical simulation",
     "note": "Read current engine.ts, data.ts comparison table, README and ui.ts honesty panel after independently tested CHSH interval repair. runE91 computes simulated singlet correlations, sifting, intercept-resend Eve, noise, misalignment and loss; no physical quantum channel or finite-key/device-independent proof. BB84 is a comparison table, not implemented. Side channels are explicitly not modelled, and unauthenticated-channel MITM is a README warning, not a demonstrated protocol attack. Preserve raw static coverage and real bounded simulation, not a cryptographic implementation claim."
+  },
+  "crypto-lab-lattice-fault": {
+    "commit": "6b127eb85b647f573408f2e9a90cbe0fcca2c94b",
+    "reviewed": "2026-10-10",
+    "remove": [
+      "Kyber",
+      "ML-DSA",
+      "Chosen-plaintext attack",
+      "Padding oracle"
+    ],
+    "implementation": "Hand-rolled Keccak/SHAKE256 and NTT; simulated physical attacks using ML-KEM decode and ML-DSA components",
+    "note": "Read README.md, src/main.ts, timing.ts, timing.worker.ts, loopabort.ts, rejection.ts, ntt.ts, shake256.ts and relevant tests at this exact commit. Kyber@src/timing.ts:88 models software-divide cycle counts only, not a complete KEM. ML-DSA@src/loopabort.ts:37 is a parameter object; runLoopAbortAttack constructs one 256-coefficient secret polynomial and z=y+c*s1 with selected real FIPS 204 ring/sampling operations, independently randomized challenge/nonce seeds and toy signer assumptions, not full ML-DSA key generation, signing or verification. Preserve actual Keccak-f[1600]/SHAKE256 and NTT. CPA in src/main.ts:40 means correlation power analysis rather than chosen-plaintext attack; padding-oracle at line618 is a sibling name rather than an executed attack. Keep the disclosed bounded power, fault, timing, key-recovery and LLL computations. No constant-time target-hardware, standards-conformance or full signing-key recovery claim is established. Fleet interpretation work 4ad4a3db-52c4-428e-9b19-d0f63199ef6c; this review does not complete its pending hub integration."
+  },
+  "crypto-lab-stego-suite": {
+    "commit": "145f8f49b6e0a5ec649704472722a41d8df34ea8",
+    "reviewed": "2026-10-10",
+    "remove": [
+      "Power analysis"
+    ],
+    "note": "Read current README, src/main.ts and crypto/bits/stego/DCT/chi/image modules plus tests at this SHA. src/main.ts:326 lists SPA among stronger image steganalysis detectors; this is not Simple Power Analysis or an executed physical-power attack. Remove that abbreviation-derived attack credit. AES/AES-GCM are real WebCrypto encryption/decryption, with PBKDF2 and SHA-256 key derivation in src/lib/crypto.ts; retain all four implementation credits. F5-inspired raw-block DCT embedding and WOW-inspired adaptive placement are disclosed models, not complete named production schemes. The old interpretation candidates arose from a timed-out scan, now independently completed. Review scope is catalogue classification, not a blanket covert-channel/security guarantee. Fleet work3a0b1565-7f73-4412-a3e9-ebf5de96d515."
   }
 }

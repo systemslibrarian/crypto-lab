@@ -139,6 +139,8 @@ test('check mode still fails a verified browser lab missing its catalog card', a
 });
 
 test('newlines in one tracked filename cannot masquerade as separate HTML paths', async () => {
-  const result = await hasPage(repo(), { exists: () => false, run: async () => ok(tree(['notes\nindex.html\nunrelated.txt'])) });
-  assert.equal(result.state, 'no-page');
+  for (const file of ['notes\nindex.html\nunrelated.txt', 'index.html\n', 'demos/index.html\r']) {
+    const result = await hasPage(repo(), { exists: () => false, run: async () => ok(tree([file])) });
+    assert.equal(result.state, 'no-page', JSON.stringify(file));
+  }
 });

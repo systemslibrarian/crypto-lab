@@ -124,7 +124,7 @@ function cardedSlugs(html) {
   return { slugs, hrefless };
 }
 
-const INDEX_PATH = /(^|\/)index\.html$/;
+const isIndexPath = file => file === 'index.html' || file.endsWith('/index.html');
 
 /* Presence, absence and unreadable source are separate answers. A failed fetch
  * cannot make an old tracking ref current; a failed API read cannot make a lab
@@ -147,7 +147,7 @@ async function hasPage(repo, { run = sh, exists = fs.existsSync } = {}) {
       if (!commit.ok || !/^[a-f0-9]{40}$/.test(commit.stdout)) return unread('Fetched default-branch commit is unavailable');
       const tree = await run('git', ['ls-tree', '-r', '--name-only', '-z', commit.stdout], dir);
       if (!tree.ok) return unread('Fetched commit tree is unreadable');
-      return { state: tree.stdout.split('\0').some(file => INDEX_PATH.test(file)) ? 'page' : 'no-page', sourceSha: commit.stdout };
+      return { state: tree.stdout.split('\0').some(isIndexPath) ? 'page' : 'no-page', sourceSha: commit.stdout };
     }
     // A missing default branch may be an empty repository. Ask GitHub rather
     // than guessing main/master or reading an unrelated old origin/HEAD.
@@ -163,7 +163,7 @@ async function hasPage(repo, { run = sh, exists = fs.existsSync } = {}) {
       || tree.tree.some(entry => !entry || typeof entry.path !== 'string' || !['blob', 'tree', 'commit'].includes(entry.type))) {
     return unread('Repository tree is incomplete, truncated or malformed');
   }
-  return { state: tree.tree.some(entry => entry.type === 'blob' && INDEX_PATH.test(entry.path)) ? 'page' : 'no-page', sourceTreeSha: tree.sha };
+  return { state: tree.tree.some(entry => entry.type === 'blob' && isIndexPath(entry.path)) ? 'page' : 'no-page', sourceTreeSha: tree.sha };
 }
 
 async function mapLimited(items, fn) {

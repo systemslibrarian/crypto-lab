@@ -8,6 +8,8 @@ stale/unreadable-review guard controls whether corrections may be applied.
 accepts canonical algorithm names whose apparent mention is not a reference to
 that algorithm. It affects only generated references, preserves raw mention and
 implementation evidence, and stays unapplied when the review is stale or unreadable.
+Reference exclusions additionally require HEAD to equal the exact review commit:
+document wording can change outside the older implementation movement scope.
 Malformed names fail instead of silently doing nothing.
 
 TC26's provenance documentation uses “opaque-WASM coverage” to describe unread

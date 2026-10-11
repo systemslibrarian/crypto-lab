@@ -976,8 +976,10 @@ function evidenceFor(slug) {
 
   const review = REVIEWS[slug];
   let staleReview = null;
+  let reviewHead = null;
   if (review) {
     const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+    reviewHead = head;
     const movement = head === review.commit ? 'not-moved' : movedSubstantively(dir, review.commit, head);
     if (movement === 'unreadable') {
       /* Could not look is not permission to apply the pin. The recorded add and
@@ -1042,7 +1044,7 @@ function evidenceFor(slug) {
   }
   const impl = [...hits.entries()].map(([name, v]) => ({ name, at: v.at, shape: v.shape }))
     .sort((a, b) => a.name.localeCompare(b.name));
-  const refs = reviewedReferenceNames(slug, mentions, hits, review, staleReview);
+  const refs = reviewedReferenceNames(slug, mentions, hits, review, staleReview, reviewHead);
   const atks = [...attackHits.entries()].map(([name, v]) => ({ name, at: v.at }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -1476,12 +1478,14 @@ function verifyAnchors(all) {
   console.log('Every anchor still resolves and every pinned source review matches its lab clone.');
 }
 
-function reviewedReferenceNames(slug, mentions, hits, review, staleReview) {
+function reviewedReferenceNames(slug, mentions, hits, review, staleReview, head) {
   // "opaque WASM" describes a coverage limit, not the OPAQUE PAKE.
   // Correct such ambiguous mentions only under the same source-review guard
   // as algorithm/attack corrections. Keep the raw evidence and claim maps.
   let excluded = [];
-  if (review && !staleReview) {
+  // Reference wording can change in docs outside the legacy implementation
+  // movement scope. Never inherit a reference exclusion at a different HEAD.
+  if (review && !staleReview && /^[0-9a-f]{40}$/.test(review.commit || '') && head === review.commit) {
     excluded = review.removeReferences ?? [];
     if (!Array.isArray(excluded) || excluded.some((name) =>
       !ALGORITHMS.some((term) => term.name === name))) {

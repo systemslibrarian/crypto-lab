@@ -320,4 +320,8 @@ function main() {
   return 0;
 }
 
-process.exit(main());
+// Importing the classifier must not scan sibling repositories or exit its caller.
+// Its README.md/src-only scope remains unchanged; broader teaching-reference
+// invalidation must account for every tracked path separately.
+module.exports = { classify, findCorpus, refFor, isAncestorOf, changedSince };
+if (require.main === module) process.exit(main());

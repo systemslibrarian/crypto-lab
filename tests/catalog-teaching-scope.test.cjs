@@ -40,15 +40,84 @@ test('comparison tables, parameter imports and symbolic terms are not primitive 
   ]) assert.ok(implementationsFor(html, slug).includes(term), `${slug}: preserve ${term}`);
 });
 
+function checkLatticeModelScope(source) {
+  const slug = 'crypto-lab-lattice-fault';
+  // Inspected immutable source at 6b127eb85b647f573408f2e9a90cbe0fcca2c94b:
+  // src/timing.ts:88 counts a model's divide steps; src/loopabort.ts:37 is
+  // a parameter object. runLoopAbortAttack at :560 generates one polynomial
+  // relation, not a complete ML-DSA key/signature/verification implementation.
+  const implementations = implementationsFor(source, slug);
+  assert.deepEqual(implementations, ['Keccak', 'NTT', 'SHAKE'],
+    'Keep executed primitives without crediting complete Kyber or ML-DSA');
+  const attacks = attacksFor(source, slug);
+  // src/main.ts:40 uses CPA for correlation power analysis, not a chosen-
+  // plaintext attack; :618 is only a related padding-oracle lab name.
+  assert.ok(!attacks.includes('Chosen-plaintext attack'));
+  assert.ok(!attacks.includes('Padding oracle'));
+  for (const name of ['Fault injection', 'Key recovery', 'Lattice reduction',
+    'Power analysis', 'Timing side-channel']) {
+    assert.ok(attacks.includes(name), `Preserve the bounded ${name} exhibit`);
+  }
+  const card = source.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[\\s\\S]*?</a>'))[0];
+  assert.match(card, /Modelled ML-KEM decode/);
+  assert.match(card, /Modelled ML-DSA components/);
+  assert.match(card, /one secret polynomial in a signing model/);
+  assert.doesNotMatch(card, /whole ML-DSA secret/);
+}
+
+test('Lattice Fault separates component and cycle models from complete standards', () => {
+  checkLatticeModelScope(html);
+});
+
+test('Lattice Fault scope rejects false credits and loss of real computations', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/"';
+  for (const [attribute, value] of [
+    ['implements', 'Kyber@src/timing.ts:88'],
+    ['implements', 'ML-DSA@src/loopabort.ts:37'],
+    ['attacks', 'Chosen-plaintext attack@src/main.ts:40'],
+    ['attacks', 'Padding oracle@src/main.ts:618'],
+  ]) {
+    assert.throws(() => checkLatticeModelScope(html.replace(marker,
+      `${marker} data-${attribute}="${value}"`)), assert.AssertionError);
+  }
+  for (const name of ['Keccak', 'NTT', 'SHAKE']) {
+    const changed = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-lattice-fault\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${name}@src/(?:shake256|loopabort)\\.ts:\\d+`), ''));
+    assert.notEqual(changed, html, `${name} control must change the actual anchor`);
+    assert.throws(() => checkLatticeModelScope(changed), assert.AssertionError);
+  }
+});
+
 test('visible catalog summaries distinguish BBS naming and bounded DP advantage', () => {
   const card = slug => html.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[\\s\\S]*?</a>'))[0];
   assert.match(card('crypto-lab-credential-veil'), /BBS selective disclosure/);
   assert.doesNotMatch(card('crypto-lab-credential-veil'), /(?:project-copy|chip)">[^<]*BBS\+/);
   assert.match(card('crypto-lab-dp-noise'), /distinguishing advantage.*bounded/);
   assert.doesNotMatch(card('crypto-lab-dp-noise'), /become indistinguishable/);
+  assert.match(card('crypto-lab-rsa-educational'), /projected 2048-bit factoring cost/);
+  assert.doesNotMatch(card('crypto-lab-rsa-educational'), /while a 2048-bit key holds/);
 });
 
 function checkScope(source) {
+  // HQC Timing Break cc4305c7: src/engine.ts runs a repetition-code cache
+  // model. data.ts's 2020 chosen-ciphertext event and README's Lattice Fault
+  // sibling link describe other work, not attacks executed by this model.
+  assert.deepEqual(attacksFor(source, 'crypto-lab-hqc-timing-break'),
+    ['Cache timing', 'Key recovery', 'Side-channel (unspecified)', 'Timing side-channel']);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-hqc-timing-break'),
+    ['Repetition code']);
+  // Educational RSA 81e413b19: factor.ts computes integer factors, not
+  // discrete logarithms; real-world.ts links to a sibling padding oracle.
+  assert.deepEqual(attacksFor(source, 'crypto-lab-rsa-educational'),
+    ['Ciphertext malleability', 'Factoring', 'Key recovery']);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-rsa-educational'),
+    ['RSA', 'RSA-OAEP']);
+  // Current Stego Suite 145f8f49b6e0a5ec649704472722a41d8df34ea8:
+  // src/main.ts:326 lists image detectors RS/SPA/ML, not physical power
+  // analysis. src/lib/crypto.ts performs the real encrypt-before-hide calls.
+  assert.deepEqual(attacksFor(source, 'crypto-lab-stego-suite'), []);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-stego-suite'),
+    ['AES', 'AES-GCM', 'PBKDF2', 'SHA-256']);
   const bitcoin = attacksFor(source, 'crypto-lab-bitcoin-script');
   assert.ok(bitcoin.includes('Signature malleability'), 'Keep the actual high-S experiment');
   assert.ok(!bitcoin.includes('Key recovery'), 'Sibling key recovery is not executed here');
@@ -72,6 +141,7 @@ function checkScope(source) {
     'crypto-lab-protocol-checker': ['Discrete log', 'Key recovery', 'Padding oracle', 'Side-channel (unspecified)', 'Timing side-channel'],
     'crypto-lab-isogeny-atlas': ['Factoring'],
     'crypto-lab-e91': ['Man-in-the-middle', 'Side-channel (unspecified)'],
+    'crypto-lab-lwe-hints': ['Chosen-plaintext attack', 'Lattice reduction', 'Power analysis'],
   })) {
     for (const name of rejected) assert.ok(!attacksFor(source, slug).includes(name), `${slug}: reject ${name}`);
   }
@@ -81,6 +151,10 @@ function checkScope(source) {
   assert.ok(attacksFor(source, 'crypto-lab-isogeny-atlas').includes('Brute force'));
   assert.ok(attacksFor(source, 'crypto-lab-order-leak').includes('Frequency analysis'),
     'Preserve actual ciphertext-frequency recovery against public counts');
+  assert.ok(attacksFor(source, 'crypto-lab-lwe-hints').includes('Side-channel (unspecified)'),
+    'Preserve the assumed inner-product leakage setting, without claiming a physical channel');
+  assert.ok(implementationsFor(source, 'crypto-lab-lwe-hints').includes('LWE'),
+    'Preserve the actual toy LWE instance and perfect-hint recovery');
 }
 
 test('catalog keeps sibling attacks and negated limits out of attacks shown', () => {
@@ -97,6 +171,14 @@ test('scope control detects reintroduced sibling and negated-limit credits', () 
     ['crypto-lab-sphincs-ledger', 'Factoring'],
     ['crypto-lab-dilithium-seal', 'Key recovery'],
     ['crypto-lab-protocol-checker', 'Padding oracle'],
+    ['crypto-lab-lwe-hints', 'Chosen-plaintext attack'],
+    ['crypto-lab-lwe-hints', 'Lattice reduction'],
+    ['crypto-lab-lwe-hints', 'Power analysis'],
+    ['crypto-lab-hqc-timing-break', 'Chosen-ciphertext attack'],
+    ['crypto-lab-hqc-timing-break', 'Fault injection'],
+    ['crypto-lab-rsa-educational', 'Discrete log'],
+    ['crypto-lab-rsa-educational', 'Padding oracle'],
+    ['crypto-lab-stego-suite', 'Power analysis'],
   ]) {
     const marker = `href="https://systemslibrarian.github.io/${slug}/"`;
     const mutated = html.replace(marker, `${marker} data-attacks="${attack}@README.md:1"`);
@@ -104,10 +186,83 @@ test('scope control detects reintroduced sibling and negated-limit credits', () 
   }
 });
 
+test('scope control detects loss of Stego Suite encrypt-before-hide cryptography', () => {
+  for (const name of ['AES-GCM', 'PBKDF2', 'SHA-256']) {
+    const changed = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-stego-suite\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${name}@src/lib/crypto\\.ts:\\d+`), ''));
+    assert.notEqual(changed, html, `${name} mutation must change the actual card`);
+    assert.throws(() => checkScope(changed), assert.AssertionError);
+  }
+});
+
 test('scope control detects loss of the actual frequency-recovery exhibit', () => {
   const mutated = html.replace(/Frequency analysis@src\/app.ts:\d+/, '');
   assert.notEqual(mutated, html, 'The mutation must remove the real catalog anchor');
   assert.throws(() => checkScope(mutated), assert.AssertionError);
+});
+
+test('LWE scope control detects loss of the real instance and assumed leakage context', () => {
+  for (const attr of ['implements', 'attacks']) {
+    const marker = 'href="https://systemslibrarian.github.io/crypto-lab-lwe-hints/"';
+    const mutated = html.replace(marker, `${marker} data-${attr}=""`);
+    assert.notEqual(mutated, html, 'The mutation must alter the selected card');
+    assert.throws(() => checkScope(mutated), assert.AssertionError);
+  }
+});
+
+test('HQC scope control preserves the modeled cache channel, recovery and repetition code', () => {
+  for (const [field, name] of [
+    ['data-implements', 'Repetition code'],
+    ['data-attacks', 'Cache timing'], ['data-attacks', 'Key recovery'],
+  ]) {
+    const mutated = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hqc-timing-break\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${field}="([^"]*)"`), (attribute, value) => {
+        const entries = value.split(' | ').filter(entry => entry.split('@')[0] !== name);
+        assert.notEqual(entries.length, value.split(' | ').length, `${name} mutation must apply`);
+        return `${field}="${entries.join(' | ')}"`;
+      }));
+    assert.notEqual(mutated, html, 'Mutate the actual card');
+    assert.throws(() => checkScope(mutated), assert.AssertionError);
+  }
+});
+
+function checkHqcVisibleScope(source) {
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hqc-timing-break\/"[\s\S]*?<\/a>/)[0];
+  const copy = card.match(/<div class="project-copy">([^<]*)<\/div>/)[1];
+  assert.match(copy, /cache-channel simulation/);
+  assert.match(copy, /repetition-code stand-in/);
+  assert.match(copy, /majority and reliability-weighted bit recovery/);
+  assert.match(copy, /No full HQC decoder or target-hardware timing measurements/);
+  assert.doesNotMatch(copy, /A full-decryption oracle on HQC/);
+  assert.match(card, /chip">Reliability-Weighted Recovery<\/span>/);
+  assert.doesNotMatch(card, /chip">Soft-ISD<\/span>/);
+}
+
+test('HQC visible teaching scope describes a cache simulation, not a working HQC oracle', () => {
+  checkHqcVisibleScope(html);
+  const changed = html.replace(/cache-channel simulation inspired by HQC decryption-oracle attacks/, 'full-decryption oracle on HQC');
+  assert.notEqual(changed, html, 'The negative control must change visible learner-facing text');
+  assert.throws(() => checkHqcVisibleScope(changed), assert.AssertionError);
+  const unqualified = html.replace('chip">Reliability-Weighted Recovery</span>', 'chip">Soft-ISD</span>');
+  assert.notEqual(unqualified, html);
+  assert.throws(() => checkHqcVisibleScope(unqualified), assert.AssertionError);
+});
+
+test('scope control preserves Educational RSA arithmetic and executed attacks', () => {
+  for (const [field, name] of [
+    ['data-implements', 'RSA'], ['data-implements', 'RSA-OAEP'],
+    ['data-attacks', 'Ciphertext malleability'], ['data-attacks', 'Factoring'],
+    ['data-attacks', 'Key recovery'],
+  ]) {
+    const mutated = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-rsa-educational\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(`${field}="([^"]*)"`), (attribute, value) => {
+        const entries = value.split(' | ').filter(entry => entry.split('@')[0] !== name);
+        assert.notEqual(entries.length, value.split(' | ').length, `${name} mutation must apply`);
+        return `${field}="${entries.join(' | ')}"`;
+      }));
+    assert.notEqual(mutated, html, 'Mutate the actual card');
+    assert.throws(() => checkScope(mutated), assert.AssertionError);
+  }
 });
 
 test('scanner rejects negated claims, risk warnings and biographies as attack evidence', () => {

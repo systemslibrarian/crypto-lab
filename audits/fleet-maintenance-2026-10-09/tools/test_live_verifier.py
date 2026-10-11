@@ -42,6 +42,10 @@ class LiveVerifierControls(unittest.TestCase):
         # command is the existing installed browser runner with --no installation.
         (self.pkg / 'package.json').write_text(json.dumps({'scripts': {
             'preinstall': 'touch LIFECYCLE-RAN', 'install': 'touch LIFECYCLE-RAN'}}))
+        (self.pkg/'e2e/fixture.spec.ts').write_text('// Explicit synthetic fixture; external runner substituted\n')
+        self.git('add', '.')
+        self.git('commit', '-qm', 'Tracked test configurations')
+        self.sha = self.git('rev-parse', 'HEAD')
         self.write_inputs()
         hooks = self.root / 'hooks'
         hooks.mkdir()
@@ -64,6 +68,8 @@ def fixture(args, *a, **kw):
    time.sleep(.025)
  if mode == 'timeout' or mode == 'second-timeout' and calls == 2:
   raise subprocess.TimeoutExpired(args,1800,output=b'partial browser stdout',stderr=b'partial stderr')
+ if mode == 'source-change': original(['git','commit','--allow-empty','-qm','Concurrent fixture change'],cwd=kw['cwd'],check=True)
+ if mode == 'dirty-source': (pathlib.Path(kw['cwd'])/'fixture.txt').write_text('Changed during browser execution\\n')
  if mode == 'failed': return subprocess.CompletedProcess(args,1,'1 failed\\n','fixture assertion')
  if mode == 'zero': return subprocess.CompletedProcess(args,0,'0 passed\\n','')
  if mode == 'missing-summary': return subprocess.CompletedProcess(args,0,'setup complete\\n','')
@@ -183,18 +189,49 @@ subprocess.run = fixture
         self.assertIsNone(current['sourceSha'])
 
     def test_unreviewed_global_setup_or_dynamic_test_directory_is_incomplete(self):
+        self.prime()
         for source in ("export default {globalSetup:'./hook',testDir:'./e2e'};",
                        'export default {testDir:dynamicDirectory};'):
             with self.subTest(source=source):
-                (self.pkg/'playwright.config.ts').write_text("export default {testDir:'./e2e'};")
-                self.prime()
-                (self.pkg/'playwright.config.ts').write_text(source)
+                (self.pkg/'playwright.config.ts').write_text(source+'\n')
+                self.git('add','playwright.config.ts')
+                self.git('commit','-qm','Current configuration fixture')
+                proof=json.loads(self.proof.read_text())
+                proof['currentSha']=self.git('rev-parse','HEAD')
+                self.proof.write_text(json.dumps(proof))
                 self.assert_incomplete(self.invoke())
 
     def test_missing_test_directory_is_incomplete(self):
         self.prime()
+        (self.pkg/'e2e/fixture.spec.ts').rename(self.out/'preserved-fixture.spec.ts')
         (self.pkg/'e2e').rmdir()
+        self.git('add','e2e/fixture.spec.ts')
+        self.git('commit','-qm','Missing tracked test directory fixture')
+        proof=json.loads(self.proof.read_text())
+        proof['currentSha']=self.git('rev-parse','HEAD')
+        self.proof.write_text(json.dumps(proof))
         self.assert_incomplete(self.invoke())
+
+    def test_tracked_local_changes_before_execution_are_incomplete(self):
+        self.prime()
+        (self.pkg/'fixture.txt').write_text('Uncommitted source change\n')
+        self.assert_incomplete(self.invoke())
+        self.assertEqual((self.pkg/'fixture.txt').read_text(), 'Uncommitted source change\n')
+
+    def test_committed_or_uncommitted_changes_during_execution_are_incomplete(self):
+        self.prime()
+        for mode in ['source-change','dirty-source']:
+            with self.subTest(mode=mode):
+                current=self.assert_incomplete(self.invoke(mode))
+                self.assertTrue(current['completedSuites'])
+                self.assertEqual(current['sourceSha'], self.sha)
+                # Restore fixture readability by committing intentional fixture
+                # changes and updating its explicit proof, never resetting files.
+                self.git('add','fixture.txt')
+                if self.git('status','--porcelain','--untracked-files=no'):
+                    self.git('commit','-qm','Retain intentional fixture mutation')
+                self.sha=self.git('rev-parse','HEAD')
+                self.write_inputs()
 
     def test_zero_exit_without_positive_complete_browser_result_is_incomplete(self):
         self.prime()

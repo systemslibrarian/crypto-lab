@@ -30,7 +30,9 @@ The existing cohort must contain inspected checks/pushed and postmerge records;
 the root must contain its existing `console-current-critical-20261009/fleet.json`
 URL inventory. Reading that inventory does not refresh its historical source
 or provider observations. The actual Git HEAD must match the inspected
-postmerge revision. Review the original lab's configurations and assertions
+postmerge revision, and tracked source must be clean before and after execution.
+Revision or tracked-file changes during a suite invalidate its current result.
+Review the original lab's configurations and assertions
 before selecting its suites. Dynamic test directories or extra global lifecycle
 hooks are incomplete evidence, requiring review.
 
@@ -74,7 +76,7 @@ python3 -B -m unittest discover \
   -s audits/fleet-maintenance-2026-10-09/tools -p 'test_*.py' -v
 ```
 
-Fourteen live-reader tests execute the actual CLI, temporary Git repository and
+Sixteen live-reader tests execute the actual CLI, temporary Git repository and
 filesystem evidence. Only the external browser command is substituted; their
 synthetic successes are not public application checks. Sixteen policy tests
 exercise source ancestry, complete collections, latest attempts and positive

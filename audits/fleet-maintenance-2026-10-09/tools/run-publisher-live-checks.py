@@ -40,6 +40,7 @@ def run_target(slug):
     root=Path(record['path']);pkg=Path(record['packagePath'])
     proof=json.loads((out/(slug+'-postmerge.json')).read_text())
     assert proof['verifiedScopedRepair'] and proof['currentTreeMatchesReviewedHead'] and proof['allApplicationResourcesVerified']
+    assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=root,text=True).strip(), 'Tracked source changes require a clean inspected worktree'
     sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
     assert sha==proof['currentSha'], 'Integrated tests must use actual default source'
     attempt_context[slug].update(sourceSha=sha,url=urls[slug])
@@ -84,6 +85,8 @@ def run_target(slug):
       attempt_context[slug]['completedSuites']=list(suites)
       print(slug,'public',config_name,run.returncode,flush=True)
     result={**suites[0],'suites':suites,'result':'passed' if all(s['result']=='passed' for s in suites) else 'failed','exit':0 if all(s['exit']==0 for s in suites) else 1}
+    assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()==sha, 'Source revision changed during browser execution'
+    assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=root,text=True).strip(), 'Tracked source changed during browser execution'
     write_record(out/(slug+'-live-checks.json'),result)
 
 if __name__ == '__main__':

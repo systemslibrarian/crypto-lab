@@ -59,6 +59,13 @@ guards are exercised by `node --test tests/fleet-sync-source.test.cjs` in the
 existing discovery workflow; fixture passes do not replace the actual
 authenticated `node tools/fleet-sync.js check`.
 
+`lab-dates.js` uses Git glob exclusion pathspecs so root documentation such as
+`AGENTS.md` and `README.md` is excluded just like nested Markdown. The actual
+Git-history controls in `tests/lab-dates-history.test.cjs` verify documentation
+and maintenance exclusions while preserving real HTML, nested demo, Rust, C,
+data and WASM content changes. A hand-written glob mirror alone cannot verify
+Git's matching semantics.
+
 Dispatch evidence reads every executable dispatch in an auto-merge job. A
 readable, dispatchable verification workflow may precede or follow the actual
 Pages publisher; its name alone does not establish its role. The deployment

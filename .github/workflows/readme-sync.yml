@@ -72,6 +72,9 @@ jobs:
       - name: Demo date regression fixtures
         if: ${{ !cancelled() }}
         run: node tools/lab-dates.js selftest
+      - name: Actual Git history content-date positive and negative controls
+        if: ${{ !cancelled() }}
+        run: node --test tests/lab-dates-history.test.cjs
       - name: Card metadata duplicates and writer ordering
         if: ${{ !cancelled() }}
         run: node --test tests/card-metadata.test.cjs

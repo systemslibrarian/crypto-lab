@@ -97,7 +97,9 @@ const NOT_THE_DEMO = [
   '**/*.md',
 ];
 
-const EXCLUDE_PATHSPEC = NOT_THE_DEMO.map((p) => `:(exclude)${p}`);
+// Git's default wildcard semantics do not let **/*.md match root AGENTS.md
+// or README.md. Use actual glob pathspecs so the exclusions match their intent.
+const EXCLUDE_PATHSPEC = NOT_THE_DEMO.map((p) => `:(glob,exclude)${p}`);
 
 function git(dir, args) {
   return execFileSync('git', ['-C', dir, ...args], {
@@ -405,5 +407,5 @@ function main() {
   return 0;
 }
 
-module.exports = { stamp, readAttrs };
+module.exports = { stamp, readAttrs, EXCLUDE_PATHSPEC };
 if (require.main === module) process.exit(main());

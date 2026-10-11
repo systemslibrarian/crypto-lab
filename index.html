@@ -3876,15 +3876,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-snark-arena/"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-snark-arena/" data-added="2026-04" data-updated="2026-10"
             data-implements="Groth16@src/ui/realproof.ts:97 | KZG commitment@src/crypto/setup.ts:101"
             data-unscanned="WebAssembly:1"
             data-references="BLS12-381 | Bulletproofs | Fiat-Shamir | Halo2 | PLONK | Pairing | SHA-256 | STARK | Schnorr | Shor's algorithm"
             data-attacks="Discrete log@src/ui/ceremony.ts:116"
             data-implementation="WASM"
             data-review-commit="9e6e0c68b6bb0bfc1f7ecd74d4e2dff08a2cb220"
-            data-review-note="Read current Groth16 fullProve/verify calls, cubic.circom, setup explanations and complete PR21 diff; real proof mechanics disclose the bounded witness through public cubic output, while PLONK remains a comparison. Actual independent Mac and Linux builds from authenticated Circom2.2.3 source ad44e915 with selected Rust1.87 reproduce the exact shipped witness WASM45784cb8; CI retains source-bound receipts and negative controls. The original compiler, ceremony inputs and secret destruction remain unknown; published entropy alone does not establish a leak. Setup trust and vendored snarkjs source reproduction are unverified. Preserve raw WebAssembly scanner coverage separately. Fleet8b6b8411; labPR21."
-            data-added="2026-04" data-updated="2026-10" data-level="advanced"
+            data-review-note="Read current Groth16 fullProve/verify calls, cubic.circom, setup explanations and complete PR21 diff; real proof mechanics disclose the bounded witness through public cubic output, while PLONK remains a comparison. Actual independent Mac and Linux builds from authenticated Circom2.2.3 source ad44e915 with selected Rust1.87 reproduce the exact shipped witness WASM45784cb8; CI retains source-bound receipts and negative controls. The original compiler, ceremony inputs and secret destruction remain unknown; published entropy alone does not establish a leak. Setup trust and vendored snarkjs source reproduction are unverified. Preserve raw WebAssembly scanner coverage separately. Fleet8b6b8411; labPR21." data-level="advanced"
            
            
            
@@ -17227,15 +17226,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-ablation-wire/"
+          <a class="project-card" data-category="PROTOCOLS | ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-ablation-wire/" data-added="2026-07" data-updated="2026-10"
             data-implements="AES-GCM@codetalker-core/src/aead.rs:5 | ChaCha20-Poly1305@codetalker-core/src/aead.rs:6 | Ed25519@codetalker-core/src/identity.rs:172 | HKDF@codetalker-core/src/kdf.rs:4 | ML-DSA@codetalker-core/src/identity.rs:221 | ML-KEM@codetalker-core/src/kem.rs:253 | SHA-256@codetalker-core/src/kdf.rs:5 | X25519@codetalker-core/src/kem.rs:97"
             data-references="AES | ChaCha20 | DHKEM | Diffie-Hellman | Double Ratchet | EC point arithmetic | Pairing | Poly1305"
             data-attacks="Discrete log@TEACHING.md:243 | Known-plaintext attack@README.md:301 | Man-in-the-middle@web/index.html:2493 | Nonce reuse@web/index.html:1344"
             data-standards="IETF | NIST"
             data-implementation="Rust crates / WASM"
             data-review-commit="f0c5328848ca7de14af3df18751050352c556131"
-            data-review-note="Re-read Rust core, WASM callers, threat model and learner-facing limits at the integrated PR20 source. The eight primitive implementations remain; production Rust/WASM code is unchanged from the prior review, with malformed-input regression tests appended. Supported libcrux-kem 0.0.10 / ML-KEM 0.0.11 in both locks fix verified RustSec 0330/0331 input panics. The authenticated libcrux-platform 0.0.4 patch changes only three CPUID unsafe blocks and preserves Rust 1.85 on x86; source/hash controls and current root/WASM audits pass. WASM is built from that core. A5 is explicitly OutOfScope: timing/cache behavior is neither defended nor measured, so its side-channel warning is not an attack demonstration. Preserve executed known-plaintext/reused-nonce and active MITM exhibits. The optional typed-secret compiler check still fails upstream; neither secret independence nor constant-time behavior is established. Application, source correspondence, provider captures and deployment evidence remain separate."
-            data-added="2026-07" data-updated="2026-09" data-level="intermediate"
+            data-review-note="Re-read Rust core, WASM callers, threat model and learner-facing limits at the integrated PR20 source. The eight primitive implementations remain; production Rust/WASM code is unchanged from the prior review, with malformed-input regression tests appended. Supported libcrux-kem 0.0.10 / ML-KEM 0.0.11 in both locks fix verified RustSec 0330/0331 input panics. The authenticated libcrux-platform 0.0.4 patch changes only three CPUID unsafe blocks and preserves Rust 1.85 on x86; source/hash controls and current root/WASM audits pass. WASM is built from that core. A5 is explicitly OutOfScope: timing/cache behavior is neither defended nor measured, so its side-channel warning is not an attack demonstration. Preserve executed known-plaintext/reused-nonce and active MITM exhibits. The optional typed-secret compiler check still fails upstream; neither secret independence nor constant-time behavior is established. Application, source correspondence, provider captures and deployment evidence remain separate." data-level="intermediate"
            
            
            

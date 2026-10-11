@@ -127,8 +127,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-04T04:06:43Z",
-   "updatedFrom": "2026-10-11T00:15:56-04:00",
-   "updatedCommit": "8b9fa363e0337d5e7647a004fdd72149a233da0b"
+   "updatedFrom": "2026-10-11T11:05:35-04:00",
+   "updatedCommit": "a27db697efdb1000c69c88f01df860a1217b0ffc"
   },
   "crypto-lab-zk-proof-lab": {
    "added": "2026-04",
@@ -148,8 +148,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-12T18:58:27Z",
-   "updatedFrom": "2026-10-10T08:31:35-04:00",
-   "updatedCommit": "9c642947eae93032a558678a365b692ca276b798"
+   "updatedFrom": "2026-10-11T12:03:37-04:00",
+   "updatedCommit": "9e6e0c68b6bb0bfc1f7ecd74d4e2dff08a2cb220"
   },
   "crypto-lab-blind-oracle": {
    "added": "2026-04",
@@ -1217,10 +1217,10 @@
   },
   "crypto-lab-ablation-wire": {
    "added": "2026-07",
-   "updated": "2026-09",
+   "updated": "2026-10",
    "addedFrom": "2026-07-28T21:26:59Z",
-   "updatedFrom": "2026-09-30T03:21:12-04:00",
-   "updatedCommit": "1af1ac65d90cdfc5fbf1c31de89ab41aa697246c"
+   "updatedFrom": "2026-10-11T13:04:02-04:00",
+   "updatedCommit": "f0c5328848ca7de14af3df18751050352c556131"
   },
   "crypto-lab-accumulator": {
    "added": "2026-08",

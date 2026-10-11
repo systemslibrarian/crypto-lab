@@ -53,6 +53,9 @@ jobs:
       - name: Deployment CLI rejects incomplete evidence
         if: ${{ !cancelled() }}
         run: node --test tests/deploy-report.test.cjs tests/workflow-evidence.test.cjs
+      - name: Auxiliary dispatches preserve publisher and merge guards
+        if: ${{ !cancelled() }}
+        run: node --test tests/dispatch-targets.test.cjs
       - name: Maintainer live and integration evidence controls
         if: ${{ !cancelled() }}
         run: python3 -B -m unittest discover -s audits/fleet-maintenance-2026-10-09/tools -p 'test_*.py' -v

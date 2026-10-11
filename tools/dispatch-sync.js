@@ -217,9 +217,9 @@ function steps(lines, from, to) {
 
 function runScript(lines, from, to) {
   for (let i = from; i < to; i++) {
-    const m = /^(\s*)run:\s*[|>][-+]?\s*$/.exec(lines[i]);
+    const m = /^(\s*)(-\s+)?run:\s*[|>][-+]?\s*$/.exec(lines[i]);
     if (!m) continue;
-    const keyInd = m[1].length;
+    const keyInd = m[1].length + (m[2]?.length || 0);
     const body = [];
     for (let j = i + 1; j < to; j++) {
       if (lines[j].trim() === '') { body.push(''); continue; }
@@ -230,7 +230,7 @@ function runScript(lines, from, to) {
   }
   /* A one-line `run: gh pr merge ...` is still a script. */
   for (let i = from; i < to; i++) {
-    const m = /^\s*run:\s*(\S.*)$/.exec(lines[i]);
+    const m = /^\s*(?:-\s+)?run:\s*(\S.*)$/.exec(lines[i]);
     if (m) return [m[1]];
   }
   return null;
@@ -283,10 +283,30 @@ function flagReadLine(script, flag, from) {
   return -1;
 }
 
-function dispatchLine(script) {
+function dispatchLines(script) {
+  return [...new Set(comments.findDispatches(code(script), 0, script.length).map((d) => d.line))];
+}
+
+/* Supported shell guards are bounded to the actual dispatches. A positive
+ * guard protects its then arm; a negative guard must terminate the failed-merge
+ * path. Reading a flag once cannot protect a later dispatch outside that arm. */
+function guardedDispatch(script, flag, read, disp) {
   const src = code(script);
-  for (let i = 0; i < src.length; i++) if (/gh workflow run\s+\S+/.test(src[i])) return i;
-  return -1;
+  if (read < 0 || disp <= read) return false;
+  // The established chained dialect terminates the failed-merge path too.
+  if (/^\s*\[\[?\s*-n\s/.test(src[read]) && /\]\]?\s*\|\|\s*\{[^{}]*;\s*exit\s+\d+\s*;\s*\}\s*$/.test(src[read])) return true;
+  if (!/^\s*if\b/.test(src[read])) return false;
+  let depth = 0, end = -1, alternate = -1, terminates = false;
+  for (let i = read; i < src.length; i++) {
+    if (/^\s*if\b/.test(src[i])) depth++;
+    if (depth === 1 && /^\s*(else|elif)\b/.test(src[i])) alternate = i;
+    if (depth === 1 && /^\s*exit\s+\d+\s*;?\s*$/.test(src[i])) terminates = true;
+    if (/^\s*fi\b/.test(src[i]) && --depth === 0) { end = i; break; }
+  }
+  if (end < 0) return false;
+  const negative = /-z\s/.test(src[read]) || /!=\s*["']?1["']?/.test(src[read]);
+  if (!negative) return disp < (alternate < 0 ? end : alternate);
+  return alternate < 0 && disp > end && terminates;
 }
 
 /* A flag exported to "$GITHUB_ENV" is a legitimate cross-step shape: the next
@@ -294,8 +314,11 @@ function dispatchLine(script) {
  * Accepted so this file judges the invariant rather than one house style. */
 function crossStepFlag(step, flag) {
   const head = step.head.join('\n');
-  if (new RegExp(`if:\\s*[^\\n]*\\b(env|steps\\.[A-Za-z0-9_-]+\\.outputs)\\.${flag}\\b`).test(head)) return true;
-  return step.run ? flagReadLine(step.run, flag, -1) >= 0 : false;
+  const condition = /^\s*(?:-\s*)?if:\s*(.+)$/m.exec(head)?.[1].replace(/^\$\{\{\s*|\s*\}\}$/g, '').trim();
+  if (condition && new RegExp(`^(?:success\\(\\)\\s*&&\\s*)?(env|steps\\.[A-Za-z0-9_-]+\\.outputs)\\.${flag}\\s*==\\s*['"]1['"]$`).test(condition)) return true;
+  if (!step.run) return false;
+  const read = flagReadLine(step.run, flag, -1);
+  return dispatchLines(step.run).every((disp) => guardedDispatch(step.run, flag, read, disp));
 }
 
 /* ------------------------------------------------------------------ verdict */
@@ -316,36 +339,26 @@ function inspectJob(lines, job) {
     const found = flagFromExitStatus(step.run);
     if (!found) continue;
 
-    /* Same-script shape: flag set, flag tested, dispatch — in that order. */
-    const disp = dispatchLine(step.run);
-    const read = flagReadLine(step.run, found.flag, found.line);
-    if (disp >= 0 && read >= 0 && read < disp) {
-      return { verdict: 'OK', detail: `\`${found.flag}\` set by the merge's own exit status, tested before the dispatch` };
-    }
-    if (disp >= 0 && (read < 0 || read > disp)) {
-      return { verdict: 'UNGUARDED-DISPATCH',
-        detail: `\`${found.flag}\` is set from the merge's exit status but the dispatch does not read it first, `
-          + 'so a failed merge still dispatches' };
-    }
-
-    /* Cross-step shape: exported flag, dispatch step guards on it. */
-    const idx = st.indexOf(step);
-    const later = st.slice(idx + 1);
-    const dispStep = later.find((s) => s.run && dispatchLine(s.run) >= 0);
-    if (dispStep) {
-      if (found.exported && crossStepFlag(dispStep, found.flag)) {
-        return { verdict: 'OK', detail: `\`${found.flag}\` exported from the merge's own exit status and read by the dispatch step` };
+    const dispatched = st.filter((s) => s.run && dispatchLines(s.run).length);
+    if (dispatched.length) {
+      for (const targetStep of dispatched) {
+        if (targetStep === step) {
+          const read = flagReadLine(step.run, found.flag, found.line);
+          if (!dispatchLines(step.run).every((disp) => guardedDispatch(step.run, found.flag, read, disp))) {
+            return { verdict: 'UNGUARDED-DISPATCH', detail: `Not every dispatch is protected by \`${found.flag}\` from the merge's exit status` };
+          }
+        } else if (st.indexOf(targetStep) <= st.indexOf(step) || !found.exported || !crossStepFlag(targetStep, found.flag)) {
+          return { verdict: 'FLAG-NOT-READ', detail: `Not every dispatch step reads the exported \`${found.flag}\` after the merge` };
+        }
       }
-      return { verdict: 'FLAG-NOT-READ',
-        detail: `\`${found.flag}\` is set in the merge step but the dispatch step does not read it`
-          + (found.exported ? '' : ' — and a shell variable does not survive into the next step') };
+      return { verdict: 'OK', detail: `\`${found.flag}\` set by the merge's own exit status and checked for every dispatch` };
     }
     return { verdict: 'NO-DISPATCH',
       detail: 'the merge lands and nothing dispatches the deploy; a GITHUB_TOKEN merge raises no push event, '
         + 'so the site keeps serving the previous build' };
   }
 
-  if (!st.some((s) => s.run && dispatchLine(s.run) >= 0)) {
+  if (!st.some((s) => s.run && dispatchLines(s.run).length > 0)) {
     return { verdict: 'NO-DISPATCH',
       detail: 'the merge lands and nothing dispatches the deploy; a GITHUB_TOKEN merge raises no push event, '
         + 'so the site keeps serving the previous build' };

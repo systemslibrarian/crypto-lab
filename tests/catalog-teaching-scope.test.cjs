@@ -44,7 +44,7 @@ function checkLatticeModelScope(source) {
   const slug = 'crypto-lab-lattice-fault';
   // Inspected immutable source at 6b127eb85b647f573408f2e9a90cbe0fcca2c94b:
   // src/timing.ts:88 counts a model's divide steps; src/loopabort.ts:37 is
-  // a parameter object. runLoopAbortAttack at :550 generates one polynomial
+  // a parameter object. runLoopAbortAttack at :560 generates one polynomial
   // relation, not a complete ML-DSA key/signature/verification implementation.
   const implementations = implementationsFor(source, slug);
   assert.deepEqual(implementations, ['Keccak', 'NTT', 'SHAKE'],

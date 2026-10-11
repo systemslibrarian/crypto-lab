@@ -16305,13 +16305,13 @@
           </a>
 
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-power-trace/"
-            data-implements="AES@src/attack/cpa.ts:15"
+            data-implements="AES@src/aes/aes.ts:123"
             data-references="NTT | RSA"
             data-attacks="Key recovery@docs/TECHNICAL.md:64 | Power analysis@src/attack/dpa.ts:112 | Side-channel (unspecified)@src/ui/ui.ts:69"
             data-standards="NIST"
             data-implementation="hand-rolled"
             data-review-commit="9323347c18f90224ebbd286bd78da5af74672e68"
-            data-review-note="Read current README, docs/TECHNICAL.md, src/attack/cpa.ts and dpa.ts, src/leakage/traces.ts and UI honesty/sibling panels at this exact SHA. CPA here means correlation power analysis, not chosen-plaintext attack: the code correlates known plaintext-byte leakage; no chosen-plaintext security game is demonstrated. Fault injection and timing attacks are explicitly sibling-only channels not covered here. Preserve real AES, encryption-key-byte recovery, power analysis and assumed simulated side-channel leakage. The model assumes constant-time execution; the shipped JavaScript AES has secret-dependent S-box lookups and GF branches and is explicitly not constant-time. Correct the hub description to match this distinction without asserting hardware/timing verification. Fleet work 41f92c93-e468-4ba8-ada6-4550accd9351."
+            data-review-note="Read current README, docs/TECHNICAL.md, src/attack/cpa.ts and dpa.ts, src/leakage/traces.ts and UI honesty/sibling panels at this exact SHA. CPA here means correlation power analysis, not chosen-plaintext attack: the code correlates known plaintext-byte leakage; no chosen-plaintext security game is demonstrated. Fault injection and timing attacks are explicitly sibling-only channels not covered here. Preserve real AES, encryption-key-byte recovery, power analysis and assumed simulated side-channel leakage. The model assumes constant-time execution; the shipped JavaScript AES has secret-dependent S-box lookups and GF branches and is explicitly not constant-time. Correct the hub description to match this distinction without asserting hardware/timing verification. Fleet work 41f92c93-e468-4ba8-ada6-4550accd9351. AES source anchor is encryptBlock at src/aes/aes.ts:123, exercised by three known-answer tests; browser traces use the real S-box intermediate rather than invoking full block encryption. An import of SBOX in cpa.ts is not the encryption implementation."
             data-added="2026-07" data-updated="2026-10" data-level="advanced"
            
            

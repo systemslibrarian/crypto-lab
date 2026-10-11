@@ -333,6 +333,8 @@ function checkPowerScope(source) {
   assert.ok(implementationsFor(source, slug).includes('AES'));
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-power-trace\/"[\s\S]*?<\/a>/)[0];
   const copy = card.match(/<div class="project-copy">([^<]*)<\/div>/)[1];
+  assert.match(card, /data-implements="AES@src\/aes\/aes\.ts:123"/,
+    'AES source evidence points to the tested encryption function, not a SBOX import');
   assert.match(copy, /simulated power traces/i);
   assert.match(copy, /Correlation and differential power analysis/i);
   assert.match(copy, /JavaScript AES is not constant-time/);
@@ -359,4 +361,7 @@ test('Power Trace controls reject false attacks, timing guarantees and loss of a
   const mutated = html.replace('the JavaScript AES is not constant-time.', 'the JavaScript AES is constant-time.');
   assert.notEqual(mutated, html);
   assert.throws(() => checkPowerScope(mutated), assert.AssertionError);
+  const importAnchor = html.replace('AES@src/aes/aes.ts:123', 'AES@src/attack/cpa.ts:15');
+  assert.notEqual(importAnchor, html, 'The negative control must replace the actual implementation anchor');
+  assert.throws(() => checkPowerScope(importAnchor), assert.AssertionError);
 });

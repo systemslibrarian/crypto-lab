@@ -464,8 +464,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Baby-step giant-step
 
-- **Implemented by:** [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/pohlig.ts:71`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:135`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/dlog.ts:130`
-- **Also referenced by:** *Point Arithmetic*, *ElGamal Plain*
+- **Implemented by:** [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/attacks.ts:35`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/pohlig.ts:71`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:135`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/dlog.ts:130`
+- **Also referenced by:** *Point Arithmetic*
 
 ### elliptic curve
 
@@ -1194,7 +1194,7 @@ disagree about who owns SHA-256.
 | ABDP15 IPFE | — | 1 |
 | AIMer | — | 1 |
 | Babai rounding | — | 5 |
-| Baby-step giant-step | — | 3 |
+| Baby-step giant-step | — | 4 |
 | BB84 | — | 1 |
 | BCH | — | 1 |
 | bcrypt | — | 1 |
@@ -2323,8 +2323,9 @@ Textbook RSA on real small numbers — key generation, encryption, decryption, a
 
 Taher ElGamal's 1985 scheme with fresh ephemeral randomness, multiplicative homomorphism, and ciphertext rerandomization across toy and RFC 3526 groups.
 
-- **Implements:** ElGamal `src/attacks.ts:1`, HMAC `src/authenticated.ts:83`, SHA-256 `src/authenticated.ts:62`
-- **References:** Baby-step giant-step, DSA, Diffie-Hellman, ECDSA, HPKE, Paillier, RSA, RSA-OAEP, Shor's algorithm
+- **Implements:** Baby-step giant-step `src/attacks.ts:35`, ElGamal `src/attacks.ts:1`, HMAC `src/authenticated.ts:83`, SHA-256 `src/authenticated.ts:62`
+- **Source review:** [d12c20a76d97](https://github.com/systemslibrarian/crypto-lab-elgamal-plain/commit/d12c20a76d97a869dedd34b655e3c2f4d49a8c19) — Bounded Baby-step giant-step review at the exact current source commit. Read README Security Lab, src/attacks.ts, src/groups.ts, modular exponentiation/inverse helpers and src/attacks.test.ts. discreteLog builds g^j baby steps, then searches target times g^(-m*i) with m=ceil(sqrt(q)); the q guard refuses RFC 3526 Group 14. This is executable toy-group key recovery, not a reference-only mention. Its algorithm name appears only in comments, so add the implementation at the exported function through this reviewed supplement rather than reading comments as implementations globally. The attack implementation and tests are unchanged from the historical 72048d72 interpretation; the full 15-path change inventory was compared, and the solver and its tests remain byte-identical. The newer Cramer-Shoup exhibit is outside this bounded solver review. Actual current npm test passes 127 tests, including 300 toy-key recoveries, operation-count and large-group refusal controls. This review only adds the bounded solver credit; it does not claim constant-time execution, real-group key recovery, or full cryptographic conformance. Fleet finding lab:crypto-lab-elgamal-plain:interpretation, work 329ddccd-506a-4dab-84d1-4a3ede2b14f7.
+- **References:** DSA, Diffie-Hellman, ECDSA, HPKE, Paillier, RSA, RSA-OAEP, Shor's algorithm
 - **Attacks shown:** Brute force `src/attacks.ts:40`, Chosen-ciphertext attack `src/main.ts:209`, Ciphertext malleability `src/main.ts:206`, Discrete log `src/attacks.ts:7`, Key recovery `src/main.ts:358`, Nonce reuse `src/main.ts:358`, Signature malleability `README.md:41`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto

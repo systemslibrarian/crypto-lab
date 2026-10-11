@@ -1,0 +1,19 @@
+{
+  "capturedAt": "2026-10-11T05:54:53.874711+00:00",
+  "inspectedHubSha": "133315735cec3749821b688f55770a9972e79be3",
+  "attribution": "Preserve original locally amended helpers unchanged. Existing edits are not attributed to this run; archive source hashes distinguish subsequent repairs.",
+  "existingUnloggedHelpers": [
+    {
+      "filename": "run-publisher-live-checks.py",
+      "sha256": "84fed35d970c00491094fc54eea7e099bf2947c9f8d213dc02a8d531d574d7a7"
+    },
+    {
+      "filename": "source_map_verification_policy.py",
+      "sha256": "54a95177902c8e409e4b8b022ea5d91d8b0ba9ac229dcd617acf40ec28b8e885"
+    },
+    {
+      "filename": "test_source_map_verification_policy.py",
+      "sha256": "cc71e227052930516fefe98a6acb7c48dee47544124e59199233479f18bea7e4"
+    }
+  ]
+}

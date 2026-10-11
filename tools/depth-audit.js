@@ -173,7 +173,8 @@ const ENGINES = ['chromium', 'firefox', 'webkit'];
 
 function walk(dir, out = [], base = dir) {
   let entries;
-  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return out; }
+  try { entries = fs.readdirSync(dir, { withFileTypes: true }); }
+  catch (error) { throw new Error(`UNREAD: source directory ${path.relative(SCRATCH, dir)}: ${error.code || error.message}`); }
   for (const e of entries) {
     const p = path.join(dir, e.name);
     const rel = path.relative(base, p);
@@ -184,15 +185,21 @@ function walk(dir, out = [], base = dir) {
   return out;
 }
 
-const read = (lab, rel) => {
-  try { return fs.readFileSync(path.join(SCRATCH, lab, rel), 'utf8'); } catch { return null; }
+const read = (lab, rel, required = false) => {
+  try { return fs.readFileSync(path.join(SCRATCH, lab, rel), 'utf8'); }
+  catch (error) {
+    // Optional one-hop imports, configuration and README paths may be absent.
+    // A discovered source file disappearing, or any denied read, is a scan gap.
+    if (!required && error.code === 'ENOENT') return null;
+    throw new Error(`UNREAD: source file ${lab}/${rel}: ${error.code || error.message}`);
+  }
 };
 
 /* Executable text only, comments blanked, line numbers preserved. Uses the
    lexer in catalog-evidence.js rather than a second copy. */
 const { blankComments } = require('./catalog-evidence.js');
 const readCode = (lab, rel) => {
-  const t = read(lab, rel);
+  const t = read(lab, rel, true);
   if (t === null) return null;
   if (!/\.(ts|tsx|js|jsx|mjs|cjs|rs)$/.test(rel)) return t;
   try { return blankComments(t); } catch { return t; }
@@ -358,7 +365,7 @@ function classify(lab, files) {
     ...src.filter((f) => /(^|\/)(fixtures?|vectors?|kats?|test-?vectors?)(\.|\/|$)/i.test(f))];
   let leadOnly = null;
   for (const f of tCandidates) {
-    const text = read(lab, f);
+    const text = read(lab, f, true);
     if (!text) continue;
     const hit = PUBLISHED.find((p) => p.re.test(text));
     if (!hit) continue;
@@ -536,7 +543,7 @@ function classify(lab, files) {
     return map;
   };
   for (const wf of workflows) {
-    const text = read(lab, wf);
+    const text = read(lab, wf, true);
     if (!text) continue;
     if (!/actions\/deploy-pages|peaceiris\/actions-gh-pages/.test(text)) continue;
     gate.workflow = wf;
@@ -640,7 +647,7 @@ function classify(lab, files) {
   }
   /* Page copy counts too: the reader sees it without opening the README. */
   for (const f of src.filter((x) => /^(src|demos|web|exhibits)\/.*\.(ts|tsx|js|jsx|html)$/.test(x)).slice(0, 400)) {
-    const text = read(lab, f);
+    const text = read(lab, f, true);
     if (!text) continue;
     for (const g of DEPLOY_GUIDANCE) {
       const l = lineOf(text, g.re);
@@ -658,7 +665,7 @@ function classify(lab, files) {
   if (pkg && !testScript) zHazard.push('package.json declares no test script');
   if (testScript && /--passWithNoTests/.test(testScript)) zHazard.push('test script passes with no tests');
   for (const wf of workflows) {
-    const text = read(lab, wf) || '';
+    const text = read(lab, wf, true) || '';
     if (/npm test --if-present/.test(text) && !testScript) zHazard.push(`${wf} runs npm test --if-present with no test script`);
   }
 

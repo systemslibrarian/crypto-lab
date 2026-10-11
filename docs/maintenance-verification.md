@@ -33,7 +33,9 @@ evidence that the lab's cryptography failed.
 Complete depth generation, JSON output and report checking require every pinned
 source to finish classification. A timeout or worker error exits 2 before any
 report is written or any partial score is printed. The partial mode remains the
-way to obtain named diagnostic gaps.
+way to obtain named diagnostic gaps. Directory read failures, denied file reads
+and discovered files disappearing are scan gaps. An absent optional imported
+vector module remains a lead rather than a fabricated source-read failure.
 
 The complete report is generated as dated run evidence, then checked against the
 same pinned exports and saved in the artifact. The workflow does not require an

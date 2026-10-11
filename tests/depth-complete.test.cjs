@@ -70,3 +70,49 @@ test('strict modes retain timeout, unreadable and malformed worker gaps without 
     }
   });
 });
+
+test('actual source I/O failures remain unreadable rather than assessed absence', async t => {
+  for (const [operation,code] of [['readdirSync','EACCES'],['readFileSync','EACCES'],['readFileSync','ENOENT']]) {
+    await t.test(`${operation} ${code}`, t => {
+      const f = fixture(t);
+      const directory = path.join(f.root,'.scratch/crypto-lab-live/tests');
+      fs.mkdirSync(directory);
+      fs.writeFileSync(path.join(directory,'claims.test.js'),'// RFC 7748\nconst expected="1234567890abcdef1234567890abcdef";');
+      const worker = path.join(f.root,'tools/depth-classify-worker.js');
+      const preload = `const fs=require('node:fs');const original=fs.${operation};
+        fs.${operation}=function(file,...args){
+          if(String(file).includes('/.scratch/crypto-lab-live${operation==='readFileSync'?'/tests/claims.test.js':''}')){
+            throw Object.assign(new Error('controlled source read failure'),{code:${JSON.stringify(code)}});
+          }return original.call(this,file,...args);
+        };\n`;
+      fs.writeFileSync(worker,preload+fs.readFileSync(worker,'utf8'));
+      fs.writeFileSync(f.report,'previous complete report');
+      const strict = f.run(['--json']);
+      assert.equal(strict.status,2,strict.stderr);
+      assert.equal(strict.stdout,'');
+      assert.match(strict.stderr,new RegExp(`UNREAD.*${code}`));
+      assert.match(strict.stderr,new RegExp(f.sha));
+      const partial = f.run(['--partial-json']);
+      assert.equal(partial.status,2,partial.stderr);
+      const result = JSON.parse(partial.stdout);
+      assert.equal(result.scope.complete,true);
+      assert.equal(result.scan.complete,false);
+      assert.equal(result.scan.classified,0);
+      assert.equal(result.scan.unreadable[0].sourceSha,f.sha);
+      assert.match(result.scan.unreadable[0].reason,new RegExp(code));
+      assert.equal(fs.readFileSync(f.report,'utf8'),'previous complete report');
+    });
+  }
+});
+
+test('an absent optional one-hop import stays an explicit ground-truth lead', t => {
+  const f = fixture(t);
+  const directory = path.join(f.root,'.scratch/crypto-lab-live/tests');
+  fs.mkdirSync(directory);
+  fs.writeFileSync(path.join(directory,'claims.test.js'),`// RFC 7748\nimport values from './missing-vector-module';`);
+  const result = f.run(['--json']);
+  assert.equal(result.status,0,result.stderr);
+  const row = JSON.parse(result.stdout)[0];
+  assert.equal(row.dims.T,'?');
+  assert.match(row.note.T,/lead, not a pinned vector/);
+});

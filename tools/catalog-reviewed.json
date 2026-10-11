@@ -234,17 +234,18 @@
     "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS Re-read current textbook.ts/RSA tests/UI and focused encoding repair PR21: browser implements RSA, explicitly rejects non-ASCII/leading NUL instead of silently losing bytes; empty/internal/trailing zero handling and primitive mathematics preserved. Independent completed Dot report36870c37 review at this exact source SHA recorded separately. Current catalogue interpretation review: textbook.ts:21 encrypt computes m^e mod n through modexpTraced and its decrypt/sign/verify operations are consumed by UI; use this implementation anchor instead of a UI import. oaep.ts implements separate real 2048-bit WebCrypto RSA-OAEP. factor.ts:52 is Pollard rho integer factorization via gcd, not a discrete-log solver; real-world.ts:91 discusses the sibling RSA Forge padding oracle, not an executed local oracle attack. Remove those two attack credits, preserving real ciphertext malleability, factoring and private-exponent recovery. Textbook signing uses a disclosed toy FNV-1a hash; realistic factoring time is a projection, not a 2048-bit benchmark. Preserve the existing bounded Python review and all prior findings; no production RSA assurance. Fleet work5259971f-74ae-40db-b33b-d97d2223021d."
   },
   "crypto-lab-shadow-vault": {
-    "commit": "c6791de071d7cd6df4a67d5a48731c45a8441c72",
-    "reviewed": "2026-10-10",
+    "commit": "8b9fa363e0337d5e7647a004fdd72149a233da0b",
+    "reviewed": "2026-10-11",
     "add": [
       "ChaCha20-Poly1305@crate/src/lib.rs:13",
       "SHA-256@crate/src/lib.rs:17"
     ],
     "covered": [
-      "Rust"
+      "Rust",
+      "Python"
     ],
     "implementation": "RustCrypto / compiled WASM",
-    "note": "Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22\u201326 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review.",
+    "note": "Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22\u201326 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review. Re-reviewed integrated PR27 at 8b9fa363e0337d5e7647a004fdd72149a233da0b: only security workflow, SECURITY.md, Cargo license metadata, cargo-deny policy and five offline real-tool controls changed. Rust/TypeScript runtime sources and both dependency locks are byte-identical to the prior inspected revision. Read the complete changes, verify existing MIT license, preserve all cryptographic exclusions and opaque binary/compiler limits. The restored blocking cargo-deny gate and separate application/deployment checks do not establish original compiler provenance. The sole tracked Python file, verification/test_supply_chain_policy.py, is the fully read and executed five-case offline supply-chain policy fixture, not browser cryptography. Cover this exact file at this pin while retaining opaque WASM; raw scanner language counts remain separate.",
     "remove": [
       "Brute force",
       "Cache timing",

@@ -64,6 +64,34 @@ test('dependency-only movement invalidates prose even while old corpus scope rep
   assert.equal(result.reviewedSha, A); assert.equal(after.review.lastReviewedSha, A);
 });
 
+test('indexed-to-indexed narrow comparison cannot claim freshness of an earlier human review', () => {
+  const reviewedSha = 'c'.repeat(40);
+  for (const changed of [null, 'package-lock.json', 'src/solver.ts']) {
+    const files = [file('index.html', 'Same learner-facing words')];
+    if (changed) files.push(file(changed, 'old implementation'));
+    const before = record(files, [section('intro', 'index.html', 'Same learner-facing words')]);
+    const after = clone(before); after.source.indexedSha = B;
+    before.review.lastReviewedSha = reviewedSha; after.review.lastReviewedSha = reviewedSha;
+    if (changed) after.files.find(f => f.path === changed).sha256 = hash('new implementation');
+    const rows = changed ? [{ path: changed, status: 'M' }] : [];
+    const result = compareRecords(freeze(before), freeze(after), opts(rows));
+    const narrow = result.narrowScopeComparison;
+    assert.equal(result.reviewedSha, reviewedSha); assert.deepEqual(result.wordingChanged, []);
+    assert.equal(narrow.fromSha, A); assert.equal(narrow.toSha, B); assert.equal(narrow.range, `${A}..${B}`);
+    assert.equal(narrow.appliesToLastReviewedSha, false); assert.equal(narrow.reviewFreshness, 'not-measured');
+    assert.equal(narrow.result.state, changed === 'src/solver.ts' ? 'STALE' : 'CURRENT');
+    assert.equal(result.state, changed ? 'needs-review' : 'unchanged');
+    assert.equal(result.unchangedWordingInvalidated, !!changed);
+  }
+  const matching = compareRecords(record(), record(), opts([])).narrowScopeComparison;
+  assert.equal(matching.appliesToLastReviewedSha, true); assert.equal(matching.reviewFreshness, 'limited-corpus-scope-only');
+  const initial = compareRecords(null, record(), opts([])).narrowScopeComparison;
+  assert.equal(initial.range, null); assert.equal(initial.result, null); assert.equal(initial.appliesToLastReviewedSha, false);
+  assert.equal(initial.reviewFreshness, 'not-measured');
+  const failed = record(); failed.source.state = 'stale';
+  assert.equal(compareRecords(record(), failed, opts([])).narrowScopeComparison.reviewFreshness, 'not-measured');
+});
+
 test('root HTML, nested runtime code, Rust and C all invalidate unchanged words', () => {
   for (const name of ['index.html', 'demos/nested/src/main.ts', 'crates/core/src/lib.rs', 'wasm/src/bridge.c']) {
     const before = record([file(name, 'first')], [section('explanation', name, 'Words stay')]);

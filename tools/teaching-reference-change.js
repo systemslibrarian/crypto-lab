@@ -148,10 +148,16 @@ function compareRecords(previous, current, { changedPaths, isAncestor = null } =
     : previous == null || wordingChanged.length || trackedChanges.some(c => c.needsReview) ? 'needs-review' : 'unchanged';
   const unchangedWordingInvalidated = wordingChanged.length === 0 && (unreadable || identityUnknown || isAncestor === false || trackedChanges.some(c => c.needsReview));
   const pathsForNarrowScope = Array.isArray(changedPaths) ? trackedChanges.map(c => c.path) : null;
+  // The supplied diff/ancestry describes indexed-to-indexed captures, not an
+  // earlier human-review commit. Never attribute that unchecked range to review.
+  const appliesToLastReviewedSha = COMMIT.test(fromSha || '') && reviewedSha === fromSha;
+  const range = COMMIT.test(fromSha || '') && COMMIT.test(toSha || '') ? `${fromSha}..${toSha}` : null;
   return { fromSha, toSha, reviewedSha, state, wordingChanged, trackedChanges, unchangedWordingInvalidated,
     gaps: [...new Set(gaps)].sort(order),
-    narrowScopeComparison: { scope: 'README.md and src/** only; corpus-freshness classifier, not a corpus refresh or the teaching invalidation denominator',
-      result: classify(reviewedSha ? { lab_commit: reviewedSha } : null, pathsForNarrowScope, isAncestor) } };
+    narrowScopeComparison: { scope: 'README.md and src/** only over the supplied indexed-to-indexed range; not a corpus refresh, human review or the teaching invalidation denominator',
+      fromSha, toSha, range, appliesToLastReviewedSha,
+      reviewFreshness: appliesToLastReviewedSha && !identityUnknown && !unreadable && isAncestor === true ? 'limited-corpus-scope-only' : 'not-measured',
+      result: COMMIT.test(fromSha || '') ? classify({ lab_commit: fromSha }, pathsForNarrowScope, isAncestor) : null } };
 }
 
 function canonical(value) {

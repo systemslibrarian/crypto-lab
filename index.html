@@ -5870,14 +5870,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/" data-added="2026-06" data-updated="2026-10" data-level="intermediate"
-            data-implements="RSA@src/ui/encrypt-decrypt.ts:3 | RSA-OAEP@src/rsa/oaep.ts:18"
+          <a class="project-card" data-category="ENCRYPTION | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/"
+            data-implements="RSA@src/rsa/textbook.ts:21 | RSA-OAEP@src/rsa/oaep.ts:18"
             data-references="Dilithium | ECDSA | Ed25519 | Kyber | ML-DSA | ML-KEM | RSA-PSS | SHA-256 | Shor's algorithm | TLS 1.3 | X25519"
-            data-attacks="Ciphertext malleability@README.md:19 | Discrete log@src/rsa/factor.ts:52 | Factoring@src/main.ts:39 | Key recovery@README.md:48 | Padding oracle@src/ui/real-world.ts:91"
+            data-attacks="Ciphertext malleability@README.md:19 | Factoring@src/main.ts:39 | Key recovery@README.md:48"
             data-standards="IETF"
             data-implementation="hand-rolled"
             data-review-commit="81e413b19edd40bf825dd654798ac397366ad5fc"
-            data-review-note="Legacy Python RSA scripts inspected; browser lab implements RSA in JS Re-read current textbook.ts/RSA tests/UI and focused encoding repair PR21: browser implements RSA, explicitly rejects non-ASCII/leading NUL instead of silently losing bytes; empty/internal/trailing zero handling and primitive mathematics preserved. Independent completed Dot report36870c37 review at this exact source SHA recorded separately."
+            data-review-note="Legacy Python RSA scripts inspected; browser lab implements RSA in JS Re-read current textbook.ts/RSA tests/UI and focused encoding repair PR21: browser implements RSA, explicitly rejects non-ASCII/leading NUL instead of silently losing bytes; empty/internal/trailing zero handling and primitive mathematics preserved. Independent completed Dot report36870c37 review at this exact source SHA recorded separately. Current catalogue interpretation review: textbook.ts:21 encrypt computes m^e mod n through modexpTraced and its decrypt/sign/verify operations are consumed by UI; use this implementation anchor instead of a UI import. oaep.ts implements separate real 2048-bit WebCrypto RSA-OAEP. factor.ts:52 is Pollard rho integer factorization via gcd, not a discrete-log solver; real-world.ts:91 discusses the sibling RSA Forge padding oracle, not an executed local oracle attack. Remove those two attack credits, preserving real ciphertext malleability, factoring and private-exponent recovery. Textbook signing uses a disclosed toy FNV-1a hash; realistic factoring time is a projection, not a 2048-bit benchmark. Preserve the existing bounded Python review and all prior findings; no production RSA assurance. Fleet work5259971f-74ae-40db-b33b-d97d2223021d."
+            data-added="2026-06" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -5962,7 +5963,7 @@
             target="_blank" rel="noopener" style="--accent: #f59e0b;">
             <div class="card-kicker">Public-Key Cryptography</div>
             <div class="project-title">Educational RSA</div>
-            <div class="project-copy">Step-by-step RSA on real small numbers — key generation, encryption, decryption, and signatures — then watch a weak key get factored in milliseconds while a 2048-bit key holds. Real BigInt math, no backend.</div>
+            <div class="project-copy">Textbook RSA on real small numbers — key generation, encryption, decryption, and signatures — with live weak-key factoring, a projected 2048-bit factoring cost, and a separate WebCrypto RSA-OAEP comparison. Real BigInt math, no backend.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">RSA</span>
@@ -8366,12 +8367,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-stego-suite/" data-added="2026-04" data-updated="2026-10" data-level="beginner"
+          <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-stego-suite/"
             data-implements="AES@src/lib/crypto.ts:8 | AES-GCM@src/lib/crypto.ts:8 | PBKDF2@src/lib/crypto.ts:13 | SHA-256@src/lib/crypto.ts:13"
             data-references="SNOW 2.0"
-            data-attacks="Power analysis@src/main.ts:326"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="145f8f49b6e0a5ec649704472722a41d8df34ea8"
+            data-review-note="Read current README, src/main.ts and crypto/bits/stego/DCT/chi/image modules plus tests at this SHA. src/main.ts:326 lists SPA among stronger image steganalysis detectors; this is not Simple Power Analysis or an executed physical-power attack. Remove that abbreviation-derived attack credit. AES/AES-GCM are real WebCrypto encryption/decryption, with PBKDF2 and SHA-256 key derivation in src/lib/crypto.ts; retain all four implementation credits. F5-inspired raw-block DCT embedding and WOW-inspired adaptive placement are disclosed models, not complete named production schemes. The old interpretation candidates arose from a timed-out scan, now independently completed. Review scope is catalogue classification, not a blanket covert-channel/security guarantee. Fleet work3a0b1565-7f73-4412-a3e9-ebf5de96d515."
+            data-added="2026-04" data-updated="2026-10" data-level="beginner"
            
            
            
@@ -9411,12 +9414,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/" data-added="2026-04" data-updated="2026-09" data-level="advanced"
-            data-implements="Keccak@src/shake256.ts:41 | Kyber@src/timing.ts:88 | ML-DSA@src/loopabort.ts:37 | NTT@src/loopabort.ts:116 | SHAKE@src/shake256.ts:88"
-            data-references="Dilithium | EC point arithmetic | Fujisaki-Okamoto transform | HQC | ML-KEM | Shamir secret sharing"
-            data-attacks="Chosen-ciphertext attack@src/main.ts:180 | Chosen-plaintext attack@src/main.ts:40 | Fault injection@src/main.ts:40 | Key recovery@src/main.ts:254 | Lattice reduction@src/loopabort.ts:629 | Padding oracle@src/main.ts:618 | Power analysis@src/main.ts:17 | Side-channel (unspecified)@src/main.ts:171 | Timing side-channel@src/main.ts:40"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/"
+            data-implements="Keccak@src/shake256.ts:41 | NTT@src/loopabort.ts:116 | SHAKE@src/shake256.ts:88"
+            data-references="Dilithium | EC point arithmetic | Fujisaki-Okamoto transform | HQC | Kyber | ML-KEM | Shamir secret sharing"
+            data-attacks="Chosen-ciphertext attack@src/main.ts:180 | Fault injection@src/main.ts:40 | Key recovery@src/main.ts:254 | Lattice reduction@src/loopabort.ts:629 | Power analysis@src/main.ts:17 | Side-channel (unspecified)@src/main.ts:171 | Timing side-channel@src/main.ts:40"
             data-standards="NIST"
-            data-implementation="hand-rolled"
+            data-implementation="Hand-rolled Keccak/SHAKE256 and NTT; simulated physical attacks using ML-KEM decode and ML-DSA components"
+            data-review-commit="6b127eb85b647f573408f2e9a90cbe0fcca2c94b"
+            data-review-note="Read README.md, src/main.ts, timing.ts, timing.worker.ts, loopabort.ts, rejection.ts, ntt.ts, shake256.ts and relevant tests at this exact commit. Kyber@src/timing.ts:88 models software-divide cycle counts only, not a complete KEM. ML-DSA@src/loopabort.ts:37 is a parameter object; runLoopAbortAttack constructs one 256-coefficient secret polynomial and z=y+c*s1 with selected real FIPS 204 ring/sampling operations, independently randomized challenge/nonce seeds and toy signer assumptions, not full ML-DSA key generation, signing or verification. Preserve actual Keccak-f[1600]/SHAKE256 and NTT. CPA in src/main.ts:40 means correlation power analysis rather than chosen-plaintext attack; padding-oracle at line618 is a sibling name rather than an executed attack. Keep the disclosed bounded power, fault, timing, key-recovery and LLL computations. No constant-time target-hardware, standards-conformance or full signing-key recovery claim is established. Fleet interpretation work 4ad4a3db-52c4-428e-9b19-d0f63199ef6c; this review does not complete its pending hub integration."
+            data-added="2026-04" data-updated="2026-09" data-level="advanced"
            
            
            
@@ -9490,11 +9496,11 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Post-Quantum Side-Channel</div>
             <div class="project-title">Lattice Fault</div>
-            <div class="project-copy">Implementation attacks on lattice PQC: NTT power leakage, rejection-sampling fault bypass, KyberSlash timing, and a loop-abort fault that recovers a whole ML-DSA secret from one signature. The math survives; sloppy implementations do not.</div>
+            <div class="project-copy">Simulated implementation attacks on lattice PQC: NTT power leakage, rejection-sampling fault bypass, KyberSlash timing, and a loop-abort fault that recovers one secret polynomial in a signing model. Selected arithmetic is real; the exhibits do not implement complete ML-KEM or ML-DSA.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">ML-KEM</span>
-                <span class="chip">ML-DSA</span>
+                <span class="chip">Modelled ML-KEM decode</span>
+                <span class="chip">Modelled ML-DSA components</span>
                 <span class="chip">KyberSlash</span>
                 <span class="chip">Fault Injection</span>
               </div>
@@ -10675,14 +10681,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/"
             data-implements="Repetition code@src/engine.ts:163"
             data-comment-only="Information-set decoding@src/engine.ts:68"
             data-references="BCH | HQC | Information-set decoding | Kyber | ML-DSA | ML-KEM | Reed-Muller | STARK"
-            data-attacks="Cache timing@src/data.ts:7 | Chosen-ciphertext attack@src/data.ts:66 | Fault injection@README.md:57 | Key recovery@src/data.ts:87 | Side-channel (unspecified)@src/data.ts:7 | Timing side-channel@src/data.ts:66"
+            data-attacks="Cache timing@src/data.ts:7 | Key recovery@src/data.ts:87 | Side-channel (unspecified)@src/data.ts:7 | Timing side-channel@src/data.ts:66"
             data-implementation="hand-rolled"
-            data-review-commit="50c0b64a3597cfc9caf97eca16b69420e4f09f35"
-            data-review-note="Runs a repetition-code surrogate and majority recovery; no HQC decoder"
+            data-review-commit="cc4305c70238764212e04ef35fe36775f5e099d8"
+            data-review-note="Runs an abstract cache-channel simulation with repetition-code majority and reliability-weighted recovery, not an HQC decoder or full information-set decoding. The chosen-ciphertext timeline event and Lattice Fault sibling link describe other work, not attacks executed here."
+            data-added="2026-04" data-updated="2026-08" data-level="advanced"
            
            
            
@@ -10742,12 +10749,12 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Post-Quantum Side-Channel</div>
             <div class="project-title">HQC Timing Break</div>
-            <div class="project-copy">A full-decryption oracle on HQC, where compiler rewrites reintroduce cache timing into constant-time source. Substitutes a repetition code for HQC&#39;s Reed-Muller inner code so the soft-decoding step stays legible.</div>
+            <div class="project-copy">A cache-channel simulation inspired by HQC decryption-oracle attacks, using a repetition-code stand-in to compare majority and reliability-weighted bit recovery. No full HQC decoder or target-hardware timing measurements.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">vs. HQC</span>
                 <span class="chip">Cache Timing</span>
-                <span class="chip">Soft-ISD</span>
+                <span class="chip">Reliability-Weighted Recovery</span>
                 <span class="chip">Repetition Stand-In</span>
               </div>
               <span class="arrow">→</span>
@@ -12601,12 +12608,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/" data-added="2026-06" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/" data-added="2026-06" data-updated="2026-10"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:55 | SHA-256@src/crypto.ts:35"
             data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | UOV | Winternitz | X25519 | XMSS"
-            data-attacks="Birthday bound@src/data.ts:423 | Chosen-ciphertext attack@src/data.ts:192 | Chosen-plaintext attack@src/data.ts:868 | Differential cryptanalysis@src/data.ts:538 | Discrete log@src/data.ts:724 | Factoring@src/data.ts:724 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:155 | Side-channel (unspecified)@src/data.ts:229 | Timing side-channel@src/data.ts:297"
+            data-attacks="Birthday bound@src/data.ts:423 | Chosen-ciphertext attack@src/data.ts:192 | Chosen-plaintext attack@src/data.ts:882 | Differential cryptanalysis@src/data.ts:538 | Discrete log@src/data.ts:738 | Factoring@src/data.ts:738 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:155 | Side-channel (unspecified)@src/data.ts:229 | Timing side-channel@src/data.ts:297"
             data-standards="NIST"
-            data-implementation="WebCrypto"
+            data-implementation="WebCrypto" data-level="advanced"
            
            
            
@@ -17890,12 +17897,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-stream-ward/" data-added="2026-07" data-updated="2026-10" data-level="beginner"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-stream-ward/" data-added="2026-07" data-updated="2026-10"
             data-implements="ChaCha20@src/stream/chained.ts:119 | Poly1305@src/stream/chained.ts:119 | SHA-256@src/stream/chained.ts:80 | XChaCha20-Poly1305@src/stream/chained.ts:119"
             data-references="AES | AES-CTR | AES-GCM | AES-XTS | ChaCha20-Poly1305 | HKDF | HMAC | HPKE | MLS | Merkle tree | TLS 1.3"
-            data-attacks="Nonce reuse@README.md:143"
+            data-attacks="Nonce reuse@README.md:150"
             data-standards="IETF | NIST"
-            data-implementation="@noble"
+            data-implementation="@noble" data-level="beginner"
            
            
            
@@ -20367,14 +20374,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-point-ledger/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
+          <a class="project-card" data-category="POST-QUANTUM | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-point-ledger/" data-added="2026-09" data-updated="2026-10"
             data-implements="SHA-256@src/fuzz.ts:111 | SHAKE@src/fuzz.ts:2"
             data-references="EC point arithmetic | ECDSA | Fiat-Shamir | Groth16 | Pairing | SHA-3 | STARK | Shor's algorithm | secp256k1"
             data-attacks="Discrete log@src/sources.ts:76"
             data-standards="NIST"
             data-implementation="@noble"
-            data-review-commit="49dfff0b098791f09e26ecccb53f04b8ad22f1ef"
-            data-review-note="Fresh clone inspected; ECDSA is a data table and SHA-3 is merely the module path exporting SHAKE"
+            data-review-commit="abe44608d558561512e6783284fc16ef50623620"
+            data-review-note="Re-read current README, every tracked src module and relevant tests after integrated Lucide v1 repair PR15. Full prior review49dfff0 to this commit changes only the navigation icon Github to CodeXml in src/main.tsx; ledger/dialog/fuzz/toy computations and learner-facing claims are unchanged. ECDSA remains a cited resource-estimate data table, not an implementation; the noble/hashes sha3 module path exports the used SHAKE256, not SHA-3 execution. Preserve SHAKE and SHA-256 evidence and teaching-model limits. Actual36 unit,11 local and11 public browser/WCAG tests and immutable-lock npm audit zero passed at this exact SHA. Fleet dependency work39b11ea4-0958-4717-8cc8-faaabd45be07; source review is separate from deployment and dependency provider evidence." data-level="advanced"
            
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Quantum Cost Accounting</div>
@@ -20509,13 +20516,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sat-break/" data-added="2026-10" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-sat-break/" data-added="2026-10" data-updated="2026-10"
             data-implements="Toy SPN@src/crypto/spn.ts:99"
             data-unscanned="WebAssembly:1 | C/C++:1"
             data-references="AES | SHA-256"
             data-implementation="WASM"
-            data-review-commit="22cf78e9dd3e1f1d3dcd9901b0dbed3bd1972508"
-            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain."
+            data-review-commit="38b92b51cb4264c325824d9dd3dbafcfa725a769"
+            data-review-note="Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain. Re-reviewed PR2 at integrated38b92b51cb4264c325824d9dd3dbafcfa725a769: the SPN, CNF encoder, solver and exhaustive workers, direct verifier, UI, README, C++ wrapper and both shipped assets are byte-identical to the preceding pin. The clean build recipe captures immutable CaDiCaL c60730422e758ef1cebe7aeddf2dda31c996bf04 source and fresh objects/caches, with fourteen offline hygiene/failure controls. Integrated workflow38102731905 independently reproduces both shipped assets using the pinned official SDK, establishing measured source-to-byte correspondence. The original compiler identity remains unknown; static C/C++ and WASM coverage limits and cryptographic/constant-time limits remain. Documentation hash checks alone still do not establish reproduction." data-level="advanced"
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Constraint-Based Cryptanalysis</div>
             <div class="project-title">SAT Break</div>

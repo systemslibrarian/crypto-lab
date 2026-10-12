@@ -318,7 +318,7 @@
       },
       "dp-noise: the averaging attack's error shrinks as more answers are averaged until the true payroll is recovered, and the ledger refuses a query that would overdraw the budget.",
       {
-        "text": "dp-noise: noisy results differ from run to run unless Classroom mode (seeded sampling) is switched on, and seeded panels say so on screen. Exhibit 1's differentially private verdict says the ledger would refuse the second query, but that panel never asks the ledger: raise the budget in the menu and the two charges are admitted while the sentence still says otherwise.",
+        "text": "dp-noise: noisy results differ from run to run unless Classroom mode (seeded sampling) is switched on, and seeded panels say so on screen. Current-source clarification (2026-10-11; inspected commit 1a71ad103004; public interaction verified 2026-10-12 against the byte-matched deployed artifact): Exhibit 1's DP comparison reads the selected session budget, charged ε, and remaining budget. Changing the budget, spending, or resetting the ledger updates that comparison without charging the unbudgeted illustration or resampling its displayed answers. The copy distinguishes ε = 2 per two-query run from ε = 10 across the five displayed runs. This clarification does not change the historical live-review date below.",
         "exhibit": "dp-noise",
         "rederived": "2026-09-22",
         "observable": {

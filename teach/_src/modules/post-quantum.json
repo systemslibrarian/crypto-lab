@@ -328,7 +328,7 @@
         }
       },
       {
-        "text": "lattice-gentle: switching to the bad basis leaves the lattice points and the shortest vector unchanged while the rounding decode lands farther from the target. Raising the toy-Kyber error past the q/4 ceiling makes decrypted bits flip; a tampered KEM ciphertext silently yields the fallback key instead of an error; toy-Dilithium signing shows rejection sampling, and the tamper buttons are refused by the verifier. Moving the error-bound slider silently replaces the worked example's numbers with fresh seeded ones, so the values a student just copied stop being the values on screen. The canvas can only be dragged with a pointer; the numeric fields are the keyboard route, and the worksheet uses those.",
+        "text": "lattice-gentle: switching to the bad basis leaves the lattice points and the shortest vector unchanged while the rounding decode lands farther from the target. Raising the toy-Kyber error past the q/4 ceiling makes decrypted bits flip; a tampered KEM ciphertext silently yields the fallback key instead of an error; toy-Dilithium signing shows rejection sampling; message tampering usually fails verification, but the documented 4-bit challenge can collide (about 1 in 16), so a changed message can also be accepted. Moving the error-bound slider silently replaces the worked example's numbers with fresh seeded ones, so the values a student just copied stop being the values on screen. The canvas can only be dragged with a pointer; the numeric fields are the keyboard route, and the worksheet uses those.",
         "exhibit": "lattice-gentle",
         "rederived": "2026-09-22",
         "observable": {

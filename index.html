@@ -4773,12 +4773,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-ratchet-wire/" data-added="2026-04" data-updated="2026-10" data-level="intermediate"
-            data-implements="AES@ratchet-wire/src/crypto/double-ratchet.ts:257 | AES-GCM@ratchet-wire/src/crypto/double-ratchet.ts:248 | Diffie-Hellman@ratchet-wire/src/crypto/dh-ratchet.ts:70 | Double Ratchet@ratchet-wire/src/main.ts:8 | Ed25519@ratchet-wire/src/crypto/ed25519.ts:24 | HKDF@ratchet-wire/src/crypto/hkdf.ts:32 | SHA-256@ratchet-wire/src/crypto/hkdf.ts:53 | X25519@ratchet-wire/src/crypto/dh-ratchet.ts:20 | X3DH@ratchet-wire/src/crypto/session-init.ts:131"
-            data-references="ECDH | EdDSA | MLS | Noise protocol | X448"
-            data-attacks="Man-in-the-middle@ratchet-wire/src/main.ts:210 | Nonce reuse@README.md:24 | Side-channel (unspecified)@ratchet-wire/README.md:10"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-ratchet-wire/"
+            data-implements="AES@ratchet-wire/src/crypto/double-ratchet.ts:262 | AES-GCM@ratchet-wire/src/crypto/double-ratchet.ts:253 | Diffie-Hellman@ratchet-wire/src/crypto/dh-ratchet.ts:72 | Double Ratchet@ratchet-wire/src/main.ts:8 | Ed25519@ratchet-wire/src/crypto/ed25519.ts:24 | HKDF@ratchet-wire/src/crypto/hkdf.ts:32 | ML-KEM@ratchet-wire/src/crypto/hybrid-session.ts:11 | SHA-256@ratchet-wire/src/crypto/hkdf.ts:53 | X25519@ratchet-wire/src/crypto/dh-ratchet.ts:20 | X3DH@ratchet-wire/src/crypto/session-init.ts:133"
+            data-references="ECDH | EdDSA | Kyber | MLS | Noise protocol | PQXDH | X448"
+            data-attacks="Man-in-the-middle@ratchet-wire/src/main.ts:218 | Nonce reuse@README.md:24 | Side-channel (unspecified)@ratchet-wire/README.md:10"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-added="2026-04" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -4852,7 +4853,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Forward-Secret Messaging</div>
             <div class="project-title">Ratchet Wire</div>
-            <div class="project-copy">A live walkthrough of the Double Ratchet protocol powering Signal-style messaging, with per-message key derivation and forward secrecy guarantees.</div>
+            <div class="project-copy">Compare classical X3DH and real ML-KEM-1024 hybrid setup, then exchange messages through the Double Ratchet. Explains the continuing post-quantum ratchet used by current Signal.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Double Ratchet</span>

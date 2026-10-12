@@ -1661,7 +1661,7 @@ scanner does not read, so there is no finding either way. `could not look` is no
 `nothing there`, and collapsing the two would publish "implements nothing" about source
 nobody opened.
 
-**Partially unread (7)** — some bundled source or binary remains opaque
+**Partially unread (8)** — some bundled source or binary remains opaque
 to this index; the algorithm list is a floor rather than a total.
 
 ### Ablation Wire
@@ -1791,7 +1791,7 @@ Encrypt to a policy instead of to a person. Then splice two real keys whose attr
 SHA-256, SHA3-256, and BLAKE3 side by side with live avalanche visualization, length extension attack demo, and HMAC defense.
 
 - **Implements:** BLAKE3 `demos/babel-hash/src/crypto/hash.ts:127`, HMAC `demos/babel-hash/src/crypto/hmac.ts:9`, SHA-256 `demos/babel-hash/src/crypto/length-extension.ts:61`, SHA-3 `demos/babel-hash/src/crypto/hash.ts:123`
-- **Source review:** [1a5662ad0473](https://github.com/systemslibrarian/crypto-lab-babel-hash/commit/1a5662ad047328b8a14cff73ebaf75a03f52c526) — Read current README, live reduced-SHA2 context and executable hash/length-extension paths. The new panel cites paper collision results but does not execute that SHA2 collision attack or reproduce the reported pair. Remove the paper-only collision attack credit; retain actual full-round hash computations and length-extension demonstrations.
+- **Source review:** [3e86c5cd6442](https://github.com/systemslibrarian/crypto-lab-babel-hash/commit/3e86c5cd6442522530a5b2fa8cb8b8c4c98e8691) — Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault’s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations.
 - **References:** Argon2, Double Ratchet, Grover's algorithm, HKDF, Keccak, MD5, Merkle tree, PBKDF2, SHA-1, SHA-512, SLH-DSA, SPHINCS+, Serpent, Shamir secret sharing, bcrypt, scrypt
 - **Attacks shown:** Brute force `demos/babel-hash/src/main.ts:827`, Length extension `demos/babel-hash/src/crypto/hmac.ts:7`, Timing side-channel `README.md:24`
 - **Standards body:** IETF, NIST
@@ -2019,14 +2019,15 @@ Approximate FHE for encrypted floating-point arithmetic, homomorphic neural netw
 
 [`crypto-lab-collision-vault`](https://systemslibrarian.github.io/crypto-lab-collision-vault/) · Hash Collisions · HASHING & KDFS, ATTACKS
 
-Verify real published MD5 and SHA-1 collision pairs — SHAttered, identical-prefix, chosen-prefix — live in the browser, then watch SHA-256 and SHA-3 resist the same attack.
+Verify published MD5 and SHA-1 collision pairs, then compare full-round SHA-256 and SHA-3 digests. A separate research verifier checks a published 36-step SHA-256 pair.
 
 - **Implements:** MD5 `demos/collision-vault/src/hashing/md5.ts:10`, SHA-1 `demos/collision-vault/src/hashing/trace.ts:111`, SHA-256 `demos/collision-vault/src/hashing/index.ts:79`, SHA-3 `demos/collision-vault/src/hashing/sha3.ts:9`, SHA-512 `demos/collision-vault/src/hashing/index.ts:81`
-- **Source review:** [e63324a214d8](https://github.com/systemslibrarian/crypto-lab-collision-vault/commit/e63324a214d887cbf8dc05a2a38f7986b85becf6) — The lab hashes with WebCrypto through one local helper, and names the algorithm only as that helper's STRING ARGUMENT: hashing/index.ts:79 is `return webcryptoDigest('SHA-256', bytes)` and :81 the SHA-512 case, while webcrypto.ts:25 does the work as `subtle().digest(algo, copy)` with algo a parameter. No line carries both the name and the operation, so no detection shape can reach it, and the only other place either name appears in executable code is a vectors table (SHA256_VECTORS, SHA512_VECTORS) - which is test data, not an implementation, and is now correctly suppressed. Re-read the complete 476dec52aa83 to 14e447fd16e7 change and the current hashing source: hashing/index.ts and hashing/webcrypto.ts are byte-identical, so both WebCrypto digest classifications and call-site anchors remain exact. The intervening production edit is CSS only; the remaining changes migrate workflows and dependency/tooling controls. Exact-head Linux gates separately passed 107 units, 31 browser cases with one intentional skip, build, audit and ten TypeScript/lint controls. Anchored at the call sites rather than at the digest call, because those are the lines that say WHICH algorithm. Re-read the 12 October reduced-round SHA2 context and prior-pin diff: both hashing helper files and anchors79/81 are byte-identical. The resistance panel now explicitly discusses full-round SHA2/SHA3. Reduced-round paper results are reference-only; no collision pair from the new preprint was reproduced.
+- **Source review:** [9e4c26555dfe](https://github.com/systemslibrarian/crypto-lab-collision-vault/commit/9e4c26555dfea4cd4b82bb6a07968495f7c9eb76) — Re-read the full 12 October published change and exact fixture provenance. Existing MD5/SHA1/full-round providers and SHA256/SHA512 helper anchors79/81 remain. The new isolated research backend executes SHA256 compression with an explicit step count over whole big-endian blocks, standard IV and per-block feed-forward; it adds no padding. Table2 of the 9 September 2026 preprint yields the same 36-step result for the two supplied 128-byte messages, unlike the appendix semi-free-start examples. Normal WebCrypto SHA256 with message padding produces different digests. Independent Python and TypeScript controls reproduce the table value and reject all1024 one-bit mutations and incorrect Table2 round/IV/padding interpretations. A common padding suffix preserves the reduced-round collision but changes the reported Table2 chaining value. The 64-step implementation is cross-checked against noble at padding boundaries; 118 units, lint/build and35 browser checks passed, with one existing intentional skip. This verifies the supplied pair, not the attack search, complexity estimates or full SHA256 break. PDF mirror retrieval and SHA256 fingerprint are recorded in the fixture. The native-select overflow fix keeps controls within phone-width panels.
+- **Partially unread:** Python:1 — source or compiled binary not fully available for review here.
 - **References:** BLAKE3, CMAC, GHASH, HMAC, Keccak, Kupyna, Merkle tree, Poly1305, Streebog
 - **Attacks shown:** Brute force `demos/collision-vault/src/pairs/manifest.ts:64`, Collision attack `demos/collision-vault/src/hashing/index.ts:44`, Length extension `README.md:60`
 - **Standards body:** IETF, NIST
-- **Implementation:** @noble
+- **Implementation:** WebCrypto / noble / local reduced-round SHA-256
 
 ### Commit Gate
 
@@ -2596,7 +2597,7 @@ Why harvested traffic is already lost: capture a real key exchange, upgrade to p
 SHA-256 vs SHA3-256 vs BLAKE3 internals — live avalanche analysis, Merkle-Damgård/sponge/tree construction diagrams, and timing benchmarks.
 
 - **Implements:** BLAKE3 `src/hasher.ts:154`, SHA-256 `src/hasher.ts:241`, SHA-3 `src/hasher.ts:151`
-- **Source review:** [5397b4e24b4c](https://github.com/systemslibrarian/crypto-lab-hash-zoo/commit/5397b4e24b4c37ae7f6207d2364dc0fa058454b9) — Read current README, live reduced-SHA2 context and executable hash/length-extension paths. The new panel cites paper collision results but does not execute that SHA2 collision attack or reproduce the reported pair. Remove the paper-only collision attack credit; retain actual full-round hash computations and length-extension demonstrations.
+- **Source review:** [8161d1c413d6](https://github.com/systemslibrarian/crypto-lab-hash-zoo/commit/8161d1c413d6890cf1c17171b81858f1af05ff29) — Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault’s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations.
 - **References:** Argon2, CMAC, GHASH, HKDF, HMAC, Keccak, MD5, Merkle tree, PBKDF2, Poly1305, SHA-1, SHA-512, TLS 1.3, scrypt
 - **Attacks shown:** Brute force `README.md:39`, Length extension `src/hasher.ts:216`, Side-channel (unspecified) `README.md:42`, Timing side-channel `README.md:42`
 - **Standards body:** NIST

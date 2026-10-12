@@ -19358,11 +19358,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-factor-forge/" data-added="2026-09" data-updated="2026-09" data-level="intermediate"
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-factor-forge/"
             data-implements="Shor's algorithm@src/ui/shor.ts:98"
             data-references="EC point arithmetic | RSA"
-            data-attacks="Birthday bound@src/ui/ladder.ts:93 | Brute force@README.md:210 | Discrete log@src/factor/types.ts:195 | Factoring@src/factor/ecm.ts:201"
+            data-attacks="Birthday bound@src/ui/ladder.ts:93 | Discrete log@src/factor/types.ts:195 | Factoring@src/factor/ecm.ts:201"
             data-implementation="hand-rolled"
+            data-review-commit="8fcf023884964522ebddf678676aea20c04d6bf2"
+            data-review-note="Bounded current-source review of the Brute force credit only. README.md:223 (formerly :210 before a thirteen-line documentation insertion) describes a Jacobi unit-test reference oracle; src/factor/bigint.test.ts:76-85 enumerates quadratic residues for five small primes to check jacobi. This is test support, not an attack exhibit, so exclude that README-derived Brute force credit. The actual trial-division implementation and its registry/worker wiring were inspected and remain unchanged. Preserve all other derived classifications and source limitations; this clarification does not claim a fresh live exercise, full cryptographic review or constant-time assurance."
+            data-added="2026-09" data-updated="2026-09" data-level="intermediate"
            
            
            

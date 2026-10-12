@@ -69,13 +69,13 @@
     "note": "Covert-channel encoders and detectors; no named cryptographic primitive implemented"
   },
   "crypto-lab-dp-noise": {
-    "commit": "85ca9a3bf809877cca008bd42018de4d0985074c",
-    "reviewed": "2026-10-09",
+    "commit": "1a71ad1030045c5ac66c674442823d1bc81ece95",
+    "reviewed": "2026-10-12",
     "add": [
       "Laplace mechanism@src/dp/laplace.ts:45",
       "Gaussian mechanism@src/dp/discrete.ts:40"
     ],
-    "note": "Read current README, exact discrete Laplace/Gaussian samplers and continuous Laplace source. Differential privacy bounds nonzero distinguishing advantage; it does not make neighbouring databases indistinguishable. Existing implementation anchors45/40 retained after current-source review.",
+    "note": "Read current README, exact discrete Laplace/Gaussian samplers and continuous Laplace source at this exact commit. Re-read the complete 85ca9a3bf809 to 1a71ad103004 change inventory: only AGENTS.md, src/ui/leak.ts and e2e/claims.spec.ts changed; all DP engine, composition/session-ledger, README, manifest and lock bytes are unchanged. The comparison uses nonmutating ledger quotes and bestComposition over existing spends, the two-query run and all five runs; budget/spend/reset notifications update only its text without billing or resampling the illustration. Admission remains the existing ledger policy. Differential privacy bounds nonzero distinguishing advantage; it does not make neighbouring databases indistinguishable. Existing implementation anchors45/40 and add/remove classifications retained. This bounded teaching-source review is not production, cryptographic-conformance or constant-time assurance.",
     "remove": []
   },
   "crypto-lab-export-grade": {

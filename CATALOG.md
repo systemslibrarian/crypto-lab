@@ -2362,8 +2362,9 @@ Run real TETRA TEA1, trace its 80-bit key into a 32-bit working register, recove
 Seven classical factoring methods on a real BigInt N, each waiting for a different mistake in key generation. Obey every RSA rule and rho and ECM still finish; only size stops them.
 
 - **Implements:** Shor's algorithm `src/ui/shor.ts:98`
+- **Source review:** [8fcf02388496](https://github.com/systemslibrarian/crypto-lab-factor-forge/commit/8fcf023884964522ebddf678676aea20c04d6bf2) — Bounded current-source review of the Brute force credit only. README.md:223 (formerly :210 before a thirteen-line documentation insertion) describes a Jacobi unit-test reference oracle; src/factor/bigint.test.ts:76-85 enumerates quadratic residues for five small primes to check jacobi. This is test support, not an attack exhibit, so exclude that README-derived Brute force credit. The actual trial-division implementation and its registry/worker wiring were inspected and remain unchanged. Preserve all other derived classifications and source limitations; this clarification does not claim a fresh live exercise, full cryptographic review or constant-time assurance.
 - **References:** EC point arithmetic, RSA
-- **Attacks shown:** Birthday bound `src/ui/ladder.ts:93`, Brute force `README.md:210`, Discrete log `src/factor/types.ts:195`, Factoring `src/factor/ecm.ts:201`
+- **Attacks shown:** Birthday bound `src/ui/ladder.ts:93`, Discrete log `src/factor/types.ts:195`, Factoring `src/factor/ecm.ts:201`
 - **Standards body:** —
 - **Implementation:** hand-rolled
 

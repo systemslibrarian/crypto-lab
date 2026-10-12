@@ -97,11 +97,9 @@ function usesIn(text) {
 }
 
 async function deployingLabs() {
-  const repos = fs.readdirSync(FLEET_ROOT).sort().filter((repo) => {
-    if (!/^crypto-(lab|compare|counsel)/.test(repo)) return false;
-    try { return fs.statSync(path.join(FLEET_ROOT, repo, '.git')).isDirectory(); }
-    catch { return false; }
-  });
+  // Use the same origin-verified canonical worktree discovery as the floor
+  // and other checkers; .git's storage representation is not a publisher test.
+  const { labs: repos } = siblingLabsForFloor(FLEET_ROOT);
   const rows = await pooled(repos, async (repo) => {
     const dir = path.join(FLEET_ROOT, repo);
     if (await sh('git', ['fetch', '-q', 'origin'], dir) === null) return { repo, verdict: 'API-ERROR', detail: 'git fetch failed; tracking ref is not current evidence' };

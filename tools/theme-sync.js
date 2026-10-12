@@ -56,7 +56,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const { isLinkedWorktree, excludedLine, fleetUnreadLine, siblingLabs: siblingLabsForFloor } = require('./sibling-labs.js');
+const { repositorySource, excludedLine, fleetUnreadLine, siblingLabs: siblingLabsForFloor } = require('./sibling-labs.js');
 
 const REPO_ROOT = path.join(__dirname, '..');
 const FLEET_ROOT = path.join(REPO_ROOT, '..');
@@ -108,11 +108,9 @@ function labPages() {
     if (!repo.startsWith('crypto-lab-')) continue;
     const root = path.join(FLEET_ROOT, repo);
     if (!fs.statSync(root).isDirectory()) continue;
-    /* A linked git worktree is a second working copy of a repository already in
-     * this list, and a worktree of THIS repository carries generated teach/
-     * pages that no lab rule applies to. Excluded and named below, never
-     * dropped in silence. See tools/sibling-labs.js. */
-    if (isLinkedWorktree(root)) { excludedWorktrees.push(repo); continue; }
+    /* Canonical origin-verified source worktrees are subjects; named lane
+     * copies and unreadable metadata remain excluded. */
+    if (!repositorySource(root)) { excludedWorktrees.push(repo); continue; }
     const found = [];
     (function walk(dir, depth) {
       if (depth > 4) return;

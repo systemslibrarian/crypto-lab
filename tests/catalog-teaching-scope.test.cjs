@@ -448,3 +448,37 @@ test('Power Trace controls reject false attacks, timing guarantees and loss of a
   assert.notEqual(importAnchor, html, 'The negative control must replace the actual implementation anchor');
   assert.throws(() => checkPowerScope(importAnchor), assert.AssertionError);
 });
+
+function checkNewResearchScope(source) {
+  for (const [slug, excluded, retained] of [
+    ['crypto-lab-frost-threshold', 'Discrete log', 'Nonce reuse'],
+    ['crypto-lab-shamir-vs-frost', 'Discrete log', 'Nonce reuse'],
+    ['crypto-lab-babel-hash', 'Collision attack', 'Length extension'],
+    ['crypto-lab-hash-zoo', 'Collision attack', 'Length extension'],
+  ]) {
+    const attacks = attacksFor(source, slug);
+    assert.ok(!attacks.includes(excluded), `${slug}: a cited research result is not a demonstrated attack`);
+    assert.ok(attacks.includes(retained), `${slug}: keep the actual demonstration`);
+  }
+}
+
+test('new FROST and SHA2 reading panels do not become demonstrated attacks', () => {
+  checkNewResearchScope(html);
+});
+
+test('research scope controls reject false credits and loss of actual demonstrations', () => {
+  for (const [slug, excluded, retained] of [
+    ['crypto-lab-frost-threshold', 'Discrete log', 'Nonce reuse'],
+    ['crypto-lab-shamir-vs-frost', 'Discrete log', 'Nonce reuse'],
+    ['crypto-lab-babel-hash', 'Collision attack', 'Length extension'],
+    ['crypto-lab-hash-zoo', 'Collision attack', 'Length extension'],
+  ]) {
+    const re = new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[^>]*>');
+    const added = html.replace(re, card => card.replace(/data-attacks="/, `data-attacks="${excluded}@README.md:1 | `));
+    assert.notEqual(added, html);
+    assert.throws(() => checkNewResearchScope(added), assert.AssertionError);
+    const removed = html.replace(re, card => card.replace(new RegExp(retained + '@[^|" ]+'), ''));
+    assert.notEqual(removed, html);
+    assert.throws(() => checkNewResearchScope(removed), assert.AssertionError);
+  }
+});

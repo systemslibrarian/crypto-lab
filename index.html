@@ -3071,12 +3071,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-drbg-arena/" data-added="2026-04" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-drbg-arena/"
             data-implements="AES@src/crypto/utils.ts:56 | AES-CBC@src/crypto/utils.ts:62 | CTR-DRBG@src/crypto/ctr-drbg.ts:25 | HMAC@src/crypto/hmac-drbg.ts:20 | HMAC-DRBG@src/crypto/hmac-drbg.ts:20 | SHA-256@src/crypto/utils.ts:38 | SHA-512@src/crypto/utils.ts:43"
             data-references="Argon2 | ECDSA | HKDF | PBKDF2 | scrypt"
             data-attacks="Discrete log@src/ui/exhibit5.ts:176"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-added="2026-04" data-updated="2026-08" data-level="advanced"
            
            
            
@@ -4575,15 +4576,16 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/"
             data-implements="Ed25519@src/exhibits/attacks.ts:31 | FROST@crate/src/round2.rs:54 | SHA-512@src/exhibits/attacks.ts:75 | Shamir secret sharing@src/exhibits/attacks.ts:105"
             data-comment-only="Shamir secret sharing@src/exhibits/attacks.ts:94"
-            data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | Schnorr | secp256k1"
+            data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | Schnorr | X25519 | secp256k1"
             data-attacks="Key recovery@src/exhibits/round1.ts:60 | Nonce reuse@src/exhibits/attacks-view.ts:2 | Side-channel (unspecified)@THREAT_MODEL.md:47"
             data-standards="IETF | NIST"
             data-implementation="Rust FROST crate / WASM"
-            data-review-commit="7fe5f800feb477b4d9ea47c784dc4039afb592c4"
-            data-review-note="Re-read Rust round2 bridge, TypeScript keygen/signing/binding transcript and honest-response consistency experiment after verified PR23 at this exact SHA. Rust FROST/WASM signing remains distinct from the local RFC9591 Ed25519 teaching engine; SHA-512 is computed by WebCrypto. Shamir samples scalar coefficients and evaluates f(id); Lagrange weights reconstruct. AppendixE.1 transcript/rho/share/signature controls and real nonce-reuse forgery inspected; the rho=1 honest control and R-only inconsistency rejection do not mount a concurrent ROS/Drijvers forgery. Prior successful10Rust/9unit/7browser gates and exact published artifact byte checks retained, not independent compiler reproduction."
+            data-review-commit="f5fba38fe404741b8c72e83921d1025f12ca36d2"
+            data-review-note="Re-read Rust round2 bridge, TypeScript keygen/signing/binding transcript and honest-response consistency experiment after verified PR23 at this exact SHA. Rust FROST/WASM signing remains distinct from the local RFC9591 Ed25519 teaching engine; SHA-512 is computed by WebCrypto. Shamir samples scalar coefficients and evaluates f(id); Lagrange weights reconstruct. AppendixE.1 transcript/rho/share/signature controls and real nonce-reuse forgery inspected; the rho=1 honest control and R-only inconsistency rejection do not mount a concurrent ROS/Drijvers forgery. Prior successful10Rust/9unit/7browser gates and exact published artifact byte checks retained, not independent compiler reproduction. Re-read the 12 October adaptive-research integration and full prior-pin diff: Rust/core arithmetic and runtime crypto provider lock entries are unchanged. The new context and contrast repairs do not implement masking or an LDVR attack. Local 10 Rust, 9 unit and 7 browser checks passed; the standard GitHub build and deployment also passed at this pin. The discrete-log bounds quoted in the new research panel are not an attack executed here, so that attack credit is removed; actual nonce-reuse and recovery exhibits remain."
+            data-added="2026-04" data-updated="2026-10" data-level="advanced"
            
            
            
@@ -5335,14 +5337,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/"
             data-implements="Merkle tree@demos/sphincs-ledger/src/crypto/merkle.ts:15 | SHA-256@demos/sphincs-ledger/src/crypto/fors.ts:58 | SLH-DSA@demos/sphincs-ledger/src/crypto/params.ts:17 | SPHINCS+@demos/sphincs-ledger/src/crypto/params.ts:18 | Winternitz@demos/sphincs-ledger/src/crypto/params.ts:65"
             data-comment-only="XMSS@demos/sphincs-ledger/src/crypto/params.ts:25"
             data-references="Dilithium | ECDSA | Ed25519 | Falcon | Grover's algorithm | HAETAE | LMS | LWE | ML-DSA | ML-KEM | NTRU | OPAQUE | RSA | SHA-3 | SHA-512 | SHAKE | Shor's algorithm | X3DH | XMSS"
             data-standards="NIST"
             data-implementation="WebCrypto"
-            data-review-commit="c6ec3f5e305d346549e778de783a6ecba9041f57"
-            data-review-note="Read current hash-only assumption/comparison panel, noble SLH-DSA adapter, selected-set params.ts equations and reduced complete-WOTS+ source, README/scaled-values limits, verified PR12/13 controls. Factoring/discrete-log remain comparisons/negations, not executed attacks. Standard 35/67-chain comparison is distinct from the real-hash reduced 8-chain teaching model; no FIPS-conformance claim for that model."
+            data-review-commit="73ce1d64f8d2bf94be787e2df0e4641bbad6db17"
+            data-review-note="Read current hash-only assumption/comparison panel, noble SLH-DSA adapter, selected-set params.ts equations and reduced complete-WOTS+ source, README/scaled-values limits, verified PR12/13 controls. Factoring/discrete-log remain comparisons/negations, not executed attacks. Standard 35/67-chain comparison is distinct from the real-hash reduced 8-chain teaching model; no FIPS-conformance claim for that model. Re-read the 12 October signature-budget panel, BigInt arithmetic, noble adapter and prior-pin diff: cryptographic source is unchanged. The calculator is a balanced workload teaching model, not a durable signing counter or implementation of draft limited-use profiles. Factoring/discrete-log remain comparison context, not executed attacks."
+            data-added="2026-04" data-updated="2026-10" data-level="advanced"
            
            
            
@@ -5432,13 +5435,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/" data-added="2026-04" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/"
             data-implements="Toy SPN@src/crypto/spn.ts:95"
-            data-references="AES | AES-CBC | DES | Enigma | MD5 | PRESENT | RSA | SHA-1 | Serpent | Shamir secret sharing | Simon | Speck | Vigenere cipher"
+            data-references="AES | AES-CBC | ChaCha20 | DES | Enigma | MD5 | PRESENT | RSA | SHA-1 | Serpent | Shamir secret sharing | Simon | Speck | Vigenere cipher"
             data-attacks="Brute force@README.md:13 | Chosen-ciphertext attack@README.md:62 | Chosen-plaintext attack@src/feal-tab.ts:16 | Collision attack@README.md:63 | Differential cryptanalysis@src/main.ts:1084 | Impossible differential@src/main.ts:785 | Key recovery@README.md:22 | Padding oracle@README.md:62"
             data-implementation="hand-rolled"
-            data-review-commit="a106bf8a64ece57b6944e2dfece9b7ed785e4861"
-            data-review-note="Re-read root source after relocation and FEAL-4 extension. Executes an 8-bit, four-round toy SPN, not DES. The independent FEAL-4 engine implements its published key schedule; the worker attacks only oracle observations and recovers equivalent round-key/whitening material, not the master key. FEAL-8 exists only in a test wrapper and is not a shipped implementation. Unit vectors and fresh-block/negative verification tests inspected; browser gates run separately. FEAL-4 is presently outside the algorithm vocabulary and is described in card prose rather than credited as DES."
+            data-review-commit="c7a32a7c391bdefecc95e46a13a4aebedf5636af"
+            data-review-note="Re-read root source after relocation and FEAL-4 extension. Executes an 8-bit, four-round toy SPN, not DES. The independent FEAL-4 engine implements its published key schedule; the worker attacks only oracle observations and recovers equivalent round-key/whitening material, not the master key. FEAL-8 exists only in a test wrapper and is not a shipped implementation. Unit vectors and fresh-block/negative verification tests inspected; browser gates run separately. FEAL-4 is presently outside the algorithm vocabulary and is described in card prose rather than credited as DES. Re-read the 12 October source and full prior-pin inventory: SPN/FEAL cryptographic source is unchanged, with toolchain/publishing updates and a source-linked reduced-ChaCha context note. That note does not execute the ChaCha cryptanalysis."
+            data-added="2026-04" data-updated="2026-10" data-level="advanced"
            
            
            
@@ -5692,12 +5696,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-babel-hash/" data-added="2026-04" data-updated="2026-10" data-level="intermediate"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-babel-hash/"
             data-implements="BLAKE3@demos/babel-hash/src/crypto/hash.ts:127 | HMAC@demos/babel-hash/src/crypto/hmac.ts:9 | SHA-256@demos/babel-hash/src/crypto/length-extension.ts:61 | SHA-3@demos/babel-hash/src/crypto/hash.ts:123"
-            data-references="Argon2 | Double Ratchet | Grover's algorithm | HKDF | Keccak | MD5 | Merkle tree | PBKDF2 | SHA-1 | SLH-DSA | SPHINCS+ | Serpent | Shamir secret sharing | bcrypt | scrypt"
-            data-attacks="Brute force@demos/babel-hash/src/main.ts:821 | Length extension@demos/babel-hash/src/crypto/hmac.ts:7 | Timing side-channel@README.md:24"
+            data-references="Argon2 | Double Ratchet | Grover's algorithm | HKDF | Keccak | MD5 | Merkle tree | PBKDF2 | SHA-1 | SHA-512 | SLH-DSA | SPHINCS+ | Serpent | Shamir secret sharing | bcrypt | scrypt"
+            data-attacks="Brute force@demos/babel-hash/src/main.ts:827 | Length extension@demos/babel-hash/src/crypto/hmac.ts:7 | Timing side-channel@README.md:24"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="1a5662ad047328b8a14cff73ebaf75a03f52c526"
+            data-review-note="Read current README, live reduced-SHA2 context and executable hash/length-extension paths. The new panel cites paper collision results but does not execute that SHA2 collision attack or reproduce the reported pair. Remove the paper-only collision attack credit; retain actual full-round hash computations and length-extension demonstrations."
+            data-added="2026-04" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -5784,12 +5791,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-aes-modes/" data-added="2026-04" data-updated="2026-10" data-level="intermediate"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-aes-modes/"
             data-implements="AES@src/ccm.ts:32 | AES-CBC@src/cbc.ts:30 | AES-CCM@src/ccm.ts:174 | AES-CTR@src/compare.ts:113 | AES-GCM@src/compare.ts:120 | GHASH@src/forbidden.ts:99"
             data-references="3DES | Ascon | ChaCha20 | ChaCha20-Poly1305 | HMAC | Poly1305 | RC4 | Serpent | TLS 1.3"
             data-attacks="IV reuse@src/cbc.ts:97 | Known-plaintext attack@index.html:567 | Nonce reuse@src/ctr.ts:113 | Padding oracle@src/cbc.ts:307"
             data-standards="NIST"
             data-implementation="WebCrypto"
+            data-added="2026-04" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -7330,12 +7338,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-chacha20-stream/" data-added="2026-04" data-updated="2026-10" data-level="intermediate"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-chacha20-stream/"
             data-implements="ChaCha20@src/cipher.ts:14"
             data-references="AES | AES-GCM | AES-SIV | Argon2 | ChaCha20-Poly1305 | One-time pad | Poly1305 | SHA-256 | Salsa20 | TLS 1.3 | XChaCha20-Poly1305"
             data-attacks="Birthday bound@README.md:32 | Ciphertext malleability@README.md:30 | Nonce reuse@src/cipher.ts:41 | Side-channel (unspecified)@index.html:357"
             data-standards="IETF"
             data-implementation="@noble"
+            data-added="2026-04" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -7511,12 +7520,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/" data-added="2026-04" data-updated="2026-08" data-level="beginner"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/"
             data-implements="BLAKE3@src/hasher.ts:154 | SHA-256@src/hasher.ts:241 | SHA-3@src/hasher.ts:151"
-            data-references="Argon2 | CMAC | GHASH | HKDF | HMAC | Keccak | MD5 | Merkle tree | PBKDF2 | Poly1305 | SHA-1 | TLS 1.3 | scrypt"
+            data-references="Argon2 | CMAC | GHASH | HKDF | HMAC | Keccak | MD5 | Merkle tree | PBKDF2 | Poly1305 | SHA-1 | SHA-512 | TLS 1.3 | scrypt"
             data-attacks="Brute force@README.md:39 | Length extension@src/hasher.ts:216 | Side-channel (unspecified)@README.md:42 | Timing side-channel@README.md:42"
             data-standards="NIST"
             data-implementation="@noble"
+            data-review-commit="5397b4e24b4c37ae7f6207d2364dc0fa058454b9"
+            data-review-note="Read current README, live reduced-SHA2 context and executable hash/length-extension paths. The new panel cites paper collision results but does not execute that SHA2 collision attack or reproduce the reported pair. Remove the paper-only collision attack credit; retain actual full-round hash computations and length-extension demonstrations."
+            data-added="2026-04" data-updated="2026-08" data-level="beginner"
            
            
            
@@ -8134,12 +8146,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-nonce-guard/" data-added="2026-04" data-updated="2026-08" data-level="intermediate"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-nonce-guard/"
             data-implements="AES@src/crypto.ts:28 | AES-GCM@src/crypto.ts:28 | AES-SIV@src/crypto.ts:48 | Diffie-Hellman@src/gf128poly.ts:177 | GHASH@src/crypto.ts:300"
             data-references="AES-CTR | Ascon | ChaCha20 | ChaCha20-Poly1305 | HMAC | Poly1305 | SHA-256 | SHA-384 | TLS 1.3"
             data-attacks="Birthday bound@README.md:46 | Factoring@src/main.ts:243 | Key recovery@src/main.ts:233 | Known-plaintext attack@src/crypto.ts:212 | Nonce reuse@src/crypto.ts:183 | Padding oracle@README.md:74"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-added="2026-04" data-updated="2026-08" data-level="intermediate"
            
            
            
@@ -11378,11 +11391,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-pq-rotation/" data-added="2026-04" data-updated="2026-10" data-level="intermediate"
+          <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-pq-rotation/"
             data-implements="ML-DSA@src/hybrid-cert.ts:2 | P-256@src/hybrid-cert.ts:1 | SHA-256@src/hybrid-cert.ts:70"
             data-references="AES | DSA | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | ML-KEM | Pairing | RSA | TLS 1.3 | X25519"
             data-standards="NIST"
             data-implementation="WebCrypto"
+            data-added="2026-04" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -12947,13 +12961,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ssh-handshake/" data-added="2026-06" data-updated="2026-10" data-level="intermediate"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ssh-handshake/"
             data-implements="ECDH@src/engine.ts:45 | ECDSA@src/ca.ts:25 | Ed25519@src/ca.ts:20 | P-256@src/ca.ts:25 | SHA-256@src/engine.ts:83 | X25519@src/engine.ts:37"
             data-protocol-partial="TLS 1.3@src/engine.ts:160"
-            data-references="Ed448 | EdDSA | Kerberos | MD5 | RSA | SHA-512 | TLS 1.3 | X3DH"
+            data-references="Ed448 | EdDSA | Kerberos | MD5 | ML-DSA | ML-KEM | RSA | SHA-512 | TLS 1.3 | X3DH"
             data-attacks="Man-in-the-middle@src/data.ts:309"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-added="2026-06" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -13359,14 +13374,16 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-collision-vault/" data-added="2026-06" data-updated="2026-10"
+          <a class="project-card" data-category="HASHING & KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-collision-vault/"
             data-implements="MD5@demos/collision-vault/src/hashing/md5.ts:10 | SHA-1@demos/collision-vault/src/hashing/trace.ts:111 | SHA-256@demos/collision-vault/src/hashing/index.ts:79 | SHA-3@demos/collision-vault/src/hashing/sha3.ts:9 | SHA-512@demos/collision-vault/src/hashing/index.ts:81"
             data-references="BLAKE3 | CMAC | GHASH | HMAC | Keccak | Kupyna | Merkle tree | Poly1305 | Streebog"
             data-attacks="Brute force@demos/collision-vault/src/pairs/manifest.ts:64 | Collision attack@demos/collision-vault/src/hashing/index.ts:44 | Length extension@README.md:60"
             data-standards="IETF | NIST"
             data-implementation="@noble"
-            data-review-commit="14e447fd16e7e3a15bd2ae5f52a191853726ea96"
-            data-review-note="The lab hashes with WebCrypto through one local helper, and names the algorithm only as that helper's STRING ARGUMENT: hashing/index.ts:79 is `return webcryptoDigest('SHA-256', bytes)` and :81 the SHA-512 case, while webcrypto.ts:25 does the work as `subtle().digest(algo, copy)` with algo a parameter. No line carries both the name and the operation, so no detection shape can reach it, and the only other place either name appears in executable code is a vectors table (SHA256_VECTORS, SHA512_VECTORS) - which is test data, not an implementation, and is now correctly suppressed. Re-read the complete 476dec52aa83 to 14e447fd16e7 change and the current hashing source: hashing/index.ts and hashing/webcrypto.ts are byte-identical, so both WebCrypto digest classifications and call-site anchors remain exact. The intervening production edit is CSS only; the remaining changes migrate workflows and dependency/tooling controls. Exact-head Linux gates separately passed 107 units, 31 browser cases with one intentional skip, build, audit and ten TypeScript/lint controls. Anchored at the call sites rather than at the digest call, because those are the lines that say WHICH algorithm." data-level="beginner"
+            data-review-commit="e63324a214d887cbf8dc05a2a38f7986b85becf6"
+            data-review-note="The lab hashes with WebCrypto through one local helper, and names the algorithm only as that helper's STRING ARGUMENT: hashing/index.ts:79 is `return webcryptoDigest('SHA-256', bytes)` and :81 the SHA-512 case, while webcrypto.ts:25 does the work as `subtle().digest(algo, copy)` with algo a parameter. No line carries both the name and the operation, so no detection shape can reach it, and the only other place either name appears in executable code is a vectors table (SHA256_VECTORS, SHA512_VECTORS) - which is test data, not an implementation, and is now correctly suppressed. Re-read the complete 476dec52aa83 to 14e447fd16e7 change and the current hashing source: hashing/index.ts and hashing/webcrypto.ts are byte-identical, so both WebCrypto digest classifications and call-site anchors remain exact. The intervening production edit is CSS only; the remaining changes migrate workflows and dependency/tooling controls. Exact-head Linux gates separately passed 107 units, 31 browser cases with one intentional skip, build, audit and ten TypeScript/lint controls. Anchored at the call sites rather than at the digest call, because those are the lines that say WHICH algorithm. Re-read the 12 October reduced-round SHA2 context and prior-pin diff: both hashing helper files and anchors79/81 are byte-identical. The resistance panel now explicitly discusses full-round SHA2/SHA3. Reduced-round paper results are reference-only; no collision pair from the new preprint was reproduced."
+            data-added="2026-06" data-updated="2026-10"
+            data-level="beginner"
            
            
            
@@ -14576,14 +14593,16 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/" data-added="2026-06" data-updated="2026-10"
+          <a class="project-card" data-category="MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/"
             data-implements="Ed25519@src/frost/verify.ts:14 | FROST@src/frost/round2.ts:84 | HMAC@src/ui/shamir-panel.ts:542 | SHA-256@src/ui/shamir-panel.ts:542 | SHA-512@src/frost/keygen.ts:14 | Shamir secret sharing@src/frost/field.ts:80"
-            data-references="Schnorr"
-            data-attacks="Key recovery@src/ui/decision-guide.ts:22 | Nonce reuse@src/ui/decision-guide.ts:48"
+            data-references="Schnorr | X25519"
+            data-attacks="Key recovery@src/ui/decision-guide.ts:22 | Nonce reuse@src/ui/adaptive-research.ts:16"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="439f567fd8b130fc95c0006765f61e0271f0890f"
-            data-review-note="Read keygen/round2/verify and Shamir signing caller at exact439f integration. Actual Ed25519 aggregate verification, participant-local threshold arithmetic and HMAC-SHA256 computation replace import/UI/key-import-only anchors. Preserve actual GF256/scalar Shamir and SHA512 source. This is genuine two-round threshold Schnorr arithmetic producing an Ed25519 signature, but documented simplified binding-factor hashing lacks RFC9591 ContextString and is not conformant; trusted dealer holds the setup secret. Standard/native tests do not establish full RFC9591 conformance or constant-time behavior." data-level="advanced"
+            data-review-commit="86b59789bca744b9e032bd121ef0d8df75bbe5b4"
+            data-review-note="Read keygen/round2/verify and Shamir signing caller at exact439f integration. Actual Ed25519 aggregate verification, participant-local threshold arithmetic and HMAC-SHA256 computation replace import/UI/key-import-only anchors. Preserve actual GF256/scalar Shamir and SHA512 source. This is genuine two-round threshold Schnorr arithmetic producing an Ed25519 signature, but documented simplified binding-factor hashing lacks RFC9591 ContextString and is not conformant; trusted dealer holds the setup secret. Standard/native tests do not establish full RFC9591 conformance or constant-time behavior. Re-read the 12 October adaptive-research panel and its integration: signing, keygen and verifier source are byte-identical to the prior pin. The new panel is research context only; it does not execute LDVR attacks or certify adaptive security. HMAC still computes at line542. The discrete-log bounds quoted in the new research panel are not an attack executed here, so that attack credit is removed; actual nonce-reuse and recovery exhibits remain."
+            data-added="2026-06" data-updated="2026-10"
+            data-level="advanced"
            
            
            
@@ -15252,12 +15271,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/" data-added="2026-07" data-updated="2026-09" data-level="intermediate"
+          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/"
             data-implements="AES@src/crypto/aes.ts:78 | AES-CBC@src/crypto/aes.ts:94 | AES-CTR@src/crypto/aes.ts:78 | AES-GCM@src/crypto/aes.ts:136 | ChaCha20@src/crypto/chacha20.ts:44 | GHASH@src/crypto/aes.ts:183 | Poly1305@src/crypto/aead.ts:48"
             data-references="AES-SIV | ChaCha20-Poly1305"
             data-attacks="Birthday bound@README.md:28 | IV reuse@README.md:50 | Key recovery@src/crypto/aead.ts:96 | Nonce reuse@src/crypto/aes.ts:242 | Padding oracle@README.md:69"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-added="2026-07" data-updated="2026-09" data-level="intermediate"
            
            
            
@@ -15947,12 +15967,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-entropy-collapse/" data-added="2026-07" data-updated="2026-08" data-level="intermediate"
+          <a class="project-card" data-category="RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-entropy-collapse/"
             data-implements="HMAC@src/crypto/hmac.ts:6 | HMAC-DRBG@src/crypto/hmac_drbg.ts:27 | SHA-256@src/crypto/hmac.ts:6"
             data-references="DSA | ECDSA | RSA"
             data-attacks="Brute force@src/ui/entropyPanel.ts:108 | Nonce reuse@src/ui/clonePanel.ts:302"
             data-standards="IETF | NIST"
             data-implementation="hand-rolled"
+            data-added="2026-07" data-updated="2026-08" data-level="intermediate"
            
            
            
@@ -16502,12 +16523,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-quantum-entropy/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-quantum-entropy/"
             data-implements="Toeplitz extractor@src/entropy/toeplitz.ts:21 | von Neumann extractor@src/entropy/vonneumann.ts:15"
             data-references="BB84 | E91 | Pairing"
             data-implementation="hand-rolled"
-            data-review-commit="58b690d875abea61f59a9cd89b8d53ea2d487e33"
-            data-review-note="Runs both extractors on generated bits; source QRNG is modeled"
+            data-review-commit="6e75cbb5c4473a7a0254f14a6318a4c832a2fa12"
+            data-review-note="Runs both extractors on generated bits; source QRNG is modeled Re-read the extractors and full prior-pin diff on 12 October: Toeplitz/vonNeumann source and anchors21/15 remain exact. The 90C bridge is source-system context, not an implemented RBG1/2/3/C or certification."
+            data-added="2026-07" data-updated="2026-08" data-level="advanced"
            
            
            
@@ -17651,13 +17673,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-matsui-line/" data-added="2026-08" data-updated="2026-08" data-level="advanced"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-matsui-line/"
             data-implements="Toy SPN@src/crypto/spn.ts:66"
             data-references="AES | ChaCha20 | DES | Enigma | Serpent | Shamir secret sharing | Vigenere cipher"
             data-attacks="Brute force@README.md:91 | Chosen-plaintext attack@index.html:520 | Differential cryptanalysis@README.md:73 | Key recovery@index.html:19 | Known-plaintext attack@src/ui/piling.ts:105 | Linear cryptanalysis@src/main.ts:264"
             data-implementation="hand-rolled"
-            data-review-commit="54ae594278d010249b2f72eb664567b0e28c3494"
-            data-review-note="Executes a toy SPN for Matsui's linear attack"
+            data-review-commit="9ab368a1300fcb94bbd03925176fa96472841b5d"
+            data-review-note="Executes a toy SPN for Matsui's linear attack Re-read the complete prior-pin inventory and SPN source on 12 October: toy cipher arithmetic and anchor66 remain exact. Toolchain changes, a reduced-ChaCha reading panel and browser cancellation coverage do not implement the paper attack. The live experiment still attacks the toy SPN."
+            data-added="2026-08" data-updated="2026-08" data-level="advanced"
            
            
            
@@ -18921,12 +18944,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sector-vault/" data-added="2026-08" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sector-vault/"
             data-implements="AES@src/crypto/xts.ts:156 | AES-GCM@src/crypto/gcm.ts:78 | AES-XTS@src/crypto/xts.ts:33"
             data-references="AES-CBC | Merkle tree"
             data-attacks="Chosen-plaintext attack@README.md:145 | Ciphertext malleability@README.md:173 | Nonce reuse@src/ui/panelComparison.ts:57 | Padding oracle@README.md:219"
             data-standards="NIST"
             data-implementation="WebCrypto"
+            data-added="2026-08" data-updated="2026-10" data-level="advanced"
            
            
            
@@ -20455,11 +20479,12 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/" data-added="2026-10" data-updated="2026-10" data-level="advanced"
+          <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/"
             data-implements="Keccak@src/entropy/keccak.ts:49 | SHA-256@src/entropy/counter-hash.ts:85 | SHA-3@src/entropy/keccak.ts:227"
             data-references="CTR-DRBG | DSA | HMAC-DRBG | MD5 | One-time pad | Toeplitz extractor | von Neumann extractor"
             data-standards="NIST"
             data-implementation="WebCrypto"
+            data-added="2026-10" data-updated="2026-10" data-level="advanced"
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Entropy Assessment</div>
             <div class="project-title">Noise to Numbers</div>
@@ -20579,14 +20604,15 @@
               <span class="arrow">&rarr;</span>
             </div>
           </a>
-          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pq-chooser/" data-added="2026-09" data-updated="2026-09" data-level="advanced"
+          <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-pq-chooser/"
             data-implements="ECDSA@src/bench/runner.ts:324 | Falcon@src/derive/adapters.ts:30 | ML-DSA@src/derive/adapters.ts:16 | ML-KEM@src/derive/adapters.ts:15 | P-256@src/bench/runner.ts:329 | RSA@src/bench/runner.ts:374 | SHA-256@src/bench/runner.ts:330 | SLH-DSA@src/derive/adapters.ts:24 | X25519@src/bench/runner.ts:250"
             data-references="Dilithium | ECDH | Kyber | NTRU | P-384 | Pairing | SPHINCS+ | TLS 1.3 | UOV"
             data-attacks="Key recovery@src/data/risk.ts:43 | Side-channel (unspecified)@src/choose/rules.ts:63 | Timing side-channel@src/data/risk.ts:80"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="86142c92e563a1c446fca3e5e85f23cc2c7c0f64"
-            data-review-note="Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design."
+            data-review-commit="cfe96fd792a566672290ad3e059e923005a253ba"
+            data-review-note="Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design. Re-read adapters, registry, benchmark runner and the full prior-pin diff on 12 October: runtime crypto provider entries and execution source are unchanged. SP800-230 limited-use draft profiles are reference-only and are excluded from the scheme registry, shortlist, benchmark matrix and exports; no draft adapter is implemented."
+            data-added="2026-09" data-updated="2026-09" data-level="advanced"
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Post-Quantum Selection</div>
             <div class="project-title">PQ Chooser</div>

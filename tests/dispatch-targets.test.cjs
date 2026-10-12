@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const { execFileSync } = require('node:child_process');
 const comments = require('../tools/dispatch-comment-sync.js');
 const claims = require('../tools/dispatch-claims.js');
 const dispatch = require('../tools/dispatch-sync.js');
@@ -26,6 +27,17 @@ function fleet(t, source, extra = {}) {
   for (const [name, text] of Object.entries({ 'ci.yml': ci, 'pages.yml': pages, ...extra })) {
     if (text !== null) fs.writeFileSync(path.join(dir, name), text);
   }
+  // Discovery requires a readable repository subject. Keep parser fixtures as
+  // committed data in a real synthetic clone, without running their workflows.
+  const repo = path.join(root, 'crypto-lab-fixture');
+  const git = args => execFileSync('git', args, { cwd: repo, stdio: 'ignore' });
+  git(['init', '--quiet', '-b', 'main']);
+  git(['config', 'core.hooksPath', '/dev/null']);
+  git(['config', 'user.name', 'Synthetic fixture']);
+  git(['config', 'user.email', 'fixture@example.invalid']);
+  git(['remote', 'add', 'origin', 'https://github.com/systemslibrarian/crypto-lab-fixture.git']);
+  git(['add', '.github/workflows']);
+  git(['commit', '--quiet', '-m', 'Committed dispatch fixture data']);
   return {root, dir};
 }
 const call = (name) => `          gh workflow run ${name} --ref main`;

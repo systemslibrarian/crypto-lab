@@ -1138,13 +1138,17 @@ and reading as a lab defect — and took `dispatch-sync` to `UNPINNED-LAB` and `
 its census, because disk said 223 where the pin says 222. Following this file's own
 instructions produced it.
 
-`tools/sibling-labs.js` is now the one enumerator all four share, and it excludes a sibling
-whose `.git` is a FILE rather than a directory: that is a linked worktree, so it is a second
-working copy of a repository already in the list. The exclusion is PRINTED with the names, not
-taken in silence, because a denominator that drops quietly is the defect `dispatch-census.json`
-exists to make loud. Proven both ways against a worktree at `../crypto-lab-lane-test`: without
-the guard `theme-sync` fails on two generated teach pages and `dispatch-sync` exits 1; with it
-all four hold their counts and name the exclusion.
+`tools/sibling-labs.js` is the shared enumerator. A `.git` FILE identifies a linked
+worktree; it does not prove that another copy is present in the fleet directory.
+An isolated layout may use one canonical worktree per subject, with the managed
+bases elsewhere. Such a worktree counts only when its readable administrative
+back-pointer and Git top-level agree, HEAD is a commit or a verified unborn
+branch waiting for code, and its exact GitHub
+`systemslibrarian/<canonical-directory-name>` origin matches. Duplicate lane names,
+wrong origins and unreadable metadata remain excluded. The exclusion is PRINTED
+with the names, and the census population floor remains unchanged. This discovery
+rule establishes identity; `clone-source.js` still reads committed HEAD for dirty
+sources and retains its torn-snapshot and source-review guards.
 
 **Cut every lane branch from `origin/main`, never from another lane's local branch — doing so
 reproduces the sweeping problem at PR level.** Seen on 2026-09-29: a lane branched from a

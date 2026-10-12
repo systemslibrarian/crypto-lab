@@ -160,7 +160,7 @@ increase a tool-run count.
 | `catalog-vocab.js` | Keep as support | Shared algorithm, attack, and standards vocabulary. |
 | `clone-source.js` | Keep as support | Shared committed-source reading and torn-snapshot guard. |
 | `depth-audit-report.js` | Keep as support | Report writer called by depth-audit; separates presentation from classification. |
-| `sibling-labs.js` | Keep as support | Shared clone enumeration and population floor; excludes linked worktrees. |
+| `sibling-labs.js` | Keep as support | Shared source enumeration and population floor; admits origin-verified canonical worktrees and excludes duplicate lanes or unreadable entries. |
 
 The renderers and migration helper are not evidence detectors. Their absence of a
 nightly run is not a lab defect. Lack of a recent result for a real checker remains

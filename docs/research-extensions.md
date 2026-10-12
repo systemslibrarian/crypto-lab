@@ -9,6 +9,19 @@ This records the remaining optional implementation scope from the 18-month revie
 | Collision Vault 36-step SHA-256 pair | Implemented | Paper Table 2 bytes independently reproduce the reported compression value. Browser contrasts normal full SHA-256; mutation/wrong-round controls and independent Python/TypeScript checks. This verifies a supplied pair, not the search complexity. |
 | Sector Vault EME2 engine | Historical research exhibit implemented | Real EME* / EME2 encryption/decryption from the 2004 paper and archived December 2008 draft. Independent AES backends and third-party regression vectors; IEEE1619.2-2025 normative conformance remains unverified. |
 
+## Credential Veil BBS baseline
+
+[Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/)
+now has a verified SHA-256 BBS baseline against numbered CFRG draft-12
+(28 September 2026) and immutable matching publisher fixtures/tooling.
+All 30 original fixture byte sequences match the selected upstream snapshot;
+102 unit tests, source/equation/trace checks and 18 local browser cases passed.
+The demo links the draft and fixture source visibly. The draft remains work in
+progress, and these checks exclude the custom age-proof composition and browser
+side channels. The original source revision remains unknown in Git history.
+See the lab’s [baseline review](https://github.com/systemslibrarian/crypto-lab-credential-veil/blob/main/docs/bbs-baseline-review.md)
+for exact pins and evidence boundaries.
+
 ## EME2 exhibit and remaining standards validation
 
 [IEEE1619.2-2025](https://standards.ieee.org/ieee/1619.2/11949/) was published 20 November 2025. Its public record describes EME2-AES and test vectors, but full access requires purchase or subscription. No authorized copy of that normative text or its official vectors was available in this work.

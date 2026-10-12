@@ -17594,12 +17594,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-dp-noise/" data-added="2026-07" data-updated="2026-09" data-level="advanced"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-dp-noise/"
             data-implements="Gaussian mechanism@src/dp/discrete.ts:40 | Laplace mechanism@src/dp/laplace.ts:45"
             data-references="Bloom filter | CKKS"
             data-implementation="hand-rolled"
-            data-review-commit="85ca9a3bf809877cca008bd42018de4d0985074c"
-            data-review-note="Read current README, exact discrete Laplace/Gaussian samplers and continuous Laplace source. Differential privacy bounds nonzero distinguishing advantage; it does not make neighbouring databases indistinguishable. Existing implementation anchors45/40 retained after current-source review."
+            data-review-commit="1a71ad1030045c5ac66c674442823d1bc81ece95"
+            data-review-note="Read current README, exact discrete Laplace/Gaussian samplers and continuous Laplace source at this exact commit. Re-read the complete 85ca9a3bf809 to 1a71ad103004 change inventory: only AGENTS.md, src/ui/leak.ts and e2e/claims.spec.ts changed; all DP engine, composition/session-ledger, README, manifest and lock bytes are unchanged. The comparison uses nonmutating ledger quotes and bestComposition over existing spends, the two-query run and all five runs; budget/spend/reset notifications update only its text without billing or resampling the illustration. Admission remains the existing ledger policy. Differential privacy bounds nonzero distinguishing advantage; it does not make neighbouring databases indistinguishable. Existing implementation anchors45/40 and add/remove classifications retained. This bounded teaching-source review is not production, cryptographic-conformance or constant-time assurance."
+            data-added="2026-07" data-updated="2026-09" data-level="advanced"
            
            
            

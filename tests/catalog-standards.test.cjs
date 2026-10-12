@@ -22,3 +22,10 @@ test('SIKE status is retained separately; CSIDH is not marked broken', () => {
   assert.equal(csidh.status, undefined);
   assert.deepEqual(standardMetadataProblems(), []);
 });
+
+test('EME2 discovery does not conflate the original EME or EME-32 construction', () => {
+  const eme2 = ALGORITHMS.find((t) => t.name === 'EME2');
+  assert.equal(eme2.std, 'IEEE:1619.2');
+  assert.equal(eme2.re.test('EME2-AES'), true);
+  for (const label of ['EME', 'EME-32', 'EME32', 'EME*']) assert.equal(eme2.re.test(label), false);
+});

@@ -767,5 +767,22 @@
       "Collision attack"
     ],
     "note": "Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault’s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
+  },
+  "crypto-lab-sector-vault": {
+    "commit": "d65d542f2cb770e41ccb0486c68048c571285786",
+    "reviewed": "2026-10-12",
+    "add": [
+      "EME2@src/crypto/eme2.ts:41"
+    ],
+    "remove": [
+      "Chosen-plaintext attack",
+      "Nonce reuse",
+      "Padding oracle"
+    ],
+    "implementation": "WebCrypto / noble AES / local EME2 research",
+    "note": "Read the historical EME2 core, named independent key components, actual XTS/EME2 experiment outputs, UI source notes, scope, README and validation provenance at this commit. Source is Halevi 2004 Figure 1 and archived IEEE P1619.2/D9 December 2008, not asserted IEEE1619.2-2025 conformance. Independent OpenSSL/BigInt and noble/byte arithmetic checks in both directions, six published third-party self-generated regression vectors with explicit key-order mapping, partial-block/AD/128-block-renewal boundaries and replay controls passed. 159 unit tests, build, 23 browser claim tests and desktop/380px/280px accessibility checks passed locally. XTS/AES-GCM and trusted-version lessons remain. Remove CPA, nonce-reuse and padding-oracle attack credits: these are comparison/limitation prose or sibling-lab links; the lab does not execute those attacks. Ciphertext manipulation and rollback are actual operations. No production, constant-time or current-edition conformance claim. SHA-256 appears only as a retrieved-source fingerprint, not a taught cryptographic primitive.",
+    "removeReferences": [
+      "SHA-256"
+    ]
   }
 }

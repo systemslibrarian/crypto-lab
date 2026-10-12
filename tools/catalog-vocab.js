@@ -43,6 +43,7 @@ const ALGORITHMS = [
   { name: 'AES-CFB', kind: 'algorithm', family: 'block cipher mode', re: /aes[-_ ]?cfb/i, std: 'NIST:SP 800-38A' },
   { name: 'AES-OFB', kind: 'algorithm', family: 'block cipher mode', re: /aes[-_ ]?ofb/i, std: 'NIST:SP 800-38A' },
   { name: 'AES-XTS', kind: 'algorithm', family: 'block cipher mode', re: /\bxts\b/i, std: 'NIST:SP 800-38E' },
+  { name: 'EME2', kind: 'algorithm', family: 'wide-block cipher mode', re: /\beme2\b/i, std: 'IEEE:1619.2' },
   { name: 'AES-KW', kind: 'algorithm', family: 'key wrap', re: /(?<![a-z0-9])aes(?:[-_ ]?kw|[-_ ]?key[-_ ]?wrap)(?![a-z0-9])/i, std: 'NIST:SP 800-38F' },
   { name: 'AES-SIV', kind: 'algorithm', family: 'AEAD', re: /\bsiv\b/i, std: 'IETF:RFC 5297' },
   { name: 'AES-CCM', kind: 'algorithm', family: 'AEAD', re: /\bccm\b/i, std: 'NIST:SP 800-38C' },

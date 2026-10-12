@@ -14129,14 +14129,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-script/" data-added="2026-06" data-updated="2026-10" data-level="intermediate"
-            data-implements="HMAC@src/engine.ts:21 | secp256k1@src/engine.ts:13 | SHA-256@src/engine.ts:57"
-            data-references="EC point arithmetic | ECDSA | Ed25519 | Merkle tree | Schnorr"
+          <a class="project-card" data-category="SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-script/"
+            data-implements="ECDSA@src/engine.ts:301 | HMAC@src/engine.ts:21 | secp256k1@src/engine.ts:301 | SHA-256@src/engine.ts:59"
+            data-references="EC point arithmetic | Ed25519 | Merkle tree | Schnorr"
             data-attacks="Signature malleability@src/scenario.ts:239"
             data-standards="IETF | NIST | SECG"
             data-implementation="@noble"
-            data-review-commit="7d525f9ad29424d232d4be19ea1205cd7f36dd9c"
-            data-review-note="Read README.md and src/script.ts, scenario.ts and engine.ts at this exact source SHA. The nonce-reuse and key-recovery matches are a README Related Demos link to ECDSA Forge, not attacks this Bitcoin Script lab computes. Its hand-written P2PKH/P2PK interpreter verifies genuine signatures and demonstrates valid, wrong-key, forged, transaction-tampered, high-S, malformed-DER and swapped-script scenarios; signature malleability remains an actual experiment. Remove only the two sibling-prose attack credits. Keep the sibling link and existing implementation/teaching relationships."
+            data-review-commit="6c2dc4b5873d933bf124e71cc849927bebf9105e"
+            data-review-note="Read README.md and src/script.ts, scenario.ts and engine.ts at this exact source SHA. The nonce-reuse and key-recovery matches are a README Related Demos link to ECDSA Forge, not attacks this Bitcoin Script lab computes. Its hand-written P2PKH/P2PK interpreter verifies genuine signatures and demonstrates valid, wrong-key, forged, transaction-tampered, high-S, malformed-DER and swapped-script scenarios; signature malleability remains an actual experiment. Remove only the two sibling-prose attack credits. Keep the sibling link and existing implementation/teaching relationships. Re-read current engine sign/high-S/verify and double-hash, interpreter CHECKSIG, scenario/README and complete supported secp3/hashes2 migration at exact6c2dc4b. Explicit prehash:false preserves the already-double-SHA256 legacy SIGHASH_ALL digest; native/OpenSSL third-hash/tamper negatives and old/new locked deterministic signatures were verified separately. Anchor actualsecp/ECDSA signing and SHA256d calls rather than namespace import/comment. ECDSA is credited as the actual named algorithm called by this Bitcoin exhibit, using existing vocabulary. README54 remains only a sibling reference to nonce-reuse key recovery; preserve prior two attack removals and genuine high-S/signature-malleability exhibit. This is a single-input/output teaching subset, not a wallet/consensus implementation, and publisher explicitly states this current rewrite is not independently audited."
+            data-added="2026-06" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -14574,12 +14575,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/" data-added="2026-06" data-updated="2026-08" data-level="advanced"
-            data-implements="Ed25519@src/frost/keygen.ts:4 | FROST@src/ui/risk-scenarios.ts:166 | HMAC@src/ui/shamir-panel.ts:539 | SHA-256@src/ui/shamir-panel.ts:539 | SHA-512@src/frost/keygen.ts:14 | Shamir secret sharing@src/frost/field.ts:80"
+          <a class="project-card" data-category="MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/"
+            data-implements="Ed25519@src/frost/verify.ts:14 | FROST@src/frost/round2.ts:84 | HMAC@src/ui/shamir-panel.ts:542 | SHA-256@src/ui/shamir-panel.ts:542 | SHA-512@src/frost/keygen.ts:14 | Shamir secret sharing@src/frost/field.ts:80"
             data-references="Schnorr"
             data-attacks="Key recovery@src/ui/decision-guide.ts:22 | Nonce reuse@src/ui/decision-guide.ts:48"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="439f567fd8b130fc95c0006765f61e0271f0890f"
+            data-review-note="Read keygen/round2/verify and Shamir signing caller at exact439f integration. Actual Ed25519 aggregate verification, participant-local threshold arithmetic and HMAC-SHA256 computation replace import/UI/key-import-only anchors. Preserve actual GF256/scalar Shamir and SHA512 source. This is genuine two-round threshold Schnorr arithmetic producing an Ed25519 signature, but documented simplified binding-factor hashing lacks RFC9591 ContextString and is not conformant; trusted dealer holds the setup secret. Standard/native tests do not establish full RFC9591 conformance or constant-time behavior."
+            data-added="2026-06" data-updated="2026-08" data-level="advanced"
            
            
            
@@ -15015,10 +15019,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-chain-of-trust/" data-added="2026-07" data-updated="2026-10" data-level="beginner"
-            data-implements="ECDSA@src/pki/certgen.ts:11 | P-256@src/pki/certgen.ts:11 | SHA-256@src/pki/certgen.ts:12"
+          <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-chain-of-trust/"
+            data-implements="ECDSA@src/pki/certgen.ts:77 | P-256@src/pki/certgen.ts:20 | SHA-256@src/pki/certgen.ts:77"
             data-standards="NIST"
             data-implementation="hand-rolled"
+            data-review-commit="a63d316ca7b08c78a5f0c3a4e5375f3792a5c9af"
+            data-review-note="Read current real P256 key generation, ECDSA/SHA256 certificate generator and README at exacta63d integration after X5092 reflection facade/cold native-verifier controls. Anchor actual generation calls rather than algorithm constants; SIGN_ALG supplies SHA256 to ECDSA over real DER TBS. Builder/validation checklist is a teaching subset: revocation is local fixture input and imported-chain unevaluated revocation remains UNKNOWN, not ACCEPT. SDK bootstrap tests/public functional gates do not establish full RFC5280, ASN1 hardening or constant-time security."
+            data-added="2026-07" data-updated="2026-10" data-level="beginner"
            
            
            
@@ -15694,11 +15701,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-key-mirror/" data-added="2026-07" data-updated="2026-10" data-level="intermediate"
-            data-implements="AES@src/e2ee/box.ts:35 | AES-GCM@src/e2ee/box.ts:63 | Diffie-Hellman@src/e2ee/box.ts:30 | Ed25519@src/directory/client.ts:11 | HKDF@src/e2ee/box.ts:40 | Merkle tree@src/merkle/tree.ts:38 | SHA-256@src/core/sha256.ts:3 | SHA-512@src/vrf/ecvrf.ts:27 | X25519@src/e2ee/box.ts:10"
+          <a class="project-card" data-category="PROTOCOLS | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-key-mirror/"
+            data-implements="AES@src/e2ee/box.ts:63 | AES-GCM@src/e2ee/box.ts:63 | Diffie-Hellman@src/e2ee/box.ts:30 | Ed25519@src/directory/client.ts:35 | HKDF@src/e2ee/box.ts:40 | Merkle tree@src/merkle/tree.ts:38 | SHA-256@src/core/sha256.ts:3 | SHA-512@src/vrf/ecvrf.ts:27 | X25519@src/e2ee/box.ts:31"
             data-references="Argon2 | ECDH | Hash-to-curve | MLS | OPAQUE | X3DH"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="f5d92dcdd6bcb0ef4b03120712eea5fac9df27d7"
+            data-review-note="Read directory/client.ts, e2ee/box.ts and current README at exactf5d92dc integration. Actual Ed25519 signature verification, X25519 agreement and AES-GCM encryption replace import/key-only anchors. Preserve custom VRF/Merkle correctness reviews and safe-integer/domain limits, existing native/standard controls and epistemic distinction: valid signatures/inclusion/consistency alone do not prevent equivocation; gossip detects compared views and compromises preceding detection remain. This is a flat binding log, not a KEYTRANS wire-format implementation; no whole-library/constant-time assurance."
+            data-added="2026-07" data-updated="2026-10" data-level="intermediate"
            
            
            
@@ -15770,12 +15780,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-spake-gate/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
-            data-implements="HKDF@src/spake/transcript.ts:52 | HMAC@src/spake/transcript.ts:41 | P-256@src/spake/group.ts:10 | PBKDF2@src/spake/password.ts:49 | SHA-256@src/spake/transcript.ts:37 | SPAKE2@src/attack/offline.ts:45"
-            data-references="CPace | Diffie-Hellman | Dragonfly | EC point arithmetic | Hash-to-curve | J-PAKE | Kerberos | OPAQUE | OPRF | Pairing | SRP"
+          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-spake-gate/"
+            data-implements="HKDF@src/spake/transcript.ts:52 | HMAC@src/spake/transcript.ts:41 | P-256@src/spake/group.ts:66 | PBKDF2@src/spake/password.ts:49 | SHA-256@src/spake/transcript.ts:37 | SPAKE2@src/spake/spake2.ts:119"
+            data-references="CPace | Diffie-Hellman | Dragonfly | EC point arithmetic | ECDH | Hash-to-curve | J-PAKE | Kerberos | OPAQUE | OPRF | Pairing | SRP"
             data-attacks="Discrete log@src/main.ts:97 | Man-in-the-middle@src/ui/constants.ts:60 | Side-channel (unspecified)@README.md:72"
             data-standards="IETF | NIST"
             data-implementation="@noble"
+            data-review-commit="50137f12b70db584e5ace6a7bf264d45baecb351"
+            data-review-note="Read group/spake2/spake2plus/password/transcript and README at exact50137 integration. P256 scalar multiplication and genuine SPAKE2 masked exchange replace primitive import/attack-entry anchors; both peers unmask and derive matching group secrets with RFC9382/9383 constants/transcript/KDF controls. Current Noble2 codecs and scalar order API preserve protocol equations, endian/encoding and keys. Declaration of cryptographic primitives and passing native/KAT tests is not a production/constant-time or complete-protocol security certification."
+            data-added="2026-07" data-updated="2026-08" data-level="advanced"
            
            
            
@@ -16119,14 +16132,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-frozen-heart/" data-added="2026-07" data-updated="2026-08" data-level="advanced"
-            data-implements="Fiat-Shamir@src/main.ts:14 | ristretto255@src/schnorr/group.ts:17 | Schnorr@src/main.ts:11 | SHA-512@src/schnorr/group.ts:113"
-            data-references="Bulletproofs | EC point arithmetic | EdDSA | FROST | Groth16 | PLONK | STARK | Schnorr identification | Shamir secret sharing | Sigma protocol"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-frozen-heart/"
+            data-implements="Fiat-Shamir@src/schnorr/fiatshamir.ts:45 | ristretto255@src/schnorr/group.ts:77 | Schnorr@src/schnorr/verify.ts:49 | SHA-512@src/schnorr/group.ts:115"
+            data-references="Bulletproofs | EC point arithmetic | Ed25519 | EdDSA | FROST | Groth16 | OPAQUE | PLONK | STARK | Schnorr identification | Shamir secret sharing | Sigma protocol"
             data-attacks="Discrete log@src/main.ts:258"
             data-standards="IETF | NIST"
             data-implementation="@noble"
-            data-review-commit="fbcafa21d97e27e1b62fa8b96efa55b2f205a79d"
-            data-review-note="Read current group.ts and Schnorr README/source: Ed25519 supplies a scalar-order constant; the proof uses Ristretto points, not Ed25519 signatures. Preserve real Ristretto/Schnorr/Fiat-Shamir and Ed25519 reference."
+            data-review-commit="2cd32d231b2c1f00c67a9ed868956e9e92e6ff14"
+            data-review-note="Read current group.ts/prover.ts/verify.ts/fiatshamir.ts/forge.ts and README at exact integrated2cd32d. Noble2 uses ristretto255.Point and its Fn.ORDER, with actual point arithmetic/canonical codecs; the old Ed25519 order-only import is gone and no Ed25519 signature is implemented. Move import/comment anchors to real Schnorr equation, transcript hash, point multiply and SHA512-to-scalar calls. Keep real algebraic omission forgery separate from security verdict and preserve prior Ed25519 removal. Runtime/e2e/manifests/lock are byte-identical to previously read5e2. Independently reviewed all six new automatic-public-verification workflow/docs/helper paths, including changed-source/index, missing/partial download and missing/failed/skipped/flaky report negative controls. Actual original52unit/24browser/Pages evidence and separately dated full24 public controls at5e2 are retained; both earlier public90s timeouts remain historical. Automatic newmain postdeploy execution is separate evidence, not inferred from PR success. This bounded algorithm/tooling review does not establish whole-library security/constant-time behavior or light-theme accessibility. The sole SHA256 computation is tools/verify-public-deployment.mjs hashing maintenance artifacts, outside the browser lesson; exclude that tooling-only implementation credit while preserving the actual runtime SHA512 transcript and all original Schnorr/Ristretto operations."
+            data-added="2026-07" data-updated="2026-08" data-level="advanced"
            
            
            
@@ -16212,14 +16226,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/" data-added="2026-07" data-updated="2026-10" data-level="advanced"
-            data-implements="BBS signatures@src/bbs/bbs.ts:414 | BLS12-381@src/bbs/bbs.ts:6 | Ed25519@src/baseline/ed25519.ts:24 | Hash-to-curve@src/bbs/generators.ts:18 | Pairing@src/bbs/ciphersuite.ts:145 | Pedersen commitment@src/predicate/ageProof.ts:63 | SHA-256@src/bbs/ciphersuite.ts:15"
+          <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/"
+            data-implements="BBS signatures@src/bbs/bbs.ts:122 | BLS12-381@src/bbs/ciphersuite.ts:151 | Ed25519@src/baseline/ed25519.ts:29 | Hash-to-curve@src/bbs/generators.ts:18 | Pairing@src/bbs/ciphersuite.ts:151 | Pedersen commitment@src/predicate/ageProof.ts:127 | SHA-256@src/bbs/ciphersuite.ts:90"
             data-references="Bulletproofs | EC point arithmetic | Private information retrieval | RSA | Schnorr | Schnorr identification | Shamir secret sharing | Sigma protocol"
-            data-attacks="Discrete log@docs/design-note.md:69 | Side-channel (unspecified)@docs/design-note.md:11"
             data-standards="IETF | NIST"
             data-implementation="@noble"
-            data-review-commit="9ac8fd5c499e11504aff79a96397abdbfa999e97"
-            data-review-note="Read current README naming note, CONTRIBUTING, bbs sign/verify/proof and ciphersuite. Implements CFRG draft BBS (A,e), not BBS+ (A,e,s); uses BLS12-381 group/pairing without BLS signing. Explicit BBS source anchor preserves genuine implementation, official draft vectors recorded separately."
+            data-review-commit="976b4507ad9dbf5f9334f7599e1e488a8142a6aa"
+            data-review-note="Read current README naming note, CONTRIBUTING, bbs sign/verify/proof and ciphersuite. Implements CFRG draft BBS (A,e), not BBS+ (A,e,s); uses BLS12-381 group/pairing without BLS signing. Explicit BBS source anchor preserves genuine implementation, official draft vectors recorded separately. Re-read current BBS sign/verify/proof interfaces, ciphersuite/generators, linked Pedersen commitment and verifier, Ed25519 baseline, README/design-note/CONTRIBUTING and complete five-runtime-file API migration diff at exact976b4507. Runtime changes from prior9ac review are supported Noble2 export/Point/codec/random-key API replacements; custom equations/transcripts and every fixture remain unchanged. Move import/generator-only anchors to actual operations. Discrete-log generator assumptions at design-note69 and explicit lack of side-channel review at11 are assurance/risk prose, not executed attacks; remove only those two false attack credits and preserve their references. Real CFRG-draft BBS(A,e), not BBS+ or BLS signing. Custom DOB scalar/challenge-linked age proof is an unvalidated teaching extension, not an externally reviewed credential protocol; no production/constant-time claim. Actual88unit/32publicbrowser/artifact proof is separately dated execution evidence."
+            data-added="2026-07" data-updated="2026-10" data-level="advanced"
            
            
            
@@ -16969,11 +16983,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-encrochat/" data-added="2026-07" data-updated="2026-10" data-level="advanced"
-            data-implements="AES@src/crypto/primitives.ts:107 | AES-GCM@src/crypto/primitives.ts:107 | Diffie-Hellman@src/crypto/double-ratchet.ts:160 | Double Ratchet@src/session.ts:22 | ECDSA@src/endpoint/architecture.ts:6 | HKDF@src/crypto/primitives.ts:85 | HMAC@src/crypto/primitives.ts:66 | P-256@src/endpoint/architecture.ts:7 | SHA-256@src/crypto/primitives.ts:66 | X25519@src/crypto/types.ts:2"
+          <a class="project-card" data-category="ATTACKS | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-encrochat/"
+            data-implements="AES@src/crypto/primitives.ts:107 | AES-GCM@src/crypto/primitives.ts:107 | Diffie-Hellman@src/crypto/double-ratchet.ts:160 | Double Ratchet@src/crypto/double-ratchet.ts:177 | ECDSA@src/endpoint/architecture.ts:18 | HKDF@src/crypto/primitives.ts:85 | HMAC@src/crypto/primitives.ts:66 | P-256@src/endpoint/architecture.ts:7 | SHA-256@src/crypto/primitives.ts:66 | X25519@src/crypto/x25519.ts:28"
             data-references="Ed25519 | OPAQUE | X3DH"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="e0eee968358cd20d66cd74473ceda7630110e480"
+            data-review-note="Read real X25519 wrappers, transactional in-order Double Ratchet/AAD state progression and independently pinned ECDSA update approval policy at exact e0eee integration. Correct type/import/algorithm-constant anchors to actual agreement, ratchet encryption and WebCrypto signature verification. Existing primitive KAT/forged-packet rollback and architecture controls retained. The endpoint implant and authority separation are labeled models, not a historical Encrochat update-protocol reconstruction; skipped-message/out-of-order support is omitted. No whole Signal implementation, production or constant-time claim."
+            data-added="2026-07" data-updated="2026-10" data-level="advanced"
            
            
            
@@ -20677,15 +20694,16 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-https-padlock/" data-added="2026-10" data-updated="2026-10" data-level="beginner"
+          <a class="project-card" data-category="PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-https-padlock/"
             data-implements="ECDSA@src/pki/path.ts:86 | X25519@src/tls/clienthello.ts:282"
             data-comment-only="ECDSA@src/tls/clienthello.ts:190 | P-256@src/tls/clienthello.ts:190 | P-384@src/tls/clienthello.ts:193 | RSA-PSS@src/tls/clienthello.ts:191 | SHA-256@src/tls/clienthello.ts:190 | SHA-384@src/tls/clienthello.ts:193 | SHA-512@src/tls/clienthello.ts:195 | TLS 1.3@src/tls/clienthello.ts:156"
             data-protocol-partial="TLS 1.3@src/main.ts:382"
             data-references="ChaCha20 | ChaCha20-Poly1305 | ECDH | Encrypted Client Hello | P-256 | P-384 | Poly1305 | RSA | SHA-256 | SHA-384 | TLS 1.3"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="8065456c2dd118341ae3a30f59e9b3993ec2b09b"
-            data-review-note="Read src/pki/path.ts, parse.ts, assess.ts, break.ts and src/tls/clienthello.ts. The scanner found only X25519 in the ClientHello builder. The chain walk really does verify every signature: src/pki/path.ts:86 calls @peculiar/x509's verify with the parent's public key and the WebCrypto provider, over real DER TBS bytes, and the certificates this lab ships are ECDSA over P-256 and P-384 -- so ECDSA is pinned above. Scope that the card and chips are written to respect: the lab makes NO network connection and runs no handshake, so it never observes encryption; it reads certificates captured earlier. Its RFC 5280 path validation is a stated teaching subset, deliberately omitting revocation, name constraints, policy constraints and path length, so a chain this page accepts is not thereby a chain a browser would accept. The ClientHello is encoded byte for byte and never sent, and its X25519 private half is discarded unused -- which is why the chip is marked 'ClientHello Bytes Only' rather than claiming TLS 1.3. Trust terminates in the lab's own committed copy of a root list, not the reader's device trust store, and the page says so. Re-read current hostname.ts, original PKI path and ClientHello at this exact SHA after PR4/5. Authority ends before path/query/fragment userinfo; 68 unit, 63 verdict, 3 full-state accessibility checks and 24 live URL/SNI/reflow controls verify the bounded repair. ECDSA anchor and captured-certificate/offline/partial-validation limitations remain unchanged; this review does not assert a live TLS handshake."
+            data-review-commit="f5d5b09b548bcb2f67b133bd19044cc3fc577eaa"
+            data-review-note="Read src/pki/path.ts, parse.ts, assess.ts, break.ts and src/tls/clienthello.ts. The scanner found only X25519 in the ClientHello builder. The chain walk really does verify every signature: src/pki/path.ts:86 calls @peculiar/x509's verify with the parent's public key and the WebCrypto provider, over real DER TBS bytes, and the certificates this lab ships are ECDSA over P-256 and P-384 -- so ECDSA is pinned above. Scope that the card and chips are written to respect: the lab makes NO network connection and runs no handshake, so it never observes encryption; it reads certificates captured earlier. Its RFC 5280 path validation is a stated teaching subset, deliberately omitting revocation, name constraints, policy constraints and path length, so a chain this page accepts is not thereby a chain a browser would accept. The ClientHello is encoded byte for byte and never sent, and its X25519 private half is discarded unused -- which is why the chip is marked 'ClientHello Bytes Only' rather than claiming TLS 1.3. Trust terminates in the lab's own committed copy of a root list, not the reader's device trust store, and the page says so. Re-read current hostname.ts, original PKI path and ClientHello at this exact SHA after PR4/5. Authority ends before path/query/fragment userinfo; 68 unit, 63 verdict, 3 full-state accessibility checks and 24 live URL/SNI/reflow controls verify the bounded repair. ECDSA anchor and captured-certificate/offline/partial-validation limitations remain unchanged; this review does not assert a live TLS handshake. Re-read complete current path.ts and parse.ts, bounded assess/ClientHello callers, trust-anchor regression controls and PR7 at f5d5b09. Actual held subject/SPKI identity now terminates cross-signed paths; copied subject with a different key rejects, genuine same-key cross-signs remain valid and held/served date policy stays explicit. X5092 reflection initialization preserves real ECDSA verification. Existing ECDSA86/X25519 ClientHello282 anchors unchanged. This source review retains offline captured-certificate/partial RFC5280 limits and does not establish live TLS, full validation, revocation or constant-time behavior."
+            data-added="2026-10" data-updated="2026-10" data-level="beginner"
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">What the Padlock Means</div>
             <div class="project-title">HTTPS Padlock</div>
@@ -20746,14 +20764,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-vector-gate/" data-added="2026-10" data-updated="2026-10" data-level="intermediate"
+          <a class="project-card" data-category="SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-vector-gate/"
             data-implements="Ed25519@src/crypto/ed25519.ts:74 | SHA-512@src/crypto/ed25519.ts:85"
             data-references="AEGIS-256 | ECDSA | Kyber | ML-KEM | SHA-256"
             data-attacks="Signature malleability@docs/source-lock.md:23"
             data-standards="IETF | NIST"
             data-implementation="TypeScript BigInt / WebCrypto"
-            data-review-commit="ef85d2adf408b905b194956b25996c4b7dddcd01"
-            data-review-note="Read src/crypto/ed25519.ts, src/main.ts and tools/check-oracles.py. The browser performs real Ed25519 verification with extended-coordinate BigInt arithmetic and WebCrypto SHA-512; both modes share decoder, challenge and equation, and differ only on S < L enforcement. The Ed25519 anchor is its verifier entry rather than the UI import. The Python file only cross-checks frozen fixtures with OpenSSL and libsodium; it is not hidden browser crypto. The derived side-channel attack is removed: src/main.ts mentions side-channel resistance only as evidence not established, and mounts no side-channel attack. Signature malleability is the actual one-predicate experiment. No ZIP215 comparison, ECDSA or ML-KEM computation is implemented here. RE-READ 2026-10-04 after this lab was re-framed to lead with the forgery (crypto-lab-vector-gate#7). src/crypto/ed25519.ts and tools/check-oracles.py are BYTE-IDENTICAL to the previously reviewed commit, and both anchors still resolve to what this note describes -- line 74 is the verifier entry, line 85 the WebCrypto SHA-512 digest. What moved is presentation: src/main.ts copy and ordering, style.css, the claims suite and the mutation set. The two claims above that are about main.ts were re-checked rather than assumed: side-channel resistance is still mentioned only as evidence NOT established, and ZIP215 and ML-KEM still appear only as prose pointing at other labs, with no computation of either here. The pin moves; the reading does not change."
+            data-review-commit="31df66d48e623210c87f62ee8fccc3cfd2172b4c"
+            data-review-note="Read src/crypto/ed25519.ts, src/main.ts and tools/check-oracles.py. The browser performs real Ed25519 verification with extended-coordinate BigInt arithmetic and WebCrypto SHA-512; both modes share decoder, challenge and equation, and differ only on S < L enforcement. The Ed25519 anchor is its verifier entry rather than the UI import. The Python file only cross-checks frozen fixtures with OpenSSL and libsodium; it is not hidden browser crypto. The derived side-channel attack is removed: src/main.ts mentions side-channel resistance only as evidence not established, and mounts no side-channel attack. Signature malleability is the actual one-predicate experiment. No ZIP215 comparison, ECDSA or ML-KEM computation is implemented here. RE-READ 2026-10-04 after this lab was re-framed to lead with the forgery (crypto-lab-vector-gate#7). src/crypto/ed25519.ts and tools/check-oracles.py are BYTE-IDENTICAL to the previously reviewed commit, and both anchors still resolve to what this note describes -- line 74 is the verifier entry, line 85 the WebCrypto SHA-512 digest. What moved is presentation: src/main.ts copy and ordering, style.css, the claims suite and the mutation set. The two claims above that are about main.ts were re-checked rather than assumed: side-channel resistance is still mentioned only as evidence NOT established, and ZIP215 and ML-KEM still appear only as prose pointing at other labs, with no computation of either here. The pin moves; the reading does not change. Re-read current complete verifier and Python oracle role; immutable diff from previous ef85 review changes development manifest/lock and root instructions only. Runtime, README and oracle source remain byte-identical. Current paired Vitest5/coverage5 integration has actual34 units/14 browser/13 mutation CI and artifact/public proof; those execution observations are separately dated, not a source or cryptographic assurance claim. Preserve canonical-scalar-only acceptance experiment and existing covered Python test-support role."
+            data-added="2026-10" data-updated="2026-10" data-level="intermediate"
             data-overlaps="crypto-lab-ed25519-forge: Ed25519 Forge covers ZIP215 and cofactor behavior; Vector Gate fixes scalar canonicality and scopes conformance and validation evidence." target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">A Verifier That Accepts a Forgery</div>
             <div class="project-title">Vector Gate</div>

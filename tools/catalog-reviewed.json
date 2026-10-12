@@ -46,13 +46,13 @@
     "note": "Runs den Boer's physical-card AND protocol; no encryption"
   },
   "crypto-lab-collision-vault": {
-    "commit": "476dec52aa83e9eb3045cfb79a6e01d9a030f0d0",
-    "reviewed": "2026-09-30",
+    "commit": "14e447fd16e7e3a15bd2ae5f52a191853726ea96",
+    "reviewed": "2026-10-12",
     "add": [
       "SHA-256@demos/collision-vault/src/hashing/index.ts:79",
       "SHA-512@demos/collision-vault/src/hashing/index.ts:81"
     ],
-    "note": "The lab hashes with WebCrypto through one local helper, and names the algorithm only as that helper's STRING ARGUMENT: hashing/index.ts:79 is `return webcryptoDigest('SHA-256', bytes)` and :81 the SHA-512 case, while webcrypto.ts:25 does the work as `subtle().digest(algo, copy)` with algo a parameter. No line carries both the name and the operation, so no detection shape can reach it, and the only other place either name appears in executable code is a vectors table (SHA256_VECTORS, SHA512_VECTORS) - which is test data, not an implementation, and is now correctly suppressed. Reviewed by reading hashing/index.ts and hashing/webcrypto.ts in full: both digests are computed by the platform on the learner's input, which is the lab's whole subject. Anchored at the call sites rather than at the digest call, because those are the lines that say WHICH algorithm."
+    "note": "The lab hashes with WebCrypto through one local helper, and names the algorithm only as that helper's STRING ARGUMENT: hashing/index.ts:79 is `return webcryptoDigest('SHA-256', bytes)` and :81 the SHA-512 case, while webcrypto.ts:25 does the work as `subtle().digest(algo, copy)` with algo a parameter. No line carries both the name and the operation, so no detection shape can reach it, and the only other place either name appears in executable code is a vectors table (SHA256_VECTORS, SHA512_VECTORS) - which is test data, not an implementation, and is now correctly suppressed. Re-read the complete 476dec52aa83 to 14e447fd16e7 change and the current hashing source: hashing/index.ts and hashing/webcrypto.ts are byte-identical, so both WebCrypto digest classifications and call-site anchors remain exact. The intervening production edit is CSS only; the remaining changes migrate workflows and dependency/tooling controls. Exact-head Linux gates separately passed 107 units, 31 browser cases with one intentional skip, build, audit and ten TypeScript/lint controls. Anchored at the call sites rather than at the digest call, because those are the lines that say WHICH algorithm."
   },
   "crypto-lab-context-ward": {
     "commit": "0fa3a0ee23fdb9dc6a8a294592dfed7434622c69",
@@ -299,8 +299,8 @@
     "note": "Runs Prange-style and Stern information-set decoding against toy instances"
   },
   "crypto-lab-tc26-pair": {
-    "commit": "a9b6f574d25bc87548accc495b3836baa7697ffd",
-    "reviewed": "2026-10-11",
+    "commit": "fbea18b4ffa52256c686fb14502b5d51dd9981cb",
+    "reviewed": "2026-10-12",
     "remove": [
       "Shamir secret sharing"
     ],
@@ -312,7 +312,7 @@
       "C/C++"
     ],
     "implementation": "C wrappers / WASM",
-    "note": "C wrappers and TS calls reviewed; two compiled reference WASM binaries remain opaque. Re-read integrated PR5 complete provenance/build/checker/workflow/report changes and unchanged C wrappers/TS callers/current shipped bytes at a9b6f574d25bc87548accc495b3836baa7697ffd. Clean pinned QAPP source builds with immutable official SDK6.0.10 source/release-map identity independently reproduced both WASM and both JS adapters on Mac and current CI; the checker now requires every input to match its recorded Git blob, separates mismatch from unreadable/partial evidence and never overwrites shipped artifacts. The repeatable workflow covers relevant main/PR source and WASM/JS changes. Original compiler remains unknown, historical SDK4.0.23 byte mismatches retained, and raw opaque-WASM scanner coverage is preserved; byte correspondence in the observed environment is not constant-time or full cryptographic assurance. The phrase opaque-WASM coverage in docs/wasm-provenance.md describes a scanner limitation, not the OPAQUE PAKE; exclude only that false algorithm reference at this inspected source pin.",
+    "note": "C wrappers and TS calls reviewed; two compiled reference WASM binaries remain opaque. Re-read the complete a9b6f574d25b to fbea18b4ffa5 change and current implementation source: both pinned C wrappers, TS callers, WASM, fixtures and provenance documents are byte-identical; the change is dependency/tooling metadata plus focused native-TypeScript controls. Exact-head tests separately passed 16 units, three tooling controls, build and audit, and the current Pages artifact's 11 files match production byte-for-byte. Clean pinned QAPP source builds with immutable official SDK6.0.10 source/release-map identity independently reproduced both WASM and both JS adapters on Mac and current CI; the checker requires every input to match its recorded Git blob, separates mismatch from unreadable/partial evidence and never overwrites shipped artifacts. Original compiler remains unknown, historical SDK4.0.23 byte mismatches retained, and raw opaque-WASM scanner coverage is preserved; byte correspondence in the observed environment is not constant-time or full cryptographic assurance. The phrase opaque-WASM coverage in docs/wasm-provenance.md describes a scanner limitation, not the OPAQUE PAKE; exclude only that false algorithm reference at this inspected source pin.",
     "removeReferences": [
       "OPAQUE"
     ]
@@ -337,14 +337,14 @@
     "note": "Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design."
   },
   "crypto-lab-sm9-forge": {
-    "commit": "9f362ccfd71a48ee41789c52b54bc9de4008d830",
-    "reviewed": "2026-09-29",
+    "commit": "4cefea2cd6288c06504e21de1b7fc8a7efbafcb6",
+    "reviewed": "2026-10-12",
     "remove": [
       "Boneh-Franklin IBE",
       "SM3",
       "SM4"
     ],
-    "note": "Implements the SM9 family in src/sm9/ \u2014 extraction for both master key pairs, signature, key exchange, KEM and public key encryption \u2014 over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. SM3 and SM4 are imported, not implemented here. Boneh-Franklin IBE is drawn as the contrast to SM9's inversion, never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
+    "note": "Implements the SM9 family in src/sm9/ \u2014 extraction for both master key pairs, signature, key exchange, KEM and public key encryption \u2014 over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. Re-read the complete 9f362ccfd71a to 4cefea2cd628 change and current source: the entire src tree is byte-identical; the change is dependency/tooling configuration, focused native-TypeScript controls, and explanatory README text. Exact-head gates separately passed 419 units, seven Node controls, build and audit, and all three current Pages files match production byte-for-byte. SM3 and SM4 remain imported rather than implemented here. Boneh-Franklin IBE remains a drawn contrast to SM9's inversion and is never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
   },
   "crypto-lab-vector-gate": {
     "commit": "31df66d48e623210c87f62ee8fccc3cfd2172b4c",

@@ -144,6 +144,10 @@ test('a valid relative administrative pointer still must have the correct back-p
 
 test('canonical directory alias counts once, a symlink duplicate and substituted .git do not', t => {
   const f = fixture(t); const duplicate = `${f.slug}-alias`;
+  const physical = path.join(f.root, 'physical-source');
+  f.git(['worktree', 'move', f.dir, physical]);
+  fs.symlinkSync(physical, f.dir, 'dir');
+  assert.equal(canonicalWorktree(f.dir), true);
   fs.symlinkSync(f.dir, path.join(f.fleet, duplicate), 'dir');
   assert.deepEqual(siblingLabs(f.fleet).labs, [f.slug]);
   assert.deepEqual(siblingLabs(f.fleet).excluded, [duplicate]);

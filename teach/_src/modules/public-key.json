@@ -324,7 +324,7 @@
         }
       },
       {
-        "text": "RSA Forge: in Pick Your Config, the e = 3 / no-padding choice has its message recovered, while the e = 65537 / OAEP choice runs the same CRT and cube-root steps and does not recover it; the manual Håstad flow shows N, M = m³ and the recovered message. The out-of-order guard notices in the manual Håstad flow are announced only to a screen reader, so those presses look like dead buttons; attack-setup and safe-path failures have visible error messages. Press in the order the worksheet gives.",
+        "text": "RSA Forge: in Pick Your Config, the e = 3 / no-padding choice has its message recovered, while the e = 65537 / OAEP choice runs the same CRT and cube-root steps and does not recover it; the manual Håstad flow shows N, M = m³ and the recovered message. Current-source clarification (2026-10-11; inspected commit e6ca1c18afa8; no fresh live exercise): the out-of-order guard notices in the manual Håstad flow are announced only to a screen reader, so those presses look like dead buttons; attack-setup and safe-path failures have visible error messages. Press in the order the worksheet gives.",
         "rederived": "2026-09-22",
         "observable": {
           "kind": "manual",

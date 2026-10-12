@@ -2822,7 +2822,7 @@ Elliptic-curve isogenies with a toy CSIDH over GF(419), supersingular graph walk
 
 [`crypto-lab-j-uniward`](https://systemslibrarian.github.io/crypto-lab-j-uniward/) · Steganography · STEGANOGRAPHY
 
-JPEG steganography via Universal Wavelet Relative Distortion — adaptive DCT coefficient embedding that minimizes wavelet-domain detectability. The state-of-the-art in content-adaptive JPEG steganography.
+A foundational adaptive JPEG steganography benchmark using Universal Wavelet Relative Distortion. Its placement-cost model guides DCT embedding; it does not measure detector success or prove undetectability.
 
 - **Implements:** AES `src/stc-keys.ts:37`, AES-CTR `src/stc-keys.ts:37`, HKDF `src/kdf.ts:14`, HMAC `src/steg/Embedder.ts:168`, PBKDF2 `src/kdf.ts:45`, SHA-256 `src/kdf.ts:23`
 - **References:** Private information retrieval

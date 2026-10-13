@@ -1,24 +1,26 @@
-# Knowledge map
+# Learning map
 
-Separate landing page. Not linked from `index.html`.
+Public, separate landing page at
+[crypto-lab.systemslibrarian.dev/knowledge-map/](https://crypto-lab.systemslibrarian.dev/knowledge-map/).
+It leaves the main catalog homepage in `index.html` unchanged and needs no LLM or
+application backend.
 
-Live once GitHub Pages publishes the folder:
+Search topics such as factorization, select connected labs or ideas, and follow
+the existing learning journeys or suggested topic routes. Whole-module
+prerequisites retain their author's wording. Connections and suggested routes
+are exploration guidance, not mandatory lab prerequisites. Progress and
+observation notes stay in the learner's browser.
 
-https://crypto-lab.systemslibrarian.dev/knowledge-map/
+The factorization activity compares two 14-bit toy semiprimes: Fermat's method
+tests 1 candidate for 9797 and 128 for 9913. These exact counts illustrate the
+method; they do not estimate real RSA security.
 
-`catalog.json` is generated from the catalog cards, navigation literals, concept
-filing lines, and `teach/_src/modules/*.json`. After changing those sources, run
-`node tools/knowledge-map-sync.js write`. CI checks the saved output with
-`node tools/knowledge-map-sync.js check` and tests navigation in Chromium.
+`catalog.json` is generated from the catalog cards, navigation literals,
+`concept-coverage.md`, and `teach/_src/modules/*.json`. After changing a source,
+run `node tools/knowledge-map-sync.js write` and review the diff. CI checks
+freshness, model and arithmetic controls, and Chromium navigation and layout.
+Catalog implementation notes preserve source-review distinctions; an index term
+or attack mention is not a cryptographic audit of that lab.
 
-Search accepts topic names (including factorization), lab names and card terms.
-The URL retains the selected view and lab; browser Back and Forward restore it.
-Module prerequisites retain the module author's wording and apply to that whole
-module. Concept links mean shared authored exhibit membership, not prerequisites.
-
-`noindex` stays until this page is linked on purpose. This is an unlinked draft,
-not a private page: GitHub Pages serves it to anyone who knows the address.
-Preparing or pushing a branch does not publish these changes; merging to `main`
-does. Keep the repair PR unmerged until the owner approves deployment.
-
-See [the architecture notes](../docs/knowledge-map.md) for sources and test limits.
+See [the architecture notes](../docs/knowledge-map.md) for sources, navigation,
+storage behavior, check commands and verification limits.

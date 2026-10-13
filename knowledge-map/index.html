@@ -1,50 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex">
-  <title>Crypto Lab knowledge map</title>
-  <meta name="description" content="Student map of Crypto Lab learning paths, course modules, and concept filings. Unlinked draft.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./map.css">
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Learning Map · Crypto Lab</title>
+ <meta name="description" content="Explore cryptography by following connected ideas, guided lab routes, and the questions that make each concept click.">
+ <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="./map.css"><link rel="stylesheet" href="./factor-playground.css">
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
-      <div class="brand">
-        <span class="mark" aria-hidden="true">CL</span>
-        <div>
-          <p class="kicker">Crypto Lab · student map · direct address only</p>
-          <h1>Knowledge map</h1>
-        </div>
-      </div>
-      <p class="lede">Start with a topic or lab. Follow its learning paths, explore concepts, and check what a course module expects you to know first. <a href="https://crypto-lab.systemslibrarian.dev/">Open the catalog</a>.</p>
-      <dl class="stats">
-        <div class="stat"><dt class="kicker">Exhibits</dt><dd id="n-exhibits">—</dd></div>
-        <div class="stat"><dt class="kicker">On a path</dt><dd id="n-path">—</dd></div>
-        <div class="stat"><dt class="kicker">In a module</dt><dd id="n-module">—</dd></div>
-        <div class="stat"><dt class="kicker">Neither</dt><dd id="n-neither">—</dd></div>
-      </dl>
-    </div>
-  </header>
-  <main class="wrap layout">
-    <section class="stack">
-      <div class="search">
-        <label class="sr" for="q">Find a topic or lab</label>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input id="q" type="search" placeholder="Find a topic or lab, e.g. factorization" autocomplete="off" aria-controls="hits">
-        <ul id="hits" class="hits" hidden></ul>
-      </div>
-      <p id="search-status" class="sr" role="status"></p>
-      <div id="tabs" class="tabs" role="group" aria-label="Map view"></div>
-      <div id="scope"></div>
-      <div id="spine" class="stack"></div>
-    </section>
-    <aside id="detail"></aside>
+ <a class="skip" href="#workspace">Skip to the learning map</a>
+ <header class="topbar">
+  <a class="brand" href="#topic=7" aria-label="Crypto Lab Learning Map"><span class="brand-mark">CL</span><span>CRYPTO LAB<small>LEARNING MAP</small></span></a>
+  <div class="global-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><label class="sr" for="q">Search topics and labs</label><input id="q" type="search" placeholder="Find an idea. Follow a connection." autocomplete="off" aria-controls="search-results"><kbd>/</kbd><div id="search-results" hidden></div></div>
+  <a class="catalog-link" href="https://crypto-lab.systemslibrarian.dev/" target="_blank" rel="noopener">Full catalog <span aria-hidden="true">↗</span></a>
+  <span class="private-pill"><i></i> SELF-PACED LEARNING</span>
+ </header>
+ <div class="app-shell">
+  <aside class="sidebar" aria-label="Learning navigation">
+   <button class="mobile-toggle" id="topic-toggle" type="button" aria-expanded="false" aria-controls="topic-menu">Browse topics <span>⌄</span></button>
+   <div id="topic-menu"><div class="nav-intro"><span class="eyebrow">EXPLORE THE IDEAS</span><p>A place to start.<br>A way to keep going.</p></div><div id="featured-topics"></div><details class="all-topics"><summary>All 40 topics</summary><div id="topics"></div></details><div class="nav-paths"><span class="eyebrow">GUIDED JOURNEYS</span><div id="paths"></div></div></div>
+   <div class="sidebar-footer"><span id="progress-total">0 labs explored</span><p>Progress stays in this browser.</p><button id="reset-progress" type="button">Reset progress</button></div>
+  </aside>
+  <main id="workspace" tabindex="-1">
+   <div id="breadcrumb" class="breadcrumb"></div>
+   <div id="resume-card" class="resume-card" hidden></div><div id="hero"></div>
+   <div id="goal-switch" class="goal-switch" role="group" aria-label="Choose a learning goal"></div>
+   <section id="topic-primer" class="topic-primer panel" hidden><details class="primer-disclosure"><summary><div><span class="eyebrow">TRY THE IDEA BEFORE OPENING A LAB</span><strong>Same size. Different factoring work.</strong><p>Make a prediction, step through two real calculations, and see what changes.</p></div><span class="primer-action">Try the experiment →</span></summary><div id="factor-lesson"></div></details></section>
+   <div class="workspace-grid">
+    <div class="map-column"><section class="panel map-panel" aria-labelledby="map-title"><div class="panel-heading"><div><span class="eyebrow">THE CONNECTIONS</span><h2 id="map-title">Start here. See where it leads.</h2></div><span class="map-hint">Select a node to explore</span></div><div id="concept-map"></div><div id="map-caption" class="map-caption"></div></section>
+    <section class="route-panel" aria-labelledby="route-title"><div class="section-heading"><div><span class="eyebrow">YOUR LEARNING ROUTE</span><h2 id="route-title">One idea at a time.</h2></div><span id="route-progress"></span></div><div id="route"></div></section></div>
+    <aside id="lab-detail" class="panel lab-detail" aria-label="Selected lab"></aside>
+   </div>
+   <section class="topic-labs" aria-labelledby="labs-title"><div class="section-heading"><div><span class="eyebrow">EXPLORE THIS TOPIC</span><h2 id="labs-title">Labs that bring it to life.</h2></div><div id="level-filter" role="group" aria-label="Filter labs by level"></div></div><div id="labs"></div></section>
+   <section id="checkpoint" class="panel checkpoint" aria-label="Check your understanding"></section>
+   <footer class="workspace-footer"><span>Real concepts. Real labs. Your own pace.</span><details><summary>About these connections</summary><p>Catalog memberships, existing path order, and course prerequisites come from Crypto Lab. The featured topic routes, readiness notes, and connection explanations are authored suggestions for the learning map. A suggested route is not a mandatory prerequisite chain. Shared-lab links mean a lab is filed under both concepts. Marking a lab explored is your own record, not an assessment.</p><p id="source-stamp"></p></details></footer>
   </main>
-  <script src="./map.js"></script>
-</body>
-</html>
+ </div>
+ <div id="toast" class="toast" role="status" aria-live="polite"></div><div id="search-status" class="sr" role="status"></div>
+ <script src="./guides.js"></script><script src="./map-model.js"></script><script src="./factor-playground.js"></script><script src="./map.js"></script>
+</body></html>

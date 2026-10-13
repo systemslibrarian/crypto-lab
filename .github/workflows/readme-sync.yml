@@ -120,3 +120,7 @@ jobs:
         run: node tools/knowledge-map-sync.js check
       - name: Knowledge map freshness and missing-source controls
         run: node --test tests/knowledge-map-sync.test.cjs
+      - name: Learning map source relationships and exact Fermat arithmetic
+        run: |
+          node tests/knowledge-map-model.test.cjs
+          node tests/knowledge-map-factor.test.cjs

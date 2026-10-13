@@ -104,6 +104,29 @@ test('Ablation scope rejects an assurance-limit credit and loss of real attacks'
   }
 });
 
+function checkModelBreachScope(source) {
+  // Inspected 8558ee8cca7dcd38537adf621d75fee50b6b1a3e: README.md:142
+  // describes a cited paper's separate nonce-misuse result. The demo's own
+  // reduced-seed oracle model does not reuse a nonce or execute that attack.
+  const slug = 'crypto-lab-model-breach';
+  assert.deepEqual(implementationsFor(source, slug), ['Toy HiAE']);
+  assert.deepEqual(attacksFor(source, slug), [
+    'Brute force', 'Key recovery', 'Man-in-the-middle',
+  ]);
+}
+
+test('Model Breach separates cited nonce misuse from its executed toy oracle model', () => {
+  checkModelBreachScope(html);
+});
+
+test('Model Breach scope rejects the cited nonce-misuse false credit', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-model-breach/"';
+  const changed = html.replace(marker,
+    `${marker} data-attacks="Nonce reuse@README.md:142"`);
+  assert.notEqual(changed, html);
+  assert.throws(() => checkModelBreachScope(changed), assert.AssertionError);
+});
+
 test('comparison tables, parameter imports and symbolic terms are not primitive implementations', () => {
   for (const [slug, term] of [
     ['crypto-lab-zk-arena', 'STARK'],

@@ -236,17 +236,32 @@ function verifyPublishJobs(wf, jobs, workflowSources = {}) {
   for (const observed of jobs.filter((j) => j.conclusion === 'success')) {
     const entry = configured.find((x) => x.name === observed.name);
     if (!entry || !Array.isArray(entry.job.steps) || !entry.job.steps.length) return false;
-    const expectedNames = new Map();
-    for (const step of entry.job.steps) {
+    const expectedNames = new Map(), runtimeNamed = [];
+    for (const [index, step] of entry.job.steps.entries()) {
       if (!step || typeof step !== 'object') return false;
       let name = step.name || (step.uses ? `Run ${step.uses}` : typeof step.run === 'string' ? `Run ${step.run.trim().split('\n')[0]}` : null);
       if (typeof name !== 'string') return false;
       name = name.replace(/\$\{\{\s*matrix\.([A-Za-z0-9_-]+)\s*\}\}/g, (whole, key) => Object.hasOwn(entry.matrix, key) ? String(entry.matrix[key]) : whole);
-      if (name.includes('${{')) return false;
+      if (name.includes('${{')) {
+        // GitHub expands expressions in the generated display name for an
+        // unnamed `run` step. Static source cannot recover step outputs, but
+        // the jobs API gives that workflow step a stable ordinal: setup is 1,
+        // then committed steps start at 2. Bind only this narrow case to its
+        // exact ordinal and generated `Run ...` shape. Explicit dynamic names,
+        // action steps and missing/unreadable ordinals remain incomplete.
+        if (step.name !== undefined || typeof step.run !== 'string') return false;
+        runtimeNamed.push(index + 2);
+        continue;
+      }
       expectedNames.set(name, (expectedNames.get(name) || 0) + 1);
     }
     for (const [name, count] of expectedNames) {
       if (observed.steps.filter((s) => s.name === name).length !== count) return false;
+    }
+    for (const number of runtimeNamed) {
+      const matched = observed.steps.filter((s) => s.number === number &&
+        typeof s.name === 'string' && s.name.startsWith('Run ') && s.conclusion === 'success');
+      if (matched.length !== 1) return false;
     }
   }
   let publishers = 0;

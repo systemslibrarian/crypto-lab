@@ -9,6 +9,7 @@ not a cryptographic audit, a test run of every lab, or proof that a build shippe
 | Catalog consistency | `README catalog` workflow | Generated files and catalog claims agree with their declared inputs. |
 | Fleet and deployment checks | Weekly `Fleet check` workflow | Eight checkers read sibling sources or GitHub: discovery, served revision, workflow gates, dispatch, theme, anchors, recall, and dates. |
 | Teaching checks | `teach.yml`, with job-specific triggers | Teaching builds, layout, and scheduled drift checks have separate execution paths. |
+| Knowledge-map checks | `readme-sync.yml` data checks; `teach.yml` layout job on PR/main push | Current source parity, missing-source controls and Chromium navigation/layout; no external lab execution or deployment proof. |
 | Fleet Console collection | Separate nightly Site refresh | Reads cataloged source, derives evidence, checks anchors, and imports workflow observations. It does not execute all tools or all lab tests. |
 
 ## Reading a result

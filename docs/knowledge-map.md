@@ -2,7 +2,8 @@
 
 The public `knowledge-map/` page is a separate learner workspace at
 https://crypto-lab.systemslibrarian.dev/knowledge-map/. It reuses the Crypto Lab
-catalog and leaves the root `index.html` homepage unchanged. The runtime is static
+catalog. The root `index.html` remains the homepage and links to this separate
+workspace. The runtime is static
 HTML, CSS, JavaScript and a generated JSON catalog; navigation, arithmetic and
 local progress do not call an LLM or require an application backend. GitHub Pages
 publishes the folder from `main`.
@@ -108,5 +109,5 @@ These checks do not establish Firefox/WebKit behavior, live external-lab
 availability, complete WCAG conformance or cryptographic correctness across the
 catalog. Arithmetic controls establish only the tested in-page Fermat behavior.
 A successful merge or CI run alone does not prove publication: deployment must
-also be checked against the served `/knowledge-map/` files, and the root homepage
-must remain unchanged.
+also be checked against the served `/knowledge-map/` files. The root catalog must
+remain the homepage, with its link to the separate learner workspace verified.

@@ -2,8 +2,8 @@
 
 Public, separate landing page at
 [crypto-lab.systemslibrarian.dev/knowledge-map/](https://crypto-lab.systemslibrarian.dev/knowledge-map/).
-It leaves the main catalog homepage in `index.html` unchanged and needs no LLM or
-application backend.
+The main catalog in `index.html` remains the homepage and links to this learner
+workspace. The map needs no LLM or application backend.
 
 Search topics such as factorization, select connected labs or ideas, and follow
 the existing learning journeys or suggested topic routes. Whole-module

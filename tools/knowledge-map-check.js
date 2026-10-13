@@ -66,7 +66,18 @@ async function main() {
     const state = () => page.evaluate(() => window.CryptoLearningMap.getState());
     const ids = selector => page.locator(selector).evaluateAll(nodes => nodes.map(node => node.dataset.lab));
     async function loaded() { await page.waitForFunction(() => Boolean(window.CryptoLearningMap)); }
-    async function open(hash = '') { await page.goto(entry + hash); await loaded(); }
+    async function open(hash = '') {
+      await page.goto(entry + hash);
+      // Changing only the hash can preserve the DOM and lesson controller. Fixtures
+      // need a fresh document; the explicit history checks below remain in-page.
+      await page.reload();
+      await loaded();
+    }
+    async function expandExperiment() {
+      const disclosure = page.locator('#topic-primer .primer-disclosure');
+      if (await disclosure.getAttribute('open') === null) await disclosure.locator(':scope > summary').click();
+      await page.locator('#factor-lesson .factor-lesson').waitFor({state: 'visible'});
+    }
     async function chooseTopic(id) {
       const button = page.locator(`#topics [data-topic="${id}"]`);
       await button.evaluate(node => { for (let p = node.parentElement; p; p = p.parentElement) if (p.tagName === 'DETAILS') p.open = true; });
@@ -227,7 +238,7 @@ async function main() {
     equal((await state()).explored, beforeExternal, 'opening external lab never automatically marks it explored');
 
     // Compare exact UI calculations against FactorLesson, with fixed 1-versus-128 regression values.
-    await page.locator('#topic-primer .primer-disclosure > summary').click();
+    await expandExperiment();
     check(await page.locator('[data-factor-action="run"]').isDisabled(), 'Fermat run requires prediction');
     equal(await page.locator('[data-factor-action="step"]:disabled').count(), FactorLesson.CASES.length, 'Fermat steps require prediction');
     await page.locator('[data-factor-prediction="same"]').click(); await page.locator('[data-factor-case="apart"][data-factor-action="step"]').click();
@@ -272,7 +283,8 @@ async function main() {
         }
       }
       await open('#topic=7');
-      await page.locator('#topic-primer .primer-disclosure > summary').click();
+      await expandExperiment();
+      await page.locator('[data-factor-action="reset"]').click();
       await page.locator('[data-factor-prediction="close"]').click();
       await page.locator('[data-factor-action="run"]').click();
       check(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1), `${width}px: expanded completed experiment has no overflow`);

@@ -1,7 +1,7 @@
 {
   "crypto-lab-ablation-wire": {
-    "commit": "f0c5328848ca7de14af3df18751050352c556131",
-    "reviewed": "2026-10-11",
+    "commit": "24ae374e44bdf11e99e55be3361d6f8c42758fb3",
+    "reviewed": "2026-10-13",
     "add": [
       "AES-GCM@codetalker-core/src/aead.rs:5",
       "ChaCha20-Poly1305@codetalker-core/src/aead.rs:6",
@@ -16,7 +16,7 @@
       "Rust"
     ],
     "implementation": "Rust crates / WASM",
-    "note": "Re-read Rust core, WASM callers, threat model and learner-facing limits at the integrated PR20 source. The eight primitive implementations remain; production Rust/WASM code is unchanged from the prior review, with malformed-input regression tests appended. Supported libcrux-kem 0.0.10 / ML-KEM 0.0.11 in both locks fix verified RustSec 0330/0331 input panics. The authenticated libcrux-platform 0.0.4 patch changes only three CPUID unsafe blocks and preserves Rust 1.85 on x86; source/hash controls and current root/WASM audits pass. WASM is built from that core. A5 is explicitly OutOfScope: timing/cache behavior is neither defended nor measured, so its side-channel warning is not an attack demonstration. Preserve executed known-plaintext/reused-nonce and active MITM exhibits. The optional typed-secret compiler check still fails upstream; neither secret independence nor constant-time behavior is established. Application, source correspondence, provider captures and deployment evidence remain separate.",
+    "note": "Re-read the merged PR21 Rust core, WASM callers, threat model, vendored libcrux source/provenance, compiler controls and learner-facing limits. The eight primitive implementations remain. Secret-typed u8 values now propagate through the verification-only ML-KEM, SHA3/SHAKE and X-Wing paths, with declassification limited to reviewed public outputs and embedded public-key bytes; positive and negative compiler controls pass. Shipping APIs, malformed-input handling and normal builds remain intact. This establishes source-level secret classification only, not constant-time machine code or browser-JIT side-channel resistance. A5 remains explicitly OutOfScope, so the side-channel warning is not an executed attack demonstration. Preserve the executed known-plaintext/reused-nonce and active MITM exhibits.",
     "remove": [
       "Side-channel (unspecified)"
     ]
@@ -172,12 +172,15 @@
     "note": "Executes a toy SPN for Matsui's linear attack Re-read the complete prior-pin inventory and SPN source on 12 October: toy cipher arithmetic and anchor66 remain exact. Toolchain changes, a reduced-ChaCha reading panel and browser cancellation coverage do not implement the paper attack. The live experiment still attacks the toy SPN."
   },
   "crypto-lab-model-breach": {
-    "commit": "a1e3864c76e26f622608c25325ead69869119465",
-    "reviewed": "2026-09-24",
+    "commit": "8558ee8cca7dcd38537adf621d75fee50b6b1a3e",
+    "reviewed": "2026-10-13",
     "add": [
       "Toy HiAE@src/hiae.ts:50"
     ],
-    "note": "Executes a deliberately toy HiAE model, not the production cipher"
+    "remove": [
+      "Nonce reuse"
+    ],
+    "note": "Re-read the current README, toy HiAE core, AESL implementation, oracle attack and UI after the research-cost clarification. The browser still executes a deliberately reduced-seed, structurally toy HiAE model with real AESL and a computed oracle-driven recovery; it does not implement or reproduce either cited full-scale attack. Preserve Toy HiAE as the bounded implementation credit, not the production cipher. The new nonce-misuse phrase only summarizes a cited paper result that the lab explicitly treats separately; this demo neither reuses a nonce nor runs that attack, so it is not an attack credit."
   },
   "crypto-lab-point-ledger": {
     "commit": "abe44608d558561512e6783284fc16ef50623620",
@@ -333,10 +336,10 @@
     ]
   },
   "crypto-lab-timing-sidechannel": {
-    "commit": "c6ea44e5a4ac6bd5ac23d800c134cf5f03ca3a2f",
-    "reviewed": "2026-10-09",
+    "commit": "72aceaa9338370fdb34eec26cc6431c3ab1a1e61",
+    "reviewed": "2026-10-13",
     "state": "N/A",
-    "note": "Runs early-exit comparison timing attack; no named cryptographic primitive Re-read current early-exit/all-byte comparators, timing probes and README; no named cryptographic primitive added. Source files unchanged from prior review; dependency/publisher-only integrations separately passed31unit/17browser gates. N/A preserved, not a constant-time browser-engine guarantee."
+    "note": "Re-read the current early-exit/all-byte comparators, timing probes, recovery engine, verdict logic, UI and README. The change correctly makes incomplete recoveries inconclusive and labels the defended result as a source-model result; cited Hertzbleed and GoFetch hardware channels are explicitly not reproduced. No named cryptographic primitive is implemented, so N/A remains accurate. The constant-work JavaScript pattern is not a browser-engine or machine-code constant-time guarantee."
   },
   "crypto-lab-token-tell": {
     "commit": "41100d93f8174cfce0b0be71989aebdde4d6b4db",
@@ -498,13 +501,13 @@
     "note": "Read README.md, renderScopePanel in src/ui/panels.ts and the naive-MAC/Keccak implementation at this source SHA. The scope panel explicitly lists the length-extension attack itself as deliberately not built and links to Mac Race and Babel Hash; it is a contrast to the sponge/KMAC mechanisms, not an executed attack in this lab. Remove that prose-derived attack credit. Preserve actual computations and sibling links. The October8 NIST SP800185 Revision1 initial public draft is documented as a draft; this lab follows final SP800185 and does not establish draft streaming-API conformance. Also read KNOWN-GAPS.md: line24 explicitly says the append forgery is never key recovery, and line31 states lack of side-channel hardening rather than demonstrating a side-channel attack. Those two negated-limit credits are removed as well."
   },
   "crypto-lab-frodo-vault": {
-    "commit": "54665d57569765018c17caa552ad07a1d76507fb",
-    "reviewed": "2026-10-09",
+    "commit": "f79176d35ae1798b9ae5dfab60c55caffd5b09d9",
+    "reviewed": "2026-10-13",
     "remove": [
       "Chosen-plaintext attack",
       "Side-channel (unspecified)"
     ],
-    "note": "Read README.md, src/math.ts, src/frodo-kem.ts and src/main.ts including all actual toy-LWE, KEM, comparison, hybrid and failure handlers at this exact source SHA. README28 discusses raw LWE CPA security and the FO transform; it does not execute a chosen-plaintext attack. The source side-channel matches explicitly disclaim constant-time or side-channel guarantees and link related experiments; neither benchmarks nor missing hardening demonstrate a secret-dependent oracle or attack. Remove only those two prose-derived credits. Retain the real chosen-ciphertext tamper experiment: kemTamper flips an actual ciphertext bit and kemDecap calls the real KEM with the stored secret key, showing an unrelated implicit-rejection secret. This is a bounded tamper/rejection lesson, not adaptive-oracle exploitation or key recovery. No new algorithm names, categories or source/compiler provenance are inferred; opaque third-party WASM remains a separate evidence boundary."
+    "note": "Re-read README.md, src/math.ts, src/frodo-kem.ts, src/key-use.ts and src/main.ts, including the toy-LWE, real KEM, comparison, hybrid, failure and new key-use handlers. The 255-ciphertext limit is an enforced eFrodoKEM public-key-use policy, not a chosen-plaintext attack. The source still only discusses CPA security and explicitly disclaims constant-time/browser side-channel guarantees, so those two prose-derived attack credits remain removed. Preserve the real chosen-ciphertext tamper experiment: it flips an actual ciphertext bit and decapsulates with the stored secret key to show an unrelated implicit-rejection secret. That is bounded tamper/rejection teaching, not adaptive-oracle exploitation or key recovery. Opaque third-party WASM remains a separate evidence boundary."
   },
   "crypto-lab-sphincs-ledger": {
     "commit": "73ce1d64f8d2bf94be787e2df0e4641bbad6db17",
@@ -620,13 +623,13 @@
     "state": "N/A"
   },
   "crypto-lab-isogeny-atlas": {
-    "commit": "587e9b049f356597858564e56b163e442b026495",
-    "reviewed": "2026-10-09",
+    "commit": "c1207baa7d5794cb2749fc5557a2f24ac217e713",
+    "reviewed": "2026-10-13",
     "remove": [
       "CGL hash",
       "Factoring"
     ],
-    "note": "Read current README/math/walk.ts: polynomial root factorization is not an integer factoring attack. cglWalk is a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference.",
+    "note": "Re-read the current README, math/walk implementation and seven-problem UI after the 2026 complexity and endpoint-ring qualification. The new text distinguishes generic graph search from specialized preprint results and does not change the executable graph walk. Polynomial root factorization is still not an integer factoring attack; cglWalk remains a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve the real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference.",
     "add": [
       "Isogeny walk@src/math/walk.ts:203"
     ]

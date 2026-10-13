@@ -187,4 +187,5 @@ function main() {
   if (check) console.log('\nconcept-coverage.md in step with index.html.');
 }
 
-main();
+if (require.main === module) main();
+module.exports = { parseConcepts };

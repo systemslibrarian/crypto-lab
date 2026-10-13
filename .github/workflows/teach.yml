@@ -59,6 +59,8 @@ jobs:
         run: node tools/teach-layout.js
       - name: Hub award link preserves its visible accessible name
         run: node --test tests/hub-accessible-name.test.cjs
+      - name: Knowledge map navigation and responsive layout
+        run: node tools/knowledge-map-check.js
 
   drift:
     # Opens each worksheet's live exhibit and confirms every control it names is still

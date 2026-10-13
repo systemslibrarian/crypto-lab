@@ -115,3 +115,8 @@ jobs:
 
       - name: Catalog document structure
         run: node tools/catalog-structure-check.js
+
+      - name: Knowledge map matches its authored sources
+        run: node tools/knowledge-map-sync.js check
+      - name: Knowledge map freshness and missing-source controls
+        run: node --test tests/knowledge-map-sync.test.cjs

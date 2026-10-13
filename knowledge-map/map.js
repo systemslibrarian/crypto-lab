@@ -14,6 +14,8 @@ const ROLE_LINE = {
   Extension: "is optional depth",
 };
 
+const CONCEPT_ALIASES = { "7": ["factorization", "factorisation", "integer factoring"] };
+
 const LENSES = [
   ["path", "Paths"],
   ["concept", "Concepts"],
@@ -165,6 +167,60 @@ function conceptsByTitle() {
     .sort((a, b) => a.title.localeCompare(b.title, "en", { sensitivity: "base" }));
 }
 
+function visibleTitles() {
+  if (state.lens === "path") {
+    const path = catalog.paths.find(item => item.id === state.scope);
+    return path ? [...path.steps, ...(path.sideTrip ? [path.sideTrip.title] : [])] : [];
+  }
+  if (state.lens === "concept") return catalog.concepts.find(item => item.id === state.scope)?.exhibits ?? [];
+  if (state.lens === "module") return catalog.modules.find(item => item.id === state.scope)?.exhibits.map(item => item.title) ?? [];
+  if (state.lens === "section") return catalog.exhibits.filter(item => item.section === state.scope).map(item => item.title);
+  return []; // Depth is a coverage report, not a sequence.
+}
+
+function alignSelection() {
+  if (state.lens === "depth") return;
+  const titles = visibleTitles();
+  if (!titles.includes(byId.get(state.selectedId)?.title)) state.selectedId = exhibitByTitle(titles[0])?.id ?? "";
+}
+
+function preparation(courses) {
+  if (!courses.length) return '<p class="note">No course-module prerequisites are recorded for this selection.</p>';
+  return courses.map(course => `<details><summary>${esc(course.label)}: what to know first</summary>
+    <p class="note">Requirements for this whole course module.</p>
+    <ul>${course.prerequisites.map(text => `<li>${esc(text)}</li>`).join("")}</ul>
+    <a href="${esc(course.href)}">Open the course module</a></details>`).join("");
+}
+
+function openConcept(id) {
+  if (!catalog.concepts.some(item => item.id === id)) return;
+  state.lens = "concept";
+  state.scope = id;
+  state.query = "";
+  $("q").value = "";
+  paint(false);
+}
+
+function urlState() {
+  const params = new URLSearchParams({ view: state.lens });
+  if (state.lens !== "depth") params.set("scope", state.scope);
+  if (state.selectedId) params.set("lab", state.selectedId);
+  return "#" + params.toString();
+}
+
+function readUrl() {
+  const params = new URLSearchParams(window.location.hash.slice(1));
+  const lens = params.get("view");
+  if (!LENSES.some(([id]) => id === lens)) return false;
+  const collections = {path:catalog.paths, concept:catalog.concepts, module:catalog.modules, section:catalog.sections};
+  state.lens = lens;
+  state.scope = collections[lens]?.some(item => item.id === params.get("scope")) ? params.get("scope") : collections[lens]?.[0].id ?? "";
+  state.selectedId = byId.has(params.get("lab")) ? params.get("lab") : "";
+  state.query = "";
+  $("q").value = "";
+  return true;
+}
+
 function renderScope() {
   const host = $("scope");
   if (state.lens === "depth") {
@@ -228,17 +284,24 @@ function renderSpine() {
       concept.status === "COVERED"
         ? " Covered means filed, not that the arc is taught in depth."
         : " Deep means the checklist treats this as a taught arc.";
+    const courses = catalog.modules.filter(course => course.exhibits.some(item => concept.exhibits.includes(item.title)));
+    const related = catalog.concepts.filter(item => item.id !== concept.id && item.exhibits.some(title => concept.exhibits.includes(title)));
     host.innerHTML = `<div class="card">
         <p class="kicker">${esc(concept.group)} · ${esc(concept.status.toLowerCase())}</p>
         <h2>§${esc(concept.number)} ${esc(concept.title)}</h2>
         <p class="note">${concept.exhibits.length} exhibits filed here. Membership is the checklist’s filing line, not a guess from shared chips.${depth}</p>
       </div>
-      <ol class="spine concept">${concept.exhibits.map((title) => spineItem(title)).join("")}</ol>`;
+      <ol class="spine concept">${concept.exhibits.map((title) => spineItem(title)).join("")}</ol>
+      <section class="card"><h2>Preparation</h2>${preparation(courses)}</section>
+      <section class="card"><h2>Explore related concepts</h2>
+        <p class="note">These concepts share a lab in the authored concept map. They are places to explore, not prerequisites.</p>
+        <ul>${related.map(item => `<li><button type="button" class="linkish" data-concept="${esc(item.id)}">${esc(item.title)}</button></li>`).join("") || '<li>No shared concept filings.</li>'}</ul></section>`;
     return;
   }
   if (state.lens === "module") {
     const course = catalog.modules.find((item) => item.id === state.scope) ?? catalog.modules[0];
     host.innerHTML = `<p class="note">Course sequence with the role the worksheet gives each exhibit. Order is the module’s order.</p>
+      <section class="card"><h2>Preparation</h2>${preparation([course])}</section>
       <ol class="spine">${course.exhibits
         .map((item, index) =>
           spineItem(item.title, {
@@ -304,13 +367,15 @@ function namedList(label, items, empty, note) {
 }
 
 function renderDetail() {
-  const exhibit = byId.get(state.selectedId) ?? catalog.exhibits[0];
+  const exhibit = byId.get(state.selectedId);
+  if (!exhibit) { $("detail").innerHTML = '<p class="note">Select a lab to see its learning steps.</p>'; return; }
   const paths = pathHits(exhibit.title);
   const courses = moduleHits(exhibit.title);
   const concepts = conceptsFor(exhibit.title);
   const attackLab = runsAttack(exhibit);
   const aliases = aliasLines(exhibit);
   const nextBits = [];
+  const stepLink = (title, lens, scope) => `<button type="button" class="linkish" data-title="${esc(title)}" data-nav-lens="${esc(lens)}" data-nav-scope="${esc(scope)}">${esc(title)}</button>`;
   if (paths.length === 0 && courses.length === 0) {
     nextBits.push(
       `<p class="note">No learning path and no course module names a neighbor. That slot stays empty on purpose.</p>`,
@@ -320,8 +385,8 @@ function renderDetail() {
     if (hit.side) {
       nextBits.push(`<p>Off the numbered line of ${esc(hit.path.label)}. ${esc(hit.path.sideTrip?.why ?? "")}</p>`);
     } else {
-      const after = hit.prev ? ` After <button type="button" class="linkish" data-title="${esc(hit.prev)}">${esc(hit.prev)}</button>.` : "";
-      const then = hit.next ? ` Then <button type="button" class="linkish" data-title="${esc(hit.next)}">${esc(hit.next)}</button>.` : "";
+      const after = hit.prev ? ` After ${stepLink(hit.prev, "path", hit.path.id)}.` : "";
+      const then = hit.next ? ` Then ${stepLink(hit.next, "path", hit.path.id)}.` : "";
       const end = !hit.next ? " Nothing authored follows it on this path." : "";
       nextBits.push(
         `<p>${esc(hit.path.label)} step ${hit.index + 1} of ${hit.path.steps.length}.${after}${then}${end}</p>`,
@@ -331,7 +396,7 @@ function renderDetail() {
   for (const hit of courses) {
     const role = ROLE_LINE[hit.role] ? ` — ${esc(ROLE_LINE[hit.role])}` : "";
     const next = hit.next
-      ? ` Next is <button type="button" class="linkish" data-title="${esc(hit.next)}">${esc(hit.next)}</button>.`
+      ? ` Next is ${stepLink(hit.next, "module", hit.moduleId)}.`
       : "";
     nextBits.push(
       `<p>${esc(hit.moduleLabel)}: ${esc(hit.role)}${role}. ${esc(hit.minutes)}. Exhibit ${hit.index + 1} of ${hit.total}.${next}</p>`,
@@ -340,10 +405,13 @@ function renderDetail() {
   $("detail").innerHTML = `<article class="detail">
     <div>
       <p class="kicker">${esc(exhibit.kicker)} · ${esc(exhibit.level)} · ${esc(sectionLabel(exhibit.section))}</p>
-      <h2>${esc(exhibit.title)}</h2>
+      <h2 tabindex="-1">${esc(exhibit.title)}</h2>
       <p>${esc(exhibit.copy)}</p>
     </div>
-    <a class="open" href="${esc(exhibit.href)}" target="_blank" rel="noopener noreferrer">Open the live lab</a>
+    ${exhibit.wip ? '<p class="note">This lab is marked work in progress in the catalog.</p>' : ''}
+    <a class="open" href="${esc(exhibit.href)}" target="_blank" rel="noopener noreferrer">Open the lab${exhibit.wip ? ' (work in progress)' : ''}</a>
+    <a href="${esc(urlState())}">Link to this selection</a>
+    <section class="block"><h3>What to know first</h3>${preparation(catalog.modules.filter(course => course.exhibits.some(item => item.title === exhibit.title)))}</section>
     <section class="block"><h3>What comes next</h3>${nextBits.join("")}</section>
     <section class="block"><h3>Concept filing</h3>
       ${
@@ -359,6 +427,7 @@ function renderDetail() {
     </section>
     <section class="block"><h3>Index, not a lesson</h3>
       ${namedList("Implements", exhibit.implements, "No algorithm term matched this card.")}
+      ${exhibit.unscanned?.length ? `<p class="note">Source not fully scanned: ${esc(exhibit.unscanned.join(" · "))}.</p>` : ''}
       ${aliases.map((line) => `<p class="note">${esc(line)}</p>`).join("")}
       ${namedList(
         attackLab ? "Attack lab — index terms" : "Attack mentions",
@@ -385,7 +454,7 @@ function renderDetail() {
 function renderTabs() {
   $("tabs").innerHTML = LENSES.map(
     ([id, label]) =>
-      `<button type="button" role="tab" data-lens="${id}" aria-selected="${state.lens === id}">${label}</button>`,
+      `<button type="button" data-lens="${id}" aria-pressed="${state.lens === id}">${label}</button>`,
   ).join("");
 }
 
@@ -395,26 +464,37 @@ function renderSearch() {
   if (q.length < 2) {
     host.hidden = true;
     host.innerHTML = "";
+    $("search-status").textContent = "";
     return;
   }
-  const matches = catalog.exhibits
-    .filter((exhibit) => `${exhibit.title} ${exhibit.kicker} ${exhibit.copy}`.toLowerCase().includes(q))
-    .slice(0, 8);
-  host.hidden = matches.length === 0;
-  host.innerHTML = matches
+  const topics = conceptsByTitle().filter(concept => [concept.title, ...(CONCEPT_ALIASES[concept.id] ?? [])].join(" ").toLowerCase().includes(q));
+  const labs = catalog.exhibits.filter(exhibit => [exhibit.title, exhibit.kicker, exhibit.copy, ...exhibit.chips, ...exhibit.implements].join(" ").toLowerCase().includes(q));
+  $("search-status").textContent = topics.length + labs.length ? `${topics.length} topics and ${labs.length} labs found. Showing up to 12 results.` : "No matching topics or labs.";
+  host.hidden = false;
+  host.innerHTML = topics.slice(0, 4).map(concept => `<li><button type="button" data-concept="${esc(concept.id)}"><span>${esc(concept.title)}</span><span class="meta">Topic</span></button></li>`).join("") + labs.slice(0, 8)
     .map(
       (exhibit) =>
         `<li><button type="button" data-title="${esc(exhibit.title)}"><span>${esc(exhibit.title)}</span><span class="meta">${esc(exhibit.level)}</span></button></li>`,
     )
     .join("");
+  if (!topics.length && !labs.length) host.innerHTML = '<li class="note" style="padding:0.75rem">No matching topics or labs.</li>';
 }
 
-function paint(scroll) {
+function paint(scroll, historyMode = "push") {
+  const focused = document.activeElement;
+  const focusData = focused instanceof HTMLButtonElement ? {...focused.dataset} : null;
+  alignSelection();
+  const hash = urlState();
+  if (historyMode !== "none" && window.location.hash !== hash) window.history[historyMode === "replace" ? "replaceState" : "pushState"](null, "", hash);
   renderTabs();
   renderScope();
   renderSpine();
   renderDetail();
   renderSearch();
+  if (focusData) {
+    const replacement = [...document.querySelectorAll("button")].find(button => Object.entries(focusData).every(([key, value]) => button.dataset[key] === value));
+    (replacement ?? $("detail").querySelector("h2"))?.focus({preventScroll:true});
+  }
   if (!scroll) return;
   if (!window.matchMedia("(max-width: 1023px)").matches) return;
   $("detail").scrollIntoView({
@@ -426,7 +506,7 @@ function paint(scroll) {
 function openExhibit(title) {
   const exhibit = exhibitByTitle(title);
   if (!exhibit) return;
-  const next = focusOf(title);
+  const next = visibleTitles().includes(title) ? {lens:state.lens, scope:state.scope} : focusOf(title);
   state.lens = next.lens;
   state.scope = next.scope;
   state.selectedId = exhibit.id;
@@ -452,7 +532,12 @@ function boot(data) {
   $("n-module").textContent = String(model.onModule);
   $("n-neither").textContent = String(model.neither.length);
   state.selectedId = exhibitByTitle(catalog.paths[0].steps[0])?.id ?? catalog.exhibits[0].id;
-  paint(false);
+  readUrl();
+  paint(false, "replace");
+  window.addEventListener("popstate", () => {
+    if (!readUrl()) { state.lens = "path"; state.scope = catalog.paths[0].id; state.selectedId = ""; }
+    paint(false, "none");
+  });
 
   document.body.addEventListener("click", (event) => {
     const target = event.target instanceof Element ? event.target.closest("button") : null;
@@ -479,22 +564,12 @@ function boot(data) {
       return;
     }
     if (target.dataset.title) {
+      if (target.dataset.navLens) { state.lens = target.dataset.navLens; state.scope = target.dataset.navScope; }
       openExhibit(target.dataset.title);
       return;
     }
     if (target.dataset.concept) {
-      const concept = catalog.concepts.find((item) => item.id === target.dataset.concept);
-      if (!concept) return;
-      state.lens = "concept";
-      state.scope = concept.id;
-      const current = byId.get(state.selectedId);
-      if (!current || !concept.exhibits.includes(current.title)) {
-        const first = exhibitByTitle(concept.exhibits[0]);
-        if (first) state.selectedId = first.id;
-      }
-      state.query = "";
-      $("q").value = "";
-      paint(false);
+      openConcept(target.dataset.concept);
       return;
     }
     if (target.dataset.list) {
@@ -521,6 +596,9 @@ function boot(data) {
     state.query = event.target.value;
     renderSearch();
   });
+  $("q").addEventListener("keydown", event => {
+    if (event.key === "Escape") { state.query = ""; $("q").value = ""; renderSearch(); }
+  });
 }
 
 fetch("./catalog.json")
@@ -531,4 +609,6 @@ fetch("./catalog.json")
   .then(boot)
   .catch(() => {
     $("spine").textContent = "The catalog snapshot did not load.";
+    $("spine").setAttribute("role", "alert");
+    $("detail").textContent = "Reload the page to try again.";
   });

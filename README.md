@@ -426,6 +426,8 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/fleet-check.js` | a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand | weekly, on demand |
 | `node tools/fleet-sync.js check` | a lab going live with no card, which every catalog checker then reads as consistent rather than missing | weekly, on demand; selftest only: every PR and push, on demand |
 | `node tools/gate-sync.js check` | a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching | weekly, on demand; selftest only: every PR and push, on demand |
+| `node tools/knowledge-map-check.js` | learner-map navigation showing the wrong lab, broken topic search or links, inaccessible keyboard controls and horizontal overflow | every PR and push |
+| `node tools/knowledge-map-sync.js check` | the learner map serving stale cards, missing authored neighbors or invented module requirements | every PR and push, on demand |
 | `node tools/lab-dates.js check` | a card's displayed dates drifting from the repository they describe, or a package bump reading as a content update | weekly, on demand; selftest only: every PR and push, on demand |
 | `node tools/level-sync.js check` | a card shipping with no audience level, or LEVELS-REVIEW.md disagreeing with the levels the page actually filters on | manual |
 | `node tools/port-sync.js check` | two labs sharing a Playwright port, where a local run silently tests whatever is already listening | manual; selftest only: every PR and push, on demand |
@@ -444,7 +446,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/transform.mjs --dry-run <workflow.yml>` | a workflow repair discarding merge status or changing repository-specific dispatch behavior | manual |
 | `node tools/validate-manifest.mjs <manifest.yaml> [lab-dir] [catalog-dir]` | unsupported, inconsistent or stale claim-manifest evidence passing validation | manual |
 
-15 of these 37 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+15 of these 39 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
 Not listed above: `catalog-vocab.js`, `clone-source.js`, `depth-audit-report.js`, `depth-bounded.js`, `depth-classify-worker.js`, `depth-exports.js`, `sibling-labs.js` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 

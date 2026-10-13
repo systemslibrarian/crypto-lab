@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +21,7 @@
           <h1>Knowledge map</h1>
         </div>
       </div>
-      <p class="lede">Authored edges only: learning-path order, course-module roles, and the forty concept filings. Chip overlap is not a link. Not linked from the catalog yet. <a href="https://crypto-lab.systemslibrarian.dev/">Open the catalog</a>.</p>
+      <p class="lede">Start with a topic or lab. Follow its learning paths, explore concepts, and check what a course module expects you to know first. <a href="https://crypto-lab.systemslibrarian.dev/">Open the catalog</a>.</p>
       <dl class="stats">
         <div class="stat"><dt class="kicker">Exhibits</dt><dd id="n-exhibits">—</dd></div>
         <div class="stat"><dt class="kicker">On a path</dt><dd id="n-path">—</dd></div>
@@ -33,12 +33,13 @@
   <main class="wrap layout">
     <section class="stack">
       <div class="search">
-        <label class="sr" for="q">Find an exhibit</label>
+        <label class="sr" for="q">Find a topic or lab</label>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input id="q" type="search" placeholder="Find an exhibit" autocomplete="off">
+        <input id="q" type="search" placeholder="Find a topic or lab, e.g. factorization" autocomplete="off" aria-controls="hits">
         <ul id="hits" class="hits" hidden></ul>
       </div>
-      <div id="tabs" class="tabs" role="tablist" aria-label="Map lens"></div>
+      <p id="search-status" class="sr" role="status"></p>
+      <div id="tabs" class="tabs" role="group" aria-label="Map view"></div>
       <div id="scope"></div>
       <div id="spine" class="stack"></div>
     </section>

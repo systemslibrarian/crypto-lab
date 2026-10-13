@@ -163,7 +163,7 @@ a { color: var(--teal); }
   text-transform: uppercase;
 }
 
-.tabs button[aria-selected="true"] {
+.tabs button[aria-pressed="true"] {
   background: var(--teal);
   border-color: var(--teal);
   color: var(--ink);
@@ -277,6 +277,15 @@ h2 { margin: 0.2rem 0; font-weight: 500; font-size: 1.55rem; line-height: 1.2; }
 }
 
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+
+.layout > *, .line > *, .hits button > * { min-width: 0; }
+.detail, .row, .hits, .scopes { overflow-wrap: anywhere; }
+.detail ul { padding-left: 1.2rem; margin: 0.4rem 0; }
 
 @media (min-width: 640px) {
   .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }

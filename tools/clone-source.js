@@ -197,4 +197,57 @@ function summary() {
   return { fromHead, refused };
 }
 
-module.exports = { sourceRoot, summary, tornSnapshot, forget, trackedFiles, isTracked };
+/** Capture a commit and its complete tracked tree without reading mutable files.
+ * The teaching reference needs exact blob bytes, including tracked binaries,
+ * nested demos and files outside src/. git archive can apply export attributes;
+ * ls-tree plus cat-file identifies the actual stored bytes instead. */
+function pinnedTree(dir, ref = 'origin/HEAD') {
+  const options = { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 * 1024 * 1024 };
+  const sha = execFileSync('git', ['--no-replace-objects', '-C', dir, 'rev-parse', '--verify', `${ref}^{commit}`], options).trim();
+  if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Invalid captured commit identity');
+  const treeOid = execFileSync('git', ['--no-replace-objects', '-C', dir, 'rev-parse', `${sha}^{tree}`], options).trim();
+  const raw = execFileSync('git', ['--no-replace-objects', '-C', dir, 'ls-tree', '-rlz', sha], { ...options, encoding: null });
+  const entries = raw.toString('utf8').split('\0').filter(Boolean).map(row => {
+    const tab = row.indexOf('\t');
+    if (tab < 0) throw new Error('Malformed tracked tree row');
+    const meta = row.slice(0, tab).trim().split(/\s+/);
+    if (meta.length !== 4 || !/^[a-f0-9]{40}$/.test(meta[2])) throw new Error('Malformed tracked object identity');
+    return { mode: meta[0], type: meta[1], objectOid: meta[2], bytes: meta[3] === '-' ? null : Number(meta[3]), path: row.slice(tab + 1) };
+  });
+  if (!Buffer.from(raw.toString('utf8'), 'utf8').equals(raw)) throw new Error('Tracked paths have unsupported non-UTF-8 encoding');
+  if (new Set(entries.map(e => e.path)).size !== entries.length) throw new Error('Duplicate tracked paths');
+  return { sha, treeOid, entries };
+}
+
+/** Read exact blobs from a captured tree. No worktree, filters, symlink targets,
+ * submodule downloads, repository scripts or package managers are consulted. */
+function pinnedBlobs(dir, entries) {
+  const unique = [...new Map(entries.filter(e => e.type === 'blob').map(e => [e.objectOid, e])).values()];
+  if (unique.some(e => !/^[a-f0-9]{40}$/.test(e.objectOid) || !Number.isSafeInteger(e.bytes) || e.bytes < 0)) throw new Error('Invalid blob request');
+  const out = new Map();
+  for (let i = 0; i < unique.length;) {
+    let bytes = 0; const batch = [];
+    while (i < unique.length && (batch.length === 0 || bytes + unique[i].bytes < 32 * 1024 * 1024)) {
+      const entry = unique[i++];
+      if (entry.bytes > 128 * 1024 * 1024) throw new Error(`Blob exceeds readable bound: ${entry.path}`);
+      bytes += entry.bytes; batch.push(entry);
+    }
+    const buffer = execFileSync('git', ['--no-replace-objects', '-C', dir, 'cat-file', '--batch'], {
+      input: batch.map(e => e.objectOid + '\n').join(''), encoding: null,
+      stdio: ['pipe', 'pipe', 'pipe'], maxBuffer: bytes + batch.length * 256 + 1024,
+    });
+    let cursor = 0;
+    for (const entry of batch) {
+      const end = buffer.indexOf(10, cursor);
+      const header = buffer.subarray(cursor, end).toString('ascii');
+      if (end < 0 || header !== `${entry.objectOid} blob ${entry.bytes}`) throw new Error(`Unreadable immutable blob: ${entry.path}`);
+      const begin = end + 1, finish = begin + entry.bytes;
+      if (finish >= buffer.length || buffer[finish] !== 10) throw new Error('Incomplete blob response');
+      out.set(entry.objectOid, Buffer.from(buffer.subarray(begin, finish))); cursor = finish + 1;
+    }
+    if (cursor !== buffer.length) throw new Error('Unexpected bytes after immutable blob response');
+  }
+  return out;
+}
+
+module.exports = { sourceRoot, summary, tornSnapshot, forget, trackedFiles, isTracked, pinnedTree, pinnedBlobs };

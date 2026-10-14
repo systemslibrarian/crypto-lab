@@ -69,8 +69,7 @@ const decode = (s) => s
 const VOCAB = new Map(ALGORITHMS.map((a) => [a.name, a]));
 const errors = [];
 
-function cards() {
-  const html = fs.readFileSync(HTML, 'utf8');
+function cards(html = fs.readFileSync(HTML, 'utf8')) {
   const re = /<a class="((?:project|feature)-card[^"]*)" data-category="([^"]*)" href="https:\/\/systemslibrarian\.github\.io\/([^/"]+)\/"([\s\S]*?)<\/a>/g;
   const out = [];
   let m;
@@ -827,4 +826,5 @@ function main() {
   console.log(`CATALOG.md written: ${list.length} labs, ${impl.size} algorithms indexed.`);
 }
 
-main();
+module.exports = { cards };
+if (require.main === module) main();

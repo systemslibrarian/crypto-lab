@@ -9,7 +9,6 @@ not a cryptographic audit, a test run of every lab, or proof that a build shippe
 | Catalog consistency | `README catalog` workflow | Generated files and catalog claims agree with their declared inputs. |
 | Fleet and deployment checks | Weekly `Fleet check` workflow | Eight checkers read sibling sources or GitHub: discovery, served revision, workflow gates, dispatch, theme, anchors, recall, and dates. |
 | Teaching checks | `teach.yml`, with job-specific triggers | Teaching builds, layout, and scheduled drift checks have separate execution paths. |
-| Knowledge-map checks | `readme-sync.yml` data checks; `teach.yml` layout job on PR/main push | Current source parity, missing-source controls and Chromium navigation/layout; no external lab execution or deployment proof. |
 | Fleet Console collection | Separate nightly Site refresh | Reads cataloged source, derives evidence, checks anchors, and imports workflow observations. It does not execute all tools or all lab tests. |
 
 ## Reading a result
@@ -98,6 +97,18 @@ Dependency vulnerability checks, cryptographic known-answer and rejection tests,
 browser behavior, and research/standards review require their own observations.
 Use the per-tool source headers and observed command results to decide what was
 actually checked; do not treat the tool inventory as completed work.
+
+## Local teaching-reference generation
+
+`teaching-reference.js` is a manual, read-only source capture and document
+generator, not another maintenance scanner. It reuses catalog and teaching
+parsers, immutable clone reading and the existing corpus review classification.
+`check --records-only` verifies saved membership, identities and rendering;
+`check --sources` additionally compares local tracking refs. Neither establishes
+CI success, live deployment or completed claim review. Missing sources and
+opaque/dynamic/unsupported content remain explicit. See
+[commands and scope](teaching-reference.md). Generation, comparison and bounded
+exports do not update Fleet, advance reviewed SHAs or publish anything.
 
 ## Necessity review — 7 October 2026
 

@@ -88,8 +88,7 @@ const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
 /* ---------- sources ---------- */
 
-function readCards() {
-  const html = read(INDEX);
+function readCards(html = read(INDEX)) {
   const re = /<a class="((?:project|feature)-card[^"]*)" data-category="[^"]*" href="(https:\/\/systemslibrarian\.github\.io\/([^\/"]+)\/)"[\s\S]*?<\/a>/g;
   const cards = new Map();
   let m;
@@ -1500,4 +1499,11 @@ function main() {
   if (problems.length) process.exit(1);
 }
 
-main();
+function parseFrontMatterChecked(text, where) {
+  const start = errors.length;
+  const metadata = parseFrontMatter(text, where);
+  return { metadata, errors: errors.splice(start) };
+}
+
+module.exports = { readCards, parseFrontMatterChecked };
+if (require.main === module) main();

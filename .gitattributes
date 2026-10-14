@@ -1,0 +1,4 @@
+# Generated evidence retains exact source formatting and canonical record bytes.
+# teaching-reference.js checks its hashes and rendering instead of trimming quotes.
+TEACHING-REFERENCE.md -text whitespace=-blank-at-eol,-blank-at-eof
+teaching-reference/** -text

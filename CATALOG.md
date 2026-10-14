@@ -931,7 +931,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### BBS signatures
 
-- **Implemented by:** [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/bbs.ts:148`
+- **Implemented by:** [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/bbs.ts:151`
 - **Also referenced by:** —
 
 #### BLS signatures
@@ -2090,10 +2090,10 @@ The same bits moved eleven ways — DNS labels, ICMP echoes, inter-arrival gaps,
 
 [`crypto-lab-credential-veil`](https://systemslibrarian.github.io/crypto-lab-credential-veil/) · Anonymous Credentials · SIGNATURES, PRIVACY, ZERO-KNOWLEDGE
 
-BBS selective disclosure over BLS12-381, checked against draft-12 vectors. Reveal chosen fields, compare presentation linkability, and explore a custom over-18 proof.
+BBS selective disclosure over BLS12-381, checked against draft-13 vectors. Reveal chosen fields, compare presentation linkability, and explore a custom over-18 proof.
 
-- **Implements:** BBS signatures `src/bbs/bbs.ts:148`, BLS12-381 `src/bbs/ciphersuite.ts:152`, Ed25519 `src/baseline/ed25519.ts:29`, Hash-to-curve `src/bbs/generators.ts:18`, Pairing `src/bbs/ciphersuite.ts:152`, Pedersen commitment `src/predicate/ageProof.ts:127`, SHA-256 `src/bbs/ciphersuite.ts:91`
-- **Source review:** [f2f316865cbc](https://github.com/systemslibrarian/crypto-lab-credential-veil/commit/f2f316865cbc164e02d930acc46695ffd1f32247) — Re-read current SHA-256 BBS sign/verify/proof interfaces, ciphersuite, generators, linked Pedersen age proof, Ed25519 baseline and draft-12 baseline review at this exact commit. Implements CFRG draft BBS (A,e), not BBS+ or BLS signing. New active baseline pins numbered draft-12 (28 September 2026) and publisher fixture/tooling commit 79ad844c7b9d960266095e347bb7cdadf1542809; all 30 existing fixture byte sequences match unchanged. Source/equation/trace review plus 102 unit and 18 local Chromium/mobile cases passed. Tightened scalar, key, index, count and hex input domains; production/privacy/constant-time assurance remains outside these tests. Original source revision remains unknown in brief historical note. Draft vectors validate the declared SHA-256 BBS core, not the custom DOB scalar/challenge-linked age composition. Preserve previous exclusions: discrete-log assumptions and lack of side-channel review are risk prose, not executed attacks. The q-signature key-recovery paper at README122 is research context, not an attack the lab executes; exclude that attack credit. These labels describe actual operations, not certification or final-RFC status.
+- **Implements:** BBS signatures `src/bbs/bbs.ts:151`, BLS12-381 `src/bbs/ciphersuite.ts:152`, Ed25519 `src/baseline/ed25519.ts:29`, Hash-to-curve `src/bbs/generators.ts:18`, Pairing `src/bbs/ciphersuite.ts:152`, Pedersen commitment `src/predicate/ageProof.ts:127`, SHA-256 `src/bbs/ciphersuite.ts:91`
+- **Source review:** [963e6f6635b2](https://github.com/systemslibrarian/crypto-lab-credential-veil/commit/963e6f6635b2bb1c4915bff53fa4ed296872aa82) — Reviewed the draft-13 baseline upgrade at this commit: numbered 13 October 2026 reference and publisher snapshot 104bdcd85869ac05d1c621e064222441404e019b. All 30 SHA-256 publisher fixture files are unchanged; remote reference/artifact hashes, 103 unit tests and production build passed. The core now rejects zero signed messages under section 4.2.3 while preserving empty-valued messages and no/some/all disclosure. Separate helper arguments and point sums implement the reviewed equations; the review documents this layout difference from draft-13. BBS proof-value unlinkability covers issuer/verifier coalitions, but identifying disclosures and context remain correlatable. Preserve the earlier source classification: implements CFRG draft BBS (A,e), not BBS+ or BLS signing; discrete-log assumptions and lack of side-channel review are risk prose, not executed attacks. The q-signature key-recovery paper is research context, not an attack this lab executes. Draft vectors do not validate the custom DOB/age-proof composition, production privacy, constant-time behavior or final-RFC status. Original source revision remains unknown in the historical note.
 - **References:** Bulletproofs, EC point arithmetic, Private information retrieval, RSA, SHAKE, Schnorr, Schnorr identification, Shamir secret sharing, Sigma protocol
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble

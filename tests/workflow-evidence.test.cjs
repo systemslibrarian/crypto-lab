@@ -117,6 +117,43 @@ test('malformed configured steps cannot throw or establish coverage', () => {
     assert.equal(verifyPublishJobs(f.wf, f.jobs), false);
   }
 });
+function runtimeNamedFixture() {
+  return {
+    wf: { jobs: {
+      test: { steps: [
+        { name: 'Flags', run: 'echo args=--release >> "$GITHUB_OUTPUT"' },
+        { run: 'cargo test ${{ steps.flags.outputs.args }}' },
+      ] },
+      deploy: { needs: 'test', steps: [publish] },
+    } },
+    jobs: [job('test', [
+      { number: 2, ...step('Flags') },
+      { number: 3, ...step('Run cargo test --release') },
+    ]), job('deploy', [step('Publish')])],
+  };
+}
+test('an unnamed run step with runtime-expanded output is bound to its workflow ordinal', () => {
+  const f = runtimeNamedFixture();
+  assert.equal(verifyPublishJobs(f.wf, f.jobs), true);
+});
+for (const mutation of ['missing', 'wrong-number', 'duplicate', 'failed', 'skipped', 'not-generated']) {
+  test(`runtime-expanded step remains fail-closed when ${mutation}`, () => {
+    const f = runtimeNamedFixture();
+    const dynamic = f.jobs[0].steps[1];
+    if (mutation === 'missing') f.jobs[0].steps.pop();
+    if (mutation === 'wrong-number') dynamic.number = 4;
+    if (mutation === 'duplicate') f.jobs[0].steps.push(structuredClone(dynamic));
+    if (mutation === 'failed') dynamic.conclusion = 'failure';
+    if (mutation === 'skipped') dynamic.conclusion = 'skipped';
+    if (mutation === 'not-generated') dynamic.name = 'cargo test --release';
+    assert.equal(verifyPublishJobs(f.wf, f.jobs), false);
+  });
+}
+test('an explicitly named unresolved step remains incomplete', () => {
+  const f = runtimeNamedFixture();
+  f.wf.jobs.test.steps[1].name = 'Verify ${{ steps.flags.outputs.args }}';
+  assert.equal(verifyPublishJobs(f.wf, f.jobs), false);
+});
 function gateFixture() {
   return withScriptFixture(path.join(__dirname, '../tools/fixtures/gate/env-split'), loadLab);
 }

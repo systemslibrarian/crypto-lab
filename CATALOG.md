@@ -2712,7 +2712,7 @@ A guide to hybrid post-quantum key exchange — a KEM combiner pairs X25519 with
 
 [`crypto-lab-hybrid-pqc`](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) · Hybrid Key Exchange & Signatures · POST-QUANTUM, KEY EXCHANGE
 
-Compare classical, post-quantum, and hybrid key exchange and signatures side by side, then break one half and watch the hybrid survive. Real X25519, ML-KEM-768, Ed25519, ML-DSA-65. No backend.
+Compare classical, post-quantum, and hybrid key exchange and signatures. Break one component to test session-key recovery and new-message forgery; same-message strong unforgeability is a separate limitation. Real X25519, ML-KEM-768, Ed25519, ML-DSA-65. No backend.
 
 - **Implements:** Diffie-Hellman `src/crypto/kem.ts:76`, Ed25519 `src/crypto/sign.ts:13`, HKDF `src/crypto/kem.ts:79`, ML-DSA `src/crypto/attack.ts:118`, ML-KEM `src/crypto/attack.ts:64`, SHA-256 `src/crypto/kem.ts:19`, X25519 `src/crypto/kem.ts:57`
 - **References:** DHKEM, Dilithium, ECDH, Kyber, LWE, PQXDH, Pairing, SHA-512, SLH-DSA, SPHINCS+, Shor's algorithm, TLS 1.3, X3DH

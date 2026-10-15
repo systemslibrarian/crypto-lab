@@ -432,6 +432,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/level-sync.js check` | a card shipping with no audience level, or LEVELS-REVIEW.md disagreeing with the levels the page actually filters on | manual |
 | `node tools/port-sync.js check` | two labs sharing a Playwright port, where a local run silently tests whatever is already listening | manual; selftest only: every PR and push, on demand |
 | `node tools/protection-census.js` | reading a 404 from the classic protection endpoint as unprotected when a ruleset is protecting the branch | manual |
+| `node tools/public-evidence.cjs check` | a private field reaching the published evidence explorer, and its CSV exports drifting from the reviewed projection they are generated from | every PR and push |
 | `node tools/readme-sync.js check` | this README’s tables drifting from the cards they are generated from | every PR and push, on demand |
 | `node tools/render-registry.mjs [catalog-dir]` | the generated verification portfolio drifting from its registry and manifest inputs | manual |
 | `node tools/render-verification.mjs <manifest.yaml> [lab-dir]` | generated verification documents drifting from their claim-manifest input | manual |
@@ -446,9 +447,9 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/transform.mjs --dry-run <workflow.yml>` | a workflow repair discarding merge status or changing repository-specific dispatch behavior | manual |
 | `node tools/validate-manifest.mjs <manifest.yaml> [lab-dir] [catalog-dir]` | unsupported, inconsistent or stale claim-manifest evidence passing validation | manual |
 
-15 of these 39 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+15 of these 40 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
-Not listed above: `catalog-vocab.js`, `clone-source.js`, `depth-audit-report.js`, `depth-bounded.js`, `depth-classify-worker.js`, `depth-exports.js`, `sibling-labs.js` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
+Not listed above: `catalog-vocab.js`, `clone-source.js`, `depth-audit-export.sh`, `depth-audit-report.js`, `depth-bounded.js`, `depth-classify-worker.js`, `depth-exports.js`, `sibling-labs.js` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 
 This table lists the tools git tracks. Anything untracked in `tools/` is work in progress rather than fleet machinery, and is absent here for that reason rather than because nothing else exists.
 

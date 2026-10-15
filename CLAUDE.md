@@ -24,8 +24,8 @@ each has a checker that fails when it drifts:
 | `CATALOG.md` | the algorithm-level view: reverse index, standards bodies, overlaps | `node tools/catalog-sync.js check` |
 
 `CATALOG.md` answers the one question the cards cannot: *which labs implement
-ML-KEM?* The chips look like they should answer it and cannot — there are 667
-distinct chips across 218 cards, so a chip search returns the labs that happened
+ML-KEM?* The chips look like they should answer it and cannot — there are 696
+distinct chips across 228 cards, so a chip search returns the labs that happened
 to spell it your way and looks complete while doing it. The card schema therefore
 carries six more fields (`data-implements`, `data-references`, `data-attacks`,
 `data-standards`, `data-implementation`, `data-overlaps`), and the first five are
@@ -83,7 +83,7 @@ own source — never from the scanner's own output, which would measure nothing 
 report 100%. Two numbers, never averaged, because they fail for different reasons
 and are fixed by different work:
 
-- **recall 90.8%** (59 of 65) — of what a lab implements AND the vocabulary can
+- **recall 89.2%** (58 of 65) — of what a lab implements AND the vocabulary can
   name, how much the detection shapes find.
 - **coverage 94.2%** (65 of 69) — of everything a lab implements, how much the
   vocabulary can name at all.
@@ -118,9 +118,9 @@ those look identical unless the reason is recorded, so it is recorded in
 when recall improves, never lowered again. Moving it a second time is the
 maintainer's call, not a tool's and not an agent's.**
 
-Today: **recall 90.8% ok, 21 labs ok, all five miss classes resolved — MET.**
+Today: **recall 89.2% ok, 21 labs ok, all five miss classes resolved — MET.**
 Met is permission, not obligation: turning the chip rule into a failing check
-would redden CI on the 26 chips across 22 labs it still flags, so dispositioning
+would redden CI on the 23 chips across 19 labs it still flags, so dispositioning
 those comes first and the decision is the maintainer's. Five classes, in
 `catalog-recall.js` with what closes each:
 
@@ -619,8 +619,8 @@ worth carrying, not because they are the whole set:
 | File | What it is |
 |---|---|
 | `tools/transform.mjs` | the rewriter that moved ~179 labs onto the flag idiom. Kept because it is the only precise statement of what was done to them. It **refuses rather than guesses** on any job that does not match the old construct exactly. |
-| `tools/dispatch-proof.js` | the evidence for both of the above, re-runnable: the validator passes the nine reference labs, fails the old construct, the transform turns one into the other and is idempotent, the injected `gh pr view` fault ships nothing under the old shape and ships under the new, the paragraph's claims are re-derived over all 195 live dispatch sites (A5) and **bound to that derivation clause by clause** (A7), and the permanent mutation set is replayed (M). 65 checks. |
-| `tools/dispatch-mutations.js` | the permanent mutation set, replayed on every proof run. Eight edits that MUST be caught and named: three that make a clause of `CANONICAL` false, three that make a lab vanish from the checkers, **M7, a rewording that stays true and must stay green** — the control that stops the clause binding from degenerating into a wording pin — and **M8, the derivation itself going blind**, because every clause is supported by the *absence* of counter-evidence and a walk that saw nothing would report all three true over nothing. Fixtures live in `tools/fixtures/dispatch/mutations/`. Each mutation also asserts the unmutated baseline is clean, so a mutation that fails on both sides is reported as proving nothing rather than counted. |
+| `tools/dispatch-proof.js` | the evidence for both of the above, re-runnable: the validator passes the nine reference labs, fails the old construct, the transform turns one into the other and is idempotent, the injected `gh pr view` fault ships nothing under the old shape and ships under the new, the paragraph's claims are re-derived over all 230 live dispatch sites (A5) and **bound to that derivation clause by clause** (A7), and the permanent mutation set is replayed (M). 71 checks. |
+| `tools/dispatch-mutations.js` | the permanent mutation set, replayed on every proof run. Nine edits that MUST be caught and named: three that make a clause of `CANONICAL` false, three that make a lab vanish from the checkers, **M9, a clause reworded outside the polarity vocabulary, which must fail CLOSED**, **M7, a rewording that stays true and must stay green** — the control that stops the clause binding from degenerating into a wording pin — and **M8, the derivation itself going blind**, because every clause is supported by the *absence* of counter-evidence and a walk that saw nothing would report all three true over nothing. Fixtures live in `tools/fixtures/dispatch/mutations/`. Each mutation also asserts the unmutated baseline is clean, so a mutation that fails on both sides is reported as proving nothing rather than counted. **That control has now fired.** On 2026-10-15 the fleet mutations and R1 were proving nothing at all: `sibling-labs.js`'s canonical-identity rule keeps only a repository SOURCE, the fixtures were bare directory trees, and a fixture that cannot be enumerated is not a smaller fleet but NO fleet — the baseline read `{labs:0, autoMergeJobs:0, dispatchSites:0}` and all four reported "no failures at all — the lab vanished in silence". 14 of 71 checks. `git init` on the fixture is the fix, deliberately through the production discovery rule rather than by loosening it. Without the baseline assertion this would have read as eight green mutations. |
 
 `transform.mjs` and `dispatch-comment-sync.js` had a real conflict, and the split is
 worth knowing: **transform.mjs owns the executable lines and each repo's own
@@ -1330,7 +1330,7 @@ checks that make that honest, both used on 2026-09-30:
 
 ### Answering from a copy, and reporting the gap as a fact about the lab
 
-Seven times now a checker here has answered from something near the question rather than the
+Eight times now a checker here has answered from something near the question rather than the
 thing the question is about, then published the difference as a finding. They were found
 separately, given separate names, and are one defect. The next checker should be built with
 this in mind rather than adding a fifth name to it.
@@ -1344,6 +1344,7 @@ this in mind rather than adding a fifth name to it.
 | `git diff <pin>..HEAD` in a `--depth 1` clone, where the pin is absent | whether the pinned commit is even present | **twenty-seven stale reviews** in the weekly job on 2026-10-01, and none from the same checkers on full clones |
 | workflows containing the literal `deploy-pages`, in `deploy-sync` | every publisher, as `gate-sync` already did | **nothing at all** about two labs, for three months, while both served a build from 2026-07-11 |
 | a lab's own linked worktree, in `port-sync` | the clones, excluding second working copies | **a false collision** — `4357 crypto-lab-lane-porttest, crypto-lab-schnorr-forge`, a lab colliding with itself |
+| a card's opening tag as `href="..."([^>]*)(>)`, in `lab-dates` and `level-sync` | the whole tag, however it is punctuated | **`card says no level`** about a card carrying two of them — a `>` inside `data-review-note` ended the tag early, both writers missed the attributes that really followed, and each added its own copy |
 
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
 `NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`. What makes them work is not

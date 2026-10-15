@@ -80,6 +80,10 @@
   "lab": "crypto-lab-rsa-small-roots"
  },
  {
+  "port": 4219,
+  "lab": "crypto-lab-lattice-builder"
+ },
+ {
   "port": 4220,
   "lab": "crypto-lab-hybrid-pqc"
  },

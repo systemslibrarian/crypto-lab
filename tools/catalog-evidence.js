@@ -1174,6 +1174,10 @@ function writeCards(all) {
    *
    * The run still exits non-zero, so the pass completes AND stays red: skipped
    * work is reported rather than quietly dropped. */
+  /* Named and skipped, never thrown: a note that would corrupt a card corrupts
+     only THAT card, so refusing the whole pass would be the global-failure-mode
+     defect the comment above was written for, re-introduced one guard later. */
+  const corrupting = [];
   const stale = all.filter((c) => c.ev.staleReview);
   const writable = all.filter((c) => !c.ev.staleReview);
   for (const c of writable) {
@@ -1192,10 +1196,39 @@ function writeCards(all) {
       f.reviewCommit ? `data-review-commit="${f.reviewCommit}"` : null,
       f.reviewNote ? `data-review-note="${f.reviewNote}"` : null,
     ].filter(Boolean);
+    /* A `>` in a review note silently corrupts the card, so refuse it here
+       rather than write it.
+       `lab-dates.js` and `level-sync.js` both capture a card's opening tag as
+       `href="..."([^>]*)(>)`, which ends at the FIRST `>`. One inside this
+       attribute therefore truncates the tag they think they are looking at: the
+       attributes that really follow — data-added, data-updated, data-level —
+       fall outside the match, so neither writer sees its own attribute, neither
+       strips it, and each adds a second copy. Observed 2026-10-15 on
+       crypto-lab-pq-chooser from a note containing `cfe96fd -> 416ef46`, after
+       which `level-sync check` reported `card says no level` about a card
+       carrying two of them: a checker reading a truncated copy of its subject
+       and publishing the gap as a fact about it, which is the one shape this
+       repository refuses everywhere else.
+       Escaping to `&gt;` was the alternative and is worse: the note is read back
+       out of the card by other tools, which would then carry the entity. House
+       style already writes ranges as `a to b`, and every other note in
+       tools/catalog-reviewed.json obeys it. `<` is left alone deliberately — it
+       does not terminate these matches, and crypto-lab-vector-gate's `S < L`
+       is a real part of what that review established. */
+    if ((f.reviewNote || '').includes('>')) { corrupting.push(c.slug); continue; }
     const next = applyDerived(c.block, c.slug, parts);
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }
   fs.writeFileSync(HTML, html);
+  if (corrupting.length) {
+    console.error(`\nREVIEW-NOTE-UNWRITABLE (${corrupting.length}) — the note in tools/catalog-reviewed.json`);
+    console.error('contains ">", which ends the card\'s opening tag early for lab-dates.js and');
+    console.error('level-sync.js (both capture it as `href="..."([^>]*)(>)`). They would then miss the');
+    console.error('data-added / data-updated / data-level that really follow and add a second copy of');
+    console.error('each. These cards were left byte-identical. Write the range as "a to b" instead:');
+    for (const slug of corrupting) console.error(`  ${slug}`);
+    process.exitCode = 1;
+  }
   printCloneSource();
   console.log(`index.html: derived fields written to ${changed} cards.`);
   if (tornSnapshot().length) process.exitCode = 1;

@@ -1,4 +1,22 @@
 #!/usr/bin/env node
+/*
+ * public-evidence.cjs — project the private evidence snapshot into the public
+ * evidence/ explorer, and hold that published data to the reviewed projection.
+ *
+ * Run: node tools/public-evidence.cjs check
+ * Prevents: a private field reaching the published evidence explorer, and its CSV exports drifting from the reviewed projection they are generated from
+ * Reads: evidence/data/evidence.json, evidence/field-classification.json and the evidence/ file list; `import` additionally reads one pinned private snapshot by absolute path from OUTSIDE this repository
+ *
+ *   node tools/public-evidence.cjs import /abs/snapshot.json   project a pinned private snapshot
+ *   node tools/public-evidence.cjs check                       exit non-zero on any drift
+ *   node tools/public-evidence.cjs write                       rewrite the CSV exports
+ *
+ * Every published byte is pinned twice over: the private input must hash to
+ * PIN.sha256 before anything is written, and the projection must hash to
+ * PUBLIC_SHA256 before it is accepted as the reviewed one. `check` also refuses
+ * any file under evidence/ or evidence/data/ that is not on its approved list,
+ * so a new file cannot be published by appearing.
+ */
 'use strict';
 // Offline, explicit projection. The private input must remain outside this repository.
 const fs = require('node:fs');

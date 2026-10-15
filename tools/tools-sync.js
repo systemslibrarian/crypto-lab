@@ -63,8 +63,8 @@ function header(text) {
   for (const line of text.split('\n')) {
     const t = line.trim();
     if (t.startsWith('#!')) continue;
-    if (t.startsWith('/*') || t.startsWith('*') || t.startsWith('//')) {
-      lines.push(t.replace(/^\/\*+/, '').replace(/^\*+\/?/, '').replace(/^\/\//, '').trim());
+    if (t.startsWith('/*') || t.startsWith('*') || t.startsWith('//') || t.startsWith('#')) {
+      lines.push(t.replace(/^\/\*+/, '').replace(/^\*+\/?/, '').replace(/^\/\//, '').replace(/^#+/, '').trim());
       continue;
     }
     if (!t) { lines.push(''); continue; }
@@ -212,10 +212,32 @@ function cadence({workflows = WORKFLOWS, tools = TOOLS} = {}) {
   return byTool;
 }
 
+/* EVERY SCRIPT EXTENSION, because a filter is a denominator too.
+ *
+ * This read `/\.(js|mjs)$/`, so a tracked tool could hide from both halves of
+ * this file by its FILE EXTENSION - absent from the generated table AND from
+ * the footnote whose whole job is to stop an absence reading as "nothing else
+ * is there". Found 2026-10-15: `tools/public-evidence.cjs` landed in PR #192
+ * with a workflow running `node tools/public-evidence.cjs check` on every push
+ * to main, and README.md mentioned it nowhere, in either place.
+ * `tools/depth-audit-export.sh` had been invisible the same way for longer.
+ *
+ * This is the discovered-denominator defect CLAUDE.md keeps re-finding, in the
+ * checker that generates the list of checkers: the table said "13 of these 28"
+ * over a directory holding two more files it could not see. */
+const SCRIPT = /\.(js|mjs|cjs|sh)$/;
+
+/* A tool's `Run:` line invokes that tool. One naming a DIFFERENT file is a
+ * helper another command drives, not a command of its own:
+ * depth-audit-export.sh declares `node tools/depth-audit.js export`, and listing
+ * it would print a second row for a command already in the table. Checked
+ * against all 60 files in tools/ when this was written - it is the only one. */
+const invokesItself = (t) => !t.run || t.run.includes(t.file);
+
 function rows() {
   const keep = tracked();
   const files = fs.readdirSync(TOOLS)
-    .filter((f) => /\.(js|mjs)$/.test(f))
+    .filter((f) => SCRIPT.test(f))
     .filter((f) => keep.has(f))
     .sort();
   const when = cadence();
@@ -223,7 +245,7 @@ function rows() {
   const notRun = [];
   for (const file of files) {
     const t = readTool(file);
-    if (!t.run && !t.prevents) { notRun.push(file); continue; }
+    if ((!t.run && !t.prevents) || !invokesItself(t)) { notRun.push(file); continue; }
     if (!t.run) fail(`${file}: has a "Prevents:" line but no "Run:" line`);
     if (!t.prevents) fail(`${file}: is runnable but its header does not say what failure it prevents — add a "Prevents:" line`);
     /* A tool must name its SOURCES as well as its purpose. Four times a checker
@@ -241,7 +263,7 @@ function rows() {
     listed.push({ ...t, manual: !said.length, when: (said.length ? said.join(', ') : 'manual')
       + (fixtures.length ? '; selftest only: ' + fixtures.join(', ') : '') });
   }
-  return { listed, notRun, untracked: fs.readdirSync(TOOLS).filter((f) => /\.(js|mjs)$/.test(f) && !keep.has(f)).sort() };
+  return { listed, notRun, untracked: fs.readdirSync(TOOLS).filter((f) => SCRIPT.test(f) && !keep.has(f)).sort() };
 }
 
 function block() {

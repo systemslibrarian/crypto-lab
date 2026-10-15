@@ -88,6 +88,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const claims = require('./dispatch-claims.js');
 const census = require('./dispatch-census.js');
@@ -190,6 +191,41 @@ function textMutations(evidence) {
     blindV.rows.map((r) => `${r.id}=${r.status}`).join(' '));
 }
 
+/* THE FIXTURE LAB MUST BE A REPOSITORY, OR THE MUTATION PROVES NOTHING
+ *
+ * Every checker below finds the fleet through sibling-labs.js, and that
+ * enumerator keeps a directory only when it is a repository SOURCE - a `.git`
+ * directory, or a worktree whose metadata and origin it can verify. A fixture
+ * built as a bare directory tree is therefore not a smaller fleet, it is NO
+ * fleet: `siblingLabs()` excluded `crypto-lab-mutant` by name, and every
+ * observation below then ran over zero labs.
+ *
+ * Measured 2026-10-15, after the canonical-identity hardening landed in
+ * sibling-labs.js: the baseline read `{labs:0, autoMergeJobs:0,
+ * dispatchSites:0}`, and M4, M5, M6 and R1 all reported "no failures at all -
+ * the lab vanished in silence". Fourteen checks, every one of them asserting
+ * that a lab which stops being classifiable is NAMED rather than subtracted,
+ * were being satisfied by a fleet holding nothing to classify.
+ *
+ * That is this repository's recurring shape reached from the other side: not a
+ * checker reading a copy of its subject, but a PROOF whose subject was never
+ * there. It stayed visible only because each mutation also asserts its
+ * unmutated baseline is clean, so the harness reported proving nothing rather
+ * than counting a pass - the control CLAUDE.md asks for, since a mutation that
+ * fails to apply is indistinguishable from a mutation nothing caught.
+ *
+ * `git init` is the whole fix, and it deliberately goes through the production
+ * discovery rule rather than loosening it: a fixture the real enumerator cannot
+ * see is not a fixture for these checkers. No origin is configured, because a
+ * `.git` DIRECTORY is already a repository source - the strict owner/repo check
+ * applies to linked worktrees, which this is not. */
+function labDir(root) {
+  const dir = path.join(root, LAB);
+  fs.mkdirSync(dir, { recursive: true });
+  execFileSync('git', ['-C', dir, 'init', '--quiet'], { stdio: ['ignore', 'ignore', 'pipe'] });
+  return dir;
+}
+
 /* ------------------------------------------------------------ fleet mutations
  *
  * Each runs over a synthetic one-lab fleet in a temp directory: the baseline
@@ -199,7 +235,7 @@ function textMutations(evidence) {
  * changing. */
 function miniFleet(fixture) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dispatch-mutations-'));
-  const wf = path.join(root, LAB, '.github', 'workflows');
+  const wf = path.join(labDir(root), '.github', 'workflows');
   fs.mkdirSync(wf, { recursive: true });
   fs.copyFileSync(fixture, path.join(wf, 'deploy.yml'));
   return root;
@@ -219,7 +255,7 @@ function miniFleet(fixture) {
 function reusableWorkflowRoute() {
   console.log('\n  R1  a lab gated ONLY through `uses: ./.github/workflows/*.yml`');
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dispatch-reusable-'));
-  const wf = path.join(root, LAB, '.github', 'workflows');
+  const wf = path.join(labDir(root), '.github', 'workflows');
   fs.mkdirSync(wf, { recursive: true });
   fs.copyFileSync(path.join(DIR, 'R1-gate-via-reusable-workflow.yml'), path.join(wf, 'deploy.yml'));
   fs.writeFileSync(path.join(wf, 'browser-gate.yml'), [

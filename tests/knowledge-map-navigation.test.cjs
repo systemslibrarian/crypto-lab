@@ -5,7 +5,35 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
-const { JSDOM, VirtualConsole } = require(process.env.CRYPTO_MAP_JSDOM_PATH || 'jsdom');
+/* jsdom is not a declared dependency of this repository and no workflow installs
+ * it, by design: `tools/knowledge-map-check.js` is what CI runs against the
+ * knowledge map, and this file is the deeper DOM-runtime pass a maintainer runs
+ * by hand, as docs/knowledge-map.md documents.
+ *
+ * So a missing jsdom is "could not look", and it must say so instead of
+ * throwing MODULE_NOT_FOUND. Running the obvious `node --test tests/` on a
+ * clean checkout previously reported one FAILING test, which reads as a broken
+ * repository rather than an absent optional tool — a gap published as a defect
+ * about the subject, which is the one shape this repository refuses everywhere
+ * else. It is named rather than skipped in silence, and the exit stays 0 only
+ * because nothing was checked: there is no result here to call clean. */
+let JSDOM; let VirtualConsole;
+try {
+  ({ JSDOM, VirtualConsole } = require(process.env.CRYPTO_MAP_JSDOM_PATH || 'jsdom'));
+} catch (error) {
+  if (error.code !== 'MODULE_NOT_FOUND') throw error;
+  /* A SKIP, not an exit 0. Under `node --test` a file that simply exits 0 is
+     counted as a PASSING test, which would be this repository's own defect in
+     miniature: nothing was checked, and the report would say clean. Registering
+     a skipped case makes the runner print `skipped 1` and carry the reason. */
+  const reason = 'jsdom is not installed, so the DOM runtime was never loaded and NOTHING here was '
+    + 'checked — a fact about this checkout, not about the knowledge map. Run with '
+    + 'CRYPTO_MAP_JSDOM_PATH=/path/to/node_modules/jsdom. CI covers the map through '
+    + '`node tools/knowledge-map-check.js`, which needs no jsdom.';
+  require('node:test')('knowledge map navigation and responsive layout', { skip: reason }, () => {});
+  console.error('Navigation regression checks: UNREAD — ' + reason);
+  return;
+}
 const dir = path.join(__dirname, '../knowledge-map');
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 const catalog = JSON.parse(fs.readFileSync(path.join(dir, 'catalog.json'), 'utf8'));

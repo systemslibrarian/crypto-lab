@@ -277,7 +277,32 @@ const ALGORITHMS = [
   { name: 'MLS', kind: 'algorithm', family: 'protocol', re: /\bmls\b(?![-_ ]?(?:results?|list))/i, structures: ['KeyPackage', 'TreeKEM', 'RatchetTree'], std: 'IETF:RFC 9420' },
   { name: 'Kerberos', kind: 'algorithm', family: 'protocol', re: /kerberos/i, structures: ['AsReq', 'AsRep', 'TgsReq', 'TgsRep', 'ApReq'], std: 'IETF:RFC 4120' },
   { name: 'WebAuthn', kind: 'algorithm', family: 'protocol', re: /webauthn/i, structures: ['AttestationObject', 'AuthenticatorData', 'ClientDataJson'], std: 'W3C:WebAuthn Level 3' },
-  { name: 'OPAQUE', kind: 'algorithm', family: 'PAKE', re: /\bopaque\b/i, structures: ['RegistrationRequest', 'RegistrationResponse', 'CredentialResponse'], std: 'IETF:draft-irtf-cfrg-opaque' },
+  /* CASE-SENSITIVE, because `opaque` is an ordinary English adjective and this
+     term is the one place in the vocabulary where the algorithm's name collides
+     with one. Measured 2026-10-15 inside the scanner's own scope (NOT_THE_LAB
+     already excludes e2e/, so the shared contrast helper's "OPAQUE ENOUGH TO
+     PAINT" comment was never the cause): 31 cards carried an OPAQUE reference,
+     and only 8 of their labs write the name in capitals - opaque-gate,
+     pake-gate, spake-gate, psi-gate, privacy-pass, diffie-hellman-mitm,
+     salamander and pqxdh-wire. Every one of the other 23 was the adjective:
+     `An opaque 8% mix` in a stylesheet, `Bob carries an opaque label`,
+     `RFC 792 echo data is opaque`, `completely opaque to client code`,
+     `S-box opaque concern`, `opaque-WASM coverage`.
+     The one borderline case is a README link to crypto-lab-opaque-gate, where
+     the only occurrence is the URL SLUG. Dropping it is the rule this catalog
+     already enforces elsewhere: no term is credited by a package or path name
+     alone, which is why `\bsm-?crypto\b` was rejected for SM2. A lab pointing a
+     reader at another lab is not the lab naming the algorithm.
+     The lookahead is the second half, and it is needed because capitals do not
+     settle it alone: crypto-lab-pqxdh-wire labels a UI state `'OPAQUE TO MODEL'`,
+     which is the adjective shouting. `OPAQUE to X` and `OPAQUE ENOUGH` are both
+     adjectival constructions and neither is how the protocol is ever written, so
+     the guard follows the precedent MLS already sets with `(?![-_ ]?results?)`.
+     Measured over all eight remaining labs: every matching line in the seven real
+     ones survives it (opaque-gate 42, pake-gate 12, spake-gate 11, diffie-hellman-
+     mitm 3, psi-gate 2, privacy-pass 2, salamander 1) and pqxdh-wire's single
+     adjectival line is the only thing it drops. */
+  { name: 'OPAQUE', kind: 'algorithm', family: 'PAKE', re: /\bOPAQUE\b(?!\s+(?:TO|ENOUGH)\b)/, structures: ['RegistrationRequest', 'RegistrationResponse', 'CredentialResponse'], std: 'IETF:draft-irtf-cfrg-opaque' },
   { name: 'SRP', kind: 'algorithm', family: 'PAKE', re: /\bsrp\b/i, std: 'IETF:RFC 2945' },
   { name: 'SPAKE2', kind: 'algorithm', family: 'PAKE', re: /spake2/i, std: 'IETF:RFC 9382' },
   /* `structures` so the anchor lands on the protocol rather than on an attack.

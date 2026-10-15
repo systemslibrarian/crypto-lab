@@ -1,0 +1,21 @@
+name: Public evidence
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, 'feat/public-evidence-explorer']
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Public schema, private-field rejection and CSV consistency
+        run: node tools/public-evidence.cjs check
+      - name: Projection isolation, negative controls and explorer behavior
+        run: node --test tests/public-evidence.test.cjs

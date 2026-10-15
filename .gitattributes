@@ -1,0 +1,3 @@
+# Preserve deterministic RFC-style CSV CRLF bytes across checkouts.
+# Treat the CR as the line terminator while retaining the normal whitespace checks.
+evidence/data/*.csv -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

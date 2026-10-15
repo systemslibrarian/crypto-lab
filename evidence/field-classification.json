@@ -1,0 +1,4230 @@
+{
+  "schema_version": "1.0.0",
+  "counts": {
+    "PUBLIC": 36,
+    "PRIVATE": 721,
+    "UNSURE": 87
+  },
+  "fields": [
+    {
+      "field": "labs[].added",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].file",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].kind",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].line",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].passed",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].reason",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].reviewCurrent",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].reviewedAnchor",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].snippet",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorResults[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorSummary.checked",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorSummary.failed[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].anchorSummary.passed",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].at",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].attacks[].evidence.at",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.file",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.kind",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.line",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.name",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.reason",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.reviewCurrent",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.reviewedAnchor",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.snippet[].line",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.snippet[].text",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].attacks[].evidence.status",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].attacks[].evidence.url",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].attacks[].name",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].attributeConflicts",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.attacks[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.attacks[].at",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.attacks[].line",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.attacks[].name",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.attacks[].path",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.implementation",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.implements[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.implements[].at",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.implements[].line",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.implements[].name",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.implements[].path",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.references[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalog.state",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].catalogState",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].categories[]",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].ci.allSelectedJobsSuccessful",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.checkedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.beforeAfterHeadAndAttemptVerified",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.checkRunsComplete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.collectionScope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.currentHeadComplete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.currentHeadReportedTotalCounts[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.currentSourceWorkflowReadability",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.historicalSavedProviderCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.historyCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.historyComplete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.historyLimit",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.historyPreservedFromSnapshot",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.historyReportedTotal",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.historyTruncated",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.latestAttemptJobsVerified",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.previousCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.scope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.collection.workflowsComplete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.commit_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.archive_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.assignees_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.blobs_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.branches_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.collaborators_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.comments_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.commits_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.compare_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.contents_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.contributors_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.deployments_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.description",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.downloads_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.events_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.fork",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.forks_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.full_name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.git_commits_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.git_refs_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.git_tags_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.hooks_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.issue_comment_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.issue_events_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.issues_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.keys_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.labels_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.languages_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.merges_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.milestones_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.notifications_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.avatar_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.events_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.followers_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.following_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.gists_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.gravatar_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.login",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.organizations_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.received_events_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.repos_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.site_admin",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.starred_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.subscriptions_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.type",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.owner.user_view_type",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.private",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.pulls_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.releases_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.stargazers_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.statuses_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.subscribers_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.subscription_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.tags_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.teams_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.trees_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.repository.url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.sha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].avatar_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].context",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].created_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].description",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].target_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].updated_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.statuses[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.total_count",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.combinedCommitStatus.url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.client_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.created_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.description",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.events[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.external_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.avatar_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.events_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.followers_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.following_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.gists_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.gravatar_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.login",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.organizations_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.received_events_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.repos_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.site_admin",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.starred_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.subscriptions_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.type",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.owner.user_view_type",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.actions",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.administration",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.artifact_metadata",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.attestations",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.checks",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.code_quality",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.contents",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.copilot_requests",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.deployments",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.discussions",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.drives",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.issues",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.merge_queues",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.metadata",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.models",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.packages",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.pages",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.pull_requests",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.repository_hooks",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.repository_projects",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.security_events",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.statuses",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.permissions.vulnerability_alerts",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].app.updated_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].check_suite.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].completed_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.created_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.description",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.environment",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.original_environment",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.repository_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.statuses_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.task",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.updated_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].deployment.url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].details_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].external_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].head_sha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].output.annotations_count",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].output.annotations_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].output.summary",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].output.text",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].output.title",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].pull_requests[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].started_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.currentCheckRuns[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.defaultBranch",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].createdAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].event",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].headSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].path",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].runAttempt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].runStartedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].updatedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.historicalRuns[].workflowId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.jobEvidenceScope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.jobEvidenceState",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].attempt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].attemptAndOutcomeStable",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].event",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].failedJobLogs[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].failedJobLogs[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].failedJobLogs[].diagnosticScope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].failedJobLogs[].jobId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].failedJobLogs[].readable",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].failedJobLogs[].receipt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].headSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobsComplete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].check_run_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].completed_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].created_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].head_branch",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].head_sha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].labels[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].run_attempt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].run_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].run_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].runner_group_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].runner_group_name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].runner_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].runner_name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].started_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].steps[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].steps[].completed_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].steps[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].steps[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].steps[].number",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].steps[].started_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].steps[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].jobs[].workflow_name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].originalCapturedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].runId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestAttemptJobs[].workflowId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].createdAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].event",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].headSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].path",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].runAttempt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].runStartedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].updatedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.latestCurrentHeadRuns[].workflowId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.limitations[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.matchingHeadRuns",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.noObservedSelectedJobFailures",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.observedFailedJobs[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.observedFailedJobs[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.observedFailedJobs[].jobId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.observedFailedJobs[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.observedFailedJobs[].runConclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.observedFailedJobs[].runId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.observedFailedJobs[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].badge_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].created_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].path",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].updated_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.registeredWorkflows[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].createdAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].event",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].headSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].path",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].runAttempt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].runStartedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].updatedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.runs[].workflowId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.sourceReceipt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.unclassifiedDynamicRuns[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].createdAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].event",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].headSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].path",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].runAttempt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].runStartedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].updatedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.runs[].workflowId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.updateService.state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].globalAllJobsPass",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].jobId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].kind",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].logs[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].logs[].diagnosticScope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].logs[].jobId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].logs[].readable",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].logs[].receipt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].parentRunConclusionPreserved",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].runConclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].runId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.verificationFailures[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.workflowSourceReceipt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].ci.workflowState",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].at",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].claimStatus",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.at",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.file",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.kind",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.line",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.name",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.reason",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.reviewCurrent",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.reviewedAnchor",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.snippet[].line",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.snippet[].text",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.status",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].evidence.url",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].family",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].kind",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].name",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].precisionWarning",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].shape",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].claimedCandidates[].std",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].commentOnly[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].commentOnly[].at",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].commentOnly[].name",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].commitDate",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].commitMessage",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].currentSha",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].defaultBranch",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].demoUrl",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].description",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].duplicateAttributes",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].flags[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implementation",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].implements[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].at",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].implements[].claimStatus",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].implements[].evidence.at",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.file",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.kind",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.line",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.name",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.reason",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.reviewCurrent",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.reviewedAnchor",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.snippet[].line",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.snippet[].text",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].evidence.status",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].implements[].evidence.url",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].implements[].family",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].implements[].kind",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].implements[].name",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].implements[].precisionWarning",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].implements[].shape",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].implements[].std",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].kicker",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].level",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].protocolPartial[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].protocolPartial[].at",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].protocolPartial[].name",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].protocolPartial[].why",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].references[]",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].review",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].review.add[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].review.commit",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].review.covered[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].review.implementation",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].review.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].review.removeReferences[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].review.remove[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].review.reviewed",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].review.state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.broadSourceMovement",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.changedDependencyFiles[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.changedFiles[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.changedSourceFiles[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.comparisonScope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.dependencyChanges[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.dependencyChanges[].changes[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.dependencyChanges[].changes[].from",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.dependencyChanges[].changes[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.dependencyChanges[].changes[].scope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.dependencyChanges[].changes[].to",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.dependencyChanges[].file",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.dependencyChanges[].scriptsChanged",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.dependencyChanges[].versionChanged",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.headChanged",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.label",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.pin",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.reviewedAnchorPathsChanged[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.reviewedDate",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.scannerSubstantiveMovement",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].reviewFreshness.status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].slug",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].sourceDrift",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].sourceObservedAt",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].sourceRead.claimOrigin",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].sourceRead.error",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].sourceRead.incomplete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].sourceRead.observedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].sourceRead.scannerCommand",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].sourceRead.status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].standardAnomalies[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].standards[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].standards[].body",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].standards[].document",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].standards[].label",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].standards[].primitive",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].state",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].teachingSourceIdentity",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].testSummary",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].title",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].unscanned[]",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "labs[].updated",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].verificationLimitations[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "labs[].workflowFiles[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.catalogSubsetRefresh.actualAnchorVerification",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.catalogSubsetRefresh.derivedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.catalogSubsetRefresh.hubSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.catalogSubsetRefresh.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.catalogSubsetRefresh.overlaps",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.catalogSubsetRefresh.verificationObservedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.ciCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.completedAt",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "meta.currentCiScope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.currentEvidenceRefresh.historyScope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.currentEvidenceRefresh.previousFullSnapshotSha256",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.currentEvidenceRefresh.previousSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.currentEvidenceRefresh.previousSnapshotUrl",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.hubSha",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "meta.limitations",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefresh.githubCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefresh.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefresh.npmCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefresh.previousSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefresh.repositories[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefresh.sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefreshHistory[].checkedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefreshHistory[].note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefreshHistory[].repositories[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefreshHistory[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.providerSubsetRefreshHistory[].sourceSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.rekeySecuritySubsetRefresh.finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.rekeySecuritySubsetRefresh.githubCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.rekeySecuritySubsetRefresh.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.rekeySecuritySubsetRefresh.npmCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.rekeySecuritySubsetRefresh.sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.rekeySecuritySubsetRefresh.visibilityCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.retrievedAt",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "meta.schema",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceCapture.exactShaReuses",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceCapture.finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceCapture.followUpIntegratedVectorSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceCapture.freshScans",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceCapture.reviewPinsAdvanced",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceCapture.startedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefresh.hubSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefresh.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefresh.providers[].githubCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefresh.providers[].npmCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefresh.providers[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefresh.providers[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefresh.slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefresh.sourceObservedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefresh.sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].hubSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].previousSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].providers.ciCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].providers.githubCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].providers.npmCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceProviderSubsetRefreshHistory[].startedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.hubSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.metadataCorrection.actualReceipt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.metadataCorrection.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.metadataCorrection.slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.metadataCorrection.sourceObservedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.previousSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.slugs[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.sourceObservedAtBySlug.crypto-lab-locks-and-keys",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.sourceObservedAtBySlug.crypto-lab-sleeve-check",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefresh.sourceObservedAtBySlug.crypto-lab-what-is-pqc",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefreshHistory[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefreshHistory[].ciObservedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefreshHistory[].hubSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefreshHistory[].note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefreshHistory[].previousSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefreshHistory[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefreshHistory[].sourceObservedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sourceSubsetRefreshHistory[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.sources[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefresh.githubCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefresh.hubSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefresh.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefresh.npmCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefresh.observedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefreshHistory[].githubCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefreshHistory[].hubSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefreshHistory[].note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefreshHistory[].npmCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.toolProviderSubsetRefreshHistory[].observedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "meta.verificationReport",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.capturedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.currentRefresh.packagedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.currentRefresh.priorSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.currentRefresh.rows",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.currentRefresh.scope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.currentRefresh.separatelyDated",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].dependencyScope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].ecosystem",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].fixedVersion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].ghsa",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].manifestPath",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].number",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].package",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].providerSeverity",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].relationship",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].severity",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].summary",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].alerts[].vulnerableRange",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].checkedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].collection.complete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].collection.finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].collection.pages",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].collection.pagination",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].collection.retrieved",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].collection.sourceHeadStable",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].collection.sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].collection.startedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].complete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].error",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].sourceReceipt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.repositories[].state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.scope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefresh.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefresh.providers[].checkedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefresh.providers[].finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefresh.providers[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefresh.providers[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefresh.slugs[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefreshHistory[].checkedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefreshHistory[].finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefreshHistory[].note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefreshHistory[].previousSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefreshHistory[].repositories[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefreshHistory[].slugs[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.advisories.subsetRefreshHistory[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.capturedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.ciRepositories",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.githubRepositories",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.headValidationAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.historyScope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.npmRepositories",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.packagedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.presenceRepositories",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.previousFullSnapshotSha256",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.previousSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.previousSnapshotUrl",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.currentEvidenceRefresh.sourceLabs",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRCollection.capturedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRCollection.complete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRCollection.initialNoLongerOpen[].number",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRCollection.initialNoLongerOpen[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRCollection.newOutsideInitialScope[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRCollection.priorSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRCollection.repositories",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].baseBranch",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].baseSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].branch",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checkedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checksComplete",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.client_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.created_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.description",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.events[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.external_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.avatar_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.events_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.followers_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.following_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.gists_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.gravatar_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.login",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.organizations_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.received_events_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.repos_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.site_admin",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.starred_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.subscriptions_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.type",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.owner.user_view_type",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.actions",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.administration",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.artifact_metadata",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.attestations",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.checks",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.code_quality",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.contents",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.copilot_requests",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.deployments",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.discussions",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.drives",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.issues",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.merge_queues",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.metadata",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.models",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.packages",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.pages",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.pull_requests",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.repository_hooks",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.repository_projects",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.security_events",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.statuses",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.permissions.vulnerability_alerts",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].app.updated_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].check_suite.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].completed_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].conclusion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].details_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].external_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].head_sha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].html_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].node_id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].output.annotations_count",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].output.annotations_url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].output.summary",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].output.text",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].output.title",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].base.ref",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].base.repo.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].base.repo.name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].base.repo.url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].base.sha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].head.ref",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].head.repo.id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].head.repo.name",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].head.repo.url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].head.sha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].id",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].number",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].pull_requests[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].started_at",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].status",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].checks[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].discoveredAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].draft",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].headSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].headStable",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].number",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].pr",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].repository",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].title",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].updatedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.dependencyPRs[].url",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.capturedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.currentRefresh.packagedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.currentRefresh.priorSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.currentRefresh.rows",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.currentRefresh.scope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.currentRefresh.separatelyDated",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.registry",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].checkedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].lockCount",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].lockInventory[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].lockInventory[].lockSha256",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].lockInventory[].manifestPath",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].lockInventory[].manifestSha256",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].affectedPackageCount",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].alerts[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].auditMode",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].command",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].counts.critical",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].counts.high",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].counts.info",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].counts.low",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].counts.moderate",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].counts.total",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].directAdvisoryCount",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].exitCode",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].lockGitBlob",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].lockSha256",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].manifestGitBlob",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].manifestPath",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].manifestSha256",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].registry",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].reportSha256",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].startedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].locks[].state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].manifestCount",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].missingLocks[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].reason",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].visibility",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.repositories[].visibilityCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.schemaVersion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.scope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.startedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.state",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefresh.note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefresh.providers[].checkedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefresh.providers[].finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefresh.providers[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefresh.providers[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefresh.slugs[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefreshHistory[].checkedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefreshHistory[].finishedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefreshHistory[].note",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefreshHistory[].previousSnapshotId",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefreshHistory[].repositories[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefreshHistory[].slugs[]",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.npmAudits.subsetRefreshHistory[].sourceSha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].catalogPresent",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].comparePresent",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].empty",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].hubReadmePresent",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].indexPresent",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].readmePresent",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].sha",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].slug",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].sourceObservedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].sourcePresent",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].supportingService",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].visibility",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].visibilityCheckedAt",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.repositories[].visibilitySource",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.schemaVersion",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "operations.scope",
+      "classification": "PRIVATE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].basis",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].distinctionState",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].hubSha",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].leftSlug",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "overlaps[].leftTitle",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].rightSlug",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "overlaps[].rightTitle",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].sharedCardMismatches[]",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].shared[]",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "overlaps[].sourceDifferenceLine",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].sourceLine",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].sourceSharedLine",
+      "classification": "UNSURE",
+      "action": "exclude"
+    },
+    {
+      "field": "overlaps[].sourceUrl",
+      "classification": "PUBLIC",
+      "action": "export"
+    },
+    {
+      "field": "overlaps[].statedDifference",
+      "classification": "PUBLIC",
+      "action": "export"
+    }
+  ]
+}

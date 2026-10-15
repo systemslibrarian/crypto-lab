@@ -17,7 +17,8 @@ repository-code: "https://github.com/systemslibrarian/crypto-lab"
 # Concept DOI ("cite all versions"); resolves to the latest Zenodo release.
 doi: 10.5281/zenodo.23105362
 # The software repository is MIT licensed. Teaching materials under teach/
-# remain CC BY 4.0 under teach/LICENSE.
+# remain CC BY 4.0 under teach/LICENSE. Public evidence data under evidence/data/
+# is CC BY 4.0 under evidence/data/LICENSE; explorer/export code remains MIT.
 license: MIT
 keywords:
   - cryptography

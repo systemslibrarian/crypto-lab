@@ -36,10 +36,10 @@ async function open(width=1366) {
 }
 async function setPolicy(page,ids,k) {
   for(let i=0;i<7;i++){
-    const keeper=page.locator(`[data-member="${i}"]`);
+    const keeper=page.locator(`.keeper[data-member="${i}"]`);
     if((await keeper.getAttribute('aria-pressed'))==='true'&&!ids.includes(i))await keeper.click();
   }
-  for(const i of ids){const keeper=page.locator(`[data-member="${i}"]`);if((await keeper.getAttribute('aria-pressed'))!=='true')await keeper.click();}
+  for(const i of ids){const keeper=page.locator(`.keeper[data-member="${i}"]`);if((await keeper.getAttribute('aria-pressed'))!=='true')await keeper.click();}
   await page.locator('#threshold').fill(String(k));
 }
 async function passTrials(page,mission,policy) {
@@ -49,7 +49,7 @@ async function passTrials(page,mission,policy) {
     if (event.kind === 'outage') {
       const affected=event.affected ? policy.ids.filter(id=>event.affected.includes(id)) : policy.ids.slice(0,event.count);
       const available=policy.ids.filter(id=>!affected.includes(id));
-      for(const id of available.slice(0,policy.threshold))await page.locator(`[data-member="${id}"]`).click();
+      for(const id of available.slice(0,policy.threshold))await page.locator(`.keeper[data-member="${id}"]`).click();
       // Independently recover from the displayed share values and compare UI output.
       const points=await page.locator('.keeper.gathered').evaluateAll(keepers=>keepers.map(el=>{
         const m=el.getAttribute('aria-label').match(/Share \((\d+), (\d+)\)/);return [Number(m[1]),Number(m[2])];
@@ -96,9 +96,9 @@ test('failure, hints, insufficient collection and revision cannot produce false 
     await page.locator('#threshold').fill('2');await page.locator('#action').click();await page.locator('#action').click();
     await page.locator('#action').click();assert.match(await page.locator('#feedback').innerText(),/Collect 2 more/);
     assert.equal(await page.locator('#vault-value').innerText(),'AWAITING SHARES');
-    await page.locator('[data-member="3"]').click();await page.locator('[data-member="3"]').click();
+    await page.locator('.keeper[data-member="3"]').click();await page.locator('.keeper[data-member="3"]').click();
     await page.locator('#action').click();assert.match(await page.locator('#feedback').innerText(),/Collect 2 more/);
-    await page.locator('[data-member="3"]').click();await page.locator('[data-member="5"]').click();
+    await page.locator('.keeper[data-member="3"]').click();await page.locator('.keeper[data-member="5"]').click();
     await page.locator('#action').click();await page.locator('#action').click();
     assert.equal(await page.locator('#trial-verdict').innerText(),'1 of 3 seals earned');
     await page.locator('#action').click();await page.locator('#action').click();
@@ -139,9 +139,9 @@ test('phone, small phone and desktop layouts, keyboard controls and navigation',
       assert.deepEqual(collisions,[],`overlapping keeper buttons at ${width}`);
       await page.locator('#threshold').focus();await page.keyboard.press('ArrowLeft');
       assert.equal(await page.locator('#threshold').inputValue(),'2');
-      await page.locator('[data-member="0"]').focus();await page.keyboard.press('Space');
-      assert.equal(await page.locator('[data-member="0"]').getAttribute('aria-pressed'),'false');
-      await page.keyboard.press('Space');assert.equal(await page.locator('[data-member="0"]').getAttribute('aria-pressed'),'true');
+      await page.locator('.keeper[data-member="0"]').focus();await page.keyboard.press('Space');
+      assert.equal(await page.locator('.keeper[data-member="0"]').getAttribute('aria-pressed'),'false');
+      await page.keyboard.press('Space');assert.equal(await page.locator('.keeper[data-member="0"]').getAttribute('aria-pressed'),'true');
       await page.screenshot({path:`test-results/secret-council/width-${width}.png`,fullPage:true});
       await page.locator('#math-details summary').click();
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`math overflow at ${width}`);

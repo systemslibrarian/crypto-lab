@@ -57,6 +57,8 @@ anchors:
 
 ## Predict
 
+> Optional warm-up before this worksheet: play the opening puzzle in [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/). Adjust the two dials and compare the candidate dots' distances from HOME. Then ask: what did the picture help you see, and what would disappear in hundreds of dimensions? This is a geometric analogy, not an ML-KEM key exchange or evidence of its security. The game's Advanced and Expert modes are optional; return here for the guided mathematics. The warm-up is additional to this worksheet's class-time estimate.
+
 Answer these before you open the exhibit. There are no penalties for wrong predictions; the point is to compare them with what you see.
 
 1. One grid of dots can be described by more than one pair of arrows. Basis B has short arrows, basis B′ has long ones, and both describe the same dots. Decoding a target point means writing it in the current arrows' coordinates and rounding those coordinates to whole numbers. Predict which description decodes the target closer, or whether the two must tie because the dots are the same, and give your reason in one sentence.

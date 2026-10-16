@@ -396,6 +396,7 @@
       "Deploying PQC today protects traffic already harvested. Stored bytes are not re-encrypted by a later upgrade."
     ],
     "conceptual_answers": [
+      "Optional preparation: offer Lattice Builder's opening puzzle before the Lattice Gentle worksheet; the worksheet links to it. Ask students to separate what they can see in two dimensions from the high-dimensional assumptions behind ML-KEM. Keep the game's Advanced and Expert modes optional. This preparation is outside the module's core class-time estimate.",
       "Shor: once the period is known, the difference-of-squares step and the two gcds are classical arithmetic, so the quantum part of the attack is order finding. Systems whose security rests on factoring or discrete logarithms (RSA, ECC, classical Diffie-Hellman) are exposed; symmetric ciphers and hash functions are not broken by Shor and face Grover's quadratic speedup instead.",
       "Grover vs Shor: Grover's speedup for unstructured search is quadratic and provably optimal, and each iteration runs a full cipher circuit sequentially, so enlarging keys restores the margin; symmetric primitives mostly need larger parameters. Shor solves the underlying factoring and discrete-log problems in polynomial time, so larger RSA or ECC keys do not help, and public-key cryptography moves to post-quantum schemes instead.",
       {

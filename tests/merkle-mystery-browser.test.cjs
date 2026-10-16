@@ -181,3 +181,33 @@ test('missing Web Crypto fails visibly; rapid chapter changes cannot apply stale
     assert.deepEqual(run.errors,[]);
   }finally{await run.page.close();}
 });
+
+test('proof climb displays ordered inputs, distinguishes courier trust and clears stale state', async () => {
+  const {page,errors}=await open(390);
+  try {
+    await chapterAt(page,2);await select(page,['0:3','1:0','2:1']);await submit(page);
+    assert.equal(await page.locator('.proof-current').getAttribute('data-node'),'0:2');
+    const H=(left,right)=>require('node:crypto').createHash('sha256').update(Buffer.concat([Buffer.from([1]),Buffer.from(left,'hex'),Buffer.from(right,'hex')])).digest('hex');
+    for (const [level,sibling,parent] of [[1,'0:3','1:1'],[2,'1:0','2:0'],[3,'2:1','3:0']]) {
+      await page.locator('#walk-next').click();
+      assert.equal(await page.locator('.proof-sibling').getAttribute('data-node'),sibling);
+      assert.equal(await page.locator('.proof-current').getAttribute('data-node'),parent);
+      const values=(await page.locator('#walk-calculation').innerText()).match(/[0-9a-f]{64}/g);
+      assert.equal(H(values[0],values[1]),values[2]);
+    }
+    assert.equal(await page.locator('#walk-next').isDisabled(),true);
+    assert.match(await page.locator('#walk-verdict').innerText(),/Yes.*independently saved/);
+    await page.screenshot({path:'test-results/merkle-mystery/proof-phone.png',fullPage:true});
+    await page.locator('#walk-back').click();assert.equal(await page.locator('#walk-verdict').innerText(),'');
+    await chapterAt(page,5);assert.equal(await page.locator('#proof-walk').isVisible(),false);
+    await page.locator('input[value=courier]').check();await submit(page);
+    for(let i=0;i<3;i++)await page.locator('#walk-next').click();
+    assert.match(await page.locator('#walk-verdict').innerText(),/Yes.*does not authenticate/);
+    await page.locator('input[value=recorded]').check();
+    assert.equal(await page.locator('#proof-walk').isVisible(),false);
+    assert.equal(await page.locator('.proof-current').count(),0);
+    await submit(page);for(let i=0;i<3;i++)await page.locator('#walk-next').click();
+    assert.match(await page.locator('#walk-verdict').innerText(),/No.*independently saved/);
+    assert.deepEqual(errors,[]);
+  } finally {await page.close();}
+});

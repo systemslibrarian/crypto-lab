@@ -1,6 +1,7 @@
 import { CHAPTERS, STORAGE_KEY, cleanProgress, prepare, dailyPlan, bookData, nodeAt, changedNodes, pathIds, siblingIds, sameSet, verifyBundle, verifyProof, proofTrace, score } from './core.mjs';
 const $ = id => document.getElementById(id);
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let walkthrough = null;
 let saved = cleanProgress(null), storageWorks = true;
 try { saved = cleanProgress(JSON.parse(localStorage.getItem(STORAGE_KEY))); } catch { storageWorks = false; }
 let chapter = 0, mode = 'campaign', daily = null, phase = 0, data = null, selected = new Set(), inspected = null;
@@ -109,6 +110,7 @@ function render() {
 
 async function start({ reset = true } = {}) {
   const ticket = ++epoch;
+  clearWalkthrough();
   done = false; selected = new Set(); inspected = null; parcelIndex = 0; verification = null;
   if (reset) { failures = 0; guided = false; }
   $('finish').hidden = true; $('play-area').hidden = false; setBusy(true); $('action').textContent = 'Opening the archive…';
@@ -138,7 +140,7 @@ function complete() {
   $('hint').disabled = true; $('decisions').hidden = true; $('root-choices').disabled = true;
   $('action').textContent = mode === 'daily' ? phase < 2 ? 'Continue the daily mystery →' : 'See daily result →' : chapter < 5 ? 'Open the next chapter →' : 'See your investigation →';
   feedback('Evidence checked. Read the finding, then continue.', 'good');
-  renderTree();
+  renderTree(); renderWalkthrough();
 }
 function finish() {
   $('play-area').hidden = true; $('finish').hidden = false;
@@ -155,7 +157,34 @@ async function advance() {
   else { if (chapter === 5) return finish(); chapter++; await start(); }
   $('case-title').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function showProof(trace, expected) {
+function clearWalkthrough() {
+  walkthrough = null;
+  $('proof-walk').hidden = true;
+  document.querySelectorAll('.proof-current, .proof-sibling').forEach(node => node.classList.remove('proof-current', 'proof-sibling'));
+}
+function renderWalkthrough() {
+  if (!walkthrough) return;
+  const { trace, expected, index, size, level } = walkthrough;
+  const step = trace.steps[level], last = level === trace.steps.length - 1;
+  document.querySelectorAll('.proof-current, .proof-sibling').forEach(node => node.classList.remove('proof-current', 'proof-sibling'));
+  const mark = (id, cls) => $('tree').querySelector(`[data-node="${id}"]`)?.classList.add(cls);
+  mark(pathIds(index, size)[level], 'proof-current');
+  if (level) mark(siblingIds(index, size)[level - 1], 'proof-sibling');
+  $('proof-walk').hidden = false;
+  $('walk-status').textContent = level === 0
+    ? `Start with Book ${index + 1}. Its fingerprint plus ${trace.steps.length - 1} sibling hashes can reconstruct the root; the other ${size - 1} books need not travel.`
+    : `Level ${level} of ${trace.steps.length - 1}: combine the sibling on the ${step.side} with the previous result. Solid outline: computed position. Dashed outline: supplied sibling position.`;
+  $('walk-calculation').textContent = level === 0 ? `Book fingerprint: ${step.hash}`
+    : `Left: ${step.side === 'left' ? step.sibling : trace.steps[level - 1].hash}
+Right: ${step.side === 'right' ? step.sibling : trace.steps[level - 1].hash}
+Parent: ${step.hash}`;
+  $('walk-verdict').textContent = last ? `Does it match? ${trace.root === expected ? 'Yes' : 'No'}. Do you trust this root? ${walkthrough.independent ? 'The selected reference is the independently saved archive root.' : 'This is the courier’s own seal; a match does not authenticate the parcel.'}` : '';
+  $('walk-next').disabled = last;
+  $('walk-back').disabled = level === 0;
+}
+function showProof(trace, expected, index, size, independent = true) {
+  walkthrough = { trace, expected, index, size, independent, level: 0 };
+  renderWalkthrough();
   $('proof-details').hidden = false;
   $('proof-steps').innerHTML = trace.steps.map(step=>`<li>${esc(step.label)}<code>${step.hash}</code></li>`).join('') + `<li>Compare with the selected reference<code>${expected}</code></li>`;
 }
@@ -181,7 +210,7 @@ async function check() {
         if (valid) {
           const trace = await proofTrace(bookData(data.original[data.mission.target]), data.mission.target, data.before.size, [...selected].map(id=>nodeAt(data.before,id)).sort((a,b)=>a.level-b.level).map(node=>node.hash));
           if (ticket !== epoch) return;
-          showProof(trace,data.before.root); complete();
+          showProof(trace,data.before.root,data.mission.target,data.before.size); complete();
         } else fail('The parcel does not reconstruct the recorded root. Pack exactly one sibling from each level, starting beside the book.');
       }
     } else {
@@ -191,7 +220,7 @@ async function check() {
       const [matches, trace] = await Promise.all([verifyProof(bookData(item.book),item.index,item.size,item.proof,expected), proofTrace(bookData(item.book),item.index,item.size,item.proof)]);
       if (ticket !== epoch) return;
       verification = { matches, rootChoice };
-      showProof(trace, expected); $('decisions').hidden = false;
+      showProof(trace, expected, item.index, item.size, rootChoice === 'recorded'); $('decisions').hidden = false;
       $('action').textContent = 'Recheck proof';
       feedback(rootChoice === 'courier' ? `The proof ${matches ? 'matches' : 'does not match'} the courier’s seal. That seal came with the parcel. Compare it with your independent archive record before trusting the delivery.` : matches ? 'The full computed root matches the independent archive record. The book is included at this position.' : 'The computed root differs from the independent archive record. This parcel fails verification.', matches && rootChoice === 'recorded' ? 'good' : 'bad');
       selectionSummary();
@@ -207,6 +236,7 @@ function decide(accept) {
   }
   if (accept !== verification.matches) { fail(verification.matches ? 'This proof matches the trusted record. Accepting it is the supported decision for inclusion in this archive.' : 'This proof does not match the trusted record. Quarantine the parcel.'); return; }
   if (parcelIndex + 1 < data.parcels.length) {
+    clearWalkthrough();
     parcelIndex++; verification = null; $('decisions').hidden = true; $('proof-details').hidden = true;
     $('action').textContent = 'Verify parcel'; renderParcel(); selectionSummary();
     feedback('Decision recorded. Inspect and verify the next parcel.', 'good');
@@ -241,11 +271,13 @@ $('chapters').addEventListener('click', event => { const button=event.target.clo
 $('campaign-mode').addEventListener('click', () => {mode='campaign'; start();});
 $('daily-mode').addEventListener('click', () => {mode='daily'; daily=dailyPlan(new Date().toISOString().slice(0,10)); phase=0; start();});
 $('restart').addEventListener('click', () => {if(mode==='daily')phase=0; start();});
+$('walk-next').addEventListener('click', () => { if (walkthrough && walkthrough.level < walkthrough.trace.steps.length - 1) { walkthrough.level++; renderWalkthrough(); } });
+$('walk-back').addEventListener('click', () => { if (walkthrough && walkthrough.level > 0) { walkthrough.level--; renderWalkthrough(); } });
 $('action').addEventListener('click', check);
 $('hint').addEventListener('click', () => showHint());
 $('accept').addEventListener('click', () => decide(true));
 $('quarantine').addEventListener('click', () => decide(false));
-$('root-choices').addEventListener('change', () => {verification=null; $('decisions').hidden=true; $('proof-details').hidden=true; selectionSummary(); feedback('Reference changed. Verify the parcel against this seal.');});
+$('root-choices').addEventListener('change', () => {clearWalkthrough(); verification=null; $('decisions').hidden=true; $('proof-details').hidden=true; selectionSummary(); feedback('Reference changed. Verify the parcel against this seal.');});
 $('play-again').addEventListener('click', () => {mode='campaign'; chapter=0; start();});
 $('clear-progress').addEventListener('click', () => {
   saved=cleanProgress(null); storageWorks=true;

@@ -106,7 +106,16 @@ wrong proof); compare two authorized revisions; and reject a replacement seal.
 The last chapter deliberately presents a proof that verifies under the courier's
 root but fails under the independently saved root. Winning requires verifying
 against the latter. All parcel verdicts come from actual proof verification.
-The proof drawer exposes every intermediate calculated hash.
+The proof drawer exposes every intermediate calculated hash. After verification,
+“Climb the proof” lets the learner move forward or backward one level at a time.
+Solid and dashed outlines identify the computed position and supplied sibling
+position on the recorded tree. The walkthrough displays the actual full left/right
+inputs and parent output from `proofTrace`, including for counterfeit parcels;
+recorded tree values are not substituted for supplied proof values. At the root,
+it distinguishes a hash match from independent trust. Chapter, parcel, and
+reference changes clear the walkthrough. It does not change scoring or verdicts.
+The field notes distinguish root mismatch detection, locating changes by comparing
+subtree evidence, updating a known leaf path, and verifying inclusion.
 
 A daily case has three tasks: find two revisions, pack a proof for a specified
 book in the restored archive, then inspect a parcel. A public UTC-date seed picks

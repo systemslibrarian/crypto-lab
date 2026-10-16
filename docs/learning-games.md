@@ -1,11 +1,10 @@
 # Learning games
 
-`games/index.html` is the entry point linked from the catalog navigation. It pairs
-Lattice Builder's existing standalone site with Secret Council, which is served
-directly from `games/secret-council/` in this repository. The latter is a
-catalog-hosted game, not a new fleet repository: it does not increment the count
-of independently catalogued exhibits or borrow an existing exhibit's evidence.
-Its live route is `https://crypto-lab.systemslibrarian.dev/games/secret-council/`.
+`games/index.html` is the entry point linked from the catalog navigation. It links
+Lattice Builder's existing standalone site with Secret Council and Merkle Mystery,
+served directly from `games/secret-council/` and `games/merkle-mystery/`. These are
+catalog-hosted games, not new fleet repositories: they do not increment the count
+of independently catalogued exhibits or borrow existing exhibits' evidence.
 
 ## Secret Council
 
@@ -78,3 +77,58 @@ pinned Playwright dependency, exercising the campaign, daily mode, failure/retry
 mathematics, persistence, keyboard controls, and responsive layouts. Screenshots
 and browser test output are uploaded as workflow artifacts. As with the other hub
 pages, GitHub Pages publishes from main; merge only after the PR checks pass.
+
+## Merkle Mystery
+
+Buildless HTML/CSS/SVG/ES modules at
+`https://crypto-lab.systemslibrarian.dev/games/merkle-mystery/`. All assets are local;
+no runtime packages, backend, accounts, analytics, fetch calls, or document inputs.
+The archive illustration consists of accessible native buttons over decorative
+SVG edges. Small screens scroll only the labeled tree region horizontally; every
+node also supports keyboard selection. The theme is fixed and reduced motion is
+respected. No shared Secret Council runtime or styles are changed.
+
+`core.mjs` implements complete binary Merkle trees with 1–64 leaves (the game uses
+4 and 8). Book records are `JSON.stringify([title, passage])`, encoded as UTF-8.
+Web Crypto SHA-256 hashes `0x00 || record` for leaves and
+`0x01 || left_hash_bytes || right_hash_bytes` for branches, following the domain
+separation in [RFC 9162 §2.1](https://www.rfc-editor.org/rfc/rfc9162.html#section-2.1).
+Full 32-byte values are used for comparisons; only board labels are truncated.
+The verifier validates tree size, leaf index, proof length, and hash encoding.
+It derives sibling order from the index and fails closed on malformed input.
+The UI has no fallback hash if Web Crypto is unavailable. This is not a Certificate
+Transparency implementation, signature scheme, file-protection tool, or proof of
+append-only history. The independently trusted archive root is a story assumption.
+
+Six chapters: identify one changed book; mark its complete ancestor path; pack
+three sibling hashes; verify and classify three parcels (valid, altered content,
+wrong proof); compare two authorized revisions; and reject a replacement seal.
+The last chapter deliberately presents a proof that verifies under the courier's
+root but fails under the independently saved root. Winning requires verifying
+against the latter. All parcel verdicts come from actual proof verification.
+The proof drawer exposes every intermediate calculated hash.
+
+A daily case has three tasks: find two revisions, pack a proof for a specified
+book in the restored archive, then inspect a parcel. A public UTC-date seed picks
+the changed indices, target book, and one of four parcel kinds (genuine, altered
+text, wrong proof, replaced seal). Date generation is puzzle variety, not randomness
+for cryptographic keys. All task transitions preserve daily hint/mistake penalties;
+a running daily case retains its captured date over midnight.
+
+`game.mjs` guards asynchronous transitions with a generation counter, preventing
+a slow hash calculation from applying to another chapter. Every solved chapter
+earns `max(1, 3 - incorrect submissions - guidance used)` bookplates; guidance costs
+one once. Empty submissions are guidance prompts, not scored mistakes. Restarting
+starts a fresh attempt. Campaign totals sum best scores for six chapters, maximum
+18. Daily scores are best for one UTC date, maximum 3. Only validated scores persist
+under `crypto-lab-merkle-mystery-v1`; all storage access is guarded. Clear progress
+resets the game. Clipboard denial exposes a selectable result fallback.
+
+Run `node --test tests/merkle-mystery-core.test.mjs` for independent Node crypto
+vectors, all leaf positions at every supported size, mutation propagation,
+adversarial proof inputs, all chapter solutions, daily variants, and corrupt
+storage values. The `merkle-mystery` job in `Learning games` runs the complete
+campaign and daily cases in Chromium, checks failed guesses and counterfeit-seal
+choices, verifies scoring and persistence, exercises keyboard controls, and
+captures desktop and phone screenshots. Publish only after actual PR checks pass
+and verify the served files after Pages deploys.

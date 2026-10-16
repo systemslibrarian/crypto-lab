@@ -73,3 +73,14 @@ test('public page has no remote requests or operator affordances',()=>{
   assert(!/localStorage|sessionStorage|XMLHttpRequest|sendBeacon|WebSocket|innerHTML|document\.write|\/api\//.test(js));
   assert(html.includes('Content-Security-Policy'));assert(html.includes('data/labs.csv'));assert(!/<(?:script|link)[^>]+(?:src|href)="https?:/i.test(html));
 });
+test('overview comparisons explain a distinction without changing snapshot records',()=>{
+  const {featuredPairs,hasDistinction}=require('../evidence/app.js');
+  const before=JSON.stringify(data),featured=featuredPairs(data);
+  assert.equal(featured.length,4);assert(featured.every(hasDistinction));
+  const explained=filterRelationships(data,{type:'untyped',detail:'explained'});
+  const missing=filterRelationships(data,{type:'untyped',detail:'missing'});
+  assert(explained.length>0);assert(missing.length>0);
+  assert.equal(explained.length+missing.length,72);
+  assert(missing.every(r=>!hasDistinction(r)));assert.equal(JSON.stringify(data),before);
+  assert.equal(filterRelationships(data,{type:'implemented',detail:'explained'}).length,0);
+});

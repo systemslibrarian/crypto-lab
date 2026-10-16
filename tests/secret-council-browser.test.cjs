@@ -144,6 +144,11 @@ test('phone, small phone and desktop layouts, keyboard controls and navigation',
         boxes.forEach((a,i)=>boxes.slice(i+1).forEach((b,j)=>{if(Math.min(a.right,b.right)-Math.max(a.left,b.left)>1&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>1)pairs.push([i,i+j+1]);}));return pairs;
       });
       assert.deepEqual(collisions,[],`overlapping keeper buttons at ${width}`);
+      const clipped=await page.locator('.keeper').evaluateAll(nodes=>{
+        const board=document.querySelector('.council-panel').getBoundingClientRect();
+        return nodes.filter(n=>{const b=n.getBoundingClientRect();return b.left<board.left||b.right>board.right||b.top<board.top||b.bottom>board.bottom;}).map(n=>n.getAttribute('aria-label'));
+      });
+      assert.deepEqual(clipped,[],`clipped keeper buttons at ${width}`);
       await page.locator('#threshold').focus();await page.keyboard.press('ArrowLeft');
       assert.equal(await page.locator('#threshold').inputValue(),'2');
       await page.locator('.keeper[data-member="0"]').focus();await page.keyboard.press('Space');

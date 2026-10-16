@@ -5,6 +5,8 @@
 
 **[Teaching a course? → Course modules for instructors](https://crypto-lab.systemslibrarian.dev/teach/)**
 
+**[Learn through play → Learning games](https://crypto-lab.systemslibrarian.dev/games/)** — play [Secret Council](https://crypto-lab.systemslibrarian.dev/games/secret-council/) to explore threshold secret sharing, or build geometric intuition with [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/).
+
 > Interactive cryptography exhibits — demonstrations, learning games, and visual tools in your browser. Most run without accounts or backends.\*
 
 \* ⚡ One deliberate exception: **[Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/)** runs a live Rust/TFHE-rs server to demonstrate real fully homomorphic encryption — its evaluation key cannot decrypt, and the browser keeps the result verdict local.

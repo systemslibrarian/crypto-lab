@@ -9,3 +9,7 @@ The homepage builds `.path-band-card` entries containing native `details` / `sum
 Course-linked catalog cards live in `.card-cell` wrappers. The card stays in normal layout and fills the wrapper; only its sibling `.module-links` footer is absolutely positioned. Making the card absolute collapses the wrapper and makes cards overlap section headings.
 
 Homepage path summaries share measured heading, metadata, and total heights, recalculated after fonts load and on resize. This aligns the collapsed cards and their controls without clipping text. Expanded lists grow independently.
+
+Lattice Builder stays in the Post-Quantum section as a learning game. Its `data-level="beginner"` describes the opening puzzle; the visible “Beginner entry · Advanced exploration” line distinguishes its optional deeper modes. The editorial judgement lives in `tools/lab-levels.json`, so `level-sync` preserves it. `data-format="learning-game"` styles its format badge and play action without changing topic filters or algorithm evidence.
+
+The Post-Quantum path places Lattice Builder and Lattice Gentle between PQ Families and Kyber Vault: orientation, geometric intuition, guided mathematics, then key establishment. The Lattice Gentle worksheet offers the puzzle as optional preparation outside its existing class-time estimate. The README, teaching pages and knowledge map are regenerated from these sources.

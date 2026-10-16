@@ -217,6 +217,33 @@
       line-height: 1.75;
     }
 
+    .project-card[data-format="learning-game"] .card-kicker {
+      align-self: flex-start;
+      max-width: 100%;
+      padding: 4px 7px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      line-height: 1.5;
+    }
+
+    .project-card[data-format="learning-game"] .card-kicker::before { display: none; }
+    .project-card[data-format="learning-game"] .project-meta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .card-entry {
+      margin: 10px 0 14px;
+      color: var(--text-dim);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .card-action {
+      color: var(--accent, var(--teal));
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
     /* One fixed position on every card. It used to sit inside the chip row with
        `justify-content: space-between`, so its height moved with the number of
        chip lines and no two cards in a row agreed on where it was. */
@@ -2236,7 +2263,7 @@
               </span>
             </a>
           </div>
-          <p class="intro-sub">Learn the primitives, protocols, implementation failures, and post-quantum systems behind modern security — every one a live, self-contained demo that runs entirely in your browser. No backends, no accounts, just the math.</p>
+          <p class="intro-sub">Explore cryptography through interactive demonstrations, learning games, and visual tools — from first principles to modern protocols and post-quantum systems. Start with a concept, try it yourself, and follow the mathematics deeper.</p>
         </div>
         <section class="teach-band" aria-labelledby="teach-band-title">
           <div class="teach-band-main">
@@ -20232,7 +20259,7 @@
             </div>
           </a>
 
-<a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-builder/" data-level="advanced" data-added="2026-08" data-updated="2026-10"
+<a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-builder/" data-level="beginner" data-format="learning-game" data-added="2026-08" data-updated="2026-10"
             data-implements="Babai rounding@src/basis.ts:74 | Keccak@src/keccak.ts:46 | ML-KEM@src/AdvancedMode.tsx:14 | NTT@src/mlkem-poly.ts:133 | SHA-3@src/keccak.ts:227 | SHAKE@src/keccak.ts:235"
             data-references="AES | LWE | SHA-256"
             data-attacks="Brute force@src/AdvancedMode.tsx:368 | Lattice reduction@src/AdvancedMode.tsx:369"
@@ -20309,9 +20336,10 @@
            
            
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
-            <div class="card-kicker">Shortest Vector Problem</div>
+            <div class="card-kicker">Learning game · Post-Quantum</div>
             <div class="project-title">Lattice Builder</div>
-            <div class="project-copy">Two dials straighten a scrambled lattice until its shortest vector is readable by eye. Then guess seven of a real Module-LWE key&#39;s eight coefficients and the error left over is no smaller than guessing none.</div>
+            <div class="project-copy">Straighten a scrambled grid and find its shortest vector. Build geometric intuition through play, then explore small Module-LWE experiments and an ML-KEM exchange. The opening puzzle is a geometric analogy.</div>
+            <p class="card-entry">Beginner entry · Advanced exploration</p>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">SVP</span>
@@ -20319,7 +20347,7 @@
                 <span class="chip">ML-KEM (FIPS 203)</span>
                 <span class="chip">Babai Rounding</span>
               </div>
-              <span class="arrow">→</span>
+              <span class="card-action">Play Lattice Builder <span aria-hidden="true">→</span></span>
             </div>
           </a>
 
@@ -20975,10 +21003,12 @@
       {
         id: 'post-quantum',
         label: 'Post-Quantum Path',
-        focus: 'PQ KEMs, signatures, hybrids and the migration itself.',
-        blurb: 'A focused track on PQ KEMs, signatures, hybrids, and migration.',
+        focus: 'From a lattice puzzle to PQ KEMs, signatures and migration.',
+        blurb: 'Survey the post-quantum families, build geometric intuition with Lattice Builder, then explore lattice mathematics in Lattice Gentle before running ML-KEM in Kyber Vault. Continue through signatures, hybrids, and migration. The opening game needs no lattice background; later steps introduce the mathematics.',
         steps: [
           { title: 'PQ Families' },
+          { title: 'Lattice Builder' },
+          { title: 'Lattice Gentle' },
           { title: 'Kyber Vault' },
           { title: 'KEM Trap' },
           { title: 'Dilithium Seal' },
@@ -21901,7 +21931,7 @@
       noResults.hidden = !empty;
       noResults.style.display = empty ? 'block' : 'none';
       noResults.textContent = empty
-        ? 'No demos match this search. Try an algorithm, attack, standard, or a query such as standard:NIST.'
+        ? 'No exhibits match this search. Try an algorithm, attack, standard, or a query such as standard:NIST.'
         : '';
 
       var orderNote = sortMode === 'relevance' ? ' · relevance'

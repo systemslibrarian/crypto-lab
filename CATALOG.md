@@ -2977,9 +2977,9 @@ A KyberSlash timing-attack lab for ML-KEM, covering secret-dependent division, v
 
 ### Lattice Builder
 
-[`crypto-lab-lattice-builder`](https://systemslibrarian.github.io/crypto-lab-lattice-builder/) · Shortest Vector Problem · POST-QUANTUM
+[`crypto-lab-lattice-builder`](https://systemslibrarian.github.io/crypto-lab-lattice-builder/) · Learning game · Post-Quantum · POST-QUANTUM
 
-Two dials straighten a scrambled lattice until its shortest vector is readable by eye. Then guess seven of a real Module-LWE key's eight coefficients and the error left over is no smaller than guessing none.
+Straighten a scrambled grid and find its shortest vector. Build geometric intuition through play, then explore small Module-LWE experiments and an ML-KEM exchange. The opening puzzle is a geometric analogy.
 
 - **Implements:** Babai rounding `src/basis.ts:74`, Keccak `src/keccak.ts:46`, ML-KEM `src/AdvancedMode.tsx:14`, NTT `src/mlkem-poly.ts:133`, SHA-3 `src/keccak.ts:227`, SHAKE `src/keccak.ts:235`
 - **References:** AES, LWE, SHA-256

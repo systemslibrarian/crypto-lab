@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 32 · Intermediate — 55 · Advanced — 141. Total 228.
+**Counts:** Beginner — 33 · Intermediate — 55 · Advanced — 140. Total 228.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -31,7 +31,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | `advanced` | systems security rather than cryptography; advanced on the trust reasoning |
 | [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | `intermediate` | The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience. |
 
-## Beginner — `beginner` (32)
+## Beginner — `beginner` (33)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -55,6 +55,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) | hand | 90-second guided tour: decode, forge, compare a correct verifier with a broken one |
 | [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) | hand | one benchmark, one control, a jargon glossary, and the tension stated in plain words |
 | [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) | hand | "Start Here - a Guided Path" numbers six steps; parameters are powers of two |
+| [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/) | hand | The opening spatial puzzle asks learners to adjust two dials and compare distances, with no lattice background required. Optional Advanced and Expert modes introduce Module-LWE, ML-KEM and basis mathematics; the catalog labels that progression explicitly. |
 | [Locks and Keys](https://systemslibrarian.github.io/crypto-lab-locks-and-keys/) | hand | one real key pair, four button presses: lock a note to the public half, open it with the private half, watch a different key fail, then run the same pair backwards to sign. No modulus or exponent on screen. |
 | [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) | hand | the structure half of the Merkle pair, by the two labs’ own stated split |
 | [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) | hand | XOR is introduced from scratch and crib-dragging is a word puzzle, not algebra |
@@ -128,7 +129,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (141)
+## Advanced — `advanced` (140)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -194,7 +195,6 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [KpqC Pair](https://systemslibrarian.github.io/crypto-lab-kpqc-pair/) | rule | needs specialist background: lattice, NTRU, AIMer |
 | [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) | rule | needs specialist background: lattice, ML-KEM, Kyber |
 | [KyberSlash](https://systemslibrarian.github.io/crypto-lab-kyberslash/) | rule | needs specialist background: ML-KEM, Kyber, side-channel |
-| [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/) | rule | needs specialist background: lattice, LWE, ML-KEM |
 | [Lattice Fault](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) | rule | needs specialist background: lattice, ML-KEM, ML-DSA |
 | [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) | rule | needs specialist background: lattice, LWE, ML-KEM |
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | rule | needs specialist background: lattice, LWE, learning with errors |

@@ -106,7 +106,7 @@ const allDemos = [
 SECTIONS.forEach(s => {
   const inSection = ordered.filter(c => TITLE_TO_SECTION[c.title] === s.id);
   if (!inSection.length) return;
-  allDemos.push('', '### ' + s.label, '', '| Demo | Description | Source | Primitives |', '|---|---|---|---|');
+  allDemos.push('', '### ' + s.label, '', '| Exhibit | Description | Source | Primitives |', '|---|---|---|---|');
   inSection.forEach(c => allDemos.push(demoRow(c)));
 });
 allDemos.push('<!-- readme-sync:all-demos:end -->');

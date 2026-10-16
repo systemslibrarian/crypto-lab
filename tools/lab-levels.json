@@ -1248,9 +1248,9 @@
   },
   "crypto-lab-lattice-builder": {
    "title": "Lattice Builder",
-   "level": "advanced",
-   "why": "needs specialist background: lattice, LWE, ML-KEM",
-   "reviewed": "rule"
+   "level": "beginner",
+   "why": "The opening spatial puzzle asks learners to adjust two dials and compare distances, with no lattice background required. Optional Advanced and Expert modes introduce Module-LWE, ML-KEM and basis mathematics; the catalog labels that progression explicitly.",
+   "reviewed": "hand"
   },
   "crypto-lab-covert-channel-studio": {
    "title": "Covert Channel Studio",

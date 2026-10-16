@@ -75,9 +75,9 @@ test('complete six chapters; independently check parcel verdicts, scores, persis
     await page.evaluate(()=>{navigator.clipboard.writeText=async()=>{throw new Error('denied');};});
     await page.locator('#copy-result').click();await page.locator('#copy-fallback').waitFor({state:'visible'});
     assert.match(await page.locator('#copy-fallback').inputValue(),/Merkle Mystery/);
-    await page.reload();await ready(page);assert.equal(await page.locator('#best-score').innerText(),'18 / 18 bookplates');
+    await page.reload();await ready(page);assert.equal(await page.locator('#best-score').textContent(),'18 / 18 bookplates');
     await page.getByText('Progress, scoring, and daily mysteries',{exact:true}).click();await page.locator('#clear-progress').click();await ready(page);
-    assert.equal(await page.locator('#best-score').innerText(),'0 / 18 bookplates');
+    assert.equal(await page.locator('#best-score').textContent(),'0 / 18 bookplates');
     assert.deepEqual(errors,[]);
   }finally{await page.close();}
 });
@@ -99,7 +99,7 @@ test('wrong findings, extra proof pieces, hints, retries and untrusted seals can
     await submit(page);await page.locator('#accept').click();assert.equal(await page.locator('#chapter-result').isVisible(),false);
     await page.locator('#quarantine').click();await closed(page);assert.match(await page.locator('#earned').innerText(),/1 \/ 3/);
     await page.locator('#restart').click();await ready(page);await page.locator('input[value=recorded]').check();await submit(page);await page.locator('#quarantine').click();await closed(page);
-    assert.match(await page.locator('#earned').innerText(),/3 \/ 3/);assert.equal(await page.locator('#best-score').innerText(),'6 / 18 bookplates');
+    assert.match(await page.locator('#earned').innerText(),/3 \/ 3/);assert.equal(await page.locator('#best-score').textContent(),'6 / 18 bookplates');
     assert.deepEqual(errors,[]);
   }finally{await page.close();}
 });
@@ -116,7 +116,9 @@ test('daily three-task mystery works for every parcel variant; penalties survive
       await page.locator('#daily-mode').click();await ready(page);
       assert.match(await page.locator('#daily-date').innerText(),new RegExp(plan.date));
       await page.locator('#hint').click();await select(page,plan.changed.map(i=>`0:${i}`));await submit(page);await closed(page);await submit(page);
+      assert.match(await page.locator('#hint-text').innerText(),/missing siblings/);
       await select(page,siblingIds(plan.target,8));await submit(page);await closed(page);await submit(page);
+      assert.match(await page.locator('#hint-text').innerText(),/archive record saved independently/);
       await page.locator('input[value=recorded]').check();const expected=await independentParcel(page);assert.equal(expected,plan.parcelKind==='genuine');
       await submit(page);await page.locator(expected?'#accept':'#quarantine').click();await closed(page);await submit(page);
       assert.match(await page.locator('#finish-text').innerText(),/2\/3 bookplates/);
@@ -157,7 +159,7 @@ test('storage refusal or corrupted values do not block play; theme storage is un
         if(denied){Storage.prototype.getItem=()=>{throw new Error('blocked');};Storage.prototype.setItem=()=>{throw new Error('blocked');};Storage.prototype.removeItem=()=>{throw new Error('blocked');};}
         else localStorage.setItem('crypto-lab-merkle-mystery-v1',JSON.stringify({best:[99,-1,'3'],daily:{date:'bad',score:100}}));
       },denied);
-      await page.goto(origin+'/games/merkle-mystery/');await ready(page);assert.equal(await page.locator('#best-score').innerText(),'0 / 18 bookplates');
+      await page.goto(origin+'/games/merkle-mystery/');await ready(page);assert.equal(await page.locator('#best-score').textContent(),'0 / 18 bookplates');
       await select(page,['0:2']);await submit(page);await closed(page);
       if(!denied)assert.equal(await page.evaluate(()=>localStorage.getItem('theme')),'sentinel');
     }finally{await page.close();}

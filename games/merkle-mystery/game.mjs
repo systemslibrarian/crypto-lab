@@ -105,8 +105,8 @@ function render() {
   $('action').textContent = ({find:'Check the altered book',trace:'Check the trail',pack:'Send the proof',inspect:'Verify parcel',compare:'Check both revisions',trust:'Verify against chosen seal'})[mission.kind];
   renderTree(); renderParcel(); selectionSummary(); inspect(`0:${mission.target}`);
   feedback('Examine the evidence, then make your move.');
-  if (guided) showHint(false);
 }
+
 async function start({ reset = true } = {}) {
   const ticket = ++epoch;
   done = false; selected = new Set(); inspected = null; parcelIndex = 0; verification = null;
@@ -116,6 +116,7 @@ async function start({ reset = true } = {}) {
     const next = await prepare(chapter, mode === 'daily' ? daily : null, phase);
     if (ticket !== epoch) return;
     data = next; render(); setBusy(false);
+    if (guided) showHint(false);
   } catch (error) {
     if (ticket !== epoch) return;
     feedback(`The archive could not open. ${error.message} Reload to try again.`, 'bad');

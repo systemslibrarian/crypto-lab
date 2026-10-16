@@ -139,7 +139,7 @@ export async function prepare(chapter, daily = null, phase = 0) {
     mission.task = [ 'Select the two revised books.', `Pack the three sibling hashes for Book ${daily.target + 1}.`, 'Choose a reference, verify the proof, then accept or quarantine.' ][phase];
   }
   const original = BOOKS.slice(0, mission.size).map(book => ({ ...book }));
-  const current = original.map((book, i) => ({ ...book, text: mission.changed.includes(i) ? book.text.replace(/\.$/, '') + ' Bring the brass key.' : book.text }));
+  const current = original.map((book, i) => ({ ...book, text: mission.changed.includes(i) ? book.text + ' Bring the brass key.' : book.text }));
   const [before, after] = await Promise.all([buildTree(original.map(bookData)), buildTree(current.map(bookData))]);
   let parcels = [];
   if (mission.kind === 'inspect') {

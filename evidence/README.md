@@ -142,3 +142,18 @@ Paul A. Clark. *Crypto Lab: Interactive Browser-Based Cryptography Demonstration
 https://doi.org/10.5281/zenodo.23105362 . For this data, also give the snapshot date
 and catalog commit above; the DOI identifies Crypto Lab, not a separate snapshot
 release.
+
+## Reader-facing presentation
+
+The overview leads with navigation and comparisons that already have a written
+catalog distinction. It selects the first four explained pairs in snapshot order;
+it does not infer descriptions or assign relationship types. Other pairs remain
+available through the full comparison list and the “no written distinction” filter.
+The distinction filter is independent of relationship type and composes with search.
+
+A native expandable label guide explains evidence states, code patterns, source
+reviews, coverage and associations. The historical-snapshot and certification
+limits remain visible on the overview, and the source-location limitation stays
+beside the coverage counts. Display wording does not change exported field names,
+provenance, evidence semantics or downloaded bytes. There is only one public
+snapshot; no change history is inferred from today's catalog.

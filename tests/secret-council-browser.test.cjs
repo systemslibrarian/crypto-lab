@@ -77,8 +77,15 @@ test('full six-chapter campaign, actual recovery, results and persistent best sc
     await page.screenshot({path:'test-results/secret-council/desktop.png',fullPage:true});
     for(let i=0;i<6;i++){await passTrials(page,CAMPAIGN[i],policies[i]);await page.locator('#action').click();}
     assert.match(await page.locator('#completion-text').innerText(),/18\/18 seals/);
+    await page.context().grantPermissions(['clipboard-read','clipboard-write'],{origin});
     await page.locator('#copy-result').click();
+    await page.waitForFunction(()=>document.querySelector('#copy-status').textContent.length>0);
     assert.match(await page.locator('#copy-status').innerText(),/copied|copy the result/);
+    assert.match(await page.evaluate(()=>navigator.clipboard.readText()),/Campaign · 18\/18/);
+    await page.evaluate(()=>{navigator.clipboard.writeText=async()=>{throw new DOMException('Clipboard denied','NotAllowedError');};});
+    await page.locator('#copy-result').click();
+    await page.locator('#copy-fallback').waitFor({state:'visible'});
+    assert.match(await page.locator('#copy-fallback').inputValue(),/Campaign · 18\/18/);
     await page.reload();await page.waitForFunction(()=>document.querySelectorAll('.keeper').length===7);
     assert.equal(await page.locator('#best-score').innerText(),'BEST 18/18');
     await page.locator('#clear-progress').click();assert.equal(await page.locator('#best-score').innerText(),'BEST —');

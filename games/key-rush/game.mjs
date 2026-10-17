@@ -42,7 +42,7 @@ function ready(level=state.level,threshold=LEVELS[level].threshold){
  state=create(level,threshold);$('lesson-panel').hidden=true;renderThresholds();renderUI();draw();
 }
 function beginRun(){
- try{if(state.phase==='result')ready(state.level,state.threshold);change(start(state));held=null;lastFrame=null;nextMoveAt=0;canvas.focus({preventScroll:true});if(innerWidth<=700)$('arena-wrap').scrollIntoView({block:'start'});}
+ try{if(state.phase==='result')ready(state.level,state.threshold);change(start(state));held=null;lastFrame=null;nextMoveAt=0;canvas.focus({preventScroll:true});if(innerWidth<=700)document.querySelector('.game-panel').scrollIntoView({block:'start'});}
  catch(e){$('game-status').textContent=e.message;}
 }
 function step(direction,boost=false){if(state.phase!=='playing')return;const d=DIRS[direction];if(d)change(move(state,d[0],d[1],boost));}

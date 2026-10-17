@@ -152,6 +152,10 @@ test('phone, tablet and desktop layouts expose touch controls, full result and l
       await fit('ready');
       await page.screenshot({path:`test-results/secret-council/key-rush-ready-${width}.png`,fullPage:true});
       await begin(page);
+      if(width<=700){
+        const hud=await page.locator('.hud').boundingBox(),controls=await page.locator('.play-controls').boundingBox();
+        assert(hud.y>=0&&controls.y+controls.height<=1000,'phone shows share counters and movement controls together');
+      }
       await page.locator('[data-direction="up"]').click();assert.equal(await attr(page,'position'),'0,2');
       await page.locator('[data-direction="down"]').focus();await page.keyboard.press('Enter');assert.equal(await attr(page,'position'),'0,3');
       await page.locator('#arena').focus();await route(page,'RR');

@@ -22,7 +22,7 @@ can add depth, but must not hide the essential connection to cryptography.
 
 | Game | Experience through play | Visible result and takeaway |
 | --- | --- | --- |
-| Lattice Builder | Straighten signal fields, fly integer vector routes, match bases | Signal completion explains the eight-candidate search; every flight explains its vector operation; Basis Match explains each matched target. These are geometric intuition, not general lattice attacks. |
+| Lattice Builder | Rescue beacons with integer jumps and reversible changes to the movement basis | Beacon Run shows the same landing points before and after refits, then explains integer combinations and why B ± A preserves the lattice. Free hints and undo support replay; the six route charts teach geometry, not cryptographic attacks. Original games remain linked. |
 | Key Rush | Steer courier bots through moving scanners and traps; boost, deliver and retry with different thresholds | Distinct stolen copies, lost bots and actual reconstruction show secrecy versus availability; each round explains its outcome. |
 | Merkle Mystery | Build a proof route from neighboring hash blocks and decide whether arcade collectibles pass the gate | Real hash joins, compact proof counts and comparison with the saved root explain inclusion, changed data and independent trust. |
 | Quantum Courier | Tune, sift, discard samples and review measurement errors | The measured replay and sample counts precede a lesson about basis agreement, disturbance or limits of the evidence. |
@@ -30,7 +30,7 @@ can add depth, but must not hide the essential connection to cryptography.
 
 Campaign browser tests exercise the gameplay and assert that the post-play lesson
 is visible. Lattice Builder has its own repository and browser gate, including
-all six Vector Flight completion lessons and every Basis Match takeaway. Daily
+Beacon Run completion/refit lessons, all six original Vector Flight lessons, and every Basis Match takeaway. Daily
 challenges reuse the same teaching flow. New games must follow this standard.
 
 ## Key Rush

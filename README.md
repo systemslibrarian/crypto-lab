@@ -5,7 +5,7 @@
 
 **[Teaching a course? → Course modules for instructors](https://crypto-lab.systemslibrarian.dev/teach/)**
 
-**[Learn through play → Learning games](https://crypto-lab.systemslibrarian.dev/games/)** — learn to commit to a hidden choice in [Sealed Showdown](https://crypto-lab.systemslibrarian.dev/games/sealed-showdown/), fly light pulses in [Quantum Courier](https://crypto-lab.systemslibrarian.dev/games/quantum-courier/), investigate data integrity and climb inclusion proofs one level at a time in [Merkle Mystery](https://crypto-lab.systemslibrarian.dev/games/merkle-mystery/), play [Secret Council](https://crypto-lab.systemslibrarian.dev/games/secret-council/) to explore threshold secret sharing, or build geometric intuition with [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/).
+**[Learn through play → Learning games](https://crypto-lab.systemslibrarian.dev/games/)** — learn to commit to a hidden choice in [Sealed Showdown](https://crypto-lab.systemslibrarian.dev/games/sealed-showdown/), fly light pulses in [Quantum Courier](https://crypto-lab.systemslibrarian.dev/games/quantum-courier/), investigate data integrity and climb inclusion proofs one level at a time in [Merkle Mystery](https://crypto-lab.systemslibrarian.dev/games/merkle-mystery/), play [Secret Council](https://crypto-lab.systemslibrarian.dev/games/secret-council/) to protect a seed vault through thefts and floods, with free rewinds that reveal the tradeoff in threshold secret sharing, or build geometric intuition with [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/).
 
 > Interactive cryptography exhibits — demonstrations, learning games, and visual tools in your browser. Most run without accounts or backends.\*
 

@@ -23,7 +23,7 @@ can add depth, but must not hide the essential connection to cryptography.
 | Game | Experience through play | Visible result and takeaway |
 | --- | --- | --- |
 | Lattice Builder | Straighten signal fields, fly integer vector routes, match bases | Signal completion explains the eight-candidate search; every flight explains its vector operation; Basis Match explains each matched target. These are geometric intuition, not general lattice attacks. |
-| Secret Council | Allocate shares and recover a secret during outages | Actual affected holders and recovered values precede the chapter lesson about threshold secrecy, availability or shared risks. |
+| Secret Council | Place keepers, set a threshold and spend reserves through cumulative thefts and floods | Actual stolen/available counts and reconstructed values explain the player’s outcome; free rewinds compare plans. |
 | Merkle Mystery | Locate changes, assemble proofs and judge archive parcels | Actual hash comparisons and the proof walkthrough lead into a lesson about integrity, inclusion or root trust. |
 | Quantum Courier | Tune, sift, discard samples and review measurement errors | The measured replay and sample counts precede a lesson about basis agreement, disturbance or limits of the evidence. |
 | Sealed Showdown | Make sealed choices, guess weak seals and judge openings | Recomputed hashes and game outcomes lead into lessons about hiding, binding, context and refusal to reveal. |
@@ -33,7 +33,64 @@ is visible. Lattice Builder has its own repository and browser gate, including
 all six Vector Flight completion lessons and every Basis Match takeaway. Daily
 challenges reuse the same teaching flow. New games must follow this standard.
 
-## Secret Council
+## Secret Council vault mission
+
+The default `games/secret-council/index.html` now opens a bounded three-mission
+prototype: protect the city seed vault from thieves and recover it at dawn. The
+mission and learning promise precede play. This is a response to owner feedback
+that the chapter games were unclear and uninteresting; passing tests does not
+establish enjoyment or learning effectiveness. User playtesting remains necessary.
+
+`vault-core.mjs` is the pure state transition layer, reusing the existing exact
+Shamir implementation in `core.mjs`. Five named keepers each have one distinct
+share. Three houses have capacity three. Placement and threshold changes are free
+before the deal; a fresh random deal locks the threshold for that attempt. The
+first starting plan uses threshold four with only three shares reachable after
+the forecast flood, so simply advancing is insufficient: adjust the plan or send
+help. Every mission is directly selectable. No lives, hint penalties, timer,
+score or prerequisite unlocks restrict experimentation.
+
+Forecasts state every event and its order. The player advances events and can
+intervene between them. A limited reserve pays for one keeper move, a watch at a
+house, or a ferry. Watches prevent future copying in their house; ferries keep
+that house reachable through floods and restore access after an outage. Moving a
+keeper never removes the thief’s copy. Flooded houses stay flooded, and a stranded
+keeper cannot move without a ferry. These are visible, deterministic game rules,
+not promises made by secret sharing.
+
+**Thefts accumulate within one attempt**, unlike the independent legacy chapter
+trials. Copied IDs are deduplicated. Once the threshold is reached the actual
+shares reconstruct the secret; posting a later watch cannot undo disclosure.
+Copying does not destroy an honest keeper’s original share. At dawn the player
+selects reachable keepers; the game interpolates their actual values and compares
+the result with the dealer’s original. Success requires both secrecy and recovery.
+A short explanation uses the attempt’s stolen count, available count and threshold,
+then connects the tradeoff to sharing a backup encryption key. An optional
+inspector shows full points and the action/event log.
+
+Rewind restores the starting placement and threshold with the same forecast,
+then draws fresh shares on the next start. It clears copies, floods, interventions
+and gathered points. The previous completed attempt is compared in memory.
+Only validated completion flags and sound preference persist under
+`crypto-lab-council-vault-v1`; every storage access is guarded. No secret/share or
+plan is persisted. Clearing this key leaves legacy chapter progress alone.
+Web Audio is opt-in; reduced motion suppresses house/vault animations. Native
+buttons/selects support touch and keyboard without drag-only interactions. On phones,
+threshold and forecast precede the map, and a compact action bar stays within reach
+while the mission is in view. Event consequences also appear beside the turn control. The
+module has no timers, network calls, dependencies or shared theme access.
+
+The existing six chapters, daily council and algebra explorer remain at
+`chapters.html`, with a return link to the new mission. Their original assets and
+progress key are retained. `tests/council-vault-core.test.mjs` covers the threshold
+tradeoff, cumulative theft/deduplication, late protection, ferry recovery, resource
+limits, actual reconstruction, state transitions, and authored mission solutions.
+`tests/council-vault-browser.test.cjs` exercises complete wins/losses and free
+rewinds, interventions, share reconstruction, storage/RNG failure, keyboard/touch
+controls, responsive layout, and screenshots in the existing Learning games job.
+The existing chapter browser suite now explicitly visits `chapters.html`.
+
+## Secret Council guided chapters
 
 Buildless HTML, CSS, SVG, and ES modules. There are no runtime dependencies,
 remote assets, accounts, telemetry, fetch calls, or real-secret input fields.

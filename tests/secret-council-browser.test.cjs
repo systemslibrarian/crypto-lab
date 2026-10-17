@@ -30,7 +30,7 @@ async function open(width=1366) {
   page.on('pageerror',e=>errors.push(e.message));
   page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
   await page.route('https://**/*',route=>route.abort());
-  await page.goto(origin+'/games/secret-council/');
+  await page.goto(origin+'/games/secret-council/chapters.html');
   await page.waitForFunction(()=>document.querySelectorAll('.keeper').length===7);
   return {page,errors};
 }
@@ -178,7 +178,7 @@ test('storage denied or malformed never blocks play',async()=>{
     try{
       await page.addInitScript(denied?()=>{Object.defineProperty(window,'localStorage',{get(){throw new Error('blocked');}});}:()=>{localStorage.setItem('crypto-lab-secret-council-v1','{"scores":[99,"3",null],"best":999,"sound":"yes","daily":null}');});
       const errors=[];page.on('pageerror',e=>errors.push(e.message));
-      await page.goto(origin+'/games/secret-council/');await page.waitForFunction(()=>document.querySelectorAll('.keeper').length===7);
+      await page.goto(origin+'/games/secret-council/chapters.html');await page.waitForFunction(()=>document.querySelectorAll('.keeper').length===7);
       assert.equal(await page.locator('#best-score').innerText(),'BEST —');
       await page.locator('#sound').click();await page.locator('#sound').click();
       await page.locator('#threshold').fill('2');await page.locator('#action').click();

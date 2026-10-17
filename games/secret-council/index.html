@@ -1,81 +1,42 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#08191c">
-  <meta name="description" content="A cryptography learning game about shared trust. Build a council, distribute secret shares, and survive stolen shares and missing keepers. No coding required.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <title>Secret Council · A Crypto Lab learning game</title>
-  <link rel="icon" href="seal.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <script type="module" src="game.mjs"></script>
-</head>
-<body>
-  <a class="skip-link" href="#game">Skip to the game</a>
-  <header class="topbar">
-    <a class="brand" href="../../"><img src="seal.svg" width="30" height="30" alt="">CRYPTO LAB <span>/ LEARN THROUGH PLAY</span></a>
-    <nav aria-label="Game navigation"><a href="../">All games</a><a href="#how-it-works">How it works</a></nav>
-  </header>
-  <main>
-    <section class="intro" aria-labelledby="title">
-      <div><p class="eyebrow">A game of shared trust</p><h1 id="title">Secret <em>Council</em><span class="title-period">.</span></h1></div>
-      <p>One secret. No single keeper.<br> Build a council that can keep a secret <em>and</em> bring it back.</p>
-    </section>
-    <div class="modebar">
-      <div class="mode-switch" role="group" aria-label="Game mode"><button id="campaign-mode" aria-pressed="true">The campaign <span>6 chapters</span></button><button id="daily-mode" aria-pressed="false">Daily council <span id="daily-date"></span></button></div>
-      <button id="sound" class="quiet" aria-pressed="false">Sound off</button>
-    </div>
-    <section class="game-frame" id="game" aria-label="Secret Council game" tabindex="-1">
-      <div class="hud"><span id="chapter-label">CHAPTER 01 / 06</span><div id="progress" class="progress" role="group" aria-label="Campaign chapters"></div><span id="best-score">BEST —</span></div>
-      <div class="game-grid">
-        <div class="council-panel">
-          <div class="board-heading"><p class="eyebrow" id="board-label">The council chamber</p><span id="seat-count">3 / 3 shares assigned</span></div>
-          <div class="chamber" id="chamber">
-            <svg class="connections" viewBox="0 0 600 530" preserveAspectRatio="none" aria-hidden="true"><defs><radialGradient id="halo"><stop stop-color="#f6cc80" stop-opacity=".12"/><stop offset="1" stop-color="#f6cc80" stop-opacity="0"/></radialGradient></defs><circle cx="300" cy="265" r="245" fill="url(#halo)"/><circle class="orbit" cx="300" cy="265" r="177"/><circle class="orbit inner" cx="300" cy="265" r="112"/><g id="threads"></g></svg>
-            <div class="vault" id="vault"><span class="vault-label">THE CITY’S SECRET</span><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M40 4 71 22v36L40 76 9 58V22Z"/><path d="M40 15 61 28v24L40 65 19 52V28Z"/><path class="lock" d="M30 36v-6a10 10 0 0 1 20 0v6m-24 0h28v23H26zm14 8v7"/></svg><strong id="vault-value">SEALED</strong><span id="vault-caption">Shared trust begins here</span></div>
-            <div id="keepers" aria-label="Council keepers"></div>
-          </div>
-          <div class="legend" aria-label="Keeper locations"><span><i class="archive"></i>Archive</span><span><i class="harbor"></i>Harbor</span><span><i class="tower"></i>Tower</span></div>
-          <p class="board-help" id="board-help">Select keepers to give each one a distinct share. Select again to remove.</p>
-        </div>
-        <div class="controls">
-          <p class="eyebrow" id="mission-subtitle">One secret. Shared responsibility.</p>
-          <h2 id="mission-title">The first oath</h2>
-          <p id="mission-brief" class="brief"></p>
-          <div id="planning-controls">
-            <div class="threshold-heading"><label for="threshold">Shares needed to open</label><output id="threshold-value" for="threshold">3</output></div>
-            <input id="threshold" type="range" min="2" max="7" value="3" aria-describedby="threshold-help">
-            <p id="threshold-help" class="small-copy">The threshold is how many distinct shares must come together.</p>
-            <div class="risk-header"><span class="eyebrow">Prepare for these trials</span><span class="small-copy">Each is independent</span></div>
-            <ul id="risks" class="risks"></ul>
-          </div>
-          <div id="trial-panel" hidden>
-            <p class="eyebrow" id="trial-number"></p><h3 id="trial-title"></h3><p id="trial-description" class="small-copy"></p>
-            <div class="trial-meter"><span id="trial-count"></span><strong id="trial-verdict"></strong></div>
-          </div>
-          <section id="charter-recap" class="charter-recap" aria-label="Your charter recap" hidden></section>
-          <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></div>
-          <button class="primary" id="action">Seal the charter <span aria-hidden="true">→</span></button>
-          <div class="secondary-actions"><button id="hint" class="quiet">A little guidance</button><button id="retry" class="quiet" hidden>Revise this council</button><button id="restart" class="quiet">Restart journey</button></div>
-          <p id="score-note" class="score-note">Take your time. Your decisions count, not your speed.</p>
-        </div>
-      </div>
-      <div class="game-bottom"><span id="chapter-stars">CHARTER SEALS <b>0 / 18</b></span><span>Choose · Share · Withstand</span><a href="#mathematics">Look inside the mathematics <span aria-hidden="true">↗</span></a></div>
-    </section>
-    <section id="completion" class="completion" hidden aria-labelledby="completion-title" tabindex="-1"><p class="eyebrow">A charter that lasts</p><h2 id="completion-title">The secret is in good hands.</h2><p id="completion-text"></p><div class="completion-actions"><button class="primary" id="copy-result">Copy result</button><button class="outline" id="play-again">Play again</button><a href="https://systemslibrarian.github.io/crypto-lab-shamir-gate/">Explore Shamir Gate →</a></div><p id="copy-status" role="status"></p><textarea id="copy-fallback" readonly hidden aria-label="Result to copy manually"></textarea></section>
-    <noscript><p class="no-script">Secret Council needs JavaScript to calculate and combine shares. Enable it to play; the explanation below is still available.</p></noscript>
-    <section class="how-section" id="how-it-works" aria-labelledby="how-title">
-      <div class="section-heading"><p class="eyebrow">The idea behind the game</p><h2 id="how-title">Trust, shared.<br><em>Power, balanced.</em></h2><p>A share is a mathematical point. Enough distinct points recover the secret. A smaller collection leaves every possible secret open.</p></div>
-      <div class="lesson-grid"><article><span class="lesson-number">01</span><h3>A share is not a slice.</h3><p>One share does not reveal one piece of the message. With correctly randomized Shamir sharing, fewer than the threshold reveal no information about the secret.</p></article><article><span class="lesson-number">02</span><h3>Higher is a tradeoff.</h3><p>A larger threshold makes a larger coalition necessary to recover the secret. It also means fewer keepers can be absent. A council needs to plan for both.</p></article><article><span class="lesson-number">03</span><h3>Different people. Shared risks.</h3><p>Two keepers in the same building may disappear in the same outage. The later chapters ask you to distribute shares across independent locations.</p></article></div>
-    </section>
-    <section id="mathematics" class="math-section" aria-labelledby="math-title">
-      <details id="math-details"><summary><span><span class="eyebrow">Optional · no algebra needed to play</span><strong id="math-title">Why aren’t fewer shares enough?</strong></span><span aria-hidden="true">+</span></summary>
-        <div class="math-content"><div class="math-controls"><p>Try a separate, freshly randomized <strong>3-of-5</strong> example. Everything is calculated modulo 17: numbers wrap around after 16.</p><label for="visible-shares">Shares visible to an observer <output id="visible-count">2 / 3 needed</output></label><input id="visible-shares" type="range" min="0" max="3" value="2"><p id="possibility-copy" role="status"></p><div id="candidate-secrets" class="candidate-secrets" role="group" aria-label="Possible secret values"></div><p class="small-copy">Choose a possible secret. The plot shows one compatible polynomial’s points. With fewer than three shares, each of the 17 secrets is compatible; the number of matching coefficient choices is equal for every secret.</p><button class="outline" id="fresh-example">New example</button></div><div class="math-plot"><svg id="share-plot" viewBox="0 0 400 330" role="img" aria-labelledby="plot-title plot-description"><title id="plot-title">A compatible polynomial over the field of 17 elements</title><desc id="plot-description"></desc><g id="plot-grid"></g><g id="plot-dots"></g></svg><div class="plot-legend"><span>○ Compatible values</span><span>● Visible shares</span><span>◆ Candidate secret at x = 0</span></div><table><caption>Shares visible to this observer</caption><thead><tr><th scope="col">Share x</th><th scope="col">Value y</th></tr></thead><tbody id="share-table"></tbody></table></div></div>
-      </details>
-    </section>
-    <aside class="scope-note"><p class="eyebrow">What this game demonstrates</p><p>Real Shamir interpolation over the small field F₁₇; fictional keepers, thefts, and outages. The vault is a game indicator, not encrypted storage. This page holds the secret and all shares in one browser—use only its generated examples. Basic Shamir sharing does not authenticate shares, prevent copying, or erase a recovered secret. Trials are alternate scenarios, not a sequence of accumulating thefts.</p></aside>
-    <footer><div><a class="brand" href="../../">CRYPTO LAB</a><p>Understand it. Play with it. Look deeper.</p></div><nav aria-label="Further learning"><a href="https://systemslibrarian.github.io/crypto-lab-shamir-gate/">Continue in Shamir Gate</a><a href="https://people.cs.pitt.edu/~litman/courses/cs2001/lectures/lecture-02-p612-shamir.pdf">Shamir’s 1979 paper (PDF)</a><a href="https://github.com/systemslibrarian/crypto-lab/tree/main/games/secret-council">Source · MIT license</a></nav><p class="privacy">No account or analytics. Progress, best scores, and sound preference stay in this browser. <button id="clear-progress" class="text-button">Clear saved progress</button></p></footer>
-  </main>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#08191c">
+<meta name="description" content="Protect the city’s seed vault through a night of thefts and floods. Place five keepers, choose a threshold, and discover how sharing a secret balances theft resistance with recovery.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Secret Council · Protect the vault</title><link rel="icon" href="seal.svg" type="image/svg+xml"><link rel="stylesheet" href="vault.css"><script type="module" src="vault.mjs"></script>
+</head><body>
+<a class="skip" href="#game">Skip to the mission</a>
+<header><a class="brand" href="../../"><img src="seal.svg" width="28" height="28" alt="">CRYPTO LAB</a><nav aria-label="Game navigation"><a href="../">All games</a><a href="chapters.html">Guided chapters</a></nav></header>
+<main>
+<section class="intro" aria-labelledby="title"><div><p class="eyebrow">A small game about sharing a secret</p><h1 id="title">Secret <em>Council.</em></h1></div><div class="promise"><strong>Save the city’s seed vault.</strong><p>Keep its secret from thieves. Bring enough keepers back to open it at dawn.</p><p class="learn"><b>You’ll learn:</b> how splitting a secret can resist theft and still survive missing shares.</p></div></section>
+<section id="game" class="game" tabindex="-1" aria-label="Vault protection game">
+<div class="game-top"><div id="nights" role="group" aria-label="Choose a mission"></div><button id="sound" class="text-button" aria-pressed="false">Sound off</button></div>
+<div class="briefing"><div><p class="eyebrow" id="night-subtitle"></p><h2 id="night-title"></h2><p id="night-brief"></p></div><div class="mission-stamp"><span id="phase-label">MAKE YOUR PLAN</span><strong id="reserve-count">1</strong><span>reserves</span></div></div>
+<div class="play-layout">
+<div class="map-panel">
+<div class="map-heading"><span class="eyebrow">Your city · five distinct shares</span><span id="move-cost">Moves are free before dusk</span></div>
+<p id="map-help">Click a keeper, then a house to move them. Each house has room for three.</p>
+<div id="city" class="city" aria-label="Keeper locations"></div>
+<div class="roads" aria-hidden="true"><svg viewBox="0 0 600 64" preserveAspectRatio="none"><path d="M100 0v25q0 12 12 12h176q12 0 12 12v15M300 0v64M500 0v25q0 12-12 12H312q-12 0-12 12v15"/></svg></div>
+<div id="vault" class="vault"><img src="seal.svg" width="66" height="66" alt=""><div><p class="eyebrow">The seed vault</p><strong id="vault-state">Waiting for your plan</strong><p id="vault-detail">Your mission needs both secrecy and recovery.</p></div></div>
+<div class="meters"><div><span>Thieves’ distinct shares</span><strong id="stolen-count">0 / 3 needed</strong><div id="stolen-pips" class="pips" aria-hidden="true"></div></div><div><span>Keepers who can arrive</span><strong id="available-count">5 / 3 needed</strong><div id="available-pips" class="pips" aria-hidden="true"></div></div></div>
+<div class="event-card" aria-live="polite" aria-atomic="true"><p class="eyebrow" id="event-label">Your first decision</p><h3 id="event-title">How many keepers should it take?</h3><p id="event-text">Two is easy to gather. Five needs everyone. What will survive this forecast?</p></div>
+</div>
+<aside class="command-panel" aria-label="Plan and play">
+<fieldset id="threshold-controls"><legend>Shares needed to open the vault</legend><div id="thresholds" role="group" aria-label="Recovery threshold"></div><p id="threshold-note">Choose the threshold before sharing the secret.</p></fieldset>
+<details class="forecast" open><summary>Tonight’s forecast <span id="forecast-count"></span></summary><ol id="forecast"></ol><p>Events happen in this order. Thieves keep earlier copies.</p></details>
+<div id="dispatch" class="dispatch"><p class="eyebrow">Your reserve crew</p><p id="dispatch-help">After dusk, spend one reserve to move a keeper, guard a house, or send a ferry. Or try to save it.</p><label for="dispatch-house">Send help to</label><select id="dispatch-house"><option value="0">Archive</option><option value="1">Harbor</option><option value="2">Tower</option></select><div class="dispatch-buttons"><button id="guard" disabled>Send watch <span>1 reserve</span></button><button id="ferry" disabled>Send ferry <span>1 reserve</span></button></div><p class="small">Watch: stops future thefts here. Ferry: keeps this house reachable through floods.</p></div>
+<p id="feedback" role="status" aria-live="polite">Try a plan. Every retry and hint is free.</p>
+<button id="action" class="primary">Begin the night <span aria-hidden="true">→</span></button>
+<div class="secondary"><button id="rewind" class="text-button">Reset plan</button><button id="hint" class="text-button">A free hint</button></div><p id="hint-text" class="hint" hidden></p>
+</aside>
+</div>
+<section id="result" class="result" hidden tabindex="-1" aria-labelledby="result-title"><p class="eyebrow" id="result-kicker"></p><h2 id="result-title"></h2><div id="result-facts" class="result-facts"></div><div class="takeaway"><h3>What your plan taught you</h3><p id="lesson"></p><p id="connection"></p></div><p id="comparison" class="comparison" hidden></p><div class="result-actions"><button id="retry-result" class="primary">Rewind &amp; try another plan</button><button id="next-night" class="outline">Try the next night →</button></div><p id="challenge" class="small"></p></section>
+<details id="evidence" class="evidence"><summary>Inspect the actual shares and night log</summary><p id="math-summary">Begin the night to generate five shares using Shamir’s method.</p><div class="table-wrap"><table><caption>Generated example · arithmetic modulo 17</caption><thead><tr><th>Keeper</th><th>Share (x, y)</th><th>Thief copied?</th><th>Can arrive?</th></tr></thead><tbody id="share-table"></tbody></table></div><ol id="night-log"></ol></details>
+</section>
+<noscript><p>This game needs JavaScript to generate and combine the shares. The explanation below is still available.</p></noscript>
+<section class="why"><div><p class="eyebrow">Why this is cryptography</p><h2>A secret you can lose a share of.<br><em>Without losing the secret.</em></h2></div><div><p>Shamir secret sharing turns a secret into mathematical shares. Any group meeting the threshold can reconstruct it. Fewer shares reveal no information about its value when the sharing is correctly randomized.</p><p>This can help protect a backup encryption key: some copies of shares can be lost or stolen without losing recovery or revealing the key. Your threshold and where you keep the shares determine which losses you can tolerate.</p><a href="chapters.html#mathematics">Explore why fewer shares leave every secret possible →</a></div></section>
+<aside class="limits"><strong>A playable model, using real small-field arithmetic.</strong> Guards, ferries and forecasts are simplified game rules. All shares and the secret live in this browser; the vault is a game indicator, not encrypted storage. No real secrets belong here. Sharing alone does not authenticate shares or erase stolen copies. Each retry generates a fresh example; thefts accumulate only within that attempt.</aside>
+<footer><nav aria-label="Further learning"><a href="https://systemslibrarian.github.io/crypto-lab-shamir-gate/">Go deeper in Shamir Gate</a><a href="https://people.cs.pitt.edu/~litman/courses/cs2001/lectures/lecture-02-p612-shamir.pdf">Shamir’s original paper</a><a href="https://github.com/systemslibrarian/crypto-lab/tree/main/games/secret-council">Source</a></nav><p>No account or analytics. Only completed missions and sound preference are saved. <button id="clear-progress" class="text-button">Clear mission progress</button></p><p id="storage-note" class="small"></p></footer>
+</main></body></html>

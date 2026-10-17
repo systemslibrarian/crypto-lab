@@ -101,7 +101,7 @@ function complete(resultTitle){
   save();$('#lesson-result').hidden=false;
   $('#earned').textContent=mode==='arena'?`Verified round ${arenaRound+1} / 5`:mode==='daily'&&dailyStage<2?`Lesson ${dailyStage+1} complete · ${badges()} badges still available`:`${badges()} / 3 learning badges`;
   $('#outcome-title').textContent=resultTitle;$('#lesson').textContent=s.def.lesson;
-  $('#feedback').textContent='Read what happened, then continue.';render();
+  $('#feedback').textContent='Read what happened, then continue.';render();$('#lesson-result').focus({preventScroll:true});$('#lesson-result').scrollIntoView({block:'nearest'});
 }
 function roundTitle(result){return result==='win'?'You win this round.':result==='tie'?'A verified tie.':'Switch wins this round.';}
 async function reveal(){

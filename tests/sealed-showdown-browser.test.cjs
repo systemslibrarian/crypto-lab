@@ -68,6 +68,7 @@ async function solve(page,kind,{mistake=false}={}){
     }else{assert.equal(H(await page.locator('#robot-opening').textContent()),seal);assert.match(await page.locator('#verification-title').innerText(),/matches/);}
   }
   await page.locator('#lesson-result').waitFor({state:'visible'});
+  assert(await page.evaluate(()=>document.querySelector('#lesson-result').compareDocumentPosition(document.querySelector('#action')) & Node.DOCUMENT_POSITION_FOLLOWING));
   const keywords={open:/timing/,sealed:/Both hashes matched/,guess:/three possible moves/,swap:/binding/,replay:/current round/,abort:/cannot force participation/};
   assert.match(await page.locator('#lesson').innerText(),keywords[kind]);
 }

@@ -249,6 +249,8 @@ Catalogued total moves to 225.*
 
 *Version 28 — files RSA Small Roots under §7 for larger-prime high-bit leakage and §10 for exact integer lattice reduction. Its known-prefix exponent-3 RSA mode and factoring mode distinguish a finite bound, norm certificate, bounded root search and independent public verification. Source and served assets are verified; no concept status changes. Catalogued total moves to 228.*
 
+*Version 29 — files three source-to-served-SHA verified teaching labs without claiming any newly closed concept gap: Key Lifecycle (§39) demonstrates a real captured-key confidentiality failure after correct AES-GCM authentication; Compression Leak (§29) shows gzip ciphertext-length disclosure despite valid encryption; Subliminal Channels (§37) verifies the real ECDSA signature that also carries a bit chosen by its signer. These deepen existing COVERED concepts, and none changes the catalogue's concept-completeness status. Catalogued total moves to 231.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -858,7 +860,7 @@ Forge · SM2 Forge.
 
 **29. Composition and parsing failures — `COVERED`**
 Protocol Compose · Signed Bytes · Salamander · KEM Trap · JWT Forge · Padding Oracle ·
-Ablation Wire · Sector Vault. The first six break a composition; Ablation Wire inverts the
+Ablation Wire · Sector Vault · Compression Leak. The first six break a composition; Ablation Wire inverts the
 question and asks which layer was carrying the guarantee all along — switch one off and watch
 what an adversary recovers. It also separates hybrid-PQ confidentiality from authentication,
 which is the distinction a single "PQ" badge hides.
@@ -979,7 +981,7 @@ Dead Sea Cipher · Enigma Forge · Vigenère Break. (Cipher Museum carries this 
 a sibling project — do not expand here.)
 
 **37. Steganography — `COVERED`**
-Stego Suite · J-UNIWARD · Regex Veil — FTE · Covert Channel Studio.
+Stego Suite · J-UNIWARD · Regex Veil — FTE · Covert Channel Studio · Subliminal Channels.
 
 Covert Channel Studio adds the carrier survey the other three do not attempt: the same bits
 moved eleven ways — DNS labels, ICMP echoes, inter-arrival gaps, IP/TCP field values, packet
@@ -1039,7 +1041,7 @@ lock into is MuSig Gate's subject, and Adaptor Gate models the lock deliberately
 adaptor arithmetic stays in view.
 
 **39. Operational key management — `COVERED`**
-Envelope KMS · PQ Rotation · Ghost Commit.
+Envelope KMS · PQ Rotation · Ghost Commit · Key Lifecycle.
 
 Ghost Commit is the failure case the other two only imply. Envelope KMS shows the safe path —
 a DEK/KEK hierarchy, rotation, re-wrap without plaintext exposure — and PQ Rotation shows
@@ -1097,7 +1099,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 228.**
+**Catalogued total: 231.**
 
 ---
 

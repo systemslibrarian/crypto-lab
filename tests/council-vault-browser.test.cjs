@@ -154,7 +154,12 @@ test('responsive mission and result, meaningful native controls, reduced motion 
       for(const keeper of await page.locator('.keeper').all()){const b=await keeper.boundingBox();assert(b.width>=44&&b.height>=44);}
       await page.screenshot({path:`test-results/secret-council/vault-plan-${width}.png`,fullPage:true});
       await page.locator('[data-threshold="3"]').click();await page.locator(width<=700?'#quick-action':'#action').click();
-      if(width<=700){await page.locator('#quick-action').click();assert.match(await page.locator('#feedback').innerText(),/Thieves now hold 2/);}
+      if(width<=700){
+        await page.locator('#quick-action').click();assert.match(await page.locator('#feedback').innerText(),/Thieves now hold 2/);
+        const event=await page.locator('.event-card').boundingBox(),bar=await page.locator('#mobile-actions').boundingBox();
+        assert(event.y>=0&&event.y+event.height<bar.y,'event outcome stays visible above the phone controls');
+        await page.screenshot({path:`test-results/secret-council/vault-event-${width}.png`,fullPage:false});
+      }
       await events(page);await collect(page);
       assert.equal(await page.locator('#mobile-actions').isVisible(),false);
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`result overflow ${width}`);

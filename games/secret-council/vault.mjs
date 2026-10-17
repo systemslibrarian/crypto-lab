@@ -167,7 +167,10 @@ $('action').addEventListener('click', () => {
     render(); sound(state.result.pass); $('result').focus({ preventScroll: true }); $('result').scrollIntoView({ block: 'center' });
   }
 });
-$('quick-action').addEventListener('click', () => $('action').click());
+$('quick-action').addEventListener('click', () => {
+  const before = state.phase; $('action').click();
+  if (state.phase === 'watch') (before === 'plan' ? $('city') : document.querySelector('.event-card')).scrollIntoView({ block: 'center' });
+});
 $('quick-help').addEventListener('click', () => {
   const target = state.phase === 'watch' ? $('dispatch-house') : $('city').querySelector('.keeper:not(.stranded)');
   target?.focus({ preventScroll: true }); target?.scrollIntoView({ block: 'center' });

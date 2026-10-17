@@ -41,9 +41,9 @@ test('games stay out of the main grid and remain reachable through the menu', as
         assert.equal(await games.getAttribute('href'),'games/');
         // file:// has no directory index routing; load the index at the menu target.
         await page.goto(new URL('index.html',await games.evaluate(a=>a.href)).href);
-        assert.equal(await page.locator('.arcade-card').count(),5);
+        assert.equal(await page.locator('.arcade-card').count(),8);
         assert.equal(await page.locator('.arcade-card[href="'+gameURL+'"]').isVisible(),true);
-        for(const slug of ['sealed-showdown','key-rush','merkle-mystery','quantum-courier'])assert.equal(await page.locator(`.arcade-card[href="${slug}/"]`).isVisible(),true);
+        for(const slug of ['sealed-showdown','key-rush','merkle-mystery','quantum-courier','mental-poker','coin-flip-challenge','the-digital-trade'])assert.equal(await page.locator(`.arcade-card[href="${slug}/"]`).isVisible(),true);
         assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
         assert.deepEqual(errors,[]);
       } finally { await page.close(); }

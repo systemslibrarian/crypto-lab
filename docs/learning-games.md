@@ -24,7 +24,7 @@ can add depth, but must not hide the essential connection to cryptography.
 | --- | --- | --- |
 | Lattice Builder | Straighten signal fields, fly integer vector routes, match bases | Signal completion explains the eight-candidate search; every flight explains its vector operation; Basis Match explains each matched target. These are geometric intuition, not general lattice attacks. |
 | Key Rush | Steer courier bots through moving scanners and traps; boost, deliver and retry with different thresholds | Distinct stolen copies, lost bots and actual reconstruction show secrecy versus availability; each round explains its outcome. |
-| Merkle Mystery | Locate changes, assemble proofs and judge archive parcels | Actual hash comparisons and the proof walkthrough lead into a lesson about integrity, inclusion or root trust. |
+| Merkle Mystery | Build a proof route from neighboring hash blocks and decide whether arcade collectibles pass the gate | Real hash joins, compact proof counts and comparison with the saved root explain inclusion, changed data and independent trust. |
 | Quantum Courier | Tune, sift, discard samples and review measurement errors | The measured replay and sample counts precede a lesson about basis agreement, disturbance or limits of the evidence. |
 | Sealed Showdown | Make sealed choices, guess weak seals and judge openings | Recomputed hashes and game outcomes lead into lessons about hiding, binding, context and refusal to reveal. |
 
@@ -216,8 +216,54 @@ pages, GitHub Pages publishes from main; merge only after the PR checks pass.
 
 ## Merkle Mystery
 
+The default entry is now **Proof Run**: four compact puzzles for fictional arcade
+collectibles. Players choose a sibling block and place its fingerprint to the left
+or right of their current block. A successful join moves up the visible route;
+an incorrect block or reversed order calculates a real hash preview, explains the
+mistake and leaves the previous step intact. Undo, hints and retries are free.
+There is no timer, life limit or penalty for exploring. This is a puzzle prototype;
+automated behavior checks do not establish enjoyment or teaching effectiveness.
+
+`run-core.mjs` reuses the existing SHA-256 tree and proof implementation without
+changing it. Four authored cases cover a valid 4-item proof with 2 siblings, a
+valid 8-item proof with 3 siblings, an altered item in a 16-item collection, and
+an altered item with a completely rebuilt sender-provided tree. The last two use
+4 siblings. All joins calculate `nodeHash` from the actual running value and
+selected sibling. The final verifier recomputes from the delivered record,
+position, size, collected sibling hashes and independently saved root. An authored
+case label never decides whether a proof verifies. A sender root may match while
+the saved root fails. Completion requires accepting a matching proof or rejecting
+a mismatch, then shows a short outcome-specific lesson.
+
+Range labels and structural sibling checks are puzzle guidance, not cryptographic
+authentication. Candidates come from a full local tree; the proof count describes
+what the verifier needs, not how much the teaching page downloads. The hash engine
+drawer exposes full inputs, calculated values and rejected-join previews. The
+saved root is explicitly an assumption; signatures, truth of a record, file
+protection and append-only consistency are outside this game.
+
+`run.mjs` guards async preparation and joins with a generation counter, so an old
+hash cannot finish a restarted or different run. Native buttons support keyboard
+and touch. Optional Web Audio is off by default, delayed audio checks its current
+preference, and reduced motion suppresses the jump flourish. Only validated
+completion flags and sound preference are stored under `crypto-lab-merkle-run-v1`;
+storage errors preserve play. Clearing it leaves prior chapter scores and the
+shared theme alone. No runtime dependencies, external assets, accounts, telemetry,
+network requests or document inputs are added. The menu card and README now
+describe Proof Run; games remain off the main exhibit grid.
+
+`tests/merkle-run-core.test.mjs` independently recomputes hashes, checks all four
+outcomes, incorrect joins, undo and progress validation. The browser suite drives
+all routes and decisions, checks actual displayed hash inputs, async cancellation,
+storage/Web Crypto failure, keyboard controls and responsive screenshots. Both
+run in the existing `merkle-mystery` job and artifact. The six archive chapters,
+daily challenge, existing assets and progress remain at `chapters.html`, with
+navigation back to Proof Run. Their browser suite explicitly uses that route.
+
+### Original archive chapters
+
 Buildless HTML/CSS/SVG/ES modules at
-`https://crypto-lab.systemslibrarian.dev/games/merkle-mystery/`. All assets are local;
+`https://crypto-lab.systemslibrarian.dev/games/merkle-mystery/chapters.html`. All assets are local;
 no runtime packages, backend, accounts, analytics, fetch calls, or document inputs.
 The archive illustration consists of accessible native buttons over decorative
 SVG edges. Small screens scroll only the labeled tree region horizontally; every

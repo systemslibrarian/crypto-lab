@@ -31,7 +31,7 @@ async function open(width=1366, date=null) {
   page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
   await page.route('https://**/*',route=>route.abort());
   if(date) await page.addInitScript(date => { const OriginalDate=Date; globalThis.Date=class extends OriginalDate {constructor(...args){super(...(args.length?args:[date+'T12:00:00Z']));} static now(){return new OriginalDate(date+'T12:00:00Z').getTime();}}; },date);
-  await page.goto(origin+'/games/merkle-mystery/');
+  await page.goto(origin+'/games/merkle-mystery/chapters.html');
   await ready(page);
   return {page,errors};
 }
@@ -159,7 +159,7 @@ test('storage refusal or corrupted values do not block play; theme storage is un
         if(denied){Storage.prototype.getItem=()=>{throw new Error('blocked');};Storage.prototype.setItem=()=>{throw new Error('blocked');};Storage.prototype.removeItem=()=>{throw new Error('blocked');};}
         else localStorage.setItem('crypto-lab-merkle-mystery-v1',JSON.stringify({best:[99,-1,'3'],daily:{date:'bad',score:100}}));
       },denied);
-      await page.goto(origin+'/games/merkle-mystery/');await ready(page);assert.equal(await page.locator('#best-score').textContent(),'0 / 18 bookplates');
+      await page.goto(origin+'/games/merkle-mystery/chapters.html');await ready(page);assert.equal(await page.locator('#best-score').textContent(),'0 / 18 bookplates');
       await select(page,['0:2']);await submit(page);await closed(page);
       if(!denied)assert.equal(await page.evaluate(()=>localStorage.getItem('theme')),'sentinel');
     }finally{await page.close();}
@@ -169,7 +169,7 @@ test('missing Web Crypto fails visibly; rapid chapter changes cannot apply stale
   const page=await browser.newPage();
   try{
     await page.addInitScript(()=>Object.defineProperty(globalThis.crypto,'subtle',{value:undefined}));
-    await page.goto(origin+'/games/merkle-mystery/');
+    await page.goto(origin+'/games/merkle-mystery/chapters.html');
     await page.waitForFunction(()=>document.querySelector('#case-title').textContent==='The archive could not open');
     assert.equal(await page.locator('#action').isDisabled(),true);
     assert.match(await page.locator('#feedback').innerText(),/Web Crypto/);

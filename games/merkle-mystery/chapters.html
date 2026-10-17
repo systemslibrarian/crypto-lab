@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1b1c">
+  <meta name="description" content="Investigate a mysterious archive. Find altered books, pack Merkle proofs, and discover why a trusted root matters in this visual cryptography game.">
+  <title>Merkle Mystery · Crypto Lab</title>
+  <link rel="icon" href="seal.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+  <script type="module" src="game.mjs"></script>
+</head>
+<body>
+<a class="skip" href="#play-area">Skip to the investigation</a>
+<header class="topbar"><a class="brand" href="../../"><img src="seal.svg" alt="" width="30" height="30">CRYPTO LAB</a><nav aria-label="Main navigation"><a href="../">All games <span aria-hidden="true">↗</span></a><a href="./">Play Proof Run</a><a href="#field-notes">Field notes</a></nav></header>
+<main>
+  <section class="hero"><div><p class="eyebrow"><span class="tiny-seal" aria-hidden="true"></span> An investigation in six chapters</p><h1>Merkle <em>Mystery.</em></h1><p class="tagline">Every book has a story.<br>Every change leaves a trace.</p></div><div class="hero-note"><span class="archive-number">ARCHIVE / 003</span><p>Something has changed in the library. Follow the fingerprints, assemble the evidence, and learn which seal to trust.</p><span class="hero-meta">Visual puzzles <b>·</b> No coding needed <b>·</b> Take your time</span></div></section>
+  <div class="toolbar"><div class="mode-switch" role="group" aria-label="Game mode"><button id="campaign-mode" aria-pressed="true">The investigation</button><button id="daily-mode" aria-pressed="false">Daily mystery</button></div><span id="best-score" class="score">0 / 18 bookplates</span></div>
+  <nav id="chapters" class="chapters" aria-label="Chapters"></nav>
+  <p id="daily-date" class="daily-date" hidden></p>
+  <section id="play-area" aria-label="Archive investigation" aria-busy="true">
+    <div class="case-heading"><div><p class="eyebrow" id="case-number">Chapter 01 / 06</p><h2 id="case-title">Opening the archive…</h2></div><button id="restart" class="quiet">Restart chapter</button></div>
+    <div class="game-layout">
+      <div class="archive-panel">
+        <div class="archive-top"><div><span class="small-label">The reading room</span><h3 id="board-title">An archive of fingerprints</h3></div><span id="tree-size" class="count-tag">4 books</span></div>
+        <div class="root-strip"><span>Independently recorded root</span><code id="trusted-root">Loading…</code><span class="recorded">REFERENCE</span></div>
+        <p id="tree-instruction" class="tree-instruction">Select a book to examine it.</p>
+        <div class="tree-scroll" tabindex="0" role="region" aria-label="Interactive Merkle tree; scroll horizontally on small screens"><div id="tree" class="tree"></div></div>
+        <p class="tree-caption"><span><i class="key-dot" aria-hidden="true"></i> <span id="legend-text">Changed fingerprint</span></span><span>Short labels · Full hashes in the evidence drawer</span></p>
+        <section id="proof-walk" class="proof-walk" hidden aria-label="Climb the proof">
+          <h3>Climb the proof</h3><p id="walk-status" role="status" aria-live="polite"></p>
+          <p>The tree shows recorded hashes. Outlines mark positions; supplied and computed values below may differ from that record.</p>
+          <pre id="walk-calculation"></pre><p id="walk-verdict" role="status"></p>
+          <div><button id="walk-back" class="secondary">Previous level</button><button id="walk-next" class="primary">Climb one level</button></div>
+        </section>
+        <section class="evidence" aria-labelledby="evidence-title"><div class="evidence-top"><span class="small-label">Evidence drawer</span><span id="evidence-id">Select a node</span></div><h3 id="evidence-title">Follow the branches</h3><div id="evidence-content"><p>Every book has a fingerprint. Pairs of fingerprints combine upward into one root.</p></div></section>
+      </div>
+      <aside class="case-panel" aria-labelledby="brief-title">
+        <p class="eyebrow">Your case file</p><h3 id="brief-title">The librarian’s request</h3><p id="story"></p>
+        <div class="objective"><span class="small-label">Your next move</span><p id="task"></p></div>
+        <div id="parcel" hidden></div>
+        <fieldset id="root-choices" hidden><legend>Which seal will you use?</legend><label><input type="radio" name="root-choice" value="recorded"><span><strong>Archive record</strong><small>Saved independently before delivery</small></span></label><label><input type="radio" name="root-choice" value="courier"><span><strong>Courier’s seal</strong><small>Supplied alongside the parcel</small></span></label><details><summary>Compare the full seals</summary><p>Recorded root</p><code id="recorded-full"></code><p>Courier root</p><code id="courier-full"></code></details></fieldset>
+        <div id="selection-summary" class="selection-summary">Nothing selected yet</div>
+        <button id="action" class="primary" disabled>Opening the archive…</button>
+        <div id="decisions" class="decisions" hidden><button id="accept" class="primary">Accept parcel</button><button id="quarantine" class="secondary">Quarantine parcel</button></div>
+        <p id="feedback" role="status" aria-live="polite" aria-atomic="true" class="feedback">The archive is loading.</p>
+        <details id="proof-details" hidden><summary>See the proof calculation</summary><ol id="proof-steps"></ol></details>
+        <div id="chapter-result" class="chapter-result" hidden><p class="eyebrow" id="earned"></p><h3>Case closed.</h3><p id="lesson"></p></div>
+        <div class="case-tools"><button id="hint" class="quiet">Ask the librarian</button><span>Guidance costs 1 bookplate</span></div>
+        <p id="hint-text" class="hint-text" hidden></p>
+      </aside>
+    </div>
+  </section>
+  <section id="finish" class="finish" hidden tabindex="-1"><img src="seal.svg" width="88" height="88" alt=""><p class="eyebrow">The archive is in good hands</p><h2 id="finish-title">An investigation complete.</h2><p id="finish-text"></p><div class="finish-actions"><button id="play-again" class="primary">Return to the archive</button><button id="copy-result" class="secondary">Copy result</button></div><p id="copy-status" role="status"></p><textarea id="copy-fallback" aria-label="Result to copy" readonly hidden></textarea><a href="../">Explore the other learning games →</a></section>
+  <section id="field-notes" class="field-notes"><div class="notes-intro"><p class="eyebrow">Under the seal</p><h2>A little structure.<br><em>A remarkable shortcut.</em></h2><p>A Merkle tree lets you check one record against a trusted root using only a few neighboring hashes.</p></div><div class="notes-body">
+    <details><summary>What is the game actually calculating?</summary><p>Every fingerprint is a full SHA-256 hash computed by your browser. A book record is encoded as a JSON array of its title and passage, then encoded as UTF-8. Leaf hashes start with byte <code>00</code>; branch hashes start with byte <code>01</code>, followed by the two raw 32-byte child hashes, left first. These distinct prefixes separate books from branches.</p><p>The board abbreviates hashes for readability. Comparisons always use all 32 bytes; open a node’s evidence drawer to inspect the full value. The game uses complete trees of four or eight books.</p></details>
+    <details><summary>Why can three fingerprints stand in for seven books?</summary><p>Start with the book’s hash. One sibling hash lets you calculate its parent. A second lets you calculate the next parent. A third reaches the root of an eight-book tree. Siblings can represent whole subtrees: you do not need to receive those other books.</p><p>Position, left/right order, and tree size matter. This game checks them along with the proof length. Inclusion in a committed collection does not prove an author’s identity or the accuracy of a statement.</p></details>
+    <details><summary>Does the root locate an altered book?</summary><p>A root mismatch tells you that the collection differs; the root alone does not identify the changed book. Locating it requires comparing available subtree fingerprints or other evidence. This game calculates both full snapshots and lets you inspect their differences.</p><p>Once a changed book is known, a system retaining the other hashes can update just that leaf and its ancestors. An inclusion proof answers a separate question: whether one book record belongs at a given position under the reference root.</p></details>
+    <details><summary>Where does trust enter the picture?</summary><p>A courier can create a new root for any collection they choose. You need an independently trusted root for the collection you intend to check. Real systems may authenticate roots with signatures or other trusted channels. The archive’s saved record is a story assumption here; no signature system is implemented.</p><p>A changed root shows a difference, not necessarily a crime. Our edition comparison uses complete snapshots. It is not a Merkle consistency proof and does not establish an append-only history.</p></details>
+    <details><summary>Progress, scoring, and daily mysteries</summary><p>Each chapter earns up to three bookplates. An incorrect submitted answer costs one; asking for guidance costs one once per chapter. A solved chapter always earns at least one. Only your best score for each chapter counts, for a maximum of 18. Replaying starts a fresh attempt.</p><p>The daily mystery has three tasks and earns up to three bookplates in total. It is determined by the UTC calendar date and is the same for everyone. An open daily case keeps its date across midnight.</p><p>Only scores are stored in this browser. There are no accounts, network requests from the game, or analytics. Clearing progress removes the game’s saved scores.</p><button id="clear-progress" class="quiet">Clear saved progress</button><p id="storage-status" role="status"></p></details>
+    <details><summary>Keep exploring</summary><p>For the underlying tree definitions and inclusion proofs, see <a href="https://www.rfc-editor.org/rfc/rfc9162.html#section-2.1">RFC 9162 §2.1</a>. The game uses its leaf/branch hash separation; it is not an implementation of the Certificate Transparency protocol.</p><p>Ready to explore more? Visit <a href="../../">Crypto Lab’s exhibit catalog</a> or try <a href="https://cryptohack.org/challenges/hashes/">CryptoHack’s hash challenges</a> for a coding-oriented next step. CryptoHack is an independent project.</p></details>
+  </div></section>
+  <aside class="scope-note">A fictional archive, real hash calculations. This is an educational game; it does not protect or authenticate your files. No real documents are requested.</aside>
+  <footer><a class="brand" href="../../">CRYPTO LAB</a><p>Follow the evidence. Understand the mathematics.</p><a href="https://github.com/systemslibrarian/crypto-lab/tree/main/games/merkle-mystery">View the source ↗</a></footer>
+</main>
+<noscript><div class="noscript">Merkle Mystery needs JavaScript to calculate hashes and run the puzzles. The field notes above are still available.</div></noscript>
+</body></html>

@@ -20,6 +20,7 @@ function cells(parent,first,last,size){parent.replaceChildren();for(let i=1;i<=s
 function announce(message,warning=false){$('feedback').textContent=message;$('feedback').classList.toggle('warning',warning);}
 function controls(){
  $('game').setAttribute('aria-busy',String(busy));
+ $('play').disabled=busy||!state;
  for(const b of $('choices').children)b.disabled=busy;
  $('join-left').disabled=$('join-right').disabled=busy||!selected||state?.phase!=='build';
  $('undo').disabled=busy||!state?.steps.length;
@@ -77,6 +78,7 @@ function render(){
  $('item-name').textContent=state.record.title;$('item-record').textContent=state.record.text;$('item-position').textContent=`Item ${state.mission.target+1} of ${state.mission.size}`;
  $('cargo-art').innerHTML=`<svg viewBox="0 0 80 80">${ART[state.run]}</svg>`;
  const held=range(state.level,state.position);$('held-range').textContent=held.label;cells($('held-cells'),held.first,held.last,state.mission.size);$('current-short').textContent=short(state.current);
+ $('step-counter').textContent=`Your current block · ${state.level} / ${Math.log2(state.mission.size)} jumps`;
  $('build-controls').hidden=state.phase!=='build';$('judge').hidden=state.phase!=='judge';$('result').hidden=state.phase!=='done';
  if(state.phase==='judge'){
   $('computed-root').textContent=state.current;$('saved-root').textContent=state.trustedRoot;
@@ -124,6 +126,7 @@ RUNS.forEach((r,i)=>{const b=document.createElement('button');b.dataset.run=i;b.
 $('join-left').addEventListener('click',()=>combine('left'));$('join-right').addEventListener('click',()=>combine('right'));
 $('accept').addEventListener('click',()=>decision('accept'));$('reject').addEventListener('click',()=>decision('reject'));
 $('restart').addEventListener('click',()=>load(requested));
+ $('play').addEventListener('click',()=>{$('workshop').focus({preventScroll:true});$('workshop').scrollIntoView({block:'start'});});
 $('undo').addEventListener('click',()=>{if(busy||!state)return;state=rewind(state);selected=null;render();});
 $('hint').addEventListener('click',()=>{if(busy||state?.phase!=='build')return;const sibling=range(state.level,state.position^1);announce(`Look for ${sibling.label.toLowerCase()}. It belongs on the ${state.position%2?'left':'right'}. Together, two equal-sized neighboring blocks make their parent. Hints are always free.`);});
 $('next').addEventListener('click',()=>{load((requested+1)%RUNS.length);document.querySelector('.mission').scrollIntoView({block:'start'});});

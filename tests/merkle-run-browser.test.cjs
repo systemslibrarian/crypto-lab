@@ -71,12 +71,13 @@ test('all four routes are played, use actual SHA-256 inputs, explain the result 
  }finally{await page.close();}
 });
 test('wrong joins, order, hints and decisions give free feedback, while undo restores the route',async()=>{
- const {page,errors}=await open();
+ const {page,errors}=await open(320);
  try{
   const initial=await page.locator('#current-short').textContent();
   await page.locator('[data-node="0:2"]').click();await page.locator('#join-left').click();await ready(page);
   assert.equal(await page.locator('#budget').textContent(),'0 / 2');assert.equal(await page.locator('#current-short').textContent(),initial);
   assert.match(await page.locator('#feedback').textContent(),/wrong block/);assert.match(await page.locator('#preview').textContent(),/Computed SHA-256/);
+  await page.locator('#math summary').click();assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'full rejected-join hashes fit a phone');await page.locator('#math summary').click();
   await page.locator('[data-node="0:0"]').click();await page.locator('#join-right').click();await ready(page);
   assert.match(await page.locator('#feedback').textContent(),/wrong order/);assert.equal(await page.locator('#budget').textContent(),'0 / 2');
   await page.locator('#hint').click();assert.match(await page.locator('#feedback').textContent(),/Hints are always free/);
@@ -98,6 +99,9 @@ test('phone, tablet and desktop keep tiles, decisions and full root values insid
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`initial ${width}`);
    for(const tile of await page.locator('.choice').all()){const b=await tile.boundingBox();assert(b.width>=44&&b.height>=44);}
    await page.screenshot({path:`test-results/merkle-mystery/run-ready-${width}.png`,fullPage:true});
+   await page.locator('#play').click();
+   if(width<=700){const current=await page.locator('.held').boundingBox(),join=await page.locator('.join-buttons').boundingBox();assert(current.y>=0&&join.y+join.height<=1000,'play brings current block, tiles and joins into view');}
+   await page.screenshot({path:`test-results/merkle-mystery/run-playing-${width}.png`,fullPage:false});
    await step(page);assert.equal(await page.locator('.platform.current').evaluate(el=>getComputedStyle(el).animationName),'none');
    await page.screenshot({path:`test-results/merkle-mystery/run-jump-${width}.png`,fullPage:true});
    await runAt(page,3);await climb(page);

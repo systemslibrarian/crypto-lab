@@ -71,6 +71,9 @@ async function solve(page,kind,{mistake=false}={}){
   assert(await page.evaluate(()=>document.querySelector('#lesson-result').compareDocumentPosition(document.querySelector('#action')) & Node.DOCUMENT_POSITION_FOLLOWING));
   const keywords={open:/timing/,sealed:/Both hashes matched/,guess:/three possible moves/,swap:/binding/,replay:/current round/,abort:/cannot force participation/};
   assert.match(await page.locator('#lesson').innerText(),keywords[kind]);
+  assert((await page.locator('#crypto-question').innerText()).endsWith('?'));
+  assert.equal(await page.locator('#what-happened').isVisible(),true);
+  assert.equal(await page.locator('#use-case').isVisible(),true);
   if(kind==='guess')assert.match(await page.locator('#verification-text').innerText(),/No secret random value was included/);
 }
 test('six playable lessons, independently hashed openings, visible takeaways, scores and clipboard fallback',async()=>{
@@ -134,10 +137,44 @@ test('storage, unsupported crypto, midround RNG errors and stale digests fail sa
     }finally{await page.close();}
   }
   const {page,errors}=await open();try{
-    await chapterAt(page,1);await page.locator('[data-move=rock]').click();
+    await chapterAt(page,1);await page.locator('[data-move=rock]').click();await ready(page);
     await page.evaluate(()=>{const original=crypto.subtle.digest.bind(crypto.subtle);crypto.subtle.digest=(...args)=>new Promise(resolve=>setTimeout(()=>resolve(original(...args)),150));document.querySelector('#action').click();document.querySelector('[data-chapter="0"]').click();});
     await page.waitForTimeout(250);await ready(page);assert.equal(await page.locator('#round-title').innerText(),'After you, human');assert.equal(await page.locator('#your-seal').textContent(),'Not committed');
-    await chapterAt(page,1);await page.locator('[data-move=rock]').click();await page.evaluate(()=>{crypto.getRandomValues=()=>{throw new Error('Random source unavailable');};});await action(page);assert.match(await page.locator('#feedback').innerText(),/Random source unavailable/);assert.equal(await page.locator('#lesson-result').isVisible(),false);assert.deepEqual(errors,[]);
+    await chapterAt(page,1);await page.locator('[data-move=rock]').click();await ready(page);await page.evaluate(()=>{crypto.getRandomValues=()=>{throw new Error('Random source unavailable');};});await page.locator('#refresh-random').click();await ready(page);assert.match(await page.locator('#feedback').innerText(),/Random source unavailable/);assert.equal(await page.locator('#lesson-result').isVisible(),false);assert.deepEqual(errors,[]);
   }finally{await page.close();}
   const unsupported=await browser.newPage();try{await unsupported.addInitScript(()=>{crypto.getRandomValues=undefined;});await unsupported.goto(origin+'/games/sealed-showdown/');await ready(unsupported);assert.match(await unsupported.locator('#feedback').innerText(),/needs Web Crypto/);assert.equal(await unsupported.locator('#action').isDisabled(),true);}finally{await unsupported.close();}
+});
+
+test('private fingerprint preview teaches changed inputs, locks the exact draft and reveals for recomputation',async()=>{
+  for(const width of [390,1366]){
+    const {page,errors}=await open(width);
+    try{
+      assert.match(await page.locator('.crypto-start').innerText(),/commit now, reveal later/);
+      await chapterAt(page,1);
+      const botSeal=await page.locator('#bot-seal').textContent();
+      async function choose(move){await page.locator(`[data-move="${move}"]`).click();await ready(page);return await page.locator('#draft-hash').textContent();}
+      const rock=await choose('rock'),nonce=await page.locator('#draft-random').textContent(),round=await page.locator('#expected-round').textContent();
+      assert.equal(rock,H(JSON.stringify(['crypto-lab/sealed-showdown/v1',round,'you','rock',nonce])));
+      assert.equal(await page.locator('#your-seal').textContent(),'Not committed');
+      assert.equal(await page.locator('#human-opening').count(),0);
+      const paper=await choose('paper');assert.notEqual(paper,rock);assert.equal(await page.locator('#draft-random').textContent(),nonce);
+      assert.match(await page.locator('#draft-note').innerText(),/Different move, same secret randomness/);
+      assert.equal(await choose('rock'),rock);
+      await page.locator('#refresh-random').click();await ready(page);
+      const changed=await page.locator('#draft-hash').textContent(),newNonce=await page.locator('#draft-random').textContent();
+      assert.notEqual(newNonce,nonce);assert.notEqual(changed,rock);assert.equal(changed,H(JSON.stringify(['crypto-lab/sealed-showdown/v1',round,'you','rock',newNonce])));
+      assert.match(await page.locator('#draft-note').innerText(),/Same move, different secret randomness/);
+      assert.equal(await page.locator('#bot-seal').textContent(),botSeal);
+      assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+      await page.screenshot({path:`test-results/sealed-showdown/builder-${width}.png`,fullPage:true});
+      await action(page);assert.equal(await page.locator('#your-seal').textContent(),changed);
+      assert.equal(await page.locator('[data-move]:not(:disabled)').count(),0);assert.equal(await page.locator('#refresh-random').isVisible(),false);
+      assert.equal(await page.locator('#human-opening').count(),0);
+      await action(page);assert.equal(H(await page.locator('#human-opening').textContent()),changed);
+      assert.match(await page.locator('#what-happened').innerText(),/You revealed rock/);
+      assert.match(await page.locator('#use-case').innerText(),/bidder/);
+      await page.screenshot({path:`test-results/sealed-showdown/commitment-result-${width}.png`,fullPage:true});
+      assert.deepEqual(errors,[]);
+    }finally{await page.close();}
+  }
 });

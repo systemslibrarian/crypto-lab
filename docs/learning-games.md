@@ -3,7 +3,13 @@
 `games/index.html` is the entry point linked from the catalog navigation. It links
 Lattice Builder's existing standalone site with Secret Council, Merkle Mystery, and
 Quantum Courier, and Sealed Showdown, served directly from their respective `games/<slug>/` directories.
-These are catalog-hosted games, not new fleet repositories: they do not increment the count
+Games are reached through the **Learn through play** menu and `games/`, not the
+main exhibit card display. The existing Lattice Builder source record remains
+in the catalog for evidence and maintainer tools, but `data-format="learning-game"`
+excludes it from the visible grid and its filter counts. Do not add game cards to
+the main display unless the owner requests that again.
+
+The four hub games are catalog-hosted games, not new fleet repositories: they do not increment the count
 of independently catalogued exhibits or borrow existing exhibits' evidence.
 
 ## The teaching standard
@@ -242,6 +248,17 @@ countermove. Tampering and replay rounds require recomputation and rejection;
 the final round withholds the opening and requires recording an incomplete game.
 Each completion shows its own short explanation. Honest losses and ties still
 complete a lesson; learning scores are separate from winning at RPS.
+
+The opening explains the problem in plain language: fix a hidden choice now and
+check it later. Every round names its crypto question before play, describes the
+actual move/hash outcome afterward, and connects it to the same sealed-bid auction
+example. Auction examples explain a building block, not a complete auction protocol.
+The basic commitment round shows a private draft with the selected move, secret
+randomness and real SHA-256 fingerprint. Changing either input recomputes that
+preview; committing publishes the exact previewed fingerprint and locks the inputs.
+Reveal supplies those inputs for recomputation, not decryption. Draft randomness is
+visible only in the learner's private panel until reveal, not the public record.
+Draft calculations use the same navigation generation guard as other hashing work.
 
 The strong commitment is Web Crypto SHA-256 over UTF-8 encoding of the JSON array
 `["crypto-lab/sealed-showdown/v1", round, player, move, nonce]`. Nonces are fresh

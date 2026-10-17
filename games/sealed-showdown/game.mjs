@@ -29,7 +29,7 @@ function stats(){
 async function begin({keepAttempt=false,focus=false}={}){
   const token=++generation,old=state,def={...LESSONS[chosenLesson()]};
   if(mode==='arena'){def.title=`Arena round ${arenaRound+1} of 5`;def.brief='Switch commits a random move before you choose. Pick yours, lock it, then reveal and verify. Five rounds, including ties. Your arena score is separate from learning badges.';def.hint='There is no guaranteed winning move against an independent random choice. Pick a move, seal it, and check both openings.';}
-  state={def,phase:'choose',busy:true,ready:false,error:null,selected:null,robot:null,robotSeal:null,human:null,humanSeal:null,opening:null,verified:null,guesses:{},found:null,bubble:def.bubble,mistakes:keepAttempt?old.mistakes:0,guided:keepAttempt?old.guided:false,done:false,humanRevealed:false,outcome:null};
+  state={def,phase:'choose',busy:true,ready:false,error:null,selected:null,robot:null,robotSeal:null,human:null,humanSeal:null,draft:null,draftSeal:null,draftNote:'',opening:null,verified:null,guesses:{},found:null,bubble:def.bubble,mistakes:keepAttempt?old.mistakes:0,guided:keepAttempt?old.guided:false,done:false,humanRevealed:false,outcome:null};
   $('#feedback').textContent='';$('#verification').hidden=true;$('#lesson-result').hidden=true;$('#finish').hidden=true;$('#hint-text').hidden=!state.guided;$('#copy-fallback').hidden=true;$('#copy-status').textContent='';$('#receipt').open=false;
   render();
   try{
@@ -48,7 +48,7 @@ function render(){
   $('#play').setAttribute('aria-busy',String(s.busy));
   $('#round-tag').textContent=mode==='daily'?`Daily challenge / ${dailyStage+1} of 3`:mode==='arena'?'Five rounds / every opening verified':`Lesson 0${chapter+1} / ${d.concept}`;
   $('#round-title').textContent=s.error?'The table could not open':d.title;
-  $('#brief').textContent=d.brief;$('#round-label').textContent=mode==='daily'?daily.date+' / UTC':d.kind==='open'?'OPEN PLAY':d.kind==='guess'?'WEAK HASH / NO NONCE':'LIVE SHA-256';
+  $('#brief').textContent=d.brief;$('#crypto-question').textContent=d.question;$('#round-label').textContent=mode==='daily'?daily.date+' / UTC':d.kind==='open'?'OPEN PLAY':d.kind==='guess'?'WEAK HASH / NO NONCE':'LIVE SHA-256';
   $('#human-art').innerHTML=art(s.humanSeal&&!s.humanRevealed?'sealed':s.selected||'unknown');
   $('#human-move').textContent=s.humanSeal&&!s.humanRevealed?'Sealed.':s.selected?title(s.selected):'Your move?';
   $('#human-status').textContent=s.humanRevealed?'Opened':s.humanSeal?'Committed':'Choosing';
@@ -59,6 +59,7 @@ function render(){
   $('#bot-detail').textContent=visible?d.kind==='open'?'Picked after seeing your move.':s.verified?(s.verified.valid?'Opening matches the stored seal.':'Opening fails this round’s check.'):'A displayed move is not yet verified.':s.found?'Found by your three-guess lookup.':s.robotSeal?'The hash is public. The move is hidden.':'A professional second-guesser.';
   $('#bubble').innerHTML=`<span>SWITCH SAYS</span>“${escape(s.bubble)}”`;
   $('#moves').innerHTML=MOVES.map((move,i)=>`<button data-move="${move}" aria-pressed="${s.selected===move}" ${s.phase!=='choose'||!s.ready||s.busy||s.error?'disabled':''}>${art(move)}<span>${title(move)}</span><small>BEATS ${['SCISSORS','ROCK','PAPER'][i]}</small></button>`).join('');
+  renderBuilder();
   $('#guess-lab').hidden=d.kind!=='guess';
   $('#guesses').innerHTML=MOVES.map(move=>{const g=s.guesses[move];return `<button data-guess="${move}" class="${g?.match?'matched':''}" ${g||s.phase!=='choose'||s.busy||!s.ready?'disabled':''}>Test ${title(move)}<code>${g?g.hash.slice(0,10)+'…':'SHA-256 → ?'}</code>${g?`<small>${g.match?'MATCH':'No match'}</small>`:''}</button>`;}).join('');
   $('#guess-status').textContent=s.found?`Match found: Switch committed to ${s.found}. Pick the move that beats it.`:'These experiments cost no badges.';
@@ -75,9 +76,43 @@ function render(){
   const decision=s.phase==='checked'||s.phase==='withheld';
   $('#decisions').hidden=!decision;$('#accept').hidden=s.phase!=='checked';$('#reject').hidden=s.phase!=='checked';$('#declare-win').hidden=s.phase!=='withheld';$('#incomplete').hidden=s.phase!=='withheld';
   $('#action').hidden=decision;$('#action').disabled=s.busy||!s.ready||!!s.error;
-  $('#action').textContent=s.busy?'Checking the record…':s.done?nextLabel():s.phase==='choose'?d.kind==='open'?'Play openly →':'Seal my move →':s.phase==='sealed'?d.kind==='abort'?'Reveal my move →':d.kind==='swap'||d.kind==='replay'?'Reveal the moves →':'Reveal & verify →':'Verify Switch’s seal →';
+  $('#action').textContent=s.busy?'Checking the record…':s.done?nextLabel():s.phase==='choose'?d.kind==='open'?'Show my move first →':'Commit my fingerprint →':s.phase==='sealed'?d.kind==='abort'?'Reveal my move →':d.kind==='swap'||d.kind==='replay'?'Reveal the moves →':'Reveal & verify →':'Verify Switch’s seal →';
   $('#hint').disabled=s.done||s.busy||!!s.error;$('#hint-text').textContent=d.hint;
   document.querySelectorAll('#decisions button').forEach(b=>{b.disabled=s.busy||!!s.error;});
+}
+function renderBuilder(){
+  const s=state;
+  $('#commitment-builder').hidden=s.def.kind!=='sealed';
+  $('#builder-stage').textContent=s.humanRevealed?'Revealed: everyone can check':s.humanSeal?'Committed: only the fingerprint is public':'Your private draft: not sent to Switch';
+  $('#draft-move').textContent=s.selected?title(s.selected):'Choose a card';
+  $('#draft-random').textContent=s.draft?.nonce||'Generated when you choose';
+  $('#draft-hash').textContent=s.busy&&s.phase==='choose'?'Calculating…':s.draftSeal||'Choose a move to calculate it';
+  $('#refresh-random').disabled=s.phase!=='choose'||!s.draft||s.busy||!!s.error;
+  $('#refresh-random').hidden=s.phase!=='choose';
+  $('#draft-note').textContent=s.humanRevealed?'Your move and randomness have now been revealed. The same inputs reproduce your published fingerprint.':s.humanSeal?'This exact fingerprint is now on the public record. Your choice and randomness stay private until you reveal.':s.draftNote||'Only the fingerprint is published when you commit. Your move and randomness stay private until you reveal.';
+}
+async function prepareDraft(move,refresh=false){
+  const s=state,previous=s.draftSeal;
+  await work(async()=>{
+    const draft={round:s.round,player:'you',move,nonce:refresh||!s.draft?randomHex():s.draft.nonce};
+    return {draft,seal:await commit(draft)};
+  },({draft,seal})=>{
+    s.draft=draft;s.draftSeal=seal;
+    s.draftNote=previous?(seal===previous?'Same inputs, same fingerprint. Nothing has been published yet.':refresh?'Same move, different secret randomness: the fingerprint changed. Nothing has been published yet.':'Different move, same secret randomness: the fingerprint changed. Nothing has been published yet.'):'This is your private preview. Commit publishes the fingerprint while keeping the move and randomness private.';
+  });
+}
+$('#refresh-random').addEventListener('click',async()=>{
+  const s=state;if(s.phase!=='choose'||!s.draft||s.busy||s.error)return;
+  await prepareDraft(s.selected,true);if(state===s)$('#refresh-random').focus({preventScroll:true});
+});
+function roundEvidence(){
+  const s=state;
+  if(s.def.kind==='open')return `You showed ${s.selected}. Switch saw it, then picked ${s.robot.move} to beat you. No earlier record fixed Switch’s choice.`;
+  if(s.def.kind==='guess')return `You discovered ${s.found} by testing fingerprints, then beat it with ${s.selected}. The weak hash exposed the hidden choice.`;
+  if(s.def.kind==='swap')return `Switch revealed ${s.opening.move}. Its calculated fingerprint did not match the saved one, so you rejected the reveal.`;
+  if(s.def.kind==='replay')return 'Switch supplied an old opening. Checking it for this round produced a different fingerprint, so you rejected it.';
+  if(s.def.kind==='abort')return `You revealed ${s.selected} and passed the hash check. Switch supplied no opening, so you recorded an incomplete round.`;
+  return `You revealed ${s.selected}; Switch revealed ${s.opening.move}. Both fingerprints matched the records fixed before either choice was revealed.`;
 }
 function nextLabel(){return mode==='school'?chapter<5?'Next lesson →':'See my result →':mode==='daily'?dailyStage<2?'Next daily lesson →':'See daily result →':arenaRound<4?'Next arena round →':'See match result →';}
 async function work(operation,apply){
@@ -100,7 +135,7 @@ function complete(resultTitle){
   if(mode==='arena'){arena.push(s.outcome);if(arenaRound===4)progress.arenaBest=Math.max(progress.arenaBest||0,arena.filter(x=>x==='win').length);}
   save();$('#lesson-result').hidden=false;
   $('#earned').textContent=mode==='arena'?`Verified round ${arenaRound+1} / 5`:mode==='daily'&&dailyStage<2?`Lesson ${dailyStage+1} complete · ${badges()} badges still available`:`${badges()} / 3 learning badges`;
-  $('#outcome-title').textContent=resultTitle;$('#lesson').textContent=s.def.lesson;
+  $('#outcome-title').textContent=resultTitle;$('#what-happened').textContent=roundEvidence();$('#lesson').textContent=s.def.lesson;$('#use-case').textContent=s.def.application;
   $('#feedback').textContent='Read what happened, then continue.';render();$('#lesson-result').focus({preventScroll:true});$('#lesson-result').scrollIntoView({block:'nearest'});
 }
 function roundTitle(result){return result==='win'?'You win this round.':result==='tie'?'A verified tie.':'Switch wins this round.';}
@@ -136,14 +171,17 @@ $('#action').addEventListener('click',async()=>{
       if(!s.found){$('#feedback').textContent='Find the matching hash with the guess buttons before locking your move.';return;}
       if(outcome(s.selected,s.found)!=='win'){fail(`The matching hash identified ${s.found}. Choose ${counter(s.found)} to beat that move.`);return;}
     }
-    let human;
-    await work(()=>{human={round:s.round,player:'you',move:s.selected,nonce:randomHex()};return commit(human);},seal=>{s.human=human;s.humanSeal=seal;s.phase='sealed';s.bubble='Two seals on the table. No take-backs.';$('#feedback').textContent='Your move and secret nonce are now committed. Both hashes are fixed before the reveals.';});
+    if(!s.draft||!s.draftSeal){$('#feedback').textContent='Choose a move to calculate its fingerprint first.';return;}
+    const human={...s.draft};
+    await work(()=>commit(human),seal=>{if(seal!==s.draftSeal)throw new Error('Your draft fingerprint changed unexpectedly. Restart this round.');s.human=human;s.humanSeal=seal;s.phase='sealed';s.bubble='Two seals on the table. No take-backs.';$('#feedback').textContent='Your move and secret nonce are now committed. Both hashes are fixed before the reveals.';});
   }else if(s.phase==='sealed')await reveal();
   else if(s.phase==='revealed')await work(()=>verify(s.robotSeal,s.opening,{round:s.round,player:'switch'}),check=>{s.verified=check;s.phase='checked';displayVerification(check);$('#feedback').textContent='Use the computed result to decide whether this opening counts.';});
 });
-$('#moves').addEventListener('click',event=>{
+$('#moves').addEventListener('click',async event=>{
   const b=event.target.closest('[data-move]');if(!b||b.disabled||state.phase!=='choose'||state.busy)return;
-  state.selected=b.dataset.move;render();$(`[data-move="${state.selected}"]`).focus({preventScroll:true});
+  const s=state,move=b.dataset.move;s.selected=move;
+  if(s.def.kind==='open')render();else await prepareDraft(move);
+  if(state===s)$(`[data-move="${move}"]`).focus({preventScroll:true});
 });
 $('#guesses').addEventListener('click',async event=>{
   const b=event.target.closest('[data-guess]');if(!b||b.disabled||state.busy||state.phase!=='choose')return;

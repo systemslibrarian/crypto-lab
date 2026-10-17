@@ -217,6 +217,8 @@
       line-height: 1.75;
     }
 
+    /* Games are reached through Menu → Learn through play for now. */
+    .project-card[data-format="learning-game"] { display: none !important; }
     .project-card[data-format="learning-game"] .card-kicker {
       align-self: flex-start;
       max-width: 100%;
@@ -20263,7 +20265,7 @@
             </div>
           </a>
 
-<a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-builder/" data-level="beginner" data-format="learning-game" data-added="2026-08" data-updated="2026-10"
+<a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-builder/" data-level="beginner" data-format="learning-game" hidden data-added="2026-08" data-updated="2026-10"
             data-implements="Babai rounding@src/basis.ts:74 | Keccak@src/keccak.ts:46 | ML-KEM@src/AdvancedMode.tsx:14 | NTT@src/mlkem-poly.ts:133 | SHA-3@src/keccak.ts:227 | SHAKE@src/keccak.ts:235"
             data-references="AES | LWE | SHA-256"
             data-attacks="Brute force@src/AdvancedMode.tsx:368 | Lattice reduction@src/AdvancedMode.tsx:369"
@@ -21007,11 +21009,10 @@
       {
         id: 'post-quantum',
         label: 'Post-Quantum Path',
-        focus: 'From a lattice puzzle to PQ KEMs, signatures and migration.',
-        blurb: 'Survey the post-quantum families, build geometric intuition with Lattice Builder, then explore lattice mathematics in Lattice Gentle before running ML-KEM in Kyber Vault. Continue through signatures, hybrids, and migration. The opening game needs no lattice background; later steps introduce the mathematics.',
+        focus: 'Lattice mathematics, PQ KEMs, signatures and migration.',
+        blurb: 'Survey the post-quantum families, explore lattice mathematics in Lattice Gentle, then run ML-KEM in Kyber Vault. Continue through signatures, hybrids, and migration. For optional games, use Learn through play in the menu.',
         steps: [
           { title: 'PQ Families' },
-          { title: 'Lattice Builder' },
           { title: 'Lattice Gentle' },
           { title: 'Kyber Vault' },
           { title: 'KEM Trap' },
@@ -21264,7 +21265,10 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && navMenu && navMenu.classList.contains('open')) setMenuOpen(false);
     });
-    var cards = Array.from(document.querySelectorAll('.project-card'));
+    var cards = Array.from(document.querySelectorAll('.project-card')).filter(function (card) {
+      if (card.getAttribute('data-format') === 'learning-game') { card.hidden = true; return false; }
+      return true;
+    });
     var total = cards.length;
     var exhibitCountEl = document.getElementById('exhibit-count');
     if (exhibitCountEl) exhibitCountEl.textContent = total;

@@ -2385,6 +2385,46 @@
         </div>
 
         <div class="project-grid">
+          <a class="project-card" data-category="ENCRYPTION | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-key-lifecycle/" data-level="intermediate" data-added="2026-10" data-updated="2026-10"
+            data-implements="AES-GCM@src/crypto/aead.ts:14"
+            data-references="AES Key Wrap | HKDF"
+            data-standards="NIST"
+            data-implementation="WebCrypto"
+            data-overlaps="crypto-lab-envelope-kms: Envelope KMS models KEK/DEK wrapping and KMS rewrap without exposing plaintext; Key Lifecycle demonstrates a genuine old-key breach, copied ciphertext and incident response."
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Operational Key Management</div>
+            <div class="project-title">Key Lifecycle</div>
+            <div class="project-copy">Rotate real AES-GCM keys, let an attacker decrypt a captured record with a copied old key, and learn why re-encryption cannot erase the attacker's historical copy.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">AES-256-GCM</span><span class="chip">Key Rotation</span><span class="chip">Key Compromise</span><span class="chip">AES-GCM AAD</span></div><span class="arrow">→</span></div>
+          </a>
+
+          <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-compression-leak/" data-level="intermediate" data-added="2026-10" data-updated="2026-10"
+            data-implements="AES-GCM@src/crypto/oracle.ts:41"
+            data-references="DEFLATE | gzip | BREACH"
+            data-standards="NIST | IETF"
+            data-implementation="WebCrypto | CompressionStream"
+            data-overlaps="crypto-lab-protocol-compose: Protocol Compose surveys CRIME and composition failures; Compression Leak demonstrates a genuine gzip-to-AES-GCM length oracle with measurements and scoped mitigations."
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Length Oracle</div>
+            <div class="project-title">Compression Leak</div>
+            <div class="project-copy">Compress a secret beside an attacker-controlled guess, then encrypt with AES-GCM. Measure real ciphertext lengths and test why separating compression contexts changes the leak.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">AES-256-GCM</span><span class="chip">gzip</span><span class="chip">BREACH Pattern</span><span class="chip">Length Oracle</span></div><span class="arrow">→</span></div>
+          </a>
+
+          <a class="project-card" data-category="SIGNATURES | STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-subliminal-channels/" data-level="advanced" data-added="2026-10" data-updated="2026-10"
+            data-implements="ECDSA@src/ecdsa/channel.ts:19"
+            data-references="SHA-256 | RFC 6979"
+            data-standards="NIST | IETF"
+            data-implementation="@noble/curves | WebCrypto"
+            data-overlaps="crypto-lab-ecdsa-forge: ECDSA Forge demonstrates ECDSA arithmetic and nonce-reuse failures; Subliminal Channels encodes a covert signaling bit by selecting among genuinely valid randomized signatures."
+            target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">ECDSA Covert Signaling</div>
+            <div class="project-title">Subliminal Channels</div>
+            <div class="project-copy">Encode one extra bit by selecting a valid P-256 ECDSA signature. Independently verify it with WebCrypto, then compare deterministic signatures and message tampering.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">ECDSA</span><span class="chip">P-256</span><span class="chip">RFC 6979</span><span class="chip">Subliminal Signaling</span></div><span class="arrow">→</span></div>
+          </a>
+
+
           <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-phantom-vault/" data-level="advanced" data-added="2026-04" data-updated="2026-10"
             data-implements="HMAC@src/crypto/hmac-drbg.ts:36 | HMAC-DRBG@src/crypto/hmac-drbg.ts:53 | PBKDF2@src/crypto/pbkdf2.ts:32 | SHA-256@src/crypto/hmac-drbg.ts:42"
             data-references="Argon2 | CTR-DRBG | HKDF | SHA-1 | bcrypt | scrypt"
@@ -21056,6 +21096,9 @@
     ];
 
     var TITLE_TO_SECTION = {
+      'Key Lifecycle': 'key-exchange',
+      'Compression Leak': 'cryptanalysis',
+      'Subliminal Channels': 'public-key',
       'Point Ledger': 'post-quantum',
       'PQ Chooser': 'post-quantum',
       'Phantom Vault': 'foundations', 'DRBG Arena': 'foundations',

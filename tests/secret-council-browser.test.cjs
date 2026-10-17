@@ -166,7 +166,7 @@ test('phone, small phone and desktop layouts, keyboard controls and navigation',
       await page.locator('#math-details summary').click();
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`math overflow at ${width}`);
       await page.goto(origin+'/games/');
-      assert.equal(await page.getByRole('link',{name:/Secret Council.*Play Secret Council/}).count(),1);
+      assert.equal(await page.getByRole('link',{name:/Key Rush.*Play Key Rush/}).count(),1);
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`arcade overflow at ${width}`);
       assert.deepEqual(errors,[]);
     }finally{await page.close();}

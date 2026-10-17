@@ -21,13 +21,13 @@ jobs:
           cache: npm
           cache-dependency-path: tools/package-lock.json
       - name: Exact arithmetic, secrecy and mission checks
-        run: node --test tests/secret-council-core.test.mjs tests/council-vault-core.test.mjs
+        run: node --test tests/secret-council-core.test.mjs tests/council-vault-core.test.mjs tests/key-rush-core.test.mjs
       - run: npm ci
         working-directory: tools
       - run: npx playwright install chromium
         working-directory: tools
       - name: Complete gameplay, accessible controls and responsive layout
-        run: node --test --test-timeout=180000 tests/secret-council-browser.test.cjs tests/council-vault-browser.test.cjs
+        run: node --test --test-timeout=180000 tests/secret-council-browser.test.cjs tests/council-vault-browser.test.cjs tests/key-rush-browser.test.cjs
       - name: Save gameplay screenshots
         if: always()
         uses: actions/upload-artifact@v7

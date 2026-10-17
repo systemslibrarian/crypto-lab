@@ -1,11 +1,12 @@
 import { STORE, HOUSES, KEEPERS, NIGHTS, cleanProgress, newNight, available, setThreshold, moveKeeper, begin, deploy, advance, gather, finish } from './vault-core.mjs';
 const $ = id => document.getElementById(id);
 let storageOK = true;
-let saved;
-try { saved = cleanProgress(JSON.parse(localStorage.getItem(STORE))); } catch { saved = cleanProgress(null); storageOK = false; }
+let saved, rawProgress = null;
+try { rawProgress = localStorage.getItem(STORE); } catch { storageOK = false; }
+try { saved = cleanProgress(JSON.parse(rawProgress)); } catch { saved = cleanProgress(null); }
 let state = newNight(), selected = null, lastHouse = null, startPlan = null;
 const previous = NIGHTS.map(() => null);
-let soundContext, soundEpoch = 0;
+let soundContext, soundEpoch = 0, gameInView = true;
 function save() {
   try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch { storageOK = false; }
   $('storage-note').textContent = storageOK ? '' : 'Saving is unavailable. You can still play and retry in this tab.';
@@ -128,6 +129,9 @@ function render() {
   $('event-text').textContent = last?.text || (state.phase === 'plan' ? 'Two is easy to gather. Five needs everyone. What will survive this forecast?' : 'You can send help or move a keeper now. Resolve the next event when you are ready.');
   $('action').textContent = state.phase === 'plan' ? 'Begin the night →' : state.phase === 'watch' ? `Resolve ${HOUSES[mission.events[state.eventIndex].house]} ${mission.events[state.eventIndex].kind === 'theft' ? 'burglary' : 'flood'} →` : state.phase === 'recover' ? 'Open the vault →' : 'Rewind & change your plan';
   $('rewind').textContent = state.phase === 'plan' ? 'Reset plan' : 'Rewind this night';
+  $('quick-action').textContent = $('action').textContent;
+  $('quick-help').textContent = state.phase === 'plan' ? 'Arrange keepers' : state.phase === 'recover' ? 'Choose keepers' : `Use reserves (${state.reserves})`;
+  $('mobile-actions').hidden = !gameInView || state.phase === 'result';
   $('sound').textContent = saved.sound ? 'Sound on' : 'Sound off'; $('sound').setAttribute('aria-pressed', String(saved.sound));
   $('storage-note').textContent = storageOK ? '' : 'Saving is unavailable. You can still play and retry in this tab.';
   renderCity(); renderEvidence(); renderResult();
@@ -157,12 +161,20 @@ $('action').addEventListener('click', () => {
     if (run(begin)) { startPlan = plan; selected = null; render(); feedback('The shares are dealt. Send help now, or resolve the first event. You can intervene between events.'); sound(); }
   } else if (state.phase === 'watch') {
     lastHouse = NIGHTS[state.index].events[state.eventIndex].house; selected = null;
-    if (run(advance)) { feedback(state.phase === 'recover' ? `Dawn. Click ${state.threshold} reachable keepers to bring their shares. You may still send a ferry.` : 'Read what happened. You can use reserves before the next event.'); sound(); if (state.phase === 'recover') { $('city').querySelector('.keeper:not(.stranded)')?.focus({ preventScroll: true }); $('city').scrollIntoView({ block: 'center' }); } }
+    if (run(advance)) { feedback(`${state.log.at(-1).text} ${state.phase === 'recover' ? `Dawn: choose ${state.threshold} reachable keepers, or send a ferry.` : 'You can use reserves before the next event.'}`); sound(); if (state.phase === 'recover') { $('city').querySelector('.keeper:not(.stranded)')?.focus({ preventScroll: true }); $('city').scrollIntoView({ block: 'center' }); } }
   } else if (state.phase === 'recover' && run(finish)) {
     if (state.result.pass) { saved.completed[state.index] = true; save(); }
     render(); sound(state.result.pass); $('result').focus({ preventScroll: true }); $('result').scrollIntoView({ block: 'center' });
   }
 });
+$('quick-action').addEventListener('click', () => $('action').click());
+$('quick-help').addEventListener('click', () => {
+  const target = state.phase === 'watch' ? $('dispatch-house') : $('city').querySelector('.keeper:not(.stranded)');
+  target?.focus({ preventScroll: true }); target?.scrollIntoView({ block: 'center' });
+});
+if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
+  gameInView = entries[0].isIntersecting; $('mobile-actions').hidden = !gameInView || state.phase === 'result';
+}).observe($('game'));
 $('rewind').addEventListener('click', () => load(state.index, state.phase !== 'plan'));
 $('retry-result').addEventListener('click', () => load(state.index, true));
 $('next-night').addEventListener('click', () => load((state.index + 1) % NIGHTS.length));

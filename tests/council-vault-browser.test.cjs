@@ -145,9 +145,18 @@ test('responsive mission and result, meaningful native controls, reduced motion 
     const {page,errors}=await open(width);
     try{
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`plan overflow ${width}`);
+      if(width<=700){
+        await page.locator('#quick-action').waitFor({state:'visible'});
+        const threshold=await page.locator('#threshold-controls').boundingBox(),city=await page.locator('#city').boundingBox();
+        assert(threshold.y<city.y,'threshold precedes map on a phone');
+        const quick=await page.locator('#quick-action').boundingBox();assert(quick.y+quick.height<=1000);
+      }
       for(const keeper of await page.locator('.keeper').all()){const b=await keeper.boundingBox();assert(b.width>=44&&b.height>=44);}
       await page.screenshot({path:`test-results/secret-council/vault-plan-${width}.png`,fullPage:true});
-      await page.locator('[data-threshold="3"]').click();await page.locator('#action').click();await events(page);await collect(page);
+      await page.locator('[data-threshold="3"]').click();await page.locator(width<=700?'#quick-action':'#action').click();
+      if(width<=700){await page.locator('#quick-action').click();assert.match(await page.locator('#feedback').innerText(),/Thieves now hold 2/);}
+      await events(page);await collect(page);
+      assert.equal(await page.locator('#mobile-actions').isVisible(),false);
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`result overflow ${width}`);
       assert.equal(await page.locator('#vault').evaluate(el=>getComputedStyle(el).animationName),'none');
       await page.screenshot({path:`test-results/secret-council/vault-result-${width}.png`,fullPage:true});

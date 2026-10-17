@@ -75,7 +75,9 @@ Only validated completion flags and sound preference persist under
 `crypto-lab-council-vault-v1`; every storage access is guarded. No secret/share or
 plan is persisted. Clearing this key leaves legacy chapter progress alone.
 Web Audio is opt-in; reduced motion suppresses house/vault animations. Native
-buttons/selects support touch and keyboard without drag-only interactions. The
+buttons/selects support touch and keyboard without drag-only interactions. On phones,
+threshold and forecast precede the map, and a compact action bar stays within reach
+while the mission is in view. Event consequences also appear beside the turn control. The
 module has no timers, network calls, dependencies or shared theme access.
 
 The existing six chapters, daily council and algebra explorer remain at

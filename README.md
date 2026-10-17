@@ -5,7 +5,7 @@
 
 **[Teaching a course? → Course modules for instructors](https://crypto-lab.systemslibrarian.dev/teach/)**
 
-**[Learn through play → Learning games](https://crypto-lab.systemslibrarian.dev/games/)** — investigate data integrity and climb inclusion proofs one level at a time in [Merkle Mystery](https://crypto-lab.systemslibrarian.dev/games/merkle-mystery/), play [Secret Council](https://crypto-lab.systemslibrarian.dev/games/secret-council/) to explore threshold secret sharing, or build geometric intuition with [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/).
+**[Learn through play → Learning games](https://crypto-lab.systemslibrarian.dev/games/)** — fly light pulses in [Quantum Courier](https://crypto-lab.systemslibrarian.dev/games/quantum-courier/), investigate data integrity and climb inclusion proofs one level at a time in [Merkle Mystery](https://crypto-lab.systemslibrarian.dev/games/merkle-mystery/), play [Secret Council](https://crypto-lab.systemslibrarian.dev/games/secret-council/) to explore threshold secret sharing, or build geometric intuition with [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/).
 
 > Interactive cryptography exhibits — demonstrations, learning games, and visual tools in your browser. Most run without accounts or backends.\*
 

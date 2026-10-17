@@ -1,9 +1,9 @@
 # Learning games
 
 `games/index.html` is the entry point linked from the catalog navigation. It links
-Lattice Builder's existing standalone site with Secret Council and Merkle Mystery,
-served directly from `games/secret-council/` and `games/merkle-mystery/`. These are
-catalog-hosted games, not new fleet repositories: they do not increment the count
+Lattice Builder's existing standalone site with Secret Council, Merkle Mystery, and
+Quantum Courier, served directly from their respective `games/<slug>/` directories.
+These are catalog-hosted games, not new fleet repositories: they do not increment the count
 of independently catalogued exhibits or borrow existing exhibits' evidence.
 
 ## Secret Council
@@ -141,3 +141,64 @@ campaign and daily cases in Chromium, checks failed guesses and counterfeit-seal
 choices, verifies scoring and persistence, exercises keyboard controls, and
 captures desktop and phone screenshots. Publish only after actual PR checks pass
 and verify the served files after Pages deploys.
+
+## Quantum Courier
+
+Buildless HTML/CSS/SVG and ES modules, served at `games/quantum-courier/`. No
+runtime dependencies, accounts, remote assets, real-secret inputs, or uploads.
+Six flights introduce basis choice, sifting, discarding disclosed samples, reading
+sampled errors, interpreting a clean sample, and spending a sample budget. Native
+pulse buttons, radio inputs, and a range control support keyboard and touch. The
+space route is decorative. Reduced-motion settings suppress its animation.
+
+`core.mjs` models ideal BB84 polarization measurements classically: matching bases
+return the prepared bit; different bases draw an unbiased bit and prepare the
+measured state. Intercept/resend measures at Eve and sends that resulting state
+to Bob. An exact enumeration test establishes a 1/4 sifted-bit error probability
+under full intercept/resend with fair independent bases. In that specific ideal,
+independent model, `1 - (3/4)^t` is the probability of at least one error in t
+sampled sifted bits. The budget puzzle requires the smallest sample reaching
+95%, with at least 12 of 24 bits retained: 11 samples, 13 candidate bits left.
+It is never labeled a posterior probability of safety or a general security bound.
+
+Campaign and daily flights are deterministic teaching replays with exactly eight
+basis matches in twelve positions and a three-position sample selected before
+review. The shadow replay (`shadow-14`) has two sampled errors. The quiet replay
+(`quiet-0`) has an interceptor, no sampled errors, and unsampled errors. These
+outcomes are deliberately selected teaching cases, not attack-frequency data.
+Public sample values appear only after sending. Unsampled values remain hidden.
+Only calibration shows Alice's states before sending; it explicitly contrasts
+this with actual BB84 basis timing. Calibration succeeds on basis matches, never
+on lucky matching output bits from wrong bases.
+
+The optional light bench is an unconditioned experiment over 64 fresh simulated
+photons. It draws unbiased bits from `crypto.getRandomValues`; unavailable RNG
+fails visibly without silently falling back. The deterministic replay seed is
+never used by the bench. Changing its settings clears the old result label.
+
+A daily UTC-date seed chooses a replay with or without full interception. Three
+tasks share one score: sift, discard samples, then flag sampled errors and choose
+pause/continue processing. No task claims to produce a secure key. The simplified
+puzzle pauses on any sampled error; noise can also cause errors in a real system.
+An authenticated classical channel, finite-size analysis, error correction,
+privacy amplification, loss and realistic hardware are outside this model.
+Source notes link Bennett and Brassard's original BB84 paper and Shor and
+Preskill's security proof, followed by the existing deeper BB84 exhibit.
+
+Scores are `max(1, 3 - incorrect submissions - guidance used)`, with guidance
+charged once per attempt. Daily penalties persist across all three tasks. Empty
+keep selections and missing decisions prompt without penalty. Restart is a fresh
+attempt; mode switches also start fresh. Campaign bests sum to at most 18, and
+one daily date/best score is retained. Storage uses only
+`crypto-lab-quantum-courier-v1`, validates all persisted fields, and degrades to
+in-memory progress if storage is blocked. Clear progress resets play. Clipboard
+denial exposes selectable text. An in-progress daily retains its captured date.
+A generation token prevents a late flight animation from altering a new chapter.
+
+`tests/quantum-courier-core.test.mjs` covers measurement outcomes, exact attack
+probabilities, sample exclusion, authored cases, daily variants, and malformed
+progress. The `quantum-courier` job in `Learning games` plays the complete campaign,
+all daily scenario variants, wrong choices, hints, storage/RNG/clipboard failures,
+keyboard controls, and navigation. It captures phone/tablet/desktop screenshots
+for visual review. Verify the final PR checks and deployed bytes before claiming
+publication.

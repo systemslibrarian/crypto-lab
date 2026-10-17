@@ -70,6 +70,8 @@ async function passTrials(page,mission,policy) {
     await page.locator('#action').click();
   }
   assert.equal(await page.locator('#trial-title').innerText(),'Every trial passed');
+  assert.equal(await page.locator('#trial-description').isVisible(),true);
+  assert.equal(await page.locator('#trial-description').innerText(),mission.lesson);
   assert.match(await page.locator('#charter-recap').innerText(),new RegExp(`${policy.threshold}-of-${policy.ids.length}`));
   assert.equal(await page.locator('#charter-recap li').count(),mission.events.length);
 }

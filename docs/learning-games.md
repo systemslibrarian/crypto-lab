@@ -2,9 +2,30 @@
 
 `games/index.html` is the entry point linked from the catalog navigation. It links
 Lattice Builder's existing standalone site with Secret Council, Merkle Mystery, and
-Quantum Courier, served directly from their respective `games/<slug>/` directories.
+Quantum Courier, and Sealed Showdown, served directly from their respective `games/<slug>/` directories.
 These are catalog-hosted games, not new fleet repositories: they do not increment the count
 of independently catalogued exhibits or borrow existing exhibits' evidence.
+
+## The teaching standard
+
+Every lesson follows **action → visible consequence → short explanation**. The
+player should first do something that expresses the concept. The game then shows
+what that choice caused, and places a brief takeaway in the completion result,
+before the next lesson. A score alone is not the explanation. Optional mathematics
+can add depth, but must not hide the essential connection to cryptography.
+
+| Game | Experience through play | Visible result and takeaway |
+| --- | --- | --- |
+| Lattice Builder | Straighten signal fields, fly integer vector routes, match bases | Signal completion explains the eight-candidate search; every flight explains its vector operation; Basis Match explains each matched target. These are geometric intuition, not general lattice attacks. |
+| Secret Council | Allocate shares and recover a secret during outages | Actual affected holders and recovered values precede the chapter lesson about threshold secrecy, availability or shared risks. |
+| Merkle Mystery | Locate changes, assemble proofs and judge archive parcels | Actual hash comparisons and the proof walkthrough lead into a lesson about integrity, inclusion or root trust. |
+| Quantum Courier | Tune, sift, discard samples and review measurement errors | The measured replay and sample counts precede a lesson about basis agreement, disturbance or limits of the evidence. |
+| Sealed Showdown | Make sealed choices, guess weak seals and judge openings | Recomputed hashes and game outcomes lead into lessons about hiding, binding, context and refusal to reveal. |
+
+Campaign browser tests exercise the gameplay and assert that the post-play lesson
+is visible. Lattice Builder has its own repository and browser gate, including
+all six Vector Flight completion lessons and every Basis Match takeaway. Daily
+challenges reuse the same teaching flow. New games must follow this standard.
 
 ## Secret Council
 
@@ -209,3 +230,50 @@ all daily scenario variants, wrong choices, hints, storage/RNG/clipboard failure
 keyboard controls, and navigation. It captures phone/tablet/desktop screenshots
 for visual review. Verify the final PR checks and deployed bytes before claiming
 publication.
+
+## Sealed Showdown
+
+Buildless local HTML/CSS/SVG/ES modules at `games/sealed-showdown/`. Six playable
+rock–paper–scissors situations introduce timing, hiding, binding, context and
+abort behavior. Switch chooses after the human in the first open round. Subsequent
+rounds publish Switch's seal before human controls become available. The weak
+round omits a nonce, allowing the player to hash three candidates and choose the
+countermove. Tampering and replay rounds require recomputation and rejection;
+the final round withholds the opening and requires recording an incomplete game.
+Each completion shows its own short explanation. Honest losses and ties still
+complete a lesson; learning scores are separate from winning at RPS.
+
+The strong commitment is Web Crypto SHA-256 over UTF-8 encoding of the JSON array
+`["crypto-lab/sealed-showdown/v1", round, player, move, nonce]`. Nonces are fresh
+16-byte browser random values, hex encoded, secret until reveal. The deliberately
+weak scheme uses a distinct domain and omits the nonce. Verification requires
+full hash equality and a round/player context supplied independently of the
+opening packet. Player and round labels do not authenticate themselves. Secret
+moves use rejection sampling on random bytes, discarding 252–255 before reducing
+modulo three. Unsupported Web Crypto or RNG fails visibly; there is no fallback.
+
+The construction follows the educational hash-commitment discussion in
+[MIT's course notes](https://people.csail.mit.edu/alinush/6.857-spring-2015/l14-public-key.html).
+It is not a formal security proof or remote multiplayer protocol: both players
+run locally and browser inspection can expose their state. The final lesson
+explicitly separates commitments from forcing an opening; source notes also link
+[Boneh and Naor's timed commitments](https://cs.stanford.edu/people/dabo/pubs/abstracts/timedcommit.html),
+an extension not implemented here. The next exhibit is Commit Gate.
+
+Free arena plays five independently generated verified rounds, including ties,
+and stores the best number of wins separately. The UTC daily seed chooses three
+distinct lessons only; moves and nonces always use fresh cryptographic randomness.
+The daily date is captured on entry, including across midnight. Each campaign
+lesson scores `max(1, 3 - mistakes - guidance used)`; hints cost one once per
+attempt. Daily tasks share one score. Best campaign scores total at most 18.
+Only validated scores persist under `crypto-lab-sealed-showdown-v1`. Storage
+failure preserves play; clipboard failure provides selectable text. No account,
+network requests, shared theme writes or real-secret inputs are used.
+
+Core tests independently compute expected hashes with Node crypto, reject changed
+openings and contexts, verify the weak three-guess lookup, exhaust all RPS pairs,
+and check unbiased sampling and saved-score validation. Browser tests play all
+six lessons and daily variants, independently recompute displayed hashes, check
+wrong decisions, five-round arena results, hints, unavailable capabilities,
+async navigation races, persistence and keyboard controls. The Learning games
+workflow captures desktop and mobile screenshots for review before publication.

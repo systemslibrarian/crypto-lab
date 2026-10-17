@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#121819"><meta name="description" content="Outplay a cheeky robot and learn cryptographic commitments. Real SHA-256 seals, six hands-on lessons, a daily challenge, and a five-round rock–paper–scissors arena."><title>Sealed Showdown · Crypto Lab</title><link rel="icon" href="switch.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css"></head>
+<body>
+<a class="skip" href="#play">Skip to the showdown</a>
+<header class="topbar"><a class="brand" href="../../"><img src="switch.svg" alt="" width="32" height="32">CRYPTO LAB</a><nav aria-label="Main navigation"><a href="../">All games ↗</a><a href="../../">Explore the labs</a></nav></header>
+<main>
+<section class="intro"><div><p class="eyebrow">Rock. Paper. Scissors. No take-backs.</p><h1>Sealed <span>Showdown.</span></h1></div><p>Outplay a robot.<br>Learn what a promise can prove.</p></section>
+<div class="toolbar"><div class="modes" aria-label="Game modes"><button data-mode="school" aria-pressed="true">Learn &amp; play</button><button data-mode="daily" aria-pressed="false">Daily challenge</button><button data-mode="arena" aria-pressed="false">Free arena</button></div><p id="progress">0 / 18 learning badges</p></div>
+<nav id="chapters" class="chapters" aria-label="Choose a lesson"></nav>
+<section id="play" aria-busy="true" class="play" aria-labelledby="round-title">
+  <div class="round-heading"><div><p id="round-tag" class="eyebrow">Opening the table</p><h2 id="round-title" tabindex="-1">Getting ready…</h2></div><span id="round-label" class="round-label">LIVE SHA-256</span></div>
+  <p id="brief" class="brief"></p>
+  <div id="arena-score" class="arena-score" hidden><span>You <strong id="you-score">0</strong></span><span>Ties <strong id="tie-score">0</strong></span><span>Switch <strong id="bot-score">0</strong></span></div>
+  <div class="match-layout">
+    <div class="main-table">
+      <div class="duel">
+        <article class="fighter human"><div class="fighter-label"><span>01 / YOU</span><span id="human-status">Choosing</span></div><div id="human-art" class="move-art" aria-hidden="true"></div><h3 id="human-move">Your move?</h3><p id="human-detail">Choose a card below.</p></article>
+        <span class="versus" aria-hidden="true">VS</span>
+        <article class="fighter robot"><div class="fighter-label"><span>02 / SWITCH</span><span id="bot-status">Waiting</span></div><div id="bot-art" class="move-art" aria-hidden="true"></div><h3 id="bot-move">Poker face.</h3><p id="bot-detail">A professional second-guesser.</p></article>
+      </div>
+      <p id="bubble" class="bubble"><span>SWITCH SAYS</span>“After you.”</p>
+      <div id="guess-lab" class="guess-lab" hidden><h3>A three-guess experiment</h3><p>Hash each possible move using the public round and player labels. Which one matches Switch’s seal?</p><div id="guesses" class="guesses"></div><p id="guess-status" role="status">These experiments cost no badges.</p></div>
+      <div class="pick-label"><h3>Choose your move</h3><span>Rock beats scissors · Paper beats rock · Scissors beats paper</span></div>
+      <div id="moves" class="moves" role="group" aria-label="Your move"></div>
+      <div class="actions"><button id="action" class="primary" disabled>Getting ready…</button><button id="hint">Hint</button><button id="restart" class="quiet">Restart</button></div>
+      <div id="decisions" class="decisions" hidden><button id="accept">Count this opening</button><button id="reject">Reject this opening</button><button id="declare-win">Record a verified win</button><button id="incomplete">Record an incomplete round</button></div>
+      <p id="feedback" class="feedback" role="status" aria-live="polite"></p><p id="hint-text" class="hint" hidden></p>
+    </div>
+    <aside class="match-record" aria-label="Public record">
+      <p class="eyebrow">The promise trail</p><ol id="steps" class="steps"><li>Choose</li><li>Commit</li><li>Reveal</li><li>Verify</li></ol>
+      <div class="record-heading"><h3>Seals on the table</h3><span>Public hashes</span></div>
+      <label class="seal-label">YOUR SEAL<code id="your-seal">Not committed</code></label><label class="seal-label">SWITCH’S SEAL<code id="bot-seal">Not committed</code></label>
+      <p class="record-note" id="record-note">A seal is a hash commitment. Its full value stays here so you can check it later.</p>
+      <details id="receipt"><summary>Inspect the exact record</summary><div class="receipt-body"><span class="small-label">EXPECTED ROUND</span><code id="expected-round"></code><p>Player labels: <code>you</code> and <code>switch</code>.</p><div id="opening-record">Moves and secret random values appear here only when revealed.</div></div></details>
+    </aside>
+  </div>
+  <section id="verification" class="verification" hidden aria-labelledby="verification-title"><p class="eyebrow">Recomputed, not taken on trust</p><h3 id="verification-title"></h3><p id="verification-text"></p><div class="hash-comparison"><div><span>Stored Switch seal</span><code id="stored-hash"></code></div><div><span>Computed for this round</span><code id="computed-hash"></code></div></div></section>
+  <section id="lesson-result" class="lesson-result" hidden><div><p id="earned" class="eyebrow"></p><h3 id="outcome-title"></h3></div><div><p class="takeaway-label">What you just learned</p><p id="lesson"></p></div></section>
+</section>
+<section id="finish" class="finish" hidden><p class="eyebrow">The final record</p><h2 id="finish-title">Promises checked.</h2><p id="finish-text"></p><button id="copy-result" class="primary">Copy my result</button><p id="copy-status" role="status"></p><textarea id="copy-fallback" aria-label="Result text to copy" readonly hidden></textarea><a href="../">Find your next game →</a></section>
+<div class="further">
+<details><summary><span>01 / THE CRYPTO</span>What does a seal prove?</summary><div class="details-body"><p><strong>Hiding</strong> means a commitment conceals the choice before it is opened. <strong>Binding</strong> means it should be infeasible to find two different valid openings for the same commitment. These are different properties.</p><p>This game hashes an unambiguous JSON array containing a protocol label, round, player, move and fresh 16-byte secret random value, using SHA-256. That random value is often called a nonce. It stays secret until the opening; making it public early would let an opponent test all three moves.</p><p>The three-guess lesson deliberately omits the nonce. It breaks hiding, even though a changed move still fails to match that hash. The ordinary construction is an educational hash commitment, with computational assumptions about SHA-256 and randomness. These demonstrations are not a formal security proof.</p><p>Hash commitments are building blocks for sealed choices and larger protocols. Real applications also need authenticated messages, agreed timing and abort rules, and an appropriate security analysis. A hash by itself does not prove who made a promise or when.</p><p><a href="https://people.csail.mit.edu/alinush/6.857-spring-2015/l14-public-key.html">MIT course notes: commitments and their properties</a><br><a href="https://cs.stanford.edu/people/dabo/pubs/abstracts/timedcommit.html">Boneh &amp; Naor: timed commitments and forced opening</a></p><a href="https://systemslibrarian.github.io/crypto-lab-commit-gate/">Go deeper in Commit Gate →</a></div></details>
+<details><summary><span>02 / YOUR PLAYBOOK</span>Badges, daily challenges &amp; privacy</summary><div class="details-body"><p>Each completed lesson earns 1–3 learning badges. A mistaken verification decision costs one badge; a hint costs one once per attempt. Experiments, ties and honest losses cost nothing. Restart for a fresh attempt. Your best score in each of six lessons counts once, up to 18.</p><p>The daily challenge has three lessons and one shared score out of 3. A public UTC-date seed selects the lessons, never secret moves or random values. Those are freshly generated on every attempt. A challenge you started keeps its date across midnight.</p><p>The arena plays five verified rounds, with ties counting as rounds. Its score is separate from learning badges. Switch commits a randomly selected move before you can choose. This is local practice: both players run in your browser, so it is not a cheat-proof remote game.</p><p id="storage-status">Only scores are saved in this browser. No account, uploads, or real secrets.</p><button id="clear-progress">Clear saved scores</button></div></details>
+</div>
+<footer><div><a class="brand" href="../../">CRYPTO LAB</a><p>Play the idea. See the result. Understand why.</p></div><p>Real hashes. Fictional opponent.<br><a href="https://github.com/systemslibrarian/crypto-lab/tree/main/games/sealed-showdown">Source code</a> · <a href="../">More games</a></p></footer>
+</main><noscript><p>Enable JavaScript to play Sealed Showdown.</p></noscript><script type="module" src="game.mjs"></script></body></html>

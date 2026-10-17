@@ -85,3 +85,28 @@ jobs:
           name: quantum-courier-browser
           path: test-results/quantum-courier/
           if-no-files-found: warn
+  sealed-showdown:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+      - name: Commitment vectors, binding, replay rejection and move rules
+        run: node --test tests/sealed-showdown-core.test.mjs
+      - run: npm ci
+        working-directory: tools
+      - run: npx playwright install chromium
+        working-directory: tools
+      - name: Playable lessons, daily challenges, arena and responsive layout
+        run: node --test --test-timeout=180000 tests/sealed-showdown-browser.test.cjs
+      - name: Save showdown screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: sealed-showdown-browser
+          path: test-results/sealed-showdown/
+          if-no-files-found: warn

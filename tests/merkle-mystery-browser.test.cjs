@@ -38,7 +38,7 @@ async function open(width=1366, date=null) {
 async function ready(page) { await page.waitForFunction(()=>document.querySelector('#play-area').getAttribute('aria-busy')==='false' && document.querySelectorAll('.node').length>0); }
 async function select(page,ids) { for(const id of ids)await page.locator(`.node[data-node="${id}"]`).click(); }
 async function submit(page) { await page.locator('#action').click(); await ready(page); }
-async function closed(page) { await page.locator('#chapter-result').waitFor({state:'visible'}); }
+async function closed(page) { await page.locator('#chapter-result').waitFor({state:'visible'}); assert.equal(await page.locator('#lesson').isVisible(),true); assert((await page.locator('#lesson').innerText()).length>60); }
 async function chapterAt(page,index) { await page.locator(`[data-chapter="${index}"]`).click(); await ready(page); }
 async function independentParcel(page) {
   const {createHash}=require('node:crypto');

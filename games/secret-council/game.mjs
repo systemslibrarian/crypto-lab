@@ -22,6 +22,36 @@ let date = today();
 let mission, selected, threshold, phase, trialIndex, currentDeal, outcome, gathered;
 let failures = 0, guided = false, mathDeal, candidate = 0;
 let audioContext;
+const keeperFlavors = [
+  'Every record has its place. Ada knows exactly where.',
+  'Bram remembers the city before its newest walls.',
+  'Cleo never leaves a story half written.',
+  'Dara reads the tides before setting out.',
+  'Enzo insists every good journey starts with a map.',
+  'Faye keeps watch long after the city sleeps.',
+  'Gus is always first to spot a visitor on the horizon.'
+];
+function trialStory(event, result) {
+  const names = result.affected.map(id => `${MEMBERS[id].name} (${MEMBERS[id].zone})`).join(', ');
+  if (!names) return 'None of your share holders is caught in this trial. Your distribution kept them clear.';
+  return event.kind === 'theft'
+    ? `Shares exposed in this scenario: ${names}. The intruder now has ${result.affected.length} distinct share${result.affected.length === 1 ? '' : 's'}.`
+    : `Unable to reach the chamber: ${names}. ${result.available.length} share${result.available.length === 1 ? '' : 's'} can still arrive.`;
+}
+function renderRecap() {
+  const recap = $('charter-recap'); recap.replaceChildren(); recap.hidden = false;
+  const heading = document.createElement('h3'); heading.textContent = 'Your council held';
+  const policy = document.createElement('p');
+  const locations = new Set(selected.map(id => MEMBERS[id].zone)).size;
+  policy.textContent = `${threshold}-of-${selected.length} across ${locations} location${locations === 1 ? '' : 's'}. Every trial below starts afresh.`;
+  const list = document.createElement('ul');
+  for (const event of mission.events) {
+    const result = eventOutcome(selected, threshold, event), item = document.createElement('li');
+    item.textContent = `${event.name}: ${event.kind === 'theft' ? `${result.affected.length} copied; fewer than ${threshold}, so the secret stayed private.` : `${result.available.length} available; enough to recover with ${threshold}.`}`;
+    list.append(item);
+  }
+  recap.append(heading, policy, list);
+}
 function sound(kind) {
   if (!saved.sound) return;
   try {
@@ -90,6 +120,7 @@ function renderKeepers() {
     if (phase !== 'plan' && chosen) {
       status = affected ? (mission.events[trialIndex]?.kind === 'theft' ? 'Copied' : 'Unavailable') : inHand ? 'Collected' : 'Available';
     }
+    b.title = `${member.role}. ${keeperFlavors[id]}`;
     b.setAttribute('aria-label', `${member.name}, ${member.role}, ${member.zone}. ${status}${share ? `. Share (${share.x}, ${share.y})` : ''}`);
     const display = [['sigil', member.symbol], ['name', member.name], ['zone', member.zone],
       ['share-value', phase === 'plan' ? (chosen ? 'Share assigned' : 'Invite keeper') : (share ? `${status} · ${share.x},${share.y}` : 'No share')]];
@@ -100,7 +131,7 @@ function renderKeepers() {
         if (chosen) selected = selected.filter(x => x !== id);
         else if (selected.length < mission.seats) selected = [...selected, id].sort((a, b) => a - b);
         else { feedback(`This charter has ${mission.seats} seats. Remove a keeper before inviting ${member.name}.`); return; }
-        feedback(`${selected.length} of ${mission.seats} shares assigned. Each selected keeper receives a different share.`);
+        feedback(`${member.name}, ${member.role.toLowerCase()}: ${keeperFlavors[id]} ${selected.length} of ${mission.seats} shares assigned.`);
       } else if (phase === 'recover') {
         gathered = inHand ? gathered.filter(x => x !== id) : [...gathered, id];
         feedback(gathered.length < threshold ? `${gathered.length} collected; ${threshold - gathered.length} more distinct share${threshold - gathered.length === 1 ? '' : 's'} needed. Every secret value is still possible from this collection alone.` : `${gathered.length} distinct shares collected. You can now recover the secret.`, gathered.length >= threshold ? 'success' : '');
@@ -139,9 +170,11 @@ function renderRisks() {
   }
 }
 function scoreNote() {
-  $('score-note').textContent = `Up to 3 seals per chapter. ${failures} failed attempt${failures === 1 ? '' : 's'}${guided ? ' · guidance used' : ''}. No timer.${storageOK ? '' : ' Browser storage unavailable; this session still works.'}`;
+  $('score-note').textContent = `Up to 3 seals per chapter. ${failures} failed attempt${failures === 1 ? '' : 's'}${guided ? ' · guidance used (free)' : ''}. Guidance is free. No timer.${storageOK ? '' : ' Browser storage unavailable; this session still works.'}`;
 }
 function planAgain() {
+  $('charter-recap').hidden = true;
+  $('chamber').classList.remove('recovery-celebration');
   phase = 'plan'; trialIndex = 0; currentDeal = null; outcome = null; gathered = [];
   $('planning-controls').hidden = false; $('trial-panel').hidden = true; $('hint').hidden = false;
   $('retry').hidden = true; $('completion').hidden = true; $('action').disabled = false;
@@ -161,11 +194,12 @@ function loadMission() {
   renderRisks(); planAgain();
 }
 function enterTrial() {
+  $('chamber').classList.remove('recovery-celebration');
   const event = mission.events[trialIndex];
   outcome = eventOutcome(selected, threshold, event); gathered = [];
   $('planning-controls').hidden = true; $('trial-panel').hidden = false; $('hint').hidden = true; $('retry').hidden = false;
   $('trial-number').textContent = `INDEPENDENT TRIAL ${trialIndex + 1} / ${mission.events.length}`;
-  $('trial-title').textContent = event.name; $('trial-description').textContent = event.description;
+  $('trial-title').textContent = event.name; $('trial-description').textContent = `${event.description} ${trialStory(event, outcome)}`;
   $('board-label').textContent = event.kind === 'theft' ? 'The intruder’s view' : 'Bring the council together';
   if (!outcome.pass) {
     phase = 'failed'; failures++; sound('fail');
@@ -202,10 +236,10 @@ function enterTrial() {
   renderKeepers(); scoreNote();
 }
 function award() {
-  const seals = Math.max(1, 3 - failures - Number(guided));
+  const seals = Math.max(1, 3 - failures);
   if (mode === 'campaign') { saved.scores[chapter] = Math.max(saved.scores[chapter], seals); saved.best = Math.max(saved.best, totalScore()); }
   else saved.daily = { date, score: Math.max(saved.daily?.date === date ? saved.daily.score : 0, seals) };
-  save(); phase = 'won'; $('retry').hidden = true;
+  save(); renderRecap(); phase = 'won'; $('retry').hidden = true;
   $('board-label').textContent = 'The charter holds';
   $('trial-title').textContent = 'Every trial passed'; $('trial-number').textContent = 'CHARTER COMPLETE';
   $('trial-description').textContent = mission.lesson;
@@ -240,7 +274,7 @@ $('action').addEventListener('click', () => {
     $('trial-verdict').textContent = 'The secret is recovered';
     feedback(`Your ${gathered.length} distinct shares reconstruct ${secret}, exactly matching the generated secret. Any ${threshold} valid shares from this deal would work.`, 'success');
     $('board-help').textContent = 'The gold seal opens only after the selected shares actually reconstruct the secret.';
-    actionLabel('Next trial'); renderKeepers(); sound('win');
+    actionLabel('Next trial'); renderKeepers(); $('chamber').classList.add('recovery-celebration'); sound('win');
   } else if (phase === 'won') {
     if (mode === 'daily' || chapter === CAMPAIGN.length - 1) finish();
     else { chapter++; loadMission(); focusGame(); }
@@ -256,7 +290,7 @@ $('hint').addEventListener('click', () => {
   const risks = mission.events.map(e => ({ event: e, outcome: eventOutcome(selected, threshold, e) }));
   const maxStolen = Math.max(0, ...risks.filter(r => r.event.kind === 'theft').map(r => r.outcome.affected.length));
   const minAvailable = Math.min(selected.length, ...risks.filter(r => r.event.kind === 'outage').map(r => r.outcome.available.length));
-  feedback(`With your current keepers, an intruder could get up to ${maxStolen} shares, and as few as ${minAvailable} could remain available. You need: ${maxStolen} < threshold ≤ ${minAvailable}.${maxStolen >= minAvailable ? ' No threshold fits yet. Change who holds the shares.' : ''} Guidance costs one seal for this attempt.`);
+  feedback(`With your current keepers, an intruder could get up to ${maxStolen} shares, and as few as ${minAvailable} could remain available. You need: ${maxStolen} < threshold ≤ ${minAvailable}.${maxStolen >= minAvailable ? ' No threshold fits yet. Change who holds the shares.' : ''} Guidance is free. Try a different council whenever you like.`);
   scoreNote();
 });
 $('retry').addEventListener('click', planAgain);

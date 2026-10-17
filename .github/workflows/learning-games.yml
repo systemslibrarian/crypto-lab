@@ -46,13 +46,13 @@ jobs:
           cache: npm
           cache-dependency-path: tools/package-lock.json
       - name: Hash vectors, adversarial proofs and mission checks
-        run: node --test tests/merkle-mystery-core.test.mjs
+        run: node --test tests/merkle-mystery-core.test.mjs tests/merkle-run-core.test.mjs
       - run: npm ci
         working-directory: tools
       - run: npx playwright install chromium
         working-directory: tools
       - name: Campaign, daily mysteries, trust decisions and responsive layout
-        run: node --test --test-timeout=180000 tests/merkle-mystery-browser.test.cjs
+        run: node --test --test-timeout=180000 tests/merkle-mystery-browser.test.cjs tests/merkle-run-browser.test.cjs
       - name: Save archive screenshots
         if: always()
         uses: actions/upload-artifact@v7

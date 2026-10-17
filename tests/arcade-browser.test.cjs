@@ -53,7 +53,11 @@ test('coin flip resolves all six missions with real SHA-256 and correct fairness
     assert.match(await page.locator('#result-title').textContent(),/Correct classification/);
     if(i<5)await page.locator('#next').click();
   }
-  assert.equal(await page.locator('#correct').textContent(),'6');assert.deepEqual(errors,[]);
+  assert.equal(await page.locator('#correct').textContent(),'6');
+  assert.equal(await page.locator('#mission-summary').isVisible(),true);
+  assert.equal(await page.locator('#summary-list li').count(),6);
+  assert.match(await page.locator('#summary-takeaway').textContent(),/6 of 6/);
+  assert.deepEqual(errors,[]);
  }finally{await page.close();}
 });
 test('trade escrow delivers an authentic item, refunds counterfeit and times out a vanishing trader',async()=>{
@@ -72,4 +76,24 @@ test('trade escrow delivers an authentic item, refunds counterfeit and times out
    else {await act('Verify deposit');if((await page.locator('#match').textContent()).startsWith('MATCH'))await act('Release swap');else await act('Claim refund');}
    assert.equal(await page.locator('#wins').textContent(),'4');assert.deepEqual(errors,[]);
  }finally{await page.close();}
+});
+
+test('risky direct trade explains the escrow alternative and allows retry',async()=>{
+ const {page,errors}=await open('the-digital-trade',390);
+ try{
+  await page.getByRole('button',{name:/^Send directly/}).click();
+  assert.match(await page.locator('#result-title').textContent(),/FAILED/);
+  assert.match(await page.locator('#trade-contrast').textContent(),/Deposit → Verify → Release or Refund/);
+  await page.locator('#retry').click();
+  assert.equal(await page.locator('#result').isVisible(),false);
+  assert.deepEqual(errors,[]);
+ }finally{await page.close();}
+});
+test('all on-site learning games visibly link to full exhibits without opening an accordion',()=>{
+ for(const slug of ['sealed-showdown','quantum-courier','merkle-mystery','key-rush','mental-poker','coin-flip-challenge','the-digital-trade']){
+  const html=fs.readFileSync(path.join(root,'games',slug,'index.html'),'utf8');
+  assert.match(html,/<section class="learning-bridge" aria-label="Where this leads">/,slug);
+  assert.match(html,/<nav class="bridge-links" aria-label="Related cryptography exhibits">/,slug);
+  assert.match(html, /href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-[^"]+\/"/,slug);
+ }
 });

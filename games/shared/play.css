@@ -12,3 +12,11 @@
 .learning-bridge .bridge-contrast{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}
 .learning-bridge .bridge-contrast p{margin:0;padding:12px;border:1px solid var(--line);border-radius:10px}
 @media(max-width:620px){.learning-bridge .bridge-contrast{grid-template-columns:1fr}}
+
+/* Completion feedback: accessible, text-first evidence after replayable missions. */
+.mission-summary{margin:17px 0;padding:15px 18px;background:#0e1e3b;border:1px solid var(--line);border-radius:12px}
+.mission-summary h4{margin:0 0 10px;font-size:16px}
+.mission-summary ul{margin:0 0 12px;padding-left:21px;font-size:13px;line-height:1.7;color:var(--ink)}
+.mission-summary li+li{margin-top:4px}
+.mission-summary p{font-size:13px;color:var(--mint)}
+.trade-contrast{margin:12px 0;padding:12px 15px;border-left:3px solid var(--mint);background:#112a3d;color:var(--ink);font-size:13px;line-height:1.6}

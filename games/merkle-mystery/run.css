@@ -6,3 +6,13 @@
 .promise .primary{margin-top:17px;font-size:13px;padding:11px 22px}.budget{gap:7px 12px}.budget>span{line-height:1.4;min-width:0}.math #preview,.math #record-full{overflow-wrap:anywhere;white-space:pre-wrap}.workshop{scroll-margin-top:12px}
 @media(max-width:900px) and (min-width:701px){.budget>span{font-size:8px;max-width:95px}}
 @media(max-width:700px){.budget{grid-column:2;grid-row:1;gap:3px}.promise .primary{margin-top:14px;min-width:180px}}
+
+/* Shared teaching handoff: game outcome to relevant exhibits. */
+.learning-bridge{margin:24px 0;padding:clamp(18px,3vw,26px);border:1px solid var(--line);border-radius:16px;background:var(--panel,#121b34);color:var(--ink)}
+.learning-bridge h2{margin:7px 0 12px;font-size:clamp(20px,3vw,28px);line-height:1.25}
+.learning-bridge p{margin:8px 0;font-size:14px;line-height:1.65;max-width:85ch}
+.learning-bridge .bridge-links{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:15px}
+.learning-bridge .bridge-links a{color:var(--mint);font-weight:700;text-underline-offset:4px}
+.learning-bridge .bridge-contrast{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}
+.learning-bridge .bridge-contrast p{margin:0;padding:12px;border:1px solid var(--line);border-radius:10px}
+@media(max-width:620px){.learning-bridge .bridge-contrast{grid-template-columns:1fr}}

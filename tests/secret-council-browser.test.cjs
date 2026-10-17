@@ -64,10 +64,14 @@ async function passTrials(page,mission,policy) {
       await page.locator('#action').click();
       assert.equal(await page.locator('#vault-value').innerText(),`SECRET ${String(expected).padStart(2,'0')}`);
       assert.equal(await page.locator('#trial-verdict').innerText(),'The secret is recovered');
+      assert.equal(await page.locator('#chamber').evaluate(el=>el.classList.contains('recovery-celebration')),true);
+      assert.equal(await page.locator('#vault').evaluate(el=>getComputedStyle(el).animationName),'none');
     } else assert.equal(await page.locator('#trial-verdict').innerText(),'Every secret is still possible');
     await page.locator('#action').click();
   }
   assert.equal(await page.locator('#trial-title').innerText(),'Every trial passed');
+  assert.match(await page.locator('#charter-recap').innerText(),new RegExp(`${policy.threshold}-of-${policy.ids.length}`));
+  assert.equal(await page.locator('#charter-recap li').count(),mission.events.length);
 }
 test('full six-chapter campaign, actual recovery, results and persistent best scores',async()=>{
   const {page,errors}=await open();
@@ -95,7 +99,9 @@ test('full six-chapter campaign, actual recovery, results and persistent best sc
 test('failure, hints, insufficient collection and revision cannot produce false wins',async()=>{
   const {page,errors}=await open();
   try{
-    await page.locator('#action').click();await page.locator('#action').click();
+    await page.locator('#action').click();
+    assert.match(await page.locator('#trial-description').innerText(),/Ada \(Archive\)/);
+    await page.locator('#action').click();
     assert.equal(await page.locator('#trial-verdict').innerText(),'The council cannot recover');
     await page.locator('#action').click();
     await page.locator('#hint').click();
@@ -107,7 +113,7 @@ test('failure, hints, insufficient collection and revision cannot produce false 
     await page.locator('#action').click();assert.match(await page.locator('#feedback').innerText(),/Collect 2 more/);
     await page.locator('.keeper[data-member="3"]').click();await page.locator('.keeper[data-member="5"]').click();
     await page.locator('#action').click();await page.locator('#action').click();
-    assert.equal(await page.locator('#trial-verdict').innerText(),'1 of 3 seals earned');
+    assert.equal(await page.locator('#trial-verdict').innerText(),'2 of 3 seals earned');
     await page.locator('#action').click();await page.locator('#action').click();
     assert.equal(await page.locator('#trial-verdict').innerText(),'The secret was exposed');
     assert.match(await page.locator('#vault-value').innerText(),/^SECRET \d{2}$/);
@@ -178,4 +184,28 @@ test('storage denied or malformed never blocks play',async()=>{
       await page.locator('#clear-progress').click();assert.deepEqual(errors,[]);
     }finally{await page.close();}
   }
+});
+
+test('recovery flourish supports motion, free guidance, and immediate restart',async()=>{
+  const {page,errors}=await open();
+  try{
+    await page.emulateMedia({reducedMotion:'no-preference'});
+    await page.locator('.keeper[data-member="0"]').click();
+    assert.match(await page.locator('#feedback').innerText(),/Every record has its place/);
+    await page.locator('.keeper[data-member="0"]').click();
+    await page.locator('#hint').click();
+    await page.locator('#threshold').fill('2');
+    await page.locator('#action').click();await page.locator('#action').click();
+    await page.locator('.keeper[data-member="3"]').click();await page.locator('.keeper[data-member="5"]').click();
+    await page.locator('#action').click();
+    assert.equal(await page.locator('#vault').evaluate(el=>getComputedStyle(el).animationName),'vault-glow');
+    await page.locator('#action').click();
+    assert.equal(await page.locator('#trial-verdict').innerText(),'3 of 3 seals earned');
+    assert.match(await page.locator('#charter-recap').innerText(),/2-of-3 across 3 locations/);
+    await page.locator('#restart').click();
+    assert.equal(await page.locator('#charter-recap').isVisible(),false);
+    assert.equal(await page.locator('#chamber').evaluate(el=>el.classList.contains('recovery-celebration')),false);
+    assert.equal(await page.locator('#vault-value').innerText(),'SEALED');
+    assert.deepEqual(errors,[]);
+  }finally{await page.close();}
 });

@@ -9,3 +9,16 @@
 @media(max-width:650px){.arcade-grid{grid-template-columns:1fr}.arcade-art svg{height:200px}.arcade-copy{padding:24px}}
 @media(max-width:450px){.keeper:nth-child(2){left:81%}.keeper:nth-child(3){left:85%}.keeper:nth-child(4){left:67%}.keeper:nth-child(5){left:33%}.keeper:nth-child(6){left:15%}.keeper:nth-child(7){left:19%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* Celebrate only a verified recovery; no delayed state changes or blocked controls. */
+.charter-recap{padding:16px;margin:16px 0;border:1px solid var(--mint);border-radius:5px;background:#102c2b;font-size:12px;line-height:1.65}
+.charter-recap h3{font:24px Georgia,serif;color:var(--mint);margin:0 0 8px}
+.charter-recap p{color:var(--muted);margin:0 0 10px}.charter-recap ul{padding-left:18px;margin:0}.charter-recap li+li{margin-top:8px}
+@media(prefers-reduced-motion:no-preference){
+.recovery-celebration .thread.gathered{stroke-dasharray:8 6;animation:share-arrives 1.2s ease-out}
+.recovery-celebration .keeper.gathered{animation:keeper-glow 1.2s ease-out}
+.recovery-celebration .vault.open{animation:vault-glow 1.2s ease-out}
+}
+@keyframes share-arrives{from{stroke-dashoffset:84;opacity:.3}to{stroke-dashoffset:0;opacity:1}}
+@keyframes keeper-glow{50%{box-shadow:0 0 24px #a7e5cf80}}
+@keyframes vault-glow{50%{filter:drop-shadow(0 0 18px #edc381aa)}}

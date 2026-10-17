@@ -24,6 +24,13 @@ trial similarly reconstructs the secret from the intruder's shares. Each trial
 is an independent alternate scenario; stolen shares do not accumulate between
 trials. The six chapters progress from threshold selection to correlated risk.
 
+Trial feedback names the affected share holders and their locations, including when
+no issued shares are affected. Selecting a keeper reveals a short personality line;
+flavor does not change the rules. Successful reconstruction triggers a 1.2-second
+connection and vault flourish, disabled for reduced motion, without delaying controls.
+Completed charters show the actual threshold, location count, and independent trial
+results in a recap.
+
 The daily puzzle permutes the final chapter's member identities using a public
 UTC date seed. Permutation preserves solvability. The displayed descriptions are
 rebuilt from the permuted identities. Its share numbers are independently drawn
@@ -31,7 +38,7 @@ from the browser's secure RNG on every attempt. The date seed never generates
 Shamir coefficients. Switching to daily mode captures the current UTC date;
 an already-running daily charter retains that date over midnight.
 
-Every chapter earns 1–3 seals: `max(1, 3 - failed trials - guidance used)`.
+Every chapter earns 1–3 seals: `max(1, 3 - failed trials)`. Guidance is free.
 Revising after a failed trial preserves its penalty. Restarting a chapter starts
 a fresh attempt. Best per-chapter scores are retained; replay never adds the same
 chapter twice. Campaign score is the sum of those chapter bests, maximum 18.

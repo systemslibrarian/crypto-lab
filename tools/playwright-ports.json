@@ -408,6 +408,18 @@
   "lab": "crypto-lab-pq-families"
  },
  {
+  "port": 4500,
+  "lab": "crypto-lab-key-lifecycle"
+ },
+ {
+  "port": 4501,
+  "lab": "crypto-lab-compression-leak"
+ },
+ {
+  "port": 4502,
+  "lab": "crypto-lab-subliminal-channels"
+ },
+ {
   "port": 4600,
   "lab": "crypto-lab-aegis-gate"
  },

@@ -1,0 +1,46 @@
+name: One-time catalog integration writers
+on:
+  push:
+    branches: [chatgpt/catalog-three-labs-20261017]
+permissions:
+  contents: write
+concurrency:
+  group: catalog-three-labs-generation
+  cancel-in-progress: false
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: chatgpt/catalog-three-labs-20261017
+          persist-credentials: true
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Regenerate approved catalog derivatives from indexed cards
+        run: |
+          set -eu
+          node tools/teach-build.js
+          node tools/readme-sync.js
+          node tools/catalog-sync.js
+          node tools/knowledge-map-sync.js
+          node tools/teach-build.js check
+          node tools/readme-sync.js check
+          node tools/catalog-sync.js check
+          node tools/knowledge-map-sync.js check
+          node tools/concept-sync.js check
+          git status --short
+      - name: Commit only the catalog's generated outputs
+        run: |
+          set -eu
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html README.md CATALOG.md teach/ knowledge-map/ .github/ISSUE_TEMPLATE/
+          if git diff --cached --quiet; then
+            echo 'No generated changes'
+          else
+            git commit -m 'Synchronize catalog README, algorithm index, teach pages and knowledge map'
+            git push origin HEAD:chatgpt/catalog-three-labs-20261017
+          fi

@@ -1,7 +1,7 @@
 # Learning games
 
 `games/index.html` is the entry point linked from the catalog navigation. It links
-Lattice Builder's existing standalone site with Secret Council, Merkle Mystery, and
+Lattice Builder's existing standalone site with Key Rush, Merkle Mystery, and
 Quantum Courier, and Sealed Showdown, served directly from their respective `games/<slug>/` directories.
 Games are reached through the **Learn through play** menu and `games/`, not the
 main exhibit card display. The existing Lattice Builder source record remains
@@ -23,7 +23,7 @@ can add depth, but must not hide the essential connection to cryptography.
 | Game | Experience through play | Visible result and takeaway |
 | --- | --- | --- |
 | Lattice Builder | Straighten signal fields, fly integer vector routes, match bases | Signal completion explains the eight-candidate search; every flight explains its vector operation; Basis Match explains each matched target. These are geometric intuition, not general lattice attacks. |
-| Secret Council | Place keepers, set a threshold and spend reserves through cumulative thefts and floods | Actual stolen/available counts and reconstructed values explain the player’s outcome; free rewinds compare plans. |
+| Key Rush | Steer courier bots through moving scanners and traps; boost, deliver and retry with different thresholds | Distinct stolen copies, lost bots and actual reconstruction show secrecy versus availability; each round explains its outcome. |
 | Merkle Mystery | Locate changes, assemble proofs and judge archive parcels | Actual hash comparisons and the proof walkthrough lead into a lesson about integrity, inclusion or root trust. |
 | Quantum Courier | Tune, sift, discard samples and review measurement errors | The measured replay and sample counts precede a lesson about basis agreement, disturbance or limits of the evidence. |
 | Sealed Showdown | Make sealed choices, guess weak seals and judge openings | Recomputed hashes and game outcomes lead into lessons about hiding, binding, context and refusal to reveal. |
@@ -33,9 +33,54 @@ is visible. Lattice Builder has its own repository and browser gate, including
 all six Vector Flight completion lessons and every Basis Match takeaway. Daily
 challenges reuse the same teaching flow. New games must follow this standard.
 
-## Secret Council vault mission
+## Key Rush
 
-The default `games/secret-council/index.html` now opens a bounded three-mission
+The owner rejected the council/flood theme. `games/key-rush/` replaces that entry
+with a neon robot arcade: direct movement, timed scanner gaps, pink traps, a
+three-cell boost, three arenas and immediate free retries. The opening states
+the goal and learning promise. This is an arcade prototype; automated checks
+establish behavior, not whether young players find it fun or learn effectively.
+
+Each bot carries one distinct Shamir share. Cyan scanners copy it once per bot,
+without stopping delivery; pink traps take that bot offline without copying its
+share. Previously stolen copies remain stolen. Enough deliveries actually
+reconstruct the secret, enough distinct copies actually expose it, and losing
+too many bots makes recovery impossible. Each result gives a short explanation
+using the actual counts, with a backup encryption key as the real-world connection.
+The threshold is adjustable before a run. Raising it needs more deliveries and
+more stolen shares; lowering it tolerates more unavailable bots but fewer copies.
+
+`core.mjs` owns deterministic game transitions and imports the established F_17
+sharing implementation from `../secret-council/core.mjs`. Each run deals fresh
+shares through the browser secure RNG, with no fallback. Movement and boosts
+check every traversed cell; elapsed-time collision checks catch stationary bots
+when a gap moves. Scanner cycles and trap timing are authored hazards, not crypto
+randomness. The run clock measures simulated time; slow practice reduces that
+rate. No time score or competitive leaderboard compares normal and slow runs.
+
+`game.mjs` renders a local canvas arena with native directional buttons, keyboard
+controls, pause, opt-in Web Audio and reduced-motion support. Leaving the tab
+pauses play. Key holds and pointer holds stop on a new bot, result or pause. The
+optional inspector shows actual share points and recovered values. The browser
+holds all shares; this is a tiny-field teaching model, not a secure key vault.
+There are no accounts, backend, network calls, real-secret inputs or remote assets.
+Only validated completion flags, slow practice and sound preferences persist
+under `crypto-lab-key-rush-v1`. Storage failures preserve play, and clearing progress
+does not touch another game or the shared theme. Previous-run comparison stays
+in memory. `tests/key-rush-core.test.mjs` verifies actual reconstruction, copy
+deduplication, loss, boosts, timing, pause, all level solutions and fresh starts.
+`tests/key-rush-browser.test.cjs` drives controls, observes real share results,
+checks responsive layouts and captures screenshots in the existing Learning games
+workflow's `secret-council-browser` artifact.
+
+`games/secret-council/index.html` redirects old links to Key Rush. The earlier vault
+prototype remains at `games/secret-council/vault.html` and the original guided
+chapters and algebra at `chapters.html`, preserving their assets and saved progress.
+The games-menu card now links to Key Rush; the main catalog cards are unchanged.
+
+## Archived Secret Council vault mission
+
+The archived `games/secret-council/vault.html` contains a bounded three-mission
 prototype: protect the city seed vault from thieves and recover it at dawn. The
 mission and learning promise precede play. This is a response to owner feedback
 that the chapter games were unclear and uninteresting; passing tests does not
@@ -81,7 +126,7 @@ while the mission is in view. Event consequences also appear beside the turn con
 module has no timers, network calls, dependencies or shared theme access.
 
 The existing six chapters, daily council and algebra explorer remain at
-`chapters.html`, with a return link to the new mission. Their original assets and
+`chapters.html`, with a return link to Key Rush. Their original assets and
 progress key are retained. `tests/council-vault-core.test.mjs` covers the threshold
 tradeoff, cumulative theft/deduplication, late protection, ferry recovery, resource
 limits, actual reconstruction, state transitions, and authored mission solutions.

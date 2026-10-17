@@ -31,7 +31,7 @@ async function open(width=1366, init) {
   page.on('pageerror',e=>errors.push(e.message));
   page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
   await page.route('https://**/*',route=>route.abort());
-  await page.goto(origin+'/games/secret-council/');
+  await page.goto(origin+'/games/secret-council/vault.html');
   await page.waitForFunction(()=>document.querySelectorAll('.keeper').length===5);
   return {page,errors};
 }
@@ -167,7 +167,7 @@ test('responsive mission and result, meaningful native controls, reduced motion 
       await page.screenshot({path:`test-results/secret-council/vault-result-${width}.png`,fullPage:true});
       await page.locator('header').getByRole('link',{name:'Guided chapters'}).click();
       await page.waitForFunction(()=>document.querySelectorAll('.keeper').length===7);
-      await page.getByRole('link',{name:'Play the vault mission'}).click();
+      await page.goto(origin+'/games/secret-council/vault.html');
       await page.waitForFunction(()=>document.querySelectorAll('.keeper').length===5);
       assert.deepEqual(errors,[]);
     }finally{await page.close();}

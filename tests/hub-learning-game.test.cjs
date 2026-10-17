@@ -43,7 +43,7 @@ test('games stay out of the main grid and remain reachable through the menu', as
         await page.goto(new URL('index.html',await games.evaluate(a=>a.href)).href);
         assert.equal(await page.locator('.arcade-card').count(),5);
         assert.equal(await page.locator('.arcade-card[href="'+gameURL+'"]').isVisible(),true);
-        for(const slug of ['sealed-showdown','secret-council','merkle-mystery','quantum-courier'])assert.equal(await page.locator(`.arcade-card[href="${slug}/"]`).isVisible(),true);
+        for(const slug of ['sealed-showdown','key-rush','merkle-mystery','quantum-courier'])assert.equal(await page.locator(`.arcade-card[href="${slug}/"]`).isVisible(),true);
         assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
         assert.deepEqual(errors,[]);
       } finally { await page.close(); }

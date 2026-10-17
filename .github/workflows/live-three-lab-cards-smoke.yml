@@ -1,0 +1,31 @@
+name: One-time live catalog smoke check
+on:
+  push:
+    branches: [chatgpt/catalog-three-labs-20261017]
+permissions: { contents: read }
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Verify served catalog bytes at public domain
+        env:
+          SITE: https://crypto-lab.systemslibrarian.dev/
+        run: |
+          set -eu
+          for attempt in $(seq 1 18); do
+            url="${SITE}?audit=${GITHUB_RUN_ID}-${attempt}"
+            if curl -fsSL --connect-timeout 7 --max-time 15 -H 'Cache-Control: no-cache' "$url" -o /tmp/catalog-live.html; then
+              if grep -Fq 'id="exhibit-count">231</span>' /tmp/catalog-live.html &&
+                 grep -Fq '<div class="project-title">Key Lifecycle</div>' /tmp/catalog-live.html &&
+                 grep -Fq '<div class="project-title">Compression Leak</div>' /tmp/catalog-live.html &&
+                 grep -Fq '<div class="project-title">Subliminal Channels</div>' /tmp/catalog-live.html; then
+                echo "PUBLIC VERIFIED: 231 cards and all three lab links present at $SITE"
+                exit 0
+              fi
+              echo "Attempt $attempt: live catalog source lacks one or more expected updates"
+            fi
+            sleep 6
+          done
+          echo "::error::Live catalog did not serve all three new entries"
+          exit 1

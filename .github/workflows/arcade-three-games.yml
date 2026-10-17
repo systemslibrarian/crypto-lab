@@ -1,0 +1,25 @@
+name: Three arcade games
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  crypto-gameplay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: SHA-256, shuffle, and six-mission gameplay tests
+        run: node --test tests/arcade-games.test.mjs tests/arcade-flow.test.mjs
+      - run: npm ci
+        working-directory: tools
+      - run: npx playwright install --with-deps chromium
+        working-directory: tools
+      - name: Play through three games on desktop and mobile viewports
+        run: node --test --test-timeout=180000 tests/arcade-browser.test.cjs

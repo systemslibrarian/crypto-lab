@@ -37,7 +37,7 @@ test('games stay out of the main grid and remain reachable through the menu', as
         assert.equal(await pq.getByRole('link',{name:'Lattice Gentle',exact:true}).count(),1);
         await page.locator('#menuToggle').click();
         const games=page.locator('#nav-menu a[href="games/"]');
-        assert.equal(await games.isVisible(),true);assert.match(await games.innerText(),/Learn through play/);
+        assert.equal(await games.isVisible(),true);assert.match(await games.innerText(),/Learn through play/i);
         assert.equal(await games.getAttribute('href'),'games/');
         // file:// has no directory index routing; load the index at the menu target.
         await page.goto(new URL('index.html',await games.evaluate(a=>a.href)).href);

@@ -1613,6 +1613,27 @@
    "addedFrom": "2026-10-06T11:20:19Z",
    "updatedFrom": "2026-10-09T02:30:24-04:00",
    "updatedCommit": "1ce5a8ca665b7946bb01958cbf2a9a9295fe7a84"
+  },
+  "crypto-lab-key-lifecycle": {
+   "added": "2026-10",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-17T20:10:08Z",
+   "updatedFrom": "2026-10-17T20:55:18Z",
+   "updatedCommit": "db3acd95cf0af7e2bbf38aaa651ca1d40daebe56"
+  },
+  "crypto-lab-compression-leak": {
+   "added": "2026-10",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-17T20:10:34Z",
+   "updatedFrom": "2026-10-17T20:55:21Z",
+   "updatedCommit": "1fed7250ad8bbe4b7547b21b56d0451fa1002578"
+  },
+  "crypto-lab-subliminal-channels": {
+   "added": "2026-10",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-17T20:10:53Z",
+   "updatedFrom": "2026-10-17T20:55:24Z",
+   "updatedCommit": "86f4e46fa2fd4d8991130f97ec0c05df6e7ce147"
   }
  }
 }

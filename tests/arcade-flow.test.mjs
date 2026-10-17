@@ -34,6 +34,9 @@ test('Coin Flip six cases can be verified and properly classified',async()=>{
    if(i<5) await el('next').click();
  }
  assert.equal(el('correct').textContent,6);assert.ok(Number(el('score').textContent)>=12);
+ assert.equal(el('mission-summary').hidden,false);
+ assert.equal(el('summary-list').children.length,6);
+ assert.match(el('summary-takeaway').textContent,/6 of 6/);
 });
 test('The Digital Trade allows safe honest swap, counterfeit refund and ghost timeout',async()=>{
  const el=newDom();await import('../games/the-digital-trade/game.mjs');await waitFor(()=>el('listed-hash').textContent.length===64,'listing');

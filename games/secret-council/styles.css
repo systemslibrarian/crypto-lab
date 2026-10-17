@@ -22,3 +22,5 @@
 @keyframes share-arrives{from{stroke-dashoffset:84;opacity:.3}to{stroke-dashoffset:0;opacity:1}}
 @keyframes keeper-glow{50%{box-shadow:0 0 24px #a7e5cf80}}
 @keyframes vault-glow{50%{filter:drop-shadow(0 0 18px #edc381aa)}}
+
+.index-learning-note{max-width:75ch;margin:16px auto 24px;padding:12px 18px;border-left:3px solid var(--lime,#b3f0d2);color:var(--muted,#b2bfd1);font-size:14px;line-height:1.6}

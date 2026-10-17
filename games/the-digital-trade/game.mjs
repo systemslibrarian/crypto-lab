@@ -35,6 +35,12 @@ async function prepare(index=0,wins=0,oldKind=null){
 function finish(won,reason,lesson){
  state.finished=true;state.wins+=won?1:0;
  say('result-title',won?'TRADE SECURED!':'TRADE FAILED — RETRY FREE');say('result-detail',`${reason} ${lesson}`);
+ const comparison=state.lost
+ ? 'Compare the paths: sending directly gave up control before you checked anything. Retry using Deposit → Verify → Release or Refund; the simulated escrow can block a bad exchange and return your item.'
+ : state.released
+ ? 'Compare the risky path: sending directly would depend on the rival’s goodwill. Here the escrow held both deposits until the expected bytes were verified.'
+ : 'Compare the risky path: sending directly could lose the item permanently. Here a verified mismatch or elapsed timeout allowed the escrow to return it.';
+ say('trade-contrast',comparison);
  say('lesson-title',won?'Why that worked':'What went wrong');say('lesson',lesson);
  el('next').hidden=!won;el('retry').hidden=won;
  feedback(won?'You handled the counterparty safely.':'A flawed exchange rule lost the trade. Test another path!',won?'good':'bad');render();

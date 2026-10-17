@@ -58,3 +58,13 @@
 @media(max-width:700px){.game-panel>.lesson{margin:0 12px 14px;padding:14px}.lesson h3{font-size:22px;margin-bottom:14px}.recovery{padding:13px}.recovery-heading h4{font-size:17px}.recovery-heading{gap:10px}.recovery-output{padding:13px}.share-chip{padding:8px 10px}.event-toast{top:6px;padding:7px 10px}.event-toast strong{font-size:11px}.event-toast span{font-size:10px}.overlay .primary,.overlay .outline{min-height:44px}}
 
 #lesson-panel{scroll-margin-top:14px}#next-arena{margin-top:16px;min-height:44px;font-size:12px}
+
+/* Shared teaching handoff: game outcome to relevant exhibits. */
+.learning-bridge{margin:24px 0;padding:clamp(18px,3vw,26px);border:1px solid var(--line);border-radius:16px;background:var(--panel,#121b34);color:var(--ink)}
+.learning-bridge h2{margin:7px 0 12px;font-size:clamp(20px,3vw,28px);line-height:1.25}
+.learning-bridge p{margin:8px 0;font-size:14px;line-height:1.65;max-width:85ch}
+.learning-bridge .bridge-links{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:15px}
+.learning-bridge .bridge-links a{color:var(--lime);font-weight:700;text-underline-offset:4px}
+.learning-bridge .bridge-contrast{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}
+.learning-bridge .bridge-contrast p{margin:0;padding:12px;border:1px solid var(--line);border-radius:10px}
+@media(max-width:620px){.learning-bridge .bridge-contrast{grid-template-columns:1fr}}

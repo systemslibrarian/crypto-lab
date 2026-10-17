@@ -71,6 +71,7 @@ async function solve(page,kind,{mistake=false}={}){
   assert(await page.evaluate(()=>document.querySelector('#lesson-result').compareDocumentPosition(document.querySelector('#action')) & Node.DOCUMENT_POSITION_FOLLOWING));
   const keywords={open:/timing/,sealed:/Both hashes matched/,guess:/three possible moves/,swap:/binding/,replay:/current round/,abort:/cannot force participation/};
   assert.match(await page.locator('#lesson').innerText(),keywords[kind]);
+  if(kind==='guess')assert.match(await page.locator('#verification-text').innerText(),/No secret random value was included/);
 }
 test('six playable lessons, independently hashed openings, visible takeaways, scores and clipboard fallback',async()=>{
   const {page,errors}=await open();

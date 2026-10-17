@@ -90,7 +90,7 @@ function fail(message){state.mistakes++;$('#feedback').textContent=message+` Try
 function displayVerification(check){
   $('#verification').hidden=false;$('#verification').classList.toggle('valid',check.valid);
   $('#verification-title').textContent=check.valid?'The opening matches.':check.contextOK?'The move changed. The hash does not match.':'That seal belongs to another round.';
-  $('#verification-text').textContent=check.valid?'The supplied move and random value reproduce the seal fixed before the reveal.':check.contextOK?'Hashing the supplied opening produces a different value from Switch’s stored commitment. The opening must be rejected.':'Verification uses the current round identifier and expected player, supplied independently of the old packet. Reusing an old opening fails that check.';
+  $('#verification-text').textContent=check.valid?(state.def.kind==='guess'?'The supplied move and public context reproduce the weak seal. No secret random value was included, so you could test every possible move.':'The supplied move and random value reproduce the seal fixed before the reveal.'):check.contextOK?'Hashing the supplied opening produces a different value from Switch’s stored commitment. The opening must be rejected.':'Verification uses the current round identifier and expected player, supplied independently of the old packet. Reusing an old opening fails that check.';
   $('#stored-hash').textContent=state.robotSeal;$('#computed-hash').textContent=check.computed||'Invalid opening';
 }
 function complete(resultTitle){

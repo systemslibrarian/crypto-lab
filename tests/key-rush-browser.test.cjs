@@ -163,12 +163,84 @@ test('phone, tablet and desktop layouts expose touch controls, full result and l
       await route(page,'RRRRRRRR');await route(page,'RRRRRRRRRR');
       assert.equal(await attr(page,'reason'),'win');await fit('result');
       await page.screenshot({path:`test-results/secret-council/key-rush-result-${width}.png`,fullPage:true});
+      await page.locator('#remove-share').click();
+      assert.equal(await page.locator('#recovery-value').textContent(),'17 possibilities');
+      await page.locator('[data-candidate="16"]').click();
+      await page.locator('#recovery-math summary').click();
+      assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`evidence width ${width}`);
+      await page.screenshot({path:`test-results/secret-council/key-rush-fewer-shares-${width}.png`,fullPage:true});
+      for(const b of await page.locator('.candidate-keys button,.dpad button,.party-switch button,#remove-share').all()){
+        if(!(await b.isVisible()))continue;const rect=await b.boundingBox();assert(rect.width>=44&&rect.height>=44,'touch target at least 44px');
+      }
       await page.goto(origin+'/games/secret-council/');await page.waitForURL('**/games/key-rush/');
       await page.locator('#thresholds button').first().waitFor();
       assert.equal(await page.title(),'Key Rush · Crypto Lab');
       assert.deepEqual(errors,[]);
     }finally{await page.close();}
   }
+});
+
+test('the result rebuilds the actual key, then constructs witnesses for all 17 keys with one share removed',async()=>{
+ const {page,errors}=await open();
+ try{
+  await begin(page);const expected=await pointSecret(page,[0,1]);
+  await route(page,'RRRRRRRRRRRRRRRRRRRR');
+  assert.equal(await page.locator('#recovery-value').textContent(),String(expected));
+  assert.equal(await page.locator('[data-recovery-id]').count(),2);
+  assert.equal(await page.locator('#view-home').getAttribute('aria-pressed'),'true');
+  assert.equal(await page.locator('#candidate-panel').isVisible(),false);
+  await page.locator('#next').click();assert.equal(await page.locator('#lesson-title').evaluate(n=>n===document.activeElement),true);
+  await page.locator('#recovery-math summary').click();
+  const mod=n=>((n%17)+17)%17;
+  let sum=0;
+  for(const text of await page.locator('[data-term]').allTextContents()){
+   const match=text.match(/: (\d+) × (\d+) = (\d+)/);assert(match);const [y,weight,contribution]=match.slice(1).map(Number);
+   assert.equal(mod(y*weight),contribution);sum=mod(sum+contribution);
+  }
+  assert.equal(sum,expected);
+  await page.locator('#remove-share').click();
+  assert.equal(await page.locator('[data-recovery-id]').count(),1);
+  assert.equal(await page.locator('#candidate-keys button').count(),17);
+  for(let n=0;n<17;n++){
+   const button=page.locator(`[data-candidate="${n}"]`);await button.focus();await page.keyboard.press('Enter');
+   assert.equal(await button.getAttribute('aria-pressed'),'true');
+   assert.match(await page.locator('#candidate-witness').textContent(),new RegExp(`Candidate ${n} works: f\\(0\\) = ${n};`));
+   assert.match(await page.locator('#candidate-witness').textContent(),/Every shown share matches/);
+  }
+  assert.equal(await page.locator('#home-count').textContent(),'2 / 2','experiment leaves run unchanged');
+  await page.locator('#remove-share').click();assert.equal(await page.locator('#recovery-value').textContent(),String(expected));
+  await page.locator('#view-scanners').click();assert.match(await page.locator('#recovery-count').textContent(),/received 0/);
+  assert.equal(await page.locator('#recovery-value').textContent(),'17 possibilities');assert.equal(await page.locator('#remove-share').isVisible(),false);
+  await page.locator('#start').click();assert.equal(await page.locator('#lesson-panel').isVisible(),false);
+  assert.deepEqual(errors,[]);
+ }finally{await page.close();}
+});
+
+test('copy and offline notices distinguish originals, lost bots and surviving stolen copies',async()=>{
+ const {page,errors}=await open(390);
+ try{
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await begin(page);await route(page,'URRRR');
+  assert.equal(await page.locator('#event-toast').isVisible(),true);
+  assert.equal(await page.locator('#event-toast').getAttribute('data-kind'),'copy');
+  assert.match(await page.locator('#event-copy').textContent(),/Original intact.*still deliver/);
+  await page.screenshot({path:'test-results/secret-council/key-rush-copy-notice.png',fullPage:true});
+  await route(page,'RRRRRRD');assert.equal(await page.locator('#event-toast').getAttribute('data-kind'),'deliver');
+  await route(page,'URRRR');assert.equal(await attr(page,'reason'),'breach');
+  assert.equal(await page.locator('#view-scanners').getAttribute('aria-pressed'),'true');
+  assert.equal(await page.locator('#recovery-value').textContent(),String(await pointSecret(page,[0,1])));
+  await page.locator('#view-home').click();assert.equal(await page.locator('#recovery-value').textContent(),'17 possibilities');
+  await page.locator('[data-level="1"]').click();await begin(page);
+  await route(page,'RRRRR'); // Zip is copied at x3, then goes offline at x5.
+  assert.equal(await page.locator('#event-toast').getAttribute('data-kind'),'offline');
+  assert.match(await page.locator('#event-copy').textContent(),/stolen copy survives/);
+  assert.equal(await page.locator('#copy-count').textContent(),'1 / 3');
+  assert.equal(await page.locator('.bot-badge.offline.copied').count(),1);
+  await page.locator('#reset').click();await begin(page);await route(page,'UURRRRDDR');
+  assert.match(await page.locator('#event-copy').textContent(),/No share copied/);
+  await page.clock.runFor(2100);assert.equal(await page.locator('#event-toast').isVisible(),false);
+  assert.deepEqual(errors,[]);
+ }finally{await page.close();}
 });
 test('blocked/corrupt storage and absent secure randomness fail honestly and leave other progress alone',async()=>{
   for(const init of [

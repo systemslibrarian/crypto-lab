@@ -47,6 +47,22 @@ share. Previously stolen copies remain stolen. Enough deliveries actually
 reconstruct the secret, enough distinct copies actually expose it, and losing
 too many bots makes recovery impossible. Each result gives a short explanation
 using the actual counts, with a backup encryption key as the real-world connection.
+The result panel now sits below the arena and before settings on phones. **Rebuild
+the key** switches between Home's delivered shares and the scanners' copied shares.
+It recomputes recovery from those points and displays the actual key, with optional
+Lagrange weights and the modular sum. **Try one fewer share** sets aside one observed
+share without changing the run. All 17 candidate keys remain selectable; each gets
+a constructed degree-below-threshold polynomial matching the observed points and
+that candidate at x=0. This uses the existing Shamir module, not an animation that
+reads the dealer's answer. The panel links directly to Shamir Gate for the next step.
+No keys, shares, candidate choices or reconstruction data are persisted.
+
+Copy, offline and delivery events have distinct visible notices and sound patterns.
+A copied bot is explicitly still deliverable; a copied bot subsequently taken offline
+keeps its stolen copy on the scanner side. Short trails and a single copy pulse are
+omitted under reduced motion; notices remain. Movement, recovery experiment and
+candidate buttons have 44px minimum touch targets.
+
 The threshold is adjustable before a run. Raising it needs more deliveries and
 more stolen shares; lowering it tolerates more unavailable bots but fewer copies.
 
@@ -69,6 +85,9 @@ under `crypto-lab-key-rush-v1`. Storage failures preserve play, and clearing pro
 does not touch another game or the shared theme. Previous-run comparison stays
 in memory. `tests/key-rush-core.test.mjs` verifies actual reconstruction, copy
 deduplication, loss, boosts, timing, pause, all level solutions and fresh starts.
+It also checks recovery weights at thresholds 2–5, all candidate witnesses, unchanged
+run state after experiments, and independently counts equally many compatible
+coefficient choices per secret in the two- and three-share schemes.
 `tests/key-rush-browser.test.cjs` drives controls, observes real share results,
 checks responsive layouts and captures screenshots in the existing Learning games
 workflow's `secret-council-browser` artifact.

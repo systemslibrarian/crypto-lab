@@ -1,4 +1,4 @@
-import { STORE,COLS,ROWS,EXIT,NAMES,LEVELS,cleanProgress,create,start,move,tick,pause,hazards,explanation } from './core.mjs';
+import { STORE,COLS,ROWS,EXIT,NAMES,LEVELS,cleanProgress,create,start,move,tick,pause,hazards,explanation,recoveryEvidence } from './core.mjs';
 const $=id=>document.getElementById(id),canvas=$('arena'),ctx=canvas.getContext('2d');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let storageOK=true,raw=null,saved;
@@ -6,6 +6,7 @@ try{raw=localStorage.getItem(STORE);}catch{storageOK=false;}
 try{saved=cleanProgress(JSON.parse(raw));}catch{saved=cleanProgress(null);}
 let state=create(),previous=null,held=null,nextMoveAt=0,lastFrame=null,audioContext,audioEpoch=0,lastSoundEvent=-1;
 let seenResult=null;
+let audience='home',removeOne=false,candidate=0,notice=null,trail=[];
 const DIRS={up:[0,-1],left:[-1,0],down:[0,1],right:[1,0]};
 const KEYS={ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right'};
 function save(){try{localStorage.setItem(STORE,JSON.stringify(saved));}catch{storageOK=false;}storageNote();}
@@ -15,7 +16,7 @@ function sound(kind='move'){
  const epoch=audioEpoch;
  try{
   const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;audioContext||=new Audio();
-  const play=()=>{if(epoch!==audioEpoch||!saved.sound)return;(kind==='win'?[440,554,659,880]:kind==='hit'?[180,140]:[kind==='deliver'?660:330]).forEach((frequency,i)=>{
+  const play=()=>{if(epoch!==audioEpoch||!saved.sound)return;(kind==='win'?[440,554,659,880]:kind==='offline'?[180,100]:kind==='copy'?[620,880]:[kind==='deliver'?660:330]).forEach((frequency,i)=>{
    const o=audioContext.createOscillator(),g=audioContext.createGain(),t=audioContext.currentTime+i*.09;o.type='triangle';o.frequency.value=frequency;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.035,t+.008);g.gain.exponentialRampToValueAtTime(.001,t+.15);o.connect(g);g.connect(audioContext.destination);o.start(t);o.stop(t+.17);
   });};
   if(audioContext.state==='suspended')audioContext.resume().then(play).catch(()=>{});else play();
@@ -24,21 +25,31 @@ function sound(kind='move'){
 function change(next){
  const before=state;
  state=next;
+ if(state.active!==before.active)trail=[];
+ else if(state.x!==before.x||state.y!==before.y)trail=[...trail,{x:before.x,y:before.y}].slice(-7);
+ const copied=state.copied.length>before.copied.length,offline=state.offline.length>before.offline.length,delivered=state.delivered.length>before.delivered.length;
+ if(copied||offline||delivered){
+  const id=offline?state.offline.at(-1):copied?state.copied.at(-1):state.delivered.at(-1);
+  notice={kind:offline?'offline':copied?'copy':'deliver',at:state.elapsed,bot:id,
+   title:offline?`${NAMES[id]} offline`:copied?`${NAMES[id]}’s share copied`:`${NAMES[id]} delivered`,
+   copy:offline?(state.copied.includes(id)?'The stolen copy survives. This bot cannot deliver.':'No share copied. This bot cannot deliver.'):
+    copied?(delivered?'Copied AND delivered. The original still worked.':'Original intact — this bot can still deliver!'):`${state.delivered.length} / ${state.threshold} distinct shares home.`};
+ }
  if(state.active!==before.active||state.phase!=='playing')held=null;
  if(state.event!==before.event){
   if(state.phase==='result'&&state!==seenResult){
    seenResult=state;
    if(state.reason==='win'){saved.completed[state.level]=true;save();}
-   renderLesson();
-   $('start').focus({preventScroll:true});
+   audience=state.reason==='breach'?'scanners':'home';removeOne=false;candidate=0;renderLesson();
+   $('lesson-title').focus({preventScroll:true});
   }
-  if(state.event!==lastSoundEvent){sound(state.reason==='win'?'win':state.copied.length>before.copied.length||state.offline.length>before.offline.length?'hit':'deliver');lastSoundEvent=state.event;}
+  if(state.event!==lastSoundEvent){sound(state.reason==='win'?'win':offline?'offline':copied?'copy':'deliver');lastSoundEvent=state.event;}
  }
  renderUI();draw();
 }
 function ready(level=state.level,threshold=LEVELS[level].threshold){
  if(state.phase==='result')previous={level:state.level,threshold:state.threshold,delivered:state.delivered.length,copied:state.copied.length,offline:state.offline.length,reason:state.reason};
- held=null;lastFrame=null;nextMoveAt=0;audioEpoch++;seenResult=null;
+ held=null;lastFrame=null;nextMoveAt=0;audioEpoch++;seenResult=null;lastSoundEvent=-1;notice=null;trail=[];audience='home';removeOne=false;candidate=0;
  state=create(level,threshold);$('lesson-panel').hidden=true;renderThresholds();renderUI();draw();
 }
 function beginRun(){
@@ -56,10 +67,37 @@ function renderLesson(){
  const e=explanation(state);$('lesson-panel').hidden=false;$('lesson-title').textContent=e.title;$('lesson').textContent=e.lesson;$('connection').textContent=e.connection;
  $('compare').hidden=!previous||previous.level!==state.level;
  if(previous&&previous.level===state.level)$('compare').textContent=`Last run: threshold ${previous.threshold}, ${previous.delivered} delivered, ${previous.copied} copied, ${previous.offline} offline. This run: threshold ${state.threshold}, ${state.delivered.length} delivered, ${state.copied.length} copied, ${state.offline.length} offline.`;
+ renderRecovery();
+}
+function renderRecovery(){
+ const e=recoveryEvidence(state,audience,removeOne,candidate),enough=e.value!==null;
+ $('view-home').setAttribute('aria-pressed',String(audience==='home'));$('view-scanners').setAttribute('aria-pressed',String(audience==='scanners'));
+ $('recovery-count').textContent=`${audience==='home'?'Home':'Scanners'} received ${e.received} distinct share${e.received===1?'':'s'}. Using ${e.points.length} of ${e.threshold} needed${e.removed?' after setting one aside':''}.`;
+ $('recovery-shares').innerHTML=e.points.length?e.points.map(p=>`<span class="share-chip" data-recovery-id="${p.id}"><b>${NAMES[p.id]}</b><code>(${p.x}, ${p.y})</code></span>`).join(''):'<span class="no-shares">No shares received</span>';
+ $('recovery-output').dataset.determined=String(enough);
+ $('recovery-label').textContent=enough?'ONE POSSIBLE KEY · RECONSTRUCTED':'KEY STILL UNKNOWN';
+ $('recovery-value').textContent=enough?String(e.value):`${e.possibilities.length} possibilities`;
+ $('recovery-why').textContent=enough?`These ${e.points.length} shares pin down the key. They reconstruct ${e.value} using the calculation below.`:`From these shares alone, every key from 0 to 16 still fits. Being one share short does not mean knowing part of the key.`;
+ $('remove-share').hidden=e.received<e.threshold;$('remove-share').setAttribute('aria-pressed',String(removeOne));$('remove-share').textContent=removeOne?'Put the share back':'Try one fewer share';
+ $('removed-share').hidden=!e.removed;if(e.removed)$('removed-share').textContent=`Set aside ${NAMES[e.removed.id]}’s share (${e.removed.x}, ${e.removed.y}). This experiment does not change your finished run.`;
+ $('candidate-panel').hidden=enough;
+ for(const b of $('candidate-keys').children)b.setAttribute('aria-pressed',String(Number(b.dataset.candidate)===candidate));
+ if(!enough)$('candidate-witness').textContent=`Candidate ${candidate} works: ${['f(0) = '+e.witness[0].y,...e.points.map(p=>`f(${p.x}) = ${e.witness[p.x].y}`)].join('; ')}. ${e.points.length?'Every shown share matches.':'With no shares observed, nothing rules this key out.'}`;
+ $('recovery-steps').replaceChildren();
+ if(enough){
+  const intro=document.createElement('p');intro.textContent='Each y value is multiplied by its Lagrange weight at x = 0. All arithmetic wraps modulo 17.';$('recovery-steps').append(intro);
+  const list=document.createElement('ol');for(const t of e.terms){const li=document.createElement('li');li.dataset.term=t.id;li.textContent=`${NAMES[t.id]}: ${t.y} × ${t.weight} = ${t.contribution} (mod 17)`;list.append(li);}$('recovery-steps').append(list);
+  const sum=document.createElement('p');sum.className='recovery-sum';sum.textContent=`(${e.terms.map(t=>t.contribution).join(' + ')}) mod 17 = ${e.value}. That is the recovered key.`;$('recovery-steps').append(sum);
+ }else{
+  const p=document.createElement('p');p.textContent=`For each candidate, we construct a polynomial through (0, candidate) and all ${e.points.length} observed shares. Its degree is at most ${e.points.length}, below the threshold ${e.threshold}. Every candidate is compatible. Shamir’s uniformly random coefficients make the shares reveal no information about the secret.`;$('recovery-steps').append(p);
+ }
 }
 function renderUI(){
  const level=LEVELS[state.level],playing=state.phase==='playing';
  $('arena-wrap').dataset.phase=state.phase;canvas.dataset.phase=state.phase;canvas.dataset.position=`${state.x},${state.y}`;canvas.dataset.active=String(state.active);canvas.dataset.elapsed=String(Math.round(state.elapsed));canvas.dataset.reason=state.reason||'';
+ document.querySelector('.play-controls').hidden=state.phase==='result';$('controls-help').hidden=state.phase==='result';
+ $('event-toast').hidden=!notice||state.phase!=='playing'||state.elapsed-notice.at>=1900;
+ if(notice){$('event-toast').dataset.kind=notice.kind;$('event-title').textContent=notice.title;$('event-copy').textContent=notice.copy;}
  $('home-count').textContent=`${state.delivered.length} / ${state.threshold}`;$('copy-count').textContent=`${state.copied.length} / ${state.threshold}`;
  const seconds=Math.floor(state.elapsed/1000);$('time').textContent=`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;
  // Update the live region only for meaningful events, never for animation frames.
@@ -71,7 +109,7 @@ function renderUI(){
  $('level-name').textContent=level.name;$('arena-tip').textContent=level.tip;
  for(const b of $('levels').children){const i=Number(b.dataset.level);b.setAttribute('aria-pressed',String(i===state.level));b.classList.toggle('complete',saved.completed[i]);}
  for(const b of $('thresholds').children){b.setAttribute('aria-pressed',String(Number(b.dataset.threshold)===state.threshold));b.disabled=['playing','paused'].includes(state.phase);}
- $('policy').textContent=`${state.threshold} of ${level.bots} deliveries unlock your key. ${state.threshold} distinct stolen shares expose it. You can lose ${level.bots-state.threshold} bots and still recover.`;
+ $('policy').textContent=`${state.threshold} of ${level.bots} deliveries unlock your key. ${state.threshold} distinct stolen shares expose it. You can lose ${level.bots-state.threshold} ${level.bots-state.threshold===1?'bot':'bots'} and still recover.`;
  $('slow').checked=saved.slow;$('slow').disabled=['playing','paused'].includes(state.phase);
  $('sound').textContent=saved.sound?'Sound on':'Sound off';$('sound').setAttribute('aria-pressed',String(saved.sound));
  $('overlay').hidden=playing;$('next').hidden=state.phase!=='result';
@@ -79,7 +117,7 @@ function renderUI(){
  else if(state.phase==='paused'){$('overlay-kicker').textContent='Take a breath';$('overlay-title').textContent='Paused.';$('overlay-copy').textContent='Your bots and the hazards are frozen. Resume when you’re ready.';$('start').textContent='Keep going →';$('overlay-hint').textContent='P / Escape also resumes.';}
  else if(state.phase==='result'){
   const e=explanation(state);$('overlay-kicker').textContent=state.reason==='win'?'RUN COMPLETE':'RETRY IS FREE';$('overlay-title').textContent=e.title;
-  $('overlay-copy').textContent=state.reason==='win'?`${state.delivered.length} shares home recovered your key. Only ${state.copied.length} copied: below ${state.threshold}, so the scanners could not reconstruct it.`:state.reason==='breach'?`${state.copied.length} different stolen shares met your threshold of ${state.threshold}. The scanners reconstructed the key.`:`Only ${level.bots-state.offline.length} bots remained available. Your threshold needed ${state.threshold}, so the key could not be recovered.`;$('overlay-hint').textContent='The short crypto explanation is also below the arena.';$('start').textContent='Run again →';$('next').textContent=state.level===2?'First arena →':'Next arena →';
+  $('overlay-copy').textContent=state.reason==='win'?`${state.delivered.length} shares home recovered key ${state.recovered}. Try removing one share below to see why the threshold matters.`:state.reason==='breach'?`${state.copied.length} different stolen shares reconstructed key ${state.exposed}. Compare the scanners’ shares with Home below.`:`Only ${level.bots-state.offline.length} bots remained available. Your threshold needed ${state.threshold}. See why the shares at Home are insufficient below.`;$('overlay-hint').textContent='Rebuild the key below the arena.';$('start').textContent='Run again →';$('next').textContent=state.reason==='win'?'Why did it unlock? ↓':state.reason==='breach'?'How was it exposed? ↓':'Why was it lost? ↓';$('next-arena').textContent=state.level===2?'First arena →':'Next arena →';
  }
  if(state.dealt){
   $('share-table').innerHTML=state.dealt.shares.map(p=>`<tr><th scope="row">${NAMES[p.id]}</th><td data-point="${p.id}">(${p.x}, ${p.y})</td><td>${state.delivered.includes(p.id)?'Yes':'No'}</td><td>${state.copied.includes(p.id)?'Yes':'No'}</td><td>${state.offline.includes(p.id)?'Yes':'No'}</td></tr>`).join('');
@@ -117,6 +155,10 @@ function draw(){
   ctx.save();ctx.translate(j.x*cell+40,j.y*cell+40);ctx.beginPath();for(let i=0;i<16;i++){const a=i*Math.PI/8,r=i%2?21:31;const x=Math.cos(a)*r,y=Math.sin(a)*r;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.closePath();ctx.fillStyle=j.active?'#fa79b4':'#50334c';ctx.fill();ctx.strokeStyle='#ffb1d2';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=j.active?'#391129':'#d69bb6';ctx.font='bold 24px Arial';ctx.fillText(j.active?'×':'·',0,8);ctx.restore();
  }
  for(const [x,y] of LEVELS[state.level].walls){roundRect(x*cell+4,y*cell+4,72,72,9,'#29324c','#4b5573');ctx.strokeStyle='#606c8d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x*cell+15,y*cell+25);ctx.lineTo(x*cell+65,y*cell+25);ctx.moveTo(x*cell+15,y*cell+50);ctx.lineTo(x*cell+65,y*cell+50);ctx.stroke();}
+ if(!reduced.matches&&state.phase==='playing'){
+  if(trail.length){ctx.beginPath();[...trail,{x:state.x,y:state.y}].forEach((p,i)=>i?ctx.lineTo(p.x*cell+40,p.y*cell+40):ctx.moveTo(p.x*cell+40,p.y*cell+40));ctx.strokeStyle='#c6ff5e35';ctx.lineWidth=9;ctx.lineCap='round';ctx.stroke();ctx.lineCap='butt';}
+  if(notice&&notice.bot===state.active&&state.elapsed-notice.at<650){const t=(state.elapsed-notice.at)/650;ctx.beginPath();ctx.arc(state.x*cell+40,state.y*cell+40,25+t*28,0,Math.PI*2);ctx.strokeStyle=notice.kind==='offline'?'#ff8dbb':notice.kind==='copy'?'#6de8f4':'#c6ff5e';ctx.globalAlpha=1-t;ctx.lineWidth=3;ctx.stroke();ctx.globalAlpha=1;}
+ }
  if(state.active!==null){robot(state.x*cell+40,state.y*cell+40,state.copied.includes(state.active)?'#8adce8':'#c6ff5e',.85,state.copied.includes(state.active));ctx.font='bold 11px Arial';ctx.fillStyle='#fff';ctx.fillText(NAMES[state.active],state.x*cell+40,state.y*cell+75);}
  if(state.reason==='win'&&!reduced.matches){for(let i=0;i<30;i++){const x=(i*137+29)%880,y=(i*83+47)%560;ctx.fillStyle=['#c6ff5e','#ff8dbb','#6de8f4'][i%3];ctx.fillRect(x,y,5,9);}}
 }
@@ -131,7 +173,8 @@ function frame(now){
 }
 LEVELS.forEach((l,i)=>{const b=document.createElement('button');b.dataset.level=i;b.textContent=String(i+1);b.setAttribute('aria-label',`Arena ${i+1}: ${l.name}`);b.addEventListener('click',()=>ready(i));$('levels').append(b);});
 $('start').addEventListener('click',()=>state.phase==='paused'?pauseRun():beginRun());
-$('next').addEventListener('click',()=>{ready((state.level+1)%LEVELS.length);canvas.scrollIntoView({block:'center'});});
+$('next').addEventListener('click',()=>{$('lesson-panel').scrollIntoView({block:'start'});$('lesson-title').focus({preventScroll:true});});
+$('next-arena').addEventListener('click',()=>{ready((state.level+1)%LEVELS.length);document.querySelector('.game-panel').scrollIntoView({block:'start'});$('start').focus({preventScroll:true});});
 $('reset').addEventListener('click',()=>ready(state.level,state.threshold));
 $('pause').addEventListener('click',pauseRun);
 $('boost').addEventListener('click',doBoost);
@@ -153,4 +196,8 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){held=null;
 $('slow').addEventListener('change',()=>{saved.slow=$('slow').checked;save();});
 $('sound').addEventListener('click',()=>{saved.sound=!saved.sound;audioEpoch++;save();renderUI();sound();});
 $('clear').addEventListener('click',()=>{try{localStorage.removeItem(STORE);}catch{storageOK=false;}saved=cleanProgress(null);previous=null;ready(0);$('game-status').textContent='Arcade progress and preferences cleared.';});
+$('lesson-title').tabIndex=-1;
+for(const party of ['home','scanners'])$('view-'+party).addEventListener('click',()=>{audience=party;removeOne=false;candidate=0;renderRecovery();});
+$('remove-share').addEventListener('click',()=>{removeOne=!removeOne;candidate=0;renderRecovery();});
+for(let i=0;i<17;i++){const b=document.createElement('button');b.dataset.candidate=i;b.textContent=i;b.setAttribute('aria-label',`Try key ${i}`);b.addEventListener('click',()=>{candidate=i;renderRecovery();});$('candidate-keys').append(b);}
 renderThresholds();renderUI();draw();requestAnimationFrame(frame);

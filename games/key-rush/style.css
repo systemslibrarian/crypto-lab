@@ -9,3 +9,52 @@
 .arena-wrap[data-phase="result"] .overlay .primary,.arena-wrap[data-phase="result"] .overlay .outline{margin:4px 0 0;min-height:44px;font-size:12px}
 .arena-wrap[data-phase="result"] .overlay-hint{display:none}
 @media(max-width:700px){.arena-wrap[data-phase="result"] .overlay-card{gap:4px}.arena-wrap[data-phase="result"] .overlay h2{font-size:22px;margin:4px 0}.arena-wrap[data-phase="result"] .overlay-card>.kicker{display:none}}
+
+/* The result lives with the arena, before settings on phones. */
+.game-panel>.lesson{margin:0 16px 18px;padding:20px;background:#13272a;border-color:#46686b}
+.lesson h3{font-size:24px;line-height:1.2;margin:8px 0 18px;letter-spacing:-.025em}
+.lesson h3:focus{outline:0}
+.recovery{padding:18px;background:#0b1526;border:1px solid #3d5271;border-radius:12px}
+.recovery-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.recovery-heading h4{font-size:18px;margin:0;letter-spacing:-.025em}
+.party-switch{display:flex;gap:5px}
+.party-switch button{min-height:44px;font-size:12px;padding:9px 12px}
+.party-switch [aria-pressed="true"]{border-color:var(--cyan);background:#163a45;color:#a6f7ff}
+.lesson #recovery-count{color:var(--muted);font-size:12px;margin:13px 0}
+.recovery-shares{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.share-chip{display:grid;gap:3px;padding:9px 12px;border:1px solid #536a88;border-radius:8px;background:#1a2b43}
+.share-chip b{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.share-chip code{font-size:17px;color:#effaff}
+.no-shares{padding:10px 0;color:var(--muted);font-size:12px}
+.recovery-output{padding:16px;background:#263b21;border:1px solid #607a45;border-radius:9px;margin:14px 0}
+.recovery-output>span{font-size:10px;letter-spacing:.1em;color:#d1efa6;display:block;font-weight:700}
+.recovery-output>strong{display:block;font-size:44px;line-height:1.15;color:var(--lime);letter-spacing:-.045em;margin-top:6px}
+.recovery-output[data-determined="false"]{background:#29243d;border-color:#6c5c87}
+.recovery-output[data-determined="false"]>span{color:#d2bfef}
+.recovery-output[data-determined="false"]>strong{font-size:29px;color:#e1d0ff}
+.lesson #recovery-why{margin-top:8px;font-size:12px}
+#remove-share{font-size:12px;min-height:44px}
+.lesson #removed-share{font-size:11px;color:#ddc8fa;margin:12px 0}
+.candidate-keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(44px,1fr));gap:6px;margin:12px 0}
+.candidate-keys button{min-width:44px;min-height:44px;padding:8px;font:700 14px ui-monospace,monospace}
+.candidate-keys [aria-pressed="true"]{border-color:#d8b4ff;background:#48365e;color:#fff}
+.lesson #candidate-witness{padding-left:10px;border-left:2px solid #d8b4ff;font-size:12px;color:#e5d9fa}
+#recovery-math{border-top:1px solid var(--line);margin-top:18px;padding-top:14px;font-size:12px}
+#recovery-math summary{min-height:32px}
+#recovery-steps ol{padding-left:22px;color:var(--muted);line-height:1.8;overflow-wrap:anywhere}
+#recovery-steps .recovery-sum{font-family:ui-monospace,monospace;color:var(--lime)}
+.next-learning{display:block;text-decoration:none;border-top:1px solid #46686b;padding-top:16px;margin-top:18px}
+.next-learning span{display:block;color:var(--muted);font-size:10px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em}
+.next-learning strong{display:block;font-size:13px;color:var(--lime)}
+.event-toast{position:absolute;left:50%;top:12px;transform:translateX(-50%);width:max-content;max-width:calc(100% - 24px);padding:10px 16px;border:1px solid var(--cyan);border-radius:10px;background:#0a2434f5;box-shadow:0 4px 20px #0005;pointer-events:none;text-align:center;z-index:1}
+.event-toast strong{display:block;font-size:14px;color:var(--cyan)}
+.event-toast span{display:block;color:#e5f8ff;font-size:11px;margin-top:3px}
+.event-toast[data-kind="offline"]{background:#341729f5;border-color:var(--pink)}
+.event-toast[data-kind="offline"] strong{color:var(--pink)}
+.event-toast[data-kind="deliver"]{background:#1c2d18f5;border-color:var(--lime)}
+.event-toast[data-kind="deliver"] strong{color:var(--lime)}
+.dpad{grid-template-rows:repeat(2,44px)}
+.dpad button,.small-button{min-height:44px}
+@media(max-width:700px){.game-panel>.lesson{margin:0 12px 14px;padding:14px}.lesson h3{font-size:22px;margin-bottom:14px}.recovery{padding:13px}.recovery-heading h4{font-size:17px}.recovery-heading{gap:10px}.recovery-output{padding:13px}.share-chip{padding:8px 10px}.event-toast{top:6px;padding:7px 10px}.event-toast strong{font-size:11px}.event-toast span{font-size:10px}.overlay .primary,.overlay .outline{min-height:44px}}
+
+#lesson-panel{scroll-margin-top:14px}#next-arena{margin-top:16px;min-height:44px;font-size:12px}

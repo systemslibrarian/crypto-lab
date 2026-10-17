@@ -6,10 +6,25 @@
 <section class="game-panel" aria-label="Key Rush arcade game">
 <div class="hud"><div><span>SHARES HOME</span><strong id="home-count">0 / 2</strong></div><div><span>STOLEN COPIES</span><strong id="copy-count">0 / 2</strong></div><div><span>RUN TIME</span><strong id="time">0:00</strong></div></div>
 <div class="arena-wrap" id="arena-wrap"><canvas id="arena" width="880" height="560" tabindex="0" aria-label="Courier arena. Use arrow keys or W A S D to move, Space to boost, and P or Escape to pause." aria-describedby="controls-help game-status">Your browser needs canvas support to display this game.</canvas>
+<div id="event-toast" class="event-toast" hidden aria-hidden="true"><strong id="event-title"></strong><span id="event-copy"></span></div>
 <div id="overlay" class="overlay"><div class="overlay-card"><p class="kicker" id="overlay-kicker">FIRST RUN</p><h2 id="overlay-title">Get 2 bots home.</h2><p id="overlay-copy">Each bot carries a different share of one secret key. Enough deliveries unlock it. Enough stolen copies expose it.</p><p id="overlay-hint" class="overlay-hint">Move with arrows / WASD or tap a direction below. Space = boost.</p><button id="start" class="primary">Start run <span aria-hidden="true">→</span></button><button id="next" class="outline" hidden>Next arena →</button></div></div>
 </div>
 <div class="bot-strip"><div id="bots" aria-label="Courier status"></div><button id="pause" class="small-button" disabled>Pause</button></div>
 <p id="game-status" role="status" aria-live="polite" aria-atomic="true">Every bot carries one distinct share. Get enough to the exit.</p>
+<section id="lesson-panel" class="lesson" hidden aria-labelledby="lesson-title">
+<p class="kicker">Your run. Your actual shares.</p><h3 id="lesson-title"></h3>
+<div class="recovery" aria-label="Rebuild the key">
+<div class="recovery-heading"><h4>Rebuild the key</h4><div class="party-switch" role="group" aria-label="Whose shares?"><button id="view-home" aria-pressed="true">Home</button><button id="view-scanners" aria-pressed="false">Scanners</button></div></div>
+<p id="recovery-count"></p><div id="recovery-shares" class="recovery-shares" aria-label="Shares used"></div>
+<div id="recovery-output" class="recovery-output" aria-live="polite" aria-atomic="true"><span id="recovery-label"></span><strong id="recovery-value"></strong><p id="recovery-why"></p></div>
+<button id="remove-share" class="outline" aria-pressed="false" hidden>Try one fewer share</button><p id="removed-share" hidden></p>
+<div id="candidate-panel" hidden><p><strong>Try a possible key.</strong> Every value below fits the shares shown.</p><div id="candidate-keys" class="candidate-keys" role="group" aria-label="Possible secret values"></div><p id="candidate-witness" role="status"></p></div>
+<details id="recovery-math"><summary>See the calculation</summary><div id="recovery-steps"></div></details>
+</div>
+<p id="lesson"></p><p id="connection"></p><p id="compare" hidden></p>
+<a class="next-learning" href="https://systemslibrarian.github.io/crypto-lab-shamir-gate/"><span>Next: explore the same idea</span><strong>Split and rebuild a secret in Shamir Gate →</strong></a>
+<button id="next-arena" class="outline">Next arena →</button>
+</section>
 <div class="play-controls"><div class="dpad" role="group" aria-label="Movement controls"><button data-direction="up" aria-label="Move up">↑</button><button data-direction="left" aria-label="Move left">←</button><button data-direction="down" aria-label="Move down">↓</button><button data-direction="right" aria-label="Move right">→</button></div><button id="boost" class="boost" disabled>BOOST <span id="boost-state">Space</span></button></div>
 <p id="controls-help" class="small controls-help">Hold arrows / WASD or the direction buttons. Boost moves up to three squares in your last direction; it does not make you invincible. P / Esc pauses.</p>
 </section>
@@ -19,7 +34,7 @@
 <label class="slow"><input id="slow" type="checkbox">Slower practice mode <span>Same rules. More time to react.</span></label>
 <div class="hazard-key"><p><i class="cyan"></i><span><b>CYAN = COPY</b>Scanners steal a share. The bot can still deliver it.</span></p><p><i class="pink"></i><span><b>PINK = OFFLINE</b>Active traps stop a bot. That trap does not copy its share.</span></p><p><i class="lime"></i><span><b>LIME = HOME</b>Reach the exit to deliver. Your next bot jumps in automatically.</span></p></div>
 <p id="arena-tip" class="tip"></p>
-<section id="lesson-panel" class="lesson" hidden aria-labelledby="lesson-title"><p class="kicker">What just happened?</p><h3 id="lesson-title"></h3><p id="lesson"></p><p id="connection"></p><p id="compare" hidden></p></section>
+
 <button id="reset" class="text-button">Change settings / restart</button>
 </aside></div>
 <details class="evidence"><summary>Show the actual cryptography</summary><p id="math-summary">Every run generates real Shamir shares over the tiny field of 17 values. A delivery or disclosure is checked by recombining the actual share values.</p><div class="table-wrap"><table><caption>Generated shares for this run</caption><thead><tr><th>Bot</th><th>Share (x, y)</th><th>Delivered</th><th>Copied</th><th>Offline</th></tr></thead><tbody id="share-table"></tbody></table></div><p>The scanners and traps are arcade rules. This page contains every share and the secret in one browser; it is not secure storage. Basic sharing does not authenticate shares or erase stolen copies. Use only the generated examples.</p><a href="../secret-council/chapters.html#mathematics">Why do fewer shares reveal nothing? Explore the mathematics →</a></details>

@@ -1,4 +1,4 @@
-import { deal, reconstruct, possibleSecrets } from '../secret-council/core.mjs';
+import { deal, reconstruct, possibleSecrets, compatiblePoints, PRIME, mod, inverse } from '../secret-council/core.mjs';
 export const STORE = 'crypto-lab-key-rush-v1';
 export const COLS = 11, ROWS = 7, EXIT = { x: 10, y: 3 };
 export const NAMES = ['Zip', 'Pip', 'Bop', 'Dot', 'Hex'];
@@ -92,4 +92,26 @@ export function explanation(state) {
     :state.reason==='lost'?`You needed ${state.threshold} shares, but only ${count} bots remained available. A lower threshold can tolerate more missing shares, but fewer stolen shares would expose the secret.`
     :`${state.delivered.length} delivered shares reconstructed the secret. The scanners had ${state.copied.length}, below your threshold of ${state.threshold}; all ${possibilities} possible secret values still fit those stolen shares.`,
     connection:'This is Shamir secret sharing: a backup key can be split so some shares may be missing or stolen without losing recovery or revealing the key. Scanners copy a share; traps make it unavailable. Those are different problems.'};
+}
+
+// Evidence comes from one party's actual distinct shares, never from the
+// dealer's secret. With fewer than k shares, compatiblePoints constructs a
+// degree < k polynomial through (0, candidate) and every observed share.
+export function recoveryEvidence(state, audience='home', removeOne=false, candidate=0) {
+  if(state.phase!=='result'||!state.dealt)throw new RangeError('Finish the round first.');
+  if(!['home','scanners'].includes(audience))throw new RangeError('Choose Home or Scanners.');
+  if(!Number.isInteger(candidate)||candidate<0||candidate>=PRIME)throw new RangeError('Choose a field value.');
+  const ids=audience==='home'?state.delivered:state.copied;
+  const received=state.dealt.shares.filter(p=>ids.includes(p.id));
+  const used=received.slice(0,state.threshold);
+  const removed=removeOne&&used.length>=state.threshold?used.pop():null;
+  const possibilities=possibleSecrets(used,state.threshold);
+  const determined=used.length>=state.threshold;
+  const value=determined?reconstruct(used,state.threshold):null;
+  const terms=determined?used.map((p,i)=>{
+    const weight=used.reduce((w,q,j)=>i===j?w:mod(w*mod(-q.x)*inverse(p.x-q.x)),1);
+    return {id:p.id,x:p.x,y:p.y,weight,contribution:mod(p.y*weight)};
+  }):[];
+  const witness=determined?null:compatiblePoints(used,candidate,state.threshold);
+  return {audience,threshold:state.threshold,received:received.length,points:used,removed,possibilities,value,terms,witness,candidate};
 }

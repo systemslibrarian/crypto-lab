@@ -390,9 +390,9 @@
     "note": "Read current README, root HTML and src/attack.ts with its regression tests, plus the model and UI threat calculator. CPA in index.html:592 is paired with DPA under Power analysis: it means correlation power analysis, not a chosen-plaintext attack. The lab generates toy LWE samples and recovers a sparse ternary secret from perfect inner-product hints with adaptive group testing and finite-field linear algebra. Lattice reduction is the referenced paper method, explicitly not run here; power capture is a discussed channel and illustrative arithmetic preset, not a measured or simulated power-analysis experiment. Remove those three attack credits; preserve the real LWE implementation and generic assumed side-channel hint setting. The physical channel is assumed, not implemented. Fleet item f1096dc9-df29-470e-8d30-80baecc44c8a; this classification review does not validate the paper or establish a full cryptographic audit."
   },
   "crypto-lab-locks-and-keys": {
-    "commit": "87498b95c19b705b1c01f4f92563beac48abbb90",
-    "reviewed": "2026-10-13",
-    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public key could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (\u00a77.1 RSAES-OAEP, \u00a78.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md."
+    "commit": "cfdda6915fcf9230d07b06da4f214525ce7dfd00",
+    "reviewed": "2026-10-17",
+    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public key could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md. Re-read the 17 October copy changes and unchanged WebCrypto call sites: the page now explicitly says two separate mathematically related keys and trims repeated instructions. Encryption/signing behavior and published fixtures are unchanged."
   },
   "crypto-lab-what-is-pqc": {
     "commit": "193e2248a9530e88a0b88ebcd78537cce20832c3",
@@ -623,13 +623,15 @@
     "state": "N/A"
   },
   "crypto-lab-isogeny-atlas": {
-    "commit": "c1207baa7d5794cb2749fc5557a2f24ac217e713",
-    "reviewed": "2026-10-13",
+    "commit": "c03a354c776fb572476b4ade5c2e29d00752c095",
+    "reviewed": "2026-10-17",
     "remove": [
       "CGL hash",
-      "Factoring"
+      "Factoring",
+      "Key recovery",
+      "Power analysis"
     ],
-    "note": "Re-read the current README, math/walk implementation and seven-problem UI after the 2026 complexity and endpoint-ring qualification. The new text distinguishes generic graph search from specialized preprint results and does not change the executable graph walk. Polynomial root factorization is still not an integer factoring attack; cglWalk remains a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve the real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference.",
+    "note": "Re-read the current README, math/walk implementation and seven-problem UI after the 2026 complexity and endpoint-ring qualification. The new text distinguishes generic graph search from specialized preprint results and does not change the executable graph walk. Polynomial root factorization is still not an integer factoring attack; cglWalk remains a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve the real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference. Re-read the 17 October SQIsign note, README, walk and problem UI and compared all files since the prior pin. The cited leakage preprint is context only; this atlas neither implements SQIsign nor performs power analysis. Math and graph code are unchanged.",
     "add": [
       "Isogeny walk@src/math/walk.ts:203"
     ]
@@ -789,5 +791,24 @@
     "removeReferences": [
       "SHA-256"
     ]
+  },
+  "crypto-lab-isogeny-gate": {
+    "commit": "1ab8d59bd89c5fbd800c22b43b952e5fe05f8400",
+    "reviewed": "2026-10-17",
+    "remove": [
+      "SIKE",
+      "Lattice reduction",
+      "Power analysis",
+      "Key recovery"
+    ],
+    "note": "Reviewed the new SQIsign source note, README scope table, Exhibit 4 and csidh.ts bruteForceStep/recovery. The executable attack is the toy CSIDH exhaustive search retained as Brute force; the separate Key recovery hit now points to the SQIsign paper discussion, not that computation. Power analysis is reported research, not an executed experiment. The sidhOutput variable is a CSIDH display element, not a SIKE implementation; the lattice-reduction hit is a related-demo link. Preserve CSIDH, EC arithmetic and isogeny walks. This is a bounded catalog classification review, not a full cryptographic audit."
+  },
+  "crypto-lab-pq-families": {
+    "commit": "73a022541e5b8563d70cd8141cac602c9dbb7c46",
+    "reviewed": "2026-10-17",
+    "remove": [
+      "Power analysis"
+    ],
+    "note": "Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus."
   }
 }

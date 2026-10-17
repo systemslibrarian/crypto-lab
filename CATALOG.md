@@ -20,7 +20,7 @@ with `node tools/catalog-evidence.js verify`.
 
 ## Reverse index — which labs implement what
 
-177 algorithms are implemented somewhere in the fleet, grouped by family.
+176 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -239,12 +239,6 @@ A lab in *italics* references the algorithm without implementing it.
 
 - **Implemented by:** [KpqC Pair](https://systemslibrarian.github.io/crypto-lab-kpqc-pair/) `src/ntruplus/reference.ts:22`
 - **Also referenced by:** —
-
-#### SIKE
-
-- **Historical status:** broken 2022
-- **Implemented by:** [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) `src/main.ts:1193`
-- **Also referenced by:** *BIKE Vault*, *PQ Families*, *Key Exchange*, *Isogeny Atlas*
 
 #### SMAUG-T
 
@@ -1261,7 +1255,6 @@ disagree about who owns SHA-256.
 | Shamir secret sharing | — | 9 |
 | Shipovnik | — | 1 |
 | Shor's algorithm | — | 3 |
-| SIKE | — | 1 |
 | Simon | — | 1 |
 | SMAUG-T | — | 1 |
 | STARK | — | 1 |
@@ -2800,7 +2793,7 @@ The Serpent block cipher — AES finalist with a deeper security margin. Avalanc
 A real supersingular isogeny graph over GF(431²), computed live from the modular polynomials, with the seven open problems of isogeny crypto drawn as paths, cycles, and endomorphisms.
 
 - **Implements:** Isogeny walk `src/math/walk.ts:203`
-- **Source review:** [c1207baa7d57](https://github.com/systemslibrarian/crypto-lab-isogeny-atlas/commit/c1207baa7d5794cb2749fc5557a2f24ac217e713) — Re-read the current README, math/walk implementation and seven-problem UI after the 2026 complexity and endpoint-ring qualification. The new text distinguishes generic graph search from specialized preprint results and does not change the executable graph walk. Polynomial root factorization is still not an integer factoring attack; cglWalk remains a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve the real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference.
+- **Source review:** [c03a354c776f](https://github.com/systemslibrarian/crypto-lab-isogeny-atlas/commit/c03a354c776fb572476b4ade5c2e29d00752c095) — Re-read the current README, math/walk implementation and seven-problem UI after the 2026 complexity and endpoint-ring qualification. The new text distinguishes generic graph search from specialized preprint results and does not change the executable graph walk. Polynomial root factorization is still not an integer factoring attack; cglWalk remains a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve the real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference. Re-read the 17 October SQIsign note, README, walk and problem UI and compared all files since the prior pin. The cited leakage preprint is context only; this atlas neither implements SQIsign nor performs power analysis. Math and graph code are unchanged.
 - **References:** CGL hash, CSIDH, SIKE
 - **Attacks shown:** Brute force `src/main.ts:604`
 - **Standards body:** —
@@ -2810,11 +2803,12 @@ A real supersingular isogeny graph over GF(431²), computed live from the modula
 
 [`crypto-lab-isogeny-gate`](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) · Post-Quantum Isogeny · POST-QUANTUM
 
-Elliptic-curve isogenies with a toy CSIDH over GF(419), supersingular graph walks, the Castryck-Decru break of SIDH, and the surviving branches of the field in SQIsign.
+Elliptic-curve isogenies with a toy CSIDH over GF(419), supersingular graph walks, the Castryck-Decru break of SIDH, and ongoing SQIsign research, with mathematical assumptions distinguished from implementation leakage.
 
-- **Implements:** CSIDH `src/graph.ts:22`, EC point arithmetic `src/ec.ts:106`, Isogeny walk `src/csidh.ts:92`, SIKE `src/main.ts:1193`
-- **References:** Classic McEliece, HQC, Kyber, ML-DSA, ML-KEM, SLH-DSA, UOV
-- **Attacks shown:** Brute force `src/csidh.ts:267`, Key recovery `README.md:32`, Lattice reduction `src/main.ts:363`
+- **Implements:** CSIDH `src/graph.ts:22`, EC point arithmetic `src/ec.ts:106`, Isogeny walk `src/csidh.ts:92`
+- **Source review:** [1ab8d59bd89c](https://github.com/systemslibrarian/crypto-lab-isogeny-gate/commit/1ab8d59bd89c5fbd800c22b43b952e5fe05f8400) — Reviewed the new SQIsign source note, README scope table, Exhibit 4 and csidh.ts bruteForceStep/recovery. The executable attack is the toy CSIDH exhaustive search retained as Brute force; the separate Key recovery hit now points to the SQIsign paper discussion, not that computation. Power analysis is reported research, not an executed experiment. The sidhOutput variable is a CSIDH display element, not a SIKE implementation; the lattice-reduction hit is a related-demo link. Preserve CSIDH, EC arithmetic and isogeny walks. This is a bounded catalog classification review, not a full cryptographic audit.
+- **References:** Classic McEliece, HQC, Kyber, ML-DSA, ML-KEM, SIKE, SLH-DSA, UOV
+- **Attacks shown:** Brute force `src/csidh.ts:267`
 - **Standards body:** —
 - **Implementation:** hand-rolled
 
@@ -3065,10 +3059,10 @@ State-managed hash-based signatures with LM-OTS, Merkle trees, and hierarchical 
 
 [`crypto-lab-locks-and-keys`](https://systemslibrarian.github.io/crypto-lab-locks-and-keys/) · Public-Key Basics · ENCRYPTION, SIGNATURES
 
-A padlock anyone may close and only you can open &mdash; real RSA-OAEP and RSA-PSS on a 2048-bit pair, with the wrong key failing on purpose and the same pair doing its other job, signing. No maths on screen.
+Generate a public key and a separate, mathematically related private key. Encrypt and open a note with RSA-OAEP, then sign and verify with RSA-PSS. Try the wrong key and a changed message. No maths needed.
 
 - **Implements:** RSA `src/crypto/lock.ts:40`, RSA-OAEP `src/crypto/pinned.ts:42`, RSA-PSS `src/crypto/pinned.ts:57`, SHA-256 `src/crypto/pair.ts:35`
-- **Source review:** [87498b95c19b](https://github.com/systemslibrarian/crypto-lab-locks-and-keys/commit/87498b95c19b705b1c01f4f92563beac48abbb90) — Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public key could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md.
+- **Source review:** [cfdda6915fcf](https://github.com/systemslibrarian/crypto-lab-locks-and-keys/commit/cfdda6915fcf9230d07b06da4f214525ce7dfd00) — Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public key could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md. Re-read the 17 October copy changes and unchanged WebCrypto call sites: the page now explicitly says two separate mathematically related keys and trims repeated instructions. Encryption/signing behavior and published fixtures are unchanged.
 - **References:** Ed25519, HPKE, ML-KEM, P-256, Schnorr, TLS 1.3
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
@@ -3559,8 +3553,9 @@ Set what constrains you and get a shortlist of two or three post-quantum schemes
 A guided tour of the five post-quantum problem families — lattice, code-based, hash-based, multivariate, and isogeny — with the assumptions, history, and standardization status of each.
 
 - **Implements:** Information-set decoding `src/crypto.ts:240`, Lamport `src/crypto.ts:55`, SHA-256 `src/crypto.ts:35`
+- **Source review:** [73a022541e5b](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/73a022541e5b8563d70cd8141cac602c9dbb7c46) — Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus.
 - **References:** AES, ARIA, BIKE, CSIDH, Classic McEliece, Dilithium, ECDSA, Falcon, Fujisaki-Okamoto transform, Grover's algorithm, HQC, Isogeny walk, Kyber, LMS, LWE, ML-DSA, ML-KEM, Merkle tree, NTRU, P-256, Pairing, RSA, SHA-384, SHAKE, SIKE, SLH-DSA, SPHINCS+, Schnorr, Shamir secret sharing, Shor's algorithm, TLS 1.3, UOV, Winternitz, X25519, XMSS
-- **Attacks shown:** Birthday bound `src/data.ts:423`, Chosen-ciphertext attack `src/data.ts:192`, Chosen-plaintext attack `src/data.ts:882`, Differential cryptanalysis `src/data.ts:538`, Discrete log `src/data.ts:738`, Factoring `src/data.ts:738`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:155`, Side-channel (unspecified) `src/data.ts:229`, Timing side-channel `src/data.ts:297`
+- **Attacks shown:** Birthday bound `src/data.ts:423`, Chosen-ciphertext attack `src/data.ts:192`, Chosen-plaintext attack `src/data.ts:895`, Differential cryptanalysis `src/data.ts:538`, Discrete log `src/data.ts:751`, Factoring `src/data.ts:751`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:155`, Side-channel (unspecified) `src/data.ts:229`, Timing side-channel `src/data.ts:297`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 

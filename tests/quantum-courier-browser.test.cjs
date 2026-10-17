@@ -37,7 +37,7 @@ async function open(width=1366, date=null) {
 }
 async function ready(page) { await page.waitForFunction(()=>document.querySelector('#flight').getAttribute('aria-busy')==='false' && document.querySelector('#flight-title').textContent.length>0); }
 async function action(page) { await page.locator('#action').click(); await ready(page); }
-async function solved(page) { await page.locator('#result').waitFor({state:'visible'}); }
+async function solved(page) { await page.locator('#result').waitFor({state:'visible'}); assert.equal(await page.locator('#lesson').isVisible(),true); assert((await page.locator('#lesson').innerText()).length>60); }
 async function chapterAt(page,n) { await page.locator(`[data-chapter="${n}"]`).click();await ready(page); }
 async function select(page,ids) { for(const id of ids)await page.locator(`[data-pulse="${id}"]`).click(); }
 async function observation(page) {

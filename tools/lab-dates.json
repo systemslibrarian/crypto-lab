@@ -461,10 +461,10 @@
   },
   "crypto-lab-ot-gate": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-09T09:24:58Z",
-   "updatedFrom": "2026-08-19T01:47:13-04:00",
-   "updatedCommit": "0d44c3bcc25fd4047b2c86607ede50d5bae827d8"
+   "updatedFrom": "2026-10-18T13:46:47Z",
+   "updatedCommit": "e1b7f4a4430113db21499bf7ddccb6a0695811d3"
   },
   "crypto-lab-lms-ledger": {
    "added": "2026-04",
@@ -1618,8 +1618,8 @@
    "added": "2026-10",
    "updated": "2026-10",
    "addedFrom": "2026-10-17T20:10:08Z",
-   "updatedFrom": "2026-10-17T20:55:18Z",
-   "updatedCommit": "db3acd95cf0af7e2bbf38aaa651ca1d40daebe56"
+   "updatedFrom": "2026-10-18T13:47:44Z",
+   "updatedCommit": "4d366e229317a00cb7afc223097351050c11e12c"
   },
   "crypto-lab-compression-leak": {
    "added": "2026-10",

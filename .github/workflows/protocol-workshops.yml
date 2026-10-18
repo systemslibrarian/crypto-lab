@@ -1,0 +1,25 @@
+name: Protocol workshops
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Cryptographic negative controls and reading-path integrity
+        run: node --test tests/protocol-workshops.test.mjs tests/reading-path.test.mjs
+      - run: npm ci
+        working-directory: tools
+      - run: npx playwright install chromium
+        working-directory: tools
+      - name: Real browser interactions, keyboard access and responsive layout
+        run: node --test --test-timeout=180000 tests/protocol-workshops-browser.test.cjs

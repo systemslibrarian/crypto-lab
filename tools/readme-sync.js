@@ -57,9 +57,17 @@ while ((m = cardRe.exec(html)) !== null) {
   const title = /project-title">([^<]+)</.exec(block);
   const copy = /project-copy">([^<]+)</.exec(block);
   const chips = [...block.matchAll(/class="chip">([^<]+)</g)].map(x => decode(x[1].trim()));
+  /* `data-format`, read from the OPENING TAG only. The split is on the first
+     `<div` -- where a card's content begins -- rather than on the first `>`,
+     because a `>` inside an attribute value ends an opening tag early: that is
+     exactly how a `>` in data-review-note once made lab-dates.js and
+     level-sync.js each write a second data-level. */
+  const openTag = block.split('<div')[0];
+  const format = /data-format="([^"]*)"/.exec(openTag);
   cards.push({
     href: m[2],
     slug: m[3],
+    format: format ? format[1] : '',
     wip: m[1].includes('wip-card'),
     kicker: kicker ? decode(kicker[1].trim()) : '',
     title: title ? decode(title[1].trim()) : '',
@@ -140,20 +148,47 @@ if (!heroMatch) {
   process.exit(1);
 }
 const heroWas = Number(heroMatch[2]);
-const heroHtml = html.replace(heroRe, (_, a, __, c) => a + cards.length + c);
+/* THE HERO COUNTS WHAT THE GRID SHOWS, WHICH IS NOT THE NUMBER OF CARDS.
+ *
+ * index.html's own JS builds its card list as
+ *
+ *   .filter(card => data-format === 'learning-game' ? (card.hidden = true, false) : true)
+ *
+ * and then sets the hero from THAT array's length, so a learning-game card is
+ * out of the grid, the chips, the search box and the count together. Generating
+ * the literal from `cards.length` therefore published a number no visitor ever
+ * sees: 232 in the markup against 231 on the page, once Lattice Builder was
+ * re-presented as a game in #196.
+ *
+ * Which is this generator's own purpose inverted. The comment at the top of this
+ * file keeps the literal generated because the runtime overwrite makes drift
+ * invisible in a browser while crawlers and link-preview cards read the literal
+ * -- so the literal has to match the RENDERED number, not the row count.
+ *
+ * The README tables keep every card, Lattice Builder included: it is a
+ * catalogued demo with a repo, a live site, a corpus entry and a CATALOG.md
+ * row, and it is reachable from games/. Only its presentation moved. So the two
+ * numbers differ on purpose, and `heroCards` is the one the heading sentence
+ * ("Explore N interactive cryptography exhibits") is actually about. */
+const heroCards = cards.filter(c => c.format !== 'learning-game');
+const heroHtml = html.replace(heroRe, (_, a, __, c) => a + heroCards.length + c);
 
 if (process.argv[2] === 'check') {
   const readmeOk = out === md;
-  const heroOk = heroWas === cards.length;
+  const heroOk = heroWas === heroCards.length;
   if (readmeOk && heroOk) {
     console.log('README tables in sync with index.html cards (' + cards.length + ' cards); '
-      + 'hero count reads ' + heroWas + '.');
+      + 'hero count reads ' + heroWas
+      + (cards.length === heroCards.length ? '.'
+        : ', which is what the grid shows — '
+          + (cards.length - heroCards.length) + ' learning-game card(s) are excluded by the page\'s own JS.'));
   } else {
     if (!readmeOk) console.error('README tables out of sync with index.html cards.');
     if (!heroOk) {
-      console.error('index.html hero count reads ' + heroWas + ' but there are ' + cards.length
-        + ' cards. The runtime JS overwrites it, so this is invisible in a browser and wrong '
-        + 'in every raw-HTML read of the page.');
+      console.error('index.html hero count reads ' + heroWas + ' but the grid shows '
+        + heroCards.length + ' of ' + cards.length + ' cards (learning-game cards are excluded '
+        + 'by the page\'s own JS). The runtime JS overwrites the literal, so this is invisible '
+        + 'in a browser and wrong in every raw-HTML read of the page.');
     }
     console.error('Run: node tools/readme-sync.js');
     process.exit(1);
@@ -163,5 +198,5 @@ if (process.argv[2] === 'check') {
   if (heroHtml !== html) fs.writeFileSync(htmlPath, heroHtml);
   console.log('README.md regenerated: ' + cards.length + ' cards in ' + SECTIONS.length + ' sections, '
     + paths.length + ' learning paths.'
-    + (heroHtml !== html ? ' Hero count ' + heroWas + ' -> ' + cards.length + '.' : ''));
+    + (heroHtml !== html ? ' Hero count ' + heroWas + ' -> ' + heroCards.length + '.' : ''));
 }

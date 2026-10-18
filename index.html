@@ -2390,8 +2390,9 @@
 
         <div class="project-grid">
           <a class="project-card" data-category="ENCRYPTION | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-key-lifecycle/" data-level="intermediate" data-added="2026-10" data-updated="2026-10"
-            data-implements="AES-GCM@src/crypto/aead.ts:14"
-            data-references="AES Key Wrap | HKDF"
+            data-implements="AES@src/crypto/aead.ts:14 | AES-GCM@src/crypto/aead.ts:14"
+            data-references="Shamir secret sharing"
+            data-attacks="Nonce reuse@src/journey.ts:5"
             data-standards="NIST"
             data-implementation="WebCrypto"
             data-overlaps="crypto-lab-envelope-kms: Envelope KMS models KEK/DEK wrapping and KMS rewrap without exposing plaintext; Key Lifecycle demonstrates a genuine old-key breach, copied ciphertext and incident response."
@@ -2403,10 +2404,9 @@
           </a>
 
           <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-compression-leak/" data-level="intermediate" data-added="2026-10" data-updated="2026-10"
-            data-implements="AES-GCM@src/crypto/oracle.ts:41"
-            data-references="DEFLATE | gzip | BREACH"
-            data-standards="NIST | IETF"
-            data-implementation="WebCrypto | CompressionStream"
+            data-implements="AES@src/crypto/oracle.ts:23 | AES-GCM@src/crypto/oracle.ts:23"
+            data-standards="NIST"
+            data-implementation="WebCrypto"
             data-overlaps="crypto-lab-protocol-compose: Protocol Compose surveys CRIME and composition failures; Compression Leak demonstrates a genuine gzip-to-AES-GCM length oracle with measurements and scoped mitigations."
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Length Oracle</div>
@@ -2416,10 +2416,10 @@
           </a>
 
           <a class="project-card" data-category="SIGNATURES | STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-subliminal-channels/" data-level="advanced" data-added="2026-10" data-updated="2026-10"
-            data-implements="ECDSA@src/ecdsa/channel.ts:19"
-            data-references="SHA-256 | RFC 6979"
-            data-standards="NIST | IETF"
-            data-implementation="@noble/curves | WebCrypto"
+            data-implements="ECDSA@src/ecdsa/channel.ts:14 | P-256@src/ecdsa/channel.ts:3 | SHA-256@src/ecdsa/channel.ts:14"
+            data-references="Schnorr"
+            data-standards="NIST"
+            data-implementation="WebCrypto"
             data-overlaps="crypto-lab-ecdsa-forge: ECDSA Forge demonstrates ECDSA arithmetic and nonce-reuse failures; Subliminal Channels encodes a covert signaling bit by selecting among genuinely valid randomized signatures."
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">ECDSA Covert Signaling</div>
@@ -4767,7 +4767,7 @@
           <a class="project-card" data-category="POST-QUANTUM | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/" data-level="advanced" data-added="2026-04" data-updated="2026-10"
             data-implements="Ed25519@src/bench/runner.ts:111 | Fiat-Shamir@src/ui/viz-render.ts:10 | ML-DSA@src/crypto/mldsa.ts:47 | SHA-256@src/crypto/seal.ts:49"
             data-references="AES | Dilithium | ECDSA | Falcon | Grover's algorithm | Kyber | LWE | ML-KEM | NTT | P-256 | Pairing | RSA | RSA-PSS | SHAKE | SLH-DSA | SPHINCS+ | Schnorr | Shor's algorithm"
-            data-attacks="Timing side-channel@src/data/runtime.ts:90"
+            data-attacks="Lattice reduction@src/data/sources.ts:74 | Timing side-channel@src/data/runtime.ts:90"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-review-commit="f5de094309afa62e653c875bb24a3994f50b43d5"
@@ -7962,9 +7962,9 @@
           </a>
 
           <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-ot-gate/" data-level="advanced" data-added="2026-04" data-updated="2026-10"
-            data-implements="AES@src/ot.ts:107 | AES-GCM@src/ot.ts:120 | Ed25519@src/ot.ts:22 | Oblivious transfer@src/ot.ts:60 | SHA-256@src/ot.ts:169"
+            data-implements="AES@src/ot.ts:107 | AES-GCM@src/ot.ts:120 | Ed25519@src/ot.ts:22 | Oblivious transfer@src/andos.ts:2 | SHA-256@src/ot.ts:169"
             data-references="Diffie-Hellman | EC point arithmetic | FROST | Garbled circuits | LWE | Private information retrieval | Private set intersection | Shamir secret sharing | Shor's algorithm | X25519"
-            data-attacks="Ciphertext malleability@README.md:34 | Discrete log@src/main.ts:153"
+            data-attacks="Ciphertext malleability@README.md:44 | Discrete log@src/main.ts:155"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
            
@@ -9413,14 +9413,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-gate/"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-gate/" data-level="advanced" data-added="2026-04" data-updated="2026-10"
             data-implements="CSIDH@src/graph.ts:22 | EC point arithmetic@src/ec.ts:106 | Isogeny walk@src/csidh.ts:92"
             data-references="Classic McEliece | HQC | Kyber | ML-DSA | ML-KEM | SIKE | SLH-DSA | UOV"
             data-attacks="Brute force@src/csidh.ts:267"
             data-implementation="hand-rolled"
             data-review-commit="1ab8d59bd89c5fbd800c22b43b952e5fe05f8400"
             data-review-note="Reviewed the new SQIsign source note, README scope table, Exhibit 4 and csidh.ts bruteForceStep/recovery. The executable attack is the toy CSIDH exhaustive search retained as Brute force; the separate Key recovery hit now points to the SQIsign paper discussion, not that computation. Power analysis is reported research, not an executed experiment. The sidhOutput variable is a CSIDH display element, not a SIKE implementation; the lattice-reduction hit is a related-demo link. Preserve CSIDH, EC arithmetic and isogeny walks. This is a bounded catalog classification review, not a full cryptographic audit."
-            data-level="advanced" data-added="2026-04" data-updated="2026-10"
            
            
            
@@ -9512,8 +9511,8 @@
             data-attacks="Chosen-ciphertext attack@src/main.ts:180 | Fault injection@src/main.ts:40 | Key recovery@src/main.ts:254 | Lattice reduction@src/loopabort.ts:629 | Power analysis@src/main.ts:17 | Side-channel (unspecified)@src/main.ts:171 | Timing side-channel@src/main.ts:40"
             data-standards="NIST"
             data-implementation="Hand-rolled Keccak/SHAKE256 and NTT; simulated physical attacks using ML-KEM decode and ML-DSA components"
-            data-review-commit="6b127eb85b647f573408f2e9a90cbe0fcca2c94b"
-            data-review-note="Read README.md, src/main.ts, timing.ts, timing.worker.ts, loopabort.ts, rejection.ts, ntt.ts, shake256.ts and relevant tests at this exact commit. Kyber@src/timing.ts:88 models software-divide cycle counts only, not a complete KEM. ML-DSA@src/loopabort.ts:37 is a parameter object; runLoopAbortAttack constructs one 256-coefficient secret polynomial and z=y+c*s1 with selected real FIPS 204 ring/sampling operations, independently randomized challenge/nonce seeds and toy signer assumptions, not full ML-DSA key generation, signing or verification. Preserve actual Keccak-f[1600]/SHAKE256 and NTT. CPA in src/main.ts:40 means correlation power analysis rather than chosen-plaintext attack; padding-oracle at line618 is a sibling name rather than an executed attack. Keep the disclosed bounded power, fault, timing, key-recovery and LLL computations. No constant-time target-hardware, standards-conformance or full signing-key recovery claim is established. Fleet interpretation work 4ad4a3db-52c4-428e-9b19-d0f63199ef6c; this review does not complete its pending hub integration."
+            data-review-commit="ae17f8780721a5aa36d087a5f2127d8c4584bf4e"
+            data-review-note="Read README.md, src/main.ts, timing.ts, timing.worker.ts, loopabort.ts, rejection.ts, ntt.ts, shake256.ts and relevant tests at this exact commit. Kyber@src/timing.ts:88 models software-divide cycle counts only, not a complete KEM. ML-DSA@src/loopabort.ts:37 is a parameter object; runLoopAbortAttack constructs one 256-coefficient secret polynomial and z=y+c*s1 with selected real FIPS 204 ring/sampling operations, independently randomized challenge/nonce seeds and toy signer assumptions, not full ML-DSA key generation, signing or verification. Preserve actual Keccak-f[1600]/SHAKE256 and NTT. CPA in src/main.ts:40 means correlation power analysis rather than chosen-plaintext attack; padding-oracle at line618 is a sibling name rather than an executed attack. Keep the disclosed bounded power, fault, timing, key-recovery and LLL computations. No constant-time target-hardware, standards-conformance or full signing-key recovery claim is established. Fleet interpretation work 4ad4a3db-52c4-428e-9b19-d0f63199ef6c; this review does not complete its pending hub integration. Re-read the full prior-pin diff on 18 October (6b127eb to ae17f87, three commits): a claims correction, a devDependency bump and an audit-authorization note. src/main.ts gained a cited research note and one reworded result sentence, both of which NARROW the lab's claims rather than widening them: the ordinary ML-DSA-44 signing average is corrected from 4.25 to about 4.36 iterations per Kwiatkowski, ePrint 2026/2456, and the page now says explicitly that this is not an estimate of fault injections per usable signature and that the model checks only the z bound, not a full signer's acceptance conditions. No executable cryptographic operation changed. Verified the cited lines at the new commit: CPA at src/main.ts:40 is still correlation power analysis in the hero description, and the padding-oracle sibling name moved from line 618 to line 625 under Related demos, shifted by the seven-line note added above it, still a name rather than an executed attack. Every removal and limit above therefore still holds of the pinned source."
            
            
            
@@ -12700,15 +12699,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/" data-level="advanced" data-added="2026-06" data-updated="2026-10"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:55 | SHA-256@src/crypto.ts:35"
             data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | UOV | Winternitz | X25519 | XMSS"
-            data-attacks="Birthday bound@src/data.ts:436 | Chosen-ciphertext attack@src/data.ts:205 | Chosen-plaintext attack@src/data.ts:908 | Differential cryptanalysis@src/data.ts:551 | Discrete log@src/data.ts:764 | Factoring@src/data.ts:764 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:161 | Side-channel (unspecified)@src/data.ts:242 | Timing side-channel@src/data.ts:310"
+            data-attacks="Birthday bound@src/data.ts:436 | Chosen-ciphertext attack@src/data.ts:205 | Chosen-plaintext attack@src/data.ts:908 | Differential cryptanalysis@src/data.ts:551 | Discrete log@src/data.ts:764 | Factoring@src/data.ts:764 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:157 | Side-channel (unspecified)@src/data.ts:242 | Timing side-channel@src/data.ts:310"
             data-standards="NIST"
             data-implementation="WebCrypto"
             data-review-commit="a3e9b9431802746fcf3a891721be7d287f7c3ac6"
-            data-review-note="Reviewed the new isogeny attack/reference entries, README and crypto.ts&#x27;s executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus."
-            data-level="advanced" data-added="2026-06" data-updated="2026-10"
+            data-review-note="Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus."
            
            
            
@@ -16823,14 +16821,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/" data-level="advanced" data-added="2026-07" data-updated="2026-10"
             data-implements="Isogeny walk@src/math/walk.ts:203"
             data-references="CGL hash | CSIDH | SIKE"
             data-attacks="Brute force@src/main.ts:604"
             data-implementation="hand-rolled"
             data-review-commit="c03a354c776fb572476b4ade5c2e29d00752c095"
             data-review-note="Re-read the current README, math/walk implementation and seven-problem UI after the 2026 complexity and endpoint-ring qualification. The new text distinguishes generic graph search from specialized preprint results and does not change the executable graph walk. Polynomial root factorization is still not an integer factoring attack; cglWalk remains a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve the real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference. Re-read the 17 October SQIsign note, README, walk and problem UI and compared all files since the prior pin. The cited leakage preprint is context only; this atlas neither implements SQIsign nor performs power analysis. Math and graph code are unchanged."
-            data-level="advanced" data-added="2026-07" data-updated="2026-10"
            
            
            
@@ -19016,7 +19013,7 @@
 
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sector-vault/" data-level="advanced" data-added="2026-08" data-updated="2026-10"
             data-implements="AES@src/crypto/eme2.ts:75 | AES-GCM@src/crypto/gcm.ts:78 | AES-XTS@src/crypto/xts.ts:33 | EME2@src/crypto/eme2.ts:41"
-            data-references="AES-CBC | Merkle tree"
+            data-references="AES-CBC | Merkle tree | SHA-256"
             data-attacks="Ciphertext malleability@README.md:178"
             data-standards="IEEE | NIST"
             data-implementation="WebCrypto / noble AES / local EME2 research"
@@ -20316,12 +20313,14 @@
             </div>
           </a>
 
-<a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-builder/" data-level="beginner" data-format="learning-game" hidden data-added="2026-08" data-updated="2026-10"
+<a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-builder/" data-level="beginner" data-added="2026-08" data-updated="2026-10"
             data-implements="Babai rounding@src/basis.ts:74 | Keccak@src/keccak.ts:46 | ML-KEM@src/AdvancedMode.tsx:14 | NTT@src/mlkem-poly.ts:133 | SHA-3@src/keccak.ts:227 | SHAKE@src/keccak.ts:235"
+            data-comment-only="Kyber@src/BeaconRun.tsx:107 | LWE@src/BeaconRun.tsx:107"
             data-references="AES | LWE | SHA-256"
             data-attacks="Brute force@src/AdvancedMode.tsx:368 | Lattice reduction@src/AdvancedMode.tsx:369"
             data-standards="NIST"
             data-implementation="hand-rolled"
+            data-format="learning-game" hidden
            
            
            
@@ -20741,14 +20740,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-locks-and-keys/"
+          <a class="project-card" data-category="ENCRYPTION | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-locks-and-keys/" data-level="beginner" data-added="2026-10" data-updated="2026-10"
             data-implements="RSA@src/crypto/lock.ts:40 | RSA-OAEP@src/crypto/pinned.ts:42 | RSA-PSS@src/crypto/pinned.ts:57 | SHA-256@src/crypto/pair.ts:35"
             data-references="Ed25519 | HPKE | ML-KEM | P-256 | Schnorr | TLS 1.3"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-review-commit="cfdda6915fcf9230d07b06da4f214525ce7dfd00"
             data-review-note="Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public key could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md. Re-read the 17 October copy changes and unchanged WebCrypto call sites: the page now explicitly says two separate mathematically related keys and trims repeated instructions. Encryption/signing behavior and published fixtures are unchanged."
-            data-level="beginner" data-added="2026-10" data-updated="2026-10"
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Public-Key Basics</div>
             <div class="project-title">Locks and Keys</div>
@@ -20928,7 +20926,7 @@
             <div class="project-meta"><div class="stack"><span class="chip">Textbook RSA</span><span class="chip">Coppersmith</span><span class="chip">Exact LLL</span><span class="chip">Sturm Search</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | ZERO-KNOWLEDGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/"
+          <a class="project-card" data-category="SIGNATURES | ZERO-KNOWLEDGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/" data-level="advanced" data-added="2026-10" data-updated="2026-10"
             data-implements="BLS signatures@research/real-pairing/core.mjs:136 | BLS12-381@research/real-pairing/core.mjs:106 | ECDSA@prototype/crypto.mjs:9 | Hash-to-curve@research/real-pairing/core.mjs:81 | P-256@prototype/crypto.mjs:10 | Pairing@research/real-pairing/core.mjs:89 | SHA-256@research/real-pairing/core.mjs:74"
             data-unscanned="Python:5"
             data-references="EC point arithmetic | ElGamal | Pedersen commitment | Schnorr | Shamir secret sharing | Sigma protocol"
@@ -20936,8 +20934,6 @@
             data-implementation="WebCrypto / @noble/curves / local research protocols"
             data-review-commit="7c7f74d7efff3a6c1cac227ef08b93d42cd184c1"
             data-review-note="Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged."
-            data-level="advanced"
-            data-added="2026-10" data-updated="2026-10"
             data-overlaps="crypto-lab-pairing-gate: Pairing Gate teaches BLS signatures, aggregation and pairing primitives; Signature Gate explores interactive confirmation, candidate disavowal and challenge timing in an explicitly experimental construction."
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Confirmer Signatures · Research Preview</div>

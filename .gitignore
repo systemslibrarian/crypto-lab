@@ -24,3 +24,15 @@ tools/node_modules/
 # this for the demo-authoring template and was not applied here at the time.
 tools/majors-sync.js
 chat.md
+
+# Playwright output from the browser suites, which write screenshots here by
+# explicit path (tests/council-vault-browser.test.cjs and its siblings create
+# test-results/<game>/ and save PNGs into it). Disposable: re-created by the
+# next run, and never a source of truth — the assertions are.
+#
+# Ignored rather than left merely untracked, for the reason the entry above
+# records: untracked is exactly the state a broad `git add` sweeps up. Running
+# the suites leaves a `?? test-results/` in `git status`, so this would have
+# ridden into a commit as a directory of binary screenshots the first time
+# anyone staged a directory instead of a path.
+test-results/

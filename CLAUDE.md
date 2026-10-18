@@ -1018,7 +1018,14 @@ that instruction any more**, so grep for "do not hand-build one" should stay emp
 
 **Single-instance divergences are load-bearing until proven otherwise** —
 `quantum-vault-kpqc` (light theme, the only one), `blind-oracle-api` (auto-merges but
-publishes no page). A sweep that flattens one is a regression, not a cleanup. `snow2`
+publishes no page), `confirmer-signatures` (publishes a page and deliberately does NOT
+auto-merge: it is the fleet's only owner-authorized **Advanced · Research Preview**, carries
+no `dependabot.yml` at all, and pins its crypto dependencies through a workflow called
+`pin-dcs-real-lock-once.yml`, because its Pages publication requires a Lean 4 proof check on
+the same commit — grouped auto-merge would ship a bump past the proof that licenses the
+page's claims. It is pinned in `dispatch-census.json` under `noAutoMergeJob`, which is what
+keeps `dispatch-sync` green without anyone having to remember why. Do NOT run the step-5
+automation greps against it and 'fix' the two that fail). A sweep that flattens one is a regression, not a cleanup. `snow2`
 was listed here as "carded but never cloned" until 2026-09-22, when it moved from a card
 to Related Projects: it is a related project, not an exhibit, so it is no longer a
 catalog divergence. **Before any fleet-wide edit, re-derive the exception list

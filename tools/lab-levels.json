@@ -1402,6 +1402,12 @@
       "level": "advanced",
       "why": "Explores ECDSA signature field encoding, independent verification, randomized valid-signature selection, and deterministic signing.",
       "reviewed": "hand"
+    },
+    "crypto-lab-confirmer-signatures": {
+      "title": "Signature Gate",
+      "level": "advanced",
+      "why": "The guided story introduces the roles; deeper experiments require pairing groups, OR-proof challenge/response algebra, and the distinction between a scoped mathematical model and full DCS security.",
+      "reviewed": "hand"
     }
   }
 }

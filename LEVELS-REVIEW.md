@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 55 · Advanced — 140. Total 228.
+**Counts:** Beginner — 33 · Intermediate — 57 · Advanced — 142. Total 232.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -69,7 +69,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (55)
+## Intermediate — `intermediate` (57)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -80,6 +80,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Bitcoin Script](https://systemslibrarian.github.io/crypto-lab-bitcoin-script/) | rule | school-level primitives: SHA-256, public-key, ECDSA |
 | [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | rule | school-level primitives: SHA-256, PBKDF2, public key |
 | [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) | hand | stream cipher as XOR with a keystream, quarter-round stepper and nonce reuse; "constant-time" is a passing note |
+| [Compression Leak](https://systemslibrarian.github.io/crypto-lab-compression-leak/) | hand | Understands encryption/authentication and interprets measured gzip length differences across constrained hypotheses. |
 | [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) | rule | school-level primitives: SHA-256, HMAC, HKDF |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | rule | school-level primitives: Diffie-Hellman, X25519 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | rule | school-level primitives: Diffie-Hellman, Ed25519, key exchange |
@@ -97,6 +98,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) | rule | school-level primitives: HMAC, password, AES |
 | [Jevil](https://systemslibrarian.github.io/crypto-lab-jevil/) | rule | school-level primitives: public key, digital signature, signature |
 | [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) | rule | school-level primitives: HMAC, AES, Kerberos |
+| [Key Lifecycle](https://systemslibrarian.github.io/crypto-lab-key-lifecycle/) | hand | Understands authenticated encryption and asks learners to reason about key epochs, captured copies, compromise and re-encryption. |
 | [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) | rule | school-level primitives: SHA-256, Merkle, HKDF |
 | [LFSR Forge](https://systemslibrarian.github.io/crypto-lab-lfsr-forge/) | hand | binary polynomial recurrences, finite-prefix synthesis and conditional state recovery; forecast verification is separate from original-state confirmation |
 | [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | rule | school-level primitives: SHA-256, Merkle, public key |
@@ -129,7 +131,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (140)
+## Advanced — `advanced` (142)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -249,6 +251,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) | rule | needs specialist background: secret sharing, Shamir, FROST |
 | [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) | rule | needs specialist background: BFV, private information retrieval |
 | [Shor](https://systemslibrarian.github.io/crypto-lab-shor/) | rule | needs specialist background: Shor, Grover, quantum |
+| [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) | hand | The guided story introduces the roles; deeper experiments require pairing groups, OR-proof challenge/response algebra, and the distinction between a scoped mathematical model and full DCS security. |
 | [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) | rule | needs specialist background: homomorphic, multi-party computation, MPC |
 | [Simon's Period](https://systemslibrarian.github.io/crypto-lab-simon-period/) | rule | needs specialist background: Shor, quantum |
 | [SM9 Forge](https://systemslibrarian.github.io/crypto-lab-sm9-forge/) | rule | needs specialist background: pairing, identity-based |
@@ -259,6 +262,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) | hand | Sphinx mix-network packet format with per-hop ristretto255 blinding and LIONESS |
 | [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) | rule | needs specialist background: private information retrieval, secret sharing |
 | [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) | rule | needs specialist background: zero-knowledge, STARK, Groth16 |
+| [Subliminal Channels](https://systemslibrarian.github.io/crypto-lab-subliminal-channels/) | hand | Explores ECDSA signature field encoding, independent verification, randomized valid-signature selection, and deterministic signing. |
 | [Syndrome Drain](https://systemslibrarian.github.io/crypto-lab-syndrome-drain/) | rule | needs specialist background: code-based, syndrome decoding |
 | [Syndrome Hints](https://systemslibrarian.github.io/crypto-lab-syndrome-hints/) | rule | needs specialist background: side-channel, syndrome decoding |
 | [TC26 Pair](https://systemslibrarian.github.io/crypto-lab-tc26-pair/) | rule | needs specialist background: Hypericum, Shipovnik, code-based |

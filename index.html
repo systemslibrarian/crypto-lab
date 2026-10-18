@@ -2258,7 +2258,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">231</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">232</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -20928,6 +20928,24 @@
             <div class="project-meta"><div class="stack"><span class="chip">Textbook RSA</span><span class="chip">Coppersmith</span><span class="chip">Exact LLL</span><span class="chip">Sturm Search</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
+          <a class="project-card" data-category="SIGNATURES | ZERO-KNOWLEDGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/"
+            data-implements="BLS signatures@research/real-pairing/core.mjs:136 | BLS12-381@research/real-pairing/core.mjs:106 | ECDSA@prototype/crypto.mjs:9 | Hash-to-curve@research/real-pairing/core.mjs:81 | P-256@prototype/crypto.mjs:10 | Pairing@research/real-pairing/core.mjs:89 | SHA-256@research/real-pairing/core.mjs:74"
+            data-unscanned="Python:5"
+            data-references="EC point arithmetic | ElGamal | Pedersen commitment | Schnorr | Shamir secret sharing | Sigma protocol"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto / @noble/curves / local research protocols"
+            data-review-commit="7c7f74d7efff3a6c1cac227ef08b93d42cd184c1"
+            data-review-note="Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged."
+            data-level="advanced"
+            data-added="2026-10" data-updated="2026-10"
+            data-overlaps="crypto-lab-pairing-gate: Pairing Gate teaches BLS signatures, aggregation and pairing primitives; Signature Gate explores interactive confirmation, candidate disavowal and challenge timing in an explicitly experimental construction."
+            target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Confirmer Signatures · Research Preview</div>
+            <div class="project-title">Signature Gate</div>
+            <div class="project-copy">Become Bob: challenge real BLS12-381 proofs, change the claim, and expose Eve’s fabricated recording. Explore a candidate disavowal reconstruction with machine-checked mathematics; full designated-confirmer security remains under review.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">BLS12-381</span><span class="chip">OR Proofs</span><span class="chip">Challenge Timing</span><span class="chip">Research Preview</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -21140,6 +21158,7 @@
       'Ring Sign': 'public-key', 'SPHINCS+ Ledger': 'public-key',
       'LMS Ledger': 'public-key', 'LMS/XMSS': 'public-key',
       'Pairing Gate': 'public-key',
+      'Signature Gate': 'public-key',
       'Hybrid Wire': 'key-exchange', 'X3DH Wire': 'key-exchange',
       'Noise Pipe': 'key-exchange', 'Ratchet Wire': 'key-exchange',
       'MLS Group': 'key-exchange', 'Kerberos v5': 'key-exchange',

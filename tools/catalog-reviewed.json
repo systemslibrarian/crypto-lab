@@ -810,5 +810,23 @@
       "Power analysis"
     ],
     "note": "Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus."
+  },
+  "crypto-lab-confirmer-signatures": {
+    "commit": "7c7f74d7efff3a6c1cac227ef08b93d42cd184c1",
+    "reviewed": "2026-10-18",
+    "add": [
+      "BLS signatures@research/real-pairing/core.mjs:136",
+      "BLS12-381@research/real-pairing/core.mjs:106",
+      "SHA-256@research/real-pairing/core.mjs:74"
+    ],
+    "remove": [
+      "Paillier",
+      "Chosen-ciphertext attack",
+      "Discrete log",
+      "Factoring",
+      "Side-channel (unspecified)"
+    ],
+    "implementation": "WebCrypto / @noble/curves / local research protocols",
+    "note": "Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged."
   }
 }

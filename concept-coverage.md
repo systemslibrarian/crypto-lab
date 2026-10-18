@@ -251,6 +251,8 @@ Catalogued total moves to 225.*
 
 *Version 29 — files three source-to-served-SHA verified teaching labs without claiming any newly closed concept gap: Key Lifecycle (§39) demonstrates a real captured-key confidentiality failure after correct AES-GCM authentication; Compression Leak (§29) shows gzip ciphertext-length disclosure despite valid encryption; Subliminal Channels (§37) verifies the real ECDSA signature that also carries a bit chosen by its signer. These deepen existing COVERED concepts, and none changes the catalogue's concept-completeness status. Catalogued total moves to 231.*
 
+*Version 30 — adds Signature Gate as an explicitly labeled research-preview demo under §9 (pairings) and §21 (interactive proof simulation and challenge timing). The candidate disavowal model has scoped Lean checks; full DCS security and independent review remain open. This adds teaching depth without closing a security or concept gap. Catalogued total moves to 232.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -448,7 +450,7 @@ it — ABE controls *whether* the plaintext is released and resists collusion; I
 secret.
 
 **9. Pairings / bilinear maps — `DEEP`**
-Pairing Gate · IBE Gate · Credential Veil · Rekey Relay · Attribute Gate · SM9 Forge.
+Pairing Gate · IBE Gate · Credential Veil · Rekey Relay · Attribute Gate · SM9 Forge · Signature Gate.
 
 Rekey Relay and Attribute Gate are a **declared pair** — same curve, same section, both with
 an escrow subplot — and they are kept distinct by which question each leads on. Attribute
@@ -676,7 +678,7 @@ here.
 
 **21. Zero knowledge — `DEEP`**
 ZK Proof Lab · SNARK Arena · STARK Tower · ZK Arena · Bulletproofs · Frozen Heart ·
-MPCitH Sign · Fold Gate · Proof Tally.
+MPCitH Sign · Fold Gate · Proof Tally · Signature Gate.
 
 Fold Gate is the first demo here that is not a proof system, and it refuses both properties in its
 own copy: this NIFS is "neither zero-knowledge nor a succinct final proof." What it isolates is
@@ -1099,7 +1101,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 231.**
+**Catalogued total: 232.**
 
 ---
 

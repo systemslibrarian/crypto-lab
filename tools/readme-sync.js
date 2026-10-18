@@ -115,7 +115,7 @@ const allBlock = allDemos.join(eol);
 // Learning Paths: from the LEARNING_PATHS array in the page's JS.
 const paths = literal('LEARNING_PATHS', '[', ']');
 const pathRows = paths.map(p =>
-  '| **' + p.label.replace(/ Path$/, '') + '** | ' + p.blurb + ' | ' +
+  '| **' + p.label.replace(/ Path$/, '') + '** | ' + p.blurb + (p.guide ? ' [' + p.guide.label + '](https://crypto-lab.systemslibrarian.dev/' + p.guide.href + ')' : '') + ' | ' +
   p.steps.map(s => s.title).join(' → ') + ' |').join(eol);
 
 const allRe = /<!-- readme-sync:all-demos:begin[^\n]*-->[\s\S]*?<!-- readme-sync:all-demos:end -->/;

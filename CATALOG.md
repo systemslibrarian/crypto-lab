@@ -2926,7 +2926,7 @@ A walkthrough of key exchange across history and protocol families — from Diff
 
 [`crypto-lab-key-lifecycle`](https://systemslibrarian.github.io/crypto-lab-key-lifecycle/) · Operational Key Management · ENCRYPTION, PROTOCOLS
 
-Rotate real AES-GCM keys, let an attacker decrypt a captured record with a copied old key, and learn why re-encryption cannot erase the attacker's historical copy.
+Follow ten key-management decisions, then rotate real AES-GCM keys and test why a copied old key still decrypts an attacker’s archived ciphertext.
 
 - **Implements:** AES-GCM `src/crypto/aead.ts:14`
 - **References:** AES Key Wrap, HKDF
@@ -3393,7 +3393,7 @@ A column you can still sort or match on has already published the shape of its a
 
 [`crypto-lab-ot-gate`](https://systemslibrarian.github.io/crypto-lab-ot-gate/) · Oblivious Transfer · PROTOCOLS, MPC & THRESHOLD
 
-1-of-2 Oblivious Transfer using the Simplest OT protocol (Chou-Orlandi 2015) over Curve25519 with real Edwards25519 group arithmetic and AES-256-GCM encryption. Foundational primitive for secure MPC.
+Explore 1-of-2 private choice with real Edwards25519 arithmetic and AES-GCM, then connect it to all-or-nothing disclosure. A teaching version of Chou–Orlandi with explicit KDF and validation limits.
 
 - **Implements:** AES `src/ot.ts:107`, AES-GCM `src/ot.ts:120`, Ed25519 `src/ot.ts:22`, Oblivious transfer `src/ot.ts:60`, SHA-256 `src/ot.ts:169`
 - **References:** Diffie-Hellman, EC point arithmetic, FROST, Garbled circuits, LWE, Private information retrieval, Private set intersection, Shamir secret sharing, Shor's algorithm, X25519

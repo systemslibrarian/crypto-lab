@@ -2218,6 +2218,10 @@
         <span class="nav-menu-educators-label">Explore the evidence</span>
         <span class="nav-menu-educators-sub">Labs, algorithms, standards and source-backed connections <span aria-hidden="true">&rarr;</span></span>
       </a>
+      <a class="nav-menu-educators" href="learn/applied-cryptography/">
+        <span class="nav-menu-educators-label">Applied Cryptography reading path</span>
+        <span class="nav-menu-educators-sub">Chapter connections, timestamping and fair-exchange workshops →</span>
+      </a>
       <div class="crypto-tree-wrap" id="crypto-tree-wrap">
         <span class="crypto-tree-label">The cryptography map &middot; click a branch</span>
 <pre class="crypto-tree" aria-label="Cryptography map"><span class="crypto-tree-root">Cryptography</span>
@@ -2394,7 +2398,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Operational Key Management</div>
             <div class="project-title">Key Lifecycle</div>
-            <div class="project-copy">Rotate real AES-GCM keys, let an attacker decrypt a captured record with a copied old key, and learn why re-encryption cannot erase the attacker's historical copy.</div>
+            <div class="project-copy">Follow ten key-management decisions, then rotate real AES-GCM keys and test why a copied old key still decrypts an attacker’s archived ciphertext.</div>
             <div class="project-meta"><div class="stack"><span class="chip">AES-256-GCM</span><span class="chip">Key Rotation</span><span class="chip">Key Compromise</span><span class="chip">AES-GCM AAD</span></div><span class="arrow">→</span></div>
           </a>
 
@@ -7957,7 +7961,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-ot-gate/" data-level="advanced" data-added="2026-04" data-updated="2026-08"
+          <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-ot-gate/" data-level="advanced" data-added="2026-04" data-updated="2026-10"
             data-implements="AES@src/ot.ts:107 | AES-GCM@src/ot.ts:120 | Ed25519@src/ot.ts:22 | Oblivious transfer@src/ot.ts:60 | SHA-256@src/ot.ts:169"
             data-references="Diffie-Hellman | EC point arithmetic | FROST | Garbled circuits | LWE | Private information retrieval | Private set intersection | Shamir secret sharing | Shor's algorithm | X25519"
             data-attacks="Ciphertext malleability@README.md:34 | Discrete log@src/main.ts:153"
@@ -8036,7 +8040,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Oblivious Transfer</div>
             <div class="project-title">OT Gate</div>
-            <div class="project-copy">1-of-2 Oblivious Transfer using the Simplest OT protocol (Chou-Orlandi 2015) over Curve25519 with real Edwards25519 group arithmetic and AES-256-GCM encryption. Foundational primitive for secure MPC.</div>
+            <div class="project-copy">Explore 1-of-2 private choice with real Edwards25519 arithmetic and AES-GCM, then connect it to all-or-nothing disclosure. A teaching version of Chou–Orlandi with explicit KDF and validation limits.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Simplest OT</span>
@@ -21006,6 +21010,13 @@
         ]
       },
       {
+        id: 'applied-cryptography', label: 'Applied Cryptography',
+        focus: 'Read a classic concept, then challenge it in the browser.',
+        blurb: 'An independent companion to Schneier’s second edition. Follow selected protocol foundations, then use the chapter guide for all 25 chapters, coverage limits and two hands-on workshops.',
+        guide: {href: 'learn/applied-cryptography/', label: 'Open the chapter guide and workshops →'},
+        steps: [{title: 'Hash Zoo'}, {title: 'Commit Gate'}, {title: 'Shamir Gate'}, {title: 'OT Gate'}, {title: 'Blind Sign'}, {title: 'IBE Gate'}, {title: 'Key Lifecycle'}, {title: 'Compression Leak'}]
+      },
+      {
         id: 'developer',
         label: 'Developer Path',
         focus: 'Primitives through to the protocols you actually ship.',
@@ -21689,6 +21700,16 @@
         blurb.className = 'path-blurb';
         blurb.textContent = path.blurb;
         details.appendChild(blurb);
+        if (path.guide) {
+          var guide = document.createElement('p');
+          guide.className = 'path-guide path-blurb';
+          var guideLink = document.createElement('a');
+          guideLink.href = path.guide.href;
+          guideLink.textContent = path.guide.label;
+          guide.appendChild(guideLink);
+          details.appendChild(guide);
+        }
+
 
         var ol = document.createElement('ol');
         ol.className = 'path-steps';
@@ -21820,6 +21841,8 @@
           var menuPath = document.getElementById('path-' + path.id);
           var blurb = menuPath.querySelector('.path-blurb').cloneNode(true);
           disclosure.appendChild(blurb);
+          var guide = menuPath.querySelector('.path-guide');
+          if (guide) disclosure.appendChild(guide.cloneNode(true));
           var list = menuPath.querySelector('.path-steps').cloneNode(true);
           Array.from(list.querySelectorAll('a[data-step-target]')).forEach(function (link) {
             var card = titleToCard[link.getAttribute('data-step-target')];

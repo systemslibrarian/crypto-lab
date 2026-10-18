@@ -537,8 +537,8 @@
     "note": "Read current LWE search-space helper, FO explanation and assurance/power-research panel. Search-space count is not enumeration; FO prevention and external side-channel research are references/limitations, not browser attacks. Preserve actual LWE/ML-KEM/AES and tests."
   },
   "crypto-lab-dilithium-seal": {
-    "commit": "2e781154f101613e2ddada39d5e210adc2eb6b09",
-    "reviewed": "2026-10-10",
+    "commit": "f5de094309afa62e653c875bb24a3994f50b43d5",
+    "reviewed": "2026-10-18",
     "remove": [
       "Discrete log",
       "Factoring",
@@ -546,7 +546,7 @@
       "Key recovery",
       "Side-channel (unspecified)"
     ],
-    "note": "Re-read current ML-DSA/SHA-256 sealing, unsigned metadata disclosures, README and comparison/timing panels against verified PR40. Preserve five removals: risk/negated/comparison assertions are not executed attacks. Timing variability remains an actual measurement with no key-recovery/hardware-trace or constant-time claim."
+    "note": "Re-read current ML-DSA/SHA-256 sealing, unsigned metadata disclosures, README and comparison/timing panels against verified PR40. Preserve five removals: risk/negated/comparison assertions are not executed attacks. Timing variability remains an actual measurement with no key-recovery/hardware-trace or constant-time claim. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus."
   },
   "crypto-lab-zk-arena": {
     "commit": "96f5ec88184aef25f7ed141e4dc35ccd83043b64",
@@ -804,11 +804,11 @@
     "note": "Reviewed the new SQIsign source note, README scope table, Exhibit 4 and csidh.ts bruteForceStep/recovery. The executable attack is the toy CSIDH exhaustive search retained as Brute force; the separate Key recovery hit now points to the SQIsign paper discussion, not that computation. Power analysis is reported research, not an executed experiment. The sidhOutput variable is a CSIDH display element, not a SIKE implementation; the lattice-reduction hit is a related-demo link. Preserve CSIDH, EC arithmetic and isogeny walks. This is a bounded catalog classification review, not a full cryptographic audit."
   },
   "crypto-lab-pq-families": {
-    "commit": "73a022541e5b8563d70cd8141cac602c9dbb7c46",
-    "reviewed": "2026-10-17",
+    "commit": "a3e9b9431802746fcf3a891721be7d287f7c3ac6",
+    "reviewed": "2026-10-18",
     "remove": [
       "Power analysis"
     ],
-    "note": "Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus."
+    "note": "Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus."
   }
 }

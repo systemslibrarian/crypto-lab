@@ -4766,8 +4766,8 @@
             data-attacks="Timing side-channel@src/data/runtime.ts:90"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="2e781154f101613e2ddada39d5e210adc2eb6b09"
-            data-review-note="Re-read current ML-DSA/SHA-256 sealing, unsigned metadata disclosures, README and comparison/timing panels against verified PR40. Preserve five removals: risk/negated/comparison assertions are not executed attacks. Timing variability remains an actual measurement with no key-recovery/hardware-trace or constant-time claim."
+            data-review-commit="f5de094309afa62e653c875bb24a3994f50b43d5"
+            data-review-note="Re-read current ML-DSA/SHA-256 sealing, unsigned metadata disclosures, README and comparison/timing panels against verified PR40. Preserve five removals: risk/negated/comparison assertions are not executed attacks. Timing variability remains an actual measurement with no key-recovery/hardware-trace or constant-time claim. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus."
            
            
            
@@ -12699,11 +12699,11 @@
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:55 | SHA-256@src/crypto.ts:35"
             data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | UOV | Winternitz | X25519 | XMSS"
-            data-attacks="Birthday bound@src/data.ts:423 | Chosen-ciphertext attack@src/data.ts:192 | Chosen-plaintext attack@src/data.ts:895 | Differential cryptanalysis@src/data.ts:538 | Discrete log@src/data.ts:751 | Factoring@src/data.ts:751 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:155 | Side-channel (unspecified)@src/data.ts:229 | Timing side-channel@src/data.ts:297"
+            data-attacks="Birthday bound@src/data.ts:436 | Chosen-ciphertext attack@src/data.ts:205 | Chosen-plaintext attack@src/data.ts:908 | Differential cryptanalysis@src/data.ts:551 | Discrete log@src/data.ts:764 | Factoring@src/data.ts:764 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:161 | Side-channel (unspecified)@src/data.ts:242 | Timing side-channel@src/data.ts:310"
             data-standards="NIST"
             data-implementation="WebCrypto"
-            data-review-commit="73a022541e5b8563d70cd8141cac602c9dbb7c46"
-            data-review-note="Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus."
+            data-review-commit="a3e9b9431802746fcf3a891721be7d287f7c3ac6"
+            data-review-note="Reviewed the new isogeny attack/reference entries, README and crypto.ts&#x27;s executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus."
             data-level="advanced" data-added="2026-06" data-updated="2026-10"
            
            

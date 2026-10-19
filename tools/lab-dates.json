@@ -71,8 +71,8 @@
    "added": "2026-09",
    "updated": "2026-10",
    "addedFrom": "2026-09-21T08:58:39Z",
-   "updatedFrom": "2026-10-01T09:43:04-04:00",
-   "updatedCommit": "bfa8d77e2147c6f1500e294e945425971db764fc"
+   "updatedFrom": "2026-10-19T12:58:46Z",
+   "updatedCommit": "5829644c4dde3034b23839542e47f91a27dc8bd4"
   },
   "crypto-lab-tc26-pair": {
    "added": "2026-09",
@@ -624,8 +624,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-18T11:08:45Z",
-   "updatedFrom": "2026-10-10T07:36:21-04:00",
-   "updatedCommit": "89ac2fca1868c4e3b12f75e6a8d76ff1576de3ce"
+   "updatedFrom": "2026-10-19T12:56:29Z",
+   "updatedCommit": "6b50a953311753ba20adc61c4ac4172789b4a2fa"
   },
   "crypto-lab-opaque-gate": {
    "added": "2026-04",
@@ -1182,10 +1182,10 @@
   },
   "crypto-lab-spdz-forge": {
    "added": "2026-07",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-07-16T23:10:58Z",
-   "updatedFrom": "2026-08-15T21:19:53-04:00",
-   "updatedCommit": "02ed7c0be79d4c35e18b0d5aed506c1a88e79cf9"
+   "updatedFrom": "2026-10-19T12:58:43Z",
+   "updatedCommit": "65f66dafa86a059696d93eeff173cc5451d2b6c8"
   },
   "crypto-lab-traitor-trace": {
    "added": "2026-07",

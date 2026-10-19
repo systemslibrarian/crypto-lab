@@ -102,8 +102,11 @@ function sh(cmd, args, cwd) {
  * 2026-10-04 collected only the data-* attributes and dropped the href from the
  * cards it converted, taking the catalog to 221 -- and a card this checker
  * cannot resolve is "could not look", never "nothing there". */
-const CARD_ANCHOR = /<a\s+class="(?:feature|project)-card(?:\s[^"]*)?"[^>]*>/g;
-const CARD_HREF = /\shref="https:\/\/systemslibrarian\.github\.io\/([A-Za-z0-9._-]+)\/"/;
+/* The matcher itself now lives in tools/card-reader.js, imported rather than
+ * copied. This file's rule was the most permissive of the eight in the fleet --
+ * any attribute order, both card classes -- which is why the shared one was
+ * generalised from it; see #125 for the census of what the other seven missed. */
+const { readCards, hreflessLine } = require('./card-reader.js');
 
 /* The pre-2026-10-06 rule, kept for ONE caller: the selftest, which asserts
  * that the prose-only fixture WOULD have been miscounted by it. Without that
@@ -114,14 +117,13 @@ const LOOSE_SLUGS_SUPERSEDED = /https:\/\/systemslibrarian\.github\.io\/([A-Za-z
 
 function cardedSlugs(html) {
   const text = html === undefined ? fs.readFileSync(INDEX, 'utf8') : html;
-  const slugs = new Set();
-  const hrefless = [];
-  for (const m of text.matchAll(CARD_ANCHOR)) {
-    const got = CARD_HREF.exec(m[0]);
-    if (got) slugs.add(got[1]);
-    else hrefless.push(m[0].replace(/\s+/g, ' ').slice(0, 120));
-  }
-  return { slugs, hrefless };
+  const read = readCards(text);
+  return {
+    slugs: new Set(read.cards.map((c) => c.slug)),
+    /* Shape preserved for this file's callers and selftest: a short string per
+       unresolved anchor. The shared reader carries structured detail too. */
+    hrefless: read.hrefless.map((h) => `${h.title ? `"${h.title}" ` : ''}${h.why}`),
+  };
 }
 
 const isIndexPath = file => file === 'index.html' || file.endsWith('/index.html');

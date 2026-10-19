@@ -40,6 +40,7 @@
  *   node tools/teach-build.js lint    the count lint alone
  */
 'use strict';
+const cardReader = require('./card-reader.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -90,12 +91,16 @@ const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
 function readCards() {
   const html = read(INDEX);
-  const re = /<a class="((?:project|feature)-card[^"]*)" data-category="[^"]*" href="(https:\/\/systemslibrarian\.github\.io\/([^\/"]+)\/)"[\s\S]*?<\/a>/g;
+  /* Imported, not written here: this file's own rule pinned data-category before
+     href and was the eighth such matcher in the fleet. See tools/card-reader.js. */
+  const sharedRead = cardReader.readCards(html);
+  if (sharedRead.hrefless.length) {
+    console.error(cardReader.hreflessLine(sharedRead.hrefless));
+    process.exit(1);
+  }
   const cards = new Map();
-  let m;
-  while ((m = re.exec(html)) !== null) {
-    const title = /(?:project|feature)-title">([^<]+)</.exec(m[0]);
-    cards.set(m[3], { slug: m[3], url: m[2], title: title ? decode(title[1].trim()) : m[3], wip: m[1].includes('wip-card') });
+  for (const m of sharedRead.cards) {
+    cards.set(m.slug, { slug: m.slug, url: m.href, title: m.title ? decode(m.title) : m.slug, wip: m.wip });
   }
   if (!cards.size) fail('index.html: no cards found — has the card markup changed?');
   return cards;

@@ -233,6 +233,22 @@ function cloneNeedsFetch(dir, pin, head, remote) {
 /* Labs whose pin could not be judged because the clone is shallow. Module level
  * because the derivation fills it per lab and the reports read it once. */
 const pinUnreadable = new Set();
+/* Reviewed entries that do not parse, collected rather than thrown.
+ *
+ * Both guards below used to `throw` from inside evidenceFor, which runs inside
+ * the fleet-wide map, so ONE malformed entry on ONE lab derived nothing for the
+ * other 231: the process exited 1 having written no card at all, with a stack
+ * trace naming a single slug as its only output. That is the local-guard /
+ * global-failure shape this file already fixed once for stale pins, and the
+ * comment on that fix says to look for it wherever a per-item guard sits inside
+ * a fleet-wide loop. This was the other instance. See #129.
+ *
+ * A lab with a malformed review is skipped the way a stale-pinned one is -- its
+ * recorded add and remove lists are NOT applied, so its card stays
+ * byte-identical and keeps the state it was last written in -- then named, and
+ * the run still exits non-zero. Applying half of a list that does not parse
+ * would be inheriting a judgement nobody made. */
+const badReview = new Map();
 
 /** A `--depth` clone. Its history is truncated, so an older commit is absent for
  *  a reason that says nothing about the lab. */
@@ -795,6 +811,21 @@ function labFiles(dir, clone = dir) {
 }
 
 /** Everything derivable about one lab. Never throws; a missing clone is a state. */
+/** Reasons each reviewed `add` entry does not parse; empty when the list is good.
+ *  Exported so selftest asserts the production rule rather than a copy of it. */
+function invalidReviewedAdds(add) {
+  const bad = [];
+  for (const item of add) {
+    const at = item.lastIndexOf('@');
+    const name = item.slice(0, at);
+    const anchor = item.slice(at + 1);
+    if (at < 0) bad.push(`${item} (no @anchor)`);
+    else if (!ALGORITHMS.some((term) => term.name === name)) bad.push(`${item} (no vocabulary term named "${name}")`);
+    else if (!/^.+:\d+$/.test(anchor)) bad.push(`${item} (anchor is not path:line)`);
+  }
+  return bad;
+}
+
 function evidenceFor(slug) {
   const dir = path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
@@ -1002,18 +1033,20 @@ function evidenceFor(slug) {
       staleReview = { pinned: review.commit, current: head };
     }
     if (!staleReview) {
-    applyReviewRemovals(slug, review.remove, hits, attackHits);
-    for (const item of review.add || []) {
-      const at = item.lastIndexOf('@');
-      const name = item.slice(0, at);
-      const anchor = item.slice(at + 1);
-      if (at < 0 || !ALGORITHMS.some((term) => term.name === name) || !/^.+:\d+$/.test(anchor)) {
-        throw new Error(`${slug}: invalid reviewed implementation ${item}`);
+    /* Validate the WHOLE list before applying any of it, so a lab is either
+       fully reviewed or untouched -- never half. */
+    const invalid = invalidReviewedAdds(review.add || []);
+    if (invalid.length) {
+      badReview.set(slug, invalid);
+    } else {
+      applyReviewRemovals(slug, review.remove, hits, attackHits);
+      for (const item of review.add || []) {
+        const at = item.lastIndexOf('@');
+        hits.set(item.slice(0, at), { at: item.slice(at + 1), shape: 'reviewed' });
       }
-      hits.set(name, { at: anchor, shape: 'reviewed' });
-    }
-    if (review.state === 'N/A' && hits.size) {
-      throw new Error(`${slug}: N/A review conflicts with ${[...hits.keys()].join(', ')}`);
+      if (review.state === 'N/A' && hits.size) {
+        badReview.set(slug, [`state "N/A" conflicts with derived ${[...hits.keys()].join(', ')}`]);
+      }
     }
     }
   }
@@ -1087,6 +1120,7 @@ function evidenceFor(slug) {
     reviewed: review ? { commit: review.commit, note: review.note, state: review.state || 'covered' } : null,
     commentOnly: inertOnly,
     staleReview,
+    invalidReview: badReview.get(slug) || null,
     protocolPartial: protocolPartial.filter((x) => !hits.has(x.name)).sort((a, b) => a.name.localeCompare(b.name)),
   };
 }
@@ -1179,7 +1213,10 @@ function writeCards(all) {
      defect the comment above was written for, re-introduced one guard later. */
   const corrupting = [];
   const stale = all.filter((c) => c.ev.staleReview);
-  const writable = all.filter((c) => !c.ev.staleReview);
+  /* A malformed review is skipped for the same reason a stale pin is: its
+     recorded edits must not be half-applied. Named below, never silent. */
+  const malformed = all.filter((c) => c.ev.invalidReview);
+  const writable = all.filter((c) => !c.ev.staleReview && !c.ev.invalidReview);
   for (const c of writable) {
     const f = fieldsFor(c.ev);
     /* data-overlaps is NOT touched: it is the one judged field, and a difference
@@ -1220,6 +1257,16 @@ function writeCards(all) {
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }
   fs.writeFileSync(HTML, html);
+  if (malformed.length) {
+    console.error(`\nINVALID-REVIEW (${malformed.length}) — the entry in tools/catalog-reviewed.json does not`);
+    console.error('parse, so this lab\'s recorded add and remove lists were NOT applied and its card is');
+    console.error('byte-identical. Every other lab in this run was derived as usual (see #129: this');
+    console.error('guard used to throw from inside the fleet-wide map and derive nothing for anyone).');
+    for (const c of malformed) {
+      for (const why of c.ev.invalidReview) console.error(`  ${c.slug.padEnd(34)} ${why}`);
+    }
+    process.exitCode = 1;
+  }
   if (corrupting.length) {
     console.error(`\nREVIEW-NOTE-UNWRITABLE (${corrupting.length}) — the note in tools/catalog-reviewed.json`);
     console.error('contains ">", which ends the card\'s opening tag early for lab-dates.js and');
@@ -1661,6 +1708,24 @@ function selftest() {
     const afterIgnoreOnly = git('rev-parse', 'HEAD').trim();
     if (movedSubstantively(tmp, base, afterIgnoreOnly) !== 'not-moved') fail.push('a .gitignore-only commit was called substantive');
     else { pass++; console.log('  ok  a .gitignore-only commit does NOT invalidate a pin'); }
+
+    /* #129 — a malformed reviewed entry must be NAMED, not thrown. The guard
+       used to throw from inside the fleet-wide map, so one bad entry on one lab
+       derived nothing for the other 231 and the only output was a stack trace
+       naming a single slug. Asserts each invalid shape is reported with a
+       reason, and - the control that matters - that a VALID entry still passes,
+       since a validator rejecting everything would satisfy the first half. */
+    const realTerm = ALGORITHMS[0].name;
+    for (const [why, add2, want] of [
+      ['no @anchor', ['SHA-256'], 1],
+      ['unknown name', ['Nonexistent-Cipher-X@src/fake.ts:43'], 1],
+      ['anchor without a line', [`${realTerm}@src/fake.ts`], 1],
+      ['a valid entry must still pass', [`${realTerm}@src/fake.ts:43`], 0],
+    ]) {
+      const got = invalidReviewedAdds(add2).length;
+      if (got !== want) fail.push(`reviewed add validation, ${why}: expected ${want}, got ${got}`);
+      else { pass++; console.log(`  ok  reviewed add validation: ${why}`); }
+    }
 
     fs.writeFileSync(path.join(tmp, 'src', 'main.ts'), 'export function sha512() { return 2 }\n');
     git('add', 'src/main.ts'); git('commit', '-qm', 'change src');

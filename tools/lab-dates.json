@@ -106,8 +106,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-12T16:09:18Z",
-   "updatedFrom": "2026-10-12T12:11:04-04:00",
-   "updatedCommit": "517378352b256ed94951933a7bd8754216c42f81"
+   "updatedFrom": "2026-10-19T00:22:07-04:00",
+   "updatedCommit": "4739c152e1ce7a143e359dc671663a5fb82e7b4d"
   },
   "crypto-lab-bb84": {
    "added": "2026-04",
@@ -1513,8 +1513,8 @@
    "added": "2026-10",
    "updated": "2026-10",
    "addedFrom": "2026-10-01T01:47:52Z",
-   "updatedFrom": "2026-10-12T12:09:01-04:00",
-   "updatedCommit": "3b77654607d443b04af5a29586be4f9958164ea4"
+   "updatedFrom": "2026-10-19T00:25:06-04:00",
+   "updatedCommit": "f468565fbc6530fcd98508b2493370dfa61aa88a"
   },
   "crypto-lab-pulse-chain": {
    "added": "2026-10",

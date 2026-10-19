@@ -31,9 +31,20 @@ test('mental poker deals 5 hands and audit independently re-checks the sealed op
   for(let i=0;i<5;i++)await page.locator('#hand button').first().click();
   await page.locator('#verify').click();
   await page.locator('#authentic:not([disabled])').waitFor();
-  const receipt=await page.locator('#deck-check').textContent();
-  await page.locator(receipt.includes('Seal matches')?'#authentic':'#forged').click();
+  /* Audit the way the page now requires: the verdict is withheld until the player
+     decides, so compare each recomputed digest against its published commitment.
+     This test used to read 'Seal matches' straight out of #deck-check, which was
+     only possible because the page printed the answer before unlocking the
+     buttons it pays a bonus for. */
+  assert.doesNotMatch(await page.locator('#deck-check').textContent(),/(matches|FAILS|DIFFERS)/);
+  assert.match(await page.locator('#opened-values').textContent(),/^seed [0-9a-f]{48} · nonce [0-9a-f]{32}$/);
+  const [rivalPub,rivalGot,minePub,mineGot]=await Promise.all([
+   page.locator('#original-hash').textContent(),page.locator('#reopened-hash').textContent(),
+   page.locator('#user-commit-audit').textContent(),page.locator('#user-reopened').textContent()]);
+  assert.equal(minePub,mineGot,"the player's own seal must recompute to its published commitment");
+  await page.locator(rivalPub===rivalGot?'#authentic':'#forged').click();
   assert.equal(await page.locator('#bonus').textContent(),'+5');
+  assert.match(await page.locator('#deck-check').textContent(),/Rival seal (matches|FAILS) · your seal (matches|FAILS) · reconstructed deck (matches|DIFFERS)\./);
   assert.equal(await page.locator('#replay').isVisible(),true);
   assert.deepEqual(errors,[]);
  }finally{await page.close();}

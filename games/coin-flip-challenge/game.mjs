@@ -31,12 +31,21 @@ async function lock(){if(state.stage!=='choose'||state.bit===null)return;state.m
 async function reveal(){if(state.stage!=='locked')return;state.stage='opened';el('reveal').disabled=true;el('check').disabled=false;el('progress').style.width='67%';if(state.type==='aborted'){state.opening=null;say('them','…');say('open-info','NO OPENING: The rival disconnected without revealing a bit or nonce.');say('computed','No opening to recompute');feedback('The rival has gone silent. Decide whether this is a forged hash or an aborted protocol.','bad');return;}
 state.opening={bit:state.type==='forged'?1-state.botBit:state.botBit,nonce:state.nonce};say('them',String(state.opening.bit));say('open-info',`Revealed bit ${state.opening.bit}, nonce ${state.opening.nonce}. The verifier must hash these exact values.`);feedback('Opening received. Compute the fingerprint yourself before deciding what happened.');}
 async function check(){if(state.stage!=='opened')return;state.stage='checked';state.valid=state.opening?await verify(`coin-${state.index}`,state.opening.bit,state.opening.nonce,state.commit):false;const calculated=state.opening?await seal(`coin-${state.index}`,state.opening.bit,state.opening.nonce):'NO OPENING';say('computed',calculated);
-const outcome=state.valid?state.bit^state.opening.bit:null;state.outcome=outcome;
-if(state.opening){say('open-info',`The opening ${state.valid?'MATCHES':'DOES NOT MATCH'} the pre-published hash. ${state.valid?`XOR result: ${outcome===0?'HEADS':'TAILS'}.`:'Do not accept or score a coin result from an invalid opening.'}`);}
+/* BOTH openings are verified, because the page claims both are. The rules said
+   "both parties' verified bits are XORed" and "A valid result requires both
+   genuine openings" while only the rival's seal was ever checked: the player's
+   bit went into the XOR unverified, and state.myCommit was computed in lock()
+   and never read again. Checking it here is what a fair coin flip actually is --
+   each side binds its bit before either opens -- so the claim and the code now
+   agree, and the honest direction was to make the code true rather than to
+   weaken the sentence. */
+state.mineValid=state.myCommit?await verify(`you-${state.index}`,state.bit,state.myNonce,state.myCommit):false;
+const outcome=(state.valid&&state.mineValid)?state.bit^state.opening.bit:null;state.outcome=outcome;
+if(state.opening){say('open-info',`The rival's opening ${state.valid?'MATCHES':'DOES NOT MATCH'} the pre-published hash, and your own opening ${state.mineValid?'matches yours':'does NOT match yours'}. ${outcome!==null?`Both bits verified, so the XOR stands: ${outcome===0?'HEADS':'TAILS'}.`:'Do not accept or score a coin result unless BOTH openings verify.'}`);}
 else say('open-info','No revealed bit or nonce: verification cannot run. There is no agreed coin result.');
 el('check').disabled=true;el('verdict-zone').hidden=false;el('progress').style.width='84%';el('verdicts').replaceChildren();
 for(const [kind,label] of [['honest','Fair ✓'],['forged','Forged ✕'],['aborted','Aborted ⏱'],['leaky','Leaky ⚡']])button(el('verdicts'),label,()=>judge(kind),'choice');
-feedback(state.valid?'The cryptographic hash matches. Did anything else compromise fairness?':'The verification did not produce a valid confirmed coin. Classify why.');}
+feedback(outcome!==null?'Both cryptographic hashes match. Did anything else compromise fairness?':'The verification did not produce a valid confirmed coin. Classify why.');}
 function showSummary(){
  const names={honest:'Fair',leaky:'Leaky',forged:'Forged',aborted:'Aborted'};
  const list=el('summary-list');list.replaceChildren();

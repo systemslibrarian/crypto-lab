@@ -18,9 +18,25 @@ test('Mental Poker can complete 5-card match and cryptographic audit',async()=>{
  await waitFor(()=>el('hand').children.length===5,'deal');assert.equal(el('user-commit').textContent.length,64);
  for(let i=0;i<5;i++){await el('hand').children[0].click();await waitFor(()=>el('hand').children.length===4-i||i===4,'cards played');}
  assert.equal(el('audit-panel').hidden,false);await el('verify').click();await waitFor(()=>!el('authentic').disabled,'audit');
- assert.match(el('deck-check').textContent,/(matches|FAILS)/);
- const genuine=el('deck-check').textContent.includes('Seal matches');await el(genuine?'authentic':'forged').click();
+ /* The verdict must NOT be readable before the decision. The page instructs the
+    player to "check that the revealed values match the commitment" and pays a
+    bonus for catching a forged opening, so printing matches/FAILS here would make
+    that bonus a reward for copying an answer the page had already given. This
+    assertion is the guard: it previously required the opposite. */
+ assert.doesNotMatch(el('deck-check').textContent,/(matches|FAILS|DIFFERS)/);
+ /* The revealed seed and nonce have to be on screen, or the instructed check is
+    impossible -- they were never rendered at all before. */
+ assert.match(el('opened-values').textContent,/^seed [0-9a-f]{48} · nonce [0-9a-f]{32}$/);
+ /* Audit the way the player now has to: compare each recomputed digest against
+    the commitment published above it. Both sides are checked, because the result
+    sentence claims both. */
+ const rivalOk=el('reopened-hash').textContent===el('original-hash').textContent;
+ const mineOk=el('user-reopened').textContent===el('user-commit-audit').textContent;
+ assert.ok(mineOk,"the player's own seal must recompute to its published commitment");
+ await el(rivalOk?'authentic':'forged').click();
  assert.equal(el('bonus').textContent,'+5'); assert.match(el('feedback').textContent,/Great catch/);
+ /* And it IS revealed once the judgement is on the record, naming all three parts. */
+ assert.match(el('deck-check').textContent,/Rival seal (matches|FAILS) · your seal (matches|FAILS) · reconstructed deck (matches|DIFFERS)\./);
 });
 test('Coin Flip six cases can be verified and properly classified',async()=>{
  const el=newDom();await import('../games/coin-flip-challenge/game.mjs');await waitFor(()=>el('lock').disabled===true&&el('seal').textContent.length===64,'ready');

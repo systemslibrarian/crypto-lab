@@ -70,16 +70,40 @@ async function audit(){
   const openedCombined=await hash('mental-poker-deck-v1',state.userSeed,state.openedSeed);
   const recreated=await shuffle(deckSource,openedCombined);
   const sameDeck=JSON.stringify(recreated)===JSON.stringify(state.fullDeck);
-  state.auditPass=openingValid&&sameDeck;
+  /* BOTH seals are audited, because the result sentence claims both.
+     `auditPass` was `openingValid && sameDeck` -- the rival's seal only -- while
+     the lesson text asserted "Both seeds matched their earlier commitments" on
+     every win, and state.userSeal was published at :41 and never read again.
+     Recomputing the player's own seal here makes that sentence true and is the
+     check the page already told the player mattered. */
+  const userShown=await seal('mental-poker-player',state.userSeed,state.userNonce);
+  const userValid=await verify('mental-poker-player',state.userSeed,state.userNonce,state.userSeal);
+  Object.assign(state,{openingValid,userValid,sameDeck});
+  state.auditPass=openingValid&&userValid&&sameDeck;
+  /* The EVIDENCE is shown; the VERDICT is not, until the player has committed to
+     one. index.html tells the player "check that the revealed values match the
+     commitment" and pays a bonus for "catching" a forged opening -- so printing
+     `Seal matches/FAILS` here, one line before enabling the buttons, made the
+     bonus a reward for copying an answer the page had just given, and made the
+     claim that the player caught anything false. The revealed seed and nonce are
+     rendered instead, which is also what makes that instruction performable:
+     before this they were never displayed at all. */
+  say('opened-values',`seed ${state.openedSeed} · nonce ${state.openedNonce}`);
   say('reopened-hash',shown);
-  say('deck-check',`Seal ${openingValid?'matches':'FAILS'} · Reconstructed deck ${sameDeck?'matches':'DIFFERS'}.`);
-  feedback('Audit computed with real SHA-256. Now decide: is this opening authentic or forged?');
+  say('user-commit-audit',state.userSeal);
+  say('user-reopened',userShown);
+  say('deck-check','Compare each recomputed digest with the commitment above it, then decide.');
+  feedback('Audit computed with real SHA-256. Compare the digests yourself, then decide: authentic or forged?');
   el('verify').disabled=true;el('authentic').disabled=false;el('forged').disabled=false;
 }
 function verdict(accepted){
   if(state.stage!=='audit'||el('authentic').disabled)return;
   state.auditRight=(accepted===state.auditPass);state.chips+=state.auditRight?5:0;state.stage='finished';
   say('bonus',state.auditRight?'+5':'+0');
+  /* The verdict lands HERE, after the decision, so the player is told the answer
+     once their own judgement is on the record. `audit()` renders the digests; it
+     deliberately does not grade them. */
+  say('deck-check',`Rival seal ${state.openingValid?'matches':'FAILS'} · your seal ${state.userValid?'matches':'FAILS'} · reconstructed deck ${state.sameDeck?'matches':'DIFFERS'}.`);
   say('lesson',state.auditPass?'Both seeds matched their earlier commitments and the deck reconstructed identically. A valid opening certifies this simulator’s published shuffle record, not a private remote deal.':'A different opening changed the hash and the deterministic deck. A commitment lets you detect post-commit changes, not prevent someone from refusing to reveal.');
   feedback(state.auditRight?`Great catch! ${state.auditPass?'Honest opening verified.':'Forged opening rejected.'} +5 detective chips.`:`That verdict did not match the hash audit. The rival ${state.auditPass?'opened correctly':'changed the committed seed'}. Try another match.`,state.auditRight?'good':'bad');
   render();

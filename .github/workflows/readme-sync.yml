@@ -124,3 +124,13 @@ jobs:
         run: |
           node tests/knowledge-map-model.test.cjs
           node tests/knowledge-map-factor.test.cjs
+
+      # games/ was the only published surface with no checker of its own, and
+      # four false player-facing claims survived in it because nothing looked.
+      # The selftest runs first: it proves each check still bites against
+      # fixtures, so a green `check` below cannot be a check that fires on
+      # nothing.
+      - name: Game claim checks still bite
+        run: node tools/games-sync.js selftest
+      - name: Every game states its limits, bridges to an exhibit and pins a theme
+        run: node tools/games-sync.js check

@@ -2251,7 +2251,7 @@ Real Laplace and Gaussian mechanisms over a twelve-person payroll — watch the 
 
 [`crypto-lab-drbg-arena`](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) · CSPRNG · RANDOMNESS
 
-HMAC_DRBG, CTR_DRBG, and Hash_DRBG with state visualizers, seeding, reseeding, and live NIST SP 800-22 statistical tests. The correct-case companion to Corrupted Oracle.
+HMAC_DRBG, CTR_DRBG, and Hash_DRBG with state visualizers, reseeding, and live statistical tests. Route two sources through a Hash_DRBG experiment and distinguish input influence from credited entropy.
 
 - **Implements:** AES `src/crypto/utils.ts:56`, AES-CBC `src/crypto/utils.ts:62`, CTR-DRBG `src/crypto/ctr-drbg.ts:25`, HMAC `src/crypto/hmac-drbg.ts:20`, HMAC-DRBG `src/crypto/hmac-drbg.ts:20`, SHA-256 `src/crypto/utils.ts:38`, SHA-512 `src/crypto/utils.ts:43`
 - **References:** Argon2, ECDSA, HKDF, PBKDF2, scrypt
@@ -3312,7 +3312,7 @@ NN, XX, IK, and IKpsk2 handshake patterns with real X25519 arithmetic, live tran
 
 [`crypto-lab-noise-to-numbers`](https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/) · Entropy Assessment · RANDOMNESS
 
-NIST SP 800-90B min-entropy from pinned runs of the real assessment tool: a modelled Infinite Noise TRNG scores 0.37 bits per bit, a SHA-256 counter scores 0.92. Entropy belongs to the source, not the bytes.
+Compare pinned SP 800-90B and Theseus results on seven reproducible inputs, inspect variability across simulated runs, and challenge the IID assumption. Entropy belongs to the source, not a statistical score.
 
 - **Implements:** Keccak `src/entropy/keccak.ts:49`, SHA-256 `src/entropy/counter-hash.ts:85`, SHA-3 `src/entropy/keccak.ts:227`
 - **References:** CTR-DRBG, DSA, HMAC-DRBG, MD5, One-time pad, Toeplitz extractor, von Neumann extractor
@@ -3716,7 +3716,7 @@ Recompute real NIST Beacon 2.0 pulses byte by byte, walk their SHA-512 hash chai
 
 [`crypto-lab-quantum-entropy`](https://systemslibrarian.github.io/crypto-lab-quantum-entropy/) · Quantum RNG · RANDOMNESS
 
-A biased beam-splitter QRNG, Shannon vs min-entropy on the same stream, von Neumann debiasing, and a real Toeplitz extractor with Leftover Hash Lemma accounting and NIST SP 800-90B health tests.
+A modelled beam-splitter QRNG, min-entropy accounting, von Neumann debiasing, and a real Toeplitz extractor. Tune SP 800-90B health-test cutoffs and measure false alarms, missed failures, and detection delay.
 
 - **Implements:** Toeplitz extractor `src/entropy/toeplitz.ts:21`, von Neumann extractor `src/entropy/vonneumann.ts:15`
 - **Source review:** [6e75cbb5c447](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/commit/6e75cbb5c4473a7a0254f14a6318a4c832a2fa12) — Runs both extractors on generated bits; source QRNG is modeled Re-read the extractors and full prior-pin diff on 12 October: Toeplitz/vonNeumann source and anchors21/15 remain exact. The 90C bridge is source-system context, not an implemented RBG1/2/3/C or certification.

@@ -192,13 +192,13 @@
     "note": "Re-read current README, every tracked src module and relevant tests after integrated Lucide v1 repair PR15. Full prior review49dfff0 to this commit changes only the navigation icon Github to CodeXml in src/main.tsx; ledger/dialog/fuzz/toy computations and learner-facing claims are unchanged. ECDSA remains a cited resource-estimate data table, not an implementation; the noble/hashes sha3 module path exports the used SHAKE256, not SHA-3 execution. Preserve SHAKE and SHA-256 evidence and teaching-model limits. Actual36 unit,11 local and11 public browser/WCAG tests and immutable-lock npm audit zero passed at this exact SHA. Fleet dependency work39b11ea4-0958-4717-8cc8-faaabd45be07; source review is separate from deployment and dependency provider evidence."
   },
   "crypto-lab-quantum-entropy": {
-    "commit": "6e75cbb5c4473a7a0254f14a6318a4c832a2fa12",
-    "reviewed": "2026-10-12",
+    "commit": "44b945c15d5de424f4209239b6d96063eccc82f0",
+    "reviewed": "2026-10-19",
     "add": [
       "Toeplitz extractor@src/entropy/toeplitz.ts:21",
       "von Neumann extractor@src/entropy/vonneumann.ts:15"
     ],
-    "note": "Runs both extractors on generated bits; source QRNG is modeled Re-read the extractors and full prior-pin diff on 12 October: Toeplitz/vonNeumann source and anchors21/15 remain exact. The 90C bridge is source-system context, not an implemented RBG1/2/3/C or certification."
+    "note": "Runs both extractors on generated bits; source QRNG is modeled Re-read the extractors and full prior-pin diff on 12 October: Toeplitz/vonNeumann source and anchors21/15 remain exact. The 90C bridge is source-system context, not an implemented RBG1/2/3/C or certification. Re-read the full prior-pin diff on 19 October (6e75cbb to 44b945c, two commits): a dependency bump and a new failure-detection workshop. Both pinned anchors are exact at this commit, toeplitzExtract at src/entropy/toeplitz.ts:21 and vonNeumann at src/entropy/vonneumann.ts:15. The workshop adds src/entropy/health-workshop.ts and src/ui/healthWorkshop.ts: a log-space binomial tail and an analytical binary-IID APT window probability driving simulated RCT/APT first-alarm experiments over the deterministic xorshift128 test RNG. Its header attributes the construction to Hill, ICMC 2024, and states that no Hill code or numerical tables are copied; the module itself records that the probability is analytical for the chosen model and NOT an entropy estimate. The two one-line source edits both NARROW claims rather than widening them: the health-test alpha is restated as a nominal tail target whose actual false-alarm probability is model-dependent, and the xorshift128 comment now scopes it to tests and the public-seed workshop and never key material. The modeled QRNG source and the 90C limit above are unchanged, so every claim here still holds of the pinned source."
   },
   "crypto-lab-factor-forge": {
     "commit": "8fcf023884964522ebddf678676aea20c04d6bf2",

@@ -477,7 +477,19 @@ const ATTACKS = [
   { name: 'Padding oracle', re: /padding[-_ ]?oracle/i },
   { name: 'Timing side-channel', re: /timing[-_ ]?(?:attack|oracle|leak|side[-_ ]?channel)/i },
   { name: 'Cache timing', re: /cache[-_ ]?timing|flush\+reload|prime\+probe/i },
-  { name: 'Power analysis', re: /\bdpa\b|\bspa\b|power[-_ ]?analysis/i },
+  /* The lookbehind keeps STATISTICAL power out. "statistical-power analysis" is
+     the power of a hypothesis test, not the side-channel attack, and on
+     2026-10-19 it put `Power analysis@src/ui/healthWorkshop.ts:37` on
+     crypto-lab-quantum-entropy -- from a citation paragraph crediting Hill with
+     "the failure-mode and statistical-power analysis", which is prose about a
+     paper rather than an exhibit of an attack. Same shape as the `opaque`
+     adjective: a term colliding with an ordinary English use of its own word.
+     Measured before narrowing: exactly one lab in the fleet writes "statistical
+     power", the one being mis-credited, and all nine genuine side-channel labs
+     (power-trace, masked-core, kyberslash, lattice-fault, glass-box,
+     ciphertext-mirror, scloud-vault, syndrome-hints, world-ciphers) keep the
+     credit, which is asserted as the positive control below. */
+  { name: 'Power analysis', re: /\bdpa\b|\bspa\b|(?<!statistical[-_ ])power[-_ ]?analysis/i },
   { name: 'Fault injection', re: /fault[-_ ]?(?:injection|attack)|rowhammer/i },
   { name: 'Nonce reuse', re: /nonce[-_ ]?(?:reuse|collision|misuse)/i },
   { name: 'IV reuse', re: /iv[-_ ]?reuse/i },

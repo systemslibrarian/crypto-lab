@@ -49,26 +49,29 @@ const decode = s => s
 const cell = s => s.replace(/\|/g, '\\|');
 
 const cards = [];
-const cardRe = /<a class="((?:project|feature)-card[^"]*)" data-category="[^"]*" href="(https:\/\/systemslibrarian\.github\.io\/([^\/"]+)\/)"[\s\S]*?<\/a>/g;
-let m;
-while ((m = cardRe.exec(html)) !== null) {
-  const block = m[0];
+/* The card matcher is imported, not written here: this file's own rule pinned
+   `data-category` before `href` and would have dropped any card that reshuffled
+   its attributes. See tools/card-reader.js and #125. `data-format` now comes off
+   a properly bounded opening tag, so the `>`-in-an-attribute hazard that the
+   previous comment here worked around is gone rather than guarded. */
+const { readCards, hreflessLine } = require('./card-reader.js');
+const read = readCards(html);
+if (read.hrefless.length) {
+  console.error(hreflessLine(read.hrefless));
+  process.exit(1);
+}
+for (const card of read.cards) {
+  const block = card.block;
   const kicker = /card-kicker">([^<]+)</.exec(block);
   const title = /project-title">([^<]+)</.exec(block);
   const copy = /project-copy">([^<]+)</.exec(block);
   const chips = [...block.matchAll(/class="chip">([^<]+)</g)].map(x => decode(x[1].trim()));
-  /* `data-format`, read from the OPENING TAG only. The split is on the first
-     `<div` -- where a card's content begins -- rather than on the first `>`,
-     because a `>` inside an attribute value ends an opening tag early: that is
-     exactly how a `>` in data-review-note once made lab-dates.js and
-     level-sync.js each write a second data-level. */
-  const openTag = block.split('<div')[0];
-  const format = /data-format="([^"]*)"/.exec(openTag);
+  const format = card.attr('data-format');
   cards.push({
-    href: m[2],
-    slug: m[3],
-    format: format ? format[1] : '',
-    wip: m[1].includes('wip-card'),
+    href: card.href,
+    slug: card.slug,
+    format: format || '',
+    wip: card.wip,
     kicker: kicker ? decode(kicker[1].trim()) : '',
     title: title ? decode(title[1].trim()) : '',
     copy: copy ? decode(copy[1].trim().replace(/\s+/g, ' ')) : '',

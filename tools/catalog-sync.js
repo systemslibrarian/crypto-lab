@@ -50,6 +50,7 @@
  *   node tools/catalog-sync.js vocab --modules  … and the non-failing module-backed chip report
  */
 'use strict';
+const cardReader = require('./card-reader.js');
 const fs = require('fs');
 const path = require('path');
 const { ALGORITHMS, standardMetadataProblems } = require('./catalog-vocab.js');
@@ -71,11 +72,18 @@ const errors = [];
 
 function cards() {
   const html = fs.readFileSync(HTML, 'utf8');
-  const re = /<a class="((?:project|feature)-card[^"]*)" data-category="([^"]*)" href="https:\/\/systemslibrarian\.github\.io\/([^/"]+)\/"([\s\S]*?)<\/a>/g;
+  /* Imported, not written here: this file's own rule pinned data-category before
+     href, so a card that reshuffled its attributes would have dropped out of
+     this denominator. See tools/card-reader.js and #125. */
+  const sharedRead = cardReader.readCards(html);
+  if (sharedRead.hrefless.length) {
+    console.error(cardReader.hreflessLine(sharedRead.hrefless));
+    process.exit(1);
+  }
   const out = [];
-  let m;
-  while ((m = re.exec(html)) !== null) {
-    const block = m[0];
+  for (const card of sharedRead.cards) {
+    const m = [card.block, card.tag, card.categories.join(' | '), card.slug, card.block];
+    const block = card.block;
     const attr = (n) => {
       const a = new RegExp(`\\sdata-${n}="([^"]*)"`).exec(block);
       return a ? decode(a[1]) : '';

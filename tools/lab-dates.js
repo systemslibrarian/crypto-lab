@@ -56,6 +56,7 @@
  * could not, is how this repository has hidden defects before.
  */
 'use strict';
+const cardReader = require('./card-reader.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -240,14 +241,23 @@ function stamp(html, labs) {
 
 function readAttrs(html) {
   const out = {};
-  let m;
-  CARD_HEAD.lastIndex = 0;
-  while ((m = CARD_HEAD.exec(html)) !== null) {
-    const tail = m[3] || '';
-    const values = (name) => [...tail.matchAll(new RegExp(`data-${name}="([^"]*)"`, 'g'))].map(v => v[1]);
+  /* READ through the shared reader; the WRITE position below keeps CARD_HEAD, a
+     split made deliberately rather than discovered (see #125). This file carried
+     TWO matchers that disagreed with each other on attribute order, and the one
+     here matched `project-card` only -- so a returning `feature-card` would be
+     carded by six tools and dated by none. Duplicate detection is kept and is
+     stronger: it counts within a properly bounded opening tag rather than within
+     a `([^>]*)` tail that stopped at the first `>`. */
+  const read = cardReader.readCards(html);
+  if (read.hrefless.length) {
+    console.error(cardReader.hreflessLine(read.hrefless));
+    process.exit(1);
+  }
+  for (const card of read.cards) {
+    const values = (name) => [...card.tag.matchAll(new RegExp(`data-${name}="([^"]*)"`, 'g'))].map((v) => v[1]);
     const added = values('added');
     const updated = values('updated');
-    out[m[2]] = { added: added[0] || null, updated: updated[0] || null,
+    out[card.slug] = { added: added[0] || null, updated: updated[0] || null,
       duplicates: ['added', 'updated'].filter((name) => values(name).length > 1),
       conflicts: ['added', 'updated'].filter((name) => new Set(values(name)).size > 1) };
   }

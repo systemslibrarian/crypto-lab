@@ -39,6 +39,7 @@
  * not established rather than publishing it as settled.
  */
 'use strict';
+const cardReader = require('./card-reader.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -83,11 +84,21 @@ function stamp(html, labs) {
 
 function readLevels(html) {
   const out = {};
-  CARD_HEAD.lastIndex = 0;
-  let m;
-  while ((m = CARD_HEAD.exec(html)) !== null) {
-    const levels = [...(m[3] || '').matchAll(/data-level="([^"]*)"/g)].map(v => v[1]);
-    out[m[2]] = { level: levels[0] || null, duplicates: levels.length > 1,
+  /* READ through the shared reader; the WRITE position below keeps CARD_HEAD.
+     That split is deliberate rather than discovered (see #125): a bug in the
+     stamping path would silently rewrite 232 cards, so it moves on its own.
+     Duplicate detection is kept and is now STRONGER -- it counts occurrences in
+     a properly bounded opening tag, where CARD_HEAD's `([^>]*)` tail stopped at
+     the first `>` and could miss a duplicate past it, which is exactly how a `>`
+     in data-review-note produced two data-level attributes in the first place. */
+  const read = cardReader.readCards(html);
+  if (read.hrefless.length) {
+    console.error(cardReader.hreflessLine(read.hrefless));
+    process.exit(1);
+  }
+  for (const card of read.cards) {
+    const levels = [...card.tag.matchAll(/data-level="([^"]*)"/g)].map((v) => v[1]);
+    out[card.slug] = { level: levels[0] || null, duplicates: levels.length > 1,
       conflicts: new Set(levels).size > 1 };
   }
   return out;

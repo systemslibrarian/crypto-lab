@@ -30,6 +30,7 @@
  *   `slug` in flight               demo being built now
  */
 'use strict';
+const cardReader = require('./card-reader.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -49,11 +50,17 @@ const decode = (s) =>
 // Card titles, exactly as readme-sync.js reads them.
 function cardTitles() {
   const html = fs.readFileSync(HTML_PATH, 'utf8');
-  const titles = [];
-  const re = /class="(?:feature|project)-title">([^<]+)</g;
-  let m;
-  while ((m = re.exec(html)) !== null) titles.push(decode(m[1].trim()));
-  return titles;
+  /* Titles OF CARDS, via the shared reader. This used to scan the whole page for
+     `class="project-title">` with no anchor scope at all, which is the #123
+     shape -- `fleet-sync` counting any github.io URL in the page rather than a
+     card, and printing 225 where three other readers said 224. It agreed with
+     the others today only because no project-title lives outside a card. */
+  const read = cardReader.readCards(html);
+  if (read.hrefless.length) {
+    console.error(cardReader.hreflessLine(read.hrefless));
+    process.exit(1);
+  }
+  return read.cards.map((c) => decode(c.title));
 }
 
 /*

@@ -69,7 +69,9 @@ test('freshness check catches an actual stale saved snapshot', t => {
   const dir=fixture(t);
   fs.mkdirSync(path.join(dir,'tools'));
   fs.mkdirSync(path.join(dir,'knowledge-map'));
-  for (const file of ['knowledge-map-sync.js','concept-sync.js']) fs.copyFileSync(path.join(ROOT,'tools',file),path.join(dir,'tools',file));
+  /* card-reader.js is the shared card matcher concept-sync.js imports (#125);
+     a fixture that copies a fixed tool list has to copy its dependencies too. */
+  for (const file of ['knowledge-map-sync.js','concept-sync.js','card-reader.js']) fs.copyFileSync(path.join(ROOT,'tools',file),path.join(dir,'tools',file));
   fs.writeFileSync(path.join(dir,'knowledge-map/catalog.json'),JSON.stringify(build(dir),null,2)+'\n');
   let p=spawnSync(process.execPath,[path.join(dir,'tools/knowledge-map-sync.js'),'check'],{encoding:'utf8'});
   assert.equal(p.status,0,p.stderr);

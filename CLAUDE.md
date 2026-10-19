@@ -1041,6 +1041,72 @@ exactly the one most likely to be inherited without checking.
 
 ---
 
+## The learning games (`games/`)
+
+`games/` holds eight browser games reached from one nav entry, "Learn through
+play". They are **deliberately not exhibits**: the one lab presented as a game
+carries `data-format="learning-game"`, is hidden from the grid, and is excluded
+from the published exhibit count, so the hero figure a visitor reads is the
+number of cards the grid actually shows. Games appear in no derived catalog view
+— no `CATALOG.md` row, no corpus entry, no `concept-coverage.md` line, no
+knowledge-map node — and that is on purpose: `concept-coverage.md` answers "what
+cryptography is not covered yet", a question about LABS that eight games would
+corrupt rather than inform.
+
+**The substance is real and was measured rather than assumed.** `Math.random`
+appears nowhere under `games/`; `shared/crypto.mjs` uses WebCrypto SHA-256 and
+`getRandomValues`, throws rather than falling back, and rejection-samples in both
+`secureIndex` and `shuffle` to avoid modulo bias. Checked empirically on
+2026-10-18: `secureIndex` uniform over 60,000 draws (chi-squared 3.69, df 5,
+0.1% critical 20.5), `shuffle` per-card position uniform (worst 8.77, df 4,
+critical 18.5), deterministic per seed. Shamir is over GF(17) with a real modular
+inverse, and `possibleSecrets` returns every field element below threshold, which
+is the information-theoretic point made playable. Nothing is console-cheatable:
+every game loads `type="module"`, so top-level state is module-scoped.
+
+**What was NOT real was the claim discipline, because nothing was checking it.**
+Four sentences shown to players were false of the code behind them: `mental-poker`
+told every winner "Both seeds matched their earlier commitments" while only one
+seal was checked, and instructed a comparison of revealed values it never
+rendered; `coin-flip-challenge` claimed "both parties' verified bits are XORed"
+over a one-sided implementation, and said "Your opponent is across the internet"
+on a page whose own CSP is `connect-src 'none'`. All four were fixed in #218 by
+making the code true rather than weakening the copy, since each claim was about
+the thing the game exists to teach.
+
+**They survived because `games/` was the only published surface with no checker
+of its own** — `evidence/` has one, `teach/` has four, `knowledge-map/` has two,
+`index.html` has seven. That gap is closed by `node tools/games-sync.js check`,
+and the decision not to close it the other two ways is worth keeping:
+
+- **Not by carding the games.** That would push them into the exhibit count,
+  `CATALOG.md`, the corpus and the gap list, against the explicit intent above.
+- **Not by an exemption.** The sentence would have to read "the arcade is
+  deliberately outside the honesty apparatus", which inverts every other
+  decision in this file.
+
+Four of its checks FAIL and one REPORTS, and the split is the same one
+`catalog-sync chips` already makes. The four are derivable from the page itself —
+the arcade's closing honesty ledger names every game it presents, no copy asserts
+a remote party the page's own CSP forbids, every arcade-linked entry page bridges
+into an exhibit, and every page stamps `data-theme` (the surface `theme-sync`
+structurally cannot see, since it reads sibling `crypto-lab-*` clones). Each was
+verified green across all 11 pages before becoming a gate, so it did not redden
+CI on arrival. The title check only reports: it is as good as its own list of
+construction names, and every name the list misses would accuse a game unjustly.
+It currently flags one, **"Mental Poker: Shuffle Showdown"** — a title naming SRA
+commutative encryption that the source does not contain.
+
+Two of its own bugs are worth not reintroducing. It paired each arcade heading
+with **the next card's link**, because the anchor wraps the card, so it named
+`coin-flip-challenge` as the game titled "Mental Poker" — a finding about the
+wrong subject, produced by a checker written to prevent exactly that. And the
+bridge check first required the literal phrase "Where this leads", which failed
+`secret-council/chapters.html` for sending a reader to `crypto-lab-shamir-gate`
+under a different heading; it asserts the property now. A page with no CSP is
+reported **NO-CSP** rather than counted clean, and `games-sync.js selftest` runs
+in CI ahead of `check` so a gate that stopped biting cannot pass as a clean one.
+
 ## The teaching layer (`teach/`)
 
 `teach/_src/` holds the sources — one JSON per module, one Markdown worksheet per exhibit —

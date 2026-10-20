@@ -49,7 +49,7 @@ test('modern reading path filters exact chapters, restores progress and keeps th
   await page.locator('#search').fill('chapter 12');assert.equal(await page.locator('.chapter:visible').count(),1);assert.equal(await page.locator('#chapter-12').isVisible(),true);
   await page.locator('#clear').click();await page.locator('#part').selectOption('Symmetric cryptography');assert.equal(await page.locator('.chapter:visible').count(),6);
   await page.locator('#coverage').selectOption('intro');assert.equal(await page.locator('.chapter:visible').count(),1);assert.equal(await page.locator('#chapter-8').isVisible(),true);
-  await page.locator('.cards a[href="#chapter-2"]').click();assert.equal(await page.locator('#chapter-2').isVisible(),true);assert.equal(await page.locator('.chapter:visible').count(),15);
+  await page.locator('#clear').click();assert.equal(await page.locator('#chapter-2').isVisible(),true);assert.equal(await page.locator('.chapter:visible').count(),15);
   await page.locator('#chapter-2 input').check();await contains(page,'progress','1 of 15');await page.reload();assert.equal(await page.locator('#chapter-2 input').isChecked(),true);
   await page.goto(origin+'/learn/applied-cryptography/');assert.equal(await page.locator('#chapter-2 input').isChecked(),false);await page.locator('#chapter-4 input').check();
   await page.goto(origin+'/learn/modern-cryptography/');assert.equal(await page.locator('#chapter-2 input').isChecked(),true);assert.equal(await page.locator('#chapter-4 input').isChecked(),false);

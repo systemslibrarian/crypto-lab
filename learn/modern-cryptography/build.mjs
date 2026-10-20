@@ -53,6 +53,7 @@ const html = `<!doctype html>
 <meta name="description" content="An independent companion to Katz and Lindell’s Introduction to Modern Cryptography: 15 chapter connections, original experiments, security questions and explicit coverage limits.">
 <link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/learn/modern-cryptography/">
 <link rel="stylesheet" href="../shared/workshop.css">
+<link rel="stylesheet" href="../shared/reading-path.css">
 <link rel="stylesheet" href="path.css">
 <script type="module" src="app.mjs"></script>
 </head>
@@ -60,33 +61,11 @@ const html = `<!doctype html>
 <a class="skip-link" href="#main">Skip to reading path</a>
 <div class="shell">
 <nav class="topbar" aria-label="Primary"><a class="brand" href="../../">CRYPTO LAB</a><a href="../applied-cryptography/">Applied Cryptography path</a><a href="../../teach/">For educators</a></nav>
-<main id="main">
-<header class="hero">
-<p class="eyebrow">A book beside a browser · Independent reading companion</p>
-<h1>Read the definition.<br>Test the claim.</h1>
-<p class="lede">Explore Jonathan Katz and Yehuda Lindell’s <em>Introduction to Modern Cryptography</em>, third edition and revised third edition, through Crypto Lab’s experiments.</p>
-<p>Ask what the adversary can do, make a prediction, then change one assumption. Use what happens to explain the security claim in your own words.</p>
-<p class="reading-loop">Read → predict → experiment → explain</p>
-<p class="small">Independent and unaffiliated with the authors or publisher. The practice prompts are original; no textbook passages or exercises are reproduced. Chapter connections were reviewed on 20 October 2026. Experiments illustrate security ideas; they do not replace proofs.</p>
+<main id="main" class="reading-path">
+<header class="reading-header">
+<h1>Introduction to Modern Cryptography</h1>
+<p>Jonathan Katz &amp; Yehuda Lindell · Third edition / revised third edition · 15 chapters</p>
 </header>
-
-<section class="panel" aria-labelledby="start-title">
-<h2 id="start-title">Choose a first experiment</h2>
-<div class="cards">
-<a class="panel card-link" href="#chapter-2"><p class="eyebrow">Chapter 2 · Perfect secrecy</p><h3>What changes when a pad is reused?</h3><p>Use OTP Vault to connect an observable failure with the assumptions behind the one-time pad.</p></a>
-<a class="panel card-link" href="#chapter-3"><p class="eyebrow">Chapter 3 · Security games</p><h3>What can the attacker distinguish?</h3><p>Use Hidden Bit to examine the experiment that gives an encryption claim its meaning.</p></a>
-<a class="panel card-link" href="#chapter-5"><p class="eyebrow">Chapter 5 · Active attacks</p><h3>What does a decryption error reveal?</h3><p>Explore an oracle attack, then compare the goal of authenticated encryption.</p></a>
-</div>
-</section>
-
-<section class="panel" aria-labelledby="coverage-title">
-<h2 id="coverage-title">Read the connection, then its boundary</h2>
-<p><span class="badge direct">Direct coverage</span> A lab addresses a selected concept in that chapter. The label does not promise complete chapter coverage.</p>
-<p><span class="badge modern">Modern counterpart</span> A different practical construction or a later standard explores a related idea. Read the lab note for how it differs from the book’s example.</p>
-<p><span class="badge intro">Introductory coverage</span> A partial bridge or intuition builder. Formal definitions, reductions and unimplemented constructions remain reading work.</p>
-<p>Each lab has its own label. The chapter label describes the overall connection; the coverage filter uses that chapter label.</p>
-<ul class="book-outline"><li><strong>1–2:</strong> Foundations</li><li><strong>3–8:</strong> Symmetric cryptography</li><li><strong>9–15:</strong> Public-key cryptography</li></ul>
-</section>
 
 <section aria-labelledby="browse-title">
 <h2 id="browse-title">Find your chapter</h2>
@@ -98,10 +77,24 @@ const html = `<!doctype html>
 </div>
 <div class="controls"><button class="secondary" id="clear">Clear filters</button><button class="secondary" id="clear-progress">Reset reading progress</button></div>
 <p id="results" role="status" aria-live="polite">${chapters.length} chapter connections</p>
-<p class="small"><span id="progress" class="progress" role="status" aria-live="polite">0 of ${chapters.length} explored</span> · Optional checkmarks stay in this browser when local storage is available. They record exploration, not mastery, and are separate from the Applied Cryptography path.</p>
+<p class="small reading-progress"><span id="progress" class="progress" role="status" aria-live="polite">0 of ${chapters.length} explored</span> · This browser only.</p>
 </div>
 <div id="chapters">${chapterHtml}</div>
 <p id="empty" class="notice" hidden>No chapters match. Clear the filters or try a broader term.</p>
+</section>
+
+<section class="panel" aria-labelledby="coverage-title">
+<h2 id="coverage-title">About this reading path</h2>
+<p>Read a chapter, make a prediction, then change one assumption in an experiment. Use what happens to explain the security claim in your own words.</p>
+<p class="reading-loop">Read → predict → experiment → explain</p>
+<p class="small">Independent and unaffiliated with the authors or publisher. The practice prompts are original; no textbook passages or exercises are reproduced. Chapter connections were reviewed on 20 October 2026. Experiments illustrate security ideas; they do not replace proofs.</p>
+<p>Optional checkmarks record exploration, not mastery. They stay in this browser when local storage is available and are separate from the Applied Cryptography path.</p>
+<h3>What the coverage labels mean</h3>
+<p><span class="badge direct">Direct coverage</span> A lab addresses a selected concept in that chapter. The label does not promise complete chapter coverage.</p>
+<p><span class="badge modern">Modern counterpart</span> A different practical construction or a later standard explores a related idea. Read the lab note for how it differs from the book’s example.</p>
+<p><span class="badge intro">Introductory coverage</span> A partial bridge or intuition builder. Formal definitions, reductions and unimplemented constructions remain reading work.</p>
+<p>Each lab has its own label. The chapter label describes the overall connection; the coverage filter uses that chapter label.</p>
+<ul class="book-outline"><li><strong>1–2:</strong> Foundations</li><li><strong>3–8:</strong> Symmetric cryptography</li><li><strong>9–15:</strong> Public-key cryptography</li></ul>
 </section>
 
 <section class="panel sources" aria-labelledby="sources-title">

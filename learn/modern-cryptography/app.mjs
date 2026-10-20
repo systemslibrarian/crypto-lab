@@ -63,13 +63,6 @@ for (const box of boxes) {
 }
 $('clear-progress').addEventListener('click', () => { checked.clear(); save(); });
 
-// A chapter shortcut must still work after a filter has hidden its destination.
-for (const link of document.querySelectorAll('a[href^="#chapter-"]')) {
-  link.addEventListener('click', () => {
-    const target = document.getElementById(link.hash.slice(1));
-    if (target?.hidden) clearFilters();
-  });
-}
 $('reader-controls').hidden = false;
 progress();
 filter();

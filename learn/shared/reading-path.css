@@ -1,0 +1,8 @@
+.reading-header{padding:1.5rem 0 .5rem}
+.reading-header h1{font-size:clamp(1.65rem,3.5vw,2.5rem);line-height:1.15;letter-spacing:-.025em;margin:0 0 .5rem}
+.reading-header p{color:var(--text-dim);font-size:.95rem;margin:0}
+.reading-path #browse-title{font-size:1.35rem;margin:1rem 0 .4rem}
+.reading-path #results{margin:.6rem 0 .2rem}
+.reading-progress{margin:.2rem 0 1rem}
+@media(max-width:600px){.reading-header{padding:1rem 0 .3rem}.reading-path .filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.3rem .75rem}.reading-path .filters>div{min-width:0}.reading-path .filters>div:first-child{grid-column:1/-1}.reading-path .filters label{font-size:.88rem}.reading-path .filters select{font-size:.85rem}.reading-path .controls{gap:.5rem;margin:.75rem 0}.reading-path .controls button{font-size:.85rem;padding:.65rem .55rem;flex:1 1 0}}
+@media print{.reading-header{padding:1rem 0}.reading-header p{color:black}.reading-path .filters,.reading-path #results,.reading-progress{display:none}}

@@ -14,17 +14,25 @@ right and this line is stale.
 
 ---
 
-## 3. #31 — published test vectors, 16 of 18 rows left
+## 3. #31 — published test vectors, 15 of 18 rows left
 
 Each row is a published vector to **source, verify the provenance of, and wire
-into a different sibling repo**. Two are done: `pq-tls-handshake` and
-`tls-handshake`, both of which turned out to carry a real conformance bug rather
-than just a missing score.
+into a different sibling repo**.
 
-Next by score: **`time-lock-puzzle` (4/15, missing T I C H)** — NIST publishes
-AES and AES-GCM vectors for what it computes. Then the 5/15 group: `bb84`,
-`bike-vault`, `falcon-seal`, `ghost-commit`, `hawk`, `hqc-vault`, `kyberslash`,
-`lms-xmss`, `paillier-gate`, `spdz-forge`.
+Done: `pq-tls-handshake` and `tls-handshake` (both carried a real RFC 5869
+conformance bug — an absent salt threw instead of defaulting to HashLen zeros),
+and `time-lock-puzzle` (NIST CAVP SHA-256 and AES-256-GCM vectors into
+`aes.ts`, which had no test file at all; no bug found, the code was correct and
+merely unverified).
+
+Next, the 5/15 group: `bb84`, `bike-vault`, `falcon-seal`, `ghost-commit`,
+`hawk`, `hqc-vault`, `kyberslash`, `lms-xmss`, `paillier-gate`, `spdz-forge`.
+
+Two sources that worked and are worth reusing: NIST CAVP response files
+(`shabytetestvectors.zip`, `gcmtestvectors.zip` from csrc.nist.gov — pick the
+section whose parameters match what the lab actually does) and RFC text from
+rfc-editor.org, whose octet counts beside each value let you check the
+extraction.
 
 The rule that makes a row worth doing: **copy the bytes from the publication**,
 not from a library. A vector regenerated from `@noble` or WebCrypto agrees with

@@ -14,7 +14,7 @@ right and this line is stale.
 
 ---
 
-## 3. #31 — published test vectors, 15 of 18 rows left
+## 3. #31 — published test vectors, 13 of 18 rows left
 
 Each row is a published vector to **source, verify the provenance of, and wire
 into a different sibling repo**.
@@ -25,8 +25,23 @@ and `time-lock-puzzle` (NIST CAVP SHA-256 and AES-256-GCM vectors into
 `aes.ts`, which had no test file at all; no bug found, the code was correct and
 merely unverified).
 
-Next, the 5/15 group: `bb84`, `bike-vault`, `falcon-seal`, `ghost-commit`,
-`hawk`, `hqc-vault`, `kyberslash`, `lms-xmss`, `paillier-gate`, `spdz-forge`.
+Done since: `bb84` (its `encrypt.ts` had no test file and displays an authTag
+it never verified) and `bike-vault` (its F2[x] algebra was well covered; the
+SHA-256 and AES-GCM the KEM output passes through were not).
+
+Next, the rest of the 5/15 group: `falcon-seal`, `ghost-commit`, `hawk`,
+`hqc-vault`, `kyberslash`, `lms-xmss`, `paillier-gate`, `spdz-forge`.
+
+**The recurring shape, worth checking first in each:** the hand-rolled hard
+maths usually HAS tests, and the symmetric primitives it feeds — a SHA-256
+turning output into a key, an AES-GCM sealing step — usually do not. In three of
+four labs so far the untested module was the one that seals.
+
+**Assert the vector THROUGH the lab's own function, not against
+`crypto.subtle`.** In `bike-vault` the first version of the test called
+`subtle.digest` directly and a mutation switching the lab's digest to SHA-1 went
+uncaught, because the assertion was testing WebCrypto rather than the lab. Export
+the function if you must.
 
 Two sources that worked and are worth reusing: NIST CAVP response files
 (`shabytetestvectors.zip`, `gcmtestvectors.zip` from csrc.nist.gov — pick the

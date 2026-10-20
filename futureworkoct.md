@@ -288,25 +288,90 @@ so the ten pages without one are left alone rather than swept into a convention.
 
 ## 5. Standing hazards recorded in CLAUDE.md
 
-5a. **Product copy asserted in `e2e/gate.ts`.** A shared `boot()` runs before
-every test that imports it, so a copy edit fails all of them under an
-accessibility name — this is what hid a security correction in
-`crypto-lab-mceliece-gate` for three days. `CLAUDE.md` records **77 of 167**
-labs, surveyed 2026-09-29. **That number needs re-deriving before anyone acts:**
-my broader probe (`grep -lE 'toContainText|toHaveText' e2e/gate.ts`) counts
-**152**, but that also catches structural assertions, so the two are not
-measuring the same thing. Do not sweep all of them — each is a judgement about
-which assertions are structural and which are copy.
+5a. **RE-DERIVED 2026-10-20. The hazard count is 83, not 77 and not 152.**
 
-5b. **Legacy theme toggles.** `CLAUDE.md` records 82 labs that can build an
-older `#theme-toggle` and 35 where the handler is fully wired, suppressed only
-by one inline `display:none!important` rule. Deleting the dead toggle code is
-the real fix and is outstanding. Note `theme-sync check` currently reports no
-legacy-toggle debt section at all, so **that figure needs re-deriving too**
-before it is trusted either way.
+The two figures were measuring different things and neither was the hazard. What
+CLAUDE.md describes is prose asserted inside the SHARED SETUP helper — the
+`boot()` that runs before every test that imports it, so one copy edit fails them
+all under an accessibility name. Measured by parsing each `gate.ts`, matching
+exported setup-shaped functions by brace depth, and counting text assertions
+against a string literal of three or more words:
+
+| | |
+|---|---|
+| labs with an `e2e/gate.ts` | **184** (CLAUDE.md's 167 is stale) |
+| asserting prose anywhere in `gate.ts` | 132 |
+| **asserting prose inside the SETUP function — the hazard** | **83** |
+| total such assertions | 183 |
+| worst single lab | `dp-noise`, 7 |
+
+My earlier broad probe's **152** was `grep -lE 'toContainText|toHaveText'` — any
+text assertion anywhere in the file, including structural ones and ones outside
+setup. It is not this.
+
+**Validated against the known incident rather than trusted:**
+`crypto-lab-mceliece-gate`, the lab whose copy edit was reported as an
+accessibility failure for three days, is flagged with 3, and its first sample is
+`'Public key generated: 261,120 bytes.'` — exactly the shape that caused it. A
+measure that missed that lab would have been wrong whatever number it produced.
+
+CLAUDE.md's instruction stands and is unchanged: **do not sweep the 83.** Each is
+a judgement about which assertions are structural and which are copy. Move them
+when you next touch the lab.
+
+5b. **RE-DERIVED 2026-10-20, and the warning had gone SILENT — fixed.**
+
+`theme-sync`'s "Legacy toggle debt" section still existed in the code and printed
+nothing, while labs were demonstrably shipping suppressed, working toggles.
+
+**`crypto-lab-ascon` is the proof.** `src/main.ts:59` builds
+`<button id="theme-toggle">`, `:673` binds it, `:674` `applyTheme()` sets
+`data-theme` and writes `localStorage`, and `:680` attaches the click listener.
+Fully wired, held off the page by one CSS line, and reported by nothing.
+
+Two reasons it was missed, both in `FLIPS_THEME`:
+
+- it required the theme operation within **300 characters after** the click
+  listener, and ascon's are 600 lines apart;
+- it knew the function name `setTheme`, and this lab calls its function
+  `applyTheme`.
+
+Its 20 apparent matches were **all in `e2e/` specs** — the tests click the
+toggle, so the pattern matched the test rather than the lab. Scoped to non-test
+source it confirmed **zero**.
+
+**The fix follows the ELEMENT, not a distance:** bind an identifier from a
+theme-toggle lookup, find a click listener attached to that identifier, and
+require the same file to set the theme. Nothing depends on spacing or on what the
+handler is named. Rendering and wiring are now also asked of DIFFERENT files,
+because labs put the button in `index.html` and the handler in `src/` — testing
+wiring only where the markup sits confirmed 2; asking every file that references
+the toggle confirms 36.
+
+| | |
+|---|---|
+| build a legacy toggle in non-test source | **46** |
+| **confirmed wired** | **36** (CLAUDE.md recorded 35 by hand in August) |
+| wiring unconfirmed — reported as a floor, not as "dead" | 10 |
+
+Controls, all asserted: ascon confirmed; an element bound with no listener NOT
+confirmed; a listener on a different element NOT confirmed; and removing a
+suppression rule still fails the hard gate with exit 1. **Four looser variants
+were tried and rejected** — a 4000-character window gave 24, requiring a
+non-literal write gave 9, the element alone 46, any lab that builds one 49. A
+rule whose answer moves that much with its own threshold is not measuring the
+thing, so none was adopted and the residue is reported as unconfirmed rather than
+guessed at.
+
+A test-file exclusion was added for the DEBT question only:
+`crypto-lab-timing-oracle`'s `e2e/gate.ts:284` is a comment describing its dead
+button and `:295` a selector asserting it does not render — a test checking the
+invariant, counted as a breach of it. `toggleDrivers` still sweeps `e2e/` and
+must, for the opposite reason CLAUDE.md records.
+
+Deleting the dead toggle code remains the real fix, now with a trustworthy count
+of what there is to delete.
 Check: `node tools/theme-sync.js check`
-
----
 
 ## 6. `protection-census` — scheduled, waiting on one command
 

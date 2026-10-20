@@ -1033,9 +1033,29 @@ body :is(#theme-toggle,#themeToggle,.theme-toggle,.theme-toggle-btn,[data-theme-
 Delete that line and the lab has a working, persisting toggle again — the precise
 failure the removal existed to end. Nothing checked it until 2026-08-19; a pass that
 tidied those inline `<style>` blocks would have resurrected 35 toggles silently and
-looked correct in every repo. `theme-sync.js` now **fails** if a lab can build a legacy
-toggle but no longer suppresses it, and lists the 35 wired ones under *"Legacy toggle
-debt"* as a non-failing warning. Deleting the dead toggle code is the real fix and is
+looked correct in every repo. `theme-sync.js` **fails** if a lab can build a legacy
+toggle but no longer suppresses it, and lists the wired ones under *"Legacy toggle
+debt"* as a non-failing warning.
+
+**That warning had gone SILENT, and was fixed on 2026-10-20.** The section existed and
+printed nothing while labs shipped suppressed, working toggles. `crypto-lab-ascon` is the
+proof: `src/main.ts:59` builds the button, `:673` binds it, `:674` `applyTheme()` sets
+`data-theme` and persists it, `:680` attaches the click listener. `FLIPS_THEME` missed it
+twice over — it required the theme operation within 300 characters AFTER the listener
+(ascon's are 600 lines apart) and it knew only the function name `setTheme`. Its 20
+apparent matches were all in `e2e/` specs, because the TESTS click the toggle; scoped to
+non-test source it confirmed zero.
+
+The fix follows the ELEMENT rather than a distance: bind an identifier from a
+theme-toggle lookup, find a click listener on that identifier, require the same file to
+set the theme. Rendering and wiring are asked of DIFFERENT files, since labs put the
+button in `index.html` and the handler in `src/` — asking only where the markup sits
+confirmed 2, asking every file that references the toggle confirms **36**, beside the 35
+counted by hand in August. **46 labs build one, 36 confirmed wired, 10 unconfirmed — and
+the unconfirmed are printed as a FLOOR, never as "dead".** Four looser variants were
+measured and rejected (4000-character window 24, non-literal write 9, element alone 46,
+any lab that builds one 49); a rule whose answer moves that much with its own threshold
+is not measuring the thing. Deleting the dead toggle code is the real fix and is
 still outstanding; until then, do not touch those `<style>` blocks casually.
 
 `[data-theme="light"]` blocks survive in most stylesheets as dead code. Nothing
@@ -1705,8 +1725,14 @@ STRUCTURE — the controls exist, the first branch is the one that ships, nothin
 subject. A setup helper is the worst place in the repo to put a sentence, because it is the
 place where the failure is furthest from its cause.
 
-**77 of the 167 labs with an `e2e/gate.ts` currently assert product copy in it** (surveyed
-2026-09-29), from one string to fifteen. That is a standing hazard rather than a bug list:
+**83 of the 184 labs with an `e2e/gate.ts` assert product copy inside its SETUP helper**
+(re-derived 2026-10-20; this read "77 of 167, surveyed 2026-09-29", and both numbers had
+moved). 132 assert prose somewhere in the file; the 83 are the ones where it sits in the
+shared `boot()`, which is the hazard — an assertion there fails every test that imports
+it. A broader probe counting any `toContainText`/`toHaveText` gives 152 and is NOT this
+measure; the three numbers answer three different questions. Validated against the
+incident rather than trusted: `crypto-lab-mceliece-gate` is flagged with 3, its first
+sample being `'Public key generated: 261,120 bytes.'`. That is a standing hazard rather than a bug list:
 every one of those labs will, on some future copy edit, report a red gate under a name that
 has nothing to do with what changed. Move the assertion when you next touch the lab; do not
 sweep all 77, because each is a judgement about which assertions are structural and which are

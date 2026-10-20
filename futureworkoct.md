@@ -14,12 +14,12 @@ right and this line is stale.
 
 ---
 
-## 3. #31 — published test vectors, 10 of 18 rows done
+## 3. #31 — published test vectors, 13 of 18 rows done
 
 **Two denominators here, and they are not the same — do not collapse them.** 18
 is the issue's row count. The seven labs this file has been naming as "next"
 were the rest of one GROUP inside it, not the rest of the 18, so finishing that
-group leaves **three named rows and five unnamed ones**. The heading said "12 of
+group is now FINISHED, leaving **five unnamed rows**. The heading said "12 of
 18 rows left" while listing seven; keeping both numbers visible is the point.
 
 Each row is a published vector to **source, verify the provenance of, and wire
@@ -67,12 +67,95 @@ copy of the formula is a differential, not a ground truth: it catches a typo in
 one copy and is blind to a misreading of the standard. The tell is that the
 reference expression and the implementation expression are the same shape.
 
-Next: `lms-xmss`, `paillier-gate`, `spdz-forge`.
+Done since: `lms-xmss`, and it carried **two real conformance bugs** — the
+second lab after the two TLS ones to do so. RFC 8554 Appendix F Test Case 1 went
+in, and its HSS layer failed it two ways: `encodeLmsPublicKey` prepended
+`u32(levelUsed)` to the child public key a parent signs, where Section 5.3
+defines that serialization with no prefix; and the signature's leading u32
+carried the active leaf-tree index where Sections 6.1/6.2 define Nspk, with a
+verifier that accepted any non-negative value. The LM-OTS and LMS layers were
+already correct — both LMS signatures in the vector verify through the lab's own
+`lmsVerify` unchanged.
 
-`lms-xmss` is surveyed and is the next one to do: no vitest and no unit test
-file at all — its `test` script is four `tsx src/gates/phase*.ts` runners — over
-`lmots.ts`, `lms.ts`, `hss.ts`. RFC 8554 publishes LMS/LM-OTS test vectors,
-which is the obvious source.
+**This row is the clearest evidence for why #31 exists, so the measurement is
+worth keeping.** With the first bug restored:
+
+| | |
+|---|---|
+| round-trip: keygen, sign, verify | **PASSES** — blind |
+| RFC 8554 Appendix F Test Case 1 | **REJECTS** — caught |
+| control, unmutated | round-trip passes, vector verifies |
+
+A lab's own round-trip cannot see a conformance bug its signer and verifier
+share. Nothing but the publication can.
+
+**It also found a gate line standing for nothing.** `phase2.ts` printed `PASS:
+RFC 8554 Appendix F LMS vector structure verified (HSS parsing in Phase 3)` with
+no assertion above it and no vector in the file — zero hex literals in
+`phase2.ts` against 41 in `phase1.ts`, whose LM-OTS vector is real — and its
+parenthesis sent a reader to Phase 3, which did not verify it either. **Worth
+grepping for in the remaining rows: a `logPass`/`console.log` naming a vector,
+with no hex and no assertion near it.**
+
+I swept the fleet for it and **the sweep does not license any claim about the
+fleet**, which is worth writing down rather than filing as "clean". It matched
+labs that PRINT pass lines — the `tsx src/gates/phase*.ts` style — and its whole
+denominator was **8 files**. Most labs use vitest, where the claim lives in a
+test NAME rather than a printed string, so they never entered the denominator at
+all. Within those 8 only `lms-xmss`'s two appeared, and they are the ones just
+fixed. The probe also false-positived on its own fix, because the hex now lives
+in an imported module and the import is multi-line, so a one-line
+`^import .*test-case` missed it.
+
+So the real version of this check is per-row and by hand: does a test that names
+a publication assert anything against bytes from it? Not a grep. Treat the empty
+fleet result as "this probe cannot see most labs", which is what it is.
+
+Done since: `paillier-gate` and `spdz-forge`. **Both looked like "no vector
+applies" and neither was.** Paillier has no published KAT (no RFC; ISO/IEC
+18033-6 is not freely available) and SPDZ is a paper — but in each case the
+vector belonged to the primitive FEEDING the hard maths:
+
+- `paillier-gate` authenticates ballots with HMAC-SHA-256, so RFC 4231's seven
+  vectors apply. All ten existing ballot tests went through `tagCiphertext` on
+  both sides. No bug.
+- `spdz-forge` commits with SHA-256 over `nonce || sigma` — the thing that makes
+  commit-then-open bind, its central exhibit — and had **no digest literal in
+  any of its six test files**. CAVP SHA-256 reaches it by splitting a published
+  message: leading bytes as the nonce, final 8 as sigma. No bug.
+
+`spdz-forge`'s KAT file is the one to copy from: it states its own limit first
+("SPDZ is a paper, not an RFC"), and its vectors are hand-derived from the
+published equations as literals. That IS ground truth, and it is why that row
+needed nothing on the protocol.
+
+**THE NAMED GROUP IS FINISHED.** Five unnamed rows of the 18 remain, and the
+issue's own ranking is stale — re-derive them with `node tools/depth-audit.js`
+and read `audits/DEPTH-AUDIT-<today>.md` before picking the next one.
+
+**Where the vector lives, after thirteen rows.** The hard maths almost always
+has tests; the primitive that seals, keys, tags or commits its output almost
+never does. In nine of thirteen the untested module was the symmetric one. Look
+there first, and when a lab has no obvious KAT, ask what standardized primitive
+its output passes through rather than concluding none applies.
+
+**Pin what the KEY carries, not just what the function computes.** In
+`paillier-gate` the exported `hmacSha256` takes a `CryptoKey`, so the hash lives
+in the key: the seven RFC vectors import their own key and stayed green when
+`generateBallotKey` was switched to SHA-1. One assertion on
+`key.algorithm.hash` is what noticed. A vector through a function parameterised
+by a key does not pin the key.
+
+**A misleading field name cost a bug inside the fix.** `maxLevels` was
+`1 << rootH` — the leaf-TREE count, 32 — and reads like RFC 8554's L, so the
+first Nspk fix wrote `maxLevels - 1` = 31 rather than 1. Renamed
+`leafTreeCount`, with one `HSS_LEVELS` both sides derive Nspk from.
+
+**Check an extraction against the publication's own octet counts.** Pulling hex
+runs of 8+ characters out of the RFC dropped the message's final line `2e0a` —
+160 bytes where Appendix F shows 162 — and the truncated message made the leaf
+signature fail to verify, reading exactly like a lab defect. The RFC's field
+definitions give an independent arithmetic check: 60, 162 and 2644 bytes.
 
 **Check what the GATE invokes, not just that it went green.** hqc-vault's build
 job ran `npm ci` → `npm run build` → `test:a11y` and never `npm test`, so the
@@ -88,8 +171,8 @@ that did not. The corrected probe excludes a following colon. Eight genuinely
 do; hqc-vault was the one outlier, because it had no test script to run.
 
 **Expect some rows to end in "no vector applies", and treat that as a result.**
-Of ten done: two carried a real conformance bug, six were correct but
-unverified, one cannot take a vector at all, and one was verified against a
+Of thirteen done: **three carried a real conformance bug**, eight were correct
+but unverified, one cannot take a vector at all, and one was verified against a
 transcription of its own formula — a fourth outcome worth expecting. Forcing one into the last case
 would mean adding an algorithm or asserting a framing mismatch as a defect.
 
@@ -145,18 +228,40 @@ Firefox/WebKit binaries that are not installed, which is an instrument limit
 rather than a lab finding.
 Check: `node tools/teach-issues.js`
 
-4d. **`games-sync` report: 1 unmarked construction title.** "Mental Poker:
-Shuffle Showdown" names SRA commutative encryption that the source does not
-contain. Either mark the title the way a chip is marked, or rename it.
-Check: `node tools/games-sync.js`
+4d and 4e are **DONE** (2026-10-20). `games-sync` now reports nothing across all
+11 pages — four gates and both reports clean.
 
-4e. **`games-sync`: 4 pages carry no CSP**, so the copy-versus-policy check
-cannot be asked of them (`merkle-mystery/chapters.html`,
-`quantum-courier/index.html`, `sealed-showdown/index.html`,
-`secret-council/index.html`). Adding `connect-src 'none'` to each would bring
-them under that gate.
+- The title is marked: **"Mental Poker, Simplified: Shuffle Showdown"**. The
+  game's body copy was accurate throughout; only the title borrowed the
+  construction name with no verb to qualify it. "Simplified" is a word from the
+  check's own vocabulary and is also true — hash commitments instead of
+  commutative encryption is a simplification of the classic construction.
+- The four CSP-less pages carry the policy the other seven do.
 
----
+**4e was not the one-line change it looks like, and the lesson is reusable.**
+Three of the four pages took the strict policy with no violation. The fourth,
+`merkle-mystery/chapters.html`, broke completely: `game.mjs` built every Merkle
+node with `style="left:…;top:…"` inside an `innerHTML` template, a style
+ATTRIBUTE is an inline style, `style-src 'self'` blocked all of them, the tree
+collapsed and all seven browser tests failed on a click the stacked root node
+intercepted. **The fix is not `'unsafe-inline'`** — positions are assigned
+through the CSSOM after insertion, which `style-src` does not govern.
+
+**The static check said it was safe, and three probes said the wrong thing
+before one said the right thing.** Worth copying the sequence:
+
+| probe | said | why it was wrong |
+|---|---|---|
+| grep for inline `<style>`, `<script>`, `on*`, `style=` | all clean | the attribute is written by JS at render time, not present in the file |
+| load the page, capture CSP violations | none | the styles are applied during PLAY, not on load |
+| `grep -c "^not ok"` on `node --test` | 0 failures, twice | node prints `✔`/`✖`, not TAP — it counted nothing and read as "fine" |
+| Playwright screenshot injection (the documented kyber-vault hazard) | the obvious suspect | the screenshot SUCCEEDS under the policy, and the other three pages screenshot too and pass |
+| every console error during a real interaction, diffed with / without / clean | **7 inline-style violations; 0/7, 7/0, 7/0** | this is the one that settled it |
+
+**Found incidentally and fixed:** `secret-council/index.html` carried
+`rel="canonical"` pointing at `/games/key-rush/` — its own page declaring itself
+a duplicate of a different game. It is the only canonical link under `games/`,
+so the ten pages without one are left alone rather than swept into a convention.
 
 ## 5. Standing hazards recorded in CLAUDE.md
 

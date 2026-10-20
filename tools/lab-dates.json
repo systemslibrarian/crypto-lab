@@ -734,10 +734,10 @@
   },
   "crypto-lab-lms-xmss": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-19T17:16:57Z",
-   "updatedFrom": "2026-08-15T21:19:51-04:00",
-   "updatedCommit": "2a856255f45b4515cbf78cb1f74d776fb1a2e08c"
+   "updatedFrom": "2026-10-20T08:42:15-04:00",
+   "updatedCommit": "16e81b1cb1fa2e2a1f551dc99deadeccdad1c1fc"
   },
   "crypto-lab-ntru-classic": {
    "added": "2026-04",
@@ -755,10 +755,10 @@
   },
   "crypto-lab-paillier-gate": {
    "added": "2026-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-19T00:40:40Z",
-   "updatedFrom": "2026-08-15T21:19:52-04:00",
-   "updatedCommit": "ab86b240da9aa550527d59608c4e2054068a737b"
+   "updatedFrom": "2026-10-20T08:50:24-04:00",
+   "updatedCommit": "1e102ca4d6b3cf32a759e3375efc11089f40663b"
   },
   "crypto-lab-pq-rotation": {
    "added": "2026-04",
@@ -1184,8 +1184,8 @@
    "added": "2026-07",
    "updated": "2026-10",
    "addedFrom": "2026-07-16T23:10:58Z",
-   "updatedFrom": "2026-10-19T08:58:43-04:00",
-   "updatedCommit": "65f66dafa86a059696d93eeff173cc5451d2b6c8"
+   "updatedFrom": "2026-10-20T08:55:16-04:00",
+   "updatedCommit": "d5d8b60211fa4842cd83ebab27699a9b097a9b10"
   },
   "crypto-lab-traitor-trace": {
    "added": "2026-07",

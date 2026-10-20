@@ -241,14 +241,42 @@ marker vocabulary lacks, 1 is marginal, 2 need one more read. Totals 23.
 The gate decision itself remains the maintainer's and nothing was switched on.
 Check: `node tools/catalog-sync.js chips`
 
-4b. **Corpus prose: 185 never-reviewed entries.** The chatbot's corpus text has
-never been checked against the lab it describes. Recorded as a backlog rather
-than back-dated.
-Check: `node tools/corpus-freshness.js`
+4b. **Re-measured 2026-10-20: 233 entries — 28 current, 20 stale, 185 never
+reviewed.** A genuine review backlog, not a defect, and it cannot be swept: each
+entry means reading a lab and confirming the prose describes it. The 20 STALE are
+the better place to start than the 185 — someone checked those and the lab moved
+underneath them.
 
-4c. **Teach layer: 43 unchecked, 4 unreadable.** The unreadable four are local
-Firefox/WebKit binaries that are not installed, which is an instrument limit
-rather than a lab finding.
+**One thing was checked and deliberately left alone.** `corpus-freshness` counts
+a README-only change as substantive, and a scheduled task rewrites these READMEs,
+so I expected that to be the `lab-dates` markdown problem again. It is not: the
+corpus prose is WRITTEN FROM the README (CLAUDE.md step 6 says "grounded in the
+demo's README"), so a rewritten README genuinely can invalidate prose derived
+from the old one. The scope is correct and is already written down in the tool's
+header.
+
+**And a near-miss worth recording.** Reviewing `tls-handshake`'s entry I read
+"TLS 1.3 (RFC 9846)" as an error, since TLS 1.3 is RFC 8446. **RFC 9846 is real**
+— July 2026, and it OBSOLETES 8446. The lab cites it 22 times and the entry
+agrees with the lab. One edit from correcting a correct citation, which is the
+`key-rush` shape already in the settled list below. Check the publication before
+correcting a citation, including when you are sure.
+Check: `node tools/corpus-freshness.js` (`--stale` for the 20, `--fetch` for an
+answer that does not depend on when you last pulled)
+
+4c. **Re-measured 2026-10-20: 43 UNCHECKED, and the 4 UNREADABLE are GONE.**
+
+The four were never a lab finding — they were local Firefox and WebKit binaries
+that were not installed, so the probe could not look. Installing them
+(`cd tools && npx playwright install firefox webkit`) turned all four into
+**MATCHES**: the claims are confirmed true in every engine, which is a stronger
+result than the backlog they were filed under. `symmetric/aes-modes`
+expected_observations[4][5][6] and `symmetric/nonce-collision`[8].
+
+The remaining **43 UNCHECKED** are real work and are honest about why: each needs
+a needle chosen from the live page and verified before it can become an automated
+probe, because an unverified needle reports a false failure. The report names the
+cadence per item. This is a judgement-per-item backlog, not a sweep.
 Check: `node tools/teach-issues.js`
 
 4d and 4e are **DONE** (2026-10-20). `games-sync` now reports nothing across all

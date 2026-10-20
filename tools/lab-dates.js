@@ -226,16 +226,59 @@ function derive() {
  *
  * A null date writes NO attribute and REMOVES one left by a previous run, so a
  * date can never outlive the fact it came from. */
-const CARD_HEAD = /(<a class="project-card[^"]*" data-category="[^"]*" href="https:\/\/systemslibrarian\.github\.io\/(crypto-lab-[a-z0-9-]+)\/")([^>]*)(>)/g;
+/* CARD_HEAD is GONE -- see stampTag() below. Note it matched `project-card` only, so a
+ * returning `feature-card` would have been carded by six tools and dated by none; the
+ * shared reader accepts both. */
+
+
+/* Rewrite one card's opening tag, keeping the position rule: the stamped attributes go
+ * AFTER the href, because readme-sync and catalog-sync both match
+ * `data-category="…" href="…"` adjacent and anything inserted between them takes
+ * catalog-sync to "0 cards".
+ *
+ * This replaces CARD_HEAD for the WRITE, closing the other half of #125. The READ moved
+ * to card-reader.js first and the write was deliberately left behind, because a bug in
+ * the stamping path silently rewrites every card. Both now share one definition of where
+ * a tag ENDS, and that is the whole point: CARD_HEAD's `([^>]*)` tail stopped at the
+ * first `>`, so a `>` inside a quoted attribute value — a review note saying `a > b` —
+ * ended the tag early, the writer stripped only the truncated part and re-inserted, and
+ * the card came out with TWO data-level attributes. That is on record as the eighth
+ * instance of "answering from a copy" in CLAUDE.md. It is now impossible here rather
+ * than guarded against downstream.
+ *
+ * Operates on the tag the shared reader bounded, so a `>` in an attribute value cannot
+ * truncate it, and rewrites back by offset. */
+function stampTag(tag, names, insert) {
+  const strip = new RegExp(`\\s+data-(?:${names.join('|')})="[^"]*"`, 'g');
+  const stripped = tag.replace(strip, '');
+  if (!insert) return stripped;
+  const href = /\shref="[^"]*"/.exec(stripped);
+  /* No href means the reader already reported it as CARD-HREFLESS and the caller exits
+     non-zero; append rather than guess at a position, and change nothing silently. */
+  if (!href) return stripped;
+  const at = href.index + href[0].length;
+  return `${stripped.slice(0, at)}${insert}${stripped.slice(at)}`;
+}
+
+/** Apply `rewrite(card)` to every card's opening tag, from the end so offsets hold. */
+function rewriteCards(html, cards, rewrite) {
+  let out = html;
+  for (let i = cards.length - 1; i >= 0; i -= 1) {
+    const card = cards[i];
+    const next = rewrite(card);
+    if (next === card.tag) continue;
+    out = out.slice(0, card.tagStart) + next + out.slice(card.tagEnd + 1);
+  }
+  return out;
+}
 
 function stamp(html, labs) {
-  return html.replace(CARD_HEAD, (whole, head, slug, tail, close) => {
-    const rec = labs[slug] || {};
+  const { cards } = cardReader.readCards(html);
+  return rewriteCards(html, cards, (card) => {
+    const rec = labs[card.slug] || {};
     const added = rec.added ? ` data-added="${rec.added}"` : '';
     const updated = rec.updated ? ` data-updated="${rec.updated}"` : '';
-    // Remove every occurrence, including attributes separated by other fields.
-    const clean = tail.replace(/\s+data-(?:added|updated)="[^"]*"/g, '');
-    return `${head}${added}${updated}${clean}${close}`;
+    return stampTag(card.tag, ['added', 'updated'], `${added}${updated}`);
   });
 }
 

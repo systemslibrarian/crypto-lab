@@ -14,12 +14,12 @@ right and this line is stale.
 
 ---
 
-## 3. #31 — published test vectors, 9 of 18 rows done
+## 3. #31 — published test vectors, 10 of 18 rows done
 
 **Two denominators here, and they are not the same — do not collapse them.** 18
 is the issue's row count. The seven labs this file has been naming as "next"
 were the rest of one GROUP inside it, not the rest of the 18, so finishing that
-group leaves **four named rows and five unnamed ones**. The heading said "12 of
+group leaves **three named rows and five unnamed ones**. The heading said "12 of
 18 rows left" while listing seven; keeping both numbers visible is the point.
 
 Each row is a published vector to **source, verify the provenance of, and wire
@@ -51,7 +51,28 @@ bit-order directions are asserted separately, because reversing writer and
 reader together still round-trips and a round-trip test cannot tell them apart.
 Correct but unverified; no bug.
 
-Next: `kyberslash`, `lms-xmss`, `paillier-gate`, `spdz-forge`.
+Done since: `kyberslash`, whose finding was a different shape — its hard maths
+HAD tests, and half of it was tested against a copy of itself. The two
+`reference*` helpers were labelled "Independent reference" and compute
+`floor(((x << d) + floor(q/2)) / q) & mask`, character for character what the
+implementation computes. Proven blind by putting the same wrong rounding
+constant in BOTH copies: the two "matches the reference" tests stayed green.
+`poly_tomsg` was fine — it carries ten hardcoded (coefficient, bit) pairs and
+caught the mutation — but `poly_compress` had no hardcoded value anywhere, under
+a describe block titled "known-answer vectors". FIPS 203 eq. 4.7 supplies the
+ground truth, asserted over the COMPLETE domain [0, q) at every bit width.
+
+**So check what a lab's "reference" actually IS before crediting it.** A second
+copy of the formula is a differential, not a ground truth: it catches a typo in
+one copy and is blind to a misreading of the standard. The tell is that the
+reference expression and the implementation expression are the same shape.
+
+Next: `lms-xmss`, `paillier-gate`, `spdz-forge`.
+
+`lms-xmss` is surveyed and is the next one to do: no vitest and no unit test
+file at all — its `test` script is four `tsx src/gates/phase*.ts` runners — over
+`lmots.ts`, `lms.ts`, `hss.ts`. RFC 8554 publishes LMS/LM-OTS test vectors,
+which is the obvious source.
 
 **Check what the GATE invokes, not just that it went green.** hqc-vault's build
 job ran `npm ci` → `npm run build` → `test:a11y` and never `npm test`, so the
@@ -67,8 +88,9 @@ that did not. The corrected probe excludes a following colon. Eight genuinely
 do; hqc-vault was the one outlier, because it had no test script to run.
 
 **Expect some rows to end in "no vector applies", and treat that as a result.**
-Of eight done: two carried a real conformance bug, five were correct but
-unverified, one cannot take a vector at all. Forcing one into the last case
+Of ten done: two carried a real conformance bug, six were correct but
+unverified, one cannot take a vector at all, and one was verified against a
+transcription of its own formula — a fourth outcome worth expecting. Forcing one into the last case
 would mean adding an algorithm or asserting a framing mismatch as a defect.
 
 **Choose the tampered byte deliberately.** In `falcon-seal` flipping the FINAL
@@ -198,10 +220,25 @@ bug in the stamping path would silently rewrite every card. `card-reader.js`
 already exposes `tagStart` / `tagEnd`, so the position is available when someone
 wants to finish it.
 
-Also cosmetic and known: running `level-sync` then `lab-dates` reorders
-`data-level` relative to `data-added`/`data-updated` versus the reverse order.
-Both orders are idempotent and no value changes, so it is harmless — but it
-means a regeneration can produce a large diff that carries no information.
+**The cosmetic half is SOLVED, and it was a run order rather than a bug.**
+`data-level` sits where the writer that ran LAST put it, and `main`'s order is
+the one `level-sync` produces. Measured 2026-10-20 on a real repin: running
+`catalog-evidence write` then `lab-dates` gave a **704-line** `index.html` diff;
+running `level-sync` afterwards collapsed it to **10 lines** — the four cards
+that had actually changed. Nothing else moved, and no value differed.
+
+So: **finish any card-stamping pass with `node tools/level-sync.js`.** No code
+change needed, and the write-position regexes stay separate.
+
+That matters more than tidiness. The 704-line version contained four real
+changes and 228 cards whose attributes only reordered, which is a diff nobody
+can review — and this repository's recurring failure is a real change hidden
+inside a plausible-looking one. The check that made it safe either way is worth
+reusing: compare cards by their attribute SET rather than by text, through
+`card-reader.js`, and print only the slugs whose values differ. CLAUDE.md
+already notes that card-by-card diffing caught a swept derivation once and calls
+that luck rather than a control; this is the same read, as a command.
+
 
 ---
 

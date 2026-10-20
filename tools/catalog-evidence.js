@@ -208,7 +208,21 @@ function movedSubstantively(dir, from, to) {
     const out = execFileSync('git', ['-C', dir, 'diff', '--name-only', `${from}..${to}`], {
       encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 32 * 1024 * 1024,
     });
-    return out.split('\n').filter(Boolean).some((f) => f === 'README.md' || f.startsWith('src/'))
+    /* NOT_THE_LAB, the same definition the scanner uses to decide what it reads. Two
+       answers to "what is this lab's source" in one file is how the second reader misses
+       what the first one learned — the card-reader and PAGES_PUBLISHERS lesson again,
+       and here both copies were twenty lines apart.
+
+       It mattered on 2026-10-20: crypto-lab-ghost-commit was reported STALE-REVIEW
+       because a #31 commit added `src/git/objects.independent.test.ts`. The reviewed
+       file, `src/git/objects.ts`, was byte-identical across the two commits — blob
+       57209b39 at both — so this asked a person to re-read a lab whose reviewed source
+       had not changed, which is the re-review queue with nothing in it that this file
+       has produced twice before. A test cannot change the derivation, because the
+       scanner never reads one. */
+    return out.split('\n').filter(Boolean)
+      .filter((f) => !NOT_THE_LAB.test(f))
+      .some((f) => f === 'README.md' || f.startsWith('src/'))
       ? 'moved' : 'not-moved';
   } catch {
     return hasCommit(dir, from) ? 'moved' : (isShallow(dir) ? 'unreadable' : 'moved');
@@ -1735,8 +1749,44 @@ function selftest() {
 
     fs.writeFileSync(path.join(tmp, 'README.md'), '# lab\n');
     git('add', 'README.md'); git('commit', '-qm', 'add readme');
-    if (movedSubstantively(tmp, afterSrc, git('rev-parse', 'HEAD').trim()) !== 'moved') fail.push('a README.md change was not called substantive');
+    const afterReadme = git('rev-parse', 'HEAD').trim();
+    if (movedSubstantively(tmp, afterSrc, afterReadme) !== 'moved') fail.push('a README.md change was not called substantive');
     else { pass++; console.log('  ok  a README.md change DOES invalidate a pin'); }
+
+    /* A TEST under src/ is not the lab, by NOT_THE_LAB — the same definition that keeps
+       the scanner from reading one. Both directions, because a rule that answered
+       'not-moved' for everything under src/ would be worse than the coarse one it
+       replaced: the next assertion is the control. */
+    fs.writeFileSync(path.join(tmp, 'src', 'main.test.ts'), "it('hashes', () => {})\n");
+    git('add', 'src/main.test.ts'); git('commit', '-qm', 'add a test');
+    const afterTest = git('rev-parse', 'HEAD').trim();
+    if (movedSubstantively(tmp, afterReadme, afterTest) !== 'not-moved') {
+      fail.push('a test-only commit under src/ was called substantive');
+    } else { pass++; console.log('  ok  a src/ TEST does NOT invalidate a pin'); }
+
+    fs.mkdirSync(path.join(tmp, 'e2e'), { recursive: true });
+    fs.writeFileSync(path.join(tmp, 'e2e', 'a11y.spec.ts'), "test('axe', () => {})\n");
+    git('add', 'e2e/a11y.spec.ts'); git('commit', '-qm', 'add a spec');
+    const afterSpec = git('rev-parse', 'HEAD').trim();
+    if (movedSubstantively(tmp, afterTest, afterSpec) !== 'not-moved') {
+      fail.push('an e2e-only commit was called substantive');
+    } else { pass++; console.log('  ok  an e2e spec does NOT invalidate a pin'); }
+
+    /* The control: implementation and test in ONE commit is still substantive. Without
+       this, a filter that dropped the whole commit on seeing any excluded file would
+       pass every assertion above and let a real source change escape review.
+
+       The body below must differ from every other write to this path in this function.
+       It first read `return 3`, which is byte-identical to the clone fixture's write
+       further down, so that fixture had nothing left to stage and died on `git commit`
+       — reporting "fixture could not be built" against a block 50 lines away from the
+       edit that caused it. These fixtures share one working tree. */
+    fs.writeFileSync(path.join(tmp, 'src', 'main.ts'), 'export function sha512() { return 41 }\n');
+    fs.writeFileSync(path.join(tmp, 'src', 'main.test.ts'), "it('hashes', () => { 1 })\n");
+    git('add', 'src/main.ts', 'src/main.test.ts'); git('commit', '-qm', 'change both');
+    if (movedSubstantively(tmp, afterSpec, git('rev-parse', 'HEAD').trim()) !== 'moved') {
+      fail.push('a commit touching implementation AND test was not called substantive');
+    } else { pass++; console.log('  ok  implementation + test in one commit DOES invalidate a pin'); }
 
     if (movedSubstantively(tmp, 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeef', 'HEAD') !== 'moved') {
       fail.push('an unreadable range was not treated as moved');

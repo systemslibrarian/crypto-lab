@@ -1,0 +1,16 @@
+.reading-loop{font-weight:700;color:var(--teal);letter-spacing:.02em}
+.chapter-reading{color:var(--text-hi);font-weight:650;margin:.3rem 0}
+.chapter-sections{margin:.3rem 0 1rem}
+.chapter-labs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;list-style:none;padding:0;margin:1.2rem 0}
+.chapter-labs li{padding:.9rem;border:1px solid var(--border);border-radius:8px;min-width:0}
+.chapter-labs a{font-weight:700;text-underline-offset:3px}
+.chapter-labs .badge{margin:.4rem 0 0;display:table}
+.chapter-labs p{font-size:.9rem;margin:.5rem 0 0}
+.chapter header>.badge{flex-shrink:0}
+.chapter footer{border:0;margin:1rem 0 0;padding:0}
+.book-outline{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;padding-left:1.2rem}
+.source-links{padding-left:1.2rem}
+.reflect{padding-left:1rem;border-left:2px solid var(--amber)}
+.source-links a,.chapter-labs a{overflow-wrap:anywhere}
+@media(max-width:600px){.chapter-labs{grid-template-columns:1fr}.chapter header>.badge{margin-top:.4rem}}
+@media print{.chapter-labs{display:block}.chapter-labs li{break-inside:avoid;margin:.6rem 0}.reading-loop,.chapter-reading{color:black}}

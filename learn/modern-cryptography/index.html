@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Introduction to Modern Cryptography Reading Path · Crypto Lab</title>
+<meta name="description" content="An independent companion to Katz and Lindell’s Introduction to Modern Cryptography: 15 chapter connections, original experiments, security questions and explicit coverage limits.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/learn/modern-cryptography/">
+<link rel="stylesheet" href="../shared/workshop.css">
+<link rel="stylesheet" href="path.css">
+<script type="module" src="app.mjs"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to reading path</a>
+<div class="shell">
+<nav class="topbar" aria-label="Primary"><a class="brand" href="../../">CRYPTO LAB</a><a href="../applied-cryptography/">Applied Cryptography path</a><a href="../../teach/">For educators</a></nav>
+<main id="main">
+<header class="hero">
+<p class="eyebrow">A book beside a browser · Independent reading companion</p>
+<h1>Read the definition.<br>Test the claim.</h1>
+<p class="lede">Explore Jonathan Katz and Yehuda Lindell’s <em>Introduction to Modern Cryptography</em>, third edition and revised third edition, through Crypto Lab’s experiments.</p>
+<p>Ask what the adversary can do, make a prediction, then change one assumption. Use what happens to explain the security claim in your own words.</p>
+<p class="reading-loop">Read → predict → experiment → explain</p>
+<p class="small">Independent and unaffiliated with the authors or publisher. The practice prompts are original; no textbook passages or exercises are reproduced. Chapter connections were reviewed on 20 October 2026. Experiments illustrate security ideas; they do not replace proofs.</p>
+</header>
+
+<section class="panel" aria-labelledby="start-title">
+<h2 id="start-title">Choose a first experiment</h2>
+<div class="cards">
+<a class="panel card-link" href="#chapter-2"><p class="eyebrow">Chapter 2 · Perfect secrecy</p><h3>What changes when a pad is reused?</h3><p>Use OTP Vault to connect an observable failure with the assumptions behind the one-time pad.</p></a>
+<a class="panel card-link" href="#chapter-3"><p class="eyebrow">Chapter 3 · Security games</p><h3>What can the attacker distinguish?</h3><p>Use Hidden Bit to examine the experiment that gives an encryption claim its meaning.</p></a>
+<a class="panel card-link" href="#chapter-5"><p class="eyebrow">Chapter 5 · Active attacks</p><h3>What does a decryption error reveal?</h3><p>Explore an oracle attack, then compare the goal of authenticated encryption.</p></a>
+</div>
+</section>
+
+<section class="panel" aria-labelledby="coverage-title">
+<h2 id="coverage-title">Read the connection, then its boundary</h2>
+<p><span class="badge direct">Direct coverage</span> A lab addresses a selected concept in that chapter. The label does not promise complete chapter coverage.</p>
+<p><span class="badge modern">Modern counterpart</span> A different practical construction or a later standard explores a related idea. Read the lab note for how it differs from the book’s example.</p>
+<p><span class="badge intro">Introductory coverage</span> A partial bridge or intuition builder. Formal definitions, reductions and unimplemented constructions remain reading work.</p>
+<p>Each lab has its own label. The chapter label describes the overall connection; the coverage filter uses that chapter label.</p>
+<ul class="book-outline"><li><strong>1–2:</strong> Foundations</li><li><strong>3–8:</strong> Symmetric cryptography</li><li><strong>9–15:</strong> Public-key cryptography</li></ul>
+</section>
+
+<section aria-labelledby="browse-title">
+<h2 id="browse-title">Find your chapter</h2>
+<div id="reader-controls" hidden>
+<div class="filters">
+<div><label for="search">Search topics or exhibits</label><input id="search" type="search" placeholder="Try: chapter 8, Hidden Bit, CPA, Paillier"></div>
+<div><label for="part">Book area</label><select id="part"><option value="all">All areas</option><option>Foundations</option><option>Symmetric cryptography</option><option>Public-key cryptography</option></select></div>
+<div><label for="coverage">Chapter coverage</label><select id="coverage"><option value="all">All coverage</option><option value="direct">Direct coverage</option><option value="modern">Modern counterpart</option><option value="intro">Introductory coverage</option></select></div>
+</div>
+<div class="controls"><button class="secondary" id="clear">Clear filters</button><button class="secondary" id="clear-progress">Reset reading progress</button></div>
+<p id="results" role="status" aria-live="polite">15 chapter connections</p>
+<p class="small"><span id="progress" class="progress" role="status" aria-live="polite">0 of 15 explored</span> · Optional checkmarks stay in this browser when local storage is available. They record exploration, not mastery, and are separate from the Applied Cryptography path.</p>
+</div>
+<div id="chapters"><article class="panel chapter" id="chapter-1" data-part="Foundations" data-coverage="direct" aria-labelledby="chapter-1-title">
+<header><div><p class="eyebrow">Chapter 1 · Foundations</p><h2 id="chapter-1-title">Decide what “secure” should mean</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Historical encryption and the modern security framework</p><p class="small chapter-sections">Reading pointers: 1.2–1.4</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-vigenere-break/">Vigenère Break</a><span class="badge direct">Direct coverage</span><p>Use frequency and repeated-pattern evidence to challenge a classical cipher.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge intro">Introductory coverage</span><p>Preview the challenger, adversary and success condition that later chapters make precise.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Use a supplied challenge encrypted under a short repeating key. Before opening Hidden Bit, write down what the attacker sees, what the attacker may do, and what would count as success.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why is “I cannot read this ciphertext” a weaker claim than a definition covering every efficient adversary?</p>
+<p><strong>Coverage boundary:</strong> The classical attack motivates formal definitions. A successful round trip or a ciphertext that looks scrambled establishes neither secrecy nor a proof.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="1" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-2" data-part="Foundations" data-coverage="direct" aria-labelledby="chapter-2-title">
+<header><div><p class="eyebrow">Chapter 2 · Foundations</p><h2 id="chapter-2-title">Find the assumptions behind perfect secrecy</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Perfect secrecy, one-time pads and their limits</p><p class="small chapter-sections">Reading pointers: 2.1–2.4</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-otp-vault/">OTP Vault</a><span class="badge direct">Direct coverage</span><p>Inspect XOR arithmetic, candidate-message keys and the two-time-pad attack.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-good-randomness/">Good Randomness</a><span class="badge intro">Introductory coverage</span><p>Separate a source of unpredictability from deterministic expansion and statistical appearance.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Keep a ciphertext fixed and derive keys for two different candidate messages of the same length. Then reuse a pad for two messages and inspect the ciphertext XOR.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which claim fails when the pad is reused? Which assumptions concern the key distribution rather than the XOR operation?</p>
+<p><strong>Coverage boundary:</strong> Perfect secrecy requires an independent, uniformly random secret pad of the required length, used only once. OTP Vault uses browser-generated bytes to demonstrate the arithmetic; it does not certify perfect physical randomness. The pad alone supplies no message authentication.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="2" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-3" data-part="Symmetric cryptography" data-coverage="direct" aria-labelledby="chapter-3-title">
+<header><div><p class="eyebrow">Chapter 3 · Symmetric cryptography</p><h2 id="chapter-3-title">Give the attacker an encryption oracle</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Computational secrecy, pseudorandomness and encryption modes</p><p class="small chapter-sections">Reading pointers: 3.1–3.6</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge direct">Direct coverage</span><p>Run IND-CPA experiments with supplied adversaries and compare their measured advantage.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a><span class="badge direct">Direct coverage</span><p>Compare repeated-block leakage and the role of IVs, counters and nonces.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-chacha20-stream/">ChaCha20 Stream</a><span class="badge direct">Direct coverage</span><p>Inspect generated keystream and the consequence of repeating a nonce with the same key.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> In Hidden Bit, compare re-encryption against deterministic encryption with randomized encryption. Then select the chained-IV CBC fixture and compare the weak adversaries with the IV predictor.</p>
+<p class="reflect"><strong>Explain the result:</strong> What changed in the adversary’s information or strategy? Why does a near-zero measured advantage for one strategy leave other attacks open?</p>
+<p><strong>Coverage boundary:</strong> These experiments address selected chosen-plaintext attacks and mode behavior. Finite trials do not prove computational indistinguishability. The EAV/CPA definitions, negligible functions and PRG/PRF-based reductions still require the reading.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="3" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-4" data-part="Symmetric cryptography" data-coverage="direct" aria-labelledby="chapter-4-title">
+<header><div><p class="eyebrow">Chapter 4 · Symmetric cryptography</p><h2 id="chapter-4-title">Try to make a changed message verify</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Authentication tags and forgery resistance</p><p class="small chapter-sections">Reading pointers: 4.1–4.6</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-mac-race/">MAC Race</a><span class="badge direct">Direct coverage</span><p>Compare HMAC, CMAC, Poly1305 and GHASH, including attacks on incorrect use.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-poly1305-mac/">Poly1305 MAC</a><span class="badge direct">Direct coverage</span><p>Step through polynomial authentication and examine one-time-key reuse.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Generate a tag, change the message and check verification. In Poly1305 MAC, reuse the one-time key and follow the resulting algebraic attack.</p>
+<p class="reflect"><strong>Explain the result:</strong> What must a forgery achieve beyond replaying a previously authenticated message? Why does a valid MAC reveal nothing by itself about confidentiality?</p>
+<p><strong>Coverage boundary:</strong> MAC Race’s CMAC is a related construction, not the chapter’s basic CBC-MAC verbatim. Domain-extension proofs, universal-hashing bounds and information-theoretic authentication are only partly illustrated. Key requirements differ between MAC families.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="4" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-5" data-part="Symmetric cryptography" data-coverage="direct" aria-labelledby="chapter-5-title">
+<header><div><p class="eyebrow">Chapter 5 · Symmetric cryptography</p><h2 id="chapter-5-title">Turn decryption feedback into an attack</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Chosen-ciphertext resistance and authenticated encryption</p><p class="small chapter-sections">Reading pointers: 5.1–5.4</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/">Padding Oracle</a><span class="badge direct">Direct coverage</span><p>Recover plaintext through a concrete CBC padding-validity oracle.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-protocol-compose/">Protocol Compose</a><span class="badge direct">Direct coverage</span><p>Compare encrypt-then-MAC, MAC-then-encrypt, encrypt-and-MAC and authenticated encryption.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a><span class="badge direct">Direct coverage</span><p>Observe authenticated decryption rejecting tampered ciphertext.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-nonce-guard/">Nonce Guard</a><span class="badge modern">Modern counterpart</span><p>Extend the discussion to misuse resistance by comparing GCM and GCM-SIV.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Recover bytes in Padding Oracle. Next run Protocol Compose’s padding-oracle panel with MAC-then-encrypt, then encrypt-then-MAC. Identify whether authentication happens before decryption and how that changes the result.</p>
+<p class="reflect"><strong>Explain the result:</strong> What information does the oracle reveal? Which assumptions make the generic construction secure, and which implementation choices can violate them?</p>
+<p><strong>Coverage boundary:</strong> A demonstrated implementation attack is evidence of a failure under its stated conditions. It is not a proof about every implementation of that composition. Authentication, nonce requirements and session replay handling remain distinct obligations.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="5" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-6" data-part="Symmetric cryptography" data-coverage="direct" aria-labelledby="chapter-6-title">
+<header><div><p class="eyebrow">Chapter 6 · Symmetric cryptography</p><h2 id="chapter-6-title">Name the hash property you actually need</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Hash security, domain extension and applications</p><p class="small chapter-sections">Reading pointers: 6.1–6.6</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/">Hash Zoo</a><span class="badge direct">Direct coverage</span><p>Inspect Merkle–Damgård, sponge and tree structures with actual hash computations.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-collision-vault/">Collision Vault</a><span class="badge direct">Direct coverage</span><p>Verify collision examples and distinguish equal digests from recovering an original message.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-merkle-vault/">Merkle Vault</a><span class="badge direct">Direct coverage</span><p>Build inclusion proofs and test a changed leaf against the expected root.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-commit-gate/">Commit Gate</a><span class="badge direct">Direct coverage</span><p>Separate commitment hiding from binding and test an attempted altered opening.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-kdf-chain/">KDF Chain</a><span class="badge direct">Direct coverage</span><p>Compare password derivation with extracting and expanding existing key material.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Verify a collision pair, then change a leaf in Merkle Vault. For each experiment, state which object is fixed and which new object an attacker must produce.</p>
+<p class="reflect"><strong>Explain the result:</strong> How do a collision, a preimage and a second preimage differ? Why does a hash commitment need unpredictable opening randomness as well as an appropriate hash assumption?</p>
+<p><strong>Coverage boundary:</strong> A concrete hash is not literally an ideal random oracle, and an avalanche picture is not a collision-resistance proof. Consult the author errata when comparing hash properties: second-preimage resistance does not imply preimage resistance without additional conditions.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="6" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-7" data-part="Symmetric cryptography" data-coverage="direct" aria-labelledby="chapter-7-title">
+<header><div><p class="eyebrow">Chapter 7 · Symmetric cryptography</p><h2 id="chapter-7-title">Inspect the machinery inside the primitive</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Stream ciphers, block designs, cryptanalysis and hash internals</p><p class="small chapter-sections">Reading pointers: 7.1–7.3</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-lfsr-forge/">LFSR Forge</a><span class="badge direct">Direct coverage</span><p>Explore linear state evolution and why a linear generator alone is predictable.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-chacha20-stream/">ChaCha20 Stream</a><span class="badge direct">Direct coverage</span><p>Step through add–rotate–XOR operations and the generated stream.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-feistel-forge/">Feistel Forge</a><span class="badge direct">Direct coverage</span><p>Step real DES rounds and run a reduced-keyspace double-DES meet-in-the-middle attack.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-biham-lens/">Biham Lens</a><span class="badge direct">Direct coverage</span><p>Follow selected differential attacks at explicitly stated toy and FEAL parameters.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-matsui-line/">Matsui Line</a><span class="badge direct">Direct coverage</span><p>Investigate linear bias and the data an attack needs.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/">Hash Zoo</a><span class="badge direct">Direct coverage</span><p>Compare compression-based hashing with the sponge construction.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> In Feistel Forge, replace the round function with the supplied constant-output alternative and undo a round. Then compare invertibility with the statistical evidence shown by a differential or linear attack.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why can a Feistel network be invertible even when its round function is not? Why does invertibility alone say nothing about resistance to an attacker?</p>
+<p><strong>Coverage boundary:</strong> The links cover selected mechanisms, not every cipher or hash in the chapter. DES and reduced-parameter attacks are historical teaching examples. Trivium and a complete derivation of every practical construction are outside this route.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="7" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-8" data-part="Symmetric cryptography" data-coverage="intro" aria-labelledby="chapter-8-title">
+<header><div><p class="eyebrow">Chapter 8 · Symmetric cryptography</p><h2 id="chapter-8-title">Follow a reduction beyond the experiment</h2></div><span class="badge intro">Introductory coverage</span></header>
+<p class="chapter-reading">One-way functions, hard-core predicates and theoretical constructions</p><p class="small chapter-sections">Reading pointers: 8.1–8.8</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge intro">Introductory coverage</span><p>Use the PRP/PRF switching game and an ElGamal security reduction to DDH as bridges to formal reasoning.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-feistel-forge/">Feistel Forge</a><span class="badge intro">Introductory coverage</span><p>Review round reversibility before reading the distinct theorem about pseudorandom permutations.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> In Hidden Bit, vary the query count in the switching game and inspect the collision bound. Then trace what the live reduction forwards to its adversary and how it translates the answer.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which object is an assumption, which is a construction, and which is an adversary? What must a reduction preserve about runtime, query access and success probability?</p>
+<p><strong>Coverage boundary:</strong> Reading-led chapter. The linked labs do not implement the full one-way function → hard-core predicate → PRG → GGM PRF → strong PRP construction chain or its proofs. The DDH reduction is an analogy to the method; DES reversibility is not the Luby–Rackoff theorem.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="8" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-9" data-part="Public-key cryptography" data-coverage="direct" aria-labelledby="chapter-9-title">
+<header><div><p class="eyebrow">Chapter 9 · Public-key cryptography</p><h2 id="chapter-9-title">Separate arithmetic from a hardness assumption</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Modular arithmetic, finite groups and candidate hard problems</p><p class="small chapter-sections">Reading pointers: 9.1–9.4; Appendix B for algorithms</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/">Educational RSA</a><span class="badge direct">Direct coverage</span><p>Compute small RSA keys and modular exponentiation, then inspect weak-key factoring.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/">Point Arithmetic</a><span class="badge direct">Direct coverage</span><p>Carry out group addition and scalar multiplication over a finite field.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-curve-lens/">Curve Lens</a><span class="badge direct">Direct coverage</span><p>Connect curve arithmetic to concrete ECDH examples and parameter choices.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-elgamal-plain/">ElGamal Plain</a><span class="badge direct">Direct coverage</span><p>Inspect finite-group encryption and the discrete-log relation behind its keys.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Follow one small RSA encryption by hand, then use Point Arithmetic to build a scalar multiple through repeated additions. Identify the inverse problem an attacker would face in each setting.</p>
+<p class="reflect"><strong>Explain the result:</strong> How do factoring, RSA inversion, discrete logarithms, CDH and DDH ask different questions? Which implication would need a proof?</p>
+<p><strong>Coverage boundary:</strong> Small computations make the algebra inspectable; they do not establish hardness for production parameters. RSA inversion is not known in general to be equivalent to factoring, and discrete-log hardness alone does not establish DDH in every group.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="9" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-10" data-part="Public-key cryptography" data-coverage="direct" aria-labelledby="chapter-10-title">
+<header><div><p class="eyebrow">Chapter 10 · Public-key cryptography</p><h2 id="chapter-10-title">Measure how an attack uses structure</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Classical factoring and discrete-log algorithms</p><p class="small chapter-sections">Reading pointers: 10.1–10.4</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-factor-forge/">Factor Forge</a><span class="badge direct">Direct coverage</span><p>Run classical methods including Pollard rho, Pollard p−1 and the quadratic sieve.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-elgamal-plain/">ElGamal Plain</a><span class="badge direct">Direct coverage</span><p>Recover a toy discrete logarithm using baby-step/giant-step.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Compare Pollard p−1 with rho on the supplied factoring examples. Then run baby-step/giant-step in ElGamal Plain’s toy group and inspect the recovered key and reported operation count.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which feature of an instance helps each algorithm? Why can two instances of the same bit length have different observed attack costs?</p>
+<p><strong>Coverage boundary:</strong> Pohlig–Hellman and index calculus are not implemented by these connections. Factor Forge’s number-field-sieve material is a cost model. Browser-sized attacks and extrapolations do not demonstrate a break of full-size deployed keys.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="10" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-11" data-part="Public-key cryptography" data-coverage="direct" aria-labelledby="chapter-11-title">
+<header><div><p class="eyebrow">Chapter 11 · Public-key cryptography</p><h2 id="chapter-11-title">Agree on a key and identify the peer</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Key distribution, trusted centers and the public-key model</p><p class="small chapter-sections">Reading pointers: 11.1–11.4</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-kerberos/">Kerberos v5</a><span class="badge modern">Modern counterpart</span><p>Use a concrete ticket-based counterpart to the chapter’s key-distribution-center model.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-key-exchange/">Key Exchange</a><span class="badge direct">Direct coverage</span><p>Follow how two parties derive a shared secret over a public channel.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/">DH MITM</a><span class="badge direct">Direct coverage</span><p>Interpose an attacker in unauthenticated Diffie–Hellman.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-key-lifecycle/">Key Lifecycle</a><span class="badge modern">Modern counterpart</span><p>Extend the chapter’s management problem to rotation, compromise and recovery decisions.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Complete an honest key exchange, then let the middle party replace both public contributions. Compare what each endpoint believes with the secrets the attacker actually holds.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which authority is trusted in the key-distribution-center model? What additional mechanism must bind a public key to the intended peer?</p>
+<p><strong>Coverage boundary:</strong> Agreement on shared bits does not authenticate an identity. The Kerberos and lifecycle examples add practical context; neither is a complete organizational key-management system or a proof of the chapter’s models.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="11" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-12" data-part="Public-key cryptography" data-coverage="direct" aria-labelledby="chapter-12-title">
+<header><div><p class="eyebrow">Chapter 12 · Public-key cryptography</p><h2 id="chapter-12-title">Challenge public-key encryption after seeing the ciphertext</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Public-key security, hybrid encryption, ElGamal and RSA padding</p><p class="small chapter-sections">Reading pointers: 12.1–12.5</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge direct">Direct coverage</span><p>Use an adaptive IND-CCA2 oracle that rejects the exact challenge but permits other queries.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-elgamal-plain/">ElGamal Plain</a><span class="badge direct">Direct coverage</span><p>Examine probabilistic encryption and multiplicative malleability.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/">RSA Forge</a><span class="badge direct">Direct coverage</span><p>Compare textbook RSA, OAEP and a PKCS#1 v1.5 padding-oracle attack.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-iron-letter/">Iron Letter</a><span class="badge direct">Direct coverage</span><p>Connect ECIES/RSA-OAEP examples with the separation of public-key and symmetric encryption work.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Run Hidden Bit’s ElGamal CCA2 oracle game. Inspect the trace showing refusal of the exact challenge and the related-ciphertext query. Repeat with RSA-OAEP and compare the information returned.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why does forbidding only the exact challenge leave a malleable scheme vulnerable? Which assumptions belong to the KEM and which belong to the symmetric data-encryption component?</p>
+<p><strong>Coverage boundary:</strong> A rejected OAEP modification defeats that supplied attack; it does not prove CCA security. Hybrid encryption here means public-key protection combined with symmetric encryption, not a classical-plus-post-quantum combiner. The labs do not reproduce every construction or reduction in the chapter.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="12" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-13" data-part="Public-key cryptography" data-coverage="direct" aria-labelledby="chapter-13-title">
+<header><div><p class="eyebrow">Chapter 13 · Public-key cryptography</p><h2 id="chapter-13-title">Distinguish a valid signature from a trusted identity</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Signature security, certificates and authenticated sessions</p><p class="small chapter-sections">Reading pointers: 13.1–13.7</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge direct">Direct coverage</span><p>Compare chosen-message forgery with strong unforgeability and alternate ECDSA encodings.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/">RSA Forge</a><span class="badge direct">Direct coverage</span><p>Contrast algebraic textbook signatures with RSA-PSS.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-schnorr-forge/">Schnorr Forge</a><span class="badge modern">Modern counterpart</span><p>Explore BIP-340’s specific Schnorr instantiation and nonce-use requirements.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/">ECDSA Forge</a><span class="badge direct">Direct coverage</span><p>Sign, verify and investigate a reused signing nonce.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-pki-chain/">PKI Chain</a><span class="badge direct">Direct coverage</span><p>Follow certificate verification and the trust anchor it relies on.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/">TLS Handshake</a><span class="badge direct">Direct coverage</span><p>Connect signatures and certificates to an authenticated channel.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> In Hidden Bit, create the ECDSA alternate signature for an already signed message and compare the two forgery goals. Then trace a certificate chain back to the root the verifier trusts.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why is another valid signature on an old message different from signing a new message? What does verification establish about a person if the public key has no trusted binding?</p>
+<p><strong>Coverage boundary:</strong> Schnorr Forge uses BIP-340 rather than the book’s exact generic encoding. Signatures do not encrypt messages. Certificate and TLS walkthroughs illustrate selected checks; signcryption (§13.8) and complete protocol proofs are not covered by this route.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="13" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-14" data-part="Public-key cryptography" data-coverage="modern" aria-labelledby="chapter-14-title">
+<header><div><p class="eyebrow">Chapter 14 · Public-key cryptography</p><h2 id="chapter-14-title">Change the attacker’s computational model</h2></div><span class="badge modern">Modern counterpart</span></header>
+<p class="chapter-reading">Quantum threats and post-quantum encryption and signatures</p><p class="small chapter-sections">Reading pointers: 14.1–14.4</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-grover/">Grover</a><span class="badge direct">Direct coverage</span><p>Explore quantum search and distinguish query counts from practical attack time.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-shor/">Shor</a><span class="badge direct">Direct coverage</span><p>Follow small period-finding and factoring examples in a classical simulation.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-frodo-vault/">Frodo Vault</a><span class="badge modern">Modern counterpart</span><p>Bridge the chapter’s LWE ideas to a practical KEM, keeping toy noise experiments distinct from real parameters.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-lms-ledger/">LMS Ledger</a><span class="badge modern">Modern counterpart</span><p>Explore one-time chains and signature trees in a teaching adaptation with explicit state limits.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/">Kyber Vault</a><span class="badge modern">Modern counterpart</span><p>Continue beyond the text’s examples to standardized ML-KEM.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/">Dilithium Seal</a><span class="badge modern">Modern counterpart</span><p>Continue beyond the text’s examples to standardized ML-DSA.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Compare Grover’s search behavior with Shor’s period-finding route. Then inspect the one-time signing-state experiment in LMS Ledger before comparing a lattice-based signature.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why are symmetric-key search and public-key factorization different migration problems? What state must a tree-based one-time signature scheme protect?</p>
+<p><strong>Coverage boundary:</strong> The quantum demos run on classical hardware. The final ML-KEM and ML-DSA standards are follow-on connections, not claimed textbook implementations. LMS Ledger’s small-tree/HSS teaching adaptation is not interoperable HSS. The chapter’s Lamport proofs and quantum collision analysis still need the reading.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="14" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-15" data-part="Public-key cryptography" data-coverage="direct" aria-labelledby="chapter-15-title">
+<header><div><p class="eyebrow">Chapter 15 · Public-key cryptography</p><h2 id="chapter-15-title">Compute on ciphertexts and distribute decryption</h2></div><span class="badge direct">Direct coverage</span></header>
+<p class="chapter-reading">Homomorphic encryption, secret sharing and threshold methods</p><p class="small chapter-sections">Reading pointers: 15.2–15.3; read 15.1, 15.4–15.5 for remaining constructions</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-paillier-gate/">Paillier Gate</a><span class="badge direct">Direct coverage</span><p>Multiply ciphertexts to add plaintexts; inspect rerandomization and modulo wraparound.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-shamir-gate/">Shamir Gate</a><span class="badge direct">Direct coverage</span><p>Reconstruct a shared secret from a qualified subset.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-vss-gate/">VSS Gate</a><span class="badge direct">Direct coverage</span><p>Check shares and explore hiding versus binding, including the deliberately knowable generator relation.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/">Threshold Decrypt</a><span class="badge direct">Direct coverage</span><p>Validate selected partial decryptions before combining them in a local ElGamal/AES-GCM demonstration.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Add two encrypted values in Paillier Gate and verify the decrypted total. In Threshold Decrypt, generate a key, ciphertext and partial decryptions. Try recovery with too few parties. Then inject a cheating partial, select enough parties including the modified one, and attempt recovery again.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why can homomorphic malleability be useful for computation yet dangerous for integrity? How does reconstructing a secret differ from decrypting without rebuilding the whole private key?</p>
+<p><strong>Coverage boundary:</strong> Goldwasser–Micali, Rabin and the generic trapdoor-permutation construction remain reading-only gaps. VSS Gate deliberately exposes a generator relation that defeats Pedersen binding. All threshold parties share one browser; these labs do not establish distributed-system or election security.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="15" disabled> I explored this chapter’s connections</label>
+</article></div>
+<p id="empty" class="notice" hidden>No chapters match. Clear the filters or try a broader term.</p>
+</section>
+
+<section class="panel sources" aria-labelledby="sources-title">
+<h2 id="sources-title">Read with the authors’ sources beside you</h2>
+<ul class="source-links">
+<li><a href="https://www.cs.umd.edu/~jkatz/imc.html">Jonathan Katz’s official book page</a></li>
+<li><a href="https://www.cs.umd.edu/~jkatz/imc/toc-preface-3rd.pdf">Official third-edition contents and preface</a></li>
+<li><a href="https://www.cs.umd.edu/~jkatz/imc/errata-3rd.pdf">Authors’ third-edition errata</a></li>
+<li><a href="https://www.routledge.com/Introduction-to-Modern-Cryptography-Revised-Third-Edition/Katz-Lindell/p/book/9781032496795">Publisher’s revised third edition</a></li>
+</ul>
+<p><strong>Edition note:</strong> Reading pointers follow the author-hosted third-edition contents. The revised edition’s publisher listing keeps the same 15-chapter outline. Chapter 14 is headed “Post-Quantum Cryptography” in the author’s contents and “Quantum-Secure Cryptography” in the publisher’s list. Match the topics to your copy’s headings; this companion makes no claim about revised-edition page numbers.</p>
+<p>Follow each exhibit’s own sources and implementation limits. Statistical success, a failed attack attempt or a successful encryption round trip cannot establish a security proof.</p>
+<p>For a different route through protocols and historical constructions, use the <a href="../applied-cryptography/">Applied Cryptography reading path</a>. General zero-knowledge and multiparty-computation exhibits are further exploration in the <a href="../../">full catalog</a>; they are not presented as numbered chapters of this book.</p>
+</section>
+<noscript><p class="notice">All 15 chapter connections and lab links are available without JavaScript. Filtering and reading-progress checkmarks require JavaScript.</p></noscript>
+</main>
+<footer><a href="../../">Explore the full catalog</a> · <a href="https://github.com/systemslibrarian/crypto-lab/tree/main/learn/modern-cryptography">Source and teaching boundaries</a><p>So whether you eat or drink or whatever you do, do it all for the glory of God. — 1 Corinthians 10:31</p></footer>
+</div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 These pages live in the hub and deploy with its existing GitHub Pages site. They
 do not require new repositories or add standalone cards to the catalog count.
 
-## Reading path
+## Applied Cryptography reading path
 
 `applied-cryptography/chapters.mjs` contains original exercises and connections to
 all 25 chapters of Bruce Schneier's *Applied Cryptography*, second edition.
@@ -19,6 +19,77 @@ node learn/applied-cryptography/build.mjs --check
 Coverage labels describe selected connections, never complete chapter coverage.
 The path is independent, unaffiliated, and does not reproduce book passages.
 Checkmarks are optional localStorage data and measure exploration, not mastery.
+
+## Introduction to Modern Cryptography reading path
+
+`modern-cryptography/chapters.mjs` supplies 15 original chapter activities for
+Jonathan Katz and Yehuda Lindell’s third-edition structure. Chapters 1–2 form
+the foundations, 3–8 symmetric cryptography, and 9–15 public-key cryptography.
+The generated page has static links, chapter/area/coverage filtering, separate
+per-lab connection labels, reflection questions and explicit coverage limits.
+Its independent progress key is `crypto-lab-modern-cryptography-progress-v1`.
+
+```sh
+node learn/modern-cryptography/build.mjs
+node learn/modern-cryptography/build.mjs --check
+```
+
+### Sources and edition boundary — reviewed 20 October 2026
+
+- [Katz’s official book page](https://www.cs.umd.edu/~jkatz/imc.html) identifies
+  the authors, third edition, intended scope, contents and errata.
+- [Author-hosted contents and preface](https://www.cs.umd.edu/~jkatz/imc/toc-preface-3rd.pdf)
+  establishes the 15-chapter sequence, three parts and section pointers used here.
+- [Revised third edition publisher listing](https://www.routledge.com/Introduction-to-Modern-Cryptography-Revised-Third-Edition/Katz-Lindell/p/book/9781032496795)
+  and its [indexed alternate URL](https://www.routledge.com/Introduction-to-Modern-Cryptography-Third-Edition/Katz-Lindell/p/book/9781032496795)
+  identify the 2025 revision and the same chapter outline. The author’s contents
+  call chapter 14 “Post-Quantum Cryptography”; the publisher’s listing uses
+  “Quantum-Secure Cryptography.” Section pointers were checked against the
+  author-hosted third-edition contents, not a revised-edition interior. No
+  revised-edition page offsets are claimed.
+- [Author errata](https://www.cs.umd.edu/~jkatz/imc/errata-3rd.pdf), dated 23 July
+  2024, includes the qualification on second-preimage versus preimage resistance
+  reflected in chapter 6’s boundary.
+
+The page links official book resources and contains original activity prompts.
+It does not redistribute the textbook or copy its exercises. It is independent
+and unaffiliated with the authors and publisher.
+
+### Why these connections, and what remains outside them
+
+Exact exhibit names and live URLs come from `knowledge-map/catalog.json`.
+The capability review also inspected the source repositories’ READMEs for
+[Hidden Bit](https://github.com/systemslibrarian/crypto-lab-hidden-bit),
+[OTP Vault](https://github.com/systemslibrarian/crypto-lab-otp-vault),
+[Protocol Compose](https://github.com/systemslibrarian/crypto-lab-protocol-compose),
+[Feistel Forge](https://github.com/systemslibrarian/crypto-lab-feistel-forge),
+[Factor Forge](https://github.com/systemslibrarian/crypto-lab-factor-forge),
+[ElGamal Plain](https://github.com/systemslibrarian/crypto-lab-elgamal-plain),
+[Frodo Vault](https://github.com/systemslibrarian/crypto-lab-frodo-vault),
+[LMS Ledger](https://github.com/systemslibrarian/crypto-lab-lms-ledger),
+[Schnorr Forge](https://github.com/systemslibrarian/crypto-lab-schnorr-forge),
+[Paillier Gate](https://github.com/systemslibrarian/crypto-lab-paillier-gate),
+[VSS Gate](https://github.com/systemslibrarian/crypto-lab-vss-gate), and
+[Threshold Decrypt](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt).
+These are educational capability checks, not new security audits of those labs.
+
+- Hidden Bit implements security experiments and an ElGamal security reduction to DDH.
+  Its finite trials cannot establish security against every efficient adversary.
+- Chapter 8 remains introductory: the OWF/hard-core/PRG/GGM/strong-PRP chain
+  and proofs are not implemented by these connections.
+- Chapter 10 has real selected factoring methods and toy baby-step/giant-step;
+  Pohlig–Hellman and index calculus remain gaps.
+- Chapter 14 separates quantum simulations and the text’s themes from later
+  standardized ML-KEM/ML-DSA examples. LMS Ledger is a teaching adaptation,
+  not interoperable HSS.
+- Chapter 15 covers selected Paillier, sharing and threshold concepts. It does
+  not implement Goldwasser–Micali, Rabin or generic trapdoor-permutation proofs.
+  VSS Gate deliberately makes the second-generator relation knowable, defeating
+  Pedersen binding. Threshold parties run in one browser, not a distributed system.
+- General ZK and MPC are further study, not invented numbered book chapters.
+
+To update a mapping, verify the relevant lab’s current capability before editing
+the activity or coverage claim; a matching algorithm keyword is insufficient.
 
 ## Timestamping
 

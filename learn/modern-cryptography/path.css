@@ -1,6 +1,9 @@
 .reading-loop{font-weight:700;color:var(--teal);letter-spacing:.02em}
+.reading-header .companion-note{font-size:.85rem;margin-top:.45rem}
 .chapter-reading{color:var(--text-hi);font-weight:650;margin:.3rem 0}
+.chapter-edition{margin:.3rem 0 .6rem}
 .chapter-sections{margin:.3rem 0 1rem}
+.predict{padding-left:1rem;border-left:2px solid #597180}
 .chapter-labs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;list-style:none;padding:0;margin:1.2rem 0}
 .chapter-labs li{padding:.9rem;border:1px solid var(--border);border-radius:8px;min-width:0}
 .chapter-labs a{font-weight:700;text-underline-offset:3px}

@@ -15,7 +15,7 @@ test('Katz–Lindell follows the 15-chapter outline and builds only catalog-back
  assert.equal(modernChapters[7].coverage,'intro','theoretical construction chain remains a partial bridge');
  const catalog=new Map(JSON.parse(fs.readFileSync(path.join(root,'knowledge-map/catalog.json'),'utf8')).exhibits.map(e=>[e.title,e.href]));
  for(const c of modernChapters){
-  assert.ok(c.reading&&c.sections&&c.try&&c.reflect&&c.limit,`chapter ${c.chapter} has reading, practice and a boundary`);
+  assert.ok(c.bookTitle&&c.title&&c.sections&&c.predict&&c.try&&c.reflect&&c.limit,`chapter ${c.chapter} has a book title, reading reference, predict–try–explain activity and boundary`);
   for(const lab of c.labs){assert.ok(catalog.has(lab.title),`catalog has ${lab.title}`);assert.ok(lab.note);assert.ok(['direct','modern','intro'].includes(lab.coverage));}
  }
  for(const title of ['Kyber Vault','Dilithium Seal'])assert.equal(modernChapters[13].labs.find(lab=>lab.title===title)?.coverage,'modern','later standards are labeled counterparts');

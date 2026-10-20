@@ -26,7 +26,12 @@ Checkmarks are optional localStorage data and measure exploration, not mastery.
 Jonathan Katz and Yehuda Lindell’s third-edition structure. Chapters 1–2 form
 the foundations, 3–8 symmetric cryptography, and 9–15 public-key cryptography.
 The generated page has static links, chapter/area/coverage filtering, separate
-per-lab connection labels, reflection questions and explicit coverage limits.
+per-lab connection labels and explicit coverage limits. Each chapter uses the
+book’s printed title, an original learning focus, targeted section pointers,
+and an original predict–try–explain activity. Predictions appear before the lab
+links so readers encounter the question before leaving for an experiment.
+Visible labels say **Direct connection**, **Modern counterpart** and
+**Introductory bridge**; the filter retains the `direct`/`modern`/`intro` values.
 Its independent progress key is `crypto-lab-modern-cryptography-progress-v1`.
 
 ```sh
@@ -36,6 +41,10 @@ node learn/modern-cryptography/build.mjs --check
 
 ### Sources and edition boundary — reviewed 20 October 2026
 
+- Reference edition: Jonathan Katz and Yehuda Lindell, *Introduction to Modern
+  Cryptography*, third edition, CRC Press, 2021. Chapter titles and targeted
+  activity references were checked against a supplied copy’s contents and
+  relevant interior sections. The textbook is not stored in this repository.
 - [Katz’s official book page](https://www.cs.umd.edu/~jkatz/imc.html) identifies
   the authors, third edition, intended scope, contents and errata.
 - [Author-hosted contents and preface](https://www.cs.umd.edu/~jkatz/imc/toc-preface-3rd.pdf)
@@ -44,9 +53,10 @@ node learn/modern-cryptography/build.mjs --check
   and its [indexed alternate URL](https://www.routledge.com/Introduction-to-Modern-Cryptography-Third-Edition/Katz-Lindell/p/book/9781032496795)
   identify the 2025 revision and the same chapter outline. The author’s contents
   call chapter 14 “Post-Quantum Cryptography”; the publisher’s listing uses
-  “Quantum-Secure Cryptography.” Section pointers were checked against the
-  author-hosted third-edition contents, not a revised-edition interior. No
-  revised-edition page offsets are claimed.
+  “Quantum-Secure Cryptography.” That alternate title is also shown on chapter
+  14’s card and is searchable. The revised chapter outline was cross-checked;
+  revised-edition section and page numbering were not verified. The precise
+  section pointers on this page follow the 2021 edition.
 - [Author errata](https://www.cs.umd.edu/~jkatz/imc/errata-3rd.pdf), dated 23 July
   2024, includes the qualification on second-preimage versus preimage resistance
   reflected in chapter 6’s boundary.
@@ -76,17 +86,31 @@ These are educational capability checks, not new security audits of those labs.
 - Hidden Bit implements security experiments and an ElGamal security reduction to DDH.
   Its finite trials cannot establish security against every efficient adversary.
 - Chapter 8 remains introductory: the OWF/hard-core/PRG/GGM/strong-PRP chain
-  and proofs are not implemented by these connections.
+  and proofs are not implemented by these connections. Its switching-game
+  background is explicitly cross-referenced to §3.5.1 and Appendix A.4; the
+  ElGamal reduction is a later example from §12.4.1.
 - Chapter 10 has real selected factoring methods and toy baby-step/giant-step;
-  Pohlig–Hellman and index calculus remain gaps.
+  Pohlig–Hellman, collision-based discrete-log methods and index calculus remain
+  outside these connections. Factor Forge’s rho implementation is for factoring.
 - Chapter 14 separates quantum simulations and the text’s themes from later
   standardized ML-KEM/ML-DSA examples. LMS Ledger is a teaching adaptation,
   not interoperable HSS.
 - Chapter 15 covers selected Paillier, sharing and threshold concepts. It does
   not implement Goldwasser–Micali, Rabin or generic trapdoor-permutation proofs.
+  Feldman VSS connects directly to §15.3.2; Pedersen commitments and proof-checked
+  partial decryptions extend the chapter’s presentation.
   VSS Gate deliberately makes the second-generator relation knowable, defeating
   Pedersen binding. Threshold parties run in one browser, not a distributed system.
 - General ZK and MPC are further study, not invented numbered book chapters.
+
+The wording review checked these specific source behaviors:
+
+| Activity | Inspected source | Consequence for the guide |
+|---|---|---|
+| ECDSA forgery goals | [Hidden Bit `ecdsa-high-s.ts`, `734bd6e`](https://github.com/systemslibrarian/crypto-lab-hidden-bit/blob/734bd6ee73294f8fd8d6cded7f4f5170ccd1f4dd/src/adversaries/ecdsa-high-s.ts) | The operation changes `s` to `n − s`: two distinct valid signatures, not alternate encodings of one signature. |
+| Merkle tampering | [Merkle Vault `main.ts`, `60c4a0f`](https://github.com/systemslibrarian/crypto-lab-merkle-vault/blob/60c4a0f7a952f75a119fc6243d8970b6ddecbf18/src/main.ts) | Tamper Leaf retains the original proof and checks it against the changed tree’s root; the activity follows that actual control. |
+| Share verification | [VSS Gate `vss.ts`, `cda8c3a`](https://github.com/systemslibrarian/crypto-lab-vss-gate/blob/cda8c3aea86774e1bf9edddfb429bf9eba579509/src/vss.ts) | Both Feldman and Pedersen share checks are implemented; the connection distinguishes them. |
+| Threshold recovery | [Threshold Decrypt `main.ts`, `842f77d`](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/blob/842f77ddd5ea11496b0e35599dd43075d2905c7a/src/main.ts) and [`elgamal.ts`](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/blob/842f77ddd5ea11496b0e35599dd43075d2905c7a/src/elgamal.ts) | Chaum–Pedersen checks run before combination and reject a selected invalid partial. |
 
 To update a mapping, verify the relevant lab’s current capability before editing
 the activity or coverage claim; a matching algorithm keyword is insufficient.

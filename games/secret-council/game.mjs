@@ -218,7 +218,7 @@ function enterTrial() {
     $('board-help').textContent = 'A failed trial is a clue. Revise your council and try again.';
     actionLabel('Revise the council');
   } else if (event.kind === 'theft') {
-    phase = 'theft'; setVault('', 'STILL SECRET', '17 possible values remain');
+    phase = 'theft'; setVault('', 'STILL SECRET', `${PRIME} possible values remain`);
     $('trial-count').textContent = `${outcome.affected.length} stolen / ${threshold} needed`;
     $('trial-verdict').textContent = 'Every secret is still possible';
     const candidates = possibleSecrets(currentDeal.shares.filter(s => outcome.affected.includes(s.id)), threshold);
@@ -324,7 +324,7 @@ function renderMath() {
   const options = possibleSecrets(points, 3);
   if (!options.includes(candidate)) candidate = options[0];
   $('visible-count').textContent = `${count} / 3 needed`;
-  $('possibility-copy').textContent = count < 3 ? `All 17 secret values remain possible with ${count} visible share${count === 1 ? '' : 's'}.` : `Three distinct shares determine one secret: ${options[0]}.`;
+  $('possibility-copy').textContent = count < 3 ? `All ${PRIME} secret values remain possible with ${count} visible share${count === 1 ? '' : 's'}.` : `Three distinct shares determine one secret: ${options[0]}.`;
   $('candidate-secrets').replaceChildren();
   for (let s = 0; s < PRIME; s++) {
     const b = document.createElement('button'); b.textContent = s; b.disabled = !options.includes(s);

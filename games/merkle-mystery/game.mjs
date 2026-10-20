@@ -49,10 +49,22 @@ function renderTree() {
     const label = nodeName(level,index,tree), changedVisible = comparison() && showChanges && changed.includes(id);
     const target = kind === 'pack' && level === 0 && index === data.mission.target;
     const selectMode = kind === 'trace' || (kind === 'pack' && !target) || (!level && ['find','compare'].includes(kind));
-    nodes += `<button type="button" class="node ${!level ? 'leaf' : ''} ${isRoot ? 'root' : ''} ${selected.has(id) ? 'selected' : ''} ${changedVisible ? 'changed' : ''} ${target ? 'target' : ''}" data-node="${id}" ${!level ? `data-color="${data.original[index].color}"` : ''} style="left:${p.x}%;top:${p.y}%" ${selectMode ? `aria-pressed="${selected.has(id)}"` : ''} aria-label="${esc(label + (!level ? ': '+data.original[index].title : '') + (changedVisible ? ', changed fingerprint' : '') + (target ? ', book already in the parcel' : ''))}"><strong>${esc(!level ? String(index+1).padStart(2,'0') : label)}</strong><code>${hash.slice(0,6)}</code></button>`;
+    nodes += `<button type="button" class="node ${!level ? 'leaf' : ''} ${isRoot ? 'root' : ''} ${selected.has(id) ? 'selected' : ''} ${changedVisible ? 'changed' : ''} ${target ? 'target' : ''}" data-node="${id}" ${!level ? `data-color="${data.original[index].color}"` : ''} data-x="${p.x}" data-y="${p.y}" ${selectMode ? `aria-pressed="${selected.has(id)}"` : ''} aria-label="${esc(label + (!level ? ': '+data.original[index].title : '') + (changedVisible ? ', changed fingerprint' : '') + (target ? ', book already in the parcel' : ''))}"><strong>${esc(!level ? String(index+1).padStart(2,'0') : label)}</strong><code>${hash.slice(0,6)}</code></button>`;
   });
   $('tree').className = `tree ${tree.size === 4 ? 'four' : ''}`;
   $('tree').innerHTML = `<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${edges}</svg>${nodes}`;
+  /* Position each node through the CSSOM rather than a style="" attribute in the markup
+     above. A style ATTRIBUTE is an inline style, so `style-src 'self'` blocks it and the
+     tree collapses into a pile — which is how this page behaved the moment it was given
+     the same Content-Security-Policy its ten sibling game pages carry: seven "Applying
+     inline style violates ... 'style-src 'self''" errors on load, and every browser test
+     failing on a click the stacked root node intercepted. Property assignments on
+     `el.style` are CSSOM mutations and are NOT governed by style-src, so the coordinates
+     stay dynamic with no 'unsafe-inline'. */
+  for (const el of $('tree').querySelectorAll('.node')) {
+    el.style.left = `${el.dataset.x}%`;
+    el.style.top = `${el.dataset.y}%`;
+  }
   if (oldFocus) $('tree').querySelector(`[data-node="${oldFocus}"]`)?.focus({preventScroll:true});
   $('legend-text').textContent = comparison() && showChanges ? 'Changed fingerprint' : kind === 'pack' ? 'Outline = packed piece; dashed = target book' : kind === 'trace' ? 'Outline = selected node' : 'Select a node to inspect its fingerprint';
 }

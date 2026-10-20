@@ -1114,8 +1114,46 @@ structurally cannot see, since it reads sibling `crypto-lab-*` clones). Each was
 verified green across all 11 pages before becoming a gate, so it did not redden
 CI on arrival. The title check only reports: it is as good as its own list of
 construction names, and every name the list misses would accuse a game unjustly.
-It currently flags one, **"Mental Poker: Shuffle Showdown"** — a title naming SRA
-commutative encryption that the source does not contain.
+It flagged one until 2026-10-20, **"Mental Poker: Shuffle Showdown"** — a title
+naming SRA commutative encryption the source does not contain — now marked
+**"Mental Poker, Simplified: Shuffle Showdown"**. The game's own body copy was
+accurate throughout ("real SHA-256 commitments", "a hash commitment fixes a
+hidden value"); only the title borrowed the construction name with no verb to
+qualify it, which is the chip rule exactly. The marker is a word from the
+check's own vocabulary and it is also TRUE: solving the mental-poker problem
+with hash commitments instead of commutative encryption is a simplification of
+the classic construction, and nothing was changed to satisfy a pattern.
+
+**All four of its gates and both of its reports are now clean across 11 pages,
+and getting there needed one real code fix.** The four pages with no CSP
+(`merkle-mystery/chapters.html`, `quantum-courier/index.html`,
+`sealed-showdown/index.html`, `secret-council/index.html`) were given the policy
+the other seven carry. Three took it with no violation. The fourth did not, and
+the static check said it would: it has no inline `<style>`, no inline
+`<script>`, no `on*` handler and no `style=` attribute in its markup — but
+`game.mjs` built every Merkle node with `style="left:…;top:…"` inside an
+`innerHTML` template. A style ATTRIBUTE is an inline style, so `style-src
+'self'` blocked all of them, the tree collapsed into a pile, and all seven
+browser tests failed on a click the stacked root node intercepted. The fix is
+not `'unsafe-inline'`: positions are now assigned through the CSSOM after
+insertion, which `style-src` does not govern, so the coordinates stay dynamic
+under the strict policy.
+
+**Three wrong diagnoses came first, and each was a probe rather than the page.**
+A plain page load reported no violation at all, because the styles are applied
+during play. `node --test`'s output is `✔`/`✖`, not TAP, so a `grep -c "^not
+ok"` counted zero failures twice and read as "the CSP is fine". And Playwright's
+screenshot injection — the documented `crypto-lab-kyber-vault` hazard, and these
+suites do screenshot `fullPage` — was the obvious suspect and was wrong: the
+screenshot succeeds under the policy, and the three other pages screenshot too
+and pass. What settled it was capturing every console error during a real
+interaction, then diffing the page with the CSP, without it, and on a clean
+checkout: 0/7, 7/0, 7/0.
+
+A stray `rel="canonical"` was corrected in the same pass: `secret-council`'s
+page pointed at `/games/key-rush/`, telling search engines its own content was a
+duplicate of a different game. It is the only canonical link in `games/`, so the
+ten pages without one are left alone rather than swept into a convention.
 
 Two of its own bugs are worth not reintroducing. It paired each arcade heading
 with **the next card's link**, because the anchor wraps the card, so it named

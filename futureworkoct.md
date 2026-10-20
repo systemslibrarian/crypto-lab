@@ -14,55 +14,6 @@ right and this line is stale.
 
 ---
 
-## 1. Claims in `games/` — DONE 2026-10-20, and one was a false finding
-
-Worked on 2026-10-20. Two of the three items were real; one was not, and the
-record matters more than the tidy list.
-
-1. **`the-digital-trade/index.html` — FIXED.** It labelled a field
-   "Independently saved listing fingerprint (SHA-256)". Nothing was
-   independently saved: `game.mjs:29` computes it in-page from the `listed`
-   constant at `game.mjs:8`. Now reads "Listing fingerprint, taken on trust from
-   the listing", which matches what the page's own lesson text already said —
-   "the listed digest is *assumed* to have come from an authenticated source".
-2. **`key-rush/index.html` — NOT A DEFECT, left alone.** The claim "a delivery
-   or disclosure is checked by recombining the actual share values" is TRUE.
-   The threshold *gate* is an integer comparison, which is what the original
-   finding saw, but both outcomes then recombine for real: `core.mjs:59`
-   Lagrange-interpolates the delivered shares and `core.mjs:60` throws
-   `Reconstruction mismatch` unless the result equals the dealt secret, and
-   `core.mjs:47` does the same on the breach path. I was one edit away from
-   "correcting" a correct sentence.
-3. **`secret-council/game.mjs` — FIXED.** Two hardcoded `17`s sat beside the
-   computed value (`:221`, `:327`) where `PRIME` was already imported at `:1`
-   and used nine lines below. Both now derive. `PRIME` is 17, so the rendered
-   text is byte-identical — verified in a browser, "All 17 secret values remain
-   possible with 2 visible shares." — while the figure is no longer typed.
-   `game.mjs` is live: `chapters.html` loads it, which is where the retired
-   lab's redirect notice sends readers.
-   The third site, `vault.mjs:92`, was **not** a hardcoded figure: its number is
-   `result.possibilities`, derived from `possibleSecrets` in `vault-core.mjs:105`.
-   Its phrasing is awkward when thieves hold zero shares ("still fit their
-   shares" when there are none) but it is not false, so it is left.
-
-Verified: 32 core and 16 browser tests pass, `games-sync check` clean.
-
----
-
-## 2. `games/secret-council/vault.html` is live but unreachable
-
-HTTP 200, fully CI-tested (`council-vault-core` + `council-vault-browser`, with
-screenshot artifacts), and **linked from nowhere** — not the arcade, not the
-redirect notice, not `chapters.html`. Reachable only by typing the URL.
-
-Decide: link it, or retire it and drop its CI job. Note the directory itself is
-NOT dead — `key-rush/core.mjs` imports the GF(17) field arithmetic from
-`secret-council/core.mjs`, and `index.html` there is a deliberate redirect.
-
-Check: `grep -rl 'vault.html' games/ index.html` → currently 0 links.
-
----
-
 ## 3. #31 — published test vectors, 16 of 18 rows left
 
 Each row is a published vector to **source, verify the provenance of, and wire
@@ -168,6 +119,20 @@ Both orders are idempotent and no value changes, so it is harmless — but it
 means a regeneration can produce a large diff that carries no information.
 
 ---
+
+## Settled — do not re-file these
+
+- **`key-rush`'s "checked by recombining the actual share values" is TRUE.**
+  Investigated 2026-10-20 after a finding claimed otherwise. The threshold gate
+  is an integer comparison, which is what that finding saw, but `core.mjs:59`
+  then Lagrange-interpolates the delivered shares and `:60` throws
+  `Reconstruction mismatch` unless the result equals the dealt secret;
+  `core.mjs:47` does the same on the breach path. One edit away from correcting
+  a correct sentence.
+- **`secret-council/vault.mjs:92`'s count is DERIVED**, from
+  `result.possibilities` via `possibleSecrets` in `vault-core.mjs:105` — not a
+  hardcoded figure. Its phrasing is awkward when thieves hold zero shares
+  ("still fit their shares" when there are none) but it is not false.
 
 ## Not on this list, and deliberately
 

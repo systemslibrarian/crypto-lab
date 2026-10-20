@@ -62,7 +62,7 @@ const html = `<!doctype html>
 <body>
 <a class="skip-link" href="#main">Skip to reading path</a>
 <div class="shell">
-<nav class="topbar" aria-label="Primary"><a class="brand" href="../../">CRYPTO LAB</a><a href="../applied-cryptography/">Applied Cryptography path</a><a href="../../teach/">For educators</a></nav>
+<nav class="topbar" aria-label="Primary"><a class="brand" href="../../">CRYPTO LAB</a><a href="../applied-cryptography/">Applied Cryptography path</a><a href="../boneh-shoup/">Boneh–Shoup path</a><a href="../../teach/">For educators</a></nav>
 <main id="main" class="reading-path">
 <header class="reading-header">
 <h1>Introduction to Modern Cryptography</h1>

@@ -77,8 +77,39 @@ test('modern reading path tolerates malformed, out-of-range and unavailable prog
   }finally{await page.context().close();}
  }
 });
+test('Boneh–Shoup filters, draft boundaries, part navigation, progress isolation and no-JS reading work',async()=>{
+ const {page,errors}=await pageAt('boneh-shoup',390);try{
+  assert.equal(await page.locator('.chapter').count(),23);
+  await page.locator('#search').fill('chapter 2');assert.equal(await page.locator('.chapter:visible').count(),1);assert.equal(await page.locator('#chapter-2').isVisible(),true);
+  await page.locator('#chapter-2 input').check();await page.reload();assert.equal(await page.locator('#chapter-2 input').isChecked(),true);
+  await page.locator('#part').selectOption('Protocols');assert.equal(await page.locator('.chapter:visible').count(),6);
+  await page.locator('#search').fill('unmatched xyz');assert.equal(await page.locator('#empty').isVisible(),true);
+  await page.locator('.part-jumps a[href="#chapter-18"]').click();assert.equal(await page.locator('#chapter-18').isVisible(),true);assert.equal(await page.locator('.chapter:visible').count(),23);
+  await page.locator('#search').fill('unmatched xyz');await page.locator('.part-jumps a[href="#chapter-18"]').click();assert.equal(await page.locator('#chapter-18').isVisible(),true,'same fragment also clears a hiding filter');
+  await page.locator('#coverage').selectOption('supplement');assert.equal(await page.locator('.chapter:visible').count(),2);assert.equal(await page.locator('#chapter-17 .draft-note').isVisible(),true);
+  await page.locator('#clear').click();await contains(page,'progress','1 of 23');
+  await page.goto(origin+'/learn/modern-cryptography/');assert.equal(await page.locator('#chapter-2 input').isChecked(),false);await page.locator('#chapter-3 input').check();
+  await page.goto(origin+'/learn/boneh-shoup/');await contains(page,'progress','1 of 23');await page.locator('#clear-progress').click();await contains(page,'progress','0 of 23');
+  await page.goto(origin+'/learn/modern-cryptography/');assert.equal(await page.locator('#chapter-3 input').isChecked(),true);
+  await page.goto(origin+'/');assert.equal(await page.locator('#path-band-boneh-shoup').count(),0);await page.locator('#menuToggle').click();await page.locator('.nav-menu-educators[href="learn/boneh-shoup/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Graduate Course/);
+  await audit(page);assert.deepEqual(errors,[]);
+ }finally{await page.context().close();}
+ const noJS=await browser.newPage({javaScriptEnabled:false});try{await noJS.goto(origin+'/learn/boneh-shoup/');assert.equal(await noJS.locator('.chapter:visible').count(),23);assert.ok(await noJS.locator('.chapter-labs a').count()>45);assert.equal(await noJS.locator('#reader-controls').isVisible(),false);}finally{await noJS.close();}
+});
+test('Boneh–Shoup stays usable with blocked or malformed browser storage',async()=>{
+ for(const mode of ['denied','malformed','invalid-ids']){
+  const {page,errors}=await pageAt('boneh-shoup');try{
+   await page.addInitScript(mode=>{
+    if(mode==='denied'){Object.defineProperty(window,'localStorage',{get(){throw new DOMException('Blocked','SecurityError');}});return;}
+    localStorage.setItem('crypto-lab-boneh-shoup-progress-v1',mode==='malformed'?'broken':JSON.stringify([0,1,1,23,24,'2',null]));
+   },mode);
+   await page.reload();await contains(page,'progress',`${mode==='invalid-ids'?2:0} of 23`);await page.locator('#chapter-2 input').check();await contains(page,'progress',`${mode==='invalid-ids'?3:1} of 23`);
+   await page.locator('#search').fill('pairings');assert.equal(await page.locator('#chapter-15').isVisible(),true);assert.deepEqual(errors,[]);
+  }finally{await page.context().close();}
+ }
+});
 test('workshops remain keyboard reachable and fit phone and desktop widths',async()=>{
- for(const slug of ['applied-cryptography','modern-cryptography','timestamping','fair-exchange'])for(const width of [390,1280]){
+ for(const slug of ['applied-cryptography','modern-cryptography','boneh-shoup','timestamping','fair-exchange'])for(const width of [390,1280]){
   const {page,errors}=await pageAt(slug,width);try{await page.keyboard.press('Tab');assert.equal(await page.locator('.skip-link').evaluate(e=>e===document.activeElement),true);await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);assert.equal(await page.locator('h1').count(),1);await audit(page);assert.deepEqual(errors,[]);}finally{await page.context().close();}
  }
 });

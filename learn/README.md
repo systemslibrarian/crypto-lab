@@ -2,7 +2,7 @@
 
 These pages live in the hub and deploy with its existing GitHub Pages site. They
 do not require new repositories or add standalone cards to the catalog count.
-The two book companions remain in the hub menu and at their direct URLs. Their
+The three book companions remain in the hub menu and at their direct URLs. Their
 `LEARNING_PATHS` entries set `home: false`, which omits their cards from the
 homepage Learning paths band while preserving menu steps and generated records.
 
@@ -204,3 +204,53 @@ CI runs all three.
 node --test tests/protocol-workshops.test.mjs tests/reading-path.test.mjs
 node --test tests/protocol-workshops-browser.test.cjs
 ```
+
+## Boneh–Shoup reading path
+
+`boneh-shoup/chapters.mjs` supplies 23 chapter entries for Dan Boneh and Victor
+Shoup's *A Graduate Course in Applied Cryptography*, version 0.6 (January 2023).
+The guide lives at `/learn/boneh-shoup/`, in the hub menu and alongside both other
+book companions. It adds no catalog exhibits and uses `home: false` like the
+existing book paths.
+
+```sh
+node learn/boneh-shoup/build.mjs
+node learn/boneh-shoup/build.mjs --check
+node --test tests/reading-path.test.mjs
+node --test --test-timeout=180000 tests/protocol-workshops-browser.test.cjs
+```
+
+The generator resolves each lab name against `knowledge-map/catalog.json`.
+Static HTML preserves every lab link without JavaScript. Search, area/connection
+filters, part jumps and optional local progress enhance the page. Its independent
+storage key is `crypto-lab-boneh-shoup-progress-v1`.
+
+### Source review and scope — 20 October 2026
+
+- [Official book site](https://toc.cryptobook.us/) identifies version 0.6 as the
+  latest release and dates its posting to 14 January 2023.
+- [Pinned author-hosted PDF](https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf)
+  is the authority for chapter order, section pointers and PDF-page links.
+  The current-draft alias may change; numbered links deliberately use the
+  versioned file. No textbook PDF is redistributed in this repository.
+- Chapters **1 and 17** appear in the contents but their bodies are absent:
+  the contents go directly to the Part I divider (printed page 3), and printed
+  page 711 is followed by the Part III divider (714). The guide labels those
+  entries as supplementary exploration, not chapter implementation.
+- Sections **20.5–20.7** are unfinished on printed page 842. Bulletproofs and
+  SNARK Arena are explicit supplements. Other relevant unfinished sections
+  are identified in activity boundaries; no exercises are copied.
+- Chapter 14's heading follows the PDF, rather than the alternate wording in
+  the website's abbreviated outline.
+- Lab scope was checked against the current catalog and relevant repository
+  READMEs, particularly ZK Proof Lab (tiny challenge space), LMS Ledger (custom
+  HSS teaching transcript), IBE Gate (BasicIdent/CPA), OT Gate (Chou–Orlandi
+  adaptation), DKG Gate (Joint-Feldman versus its modeled bias experiment),
+  Threshold Decrypt (proof-checked partials), Garbled Gate (semi-honest model)
+  and SPDZ Forge (trusted preprocessing dealer and local parties).
+
+The fourth connection label, **Supplementary exploration**, marks an absent or
+unfinished portion of the draft. **Modern counterpart** denotes a different
+practical construction or later standard, not necessarily something invented
+after the draft. Direct connections cover selected concepts only. Original
+predict–try–explain activities send readers back to assumptions and proofs.

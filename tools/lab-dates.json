@@ -428,8 +428,8 @@
    "added": "2026-04",
    "updated": "2026-10",
    "addedFrom": "2026-04-07T18:39:48Z",
-   "updatedFrom": "2026-10-20T07:44:46-04:00",
-   "updatedCommit": "8e9468ddf64635e6e4c7e127bbc509bd6cc00cfd"
+   "updatedFrom": "2026-10-20T09:58:39-04:00",
+   "updatedCommit": "0a764b253838d5f15da5f359d3f4838c9c7cd225"
   },
   "crypto-lab-falcon-seal": {
    "added": "2026-04",
@@ -1364,10 +1364,10 @@
   },
   "crypto-lab-masked-core": {
    "added": "2026-08",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-08-21T21:14:11Z",
-   "updatedFrom": "2026-08-23T04:02:29-04:00",
-   "updatedCommit": "93f4f01deb6d1a68bcd47986238cda6b7859b28c"
+   "updatedFrom": "2026-10-20T09:58:47-04:00",
+   "updatedCommit": "6196c042b3cc46b9f0c6c47acf4b4b35b008f4cc"
   },
   "crypto-lab-sector-vault": {
    "added": "2026-08",

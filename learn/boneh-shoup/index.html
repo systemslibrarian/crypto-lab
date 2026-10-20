@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Graduate Course in Applied Cryptography Reading Path · Crypto Lab</title>
+<meta name="description" content="An independent Boneh–Shoup reading path: 23 chapter entries linked to Crypto Lab experiments, official free PDF references, original activities and explicit draft gaps.">
+<link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/learn/boneh-shoup/">
+<link rel="stylesheet" href="../shared/workshop.css">
+<link rel="stylesheet" href="../shared/reading-path.css">
+<link rel="stylesheet" href="path.css">
+<script type="module" src="app.mjs"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to reading path</a>
+<div class="shell">
+<nav class="topbar" aria-label="Primary"><a class="brand" href="../../">CRYPTO LAB</a><a href="../applied-cryptography/">Schneier path</a><a href="../modern-cryptography/">Katz–Lindell path</a><a href="../../teach/">For educators</a></nav>
+<main id="main" class="reading-path">
+<header class="reading-header">
+<h1>A Graduate Course in Applied Cryptography</h1>
+<p>Dan Boneh &amp; Victor Shoup · Draft version 0.6 (January 2023) · 23 chapter entries</p>
+<p class="companion-note">Independent companion · <a href="https://toc.cryptobook.us/">Official book site</a> · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf">Read the free PDF</a> · <a href="#sources-title">Version and sources</a></p>
+<p class="path-intro">Connect practical constructions to their security arguments. Read, predict an outcome, test it in a lab, then return to the assumptions and proof.</p>
+<p class="small draft-summary">This draft has gaps: <a href="#chapter-1">Chapters 1</a> and <a href="#chapter-17">17</a> are absent from the body, and <a href="#chapter-20">§§20.5–20.7</a> are unfinished. Related activities are explicitly scoped below.</p>
+<nav class="part-jumps" aria-label="Reading path parts"><a href="#chapter-2">Secret key · 2–9</a><a href="#chapter-10">Public key · 10–17</a><a href="#chapter-18">Protocols · 18–23</a></nav>
+</header>
+
+<section aria-labelledby="browse-title">
+<h2 id="browse-title">Find your chapter</h2>
+<div id="reader-controls" hidden>
+<div class="filters">
+<div><label for="search">Search topics or exhibits</label><input id="search" type="search" placeholder="Try: chapter 19, Schnorr, pairings, MPC"></div>
+<div><label for="part">Book area</label><select id="part"><option value="all">All areas</option><option>Introduction</option><option>Secret key cryptography</option><option>Public key cryptography</option><option>Protocols</option></select></div>
+<div><label for="coverage">Connection type</label><select id="coverage"><option value="all">All connections</option><option value="direct">Direct connection</option><option value="modern">Modern counterpart</option><option value="intro">Introductory bridge</option><option value="supplement">Supplementary exploration</option></select></div>
+</div>
+<div class="controls"><button class="secondary" id="clear">Clear filters</button><button class="secondary" id="clear-progress">Reset reading progress</button></div>
+<p id="results" role="status" aria-live="polite">23 chapter connections</p>
+<p class="small reading-progress"><span id="progress" class="progress" role="status" aria-live="polite">0 of 23 explored</span> · This browser only.</p>
+</div>
+<div id="chapters"><article class="panel chapter" id="chapter-1" data-part="Introduction" data-coverage="supplement" aria-labelledby="chapter-1-title">
+<header><div><p class="eyebrow">Chapter 1 · Introduction</p><h2 id="chapter-1-title">Introduction</h2></div><span class="badge supplement">Supplementary exploration</span></header>
+<p class="notice draft-note">Draft gap: the PDF’s contents are followed by the Part I divider on printed page 3. The introductory pages 1–2 are absent.</p>
+<p class="chapter-reading"><strong>Learning focus:</strong> Describe the attacker before judging the cipher</p><p class="small chapter-sections"><strong>Read:</strong> The contents list §§1.1–1.2, but the chapter body is absent in version 0.6. Use these labs as an optional orientation before Chapter 2. · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=4">See the contents (PDF)</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Which patterns might survive encryption under a short repeating key?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-vigenere-break/">Vigenère Break</a><span class="badge intro">Introductory bridge</span><p>Use repeated-pattern and frequency evidence to attack a classical cipher.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge intro">Introductory bridge</span><p>Preview a challenger, an attacker and a precisely defined success condition.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Try a supplied Vigenère challenge. Write down what the attacker knows before the attack and what the recovered key lets the attacker do. Then inspect a security game in Hidden Bit.</p>
+<p class="reflect"><strong>Explain the result:</strong> How would you turn “this looks scrambled” into a claim someone could try to falsify?</p>
+<p><strong>Coverage boundary:</strong> These labs provide an independent orientation to the topics reserved in the contents. Hidden Bit previews later security definitions. A classical attack is not evidence about a modern cipher, and this entry is not a substitute for an absent chapter.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="1" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-2" data-part="Secret key cryptography" data-coverage="direct" aria-labelledby="chapter-2-title">
+<header><div><p class="eyebrow">Chapter 2 · Secret key cryptography</p><h2 id="chapter-2-title">Encryption</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Separate perfect secrecy from computational evidence</p><p class="small chapter-sections"><strong>Read:</strong> §§2.1–2.3, especially §2.2.5 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=20">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Can one ciphertext be consistent with two different equal-length messages if the secret pad is unknown?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-otp-vault/">OTP Vault</a><span class="badge direct">Direct connection</span><p>Inspect XOR arithmetic, alternative message/key pairs and pad reuse.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge intro">Introductory bridge</span><p>Connect the bit-guessing viewpoint to executable distinguishing experiments.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> In OTP Vault, keep a ciphertext fixed and compare keys consistent with two candidate messages. Reuse a pad for two messages and inspect the ciphertext XOR. State exactly which assumption changed.</p>
+<p class="reflect"><strong>Explain the result:</strong> What does a probability statement about every possible message require that a finite set of successful encryptions cannot establish?</p>
+<p><strong>Coverage boundary:</strong> Perfect secrecy requires a uniformly random, independent secret pad of sufficient length used once. Browser-generated bytes illustrate the arithmetic without certifying physical randomness. The pad alone does not authenticate messages; Hidden Bit is a bridge to computational games, not a proof of perfect secrecy.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="2" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-3" data-part="Secret key cryptography" data-coverage="direct" aria-labelledby="chapter-3-title">
+<header><div><p class="eyebrow">Chapter 3 · Secret key cryptography</p><h2 id="chapter-3-title">Stream ciphers</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Watch repeated keystream cancel out</p><p class="small chapter-sections"><strong>Read:</strong> §§3.1–3.3, §3.6 and §3.10 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=61">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> If the same key and nonce reproduce a keystream, what remains when two ciphertexts are XORed?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-chacha20-stream/">ChaCha20 Stream</a><span class="badge direct">Direct connection</span><p>Inspect keystream generation and the consequence of nonce reuse.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-otp-vault/">OTP Vault</a><span class="badge direct">Direct connection</span><p>Compare reused pad bytes with reused stream-cipher keystream.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-good-randomness/">Good Randomness</a><span class="badge intro">Introductory bridge</span><p>Distinguish an entropy source from deterministic expansion.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Run the nonce-reuse experiment in ChaCha20 Stream with two different messages. Compare its XOR relationship with the reused-pad experiment. Explain which inputs must be repeated for the same keystream bytes to recur.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why can a deterministic generator be useful for encryption without creating new entropy?</p>
+<p><strong>Coverage boundary:</strong> ChaCha’s computational security is a different claim from information-theoretic OTP secrecy. Statistical appearance cannot prove PRG security. The next-bit theorem, generator-composition reductions and the DVD/RC4 case studies require separate reading.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="3" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-4" data-part="Secret key cryptography" data-coverage="direct" aria-labelledby="chapter-4-title">
+<header><div><p class="eyebrow">Chapter 4 · Secret key cryptography</p><h2 id="chapter-4-title">Block ciphers</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Distinguish reversible rounds from a secure permutation</p><p class="small chapter-sections"><strong>Read:</strong> §§4.1–4.2, §4.4.3 and §4.5 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=112">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Can a Feistel network be inverted even when its round function cannot?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-feistel-forge/">Feistel Forge</a><span class="badge direct">Direct connection</span><p>Step through DES and inspect the Feistel construction and meet-in-the-middle attack.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a><span class="badge direct">Direct connection</span><p>See why applying a block cipher independently to blocks leaks repeated structure.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge direct">Direct connection</span><p>Experiment with the PRP/PRF distinction at small teaching sizes.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Follow one Feistel encryption and its decryption, noting the round-key order. Compare repeated blocks in AES Modes. In Hidden Bit, inspect the collision experiment used to distinguish random functions from permutations.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why are invertibility, avalanche behavior and pseudorandomness three different properties?</p>
+<p><strong>Coverage boundary:</strong> DES is a historical teaching target. A reversible Feistel construction is not automatically a secure block cipher, and a collision experiment is not the PRP/PRF switching proof. The GGM tree construction and ideal-cipher reductions remain reading work.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="4" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-5" data-part="Secret key cryptography" data-coverage="direct" aria-labelledby="chapter-5-title">
+<header><div><p class="eyebrow">Chapter 5 · Secret key cryptography</p><h2 id="chapter-5-title">Chosen Plaintext Attack</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Give the adversary an encryption oracle</p><p class="small chapter-sections"><strong>Read:</strong> §§5.3–5.5 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=193">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Will re-encrypting a candidate message identify a deterministic challenge ciphertext as reliably when encryption uses fresh randomness?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge direct">Direct connection</span><p>Compare supplied IND-CPA adversaries against deterministic and randomized encryption.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a><span class="badge direct">Direct connection</span><p>Explore CBC and counter-mode behavior with IV and nonce choices.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Compare Hidden Bit’s re-encryption strategy on deterministic and randomized fixtures. Then try the chained-IV CBC fixture with the IV-predicting adversary. Record the information each strategy uses.</p>
+<p class="reflect"><strong>Explain the result:</strong> Does a weak adversary’s near-zero measured advantage say anything about a stronger adversary?</p>
+<p><strong>Coverage boundary:</strong> Finite trials test these strategies, not all efficient adversaries. CBC’s IV requirements and CTR’s nonce/counter requirements differ. The security reductions and multi-key bounds are not replaced by browser measurements.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="5" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-6" data-part="Secret key cryptography" data-coverage="direct" aria-labelledby="chapter-6-title">
+<header><div><p class="eyebrow">Chapter 6 · Secret key cryptography</p><h2 id="chapter-6-title">Message integrity</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Ask what a valid tag authenticates</p><p class="small chapter-sections"><strong>Read:</strong> §§6.1–6.3, §6.4.3, §6.7 and §6.10 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=231">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Does retaining a valid tag while changing its message give a valid authenticated pair?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-mac-race/">MAC Race</a><span class="badge direct">Direct connection</span><p>Compare MAC verification and inspect CMAC as a construction for variable-length messages.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Generate a CMAC tag in MAC Race, change the message while retaining the original tag, and verify again. Compare the key requirement with the HMAC example. Identify which bytes the verifier actually checks.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why is replaying an authenticated message different from forging a new one?</p>
+<p><strong>Coverage boundary:</strong> The CMAC connection does not stand in for every CBC-MAC, ECBC, NMAC or PMAC construction and proof. Authentication does not imply confidentiality or replay protection.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="6" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-7" data-part="Secret key cryptography" data-coverage="direct" aria-labelledby="chapter-7-title">
+<header><div><p class="eyebrow">Chapter 7 · Secret key cryptography</p><h2 id="chapter-7-title">Message integrity from universal hashing</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Expose the algebra behind one-time authentication</p><p class="small chapter-sections"><strong>Read:</strong> §§7.1–7.6 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=268">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> What extra equations does an attacker obtain if the same full Poly1305 one-time key authenticates multiple messages?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-poly1305-mac/">Poly1305 MAC</a><span class="badge direct">Direct connection</span><p>Step through polynomial evaluation and the one-time-key reuse attack.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-mac-race/">MAC Race</a><span class="badge direct">Direct connection</span><p>Compare Poly1305 and GHASH with keyed MAC constructions.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Use Poly1305 MAC’s polynomial stepper, then run its key-reuse experiment. Identify the polynomial accumulator and the masking value separately. Explain which secret values the repeated-key experiment holds fixed.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why is a universal hash family different from an unkeyed collision-resistant hash function?</p>
+<p><strong>Coverage boundary:</strong> Poly1305 is a concrete related instantiation, not every construction in this chapter. Standalone GHASH is not a complete MAC. Reusing the whole Poly1305 one-time key is the failure being explored; universal-hashing bounds still require the text. Section 7.7 is unfinished in this draft.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="7" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-8" data-part="Secret key cryptography" data-coverage="direct" aria-labelledby="chapter-8-title">
+<header><div><p class="eyebrow">Chapter 8 · Secret key cryptography</p><h2 id="chapter-8-title">Message integrity from collision resistant hashing</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Match the hash property to the task</p><p class="small chapter-sections"><strong>Read:</strong> §§8.1, 8.3–8.4, 8.7, 8.9–8.10 and 8.12 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=303">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Does changing one byte of a file preserve either its hash or its membership proof under an existing Merkle root?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/">Hash Zoo</a><span class="badge direct">Direct connection</span><p>Compare digests and inspect length-extension behavior.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-mac-race/">MAC Race</a><span class="badge direct">Direct connection</span><p>Use HMAC to distinguish a keyed authentication construction from plain hashing.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-merkle-proofs/">Merkle Proofs</a><span class="badge direct">Direct connection</span><p>Verify membership against a fixed root, then change the data.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-commit-gate/">Commit Gate</a><span class="badge direct">Direct connection</span><p>Explore binding and hiding as separate commitment goals.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Hash two nearly identical messages, then verify a Merkle proof before and after changing the leaf. Inspect Commit Gate’s opening checks. For each result, name the property needed rather than saying only “the hash is secure.”</p>
+<p class="reflect"><strong>Explain the result:</strong> Which attacks concern collisions, preimages, length extension, or a commitment’s hidden value?</p>
+<p><strong>Coverage boundary:</strong> Avalanche behavior is not evidence of collision resistance. A Merkle proof depends on a trusted root and its encoding. Commitment hiding also needs suitable randomness. The HMAC and random-oracle arguments are reading work; a deployed hash is not literally a random oracle.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="8" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-9" data-part="Secret key cryptography" data-coverage="direct" aria-labelledby="chapter-9-title">
+<header><div><p class="eyebrow">Chapter 9 · Secret key cryptography</p><h2 id="chapter-9-title">Authenticated Encryption</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Find out when decryption releases information</p><p class="small chapter-sections"><strong>Read:</strong> §§9.1–9.2, 9.4–9.5, 9.7 and 9.10 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=373">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> What changes when authentication is checked before CBC decryption can reveal padding validity?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-protocol-compose/">Protocol Compose</a><span class="badge direct">Direct connection</span><p>Compare encrypt-then-MAC and other compositions with actual verification behavior.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-padding-oracle/">Padding Oracle</a><span class="badge direct">Direct connection</span><p>Recover plaintext through a CBC padding-validity oracle.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/">AES Modes</a><span class="badge direct">Direct connection</span><p>Inspect GCM authentication and rejection of tampered ciphertext.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-wep-crack/">WEP Crack</a><span class="badge direct">Direct connection</span><p>Explore the failures of RC4-based WEP with synthetic teaching data.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Recover bytes in Padding Oracle, then compare Protocol Compose’s padding-oracle experiment under MAC-then-encrypt and encrypt-then-MAC. Identify where the observable signal disappears. Compare a tampered GCM ciphertext’s outcome.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which bytes need authentication, and what must the implementation withhold until verification succeeds?</p>
+<p><strong>Coverage boundary:</strong> The experiments cover specified attacks and implementations. They do not prove every use of a composition secure. AEAD nonce discipline, associated-data selection and replay handling are separate requirements. WEP is an obsolete case study, not a scheme to deploy.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="9" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-10" data-part="Public key cryptography" data-coverage="direct" aria-labelledby="chapter-10-title">
+<header><div><p class="eyebrow">Chapter 10 · Public key cryptography</p><h2 id="chapter-10-title">Public key tools</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Agree on bits without assuming an identity</p><p class="small chapter-sections"><strong>Read:</strong> §§10.2–10.5 and §10.7 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=415">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Can Alice and Bob each complete Diffie–Hellman while sharing different keys with a middle party?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/">Educational RSA</a><span class="badge direct">Direct connection</span><p>Inspect small RSA keys, modular exponentiation and the trapdoor.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-key-exchange/">Key Exchange</a><span class="badge direct">Direct connection</span><p>Follow the public contributions and shared secret in an honest exchange.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/">DH MITM</a><span class="badge direct">Direct connection</span><p>Replace public contributions in unauthenticated Diffie–Hellman.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Complete an honest exchange, then let the middle party replace both contributions in DH MITM. Track who knows each resulting secret. In Educational RSA, distinguish the forward operation from the operation requiring the private key.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which assumption concerns computing a secret, and which mechanism binds the peer to an identity?</p>
+<p><strong>Coverage boundary:</strong> Tiny arithmetic is inspectable but insecure. DL, CDH and DDH are different assumptions; hardness of one does not automatically establish all the others. Shared-secret agreement alone does not authenticate the peer.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="10" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-11" data-part="Public key cryptography" data-coverage="direct" aria-labelledby="chapter-11-title">
+<header><div><p class="eyebrow">Chapter 11 · Public key cryptography</p><h2 id="chapter-11-title">Public key encryption</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Recognize useful randomness and dangerous malleability</p><p class="small chapter-sections"><strong>Read:</strong> §§11.2–11.5; §11.6 for oblivious transfer · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=450">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Will encrypting the same message twice under one public key produce the same ciphertext?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-elgamal-plain/">ElGamal Plain</a><span class="badge direct">Direct connection</span><p>Encrypt with fresh randomness and inspect multiplicative malleability.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/">RSA Forge</a><span class="badge direct">Direct connection</span><p>Contrast deterministic textbook RSA with a padded practical construction.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-ot-gate/">OT Gate</a><span class="badge modern">Modern counterpart</span><p>Explore private choice using a Chou–Orlandi teaching adaptation, a different OT construction.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Encrypt the same message twice in ElGamal Plain and compare the results. Apply its multiplicative ciphertext transformation and inspect the changed plaintext. In OT Gate, follow the selected and unselected message paths.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why does encryption randomness help confidentiality while leaving integrity unresolved?</p>
+<p><strong>Coverage boundary:</strong> Plain ElGamal’s algebraic flexibility does not give CCA security. OT Gate is not the chapter’s exact protocol and carries its own KDF and point-validation limits. Both simulated parties and their secrets are visible in one browser.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="11" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-12" data-part="Public key cryptography" data-coverage="direct" aria-labelledby="chapter-12-title">
+<header><div><p class="eyebrow">Chapter 12 · Public key cryptography</p><h2 id="chapter-12-title">Chosen ciphertext secure public key encryption</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Challenge the scheme through related ciphertexts</p><p class="small chapter-sections"><strong>Read:</strong> §§12.1–12.4 and §12.8 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=483">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Does refusing to decrypt the exact challenge ciphertext stop an attack that submits a related ciphertext?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge direct">Direct connection</span><p>Run an ElGamal CCA2 experiment with an explicit challenge-ciphertext restriction.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/">RSA Forge</a><span class="badge direct">Direct connection</span><p>Compare RSA-OAEP with textbook RSA and a PKCS#1 v1.5 padding-oracle attack.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-iron-letter/">Iron Letter</a><span class="badge direct">Direct connection</span><p>Connect public-key encryption to a practical hybrid message-encryption workflow.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Run Hidden Bit’s CCA2 oracle game. Find the refusal of the exact challenge, then the related-ciphertext query. Compare the supplied RSA-OAEP experiment and explain the different outcome.</p>
+<p class="reflect"><strong>Explain the result:</strong> What must a reduction establish beyond the failure of this particular ciphertext modification?</p>
+<p><strong>Coverage boundary:</strong> Rejecting a test attack does not prove CCA security. The labs do not implement every Cramer–Shoup or generic-transform argument in this chapter. Public-key-plus-symmetric hybrid encryption is distinct from combining classical and post-quantum algorithms.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="12" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-13" data-part="Public key cryptography" data-coverage="direct" aria-labelledby="chapter-13-title">
+<header><div><p class="eyebrow">Chapter 13 · Public key cryptography</p><h2 id="chapter-13-title">Digital signatures</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Connect signature verification to a trusted key</p><p class="small chapter-sections"><strong>Read:</strong> §§13.1–13.6 and §13.8 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=542">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Does a valid signature establish who owns the public key supplied to the verifier?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/">RSA Forge</a><span class="badge direct">Direct connection</span><p>Compare textbook RSA signatures with RSA-PSS.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/">Hidden Bit</a><span class="badge direct">Direct connection</span><p>Inspect the adversary’s goal in a signature-forgery game.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-pki-chain/">PKI Chain</a><span class="badge direct">Direct connection</span><p>Follow certificate verification to a configured trust anchor.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Sign a message, alter it and verify again in RSA Forge. Then trace a certificate chain in PKI Chain. State which checks concern the signature bytes and which concern trust in the signing key.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why does accepting a signature under an attacker-selected key fail to identify the intended sender?</p>
+<p><strong>Coverage boundary:</strong> The signature proofs and their oracle models remain essential reading. A certificate walkthrough is not complete browser PKI validation. Signcryption and legal questions are outside this activity; §13.10 is unfinished in version 0.6.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="13" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-14" data-part="Public key cryptography" data-coverage="modern" aria-labelledby="chapter-14-title">
+<header><div><p class="eyebrow">Chapter 14 · Public key cryptography</p><h2 id="chapter-14-title">Fast hash-based signatures</h2></div><span class="badge modern">Modern counterpart</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Treat one-time signing state as part of the key</p><p class="small chapter-sections"><strong>Read:</strong> §§14.1–14.3 and §14.6 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=599">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> What can be exposed when a signer uses one one-time key on two different messages?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-lms-ledger/">LMS Ledger</a><span class="badge modern">Modern counterpart</span><p>Inspect Winternitz hash chains, a Merkle signing tree and a key-reuse forgery demonstration.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-merkle-proofs/">Merkle Proofs</a><span class="badge intro">Introductory bridge</span><p>Build intuition for authenticating one leaf under a public tree root.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Sign with successive leaves in LMS Ledger and inspect the state grid. Run its one-time-key reuse experiment. Explain why restoring old signing state differs from merely exhausting a tree.</p>
+<p class="reflect"><strong>Explain the result:</strong> What information must survive backups, crashes and concurrent signing to prevent reuse?</p>
+<p><strong>Coverage boundary:</strong> LMS is a related practical construction, not a verbatim implementation of the chapter’s Lamport framework. LMS Ledger’s HSS teaching transcript and small parameters are non-interoperable adaptations. A standalone Merkle membership proof is not a complete signature scheme.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="14" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-15" data-part="Public key cryptography" data-coverage="direct" aria-labelledby="chapter-15-title">
+<header><div><p class="eyebrow">Chapter 15 · Public key cryptography</p><h2 id="chapter-15-title">Elliptic curve cryptography and pairings</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Use a pairing, then inspect who holds the master secret</p><p class="small chapter-sections"><strong>Read:</strong> §§15.1–15.6 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=631">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> In identity-based encryption, can the authority derive the recipient’s private key and decrypt the message too?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/">Point Arithmetic</a><span class="badge direct">Direct connection</span><p>Compute elliptic-curve addition and scalar multiplication.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-pairing-gate/">Pairing Gate</a><span class="badge direct">Direct connection</span><p>Explore BLS signatures, aggregation and rogue-key behavior on BLS12-381.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-ibe-gate/">IBE Gate</a><span class="badge direct">Direct connection</span><p>Run Boneh–Franklin BasicIdent and inspect its key-escrow consequence.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Begin with a small curve calculation. In Pairing Gate, compare a single BLS signature with aggregation. Then encrypt to an identity in IBE Gate, extract its key and inspect the authority’s escrow capability.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which new capability does a pairing add, and which trust obligation does the identity authority introduce?</p>
+<p><strong>Coverage boundary:</strong> The BLS12-381 instantiations have concrete group and encoding choices beyond the abstract presentation. IBE Gate demonstrates BasicIdent with a CPA scope, not a CCA-secure FullIdent deployment. Functional encryption, multilinear maps and the full chapter’s proofs are not covered by this route.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="15" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-16" data-part="Public key cryptography" data-coverage="direct" aria-labelledby="chapter-16-title">
+<header><div><p class="eyebrow">Chapter 16 · Public key cryptography</p><h2 id="chapter-16-title">Attacks on number theoretic assumptions</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Measure an attack and identify its structural advantage</p><p class="small chapter-sections"><strong>Read:</strong> §§16.1–16.5 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=698">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Will two groups with equal-sized elements have equal attack cost if their orders factor differently?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-log-forge/">Log Forge</a><span class="badge direct">Direct connection</span><p>Compare bounded discrete-log solvers, smooth-order attacks and field-specific index calculus.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-factor-forge/">Factor Forge</a><span class="badge direct">Direct connection</span><p>Compare integer-factoring algorithms on small instances.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-shor/">Shor</a><span class="badge direct">Direct connection</span><p>Explore a small classical simulation of period finding and factoring.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Compare a smooth-order discrete-log instance with a prime-order one in Log Forge. Verify each recovered exponent. Then compare factoring methods in Factor Forge and identify the period-finding step in Shor.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which measurements concern the supplied small instance, and which asymptotic claims need a separate analysis?</p>
+<p><strong>Coverage boundary:</strong> The browser does not factor production RSA keys or run a quantum computer. Log Forge’s finite-field solver is not the general number field sieve and does not apply to its toy curve. Budget exhaustion establishes no hardness result; generic-group bounds apply within their stated model.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="16" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-17" data-part="Public key cryptography" data-coverage="supplement" aria-labelledby="chapter-17-title">
+<header><div><p class="eyebrow">Chapter 17 · Public key cryptography</p><h2 id="chapter-17-title">Post-quantum cryptography from lattices</h2></div><span class="badge supplement">Supplementary exploration</span></header>
+<p class="notice draft-note">Draft gap: the PDF goes from printed page 711 to the Part III divider on page 714. The contents reserve pages 712–713 for this chapter.</p>
+<p class="chapter-reading"><strong>Learning focus:</strong> Explore the lattice topics reserved in the draft</p><p class="small chapter-sections"><strong>Read:</strong> Chapter 17 is listed in the contents; its body is absent in version 0.6. These are supplementary lab activities. · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=12">See the contents (PDF)</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> How can adding small errors turn exact linear equations into a different recovery problem?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/">Lattice Gentle</a><span class="badge supplement">Supplementary exploration</span><p>Build geometric and small-noise intuition with explicit teaching parameters.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-frodo-vault/">Frodo Vault</a><span class="badge supplement">Supplementary exploration</span><p>Connect LWE examples to a practical KEM and its parameter choices.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/">Kyber Vault</a><span class="badge modern">Modern counterpart</span><p>Explore standardized ML-KEM as further reading beyond this draft.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/">Dilithium Seal</a><span class="badge modern">Modern counterpart</span><p>Explore standardized ML-DSA as further reading beyond this draft.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Follow Lattice Gentle’s small-noise examples and compare its toy parameters with a real KEM’s displayed sizes. In Kyber Vault, complete encapsulation and decapsulation; compare that task with signing and verification in Dilithium Seal.</p>
+<p class="reflect"><strong>Explain the result:</strong> What is the difference between agreeing on key material and signing a message, and what can neither experiment establish about quantum resistance?</p>
+<p><strong>Coverage boundary:</strong> These labs supplement an absent chapter; they are not implementations of unwritten textbook constructions or proofs. ML-KEM and ML-DSA’s final standards postdate version 0.6. Small lattice puzzles and a successful round trip do not establish the hardness assumptions or reductions for deployed parameters.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="17" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-18" data-part="Protocols" data-coverage="direct" aria-labelledby="chapter-18-title">
+<header><div><p class="eyebrow">Chapter 18 · Protocols</p><h2 id="chapter-18-title">Protocols for identification and login</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Separate password storage from a login protocol</p><p class="small chapter-sections"><strong>Read:</strong> §§18.2–18.4 and §18.6 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=729">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Does a unique salt prevent guessing a weak password, or does it change how guesses can be reused across accounts?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/">Bcrypt Forge</a><span class="badge direct">Direct connection</span><p>Compare password hashing cost, verification and a synthetic breach experiment.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-kdf-arena/">KDF Arena</a><span class="badge modern">Modern counterpart</span><p>Compare password-derivation choices and their work factors.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/">ZK Proof Lab</a><span class="badge intro">Introductory bridge</span><p>Preview challenge-response identification before the formal Sigma-protocol treatment.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> In Bcrypt Forge, compare equal passwords under different salts and increase the cost factor. Inspect the synthetic breach example. Then list the differences between storing a verifier, limiting online attempts and authenticating a session.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which defense increases the cost of each offline guess, and which defense depends on controlling the online service?</p>
+<p><strong>Coverage boundary:</strong> Local timings do not predict an attacker’s hardware throughput. A strong password hash does not prevent phishing or bind a login to a secure channel. KDF Arena adds practical counterparts; §18.8 is unfinished in this draft and is not the source of this activity.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="18" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-19" data-part="Protocols" data-coverage="direct" aria-labelledby="chapter-19-title">
+<header><div><p class="eyebrow">Chapter 19 · Protocols</p><h2 id="chapter-19-title">Identification and signatures from Sigma protocols</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Follow the commitment, challenge and response</p><p class="small chapter-sections"><strong>Read:</strong> §§19.1–19.6 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=769">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> What changes when the verifier supplies the challenge versus a hash deriving it from the transcript?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/">ZK Proof Lab</a><span class="badge direct">Direct connection</span><p>Run toy Schnorr identification and Fiat–Shamir transcript verification.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-schnorr-forge/">Schnorr Forge</a><span class="badge modern">Modern counterpart</span><p>Explore BIP-340 as a concrete Schnorr-signature counterpart.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/">ECDSA Forge</a><span class="badge direct">Direct connection</span><p>Recover a signing key in the deliberately reused-nonce experiment.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Run Schnorr identification and then the Fiat–Shamir exhibit in ZK Proof Lab. Identify the public statement and challenge inputs. Compare the altered-message verdict with the displayed challenge values. Then inspect nonce reuse in ECDSA Forge.</p>
+<p class="reflect"><strong>Explain the result:</strong> Why must the Fiat–Shamir challenge bind the intended statement and context? What is the difference between verifying a transcript and proving knowledge?</p>
+<p><strong>Coverage boundary:</strong> ZK Proof Lab uses tiny groups and a reduced challenge space: different messages can produce the same toy challenge without a SHA-256 collision. BIP-340 has its own encoding and rules. The labs do not establish the chapter’s extraction, simulation, composition or multi-extractability theorems.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="19" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-20" data-part="Protocols" data-coverage="direct" aria-labelledby="chapter-20-title">
+<header><div><p class="eyebrow">Chapter 20 · Protocols</p><h2 id="chapter-20-title">Proving properties in zero-knowledge</h2></div><span class="badge direct">Direct connection</span></header>
+<p class="notice draft-note">Draft gap: the Bulletproofs, SNARKs and general zero-knowledge sections on printed page 842 are marked unfinished. Their labs below are supplementary exploration.</p>
+<p class="chapter-reading"><strong>Learning focus:</strong> Identify the statement a proof actually establishes</p><p class="small chapter-sections"><strong>Read:</strong> §§20.1–20.4; §§20.5–20.7 are unfinished in version 0.6 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=837">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> If a partial decryption is changed, will the associated proof still justify combining it?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/">Threshold Decrypt</a><span class="badge direct">Direct connection</span><p>Inspect proof-checked partial decryptions as an application of proving relations on encrypted data.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/">ZK Proof Lab</a><span class="badge intro">Introductory bridge</span><p>Explore statements, witnesses and transcript checks at toy scale.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-bulletproofs/">Bulletproofs</a><span class="badge supplement">Supplementary exploration</span><p>Generate and verify a range proof over a commitment; supplements the unfinished §20.5.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-snark-arena/">SNARK Arena</a><span class="badge supplement">Supplementary exploration</span><p>Explore proof systems and setup assumptions; supplements the unfinished §20.6.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> In Threshold Decrypt, inspect a valid partial-decryption proof, then select a corrupted partial and attempt recovery. Name the public relation checked by the proof. As an optional extension, verify a range proof in Bulletproofs and inspect its tamper verdict.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which value remains hidden, which claim becomes public, and what assumptions are needed for the verifier to trust that claim?</p>
+<p><strong>Coverage boundary:</strong> A passing verifier equation does not establish zero knowledge or soundness against every adversary. These are selected constructions with different setup and transcript requirements. Supplementary proof-system labs do not fill in the draft’s missing proofs; they carry their own implementation limits.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="20" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-21" data-part="Protocols" data-coverage="direct" aria-labelledby="chapter-21-title">
+<header><div><p class="eyebrow">Chapter 21 · Protocols</p><h2 id="chapter-21-title">Authenticated Key Exchange</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Bind the session key to the intended peer</p><p class="small chapter-sections"><strong>Read:</strong> §§21.1–21.3, §21.8 and §§21.10–21.12 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=869">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Can a key exchange succeed cryptographically while authenticating the wrong peer?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/">DH MITM</a><span class="badge direct">Direct connection</span><p>Expose what unauthenticated Diffie–Hellman leaves unresolved.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/">TLS Handshake</a><span class="badge direct">Direct connection</span><p>Trace selected certificate, signature and key-establishment steps.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-pake-gate/">PAKE Gate</a><span class="badge direct">Direct connection</span><p>Explore a password-authenticated exchange and its guessing model.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-kerberos/">Kerberos v5</a><span class="badge direct">Direct connection</span><p>Connect tickets to key distribution through an online trusted service.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Contrast DH MITM with the authenticated steps in TLS Handshake. Identify the peer identity, transcript and session-key derivation. In PAKE Gate, compare an honest exchange with a wrong-password attempt.</p>
+<p class="reflect"><strong>Explain the result:</strong> Which long-term secret compromise could expose a past session, and when does ephemeral key erasure matter?</p>
+<p><strong>Coverage boundary:</strong> These walkthroughs are not interoperable network deployments or complete proofs of AKE security. Forward secrecy, identity protection and channel binding are different goals. PAKE does not eliminate online guessing; Kerberos introduces trust in a central service.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="21" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-22" data-part="Protocols" data-coverage="direct" aria-labelledby="chapter-22-title">
+<header><div><p class="eyebrow">Chapter 22 · Protocols</p><h2 id="chapter-22-title">Threshold cryptography</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Use a shared key without collecting it in one place</p><p class="small chapter-sections"><strong>Read:</strong> §§22.1–22.4 · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=938">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Is reconstructing a secret from shares the same operation as jointly decrypting a ciphertext?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-shamir-gate/">Shamir Gate</a><span class="badge direct">Direct connection</span><p>Reconstruct a secret with a qualified subset of shares.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-vss-gate/">VSS Gate</a><span class="badge direct">Direct connection</span><p>Check shares against commitments and inspect dishonest-dealer behavior.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/">Threshold Decrypt</a><span class="badge direct">Direct connection</span><p>Combine proof-checked partial decryptions without reconstructing the full private key.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-dkg-gate/">DKG Gate</a><span class="badge direct">Direct connection</span><p>Explore a Joint-Feldman ceremony and a separately modeled rushing-bias attack.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/">FROST Threshold</a><span class="badge modern">Modern counterpart</span><p>Compare threshold decryption with a practical threshold-signing protocol.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Compare Shamir reconstruction with Threshold Decrypt’s combination of partial decryptions. Include one invalid selected partial and inspect the rejection. In DKG Gate, introduce a bad share and follow the complaint and qualification outcome.</p>
+<p class="reflect"><strong>Explain the result:</strong> What changes when no trusted dealer is allowed, and which failure can a valid-share check detect?</p>
+<p><strong>Coverage boundary:</strong> All participants share one browser, so there is no real party isolation. DKG Gate’s bias/fix experiment is not a full GJKR implementation. FROST is a different concrete signing construction. These activities do not establish network robustness, all access structures, gap security or election security.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="22" disabled> I explored this chapter’s connections</label>
+</article>
+<article class="panel chapter" id="chapter-23" data-part="Protocols" data-coverage="direct" aria-labelledby="chapter-23-title">
+<header><div><p class="eyebrow">Chapter 23 · Protocols</p><h2 id="chapter-23-title">Secure multi-party computation</h2></div><span class="badge direct">Direct connection</span></header>
+
+<p class="chapter-reading"><strong>Learning focus:</strong> Specify what remains private when parties compute together</p><p class="small chapter-sections"><strong>Read:</strong> §§23.1–23.5; §23.7 for OT extension · <a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf#page=1011">Open chapter in free PDF</a></p>
+<p class="predict"><strong>Predict before opening a lab:</strong> Does a protocol that works when everyone follows the rules still give the right result when a party changes a share?</p>
+<ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-garbled-gate/">Garbled Gate</a><span class="badge direct">Direct connection</span><p>Garble and evaluate a small Boolean circuit and inspect input-wire transfer.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-ot-gate/">OT Gate</a><span class="badge modern">Modern counterpart</span><p>Explore base oblivious transfer as one building block, not OT extension.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/">SPDZ Forge</a><span class="badge modern">Modern counterpart</span><p>Compare arithmetic sharing with authenticated openings and Beaver multiplication.</p></li></ul>
+<p class="exercise"><strong>Try this:</strong> Follow a private comparison in Garbled Gate and record what the output reveals. In SPDZ Forge, tamper with a share and compare the semi-honest result with the authenticated opening. Reuse a Beaver triple and inspect the exposed relationship.</p>
+<p class="reflect"><strong>Explain the result:</strong> How do privacy, correctness, detection with abort and guaranteed output delivery differ?</p>
+<p><strong>Coverage boundary:</strong> Garbled Gate’s core teaching model is semi-honest. SPDZ Forge uses a trusted preprocessing dealer and local simulated parties, not a complete distributed SPDZ deployment. Base OT is not OT extension. No browser trace substitutes for the chapter’s simulation-based or universal-composability arguments.</p>
+<label class="checkpoint"><input type="checkbox" data-chapter="23" disabled> I explored this chapter’s connections</label>
+</article></div>
+<p id="empty" class="notice" hidden>No chapters match. Clear the filters or try a broader term.</p>
+</section>
+
+<section class="panel" aria-labelledby="coverage-title">
+<h2 id="coverage-title">About this reading path</h2>
+<p>Start with the listed sections in the authors’ free PDF. The chapter links open the pinned version 0.6; PDF viewers may handle page anchors differently. Write down a prediction before opening a lab, run the experiment, then explain what you observed and which assumptions mattered. Each activity ends with the limits of that connection.</p>
+<p class="reading-loop">Read → predict → experiment → explain</p>
+<p>An independent educational companion by Paul A. Clark, unaffiliated with Dan Boneh, Victor Shoup or Stanford University. No author endorsement is implied. The practice prompts are original; no textbook passages or exercises are reproduced. Experiments illustrate security ideas; they do not replace proofs.</p>
+<p>Optional checkmarks record exploration, not mastery. They stay in this browser when local storage is available and are separate from both the Schneier and Katz–Lindell paths.</p>
+<h3>What the connection labels mean</h3>
+<p><span class="badge direct">Direct connection</span> A lab addresses a selected concept in that chapter. This is a connection to part of the chapter, with its scope stated in the lab note and activity boundary.</p>
+<p><span class="badge modern">Modern counterpart</span> A different practical construction or a later standard explores a related idea. Read the lab note for how it differs from the book’s example.</p>
+<p><span class="badge intro">Introductory bridge</span> A partial bridge or intuition builder. Formal definitions, reductions and unimplemented constructions remain reading work.</p>
+<p><span class="badge supplement">Supplementary exploration</span> Labs for a topic whose chapter or section is unfinished in the pinned draft. These are independent extensions, not coverage of unwritten text.</p>
+<p>Each lab has its own label. The chapter label describes the overall connection and is used by the filter. None of the labels implies complete chapter coverage.</p>
+<ul class="book-outline"><li><strong>1:</strong> Introduction</li><li><strong>2–9:</strong> Secret key</li><li><strong>10–17:</strong> Public key</li><li><strong>18–23:</strong> Protocols</li></ul>
+<p><strong>Before you begin:</strong> Expect modular arithmetic, probability and mathematical arguments. The labs make selected operations inspectable; they cannot supply every prerequisite or replace working through the text. Read each lab’s own sources and teaching limits.</p>
+</section>
+
+<section class="panel sources" aria-labelledby="sources-title">
+<h2 id="sources-title">Book, version and sources</h2>
+<p>Dan Boneh and Victor Shoup. <cite>A Graduate Course in Applied Cryptography</cite>. Version 0.6, January 2023.</p>
+<ul class="source-links">
+<li><a href="https://toc.cryptobook.us/">Authors’ official book site and version history</a></li>
+<li><a href="https://crypto.stanford.edu/~dabo/cryptobook/BonehShoup_0_6.pdf">Author-hosted version 0.6 PDF — free to read</a></li>
+<li><a href="https://toc.cryptobook.us/book.pdf">Current-draft PDF link — may change with future revisions</a></li>
+</ul>
+<p><strong>Version note:</strong> Checked on 20 October 2026. The official site identifies version 0.6 as its latest release and gives a posting date of 14 January 2023. This guide pins its chapter references to that file. A future draft may change the numbering; use the official version history when comparing copies.</p>
+<p><strong>Draft boundaries:</strong> Chapters 1 and 17 are present in the contents but their bodies are absent from this PDF. Sections 20.5–20.7 are unfinished, as are several other sections identified in individual activities. Chapter 14’s heading here follows the PDF; the website’s abbreviated outline uses different wording. No complete chapter-coverage claim is made.</p>
+<p>The book is linked from its authors’ site, not rehosted here. The activity prompts and lab connections are original. Publicly available reading access is not a claim that the book is public domain or covered by this repository’s MIT license.</p>
+<p>Choose another route: <a href="../applied-cryptography/">Schneier’s Applied Cryptography</a> for the existing historical and protocol companion, or <a href="../modern-cryptography/">Katz and Lindell’s Introduction to Modern Cryptography</a> for its own chapter sequence. These are complementary routes, not interchangeable editions.</p>
+<p><a href="https://github.com/systemslibrarian/crypto-lab/issues/new">Suggest a correction</a> with the chapter, lab and claim that should change.</p>
+</section>
+<noscript><p class="notice">All 23 chapter connections and lab links are available without JavaScript. Filtering and reading-progress checkmarks require JavaScript.</p></noscript>
+</main>
+<footer><a href="../../">Explore the full catalog</a> · <a href="https://github.com/systemslibrarian/crypto-lab/tree/main/learn/boneh-shoup">Source and teaching boundaries</a><p>So whether you eat or drink or whatever you do, do it all for the glory of God. — 1 Corinthians 10:31</p></footer>
+</div>
+</body>
+</html>

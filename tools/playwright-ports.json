@@ -96,12 +96,28 @@
   "lab": "crypto-lab-bitcoin-wallet"
  },
  {
+  "port": 4223,
+  "lab": "crypto-lab-residue-gate"
+ },
+ {
   "port": 4224,
   "lab": "crypto-lab-hybrid-guide"
  },
  {
+  "port": 4225,
+  "lab": "crypto-lab-hash-hunt"
+ },
+ {
   "port": 4226,
   "lab": "crypto-lab-nonce-collision"
+ },
+ {
+  "port": 4227,
+  "lab": "crypto-lab-log-forge"
+ },
+ {
+  "port": 4228,
+  "lab": "crypto-lab-prime-witness"
  },
  {
   "port": 4230,

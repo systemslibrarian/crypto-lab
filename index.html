@@ -2262,7 +2262,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">231</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">235</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -20946,6 +20946,63 @@
             <div class="project-meta"><div class="stack"><span class="chip">BLS12-381</span><span class="chip">OR Proofs</span><span class="chip">Challenge Timing</span><span class="chip">Research Preview</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
+
+          <a class="project-card" data-category="RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-prime-witness/"
+            data-implements="Fermat primality test@src/primality/fermat.ts:2 | Miller–Rabin@src/primality/millerRabin.ts:11"
+            data-references="RSA"
+            data-implementation="local BigInt primality engines"
+            data-review-commit="c85f91a26720f4f2d63b8b4471720cfcce49bb25"
+            data-review-note="Read the six exhibits, independent sieve/trial-prime checks, fixed-base counterexamples, exhaustive liar counting and generation workers. These are primality tests, not primality proofs. FIPS 186-5 Table B.1 is an explicitly limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and displayed factors; the lab does not teach a separate factoring attack. All 34 units, seven browser claims, two accessibility views and seven mutations passed at the prior code-identical build; this pin updates only integration documentation."
+            data-added="2026-10" data-updated="2026-10" data-level="intermediate" data-overlaps="crypto-lab-factor-forge: Factor Forge attacks composite integers; Prime Witness tests candidate primes and distinguishes witnesses, probable primes and proofs." target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Primality Testing</div>
+            <div class="project-title">Prime Witness</div>
+            <div class="project-copy">Follow Miller–Rabin witnesses, count lying bases, defeat fixed-base lists, and measure real prime generation without mistaking probable primes for proofs.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Miller–Rabin</span><span class="chip">Fermat Test</span><span class="chip">Carmichael Numbers</span><span class="chip">Prime Generation</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-residue-gate/"
+            data-implements="Goldwasser–Micali@src/gm/gm.ts:3 | Jacobi symbol@src/nt/jacobi.ts:4 | Miller–Rabin@src/nt/primes.ts:3 | Rabin encryption@src/rabin/oracle.ts:9 | Tonelli–Shanks@src/nt/sqrt.ts:7"
+            data-references="Paillier | RSA | RSA-OAEP"
+            data-attacks="Chosen-ciphertext attack@src/main.ts:1 | Ciphertext malleability@README.md:15 | Factoring@src/main.ts:24"
+            data-implementation="local BigInt arithmetic / isolated key-holder worker"
+            data-review-commit="d1f1c553da40f36f1f02b57800262271278f441a"
+            data-review-note="Read binary Jacobi, Euler Legendre, modular roots/CRT, Goldwasser–Micali encryption and the Rabin key-holder closure. The Tonelli anchor executes order halving; the Rabin anchor actually squares the validated message. A public attacker receives N and one root-query closure, never p/q. The canonical QR root oracle yields independently verified factors; redundancy can refuse or accidentally admit a query and is not called CCA security. One-bit Rabin is distinct from GM. Cocks IBE is an extension mention, not Boneh–Franklin IBE. All 17 units, six browser claims, two accessibility views and six mutations passed at the code-identical deployment; this pin changes only integration documentation."
+            data-added="2026-10" data-updated="2026-10" data-level="intermediate" data-overlaps="crypto-lab-hidden-bit: Hidden Bit studies hard-core predicates; Residue Gate computes quadratic residues, Goldwasser–Micali ciphertexts and a Rabin root-oracle factoring reduction. crypto-lab-factor-forge: Factor Forge searches for factors directly; Residue Gate exposes the decryption-oracle assumption that yields them." target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Quadratic Residuosity</div>
+            <div class="project-title">Residue Gate</div>
+            <div class="project-copy">Compare public Jacobi symbols with private residue classes, encrypt bits, and turn a Rabin decryption oracle into independently verified factors.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Jacobi Symbol</span><span class="chip">Goldwasser–Micali</span><span class="chip">Rabin Encryption</span><span class="chip">Chosen-Ciphertext Attack</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
+          <a class="project-card" data-category="HASHING &amp; KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hash-hunt/"
+            data-implements="Floyd cycle finding@src/attack/floyd.ts:2 | Hellman chains@src/attack/tmto/tables.ts:8 | HMAC@src/mac/hashAndMac.ts:2 | Rainbow chains@src/attack/tmto/tables.ts:8 | SHA-256@src/hash/truncate.ts:3"
+            data-references="Grover's algorithm | MD5 | Merkle tree | SHA-1 | bcrypt"
+            data-attacks="Collision attack@README.md:14"
+            data-standards="IETF | NIST"
+            data-implementation="noble SHA-256 / WebCrypto HMAC / local attack engines"
+            data-review-commit="3c766455e051b48adb6af5356cb81257770f4ab4"
+            data-review-note="Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint chain regeneration and salts sampled after precomputation. The tag transfer attacks a deliberately collision-prone hash-then-MAC composition, not HMAC or full SHA-256. Hellman uses one reduction column per table; rainbow varies the column. Coverage sets and diagnostic traces are additional memory. Length extension is a neighboring topic, not an executed exhibit. All 21 units, eight browser claims, two accessibility views and eleven mutations passed; this pin only clarifies README scope and integration."
+            data-added="2026-10" data-updated="2026-10" data-level="intermediate" data-overlaps="crypto-lab-collision-vault: Collision Vault studies published collision examples and hash constructions; Hash Hunt runs generic searches on deliberately truncated SHA-256, meaningful-message forgery and measured table tradeoffs. crypto-lab-kdf-arena: KDF Arena compares password derivation; Hash Hunt demonstrates why fresh salts prevent reuse of an unsalted table." target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Generic Hash Attacks</div>
+            <div class="project-title">Hash Hunt</div>
+            <div class="project-copy">Find truncated-SHA-256 collisions, transfer a tag in an insecure hash-then-MAC construction, and measure chained-table tradeoffs and the limits of salt.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Truncated SHA-256</span><span class="chip">Floyd Cycle Finding</span><span class="chip">Hellman / Rainbow Chains</span><span class="chip">HMAC-SHA-256</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
+          <a class="project-card" data-category="KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-log-forge/"
+            data-implements="Baby-step giant-step@src/dlog/generic/bsgs.ts:2 | EC point arithmetic@src/group/ec.ts:4 | Index calculus@src/dlog/index/calculus.ts:4 | Pohlig–Hellman@src/dlog/pohlig.ts:3 | Pollard kangaroo@src/dlog/generic/kangaroo.ts:3 | Pollard rho (discrete log)@src/dlog/generic/rho.ts:3"
+            data-references="Diffie-Hellman | ElGamal | Floyd cycle finding | Shor's algorithm"
+            data-attacks="Brute force@src/main.ts:3 | Discrete log@src/main.ts:3"
+            data-implementation="local generic group solvers / finite-field and toy-curve arithmetic"
+            data-review-commit="2b5ade3940e3ae2879823c40cbc0587be6655aef"
+            data-review-note="Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig–Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation."
+            data-added="2026-10" data-updated="2026-10" data-level="intermediate" data-overlaps="crypto-lab-function-key: Function Key uses bounded discrete logarithms to decode an inner product; Log Forge compares recovery algorithms and weak-parameter choices. crypto-lab-factor-forge: Factor Forge attacks integer factorisation; Log Forge attacks exponent recovery in finite fields and a toy curve." target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Discrete Logarithms</div>
+            <div class="project-title">Log Forge</div>
+            <div class="project-copy">Recover exponents in fields and a toy curve, then expose how smooth order, short secrets and field representation change the attack.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">BSGS</span><span class="chip">Pollard Rho / Kangaroo</span><span class="chip">Pohlig–Hellman</span><span class="chip">Index Calculus</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -21028,14 +21085,14 @@
         ]
       },
       {
-        id: 'applied-cryptography', label: 'Applied Cryptography',
+        id: 'applied-cryptography', label: 'Applied Cryptography', home: false,
         focus: 'Read a classic concept, then challenge it in the browser.',
         blurb: 'An independent companion to Schneier’s second edition. Follow selected protocol foundations, then use the chapter guide for all 25 chapters, coverage limits and two hands-on workshops.',
         guide: {href: 'learn/applied-cryptography/', label: 'Open the chapter guide and workshops →'},
         steps: [{title: 'Hash Zoo'}, {title: 'Commit Gate'}, {title: 'Shamir Gate'}, {title: 'OT Gate'}, {title: 'Blind Sign'}, {title: 'IBE Gate'}, {title: 'Key Lifecycle'}, {title: 'Compression Leak'}]
       },
       {
-        id: 'modern-cryptography', label: 'Introduction to Modern Cryptography',
+        id: 'modern-cryptography', label: 'Introduction to Modern Cryptography', home: false,
         focus: 'Katz & Lindell: define the goal, test an attack, inspect the assumption.',
         blurb: 'An independent companion to Katz and Lindell’s third and revised third editions. Start with these selected experiments, then follow all 15 chapters with reading pointers, original activities and explicit boundaries between experiments and proofs.',
         guide: {href: 'learn/modern-cryptography/', label: 'Open the 15-chapter reading guide →'},
@@ -21132,6 +21189,11 @@
     ];
 
     var TITLE_TO_SECTION = {
+      'Prime Witness': 'foundations',
+      'Residue Gate': 'cryptanalysis',
+      'Hash Hunt': 'cryptanalysis',
+      'Log Forge': 'cryptanalysis',
+
       'Key Lifecycle': 'key-exchange',
       'Compression Leak': 'cryptanalysis',
       'Subliminal Channels': 'public-key',
@@ -21262,6 +21324,7 @@
     };
 
     var FOUNDATIONS_TITLES = [
+      'Prime Witness',
       'Drift Key', 'Noise to Numbers',
       'Phantom Vault','DRBG Arena','Babel Hash','Hash Zoo','World Hashes',
       'MAC Race','Poly1305 MAC','KDF Chain','KDF Arena','Bcrypt Forge',
@@ -21795,10 +21858,9 @@
         pathsContainer.appendChild(details);
       });
 
-      /* The same paths, on the page body. The menu copies above stay as they
-         are; this is where a visitor who never opens the menu meets them.
-         Both are generated from LEARNING_PATHS, so a path cannot exist in one
-         place and not the other. */
+      /* Show the general journeys on the homepage. Book companions set
+         home:false and remain available from the menu and their direct URLs.
+         Both surfaces read the same LEARNING_PATHS records. */
       var LEVEL_ORDER = ['beginner', 'intermediate', 'advanced'];
 
       /* The level range is DERIVED from the cards the path's steps point at, not
@@ -21822,6 +21884,7 @@
       var bandGrid = document.getElementById('path-band-grid');
       if (bandGrid) {
         LEARNING_PATHS.forEach(function (path, i) {
+          if (path.home === false) return;
           var li = document.createElement('li');
           li.className = 'path-band-card' + (i === 0 ? ' is-first' : '');
           li.id = 'path-band-' + path.id;

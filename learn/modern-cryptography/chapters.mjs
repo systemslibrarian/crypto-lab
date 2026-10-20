@@ -70,18 +70,19 @@ export const chapters = [
   },
   {
     chapter: 6, part: 'Symmetric cryptography', title: 'Name the hash property you actually need',
-    bookTitle: 'Hash Functions and Applications', sections: '§§6.1.1–6.1.2 and 6.6.2; §§6.5 and 6.6.5 for commitments', coverage: 'direct',
+    bookTitle: 'Hash Functions and Applications', sections: '§§6.1.1–6.1.2, 6.3.1, 6.4.1–6.4.3 and 6.6.2–6.6.3; Appendix A.4; §§6.5 and 6.6.5 for commitments', coverage: 'direct',
     labs: [
       {title: 'Hash Zoo', coverage: 'direct', note: 'Inspect Merkle–Damgård, sponge and tree structures with actual hash computations.'},
       {title: 'Collision Vault', coverage: 'direct', note: 'Verify collision examples and distinguish equal digests from recovering an original message.'},
+      {title: 'Hash Hunt', coverage: 'direct', note: 'Run birthday and small-space collision searches, transfer a tag in a deliberately insecure hash-then-MAC construction, and compare actual chain precomputation with fresh salts.'},
       {title: 'Merkle Vault', coverage: 'direct', note: 'Build inclusion proofs and inspect how a changed tree invalidates a proof checked against its new root.'},
       {title: 'Commit Gate', coverage: 'direct', note: 'Separate commitment hiding from binding and test an attempted altered opening.'},
       {title: 'KDF Chain', coverage: 'direct', note: 'Compare password derivation with extracting and expanding existing key material.'}
     ],
-    predict: 'Will an inclusion proof for the original tree still verify against the root produced after its selected leaf changes?',
-    try: 'Verify a collision pair. Then generate an inclusion proof in Merkle Vault, use Tamper Leaf, and compare the original proof’s reconstructed root with the changed tree’s root. Identify which inputs were kept fixed in each experiment.',
+    predict: 'If two different letters have the same shortened digest, will a valid MAC over that digest distinguish them? What changes when a fresh salt is chosen after an inversion table was built?',
+    try: 'In Hash Hunt, find a collision at a small output width and independently compare the displayed inputs and digests. Run Meaningful forgery, then the chain-table and salt experiments; separate endpoint matches from verified preimages. For the Merkle-tree connection, retain an original inclusion proof, use Tamper Leaf, and compare its reconstructed root with the changed tree’s root.',
     reflect: 'How do a collision, a preimage and a second preimage differ? Why must a verifier obtain the expected Merkle root from a trusted source? What role does unpredictable opening randomness play in a hash commitment?',
-    limit: 'A concrete hash is not literally an ideal random oracle, and an avalanche picture is not a collision-resistance proof. Consult the author errata when comparing hash properties: second-preimage resistance does not imply preimage resistance without additional conditions.'
+    limit: 'Hash Hunt attacks deliberately shortened outputs and an insecure hash-then-MAC composition, not full SHA-256 or HMAC. Its rainbow chains are a later extension to the Hellman connection; probability models and measured outcomes remain separate. A concrete hash is not literally an ideal random oracle, and an avalanche picture is not a collision-resistance proof. Consult the author errata when comparing hash properties: second-preimage resistance does not imply preimage resistance without additional conditions.'
   },
   {
     chapter: 7, part: 'Symmetric cryptography', title: 'Inspect the machinery inside the primitive',
@@ -113,29 +114,31 @@ export const chapters = [
   },
   {
     chapter: 9, part: 'Public-key cryptography', title: 'Separate arithmetic from a hardness assumption',
-    bookTitle: 'Number Theory and Cryptographic Hardness Assumptions', sections: '§§9.1.2–9.1.4, 9.2.3–9.2.5 and 9.3.2–9.3.4; Appendix B for algorithms', coverage: 'direct',
+    bookTitle: 'Number Theory and Cryptographic Hardness Assumptions', sections: '§§9.1.2–9.1.4, 9.2.1–9.2.5 and 9.3.2–9.3.4; Appendix B for algorithms', coverage: 'direct',
     labs: [
+      {title: 'Prime Witness', coverage: 'direct', note: 'Generate candidate primes, compare Fermat and Miller–Rabin tests, count lying bases and inspect fixed-base counterexamples.'},
       {title: 'Educational RSA', coverage: 'direct', note: 'Compute small RSA keys and modular exponentiation, then inspect weak-key factoring.'},
       {title: 'Point Arithmetic', coverage: 'direct', note: 'Carry out group addition and scalar multiplication over a finite field.'},
       {title: 'Curve Lens', coverage: 'direct', note: 'Connect curve arithmetic to concrete ECDH examples and parameter choices.'},
       {title: 'ElGamal Plain', coverage: 'direct', note: 'Inspect finite-group encryption and the discrete-log relation behind its keys.'}
     ],
-    predict: 'Choose small inputs and predict the RSA ciphertext and the next elliptic-curve addition before using the calculators.',
-    try: 'Follow one small RSA encryption by hand, then use Point Arithmetic to build a scalar multiple through repeated additions. Identify the inverse problem an attacker would face in each setting.',
+    predict: 'Will every base coprime to 561 pass Fermat’s test, and does that mean it must pass Miller–Rabin? Would passing a fixed list of bases prove primality at every size?',
+    try: 'In Prime Witness, inspect 561 at base 2, count all bases for 341 and 561, and compare fixed-base counterexamples with random rounds. Run a bounded prime-generation experiment and compare candidate counts with its estimate. Then use the RSA and curve calculators to identify the inverse problems an attacker would face.',
     reflect: 'How do factoring, RSA inversion, discrete logarithms, CDH and DDH ask different questions? Which implication would need a proof?',
-    limit: 'Small computations make the algebra inspectable; they do not establish hardness for production parameters. RSA inversion is not known in general to be equivalent to factoring, and discrete-log hardness alone does not establish DDH in every group.'
+    limit: 'Random-base probable-prime evidence is not a primality certificate; deterministic fixed-base conclusions require the stated strict bound. The FIPS generation panel is a later, explicitly limited shape experiment, not textbook wording or standards conformance. Small computations make the algebra inspectable; they do not establish hardness for production parameters. RSA inversion is not known in general to be equivalent to factoring, and discrete-log hardness alone does not establish DDH in every group.'
   },
   {
     chapter: 10, part: 'Public-key cryptography', title: 'Measure how an attack uses structure',
-    bookTitle: 'Algorithms for Factoring and Computing Discrete Logarithms', sections: '§§10.1.1–10.1.3 and 10.2.2; §10.4 for parameter choices', coverage: 'direct',
+    bookTitle: 'Algorithms for Factoring and Computing Discrete Logarithms', sections: '§§10.1.1–10.1.3, 10.2.1–10.2.3 and 10.3; §10.4 and Figure 10.1 for parameter choices', coverage: 'direct',
     labs: [
       {title: 'Factor Forge', coverage: 'direct', note: 'Run classical methods including Pollard rho, Pollard p−1 and the quadratic sieve.'},
-      {title: 'ElGamal Plain', coverage: 'direct', note: 'Recover a toy discrete logarithm using baby-step/giant-step.'}
+      {title: 'ElGamal Plain', coverage: 'direct', note: 'Recover a toy discrete logarithm using baby-step/giant-step.'},
+      {title: 'Log Forge', coverage: 'direct', note: 'Compare generic solvers, lift Pohlig–Hellman digits, reuse safe-prime index-calculus relations and independently verify each recovered exponent.'}
     ],
-    predict: 'Will Pollard p−1 outperform rho on every modulus of the same size, and must baby-step/giant-step examine every possible exponent?',
-    try: 'Compare Pollard p−1 with rho on the supplied factoring examples. Then run baby-step/giant-step in ElGamal Plain’s toy group and inspect the recovered key and reported operation count.',
+    predict: 'Will equal-size groups have equal attack costs if one order is smooth? Can a field precomputation be reused for a second target, and does the same method apply to a toy curve?',
+    try: 'Keep Factor Forge’s integer attacks separate from Log Forge’s exponent recovery. In Log Forge, compare methods under the displayed equal budgets, inspect Pohlig–Hellman’s prime-power digits, then reuse an index-calculus precomputation for another target. Change to the toy curve and inspect which methods remain applicable; check every reported answer against the independent verifier.',
     reflect: 'Which feature of an instance helps each algorithm? Why can two instances of the same bit length have different observed attack costs?',
-    limit: 'The linked activities do not implement Pohlig–Hellman, collision-based discrete-log algorithms or index calculus. Factor Forge’s rho attack factors integers; its number-field-sieve material is a cost model. Browser-sized attacks and extrapolations do not demonstrate a break of full-size deployed keys.'
+    limit: 'Log Forge executes Pohlig–Hellman, collision-based discrete-log methods and safe-prime index calculus at bounded teaching sizes. Large digit problems can leave only a partial congruence; a budget stop proves no hardness claim. Its curve is a verified toy fixture, and the field-specific index solver does not apply to it. Number-field-sieve material remains a cost model. Browser timings and key-length tables do not demonstrate a break of deployed keys.'
   },
   {
     chapter: 11, part: 'Public-key cryptography', title: 'Agree on a key and identify the peer',
@@ -199,16 +202,17 @@ export const chapters = [
   },
   {
     chapter: 15, part: 'Public-key cryptography', title: 'Compute on ciphertexts and distribute decryption',
-    bookTitle: 'Advanced Topics in Public-Key Encryption', sections: '§§15.2.2–15.2.3 and 15.3.1–15.3.3; §§15.1 and 15.4–15.5 for remaining constructions', coverage: 'direct',
+    bookTitle: 'Advanced Topics in Public-Key Encryption', sections: '§§15.2.2–15.2.3, 15.3.1–15.3.3 and 15.4–15.5; §15.1 remains reading-led', coverage: 'direct',
     labs: [
+      {title: 'Residue Gate', coverage: 'direct', note: 'Compute public Jacobi symbols, encrypt bits with Goldwasser–Micali, inspect Rabin roots and turn a precisely defined root oracle into verified factors.'},
       {title: 'Paillier Gate', coverage: 'direct', note: 'Multiply ciphertexts to add plaintexts; inspect rerandomization and modulo wraparound.'},
       {title: 'Shamir Gate', coverage: 'direct', note: 'Reconstruct a shared secret from a qualified subset.'},
       {title: 'VSS Gate', coverage: 'direct', note: 'Explore Feldman share verification and a Pedersen counterpart, including the effect of a knowable generator relation.'},
       {title: 'Threshold Decrypt', coverage: 'direct', note: 'Connect threshold ElGamal to a local ElGamal/AES-GCM demonstration that also checks partial-decryption proofs.'}
     ],
-    predict: 'What sum will decrypt in Paillier Gate, and will reaching the threshold be enough if one selected partial decryption is invalid?',
-    try: 'Add two encrypted values in Paillier Gate and verify the decrypted total. In Threshold Decrypt, generate a key, ciphertext and partial decryptions. Try recovery with too few parties. Then inject a cheating partial, select enough parties including the modified one, and attempt recovery again.',
+    predict: 'Does a Jacobi symbol of +1 tell you which values are squares modulo a hidden-factor modulus? If Rabin decryption returns a square root, what extra power could that give a chosen-ciphertext attacker?',
+    try: 'In Residue Gate, compare the public symbol with the private CRT classification, encrypt the same bit again, and try the ciphertext flip. Run the canonical root-oracle attack and verify any recovered factors, then compare the redundancy rule. For the other connections, add encrypted values in Paillier Gate and test an invalid selected partial in Threshold Decrypt.',
     reflect: 'Why can homomorphic malleability be useful for computation yet dangerous for integrity? How does reconstructing a secret differ from decrypting without rebuilding the whole private key?',
-    limit: 'Goldwasser–Micali, Rabin and the generic trapdoor-permutation construction remain reading-only gaps. Pedersen commitments and proof-checked partial decryptions extend the chapter’s presentation. VSS Gate deliberately exposes a generator relation that defeats Pedersen binding. All threshold parties share one browser; these labs do not establish distributed-system or election security.'
+    limit: 'Residue Gate now executes Goldwasser–Micali and restricted Rabin constructions; it does not make them CCA-secure or supply generic trapdoor-permutation proofs. The attack depends on the stated root-oracle contract. Redundancy can refuse a query or accidentally admit a root, and the one-bit Rabin construction has a separate CPA scope. Pedersen commitments and proof-checked partial decryptions extend the chapter’s presentation. VSS Gate deliberately exposes a generator relation that defeats Pedersen binding. All threshold parties share one browser; these labs do not establish distributed-system or election security.'
   }
 ];

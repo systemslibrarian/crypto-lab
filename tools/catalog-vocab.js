@@ -34,6 +34,24 @@
    the evidence of functions called `initializeHandshake` and `resetHandshake`.
    Prefer \b on every term short enough to live inside another word. */
 const ALGORITHMS = [
+  // Number-theory and generic-attack engines added with the four October labs.
+  // Keep Fermat primality distinct from Fermat factoring, and discrete-log rho
+  // distinct from Pollard's integer-factorisation method. Generic function names
+  // need exact-commit source reviews, not broad identifier aliases.
+  { name: 'Miller–Rabin', kind: 'algorithm', family: 'primality test', re: /miller[-_ –]?rabin/i, std: null },
+  { name: 'Fermat primality test', kind: 'algorithm', family: 'primality test', re: /fermat[-_ –]?(?:primality|test)/i, std: null },
+  { name: 'Jacobi symbol', kind: 'algorithm', family: 'number theory', re: /\bjacobi\b/i, std: null },
+  { name: 'Tonelli–Shanks', kind: 'algorithm', family: 'modular square root', re: /tonelli[-_ –]?shanks/i, std: null },
+  { name: 'Goldwasser–Micali', kind: 'algorithm', family: 'public-key encryption', re: /goldwasser[-_ –]?micali/i, std: null },
+  { name: 'Rabin encryption', kind: 'algorithm', family: 'public-key encryption', re: /rabin[-_ ]?encryption/i, std: null },
+  { name: 'Pohlig–Hellman', kind: 'algorithm', family: 'discrete log algorithm', re: /pohlig(?:[-_ –]?hellman)?/i, std: null },
+  { name: 'Index calculus', kind: 'algorithm', family: 'discrete log algorithm', re: /index[-_ ]?calculus/i, std: null },
+  { name: 'Pollard rho (discrete log)', kind: 'algorithm', family: 'discrete log algorithm', re: /pollard[-_ ]?rho[^\n]{0,12}discrete[-_ ]?log/i, std: null },
+  { name: 'Pollard kangaroo', kind: 'algorithm', family: 'discrete log algorithm', re: /pollard[-_ ]?kangaroo|\bkangaroo\b/i, std: null },
+  { name: 'Floyd cycle finding', kind: 'algorithm', family: 'cycle finding', re: /floyd[-_ ]?(?:cycle|collision)/i, std: null },
+  { name: 'Hellman chains', kind: 'algorithm', family: 'hash precomputation', re: /hellman[-_ ]?chains?/i, std: null },
+  { name: 'Rainbow chains', kind: 'algorithm', family: 'hash precomputation', re: /rainbow[-_ ]?chains?/i, std: null },
+
   // --- symmetric: ciphers and modes ---
   { name: 'AES', kind: 'algorithm', family: 'block cipher', re: /\baes\b|advanced[-_ ]encryption/i, std: 'NIST:FIPS 197' },
   { name: 'AES-GCM', kind: 'algorithm', family: 'AEAD', re: /aes[-_ ]?gcm/i, std: 'NIST:SP 800-38D' },

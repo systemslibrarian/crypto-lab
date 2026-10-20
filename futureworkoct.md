@@ -14,7 +14,7 @@ right and this line is stale.
 
 ---
 
-## 3. #31 — published test vectors, 13 of 18 rows left
+## 3. #31 — published test vectors, 12 of 18 rows left
 
 Each row is a published vector to **source, verify the provenance of, and wire
 into a different sibling repo**.
@@ -29,8 +29,26 @@ Done since: `bb84` (its `encrypt.ts` had no test file and displays an authTag
 it never verified) and `bike-vault` (its F2[x] algebra was well covered; the
 SHA-256 and AES-GCM the KEM output passes through were not).
 
-Next, the rest of the 5/15 group: `falcon-seal`, `ghost-commit`, `hawk`,
-`hqc-vault`, `kyberslash`, `lms-xmss`, `paillier-gate`, `spdz-forge`.
+`falcon-seal` is done, and it is the one row whose ground-truth gap is NOT
+closable by a vector: Falcon signing is randomized (four signings of one message
+give four distinct signatures) and this build's encoding differs from the
+reference's compressed format, so a reference KAT would be rejected for framing
+rather than for being wrong. What was closable is pinned — the WASM's key sizes
+against the lab's own published 1793/2305 — and the reason the rest is not is
+recorded in the test file.
+
+Next, the rest of the 5/15 group: `ghost-commit`, `hawk`, `hqc-vault`,
+`kyberslash`, `lms-xmss`, `paillier-gate`, `spdz-forge`.
+
+**Expect some rows to end in "no vector applies", and treat that as a result.**
+Of five done: two carried a real conformance bug, two were correct but
+unverified, one cannot take a vector at all. Forcing one into the last case
+would mean adding an algorithm or asserting a framing mismatch as a defect.
+
+**Choose the tampered byte deliberately.** In `falcon-seal` flipping the FINAL
+signature byte leaves it valid, because that build's padded format has padding
+the verifier does not cover. My first test read that `true` as a verification
+failure — a conclusion about the lab drawn from my own choice of byte.
 
 **The recurring shape, worth checking first in each:** the hand-rolled hard
 maths usually HAS tests, and the symmetric primitives it feeds — a SHA-256

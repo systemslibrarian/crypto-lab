@@ -121,8 +121,46 @@ maintainer's call, not a tool's and not an agent's.**
 Today: **recall 89.2% ok, 21 labs ok, all five miss classes resolved — MET.**
 Met is permission, not obligation: turning the chip rule into a failing check
 would redden CI on the 23 chips across 19 labs it still flags, so dispositioning
-those comes first and the decision is the maintainer's. Five classes, in
-`catalog-recall.js` with what closes each:
+those comes first and the decision is the maintainer's.
+
+**Those 23 have now been dispositioned, in `audits/CHIP-DISPOSITION-2026-10-20.md`,
+by reading each lab's source for the OPERATIONS rather than for the name. The
+result argues against switching the gate on: NONE of the 23 is a demonstrable
+card defect.** Twelve name something the lab really implements where no anchor is
+derivable — `rsBerlekampMassey` does not contain the string "Reed-Solomon", and
+`crypto-lab-accumulator` turned out to carry a real RSA accumulator (`modPow`
+×13, `hashToPrime`) behind a card credited only with a Merkle tree. One is a
+granularity mismatch (`AES-256-GCM` against a credited `AES-GCM`), one a
+primitive executed by a dependency (`bcrypt-forge` runs the real EksBlowfish
+schedule inside `bcryptjs`), and three are honestly qualified in words the marker
+vocabulary does not contain — `Shor Estimates` names a fidelity in plain English
+and `estimates` is not in the list.
+
+**The finding with the longest reach is a limitation of the rule, and it was
+reached by getting it wrong first.** Judging each flagged chip ALONE — which is
+what the tool does — produced six cards that looked like they claimed
+constructions they do not build. Reading the whole chip SET, which is what a
+visitor reads, overturned five: `zk-arena` already chips **Comparison** beside
+`zk-STARK`, `isogeny-gate` chips **Castryck-Decru** beside `SIDH` (the attack
+that broke it, discussed in the same source file that implements CSIDH), and
+`pq-families`' flagged `Isogeny` is one of five sibling FAMILY names. So **a
+card's marker is frequently a different chip in the same set, and a per-chip rule
+cannot see it.** That applies to every future card, not only these three, and it
+is the question to settle before the gate rather than after.
+
+**Do not clear class A with reviewed anchors.** It looks like the established
+mechanism and it is the one route that must not be taken: an anchor resolves only
+if the term is named on the line, by the path, or by a declared structure, and
+none of those twelve implementation lines name their algorithm. The only lines
+that would resolve are the COMMENTS — and crediting an implementation to a
+comment is exactly what this file refuses, since closing that class by reading
+comments as implementations "would hand back the very false claims four cards
+were just corrected for". The honest options are a declared entailment relation
+(CKKS and BFV *are* RLWE schemes; HQC's decoder *is* concatenated RS + RM; GGH
+decryption *is* Babai round-off) or a named exemption of the kind NOT-SCANNED
+already has.
+
+Five classes, in `catalog-recall.js` with what closes each:
 
 - **vocabulary** — CLOSED ON THE SAMPLE, and **the sample was never the fleet**.
   This read "CLOSED for the sampled labs by `catalog-evidence.js gaps`" until

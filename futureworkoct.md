@@ -14,7 +14,13 @@ right and this line is stale.
 
 ---
 
-## 3. #31 — published test vectors, 12 of 18 rows left
+## 3. #31 — published test vectors, 9 of 18 rows done
+
+**Two denominators here, and they are not the same — do not collapse them.** 18
+is the issue's row count. The seven labs this file has been naming as "next"
+were the rest of one GROUP inside it, not the rest of the 18, so finishing that
+group leaves **four named rows and five unnamed ones**. The heading said "12 of
+18 rows left" while listing seven; keeping both numbers visible is the point.
 
 Each row is a published vector to **source, verify the provenance of, and wire
 into a different sibling repo**.
@@ -37,11 +43,31 @@ rather than for being wrong. What was closable is pinned — the WASM's key size
 against the lab's own published 1793/2305 — and the reason the rest is not is
 recorded in the test file.
 
-Next, the rest of the 5/15 group: `ghost-commit`, `hawk`, `hqc-vault`,
-`kyberslash`, `lms-xmss`, `paillier-gate`, `spdz-forge`.
+Done since: `ghost-commit` (its KAT was git-generated, so an independent
+`node:crypto` computation was added beside it), `hawk`, and `hqc-vault` — which
+had **no unit tests and no test runner at all**, only `test:a11y`. CAVP SHA-256
+and AES-256-GCM went in through the lab's own exported `sha256`, and both
+bit-order directions are asserted separately, because reversing writer and
+reader together still round-trips and a round-trip test cannot tell them apart.
+Correct but unverified; no bug.
+
+Next: `kyberslash`, `lms-xmss`, `paillier-gate`, `spdz-forge`.
+
+**Check what the GATE invokes, not just that it went green.** hqc-vault's build
+job ran `npm ci` → `npm run build` → `test:a11y` and never `npm test`, so the
+first commit added ten tests and CI ran none of them — a test file no workflow
+runs, which is what `tools/test-invocation.js` exists to find in other labs. The
+build passed in 55s and looked like evidence. `gh api .../jobs --jq '.jobs[] |
+.steps[] | .name'` is the question that settles it.
+
+**A measuring probe can be the broken thing.** The audit of which #31 labs run
+their units in CI used `npm (run )?test\b`, and `\b` matches at the colon in
+`npm run test:a11y` — so every lab read as "runs npm test", including the one
+that did not. The corrected probe excludes a following colon. Eight genuinely
+do; hqc-vault was the one outlier, because it had no test script to run.
 
 **Expect some rows to end in "no vector applies", and treat that as a result.**
-Of five done: two carried a real conformance bug, two were correct but
+Of eight done: two carried a real conformance bug, five were correct but
 unverified, one cannot take a vector at all. Forcing one into the last case
 would mean adding an algorithm or asserting a framing mismatch as a defect.
 
@@ -132,17 +158,35 @@ Check: `node tools/theme-sync.js check`
 
 ---
 
-## 6. `protection-census` cannot be scheduled
+## 6. `protection-census` — scheduled, waiting on one command
 
-It is the only fleet checker that stays manual, because `secrets.GITHUB_TOKEN`
-is scoped to its own repository and reading a sibling's branch protection
-answers `403`. Scheduling it needs a fine-grained PAT covering every
-`crypto-lab-*` repo with one permission, **Administration: Read-only**. The full
-note is in `.github/workflows/fleet.yml` beside the job that would run it.
+**Done 2026-10-20, except the secret itself, which I cannot create.** The PAT
+exists and was verified end-to-end before anything was wired: all 234 labs, both
+endpoints asked of each, **0 UNREAD**, in 23 seconds — 1 ruleset, 3 classic, 230
+none. It is a fine-grained PAT with Administration: Read-only, which is where
+both branch protection and rulesets live.
 
-Its last survey was **2026-09-22** (3 classic, 1 ruleset, 200 none, 0 UNREAD
-across 204 labs) and the fleet is now 234, so it is stale.
-Check: `node tools/protection-census.js` — needs network and your own `gh` auth.
+Landed: the census is in `CHECKERS` in `tools/fleet-check.js`, the secret is
+referenced by the fleet job, the generated README row moved from `manual` to
+`weekly, on demand` on its own, and `CLAUDE.md`'s "Eight checkers" is now nine.
+
+**One command left, and it needs you — writing a credential to the remote is
+blocked for me:**
+
+```
+gh secret set FLEET_READ_TOKEN --body "$(tr -d ' \t\n\r' < pat)" --repo systemslibrarian/crypto-lab
+```
+
+Until that runs, the weekly job reports the census as **NOT RUN** by name and
+does not fail — a missing secret here is a configuration gap in this repository,
+not a finding about 234 labs. A secret that exists and no longer works is the
+other case and does fail, because then the census asked and was refused. A
+fine-grained PAT expires, so that case will come: rotate the secret, do not mute
+the checker. `node tools/fleet-check.js --selftest` asserts both directions.
+
+The `pat` file in the repo root is gitignored (`.gitignore:43`) and mode 600.
+Delete it once the secret is set — GitHub will not show it again, but the secret
+is where it needs to be and a token on disk is one more copy than necessary.
 
 ---
 

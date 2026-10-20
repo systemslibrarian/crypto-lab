@@ -216,8 +216,9 @@ a file derived from `index.html`:
 `dispatch-claims` and `dispatch-census` are also folded into `dispatch-sync check`,
 so the fast loop does not grow a command. Run them directly when the answer matters on
 its own — after editing `CANONICAL`, or after cloning or removing a lab.
-(`protection-census` is NOT folded into anything: it is the newest row, it needs the
-network, and it answers a question no other checker asks.)
+(`protection-census` is not folded into any other checker's `check`: it needs the
+network, and it answers a question no other checker asks. It does run weekly, as one of
+`fleet-check.js`'s `CHECKERS` — see the `requires` note below.)
 
 **README.md's "Maintaining the fleet" table is generated, and its text lives in the
 tools.** Each row comes out of the tool it describes: the command from that file's
@@ -253,41 +254,60 @@ no, does. Anything else — an error, a rate limit, a missing repo, an unparseab
 is **UNREAD and fails the run**, because "could not look" must never read as "nothing
 there". `classic+ruleset` is reported as its own state rather than folded into either,
 for the same reason. Its denominator is declared, not discovered: the labs pinned in
-`tools/dispatch-census.json`. Surveyed 2026-09-22 across all 204: 3 classic, 1 ruleset,
-200 none, 0 UNREAD, in 21 seconds.
+`tools/dispatch-census.json`. Surveyed 2026-10-20 across all 234: 3 classic, 1 ruleset,
+230 none, 0 UNREAD, in 23 seconds — the run that verified the scheduling credential
+before it was wired in. The one ruleset is `crypto-lab-privacy-pass`, the lab this
+checker exists for: its classic endpoint answers 404 "Branch not protected" while its
+rules endpoint returns `required_status_checks`, `deletion` and `non_fast_forward`. The
+previous survey (2026-09-22, 204 labs: 3 classic, 1 ruleset, 200 none) named the same
+four labs, so the 30 labs added since all carry `none`.
 
 `deploy-sync`, `fleet-sync` and `protection-census` are the three checkers here that
 need the network and `gh`; each takes 20 to 30 seconds for the whole fleet, so none of
 them is part of the fast loop. **Run them after any cross-repo pass, after anything that touches a
 workflow, and after building a lab.**
 
-**Eight checkers also run weekly on their own**, through `.github/workflows/fleet.yml`
+**Nine checkers also run weekly on their own**, through `.github/workflows/fleet.yml`
 and `tools/fleet-check.js`: `fleet-sync`, `deploy-sync`, `gate-sync`, `dispatch-sync`,
-`theme-sync`, `catalog-evidence verify`, `catalog-recall check` and `lab-dates check`. The last two read the
+`theme-sync`, `catalog-evidence verify`, `catalog-recall check`, `lab-dates check` and
+`protection-census`. `catalog-evidence`, `catalog-recall` and `lab-dates` read the
 sibling clones rather than GitHub, and belong to the group for the same reason — their
 answers change when a LAB changes, not when this repo does. This sentence said five
 until 2026-09-27, when a depth audit asked whether the manual-versus-scheduled count was
 stale; it was, and by the additions made in this repository. The generated table in
-`README.md` was right throughout, which is the argument for generating it. `protection-census` belongs with them and is deliberately NOT there:
+`README.md` was right throughout, which is the argument for generating it.
+
+**`protection-census` was the ninth, and joined on 2026-10-20 when its credential was
+created.** It had been out for a token reason rather than a design one:
 `secrets.GITHUB_TOKEN` is scoped to the repository the workflow runs in, so reading a
-sibling repo's branch protection answers `403 Resource not accessible by integration`.
-The first scheduled run reported UNREAD for all 204 labs and filed it as a failure.
-Scheduling it needs a fine-grained PAT whose repository access covers every
-`crypto-lab-*` repo, with one permission — **Administration: Read-only**, which is where
+sibling repo's branch protection answers `403 Resource not accessible by integration`,
+and the first scheduled run reported UNREAD for all 204 labs and filed it as a failure.
+It now reads `secrets.FLEET_READ_TOKEN`, a fine-grained PAT covering every
+`crypto-lab-*` repo with one permission — **Administration: Read-only**, which is where
 both branch protection and rulesets live, and which is all a read-only census needs. A
-classic PAT works but wants `repo`, far broader than reading protection. The full note,
-including the step to add and the secret to reference, is in
-`.github/workflows/fleet.yml` beside the job that would run it — where someone deciding
-on the credential will be looking. Until it exists `protection-census` stays manual, run
-locally where your own `gh` auth already has the access, and the generated table says
-manual, because a cadence the job cannot deliver is not one to publish. They are the group whose answers change without
+classic PAT would work but wants `repo`, far broader than reading protection.
+
+**It is wired through `requires`, which is the part worth not undoing.** A checker in
+`CHECKERS` may declare a credential it needs; `fleet-check.js` runs it WITH that
+credential (everything else in the job authenticates as `GITHUB_TOKEN`, which is the
+right token for reading public sibling data and filing the issue, and is exactly the
+token that 403s here), and reports it as **NOT RUN** when the secret is absent — a third
+state, neither passing nor failing. The distinction is which subject the run cannot
+speak about: **no credential means it never asked**, which is a configuration gap in this
+repository, so reporting it as 234 UNREAD labs would restore the original false alarm
+against the wrong subject; **a credential that no longer works means it asked and was
+refused**, which is a real failure about real labs and stays loud. A fine-grained PAT
+EXPIRES, so the second case will come — rotate the secret, do not mute the checker.
+`node tools/fleet-check.js --selftest` asserts both directions of both halves, including
+that a checker declaring nothing keeps the ambient token: a guard that fired in both
+states would be as useless as none. They are the group whose answers change without
 anyone committing here — a lab can start serving a stale build, be published with no
 card, or have its branch protection altered on a day this repo sees no activity — and
 until 2026-09-23 every one of them ran only when somebody remembered. Five labs sat live
 and uncatalogued, and sixteen repositories had no topics, because nothing asked.
 
 Four things about that runner are deliberate and worth not undoing. **Every checker runs
-even after one fails**, so a single failure cannot hide the other five. **One issue per
+even after one fails**, so a single failure cannot hide the other eight. **One issue per
 run** names every checker that failed, because six issues a week is how people learn to
 close them unread. **An open issue is reused and updated**, so the "failing since" date
 keeps counting instead of resetting weekly — a failure that has stood for a month is the

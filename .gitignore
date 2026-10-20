@@ -36,3 +36,10 @@ chat.md
 # ridden into a commit as a directory of binary screenshots the first time
 # anyone staged a directory instead of a path.
 test-results/
+
+# A GitHub PAT parked in the repo root. Gitignored so a broad `git add` cannot
+# sweep it in — CLAUDE.md records a 573-line parked file swept twice, a week
+# apart, byte for byte, because the remedy was "untrack it" rather than "ignore it".
+pat
+pat.*
+*.pat

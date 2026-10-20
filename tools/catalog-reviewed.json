@@ -828,5 +828,65 @@
     ],
     "implementation": "WebCrypto / @noble/curves / local research protocols",
     "note": "Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged."
+  },
+  "crypto-lab-prime-witness": {
+    "commit": "c85f91a26720f4f2d63b8b4471720cfcce49bb25",
+    "reviewed": "2026-10-20",
+    "add": [
+      "Miller–Rabin@src/primality/millerRabin.ts:11",
+      "Fermat primality test@src/primality/fermat.ts:2"
+    ],
+    "remove": [
+      "Factoring"
+    ],
+    "implementation": "local BigInt primality engines",
+    "note": "Read the six exhibits, independent sieve/trial-prime checks, fixed-base counterexamples, exhaustive liar counting and generation workers. These are primality tests, not primality proofs. FIPS 186-5 Table B.1 is an explicitly limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and displayed factors; the lab does not teach a separate factoring attack. All 34 units, seven browser claims, two accessibility views and seven mutations passed at the prior code-identical build; this pin updates only integration documentation."
+  },
+  "crypto-lab-residue-gate": {
+    "commit": "d1f1c553da40f36f1f02b57800262271278f441a",
+    "reviewed": "2026-10-20",
+    "add": [
+      "Jacobi symbol@src/nt/jacobi.ts:4",
+      "Tonelli–Shanks@src/nt/sqrt.ts:7",
+      "Goldwasser–Micali@src/gm/gm.ts:3",
+      "Rabin encryption@src/rabin/oracle.ts:9"
+    ],
+    "removeReferences": [
+      "Boneh-Franklin IBE"
+    ],
+    "implementation": "local BigInt arithmetic / isolated key-holder worker",
+    "note": "Read binary Jacobi, Euler Legendre, modular roots/CRT, Goldwasser–Micali encryption and the Rabin key-holder closure. The Tonelli anchor executes order halving; the Rabin anchor actually squares the validated message. A public attacker receives N and one root-query closure, never p/q. The canonical QR root oracle yields independently verified factors; redundancy can refuse or accidentally admit a query and is not called CCA security. One-bit Rabin is distinct from GM. Cocks IBE is an extension mention, not Boneh–Franklin IBE. All 17 units, six browser claims, two accessibility views and six mutations passed at the code-identical deployment; this pin changes only integration documentation."
+  },
+  "crypto-lab-hash-hunt": {
+    "commit": "3c766455e051b48adb6af5356cb81257770f4ab4",
+    "reviewed": "2026-10-20",
+    "add": [
+      "HMAC@src/mac/hashAndMac.ts:2",
+      "Floyd cycle finding@src/attack/floyd.ts:2",
+      "Hellman chains@src/attack/tmto/tables.ts:8",
+      "Rainbow chains@src/attack/tmto/tables.ts:8"
+    ],
+    "remove": [
+      "Length extension"
+    ],
+    "implementation": "noble SHA-256 / WebCrypto HMAC / local attack engines",
+    "note": "Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint chain regeneration and salts sampled after precomputation. The tag transfer attacks a deliberately collision-prone hash-then-MAC composition, not HMAC or full SHA-256. Hellman uses one reduction column per table; rainbow varies the column. Coverage sets and diagnostic traces are additional memory. Length extension is a neighboring topic, not an executed exhibit. All 21 units, eight browser claims, two accessibility views and eleven mutations passed; this pin only clarifies README scope and integration."
+  },
+  "crypto-lab-log-forge": {
+    "commit": "2b5ade3940e3ae2879823c40cbc0587be6655aef",
+    "reviewed": "2026-10-20",
+    "add": [
+      "EC point arithmetic@src/group/ec.ts:4",
+      "Pollard rho (discrete log)@src/dlog/generic/rho.ts:3",
+      "Pollard kangaroo@src/dlog/generic/kangaroo.ts:3",
+      "Pohlig–Hellman@src/dlog/pohlig.ts:3",
+      "Index calculus@src/dlog/index/calculus.ts:4"
+    ],
+    "remove": [
+      "Factoring",
+      "Man-in-the-middle"
+    ],
+    "implementation": "local generic group solvers / finite-field and toy-curve arithmetic",
+    "note": "Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig–Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation."
   }
 }

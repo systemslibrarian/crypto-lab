@@ -1408,6 +1408,30 @@
       "level": "advanced",
       "why": "The guided story introduces the roles; deeper experiments require pairing groups, OR-proof challenge/response algebra, and the distinction between a scoped mathematical model and full DCS security.",
       "reviewed": "hand"
+    },
+    "crypto-lab-prime-witness": {
+      "title": "Prime Witness",
+      "level": "intermediate",
+      "why": "Modular powers, probabilistic guarantees and generation error bounds require more than arithmetic.",
+      "reviewed": "2026-10-20: source and learner flow"
+    },
+    "crypto-lab-residue-gate": {
+      "title": "Residue Gate",
+      "level": "intermediate",
+      "why": "The reader interprets modular roots, residue classes and a chosen-ciphertext reduction.",
+      "reviewed": "2026-10-20: source and learner flow"
+    },
+    "crypto-lab-hash-hunt": {
+      "title": "Hash Hunt",
+      "level": "intermediate",
+      "why": "Birthday probabilities, cycle recovery and time–memory tradeoffs need guided mathematical interpretation.",
+      "reviewed": "2026-10-20: source and learner flow"
+    },
+    "crypto-lab-log-forge": {
+      "title": "Log Forge",
+      "level": "intermediate",
+      "why": "The reader works with group orders, exponent congruences and small linear systems.",
+      "reviewed": "2026-10-20: source and learner flow"
     }
   }
 }

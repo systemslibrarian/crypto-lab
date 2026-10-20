@@ -253,6 +253,8 @@ Catalogued total moves to 225.*
 
 *Version 30 — adds Signature Gate as an explicitly labeled research-preview demo under §9 (pairings) and §21 (interactive proof simulation and challenge timing). The candidate disavowal model has scoped Lean checks; full DCS security and independent review remain open. This adds teaching depth without closing a security or concept gap. Catalogued total moves to 232.*
 
+*Version 31 — files Prime Witness and Residue Gate under §7, Hash Hunt under §3, and Log Forge under §8. Primality testing supports the factoring family; a Rabin root oracle supplies an actual reduction to factoring. Generic truncated-hash attacks and exponent recovery add depth to already covered assumptions. No concept status changes. Catalogued total moves to 236.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -332,7 +334,7 @@ success. The cipher is hand-rolled rather than imported so a reader can open the
 that nothing is pretending.
 
 **3. One-way functions and hashing — `COVERED`**
-Babel Hash · Hash Zoo · World Hashes · Collision Vault. Construction, comparison,
+Babel Hash · Hash Zoo · World Hashes · Collision Vault · Hash Hunt. Construction, comparison,
 sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
@@ -394,7 +396,7 @@ KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault · Drift Key.
 ## II. Hardness assumptions (the trapdoor families)
 
 **7. Factoring — `COVERED`**
-Educational RSA · RSA Forge · Iron Letter · Factor Forge · Locks and Keys · RSA Small Roots. Trapdoor, padding
+Educational RSA · RSA Forge · Iron Letter · Factor Forge · Locks and Keys · RSA Small Roots · Prime Witness · Residue Gate. Trapdoor, padding
 (OAEP/PSS), and RSA-OAEP measured against an elliptic-curve alternative.
 
 Locks and Keys is the way in to this concept for someone who has not met a key pair. It files
@@ -426,9 +428,11 @@ to generate your way out of, and unlike the sieves the cost stays polynomial. Th
 cross-links Shor rather than simulating it, and the number field sieve appears only as the
 `L_N[1/3, 1.923]` cost formula, labelled as a formula.
 
+Prime Witness separates primality evidence from primality proofs: it runs Miller–Rabin square chains, exhaustive liar counts and measured generation. Residue Gate adds the quadratic-residuosity branch of this family through Goldwasser–Micali encryption and Rabin square roots. Its public attacker turns a precisely defined root-oracle reply into independently verified factors; knowing a Jacobi symbol alone does not reveal the private residue class.
+
 **8. Discrete logarithm — `COVERED`**
 Curve Lens · Point Arithmetic · ElGamal Plain · DH MITM · Curve448 · Ed25519 Forge ·
-Function Key.
+Function Key · Log Forge.
 
 Function Key is the one that uses the discrete log as a **cost** rather than as a hardness
 assumption. ABDP15's DDH-based inner-product functional encryption decrypts to `g^⟨x,y⟩`, so
@@ -1101,7 +1105,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 232.**
+**Catalogued total: 236.**
 
 ---
 

@@ -37,8 +37,8 @@ test('reading filters, browser-local progress, no-JS links and hub guide discove
   await page.locator('#search').fill('no matching chapter xyz');assert.equal(await page.locator('#empty').isVisible(),true);await page.locator('#clear').click();assert.equal(await page.locator('.chapter:visible').count(),25);
   await page.locator('#clear-progress').click();await contains(page,'progress','0 of 25');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);await audit(page);assert.deepEqual(errors,[]);
-  await page.goto(origin+'/');await page.locator('#path-band-applied-cryptography summary').click();assert.equal(await page.locator('#path-band-applied-cryptography .path-guide a').getAttribute('href'),'learn/applied-cryptography/');
-  await page.locator('#path-band-applied-cryptography .path-guide a').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Applied Cryptography/);
+  await page.goto(origin+'/');assert.equal(await page.locator('#path-band-applied-cryptography').count(),0);await page.locator('#menuToggle').click();
+  await page.locator('.nav-menu-educators[href="learn/applied-cryptography/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Applied Cryptography/);
  }finally{await page.context().close();}
  const noJS=await browser.newPage({javaScriptEnabled:false});try{await noJS.goto(origin+'/learn/applied-cryptography/');assert.equal(await noJS.locator('.chapter a').count()>50,true);}finally{await noJS.close();}
 });
@@ -58,10 +58,9 @@ test('modern reading path filters exact chapters, restores progress and keeps th
   await page.locator('#search').fill('no matching chapter xyz');assert.equal(await page.locator('#empty').isVisible(),true);await page.locator('#clear').click();assert.equal(await page.locator('.chapter:visible').count(),15);
   await audit(page);assert.deepEqual(errors,[]);
   await page.goto(origin+'/learn/applied-cryptography/');assert.equal(await page.locator('#chapter-4 input').isChecked(),true,'resetting Katz–Lindell must preserve Schneier progress');
-  await page.goto(origin+'/');await page.locator('#path-band-modern-cryptography summary').click();assert.equal(await page.locator('#path-band-modern-cryptography .path-guide a').getAttribute('href'),'learn/modern-cryptography/');
+  await page.goto(origin+'/');assert.equal(await page.locator('#path-band-modern-cryptography').count(),0);assert.equal(await page.locator('#path-band-applied-cryptography').count(),0);assert.equal(await page.locator('#path-band-start-here').count(),1);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
-  await page.locator('#path-band-modern-cryptography .path-guide a').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Introduction to Modern Cryptography/);
-  await page.goto(origin+'/');await page.locator('#menuToggle').click();await page.locator('.nav-menu-educators[href="learn/modern-cryptography/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Introduction to Modern Cryptography/);
+  await page.locator('#menuToggle').click();await page.locator('.nav-menu-educators[href="learn/modern-cryptography/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Introduction to Modern Cryptography/);
  }finally{await page.context().close();}
  const noJS=await browser.newPage({javaScriptEnabled:false});try{await noJS.goto(origin+'/learn/modern-cryptography/');assert.equal(await noJS.locator('.chapter:visible').count(),15);assert.ok(await noJS.locator('.chapter-labs a').count()>40);assert.equal(await noJS.locator('#reader-controls').isVisible(),false);}finally{await noJS.close();}
 });

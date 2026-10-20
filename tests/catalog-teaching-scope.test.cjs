@@ -509,3 +509,30 @@ test('research scope controls reject false credits and loss of actual demonstrat
     assert.throws(() => checkNewResearchScope(removed), assert.AssertionError);
   }
 });
+
+test('new number-theory vocabulary keeps primality and exponent recovery distinct from factoring', () => {
+  const { ALGORITHMS } = require('../tools/catalog-vocab.js');
+  const named = name => ALGORITHMS.find(t => t.name === name).re;
+  assert.ok(named('Miller–Rabin').test('millerRabin'));
+  assert.ok(named('Fermat primality test').test('Fermat primality test'));
+  assert.ok(!named('Fermat primality test').test('Fermat difference-of-squares factorization'));
+  assert.ok(named('Pollard rho (discrete log)').test('Pollard rho (discrete log)'));
+  assert.ok(!named('Pollard rho (discrete log)').test('Pollard rho integer factorization'));
+  assert.ok(!named('Rabin encryption').test('Miller–Rabin primality test'));
+});
+
+test('new lab cards retain real computations without borrowing neighboring attacks', () => {
+  for (const [slug, present, absent] of [
+    ['prime-witness', ['Miller–Rabin', 'Fermat primality test'], ['Factoring']],
+    ['residue-gate', ['Goldwasser–Micali', 'Rabin encryption', 'Jacobi symbol', 'Tonelli–Shanks'], []],
+    ['hash-hunt', ['SHA-256', 'HMAC', 'Hellman chains', 'Rainbow chains'], ['Length extension']],
+    ['log-forge', ['Baby-step giant-step', 'Pohlig–Hellman', 'Index calculus', 'EC point arithmetic'], ['Factoring', 'Man-in-the-middle']],
+  ]) {
+    const repo = 'crypto-lab-' + slug;
+    for (const name of present) assert.ok(implementationsFor(html, repo).includes(name), `${repo}: keep ${name}`);
+    for (const name of absent) assert.ok(!attacksFor(html, repo).includes(name), `${repo}: no ${name} exhibit`);
+  }
+  assert.ok(attacksFor(html, 'crypto-lab-residue-gate').includes('Chosen-ciphertext attack'));
+  assert.ok(attacksFor(html, 'crypto-lab-hash-hunt').includes('Collision attack'));
+  assert.ok(attacksFor(html, 'crypto-lab-log-forge').includes('Discrete log'));
+});

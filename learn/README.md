@@ -2,6 +2,9 @@
 
 These pages live in the hub and deploy with its existing GitHub Pages site. They
 do not require new repositories or add standalone cards to the catalog count.
+The two book companions remain in the hub menu and at their direct URLs. Their
+`LEARNING_PATHS` entries set `home: false`, which omits their cards from the
+homepage Learning paths band while preserving menu steps and generated records.
 
 ## Applied Cryptography reading path
 
@@ -89,14 +92,25 @@ These are educational capability checks, not new security audits of those labs.
   and proofs are not implemented by these connections. Its switching-game
   background is explicitly cross-referenced to §3.5.1 and Appendix A.4; the
   ElGamal reduction is a later example from §12.4.1.
-- Chapter 10 has real selected factoring methods and toy baby-step/giant-step;
-  Pohlig–Hellman, collision-based discrete-log methods and index calculus remain
-  outside these connections. Factor Forge’s rho implementation is for factoring.
+- Chapter 6 now connects to Hash Hunt for generic searches, meaningful-message
+  collisions, hash-then-MAC composition, Hellman precomputation and salts. The
+  SHA-256 output is deliberately shortened; rainbow chains are a later extension.
+- Chapter 9 now connects to Prime Witness for generation, primality witnesses,
+  lying bases and fixed-base limits. Its FIPS-shape panel is a separate later
+  connection, not a claim of standards-conformant key generation.
+- Chapter 10 now has Log Forge for generic exponent recovery, prime-power
+  Pohlig–Hellman and safe-prime index calculus, alongside the existing factoring
+  links. Factor Forge’s rho factors integers; Log Forge’s rho recovers exponents.
+  Partial congruences, runtime caps and production-size cost formulas remain
+  explicitly distinct from verified recovery at teaching sizes.
 - Chapter 14 separates quantum simulations and the text’s themes from later
   standardized ML-KEM/ML-DSA examples. LMS Ledger is a teaching adaptation,
   not interoperable HSS.
-- Chapter 15 covers selected Paillier, sharing and threshold concepts. It does
-  not implement Goldwasser–Micali, Rabin or generic trapdoor-permutation proofs.
+- Chapter 15 now includes Residue Gate’s Goldwasser–Micali and restricted Rabin
+  experiments beside Paillier, sharing and threshold concepts. The canonical
+  root-oracle reduction, redundancy rule and one-bit Rabin construction have
+  different contracts; none establishes CCA security. Generic trapdoor-permutation
+  proofs remain reading-led.
   Feldman VSS connects directly to §15.3.2; Pedersen commitments and proof-checked
   partial decryptions extend the chapter’s presentation.
   VSS Gate deliberately makes the second-generator relation knowable, defeating
@@ -111,6 +125,29 @@ The wording review checked these specific source behaviors:
 | Merkle tampering | [Merkle Vault `main.ts`, `60c4a0f`](https://github.com/systemslibrarian/crypto-lab-merkle-vault/blob/60c4a0f7a952f75a119fc6243d8970b6ddecbf18/src/main.ts) | Tamper Leaf retains the original proof and checks it against the changed tree’s root; the activity follows that actual control. |
 | Share verification | [VSS Gate `vss.ts`, `cda8c3a`](https://github.com/systemslibrarian/crypto-lab-vss-gate/blob/cda8c3aea86774e1bf9edddfb429bf9eba579509/src/vss.ts) | Both Feldman and Pedersen share checks are implemented; the connection distinguishes them. |
 | Threshold recovery | [Threshold Decrypt `main.ts`, `842f77d`](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/blob/842f77ddd5ea11496b0e35599dd43075d2905c7a/src/main.ts) and [`elgamal.ts`](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/blob/842f77ddd5ea11496b0e35599dd43075d2905c7a/src/elgamal.ts) | Chaum–Pedersen checks run before combination and reject a selected invalid partial. |
+
+The four new lab connections were reviewed against their source, completed gates
+and served assets on 20 October 2026. The original briefs identify the Katz–Lindell
+section gaps; the activities follow the implemented controls and limits.
+
+| Lab | Modern Cryptography connection | Applied Cryptography connection |
+|---|---|---|
+| Prime Witness | §9.2.1–9.2.2: candidate generation and primality evidence | Chapter 11: prime generation |
+| Hash Hunt | §6.3.1, §6.4.1–6.4.3, §6.6.3, Appendix A.4: composition, generic attacks and salts | Chapters 7 and 18: birthday costs, hash functions and authentication |
+| Log Forge | §10.2–10.4: generic algorithms, smooth order, index calculus and key lengths | Chapters 7 and 11: public-key strength and finite-field discrete logs |
+| Residue Gate | §15.4–15.5: Goldwasser–Micali, Rabin and the root-oracle reduction | Chapters 19 and 23: Rabin and probabilistic encryption |
+
+Applied Cryptography placements were checked against the author’s expanded
+[second-edition contents](https://www.schneier.com/books/applied-cryptography-toc/).
+Its chapter 19 Pohlig–Hellman encryption scheme is not Log Forge’s discrete-log
+solver. Later SHA-256, rainbow-chain, FIPS and current key-length examples are
+identified as extensions, not implementations of every construction in the book.
+
+Inspected implementation pins:
+- [Prime Witness `c85f91a`](https://github.com/systemslibrarian/crypto-lab-prime-witness/tree/c85f91a26720f4f2d63b8b4471720cfcce49bb25)
+- [Hash Hunt `3c76645`](https://github.com/systemslibrarian/crypto-lab-hash-hunt/tree/3c766455e051b48adb6af5356cb81257770f4ab4)
+- [Log Forge `2b5ade3`](https://github.com/systemslibrarian/crypto-lab-log-forge/tree/2b5ade3940e3ae2879823c40cbc0587be6655aef)
+- [Residue Gate `d1f1c55`](https://github.com/systemslibrarian/crypto-lab-residue-gate/tree/d1f1c553da40f36f1f02b57800262271278f441a)
 
 To update a mapping, verify the relevant lab’s current capability before editing
 the activity or coverage claim; a matching algorithm keyword is insufficient.

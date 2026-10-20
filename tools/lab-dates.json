@@ -1641,6 +1641,34 @@
    "addedFrom": "2026-10-17T20:11:12Z",
    "updatedFrom": "2026-10-18T15:46:34-04:00",
    "updatedCommit": "7c7f74d7efff3a6c1cac227ef08b93d42cd184c1"
+  },
+  "crypto-lab-prime-witness": {
+   "added": "2026-10",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-20T19:23:36Z",
+   "updatedFrom": "2026-10-20T15:57:46-04:00",
+   "updatedCommit": "aea4987eb664b595e57193c74cc2951ffdb39b5f"
+  },
+  "crypto-lab-residue-gate": {
+   "added": "2026-10",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-20T19:22:29Z",
+   "updatedFrom": "2026-10-20T15:59:10-04:00",
+   "updatedCommit": "c5573274215bcc4c69f8acb30affe52512595ac5"
+  },
+  "crypto-lab-hash-hunt": {
+   "added": "2026-10",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-20T19:23:03Z",
+   "updatedFrom": "2026-10-20T16:21:49-04:00",
+   "updatedCommit": "c71418642477df5aa3dc7bb940f6c54fadc7f4e0"
+  },
+  "crypto-lab-log-forge": {
+   "added": "2026-10",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-20T19:23:18Z",
+   "updatedFrom": "2026-10-20T16:21:52-04:00",
+   "updatedCommit": "bb0983ccfd0432173f9d8ca8d7e635217b2b3eae"
   }
  }
 }

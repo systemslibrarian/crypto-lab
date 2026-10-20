@@ -87,40 +87,47 @@ jobs:
         run: node tools/fleet-check.js --open-issues
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # protection-census is one of the checkers above and is the only one that
+          # cannot use GH_TOKEN: that secret is scoped to THIS repository, so asking a
+          # sibling for its branch protection answers `403 Resource not accessible by
+          # integration`. fleet-check.js runs a checker that declares a required
+          # credential WITH that credential, so this is the whole of the wiring.
+          #
+          # If this secret is absent the census is reported NOT RUN, by name, and does
+          # not fail the job -- a missing secret here is a configuration gap in this
+          # repository, not a finding about 234 labs. A secret that exists and no longer
+          # works is the other case and DOES fail: the census asked, was refused, and
+          # reports UNREAD. A fine-grained PAT expires, so that case will come.
+          FLEET_READ_TOKEN: ${{ secrets.FLEET_READ_TOKEN }}
 
-      # ── protection-census is NOT in this job, and adding it is a credential decision ──
+      # ── protection-census joined this job on 2026-10-20 ──
       #
-      # It belongs here by every other measure: it asks GitHub, its answer changes with
-      # nobody committing, and it is the only thing that notices a lab's branch
-      # protection changing. What stops it is the token.
+      # It is in CHECKERS in tools/fleet-check.js, not a step of its own, so its failures
+      # join the single weekly issue rather than only reddening the job. The note that
+      # stood here described why it could NOT be scheduled, and the whole of the reason
+      # was the token:
       #
-      # `secrets.GITHUB_TOKEN` is scoped to the repository the workflow runs in. Reading
-      # branch protection on a SIBLING repo answers `403 Resource not accessible by
-      # integration` — it is not a permissions block that `permissions:` above can lift,
-      # because the token has no standing in those repositories at all. The first
-      # scheduled run proved it: UNREAD for all 204 labs, filed as a failure.
+      #   `secrets.GITHUB_TOKEN` is scoped to the repository the workflow runs in, so
+      #   reading branch protection on a SIBLING answers 403. That is not a permissions
+      #   block `permissions:` above can lift -- the token has no standing in those
+      #   repositories at all. The first scheduled run proved it: UNREAD for all 204
+      #   labs, filed as a failure.
       #
-      # What would fix it, if you decide the credential is worth it:
+      # What fixed it is `secrets.FLEET_READ_TOKEN`, a fine-grained PAT whose repository
+      # access covers every crypto-lab-* repo, with ONE permission -- Administration:
+      # Read-only. Branch protection and repository rulesets both sit under
+      # Administration, and read is all the census needs; it is read-only by construction
+      # and has no write path. A classic PAT works too but wants `repo`, which carries
+      # write to code and settings across everything it can see -- prefer the
+      # fine-grained one.
       #
-      #   A fine-grained PAT whose repository access covers every crypto-lab-* repo,
-      #   with ONE permission — Administration: Read-only. Branch protection and
-      #   repository rulesets both sit under Administration, and read is all the census
-      #   needs; it is read-only by construction and has no write path.
+      # Verified against all 234 labs before scheduling: 1 ruleset, 3 classic, 230 none,
+      # 0 UNREAD, in 23 seconds. The one ruleset is crypto-lab-privacy-pass, which is the
+      # lab this checker exists for -- the classic endpoint answers 404 "Branch not
+      # protected" for it while the rules endpoint shows required_status_checks with no
+      # bypass actors.
       #
-      #   A classic PAT works too but wants `repo`, which is far broader than reading
-      #   protection — it carries write to code and settings across everything it can
-      #   see. Prefer the fine-grained one.
-      #
-      # Then store it as a repository secret and add a step here:
-      #
-      #   - name: What protects each lab's default branch
-      #     run: node tools/protection-census.js
-      #     env:
-      #       GH_TOKEN: ${{ secrets.FLEET_READ_TOKEN }}
-      #
-      # and add it back to CHECKERS in tools/fleet-check.js so its failures join the one
-      # issue rather than only failing the job.
-      #
-      # Until that exists it stays MANUAL — run locally, where your own `gh` auth already
-      # has the access — and the generated table in README.md says manual, because a
-      # cadence this job cannot deliver is not one to publish.
+      # A fine-grained PAT EXPIRES. When this one does, the census will report UNREAD and
+      # fail this job, which is correct and is the loud half on purpose: it asked and was
+      # refused, so it genuinely has no view on those labs. Rotate the secret; do not
+      # mute the checker.

@@ -212,10 +212,33 @@ The ranking inside issue #31 is stale and should not be used.
 These run clean as reports and are nobody's failure yet. Each needs a decision,
 not a fix.
 
-4a. **Chip rule: 23 chips across 19 labs.** The gate criterion is MET (recall
-89.2%, 21 fixture labs, all miss classes resolved), so `catalog-sync chips`
-*may* become a failing check — but turning it on reddens CI on those 23 until
-they are dispositioned, and `CLAUDE.md` says that decision is the maintainer's.
+4a. **DISPOSITIONED 2026-10-20** — `audits/CHIP-DISPOSITION-2026-10-20.md`. All 23
+chips across 19 labs were judged by reading each lab's source for the
+OPERATIONS, never for the algorithm's name (that is what the scanner does;
+repeating it reproduces its answer).
+
+**Result: none of the 23 is a demonstrable card defect**, so the file argues
+against switching the gate on. 12 are algorithms the lab really implements with
+no derivable anchor, 3 are marked by a SIBLING chip, 1 is a granularity
+mismatch, 1 runs inside a dependency, 3 are honestly qualified in words the
+marker vocabulary lacks, 1 is marginal, 2 need one more read. Totals 23.
+
+**Two things in it are worth knowing before touching this again:**
+
+- **I got it wrong first, by judging chips in isolation — which is what the tool
+  does.** Six cards looked like overclaims until I read the whole chip SET:
+  `zk-arena` already chips `Comparison`, `isogeny-gate` chips `Castryck-Decru`
+  beside `SIDH`, `pq-families`' `Isogeny` is one of five family names. A card's
+  marker is frequently a *different chip in the same set*. That is the finding
+  with the longest reach and it is the question to settle before any gate.
+- **Do not clear the 12 with reviewed anchors in `catalog-reviewed.json`.** It
+  looks like the established mechanism. An anchor resolves only if the term is
+  named on the line, by the path, or by a structure — and none of those twelve
+  implementation lines name their algorithm (`rsBerlekampMassey` contains no
+  "Reed-Solomon"). The only lines that WOULD resolve are the comments, and
+  crediting an implementation to a comment is what CLAUDE.md explicitly refuses.
+
+The gate decision itself remains the maintainer's and nothing was switched on.
 Check: `node tools/catalog-sync.js chips`
 
 4b. **Corpus prose: 185 never-reviewed entries.** The chatbot's corpus text has

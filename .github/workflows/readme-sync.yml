@@ -52,7 +52,7 @@ jobs:
         run: node tools/fleet-sync.js selftest
       - name: Fleet source readability positive and negative controls
         if: ${{ !cancelled() }}
-        run: node --test tests/fleet-sync-source.test.cjs tests/sibling-labs.test.cjs tests/card-reader.test.cjs
+        run: node --test tests/fleet-sync-source.test.cjs tests/sibling-labs.test.cjs tests/card-reader.test.cjs tests/card-stamp.test.cjs
       - name: Deployment regression fixtures
         if: ${{ !cancelled() }}
         run: node tools/deploy-sync.js selftest

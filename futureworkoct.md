@@ -405,35 +405,42 @@ is where it needs to be and a token on disk is one more copy than necessary.
 
 ---
 
-## 7. The write half of #125
+## 7. The write half of #125 — DONE (2026-10-20)
 
-`level-sync` and `lab-dates` now share the card **reader** but keep their own
-write-position regex. That split was made deliberately rather than discovered: a
-bug in the stamping path would silently rewrite every card. `card-reader.js`
-already exposes `tagStart` / `tagEnd`, so the position is available when someone
-wants to finish it.
+Both halves are closed. `level-sync` and `lab-dates` read cards through
+`card-reader.js` and now WRITE through one shared `stampTag()` over the tag the
+reader bounded. `CARD_HEAD` is gone from both files.
 
-**The cosmetic half is SOLVED, and it was a run order rather than a bug.**
-`data-level` sits where the writer that ran LAST put it, and `main`'s order is
-the one `level-sync` produces. Measured 2026-10-20 on a real repin: running
-`catalog-evidence write` then `lab-dates` gave a **704-line** `index.html` diff;
-running `level-sync` afterwards collapsed it to **10 lines** — the four cards
-that had actually changed. Nothing else moved, and no value differed.
+**The bug it closes was real and invisible to the catalog.** `CARD_HEAD` bounded
+the opening tag with `([^>]*)`, which stops at the first `>` — including a `>`
+inside a quoted attribute value. A review note reading `a > b` ended the tag
+early, so the writer stripped `data-level` only from the truncated part and
+re-inserted it, and the card came out carrying TWO. That is the eighth row in
+CLAUDE.md's "answering from a copy" table.
 
-So: **finish any card-stamping pass with `node tools/level-sync.js`.** No code
-change needed, and the write-position regexes stay separate.
+**The real catalog cannot tell the fix from the bug**, which is why the test
+exists: none of the 232 cards has a `>` in an attribute value, so the output is
+byte-identical either way. Both controls were run:
 
-That matters more than tidiness. The 704-line version contained four real
-changes and 228 cards whose attributes only reordered, which is a diff nobody
-can review — and this repository's recurring failure is a real change hidden
-inside a plausible-looking one. The check that made it safe either way is worth
-reusing: compare cards by their attribute SET rather than by text, through
-`card-reader.js`, and print only the slugs whose values differ. CLAUDE.md
-already notes that card-by-card diffing caught a swept derivation once and calls
-that luck rather than a control; this is the same read, as a command.
+- the new writers produce **byte-identical** output across all 232 cards, and
+  stay identical on a second run (idempotent);
+- `tests/card-stamp.test.cjs` — 6 tests on a card whose tag contains `a > b` —
+  **fails 2 of 6 against the old writers** and passes 6 of 6 against the new.
+  The two that fail are exactly the duplicate-attribute and stale-attribute
+  cases; the other four describe behaviour the old writer also got right, and
+  saying so is the point of including them.
 
+Wired into CI beside `card-reader.test.cjs` in `readme-sync.yml`.
 
----
+Also fixed in passing: `lab-dates`' `CARD_HEAD` matched `project-card` only, so a
+returning `feature-card` would have been carded by six tools and dated by none.
+The shared reader accepts both.
+
+The cosmetic half is also settled and is a RUN ORDER, not a bug: finish any
+card-stamping pass with `node tools/level-sync.js`. Measured on a real repin —
+`catalog-evidence write` then `lab-dates` gave a 704-line `index.html` diff;
+running `level-sync` afterwards collapsed it to 10, the four cards that had
+actually changed.
 
 ## Settled — do not re-file these
 

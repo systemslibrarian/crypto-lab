@@ -1535,6 +1535,18 @@ this in mind rather than adding a fifth name to it.
 | a lab's own linked worktree, in `port-sync` | the clones, excluding second working copies | **a false collision** — `4357 crypto-lab-lane-porttest, crypto-lab-schnorr-forge`, a lab colliding with itself |
 | a card's opening tag as `href="..."([^>]*)(>)`, in `lab-dates` and `level-sync` | the whole tag, however it is punctuated | **`card says no level`** about a card carrying two of them — a `>` inside `data-review-note` ended the tag early, both writers missed the attributes that really followed, and each added its own copy |
 
+**The eighth is now closed on both sides.** The READ moved to `card-reader.js` in
+#125 and the WRITE was deliberately left on `CARD_HEAD`, because a bug in the
+stamping path silently rewrites every card. Both now share one `stampTag()` over
+the tag the reader bounded, and `CARD_HEAD` is gone from both files. **The real
+catalog could not tell the fix from the bug** — none of its 232 cards has a `>`
+in an attribute value, so the output is byte-identical either way — so
+`tests/card-stamp.test.cjs` stamps a card whose tag contains `a > b` and **fails
+2 of its 6 tests against the old writers**: the duplicate-attribute case and the
+case where a date that can no longer be derived outlives the fact it came from.
+The other four pass under both, and are kept so the two that discriminate are
+visible as the two that discriminate.
+
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
 `NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`. What makes them work is not
 the name but the refusal underneath it — a checker that could not look reports that it could

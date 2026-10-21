@@ -1945,6 +1945,22 @@
    "addedFrom": "2026-10-21T00:07:57Z",
    "updatedFrom": "2026-10-20T20:55:17-04:00",
    "updatedCommit": "2ea9375ac3c616e9ae3b6817404e807b1ee0b766"
+  },
+  "crypto-lab-aes-anatomy": {
+   "added": "2026-10",
+   "addedOn": "2026-10-21",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-21T19:20:17Z",
+   "updatedFrom": "2026-10-21T16:26:35-04:00",
+   "updatedCommit": "7abf61f7fdcef076c5f536c81ec0e1b729b05118"
+  },
+  "crypto-lab-clock-arithmetic": {
+   "added": "2026-10",
+   "addedOn": "2026-10-21",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-21T19:19:56Z",
+   "updatedFrom": "2026-10-21T16:06:56-04:00",
+   "updatedCommit": "5bb86840fab4806e3681c1a378fd4c643831035d"
   }
  }
 }

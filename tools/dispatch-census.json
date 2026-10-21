@@ -3,9 +3,9 @@
   "generated": "2026-10-21",
   "root": "..",
   "totals": {
-    "labs": 245,
-    "autoMergeJobs": 243,
-    "dispatchSites": 242
+    "labs": 247,
+    "autoMergeJobs": 245,
+    "dispatchSites": 244
   },
   "withDispatchSite": [
     "crypto-compare",
@@ -14,6 +14,7 @@
     "crypto-lab-accumulator",
     "crypto-lab-adaptor-gate",
     "crypto-lab-aegis-gate",
+    "crypto-lab-aes-anatomy",
     "crypto-lab-aes-modes",
     "crypto-lab-agreeing-in-public",
     "crypto-lab-air-stream",
@@ -40,6 +41,7 @@
     "crypto-lab-chain-of-trust",
     "crypto-lab-ciphertext-mirror",
     "crypto-lab-ckks-lab",
+    "crypto-lab-clock-arithmetic",
     "crypto-lab-collision-vault",
     "crypto-lab-commit-gate",
     "crypto-lab-compression-leak",

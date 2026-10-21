@@ -2271,7 +2271,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">240</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">242</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21463,6 +21463,39 @@
             <div class="project-meta"><div class="stack"><span class="chip">ristretto255</span><span class="chip">Ed25519</span><span class="chip">HKDF-SHA-256</span><span class="chip">AES-GCM</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
+          <a class="project-card" data-category="KEY EXCHANGE | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-clock-arithmetic/"
+            data-implements="Diffie-Hellman@src/nt/toyDh.ts:4"
+            data-references="AES | Baby-step giant-step | ElGamal | Jacobi symbol | Pohlig–Hellman | RSA"
+            data-attacks="Brute force@README.md:62"
+            data-standards="IETF"
+            data-implementation="hand-rolled BigInt arithmetic"
+            data-review-commit="5bb86840fab4806e3681c1a378fd4c643831035d"
+            data-review-note="Reviewed exact modular arithmetic, extended Euclid, Euler phi, orders, generators, subgroup enumeration and generalized CRT. The small-number DH model computes both parties and searches possible shared secrets with an actual guess count at src/nt/toyDh.ts:3. It is not a discrete-log solver or MITM exhibit. Trial division supports the arithmetic lesson rather than an RSA factoring attack; RSA and adjacent algorithms are references only."
+            data-added="2026-10" data-added-on="2026-10-21" data-updated="2026-10"
+            data-level="intermediate" target="_blank" rel="noopener" style="--accent: #ffb84d;"
+            data-overlaps="crypto-lab-rsa-educational: Clock Arithmetic exposes inverses and generalized CRT before RSA uses them | crypto-lab-log-forge: Clock Arithmetic teaches orders, generators and subgroup sizes before Log Forge attacks discrete logs">
+            <div class="card-kicker">Arithmetic Before the Cipher</div>
+            <div class="project-title">Clock Arithmetic</div>
+            <div class="project-copy">Step through the integer arithmetic under RSA and Diffie–Hellman: inverses, Euler φ, powers, orders, generators, subgroups and generalized CRT. Inspect what happens when each precondition fails.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Modular Arithmetic</span><span class="chip">Extended Euclid</span><span class="chip">Euler φ</span><span class="chip">CRT</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-aes-anatomy/"
+            data-implements="AES@src/aes/cipher.ts:6"
+            data-references="AEGIS-256 | AES-CBC | SHA-256 | TLS 1.3"
+            data-attacks="Chosen-plaintext attack@src/ui/act7.ts:6 | Known-plaintext attack@src/ui/act7.ts:5"
+            data-standards="NIST"
+            data-implementation="hand-rolled AES / WebCrypto cross-check"
+            data-review-commit="7abf61f7fdcef076c5f536c81ec0e1b729b05118"
+            data-review-note="Reviewed the full AES-128/192/256 data path, inverse, key expansion and four opt-in layer ablations. Known-pair affine recovery, known-column transplantation and chosen-plaintext byte codebooks execute against weakened variants with independently recomputed full-AES controls. Side-channel and timing mentions describe limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson."
+            data-added="2026-10" data-added-on="2026-10-21" data-updated="2026-10"
+            data-level="intermediate" target="_blank" rel="noopener" style="--accent: #9f88ff;"
+            data-overlaps="crypto-lab-aegis-gate: AEGIS Gate shows one AES round inside another construction; AES Anatomy adds the full cipher, key schedule and inverse | crypto-lab-aes-modes: AES Anatomy builds the block primitive; AES Modes composes blocks into encryption schemes">
+            <div class="card-kicker">Build AES, Then Remove a Layer</div>
+            <div class="project-title">AES Anatomy</div>
+            <div class="project-copy">Build AES from field arithmetic to full encryption and decryption, then remove one layer and run four concrete attacks beside independently verified real-AES controls.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">AES-128/192/256</span><span class="chip">GF(2⁸)</span><span class="chip">Key Expansion</span><span class="chip">Inverse Cipher</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -21572,8 +21605,10 @@
         blurb: "A builder's journey — from primitives to the protocols you actually ship.",
         steps: [
           { title: 'Babel Hash' },
+          { title: 'AES Anatomy' },
           { title: 'AES Modes' },
           { title: 'KDF Chain' },
+          { title: 'Clock Arithmetic' },
           { title: 'Educational RSA' },
           { title: 'RSA Forge' },
           { title: 'Point Arithmetic' },
@@ -21666,6 +21701,8 @@
     ];
 
     var TITLE_TO_SECTION = {
+      'Clock Arithmetic': 'foundations',
+      'AES Anatomy': 'symmetric',
       'TESLA Broadcast': 'foundations',
       'Next Number': 'cryptanalysis',
       'DVD Scramble': 'cryptanalysis',
@@ -21806,6 +21843,7 @@
     };
 
     var FOUNDATIONS_TITLES = [
+      'Clock Arithmetic',
       'Prime Witness',
       'Drift Key', 'Noise to Numbers',
       'Phantom Vault','DRBG Arena','Babel Hash','Hash Zoo','World Hashes',

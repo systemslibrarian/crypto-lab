@@ -257,6 +257,8 @@ Catalogued total moves to 225.*
 
 *Version 32 — files the five labs carded on 2026-10-21: Next Number under §2 (generator predictability — a toy LCG read off its recurrence, Java's 48-bit state recovered from two ints, and a 512-bit truncated LCG lifted by lattice reduction), TESLA Broadcast under §5 (a one-way HMAC key chain with delayed disclosure, which is message authentication without a shared secret per message), DVD Scramble under §4 beside Air Stream and LFSR Forge (the two-LFSR CSS generator, where the structure itself determines the key), and Twist Trap and AKE Ladder under §16 — Twist Trap for what missing point validation costs a key exchange, AKE Ladder for the AKE1-AKE5 ladder where each removed protection has a scripted attack against real transcripts. No status change: §2 and §16 were already `DEEP`, §4 `DEEP`, §5 `COVERED`. No gap closes, because none of the five was a gap — all five are depth on concepts the catalog already covers. Catalogued total moves to 241.*
 
+*Version 33 — files AES Anatomy under §4 for the full AES primitive, schedule, inverse and four deliberately weakened data-path attacks, with full-AES controls. Files Clock Arithmetic under §7 and §8 for the arithmetic prerequisites of RSA and finite-field DH: inverses, Euler φ, orders, generators, subgroups and generalized CRT. These deepen existing coverage without changing a concept status. Catalogued total moves to 243.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -340,7 +342,7 @@ Babel Hash · Hash Zoo · World Hashes · Collision Vault · Hash Hunt. Construc
 sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
-Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Format Ward ·
+Iron Serpent · World Ciphers · AES Anatomy · AES Modes · ChaCha20 Stream · Ascon · Format Ward ·
 Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream · WEP Crack · LFSR Forge · DVD Scramble.
 SPN, ARX, sponge, stream, lightweight, and Feistel.
 
@@ -398,7 +400,7 @@ KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault · Drift Key.
 ## II. Hardness assumptions (the trapdoor families)
 
 **7. Factoring — `COVERED`**
-Educational RSA · RSA Forge · Iron Letter · Factor Forge · Locks and Keys · RSA Small Roots · Prime Witness · Residue Gate. Trapdoor, padding
+Educational RSA · RSA Forge · Iron Letter · Factor Forge · Locks and Keys · RSA Small Roots · Prime Witness · Residue Gate · Clock Arithmetic. Trapdoor, padding
 (OAEP/PSS), and RSA-OAEP measured against an elliptic-curve alternative.
 
 Locks and Keys is the way in to this concept for someone who has not met a key pair. It files
@@ -434,7 +436,7 @@ Prime Witness separates primality evidence from primality proofs: it runs Miller
 
 **8. Discrete logarithm — `COVERED`**
 Curve Lens · Point Arithmetic · ElGamal Plain · DH MITM · Curve448 · Ed25519 Forge ·
-Function Key · Log Forge.
+Function Key · Log Forge · Clock Arithmetic.
 
 Function Key is the one that uses the discrete log as a **cost** rather than as a hardness
 assumption. ABDP15's DDH-based inner-product functional encryption decrypts to `g^⟨x,y⟩`, so
@@ -1107,7 +1109,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 241.**
+**Catalogued total: 243.**
 
 ---
 

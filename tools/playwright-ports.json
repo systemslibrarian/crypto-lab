@@ -910,5 +910,13 @@
  {
   "port": 4745,
   "lab": "crypto-lab-twist-trap"
+ },
+ {
+  "port": 4746,
+  "lab": "crypto-lab-aes-anatomy"
+ },
+ {
+  "port": 4747,
+  "lab": "crypto-lab-clock-arithmetic"
  }
 ]

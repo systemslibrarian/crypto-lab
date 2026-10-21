@@ -894,5 +894,32 @@
     "reviewed": "2026-10-21",
     "state": "N/A",
     "note": "Source review of src/css/lfsr.ts, src/css/css.ts, src/attack/divide.ts and src/verify/verify.ts. lfsr.ts cites Boneh-Shoup v0.6 section 3.8 Figure 3.10 and computes a bit-serial LFSR: step() returns bit 0, XORs the declared taps, right-shifts and feeds back into the top bit; byte() clocks eight steps LSB- or MSB-first. css.ts generate() seeds a 17-bit register with taps [14,0] and a 25-bit register with taps [12,4,3,0], clocks a byte from each and adds them with carry, so z = (x+y+carry) mod 256 and the carry persists -- the CSS byte-serial combiner. The key space is 16 bits plus 24 bits, validated as such, which is the 40 bits the attack exhibit is about. divide.ts recover() enumerates smaller-register seeds and returns counted candidates; verify.ts checks a candidate against continuation bytes the search never saw. Zero runtime dependencies. N/A means no named algorithm IN THIS INDEX, not no computation: the Content Scrambling System and the LFSR family are outside the current vocabulary, the same reason crypto-lab-lfsr-forge was reviewed N/A on 2026-10-09. Scope recorded with it: this is the textbook generator, and the source says so in its own extension note -- deployed CSS changes insertion positions, discards early bytes and has inverter modes, none of which are implemented here. So the card must not be read as a deployed-CSS implementation."
+  },
+  "crypto-lab-aes-anatomy": {
+    "commit": "7abf61f7fdcef076c5f536c81ec0e1b729b05118",
+    "reviewed": "2026-10-21",
+    "add": [
+      "AES@src/aes/cipher.ts:6"
+    ],
+    "remove": [
+      "Side-channel (unspecified)",
+      "Timing side-channel"
+    ],
+    "implementation": "hand-rolled AES / WebCrypto cross-check",
+    "note": "Reviewed the full AES-128/192/256 data path, inverse, key expansion and four opt-in layer ablations. Known-pair affine recovery, known-column transplantation and chosen-plaintext byte codebooks execute against weakened variants with independently recomputed full-AES controls. Side-channel and timing mentions describe limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson."
+  },
+  "crypto-lab-clock-arithmetic": {
+    "commit": "5bb86840fab4806e3681c1a378fd4c643831035d",
+    "reviewed": "2026-10-21",
+    "add": [
+      "Diffie-Hellman@src/nt/toyDh.ts:4"
+    ],
+    "remove": [
+      "Discrete log",
+      "Factoring",
+      "Man-in-the-middle"
+    ],
+    "implementation": "hand-rolled BigInt arithmetic",
+    "note": "Reviewed exact modular arithmetic, extended Euclid, Euler phi, orders, generators, subgroup enumeration and generalized CRT. The small-number DH model computes both parties and searches possible shared secrets with an actual guess count at src/nt/toyDh.ts:3. It is not a discrete-log solver or MITM exhibit. Trial division supports the arithmetic lesson rather than an RSA factoring attack; RSA and adjacent algorithms are references only."
   }
 }

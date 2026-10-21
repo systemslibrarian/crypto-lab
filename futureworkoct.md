@@ -9,22 +9,22 @@ disagrees with its command, the command is right and the line is stale.
 
 ## Where this left off — 2026-10-21
 
-Both repos are clean and fully merged. `crypto-lab` main is **`34d7b50`**,
-`crypto-counsel` main is **`52098dc`**. Nothing is in flight: no open PRs in
-either repo, no branches besides `main` on either remote, no stale
-remote-tracking refs, and no local branches besides `main`.
+`crypto-lab` main was caught up to **`9d6ec44`** before this queue-only branch;
+`crypto-counsel` main is **`cc2979b`**. Crypto-counsel **#18** is open with the
+completed stale-corpus review. Besides the branch carrying this file, the
+catalog remote carries `draft/understanding-cryptography-2e`; counsel carries
+#18's review branch. Neither open change is merged here.
 
-Landed this session: **#239** (five new cards), **#240** (cryptanalyst split
-PROPOSAL only), **#241** (this file), and crypto-counsel **#16** (five corpus
-entries) and **#17** (eleven stale snapshot lines, Snow 2 moved to Related
-Projects, `validate.mjs` widened with M25-M27).
+The fast loop is not green on fresh main. `knowledge-map-sync`, `theme-sync` and
+`lab-dates` fail for the measured reasons in items 10 and 11. The other fast-loop
+checks pass. The network-backed evidence verifier has separate work in item 12.
 
-**Two things are waiting on a maintainer DECISION rather than on work** — items 6
-and 7 below. Item 6 is the one that blocks a change already written down.
+**Two things still wait on a maintainer DECISION** — items 6 and 7. Item 6 now
+needs its proposal refreshed before the old 20-step choice can be acted on.
 
-**Pick up with:** item 6 if you want to decide the path split; otherwise item 2
-(#31 vectors, five rows left) is the largest piece of real work and item 3 (the
-20 stale corpus entries) is the one with the clearest starting point.
+**Pick up with:** item 10 first because it is a regression already on `main`.
+After that, item 2 (#31 vectors, five rows left) is the largest judged work item;
+item 1 is a small, exactly re-derived snapshot correction.
 
 Before touching anything, re-fetch and re-run the fast loop — the figures below
 were measured on the dates beside them and other sessions work in these repos:
@@ -46,20 +46,18 @@ file literally named `x.js check` and every checker reports MODULE_NOT_FOUND.)
 
 ## 1. Nine snapshot lines carry HTML entities where the card has the character
 
-Reported by the maintainer 2026-10-21, **NOT verified here and explicitly deferred
-— do not start it without being asked.** In `../crypto-counsel`'s
-`crypto_lab_readme` All Demos lines: `&amp;` where the card has `&`, and
-`&#949;-&#948;` where it has `ε-δ`.
+**Verified 2026-10-21 against the current snapshot and catalog: exactly nine.**
+In `../crypto-counsel`'s `crypto_lab_readme` All Demos lines, eight carry
+`&amp;` where the card has `&`, and DP Noise carries `&#949;-&#948;` where the
+card and catalog README have `ε-δ`.
 
 Named: Commit Gate, PKI Chain, WebAuthn, Syndrome Drain, Chain of Trust, Lattice
 Gentle, MuSig Gate, DP Noise, Covert Channel Studio.
 
-**Re-derive the set before fixing it rather than trusting this list** — it is a
-report, not a measurement, and the count is the part most likely to be stale. The
-derivation that found the eleven drift lines is the one to reuse: read each card's
-kicker and chips out of `index.html`, cross-check against the generated All Demos
-table in `README.md`, and compare. Decoding entities is a separate question from
-that comparison, so whatever closes this should also say which side is canonical.
+Re-derive again before fixing it: read each card's kicker and chips out of
+`index.html`, cross-check the generated All Demos table in `README.md`, and
+compare with the snapshot. Decoding entities is separate from that comparison,
+so whatever closes this should also say which side is canonical.
 
 Do NOT bundle it with a drift pass: an entity fix touches lines no card changed,
 and mixing the two makes both unreviewable.
@@ -68,8 +66,11 @@ and mixing the two makes both unreviewable.
 
 ## 2. #31 — published test vectors, 13 of 18 rows done
 
-Five unnamed rows remain. **The issue's own ranking is stale — re-derive before
-picking:** `node tools/depth-audit.js`, then read `audits/DEPTH-AUDIT-<today>.md`.
+Five unnamed rows remain; the 13 completed judgements still match the lab
+histories checked on 2026-10-21. **The issue's own ranking is stale — refresh the
+remote exports before picking:** `node tools/depth-audit.js export && node
+tools/depth-audit.js`, then read `audits/DEPTH-AUDIT-<today>.md`. Running the
+second command alone rewrites a report from whatever is already in `.scratch/`.
 
 **How these rows have actually gone, after thirteen:**
 
@@ -106,35 +107,19 @@ picking:** `node tools/depth-audit.js`, then read `audits/DEPTH-AUDIT-<today>.md
 
 ---
 
-## 3. Corpus prose — 20 stale, 185 never reviewed
-
-233 entries: 28 current, 20 stale, 185 never reviewed (2026-10-20). A review
-backlog, not a defect, and it cannot be swept: each entry means reading a lab and
-confirming the prose describes it. **Start with the 20 STALE** — someone checked
-those and the lab moved underneath them.
-
-**Check the publication before correcting a citation.** `tls-handshake`'s entry
-cites "TLS 1.3 (RFC 9846)" and RFC 9846 is REAL — July 2026, obsoleting 8446. The
-lab cites it 22 times. One edit from correcting a correct citation.
-
-**`corpus-freshness` counting a README-only change as substantive is CORRECT** and
-was checked: the prose is written FROM the README, so a rewritten README can
-invalidate prose derived from the old one. Do not "fix" it.
-
-Check: `node tools/corpus-freshness.js` (`--stale`, or `--fetch` for an answer
-that does not depend on when you last pulled)
-
----
-
 ## 4. Teach layer — 43 unchecked claims
 
 Each needs a needle taken from the live page and VERIFIED before it can become an
 automated probe, because an unverified needle reports a false failure. The report
 names a cadence per item. Judgement per item, not a sweep.
 
-The 4 UNREADABLE are **gone** — they were uninstalled local Firefox and WebKit
-binaries, and all four became MATCHES once installed
-(`cd tools && npx playwright install firefox webkit`).
+Current result (2026-10-21): **43 UNCHECKED and 4 UNREADABLE**. The four are three
+AES Modes observations and one Nonce Collision observation. Reinstalling all
+three Playwright browsers did not clear them in this execution environment: a
+direct launch smoke test found Chromium's macOS Mach-port bootstrap failing with
+error 141, Firefox exiting by `SIGABRT`, and WebKit aborting. That is an
+environment-readability failure, not evidence that the four page claims moved.
+Re-run in a normal terminal before changing those records.
 
 Check: `node tools/teach-issues.js`
 
@@ -149,39 +134,40 @@ in, a declared `ENTAILS` table keyed on anchored implementations, one declared
 `QUALIFYING_SIBLINGS` pair, and the executed-stack rule requiring a verified call
 site rather than a dependency listing.
 
-**Remaining before anyone proposes enabling the gate:** finish validating the
-rules, and keep the distinction between implementing and discussing. The gate
-decision is the maintainer's.
+Re-derived 2026-10-21: **0 violations**, 26 names cleared by the rule, 11 by a
+declared relation, and 33 explicitly `Cannot judge`. **Remaining before anyone
+proposes enabling the gate:** finish validating the rules, and keep the
+distinction between implementing and discussing. The gate decision is the
+maintainer's.
 
 Check: `node tools/catalog-sync.js chips`
 
 ---
 
-## 6. DECISION: split the Cryptanalyst Path, or leave it at 20 steps
+## 6. DECISION: refresh the path proposal, then split or retain it
 
-**Waiting on the maintainer. No code is written and nothing is blocked
-technically — the proposal is the deliverable and it is already merged.**
+**Waiting on the maintainer; no split is implemented.** The merged proposal in
+`audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md` is now a useful design
+note but no longer a current implementation plan.
 
-`audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md` (merged in #240) sets out
-the case. The path is 20 steps against `CLAUDE.md`'s "keep `steps` <= ~12"; it was
-17 before #239 added three, so the additions are not the cause. It is the longest
-of the eight paths and the only one past 17.
+Re-derived from `LEARNING_PATHS` on 2026-10-21: Cryptanalyst is **21 steps**, not
+20, because AES Anatomy is now in the path. There are **nine** paths, not eight,
+and Developer is now 18 steps. The proposal's claims that its 11+9 split covers
+every step and that Cryptanalyst is the only path past 17 are therefore false on
+current main. Current lengths are 13, 12, 12, 11, 18, 21, 12, 12 and 9.
 
-Three options:
+Three choices remain, but use the current list:
 
-1. **Leave it at 20.** Nothing to do; delete this item.
-2. **Two paths**, as proposed — A "Structure and Statistics" 11 steps (1 beginner,
-   5 intermediate, 5 advanced; keeps the only beginner on-ramp), B "Implementation
-   and Composition" 9 steps (1 intermediate, 8 advanced). Verified against merged
-   main: all 20 appear exactly once, none duplicated, no group names a non-step.
-3. **Three paths.** The proposal names the seed if composition deserves its own:
-   Salamander, Frozen Heart and Padding Oracle, matching
-   `concept-coverage.md` §29 "Composition and parsing failures".
+1. **Leave Cryptanalyst at 21.** Delete this item, and separately decide whether
+   Developer at 18 needs the same exception.
+2. **Two paths.** Refresh the old 11+9 proposal by placing AES Anatomy; placing
+   it with Structure and Statistics would make the natural split 12+9.
+3. **Three paths.** The proposal's composition seed remains Salamander, Frozen
+   Heart and Padding Oracle, matching `concept-coverage.md` §29.
 
-If 2 or 3 is chosen, the implementation is mechanical and the proposal lists it.
-**The one trap is writer order:** `knowledge-map-sync write` records a path count
-and hashes `index.html`, so it must run AFTER any card stamper, or the map's hash
-describes a file that no longer exists in that form.
+If 2 or 3 is chosen, re-verify that every current step appears exactly once.
+**The writer-order trap remains:** `knowledge-map-sync write` records the path
+count and hashes `index.html`, so it must run after any card stamper.
 
 ---
 
@@ -190,6 +176,8 @@ describes a file that no longer exists in that form.
 **Offered during #17 and deliberately left out of it**, because the instruction
 was to add Snow 2 "in the same form as the other three" — so all three were left
 untouched. Two of them have since been shown to differ from the catalog README:
+the comparison below was re-run against current files on 2026-10-21 and is still
+exact.
 
 | | snapshot | catalog README |
 |---|---|---|
@@ -220,15 +208,13 @@ would also move the generated All Demos table's sibling block, so check what
 rediscovered as a surprise.**
 
 All nine are `crypto-counsel` worktrees on DETACHED HEADs, and all nine were
-clean (no uncommitted paths) when checked. Because they hold no branch, their
-commits — `0d032ee`, `051a93c`, `2186e49` (x2), `4de0cfe`, `7631877`, `a6b1036`,
-`08dade2` (x2) — are now referenced ONLY by those worktrees. Nothing points at
-them from any branch in either repo.
+clean (no uncommitted paths) when checked. Their commits — `0d032ee`, `051a93c`,
+`2186e49` (x2), `4de0cfe`, `7631877`, `a6b1036`, `08dade2` (x2) — are now all
+ancestors of current counsel `main`. The earlier claim that only the worktrees
+kept them reachable is stale.
 
-So: removing a worktree makes its commit unreachable and eventually
-garbage-collectable. Not urgent, and not a decision to take casually — if any of
-that work matters, tag it or push it to a branch BEFORE removing the worktree,
-not after.
+Removing these worktrees therefore no longer risks losing unique commits, but it
+still deletes nine checkout directories. Do it only as an explicit cleanup task.
 
 ```
 git -C ../crypto-counsel worktree list
@@ -254,8 +240,52 @@ pruned in crypto-lab, 0 in crypto-counsel.
 record outside GitHub's own reflog, and keeping it indefinitely makes it look
 like a live list rather than a receipt.
 
-"Automatically delete head branches" is now ON in both repos, so this was
-one-time: a merged PR's branch goes away on its own from here.
+GitHub's repository settings were re-read on 2026-10-21: "Automatically delete
+head branches" is **ON for `crypto-lab` and OFF for `crypto-counsel`**. The old
+claim that both were on is stale. Decide whether to re-enable it for counsel;
+until then, counsel branches such as #18's will need deliberate cleanup after
+merge.
+
+---
+
+## 10. Base-main regression — stale generated knowledge map
+
+Fresh `crypto-lab` main **`9d6ec44`** changes which book companions appear on
+the homepage but does not refresh `knowledge-map/catalog.json`'s source hash.
+`node tools/knowledge-map-sync.js check` fails on clean main with "Knowledge map
+is stale." Run `node tools/knowledge-map-sync.js write`, review the generated
+diff, and rerun the fast loop. This predates this queue-only branch.
+
+---
+
+## 11. Fresh fast-loop failures — two theme pins and three card dates
+
+`node tools/theme-sync.js check` finds two new labs whose `index.html` head does
+not literally pin `data-theme="dark"`: `crypto-lab-aes-anatomy` and
+`crypto-lab-clock-arithmetic`. Fix those in their own lab repositories, not in a
+catalog sweep.
+
+`node tools/lab-dates.js check` finds three stale card pins:
+`crypto-lab-protocol-compose` (2026-08 → 2026-10),
+`crypto-lab-threshold-decrypt` (2026-08 → 2026-10), and
+`crypto-lab-multivariate` (2026-09 → 2026-10). Re-run before writing because
+these dates move whenever a lab moves.
+
+---
+
+## 12. Catalog evidence — seven stale reviews before anchor regeneration
+
+With GitHub resolution working, `node tools/catalog-evidence.js verify` reports
+**7 STALE-REVIEW**, **27 STALE-ANCHOR**, and **9 CLONE-BEHIND** on 2026-10-21.
+The reviews are `rsa-small-roots`, `frost-threshold`, `hash-hunt`, `log-forge`,
+`dvd-scramble`, `clock-arithmetic`, and `aes-anatomy`.
+
+Do this in the checker's enforced order: refresh the nine behind checkouts,
+individually re-read and re-pin the seven reviews, then run the writer to
+re-derive anchors. Do not treat all 27 current anchor lines as final work before
+that refresh: several were read from clones the checker explicitly says the
+labs have moved past. The stale-corpus review did not authorize changes to
+`tools/catalog-reviewed.json`, so none were made here.
 
 ---
 
@@ -273,10 +303,12 @@ one-time: a merged PR's branch goes away on its own from here.
 | 7 write half of #125 | one `stampTag()`; `tests/card-stamp.test.cjs` fails 2 of 6 against the old writers |
 | Trivium, Davies-Meyer | both were absent from the vocabulary; `lfsr-forge`'s N/A was false |
 | five uncarded labs + four missing corpus entries | #239 and crypto-counsel #16; `fleet-sync` and `corpus-sync` both clean |
-| cryptanalyst path at 20 steps | PROPOSAL ONLY in crypto-lab #240, `audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md`; the split is the maintainer's call |
+| cryptanalyst path proposal at its then-current 20 steps | PROPOSAL ONLY in crypto-lab #240, `audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md`; current 21-step refresh is item 6 |
 | eleven stale `crypto_lab_readme` lines | crypto-counsel #17; Snow 2 was a MOVE to Related Projects, and `validate.mjs` was widened with M25-M27 as its controls |
-| branch cleanup, both repos | 30 remote + 4 local deleted, 20 tracking refs pruned; manifest `~/branch-cleanup-2026-10-21.txt`; auto-delete now ON, so one-time. Decide from the PR, never `git branch --merged` — squash merges make almost every merged branch read as unmerged |
+| corpus prose stale review | crypto-counsel #18; 28 re-derived rather than the noted 20: 16 accurate, 12 corrected, 0 unsettled; 190 never-reviewed entries left untouched |
+| branch cleanup, both repos | 30 remote + 4 local deleted, 20 tracking refs pruned; manifest `~/branch-cleanup-2026-10-21.txt`; auto-delete is now on only for `crypto-lab`. Decide from the PR, never `git branch --merged` — squash merges make almost every merged branch read as unmerged |
 | futureworkoct queue update | #241 |
+| futureworkoct current-state audit | this queue-only PR; caught main up through `9d6ec44`, removed the completed corpus item, and recorded the reproducible failures without fixing out-of-scope files |
 
 **Finish a card-stamping pass with `node tools/level-sync.js`.** `data-level` sits
 where the writer that ran last put it; running it last took a real repin's diff

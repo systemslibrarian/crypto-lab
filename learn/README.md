@@ -2,7 +2,7 @@
 
 These pages live in the hub and deploy with its existing GitHub Pages site. They
 do not require new repositories or add standalone cards to the catalog count.
-The three book companions remain in the hub menu and at their direct URLs. Their
+The three existing book companions remain in the hub menu and at their direct URLs. Their
 `LEARNING_PATHS` entries set `home: false`, which omits their cards from the
 homepage Learning paths band while preserving menu steps and generated records.
 
@@ -196,12 +196,15 @@ formal abort/resolve analysis are further reading, not implemented features.
 signed times, anchored rewrites, actual decryption, wrong-session evidence,
 tampering, premature release, terminal decisions and interleaving guards.
 `tests/reading-path.test.mjs` checks generated chapter coverage and local links.
+`tests/understanding-cryptography.test.mjs` checks the draft second-edition path,
+its catalog-only connections, filters, progress and static reading fallback.
 `tests/protocol-workshops-browser.test.cjs` exercises full UI flows, filters,
 progress, keyboard controls, axe accessibility audits and mobile/desktop overflow.
-CI runs all three.
+CI includes these suites; the new draft also received a focused local Chromium
+smoke check.
 
 ```sh
-node --test tests/protocol-workshops.test.mjs tests/reading-path.test.mjs
+node --test tests/protocol-workshops.test.mjs tests/reading-path.test.mjs tests/understanding-cryptography.test.mjs
 node --test tests/protocol-workshops-browser.test.cjs
 ```
 
@@ -254,3 +257,79 @@ unfinished portion of the draft. **Modern counterpart** denotes a different
 practical construction or later standard, not necessarily something invented
 after the draft. Direct connections cover selected concepts only. Original
 predict–try–explain activities send readers back to assumptions and proofs.
+
+## Understanding Cryptography reading path — draft
+
+[`understanding-cryptography/`](understanding-cryptography/) is an independent
+companion to Christof Paar, Jan Pelzl and Tim Güneysu, *Understanding Cryptography*,
+second edition, Springer, 2024. It follows the Boneh–Shoup page structure:
+chapter titles, original learning focuses, section references, predictions before
+lab links, experiments, explanation prompts and visible coverage boundaries.
+The draft is not registered in the hub menu or homepage.
+
+### Edition and sources — reviewed 21 October 2026
+
+The [published second edition](https://link.springer.com/book/10.1007/978-3-662-69007-9)
+has **14 chapters**, with **SHA-3 in §11.5 of Hash Functions**. The companion
+preserves all 15 requested topics as 14 numbered chapter entries and one separately
+identified SHA-3 focus. Post-Quantum Cryptography is Chapter 12, MACs is Chapter 13,
+and the publisher calls Chapter 14 *Key Management*. The
+[authors' website](https://www.cryptography-textbook.com/book/) calls the last
+chapter *Key Establishment*; that alternate name is also searchable.
+
+Chapter order and section pointers were checked against the publisher's
+[front matter](https://link.springer.com/content/pdf/bfm:978-3-662-69007-9/1), the
+[authors' contents](https://www.cryptography-textbook.com/files/toc.pdf) and the
+supplied detailed contents. The supplied usable 2010 first-edition PDF has
+13 chapters and is not the numbering authority. No textbook PDF, passages,
+figures, exercises or solutions are stored or reproduced here. This is a
+contents-led alignment, not an exhaustive review of the full second-edition text.
+
+### Catalog source and capability limits
+
+Unlike the existing generators, this draft reads the per-lab section of
+`CATALOG.md` directly. `chapters.mjs` specifies repository slugs and original
+connection notes; `build.mjs` resolves the exact catalog titles and live URLs.
+Unknown slugs, duplicate connections and an incorrect chapter sequence fail the
+build. The current draft has **43 connections to 37 distinct catalogued labs**.
+
+Direct connection, modern counterpart and introductory bridge describe selected
+relationships, never complete chapter coverage. Significant boundaries include:
+
+- AEGIS exposes one real AES round; full AES code exists elsewhere, but the
+  introductory field-arithmetic/key-expansion/inverse route remains incomplete.
+- KMAC Gate already provides substantial SHA-3 and SHAKE teaching. It is not a
+  missing sponge lab, although complete Keccak step-by-step teaching is outside
+  the selected surface.
+- ElGamal signatures already exist. Finite-field DSA is a separate exact lesson;
+  ECDSA and ML-DSA do not fill it.
+- McEliece Gate performs small Goppa/Patterson operations without a full submitted
+  KEM API. LMS Ledger's small HSS transcript is non-interoperable. Modern ML-KEM,
+  ML-DSA and SLH-DSA paths are identified separately from simplified models.
+- Kerberos's Lowe lesson is public-key Needham–Schroeder, not the book's symmetric
+  protocol. PKI revocation uses local fixtures.
+
+The [chapter map and gap report](../audits/UNDERSTANDING-CRYPTOGRAPHY-GAP-CHECK-2026-10-21.md)
+contains the ranked recommendations, inspected source pins and the exclusion
+ledger for **32 prior briefs across 29 repositories**. Those Katz–Lindell and
+Boneh–Shoup labs and extensions are not recommended again.
+
+### Build and verify
+
+```sh
+node learn/understanding-cryptography/build.mjs
+node learn/understanding-cryptography/build.mjs --check
+node --test tests/reading-path.test.mjs tests/understanding-cryptography.test.mjs
+```
+
+All chapter activities and lab links are static HTML. Search, area/connection
+filters, deep links and optional checkmarks enhance that reading. The independent
+storage key is `crypto-lab-understanding-cryptography-2e-progress-v1`; Chapter 11 and
+its SHA-3 focus have separate progress identifiers. Unavailable storage leaves
+checkmarks usable for the current visit. Progress records exploration, not mastery.
+
+The focused tests cover numbering, catalog authority, static content, imported
+stylesheets, filtering, invalid saved data, storage failure and deep links. A local
+Chromium check also covered keyboard navigation, persistence/reset, no-JavaScript
+reading and a 320-pixel viewport. These checks concern the companion; they are
+not security audits of the linked labs or claims of complete book coverage.

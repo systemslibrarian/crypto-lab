@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 24
       - name: Cryptographic negative controls and reading-path integrity
-        run: node --test tests/protocol-workshops.test.mjs tests/reading-path.test.mjs
+        run: node --test tests/protocol-workshops.test.mjs tests/reading-path.test.mjs tests/understanding-cryptography.test.mjs
       - run: npm ci
         working-directory: tools
       - run: npx playwright install chromium

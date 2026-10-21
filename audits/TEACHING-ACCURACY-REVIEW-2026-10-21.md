@@ -42,7 +42,7 @@ The nine marker misses were reviewed individually. HQC Timing and HQC Timing Bre
 | [point-ledger · `b7bf109955`](https://github.com/systemslibrarian/crypto-lab-point-ledger/commit/b7bf1099557c0323e9d84f408c34efb56458c3d8) | Added README guidance separating cited quantum resource estimates from executable classical arithmetic and finite fuzz evidence. Explicitly excluded quantum circuits, real-key recovery, ZK proofs and benchmark submission. |
 | [time-lock-puzzle · `d7d0f68ed5`](https://github.com/systemslibrarian/crypto-lab-time-lock-puzzle/commit/d7d0f68ed56ec9ca1b50d5e25cdf86a036873616) | Added README and opening-panel limits for the default 1024-bit modulus, retained trapdoor and lack of a guaranteed wall-clock delay. |
 
-The catalog’s changed source anchors were regenerated and verified for these eleven labs. Five human-review records were refreshed after examining the changes since their prior pins. Biham Lens’s previously added PRESENT-80 engine was read and is now explicitly credited; its known-K32 suffix search is distinguished from an attack that obtains the round key. Merely comparing DES in a table does not credit a DES implementation.
+The catalog’s changed source anchors were regenerated and verified for these eleven labs. Five human-review records were refreshed after examining the changes since their prior pins. Biham Lens’s previously added PRESENT-80 engine was read and is now explicitly credited; its known-K32 suffix search is distinguished from an attack that obtains the round key. Merely comparing DES in a table does not credit a DES implementation. Context-only chosen-ciphertext, collision, padding-oracle and linear-cryptanalysis attack credits were also removed from Biham Lens; links to other demos do not execute those attacks.
 
 ## Validation and its limits
 
@@ -68,7 +68,7 @@ Biham’s new DES test initially selected an unrelated comparison table. After n
 
 ### New DES assertion: mutation evidence
 
-The oracle enumerates all eight FIPS 46-3 S-boxes, every nonzero six-bit input difference and all 64 inputs, independently of the lab’s toy SPN and displayed prose. It compares the result with the actual rendered DES cell. The published maximum is **16/64**, not 8/64.
+The oracle enumerates all eight FIPS 46-3 S-boxes, every nonzero six-bit input difference and all 64 inputs, independently of the lab’s toy SPN and displayed prose. It compares the result with the actual rendered DES cell. The computed maximum is **16/64**, not 8/64.
 
 After committing the real correction locally, the displayed source value was changed back from `16 / 64` to `8 / 64`. The production build succeeded, the served artifact changed, and the owning browser assertion failed with expected `16 / 64`, received `8 / 64`. Restoring the source restored the artifact hash and the passing assertion. This is evidence for this new assertion, not every assertion in the fleet.
 
@@ -80,7 +80,7 @@ After committing the real correction locally, the displayed source value was cha
 
 The digest includes HTML as well as JavaScript because the mutated teaching claim is authored in HTML. Hash construction: for every regular `dist` file in sorted path order, concatenate its relative UTF-8 path, a NUL, its bytes and a NUL; hash that stream with SHA-256. Test selector: `independently enumerated` in `e2e/claims.spec.ts`; each run rebuilt before serving with CI server reuse disabled.
 
-Catalog validation passed: source-anchor verification for all eleven changed labs; catalog vocabulary and generated catalog checks; catalog search/structure; README/card parity; teach-page generation/count lint; and rendered layout checks across 35 teaching pages at 1280px and 390px. All eleven linked lab workflows passed at their fixed revisions. Fresh HTTP fetches of production HTML and its referenced JavaScript confirmed the corrected text on all ten changed UI sites. Point Ledger’s updated README was checked against its published commit.
+Catalog validation passed: source-anchor verification for all eleven changed labs; catalog vocabulary and generated catalog checks; catalog search/structure; the regenerated knowledge map and its source relationships; README/card parity; teach-page generation/count lint; and rendered layout checks across 35 teaching pages at 1280px and 390px. All eleven linked lab workflows passed at their fixed revisions. Fresh HTTP fetches of production HTML and its referenced JavaScript confirmed the corrected text on all ten changed UI sites. Point Ledger’s updated README was checked against its published commit.
 
 ## Primary technical references
 

@@ -36,7 +36,13 @@
       "Toy SPN@src/crypto/spn.ts:95",
       "PRESENT@src/crypto/present/present.ts:21"
     ],
-    "note": "Re-read the complete prior-pin change inventory, SPN/FEAL source and added PRESENT-80 core, inverse schedule, analysis, worker and UI. The original toy SPN anchor remains; FEAL-4 and full-round PRESENT-80 are distinct engines. PRESENT recovery assumes known K32 and exhausts 16 missing register bits; it does not obtain K32 or break full PRESENT. The October 21 correction changes teaching prose and the DES comparison, not these engines. DES is reference context only; an independent FIPS-table test establishes its nonzero-input DDT maximum of 16/64, with a successful wrong-value mutation kill. No round count guarantees attack immunity."
+    "note": "Re-read the complete prior-pin change inventory, SPN/FEAL source and added PRESENT-80 core, inverse schedule, analysis, worker and UI. The original toy SPN anchor remains; FEAL-4 and full-round PRESENT-80 are distinct engines. PRESENT recovery assumes known K32 and exhausts 16 missing register bits; it does not obtain K32 or break full PRESENT. The October 21 correction changes teaching prose and the DES comparison, not these engines. DES is reference context only; an independent FIPS-table test establishes its nonzero-input DDT maximum of 16/64, with a successful wrong-value mutation kill. No round count guarantees attack immunity. Remove chosen-ciphertext, collision and padding-oracle credits sourced only from Related Demos links, and linear-cryptanalysis credit sourced only from Serpent context; these attacks are not executed here.",
+    "remove": [
+      "Chosen-ciphertext attack",
+      "Collision attack",
+      "Linear cryptanalysis",
+      "Padding oracle"
+    ]
   },
   "crypto-lab-card-trick": {
     "commit": "126579c282efcf5ea58228252b2ee646c25ec8b4",

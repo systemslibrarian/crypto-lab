@@ -620,7 +620,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Rainbow chains
 
 - **Implemented by:** [Hash Hunt](https://systemslibrarian.github.io/crypto-lab-hash-hunt/) `src/attack/tmto/tables.ts:8`
-- **Also referenced by:** —
+- **Also referenced by:** *Bcrypt Forge*
 
 ### hash-based signature
 
@@ -1955,7 +1955,7 @@ Quantum key distribution with photon polarization, basis sifting, QBER eavesdrop
 Bcrypt anatomy, cost factor benchmarking, timing-safe verification, and a real-world breach simulation. The workhorse password hash, dissected.
 
 - **Implements:** bcrypt `src/lib.ts:20`, MD5 `src/lib.ts:116`, PBKDF2 `src/crypto-client.ts:108`, SHA-256 `src/crypto-worker.ts:75`
-- **References:** AES, Argon2, Blowfish, ChaCha20, ChaCha20-Poly1305, Falcon, HKDF, HMAC, Poly1305, SHA-512, scrypt
+- **References:** AES, Argon2, Blowfish, ChaCha20, ChaCha20-Poly1305, Falcon, HKDF, HMAC, Poly1305, Rainbow chains, SHA-512, scrypt
 - **Attacks shown:** Brute force `src/exhibits.ts:528`, Timing side-channel `README.md:28`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto

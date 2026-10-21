@@ -890,8 +890,8 @@
    "added": "2026-06",
    "updated": "2026-10",
    "addedFrom": "2026-06-09T08:43:30Z",
-   "updatedFrom": "2026-10-12T12:01:36-04:00",
-   "updatedCommit": "9f56cf3dd890c3b119749203aa85f25538b8a09e"
+   "updatedFrom": "2026-10-20T21:34:18-04:00",
+   "updatedCommit": "809092d30f6a63f09d8b0e2360c707d79cfe155a"
   },
   "crypto-lab-bitcoin-wallet": {
    "added": "2026-06",

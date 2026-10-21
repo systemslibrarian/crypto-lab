@@ -916,6 +916,31 @@ function evidenceFor(slug) {
     });
     for (let i = 0; i < lines.length; i += 1) {
       const line = lines[i];
+      const inertLine = inertLines[i] || '';
+      /* `line` is the STRINGS view, which is blank for a line that is nothing but a
+         comment. Until 2026-10-21 the loop opened `if (!line.trim()) continue`, and
+         the comment-only check sat BELOW it -- so a standalone comment line was
+         skipped before that check ever ran, and the exemption worked only for a
+         comment sharing its line with code.
+         That is why crypto-lab-hybrid-guide was exempt (`classical: Uint8Array; //
+         X25519-style shared secret` -- a trailing comment, so the strings view is
+         non-blank) while crypto-lab-commit-gate was not. commit-gate is the case
+         CLAUDE.md cites FOR this exemption: `src/pedersen.ts:132` names P-256 in a
+         block comment beside the arithmetic, and it had never been exempted once.
+         Same for crypto-lab-accumulator (RSA), crypto-lab-beacon-lock (IBE) and
+         crypto-lab-sleeve-check (Streebog) -- all standalone block comments, all
+         reported to the chip rule as unexplained.
+         So the exit is split: a line with nothing in EITHER view is still skipped,
+         and the comment check runs before the work that needs code. */
+      if (!line.trim() && !inertLine.trim()) continue;
+      if (inertLine.trim()) {
+        for (const term of ALGORITHMS) {
+          if (commentOnly.has(term.name)) continue;
+          if (term.re.test(inertLine) || term.re.test(camelSplit(inertLine))) {
+            commentOnly.set(term.name, `${rel}:${i + 1}`);
+          }
+        }
+      }
       if (!line.trim()) continue;
       const camel = camelSplit(line);
       /* A WebCrypto call left open at the end of a line continues onto the next
@@ -933,15 +958,6 @@ function evidenceFor(slug) {
         const shape = shapeOf(line, codeLines[i], term, wide);
         if (shape) keepBest(hits, term.name, `${rel}:${i + 1}`, shape);
         else if (!hits.has(term.name)) record(mentions, term.name, `${rel}:${i + 1}`, 'mention');
-      }
-      const inertLine = inertLines[i] || '';
-      if (inertLine.trim()) {
-        for (const term of ALGORITHMS) {
-          if (commentOnly.has(term.name)) continue;
-          if (term.re.test(inertLine) || term.re.test(camelSplit(inertLine))) {
-            commentOnly.set(term.name, `${rel}:${i + 1}`);
-          }
-        }
       }
       for (const term of PROTOCOL_TERMS) {
         for (const hit of structuresNamed(codeLines[i], term)) {

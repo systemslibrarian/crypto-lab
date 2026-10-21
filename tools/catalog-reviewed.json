@@ -30,12 +30,13 @@
     "note": "secp256k1 is added by review because the scanner now reads `import { schnorr } from '@noble/curves/secp256k1.js'` as a module path rather than an implementation, which is right in general and wrong here: src/crypto/secp.ts wraps that import into the lab's own point and scalar layer (N, G, mulG, mul, liftX, invModN) and src/crypto/adaptor.ts computes the adaptor construction on it directly. The anchor is the defining point addition, R + T, not the import. Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
   },
   "crypto-lab-biham-lens": {
-    "commit": "c7a32a7c391bdefecc95e46a13a4aebedf5636af",
-    "reviewed": "2026-10-12",
+    "commit": "8544ee0ff488f74ce437be57ac5cfd494bbe134c",
+    "reviewed": "2026-10-21",
     "add": [
-      "Toy SPN@src/crypto/spn.ts:95"
+      "Toy SPN@src/crypto/spn.ts:95",
+      "PRESENT@src/crypto/present/present.ts:21"
     ],
-    "note": "Re-read root source after relocation and FEAL-4 extension. Executes an 8-bit, four-round toy SPN, not DES. The independent FEAL-4 engine implements its published key schedule; the worker attacks only oracle observations and recovers equivalent round-key/whitening material, not the master key. FEAL-8 exists only in a test wrapper and is not a shipped implementation. Unit vectors and fresh-block/negative verification tests inspected; browser gates run separately. FEAL-4 is presently outside the algorithm vocabulary and is described in card prose rather than credited as DES. Re-read the 12 October source and full prior-pin inventory: SPN/FEAL cryptographic source is unchanged, with toolchain/publishing updates and a source-linked reduced-ChaCha context note. That note does not execute the ChaCha cryptanalysis."
+    "note": "Re-read the complete prior-pin change inventory, SPN/FEAL source and added PRESENT-80 core, inverse schedule, analysis, worker and UI. The original toy SPN anchor remains; FEAL-4 and full-round PRESENT-80 are distinct engines. PRESENT recovery assumes known K32 and exhausts 16 missing register bits; it does not obtain K32 or break full PRESENT. The October 21 correction changes teaching prose and the DES comparison, not these engines. DES is reference context only; an independent FIPS-table test establishes its nonzero-input DDT maximum of 16/64, with a successful wrong-value mutation kill. No round count guarantees attack immunity."
   },
   "crypto-lab-card-trick": {
     "commit": "126579c282efcf5ea58228252b2ee646c25ec8b4",
@@ -164,12 +165,12 @@
     ]
   },
   "crypto-lab-matsui-line": {
-    "commit": "9ab368a1300fcb94bbd03925176fa96472841b5d",
-    "reviewed": "2026-10-12",
+    "commit": "7e4c2c46d89e8bd59ebc83841b6835159d811404",
+    "reviewed": "2026-10-21",
     "add": [
       "Toy SPN@src/crypto/spn.ts:66"
     ],
-    "note": "Executes a toy SPN for Matsui's linear attack Re-read the complete prior-pin inventory and SPN source on 12 October: toy cipher arithmetic and anchor66 remain exact. Toolchain changes, a reduced-ChaCha reading panel and browser cancellation coverage do not implement the paper attack. The live experiment still attacks the toy SPN."
+    "note": "Re-read the prior-pin inventory: only package metadata changed before this review. The toy SPN source and anchor66 are unchanged. October 21 adds an opening toy-cipher disclaimer and a measured per-test timeout for exhaustive screening, preserving every candidate and key. This still executes a toy linear attack, not a full DES attack or the linked ChaCha paper attack."
   },
   "crypto-lab-model-breach": {
     "commit": "8558ee8cca7dcd38537adf621d75fee50b6b1a3e",
@@ -183,13 +184,13 @@
     "note": "Re-read the current README, toy HiAE core, AESL implementation, oracle attack and UI after the research-cost clarification. The browser still executes a deliberately reduced-seed, structurally toy HiAE model with real AESL and a computed oracle-driven recovery; it does not implement or reproduce either cited full-scale attack. Preserve Toy HiAE as the bounded implementation credit, not the production cipher. The new nonce-misuse phrase only summarizes a cited paper result that the lab explicitly treats separately; this demo neither reuses a nonce nor runs that attack, so it is not an attack credit."
   },
   "crypto-lab-point-ledger": {
-    "commit": "abe44608d558561512e6783284fc16ef50623620",
-    "reviewed": "2026-10-11",
+    "commit": "b7bf1099557c0323e9d84f408c34efb56458c3d8",
+    "reviewed": "2026-10-21",
     "remove": [
       "ECDSA",
       "SHA-3"
     ],
-    "note": "Re-read current README, every tracked src module and relevant tests after integrated Lucide v1 repair PR15. Full prior review49dfff0 to this commit changes only the navigation icon Github to CodeXml in src/main.tsx; ledger/dialog/fuzz/toy computations and learner-facing claims are unchanged. ECDSA remains a cited resource-estimate data table, not an implementation; the noble/hashes sha3 module path exports the used SHAKE256, not SHA-3 execution. Preserve SHAKE and SHA-256 evidence and teaching-model limits. Actual36 unit,11 local and11 public browser/WCAG tests and immutable-lock npm audit zero passed at this exact SHA. Fleet dependency work39b11ea4-0958-4717-8cc8-faaabd45be07; source review is separate from deployment and dependency provider evidence."
+    "note": "Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review. Inspected current dialog/fuzz computations and source-scope text; the October 21 change adds README guidance and limits, with no executable changes. Resource estimates remain cited data and experiments remain classical; no quantum circuit, real-key recovery, ZK proof or benchmark submission is executed. Preserve the ECDSA/SHA-3 removals and existing SHAKE/SHA-256 anchors."
   },
   "crypto-lab-quantum-entropy": {
     "commit": "44b945c15d5de424f4209239b6d96063eccc82f0",
@@ -266,7 +267,7 @@
       "Python"
     ],
     "implementation": "RustCrypto / compiled WASM",
-    "note": "Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22–26 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review. Re-reviewed integrated PR27 at 8b9fa363e0337d5e7647a004fdd72149a233da0b: only security workflow, SECURITY.md, Cargo license metadata, cargo-deny policy and five offline real-tool controls changed. Rust/TypeScript runtime sources and both dependency locks are byte-identical to the prior inspected revision. Read the complete changes, verify existing MIT license, preserve all cryptographic exclusions and opaque binary/compiler limits. The restored blocking cargo-deny gate and separate application/deployment checks do not establish original compiler provenance. The sole tracked Python file, verification/test_supply_chain_policy.py, is the fully read and executed five-case offline supply-chain policy fixture, not browser cryptography. Cover this exact file at this pin while retaining opaque WASM; raw scanner language counts remain separate.",
+    "note": "Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22\u201326 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review. Re-reviewed integrated PR27 at 8b9fa363e0337d5e7647a004fdd72149a233da0b: only security workflow, SECURITY.md, Cargo license metadata, cargo-deny policy and five offline real-tool controls changed. Rust/TypeScript runtime sources and both dependency locks are byte-identical to the prior inspected revision. Read the complete changes, verify existing MIT license, preserve all cryptographic exclusions and opaque binary/compiler limits. The restored blocking cargo-deny gate and separate application/deployment checks do not establish original compiler provenance. The sole tracked Python file, verification/test_supply_chain_policy.py, is the fully read and executed five-case offline supply-chain policy fixture, not browser cryptography. Cover this exact file at this pin while retaining opaque WASM; raw scanner language counts remain separate.",
     "remove": [
       "Brute force",
       "Cache timing",
@@ -362,7 +363,7 @@
       "SM3",
       "SM4"
     ],
-    "note": "Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. Re-read the complete 9f362ccfd71a to 4cefea2cd628 change and current source: the entire src tree is byte-identical; the change is dependency/tooling configuration, focused native-TypeScript controls, and explanatory README text. Exact-head gates separately passed 419 units, seven Node controls, build and audit, and all three current Pages files match production byte-for-byte. SM3 and SM4 remain imported rather than implemented here. Boneh-Franklin IBE remains a drawn contrast to SM9's inversion and is never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
+    "note": "Implements the SM9 family in src/sm9/ \u2014 extraction for both master key pairs, signature, key exchange, KEM and public key encryption \u2014 over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. Re-read the complete 9f362ccfd71a to 4cefea2cd628 change and current source: the entire src tree is byte-identical; the change is dependency/tooling configuration, focused native-TypeScript controls, and explanatory README text. Exact-head gates separately passed 419 units, seven Node controls, build and audit, and all three current Pages files match production byte-for-byte. SM3 and SM4 remain imported rather than implemented here. Boneh-Franklin IBE remains a drawn contrast to SM9's inversion and is never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
   },
   "crypto-lab-vector-gate": {
     "commit": "31df66d48e623210c87f62ee8fccc3cfd2172b4c",
@@ -392,7 +393,7 @@
   "crypto-lab-locks-and-keys": {
     "commit": "cfdda6915fcf9230d07b06da4f214525ce7dfd00",
     "reviewed": "2026-10-17",
-    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public key could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md. Re-read the 17 October copy changes and unchanged WebCrypto call sites: the page now explicitly says two separate mathematically related keys and trims repeated instructions. Encryption/signing behavior and published fixtures are unchanged."
+    "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public key could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (\u00a77.1 RSAES-OAEP, \u00a78.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md. Re-read the 17 October copy changes and unchanged WebCrypto call sites: the page now explicitly says two separate mathematically related keys and trims repeated instructions. Encryption/signing behavior and published fixtures are unchanged."
   },
   "crypto-lab-what-is-pqc": {
     "commit": "193e2248a9530e88a0b88ebcd78537cce20832c3",
@@ -556,12 +557,12 @@
     "note": "Read current proof-size visualizer and Schnorr prover. starkProofBytes estimates comparison sizes, not a STARK prover. Preserve actual Schnorr/Fiat-Shamir/BSGS and reference STARK."
   },
   "crypto-lab-broken-trust": {
-    "commit": "2f1cd8b5f8fab914ecc52971105b57c28e405818",
-    "reviewed": "2026-10-09",
+    "commit": "ea17f0ca883ac0181b05ab21727b5b5b0d7305ed",
+    "reviewed": "2026-10-21",
     "remove": [
       "ML-DSA"
     ],
-    "note": "Read current README and paperData/model source. ML_DSA_SETS stores published parameters/results; the disclosed dimension-eight optimization model has no real ML-DSA key or signature. N/A applies to named primitive implementations, not absence of a working toy model.",
+    "note": "Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review. The dimension-eight model and published-parameter data are unchanged. The October 21 opening panel now explicitly says its key is a generated toy and real-scale numbers are quoted. It executes no real ML-DSA signature or key recovery; preserve N/A and the ML-DSA removal.",
     "state": "N/A"
   },
   "crypto-lab-kem-trap": {
@@ -636,8 +637,8 @@
     ]
   },
   "crypto-lab-e91": {
-    "commit": "1168cf259655710b12040982a83545c395f99326",
-    "reviewed": "2026-10-10",
+    "commit": "eccf9173e98ab1c54293e47cc79896a2a78930af",
+    "reviewed": "2026-10-21",
     "add": [
       "E91@src/engine.ts:375"
     ],
@@ -647,7 +648,7 @@
       "Side-channel (unspecified)"
     ],
     "implementation": "idealized statistical simulation",
-    "note": "Read current engine.ts, data.ts comparison table, README and ui.ts honesty panel after independently tested CHSH interval repair. runE91 computes simulated singlet correlations, sifting, intercept-resend Eve, noise, misalignment and loss; no physical quantum channel or finite-key/device-independent proof. BB84 is a comparison table, not implemented. Side channels are explicitly not modelled, and unauthenticated-channel MITM is a README warning, not a demonstrated protocol attack. Preserve raw static coverage and real bounded simulation, not a cryptographic implementation claim."
+    "note": "Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review; runE91 and anchor375 are unchanged. The October 21 UI correction scopes full intercept-resend behavior and states that a Bell violation alone is not a finite-key security proof. Preserve the idealized statistical simulation classification and BB84/MITM/side-channel removals; no physical quantum channel is implemented."
   },
   "crypto-lab-lattice-fault": {
     "commit": "ae17f8780721a5aa36d087a5f2127d8c4584bf4e",
@@ -764,7 +765,7 @@
     "remove": [
       "Collision attack"
     ],
-    "note": "Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault’s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
+    "note": "Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault\u2019s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
   },
   "crypto-lab-hash-zoo": {
     "commit": "e86dac25e78bc6876e9fd644d1c6a0b823e06039",
@@ -772,7 +773,7 @@
     "remove": [
       "Collision attack"
     ],
-    "note": "Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault’s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
+    "note": "Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault\u2019s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
   },
   "crypto-lab-sector-vault": {
     "commit": "d65d542f2cb770e41ccb0486c68048c571285786",
@@ -833,7 +834,7 @@
     "commit": "c85f91a26720f4f2d63b8b4471720cfcce49bb25",
     "reviewed": "2026-10-20",
     "add": [
-      "Miller–Rabin@src/primality/millerRabin.ts:11",
+      "Miller\u2013Rabin@src/primality/millerRabin.ts:11",
       "Fermat primality test@src/primality/fermat.ts:2"
     ],
     "remove": [
@@ -847,15 +848,15 @@
     "reviewed": "2026-10-20",
     "add": [
       "Jacobi symbol@src/nt/jacobi.ts:4",
-      "Tonelli–Shanks@src/nt/sqrt.ts:7",
-      "Goldwasser–Micali@src/gm/gm.ts:3",
+      "Tonelli\u2013Shanks@src/nt/sqrt.ts:7",
+      "Goldwasser\u2013Micali@src/gm/gm.ts:3",
       "Rabin encryption@src/rabin/oracle.ts:9"
     ],
     "removeReferences": [
       "Boneh-Franklin IBE"
     ],
     "implementation": "local BigInt arithmetic / isolated key-holder worker",
-    "note": "Read binary Jacobi, Euler Legendre, modular roots/CRT, Goldwasser–Micali encryption and the Rabin key-holder closure. The Tonelli anchor executes order halving; the Rabin anchor actually squares the validated message. A public attacker receives N and one root-query closure, never p/q. The canonical QR root oracle yields independently verified factors; redundancy can refuse or accidentally admit a query and is not called CCA security. One-bit Rabin is distinct from GM. Cocks IBE is an extension mention, not Boneh–Franklin IBE. All 17 units, six browser claims, two accessibility views and six mutations passed at the code-identical deployment; this pin changes only integration documentation."
+    "note": "Read binary Jacobi, Euler Legendre, modular roots/CRT, Goldwasser\u2013Micali encryption and the Rabin key-holder closure. The Tonelli anchor executes order halving; the Rabin anchor actually squares the validated message. A public attacker receives N and one root-query closure, never p/q. The canonical QR root oracle yields independently verified factors; redundancy can refuse or accidentally admit a query and is not called CCA security. One-bit Rabin is distinct from GM. Cocks IBE is an extension mention, not Boneh\u2013Franklin IBE. All 17 units, six browser claims, two accessibility views and six mutations passed at the code-identical deployment; this pin changes only integration documentation."
   },
   "crypto-lab-hash-hunt": {
     "commit": "3c766455e051b48adb6af5356cb81257770f4ab4",
@@ -879,7 +880,7 @@
       "EC point arithmetic@src/group/ec.ts:4",
       "Pollard rho (discrete log)@src/dlog/generic/rho.ts:3",
       "Pollard kangaroo@src/dlog/generic/kangaroo.ts:3",
-      "Pohlig–Hellman@src/dlog/pohlig.ts:3",
+      "Pohlig\u2013Hellman@src/dlog/pohlig.ts:3",
       "Index calculus@src/dlog/index/calculus.ts:4"
     ],
     "remove": [
@@ -887,7 +888,7 @@
       "Man-in-the-middle"
     ],
     "implementation": "local generic group solvers / finite-field and toy-curve arithmetic",
-    "note": "Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig–Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation."
+    "note": "Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig\u2013Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation."
   },
   "crypto-lab-dvd-scramble": {
     "commit": "f3d4bad6c5cf660ebea5306460481099521d927d",

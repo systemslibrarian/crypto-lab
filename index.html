@@ -3277,9 +3277,9 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-bb84/"
-            data-implements="AES@src/encrypt.ts:37 | AES-GCM@src/encrypt.ts:37 | BB84@src/bb84.ts:198 | SHA-256@src/bb84.ts:187"
+            data-implements="AES@src/encrypt.ts:37 | AES-GCM@src/encrypt.ts:37 | BB84@src/bb84.ts:186 | SHA-256@src/bb84.ts:175"
             data-references="E91 | ECDH | ECDSA | Grover's algorithm | Kyber | ML-DSA | ML-KEM | P-256 | RSA | Shor's algorithm"
-            data-attacks="Brute force@index.html:347 | Discrete log@index.html:346 | Factoring@index.html:345 | Side-channel (unspecified)@README.md:37"
+            data-attacks="Brute force@index.html:348 | Discrete log@index.html:347 | Factoring@index.html:346 | Side-channel (unspecified)@README.md:37"
             data-standards="NIST"
             data-implementation="WebCrypto"
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-17" data-updated="2026-08"
@@ -4163,9 +4163,9 @@
 
           <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-ckks-lab/"
             data-implements="CKKS@src/toyCkks.ts:209"
-            data-comment-only="NTT@src/toyCkks.ts:37 | Ring-LWE@src/main.ts:873"
+            data-comment-only="NTT@src/toyCkks.ts:37 | Ring-LWE@src/main.ts:870"
             data-references="BFV | BGV | ElGamal | LWE | NTT | Paillier | Private information retrieval | Ring-LWE | TFHE"
-            data-attacks="Chosen-plaintext attack@README.md:72 | Key recovery@src/main.ts:759 | Side-channel (unspecified)@src/main.ts:745"
+            data-attacks="Chosen-plaintext attack@README.md:72 | Key recovery@src/main.ts:756 | Side-channel (unspecified)@src/main.ts:742"
             data-implementation="hand-rolled"
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-12" data-updated="2026-10"
            
@@ -4242,7 +4242,7 @@
           <a class="project-card" data-category="HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-fhe-arena/"
             data-implements="BFV@src/toyFhe.ts:132"
             data-references="BGV | CKKS | ElGamal | NTT | Paillier | Private information retrieval | Ring-LWE | TFHE"
-            data-attacks="Chosen-plaintext attack@src/main.ts:147 | Ciphertext malleability@README.md:42"
+            data-attacks="Chosen-plaintext attack@src/main.ts:148 | Ciphertext malleability@README.md:44"
             data-implementation="hand-rolled"
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-12" data-updated="2026-10"
            
@@ -5586,13 +5586,14 @@
           </a>
 
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/"
-            data-implements="Toy SPN@src/crypto/spn.ts:95"
-            data-comment-only="DES@src/crypto/attack.ts:4 | PRESENT@src/crypto/sbox.ts:20 | Shamir secret sharing@src/crypto/attack.ts:5"
-            data-references="AES | AES-CBC | ChaCha20 | DES | Enigma | MD5 | PRESENT | RSA | SHA-1 | Serpent | Shamir secret sharing | Simon | Speck | Vigenere cipher"
-            data-attacks="Brute force@README.md:13 | Chosen-ciphertext attack@README.md:62 | Chosen-plaintext attack@src/feal-tab.ts:16 | Collision attack@README.md:63 | Differential cryptanalysis@src/main.ts:1084 | Impossible differential@src/main.ts:785 | Key recovery@README.md:22 | Padding oracle@README.md:62"
+            data-implements="PRESENT@src/crypto/present/present.ts:21 | Toy SPN@src/crypto/spn.ts:95"
+            data-comment-only="DES@src/crypto/attack.ts:4 | PRESENT@src/crypto/present/present.ts:1 | Shamir secret sharing@src/crypto/attack.ts:5"
+            data-references="AES | AES-CBC | ChaCha20 | DES | Enigma | MD5 | RSA | SHA-1 | Serpent | Shamir secret sharing | Simon | Speck | Vigenere cipher"
+            data-attacks="Brute force@README.md:15 | Chosen-ciphertext attack@README.md:93 | Chosen-plaintext attack@src/feal-tab.ts:16 | Collision attack@README.md:94 | Differential cryptanalysis@src/main.ts:1086 | Impossible differential@src/main.ts:787 | Key recovery@README.md:24 | Known-plaintext attack@brief-extension-present.md:117 | Linear cryptanalysis@index.html:611 | Padding oracle@README.md:93"
+            data-standards="ISO"
             data-implementation="hand-rolled"
-            data-review-commit="c7a32a7c391bdefecc95e46a13a4aebedf5636af"
-            data-review-note="Re-read root source after relocation and FEAL-4 extension. Executes an 8-bit, four-round toy SPN, not DES. The independent FEAL-4 engine implements its published key schedule; the worker attacks only oracle observations and recovers equivalent round-key/whitening material, not the master key. FEAL-8 exists only in a test wrapper and is not a shipped implementation. Unit vectors and fresh-block/negative verification tests inspected; browser gates run separately. FEAL-4 is presently outside the algorithm vocabulary and is described in card prose rather than credited as DES. Re-read the 12 October source and full prior-pin inventory: SPN/FEAL cryptographic source is unchanged, with toolchain/publishing updates and a source-linked reduced-ChaCha context note. That note does not execute the ChaCha cryptanalysis."
+            data-review-commit="8544ee0ff488f74ce437be57ac5cfd494bbe134c"
+            data-review-note="Re-read the complete prior-pin change inventory, SPN/FEAL source and added PRESENT-80 core, inverse schedule, analysis, worker and UI. The original toy SPN anchor remains; FEAL-4 and full-round PRESENT-80 are distinct engines. PRESENT recovery assumes known K32 and exhausts 16 missing register bits; it does not obtain K32 or break full PRESENT. The October 21 correction changes teaching prose and the DES comparison, not these engines. DES is reference context only; an independent FIPS-table test establishes its nonzero-input DDT maximum of 16/64, with a successful wrong-value mutation kill. No round count guarantees attack immunity."
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-06" data-updated="2026-10"
            
            
@@ -13767,7 +13768,7 @@
             data-implements="ECDSA@src/jwt/keys.ts:58 | HMAC@src/jwt/sign.ts:66 | P-256@src/jwt/keys.ts:58 | RSA@src/jwt/keys.ts:46 | SHA-256@src/jwt/keys.ts:41"
             data-comment-only="Ed25519@src/jwt/types.ts:16 | ML-DSA@src/jwt/types.ts:16"
             data-references="Ed25519 | RSA-OAEP | RSA-PSS"
-            data-attacks="Brute force@README.md:50 | Nonce reuse@README.md:70 | Padding oracle@README.md:74 | Timing side-channel@README.md:73"
+            data-attacks="Brute force@README.md:52 | Nonce reuse@README.md:72 | Padding oracle@README.md:76 | Timing side-channel@README.md:75"
             data-standards="IETF | NIST"
             data-implementation="hand-rolled"
             data-level="beginner" data-added="2026-06" data-added-on="2026-06-27" data-updated="2026-10"
@@ -13860,8 +13861,8 @@
             data-comment-only="E91@src/data.ts:1"
             data-references="BB84 | Grover's algorithm | Shor's algorithm"
             data-implementation="idealized statistical simulation"
-            data-review-commit="1168cf259655710b12040982a83545c395f99326"
-            data-review-note="Read current engine.ts, data.ts comparison table, README and ui.ts honesty panel after independently tested CHSH interval repair. runE91 computes simulated singlet correlations, sifting, intercept-resend Eve, noise, misalignment and loss; no physical quantum channel or finite-key/device-independent proof. BB84 is a comparison table, not implemented. Side channels are explicitly not modelled, and unauthenticated-channel MITM is a README warning, not a demonstrated protocol attack. Preserve raw static coverage and real bounded simulation, not a cryptographic implementation claim."
+            data-review-commit="eccf9173e98ab1c54293e47cc79896a2a78930af"
+            data-review-note="Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review; runE91 and anchor375 are unchanged. The October 21 UI correction scopes full intercept-resend behavior and states that a Bell violation alone is not a finite-key security proof. Preserve the idealized statistical simulation classification and BB84/MITM/side-channel removals; no physical quantum channel is implemented."
             data-level="advanced" data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-10"
            
            
@@ -14367,10 +14368,10 @@
           <a class="project-card" data-category="ATTACKS | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-broken-trust/"
             data-implements="N/A"
             data-references="Dilithium | Ed25519 | Fiat-Shamir | LWE | ML-DSA | ML-KEM | RSA"
-            data-attacks="Brute force@src/main.ts:1462 | Fault injection@src/main.ts:1471 | Key recovery@src/paperData.ts:195 | Lattice reduction@index.html:631 | Side-channel (unspecified)@src/main.ts:1469"
+            data-attacks="Brute force@src/main.ts:1462 | Fault injection@src/main.ts:1471 | Key recovery@src/paperData.ts:195 | Lattice reduction@index.html:632 | Side-channel (unspecified)@src/main.ts:1469"
             data-implementation="N/A (model or attack)"
-            data-review-commit="2f1cd8b5f8fab914ecc52971105b57c28e405818"
-            data-review-note="Read current README and paperData/model source. ML_DSA_SETS stores published parameters/results; the disclosed dimension-eight optimization model has no real ML-DSA key or signature. N/A applies to named primitive implementations, not absence of a working toy model."
+            data-review-commit="ea17f0ca883ac0181b05ab21727b5b5b0d7305ed"
+            data-review-note="Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review. The dimension-eight model and published-parameter data are unchanged. The October 21 opening panel now explicitly says its key is a generated toy and real-scale numbers are quoted. It executes no real ML-DSA signature or key recovery; preserve N/A and the ML-DSA removal."
             data-level="advanced" data-added="2026-06" data-added-on="2026-06-14" data-updated="2026-08"
            
            
@@ -18047,10 +18048,10 @@
             data-implements="Toy SPN@src/crypto/spn.ts:66"
             data-comment-only="DES@src/crypto/spn.ts:16"
             data-references="AES | ChaCha20 | DES | Enigma | Serpent | Shamir secret sharing | Vigenere cipher"
-            data-attacks="Brute force@README.md:91 | Chosen-plaintext attack@index.html:520 | Differential cryptanalysis@README.md:73 | Key recovery@index.html:19 | Known-plaintext attack@src/ui/piling.ts:105 | Linear cryptanalysis@src/main.ts:264"
+            data-attacks="Brute force@README.md:91 | Chosen-plaintext attack@index.html:521 | Differential cryptanalysis@README.md:73 | Key recovery@index.html:19 | Known-plaintext attack@src/ui/piling.ts:105 | Linear cryptanalysis@src/main.ts:264"
             data-implementation="hand-rolled"
-            data-review-commit="9ab368a1300fcb94bbd03925176fa96472841b5d"
-            data-review-note="Executes a toy SPN for Matsui's linear attack Re-read the complete prior-pin inventory and SPN source on 12 October: toy cipher arithmetic and anchor66 remain exact. Toolchain changes, a reduced-ChaCha reading panel and browser cancellation coverage do not implement the paper attack. The live experiment still attacks the toy SPN."
+            data-review-commit="7e4c2c46d89e8bd59ebc83841b6835159d811404"
+            data-review-note="Re-read the prior-pin inventory: only package metadata changed before this review. The toy SPN source and anchor66 are unchanged. October 21 adds an opening toy-cipher disclaimer and a measured per-test timeout for exhaustive screening, preserving every candidate and key. This still executes a toy linear attack, not a full DES attack or the linked ChaCha paper attack."
             data-level="advanced" data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
            
            
@@ -20845,8 +20846,8 @@
             data-attacks="Discrete log@src/sources.ts:76"
             data-standards="NIST"
             data-implementation="@noble"
-            data-review-commit="abe44608d558561512e6783284fc16ef50623620"
-            data-review-note="Re-read current README, every tracked src module and relevant tests after integrated Lucide v1 repair PR15. Full prior review49dfff0 to this commit changes only the navigation icon Github to CodeXml in src/main.tsx; ledger/dialog/fuzz/toy computations and learner-facing claims are unchanged. ECDSA remains a cited resource-estimate data table, not an implementation; the noble/hashes sha3 module path exports the used SHAKE256, not SHA-3 execution. Preserve SHAKE and SHA-256 evidence and teaching-model limits. Actual36 unit,11 local and11 public browser/WCAG tests and immutable-lock npm audit zero passed at this exact SHA. Fleet dependency work39b11ea4-0958-4717-8cc8-faaabd45be07; source review is separate from deployment and dependency provider evidence."
+            data-review-commit="b7bf1099557c0323e9d84f408c34efb56458c3d8"
+            data-review-note="Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review. Inspected current dialog/fuzz computations and source-scope text; the October 21 change adds README guidance and limits, with no executable changes. Resource estimates remain cited data and experiments remain classical; no quantum circuit, real-key recovery, ZK proof or benchmark submission is executed. Preserve the ECDSA/SHA-3 removals and existing SHAKE/SHA-256 anchors."
             data-level="advanced" data-added="2026-09" data-added-on="2026-09-23" data-updated="2026-10"
            
             target="_blank" rel="noopener" style="--accent: #35d6bb;">

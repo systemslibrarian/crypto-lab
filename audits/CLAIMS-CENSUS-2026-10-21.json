@@ -1,0 +1,3485 @@
+{
+  "schemaVersion": 1,
+  "snapshotDate": "2026-10-21",
+  "catalogCommit": "9845031ce69a78b7a92d4e1caccefccfb7ffaf13",
+  "scope": "All 243 project cards: 242 grid exhibits plus Lattice Builder, presented as a learning game. Catalog repository and blind-oracle-api service excluded.",
+  "source": "Fresh sparse clones of remote default branches; immutable git ls-tree and root README at each recorded commit. No source read errors.",
+  "claimsFilenameRegex": "(?i)(?:^|/)[^/]*claims[^/]*\\.(?:spec|test)\\.[cm]?[jt]sx?$",
+  "excludedPathRegex": "(^|/)(node_modules|dist|build|vendor|vendored|target|coverage|\\.git)/",
+  "readmeNormalization": "Remove *, _, and ` markup; collapse whitespace.",
+  "readmeMarkerRegex": "(?i)not\\s+(?:for\\s+)?production|teaching\\s+demo|do\\s+not\\s+use|\\btoy\\b",
+  "rows": [
+    {
+      "slug": "crypto-lab-ablation-wire",
+      "title": "Ablation Wire",
+      "commit": "1d81a8d0f35624993e8d971611f6ee21c8097c5e",
+      "readmePath": "README.md",
+      "readmeSha256": "67e4bf6f4a351a7d0a14af63421e95320a9bd2bf529ec3f1c31dd554beedcc71",
+      "readmeMarkerMatch": false,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-accumulator",
+      "title": "Accumulator",
+      "commit": "8816733764c077df164d17296c6a4a391f4e3cc9",
+      "readmePath": "README.md",
+      "readmeSha256": "371fd5b44763eb120b896cf53a7aaa8d48ec300e47ac5f4cb6f9e15b6b6993c6",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-adaptor-gate",
+      "title": "Adaptor Gate",
+      "commit": "207c2e1a0b8d82ffe74a9ae43196a65b6ffa4557",
+      "readmePath": "README.md",
+      "readmeSha256": "334f8f397a85cdd3b66eab1985e898da1f785c01743d6010f6141cca490b50e5",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-aegis-gate",
+      "title": "AEGIS Gate",
+      "commit": "96c9e52024915148f967a8d0c9b57feaa6eb4d9b",
+      "readmePath": "README.md",
+      "readmeSha256": "03c5e292bd8e9a0842bc173b364dbdb38f14bd71a07d5632de235ac268f3448a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-aes-anatomy",
+      "title": "AES Anatomy",
+      "commit": "7abf61f7fdcef076c5f536c81ec0e1b729b05118",
+      "readmePath": "README.md",
+      "readmeSha256": "4179e4f2e6b0bab190fc8891aa5669b9ff8e5aed4e7c9b34ca01b8cdef708ff1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-aes-modes",
+      "title": "AES Modes",
+      "commit": "89db2977b2be1e45a3bd00bae23afd7fa8844a42",
+      "readmePath": "README.md",
+      "readmeSha256": "c5f5f567e9bfa7b92904d4dadbaa753d5d3dcb2f856476118dc0362b2022897c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence-cfb.json",
+        "mutation-evidence.json",
+        "scripts/check-cfb-mutations.mjs",
+        "scripts/check-ofb-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-agreeing-in-public",
+      "title": "Agreeing in Public",
+      "commit": "e5cbf32207ebc6628884e3673238199c60ed1210",
+      "readmePath": "README.md",
+      "readmeSha256": "41b2372e5493b9f838d75c7cae554c322174259d83fb294b315a4ff26f2bb698",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/verdict-mutations.json",
+        "mutations/EVIDENCE.md",
+        "mutations/evidence.json",
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-air-stream",
+      "title": "Air Stream",
+      "commit": "09529a8de623f097d69bd397467acc2a21660a12",
+      "readmePath": "README.md",
+      "readmeSha256": "d07b14388ab419d2194c112026e668f317a49d95b440cced16098369a6d72b83",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ake-ladder",
+      "title": "AKE Ladder",
+      "commit": "113e7918f040f8b6bca6d431d35681f505cf814f",
+      "readmePath": "README.md",
+      "readmeSha256": "d7900247d2fad7417f7344c88b5640ffb854d526de93091665ddda5b1ad8099b",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutation-report.mjs",
+        "scripts/mutations.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ascon",
+      "title": "Ascon",
+      "commit": "6a8836c95a5ed2bd31ad031d0f154bb6b2c744fe",
+      "readmePath": "README.md",
+      "readmeSha256": "9eb991c4d0ea41e420c34a431b4c167d59ecc36926c47bf1ae84d30ca43faed1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-attestation-gate",
+      "title": "Attestation Gate",
+      "commit": "e78e756f43202bf6ab3ea47d2013a9b805f9a07b",
+      "readmePath": "README.md",
+      "readmeSha256": "89cb908877c88c9a9f2bff93d196560227c412f8c6661abc7ed7e34356b94723",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts",
+        "src/eat/claims.test.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-attribute-gate",
+      "title": "Attribute Gate",
+      "commit": "d0bb24262e9b2b6e47044ef49e5941bdb332e17c",
+      "readmePath": "README.md",
+      "readmeSha256": "9b183897126c6e165a9c621464ec3e1f0cda6793be74741fe6128d10b1c396b4",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-babel-hash",
+      "title": "Babel Hash",
+      "commit": "6052e310cb8a66ee2ed40a1e8c8ce7839f6c4519",
+      "readmePath": "README.md",
+      "readmeSha256": "16a1d83e99b6d4af9e92b21bbad81d2c1fcd069fc22d913413ae58a27fddd4ef",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "demos/babel-hash/e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-bb84",
+      "title": "BB84",
+      "commit": "6afafc6cd890d04745f94ec47ad6bc2d8731797a",
+      "readmePath": "README.md",
+      "readmeSha256": "2f635119abbc513d6e92a4049267bfb084ba8782287c8d7d3a96a07c2bf84c27",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-bcrypt-forge",
+      "title": "Bcrypt Forge",
+      "commit": "aa8c8a2c3449b4cf6abbfac0513a54a72246eaef",
+      "readmePath": "README.md",
+      "readmeSha256": "20ae74b32ae62db15979c56f8a22c07240644b9f0e8cdd8b9c9a9778cd156353",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-beacon-lock",
+      "title": "Beacon Lock",
+      "commit": "e85126b430fd8e6e130f13864a4e36296e05256e",
+      "readmePath": "README.md",
+      "readmeSha256": "8655854f5df3f77a55de01cd47181a1dc2c8e37bc8d1e988764ad4732d90db7a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-biham-lens",
+      "title": "Biham Lens",
+      "commit": "170ee9c514f8054b1c5bd3fadb09adf173487dcf",
+      "readmePath": "README.md",
+      "readmeSha256": "6193360e28cb2cd03fbf03b0fc60094eec2f570a20325cc10b99f630a6279da1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence-present.json",
+        "scripts/check-present-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-bike-vault",
+      "title": "BIKE Vault",
+      "commit": "0866fff5fc770f1b6e4f038a15b02bd62be701cd",
+      "readmePath": "README.md",
+      "readmeSha256": "f2a7f6249216889ce988fc7875efcd30221342e6edbd1402d0090161feee1a1d",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-bitcoin-script",
+      "title": "Bitcoin Script",
+      "commit": "1af28dde3f9ef59713ea3e0ffde8227ac14cf54d",
+      "readmePath": "README.md",
+      "readmeSha256": "b9338f69996a29e62933dc8c1f6e74561f65cc79a7cbad3959b706707d9f6fac",
+      "readmeMarkerMatch": false,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-bitcoin-wallet",
+      "title": "Bitcoin Wallet",
+      "commit": "b488f7a55bcf5b35e2c7bea24ae3c32919206ac5",
+      "readmePath": "README.md",
+      "readmeSha256": "975edaec1705678dda12ebd571c895d519365929bdc21a3ac6cb37b83ea26f79",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-blind-hello",
+      "title": "Blind Hello",
+      "commit": "9f8f91c00310b1d3e616494150d5b261d93d8592",
+      "readmePath": "README.md",
+      "readmeSha256": "96b43a2b0dd16dcf146f6dd5901afab1939e220c3df93f7527e0310584686f12",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-blind-oracle",
+      "title": "Blind Oracle",
+      "commit": "64b08112fbd55a30b8644127e141467b7c85254d",
+      "readmePath": "README.md",
+      "readmeSha256": "11b8a2f008e55adf50e92780c27c4a4bca46617adbcd835b1b89c5b034398575",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-blind-relay",
+      "title": "Blind Relay",
+      "commit": "b3732c88b2d4ba4e3b94c8f949cb5f4243b17c8b",
+      "readmePath": "README.md",
+      "readmeSha256": "b8fbcb3bb66d1e82fb449b01fce9ea284a9b679e3eef1cab03135161133e7960",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-blind-sign",
+      "title": "Blind Sign",
+      "commit": "89cd80ced6b74a4d188b269c4964f3ce87818346",
+      "readmePath": "README.md",
+      "readmeSha256": "0ffac3e27bb04068a27f129884af982137056fc029308ee0da65705af4a2ed5c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-broken-trust",
+      "title": "Broken Trust",
+      "commit": "ea455da9120d8aacf267c31ef0832fa8779edb27",
+      "readmePath": "README.md",
+      "readmeSha256": "21cd23ea32820226fa193290d3a68fefed3deebf1979fd3ea235892b730710b1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-bulletproofs",
+      "title": "Bulletproofs",
+      "commit": "1b016343dcf984a61101cd67f07e3cb69f4a8c8a",
+      "readmePath": "README.md",
+      "readmeSha256": "02b9c73b32b0878d3e59157bea5a1f715ea186955dfa13741f6e197e556012c0",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-card-trick",
+      "title": "Card Trick",
+      "commit": "09a40c7abd849c8e9f9397a285daaba15af027e2",
+      "readmePath": "README.md",
+      "readmeSha256": "6e7f58f62c0bd7f4b815c585331f9b37f0aa25b05fc23130a69d95a5a17aeb7e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-chacha20-stream",
+      "title": "ChaCha20 Stream",
+      "commit": "e2c3aad0d0f370878c3db9eb57337e792856e228",
+      "readmePath": "README.md",
+      "readmeSha256": "4742f8fe9d591f3a5c0bd0f570e0ba4029d3ffe4380f382685f0f72f2f3f5c05",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-chain-of-trust",
+      "title": "Chain of Trust",
+      "commit": "653b7f826c099fbd3b4f672b350c38d9b38ea42c",
+      "readmePath": "README.md",
+      "readmeSha256": "ba0a955e5c28de1f3663110ebce522bb8f47325e328f79aa9da471a743204799",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ciphertext-mirror",
+      "title": "Ciphertext Mirror",
+      "commit": "e66812be3d1da5994c765e97eb36fca5d99917e6",
+      "readmePath": "README.md",
+      "readmeSha256": "e7660b458dbeaf46637d152974bb202233e587cb32219f46a1d505a1fb8b49d1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ckks-lab",
+      "title": "CKKS Lab",
+      "commit": "8843b44204ca236541be821591e72fd1e8349672",
+      "readmePath": "README.md",
+      "readmeSha256": "e8efc0c79a18a07da54a59261a9898fbd231140208d6da96c797ddffa3f1c7a1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-clock-arithmetic",
+      "title": "Clock Arithmetic",
+      "commit": "5bb86840fab4806e3681c1a378fd4c643831035d",
+      "readmePath": "README.md",
+      "readmeSha256": "dad0f62c42084b8509f996636c13342f4cdb64176565ecb717192055962cf7eb",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-collision-vault",
+      "title": "Collision Vault",
+      "commit": "dd7066fc82752008b73bfd21507d823569e5dee0",
+      "readmePath": "README.md",
+      "readmeSha256": "94d9c0828ffcb3b85dccc29b11b5ab3cd6f1b7a95ad1fe6371858b419639b29f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-commit-gate",
+      "title": "Commit Gate",
+      "commit": "8f17d416d19ed6255d0328a3f1f270541c302e6c",
+      "readmePath": "README.md",
+      "readmeSha256": "e3adfe17ad6169d917184cdb0a5325570d80f95eaa5880883d893a2d65ae24a6",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-compression-leak",
+      "title": "Compression Leak",
+      "commit": "1fed7250ad8bbe4b7547b21b56d0451fa1002578",
+      "readmePath": "README.md",
+      "readmeSha256": "c37dc6b25196d124b743530023ceb5fec2b19a57a0d96fa2b65937e676ee74eb",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-confirmer-signatures",
+      "title": "Signature Gate",
+      "commit": "4cf5a00f4fd11eb1dd3a343930859813f6e8da5d",
+      "readmePath": "README.md",
+      "readmeSha256": "0de4391e13cc9c297eae4a4d3b351e607a8ec1ec43ce142c5901d0baa234e79e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-context-ward",
+      "title": "Context Ward",
+      "commit": "a52a74afd03d1d8d07d23ced752de7083d1820cd",
+      "readmePath": "README.md",
+      "readmeSha256": "58fac1771de9a400eae7a9822bb007a753bed9da299cbba1fff2839eed6a3e3e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-corrupted-oracle",
+      "title": "Corrupted Oracle",
+      "commit": "3f6f2f4a2a5a0647054fe20f51d5f42df38def5d",
+      "readmePath": "README.md",
+      "readmeSha256": "2f0ff75cb8d506781bf3864d6f3eba781e0d3aac25afe0de13bebe028c355755",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-covert-channel-studio",
+      "title": "Covert Channel Studio",
+      "commit": "db77e658a5854fcf98e867fa67e9d3439de3c61f",
+      "readmePath": "README.md",
+      "readmeSha256": "1c191636587bf699f8ba67e782ab648450e6431d3505839c45405ea5e42b3e3b",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-credential-veil",
+      "title": "Credential Veil",
+      "commit": "f06bbcaefb287e438d9d626581f417f0d0fc81f0",
+      "readmePath": "README.md",
+      "readmeSha256": "56376bf29c79a4edcb3ddfbd1283c89858bfbf41eff213f68d3dab65f0041dc4",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-curve-lens",
+      "title": "Curve Lens",
+      "commit": "af90e0db7a4c8a919f28bac8f431aac57eb46aeb",
+      "readmePath": "README.md",
+      "readmeSha256": "615b24ee963173511aafc322bd659be85989e0746864e18038a9d5bfa7b3f551",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-curve448",
+      "title": "Curve448",
+      "commit": "a17f11bfd9191d67c70bed3a17969f245638e729",
+      "readmePath": "README.md",
+      "readmeSha256": "d3ad8ae189d75802f298571c4d90e1edc2fc5e9a086a52120580e1ba1710b567",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-dead-sea-cipher",
+      "title": "Dead Sea Cipher",
+      "commit": "e8c8c079b82bdb1eca6afc3d9ccf537ff40f9e47",
+      "readmePath": "README.md",
+      "readmeSha256": "3a62bec77d5048f29ea0a29721085346bc83b14a125b5b03f48f3136da350812",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "demos/dead-sea-cipher/e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence-affine.json",
+        "scripts/check-affine-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-diffie-hellman-mitm",
+      "title": "DH MITM",
+      "commit": "f5679cc9b202fa4ef7da14e072b75b10bc5bb695",
+      "readmePath": "README.md",
+      "readmeSha256": "f1a580a4c860b8d6013c0e38d589452ba436ec3fc74511d03c4f316a2fc19c9b",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-dilithium-reject",
+      "title": "Dilithium Reject",
+      "commit": "f20f206e71127143e77696454eee42b0053e620b",
+      "readmePath": "README.md",
+      "readmeSha256": "02847269a384f09437523c13d2ea2bc32c4c4785261ac8ee8750324f089c989a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-dilithium-seal",
+      "title": "Dilithium Seal",
+      "commit": "f5de094309afa62e653c875bb24a3994f50b43d5",
+      "readmePath": "README.md",
+      "readmeSha256": "c5c7e987a25d92ef81edcd64cfffdf0e35f3f4024fe9de540c1feccafdce4920",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-dkg-gate",
+      "title": "DKG Gate",
+      "commit": "b8c8eb5495c404adc8510a6501ce847a513fa422",
+      "readmePath": "README.md",
+      "readmeSha256": "5b357e8c321987491a052ae59a87c4e1a99b4630f79d7d36095f0b4d986b91c4",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-dnssec-chain",
+      "title": "DNSSEC Chain",
+      "commit": "fe881bdcdc999e20d045e1853da469ff189957bd",
+      "readmePath": "README.md",
+      "readmeSha256": "d4bdb17906e456342b77bcb713c1658b1a8b5e80dc8f159cfdf20facf463db3d",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-downgrade-wire",
+      "title": "Downgrade Wire",
+      "commit": "33796bd711522a00a3497333f22af3067876133d",
+      "readmePath": "README.md",
+      "readmeSha256": "74ad6167ec6f1118cc43dde8bb0c48f1169994ee7885faf9fa1b0a47cee32913",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-dp-noise",
+      "title": "DP Noise",
+      "commit": "ea6eac3e9fc145c9f3306d4f6610b0662f8a794f",
+      "readmePath": "README.md",
+      "readmeSha256": "821c3f5fb2e2183b7111e397a6161313a8fca7ec14b641b8915d8e152d097aae",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-drbg-arena",
+      "title": "DRBG Arena",
+      "commit": "4739c152e1ce7a143e359dc671663a5fb82e7b4d",
+      "readmePath": "README.md",
+      "readmeSha256": "e945efb5e78aaa3eee2e6547add2634cece1615762c77990ec2b51ad73f13001",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-drift-key",
+      "title": "Drift Key",
+      "commit": "b9aab9fdcc02cf4b473e2bf9f8b11846728083d0",
+      "readmePath": "README.md",
+      "readmeSha256": "fe7ee5315f0bd2d6c309b1e0ee7950b3d4e425c8ce739e61e25c609c84af23a3",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-dvd-scramble",
+      "title": "DVD Scramble",
+      "commit": "2a02c59f611b1a3aca698b737a31611fccbdd0d8",
+      "readmePath": "README.md",
+      "readmeSha256": "1c52cfba5242f1f9bfd4f573a636b1e32435467c6023eeb62fe91c47fa2c719c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutation-report.mjs",
+        "scripts/mutations.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-e91",
+      "title": "E91",
+      "commit": "dc7d9620a3ffea42da9b33b387ef364fca141f6e",
+      "readmePath": "README.md",
+      "readmeSha256": "d050e6d58f950aaebbcc6104f2336d6b9199c94f912117b07cc718d7b0540da1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ec-point-arithmetic",
+      "title": "Point Arithmetic",
+      "commit": "f4699df6e28bb314f5fc4fe4d52f1b62cc44007f",
+      "readmePath": "README.md",
+      "readmeSha256": "1a6a738a4249927059f43b0f3f098a067048922e512d5eacf427e92030392b7c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ecdsa-forge",
+      "title": "ECDSA Forge",
+      "commit": "bf95494737ddaed711ee2a348435aa0b5f70dbb5",
+      "readmePath": "README.md",
+      "readmeSha256": "88d814f5eabe6167e0962a1c52ff9fa285a9159d94d961c6771a0e45177caa6e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ed25519-forge",
+      "title": "Ed25519 Forge",
+      "commit": "f2db62ca3bed2ec10dd7d432d2849e2bd7a696c5",
+      "readmePath": "README.md",
+      "readmeSha256": "30c886f50e2f035bb4bdcadd31a388e2c9ce430620b763ef2af0a7b7630f7a46",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [
+        "audits/mutation-observations.json",
+        "tools/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-elgamal-plain",
+      "title": "ElGamal Plain",
+      "commit": "251bf90ef747f256d0e18f0fe987eadafa3f06da",
+      "readmePath": "README.md",
+      "readmeSha256": "539906c2fb844433b80d5890c868651dd8ef2c499f2b9dfd60034cffc6b28086",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-qr-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-encrochat",
+      "title": "Encrochat",
+      "commit": "9fd4d2dabf748c150eb0d2f598ba9fe2fb30fab5",
+      "readmePath": "README.md",
+      "readmeSha256": "7629de73bc02589a238a8256ca44b1d4a419ea1040c486a4d603733b5d76248a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-enigma-forge",
+      "title": "Enigma Forge",
+      "commit": "418d56def1808f38cc10eab23c0fb0e446c90001",
+      "readmePath": "README.md",
+      "readmeSha256": "555c8f24e07754216e9f626e0eb92a3da623c9356b217e407f24bc103f67ab53",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-entropy-collapse",
+      "title": "Entropy Collapse",
+      "commit": "f5abf0dd9b1a93529a81c59c96fbbc0373e757e8",
+      "readmePath": "README.md",
+      "readmeSha256": "c50eac1e77e9eafac3c93693ebecddfecc9eb1646fa6ed2f871ffe45def0f019",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-envelope-kms",
+      "title": "Envelope KMS",
+      "commit": "4bc8a71d8265b1c7d20bd60b14d3ba0be7257e85",
+      "readmePath": "README.md",
+      "readmeSha256": "5ee1932795c7984f8bd62707c3aef1e1e1a266e34b8d4b78fcf4fb0874459b8e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-export-grade",
+      "title": "Export Grade",
+      "commit": "54ad8845ac2d4465fba21b32f18f2d01a1812859",
+      "readmePath": "README.md",
+      "readmeSha256": "aee7992849bfae56e2c528b6a56be9031b0456b81ca826068df28b14b7c38ff7",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-factor-forge",
+      "title": "Factor Forge",
+      "commit": "5849f2d4b42432f25b769b8bc02916582c7f1905",
+      "readmePath": "README.md",
+      "readmeSha256": "758f3551e9c95986316122e605df760c19b64d0e14eed59e8c8210c71507e1c2",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-corpus-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-falcon-seal",
+      "title": "Falcon Seal",
+      "commit": "9558adf185c09cd28e780397d64d555221b89eeb",
+      "readmePath": "README.md",
+      "readmeSha256": "49fda9a89fa46a486c47c25dd1aaa7e545ba452581fc14916278a90d0e9e70aa",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-feistel-forge",
+      "title": "Feistel Forge",
+      "commit": "b9ef3e97fbed60c2484c007ad4b3fc6660aeac06",
+      "readmePath": "README.md",
+      "readmeSha256": "e323c765a43c60259f316c23d72e6c8fed2a38dc87901b5200ee843bbb03f50a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-rounds-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-fhe-arena",
+      "title": "FHE Arena",
+      "commit": "03a99540a451c6b6d03fe6d25066e7293b514605",
+      "readmePath": "README.md",
+      "readmeSha256": "5823e35812405e76ed53e59f8b80b775789ff72364fb5b85c3f7ace4042e3b6f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-fold-gate",
+      "title": "Fold Gate",
+      "commit": "f6ed4333ed91995ceb69cd8c5c5c2f6eba63c85f",
+      "readmePath": "README.md",
+      "readmeSha256": "3e0ca4d01599c9c4e954ec392faf1d658a430f6e9b26382dae96b995c3395f0a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/verdict-mutations.ts",
+        "scripts/mutation.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-format-ward",
+      "title": "Format Ward",
+      "commit": "596ebd44d2c0427d53e915d208e24b567b76f929",
+      "readmePath": "README.md",
+      "readmeSha256": "844afa3f1bffc32a7a6fb6e2c09185bc8f4d15c2b7b4aa5f18fb942ab4294230",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-frodo-vault",
+      "title": "Frodo Vault",
+      "commit": "f91f460f5cdaee768635edd9231bce5528b559ab",
+      "readmePath": "README.md",
+      "readmeSha256": "ca85b7fafe2319bae9cba3844ebe997f7cf1839ac40d84612e421c5a0e4355e0",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-frost-threshold",
+      "title": "FROST Threshold",
+      "commit": "0fe5f12bf39412ec0c5ffb9301f1b66cb46df647",
+      "readmePath": "README.md",
+      "readmeSha256": "96f5b8eb262a6c921fb7af74124c9256e76b919463b920eebd3ec3908c6c8f5e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/verdict-mutations.json",
+        "scripts/mutation-report.mjs",
+        "scripts/run-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-frozen-heart",
+      "title": "Frozen Heart",
+      "commit": "5b50beb9e83224ebf4bedee24f99972c4ad7aa55",
+      "readmePath": "README.md",
+      "readmeSha256": "66f0830e762fe6b412263b5e6c876263d33b4135ce932dd073f40026506f1388",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-fte",
+      "title": "Regex Veil \u2014 FTE",
+      "commit": "6114b513ae8c19906dd331af3ed2d3045afec247",
+      "readmePath": "README.md",
+      "readmeSha256": "10a7275811c3cf2f33b39470ce68775069d864361eac24b0801a2513fdc6a26c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-function-key",
+      "title": "Function Key",
+      "commit": "5d3d445b0073449e8f0168a6a8300e26337ee810",
+      "readmePath": "README.md",
+      "readmeSha256": "54da1509de09ced9df2295d3521e3628dc98fb3698f41f29e5b0d45a20ea464a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "MUTATIONS.md"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-garbled-gate",
+      "title": "Garbled Gate",
+      "commit": "ed9d62ba47ef0eaaa3b712f941efdd4ad559a36c",
+      "readmePath": "README.md",
+      "readmeSha256": "83ad820608ac296d92a2db6542e405386716e32a864cb072ba1a8402a7b39c06",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-gg20-wallet",
+      "title": "GG20 Wallet",
+      "commit": "1a2c1f42b254f397789152ad13e9c0202974393d",
+      "readmePath": "README.md",
+      "readmeSha256": "f8595dec2feab5f0dae2f9967eca1c1414758a5f5618c8a9948a698707ec1d59",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ggh-trapdoor",
+      "title": "GGH Trapdoor",
+      "commit": "cb2ece6e0ab398a3fb249304c4e860ac64fa6588",
+      "readmePath": "README.md",
+      "readmeSha256": "597ed292755949e3e3c5120803bd410e6d508f091ae0086d06811c57c54f1662",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ghost-commit",
+      "title": "Ghost Commit",
+      "commit": "20980596237d7fc8a2e6f75f25080654b3a3bf71",
+      "readmePath": "README.md",
+      "readmeSha256": "d2a4a3995bd2f463948ae86d7424722c74474c3de93b81281c19875736262d9c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-glass-box",
+      "title": "Glass Box",
+      "commit": "5c9781fb7a98dfae9422e74b604936180b585cad",
+      "readmePath": "README.md",
+      "readmeSha256": "cfa62995bc33fe369fb4c84a469a110e1b41fe34e783e5676d856cdde86d2966",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-good-randomness",
+      "title": "Good Randomness",
+      "commit": "0935bc22058ca9771509b4e87bbe94b40dfa74ae",
+      "readmePath": "README.md",
+      "readmeSha256": "4a6f8bec34569764a004bf0a6b807f5776ee2627173f47bf3bd1aac3f2a45b2f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutations/LEDGER.json",
+        "mutations/LEDGER.md",
+        "mutations/mutations.json",
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-grover",
+      "title": "Grover",
+      "commit": "b7289773147c1f19aa6533e3bf86e4843da91830",
+      "readmePath": "README.md",
+      "readmeSha256": "d9a2c93a2bbb3e06fd536f4042d7d8b0cf526db044a6edf6a77097ccde768b8f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-harvest-timeline",
+      "title": "Harvest Timeline",
+      "commit": "a7cb94cf73826c2774d560ad44c52d9963700bf7",
+      "readmePath": "README.md",
+      "readmeSha256": "c1897e639555f37dd88ad1425bc9575e375cf3bb864c40b35fdebd928f5d1145",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-harvest-vault",
+      "title": "Harvest Vault",
+      "commit": "64ccfc55e07253d6ea20319168dee5de7aebeafa",
+      "readmePath": "README.md",
+      "readmeSha256": "22c9676cfce8a422a47712d34cec3f1a0e27cb940ab2a78b0bc0e3d27dc1ef05",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hash-hunt",
+      "title": "Hash Hunt",
+      "commit": "187c35ca4dd295df7a17d8eef4b6bae442790d51",
+      "readmePath": "README.md",
+      "readmeSha256": "e6de791fc390c1cb09823351e614871502c7534cf8783baf6fbf0c5b4c650fdc",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutation-report.mjs",
+        "scripts/mutations.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hash-zoo",
+      "title": "Hash Zoo",
+      "commit": "e86dac25e78bc6876e9fd644d1c6a0b823e06039",
+      "readmePath": "README.md",
+      "readmeSha256": "65cc9f507489a06093127146d119c285a5065e850ff2c1f79082379ef755c274",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-dm-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hawk",
+      "title": "HAWK",
+      "commit": "35e73b0fa38a5ce700cd3117949781d7f5b00951",
+      "readmePath": "README.md",
+      "readmeSha256": "e95081bfc016ee08a6185a4aa3dbdce83df5bbb08c0083736212f20eaf828dd4",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hidden-bit",
+      "title": "Hidden Bit",
+      "commit": "734bd6ee73294f8fd8d6cded7f4f5170ccd1f4dd",
+      "readmePath": "README.md",
+      "readmeSha256": "42f7d070a573fee02899133ba6a8ba4095e76cb9ce637db49f8aa85439721385",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/mutation-registry.ts",
+        "mutations/registry.json",
+        "mutations/run.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hpke-envelope",
+      "title": "HPKE Envelope",
+      "commit": "bb39ab7a5f048ffd51396de8dc8b99c255f61948",
+      "readmePath": "README.md",
+      "readmeSha256": "4888172555d90252c5b3a699252c8f08bfc7a6ec7a2ddef8eb8741ab88b89dc9",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hqc-timing",
+      "title": "HQC Timing",
+      "commit": "6ae972ceac2fe8b42a858667ce33413c0c9a4b72",
+      "readmePath": "README.md",
+      "readmeSha256": "8cb72d3a6db34e9fe3ad554fc4d045af96db52cd5e26e9a7b0237ae5da874688",
+      "readmeMarkerMatch": false,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hqc-timing-break",
+      "title": "HQC Timing Break",
+      "commit": "ccbb0cfd526ec949de306e599ca19ac69c2c45f4",
+      "readmePath": "README.md",
+      "readmeSha256": "a0ad1bb830618746c1a6c79cb69ecd4f01c8e53508f61ee8893ee93bd15b578c",
+      "readmeMarkerMatch": false,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hqc-vault",
+      "title": "HQC Vault",
+      "commit": "0a764b253838d5f15da5f359d3f4838c9c7cd225",
+      "readmePath": "README.md",
+      "readmeSha256": "ff5fc71cbcda981658ba147cfac8651e88779390f20fae1ae6ea90a81a7575ad",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-https-padlock",
+      "title": "HTTPS Padlock",
+      "commit": "97ad66f4132d195aae6450ab7c0b6b5a211f65d7",
+      "readmePath": "README.md",
+      "readmeSha256": "8639a59115c2a3079682cb409bbe65546316bbb8a36e91e0d547b216f234803c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/mutation-evidence.json",
+        "e2e/verdict-mutations.json",
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hybrid-guide",
+      "title": "Hybrid Guide",
+      "commit": "c15c7a6d256c481f50e23f6f18134aa037f6b67b",
+      "readmePath": "README.md",
+      "readmeSha256": "b23fe68684b2b27c8c1466ae2928156df4006584abfd7efe81291a416cc3d7fa",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hybrid-pqc",
+      "title": "Hybrid PQC",
+      "commit": "747b5e9f218e9e69c97731db4aa93296a78ae0a3",
+      "readmePath": "README.md",
+      "readmeSha256": "3e3cff2fdbf01a3407aa6afa2ddb4dcecc386e87db32ee18e0bc30af3b4035d8",
+      "readmeMarkerMatch": false,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hybrid-sign",
+      "title": "Hybrid Sign",
+      "commit": "f9345275be11b5ce59c5fc6f5f386a4e4a689eca",
+      "readmePath": "README.md",
+      "readmeSha256": "d8004e144600c6af4a3e5d5c85ab650c426379750263108665e7ecd09fb538cb",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-hybrid-wire",
+      "title": "Hybrid Wire",
+      "commit": "dd89b591d33b1dd35b5a4efaad6e7dc8c6fb09e5",
+      "readmePath": "README.md",
+      "readmeSha256": "a0b4da4a1a6bc408c4e29268fe32e0b95854bd66aef9d886432779ac668236c2",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ibe-gate",
+      "title": "IBE Gate",
+      "commit": "b249b17c883b4472ca4ef702866fc609d2c7e943",
+      "readmePath": "README.md",
+      "readmeSha256": "f8e78d9883a1cc05b8daa7bc4deb179bdf3b484baa6b96a5d755d4a81675686e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-icy-dvrf",
+      "title": "Icy DVRF",
+      "commit": "6cae1b43972f4a7b41f4fbeadc6ff25fdb32f7cf",
+      "readmePath": "README.md",
+      "readmeSha256": "c2bb7e62d5f8f8dbdb24ab230452e8a087da3d9d90dda829e327f03e99d7e48f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-iron-letter",
+      "title": "Iron Letter",
+      "commit": "0d6257cdad496fa93e880dc6d78493dd6987a14f",
+      "readmePath": "README.md",
+      "readmeSha256": "8a4d781a5f676e0e9de6cd6f5e6669bf1c8cd7ac86c622526bbe4b0ddb226273",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-iron-serpent",
+      "title": "Iron Serpent",
+      "commit": "2ecf69b6afdeb1357be1f514fed3ec0c46844e5a",
+      "readmePath": "README.md",
+      "readmeSha256": "beea512ad7755f171d405868d8d3be2db62245d6b193658467e8f1d08c454d7d",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-isogeny-atlas",
+      "title": "Isogeny Atlas",
+      "commit": "70870f42c90fc8912276fade08685bce318c29c9",
+      "readmePath": "README.md",
+      "readmeSha256": "87536fc269a77e7c3a36921e07702c04b8fd8ddb9d0646e999590353a953ee5e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-isogeny-gate",
+      "title": "Isogeny Gate",
+      "commit": "c94292309bc98972fbef966ee1646a366dfe04e5",
+      "readmePath": "README.md",
+      "readmeSha256": "e597805d25ff0ffff706f667923c453eafb732cf32eff93e5c19265f9a383e48",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-j-uniward",
+      "title": "J-UNIWARD",
+      "commit": "a4c71e71cc68aa4fca9f2def92b5c5a1e5adff75",
+      "readmePath": "README.md",
+      "readmeSha256": "26313c3b115d50e4fbc03c74467b945c5bc89cf40026f4f1bff11affc866e1d5",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-jevil",
+      "title": "Jevil",
+      "commit": "eefa859e6abe4b4152ef52b1b3844937b5d6bb07",
+      "readmePath": "README.md",
+      "readmeSha256": "6c7fea02cf81be6c6188ee5a2f61b0ad8cb062e470b08554d3a02880eca2f59a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-jwt-forge",
+      "title": "JWT Forge",
+      "commit": "87aab64a1c2cf68c674f6422d8f22b04b8f3894c",
+      "readmePath": "README.md",
+      "readmeSha256": "6cf69a90a4751d16c0980f2f4b8c4a7ca8048dfdaf2db2984d6225226242e8d3",
+      "readmeMarkerMatch": false,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts",
+        "src/jwt/claims.test.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-kdf-arena",
+      "title": "KDF Arena",
+      "commit": "5c7fc3905dc9490f2820acfa26f767a2ca8b1d5c",
+      "readmePath": "README.md",
+      "readmeSha256": "35fef1078d30bf6f1b7bfef4ae30bf022c3f3e55740ed6ca6cfbd1782b597a67",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-kdf-chain",
+      "title": "KDF Chain",
+      "commit": "0e0e89b53606a01a08c56f47ed0eb4553f20ebf3",
+      "readmePath": "README.md",
+      "readmeSha256": "eca7d1588e3ee55312b0a520a44ca155fdf34a1a15295f59f35408cb436aa640",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-kem-trap",
+      "title": "KEM Trap",
+      "commit": "537246369b6a747b4c126855a5dd0d062924ff2a",
+      "readmePath": "README.md",
+      "readmeSha256": "05e20770329fd707e854f93a26240a4e4179e3d80cff37cfcbedd4ad67c93738",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-kerberos",
+      "title": "Kerberos v5",
+      "commit": "2d00aed8365d40610dc92ad8f11855d84fcd19d1",
+      "readmePath": "README.md",
+      "readmeSha256": "16f7c7bce0a0b5c1fec5be64860a63c96de2a33a9cdaeea0e0f7ccb54c604859",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-key-exchange",
+      "title": "Key Exchange",
+      "commit": "d2da7f50620bfe6c8e3417d7a49fba46e8c50a0a",
+      "readmePath": "README.md",
+      "readmeSha256": "13309a63c98293ae863a9b9cd444710b670dcae7f6ca7d8329bbc6aa6c1c9708",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutations/ledger.json",
+        "scripts/mutation-report.mjs",
+        "scripts/mutation-report.test.mjs",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-key-lifecycle",
+      "title": "Key Lifecycle",
+      "commit": "4d366e229317a00cb7afc223097351050c11e12c",
+      "readmePath": "README.md",
+      "readmeSha256": "159238682008c72e794b48e250ead5bfc9ecaf2a24fb5923d816d199cf53c7b1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-key-mirror",
+      "title": "Key Mirror",
+      "commit": "605ac80779c6821afb42da5db651d4f72c1ed553",
+      "readmePath": "README.md",
+      "readmeSha256": "1382afb56bb115540b6ec6493a62901237a5f541bd714032f917cc30207f8e06",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-kmac-gate",
+      "title": "KMAC Gate",
+      "commit": "ee6a55147e8717f0e7f6d53ddfcae3523a3ec424",
+      "readmePath": "README.md",
+      "readmeSha256": "209057ca61b1bae69864f189c7478a21e491ee198083d05e4255628ae652efc7",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-kpqc-pair",
+      "title": "KpqC Pair",
+      "commit": "5829644c4dde3034b23839542e47f91a27dc8bd4",
+      "readmePath": "README.md",
+      "readmeSha256": "9dfe9b460e0a85e3213e34b10f3969c98d3e4e6936d47f03ab518e6a12504342",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-kyber-vault",
+      "title": "Kyber Vault",
+      "commit": "784645fc18a9bd1114b7fde33a09e1b98731d217",
+      "readmePath": "README.md",
+      "readmeSha256": "b0cdd88807635f3f3a3e321fc9f18bf2697cf2663c9e243abf1b500e15712f5a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "demos/kyber-vault/e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-kyberslash",
+      "title": "KyberSlash",
+      "commit": "5286e2b88c51efdf0e1f963ec44c49631ba79ece",
+      "readmePath": "README.md",
+      "readmeSha256": "efa25c2f686864bfe41d9b7f39ca535e6b10f5214aade42280af03f1c26bdab4",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-lattice-builder",
+      "title": "Lattice Builder",
+      "commit": "6c63e19e9d94bcf8abfb0e5b727c8ac4d852da3e",
+      "readmePath": "README.md",
+      "readmeSha256": "50cf0c22e1cc327e1c2726e3cd016bcf3f6a40431c754d08940f7ea688d93282",
+      "readmeMarkerMatch": false,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-lattice-fault",
+      "title": "Lattice Fault",
+      "commit": "ae17f8780721a5aa36d087a5f2127d8c4584bf4e",
+      "readmePath": "README.md",
+      "readmeSha256": "4960b6142c4f4936e5a24e32bc28ac7d33c400bca71d9b0702d51dd8512a4ec5",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-lattice-gentle",
+      "title": "Lattice Gentle",
+      "commit": "ae3495ab88464579946b2be006dd11b2cc5ade11",
+      "readmePath": "README.md",
+      "readmeSha256": "3f3b147aacb7d670c4dbf52cbdc30cb5aa9b0991498078e8efc0a68d8d4cdfa5",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-lfsr-forge",
+      "title": "LFSR Forge",
+      "commit": "2800c76acf9ddc7bd79210327372b95b64d444e6",
+      "readmePath": "README.md",
+      "readmeSha256": "a78c47040752820b9a8ac2b792127742a1601dd249eeb2eb0da5b9a905ab6f73",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "docs/mutation-results.json",
+        "scripts/mutation-check.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-lll-break",
+      "title": "LLL Break",
+      "commit": "a7eea56efd93cb05bc578fe18512416698366f0d",
+      "readmePath": "README.md",
+      "readmeSha256": "de49f5d6ab37076a33f7daafb7984a9086e19e5f2da0ce6283c309cd2aa6704d",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-lms-ledger",
+      "title": "LMS Ledger",
+      "commit": "4b3e43e894ff05d65b832d864cf46ced0a13f9ce",
+      "readmePath": "README.md",
+      "readmeSha256": "5b90576fa27c89d42d1bd3894d4c20256fbb3d43ce7ac9267a623835e6d6bc36",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-lms-xmss",
+      "title": "LMS/XMSS",
+      "commit": "16e81b1cb1fa2e2a1f551dc99deadeccdad1c1fc",
+      "readmePath": "README.md",
+      "readmeSha256": "8e5fc4b859fcdbdf3dfb3c8e896ac29c3ee32690106168ed28f6e8560c97a88a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-locks-and-keys",
+      "title": "Locks and Keys",
+      "commit": "79df19c627bec29aca42abb5a3863076b7360756",
+      "readmePath": "README.md",
+      "readmeSha256": "421a64dab3cfe970afd3c68b661ede71be2fd61180cf3d496467691533f77e8a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutations/LEDGER.json",
+        "mutations/LEDGER.md",
+        "mutations/mutations.json",
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-log-forge",
+      "title": "Log Forge",
+      "commit": "d81c706537f4946c60b5f9dcc24f6ba2e5e3d15e",
+      "readmePath": "README.md",
+      "readmeSha256": "94ab6a17305f4f6ec2cdad4f5b1c667cde3e69b3d4cab807a4804603acfd05c7",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutation-report.mjs",
+        "scripts/mutations.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-lwe-hints",
+      "title": "LWE Hints",
+      "commit": "a9693c472391d93c32831b5a35b34c21e92b15d6",
+      "readmePath": "README.md",
+      "readmeSha256": "85d801535e296833cca535b5bd986f6ce2a71ae8f025a2022f8729268efeaa35",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-mac-race",
+      "title": "MAC Race",
+      "commit": "06b1646ca40d49a8805ddee5b2d6d78b17ce8bcd",
+      "readmePath": "README.md",
+      "readmeSha256": "ba0ba8e8006653ef00ae0f33dc044e5853c935db206e812c231b61a7002d17c4",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "cbcmac-mutation-evidence.json",
+        "scripts/check-cbcmac-mutations.mjs",
+        "scripts/check-crc-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-masked-core",
+      "title": "Masked Core",
+      "commit": "6196c042b3cc46b9f0c6c47acf4b4b35b008f4cc",
+      "readmePath": "README.md",
+      "readmeSha256": "e08c951347207e9cb3d68d23f7d568245b5b5a885a00a47ca0d2a6446de7011a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-matsui-line",
+      "title": "Matsui Line",
+      "commit": "ea5a22430b7f21ff2899ce21ae2b8e8173575940",
+      "readmePath": "README.md",
+      "readmeSha256": "8bb4ed4d04fbb1a7803587c5070d5ebe2a9ca057408ac99de02e4208136d30de",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-mayo-seal",
+      "title": "MAYO Seal",
+      "commit": "e80cff3d9230f746d588bdcb2754387d9cd06511",
+      "readmePath": "README.md",
+      "readmeSha256": "c80751893dea32801d0f727350d606922609c1214ead13dba1f02d330bba99ea",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/research-claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-mceliece-gate",
+      "title": "McEliece Gate",
+      "commit": "4e875737d309c5ae58c03de1f8937668f9aa6443",
+      "readmePath": "README.md",
+      "readmeSha256": "204662246e072d7c0e9a434db287f4eb57f2f31c3f578b4c83f6ce72b7e9eab3",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-merkle-proofs",
+      "title": "Merkle Proofs",
+      "commit": "bc58ccd5b628403e8c5002df74fa304b0ce16021",
+      "readmePath": "README.md",
+      "readmeSha256": "0189283b7e2c98de1405a891eb829ce15b6458c2bec7eb7761daff2c66f8dbdc",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-merkle-vault",
+      "title": "Merkle Vault",
+      "commit": "60c4a0f7a952f75a119fc6243d8970b6ddecbf18",
+      "readmePath": "README.md",
+      "readmeSha256": "212067d2a9101cfdabfb1f418ae8795bc3393bea581e20745e2fc883a304c400",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-mgm-mode",
+      "title": "MGM Mode",
+      "commit": "cfa173ebf01ceff4b4628c1bba01bea73460f043",
+      "readmePath": "README.md",
+      "readmeSha256": "79df4619438750f499ff62223cb56604cc9f5cf12ec06253f83a2e0871458cc1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-misty-lens",
+      "title": "Misty Lens",
+      "commit": "2fc818eac3d4975b9eb8c7690b858286027cdc73",
+      "readmePath": "README.md",
+      "readmeSha256": "a07a89bdc3745542379b479e9aa4bd2e1b01045628958e27269b47e282253d8a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-mls-group",
+      "title": "MLS Group",
+      "commit": "91b5f0fa3ba4c1e9893037bc12eb410a843e148c",
+      "readmePath": "README.md",
+      "readmeSha256": "f91990224a9e60463d78962494a952e21b08ca6c22cb8a6b1af7db9dfa724e2f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-model-breach",
+      "title": "Model Breach",
+      "commit": "d252c774179e95f365657fe296a04722d8c59aff",
+      "readmePath": "README.md",
+      "readmeSha256": "825b29937d898cdfe249e7a3d5778186be0100cc13fd46422bd9f349e3767263",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-mpcith-sign",
+      "title": "MPCitH Sign",
+      "commit": "6b50a953311753ba20adc61c4ac4172789b4a2fa",
+      "readmePath": "README.md",
+      "readmeSha256": "7917fcd7a15b73f3aa9d065b0f6b82744fa1672f785490030b9a15221058fd97",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-multivariate",
+      "title": "Multivariate UOV",
+      "commit": "60bef02714db186e5782487c161f330ed6b8a1c9",
+      "readmePath": "README.md",
+      "readmeSha256": "733aa2c27fb1311c625a614c403ddcf4032262e5f8e276da71a47ac79e1cb98d",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-musig-gate",
+      "title": "MuSig Gate",
+      "commit": "61fa7cc56ce72279d96350bf2c96c9971e7fe8c9",
+      "readmePath": "README.md",
+      "readmeSha256": "7d740843e041a7e4eeab24ad7c814a0da7f3dbf1328ce0f60d96523f1bef78a2",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-next-number",
+      "title": "Next Number",
+      "commit": "c6892560451e204b8cc741946e6e2bf245ba00e1",
+      "readmePath": "README.md",
+      "readmeSha256": "ca87807047d461a24f7e8e4979ae60401e336b556d719d89d0aedd1d538808c0",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutations.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-noise-pipe",
+      "title": "Noise Pipe",
+      "commit": "689e2b07a3662d0ae9c49594f3372ee7c7987768",
+      "readmePath": "README.md",
+      "readmeSha256": "05c130103cbcb3c4714822adfbe25bbc1bb6a248d982cb226e3c98faae8e38b9",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-noise-to-numbers",
+      "title": "Noise to Numbers",
+      "commit": "f468565fbc6530fcd98508b2493370dfa61aa88a",
+      "readmePath": "README.md",
+      "readmeSha256": "6e6b7530245f2e58f8a05dca323acf0a68ebe86973dc1c8b1adf65769148ec1f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/mutations.ts",
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-nonce-collision",
+      "title": "Nonce Collision",
+      "commit": "462bae9b8111425a663c192ccc85513c2f25c927",
+      "readmePath": "README.md",
+      "readmeSha256": "a3d61c699dfb4788e8d75b00ff641165d7a60fbe24d7f8cc0ecd1861f56c6bf8",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-nonce-guard",
+      "title": "Nonce Guard",
+      "commit": "ffbbecaba2e78830bcec32c5565e95d233c4e52d",
+      "readmePath": "README.md",
+      "readmeSha256": "0850def509be60df7351dd0f719b5fd28098b57375881fa44f7dbf45636d5c31",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-nonce-lattice",
+      "title": "Nonce Lattice",
+      "commit": "6cd0b424d212f330debee615b026893339e7c135",
+      "readmePath": "README.md",
+      "readmeSha256": "d2e546c20318a6b5d4a9b6005ca5297a0f69d0eed1f4a53639ea383bee98fac1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ntru-classic",
+      "title": "NTRU Classic",
+      "commit": "df32c561aaa46be4032edbb152722b86ee4fa985",
+      "readmePath": "README.md",
+      "readmeSha256": "0a2df6aa462bd72f9f5829144676509d3925562e8a380f6cd1487c947ece45dd",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-oblivious-shelf",
+      "title": "Oblivious Shelf",
+      "commit": "13bf4fd8b0f560b717cbba7d1158e58a247d7339",
+      "readmePath": "README.md",
+      "readmeSha256": "db9fe0b371882f225ad8930257e3d9a7fe744995514238f303bc94606f1e7146",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-opaque-gate",
+      "title": "OPAQUE Gate",
+      "commit": "6fffc04fec90bb396016dfa12f8bd0a9f862823f",
+      "readmePath": "README.md",
+      "readmeSha256": "80e27471e7b6dd76231145735b4c07e116a1337a224cda5b4db5a70d67f0e537",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-oram-vault",
+      "title": "ORAM Vault",
+      "commit": "8a2aa66111da27768a42510c02a2391ee409f1e6",
+      "readmePath": "README.md",
+      "readmeSha256": "a829520ef3c5ad3477b5f44647e664caede130f7a047ea3851d2953ce50ad83f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-order-leak",
+      "title": "Order Leak",
+      "commit": "79fcd970a163286ec89fde254bfa63b1d81a09a7",
+      "readmePath": "README.md",
+      "readmeSha256": "4529b2d3d4b9deb47412bcdb42da07613d4c3f854ca215ac738940e986203d73",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/verdict-mutations.ts",
+        "scripts/mutation.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ot-gate",
+      "title": "OT Gate",
+      "commit": "1d5a8f9ae8a82e7ac6e3306aec00411e742d7428",
+      "readmePath": "README.md",
+      "readmeSha256": "37165ded9daa5ef11952382b031e3605d74a4304e7759e7a13faf6d205f38163",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutation-extension.mjs",
+        "scripts/mutation-report.mjs",
+        "scripts/mutation-report.test.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-otp-vault",
+      "title": "OTP Vault",
+      "commit": "542797ed2d8ceb0893eeeaf29759aedbe87e82df",
+      "readmePath": "README.md",
+      "readmeSha256": "0f06151f52fdfd7ca82428678fff1d9b8403e4244985f1eeabf546d8edf11320",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-limits-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-padding-oracle",
+      "title": "Padding Oracle",
+      "commit": "c3806072edec3fe143f48bfcd5e7511bda1797f5",
+      "readmePath": "README.md",
+      "readmeSha256": "61eb65692d1576f61500944415a69d86bf2bdc5027a993c03818c01a05f96d11",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-paillier-gate",
+      "title": "Paillier Gate",
+      "commit": "6d73ec5564b75e3a595a74a0623e0b60380f6dfa",
+      "readmePath": "README.md",
+      "readmeSha256": "a14029901392c94e2fb28f53d632140811a8547d9e1c0df51ece57c7812fb576",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-pairing-gate",
+      "title": "Pairing Gate",
+      "commit": "dddce0a39d0dd5f42c771c65392b3b12d45d368e",
+      "readmePath": "README.md",
+      "readmeSha256": "5e275fdfdfe03ff63ae264bd0acd96b2a72f84c4dcf2272e960ef671a393ce14",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-pake-gate",
+      "title": "PAKE Gate",
+      "commit": "5019b2060e6a91edc3dee460c0d190e4b064fcb9",
+      "readmePath": "README.md",
+      "readmeSha256": "3bc09dc71e3360e59553cba70f4193feb479aa8c4df9464a670297fe34ee475a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-patron-shield",
+      "title": "Patron Shield",
+      "commit": "f8a82cf820f7e4d1135fb2fdca214d6b0e553f91",
+      "readmePath": "README.md",
+      "readmeSha256": "1ff875ef38cfe6f07a81ff161f91ec6ac46ddbeb9db7044ecb4eb1460134fb46",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-phantom-vault",
+      "title": "Phantom Vault",
+      "commit": "bbc7216e1f0c8824e6c6bd6972fa3b6da5c7745b",
+      "readmePath": "README.md",
+      "readmeSha256": "4082e284c7c4455ce520d6b709457c38556e753f647043f28977e95e8b646680",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-pki-chain",
+      "title": "PKI Chain",
+      "commit": "750a098fd1f47e36a0d101eec652f0a2bfef84fb",
+      "readmePath": "README.md",
+      "readmeSha256": "5517020a3dc5a2e4916cdc03269c9e2e970fe82b3b3769c271a9842408edf5b3",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-point-ledger",
+      "title": "Point Ledger",
+      "commit": "b4d0f3338a2d2edb46433a20d175461f8372ec1e",
+      "readmePath": "README.md",
+      "readmeSha256": "c40f9b3f3d2903b61f6c90e3d51687ac82ea30861eb819f442994d232a979b28",
+      "readmeMarkerMatch": false,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts",
+        "tests/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-poly1305-mac",
+      "title": "Poly1305 MAC",
+      "commit": "eb3adcc6b9c489eb6729920d31468ce049ece162",
+      "readmePath": "README.md",
+      "readmeSha256": "73d4bd5689cc091310c19b463c522896200e3af1227c3f72bf221af8e3cdb9ed",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-polynomial-forge",
+      "title": "Polynomial Forge",
+      "commit": "24aa348a654b5521489aa5d607a3f99add7f34dd",
+      "readmePath": "README.md",
+      "readmeSha256": "81d8f6b9d6acd2f5fb7b17a7597b1c0e2675ef67ee7f7a0b6f74caad95c7e353",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-power-trace",
+      "title": "Power Trace",
+      "commit": "9fd17c9b1b12931eb9786cefd5647b70033f537e",
+      "readmePath": "README.md",
+      "readmeSha256": "e9b1066f595e1c6e50ef2c4480e994813f8ca803a17eb5a14f4585284f6cd592",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-pq-chooser",
+      "title": "PQ Chooser",
+      "commit": "416ef46df27afdb679b947edc093736ab104658a",
+      "readmePath": "README.md",
+      "readmeSha256": "a7c05d5c8089e58f9e0759d962c23e77660f673d422e6c6e838cd22a2d8e0472",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-pq-families",
+      "title": "PQ Families",
+      "commit": "cc5b6526b65e5d41bd1724754edc1355136b74bb",
+      "readmePath": "README.md",
+      "readmeSha256": "d3e3efddb812a1d38872c995f3c3d3e421b4e1cae9291bfaafe294f2877343cd",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-pq-rotation",
+      "title": "PQ Rotation",
+      "commit": "dca588dacfd4ca8fe03edc05e9fd4c32025f2532",
+      "readmePath": "README.md",
+      "readmeSha256": "d8beb53d4d4e5f8e8cc3a9e5370cd196a2197b2b4456558e69d7f14e4336f6c5",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-pq-tls-handshake",
+      "title": "PQ TLS Handshake",
+      "commit": "959f7d460d3410f6268df2988616e9665e18a482",
+      "readmePath": "README.md",
+      "readmeSha256": "87d2b887a296eb4f5a86de2382ea54a85cd7ec6d086ef0238d53c0fde4c298a7",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-pqxdh-wire",
+      "title": "PQXDH Wire",
+      "commit": "d057c986bbb35d4677af9e9b868d217f27445880",
+      "readmePath": "README.md",
+      "readmeSha256": "83fb0e9d82bce4a6cd6f26ec981858c06cc853e9becefb3a0c8ebbb670d7bfd8",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/verdict-mutations.json",
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-prime-witness",
+      "title": "Prime Witness",
+      "commit": "c85f91a26720f4f2d63b8b4471720cfcce49bb25",
+      "readmePath": "README.md",
+      "readmeSha256": "266438819bc00ebc05d8f642e43ea325d59f0977b3e2350a833832fe99b7cfd2",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutations.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-privacy-pass",
+      "title": "Privacy Pass",
+      "commit": "6ffe92170897bda9c582b16ec8caa6343f1d935e",
+      "readmePath": "README.md",
+      "readmeSha256": "601e499e7ebeff9ec5d4a15c26133ef18b7b1e7b63e0376c88397cf6eb43e3f1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/verdict-mutations.json",
+        "scripts/mutation.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-proof-tally",
+      "title": "Proof Tally",
+      "commit": "fe703a3d31e22fd6961d736af428abf0eda8108a",
+      "readmePath": "README.md",
+      "readmeSha256": "3d875421489c1cf49ee140185c51f183028f37e7736f4623f7d3171a71ea7f87",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/verdict-mutations.json",
+        "tools/verdict-mutation.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-protocol-checker",
+      "title": "Protocol Checker",
+      "commit": "adbe6c0612e583924ebb0cda3f281521ace9a693",
+      "readmePath": "README.md",
+      "readmeSha256": "bc9402207f551f372deafbc1dff546beb3a53890478de60febdbb71ceca37318",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-protocol-compose",
+      "title": "Protocol Compose",
+      "commit": "5dd48e8f4abf8d222985d1578da699c61c07b0ee",
+      "readmePath": "README.md",
+      "readmeSha256": "2e92e78282d7348be106ff2e100567d6acf4c9b165de2fbd234e2bbc197e09ac",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-signcrypt-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-psi-gate",
+      "title": "PSI Gate",
+      "commit": "f4c3181c83ba13231e3f50424c4cead95ee306f8",
+      "readmePath": "README.md",
+      "readmeSha256": "7e31b2c801a284031dca26fe961d90c081d47eae773b9d2ca433bb18f0b482ef",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-pulse-chain",
+      "title": "Pulse Chain",
+      "commit": "2dc17f8647a4219557139bd9b94dd7a83d8fe74a",
+      "readmePath": "README.md",
+      "readmeSha256": "64cb63666ec32032f12f814c8c77b22d1b8b4314657811b484d90cb2af513a16",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        ".github/workflows/mutation.yml",
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-quantum-entropy",
+      "title": "Quantum Entropy",
+      "commit": "44b945c15d5de424f4209239b6d96063eccc82f0",
+      "readmePath": "README.md",
+      "readmeSha256": "c811eb51e65f3c933faee5c91095e3849a1cbb832803c1453e8551562c329d6f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-quantum-vault-kpqc",
+      "title": "Quantum Vault KpqC",
+      "commit": "252c7e9c749c09642e4e6ae82b7bab45ecb9d8e0",
+      "readmePath": "README.md",
+      "readmeSha256": "8207bfd766003f8d846009eff37ee526f9baea94531bb13bc2155208f828eca8",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ratchet-wire",
+      "title": "Ratchet Wire",
+      "commit": "029bff5f44e6822c17c7ce8164ecb1b5ae88d258",
+      "readmePath": "README.md",
+      "readmeSha256": "be5a2d045cfd0ec9bc963b6f7b4e3939d01c1149861b903a05ed5cc0a4b13c95",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-rekey-relay",
+      "title": "Rekey Relay",
+      "commit": "934deba71b3e6217d8aff8b734482c8696413a46",
+      "readmePath": "README.md",
+      "readmeSha256": "f52916846d847688f98dfe32e5f10e8ff1c2ee145a689e43580a947144db5544",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-reshare-circle",
+      "title": "Reshare Circle",
+      "commit": "bdba3dc208b0bf347e9f06e20f001dbec2b7f3f5",
+      "readmePath": "README.md",
+      "readmeSha256": "fa6a0c3867cbf9b50c73b7a6a5c9462d2d1ec99c8c2adb80080e7a7f22a8eb39",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-residue-gate",
+      "title": "Residue Gate",
+      "commit": "d1f1c553da40f36f1f02b57800262271278f441a",
+      "readmePath": "README.md",
+      "readmeSha256": "4c25ff7ccd72976eca40aa3df00995d877128bca2a5a7046447e88e09f81cbf2",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutations.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-return-path",
+      "title": "Return Path",
+      "commit": "b734008bf2b3d76c4fefaeb9fa948a6962f30fe1",
+      "readmePath": "README.md",
+      "readmeSha256": "d8185597659d15da2969dcf031c6dd2484620b8c7a649d67e90de0331d339e19",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ring-sign",
+      "title": "Ring Sign",
+      "commit": "a1a63b52c9274bef08c581abcfbc35f50803d0d4",
+      "readmePath": "README.md",
+      "readmeSha256": "95cdfd9dee166c8f72d909a4bc9cdaa0a7cbb335e53eab0c05f98611d3b59c79",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-rsa-educational",
+      "title": "Educational RSA",
+      "commit": "bc479abe82b5232b8187c9032e0fb8046e0e8f5b",
+      "readmePath": "README.md",
+      "readmeSha256": "999e3d49a03ae7601e55494c30aca5319b9a01d4058dc463b5e1dcf3dd7016c6",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-rsa-forge",
+      "title": "RSA Forge",
+      "commit": "fb8ce562d53d9063e9c24eb7950cae6a72109484",
+      "readmePath": "README.md",
+      "readmeSha256": "9ea821a43b4fe69db595b86cca3927418c8285424f2a4dd37916112998c8c70e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-extension-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-rsa-small-roots",
+      "title": "RSA Small Roots",
+      "commit": "763afac1320d2778d3b95e028c22d427e9b8d223",
+      "readmePath": "README.md",
+      "readmeSha256": "43de7f9f588303c4e36c92bd244b83012b87073d692f514bc167c4a757c9ec2c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutation-report.mjs",
+        "scripts/mutations.mjs",
+        "src/wiener/mutation-report.test.ts"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-salamander",
+      "title": "Salamander",
+      "commit": "70d83a114fc9b8ad70c7495edd8a802d0ab5235c",
+      "readmePath": "README.md",
+      "readmeSha256": "48abf0281071f43a4a4429d97e64e2266b7fa551ccad0207168aa642c9ed35e6",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-sat-break",
+      "title": "SAT Break",
+      "commit": "9dffc06332e5f3ade685a43c560104f0305f0ed2",
+      "readmePath": "README.md",
+      "readmeSha256": "6b92a2bcff516ea34d8b2a9bd914a816ebd4ca4f2cd197e35d8c9ed0bf46bee0",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "docs/mutation-evidence.md",
+        "tools/mutation-check.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-schnorr-forge",
+      "title": "Schnorr Forge",
+      "commit": "2dccfc2136259f2f07d5f8a576bcf1e11aa133b1",
+      "readmePath": "README.md",
+      "readmeSha256": "c31ca82979fab6c306cb45abc510b8c7fd2a87dc601cf7a6e607305ea7feb77e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-scloud-vault",
+      "title": "Scloud+ Vault",
+      "commit": "9956defae298dfb882dcb9f6f82086572256991d",
+      "readmePath": "README.md",
+      "readmeSha256": "22d54e961902de4b1a2c029f184c261730f43e43e16e6cffef9f1da05fa03fdc",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-search-vault",
+      "title": "Search Vault",
+      "commit": "715cec98e0dd03344c0fabc1efd71d0103786bd5",
+      "readmePath": "README.md",
+      "readmeSha256": "3a9ec5f6d5a29a47a6cdd881cbf604412fed72c3de856dbdba082d4516e029b5",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-sector-vault",
+      "title": "Sector Vault",
+      "commit": "3380e4e50a7903ee9548c21c4951fef3690e7cb1",
+      "readmePath": "README.md",
+      "readmeSha256": "01887320eef5a2015770520ffdab9f5c050e6daeaae5269129d37823112b38d1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-shadow-vault",
+      "title": "Shadow Vault",
+      "commit": "3c5824b8a343391868dadb2c29e1a264045a1e63",
+      "readmePath": "README.md",
+      "readmeSha256": "1ff1a66f85a60b6e79247721696653c0be2b9c420781cbab9308d66e351ed24c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-shamir-gate",
+      "title": "Shamir Gate",
+      "commit": "66874ed10bbc796b4d81d3e79c23befaf9f395fd",
+      "readmePath": "README.md",
+      "readmeSha256": "a6ca8b9f3968e578532c2ff3a2794ffef775dc738a9a2147eb018f519a02aca3",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "demos/shamir-gate/e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-shamir-vs-frost",
+      "title": "Shamir vs FROST",
+      "commit": "80adf78ce5e8115dbbce30216bb56a98bac324b4",
+      "readmePath": "README.md",
+      "readmeSha256": "a776357dffa767862c256365a15da15dbcf8f5f41595922f7c8a985ae645bc1a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-shelf-oracle",
+      "title": "Shelf Oracle",
+      "commit": "852f23ff8b406bd7f98f06cbea34f5cec6cca389",
+      "readmePath": "README.md",
+      "readmeSha256": "ed73cad31698eed258fc0ecaf11601f1cb73833133c6393a1d99fc0323a9eb6c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-shor",
+      "title": "Shor",
+      "commit": "79a145deb8dd2f69d6e39570f2c9b29f88c2c7cf",
+      "readmePath": "README.md",
+      "readmeSha256": "7d2a9a638ed52d72a11b6c592ab0a32a7dacb563e03f9953d53fdc5bd618b241",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-signed-bytes",
+      "title": "Signed Bytes",
+      "commit": "8ab85f3e2dd4c8a0248055a1f5f056897e9ec99e",
+      "readmePath": "README.md",
+      "readmeSha256": "bee4c5499e1cdf40fa9c9356369ed8e08c1f1a92a7acadf11ad7dbf802ac9e9c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-silent-tally",
+      "title": "Silent Tally",
+      "commit": "108c5da4c880472187ee14dc093b952429ea5af8",
+      "readmePath": "README.md",
+      "readmeSha256": "df6f67f9e6352b09203637126fb3e00987d44061ac9dba0523375893d4ee5bd8",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-simon-period",
+      "title": "Simon's Period",
+      "commit": "94d86ffa67fa8fc935fc502c6d2b94e555bc3aaf",
+      "readmePath": "README.md",
+      "readmeSha256": "9210f5e6a7c15234a76d30f657e5f0d2864c239604fea9c9986c0970f9d36d7e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-sleeve-check",
+      "title": "Sleeve Check",
+      "commit": "0ddd088ace6a3c12d285ee9d27d7ae3f96215c13",
+      "readmePath": "README.md",
+      "readmeSha256": "3f2568fef7d9c29fee1cca21a0e2df1ec149aae691c07b5eeb74db4a55389fef",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutation-ledger.json",
+        "scripts/mutation.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-sm2-forge",
+      "title": "SM2 Forge",
+      "commit": "9f934c83979313464cc32ab74984128417093f2e",
+      "readmePath": "README.md",
+      "readmeSha256": "be97321dae00682ae7e37c7a10b709b46b38023ceae6a369860847c33bfa07de",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-sm9-forge",
+      "title": "SM9 Forge",
+      "commit": "9009a2f627a563dc0bf08ee6a9cfac232b3e6415",
+      "readmePath": "README.md",
+      "readmeSha256": "4a69be782dc2a982c8b0208cae77f45ce98d17c5097ab28580a80a61ac885d3a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-snark-arena",
+      "title": "SNARK Arena",
+      "commit": "5999c14d2565ad4393f505b7f5c00ac9fdba7f49",
+      "readmePath": "README.md",
+      "readmeSha256": "25d696519f1a675aa52d2939d212ed410f0ed3907222b0ecce78377051624743",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-spake-gate",
+      "title": "SPAKE Gate",
+      "commit": "e73187006c3cb6da1dbb6b43673798d7a242df6f",
+      "readmePath": "README.md",
+      "readmeSha256": "dd9de8289b4d8e5be4c3dc23d8442e7f17a4c03083ef61f5b00bc6ead1eb5c20",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-spdz-forge",
+      "title": "SPDZ Forge",
+      "commit": "d5d8b60211fa4842cd83ebab27699a9b097a9b10",
+      "readmePath": "README.md",
+      "readmeSha256": "ae1f63c1f06b85eaff118872dacf2446169070da8facdc9011ebbbf7bc03bc24",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-sphincs-ledger",
+      "title": "SPHINCS+ Ledger",
+      "commit": "d218fb257cb6ce8458cae4c1d84703e51fa456bb",
+      "readmePath": "README.md",
+      "readmeSha256": "2162714c07889542bd77efd9fd72216f28f95921f10afc504b0de856e8a5b7f7",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "demos/sphincs-ledger/e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-sphinx-mix",
+      "title": "Sphinx Mix",
+      "commit": "51c0b320ba40cc97236a5d3ddd0e6e5840491917",
+      "readmePath": "README.md",
+      "readmeSha256": "2fc655d840fd27b9bbe0fef0c1e06fd30207792f2c0c613586a6ed909e387d08",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-split-point",
+      "title": "Split Point",
+      "commit": "e0b0a2d565e9668af3ad2d9a32889296e4a22dda",
+      "readmePath": "README.md",
+      "readmeSha256": "62e06073c3ccdcbfe96a41fba042e7ff1e13db6a38cfc9f0b5c98a7d41ae20f3",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/verdict-mutations.json",
+        "scripts/mutation.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-ssh-handshake",
+      "title": "SSH Handshake",
+      "commit": "c49eb6a0d7778d9602ee50a113849adec61d4846",
+      "readmePath": "README.md",
+      "readmeSha256": "a07d8e6fe299f88de615386739f7f6e58d40ec9e867974d94c6a38afd80b58ef",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "tests/e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutation-test.mjs",
+        "tests/mutations/ledger.json"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-stark-tower",
+      "title": "STARK Tower",
+      "commit": "e9f938d5fc19e065cdc21e458e266c0db8426c3f",
+      "readmePath": "README.md",
+      "readmeSha256": "6b62df4a66ff83431ae36ed459ad2cccfcbf0a64056b46659da8a145436bf111",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-stego-suite",
+      "title": "Stego Suite",
+      "commit": "33795d6f27da87da384590804c8b153f92778340",
+      "readmePath": "README.md",
+      "readmeSha256": "cb601fe6a1a626580ad41e907438d3b28698cc660878f8fea04d14cdfc26d885",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "audits/mutation-observations.json",
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-stream-ward",
+      "title": "Stream Ward",
+      "commit": "6109350d814ff614012a32c1d745c8f275fddae8",
+      "readmePath": "README.md",
+      "readmeSha256": "e589778c1cd4c676ecbb256dd61bfd7e14959ab69b8a4b4bba266b219056cbc1",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-subliminal-channels",
+      "title": "Subliminal Channels",
+      "commit": "86f4e46fa2fd4d8991130f97ec0c05df6e7ce147",
+      "readmePath": "README.md",
+      "readmeSha256": "f91ecc22b378ba7248f167e2d3a1b89d7b244626613338f3614a7f2fe9520510",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-syndrome-drain",
+      "title": "Syndrome Drain",
+      "commit": "7c921eac9591834693e8c93c2fdeec1988c16b40",
+      "readmePath": "README.md",
+      "readmeSha256": "b3adbaca94b86f5b025c2eb07535514ee5a2077eda5a48659b76b97c0f1c2281",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-syndrome-hints",
+      "title": "Syndrome Hints",
+      "commit": "b19a4a09687070f98c03a324e5d39b2424d1e25f",
+      "readmePath": "README.md",
+      "readmeSha256": "6bb6480173a84fa4059ecf047f81daac72d4538bb34a8f7c26a45ad03c3d2a8e",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-tc26-pair",
+      "title": "TC26 Pair",
+      "commit": "66d5d0ab775efd3d1884d7339ddf150fc2970b59",
+      "readmePath": "README.md",
+      "readmeSha256": "6d0dfe2f557a2f0c77c9394d798d7d65deddb0af302c72a4db0505f82ef358d2",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-tesla-broadcast",
+      "title": "TESLA Broadcast",
+      "commit": "394114fb9b1af7ccb23fff5131014f1c630acd2e",
+      "readmePath": "README.md",
+      "readmeSha256": "5a5ef88c496e8a3464db84837c6638dc6cf417bd96691303757ff3779a88cb26",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutations.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-threshold-decrypt",
+      "title": "Threshold Decrypt",
+      "commit": "512acdf680f4715bb3e0e44a427943204fb13b30",
+      "readmePath": "README.md",
+      "readmeSha256": "1d64d236662635ef269f92bf9d4b3e695fb14c247e18dae6bbc638abfde18d72",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "mutation-evidence.json",
+        "scripts/check-extension-mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-threshold-mldsa",
+      "title": "Threshold ML-DSA",
+      "commit": "652e5551d01ae1322c56bb9a6320f8f66658b1ad",
+      "readmePath": "README.md",
+      "readmeSha256": "30cfbce6aef9eab814bde0b82dba8a0ffe70227cf5b151880433727e552e9be9",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-time-lock-puzzle",
+      "title": "Time-Lock Puzzle",
+      "commit": "23c960a73386b461c2c2fbb93a586a6e65486811",
+      "readmePath": "README.md",
+      "readmeSha256": "86b18a749ea851b34e239f519737546781e14305f64fd3120c710f42147d7454",
+      "readmeMarkerMatch": false,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-time-trust",
+      "title": "Time Trust",
+      "commit": "1578c9763ac5aa15a343ee97a75be29eaddf2d79",
+      "readmePath": "README.md",
+      "readmeSha256": "d706348b44aa629df475b788ba62725e7840c34f0d23db238386010454326d30",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-timing-oracle",
+      "title": "Timing Oracle",
+      "commit": "b206d1b9265d9400c8a1d9546b0a58460e1d79d2",
+      "readmePath": "README.md",
+      "readmeSha256": "5d9029817dece88e95dc24894e95821ad0fb1320a9ba9152649581fc502ba4ed",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-timing-sidechannel",
+      "title": "Timing Side-Channel",
+      "commit": "8d72e1b854fac5f03755017fef758e900ee2a7da",
+      "readmePath": "README.md",
+      "readmeSha256": "9ea204b757e274e0446d3353188ef7e4c20f8e61bab20d264894f078ab3ab9d9",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-tls-handshake",
+      "title": "TLS Handshake",
+      "commit": "c033c5d11800b044474a414b52b4a677eb90f78a",
+      "readmePath": "README.md",
+      "readmeSha256": "9e0b17f19d0787b108894eb5af189d5a0251d205c9c51a7807f4882912500649",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutation-ledger.json",
+        "scripts/mutations.ts"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-token-tell",
+      "title": "Token Tell",
+      "commit": "85daf46b1bc0390f101d73dbc5cb58dcbd4de1aa",
+      "readmePath": "README.md",
+      "readmeSha256": "56f7ea0ab0d53d5890b325e070aff4bcddfc9baa420d027b078a4628bcd266ee",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-traitor-trace",
+      "title": "Traitor Trace",
+      "commit": "6c7317d718c1037e8a50d99308ecf2e0e434e1eb",
+      "readmePath": "README.md",
+      "readmeSha256": "b00525e841fc11ad91ef73509419de82e6394a669feac43a96562e2ba8a14724",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-twist-trap",
+      "title": "Twist Trap",
+      "commit": "410874dbb7344fe0532654aa9a30b736e9739aed",
+      "readmePath": "README.md",
+      "readmeSha256": "87572c0009248e85e3f495d6ea34d3f1880d360a4f4672d8a53049abce57af05",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "scripts/mutations.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-vdf",
+      "title": "VDF",
+      "commit": "b0bff11e8fe52c69f8f5580f2fbf9ebd071e3e56",
+      "readmePath": "README.md",
+      "readmeSha256": "5ade8e9b70844cf7427f8c8295e01a4cc6c151b9cc0a7a12d22559dd56bc88a2",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-vector-gate",
+      "title": "Vector Gate",
+      "commit": "b1755fb39aeec0e03c893fa2f1e18e1bff78f222",
+      "readmePath": "README.md",
+      "readmeSha256": "a102ecd63303faef1abf6ff0d41532be0a4ad77bfe062bd7ab779f9c33676be7",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "audits/mutation-observations.json",
+        "tools/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-vigenere-break",
+      "title": "Vigen\u00e8re Break",
+      "commit": "7e674ebfaadf0681a6dff77ab16ffc2885b46013",
+      "readmePath": "README.md",
+      "readmeSha256": "e24e2882727a84fcce5ab189db807f4455f77c351cc2e5a7f15e415523575c09",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-vrf-gate",
+      "title": "VRF Gate",
+      "commit": "ad31cf2244abaf55d31464a4a961b8e19a24c07e",
+      "readmePath": "README.md",
+      "readmeSha256": "8c1f69866070d74975b3fa2075ae5517b047bd1c328d85fe160e9acc5b48e159",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-vss-gate",
+      "title": "VSS Gate",
+      "commit": "cda8c3aea86774e1bf9edddfb429bf9eba579509",
+      "readmePath": "README.md",
+      "readmeSha256": "b5ddbca18f2925d863f4203037e8c716b40dd9e4e02fd42d6f89a90eb3c9634a",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-web-of-trust",
+      "title": "Web of Trust",
+      "commit": "5795c56389d4f44371dbe7e981953140a302c219",
+      "readmePath": "README.md",
+      "readmeSha256": "61843ed891a58a0bc1cb304a892b3bcc9fa1afc0bc73b8ed1951c9c916d5e8e2",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-webauthn",
+      "title": "WebAuthn",
+      "commit": "b9267eb6861c8a6793de2d492f37e0868c28e3d2",
+      "readmePath": "README.md",
+      "readmeSha256": "8aaddf08c41cc1f83b29b196694ee6224f3ca31008c390ac91ce1360cb35510f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-wep-crack",
+      "title": "WEP Crack",
+      "commit": "0b2433ccb1436ee5e1ad2fdb6605b37c4f701e0c",
+      "readmePath": "README.md",
+      "readmeSha256": "d81a855d957b06583cfcfb020f3d7f9cf51ede9389395334e11f040dcb4a7e2c",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "extension-mutation-report.json",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-what-is-pqc",
+      "title": "What Is PQC",
+      "commit": "8febff3132c4807e1eb3424e27e75c08180a8952",
+      "readmePath": "README.md",
+      "readmeSha256": "ed9f30d18bd0c81f35907c2be6a9726fc5232ae914bf2c21e34f37a3249e4b7f",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/verdict-mutations.json",
+        "scripts/mutate.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-world-ciphers",
+      "title": "World Ciphers",
+      "commit": "f6a0495b184059479ec5cdeeaa344373a50cd0ca",
+      "readmePath": "README.md",
+      "readmeSha256": "f847b0fb8c052ce9a8d3c52141336c1790a0da88490b25b93bde8ed962d78308",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-world-hashes",
+      "title": "World Hashes",
+      "commit": "31e62c36a87dbcb6d4a45b43e27672b641073432",
+      "readmePath": "README.md",
+      "readmeSha256": "7627da786f9993f36af46190bc3bbc40a85f34eadff8f7fb393ab9886250a213",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-x3dh-wire",
+      "title": "X3DH Wire",
+      "commit": "bf902261378847d1ca9455ea08596573bbbcf821",
+      "readmePath": "README.md",
+      "readmeSha256": "ae09b971779f2587ecaaac668c1c302bb9e86bcb1d71701b7700e1ebd54347ba",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-zk-arena",
+      "title": "ZK Arena",
+      "commit": "214c05725a19f8dae7fb2cb0fa4350ee3fcfe031",
+      "readmePath": "README.md",
+      "readmeSha256": "e0b7afdca5aa33e7ac98398afb27bfcf282a258f8a30b06e6f81397db4425484",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [],
+      "mutationNamedFiles": [],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    },
+    {
+      "slug": "crypto-lab-zk-proof-lab",
+      "title": "ZK Proof Lab",
+      "commit": "9af5d31e20b0559999611e6536c767da7b890a70",
+      "readmePath": "README.md",
+      "readmeSha256": "87ab024ae1172030122e9c17b904e5cc9cf63a8ac4c2d5f6cdf6763c8ab45a1d",
+      "readmeMarkerMatch": true,
+      "namedClaimsTests": [
+        "e2e/claims.spec.ts"
+      ],
+      "mutationNamedFiles": [
+        "e2e/sigma-mutations.spec.ts",
+        "scripts/mutation-report.mjs",
+        "scripts/mutations.mjs"
+      ],
+      "executionStatus": "not assessed by this census",
+      "mutationVerification": "not assessed by this census"
+    }
+  ],
+  "mutationPathRegex": "(?i)(?:^|[/_.-])(?:mutations?|mutates?|mutating|mutated)(?=[/_.-]|$)"
+}

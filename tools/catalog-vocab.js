@@ -68,6 +68,19 @@ const ALGORITHMS = [
   { name: 'ChaCha20', kind: 'algorithm', family: 'stream cipher', re: /chacha20?/i, std: 'IETF:RFC 8439' },
   { name: 'Poly1305', kind: 'algorithm', family: 'MAC', re: /poly1305/i, std: 'IETF:RFC 8439' },
   { name: 'Salsa20', kind: 'algorithm', family: 'stream cipher', re: /salsa20/i, std: null },
+  /* eSTREAM hardware-profile cipher. Absent from this vocabulary until 2026-10-21,
+     which is the ZUC and Kupyna situation a third time: crypto-lab-lfsr-forge
+     implements it in src/trivium/trivium.ts with the specification's own constants
+     -- INIT_ROUNDS 1152, AND_TAPS [[91,92],[175,176],[286,287]], a 288-bit state --
+     and because no term could NAME it the lab carried a reviewed state of N/A,
+     "implements no named algorithm in this index". Invisible in both directions. */
+  /* Block-cipher-based compression function. Absent until 2026-10-21, found the same
+     way as Trivium and in the same pass: crypto-lab-hash-zoo added
+     src/blockcipher/dm.ts, whose `daviesMeyer(k, x)` is the real construction over
+     an AES block with the XOR feed-forward. Unlike the Trivium case the identifier
+     is EXECUTABLE, so once a term exists the scanner anchors it without review. */
+  { name: 'Davies-Meyer', kind: 'algorithm', family: 'hash construction', re: /davies[-_ ]?meyer/i, std: null },
+  { name: 'Trivium', kind: 'algorithm', family: 'stream cipher', re: /\btrivium\b/i, std: 'ISO:ISO/IEC 29192-3' },
   { name: 'XChaCha20-Poly1305', kind: 'algorithm', family: 'AEAD', re: /xchacha20/i, std: null },
   { name: 'Ascon', kind: 'algorithm', family: 'AEAD', re: /\bascon\b/i, std: 'NIST:SP 800-232' },
   { name: 'SNOW 3G', kind: 'algorithm', family: 'stream cipher', re: /snow[-_ ]?3g/i, std: 'ETSI:SAGE SNOW 3G' },

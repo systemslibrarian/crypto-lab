@@ -201,8 +201,8 @@
     "note": "Runs both extractors on generated bits; source QRNG is modeled Re-read the extractors and full prior-pin diff on 12 October: Toeplitz/vonNeumann source and anchors21/15 remain exact. The 90C bridge is source-system context, not an implemented RBG1/2/3/C or certification. Re-read the full prior-pin diff on 19 October (6e75cbb to 44b945c, two commits): a dependency bump and a new failure-detection workshop. Both pinned anchors are exact at this commit, toeplitzExtract at src/entropy/toeplitz.ts:21 and vonNeumann at src/entropy/vonneumann.ts:15. The workshop adds src/entropy/health-workshop.ts and src/ui/healthWorkshop.ts: a log-space binomial tail and an analytical binary-IID APT window probability driving simulated RCT/APT first-alarm experiments over the deterministic xorshift128 test RNG. Its header attributes the construction to Hill, ICMC 2024, and states that no Hill code or numerical tables are copied; the module itself records that the probability is analytical for the chosen model and NOT an entropy estimate. The two one-line source edits both NARROW claims rather than widening them: the health-test alpha is restated as a nominal tail target whose actual false-alarm probability is model-dependent, and the xorshift128 comment now scopes it to tests and the public-seed workshop and never key material. The modeled QRNG source and the 90C limit above are unchanged, so every claim here still holds of the pinned source."
   },
   "crypto-lab-factor-forge": {
-    "commit": "8fcf023884964522ebddf678676aea20c04d6bf2",
-    "reviewed": "2026-10-12",
+    "commit": "5849f2d4b42432f25b769b8bc02916582c7f1905",
+    "reviewed": "2026-10-21",
     "remove": [
       "Brute force"
     ],
@@ -447,14 +447,14 @@
     "note": "Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain. Re-reviewed PR2 at integrated38b92b51cb4264c325824d9dd3dbafcfa725a769: the SPN, CNF encoder, solver and exhaustive workers, direct verifier, UI, README, C++ wrapper and both shipped assets are byte-identical to the preceding pin. The clean build recipe captures immutable CaDiCaL c60730422e758ef1cebe7aeddf2dda31c996bf04 source and fresh objects/caches, with fourteen offline hygiene/failure controls. Integrated workflow38102731905 independently reproduces both shipped assets using the pinned official SDK, establishing measured source-to-byte correspondence. The original compiler identity remains unknown; static C/C++ and WASM coverage limits and cryptographic/constant-time limits remain. Documentation hash checks alone still do not establish reproduction."
   },
   "crypto-lab-lfsr-forge": {
-    "commit": "2a9848eee885039dfda5d576b0727233624bee7f",
-    "reviewed": "2026-10-09",
-    "state": "N/A",
-    "note": "Source review of src/lfsr/lfsr.ts and bm.ts, src/geffe/geffe.ts and correlation.ts, worker contract, UI verification and tests: computes binary Fibonacci LFSRs, Berlekamp-Massey synthesis over GF(2), and a fixed 7/11/13 Geffe combiner. These are outside the current algorithm vocabulary; N/A means no named algorithm in this index, not no computation. BCH, ChaCha20, SNOW 3G and ZUC are comparisons, not implemented. Attack receives copied known keystream and budgets; its frozen forecast is checked separately from exact original-state confirmation. 13 unit and 8 browser tests passed at this SHA."
+    "commit": "2800c76acf9ddc7bd79210327372b95b64d444e6",
+    "reviewed": "2026-10-21",
+    "note": "NO LONGER N/A. This lab added src/trivium/ since the 2026-10-09 review, and it is a real eSTREAM Trivium: INIT_ROUNDS 1152, AND_TAPS [[91,92],[175,176],[286,287]] and a 288-bit state, the specification's own constants. The vocabulary could not NAME Trivium until 2026-10-21, so the lab was invisible in both directions -- neither credited with it nor judged by the chip rule -- which is the ZUC and Kupyna situation a third time. The term now exists and the implementation anchors on its own at src/trivium/panel.ts. The earlier reading stands for what it covered: src/lfsr/lfsr.ts and bm.ts, src/geffe/ geffe.ts and correlation.ts compute binary Fibonacci LFSRs, Berlekamp-Massey synthesis over GF(2) and a fixed 7/11/13 Geffe combiner, which remain outside the vocabulary. BCH, ChaCha20, SNOW 3G and ZUC are comparisons, not implemented."
+
   },
   "crypto-lab-wep-crack": {
-    "commit": "fad33459d2f9a0304a1c0b08810f375a6c1c9f51",
-    "reviewed": "2026-10-09",
+    "commit": "0b2433ccb1436ee5e1ad2fdb6605b37c4f701e0c",
+    "reviewed": "2026-10-21",
     "add": [
       "RC4@src/rc4/rc4.ts:131"
     ],
@@ -684,8 +684,8 @@
     ]
   },
   "crypto-lab-elgamal-plain": {
-    "commit": "d12c20a76d97a869dedd34b655e3c2f4d49a8c19",
-    "reviewed": "2026-10-11",
+    "commit": "251bf90ef747f256d0e18f0fe987eadafa3f06da",
+    "reviewed": "2026-10-21",
     "add": [
       "Baby-step giant-step@src/attacks.ts:35"
     ],
@@ -768,8 +768,8 @@
     "note": "Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault’s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
   },
   "crypto-lab-hash-zoo": {
-    "commit": "8161d1c413d6890cf1c17171b81858f1af05ff29",
-    "reviewed": "2026-10-12",
+    "commit": "e86dac25e78bc6876e9fd644d1c6a0b823e06039",
+    "reviewed": "2026-10-21",
     "remove": [
       "Collision attack"
     ],

@@ -29,7 +29,7 @@ test('all three exchange scenarios expose direct loss, validate deposits, releas
   }await audit(page);assert.deepEqual(errors,[]);
  }finally{await page.context().close();}
 });
-test('reading filters, browser-local progress, no-JS links and hub guide discovery work',async()=>{
+test('reading filters, browser-local progress, no-JS links and historical guide discovery work',async()=>{
  const {page,errors}=await pageAt('applied-cryptography',390);try{
   assert.equal(await page.locator('.chapter').count(),25);await page.locator('#search').fill('chapter 8');assert.equal(await page.locator('.chapter:visible').count(),1);
   await page.locator('#chapter-8 input').check();await contains(page,'progress','1 of 25');await page.reload();assert.equal(await page.locator('#chapter-8 input').isChecked(),true);
@@ -37,8 +37,14 @@ test('reading filters, browser-local progress, no-JS links and hub guide discove
   await page.locator('#search').fill('no matching chapter xyz');assert.equal(await page.locator('#empty').isVisible(),true);await page.locator('#clear').click();assert.equal(await page.locator('.chapter:visible').count(),25);
   await page.locator('#clear-progress').click();await contains(page,'progress','0 of 25');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);await audit(page);assert.deepEqual(errors,[]);
-  await page.goto(origin+'/');assert.equal(await page.locator('#path-band-applied-cryptography').count(),0);await page.locator('#menuToggle').click();
-  await page.locator('.nav-menu-educators[href="learn/applied-cryptography/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Applied Cryptography/);
+  await page.goto(origin+'/');assert.equal(await page.locator('#path-band-applied-cryptography').count(),0);
+  assert.equal(await page.locator('.nav-menu-educators[href="learn/applied-cryptography/"]').count(),0,'the historical companion is not a prominent recommendation');
+  assert.equal(await page.locator('#learning-paths #path-applied-cryptography').count(),0,'the primary learning-path set excludes the historical companion');
+  await page.locator('#menuToggle').click();
+  const historical=page.locator('#historical-paths #path-applied-cryptography');await historical.waitFor({state:'visible'});
+  assert.match(await historical.locator('summary').textContent(),/historical/i);assert.match(await historical.locator('summary').textContent(),/1996/);
+  await historical.locator('summary').click();await historical.locator('a[href="learn/applied-cryptography/"]').click();await page.waitForURL(origin+'/learn/applied-cryptography/');
+  assert.equal((await page.locator('h1').textContent()).trim(),'Applied Cryptography — Historical Reading Companion (1996)');assert.equal(await page.locator('.chapter').count(),25);assert.match(await page.title(),/Applied Cryptography/);assert.deepEqual(errors,[]);
  }finally{await page.context().close();}
  const noJS=await browser.newPage({javaScriptEnabled:false});try{await noJS.goto(origin+'/learn/applied-cryptography/');assert.equal(await noJS.locator('.chapter a').count()>50,true);}finally{await noJS.close();}
 });

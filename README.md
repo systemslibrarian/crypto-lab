@@ -18,17 +18,19 @@ A curated collection of interactive cryptography exhibits, from classical cipher
 ---
 
 
-## Applied Cryptography companion
+## Book reading companions
 
-[Open the independent reading path](https://crypto-lab.systemslibrarian.dev/learn/applied-cryptography/) for connections to all 25 chapters of the second edition, original practice prompts, and explicit direct/modern/introductory coverage labels. It is unaffiliated with the author or publisher.
+Choose a route that matches your learning goal:
 
-Two hub-hosted workshops add real cryptographic experiments: [Timestamping](https://crypto-lab.systemslibrarian.dev/learn/timestamping/) tests signed claims and linked-history rewrites; [Fair Exchange](https://crypto-lab.systemslibrarian.dev/learn/fair-exchange/) compares direct and ideal-intermediary delivery of messages, receipts, contract signatures and secrets. These workshops are separate from the standalone-repository exhibit count. Their sources and limitations are in [`learn/README.md`](learn/README.md).
+- [**Understanding Cryptography — Paar, Pelzl & Güneysu**](https://crypto-lab.systemslibrarian.dev/learn/understanding-cryptography/): foundations and hands-on algorithms, following the 2024 second edition’s 14 chapters plus a separate SHA-3 focus.
+- [**Introduction to Modern Cryptography — Katz & Lindell**](https://crypto-lab.systemslibrarian.dev/learn/modern-cryptography/): security definitions, reasoning and proofs across the 15-chapter third-edition structure, also used by the revised third edition. Hidden Bit anchors the security-game connections; theoretical constructions that remain reading work are marked explicitly.
+- [**A Graduate Course in Applied Cryptography — Boneh & Shoup**](https://crypto-lab.systemslibrarian.dev/learn/boneh-shoup/): deeper study connecting practical constructions with formal analysis, with 23 chapter entries linked to the free version 0.6 PDF.
 
-## Introduction to Modern Cryptography companion
+Each independent companion connects original activities to existing exhibits, cites its edition and sources, and states explicit coverage limits. Later constructions are distinguished from the book’s examples. No textbook passages or exercises are reproduced, and optional browser-local progress is separate for each book. See [`learn/README.md`](learn/README.md) for source-review and edition boundaries. Schneier’s 1996 companion remains available under **Historical reading** below.
 
-[Open the Katz–Lindell reading path](https://crypto-lab.systemslibrarian.dev/learn/modern-cryptography/) for all 15 chapters of the third-edition structure, also used by the revised third edition. Each chapter connects original practice and reflection questions to existing exhibits, with individual coverage labels and explicit limitations. Hidden Bit anchors the security-game and reduction connections; chapter 8 clearly marks the theoretical constructions that remain reading work.
+### Protocol workshops
 
-The guide links the authors’ contents, book page and errata, distinguishes later post-quantum standards from the text’s examples, and keeps its optional browser-local exploration progress separate from the Schneier path. It is an independent, unaffiliated companion; no textbook passages or exercises are reproduced. It lives in this repository and does not add a standalone exhibit to the catalog count. See [`learn/README.md`](learn/README.md) for source-review and edition boundaries.
+Two hub-hosted workshops add real cryptographic experiments: [Timestamping](https://crypto-lab.systemslibrarian.dev/learn/timestamping/) tests signed claims and linked-history rewrites; [Fair Exchange](https://crypto-lab.systemslibrarian.dev/learn/fair-exchange/) compares direct and ideal-intermediary delivery of messages, receipts, contract signatures and secrets. These independent workshops retain their original URLs and are separate from the standalone-repository exhibit count. Their sources and limitations are in [`learn/README.md`](learn/README.md).
 
 ## Learning Paths
 
@@ -37,14 +39,21 @@ Curated, ordered journeys through the catalog. Pick one on the [live site](https
 | Path | Focus | Journey |
 |---|---|---|
 | **Start Here** | For a first visit, with no cryptography assumed: ciphers you can do on paper, then the fingerprint, where keys come from, public and private keys, agreeing on a secret in the open, the signature, the padlock, the password and the quantum clock. Thirteen steps, every one a Beginner lab -- no maths beyond arithmetic. One more is planned, on who can read your messages, and will be added when that lab lands. | Dead Sea Cipher → Vigenère Break → Enigma Forge → Hash Zoo → Good Randomness → Locks and Keys → Agreeing in Public → Ed25519 Forge → HTTPS Padlock → Chain of Trust → Bcrypt Forge → What Is PQC → Harvest Timeline |
-| **Applied Cryptography** | An independent companion to Schneier’s second edition. Follow selected protocol foundations, then use the chapter guide for all 25 chapters, coverage limits and two hands-on workshops. [Open the chapter guide and workshops →](https://crypto-lab.systemslibrarian.dev/learn/applied-cryptography/) | Hash Zoo → Commit Gate → Shamir Gate → OT Gate → Blind Sign → IBE Gate → Key Lifecycle → Compression Leak |
+| **Understanding Cryptography** | An independent companion to the 2024 second edition. Explore selected labs here, then follow all 14 chapters plus a separate SHA-3 focus with original predict–experiment–explain activities and explicit coverage limits. [Open the 14-chapter guide and SHA-3 focus →](https://crypto-lab.systemslibrarian.dev/learn/understanding-cryptography/) | Dead Sea Cipher → ChaCha20 Stream → Feistel Forge → AEGIS Gate → Educational RSA → Point Arithmetic → ECDSA Forge → KMAC Gate → Lattice Gentle → MAC Race → PKI Chain |
 | **Introduction to Modern Cryptography** | An independent companion to Katz and Lindell’s third and revised third editions. Start with these selected experiments, then follow all 15 chapters with reading pointers, original activities and explicit boundaries between experiments and proofs. [Open the 15-chapter reading guide →](https://crypto-lab.systemslibrarian.dev/learn/modern-cryptography/) | OTP Vault → Hidden Bit → MAC Race → Padding Oracle → Hash Zoo → Factor Forge → DH MITM → RSA Forge → LMS Ledger → Paillier Gate |
 | **Boneh & Shoup: A Graduate Course in Applied Cryptography** | An independent companion to the free version 0.6 draft. Follow 23 chapter entries with official PDF links, original experiments and explicit boundaries for unfinished sections. [Open the Boneh–Shoup reading guide →](https://crypto-lab.systemslibrarian.dev/learn/boneh-shoup/) | OTP Vault → ChaCha20 Stream → MAC Race → Protocol Compose → RSA Forge → Pairing Gate → ZK Proof Lab → Threshold Decrypt → Garbled Gate |
-| **Understanding Cryptography** | An independent companion to the 2024 second edition. Explore selected labs here, then follow all 14 chapters plus a separate SHA-3 focus with original predict–experiment–explain activities and explicit coverage limits. [Open the 14-chapter guide and SHA-3 focus →](https://crypto-lab.systemslibrarian.dev/learn/understanding-cryptography/) | Dead Sea Cipher → ChaCha20 Stream → Feistel Forge → AEGIS Gate → Educational RSA → Point Arithmetic → ECDSA Forge → KMAC Gate → Lattice Gentle → MAC Race → PKI Chain |
 | **Developer** | A builder's journey — from primitives to the protocols you actually ship. | Babel Hash → AES Modes → KDF Chain → Educational RSA → RSA Forge → Point Arithmetic → Curve Lens → Signed Bytes → DH MITM → X3DH Wire → Noise Pipe → OPAQUE Gate → WebAuthn → SSH Handshake → TLS Handshake → PQ TLS Handshake |
 | **Cryptanalyst** | Mathematical attacks exploit structure and statistics; oracles exploit response differences; side channels measure timing or power; faults alter computation. Follow each from classical ciphers to PQC. | Dead Sea Cipher → LFSR Forge → DVD Scramble → WEP Crack → Biham Lens → RSA Small Roots → Matsui Line → Padding Oracle → Timing Oracle → Twist Trap → Power Trace → Masked Core → Salamander → Nonce Collision → Entropy Collapse → Next Number → Nonce Lattice → Frozen Heart → KyberSlash → Lattice Fault |
 | **Post-Quantum** | Survey the post-quantum families, explore lattice mathematics in Lattice Gentle, then run ML-KEM in Kyber Vault. Continue through signatures, hybrids, and migration. For optional games, use Learn through play in the menu. | PQ Families → Lattice Gentle → Kyber Vault → KEM Trap → Dilithium Seal → MAYO Seal → Hybrid Wire → Hybrid PQC → Downgrade Wire → PQ TLS Handshake → PQ Rotation → Harvest Timeline |
 | **Key Exchange** | How two parties agree on a secret — classical ECDH to hybrid post-quantum handshakes. | Key Exchange → Curve Lens → DH MITM → X3DH Wire → Ratchet Wire → Noise Pipe → OPAQUE Gate → TLS Handshake → Kyber Vault → Hybrid Wire → PQ TLS Handshake |
+
+### Historical reading
+
+These companions explore earlier designs and protocol ideas. Read their coverage limits and use current sources for deployment decisions.
+
+| Path | Focus | Journey |
+|---|---|---|
+| **Applied Cryptography — historical companion (1996)** | An independent historical companion to Bruce Schneier’s 1996 second edition. Explore 25 chapter connections, explicit limits and two protocol workshops. Use the newer book companions for a current course of study; this historical route is not current deployment guidance. [Open the historical companion and workshops →](https://crypto-lab.systemslibrarian.dev/learn/applied-cryptography/) | Hash Zoo → Commit Gate → Shamir Gate → OT Gate → Blind Sign → IBE Gate → Key Lifecycle → Compression Leak |
 
 ---
 

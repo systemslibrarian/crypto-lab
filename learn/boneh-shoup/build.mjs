@@ -65,7 +65,7 @@ const html = `<!doctype html>
 <body>
 <a class="skip-link" href="#main">Skip to reading path</a>
 <div class="shell">
-<nav class="topbar" aria-label="Primary"><a class="brand" href="../../">CRYPTO LAB</a><a href="../applied-cryptography/">Schneier path</a><a href="../modern-cryptography/">Katz–Lindell path</a><a href="../../teach/">For educators</a></nav>
+<nav class="topbar" aria-label="Primary"><a class="brand" href="../../">CRYPTO LAB</a><a href="../understanding-cryptography/">Understanding Cryptography path</a><a href="../modern-cryptography/">Katz–Lindell path</a><a href="../../teach/">For educators</a></nav>
 <main id="main" class="reading-path">
 <header class="reading-header">
 <h1>A Graduate Course in Applied Cryptography</h1>
@@ -119,7 +119,9 @@ const html = `<!doctype html>
 <p><strong>Version note:</strong> Checked on 20 October 2026. The official site identifies version 0.6 as its latest release and gives a posting date of 14 January 2023. This guide pins its chapter references to that file. A future draft may change the numbering; use the official version history when comparing copies.</p>
 <p><strong>Draft boundaries:</strong> Chapters 1 and 17 are present in the contents but their bodies are absent from this PDF. Sections 20.5–20.7 are unfinished, as are several other sections identified in individual activities. Chapter 14’s heading here follows the PDF; the website’s abbreviated outline uses different wording. No complete chapter-coverage claim is made.</p>
 <p>The book is linked from its authors’ site, not rehosted here. The activity prompts and lab connections are original. Publicly available reading access is not a claim that the book is public domain or covered by this repository’s MIT license.</p>
-<p>Choose another route: <a href="../applied-cryptography/">Schneier’s Applied Cryptography</a> for the existing historical and protocol companion, or <a href="../modern-cryptography/">Katz and Lindell’s Introduction to Modern Cryptography</a> for its own chapter sequence. These are complementary routes, not interchangeable editions.</p>
+<p>Other current companions: <a href="../understanding-cryptography/">Understanding Cryptography</a> and <a href="../modern-cryptography/">Katz and Lindell’s Introduction to Modern Cryptography</a>. Each follows its own chapter sequence and states its coverage limits.</p>
+<h3>Historical further reading</h3>
+<p>Explore earlier constructions and protocol ideas with <a href="../applied-cryptography/">Schneier’s Applied Cryptography (1996)</a>, a historical reading companion with explicit modern connections and coverage limits.</p>
 <p><a href="https://github.com/systemslibrarian/crypto-lab/issues/new">Suggest a correction</a> with the chapter, lab and claim that should change.</p>
 </section>
 <noscript><p class="notice">All 23 chapter connections and lab links are available without JavaScript. Filtering and reading-progress checkmarks require JavaScript.</p></noscript>

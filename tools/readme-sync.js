@@ -125,9 +125,16 @@ const allBlock = allDemos.join(eol);
 
 // Learning Paths: from the LEARNING_PATHS array in the page's JS.
 const paths = literal('LEARNING_PATHS', '[', ']');
-const pathRows = paths.map(p =>
+const pathRow = p =>
   '| **' + p.label.replace(/ Path$/, '') + '** | ' + p.blurb + (p.guide ? ' [' + p.guide.label + '](https://crypto-lab.systemslibrarian.dev/' + p.guide.href + ')' : '') + ' | ' +
-  p.steps.map(s => s.title).join(' → ') + ' |').join(eol);
+  p.steps.map(s => s.title).join(' → ') + ' |';
+const historicalPaths = paths.filter(p => p.historical);
+let pathRows = paths.filter(p => !p.historical).map(pathRow).join(eol);
+if (historicalPaths.length) {
+  pathRows += eol + eol + '### Historical reading' + eol + eol +
+    'These companions explore earlier designs and protocol ideas. Read their coverage limits and use current sources for deployment decisions.' + eol + eol +
+    '| Path | Focus | Journey |' + eol + '|---|---|---|' + eol + historicalPaths.map(pathRow).join(eol);
+}
 
 const allRe = /<!-- readme-sync:all-demos:begin[^\n]*-->[\s\S]*?<!-- readme-sync:all-demos:end -->/;
 if (!allRe.test(md)) {

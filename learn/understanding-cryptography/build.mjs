@@ -146,7 +146,9 @@ const html = `<!doctype html>
 <p><strong>Edition check:</strong> References checked on 21 October 2026 against the publisher’s chapter list and front matter. This path follows the book’s 14-chapter order and separates §11.5 as a focus. Chapter and section numbers, rather than page numbers, keep the references usable across print and digital copies.</p>
 <p><strong>Post-quantum standards:</strong> The book predates the final August 2024 publications of <a href="https://csrc.nist.gov/pubs/fips/203/final">FIPS 203 (ML-KEM)</a>, <a href="https://csrc.nist.gov/pubs/fips/204/final">FIPS 204 (ML-DSA)</a> and <a href="https://csrc.nist.gov/pubs/fips/205/final">FIPS 205 (SLH-DSA)</a>. Use each lab’s documented implementation and limits when connecting a book example to a current standard.</p>
 <p>The book remains the work of its authors and publisher. Links to official reading resources do not place the book under this repository’s MIT license.</p>
-<p>Choose another route: <a href="../boneh-shoup/">Boneh–Shoup</a>, <a href="../modern-cryptography/">Katz–Lindell</a>, or <a href="../applied-cryptography/">Schneier</a>. Each companion follows its own source and states its coverage limits.</p>
+<p>Other current companions: <a href="../boneh-shoup/">Boneh–Shoup</a> and <a href="../modern-cryptography/">Katz–Lindell</a>. Each follows its own source and states its coverage limits.</p>
+<h3>Historical further reading</h3>
+<p>Explore earlier constructions and protocol ideas with <a href="../applied-cryptography/">Schneier’s Applied Cryptography (1996)</a>, a historical reading companion with explicit modern connections and coverage limits.</p>
 <p><a href="https://github.com/systemslibrarian/crypto-lab/issues/new">Suggest a correction</a> with the chapter, lab and claim that should change.</p>
 </section>
 <noscript><p class="notice">All 14 chapter entries, the SHA-3 focus, their activities and lab links are available without JavaScript. Filtering and reading-progress checkmarks require JavaScript.</p></noscript>

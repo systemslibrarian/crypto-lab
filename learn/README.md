@@ -2,26 +2,17 @@
 
 These pages live in the hub and deploy with its existing GitHub Pages site. They
 do not require new repositories or add standalone cards to the catalog count.
-The book companions use the hub menu and their direct URLs. Their
-`LEARNING_PATHS` entries set `home: false`, which omits their cards from the
-homepage Learning paths band while preserving menu steps and generated records.
+The three primary book companions are Understanding Cryptography,
+Introduction to Modern Cryptography and Boneh–Shoup. They use the main book-menu links and
+their direct URLs. Bruce Schneier's 1996 *Applied Cryptography* companion is
+retained in the lower **Historical reading** menu group and documented after the
+primary companions below.
 
-## Applied Cryptography reading path
-
-`applied-cryptography/chapters.mjs` contains original exercises and connections to
-all 25 chapters of Bruce Schneier's *Applied Cryptography*, second edition.
-`build.mjs` resolves exhibit names against the generated knowledge-map catalog and
-emits complete HTML, so chapter links work without JavaScript. Run:
-
-```sh
-node tools/knowledge-map-sync.js
-node learn/applied-cryptography/build.mjs
-node learn/applied-cryptography/build.mjs --check
-```
-
-Coverage labels describe selected connections, never complete chapter coverage.
-The path is independent, unaffiliated, and does not reproduce book passages.
-Checkmarks are optional localStorage data and measure exploration, not mastery.
+All four `LEARNING_PATHS` entries set `home: false`, which omits their cards from
+the homepage Learning paths band while preserving menu steps and generated
+records. Applied Cryptography also sets `historical: true`; the generated hub
+README places it in a separate Historical reading section. Its URL, chapter
+identifiers, progress data and linked protocol workshops are preserved.
 
 ## Introduction to Modern Cryptography reading path
 
@@ -130,14 +121,15 @@ The four new lab connections were reviewed against their source, completed gates
 and served assets on 20 October 2026. The original briefs identify the Katz–Lindell
 section gaps; the activities follow the implemented controls and limits.
 
-| Lab | Modern Cryptography connection | Applied Cryptography connection |
+| Lab | Modern Cryptography connection | Historical Applied Cryptography (1996) connection |
 |---|---|---|
 | Prime Witness | §9.2.1–9.2.2: candidate generation and primality evidence | Chapter 11: prime generation |
 | Hash Hunt | §6.3.1, §6.4.1–6.4.3, §6.6.3, Appendix A.4: composition, generic attacks and salts | Chapters 7 and 18: birthday costs, hash functions and authentication |
 | Log Forge | §10.2–10.4: generic algorithms, smooth order, index calculus and key lengths | Chapters 7 and 11: public-key strength and finite-field discrete logs |
 | Residue Gate | §15.4–15.5: Goldwasser–Micali, Rabin and the root-oracle reduction | Chapters 19 and 23: Rabin and probabilistic encryption |
 
-Applied Cryptography placements were checked against the author’s expanded
+Placements in the historical Applied Cryptography companion were checked against
+the author’s expanded
 [second-edition contents](https://www.schneier.com/books/applied-cryptography-toc/).
 Its chapter 19 Pohlig–Hellman encryption scheme is not Log Forge’s discrete-log
 solver. Later SHA-256, rainbow-chain, FIPS and current key-length examples are
@@ -213,8 +205,8 @@ node --test tests/protocol-workshops-browser.test.cjs
 `boneh-shoup/chapters.mjs` supplies 23 chapter entries for Dan Boneh and Victor
 Shoup's *A Graduate Course in Applied Cryptography*, version 0.6 (January 2023).
 The guide lives at `/learn/boneh-shoup/`, in the hub menu and alongside the other
-book companions. It adds no catalog exhibits and uses `home: false` like the
-existing book paths.
+primary book companions. It adds no catalog exhibits and uses `home: false` like
+the existing book paths.
 
 ```sh
 node learn/boneh-shoup/build.mjs
@@ -335,3 +327,31 @@ stylesheets, filtering, invalid saved data, storage failure and deep links. A lo
 Chromium check also covered keyboard navigation, persistence/reset, no-JavaScript
 reading and a 320-pixel viewport. These checks concern the companion; they are
 not security audits of the linked labs or claims of complete book coverage.
+
+## Historical reading — Applied Cryptography (1996)
+
+`applied-cryptography/chapters.mjs` contains original exercises and connections to
+all 25 chapters of Bruce Schneier's *Applied Cryptography*, second edition (1996).
+The companion remains at `/learn/applied-cryptography/`, with its guide link in
+the hub's lower Historical reading disclosure. Its `LEARNING_PATHS` entry uses
+`historical: true` and `home: false`; its knowledge-map record also identifies the
+historical edition. The existing chapter identifiers and localStorage progress
+key are retained, so saved exploration progress continues to work.
+
+`build.mjs` resolves exhibit names against the generated knowledge-map catalog and
+emits complete HTML, so chapter links work without JavaScript. After the final
+hub navigation edit, regenerate the hub README, then the catalog, then the guide:
+
+```sh
+node tools/readme-sync.js
+node tools/knowledge-map-sync.js
+node learn/applied-cryptography/build.mjs
+node learn/applied-cryptography/build.mjs --check
+```
+
+Coverage labels describe selected connections, never complete chapter coverage.
+The path is independent, unaffiliated, and does not reproduce book passages.
+Checkmarks are optional localStorage data and measure exploration, not mastery.
+Its linked timestamping and fair-exchange workshops remain at
+`/learn/timestamping/` and `/learn/fair-exchange/`, with their teaching content and
+chapter links preserved.

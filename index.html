@@ -1787,6 +1787,7 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
+    .nav-menu #historical-paths { grid-template-columns: minmax(0, 1fr); }
 
     @media (max-width: 1120px) {
       .nav-menu .learning-paths {
@@ -2218,9 +2219,9 @@
         <span class="nav-menu-educators-label">Explore the evidence</span>
         <span class="nav-menu-educators-sub">Labs, algorithms, standards and source-backed connections <span aria-hidden="true">&rarr;</span></span>
       </a>
-      <a class="nav-menu-educators" href="learn/applied-cryptography/">
-        <span class="nav-menu-educators-label">Applied Cryptography reading path</span>
-        <span class="nav-menu-educators-sub">Chapter connections, timestamping and fair-exchange workshops →</span>
+      <a class="nav-menu-educators" href="learn/understanding-cryptography/">
+        <span class="nav-menu-educators-label">Understanding Cryptography reading path</span>
+        <span class="nav-menu-educators-sub">Paar, Pelzl &amp; Güneysu · second edition, 14 chapters plus a SHA-3 focus →</span>
       </a>
       <a class="nav-menu-educators" href="learn/modern-cryptography/">
         <span class="nav-menu-educators-label">Introduction to Modern Cryptography reading path</span>
@@ -2229,10 +2230,6 @@
       <a class="nav-menu-educators" href="learn/boneh-shoup/">
         <span class="nav-menu-educators-label">Boneh &amp; Shoup reading path</span>
         <span class="nav-menu-educators-sub">A Graduate Course in Applied Cryptography · free PDF, 23 chapter entries and lab connections →</span>
-      </a>
-      <a class="nav-menu-educators" href="learn/understanding-cryptography/">
-        <span class="nav-menu-educators-label">Understanding Cryptography reading path</span>
-        <span class="nav-menu-educators-sub">Paar, Pelzl &amp; Güneysu · second edition, 14 chapters plus a SHA-3 focus →</span>
       </a>
       <div class="crypto-tree-wrap" id="crypto-tree-wrap">
         <span class="crypto-tree-label">The cryptography map &middot; click a branch</span>
@@ -2250,6 +2247,10 @@
       <div class="learning-paths" id="learning-paths" aria-label="Learning paths">
         <p class="learning-paths-label">Learning Paths · pick a journey</p>
         <p class="learning-paths-note">Paths are for learning on your own. Teaching a course? Use the <a href="teach/">course modules</a> instead.</p>
+      </div>
+      <div class="learning-paths" id="historical-paths" aria-label="Historical reading">
+        <p class="learning-paths-label">Historical reading</p>
+        <p class="learning-paths-note">Earlier cryptographic designs and protocol ideas, with modern comparisons and explicit limits.</p>
       </div>
       <nav class="section-nav" id="section-nav" aria-label="Jump to section">
         <span class="section-nav-label">Jump to</span>
@@ -21544,11 +21545,11 @@
         ]
       },
       {
-        id: 'applied-cryptography', label: 'Applied Cryptography', home: false,
-        focus: 'Read a classic concept, then challenge it in the browser.',
-        blurb: 'An independent companion to Schneier’s second edition. Follow selected protocol foundations, then use the chapter guide for all 25 chapters, coverage limits and two hands-on workshops.',
-        guide: {href: 'learn/applied-cryptography/', label: 'Open the chapter guide and workshops →'},
-        steps: [{title: 'Hash Zoo'}, {title: 'Commit Gate'}, {title: 'Shamir Gate'}, {title: 'OT Gate'}, {title: 'Blind Sign'}, {title: 'IBE Gate'}, {title: 'Key Lifecycle'}, {title: 'Compression Leak'}]
+        id: 'understanding-cryptography', label: 'Understanding Cryptography', home: false,
+        focus: 'Paar, Pelzl & Güneysu: connect the arithmetic, algorithms and system assumptions.',
+        blurb: 'An independent companion to the 2024 second edition. Explore selected labs here, then follow all 14 chapters plus a separate SHA-3 focus with original predict–experiment–explain activities and explicit coverage limits.',
+        guide: {href: 'learn/understanding-cryptography/', label: 'Open the 14-chapter guide and SHA-3 focus →'},
+        steps: [{title: 'Dead Sea Cipher'}, {title: 'ChaCha20 Stream'}, {title: 'Feistel Forge'}, {title: 'AEGIS Gate'}, {title: 'Educational RSA'}, {title: 'Point Arithmetic'}, {title: 'ECDSA Forge'}, {title: 'KMAC Gate'}, {title: 'Lattice Gentle'}, {title: 'MAC Race'}, {title: 'PKI Chain'}]
       },
       {
         id: 'modern-cryptography', label: 'Introduction to Modern Cryptography', home: false,
@@ -21563,13 +21564,6 @@
         blurb: 'An independent companion to the free version 0.6 draft. Follow 23 chapter entries with official PDF links, original experiments and explicit boundaries for unfinished sections.',
         guide: {href: 'learn/boneh-shoup/', label: 'Open the Boneh–Shoup reading guide →'},
         steps: [{title: 'OTP Vault'}, {title: 'ChaCha20 Stream'}, {title: 'MAC Race'}, {title: 'Protocol Compose'}, {title: 'RSA Forge'}, {title: 'Pairing Gate'}, {title: 'ZK Proof Lab'}, {title: 'Threshold Decrypt'}, {title: 'Garbled Gate'}]
-      },
-      {
-        id: 'understanding-cryptography', label: 'Understanding Cryptography', home: false,
-        focus: 'Paar, Pelzl & Güneysu: connect the arithmetic, algorithms and system assumptions.',
-        blurb: 'An independent companion to the 2024 second edition. Explore selected labs here, then follow all 14 chapters plus a separate SHA-3 focus with original predict–experiment–explain activities and explicit coverage limits.',
-        guide: {href: 'learn/understanding-cryptography/', label: 'Open the 14-chapter guide and SHA-3 focus →'},
-        steps: [{title: 'Dead Sea Cipher'}, {title: 'ChaCha20 Stream'}, {title: 'Feistel Forge'}, {title: 'AEGIS Gate'}, {title: 'Educational RSA'}, {title: 'Point Arithmetic'}, {title: 'ECDSA Forge'}, {title: 'KMAC Gate'}, {title: 'Lattice Gentle'}, {title: 'MAC Race'}, {title: 'PKI Chain'}]
       },
       {
         id: 'developer',
@@ -21661,6 +21655,13 @@
           { title: 'Hybrid Wire' },
           { title: 'PQ TLS Handshake' }
         ]
+      },
+      {
+        id: 'applied-cryptography', label: 'Applied Cryptography — historical companion (1996)', home: false, historical: true,
+        focus: 'Explore historical designs and protocol ideas through modern comparisons.',
+        blurb: 'An independent historical companion to Bruce Schneier’s 1996 second edition. Explore 25 chapter connections, explicit limits and two protocol workshops. Use the newer book companions for a current course of study; this historical route is not current deployment guidance.',
+        guide: {href: 'learn/applied-cryptography/', label: 'Open the historical companion and workshops →'},
+        steps: [{title: 'Hash Zoo'}, {title: 'Commit Gate'}, {title: 'Shamir Gate'}, {title: 'OT Gate'}, {title: 'Blind Sign'}, {title: 'IBE Gate'}, {title: 'Key Lifecycle'}, {title: 'Compression Leak'}]
       }
     ];
 
@@ -22255,6 +22256,7 @@
     });
 
     var pathsContainer = document.getElementById('learning-paths');
+    var historicalPathsContainer = document.getElementById('historical-paths');
     if (pathsContainer) {
       LEARNING_PATHS.forEach(function (path) {
         var details = document.createElement('details');
@@ -22343,7 +22345,8 @@
           details.appendChild(aside);
         }
 
-        pathsContainer.appendChild(details);
+        var destination = path.historical ? historicalPathsContainer : pathsContainer;
+        if (destination) destination.appendChild(details);
       });
 
       /* Show the general journeys on the homepage. Book companions set
@@ -22372,7 +22375,7 @@
       var bandGrid = document.getElementById('path-band-grid');
       if (bandGrid) {
         LEARNING_PATHS.forEach(function (path, i) {
-          if (path.home === false) return;
+          if (path.home === false || path.historical) return;
           var li = document.createElement('li');
           li.className = 'path-band-card' + (i === 0 ? ' is-first' : '');
           li.id = 'path-band-' + path.id;
@@ -22474,7 +22477,7 @@
         });
       }
 
-      pathsContainer.addEventListener('click', function (e) {
+      function followPathStep(e) {
         var a = e.target.closest('a[data-step-target]');
         if (!a) return;
         e.preventDefault();
@@ -22499,7 +22502,9 @@
         card.classList.remove('flash');
         void card.offsetWidth;
         card.classList.add('flash');
-      });
+      }
+      pathsContainer.addEventListener('click', followPathStep);
+      if (historicalPathsContainer) historicalPathsContainer.addEventListener('click', followPathStep);
     }
 
     /* Build filter chips with per-category counts */

@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 61 · Advanced — 142. Total 236.
+**Counts:** Beginner — 33 · Intermediate — 63 · Advanced — 145. Total 241.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -69,7 +69,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (61)
+## Intermediate — `intermediate` (63)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -85,6 +85,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | rule | school-level primitives: Diffie-Hellman, X25519 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | rule | school-level primitives: Diffie-Hellman, Ed25519, key exchange |
 | [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) | rule | school-level primitives: Diffie-Hellman, modular arithmetic, key exchange |
+| [DVD Scramble](https://systemslibrarian.github.io/crypto-lab-dvd-scramble/) | 2026-10-21: README exhibits and src | GF(2) register algebra and an enumeration; no group or lattice background needed |
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | rule | school-level primitives: digital signature, ECDSA, signature |
 | [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) | rule | school-level primitives: RSA, public key, public-key |
 | [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) | rule | school-level primitives: public-key, modular arithmetic, modular exponentiation |
@@ -128,6 +129,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Sleeve Check](https://systemslibrarian.github.io/crypto-lab-sleeve-check/) | rule | school-level primitives: hash function, AES, block cipher |
 | [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) | hand | sign/encrypt under a national standard plus a reused-nonce key recovery: asymmetric basics and a simple attack **(flagged)** |
 | [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | rule | school-level primitives: SHA-256, public key, ECDSA |
+| [TESLA Broadcast](https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/) | 2026-10-21: README exhibits and src | MACs, a one-way hash chain and a signed anchor; the only arithmetic is a clock bound |
 | [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) | rule | school-level primitives: HMAC, HKDF, AES |
 | [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) | rule | school-level primitives: ECDSA, signature |
 | [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | hand | Positive and hostile Ed25519 cases, one modular scalar-range predicate, and a guided comparison of what each test establishes. **(flagged)** |
@@ -135,13 +137,14 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (142)
+## Advanced — `advanced` (145)
 
 | Lab | Source | Reason |
 |---|---|---|
 | [Accumulator](https://systemslibrarian.github.io/crypto-lab-accumulator/) | rule | needs specialist background: accumulator |
 | [Adaptor Gate](https://systemslibrarian.github.io/crypto-lab-adaptor-gate/) | rule | needs specialist background: adaptor signature |
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | rule | needs specialist background: sponge **(flagged)** |
+| [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) | 2026-10-21: README exhibits and src | the AKE1-AKE5 family, CCA encryption and channel binding over ristretto255 |
 | [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) | rule | needs specialist background: sponge |
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | hand | TPM 2.0 measured boot, TPMS_ATTEST quotes and RATS verification **(flagged)** |
 | [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) | rule | needs specialist background: BLS12, attribute-based |
@@ -214,6 +217,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) | rule | needs specialist background: ratchet tree, TreeKEM |
 | [MPCitH Sign](https://systemslibrarian.github.io/crypto-lab-mpcith-sign/) | rule | needs specialist background: Fiat-Shamir, MPC, secret sharing |
 | [Multivariate UOV](https://systemslibrarian.github.io/crypto-lab-multivariate/) | rule | needs specialist background: UOV, quantum, finite field |
+| [Next Number](https://systemslibrarian.github.io/crypto-lab-next-number/) | 2026-10-21: README exhibits and src | needs lattice reduction and modular state recovery to follow the truncated-LCG break |
 | [Noise to Numbers](https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/) | rule | needs specialist background: min-entropy |
 | [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) | rule | needs specialist background: lattice, lattice reduction, LLL |
 | [NTRU Classic](https://systemslibrarian.github.io/crypto-lab-ntru-classic/) | rule | needs specialist background: lattice, NTRU, quantum |
@@ -276,6 +280,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) | rule | needs specialist background: side-channel, constant-time, timing side |
 | [Timing Side-Channel](https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/) | rule | needs specialist background: side-channel, constant-time, timing side |
 | [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) | rule | needs specialist background: broadcast encryption, traitor tracing |
+| [Twist Trap](https://systemslibrarian.github.io/crypto-lab-twist-trap/) | 2026-10-21: README exhibits and src | quadratic twists, small-order subgroups and CRT sign choices over curve orders |
 | [VDF](https://systemslibrarian.github.io/crypto-lab-vdf/) | rule | needs specialist background: Shamir, verifiable delay, VDF |
 | [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) | rule | needs specialist background: quantum, VDF |
 | [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) | rule | needs specialist background: secret sharing, Shamir, FROST |

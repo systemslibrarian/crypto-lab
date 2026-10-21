@@ -1432,6 +1432,36 @@
       "level": "intermediate",
       "why": "The reader works with group orders, exponent congruences and small linear systems.",
       "reviewed": "2026-10-20: source and learner flow"
+    },
+    "crypto-lab-tesla-broadcast": {
+      "title": "TESLA Broadcast",
+      "level": "intermediate",
+      "why": "MACs, a one-way hash chain and a signed anchor; the only arithmetic is a clock bound",
+      "reviewed": "2026-10-21: README exhibits and src"
+    },
+    "crypto-lab-next-number": {
+      "title": "Next Number",
+      "level": "advanced",
+      "why": "needs lattice reduction and modular state recovery to follow the truncated-LCG break",
+      "reviewed": "2026-10-21: README exhibits and src"
+    },
+    "crypto-lab-dvd-scramble": {
+      "title": "DVD Scramble",
+      "level": "intermediate",
+      "why": "GF(2) register algebra and an enumeration; no group or lattice background needed",
+      "reviewed": "2026-10-21: README exhibits and src"
+    },
+    "crypto-lab-twist-trap": {
+      "title": "Twist Trap",
+      "level": "advanced",
+      "why": "quadratic twists, small-order subgroups and CRT sign choices over curve orders",
+      "reviewed": "2026-10-21: README exhibits and src"
+    },
+    "crypto-lab-ake-ladder": {
+      "title": "AKE Ladder",
+      "level": "advanced",
+      "why": "the AKE1-AKE5 family, CCA encryption and channel binding over ristretto255",
+      "reviewed": "2026-10-21: README exhibits and src"
     }
   }
 }

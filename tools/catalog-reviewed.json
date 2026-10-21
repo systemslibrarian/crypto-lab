@@ -266,7 +266,7 @@
       "Python"
     ],
     "implementation": "RustCrypto / compiled WASM",
-    "note": "Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22\u201326 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review. Re-reviewed integrated PR27 at 8b9fa363e0337d5e7647a004fdd72149a233da0b: only security workflow, SECURITY.md, Cargo license metadata, cargo-deny policy and five offline real-tool controls changed. Rust/TypeScript runtime sources and both dependency locks are byte-identical to the prior inspected revision. Read the complete changes, verify existing MIT license, preserve all cryptographic exclusions and opaque binary/compiler limits. The restored blocking cargo-deny gate and separate application/deployment checks do not establish original compiler provenance. The sole tracked Python file, verification/test_supply_chain_policy.py, is the fully read and executed five-case offline supply-chain policy fixture, not browser cryptography. Cover this exact file at this pin while retaining opaque WASM; raw scanner language counts remain separate.",
+    "note": "Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22–26 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review. Re-reviewed integrated PR27 at 8b9fa363e0337d5e7647a004fdd72149a233da0b: only security workflow, SECURITY.md, Cargo license metadata, cargo-deny policy and five offline real-tool controls changed. Rust/TypeScript runtime sources and both dependency locks are byte-identical to the prior inspected revision. Read the complete changes, verify existing MIT license, preserve all cryptographic exclusions and opaque binary/compiler limits. The restored blocking cargo-deny gate and separate application/deployment checks do not establish original compiler provenance. The sole tracked Python file, verification/test_supply_chain_policy.py, is the fully read and executed five-case offline supply-chain policy fixture, not browser cryptography. Cover this exact file at this pin while retaining opaque WASM; raw scanner language counts remain separate.",
     "remove": [
       "Brute force",
       "Cache timing",
@@ -362,7 +362,7 @@
       "SM3",
       "SM4"
     ],
-    "note": "Implements the SM9 family in src/sm9/ \u2014 extraction for both master key pairs, signature, key exchange, KEM and public key encryption \u2014 over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. Re-read the complete 9f362ccfd71a to 4cefea2cd628 change and current source: the entire src tree is byte-identical; the change is dependency/tooling configuration, focused native-TypeScript controls, and explanatory README text. Exact-head gates separately passed 419 units, seven Node controls, build and audit, and all three current Pages files match production byte-for-byte. SM3 and SM4 remain imported rather than implemented here. Boneh-Franklin IBE remains a drawn contrast to SM9's inversion and is never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
+    "note": "Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. Re-read the complete 9f362ccfd71a to 4cefea2cd628 change and current source: the entire src tree is byte-identical; the change is dependency/tooling configuration, focused native-TypeScript controls, and explanatory README text. Exact-head gates separately passed 419 units, seven Node controls, build and audit, and all three current Pages files match production byte-for-byte. SM3 and SM4 remain imported rather than implemented here. Boneh-Franklin IBE remains a drawn contrast to SM9's inversion and is never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner."
   },
   "crypto-lab-vector-gate": {
     "commit": "31df66d48e623210c87f62ee8fccc3cfd2172b4c",
@@ -450,7 +450,6 @@
     "commit": "2800c76acf9ddc7bd79210327372b95b64d444e6",
     "reviewed": "2026-10-21",
     "note": "NO LONGER N/A. This lab added src/trivium/ since the 2026-10-09 review, and it is a real eSTREAM Trivium: INIT_ROUNDS 1152, AND_TAPS [[91,92],[175,176],[286,287]] and a 288-bit state, the specification's own constants. The vocabulary could not NAME Trivium until 2026-10-21, so the lab was invisible in both directions -- neither credited with it nor judged by the chip rule -- which is the ZUC and Kupyna situation a third time. The term now exists and the implementation anchors on its own at src/trivium/panel.ts. The earlier reading stands for what it covered: src/lfsr/lfsr.ts and bm.ts, src/geffe/ geffe.ts and correlation.ts compute binary Fibonacci LFSRs, Berlekamp-Massey synthesis over GF(2) and a fixed 7/11/13 Geffe combiner, which remain outside the vocabulary. BCH, ChaCha20, SNOW 3G and ZUC are comparisons, not implemented."
-
   },
   "crypto-lab-wep-crack": {
     "commit": "0b2433ccb1436ee5e1ad2fdb6605b37c4f701e0c",
@@ -607,7 +606,6 @@
       "Pedersen commitment@src/predicate/ageProof.ts:127"
     ]
   },
-
   "crypto-lab-protocol-checker": {
     "commit": "11afc3b81faf85dbcd70df4be6b24f42437b5a91",
     "reviewed": "2026-10-09",
@@ -888,5 +886,11 @@
     ],
     "implementation": "local generic group solvers / finite-field and toy-curve arithmetic",
     "note": "Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig–Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation."
+  },
+  "crypto-lab-dvd-scramble": {
+    "commit": "f3d4bad6c5cf660ebea5306460481099521d927d",
+    "reviewed": "2026-10-21",
+    "state": "N/A",
+    "note": "Source review of src/css/lfsr.ts, src/css/css.ts, src/attack/divide.ts and src/verify/verify.ts. lfsr.ts cites Boneh-Shoup v0.6 section 3.8 Figure 3.10 and computes a bit-serial LFSR: step() returns bit 0, XORs the declared taps, right-shifts and feeds back into the top bit; byte() clocks eight steps LSB- or MSB-first. css.ts generate() seeds a 17-bit register with taps [14,0] and a 25-bit register with taps [12,4,3,0], clocks a byte from each and adds them with carry, so z = (x+y+carry) mod 256 and the carry persists -- the CSS byte-serial combiner. The key space is 16 bits plus 24 bits, validated as such, which is the 40 bits the attack exhibit is about. divide.ts recover() enumerates smaller-register seeds and returns counted candidates; verify.ts checks a candidate against continuation bytes the search never saw. Zero runtime dependencies. N/A means no named algorithm IN THIS INDEX, not no computation: the Content Scrambling System and the LFSR family are outside the current vocabulary, the same reason crypto-lab-lfsr-forge was reviewed N/A on 2026-10-09. Scope recorded with it: this is the textbook generator, and the source says so in its own extension note -- deployed CSS changes insertion positions, discards early bytes and has inverter modes, none of which are implemented here. So the card must not be read as a deployed-CSS implementation."
   }
 }

@@ -255,6 +255,8 @@ Catalogued total moves to 225.*
 
 *Version 31 — files Prime Witness and Residue Gate under §7, Hash Hunt under §3, and Log Forge under §8. Primality testing supports the factoring family; a Rabin root oracle supplies an actual reduction to factoring. Generic truncated-hash attacks and exponent recovery add depth to already covered assumptions. No concept status changes. Catalogued total moves to 236.*
 
+*Version 32 — files the five labs carded on 2026-10-21: Next Number under §2 (generator predictability — a toy LCG read off its recurrence, Java's 48-bit state recovered from two ints, and a 512-bit truncated LCG lifted by lattice reduction), TESLA Broadcast under §5 (a one-way HMAC key chain with delayed disclosure, which is message authentication without a shared secret per message), DVD Scramble under §4 beside Air Stream and LFSR Forge (the two-LFSR CSS generator, where the structure itself determines the key), and Twist Trap and AKE Ladder under §16 — Twist Trap for what missing point validation costs a key exchange, AKE Ladder for the AKE1-AKE5 ladder where each removed protection has a scripted attack against real transcripts. No status change: §2 and §16 were already `DEEP`, §4 `DEEP`, §5 `COVERED`. No gap closes, because none of the five was a gap — all five are depth on concepts the catalog already covers. Catalogued total moves to 241.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -320,7 +322,7 @@ OTP Vault. Information-theoretic security plus the two-time-pad break that shows
 guarantee actually costs.
 
 **2. Randomness, entropy, and generator failure — `DEEP`**
-DRBG Arena · Corrupted Oracle · Entropy Collapse · Quantum Entropy · VRF Gate · Noise to Numbers · Pulse Chain · Good Randomness. Correct
+DRBG Arena · Corrupted Oracle · Entropy Collapse · Quantum Entropy · VRF Gate · Noise to Numbers · Pulse Chain · Good Randomness · Next Number. Correct
 case, backdoored case, seed-provenance case, physical extraction, and output anyone can
 verify was not ground out to order.
 
@@ -339,7 +341,7 @@ sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
 Iron Serpent · World Ciphers · AES Modes · ChaCha20 Stream · Ascon · Format Ward ·
-Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream · WEP Crack · LFSR Forge.
+Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream · WEP Crack · LFSR Forge · DVD Scramble.
 SPN, ARX, sponge, stream, lightweight, and Feistel.
 
 Export Grade adds key loading as cipher structure. Real TEA1 passes its known-answer tests
@@ -382,7 +384,7 @@ out to be structured and, so far as anyone has shown, harmless. Provenance is ch
 cases; the verdict is not the same, and that is the point.
 
 **5. Message authentication — `COVERED`**
-MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward · WEP Crack · KMAC Gate · MGM Mode. Polynomial MACs, AEAD, and
+MAC Race · Poly1305 MAC · AEGIS Gate · Nonce Guard · Stream Ward · WEP Crack · KMAC Gate · MGM Mode · TESLA Broadcast. Polynomial MACs, AEAD, and
 misuse-resistant AEAD. Stream Ward extends the arc past the single message: chained streaming
 AEAD, where each segment's tag covers a rolling chain state plus its sequence number, so
 reordering or truncating intact valid frames is caught. One-shot AEAD authenticates *content*;
@@ -588,7 +590,7 @@ neighbour to cross-link, not a component to import.
 **16. Key exchange and forward secrecy — `DEEP`**
 Key Exchange · Curve Lens · DH MITM · X3DH Wire · Ratchet Wire · Noise Pipe · MLS Group ·
 SSH Handshake · TLS Handshake · Hybrid Wire · PQ TLS Handshake · Downgrade Wire · HPKE
-Envelope · PQXDH Wire · Agreeing in Public. The classical → KEM → hybrid arc is complete.
+Envelope · PQXDH Wire · Agreeing in Public · Twist Trap · AKE Ladder. The classical → KEM → hybrid arc is complete.
 
 Agreeing in Public is the entry point to that arc. It opens on a paint-mixing picture, then runs
 one real X25519 exchange and compares the two independently computed secrets byte for byte, with
@@ -1105,7 +1107,7 @@ It does **not** mean the catalog is finished. Three things still generate work:
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
 
-**Catalogued total: 236.**
+**Catalogued total: 241.**
 
 ---
 

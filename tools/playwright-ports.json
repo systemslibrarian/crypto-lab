@@ -890,5 +890,25 @@
  {
   "port": 4732,
   "lab": "crypto-lab-wep-crack"
+ },
+ {
+  "port": 4741,
+  "lab": "crypto-lab-next-number"
+ },
+ {
+  "port": 4742,
+  "lab": "crypto-lab-dvd-scramble"
+ },
+ {
+  "port": 4743,
+  "lab": "crypto-lab-tesla-broadcast"
+ },
+ {
+  "port": 4744,
+  "lab": "crypto-lab-ake-ladder"
+ },
+ {
+  "port": 4745,
+  "lab": "crypto-lab-twist-trap"
  }
 ]

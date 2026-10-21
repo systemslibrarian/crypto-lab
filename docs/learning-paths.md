@@ -4,7 +4,7 @@
 
 The menu builds `.path-card` disclosures. Its step links clear category, search, and curated-set filters and scroll to the matching catalog card.
 
-The homepage skips records with `home: false`, currently the Applied Cryptography and Introduction to Modern Cryptography companions. Both remain in the menu, the README table, the knowledge map and their direct reading-guide URLs. All other paths default to appearing on the homepage.
+The homepage skips records with `home: false`: the Applied Cryptography, Introduction to Modern Cryptography, Boneh–Shoup and Understanding Cryptography companions. They remain in the menu, the README table, the knowledge map and their direct reading-guide URLs. All other paths default to appearing on the homepage.
 
 The homepage builds `.path-band-card` entries containing native `details` / `summary` disclosures. Clicking a summary, or using Enter or Space while it has focus, reveals the ordered lab list. Those links open the labs themselves. Descriptions, step lists, and side trips reuse the menu's generated content; level ranges derive from the referenced cards. “New here? Start here” expands the first path, scrolls to it, and focuses its summary.
 
@@ -24,6 +24,10 @@ Both book guides start with a compact book title and author/edition line, follow
 
 The new path’s search treats `chapter 1` as an exact chapter-number query, so it does not also match chapters 10–15. Book-area and chapter-coverage filters compose with the search. Progress uses `crypto-lab-modern-cryptography-progress-v1`, distinct from the existing Schneier key; only valid chapter IDs are loaded, and malformed or denied storage leaves the page usable. Checkmarks record exploration, not mastery. The static page retains all links and disables progress controls until JavaScript initializes.
 
-After changing a hub path, regenerate `README.md` with `node tools/readme-sync.js` and the knowledge-map catalog with `node tools/knowledge-map-sync.js`. The book companions are navigation/learning resources, so they do not change the standalone exhibit count.
+The Boneh–Shoup companion at `learn/boneh-shoup/` follows version 0.6 of the free book, with 23 chapter entries and explicit boundaries for absent or unfinished text. The Understanding Cryptography companion at `learn/understanding-cryptography/` follows Paar, Pelzl and Güneysu's 2024 second edition: 14 numbered chapters plus a separately identified SHA-3 focus at §11.5. Both use the `guide` mechanism and direct menu links.
+
+Understanding Cryptography resolves its repository slugs, lab titles and live URLs directly against `CATALOG.md`. Its complete static page provides original predict–experiment–explain activities and a coverage boundary for every study stop. Run `node learn/understanding-cryptography/build.mjs` to regenerate it, or add `--check` to detect drift. The storage key `crypto-lab-understanding-cryptography-2e-progress-v1` keeps its optional progress separate from the other companions; Chapter 11 and its SHA-3 focus have distinct identifiers.
+
+After changing a hub path, regenerate `README.md` with `node tools/readme-sync.js`, then the knowledge-map catalog with `node tools/knowledge-map-sync.js` after the last `index.html` edit. The map records exact source hashes, so navigation changes require regeneration even when the exhibit cards are unchanged. The book companions are navigation/learning resources, so they do not change the standalone exhibit count.
 
 The timestamping and fair-exchange workshops are hub-owned learning pages under `learn/`, not separate repositories or standalone catalog cards. Their number is not added to the standalone exhibit count. They are discoverable through the path and its chapter links.

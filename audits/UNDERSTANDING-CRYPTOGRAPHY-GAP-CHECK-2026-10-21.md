@@ -2,9 +2,10 @@
 
 **Review date:** 21 October 2026  
 **Authors / edition:** Christof Paar, Jan Pelzl and Tim Güneysu, Springer, 2024  
-**Draft branch:** `draft/understanding-cryptography-2e`  
+**Original draft branch:** `draft/understanding-cryptography-2e` (review provenance)  
 **Companion source:** [`learn/understanding-cryptography/`](../learn/understanding-cryptography/)  
-**Status:** Draft for review; no merge or production deployment is part of this change.
+**Publication:** `main`, with menu access at `/learn/understanding-cryptography/` and `home: false` (no homepage card).  
+**Status:** Publication version of the reviewed companion. The original gap-check evidence and the release-preparation checks are retained below.
 
 ## Findings and edition correction
 
@@ -18,7 +19,7 @@ recorded below without assigning more work to commissioned extensions.
 The published second edition has **14 numbered chapters**. SHA-3 is **§11.5 within
 Chapter 11**, not a separate numbered chapter. Post-Quantum Cryptography is
 Chapter 12, MACs is Chapter 13, and the publisher calls Chapter 14 **Key Management**.
-The authors' website calls that last chapter **Key Establishment**. The draft
+The authors' website calls that last chapter **Key Establishment**. The companion
 preserves all 15 requested topics as **14 chapter entries plus a separate SHA-3
 focus**, in the book's actual order. It contains **43 lab connections to 37 distinct
 catalogued repositories**.
@@ -62,7 +63,7 @@ checked every page or exercise of the full second edition.
 
 The map deliberately selects useful entry points, rather than listing every
 adjacent cryptographic exhibit. Repository links below use the catalog's exhibit
-titles; their exact repository slugs are visible in the destinations. The draft
+titles; their exact repository slugs are visible in the destinations. The companion
 path supplies the catalog's live lab links.
 
 ## Chapter → repository map
@@ -94,7 +95,7 @@ The ranking is an editorial teaching judgment: prerequisite value and reuse come
 first, followed by how much of a genuinely missing construction becomes visible
 and whether the addition can stay small. It is not a security-risk score or an
 estimate of implementation effort. No new lab or extension is implemented by
-this branch.
+this release.
 
 ### 1. AES core learner sequence — highest value, partial coverage
 
@@ -296,7 +297,7 @@ so the path does not say the names themselves postdate the book. Legacy Kyber,
 Dilithium and SPHINCS+ labels do not by themselves establish conformance to
 ML-KEM, ML-DSA and SLH-DSA; each linked lab's documented path and limits control.
 
-## Draft path design and original activities
+## Companion design and original activities
 
 The page follows the Boneh–Shoup structure: printed chapter title, original
 learning focus, targeted reading references, a prediction before the lab links,
@@ -310,7 +311,7 @@ have different identifiers and checkmarks. Storage failure leaves the page usabl
 searching or opening a deep link cannot permanently hide the target. Checkmarks
 record exploration rather than mastery.
 
-Examples of the original predict–experiment–explain work in this draft:
+Examples of the original predict–experiment–explain work in this companion:
 
 - **AES:** classify value changes, byte relocation and mixing before stepping one
   real round in AEGIS; identify why that view still leaves key expansion and
@@ -331,9 +332,9 @@ section references identify the reading; the activity text is original and
 anchored to controls in the selected labs. Readers need their own lawful access
 to the book for its explanations and derivations.
 
-## Verification and scope of the branch
+## Verification and release scope
 
-Local verification completed:
+Original draft verification completed on 21 October 2026:
 
 - `node learn/understanding-cryptography/build.mjs --check` passes.
 - `node --test tests/reading-path.test.mjs tests/understanding-cryptography.test.mjs`
@@ -346,15 +347,47 @@ Local verification completed:
   and reset, deep-link recovery, 320-pixel overflow checks and no-JavaScript reading.
   Desktop and mobile screenshots were inspected; there were no page errors or
   missing resource responses in that run.
-- The existing CI integrity command includes the new test file. CI runs on a
-  future pull request or main update under the repository's existing triggers;
-  the local results above are not a claim that GitHub Actions ran for this draft.
+- The existing CI integrity command includes the new test file. CI runs on pull
+  requests and main updates under the repository's existing triggers. The local
+  results above record the draft review; they do not verify a release workflow
+  or live deployment.
 
 These checks validate the companion's content structure and interactions. They
-are not a new audit or exhaustive execution of the 37 linked labs, and the full
-existing protocol-workshop browser suite was not rerun for this content addition.
+are not a new audit or exhaustive execution of the 37 linked labs. The original
+local draft review did not rerun the full protocol-workshop browser suite.
 
-Changes are limited to the new path, this report, `learn/README.md`, its focused
-test and the CI test invocation. No lab implementation, catalog entry, main-branch
-menu registration, homepage card or production deployment is included. The draft
-remains on its branch for review.
+The release includes the new path, this report, `learn/README.md`, its focused
+test and the CI test invocation, plus menu registration and the associated
+generated navigation records. The menu entry points to
+`/learn/understanding-cryptography/` and sets `home: false`; it adds no homepage
+card or catalog exhibit. The chapter map, ranked recommendations and prior-batch
+exclusions retain the original review's scope, and no lab implementation is
+changed.
+
+### Publication preparation
+
+The companion was first prepared on the draft branch identified above. The
+publication version removes learner-facing draft labels, points report/catalog/
+source links at `main`, and adds the menu link and `home: false` path record.
+The README learning-path table and knowledge-map catalog were regenerated after
+the final hub edit. Their freshness checks pass; catalog and catalog-structure
+checks also pass without adding an exhibit or changing any lab capability claim.
+
+`node --test tests/reading-path.test.mjs tests/understanding-cryptography.test.mjs tests/knowledge-map-sync.test.cjs`
+passes **18 tests** for the publication candidate. The permanent browser suite
+also includes this companion's menu discovery, separate chapter/focus progress,
+publication links and no-JavaScript reading, and includes it in the existing
+keyboard/responsive checks.
+
+The focused Understanding Cryptography browser regression passes (one test),
+including actual menu navigation and an Axe WCAG 2 A/AA and 2.1 A/AA scan with
+zero violations. The separate Chromium guide smoke also passes its keyboard,
+filtering, persistence, deep-link, 320-pixel and no-JavaScript checks, with no page
+errors or missing resource responses.
+
+Publication follows the repository's existing Pages build from `main`. The
+[Actions history](https://github.com/systemslibrarian/crypto-lab/actions) records
+the deployment and checks for each commit; the
+[public companion](https://crypto-lab.systemslibrarian.dev/learn/understanding-cryptography/)
+is the served page. The local checks above describe candidate validation and do
+not substitute for verifying the deployment and served content.

@@ -2,7 +2,7 @@
 
 These pages live in the hub and deploy with its existing GitHub Pages site. They
 do not require new repositories or add standalone cards to the catalog count.
-The three existing book companions remain in the hub menu and at their direct URLs. Their
+The book companions use the hub menu and their direct URLs. Their
 `LEARNING_PATHS` entries set `home: false`, which omits their cards from the
 homepage Learning paths band while preserving menu steps and generated records.
 
@@ -196,12 +196,12 @@ formal abort/resolve analysis are further reading, not implemented features.
 signed times, anchored rewrites, actual decryption, wrong-session evidence,
 tampering, premature release, terminal decisions and interleaving guards.
 `tests/reading-path.test.mjs` checks generated chapter coverage and local links.
-`tests/understanding-cryptography.test.mjs` checks the draft second-edition path,
+`tests/understanding-cryptography.test.mjs` checks the second-edition path,
 its catalog-only connections, filters, progress and static reading fallback.
 `tests/protocol-workshops-browser.test.cjs` exercises full UI flows, filters,
 progress, keyboard controls, axe accessibility audits and mobile/desktop overflow.
-CI includes these suites; the new draft also received a focused local Chromium
-smoke check.
+CI includes these suites; the Understanding Cryptography path also received a
+focused local Chromium smoke check.
 
 ```sh
 node --test tests/protocol-workshops.test.mjs tests/reading-path.test.mjs tests/understanding-cryptography.test.mjs
@@ -212,7 +212,7 @@ node --test tests/protocol-workshops-browser.test.cjs
 
 `boneh-shoup/chapters.mjs` supplies 23 chapter entries for Dan Boneh and Victor
 Shoup's *A Graduate Course in Applied Cryptography*, version 0.6 (January 2023).
-The guide lives at `/learn/boneh-shoup/`, in the hub menu and alongside both other
+The guide lives at `/learn/boneh-shoup/`, in the hub menu and alongside the other
 book companions. It adds no catalog exhibits and uses `home: false` like the
 existing book paths.
 
@@ -258,14 +258,16 @@ practical construction or later standard, not necessarily something invented
 after the draft. Direct connections cover selected concepts only. Original
 predict–try–explain activities send readers back to assumptions and proofs.
 
-## Understanding Cryptography reading path — draft
+## Understanding Cryptography reading path
 
 [`understanding-cryptography/`](understanding-cryptography/) is an independent
 companion to Christof Paar, Jan Pelzl and Tim Güneysu, *Understanding Cryptography*,
 second edition, Springer, 2024. It follows the Boneh–Shoup page structure:
 chapter titles, original learning focuses, section references, predictions before
 lab links, experiments, explanation prompts and visible coverage boundaries.
-The draft is not registered in the hub menu or homepage.
+Release registration uses `/learn/understanding-cryptography/` in the hub menu.
+Its `LEARNING_PATHS` entry sets `home: false`, preserving menu access and generated
+records without adding a homepage card.
 
 ### Edition and sources — reviewed 21 October 2026
 
@@ -287,11 +289,11 @@ contents-led alignment, not an exhaustive review of the full second-edition text
 
 ### Catalog source and capability limits
 
-Unlike the existing generators, this draft reads the per-lab section of
+Unlike the existing generators, this path reads the per-lab section of
 `CATALOG.md` directly. `chapters.mjs` specifies repository slugs and original
 connection notes; `build.mjs` resolves the exact catalog titles and live URLs.
 Unknown slugs, duplicate connections and an incorrect chapter sequence fail the
-build. The current draft has **43 connections to 37 distinct catalogued labs**.
+build. The path has **43 connections to 37 distinct catalogued labs**.
 
 Direct connection, modern counterpart and introductory bridge describe selected
 relationships, never complete chapter coverage. Significant boundaries include:

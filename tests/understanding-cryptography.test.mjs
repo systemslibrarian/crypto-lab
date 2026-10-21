@@ -50,7 +50,10 @@ test('the static page contains all activities and usable links before JavaScript
   assert.match(output, /<noscript>[\s\S]*All 14 chapter entries, the SHA-3 focus/);
   assert.match(output, /No author or publisher endorsement is implied/);
   assert.match(output, /No book text, figures, exercises or solutions are reproduced or rehosted/);
-  assert.match(output, /draft\/understanding-cryptography-2e\/audits\/UNDERSTANDING-CRYPTOGRAPHY-GAP-CHECK-2026-10-21\.md/);
+  assert.match(output, /blob\/main\/audits\/UNDERSTANDING-CRYPTOGRAPHY-GAP-CHECK-2026-10-21\.md/);
+  assert.match(output, /blob\/main\/CATALOG\.md/);
+  assert.match(output, /tree\/main\/learn\/understanding-cryptography/);
+  assert.doesNotMatch(output, /draft\/understanding-cryptography-2e|Draft independent companion|This draft’s|Draft source/);
   const ids = [...output.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
   assert.equal(new Set(ids).size, ids.length, 'no duplicate anchor or label IDs');
   for (const [, id] of output.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.includes(id), `anchor ${id} resolves`);

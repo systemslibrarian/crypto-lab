@@ -108,8 +108,29 @@ test('Boneh–Shoup stays usable with blocked or malformed browser storage',asyn
   }finally{await page.context().close();}
  }
 });
+test('Understanding Cryptography is discoverable from the menu and preserves its chapter and SHA-3 reading stops',async()=>{
+ const {page,errors}=await pageAt('understanding-cryptography',390);try{
+  await page.goto(origin+'/');assert.equal(await page.locator('#path-band-understanding-cryptography').count(),0,'the guide does not add a home-page band');assert.equal(await page.locator('#path-band-start-here').count(),1,'the hub has initialized its existing paths');
+  await page.locator('#menuToggle').click();await page.locator('.nav-menu-educators[href="learn/understanding-cryptography/"]').click();await page.waitForURL(origin+'/learn/understanding-cryptography/');
+  assert.match(await page.title(),/Understanding Cryptography/);assert.equal(await page.locator('.chapter').count(),15);assert.equal(await page.locator('.chapter[data-kind="chapter"]').count(),14);assert.equal(await page.locator('.chapter[data-kind="focus"]').count(),1);
+  await page.locator('#search').fill('chapter 11');assert.equal(await page.locator('.chapter:visible').count(),2);assert.equal(await page.locator('#chapter-11').isVisible(),true);assert.equal(await page.locator('#sha3-focus').isVisible(),true);
+  await page.locator('#search').fill('section11.5');assert.equal(await page.locator('#sha3-focus').isVisible(),true);assert.equal(await page.locator('.chapter:visible:not([data-chapter="11"])').count(),0);
+  await page.locator('#clear').click();await page.locator('#chapter-11 input').check();await page.locator('#sha3-focus input').check();await contains(page,'progress','2 of 15');
+  await page.reload();assert.equal(await page.locator('#chapter-11 input').isChecked(),true);assert.equal(await page.locator('#sha3-focus input').isChecked(),true);
+  await page.locator('#chapter-11 input').uncheck();await contains(page,'progress','1 of 15');assert.equal(await page.locator('#sha3-focus input').isChecked(),true,'the focus has its own progress record');
+  assert.equal(await page.locator('a[href="https://github.com/systemslibrarian/crypto-lab/blob/main/CATALOG.md"]').count(),1);
+  assert.equal(await page.locator('a[href="https://github.com/systemslibrarian/crypto-lab/blob/main/audits/UNDERSTANDING-CRYPTOGRAPHY-GAP-CHECK-2026-10-21.md"]').count(),2);
+  assert.equal(await page.locator('footer a[href="https://github.com/systemslibrarian/crypto-lab/tree/main/learn/understanding-cryptography"]').count(),1);
+  assert.equal(await page.locator('a[href*="draft/understanding-cryptography-2e"]').count(),0);assert.doesNotMatch(await page.locator('.companion-note').textContent(),/Draft/);
+  await page.locator('#clear-progress').click();await contains(page,'progress','0 of 15');await audit(page);assert.deepEqual(errors,[]);
+ }finally{await page.context().close();}
+ const noJS=await browser.newPage({javaScriptEnabled:false});try{
+  await noJS.goto(origin+'/learn/understanding-cryptography/');assert.equal(await noJS.locator('.chapter:visible').count(),15);assert.equal(await noJS.locator('.chapter[data-kind="chapter"]:visible').count(),14);assert.equal(await noJS.locator('#sha3-focus').isVisible(),true);
+  assert.equal(await noJS.locator('.chapter-toc a').count(),15);assert.ok(await noJS.locator('.chapter-labs a').count()>30);assert.equal(await noJS.locator('#reader-controls').isVisible(),false);assert.equal(await noJS.locator('.chapter input:disabled').count(),15);
+ }finally{await noJS.close();}
+});
 test('workshops remain keyboard reachable and fit phone and desktop widths',async()=>{
- for(const slug of ['applied-cryptography','modern-cryptography','boneh-shoup','timestamping','fair-exchange'])for(const width of [390,1280]){
+ for(const slug of ['applied-cryptography','modern-cryptography','boneh-shoup','understanding-cryptography','timestamping','fair-exchange'])for(const width of [390,1280]){
   const {page,errors}=await pageAt(slug,width);try{await page.keyboard.press('Tab');assert.equal(await page.locator('.skip-link').evaluate(e=>e===document.activeElement),true);await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);assert.equal(await page.locator('h1').count(),1);await audit(page);assert.deepEqual(errors,[]);}finally{await page.context().close();}
  }
 });

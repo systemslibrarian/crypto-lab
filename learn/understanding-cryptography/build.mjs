@@ -22,9 +22,9 @@ const labels = {direct:'Direct connection', modern:'Modern counterpart', intro:'
 const parts = ['Foundations', 'Symmetric cryptography', 'Public-key cryptography', 'Hashing and authentication', 'Post-quantum cryptography', 'Key management'];
 const book = 'https://link.springer.com/book/10.1007/978-3-662-69007-9';
 const chapterUrl = chapter => `https://link.springer.com/chapter/10.1007/978-3-662-69007-9_${chapter}`;
-const draftSource = 'https://github.com/systemslibrarian/crypto-lab';
-const branch = 'draft/understanding-cryptography-2e';
-const report = `${draftSource}/blob/${branch}/audits/UNDERSTANDING-CRYPTOGRAPHY-GAP-CHECK-2026-10-21.md`;
+const sourceRepository = 'https://github.com/systemslibrarian/crypto-lab';
+const branch = 'main';
+const report = `${sourceRepository}/blob/${branch}/audits/UNDERSTANDING-CRYPTOGRAPHY-GAP-CHECK-2026-10-21.md`;
 const expectedIds = Array.from({length:14}, (_, i) => `chapter-${i + 1}`);
 expectedIds.splice(11, 0, 'sha3-focus');
 
@@ -95,10 +95,10 @@ const html = `<!doctype html>
 <header class="reading-header">
 <h1>Understanding Cryptography</h1>
 <p>Christof Paar, Jan Pelzl &amp; Tim Güneysu · Second edition, Springer, 2024</p>
-<p class="companion-note">Draft independent companion · 14 chapters + a SHA-3 focus · <a href="${book}">Publisher’s book page</a> · <a href="https://www.cryptography-textbook.com/book/">Authors’ book site</a></p>
+<p class="companion-note">Independent companion · 14 chapters + a SHA-3 focus · <a href="${book}">Publisher’s book page</a> · <a href="https://www.cryptography-textbook.com/book/">Authors’ book site</a></p>
 <p class="path-intro">Follow the algorithms from their arithmetic to the choices that make a cryptographic system work. Read, predict an outcome, try it in a lab, then explain what the experiment establishes.</p>
 <p class="small edition-note"><strong>Edition and numbering:</strong> The published second edition has 14 numbered chapters. SHA-3 is §11.5 within Hash Functions; it gets a separate study stop here. Post-Quantum Cryptography is Chapter 12. The published Chapter 14 is titled <em>Key Management</em>; the authors’ website calls it <em>Key Establishment</em>. <a href="#sources-title">Check the edition sources</a>.</p>
-<p class="small draft-summary"><a href="${report}">Chapter map and ranked gap report</a> · Lab links and titles come from this draft’s <a href="${draftSource}/blob/${branch}/CATALOG.md">catalog snapshot</a>.</p>
+<p class="small draft-summary"><a href="${report}">Chapter map and ranked gap report</a> · Lab links and titles come from the <a href="${sourceRepository}/blob/${branch}/CATALOG.md">catalog</a>.</p>
 <nav class="chapter-toc" aria-label="Chapter contents"><ol>${entries.map(entry => `<li><a href="#${entry.id}"><span>${entry.kind === 'focus' ? '§11.5' : entry.chapter}</span> ${esc(entry.bookTitle)}</a></li>`).join('')}</ol></nav>
 </header>
 
@@ -141,7 +141,7 @@ const html = `<!doctype html>
 <li><a href="https://www.cryptography-textbook.com/book/">Authors’ official book site, teaching resources and errata</a></li>
 <li><a href="https://www.cryptography-textbook.com/files/toc.pdf">Authors’ table of contents (PDF)</a></li>
 <li><a href="https://www.cryptography-textbook.com/wp-content/uploads/2025/04/errata_2nd.pdf">Authors’ second-edition errata (PDF)</a></li>
-<li><a href="${report}">This draft’s chapter map, coverage evidence and gap decisions</a></li>
+<li><a href="${report}">This path’s chapter map, coverage evidence and gap decisions</a></li>
 </ul>
 <p><strong>Edition check:</strong> References checked on 21 October 2026 against the publisher’s chapter list and front matter. This path follows the book’s 14-chapter order and separates §11.5 as a focus. Chapter and section numbers, rather than page numbers, keep the references usable across print and digital copies.</p>
 <p><strong>Post-quantum standards:</strong> The book predates the final August 2024 publications of <a href="https://csrc.nist.gov/pubs/fips/203/final">FIPS 203 (ML-KEM)</a>, <a href="https://csrc.nist.gov/pubs/fips/204/final">FIPS 204 (ML-DSA)</a> and <a href="https://csrc.nist.gov/pubs/fips/205/final">FIPS 205 (SLH-DSA)</a>. Use each lab’s documented implementation and limits when connecting a book example to a current standard.</p>
@@ -151,7 +151,7 @@ const html = `<!doctype html>
 </section>
 <noscript><p class="notice">All 14 chapter entries, the SHA-3 focus, their activities and lab links are available without JavaScript. Filtering and reading-progress checkmarks require JavaScript.</p></noscript>
 </main>
-<footer><a href="../../">Explore the full catalog</a> · <a href="${draftSource}/tree/${branch}/learn/understanding-cryptography">Draft source and teaching boundaries</a><p>So whether you eat or drink or whatever you do, do it all for the glory of God. — 1 Corinthians 10:31</p></footer>
+<footer><a href="../../">Explore the full catalog</a> · <a href="${sourceRepository}/tree/${branch}/learn/understanding-cryptography">Source and teaching boundaries</a><p>So whether you eat or drink or whatever you do, do it all for the glory of God. — 1 Corinthians 10:31</p></footer>
 </div>
 </body>
 </html>

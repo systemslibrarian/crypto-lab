@@ -86,8 +86,9 @@ export const chapters = [
   },
   {
     chapter: 7, part: 'Symmetric cryptography', title: 'Inspect the machinery inside the primitive',
-    bookTitle: 'Practical Constructions of Symmetric-Key Primitives', sections: '§§7.2.2 and 7.2.6 for the activity; §§7.1 and 7.3 for the other labs', coverage: 'direct',
+    bookTitle: 'Practical Constructions of Symmetric-Key Primitives', sections: "§§7.2.1–7.2.2, 7.2.5–7.2.6 for SPNs, Feistel networks, AES and cryptanalysis; §§7.1 and 7.3 for the other labs", coverage: 'direct',
     labs: [
+      {title: 'AES Anatomy', coverage: 'direct', note: 'Trace AES-128/192/256, key expansion and inverse operations; use opt-in layer removals to separate reversible structure from resistance to attack.'},
       {title: 'LFSR Forge', coverage: 'direct', note: 'Explore linear state evolution and why a linear generator alone is predictable.'},
       {title: 'ChaCha20 Stream', coverage: 'direct', note: 'Step through add–rotate–XOR operations and the generated stream.'},
       {title: 'Feistel Forge', coverage: 'direct', note: 'Step real DES rounds and run a reduced-keyspace double-DES meet-in-the-middle attack.'},
@@ -95,10 +96,10 @@ export const chapters = [
       {title: 'Matsui Line', coverage: 'direct', note: 'Investigate linear bias and the data an attack needs.'},
       {title: 'Hash Zoo', coverage: 'direct', note: 'Compare compression-based hashing with the sponge construction.'}
     ],
-    predict: 'If every round-function output is the same constant, do you expect a Feistel round to remain reversible, and would that make it secure?',
-    try: 'In Feistel Forge, replace the round function with the supplied constant-output alternative and undo a round. Then compare invertibility with the statistical evidence shown by a differential or linear attack.',
-    reflect: 'Why can a Feistel network be invertible even when its round function is not? Why does invertibility alone say nothing about resistance to an attacker?',
-    limit: 'The links cover selected mechanisms, not every cipher or hash in the chapter. DES and reduced-parameter attacks are historical teaching examples. Trivium and a complete derivation of every practical construction are outside this route.'
+    predict: "Can a Feistel network with a constant round function remain invertible? Can an AES variant with an affine data path have a good-looking mean avalanche and still be broken by one known pair?",
+    try: "In Feistel Forge, use the supplied constant-output round function and undo a round. In AES Anatomy, trace a full AES-128 encryption and its inverse, then load the act-7 affine-only fixture and run its recovery. Compare the held-out attack rows with the full-AES controls. Use Biham Lens or Matsui Line to distinguish this affine recovery from differential or linear statistical evidence.",
+    reflect: "Why are invertibility, mean avalanche and pseudorandomness different claims? Identify the nonlinear AES layer removed by the fixture, and explain what the failed attack on full AES does and does not establish.",
+    limit: "AES Anatomy connects directly to the AES construction and its layers. Its four ablation attacks target deliberately weakened AES-128 variants, not full AES, and do not establish a general security proof. DES and reduced-parameter cryptanalysis remain scoped teaching examples. The linked activities cover selected constructions rather than the entire chapter."
   },
   {
     chapter: 8, part: 'Symmetric cryptography', title: 'Follow a reduction beyond the experiment',
@@ -114,18 +115,19 @@ export const chapters = [
   },
   {
     chapter: 9, part: 'Public-key cryptography', title: 'Separate arithmetic from a hardness assumption',
-    bookTitle: 'Number Theory and Cryptographic Hardness Assumptions', sections: '§§9.1.2–9.1.4, 9.2.1–9.2.5 and 9.3.2–9.3.4; Appendix B for algorithms', coverage: 'direct',
+    bookTitle: 'Number Theory and Cryptographic Hardness Assumptions', sections: "§§9.1.2–9.1.5, 9.2.1–9.2.5 and 9.3.1–9.3.4; Appendix B.1.2, B.2.1–B.2.3 and B.3 for arithmetic algorithms", coverage: 'direct',
     labs: [
+      {title: 'Clock Arithmetic', coverage: 'direct', note: 'Compute modular inverses, Euler φ, orders, generators, subgroups and generalized CRT with visible preconditions and independently checked steps.'},
       {title: 'Prime Witness', coverage: 'direct', note: 'Generate candidate primes, compare Fermat and Miller–Rabin tests, count lying bases and inspect fixed-base counterexamples.'},
       {title: 'Educational RSA', coverage: 'direct', note: 'Compute small RSA keys and modular exponentiation, then inspect weak-key factoring.'},
       {title: 'Point Arithmetic', coverage: 'direct', note: 'Carry out group addition and scalar multiplication over a finite field.'},
       {title: 'Curve Lens', coverage: 'direct', note: 'Connect curve arithmetic to concrete ECDH examples and parameter choices.'},
       {title: 'ElGamal Plain', coverage: 'direct', note: 'Inspect finite-group encryption and the discrete-log relation behind its keys.'}
     ],
-    predict: 'Will every base coprime to 561 pass Fermat’s test, and does that mean it must pass Miller–Rabin? Would passing a fixed list of bases prove primality at every size?',
-    try: 'In Prime Witness, inspect 561 at base 2, count all bases for 341 and 561, and compare fixed-base counterexamples with random rounds. Run a bounded prime-generation experiment and compare candidate counts with its estimate. Then use the RSA and curve calculators to identify the inverse problems an attacker would face.',
-    reflect: 'How do factoring, RSA inversion, discrete logarithms, CDH and DDH ask different questions? Which implication would need a proof?',
-    limit: 'Random-base probable-prime evidence is not a primality certificate; deterministic fixed-base conclusions require the stated strict bound. The FIPS generation panel is a later, explicitly limited shape experiment, not textbook wording or standards conformance. Small computations make the algebra inspectable; they do not establish hardness for production parameters. RSA inversion is not known in general to be equivalent to factoring, and discrete-log hardness alone does not establish DDH in every group.'
+    predict: "Does every nonzero residue have an inverse? If Euler’s theorem holds, must the base generate the whole multiplicative group? Would a passing primality test settle either question for every input?",
+    try: "In Clock Arithmetic, compare inverses for 5 and 13 modulo 26 and check the Bézout rows. Recombine 1 modulo 6 with 3 modulo 8, then inspect the order-two example modulo 23. Separate the theorem checks from the possible-secret count. In Prime Witness, compare Fermat and Miller–Rabin on 561. Connect these arithmetic observations to the distinct inverse problems illustrated by RSA and ElGamal.",
+    reflect: "Which conclusions follow from gcd, CRT compatibility or a computed order, and which require a cryptographic hardness assumption? Explain why factoring, RSA inversion, discrete logarithms, CDH and DDH are different questions.",
+    limit: "Clock Arithmetic’s bounded BigInt calculations teach the algebra; generalized noncoprime CRT extends the standard coprime example, and the toy shared-secret search is not a discrete-log algorithm. Probable-prime evidence is not a primality certificate, and fixed-base guarantees require their stated bounds. None of these small computations establishes production-size hardness or standards-conformant key generation. RSA inversion is not known in general to be equivalent to factoring, and DLP hardness alone does not establish DDH in every group."
   },
   {
     chapter: 10, part: 'Public-key cryptography', title: 'Measure how an attack uses structure',

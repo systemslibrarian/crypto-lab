@@ -14,6 +14,31 @@ records. Applied Cryptography also sets `historical: true`; the generated hub
 README places it in a separate Historical reading section. Its URL, chapter
 identifiers, progress data and linked protocol workshops are preserved.
 
+## AES and arithmetic connections — reviewed 21 October 2026
+
+The two new labs now have original activities in the book companions, alongside
+their links in the hub's curated path summaries:
+
+| Companion | AES Anatomy | Clock Arithmetic |
+|---|---|---|
+| Understanding Cryptography, 2024 | Chapter 4: primary AES route, now a direct connection | Chapters 1, 6, 7 and 8: modular arithmetic, Euclid/Euler, CRT and finite-field groups |
+| Katz–Lindell, 2021 section numbering | §7.2.5, alongside SPNs and Feistel networks | §§9.1.2–9.1.5 and 9.3.1–9.3.3, with Appendix B arithmetic algorithms |
+| Boneh–Shoup, version 0.6 | Chapter 4: full cipher and deliberately weakened variants | Chapter 10: arithmetic preparation for RSA and DH |
+| Applied Cryptography, 1996 historical companion | No new AES placement | Chapter 11: Euclid, modular arithmetic and CRT |
+
+The activities were checked against [AES Anatomy at `7abf61f`](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/tree/7abf61f7fdcef076c5f536c81ec0e1b729b05118)
+and [Clock Arithmetic at `5bb8684`](https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/tree/5bb86840fab4806e3681c1a378fd4c643831035d),
+including the displayed key-expansion/inverse traces, affine-only fixture,
+Euclid rows, subgroup examples and generalized CRT input contract. Katz–Lindell's
+section pointers were checked against the author-hosted third-edition contents.
+
+AES Anatomy implements AES-128/192/256; the four layer-removal attacks run on
+weakened AES-128 variants with full-AES controls. Clock Arithmetic teaches exact,
+bounded integer calculations; its tiny shared-secret search is not a discrete-log
+solver. These additions fill the named AES-internals and Euclid teaching gaps,
+without claiming complete chapter coverage, security proofs or hardened crypto.
+Existing chapter IDs, edition boundaries and saved-progress keys are preserved.
+
 ## Introduction to Modern Cryptography reading path
 
 `modern-cryptography/chapters.mjs` supplies 15 original chapter activities for
@@ -285,13 +310,17 @@ Unlike the existing generators, this path reads the per-lab section of
 `CATALOG.md` directly. `chapters.mjs` specifies repository slugs and original
 connection notes; `build.mjs` resolves the exact catalog titles and live URLs.
 Unknown slugs, duplicate connections and an incorrect chapter sequence fail the
-build. The path has **43 connections to 37 distinct catalogued labs**.
+build. The path has **48 connections to 39 distinct catalogued labs**.
 
 Direct connection, modern counterpart and introductory bridge describe selected
 relationships, never complete chapter coverage. Significant boundaries include:
 
-- AEGIS exposes one real AES round; full AES code exists elsewhere, but the
-  introductory field-arithmetic/key-expansion/inverse route remains incomplete.
+- AES Anatomy now supplies the field-arithmetic, S-box, key-expansion and inverse
+  route for full AES. Its ablation experiments concern deliberately weakened
+  AES-128 variants; they neither break full AES nor establish side-channel safety.
+- Clock Arithmetic now supplies traced Euclid/Bézout calculations, Euler
+  preconditions, groups and generalized CRT. Its small examples do not establish
+  production-size hardness or authenticate a public key.
 - KMAC Gate already provides substantial SHA-3 and SHAKE teaching. It is not a
   missing sponge lab, although complete Keccak step-by-step teaching is outside
   the selected surface.

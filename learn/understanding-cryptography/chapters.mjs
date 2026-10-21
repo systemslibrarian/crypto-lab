@@ -11,12 +11,13 @@ export const entries = [
     sections: '§§1.2–1.4: symmetric encryption, cryptanalysis and modular arithmetic',
     predict: 'If you replace a Caesar shift with a longer repeating Vigenère key, which visible patterns do you expect to disappear, and which might still help an attacker?',
     labs: [
+      lab('clock-arithmetic', 'Use signed residues and addition/multiplication tables for the modular arithmetic in §1.4.'),
       lab('dead-sea-cipher', 'Use the Caesar and substitution stages to connect a secret key, a public algorithm and a small search space.'),
       lab('vigenere-break', 'Explore periodicity and frequency evidence in a different historical cipher.', 'intro')
     ],
-    try: 'In Dead Sea Cipher, encrypt a short sentence with repeated words, then run the Caesar search. In Vigenère Break, use a supplied challenge and inspect the proposed key length and recovered plaintext. Record the evidence available before the key was recovered, rather than describing only the successful answer.',
-    reflect: 'Explain why a larger key space can defeat exhaustive search while a structural attack still succeeds. Which security service is missing if a receiver cannot detect an altered ciphertext?',
-    limit: 'The classical examples illustrate selected attacks and modular operations. Vigenère is a related example, not the chapter’s affine-cipher construction. These activities do not supply a complete affine-cipher or integer-ring lesson, and the AES endpoint of the history lab is not a general proof of security.'
+    try: "In Clock Arithmetic’s wrap-around act, reduce a negative integer modulo 12 and compare the addition and multiplication tables. In Dead Sea Cipher, encrypt a sentence with repeated words and run the Caesar search. Use a supplied Vigenère challenge to compare this small search with evidence from periodicity and frequencies.",
+    reflect: "How does reducing an integer modulo n differ from encrypting it? Explain why a larger key space can defeat exhaustive search while a structural attack still succeeds. Which security service is missing if a receiver cannot detect an altered ciphertext?",
+    limit: "These activities connect classical attacks to integer modular arithmetic. Vigenère is a related historical example, not the affine cipher. Clock Arithmetic uses bounded teaching inputs; an arithmetic identity or a successful round trip does not establish cipher security."
   },
   {
     id: 'chapter-2', chapter: 2, kind: 'chapter', part: 'Symmetric cryptography',
@@ -50,18 +51,19 @@ export const entries = [
   },
   {
     id: 'chapter-4', chapter: 4, kind: 'chapter', part: 'Symmetric cryptography',
-    bookTitle: 'The Advanced Encryption Standard (AES)', coverage: 'intro',
-    title: 'Open one AES round, then identify what a complete AES explanation still needs',
+    bookTitle: 'The Advanced Encryption Standard (AES)', coverage: "direct",
+    title: "Build the AES layers, then test what each one contributes",
     sections: '§§4.2–4.6, especially field arithmetic (§4.3), the round layers and key schedule (§4.4), and decryption (§4.5)',
-    predict: 'Which AES round operations change a byte’s value, which move bytes between positions, and which mix several bytes together?',
+    predict: "Could a reversible cipher change about half its output bits when one input bit flips and still be recoverable from one known plaintext–ciphertext pair? Which AES operation prevents the data path from being affine?",
     labs: [
+      lab('aes-anatomy', 'Build GF(2⁸) arithmetic and the S-box, trace all key words and forward/inverse rounds, then compare layer-removal attacks with full-AES controls.'),
       lab('aegis-gate', 'Its “open the black box” panel computes a genuine AES round stage by stage inside AEGIS. AEGIS is a different authenticated cipher.', 'modern'),
       lab('aes-modes', 'Run real AES through several modes and distinguish the block primitive from its surrounding construction.', 'intro'),
       lab('glass-box', 'A full AES-128 implementation supports white-box experiments; the teaching focus is implementation exposure and attacks.', 'intro')
     ],
-    try: 'Open AEGIS Gate’s state-machine exhibit and expand “open the black box.” Record the displayed state after SubBytes, ShiftRows, MixColumns and the round-key XOR. Mark one relocation and one operation that combines input bytes. Return to the book and identify the key-expansion and inverse-operation steps that this single-round view does not walk through.',
-    reflect: 'Why is observing one AES round inside AEGIS insufficient to claim that you have traced a complete AES encryption? Explain the difference between a mode using AES and a construction using AES’s round function.',
-    limit: 'This is the clearest partial chapter connection. The fleet computes full AES and already exposes one round, but the selected learner surfaces do not form a complete route through GF(2^8) arithmetic, S-box derivation, all round keys, the exceptional final round and inverse operations. No browser trace establishes constant-time execution or side-channel resistance.'
+    try: "In AES Anatomy, follow one field inverse and the S-box construction, then inspect the expanded keys. Load the AES-128 FIPS example and trace the whole cipher and its inverse; locate the final round’s omitted MixColumns. Switch to AES-256 to find its extra SubWord in key expansion, then return to AES-128. In act 7, load the affine-only fixture and run the attack. Compare its avalanche and held-out recovery with the same attack on full AES.",
+    reflect: "Explain why invertibility, diffusion and a good-looking mean avalanche do not imply resistance to attack. Which nonlinear operation did the fixture remove from the data path, and why do the full-AES control rows matter? Distinguish AES itself from a mode using it and from AEGIS using an AES round.",
+    limit: "AES Anatomy now supplies the field-arithmetic, S-box, key-expansion, full-cipher and inverse route for AES-128/192/256. Its attack experiments run on deliberately weakened AES-128 variants, not on real AES. The equivalent inverse cipher, general security proofs, hardened implementations and side-channel resistance are outside that lesson. AEGIS is a different authenticated cipher, and modes are studied separately."
   },
   {
     id: 'chapter-5', chapter: 5, kind: 'chapter', part: 'Symmetric cryptography',
@@ -85,12 +87,13 @@ export const entries = [
     sections: '§§6.1–6.2 and §6.3, particularly extended Euclid (§6.3.2) and Euler’s theorem (§6.3.4)',
     predict: 'If someone sends you a public key, does a successful encrypt/decrypt round trip establish who owns it? For an RSA teaching key, when can the chosen public exponent have a multiplicative inverse?',
     labs: [
+      lab('clock-arithmetic', 'Step extended Euclid, verify Bézout coefficients and inverses, and compare Euler φ from unit counting and factorization.'),
       lab('locks-and-keys', 'Compare RSA-OAEP encryption with RSA-PSS signing, including a wrong key and an altered message.'),
       lab('rsa-educational', 'Inspect small-number key generation, phi, the private inverse and the visible square-and-multiply trace.')
     ],
-    try: 'In Locks and Keys, encrypt to one generated key pair and try opening with a different pair; then sign and change the message before verification. In Educational RSA, select small distinct primes and record e, phi and d. Calculate e·d modulo phi yourself and compare with the key-generation check. Explain what would fail if e and phi had a common factor.',
-    reflect: 'Which operations require the private key, and which can everyone perform? What additional evidence binds a mathematically valid public key to the intended person? Connect the modular inverse to the condition that makes it exist.',
-    limit: 'Educational RSA already computes gcd, extended gcd and inverses, and already renders fast exponentiation. A quotient-and-Bézout trace of extended Euclid remains a teaching-depth gap. Successful arithmetic does not authenticate a public key. This entry does not replace the group, number-theory or security-level arguments in the reading.'
+    try: "In Clock Arithmetic, compute the inverse of 5 modulo 26. Step Euclid and check the displayed Bézout identity before verifying the normalized inverse. Change 5 to 13 and explain the refusal. Compare unit counting with the prime-factor formula for Euler φ. In Educational RSA, connect the inverse of e modulo phi to d. In Locks and Keys, try the wrong decryption key and an altered signed message.",
+    reflect: "Why does gcd(a,n)=1 determine whether multiplication by a can be undone modulo n? Explain what the Bézout coefficients establish, then separate that arithmetic fact from evidence binding a public key to its intended owner.",
+    limit: "Clock Arithmetic now exposes quotient/remainder and Bézout steps, unit counts and Euler preconditions; Educational RSA applies the inverse in a toy key pair. These are bounded arithmetic lessons, not production key generation or a proof of a hardness assumption. Successful arithmetic does not authenticate a public key."
   },
   {
     id: 'chapter-7', chapter: 7, kind: 'chapter', part: 'Public-key cryptography',
@@ -99,29 +102,31 @@ export const entries = [
     sections: '§§7.2–7.7 and §§7.8–7.9: arithmetic, fast exponentiation, CRT, primes, padding, encapsulation and attacks',
     predict: 'If raw RSA encryption always decrypts correctly, what information can repeated encryption of a short message still reveal? Would a probable-prime result alone settle the security of the resulting system?',
     labs: [
+      lab('clock-arithmetic', 'Practice CRT recombination and verify the consistency condition before applying it to RSA; compatible noncoprime moduli are an additional arithmetic comparison.'),
       lab('rsa-educational', 'Follow key generation and square-and-multiply with deliberately small integers.'),
       lab('rsa-forge', 'Compare textbook RSA with OAEP and PSS and inspect explicitly scoped failure demonstrations.'),
       lab('prime-witness', 'Separate a compositeness witness, a probable prime and a primality proof.'),
       lab('factor-forge', 'Connect small composite structure to factor-search methods and their measured work.')
     ],
-    try: 'Use RSA Forge’s determinism experiment to compare repeated raw-RSA encryption with OAEP under one key. Record ciphertext equality separately from decryption success. Then choose a composite fixture in Prime Witness and compare the outcome for different test bases. Use Educational RSA’s per-bit exponentiation trace to explain why a short public exponent reduces work without providing padding.',
-    reflect: 'Explain why the equation establishing RSA correctness does not imply secure encryption. What exactly does a witness prove, and what does a passing probable-prime test leave probabilistic?',
-    limit: 'Tiny keys and restricted attacks are teaching targets, not evidence that correctly parameterized RSA-OAEP is broken. A browser round trip is not a proof of an encapsulation construction or a hardened CRT implementation. CRT faults, common-modulus attacks, parity oracles, Wiener and signature-parsing extensions are already in the earlier batches; none is a new recommendation here.'
+    try: "As arithmetic preparation in Clock Arithmetic, solve x ≡ 1 (mod 6), x ≡ 3 (mod 8). Substitute the result into both equations and inspect the combined modulus. Change the first residue to 0 and explain the refusal. Then compare repeated textbook-RSA encryption with OAEP in RSA Forge. Use Educational RSA’s per-bit exponentiation trace to explain why a short public exponent reduces work without supplying padding.",
+    reflect: "Why does compatible noncoprime CRT use the lcm rather than the product of the moduli? How does the coprime case support RSA recombination? Explain why correctness of an arithmetic step, primality evidence and secure encryption are separate questions.",
+    limit: "Clock Arithmetic teaches generalized CRT, including cases beyond RSA’s usual distinct-prime setting; it does not implement an RSA private operation or hardened CRT. Tiny keys and restricted attacks are teaching targets, not evidence against correctly parameterized RSA-OAEP. RSA/CRT fault and oracle extensions remain separate lessons."
   },
   {
     id: 'chapter-8', chapter: 8, kind: 'chapter', part: 'Public-key cryptography',
     bookTitle: 'Cryptosystems Based on the Discrete Logarithm Problem', coverage: 'direct',
     title: 'Use group structure to connect agreement, encryption and attack cost',
     sections: '§§8.1–8.5: DH, groups and subgroups, discrete logs, authentication and ElGamal encryption',
-    predict: 'If an eavesdropper sees both Diffie–Hellman public values, which computation is easy for each participant and which missing value would the eavesdropper need? Does reaching a shared value identify the peer?',
+    predict: "Modulo 23, will bases 5, 2 and 22 generate equally many possible shared secrets? If both DH participants reach the same value, what have they established about group size and peer identity?",
     labs: [
+      lab('clock-arithmetic', 'Compare orders, generator checks and subgroups, then run a small finite-field DH exchange with explicit possible-secret and guess counts.'),
       lab('agreeing-in-public', 'Run a real X25519 exchange as a practical counterpart to finite-field DH; compare shared bytes and the unproven peer identity.', 'modern'),
       lab('elgamal-plain', 'Follow fresh ephemeral exponents through encryption/decryption and observe algebraic malleability.'),
       lab('log-forge', 'Compare actual discrete-log searches on bounded teaching groups.')
     ],
-    try: 'In Agreeing in Public, record the public values and the two locally computed shared values. In ElGamal Plain, keep the message fixed while re-encrypting with fresh randomness, then try the multiplicative transformation. In Log Forge, compare two supported search methods on the same small challenge and use the reported operation counts rather than a single wall-clock time.',
-    reflect: 'Explain how the shared-value calculation supports ElGamal encryption while leaving message integrity and peer authentication as separate obligations. Why do group order and its factorization matter in addition to the size of the modulus?',
-    limit: 'These labs support selected concrete group calculations; they do not prove DLP, CDH or DDH hardness or make those assumptions interchangeable. A small-group recovery is not an attack on every large group. The discrete-log, subgroup-leakage and static-DH-oracle work is already commissioned and excluded from the new gap list.'
+    try: "In Clock Arithmetic’s generators act, compare the whole-group, prime-order-subgroup and order-two examples modulo 23. Record each base’s order, possible-secret count and actual guess count. Explain why the theorem checks can pass for the order-two example. Then compare the unauthenticated exchange in Agreeing in Public, fresh-randomness ElGamal encryption and the bounded searches in Log Forge.",
+    reflect: "Why is a proper prime-order subgroup useful while an order-two base is too small? Distinguish subgroup size from guesses actually used, and explain why a shared value alone establishes neither peer identity nor message integrity.",
+    limit: "Clock Arithmetic adds exact small finite-field DH and group enumeration; X25519 in Agreeing in Public remains a modern counterpart. Neither a theorem check nor a small search proves DLP, CDH or DDH hardness. The toy search checks possible shared secrets and is not a discrete-log solver. Authentication, subgroup-leakage attacks and static-DH oracles are separate lessons."
   },
   {
     id: 'chapter-9', chapter: 9, kind: 'chapter', part: 'Public-key cryptography',

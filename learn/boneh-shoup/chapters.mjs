@@ -33,11 +33,11 @@ export const chapters = [
   {
     chapter: 4, part: 'Secret key cryptography', bookTitle: 'Block ciphers', coverage: 'direct',
     title: 'Distinguish reversible rounds from a secure permutation', sections: '§§4.1–4.2, §4.4.3 and §4.5',
-    predict: 'Can a Feistel network be inverted even when its round function cannot?',
-    labs: [lab('Feistel Forge', 'Step through DES and inspect the Feistel construction and meet-in-the-middle attack.'), lab('AES Modes', 'See why applying a block cipher independently to blocks leaks repeated structure.'), lab('Hidden Bit', 'Experiment with the PRP/PRF distinction at small teaching sizes.')],
-    try: 'Follow one Feistel encryption and its decryption, noting the round-key order. Compare repeated blocks in AES Modes. In Hidden Bit, inspect the collision experiment used to distinguish random functions from permutations.',
-    reflect: 'Why are invertibility, avalanche behavior and pseudorandomness three different properties?',
-    limit: 'DES is a historical teaching target. A reversible Feistel construction is not automatically a secure block cipher, and a collision experiment is not the PRP/PRF switching proof. The GGM tree construction and ideal-cipher reductions remain reading work.'
+    predict: "Can an invertible cipher with good-looking mean avalanche still admit recovery from one known pair? Which additional claim would be needed to call it a secure pseudorandom permutation?",
+    labs: [lab('AES Anatomy', 'Inspect the AES layers, complete key schedule and inverse, then test weakened data paths beside full-AES controls.'), lab('Feistel Forge', 'Step through DES and inspect the Feistel construction and meet-in-the-middle attack.'), lab('AES Modes', 'See why applying a block cipher independently to blocks leaks repeated structure.'), lab('Hidden Bit', 'Experiment with the PRP/PRF distinction at small teaching sizes.')],
+    try: "Compare a reversible Feistel round with AES Anatomy’s full forward and inverse traces. In AES Anatomy, select AES-128, load the affine-only fixture in act 7 and run the attack. Compare held-out recovery and full-AES control rows before interpreting the avalanche mean. In AES Modes, inspect repeated-block leakage; use Hidden Bit’s collision experiment to return to the PRP/PRF distinction.",
+    reflect: "Why are invertibility, diffusion, mean avalanche and pseudorandomness different properties? Explain which layer the affine-only experiment removes and why neither successful decryption nor a failed particular attack proves security.",
+    limit: "AES Anatomy implements full AES-128/192/256, but its ablation attacks target deliberately weakened AES-128 variants. They are not attacks on full AES or proofs in the PRP model. DES is historical; the switching lemma, GGM construction and ideal-cipher reductions remain reading work. The browser implementation is not constant-time or hardened."
   },
   {
     chapter: 5, part: 'Secret key cryptography', bookTitle: 'Chosen Plaintext Attack', coverage: 'direct',
@@ -87,11 +87,11 @@ export const chapters = [
   {
     chapter: 10, part: 'Public key cryptography', bookTitle: 'Public key tools', coverage: 'direct',
     title: 'Agree on bits without assuming an identity', sections: '§§10.2–10.5 and §10.7',
-    predict: 'Can Alice and Bob each complete Diffie–Hellman while sharing different keys with a middle party?',
-    labs: [lab('Educational RSA', 'Inspect small RSA keys, modular exponentiation and the trapdoor.'), lab('Key Exchange', 'Follow the public contributions and shared secret in an honest exchange.'), lab('DH MITM', 'Replace public contributions in unauthenticated Diffie–Hellman.')],
-    try: 'Complete an honest exchange, then let the middle party replace both contributions in DH MITM. Track who knows each resulting secret. In Educational RSA, distinguish the forward operation from the operation requiring the private key.',
-    reflect: 'Which assumption concerns computing a secret, and which mechanism binds the peer to an identity?',
-    limit: 'Tiny arithmetic is inspectable but insecure. DL, CDH and DDH are different assumptions; hardness of one does not automatically establish all the others. Shared-secret agreement alone does not authenticate the peer.'
+    predict: "If Euler’s theorem holds for a base modulo a prime, must that base generate a large subgroup? If Alice and Bob agree on a value, have they authenticated one another?",
+    labs: [lab('Clock Arithmetic', 'Prepare modular inverses, powers, orders and subgroup arithmetic before RSA and finite-field Diffie–Hellman.'), lab('Educational RSA', 'Inspect small RSA keys, modular exponentiation and the trapdoor.'), lab('Key Exchange', 'Follow the public contributions and shared secret in an honest exchange.'), lab('DH MITM', 'Replace public contributions in unauthenticated Diffie–Hellman.')],
+    try: "Start in Clock Arithmetic with the whole-group, prime-order-subgroup and order-two examples modulo 23. Compare the computed orders, possible-secret counts and guesses actually used. Step a modular inverse before using Educational RSA’s key calculation. Then complete an honest exchange and enable the middle party in DH MITM; record who knows each resulting secret.",
+    reflect: "Separate an arithmetic precondition, a cryptographic hardness assumption and a mechanism that authenticates a peer. Why can all the toy theorem checks pass while the shared-secret space remains too small?",
+    limit: "Clock Arithmetic is preparation in bounded integer arithmetic and a small finite-field DH model, not a production group or a discrete-log solver. DL, CDH and DDH remain different assumptions. A useful prime-order subgroup need not be the entire multiplicative group, and agreement alone does not establish peer identity."
   },
   {
     chapter: 11, part: 'Public key cryptography', bookTitle: 'Public key encryption', coverage: 'direct',

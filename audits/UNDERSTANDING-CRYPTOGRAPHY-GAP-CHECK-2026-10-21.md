@@ -5,9 +5,31 @@
 **Original draft branch:** `draft/understanding-cryptography-2e` (review provenance)  
 **Companion source:** [`learn/understanding-cryptography/`](../learn/understanding-cryptography/)  
 **Publication:** `main`, with menu access at `/learn/understanding-cryptography/` and `home: false` (no homepage card).  
-**Status:** Publication version of the reviewed companion. The original gap-check evidence and the release-preparation checks are retained below.
+**Status:** Historical gap-check snapshot with a shipped follow-up below. The original findings, source pins and release-preparation evidence are retained as provenance, not a current unfulfilled-work list.
 
-## Findings and edition correction
+## Shipped follow-up — AES Anatomy and Clock Arithmetic
+
+Both labs are now catalogued and linked in the published companion:
+
+- [AES Anatomy, `7abf61f`](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/tree/7abf61f7fdcef076c5f536c81ec0e1b729b05118)
+  supplies the chapter 4 field-arithmetic → S-box → key-expansion → full cipher
+  → inverse route. That study stop is now a **direct connection**. Its original
+  activity compares a deliberately weakened affine-only AES-128 fixture with
+  full-AES controls; no attack on full AES or general security proof is claimed.
+- [Clock Arithmetic, `5bb8684`](https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/tree/5bb86840fab4806e3681c1a378fd4c643831035d)
+  supplies signed residues in chapter 1, traced Euclid/Bézout and Euler φ in
+  chapter 6, generalized CRT in chapter 7, and orders, generators, subgroups and
+  a finite-field DH model in chapter 8. The named inverse-derivation teaching gap
+  is filled. Tiny arithmetic and a shared-secret search do not establish hardness.
+
+The current companion has **48 connections to 39 distinct catalogued labs**.
+Recommendations 1 and 2 below record the original missing teaching surfaces;
+they must not be reissued as new work. The chapter map and other recommendations
+below remain the original source snapshot rather than a fresh review of every
+lab or extension. Current activities and boundaries are in
+[`learn/understanding-cryptography/chapters.mjs`](../learn/understanding-cryptography/chapters.mjs).
+
+## Original findings and edition correction
 
 Every published chapter has at least one useful catalogued lab connection. This
 does **not** amount to complete chapter coverage. The clearest substantial
@@ -66,7 +88,7 @@ adjacent cryptographic exhibit. Repository links below use the catalog's exhibit
 titles; their exact repository slugs are visible in the destinations. The companion
 path supplies the catalog's live lab links.
 
-## Chapter → repository map
+## Original chapter → repository map
 
 All rows represent **partial chapter coverage**. “Direct” and “bridge” describe
 the relationship, not completeness. Numbering follows the published book.
@@ -89,7 +111,7 @@ the relationship, not completeness. Numbering follows the published book.
 | 13. Message Authentication Codes (MACs) | [MAC Race](https://github.com/systemslibrarian/crypto-lab-mac-race); [AES Modes](https://github.com/systemslibrarian/crypto-lab-aes-modes) | Direct checksum/MAC contrast, HMAC, CMAC, GCM and CCM. Raw CBC-MAC/repair work is commissioned. Dedicated GMAC teaching is not established; bare GHASH is not GMAC. |
 | 14. Key Management | [KDF Chain](https://github.com/systemslibrarian/crypto-lab-kdf-chain); [Kerberos v5](https://github.com/systemslibrarian/crypto-lab-kerberos); [DH MITM](https://github.com/systemslibrarian/crypto-lab-diffie-hellman-mitm); [PKI Chain](https://github.com/systemslibrarian/crypto-lab-pki-chain) | Direct KDF, MITM and scoped PKI; Kerberos is a practical KDC counterpart. Its Lowe lesson is public-key Needham–Schroeder, not §14.3.2’s symmetric protocol. Revocation uses local fixtures. |
 
-## Ranked new recommendations
+## Original ranked recommendations
 
 The ranking is an editorial teaching judgment: prerequisite value and reuse come
 first, followed by how much of a genuinely missing construction becomes visible

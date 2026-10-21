@@ -5969,7 +5969,7 @@
 
           <a class="project-card" data-category="ENCRYPTION | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/" data-level="intermediate" data-added="2026-06" data-updated="2026-10"
             data-implements="RSA@src/rsa/textbook.ts:21 | RSA-OAEP@src/rsa/oaep.ts:18"
-            data-references="Dilithium | ECDSA | Ed25519 | Kyber | ML-DSA | ML-KEM | RSA-PSS | SHA-256 | Shor's algorithm | TLS 1.3 | X25519"
+            data-references="Dilithium | ECDSA | Ed25519 | Kyber | ML-DSA | ML-KEM | Miller–Rabin | RSA-PSS | SHA-256 | Shor's algorithm | TLS 1.3 | X25519"
             data-attacks="Ciphertext malleability@README.md:19 | Factoring@src/main.ts:39 | Key recovery@README.md:48"
             data-standards="IETF"
             data-implementation="hand-rolled"
@@ -6072,7 +6072,7 @@
           </a>
 
           <a class="project-card" data-category="ENCRYPTION | SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-rsa-forge/" data-level="intermediate" data-added="2026-04" data-updated="2026-10"
-            data-implements="AES@src/hybrid.ts:73 | AES-GCM@src/hybrid.ts:66 | RSA@src/textbook.ts:212 | RSA-OAEP@src/oaep-encode.ts:65 | RSA-PSS@src/pss-encode.ts:51 | SHA-256@src/oaep-encode.ts:15"
+            data-implements="AES@src/hybrid.ts:73 | AES-GCM@src/hybrid.ts:66 | Miller–Rabin@src/textbook.ts:38 | RSA@src/textbook.ts:212 | RSA-OAEP@src/oaep-encode.ts:65 | RSA-PSS@src/pss-encode.ts:51 | SHA-256@src/oaep-encode.ts:15"
             data-references="ChaCha20 | ChaCha20-Poly1305 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | ML-DSA | ML-KEM | P-256 | Poly1305 | Privacy Pass | Shor's algorithm | TLS 1.3 | X25519"
             data-attacks="Brute force@README.md:5 | Cache timing@index.html:1560 | Chosen-ciphertext attack@src/glossary.ts:42 | Chosen-plaintext attack@src/determinism.ts:68 | Ciphertext malleability@src/glossary.ts:46 | Factoring@src/attacks.ts:76 | Known-plaintext attack@index.html:1496 | Nonce reuse@README.md:60 | Padding oracle@src/attacks.ts:857 | Side-channel (unspecified)@index.html:1560 | Signature malleability@src/attacks.ts:124"
             data-standards="IETF | NIST"
@@ -6255,7 +6255,7 @@
 
           <a class="project-card" data-category="KEY EXCHANGE | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/" data-level="intermediate" data-added="2026-06" data-updated="2026-08"
             data-implements="EC point arithmetic@src/math/curve-fp.ts:23 | secp256k1@src/math/curves.ts:73"
-            data-references="Baby-step giant-step | ECDH | ECDSA | Ed25519 | EdDSA | Montgomery ladder | P-256 | X25519"
+            data-references="Baby-step giant-step | ECDH | ECDSA | Ed25519 | EdDSA | Montgomery ladder | P-256 | Tonelli–Shanks | X25519"
             data-attacks="Brute force@src/ui/panel-hard.ts:115 | Discrete log@src/ui/panel-hard.ts:164 | Nonce reuse@README.md:35"
             data-standards="SECG"
             data-implementation="hand-rolled"
@@ -7604,12 +7604,12 @@
           </a>
 
           <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/" data-level="beginner" data-added="2026-04" data-updated="2026-10"
-            data-implements="BLAKE3@src/hasher.ts:154 | SHA-256@src/hasher.ts:241 | SHA-3@src/hasher.ts:151"
-            data-references="Argon2 | CMAC | GHASH | HKDF | HMAC | Keccak | MD5 | Merkle tree | PBKDF2 | Poly1305 | SHA-1 | SHA-512 | TLS 1.3 | scrypt"
-            data-attacks="Brute force@README.md:39 | Length extension@src/hasher.ts:216 | Side-channel (unspecified)@README.md:42 | Timing side-channel@README.md:42"
+            data-implements="AES@src/blockcipher/dm.ts:21 | BLAKE3@src/hasher.ts:154 | Davies-Meyer@src/blockcipher/dm.ts:22 | SHA-256@src/hasher.ts:241 | SHA-3@src/hasher.ts:151"
+            data-references="Argon2 | CMAC | DES | GHASH | HKDF | HMAC | Keccak | MD5 | Merkle tree | PBKDF2 | Poly1305 | SHA-1 | SHA-512 | TLS 1.3 | scrypt"
+            data-attacks="Brute force@README.md:45 | Length extension@src/hasher.ts:216 | Side-channel (unspecified)@README.md:48 | Timing side-channel@README.md:48"
             data-standards="NIST"
             data-implementation="@noble"
-            data-review-commit="8161d1c413d6890cf1c17171b81858f1af05ff29"
+            data-review-commit="e86dac25e78bc6876e9fd644d1c6a0b823e06039"
             data-review-note="Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault’s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
            
            
@@ -8559,7 +8559,7 @@
 
           <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-gg20-wallet/" data-level="advanced" data-added="2026-04" data-updated="2026-10"
             data-implements="EC point arithmetic@src/gg20.ts:342 | Paillier@src/gg20.ts:219 | secp256k1@src/gg20.ts:7 | SHA-256@src/gg20.ts:347"
-            data-references="ECDSA | FROST | Feldman VSS | ML-DSA | Pairing | Pedersen commitment | RSA | Schnorr | Shamir secret sharing"
+            data-references="ECDSA | FROST | Feldman VSS | ML-DSA | Miller–Rabin | Pairing | Pedersen commitment | RSA | Schnorr | Shamir secret sharing"
             data-attacks="Discrete log@src/main.ts:302 | Nonce reuse@README.md:58"
             data-standards="NIST | SECG"
             data-implementation="WebCrypto"
@@ -9866,7 +9866,7 @@
           </a>
 
           <a class="project-card" data-category="RANDOMNESS" href="https://systemslibrarian.github.io/crypto-lab-vrf-gate/" data-level="advanced" data-added="2026-04" data-updated="2026-08"
-            data-implements="EC point arithmetic@src/utils/p256.ts:63 | ECDH@src/ecvrf.ts:272 | HMAC@src/ecvrf.ts:92 | P-256@src/ecvrf.ts:272 | SHA-256@src/beacon.ts:23"
+            data-implements="EC point arithmetic@src/utils/p256.ts:63 | ECDH@src/ecvrf.ts:272 | HMAC@src/ecvrf.ts:92 | Miller–Rabin@src/vdf.ts:77 | P-256@src/ecvrf.ts:272 | SHA-256@src/beacon.ts:23"
             data-references="ECDSA | Hash-to-curve | RSA | Shamir secret sharing | Shor's algorithm"
             data-attacks="Factoring@src/main.ts:580"
             data-standards="IETF | NIST"
@@ -10504,11 +10504,11 @@
           <a class="project-card" data-category="ENCRYPTION | HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-elgamal-plain/" data-level="intermediate" data-added="2026-04" data-updated="2026-10"
             data-implements="Baby-step giant-step@src/attacks.ts:35 | ElGamal@src/attacks.ts:1 | HMAC@src/authenticated.ts:83 | SHA-256@src/authenticated.ts:62"
             data-comment-only="Baby-step giant-step@src/attacks.ts:5"
-            data-references="DSA | Diffie-Hellman | ECDSA | HPKE | Paillier | RSA | RSA-OAEP | Shor's algorithm"
-            data-attacks="Brute force@src/attacks.ts:40 | Chosen-ciphertext attack@src/main.ts:209 | Ciphertext malleability@src/main.ts:206 | Discrete log@src/attacks.ts:7 | Key recovery@src/main.ts:358 | Nonce reuse@src/main.ts:358 | Signature malleability@README.md:41"
+            data-references="DSA | Diffie-Hellman | ECDSA | Goldwasser–Micali | HPKE | Paillier | RSA | RSA-OAEP | Shor's algorithm | ristretto255"
+            data-attacks="Brute force@src/attacks.ts:40 | Chosen-ciphertext attack@src/main.ts:210 | Chosen-plaintext attack@brief-extension.md:37 | Ciphertext malleability@src/main.ts:207 | Discrete log@src/attacks.ts:7 | Key recovery@src/main.ts:361 | Nonce reuse@src/main.ts:361 | Signature malleability@README.md:41"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="d12c20a76d97a869dedd34b655e3c2f4d49a8c19"
+            data-review-commit="251bf90ef747f256d0e18f0fe987eadafa3f06da"
             data-review-note="Bounded Baby-step giant-step review at the exact current source commit. Read README Security Lab, src/attacks.ts, src/groups.ts, modular exponentiation/inverse helpers and src/attacks.test.ts. discreteLog builds g^j baby steps, then searches target times g^(-m*i) with m=ceil(sqrt(q)); the q guard refuses RFC 3526 Group 14. This is executable toy-group key recovery, not a reference-only mention. Its algorithm name appears only in comments, so add the implementation at the exported function through this reviewed supplement rather than reading comments as implementations globally. The attack implementation and tests are unchanged from the historical 72048d72 interpretation; the full 15-path change inventory was compared, and the solver and its tests remain byte-identical. The newer Cramer-Shoup exhibit is outside this bounded solver review. Actual current npm test passes 127 tests, including 300 toy-key recoveries, operation-count and large-group refusal controls. This review only adds the bounded solver credit; it does not claim constant-time execution, real-group key recovery, or full cryptographic conformance. Fleet finding lab:crypto-lab-elgamal-plain:interpretation, work 329ddccd-506a-4dab-84d1-4a3ede2b14f7."
            
            
@@ -10598,7 +10598,7 @@
           <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-timeline/" data-level="beginner" data-added="2026-04" data-updated="2026-10"
             data-implements="AES@src/rekey.ts:197 | AES-GCM@src/rekey.ts:215 | Grover's algorithm@src/main.ts:1113 | RSA@src/rekey.ts:101 | SHA-256@src/rekey.ts:198"
             data-comment-only="Shor's algorithm@src/risk-engine.ts:103"
-            data-references="Argon2 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | LMS | ML-DSA | ML-KEM | MLS | P-256 | P-384 | Pairing | SHA-384 | SLH-DSA | Shor's algorithm | TLS 1.3 | X25519 | XMSS"
+            data-references="Argon2 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | LMS | ML-DSA | ML-KEM | MLS | Miller–Rabin | P-256 | P-384 | Pairing | SHA-384 | SLH-DSA | Shor's algorithm | TLS 1.3 | X25519 | XMSS"
             data-attacks="Discrete log@src/main.ts:19 | Factoring@src/main.ts:1761"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
@@ -11385,7 +11385,7 @@
           </a>
 
           <a class="project-card" data-category="HOMOMORPHIC | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-paillier-gate/" data-level="advanced" data-added="2026-04" data-updated="2026-10"
-            data-implements="HMAC@src/ballots.ts:31 | Paillier@src/aggregation.ts:1 | SHA-256@src/ballots.ts:31"
+            data-implements="HMAC@src/ballots.ts:46 | Paillier@src/aggregation.ts:1 | SHA-256@src/ballots.ts:46"
             data-references="BFV | BGV | EC point arithmetic | ECDSA | ElGamal | Shamir secret sharing"
             data-attacks="Ciphertext malleability@src/main.ts:1285 | Discrete log@src/main.ts:144 | Factoring@src/factor.worker.ts:44 | Side-channel (unspecified)@README.md:36"
             data-standards="IETF | NIST"
@@ -12355,7 +12355,7 @@
           </a>
 
           <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-zk-arena/" data-level="advanced" data-added="2026-06" data-updated="2026-10"
-            data-implements="Baby-step giant-step@src/pohlig.ts:71 | Fiat-Shamir@src/schnorr.ts:113 | Schnorr@src/ui.ts:1046 | SHA-256@src/schnorr.ts:121"
+            data-implements="Baby-step giant-step@src/pohlig.ts:71 | Fiat-Shamir@src/schnorr.ts:113 | Pohlig–Hellman@src/pohlig.ts:118 | Schnorr@src/ui.ts:1046 | SHA-256@src/schnorr.ts:121"
             data-references="Bulletproofs | FRI | Groth16 | Halo2 | Merkle tree | PLONK | Pairing | Pedersen commitment | STARK | Schnorr identification | Shamir secret sharing | Sigma protocol | secp256k1"
             data-attacks="Discrete log@src/groups.ts:130 | Factoring@src/ui.ts:758"
             data-standards="NIST"
@@ -12803,7 +12803,8 @@
 
           <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-key-exchange/" data-level="advanced" data-added="2026-06" data-updated="2026-10"
             data-implements="AES@src/engine.ts:181 | AES-GCM@src/engine.ts:181 | Diffie-Hellman@src/engine.ts:55 | EC point arithmetic@src/engine.ts:404 | ECDH@src/engine.ts:422 | Ed25519@src/engine.ts:24 | HKDF@src/engine.ts:164 | LWE@src/ui.ts:1859 | ML-KEM@src/engine.ts:476 | SHA-256@src/engine.ts:26 | Shor's algorithm@src/ui.ts:1490 | X25519@src/engine.ts:24"
-            data-references="Double Ratchet | Grover's algorithm | Isogeny walk | Kyber | NTT | Noise protocol | P-256 | PQXDH | RSA | SIKE | TLS 1.3 | X3DH"
+            data-comment-only="Index calculus@src/ui.ts:430"
+            data-references="Double Ratchet | Grover's algorithm | Index calculus | Isogeny walk | Kyber | NTT | Noise protocol | P-256 | PQXDH | RSA | SIKE | TLS 1.3 | X3DH"
             data-attacks="Brute force@src/ui.ts:280 | Chosen-ciphertext attack@src/data.ts:324 | Discrete log@src/data.ts:29 | Factoring@src/data.ts:145 | Invalid curve attack@README.md:26 | Key recovery@src/data.ts:286 | Man-in-the-middle@src/engine.ts:99"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
@@ -13141,7 +13142,7 @@
 
           <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/" data-level="intermediate" data-added="2026-06" data-updated="2026-10"
             data-implements="HMAC@src/engine.ts:250 | PBKDF2@src/engine.ts:186 | secp256k1@src/engine.ts:9 | SHA-256@src/engine.ts:40 | SHA-512@src/engine.ts:191"
-            data-references="BIKE | BLAKE3 | ECDH | ECDSA | FROST | Merkle tree | P-256 | SHA-3 | X25519"
+            data-references="BIKE | BLAKE3 | ECDH | ECDSA | FROST | Merkle tree | P-256 | Pollard kangaroo | SHA-3 | X25519"
             data-attacks="Nonce reuse@src/ui.ts:1278"
             data-standards="IETF | NIST | SECG"
             data-implementation="@noble"
@@ -13381,7 +13382,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-otp-vault/" data-level="beginner" data-added="2026-06" data-updated="2026-09"
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-otp-vault/" data-level="beginner" data-added="2026-06" data-updated="2026-10"
             data-implements="One-time pad@src/otp/challenges.ts:22"
             data-references="AES | AES-CTR | AES-GCM | AES-SIV | BB84 | ChaCha20 | Poly1305 | SNOW 2.0 | Vigenere cipher"
             data-attacks="Chosen-plaintext attack@src/ui/perfectSecrecyPanel.ts:63 | Frequency analysis@README.md:73 | Nonce reuse@src/ui/keystreamReusePanel.ts:113"
@@ -14324,7 +14325,7 @@
 
           <a class="project-card" data-category="KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/" data-level="intermediate" data-added="2026-06" data-updated="2026-10"
             data-implements="AES@src/engine.ts:396 | AES-GCM@src/engine.ts:396 | Baby-step giant-step@src/engine.ts:135 | Diffie-Hellman@src/engine.ts:99 | ECDSA@src/engine.ts:291 | P-256@src/engine.ts:291 | SHA-256@src/engine.ts:329"
-            data-references="ECDH | OPAQUE | TLS 1.3 | X25519 | X3DH"
+            data-references="ECDH | Index calculus | OPAQUE | TLS 1.3 | X25519 | X3DH"
             data-attacks="Brute force@src/engine.ts:520 | Discrete log@src/engine.ts:135 | Man-in-the-middle@src/engine.ts:235"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
@@ -16664,7 +16665,7 @@
           </a>
 
           <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/" data-level="advanced" data-added="2026-07" data-updated="2026-10"
-            data-implements="SHA-256@src/spdz/transcript.ts:67"
+            data-implements="SHA-256@src/spdz/cavp-sha256-vectors.ts:37"
             data-references="Garbled circuits | Oblivious transfer | One-time pad | Shamir secret sharing"
             data-standards="NIST"
             data-implementation="WebCrypto"
@@ -17427,7 +17428,7 @@
 
           <a class="project-card" data-category="PROTOCOLS | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-accumulator/" data-level="advanced" data-added="2026-08" data-updated="2026-10"
             data-implements="Merkle tree@src/merkle/merkle.ts:53 | SHA-256@src/core/hashToPrime.ts:58"
-            data-references="Pairing | RSA | Shor's algorithm"
+            data-references="Miller–Rabin | Pairing | RSA | Shor's algorithm"
             data-attacks="Factoring@src/ui/forge.ts:200"
             data-standards="NIST"
             data-implementation="@noble"
@@ -18564,7 +18565,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-feistel-forge/" data-level="beginner" data-added="2026-08" data-updated="2026-08"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-feistel-forge/" data-level="beginner" data-added="2026-08" data-updated="2026-10"
             data-implements="DES@src/attacks/mitm.ts:80"
             data-references="3DES | AES | AES-GCM | Blowfish | Camellia | FF1 | KASUMI | MISTY1 | SHA-256 | Serpent | Simon | Speck | Toy SPN | Twofish"
             data-attacks="Birthday bound@src/ui/mitmPanel.ts:296 | Brute force@src/attacks/complement.ts:138 | Chosen-plaintext attack@src/ui/complementPanel.ts:173 | Differential cryptanalysis@README.md:276 | Key recovery@README.md:303 | Known-plaintext attack@src/attacks/sweet32.ts:351 | Man-in-the-middle@src/main.ts:28 | Nonce reuse@src/ui/sweet32Panel.ts:590 | Padding oracle@README.md:203 | Side-channel (unspecified)@README.md:204"
@@ -19459,12 +19460,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-factor-forge/" data-level="intermediate" data-added="2026-09" data-updated="2026-09"
-            data-implements="Shor's algorithm@src/ui/shor.ts:98"
-            data-references="EC point arithmetic | RSA"
-            data-attacks="Birthday bound@src/ui/ladder.ts:93 | Discrete log@src/factor/types.ts:195 | Factoring@src/factor/ecm.ts:201"
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-factor-forge/" data-level="intermediate" data-added="2026-09" data-updated="2026-10"
+            data-implements="Jacobi symbol@src/factor/bigint.ts:139 | Miller–Rabin@src/factor/primality.ts:52 | Shor's algorithm@src/ui/shor.ts:98"
+            data-references="EC point arithmetic | RSA | SHA-256"
+            data-attacks="Birthday bound@src/ui/ladder.ts:93 | Discrete log@src/factor/types.ts:195 | Factoring@src/corpus/verify.ts:1"
             data-implementation="hand-rolled"
-            data-review-commit="8fcf023884964522ebddf678676aea20c04d6bf2"
+            data-review-commit="5849f2d4b42432f25b769b8bc02916582c7f1905"
             data-review-note="Bounded current-source review of the Brute force credit only. README.md:223 (formerly :210 before a thirteen-line documentation insertion) describes a Jacobi unit-test reference oracle; src/factor/bigint.test.ts:76-85 enumerates quadratic residues for five small primes to check jacobi. This is test support, not an attack exhibit, so exclude that README-derived Brute force credit. The actual trial-division implementation and its registry/worker wiring were inspected and remain unchanged. Preserve all other derived classifications and source limitations; this clarification does not claim a fresh live exercise, full cryptographic review or constant-time assurance."
            
            
@@ -19987,7 +19988,7 @@
 
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/" data-level="advanced" data-added="2026-09" data-updated="2026-09"
             data-implements="AES@src/schemes/aes-modes.ts:10 | AES-CBC@src/schemes/aes-modes.ts:37 | AES-CTR@src/schemes/aes-modes.ts:47 | AES-GCM@src/schemes/aes-modes.ts:59 | Diffie-Hellman@src/reduction/ddh.ts:87 | ECDSA@src/schemes/ecdsa.ts:10 | Ed25519@src/schemes/ed25519.ts:3 | ElGamal@src/game/cca.ts:34 | Hash-to-curve@src/schemes/elgamal.ts:29 | P-256@src/kats.ts:3 | ristretto255@src/schemes/elgamal.ts:22 | RSA@src/game/cca.ts:84 | RSA-OAEP@src/game/cca.ts:84 | RSA-PSS@src/schemes/rsa-pss.ts:4 | secp256k1@src/schemes/ecdsa.ts:1 | SHA-256@src/schemes/rsa-textbook.ts:52"
-            data-references="AES-ECB | ML-KEM | SHA-512 | Simon"
+            data-references="AES-ECB | Goldwasser–Micali | ML-KEM | SHA-512 | Simon"
             data-attacks="Chosen-ciphertext attack@src/game/cca.ts:1 | Chosen-plaintext attack@src/game/challenger.ts:18 | Ciphertext malleability@README.md:41 | Signature malleability@README.md:43"
             data-standards="IETF | NIST | SECG"
             data-implementation="WebCrypto"
@@ -20890,7 +20891,7 @@
             data-attacks="Birthday bound@README.md:126 | Key recovery@src/main.ts:43 | Known-plaintext attack@src/main.ts:123 | Nonce reuse@src/ui/panel3Collision.ts:339"
             data-standards="IEEE"
             data-implementation="hand-rolled"
-            data-review-commit="fad33459d2f9a0304a1c0b08810f375a6c1c9f51"
+            data-review-commit="0b2433ccb1436ee5e1ad2fdb6605b37c4f701e0c"
             data-review-note="Read RC4 KSA/PRGA, WEP protected-body/CRC-32 and PTW engines, public attacker contracts, receiver/secret validation, README and tests at this SHA. Generated traffic only, not complete 802.11 frames or a real-network capture tool. The RC4 anchor points to the keystream engine rather than a UI type. Chosen-ciphertext attack was picked from a build brief and Padding oracle from a sibling link, neither a demonstrated oracle attack here; remove those credits. CRC-32 ciphertext forgery and bounded probabilistic PTW recovery are actual computations; exact key equality is checked separately. 149 unit, 2 accessibility and 49 claims/interaction tests passed."
             target="_blank" rel="noopener" style="--accent: #ffb84d;"
             data-overlaps="crypto-lab-chacha20-stream: ChaCha20 Stream teaches an ARX keystream and nonce-reuse cancellation; WEP Crack adds the historical RC4 protocol, unauthenticated CRC-32 forgery and PTW statistical key recovery from generated protected bodies">
@@ -20902,12 +20903,13 @@
             </div><span class="arrow">&rarr;</span></div>
           </a>
           <a class="project-card" data-category="ENCRYPTION | RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lfsr-forge/" data-level="intermediate" data-added="2026-10" data-updated="2026-10"
-            data-implements="N/A"
-            data-references="BCH | ChaCha20 | SNOW 3G | ZUC"
-            data-attacks="Brute force@README.md:69 | Known-plaintext attack@src/main.ts:138"
-            data-implementation="N/A (model or attack)"
-            data-review-commit="2a9848eee885039dfda5d576b0727233624bee7f"
-            data-review-note="Source review of src/lfsr/lfsr.ts and bm.ts, src/geffe/geffe.ts and correlation.ts, worker contract, UI verification and tests: computes binary Fibonacci LFSRs, Berlekamp-Massey synthesis over GF(2), and a fixed 7/11/13 Geffe combiner. These are outside the current algorithm vocabulary; N/A means no named algorithm in this index, not no computation. BCH, ChaCha20, SNOW 3G and ZUC are comparisons, not implemented. Attack receives copied known keystream and budgets; its frozen forecast is checked separately from exact original-state confirmation. 13 unit and 8 browser tests passed at this SHA."
+            data-implements="Trivium@src/trivium/panel.ts:15"
+            data-references="BCH | ChaCha20 | Pairing | RC4 | SHA-256 | SNOW 3G | Shamir secret sharing | ZUC"
+            data-attacks="Brute force@README.md:73 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:139"
+            data-standards="ISO"
+            data-implementation="hand-rolled"
+            data-review-commit="2800c76acf9ddc7bd79210327372b95b64d444e6"
+            data-review-note="NO LONGER N/A. This lab added src/trivium/ since the 2026-10-09 review, and it is a real eSTREAM Trivium: INIT_ROUNDS 1152, AND_TAPS [[91,92],[175,176],[286,287]] and a 288-bit state, the specification's own constants. The vocabulary could not NAME Trivium until 2026-10-21, so the lab was invisible in both directions -- neither credited with it nor judged by the chip rule -- which is the ZUC and Kupyna situation a third time. The term now exists and the implementation anchors on its own at src/trivium/panel.ts. The earlier reading stands for what it covered: src/lfsr/lfsr.ts and bm.ts, src/geffe/ geffe.ts and correlation.ts compute binary Fibonacci LFSRs, Berlekamp-Massey synthesis over GF(2) and a fixed 7/11/13 Geffe combiner, which remain outside the vocabulary. BCH, ChaCha20, SNOW 3G and ZUC are comparisons, not implemented."
             target="_blank" rel="noopener" style="--accent: #9f88ff;"
             data-overlaps="crypto-lab-chacha20-stream: ChaCha20 Stream visualizes a modern ARX construction; LFSR Forge reconstructs tiny binary recurrences and exploits Geffe correlation from known keystream, without attacking ChaCha20">
             <div class="card-kicker">Fit, Forecast, Then Verify</div>
@@ -20921,7 +20923,7 @@
 
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-rsa-small-roots/" data-level="advanced" data-added="2026-10" data-updated="2026-10"
             data-implements="RSA@src/simulator/oracle.ts:23"
-            data-references="GGH | ML-KEM | RSA-OAEP | SHA-256 | Schnorr"
+            data-references="GGH | ML-KEM | Miller–Rabin | RSA-OAEP | SHA-256 | Schnorr"
             data-attacks="Factoring@README.md:57 | Lattice reduction@src/attacks/public.ts:3"
             data-standards="IETF"
             data-implementation="hand-rolled"
@@ -20951,56 +20953,52 @@
           </a>
 
 
-          <a class="project-card" data-category="RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-prime-witness/"
+          <a class="project-card" data-category="RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-prime-witness/" data-level="intermediate" data-added="2026-10" data-updated="2026-10"
             data-implements="Fermat primality test@src/primality/fermat.ts:2 | Miller–Rabin@src/primality/millerRabin.ts:11"
             data-references="RSA"
             data-implementation="local BigInt primality engines"
             data-review-commit="c85f91a26720f4f2d63b8b4471720cfcce49bb25"
-            data-review-note="Read the six exhibits, independent sieve/trial-prime checks, fixed-base counterexamples, exhaustive liar counting and generation workers. These are primality tests, not primality proofs. FIPS 186-5 Table B.1 is an explicitly limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and displayed factors; the lab does not teach a separate factoring attack. All 34 units, seven browser claims, two accessibility views and seven mutations passed at the prior code-identical build; this pin updates only integration documentation."
-            data-added="2026-10" data-updated="2026-10" data-level="intermediate" data-overlaps="crypto-lab-factor-forge: Factor Forge attacks composite integers; Prime Witness tests candidate primes and distinguishes witnesses, probable primes and proofs." target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            data-review-note="Read the six exhibits, independent sieve/trial-prime checks, fixed-base counterexamples, exhaustive liar counting and generation workers. These are primality tests, not primality proofs. FIPS 186-5 Table B.1 is an explicitly limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and displayed factors; the lab does not teach a separate factoring attack. All 34 units, seven browser claims, two accessibility views and seven mutations passed at the prior code-identical build; this pin updates only integration documentation." data-overlaps="crypto-lab-factor-forge: Factor Forge attacks composite integers; Prime Witness tests candidate primes and distinguishes witnesses, probable primes and proofs." target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Primality Testing</div>
             <div class="project-title">Prime Witness</div>
             <div class="project-copy">Follow Miller–Rabin witnesses, count lying bases, defeat fixed-base lists, and measure real prime generation without mistaking probable primes for proofs.</div>
             <div class="project-meta"><div class="stack"><span class="chip">Miller–Rabin</span><span class="chip">Fermat Test</span><span class="chip">Carmichael Numbers</span><span class="chip">Prime Generation</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-residue-gate/"
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-residue-gate/" data-level="intermediate" data-added="2026-10" data-updated="2026-10"
             data-implements="Goldwasser–Micali@src/gm/gm.ts:3 | Jacobi symbol@src/nt/jacobi.ts:4 | Miller–Rabin@src/nt/primes.ts:3 | Rabin encryption@src/rabin/oracle.ts:9 | Tonelli–Shanks@src/nt/sqrt.ts:7"
             data-references="Paillier | RSA | RSA-OAEP"
             data-attacks="Chosen-ciphertext attack@src/main.ts:1 | Ciphertext malleability@README.md:15 | Factoring@src/main.ts:24"
             data-implementation="local BigInt arithmetic / isolated key-holder worker"
             data-review-commit="d1f1c553da40f36f1f02b57800262271278f441a"
-            data-review-note="Read binary Jacobi, Euler Legendre, modular roots/CRT, Goldwasser–Micali encryption and the Rabin key-holder closure. The Tonelli anchor executes order halving; the Rabin anchor actually squares the validated message. A public attacker receives N and one root-query closure, never p/q. The canonical QR root oracle yields independently verified factors; redundancy can refuse or accidentally admit a query and is not called CCA security. One-bit Rabin is distinct from GM. Cocks IBE is an extension mention, not Boneh–Franklin IBE. All 17 units, six browser claims, two accessibility views and six mutations passed at the code-identical deployment; this pin changes only integration documentation."
-            data-added="2026-10" data-updated="2026-10" data-level="intermediate" data-overlaps="crypto-lab-hidden-bit: Hidden Bit studies hard-core predicates; Residue Gate computes quadratic residues, Goldwasser–Micali ciphertexts and a Rabin root-oracle factoring reduction. crypto-lab-factor-forge: Factor Forge searches for factors directly; Residue Gate exposes the decryption-oracle assumption that yields them." target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            data-review-note="Read binary Jacobi, Euler Legendre, modular roots/CRT, Goldwasser–Micali encryption and the Rabin key-holder closure. The Tonelli anchor executes order halving; the Rabin anchor actually squares the validated message. A public attacker receives N and one root-query closure, never p/q. The canonical QR root oracle yields independently verified factors; redundancy can refuse or accidentally admit a query and is not called CCA security. One-bit Rabin is distinct from GM. Cocks IBE is an extension mention, not Boneh–Franklin IBE. All 17 units, six browser claims, two accessibility views and six mutations passed at the code-identical deployment; this pin changes only integration documentation." data-overlaps="crypto-lab-hidden-bit: Hidden Bit studies hard-core predicates; Residue Gate computes quadratic residues, Goldwasser–Micali ciphertexts and a Rabin root-oracle factoring reduction. crypto-lab-factor-forge: Factor Forge searches for factors directly; Residue Gate exposes the decryption-oracle assumption that yields them." target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Quadratic Residuosity</div>
             <div class="project-title">Residue Gate</div>
             <div class="project-copy">Compare public Jacobi symbols with private residue classes, encrypt bits, and turn a Rabin decryption oracle into independently verified factors.</div>
             <div class="project-meta"><div class="stack"><span class="chip">Jacobi Symbol</span><span class="chip">Goldwasser–Micali</span><span class="chip">Rabin Encryption</span><span class="chip">Chosen-Ciphertext Attack</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
-          <a class="project-card" data-category="HASHING &amp; KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hash-hunt/"
+          <a class="project-card" data-category="HASHING &amp; KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hash-hunt/" data-level="intermediate" data-added="2026-10" data-updated="2026-10"
             data-implements="Floyd cycle finding@src/attack/floyd.ts:2 | Hellman chains@src/attack/tmto/tables.ts:8 | HMAC@src/mac/hashAndMac.ts:2 | Rainbow chains@src/attack/tmto/tables.ts:8 | SHA-256@src/hash/truncate.ts:3"
             data-references="Grover's algorithm | MD5 | Merkle tree | SHA-1 | bcrypt"
             data-attacks="Collision attack@README.md:14"
             data-standards="IETF | NIST"
             data-implementation="noble SHA-256 / WebCrypto HMAC / local attack engines"
             data-review-commit="3c766455e051b48adb6af5356cb81257770f4ab4"
-            data-review-note="Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint chain regeneration and salts sampled after precomputation. The tag transfer attacks a deliberately collision-prone hash-then-MAC composition, not HMAC or full SHA-256. Hellman uses one reduction column per table; rainbow varies the column. Coverage sets and diagnostic traces are additional memory. Length extension is a neighboring topic, not an executed exhibit. All 21 units, eight browser claims, two accessibility views and eleven mutations passed; this pin only clarifies README scope and integration."
-            data-added="2026-10" data-updated="2026-10" data-level="intermediate" data-overlaps="crypto-lab-collision-vault: Collision Vault studies published collision examples and hash constructions; Hash Hunt runs generic searches on deliberately truncated SHA-256, meaningful-message forgery and measured table tradeoffs. crypto-lab-kdf-arena: KDF Arena compares password derivation; Hash Hunt demonstrates why fresh salts prevent reuse of an unsalted table." target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            data-review-note="Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint chain regeneration and salts sampled after precomputation. The tag transfer attacks a deliberately collision-prone hash-then-MAC composition, not HMAC or full SHA-256. Hellman uses one reduction column per table; rainbow varies the column. Coverage sets and diagnostic traces are additional memory. Length extension is a neighboring topic, not an executed exhibit. All 21 units, eight browser claims, two accessibility views and eleven mutations passed; this pin only clarifies README scope and integration." data-overlaps="crypto-lab-collision-vault: Collision Vault studies published collision examples and hash constructions; Hash Hunt runs generic searches on deliberately truncated SHA-256, meaningful-message forgery and measured table tradeoffs. crypto-lab-kdf-arena: KDF Arena compares password derivation; Hash Hunt demonstrates why fresh salts prevent reuse of an unsalted table." target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Generic Hash Attacks</div>
             <div class="project-title">Hash Hunt</div>
             <div class="project-copy">Find truncated-SHA-256 collisions, transfer a tag in an insecure hash-then-MAC construction, and measure chained-table tradeoffs and the limits of salt.</div>
             <div class="project-meta"><div class="stack"><span class="chip">Truncated SHA-256</span><span class="chip">Floyd Cycle Finding</span><span class="chip">Hellman / Rainbow Chains</span><span class="chip">HMAC-SHA-256</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-log-forge/"
+          <a class="project-card" data-category="KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-log-forge/" data-level="intermediate" data-added="2026-10" data-updated="2026-10"
             data-implements="Baby-step giant-step@src/dlog/generic/bsgs.ts:2 | EC point arithmetic@src/group/ec.ts:4 | Index calculus@src/dlog/index/calculus.ts:4 | Pohlig–Hellman@src/dlog/pohlig.ts:3 | Pollard kangaroo@src/dlog/generic/kangaroo.ts:3 | Pollard rho (discrete log)@src/dlog/generic/rho.ts:3"
             data-references="Diffie-Hellman | ElGamal | Floyd cycle finding | Shor's algorithm"
             data-attacks="Brute force@src/main.ts:3 | Discrete log@src/main.ts:3"
             data-implementation="local generic group solvers / finite-field and toy-curve arithmetic"
             data-review-commit="2b5ade3940e3ae2879823c40cbc0587be6655aef"
-            data-review-note="Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig–Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation."
-            data-added="2026-10" data-updated="2026-10" data-level="intermediate" data-overlaps="crypto-lab-function-key: Function Key uses bounded discrete logarithms to decode an inner product; Log Forge compares recovery algorithms and weak-parameter choices. crypto-lab-factor-forge: Factor Forge attacks integer factorisation; Log Forge attacks exponent recovery in finite fields and a toy curve." target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            data-review-note="Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig–Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation." data-overlaps="crypto-lab-function-key: Function Key uses bounded discrete logarithms to decode an inner product; Log Forge compares recovery algorithms and weak-parameter choices. crypto-lab-factor-forge: Factor Forge attacks integer factorisation; Log Forge attacks exponent recovery in finite fields and a toy curve." target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Discrete Logarithms</div>
             <div class="project-title">Log Forge</div>
             <div class="project-copy">Recover exponents in fields and a toy curve, then expose how smooth order, short secrets and field representation change the attack.</div>

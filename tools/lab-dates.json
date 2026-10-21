@@ -215,8 +215,8 @@
    "addedOn": "2026-04-12",
    "updated": "2026-10",
    "addedFrom": "2026-04-12T19:05:56Z",
-   "updatedFrom": "2026-10-07T12:43:38-04:00",
-   "updatedCommit": "6a78f1f1f4cf7682a4deeb9d4150aecf58ebcf64"
+   "updatedFrom": "2026-10-21T15:43:13Z",
+   "updatedCommit": "03a99540a451c6b6d03fe6d25066e7293b514605"
   },
   "crypto-lab-patron-shield": {
    "added": "2026-04",
@@ -687,8 +687,8 @@
    "addedOn": "2026-04-18",
    "updated": "2026-10",
    "addedFrom": "2026-04-18T10:26:46Z",
-   "updatedFrom": "2026-10-17T14:32:11-04:00",
-   "updatedCommit": "1ab8d59bd89c5fbd800c22b43b952e5fe05f8400"
+   "updatedFrom": "2026-10-21T15:43:27Z",
+   "updatedCommit": "c94292309bc98972fbef966ee1646a366dfe04e5"
   },
   "crypto-lab-lattice-fault": {
    "added": "2026-04",
@@ -983,8 +983,8 @@
    "addedOn": "2026-06-06",
    "updated": "2026-10",
    "addedFrom": "2026-06-06T16:00:29Z",
-   "updatedFrom": "2026-10-18T07:54:04-04:00",
-   "updatedCommit": "a3e9b9431802746fcf3a891721be7d287f7c3ac6"
+   "updatedFrom": "2026-10-21T15:43:33Z",
+   "updatedCommit": "cc5b6526b65e5d41bd1724754edc1355136b74bb"
   },
   "crypto-lab-key-exchange": {
    "added": "2026-06",
@@ -1367,8 +1367,8 @@
    "addedOn": "2026-07-20",
    "updated": "2026-10",
    "addedFrom": "2026-07-20T01:38:35Z",
-   "updatedFrom": "2026-10-17T14:31:59-04:00",
-   "updatedCommit": "c03a354c776fb572476b4ade5c2e29d00752c095"
+   "updatedFrom": "2026-10-21T15:43:30Z",
+   "updatedCommit": "70870f42c90fc8912276fade08685bce318c29c9"
   },
   "crypto-lab-syndrome-hints": {
    "added": "2026-07",
@@ -1517,10 +1517,10 @@
   "crypto-lab-shelf-oracle": {
    "added": "2026-08",
    "addedOn": "2026-08-21",
-   "updated": "2026-09",
+   "updated": "2026-10",
    "addedFrom": "2026-08-21T21:13:58Z",
-   "updatedFrom": "2026-09-22T13:54:22-04:00",
-   "updatedCommit": "66c860a4a312f4f1fe79011934ff4a53b0610e16"
+   "updatedFrom": "2026-10-21T15:43:23Z",
+   "updatedCommit": "852f23ff8b406bd7f98f06cbea34f5cec6cca389"
   },
   "crypto-lab-feistel-forge": {
    "added": "2026-08",

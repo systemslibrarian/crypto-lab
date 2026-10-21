@@ -9556,8 +9556,8 @@
             data-references="Classic McEliece | HQC | Kyber | ML-DSA | ML-KEM | SIKE | SLH-DSA | UOV"
             data-attacks="Brute force@src/csidh.ts:267"
             data-implementation="hand-rolled"
-            data-review-commit="1ab8d59bd89c5fbd800c22b43b952e5fe05f8400"
-            data-review-note="Reviewed the new SQIsign source note, README scope table, Exhibit 4 and csidh.ts bruteForceStep/recovery. The executable attack is the toy CSIDH exhaustive search retained as Brute force; the separate Key recovery hit now points to the SQIsign paper discussion, not that computation. Power analysis is reported research, not an executed experiment. The sidhOutput variable is a CSIDH display element, not a SIKE implementation; the lattice-reduction hit is a related-demo link. Preserve CSIDH, EC arithmetic and isogeny walks. This is a bounded catalog classification review, not a full cryptographic audit."
+            data-review-commit="c94292309bc98972fbef966ee1646a366dfe04e5"
+            data-review-note="Reviewed the new SQIsign source note, README scope table, Exhibit 4 and csidh.ts bruteForceStep/recovery. The executable attack is the toy CSIDH exhaustive search retained as Brute force; the separate Key recovery hit now points to the SQIsign paper discussion, not that computation. Power analysis is reported research, not an executed experiment. The sidhOutput variable is a CSIDH display element, not a SIKE implementation; the lattice-reduction hit is a related-demo link. Preserve CSIDH, EC arithmetic and isogeny walks. This is a bounded catalog classification review, not a full cryptographic audit. Reviewed the 21 October source-note, README and browser-check diff against the previous pinned head. The deterministic-CSIDH/OSIDH-LD fault preprint is reported context: software key recovery and a separate hardware instruction-skip experiment, not an executed attack in this lab. Cryptographic implementation files are unchanged; retain existing classifications."
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-18" data-updated="2026-10"
            
            
@@ -12898,13 +12898,13 @@
 
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:55 | SHA-256@src/crypto.ts:35"
-            data-comment-only="AES@src/data.ts:8 | Diffie-Hellman@src/data.ts:824 | ECDSA@src/data.ts:824 | Falcon@src/data.ts:23 | HQC@src/data.ts:2 | LMS@src/crypto.ts:22 | LWE@src/ui.ts:1044 | Merkle tree@src/crypto.ts:23 | P-256@src/data.ts:824 | SHA-384@src/data.ts:9 | SPHINCS+@src/crypto.ts:22 | TLS 1.3@src/data.ts:825 | X25519@src/data.ts:824 | XMSS@src/crypto.ts:22"
+            data-comment-only="AES@src/data.ts:8 | Diffie-Hellman@src/data.ts:837 | ECDSA@src/data.ts:837 | Falcon@src/data.ts:23 | HQC@src/data.ts:2 | LMS@src/crypto.ts:22 | LWE@src/ui.ts:1044 | Merkle tree@src/crypto.ts:23 | P-256@src/data.ts:837 | SHA-384@src/data.ts:9 | SPHINCS+@src/crypto.ts:22 | TLS 1.3@src/data.ts:838 | X25519@src/data.ts:837 | XMSS@src/crypto.ts:22"
             data-references="AES | ARIA | BIKE | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | UOV | Winternitz | X25519 | XMSS"
-            data-attacks="Birthday bound@src/data.ts:436 | Chosen-ciphertext attack@src/data.ts:205 | Chosen-plaintext attack@src/data.ts:908 | Differential cryptanalysis@src/data.ts:551 | Discrete log@src/data.ts:764 | Factoring@src/data.ts:764 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:157 | Side-channel (unspecified)@src/data.ts:242 | Timing side-channel@src/data.ts:310"
+            data-attacks="Birthday bound@src/data.ts:436 | Chosen-ciphertext attack@src/data.ts:205 | Chosen-plaintext attack@src/data.ts:921 | Differential cryptanalysis@src/data.ts:551 | Discrete log@src/data.ts:777 | Factoring@src/data.ts:777 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:157 | Side-channel (unspecified)@src/data.ts:242 | Timing side-channel@src/data.ts:310"
             data-standards="NIST"
             data-implementation="WebCrypto"
-            data-review-commit="a3e9b9431802746fcf3a891721be7d287f7c3ac6"
-            data-review-note="Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus."
+            data-review-commit="cc5b6526b65e5d41bd1724754edc1355136b74bb"
+            data-review-note="Reviewed the new isogeny attack/reference entries, README and crypto.ts&#x27;s executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus. Reviewed the 21 October source-note, README and browser-check diff against the previous pinned head. The deterministic-CSIDH/OSIDH-LD fault preprint is reported context: software key recovery and a separate hardware instruction-skip experiment, not an executed attack in this lab. Cryptographic implementation files are unchanged; retain existing classifications."
             data-level="advanced" data-added="2026-06" data-added-on="2026-06-06" data-updated="2026-10"
            
            
@@ -17103,8 +17103,8 @@
             data-references="CGL hash | CSIDH | SIKE"
             data-attacks="Brute force@src/main.ts:604"
             data-implementation="hand-rolled"
-            data-review-commit="c03a354c776fb572476b4ade5c2e29d00752c095"
-            data-review-note="Re-read the current README, math/walk implementation and seven-problem UI after the 2026 complexity and endpoint-ring qualification. The new text distinguishes generic graph search from specialized preprint results and does not change the executable graph walk. Polynomial root factorization is still not an integer factoring attack; cglWalk remains a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve the real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference. Re-read the 17 October SQIsign note, README, walk and problem UI and compared all files since the prior pin. The cited leakage preprint is context only; this atlas neither implements SQIsign nor performs power analysis. Math and graph code are unchanged."
+            data-review-commit="70870f42c90fc8912276fade08685bce318c29c9"
+            data-review-note="Re-read the current README, math/walk implementation and seven-problem UI after the 2026 complexity and endpoint-ring qualification. The new text distinguishes generic graph search from specialized preprint results and does not change the executable graph walk. Polynomial root factorization is still not an integer factoring attack; cglWalk remains a real graph walk with disclosed toy edge ordering, not complete kernel-ordered CGL. Preserve the real Isogeny walk and tiny-graph brute-force collision enumeration; CGL remains a reference. Re-read the 17 October SQIsign note, README, walk and problem UI and compared all files since the prior pin. The cited leakage preprint is context only; this atlas neither implements SQIsign nor performs power analysis. Math and graph code are unchanged. Reviewed the 21 October source-note, README and browser-check diff against the previous pinned head. The deterministic-CSIDH/OSIDH-LD fault preprint is reported context: software key recovery and a separate hardware instruction-skip experiment, not an executed attack in this lab. Cryptographic implementation files are unchanged; retain existing classifications."
             data-level="advanced" data-added="2026-07" data-added-on="2026-07-20" data-updated="2026-10"
            
            
@@ -18782,7 +18782,7 @@
             data-attacks="Side-channel (unspecified)@README.md:88"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-level="advanced" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-09"
+            data-level="advanced" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-10"
            
            
            
@@ -22999,3 +22999,4 @@
   </footer>
 </body>
 </html>
+

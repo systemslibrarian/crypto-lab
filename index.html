@@ -21586,14 +21586,14 @@
         steps: [{title: 'Dead Sea Cipher'}, {title: 'ChaCha20 Stream'}, {title: 'Feistel Forge'}, {title: 'AES Anatomy'}, {title: 'Clock Arithmetic'}, {title: 'Educational RSA'}, {title: 'Point Arithmetic'}, {title: 'ECDSA Forge'}, {title: 'KMAC Gate'}, {title: 'Lattice Gentle'}, {title: 'MAC Race'}, {title: 'PKI Chain'}]
       },
       {
-        id: 'modern-cryptography', label: 'Introduction to Modern Cryptography', home: false,
+        id: 'modern-cryptography', label: 'Introduction to Modern Cryptography', home: true,
         focus: 'Katz & Lindell: define the goal, test an attack, inspect the assumption.',
         blurb: 'An independent companion to Katz and Lindell’s third and revised third editions. Start with these selected experiments, then follow all 15 chapters with reading pointers, original activities and explicit boundaries between experiments and proofs.',
         guide: {href: 'learn/modern-cryptography/', label: 'Open the 15-chapter reading guide →'},
         steps: [{title: 'OTP Vault'}, {title: 'Hidden Bit'}, {title: 'MAC Race'}, {title: 'Padding Oracle'}, {title: 'Hash Zoo'}, {title: 'AES Anatomy'}, {title: 'Clock Arithmetic'}, {title: 'Factor Forge'}, {title: 'DH MITM'}, {title: 'RSA Forge'}, {title: 'LMS Ledger'}, {title: 'Paillier Gate'}]
       },
       {
-        id: 'boneh-shoup', label: 'Boneh & Shoup: A Graduate Course in Applied Cryptography', home: false,
+        id: 'boneh-shoup', label: 'Boneh & Shoup: A Graduate Course in Applied Cryptography', home: true,
         focus: 'Connect practical constructions to security definitions and proofs.',
         blurb: 'An independent companion to the free version 0.6 draft. Follow 23 chapter entries with official PDF links, original experiments and explicit boundaries for unfinished sections.',
         guide: {href: 'learn/boneh-shoup/', label: 'Open the Boneh–Shoup reading guide →'},
@@ -22390,8 +22390,8 @@
         if (destination) destination.appendChild(details);
       });
 
-      /* Show the general journeys on the homepage. Book companions set
-         home:false and remain available from the menu and their direct URLs.
+      /* Show general journeys and selected book companions on the homepage.
+         Paths with home:false remain available from the menu and their direct URLs.
          Both surfaces read the same LEARNING_PATHS records. */
       var LEVEL_ORDER = ['beginner', 'intermediate', 'advanced'];
 

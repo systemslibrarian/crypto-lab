@@ -12,7 +12,14 @@ const committed = require('../tools/clone-source.js');
 function fixture(t, slug = 'crypto-lab-fixture') {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'canonical-fleet-control-'));
   t.after(() => { committed.forget(); fs.rmSync(root, { recursive: true, force: true }); });
-  const base = path.join(root, 'base');
+  /* The base clone is named after the slug its origin names. It used to be `base`,
+     which stopped being a valid ordinary clone when repositorySource began holding
+     ordinary clones to the same origin rule worktrees already obeyed: a directory
+     called `base` with origin systemslibrarian/crypto-lab-fixture is a clone whose
+     origin names a DIFFERENT repository, which is exactly what the rule refuses.
+     Naming it after its own origin keeps these assertions testing what they were for
+     -- that an ordinary clone is retained -- rather than testing the mismatch. */
+  const base = path.join(root, slug);
   const fleet = path.join(root, 'fleet');
   fs.mkdirSync(base); fs.mkdirSync(fleet);
   const git = (args, cwd = base) => execFileSync('git', args, {
@@ -56,16 +63,62 @@ test('the canonical Hub is a required subject; a Hub checkout named as a lab is 
   assert.deepEqual(siblingLabs(f.fleet).excluded, ['crypto-lab-unrelated']);
 });
 
-test('ordinary clone directories retain their existing discovery behavior', t => {
+test('an ordinary clone is retained when its origin names its own directory', t => {
+  /* Renamed from "ordinary clone directories retain their existing discovery
+     behavior", which is no longer true: ordinary clones are now held to the origin
+     rule, so what is retained is a clone whose origin names ITS OWN directory. The
+     two tests below cover the cases that behaviour change actually introduced. */
   const f = fixture(t);
   assert.equal(repositorySource(f.base), true);
   assert.equal(canonicalWorktree(f.base), false);
 });
 
+test('a lab-named clone of the Hub repository itself is refused', t => {
+  /* The case the rule was written for. crypto-lab-clean-origin-main is a second clone
+     of THE CATALOG sitting in the fleet root, origin systemslibrarian/crypto-lab. It
+     was counted as a lab by every fleet checker and dispatch-census.js PINNED it,
+     which is the census recording a non-lab as a lab. The `.git`-is-a-FILE test that
+     catches a lane worktree cannot see a full clone, so the origin check that already
+     guarded the worktree path was never reachable for one. */
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'hub-clone-under-lab-name-'));
+  t.after(() => { committed.forget(); fs.rmSync(root, { recursive: true, force: true }); });
+  const fleet = path.join(root, 'fleet');
+  const dir = path.join(fleet, 'crypto-lab-clean-origin-main');
+  fs.mkdirSync(dir, { recursive: true });
+  const git = args => execFileSync('git', args, { cwd: dir, stdio: 'ignore' });
+  git(['init', '--quiet', '-b', 'main']);
+  git(['config', 'core.hooksPath', '/dev/null']);
+  git(['remote', 'add', 'origin', 'https://github.com/systemslibrarian/crypto-lab.git']);
+  assert.equal(fs.lstatSync(path.join(dir, '.git')).isDirectory(), true); // a full clone
+  assert.equal(repositorySource(dir), false);
+  const result = siblingLabs(fleet);
+  assert.deepEqual(result.labs, []);
+  assert.deepEqual(result.excluded, ['crypto-lab-clean-origin-main']); // named, not silent
+  assert.equal(result.clones, 0);
+});
+
+test('a clone with no origin at all is still retained', t => {
+  /* The narrowing that keeps the rule from shrinking the denominator. An empty
+     repository has no origin, and three labs in this fleet are empty, so refusing a
+     clone for having no origin would be the discovered-denominator defect this file
+     exists to prevent. Only a clone whose origin names a DIFFERENT repository is
+     refused. */
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'clone-without-origin-'));
+  t.after(() => { committed.forget(); fs.rmSync(root, { recursive: true, force: true }); });
+  const dir = path.join(root, 'crypto-lab-no-remote');
+  fs.mkdirSync(dir, { recursive: true });
+  const git = args => execFileSync('git', args, { cwd: dir, stdio: 'ignore' });
+  git(['init', '--quiet', '-b', 'main']);
+  git(['config', 'core.hooksPath', '/dev/null']);
+  assert.equal(execFileSync('git', ['-C', dir, 'remote'], { encoding: 'utf8' }).trim(), '');
+  assert.equal(repositorySource(dir), true);
+});
+
 test('genuine empty canonical subjects count while corrupt HEAD and spoofed origins do not', t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'empty-canonical-fleet-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  const base = path.join(root, 'base'); const fleet = path.join(root, 'fleet');
+  // Named after its origin slug, for the reason in fixture() above.
+  const base = path.join(root, 'crypto-lab-empty'); const fleet = path.join(root, 'fleet');
   fs.mkdirSync(base); fs.mkdirSync(fleet);
   const git = args => execFileSync('git', args, { cwd: base, stdio: 'ignore' });
   git(['init', '--quiet', '-b', 'main']);

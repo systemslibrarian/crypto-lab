@@ -145,13 +145,40 @@ function canonicalWorktree(dir) {
   }
 }
 
-/** Preserve ordinary clones; files require the full canonical worktree check. */
+/** Preserve ordinary clones; files require the full canonical worktree check.
+ *
+ * An ordinary clone is now also held to the ORIGIN rule the worktree path already
+ * applied. Until 2026-10-21 any `.git` DIRECTORY under a `crypto-lab-*` name counted,
+ * and `crypto-lab-clean-origin-main` — a second clone of THE CATALOG ITSELF, origin
+ * `systemslibrarian/crypto-lab` — was therefore read as a lab. `dispatch-census write`
+ * pinned it, which is the census recording a non-lab as a lab: precisely what it exists
+ * to prevent. It is the documented worktree hazard one step worse, because the
+ * `.git`-is-a-file test that catches a worktree cannot see a full clone.
+ *
+ * NARROW ON PURPOSE. A clone with NO origin is left exactly as it was, because an empty
+ * repository has none and three labs in this fleet are empty. Only a clone that HAS an
+ * origin naming a different repository is refused. Measured before widening it: across
+ * 244 directories that excludes exactly one, the catalog clone above. */
 function repositorySource(dir) {
   try {
     const metadata = fs.lstatSync(path.join(dir, '.git'));
-    return metadata.isDirectory() || (metadata.isFile() && canonicalWorktree(dir));
+    if (metadata.isFile()) return canonicalWorktree(dir);
+    if (!metadata.isDirectory()) return false;
+    const origin = readOrigin(dir);
+    if (origin && !canonicalOrigin(origin, path.basename(dir))) return false;
+    return true;
   } catch {
     return false;
+  }
+}
+
+/** This clone's origin URL, or '' when it has none. Never throws. */
+function readOrigin(dir) {
+  try {
+    return execFileSync('git', ['-C', dir, 'remote', 'get-url', 'origin'],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  } catch {
+    return '';
   }
 }
 

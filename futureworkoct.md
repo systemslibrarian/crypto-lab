@@ -7,6 +7,43 @@ disagrees with its command, the command is right and the line is stale.
 
 ---
 
+## Where this left off — 2026-10-21
+
+Both repos are clean and fully merged. `crypto-lab` main is **`34d7b50`**,
+`crypto-counsel` main is **`52098dc`**. Nothing is in flight: no open PRs in
+either repo, no branches besides `main` on either remote, no stale
+remote-tracking refs, and no local branches besides `main`.
+
+Landed this session: **#239** (five new cards), **#240** (cryptanalyst split
+PROPOSAL only), **#241** (this file), and crypto-counsel **#16** (five corpus
+entries) and **#17** (eleven stale snapshot lines, Snow 2 moved to Related
+Projects, `validate.mjs` widened with M25-M27).
+
+**Two things are waiting on a maintainer DECISION rather than on work** — items 6
+and 7 below. Item 6 is the one that blocks a change already written down.
+
+**Pick up with:** item 6 if you want to decide the path split; otherwise item 2
+(#31 vectors, five rows left) is the largest piece of real work and item 3 (the
+20 stale corpus entries) is the one with the clearest starting point.
+
+Before touching anything, re-fetch and re-run the fast loop — the figures below
+were measured on the dates beside them and other sessions work in these repos:
+
+```
+git -C . fetch origin && git -C ../crypto-counsel fetch origin
+for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
+         theme-sync gate-sync dispatch-sync port-sync lab-dates \
+         games-sync teach-build knowledge-map-sync; do
+  printf '%-22s ' "$c"; node "tools/$c.js" check >/dev/null 2>&1 && echo PASS || echo FAIL
+done
+```
+
+(Quote `"tools/$c.js"` and pass `check` as its own argument. zsh does not
+word-split an unquoted `$c`, so `node tools/$c` with `c="x.js check"` looks for a
+file literally named `x.js check` and every checker reports MODULE_NOT_FOUND.)
+
+---
+
 ## 1. Nine snapshot lines carry HTML entities where the card has the character
 
 Reported by the maintainer 2026-10-21, **NOT verified here and explicitly deferred
@@ -120,6 +157,108 @@ Check: `node tools/catalog-sync.js chips`
 
 ---
 
+## 6. DECISION: split the Cryptanalyst Path, or leave it at 20 steps
+
+**Waiting on the maintainer. No code is written and nothing is blocked
+technically — the proposal is the deliverable and it is already merged.**
+
+`audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md` (merged in #240) sets out
+the case. The path is 20 steps against `CLAUDE.md`'s "keep `steps` <= ~12"; it was
+17 before #239 added three, so the additions are not the cause. It is the longest
+of the eight paths and the only one past 17.
+
+Three options:
+
+1. **Leave it at 20.** Nothing to do; delete this item.
+2. **Two paths**, as proposed — A "Structure and Statistics" 11 steps (1 beginner,
+   5 intermediate, 5 advanced; keeps the only beginner on-ramp), B "Implementation
+   and Composition" 9 steps (1 intermediate, 8 advanced). Verified against merged
+   main: all 20 appear exactly once, none duplicated, no group names a non-step.
+3. **Three paths.** The proposal names the seed if composition deserves its own:
+   Salamander, Frozen Heart and Padding Oracle, matching
+   `concept-coverage.md` §29 "Composition and parsing failures".
+
+If 2 or 3 is chosen, the implementation is mechanical and the proposal lists it.
+**The one trap is writer order:** `knowledge-map-sync write` records a path count
+and hashes `index.html`, so it must run AFTER any card stamper, or the map's hash
+describes a file that no longer exists in that form.
+
+---
+
+## 7. DECISION: two drifted Related Projects lines in the corpus snapshot
+
+**Offered during #17 and deliberately left out of it**, because the instruction
+was to add Snow 2 "in the same form as the other three" — so all three were left
+untouched. Two of them have since been shown to differ from the catalog README:
+
+| | snapshot | catalog README |
+|---|---|---|
+| Cipher Museum | `Interactive museum spanning ... history — thirteen halls` | `An interactive museum spanning ... history. Thirteen halls` |
+| Meow Decoder | ends at `via QR-code GIFs.` | plus `AES-256-GCM + Argon2id + ML-KEM-1024 + fountain codes. Python + Rust.` |
+
+Both are wording, neither is a link. Small, and a one-line re-derivation each
+from the README's Related Projects block.
+
+**The third line, Crypto Compare, is NOT a defect — do not "fix" it.** The
+snapshot's `https://crypto-compare.systemslibrarian.dev/` is that project's own
+live address: its repository's `CNAME` contains exactly that host and its README
+links it. An earlier read of mine called it dead by applying the rule about
+`crypto-lab.systemslibrarian.dev/<slug>/` 404ing, which is a DIFFERENT host
+serving the catalog page. The conflation is the thing worth remembering.
+
+If anything the discrepancy runs the other way: **the catalog README uses the
+github.io form for a project that has its own domain.** That is a question about
+`README.md` here, not about the snapshot, and nobody has decided it. Changing it
+would also move the generated All Demos table's sibling block, so check what
+`readme-sync` writes before assuming it is a one-line edit.
+
+---
+
+## 8. The nine detached worktrees under `~/repos/.fleet-maintenance-20261009/`
+
+**Left alone on 2026-10-21 by instruction. Listed here so the state is not
+rediscovered as a surprise.**
+
+All nine are `crypto-counsel` worktrees on DETACHED HEADs, and all nine were
+clean (no uncommitted paths) when checked. Because they hold no branch, their
+commits — `0d032ee`, `051a93c`, `2186e49` (x2), `4de0cfe`, `7631877`, `a6b1036`,
+`08dade2` (x2) — are now referenced ONLY by those worktrees. Nothing points at
+them from any branch in either repo.
+
+So: removing a worktree makes its commit unreachable and eventually
+garbage-collectable. Not urgent, and not a decision to take casually — if any of
+that work matters, tag it or push it to a branch BEFORE removing the worktree,
+not after.
+
+```
+git -C ../crypto-counsel worktree list
+```
+
+---
+
+## 9. Branch-cleanup restore window
+
+`~/branch-cleanup-2026-10-21.txt` holds 34 rows: 30 deleted remote branches
+(26 crypto-lab from PRs #192-#240, 4 crypto-counsel from #14-#17) and 4 deleted
+local branches, each with its full tip SHA, PR number and the PR's merged head
+SHA. Every row restores with:
+
+```
+git push origin <sha>:refs/heads/<branch>
+```
+
+or the "Restore branch" button on that PR. 20 stale remote-tracking refs were
+pruned in crypto-lab, 0 in crypto-counsel.
+
+**Delete that file once you are satisfied nothing is missing.** It is the only
+record outside GitHub's own reflog, and keeping it indefinitely makes it look
+like a live list rather than a receipt.
+
+"Automatically delete head branches" is now ON in both repos, so this was
+one-time: a merged PR's branch goes away on its own from here.
+
+---
+
 ## Done — one line each
 
 | item | where the detail is |
@@ -136,6 +275,8 @@ Check: `node tools/catalog-sync.js chips`
 | five uncarded labs + four missing corpus entries | #239 and crypto-counsel #16; `fleet-sync` and `corpus-sync` both clean |
 | cryptanalyst path at 20 steps | PROPOSAL ONLY in crypto-lab #240, `audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md`; the split is the maintainer's call |
 | eleven stale `crypto_lab_readme` lines | crypto-counsel #17; Snow 2 was a MOVE to Related Projects, and `validate.mjs` was widened with M25-M27 as its controls |
+| branch cleanup, both repos | 30 remote + 4 local deleted, 20 tracking refs pruned; manifest `~/branch-cleanup-2026-10-21.txt`; auto-delete now ON, so one-time. Decide from the PR, never `git branch --merged` — squash merges make almost every merged branch read as unmerged |
+| futureworkoct queue update | #241 |
 
 **Finish a card-stamping pass with `node tools/level-sync.js`.** `data-level` sits
 where the writer that ran last put it; running it last took a real repin's diff

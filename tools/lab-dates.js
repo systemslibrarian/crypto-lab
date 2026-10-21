@@ -110,6 +110,18 @@ function git(dir, args) {
   }).trim();
 }
 
+/** YYYY-MM-DD from an ISO timestamp, or null.
+ *
+ * The DISPLAYED date stays a month, for the reasons in this file's header. This is the
+ * day underneath it, written as its own attribute because the "New" badge needs a
+ * window the month cannot express: a three-week window is not derivable from YYYY-MM,
+ * and the two can never disagree because both come from the same `created_at`. */
+function dayOf(iso) {
+  if (!iso) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  return m ? `${m[1]}-${m[2]}-${m[3]}` : null;
+}
+
 /** YYYY-MM from an ISO timestamp, or null. */
 function monthOf(iso) {
   if (!iso) return null;
@@ -202,6 +214,7 @@ function derive() {
     if (!updated) undated.push(`${slug} — ${content.why}`);
     labs[slug] = {
       added,
+      addedOn: dayOf(created[slug]),
       updated,
       addedFrom: created[slug] || null,
       updatedFrom: content.date || null,
@@ -277,8 +290,9 @@ function stamp(html, labs) {
   return rewriteCards(html, cards, (card) => {
     const rec = labs[card.slug] || {};
     const added = rec.added ? ` data-added="${rec.added}"` : '';
+    const addedOn = rec.addedOn ? ` data-added-on="${rec.addedOn}"` : '';
     const updated = rec.updated ? ` data-updated="${rec.updated}"` : '';
-    return stampTag(card.tag, ['added', 'updated'], `${added}${updated}`);
+    return stampTag(card.tag, ['added', 'added-on', 'updated'], `${added}${addedOn}${updated}`);
   });
 }
 

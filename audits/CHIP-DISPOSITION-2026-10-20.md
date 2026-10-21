@@ -3,53 +3,88 @@
 `node tools/catalog-sync.js chips` reports **23 violations across 19 labs**. CLAUDE.md
 records that the gate criterion is MET and that "dispositioning those comes first and the
 decision is the maintainer's". This file is the dispositioning. **It does not turn the
-gate on, and nothing here changes a card.**
+gate on** — that is still the maintainer's, and decision 1 of 2026-10-21 keeps the rule
+advisory. It said "nothing here changes a card" when written, which stopped being true
+on 2026-10-21: five chips across four cards were given a qualifier. See the status
+section directly below for what was established and what was only asserted.
 
 Each chip was judged by reading the lab's own source for the OPERATIONS, never by
 grepping for the algorithm's name — that is what the scanner already does, and repeating
 it would reproduce its answer. Where a verdict rests on something I did not open, the row
 says so.
 
-## The headline
+## Status, 2026-10-21 — CLOSED, and the headline revised to match the evidence
 
-**None of the 23 is a demonstrable card defect.** Every one is either an algorithm the
-lab really implements and the scanner cannot anchor, or a chip the rule judges in
-isolation when the card's own neighbouring chips already mark it.
+**Both pending reviews are finished and the maintainer's five decisions are
+implemented. `node tools/catalog-sync.js chips` now reports 0 violations.** The
+gate stays ADVISORY by the maintainer's decision 1: finish validating the rules
+before anyone proposes enabling it.
 
-I reached the opposite conclusion first and it is worth recording how. Judging each
-flagged chip ALONE — which is what the tool does — produced six cards that looked like
-they were claiming constructions they do not build. Reading the whole chip SET, which is
-what a visitor reads, overturned five of the six:
+The headline below read "none of the 23 is a demonstrable card defect" while two
+reviews were outstanding. That was an overstatement of what had been established,
+and the instruction was to say "no card defects established so far" until they
+were done. They are done, and the accurate statement is narrower than either:
+
+**No card was found claiming a construction its lab does not build. Five chips
+across four cards needed a QUALIFIER added, which is a card change.** That is not
+the same as "no card defects", and the difference is the point:
+
+| outcome | chips |
+|---|---|
+| cleared by a declared relation — entailment, sibling, executed stack, granularity | 11 |
+| cleared as comment-only, once the exemption was fixed | 7 |
+| **needed a qualifier added to the card** | **5** |
+
+The two reviews closed in OPPOSITE directions, which is why neither could be
+guessed:
+
+- **`ciphertext-mirror` — FO Transform: IMPLEMENTED.** `src/lib/mlkem/fips203.ts`
+  is FIPS 203 Algorithm 18 with zero dependencies: `kpkeDecrypt` recovers m′,
+  `G(m′‖h)` derives r, `kpkeEncrypt` **re-encrypts**, and a constant-time compare
+  selects `J(z‖c)` on mismatch. Entailed by ML-KEM; no card change.
+- **`point-ledger` — Fiat-Shamir: NOT IMPLEMENTED.** The lab does no curve
+  arithmetic at all (`@noble/hashes` only, no `@noble/curves`), and Fiat-Shamir
+  appears solely in `src/sources.ts`, a citations file. Marked
+  `Fiat-Shamir surveyed`, alongside `vs. secp256k1` for the same reason.
+
+### The bug under most of it
+
+**Seven of the 23 were never judgements at all.** The comment-only exemption had
+never fired for a STANDALONE comment: the per-line loop opened
+`if (!line.trim()) continue` on the strings view, which is blank for a line that
+is nothing but a comment, and the exemption's check sat below it. So it worked
+only for a comment sharing its line with code.
+
+`crypto-lab-commit-gate` is the lab CLAUDE.md cites FOR that exemption and had
+never once been exempted, because its P-256 comment is a block comment. Fixed
+2026-10-21; the string boundary did not move and `catalog-recall` is unchanged at
+89.2%.
+
+### What was wrong in the first pass, and why
+
+Judging each chip ALONE — which is what the tool does — produced six cards that
+looked like they claimed constructions they do not build. Reading the whole chip
+SET overturned five:
 
 | lab | the flagged chip | its neighbours on the same card |
 |---|---|---|
 | `zk-arena` | zk-STARK | zk-SNARK · Proof Systems · **Comparison** |
 | `isogeny-gate` | SIDH | CSIDH · SQIsign · **Castryck-Decru** |
 | `pq-families` | Isogeny | **Lattice · Code-Based · Hash-Based · Multivariate** |
-| `sleeve-check` | Streebog | **Kuznyechik** · TKlog · AES S-Box |
-| `accumulator` | RSA Accumulator | Non-Membership Proofs · **Strong RSA** · Certificate Revocation |
+| `sleeve-check` | Streebog | **Kuznyechik** — they share the π S-box |
+| `accumulator` | RSA Accumulator | Non-Membership Proofs · **Strong RSA** |
 
-`zk-arena` says *Comparison* on its own card. `isogeny-gate` puts *Castryck-Decru* — the
-attack that broke SIDH — next to SIDH. `pq-families`' chips are all family names, a
-taxonomy rather than a stack. `sleeve-check` analyses the π S-box that Kuznyechik and
-Streebog SHARE. And `accumulator` turned out to implement a real RSA accumulator after
-all: `src/accumulator/accumulator.ts` carries `modPow` thirteen times and `hashToPrime`,
-which is the construction, not a Merkle tree.
+`accumulator` was the one I had flat wrong: it implements a real RSA accumulator —
+`modPow` ×13, `hashToPrime`, bigint throughout — behind a card credited only with
+a Merkle tree.
 
-**So the single most useful thing in this file is a limitation of the rule, not a list of
-bad cards: the chip rule judges one chip at a time, and a card's marker is frequently a
-DIFFERENT chip in the same set.** `Comparison`, `Castryck-Decru`, `Strong RSA` and a run
-of four sibling family names are all markers a reader uses and the rule cannot see.
-
-| class | chips | what it means |
-|---|---|---|
-| A — entailed by an implemented algorithm | 12 | the lab implements the named thing; the scanner cannot anchor it |
-| F — marked by a SIBLING chip, not by itself | 3 | honest on the card; invisible to a per-chip rule |
-| B — granularity | 1 | the chip is more specific than the vocabulary term |
-| C — executed by a dependency | 1 | the primitive runs, in a package rather than this source |
-| D — target or fidelity, needs a marker word | 3 | honest in substance, unmarked in form |
-| G — marginal, worth a maintainer's eye | 1 | `protocol-compose`'s TLS 1.3 |
-| pending a further read | 2 | named here rather than guessed |
+**But the maintainer's decision 2 narrowed what follows from that**, and it was
+the right narrowing: only an explicit, unambiguous relationship may qualify, and
+`Comparison` is not a blanket exemption for every algorithm on a card. So exactly
+one declared pair exists (`SIDH` ← `Castryck-Decru`), `zk-arena` and `pq-families`
+were marked on their own chips instead, `sleeve-check` and `accumulator` cleared
+as comment-only once the bug above was fixed, and `tests/catalog-chip-relations
+.test.cjs` asserts that `Comparison` qualifies nothing.
 
 ## A — entailed by an implemented algorithm (12 chips, 9 labs)
 

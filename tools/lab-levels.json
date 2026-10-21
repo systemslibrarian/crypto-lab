@@ -1462,6 +1462,18 @@
       "level": "advanced",
       "why": "the AKE1-AKE5 family, CCA encryption and channel binding over ristretto255",
       "reviewed": "2026-10-21: README exhibits and src"
+    },
+    "crypto-lab-aes-anatomy": {
+      "title": "AES Anatomy",
+      "level": "intermediate",
+      "why": "Builds finite-field byte arithmetic and the AES layers step by step; algebra and bitwise operations help, while the field and matrix concepts are introduced in the lab.",
+      "reviewed": "2026-10-21: source, README and seven-act learner flow"
+    },
+    "crypto-lab-clock-arithmetic": {
+      "title": "Clock Arithmetic",
+      "level": "intermediate",
+      "why": "Works through signed congruences, Bezout coefficients, Euler phi, orders, subgroups and CRT with guided examples; algebra and basic modular arithmetic are useful prerequisites.",
+      "reviewed": "2026-10-21: source, README and six-act learner flow"
     }
   }
 }

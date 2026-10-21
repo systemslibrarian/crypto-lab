@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 63 · Advanced — 145. Total 241.
+**Counts:** Beginner — 33 · Intermediate — 65 · Advanced — 145. Total 243.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -69,17 +69,19 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (63)
+## Intermediate — `intermediate` (65)
 
 | Lab | Source | Reason |
 |---|---|---|
 | [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) | rule | school-level primitives: AES |
+| [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/) | 2026-10-21: source, README and seven-act learner flow | Builds finite-field byte arithmetic and the AES layers step by step; algebra and bitwise operations help, while the field and matrix concepts are introduced in the lab. |
 | [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) | rule | school-level primitives: AES, block cipher, symmetric |
 | [Air Stream](https://systemslibrarian.github.io/crypto-lab-air-stream/) | rule | school-level primitives: AES |
 | [Babel Hash](https://systemslibrarian.github.io/crypto-lab-babel-hash/) | hand | compares SHA-256, SHA3-256 and BLAKE3 with avalanche, length extension and HMAC — "sponge" is how SHA-3 is built, not what the lab asks of you |
 | [Bitcoin Script](https://systemslibrarian.github.io/crypto-lab-bitcoin-script/) | rule | school-level primitives: SHA-256, public-key, ECDSA |
 | [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | rule | school-level primitives: SHA-256, PBKDF2, public key |
 | [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) | hand | stream cipher as XOR with a keystream, quarter-round stepper and nonce reuse; "constant-time" is a passing note |
+| [Clock Arithmetic](https://systemslibrarian.github.io/crypto-lab-clock-arithmetic/) | 2026-10-21: source, README and six-act learner flow | Works through signed congruences, Bezout coefficients, Euler phi, orders, subgroups and CRT with guided examples; algebra and basic modular arithmetic are useful prerequisites. |
 | [Compression Leak](https://systemslibrarian.github.io/crypto-lab-compression-leak/) | hand | Understands encryption/authentication and interprets measured gzip length differences across constrained hypotheses. |
 | [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) | rule | school-level primitives: SHA-256, HMAC, HKDF |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | rule | school-level primitives: Diffie-Hellman, X25519 |

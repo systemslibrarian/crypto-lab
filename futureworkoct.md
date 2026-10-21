@@ -7,19 +7,25 @@ disagrees with its command, the command is right and the line is stale.
 
 ---
 
-## 1. Five labs are live with no card
+## 1. Nine snapshot lines carry HTML entities where the card has the character
 
-`tesla-broadcast`, `next-number`, `dvd-scramble`, `twist-trap`, `ake-ladder` —
-created 2026-10-20 on another machine. Each needs the full "Adding a new demo"
-workflow in `CLAUDE.md`: card, `TITLE_TO_SECTION`, README tables, corpus entry,
-`concept-coverage.md`, dates, teach citation.
+Reported by the maintainer 2026-10-21, **NOT verified here and explicitly deferred
+— do not start it without being asked.** In `../crypto-counsel`'s
+`crypto_lab_readme` All Demos lines: `&amp;` where the card has `&`, and
+`&#949;-&#948;` where it has `ε-δ`.
 
-**Four more are carded but have no corpus entry**: `hash-hunt`, `log-forge`,
-`prime-witness`, `residue-gate`. They were carded on the other machine and
-`corpus-sync check` fails on them. `node tools/corpus-sync.js gen <slug> "<Name>"`
-scaffolds one; the prose has to be written from the lab's own README.
+Named: Commit Gate, PKI Chain, WebAuthn, Syndrome Drain, Chain of Trust, Lattice
+Gentle, MuSig Gate, DP Noise, Covert Channel Studio.
 
-Check: `node tools/fleet-sync.js check` and `node tools/corpus-sync.js check`
+**Re-derive the set before fixing it rather than trusting this list** — it is a
+report, not a measurement, and the count is the part most likely to be stale. The
+derivation that found the eleven drift lines is the one to reuse: read each card's
+kicker and chips out of `index.html`, cross-check against the generated All Demos
+table in `README.md`, and compare. Decoding entities is a separate question from
+that comparison, so whatever closes this should also say which side is canonical.
+
+Do NOT bundle it with a drift pass: an entity fix touches lines no card changed,
+and mixing the two makes both unreviewable.
 
 ---
 
@@ -127,6 +133,9 @@ Check: `node tools/catalog-sync.js chips`
 | 6 protection-census | scheduled; `FLEET_READ_TOKEN` set, census PASSED in CI in 33s |
 | 7 write half of #125 | one `stampTag()`; `tests/card-stamp.test.cjs` fails 2 of 6 against the old writers |
 | Trivium, Davies-Meyer | both were absent from the vocabulary; `lfsr-forge`'s N/A was false |
+| five uncarded labs + four missing corpus entries | #239 and crypto-counsel #16; `fleet-sync` and `corpus-sync` both clean |
+| cryptanalyst path at 20 steps | PROPOSAL ONLY in crypto-lab #240, `audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md`; the split is the maintainer's call |
+| eleven stale `crypto_lab_readme` lines | crypto-counsel #17; Snow 2 was a MOVE to Related Projects, and `validate.mjs` was widened with M25-M27 as its controls |
 
 **Finish a card-stamping pass with `node tools/level-sync.js`.** `data-level` sits
 where the writer that ran last put it; running it last took a real repin's diff

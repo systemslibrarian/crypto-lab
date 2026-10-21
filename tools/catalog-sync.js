@@ -622,6 +622,103 @@ function vocabChecks(list, opts = {}) {
   return { bad, modules, exempt: EXEMPT_CHIPS.length, reported: opts.modules ? modules : [] };
 }
 
+/* ---- ENTAILMENT ------------------------------------------------------------
+ *
+ * A chip naming a component or sub-algorithm of something the lab is ALREADY
+ * CREDITED WITH IMPLEMENTING. Each entry is a mathematical fact about the
+ * entailing scheme, not a guess, and each is keyed on `data-implements` -- an
+ * ANCHORED implementation -- so the implement/discuss boundary is preserved: a
+ * lab that merely discusses CKKS is credited with nothing and entails nothing.
+ *
+ * Deliberately short. A long speculative table would clear chips on resemblance,
+ * which is the accusation-without-a-finding problem in reverse. Every entry below
+ * was reached by reading the lab, and `node tools/catalog-sync.js entailment`
+ * asserts each one against a fixture both ways.
+ *
+ * What this is NOT: a way to credit `data-implements` with anything new. The
+ * catalog still says hqc-vault implements HQC, not Reed-Solomon. It says only
+ * that the CHIP is not a false claim. */
+const ENTAILS = [
+  { chip: 'Ring-LWE', from: ['CKKS', 'BFV', 'BGV'],
+    why: 'CKKS, BFV and BGV are RLWE schemes: their ciphertexts are RLWE samples in Z_q[x]/(x^n+1). Implementing one is implementing ring-LWE arithmetic.' },
+  { chip: 'Reed-Solomon', from: ['HQC'],
+    why: "HQC's decoder is a concatenated code with a Reed-Solomon outer layer, by its own specification." },
+  { chip: 'Reed-Muller', from: ['HQC'],
+    why: "HQC's decoder is a concatenated code with a duplicated Reed-Muller inner layer, by its own specification." },
+  { chip: 'Fujisaki-Okamoto transform', from: ['ML-KEM'],
+    why: 'ML-KEM decapsulation IS the implicit-rejection FO transform: it re-encrypts under the recovered message and selects J(z||c) on ciphertext mismatch. Verified in crypto-lab-ciphertext-mirror at src/lib/mlkem/fips203.ts:338-343.' },
+  { chip: 'Babai rounding', from: ['GGH'],
+    why: 'GGH decryption is Babai round-off against the private basis; there is no other decryption step.' },
+  { chip: 'Oblivious transfer', from: ['Garbled circuits'],
+    why: "Yao's protocol cannot evaluate a garbled circuit without oblivious transfer for the evaluator's inputs." },
+];
+const entailedBy = (chipText, t, impl) => {
+  const rule = ENTAILS.find((e) => e.chip === t.name);
+  if (!rule) return null;
+  const src = rule.from.find((n) => impl.has(n));
+  return src ? { why: rule.why, from: src } : null;
+};
+
+/* ---- A SIBLING CHIP AS A QUALIFIER ----------------------------------------
+ *
+ * The maintainer's decision, 2026-10-21: a neighbouring chip may qualify another
+ * ONLY where the relationship is explicit and unambiguous, and `Comparison` is
+ * explicitly NOT a blanket exemption for every algorithm on a card. So this is a
+ * declared table of pairs rather than a rule inferred from the chip set, and it
+ * holds exactly one entry.
+ *
+ * The disposition reached the opposite conclusion first by judging each chip
+ * ALONE, which is what this tool does, and five cards looked like they were
+ * claiming constructions they do not build. Four of those five are handled
+ * elsewhere -- by a marker word, by entailment, or by the executed stack -- and
+ * only this one is genuinely a case of one chip qualifying another. */
+const QUALIFYING_SIBLINGS = [
+  { chip: 'SIKE', sibling: /^Castryck-Decru$/i,
+    why: 'Castryck-Decru is THE published attack that broke SIDH. A card naming the break beside the scheme is discussing it, not claiming to build it, and crypto-lab-isogeny-gate implements CSIDH in src/csidh.ts while naming SIDH in the same file beside Castryck and Decru.' },
+];
+/* ---- THE EXECUTED STACK ----------------------------------------------------
+ *
+ * The maintainer's decision, 2026-10-21: a chip may describe the stack the lab
+ * EXECUTES, dependencies included -- but "a dependency listing alone is
+ * insufficient". So each entry records the package AND the call site in the lab's
+ * own product code that was read to confirm it, and a test invocation does not
+ * count: the question is what the lab does, not what its suite does.
+ *
+ * crypto-lab-bcrypt-forge was the case that prompted it. Its own source names
+ * Blowfish only in UI copy, so the scanner credits it with nothing -- while
+ * src/crypto-worker.ts:55 calls `bcrypt.hashSync`, and bcrypt's expensive key
+ * setup IS Blowfish's key schedule. The chip is true of what runs. */
+const EXECUTED_STACK = [
+  { slug: 'crypto-lab-bcrypt-forge', chip: 'Blowfish', pkg: 'bcryptjs',
+    at: 'src/crypto-worker.ts:55',
+    why: "bcrypt's EksBlowfish key setup IS Blowfish's key schedule; the worker calls bcrypt.hashSync in product code, not only in its tests." },
+];
+const executedStack = (slug, t) => EXECUTED_STACK.find((e) => e.slug === slug && e.chip === t.name) || null;
+
+/* ---- GRANULARITY -----------------------------------------------------------
+ *
+ * A chip STRICTLY MORE SPECIFIC than a credited implementation is not a false
+ * claim: crypto-lab-ablation-wire chips `AES-256-GCM` and is credited with
+ * `AES-GCM`, and the key length is a parameter of the thing it implements rather
+ * than a different algorithm. Only a key-size group is removed, so `AES-GCM` can
+ * never be reduced to `AES` and the chip can only ever become LESS specific. */
+const lessSpecific = (chipText) => chipText.replace(/-?\b(?:128|192|224|256|384|512|1024|2048|3072|4096)\b-?/g, '-')
+  .replace(/-{2,}/g, '-').replace(/^-|-$/g, '').trim();
+const satisfiedByGranularity = (chipText, impl) => {
+  const reduced = lessSpecific(chipText);
+  if (!reduced || reduced === chipText.trim()) return null;
+  const hit = [...impl].find((n) => n.toLowerCase() === reduced.toLowerCase());
+  return hit ? { from: hit, reduced } : null;
+};
+
+const qualifiedBySibling = (t, chips) => {
+  const rule = QUALIFYING_SIBLINGS.find((q) => q.chip === t.name);
+  if (!rule) return null;
+  const sib = chips.find((ch) => rule.sibling.test(ch.trim()));
+  return sib ? { why: rule.why, sibling: sib } : null;
+};
+
+
 function main() {
   const mode = process.argv[2];
   const list = cards();
@@ -668,9 +765,18 @@ function main() {
      *   does NOT exempt, because that is a lab talking about an algorithm rather
      *   than code annotated with it. That boundary is what keeps the four fixed
      *   cards flagged. */
-    const MARKED = /^(?:vs\.?|versus|against|attacks?|breaks?|targets?)\b|\b(?:target|toy|modelled|modeled|simulated|stand-?in|abstract|educational|only)\b/i;
+    /* The marker vocabulary. `estimates`, `compared`, `surveyed`, `explained` and
+     * `context` were added 2026-10-21 by the maintainer's decision, after the
+     * disposition in audits/CHIP-DISPOSITION-2026-10-20.md found cards flagged for
+     * chips that were already qualified in plain English and in words this list did
+     * not contain -- crypto-lab-point-ledger's `Shor Estimates` names a fidelity as
+     * clearly as `Toy-Scale Only` does. A qualifier is scoped to the chip it appears
+     * IN, never to its neighbours: the test below runs on `inChip` alone. */
+    const MARKED = /^(?:vs\.?|versus|against|attacks?|breaks?|targets?)\b|\b(?:target|toy|modelled|modeled|simulated|stand-?in|abstract|educational|only|estimates?|compared|surveyed|explained|context)\b/i;
+
     const violations = [];
     const clearedByProse = [];
+    const clearedByRelation = [];
     const cannotJudge = [];
     /* An algorithm is implemented if the lab implements it under EITHER name. */
     const satisfied = (impl, t) => impl.has(t.name)
@@ -690,6 +796,23 @@ function main() {
            them the chip is not a false claim, it is a chip about a construction
            whose parts this index lists separately. */
         if (inChip && ALGORITHMS.filter((o) => namesChip(o, inChip)).some((o) => satisfied(impl, o))) continue;
+        /* The declared mechanisms run BEFORE the cannot-judge checks, because
+           "this lab implements CKKS, and CKKS is an RLWE scheme" is a positive
+           answer and "the name is only in a comment" is the absence of one. Order
+           them the other way and every entailment is reported as a shrug. */
+        /* The four declared mechanisms, each keyed on something read rather than
+           inferred, and each recorded separately so a reader can see WHY a chip
+           cleared. None of them credits data-implements with anything new. */
+        if (inChip) {
+          const ent = entailedBy(inChip, t, impl);
+          if (ent) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'entailed', detail: `implements ${ent.from} — ${ent.why}` }); continue; }
+          const sib = qualifiedBySibling(t, c.chips);
+          if (sib) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'sibling', detail: `qualified by the chip "${sib.sibling}" — ${sib.why}` }); continue; }
+          const exe = executedStack(c.slug, t);
+          if (exe) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'executed', detail: `${exe.pkg} invoked at ${exe.at} — ${exe.why}` }); continue; }
+          const gran = satisfiedByGranularity(inChip, impl);
+          if (gran) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'granularity', detail: `strictly more specific than the credited "${gran.from}"` }); continue; }
+        }
         /* A lab this scanner only partly read cannot be judged: the algorithm
            may well be in the part it did not open. shadow-vault chips
            ChaCha20-Poly1305 and keeps its stream cipher in Rust. Reporting that
@@ -714,6 +837,17 @@ function main() {
     console.log('      (a target — "vs. HQC" — or a fidelity — "Toy-Scale Only"). Prose is free.');
     console.log('      NOT-SCANNED labs are exempt: no finding, no accusation.\n');
     console.log(`Cleared by the rule: ${clearedByProse.length} namings (prose, or an already-marked chip).`);
+    if (clearedByRelation.length) {
+      /* Printed rather than silent: each of these is a chip the rule would otherwise
+         have called a false claim, cleared by a relationship someone declared after
+         reading the lab. A reader must be able to check the reasoning, not just see a
+         smaller number. */
+      console.log(`Cleared by a declared relation: ${clearedByRelation.length}`);
+      for (const r of clearedByRelation) {
+        console.log(`    ${r.kind.padEnd(11)} ${r.slug.replace('crypto-lab-', '').padEnd(20)} ${r.chip}`);
+        console.log(`                ${r.detail}`);
+      }
+    }
     console.log(`Violations: ${violations.length} chips across ${labs.size} labs.`);
     console.log(`Cannot judge: ${cannotJudge.length} — no finding, so no accusation:`);
     for (const c of cannotJudge) console.log(`    ${c.slug.replace('crypto-lab-', '').padEnd(24)} ${c.algorithm.padEnd(22)} ${c.why}`);
@@ -835,4 +969,12 @@ function main() {
   console.log(`CATALOG.md written: ${list.length} labs, ${impl.size} algorithms indexed.`);
 }
 
-main();
+/* Guarded so the chip-relation tables can be required by tests/catalog-chip-relations
+ * .test.cjs without this file REGENERATING CATALOG.md as a side effect of `require`.
+ * It did exactly that once, which a test suite would have repeated on every run. */
+if (require.main === module) main();
+
+module.exports = {
+  ENTAILS, entailedBy, QUALIFYING_SIBLINGS, qualifiedBySibling,
+  EXECUTED_STACK, executedStack, lessSpecific, satisfiedByGranularity,
+};

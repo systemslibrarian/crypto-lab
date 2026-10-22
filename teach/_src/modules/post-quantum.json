@@ -393,7 +393,9 @@
         "observable": {
           "kind": "text-present",
           "needle": "nothing here demonstrates that lattice problems are hard — 2D instances are easy by design.",
-          "steps": [],
+          "steps": [
+            "#mode-reference"
+          ],
           "note": "the live honest-scoping statement at the foot of the lab"
         }
       },

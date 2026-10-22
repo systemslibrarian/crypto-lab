@@ -11,8 +11,8 @@ disagrees with its command, the command is right and the line is stale.
 
 `crypto-lab` main was caught up to **`1e6f181`** before this queue-only branch;
 `crypto-counsel` main is **`cc2979b`**. Completed work is open, not merged:
-crypto-counsel **#18** for the stale corpus and **#19**, stacked on #18, for
-snapshot characters; crypto-lab **#244** for card dates and generated metadata;
+crypto-counsel **#18** for the stale corpus and **#19**, stacked on #18, for the
+catalog README snapshot; crypto-lab **#244** for card dates and generated metadata;
 crypto-lab **#245**, stacked on #244, for catalog evidence; and the AES Anatomy
 and Clock Arithmetic **#2** PRs for theme pins. The five current depth rows are
 also complete in Harvest Vault **#21**, Hybrid Wire **#17**, Shelf Oracle **#13**,
@@ -25,11 +25,11 @@ Fresh `origin/main` remains red until those PRs merge, but the failures formerly
 listed as items 10–12 are implemented and verified on their branches. The
 executable work through item 5 is complete on open PRs.
 
-**Two content choices still wait on a maintainer DECISION** — items 6 and 7. Item
-6's proposal is current again; the path itself has deliberately not been changed.
+**One content choice still waits on a maintainer DECISION** — item 6. Its
+proposal is current again; the path itself has deliberately not been changed.
 Items 8 and 9 are cleanup/settings choices, not unfinished content work.
 
-**Pick up with:** a maintainer decision on item 6 or 7. There is no remaining
+**Pick up with:** a maintainer decision on item 6. There is no remaining
 unblocked content change in this queue.
 
 Before touching anything, re-fetch and re-run the fast loop — the figures below
@@ -74,37 +74,6 @@ Three choices remain:
 If 2 or 3 is chosen, re-verify that every current step appears exactly once.
 **The writer-order trap remains:** `knowledge-map-sync write` records the path
 count and hashes `index.html`, so it must run after any card stamper.
-
----
-
-## 7. DECISION: two drifted Related Projects lines in the corpus snapshot
-
-**Offered during #17 and deliberately left out of it**, because the instruction
-was to add Snow 2 "in the same form as the other three" — so all three were left
-untouched. Two of them have since been shown to differ from the catalog README:
-the comparison below was re-run against current files on 2026-10-21 and is still
-exact.
-
-| | snapshot | catalog README |
-|---|---|---|
-| Cipher Museum | `Interactive museum spanning ... history — thirteen halls` | `An interactive museum spanning ... history. Thirteen halls` |
-| Meow Decoder | ends at `via QR-code GIFs.` | plus `AES-256-GCM + Argon2id + ML-KEM-1024 + fountain codes. Python + Rust.` |
-
-Both are wording, neither is a link. Small, and a one-line re-derivation each
-from the README's Related Projects block.
-
-**The third line, Crypto Compare, is NOT a defect — do not "fix" it.** The
-snapshot's `https://crypto-compare.systemslibrarian.dev/` is that project's own
-live address: its repository's `CNAME` contains exactly that host and its README
-links it. An earlier read of mine called it dead by applying the rule about
-`crypto-lab.systemslibrarian.dev/<slug>/` 404ing, which is a DIFFERENT host
-serving the catalog page. The conflation is the thing worth remembering.
-
-If anything the discrepancy runs the other way: **the catalog README uses the
-github.io form for a project that has its own domain.** That is a question about
-`README.md` here, not about the snapshot, and nobody has decided it. Changing it
-would also move the generated All Demos table's sibling block, so check what
-`readme-sync` writes before assuming it is a one-line edit.
 
 ---
 
@@ -171,7 +140,7 @@ merge.
 | cryptanalyst path proposal at its then-current 20 steps | PROPOSAL ONLY in crypto-lab #240, `audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md`; current 21-step refresh is item 6 |
 | eleven stale `crypto_lab_readme` lines | crypto-counsel #17; Snow 2 was a MOVE to Related Projects, and `validate.mjs` was widened with M25-M27 as its controls |
 | corpus prose stale review | crypto-counsel #18; 28 re-derived rather than the noted 20: 16 accurate, 12 corrected, 0 unsettled; 190 never-reviewed entries left untouched |
-| nine snapshot character lines | crypto-counsel #19, stacked on #18; rendered cards plus the catalog README are canonical, and only the nine HTML/numeric entity spellings changed |
+| catalog README snapshot refresh | crypto-counsel #19, stacked on #18; nine HTML/numeric entity spellings and the two drifted Cipher Museum/Meow Decoder descriptions now match rendered catalog prose. Crypto Compare's valid custom-domain URL was deliberately preserved |
 | #31 final five depth judgements | Harvest Vault #21 and Compression Leak #6 pin published vectors through production helpers; Hybrid Wire #17 and Shelf Oracle #13 add outside-library cross-checks; WebAuthn #25 pins its production SHA-256 helper to NIST CAVP. All five implementations were correct but incompletely verified; every mutation control failed as intended |
 | generated knowledge map and card dates | crypto-lab #244; 243 repositories refreshed, 34 date-evidence records moved and six displayed months changed; knowledge map, catalog/date/level/readme/concept checks and six card-stamp tests pass |
 | AES Anatomy and Clock Arithmetic theme pins | each lab's #2; literal dark pin corrected, unit/build checks pass, and fleet theme-sync reports 255 pages with no violations; browser-owned mutation baselines remain unreadable here because Chromium exits with macOS bootstrap error 141 |

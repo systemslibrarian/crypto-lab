@@ -302,13 +302,18 @@ and the publisher calls Chapter 14 *Key Management*. The
 [authors' website](https://www.cryptography-textbook.com/book/) calls the last
 chapter *Key Establishment*; that alternate name is also searchable.
 
-Chapter order and section pointers were checked against the publisher's
-[front matter](https://link.springer.com/content/pdf/bfm:978-3-662-69007-9/1), the
-[authors' contents](https://www.cryptography-textbook.com/files/toc.pdf) and the
-supplied detailed contents. The supplied usable 2010 first-edition PDF has
-13 chapters and is not the numbering authority. No textbook PDF, passages,
-figures, exercises or solutions are stored or reproduced here. This is a
-contents-led alignment, not an exhaustive review of the full second-edition text.
+Chapter order and section pointers were rechecked against the complete supplied
+**2024 second-edition PDF**, eBook ISBN **978-3-662-69007-9**, including its title,
+copyright and contents pages. The publisher's
+[front matter](https://link.springer.com/content/pdf/bfm:978-3-662-69007-9/1) and
+[authors' contents](https://www.cryptography-textbook.com/files/toc.pdf) corroborate
+the numbering. Selected text checks cover affine ciphers (§1.4.4), PRESENT
+(§3.7.3), OFB/CFB (§§5.1.3–5.1.4) and GCM (§13.3.4). The
+[April 2025 errata](https://www.cryptography-textbook.com/wp-content/uploads/2025/04/errata_2nd.pdf)
+are linked, with the GCM tag-calculation correction highlighted in Chapter 13.
+The earlier first-edition file is not the basis for this verification. No textbook
+PDF, passages, figures, exercises or solutions are stored or reproduced here.
+This verifies the reading map and selected connections, not every page or exercise.
 
 ### Catalog source and capability limits
 
@@ -327,6 +332,11 @@ relationships, never complete chapter coverage. Significant boundaries include:
 - Clock Arithmetic now supplies traced Euclid/Bézout calculations, Euler
   preconditions, groups and generalized CRT. Its small examples do not establish
   production-size hardness or authenticate a public key.
+- Dead Sea Cipher supplies the affine-cipher card, including admissible
+  multipliers and known-letter recovery. Biham Lens supplies full PRESENT-80
+  separately from its toy SPN; PRESENT-128 remains outside that lab.
+- AES Modes supplies OFB and CFB-128/CFB-8. Feedback and error propagation are
+  confidentiality lessons, not message-authentication checks.
 - KMAC Gate already provides substantial SHA-3 and SHAKE teaching. It is not a
   missing sponge lab, although complete Keccak step-by-step teaching is outside
   the selected surface.

@@ -7,6 +7,44 @@
 **Publication:** `main`, with menu access at `/learn/understanding-cryptography/` and `home: false` (no homepage card).  
 **Status:** Historical gap-check snapshot with a shipped follow-up below. The original findings, source pins and release-preparation evidence are retained as provenance, not a current unfulfilled-work list.
 
+## Full second-edition verification — 21 October 2026
+
+The owner subsequently supplied the complete 2024 second edition. Its title and
+copyright pages identify **Christof Paar, Jan Pelzl and Tim Güneysu**, eBook ISBN
+**978-3-662-69007-9**, and DOI **10.1007/978-3-662-69007-9**. This full text now
+supersedes the first-edition/preview limitation recorded in the original findings.
+The PDF itself and extracted book content are not committed or published.
+
+All 14 chapter titles and the reading path's section references were checked
+against the supplied contents. The numbering already matched: SHA-3 is §11.5,
+PQC is Chapter 12, MACs is Chapter 13, and Chapter 14 is *Key Management*.
+Selected full-text checks also covered the affine cipher (§1.4.4), PRESENT
+(§3.7.3), OFB/CFB (§§5.1.3–5.1.4) and GCM (§13.3.4). This is verification of
+the reading map and selected teaching connections, not an audit of every page,
+exercise or implementation in the fleet.
+
+The [authors' April 2025 errata](https://www.cryptography-textbook.com/wp-content/uploads/2025/04/errata_2nd.pdf)
+were reviewed. The page now highlights the correction to GCM on p. 477: the final
+GHASH multiplication uses H, and the encrypted initial counter block is then
+XORed into the tag. The other listed corrections concern Salsa20/ChaCha notation,
+the DES initial permutation and an LWE example.
+
+Three stale coverage descriptions were updated after reviewing the current
+READMEs and named UI source at these commits:
+
+| Reading | Verified lab and source pin | Current connection and boundary |
+|---|---|---|
+| §1.4.4, affine cipher | [Dead Sea Cipher, `be9d4ad`](https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher/tree/be9d4ad49dc40641f16d1366434e4c14353c3070), `demos/dead-sea-cipher/src/ui/affine-card.ts` | Direct affine encryption, inverse checks, collisions, all 312 keys and known-letter recovery. Candidate sets can contain multiple keys. |
+| §3.7.3, PRESENT | [Biham Lens, `864ee05`](https://github.com/systemslibrarian/crypto-lab-biham-lens/tree/864ee0572f3e90496a240347a6094580a88a6318), `src/present-tab.ts` | Full PRESENT-80, separate from the toy SPN. No PRESENT-128; the unwind exercise assumes K32 is known. |
+| §§5.1.3–5.1.4, feedback modes | [AES Modes, `a8db5f2`](https://github.com/systemslibrarian/crypto-lab-aes-modes/tree/a8db5f275ec177d787a4a496a29603239f4ff40e), `src/cfbPanel.ts` and README | OFB and CFB-128/CFB-8 are available. Error propagation is not authentication; CFB-8 extends the book's full-block example. |
+
+The catalog still supplies lab membership, titles and destinations; the source
+review above establishes these newer capabilities where catalog summaries lag.
+No lab code was changed. The companion retains **48 connections to 39 distinct
+catalogued labs**. Recommendation 4 (PRESENT) and the affine/CFB entries in the
+original gap inventory below are now historical, not new work requests. The
+original snapshot and earlier follow-up remain below for provenance.
+
 ## Shipped follow-up — AES Anatomy and Clock Arithmetic
 
 Both labs are now catalogued and linked in the published companion:

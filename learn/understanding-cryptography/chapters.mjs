@@ -1,4 +1,6 @@
 // Original Crypto Lab activities for Paar, Pelzl & Güneysu, second edition (2024).
+// Checked against the full second-edition text, eBook ISBN 978-3-662-69007-9,
+// and the authors' April 2025 errata on 21 October 2026.
 // The published book has 14 chapters; SHA-3 is a separate focus on section 11.5.
 // CATALOG.md supplies every lab title and destination at build time.
 const lab = (slug, note, coverage = 'direct') => ({slug: `crypto-lab-${slug}`, note, coverage});
@@ -12,12 +14,12 @@ export const entries = [
     predict: 'If you replace a Caesar shift with a longer repeating Vigenère key, which visible patterns do you expect to disappear, and which might still help an attacker?',
     labs: [
       lab('clock-arithmetic', 'Use signed residues and addition/multiplication tables for the modular arithmetic in §1.4.'),
-      lab('dead-sea-cipher', 'Use the Caesar and substitution stages to connect a secret key, a public algorithm and a small search space.'),
+      lab('dead-sea-cipher', 'Use Caesar and the affine-cipher card for §§1.4.3–1.4.4: invertible multipliers, collisions, all 312 keys and recovery from known letters.'),
       lab('vigenere-break', 'Explore periodicity and frequency evidence in a different historical cipher.', 'intro')
     ],
-    try: "In Clock Arithmetic’s wrap-around act, reduce a negative integer modulo 12 and compare the addition and multiplication tables. In Dead Sea Cipher, encrypt a sentence with repeated words and run the Caesar search. Use a supplied Vigenère challenge to compare this small search with evidence from periodicity and frequencies.",
-    reflect: "How does reducing an integer modulo n differ from encrypting it? Explain why a larger key space can defeat exhaustive search while a structural attack still succeeds. Which security service is missing if a receiver cannot detect an altered ciphertext?",
-    limit: "These activities connect classical attacks to integer modular arithmetic. Vigenère is a related historical example, not the affine cipher. Clock Arithmetic uses bounded teaching inputs; an arithmetic identity or a successful round trip does not establish cipher security."
+    try: "In Clock Arithmetic, reduce a negative integer modulo 12 and compare the addition and multiplication tables. In Dead Sea Cipher’s Caesar panel, open the affine card, keep b fixed and compare a = 5 with a = 2. Inspect the inverse check and letter collisions, then restore a valid multiplier and try recovery from known letters. Compare with a Vigenère challenge’s periodicity and frequency evidence.",
+    reflect: "Why must an affine multiplier be coprime to 26, and how do 12 admissible multipliers and 26 offsets give 312 keys? Explain why a larger key space can defeat exhaustive search while a structural attack still succeeds. Which security service is missing if a receiver cannot detect an altered ciphertext?",
+    limit: "The affine card directly covers §1.4.4; Vigenère remains a related historical comparison. Known-letter recovery may leave several keys, so inspect the candidate set rather than assuming a unique answer. Clock Arithmetic uses bounded teaching inputs; an arithmetic identity or a successful round trip does not establish cipher security."
   },
   {
     id: 'chapter-2', chapter: 2, kind: 'chapter', part: 'Symmetric cryptography',
@@ -38,16 +40,16 @@ export const entries = [
     id: 'chapter-3', chapter: 3, kind: 'chapter', part: 'Symmetric cryptography',
     bookTitle: 'The Data Encryption Standard (DES) and Alternatives', coverage: 'direct',
     title: 'Explain reversibility separately from resistance to attack',
-    sections: '§§3.2–3.5 and §3.7; Serpent connects to §3.7.1, while PRESENT (§3.7.3) remains uncovered as an exact cipher.',
+    sections: '§§3.2–3.5 and §3.7; Serpent connects to §3.7.1 and the PRESENT-80 tab directly supports §3.7.3.',
     predict: 'DES uses S-boxes that map more input bits to fewer output bits. Can its whole encryption still be reversible without inverting those S-boxes?',
     labs: [
       lab('feistel-forge', 'Step real DES and its round-key order; inspect the double-encryption meet-in-the-middle experiment.'),
       lab('iron-serpent', 'Connect one AES finalist to a different block-cipher design; this is Serpent, not DES or PRESENT.'),
-      lab('biham-lens', 'Use a deliberately small substitution–permutation network to study differential evidence.', 'intro')
+      lab('biham-lens', 'Its separate PRESENT tab runs full PRESENT-80: the S-box, bit permutation, 80-bit key schedule, all 31 rounds and inverse decryption.')
     ],
-    try: 'In Feistel Forge, pause after a DES round and record the two halves and the round-function output. Work backwards through that round using XOR and the retained half, then check the displayed decryption. Compare the information retained by a Feistel round with the reversible layers of the toy SPN in Biham Lens.',
+    try: 'In Feistel Forge, pause after a DES round and work backwards using XOR and the retained half. In Biham Lens’s PRESENT tab, follow one bit through the permutation and step the 80-bit key register. Trace an encryption through round 31 and locate the final K32 addition. Compare how the Feistel structure and PRESENT’s invertible layers permit decryption.',
     reflect: 'Which values make the backwards step possible even though the round function loses information? Explain why demonstrating reversibility does not establish sufficient key size, block size or resistance to cryptanalysis.',
-    limit: 'DES is historical. The attack examples use the lab’s stated budgets and small or deliberately restricted targets. Serpent is one alternative, not coverage of every AES finalist. A toy SPN does not implement PRESENT. Triple-DES and DESX are not credited as implemented by the catalog merely because a lab discusses them.'
+    limit: 'DES is historical. Biham Lens’s toy-SPN attack and its full PRESENT-80 engine are separate. PRESENT-128 is not implemented. The round-key recovery exercise assumes K32 is already known; it does not obtain K32 or break full PRESENT. Serpent covers one AES finalist. Exact triple-DES and DESX execution is not established by these connections.'
   },
   {
     id: 'chapter-4', chapter: 4, kind: 'chapter', part: 'Symmetric cryptography',
@@ -69,16 +71,16 @@ export const entries = [
     id: 'chapter-5', chapter: 5, kind: 'chapter', part: 'Symmetric cryptography',
     bookTitle: 'More About Block Ciphers', coverage: 'direct',
     title: 'Ask what changes when the primitive stays the same and the construction changes',
-    sections: '§5.1, including XTS-AES (§5.1.6), and §§5.2–5.3 on search and repeated encryption',
+    sections: '§5.1, including OFB (§5.1.3), CFB (§5.1.4) and XTS-AES (§5.1.6); §§5.2–5.3 on search and repeated encryption. Authenticated modes return in §13.3.',
     predict: 'Will a secure block cipher hide the positions of repeated plaintext blocks if each block is encrypted independently? Will a disk-encryption mode also detect an attacker’s edits?',
     labs: [
-      lab('aes-modes', 'Compare ECB, CBC, CTR, GCM and CCM behavior with the same block primitive; the OFB extension is already commissioned.'),
+      lab('aes-modes', 'Compare ECB, CBC, OFB, CFB-128/CFB-8 and CTR with the same block primitive. Separate GCM and CCM panels connect forward to §13.3.'),
       lab('sector-vault', 'Explore XTS-AES tweaks, sector binding and the absence of message authentication.'),
       lab('feistel-forge', 'Use double DES to connect composition with the meet-in-the-middle search strategy.')
     ],
-    try: 'In AES Modes, encrypt repeated-block input with ECB and inspect where equal ciphertext blocks occur. Compare with a mode that chains or varies the block input. In Sector Vault, use the sector/tamper experiment and record separately whether decryption produces bytes and whether an integrity check authenticates them. Explain those observations before exploring double encryption.',
-    reflect: 'Distinguish hiding repeated structure, binding a block to its position and authenticating a message. Why does doubling a nominal key length by repeated encryption not automatically double the attacker’s work exponent?',
-    limit: 'The connections cover selected modes and composition failures. CBC IV requirements differ from CTR nonce/counter requirements. XTS does not authenticate data. CFB, a complete triple-encryption trace and a DESX/key-whitening experiment are not established by these catalog entries. OFB and Feistel-security extensions belong to the prior batches and are excluded from new recommendations.'
+    try: 'In AES Modes, encrypt repeated blocks with ECB and compare a mode that varies the block input. Open the OFB and CFB panels and identify what feeds the next AES evaluation. In CFB’s bit-flip comparison, inspect the changed plaintext bytes for CFB, OFB and CBC. In Sector Vault, distinguish decryption output from authentication, then explore double encryption in Feistel Forge.',
+    reflect: 'Why can OFB generate its keystream before the plaintext arrives, while CFB encryption depends on ciphertext feedback? Distinguish hiding repeated structure, binding a block to its position and authenticating a message. Why does double encryption not automatically double the attacker’s work exponent?',
+    limit: 'OFB and CFB provide confidentiality without authentication; error propagation is not tamper detection. CBC IV requirements differ from CTR nonce/counter requirements. XTS also does not authenticate data. CFB-8 extends the book’s full-block feedback example. A complete triple-encryption trace and a DESX/key-whitening experiment remain outside these selected connections.'
   },
   {
     id: 'chapter-6', chapter: 6, kind: 'chapter', part: 'Public-key cryptography',
@@ -214,7 +216,7 @@ export const entries = [
     ],
     try: 'In MAC Race’s checksum-versus-MAC panel, alter a message and repair the checksum. Compare the HMAC receiver with the key-leak option disabled and enabled. Follow the HMAC inner/outer construction, then use AES Modes’ authenticated-encryption comparison to observe rejection after the protected data changes. Record who knew the authentication key in each experiment.',
     reflect: 'Why does a checksum fail against an intentional editor who can recompute it? Explain why a MAC provides neither confidentiality nor public third-party verification, and why GHASH alone is not an authenticated GCM tag.',
-    limit: 'Raw CBC-MAC’s length restriction and CMAC repairs are already commissioned. The GHASH teaching view has explicit framing and masking limits. GMAC is not separately established by the catalog, and a bare GHASH calculation must not be labelled GMAC. Finite demonstrations do not replace tag-forgery bounds or prove constant-time verification.'
+    limit: 'Apply the authors’ April 2025 erratum to §13.3.4 (p. 477): the final GHASH multiplication uses the hash subkey H; the encrypted initial counter block then masks the result with XOR. The GHASH teaching view has explicit framing and masking limits. GMAC is not separately established by the catalog, and a bare GHASH calculation must not be labelled GMAC. Finite demonstrations do not replace tag-forgery bounds or prove constant-time verification.'
   },
   {
     id: 'chapter-14', chapter: 14, kind: 'chapter', part: 'Key management',

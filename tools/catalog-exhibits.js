@@ -1,3 +1,11 @@
+#!/usr/bin/env node
+/*
+ * catalog-exhibits.js — validate pinned, source-reviewed exhibit maps.
+ *
+ * Run: node tools/catalog-exhibits.js verify
+ * Prevents: an exhibit map claiming current or complete UI coverage from stale or missing source anchors
+ * Reads: tools/catalog-exhibits.json; sibling and repos/ lab checkouts at each pinned Git commit
+ */
 'use strict';
 
 /* An exhibit map is a deliberate review of a lab's UI and source at one commit.

@@ -449,6 +449,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | Tool | What it prevents | When it runs |
 |---|---|---|
 | `node tools/catalog-evidence.js verify` | the catalog asserting a lab implements an algorithm its source does not | weekly, on demand; selftest only: every PR and push, on demand |
+| `node tools/catalog-exhibits.js verify` | an exhibit map claiming current or complete UI coverage from stale or missing source anchors | manual |
 | `node tools/catalog-recall.js` | the chip rule being promoted to a failing check on a judgement call rather than a measurement | weekly, on demand |
 | `node tools/catalog-structure-check.js` | misplaced catalog cards, missing search semantics and broken metadata, alias or proximity queries | every PR and push, on demand |
 | `node tools/catalog-sync.js check` | the algorithm index drifting from the cards, a card claiming an algorithm with no evidence behind it, and a chip the vocabulary cannot name passing as clean | every PR and push, on demand |
@@ -490,7 +491,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/transform.mjs --dry-run <workflow.yml>` | a workflow repair discarding merge status or changing repository-specific dispatch behavior | manual |
 | `node tools/validate-manifest.mjs <manifest.yaml> [lab-dir] [catalog-dir]` | unsupported, inconsistent or stale claim-manifest evidence passing validation | manual |
 
-14 of these 41 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+15 of these 42 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
 Not listed above: `card-reader.js`, `catalog-vocab.js`, `clone-source.js`, `depth-audit-export.sh`, `depth-audit-report.js`, `depth-bounded.js`, `depth-classify-worker.js`, `depth-exports.js`, `sibling-labs.js` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 

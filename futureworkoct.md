@@ -18,19 +18,19 @@ and Clock Arithmetic **#2** PRs for theme pins. The five current depth rows are
 also complete in Harvest Vault **#21**, Hybrid Wire **#17**, Shelf Oracle **#13**,
 Compression Leak **#6** and WebAuthn **#25**. This queue audit itself is crypto-lab
 **#243**. Crypto-lab **#246** completes the teach probes, **#247** validates the
-advisory chip rule end to end, and **#248** refreshes the Cryptanalyst decision
-proposal against the current path.
+advisory chip rule end to end, and **#248** implements the selected 12+9
+Cryptanalyst path split.
 
 Fresh `origin/main` remains red until those PRs merge, but the failures formerly
 listed as items 10–12 are implemented and verified on their branches. The
 executable work through item 5 is complete on open PRs.
 
-**One content choice still waits on a maintainer DECISION** — item 6. Its
-proposal is current again; the path itself has deliberately not been changed.
-Items 8 and 9 are cleanup/settings choices, not unfinished content work.
+The earlier content queue is complete on open PRs. Item 10 is newly detected
+catalog maintenance caused by six labs moving after their displayed dates were
+pinned. Items 8 and 9 are cleanup/settings choices, not unfinished content work.
 
-**Pick up with:** a maintainer decision on item 6. There is no remaining
-unblocked content change in this queue.
+**Pick up with:** item 10. Items 8 and 9 still require explicit cleanup/settings
+choices.
 
 Before touching anything, re-fetch and re-run the fast loop — the figures below
 were measured on the dates beside them and other sessions work in these repos:
@@ -47,33 +47,6 @@ done
 (Quote `"tools/$c.js"` and pass `check` as its own argument. zsh does not
 word-split an unquoted `$c`, so `node tools/$c` with `c="x.js check"` looks for a
 file literally named `x.js check` and every checker reports MODULE_NOT_FOUND.)
-
----
-
-## 6. DECISION: split or retain the current Cryptanalyst Path
-
-**Waiting on the maintainer; no split is implemented.** Crypto-lab #248 refreshes
-`audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md` into a current decision
-document without changing `LEARNING_PATHS`.
-
-Re-derived from `LEARNING_PATHS` on 2026-10-21: Cryptanalyst is **21 steps**, not
-20, because AES Anatomy is now in the path. There are **nine** paths, not eight,
-and Developer is now 18 steps. Current lengths are 13, 12, 12, 11, 18, 21, 12,
-12 and 9. Those counts were rechecked at `1e6f181`; #248 mechanically verifies
-both candidate partitions against all 21 current titles.
-
-Three choices remain:
-
-1. **Leave Cryptanalyst at 21.** Delete this item, and separately decide whether
-   Developer at 18 needs the same exception.
-2. **Two paths, 12+9.** Structure and Statistics gains AES Anatomy;
-   Implementation and Composition retains the other nine.
-3. **Three paths, 12+6+3.** Split Oracles/Leakage/Faults from the three-step
-   Composition and Binding seed: Padding Oracle, Salamander and Frozen Heart.
-
-If 2 or 3 is chosen, re-verify that every current step appears exactly once.
-**The writer-order trap remains:** `knowledge-map-sync write` records the path
-count and hashes `index.html`, so it must run after any card stamper.
 
 ---
 
@@ -123,6 +96,20 @@ merge.
 
 ---
 
+## 10. Refresh six catalog date pins after current lab movement
+
+**Newly detected on 2026-10-21.** `node tools/lab-dates.js check` reports six
+cards whose pinned displayed month predates the current committed lab state:
+`bb84`, `protocol-compose`, `threshold-decrypt`, `multivariate`, `broken-trust`
+and `time-lock-puzzle`. Each is pinned to 2026-08 or 2026-09 while the lab now
+derives to 2026-10.
+
+Run the date writer, inspect the six cards rather than accepting unrelated
+output, then regenerate downstream artifacts in writer order and run the full
+checker sweep. Keep this separate from #248's path-only change.
+
+---
+
 ## Done — one line each
 
 | item | where the detail is |
@@ -147,7 +134,7 @@ merge.
 | catalog evidence refresh | crypto-lab #245, stacked on #244; nine stale reviews individually re-read, then Harvest Vault and Shelf Oracle rechecked after four more anchors moved (22 stale source-anchor claims total). Shelf Oracle's cited-but-unreproduced IND-CPA-D research is now excluded from attack credit; 1,554 anchors resolve against current remote commits, with 75 evidence fixtures and 60 catalog/map tests passing |
 | teach-layer unchecked claims | crypto-lab #246; all 43 manual claims individually reviewed and converted, leaving 47 automated and 0 manual probes; the full Linux Chromium/Firefox/WebKit run reports 47 MATCHES, 0 GONE and 0 UNREADABLE |
 | advisory chip-rule validation | crypto-lab #247; the production classifier, all four declared relations, five qualifier words, uncertainty ordering and the scanner's comment/string boundary now have positive and mutation controls; live output remains 0 violations and the gate remains advisory |
-| Cryptanalyst proposal refresh | crypto-lab #248; current 21-step path and all nine path lengths re-derived, with exact-cover 12+9 and 12+6+3 options; the retain/split decision remains item 6 |
+| Cryptanalyst path split | crypto-lab #248; the former 21-step path is now exact-cover 12+9 Structure and Statistics / Implementation and Composition paths, with the original id retained, ten generated paths and browser plus persistent-state regressions passing |
 | branch cleanup, both repos | 30 remote + 4 local deleted, 20 tracking refs pruned; manifest `~/branch-cleanup-2026-10-21.txt`; auto-delete is now on only for `crypto-lab`. Decide from the PR, never `git branch --merged` — squash merges make almost every merged branch read as unmerged |
 | futureworkoct queue update | #241 |
 | futureworkoct current-state audit | this queue-only PR; caught main up through `1e6f181`, removed the completed corpus and depth items, and recorded the reproducible failures without fixing out-of-scope files |

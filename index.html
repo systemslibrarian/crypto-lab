@@ -3355,13 +3355,13 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Quantum Key Distribution</div>
             <div class="project-title">BB84</div>
-            <div class="project-copy">Quantum key distribution with photon polarization, basis sifting, QBER eavesdropper detection, and privacy amplification before AES-256-GCM message encryption.</div>
+            <div class="project-copy">A BB84 teaching simulation with polarization, basis sifting, and QBER under eavesdropping. It hashes sifted bits into an AES-256-GCM key, but does not perform information reconciliation or security-proven privacy amplification.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Photon Polarization</span>
                 <span class="chip">Basis Sifting</span>
                 <span class="chip">QBER</span>
-                <span class="chip">Privacy Amplification</span>
+                <span class="chip">SHA-256 Key Derivation</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -4304,13 +4304,13 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Homomorphic Encryption</div>
             <div class="project-title">FHE Arena</div>
-            <div class="project-copy">BGV/BFV integer FHE — homomorphic addition and multiplication, live noise budget visualizer, relinearization, SIMD batching, and real-world deployments in private genomics and encrypted databases.</div>
+            <div class="project-copy">Explore toy BFV integer homomorphic encryption with addition, multiplication, a noise-budget visualizer, relinearization, and polynomial-coefficient packing. BGV and production SIMD batching are discussed, not implemented.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">BGV/BFV</span>
+                <span class="chip">Toy BFV</span>
                 <span class="chip">RLWE</span>
                 <span class="chip">Noise Budget</span>
-                <span class="chip">SIMD Batching</span>
+                <span class="chip">Coefficient Packing</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -12529,13 +12529,13 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Group Messaging Security</div>
             <div class="project-title">MLS Group</div>
-            <div class="project-copy">RFC 9420 Messaging Layer Security — TreeKEM ratchet tree, epoch key schedule, member add/remove/update operations, and group application messaging with forward secrecy guarantees.</div>
+            <div class="project-copy">An RFC 9420-inspired teaching subset illustrating TreeKEM, epoch key schedules, member changes, and group messages. It omits credential signatures, authenticated framing, and confirmation tags, so it does not provide the full protocol's security guarantees.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">MLS (RFC 9420)</span>
+                <span class="chip">MLS Teaching Subset</span>
                 <span class="chip">TreeKEM</span>
                 <span class="chip">Epoch Key Schedule</span>
-                <span class="chip">Forward Secrecy</span>
+                <span class="chip">Group Epochs</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -13926,7 +13926,7 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Entanglement-Based QKD</div>
             <div class="project-title">E91</div>
-            <div class="project-copy">Ekert's entanglement-based QKD: measure entangled pairs, run the CHSH Bell test, and derive a key from aligned bases. |S|≈2.83 proves security; an eavesdropper drags it toward the classical bound, so the key is discarded.</div>
+            <div class="project-copy">An idealized simulation of entanglement-based QKD: measure correlated pairs, estimate a CHSH Bell statistic, and sift a key. A Bell violation in this model alone is not a finite-key or device-independent security proof.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">E91</span>

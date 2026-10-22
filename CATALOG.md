@@ -1981,7 +1981,7 @@ SHA-256, SHA3-256, and BLAKE3 side by side with live avalanche visualization, le
 
 [`crypto-lab-bb84`](https://systemslibrarian.github.io/crypto-lab-bb84/) · Quantum Key Distribution · POST-QUANTUM, KEY EXCHANGE
 
-Quantum key distribution with photon polarization, basis sifting, QBER eavesdropper detection, and privacy amplification before AES-256-GCM message encryption.
+A BB84 teaching simulation with polarization, basis sifting, and QBER under eavesdropping. It hashes sifted bits into an AES-256-GCM key, but does not perform information reconciliation or security-proven privacy amplification.
 
 - **Implements:** AES `src/encrypt.ts:37`, AES-GCM `src/encrypt.ts:37`, BB84 `src/bb84.ts:186`, SHA-256 `src/bb84.ts:175`
 - **References:** E91, ECDH, ECDSA, Grover's algorithm, Kyber, ML-DSA, ML-KEM, P-256, RSA, Shor's algorithm
@@ -2455,7 +2455,7 @@ Break the two-LFSR Content Scrambling System: guess the smaller register, let al
 
 [`crypto-lab-e91`](https://systemslibrarian.github.io/crypto-lab-e91/) · Entanglement-Based QKD · KEY EXCHANGE
 
-Ekert's entanglement-based QKD: measure entangled pairs, run the CHSH Bell test, and derive a key from aligned bases. |S|≈2.83 proves security; an eavesdropper drags it toward the classical bound, so the key is discarded.
+An idealized simulation of entanglement-based QKD: measure correlated pairs, estimate a CHSH Bell statistic, and sift a key. A Bell violation in this model alone is not a finite-key or device-independent security proof.
 
 - **Implements:** E91 `src/engine.ts:375`
 - **Source review:** [eccf9173e98a](https://github.com/systemslibrarian/crypto-lab-e91/commit/eccf9173e98ab1c54293e47cc79896a2a78930af) — Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review; runE91 and anchor375 are unchanged. The October 21 UI correction scopes full intercept-resend behavior and states that a Bell violation alone is not a finite-key security proof. Preserve the idealized statistical simulation classification and BB84/MITM/side-channel removals; no physical quantum channel is implemented.
@@ -2614,7 +2614,7 @@ Real DES stepped round by round, where the round function need not be invertible
 
 [`crypto-lab-fhe-arena`](https://systemslibrarian.github.io/crypto-lab-fhe-arena/) · Homomorphic Encryption · HOMOMORPHIC
 
-BGV/BFV integer FHE — homomorphic addition and multiplication, live noise budget visualizer, relinearization, SIMD batching, and real-world deployments in private genomics and encrypted databases.
+Explore toy BFV integer homomorphic encryption with addition, multiplication, a noise-budget visualizer, relinearization, and polynomial-coefficient packing. BGV and production SIMD batching are discussed, not implemented.
 
 - **Implements:** BFV `src/toyFhe.ts:132`
 - **References:** BGV, CKKS, ElGamal, NTT, Paillier, Private information retrieval, Ring-LWE, TFHE
@@ -3449,7 +3449,7 @@ Run MISTY1 and KASUMI side by side, map the design changes between them, and exe
 
 [`crypto-lab-mls-group`](https://systemslibrarian.github.io/crypto-lab-mls-group/) · Group Messaging Security · PROTOCOLS, KEY EXCHANGE
 
-RFC 9420 Messaging Layer Security — TreeKEM ratchet tree, epoch key schedule, member add/remove/update operations, and group application messaging with forward secrecy guarantees.
+An RFC 9420-inspired teaching subset illustrating TreeKEM, epoch key schedules, member changes, and group messages. It omits credential signatures, authenticated framing, and confirmation tags, so it does not provide the full protocol's security guarantees.
 
 - **Implements:** AES `src/crypto/hpke.ts:32`, AES-GCM `src/crypto/hpke.ts:32`, Diffie-Hellman `src/crypto/hpke.ts:48`, HKDF `src/crypto/hkdf.ts:11`, HPKE `src/crypto/hpke.ts:65`, MLS `src/app.ts:471`, SHA-256 `src/crypto/ciphersuite.ts:36`, X25519 `src/crypto/hpke.ts:1`, X3DH `src/app.ts:469`
 - **References:** DHKEM, Double Ratchet, EC point arithmetic, Ed25519, Kerberos, ML-KEM, Noise protocol

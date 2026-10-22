@@ -838,6 +838,30 @@
     "implementation": "WebCrypto / @noble/curves / local research protocols",
     "note": "Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged."
   },
+  "crypto-lab-attribute-gate": {
+    "commit": "d0bb24262e9b2b6e47044ef49e5941bdb332e17c",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "BLS signatures"
+    ],
+    "note": "Read the committed README and src/fame implementation at this pin. Attribute Gate implements FAME CP-ABE with BLS12-381 group arithmetic, pairing, policy reconstruction and an HKDF/AES-GCM KEM wrapper. The bls12_381 namespace import is the scanner's only BLS-signature hit; the lab does not issue or verify BLS signatures. Remove that false credit while preserving the actual BLS12-381, hash-to-curve and pairing operations. The comparison with Signature Gate is a teaching-role review, not a new security or conformance claim."
+  },
+  "crypto-lab-ibe-gate": {
+    "commit": "b249b17c883b4472ca4ef702866fc609d2c7e943",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "BLS signatures"
+    ],
+    "note": "Read the committed README and src implementation at this pin. IBE Gate implements Boneh-Franklin BasicIdent setup, extraction, encryption and decryption with BLS12-381 group arithmetic and pairings, including the PKG escrow lesson. Its bls binding supplies curve and pairing operations; no BLS signature is created or verified. Remove that false signature credit while preserving the actual IBE, BLS12-381, hash-to-curve and pairing operations. The comparison with Signature Gate is a teaching-role review, not a new security or conformance claim."
+  },
+  "crypto-lab-polynomial-forge": {
+    "commit": "24aa348a654b5521489aa5d607a3f99add7f34dd",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "BLS signatures"
+    ],
+    "note": "Read the committed README and src implementation at this pin. Polynomial Forge implements and compares KZG, IPA and FRI polynomial commitments; its BLS12-381 module performs KZG group, hash-to-field and pairing work, not BLS signing or verification. Remove the scanner's import-based BLS-signature credit while preserving the actual BLS12-381, hash-to-curve, pairing and commitment operations. The comparison with Signature Gate is a teaching-role review, not a new security or conformance claim."
+  },
   "crypto-lab-prime-witness": {
     "commit": "c85f91a26720f4f2d63b8b4471720cfcce49bb25",
     "reviewed": "2026-10-20",

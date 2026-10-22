@@ -11,7 +11,7 @@ const labels = {direct:'Direct connection', modern:'Modern counterpart', intro:'
 const parts = ['Foundations', 'Symmetric cryptography', 'Public-key cryptography'];
 
 if (chapters.length !== 15 || chapters.some((chapter, index) => chapter.chapter !== index + 1)) {
-  throw new Error('The third-edition companion must contain chapters 1–15 in order.');
+  throw new Error('The revised-third-edition companion must contain chapters 1–15 in order.');
 }
 for (const chapter of chapters) {
   if (!parts.includes(chapter.part) || !Object.hasOwn(labels, chapter.coverage)) {
@@ -35,7 +35,7 @@ const chapterHtml = chapters.map(chapter => {
   }).join('\n');
   return `<article class="panel chapter" id="chapter-${chapter.chapter}" data-part="${esc(chapter.part)}" data-coverage="${chapter.coverage}" aria-labelledby="chapter-${chapter.chapter}-title">
 <header><div><p class="eyebrow">Chapter ${chapter.chapter} · ${esc(chapter.part)}</p><h2 id="chapter-${chapter.chapter}-title">${esc(chapter.bookTitle)}</h2></div><span class="badge ${chapter.coverage}">${labels[chapter.coverage]}</span></header>
-${chapter.revisedTitle ? `<p class="small chapter-edition">Revised edition title: ${esc(chapter.revisedTitle)}</p>` : ''}
+${chapter.originalTitle ? `<p class="small chapter-edition">2021 third-edition title: ${esc(chapter.originalTitle)}</p>` : ''}
 <p class="chapter-reading"><strong>Learning focus:</strong> ${esc(chapter.title)}</p><p class="small chapter-sections"><strong>Read:</strong> ${esc(chapter.sections)}</p>
 <p class="predict"><strong>Predict before opening a lab:</strong> ${esc(chapter.predict)}</p>
 <ul class="chapter-labs">${connections}</ul>
@@ -52,7 +52,7 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Introduction to Modern Cryptography Reading Path · Crypto Lab</title>
-<meta name="description" content="An independent companion to Katz and Lindell’s Introduction to Modern Cryptography: 15 chapter connections, original experiments, security questions and explicit coverage limits.">
+<meta name="description" content="An independent companion to Katz and Lindell’s Introduction to Modern Cryptography, revised third edition (2025): 15 chapter connections, original experiments, security questions and explicit coverage limits.">
 <link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/learn/modern-cryptography/">
 <link rel="stylesheet" href="../shared/workshop.css">
 <link rel="stylesheet" href="../shared/reading-path.css">
@@ -66,7 +66,7 @@ const html = `<!doctype html>
 <main id="main" class="reading-path">
 <header class="reading-header">
 <h1>Introduction to Modern Cryptography</h1>
-<p>Jonathan Katz &amp; Yehuda Lindell · Third edition (2021) · 15 chapters</p>
+<p>Jonathan Katz &amp; Yehuda Lindell · Revised third edition (2025) · 15 chapters</p>
 <p class="companion-note">Independent companion · <a href="#sources-title">Edition and sources</a></p>
 </header>
 
@@ -102,15 +102,16 @@ const html = `<!doctype html>
 
 <section class="panel sources" aria-labelledby="sources-title">
 <h2 id="sources-title">Book, edition and sources</h2>
-<p>Jonathan Katz and Yehuda Lindell. <cite>Introduction to Modern Cryptography</cite>. Third edition. CRC Press, 2021.</p>
+<p>Jonathan Katz and Yehuda Lindell. <cite>Introduction to Modern Cryptography</cite>. Revised third edition. CRC Press, 2025.</p>
 <ul class="source-links">
+<li><a href="https://www.routledge.com/Introduction-to-Modern-Cryptography-Revised-Third-Edition/Katz-Lindell/p/book/9781032496795">Publisher’s revised third edition (2025)</a></li>
+<li><a href="https://doi.org/10.1201/9781003398134">Revised third edition DOI</a></li>
 <li><a href="https://www.cs.umd.edu/~jkatz/imc.html">Jonathan Katz’s official book page</a></li>
-<li><a href="https://www.cs.umd.edu/~jkatz/imc/toc-preface-3rd.pdf">Official third-edition contents and preface</a></li>
-<li><a href="https://www.cs.umd.edu/~jkatz/imc/errata-3rd.pdf">Authors’ third-edition errata</a></li>
-<li><a href="https://www.routledge.com/Introduction-to-Modern-Cryptography-Revised-Third-Edition/Katz-Lindell/p/book/9781032496795">Publisher’s revised third edition</a></li>
+<li><a href="https://www.cs.umd.edu/~jkatz/imc/toc-preface-3rd.pdf">Original third-edition contents and preface (2021)</a></li>
+<li><a href="https://www.cs.umd.edu/~jkatz/imc/errata-3rd.pdf">Authors’ errata for the original third edition</a></li>
 </ul>
-<p><strong>Edition note:</strong> Chapter titles and section pointers were checked against the 2021 third edition, with the authors’ errata alongside it. The publisher’s revised third edition (2025) lists the same 15-chapter sequence, with Chapter 14 titled “Quantum-Secure Cryptography.” That outline has been cross-checked; revised-edition section and page numbering have not been verified. If you use the revision, match these topics to your copy’s section headings.</p>
-<p class="small">Chapter connections and reading references reviewed on 20 October 2026. The linked labs may evolve; their own sources and stated limits remain part of each activity.</p>
+<p><strong>Edition note:</strong> Chapter titles and the listed section references were checked directly against the 2025 revised third edition. References use chapter and section numbers, not PDF viewer page numbers. The 2021 third edition has the same 15-chapter sequence, but Chapter 14 was titled “Post-Quantum Cryptography.” The revision incorporates corrections and updates the discussion of NIST standards; the author-hosted 2021 contents and errata remain linked for comparison.</p>
+<p class="small">Reading references checked against the revised edition on 21 October 2026. The linked labs may evolve; their own sources and stated limits remain part of each activity.</p>
 <p>Follow each exhibit’s own sources and implementation limits. Statistical success, a failed attack attempt or a successful encryption round trip cannot establish a security proof.</p>
 <p>General zero-knowledge and multiparty-computation exhibits are further exploration in the <a href="../../">full catalog</a>; they are not presented as numbered chapters of this book.</p>
 <h3>Historical further reading</h3>

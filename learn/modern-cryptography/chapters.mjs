@@ -1,7 +1,7 @@
-// Original reading activities, reviewed 2026-10-20. These are selected connections,
+// Original reading activities; edition references checked 2026-10-21. Selected connections,
 // not reproductions of textbook exercises or claims of complete chapter coverage.
-// Chapter titles and activity references checked against the 2021 third edition.
-// Public contents: https://www.cs.umd.edu/~jkatz/imc/toc-preface-3rd.pdf
+// Chapter titles and activity references checked against the 2025 revised third edition.
+// Reference edition: https://doi.org/10.1201/9781003398134
 // Edition and source-review boundaries are recorded in ../README.md.
 // Exact exhibit titles resolve against knowledge-map/catalog.json during the build.
 export const chapters = [
@@ -70,7 +70,7 @@ export const chapters = [
   },
   {
     chapter: 6, part: 'Symmetric cryptography', title: 'Name the hash property you actually need',
-    bookTitle: 'Hash Functions and Applications', sections: '§§6.1.1–6.1.2, 6.3.1, 6.4.1–6.4.3 and 6.6.2–6.6.3; Appendix A.4; §§6.5 and 6.6.5 for commitments', coverage: 'direct',
+    bookTitle: 'Hash Functions and Applications', sections: '§§6.1.1–6.1.2, 6.3.1, 6.4.1–6.4.3 and 6.6.2–6.6.4; Appendix A.4; §§6.5 and 6.6.5 for commitments', coverage: 'direct',
     labs: [
       {title: 'Hash Zoo', coverage: 'direct', note: 'Inspect Merkle–Damgård, sponge and tree structures with actual hash computations.'},
       {title: 'Collision Vault', coverage: 'direct', note: 'Verify collision examples and distinguish equal digests from recovering an original message.'},
@@ -82,7 +82,7 @@ export const chapters = [
     predict: 'If two different letters have the same shortened digest, will a valid MAC over that digest distinguish them? What changes when a fresh salt is chosen after an inversion table was built?',
     try: 'In Hash Hunt, find a collision at a small output width and independently compare the displayed inputs and digests. Run Meaningful forgery, then the chain-table and salt experiments; separate endpoint matches from verified preimages. For the Merkle-tree connection, retain an original inclusion proof, use Tamper Leaf, and compare its reconstructed root with the changed tree’s root.',
     reflect: 'How do a collision, a preimage and a second preimage differ? Why must a verifier obtain the expected Merkle root from a trusted source? What role does unpredictable opening randomness play in a hash commitment?',
-    limit: 'Hash Hunt attacks deliberately shortened outputs and an insecure hash-then-MAC composition, not full SHA-256 or HMAC. Its rainbow chains are a later extension to the Hellman connection; probability models and measured outcomes remain separate. A concrete hash is not literally an ideal random oracle, and an avalanche picture is not a collision-resistance proof. Consult the author errata when comparing hash properties: second-preimage resistance does not imply preimage resistance without additional conditions.'
+    limit: 'Hash Hunt attacks deliberately shortened outputs and an insecure hash-then-MAC composition, not full SHA-256 or HMAC. Its rainbow chains are a later extension to the Hellman connection; probability models and measured outcomes remain separate. A concrete hash is not literally an ideal random oracle, and an avalanche picture is not a collision-resistance proof. Revised-edition §6.1.2 qualifies the implication from second-preimage resistance to preimage resistance: the hash must also be sufficiently compressing.'
   },
   {
     chapter: 7, part: 'Symmetric cryptography', title: 'Inspect the machinery inside the primitive',
@@ -188,19 +188,19 @@ export const chapters = [
   },
   {
     chapter: 14, part: 'Public-key cryptography', title: 'Change the attacker’s computational model',
-    bookTitle: 'Post-Quantum Cryptography', revisedTitle: 'Quantum-Secure Cryptography', sections: '§§14.1.1, 14.2–14.3 and 14.4.2–14.4.3', coverage: 'modern',
+    bookTitle: 'Quantum-Secure Cryptography', originalTitle: 'Post-Quantum Cryptography', sections: 'Chapter 14 introduction; §§14.1.1, 14.2–14.3 and 14.4.2–14.4.3; chapter references for the NIST standards', coverage: 'modern',
     labs: [
       {title: 'Grover', coverage: 'direct', note: 'Explore quantum search and distinguish query counts from practical attack time.'},
       {title: 'Shor', coverage: 'direct', note: 'Follow small period-finding and factoring examples in a classical simulation.'},
       {title: 'Frodo Vault', coverage: 'modern', note: 'Bridge the chapter’s LWE ideas to a practical KEM, keeping toy noise experiments distinct from real parameters.'},
       {title: 'LMS Ledger', coverage: 'modern', note: 'Explore one-time chains and signature trees in a teaching adaptation with explicit state limits.'},
-      {title: 'Kyber Vault', coverage: 'modern', note: 'Continue beyond the text’s examples to standardized ML-KEM.'},
-      {title: 'Dilithium Seal', coverage: 'modern', note: 'Continue beyond the text’s examples to standardized ML-DSA.'}
+      {title: 'Kyber Vault', coverage: 'modern', note: 'Connect the revision’s Kyber/FIPS 203 discussion to ML-KEM, a practical counterpart to the chapter’s simplified LWE encryption.'},
+      {title: 'Dilithium Seal', coverage: 'modern', note: 'Connect the revision’s Dilithium/FIPS 204 discussion to ML-DSA, a lattice-based counterpart to the chapter’s hash-based signature constructions.'}
     ],
     predict: 'Which hard problems does Shor’s algorithm threaten, and what could go wrong if a one-time signing key signs two different messages?',
     try: 'Compare Grover’s search behavior with Shor’s period-finding route. Then inspect the one-time signing-state experiment in LMS Ledger before comparing a lattice-based signature.',
     reflect: 'Why are symmetric-key search and public-key factorization different migration problems? What state must a tree-based one-time signature scheme protect?',
-    limit: 'The quantum demos run on classical hardware. The final ML-KEM and ML-DSA standards are follow-on connections, not claimed textbook implementations. LMS Ledger’s small-tree/HSS teaching adaptation is not interoperable HSS. The chapter’s Lamport proofs and quantum collision analysis still need the reading.'
+    limit: 'The quantum demos run on classical hardware. The revised chapter discusses the 2024 standards corresponding to Kyber, Dilithium and SPHINCS+ (FIPS 203–205), while teaching simplified constructions. ML-KEM and ML-DSA remain practical counterparts rather than implementations of those textbook constructions. LMS Ledger’s small-tree/HSS teaching adaptation is not interoperable HSS. The chapter’s Lamport proofs and quantum collision analysis still need the reading.'
   },
   {
     chapter: 15, part: 'Public-key cryptography', title: 'Compute on ciphertexts and distribute decryption',

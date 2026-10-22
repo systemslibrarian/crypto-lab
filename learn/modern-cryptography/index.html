@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Introduction to Modern Cryptography Reading Path · Crypto Lab</title>
-<meta name="description" content="An independent companion to Katz and Lindell’s Introduction to Modern Cryptography: 15 chapter connections, original experiments, security questions and explicit coverage limits.">
+<meta name="description" content="An independent companion to Katz and Lindell’s Introduction to Modern Cryptography, revised third edition (2025): 15 chapter connections, original experiments, security questions and explicit coverage limits.">
 <link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/learn/modern-cryptography/">
 <link rel="stylesheet" href="../shared/workshop.css">
 <link rel="stylesheet" href="../shared/reading-path.css">
@@ -18,7 +18,7 @@
 <main id="main" class="reading-path">
 <header class="reading-header">
 <h1>Introduction to Modern Cryptography</h1>
-<p>Jonathan Katz &amp; Yehuda Lindell · Third edition (2021) · 15 chapters</p>
+<p>Jonathan Katz &amp; Yehuda Lindell · Revised third edition (2025) · 15 chapters</p>
 <p class="companion-note">Independent companion · <a href="#sources-title">Edition and sources</a></p>
 </header>
 
@@ -100,7 +100,7 @@
 <article class="panel chapter" id="chapter-6" data-part="Symmetric cryptography" data-coverage="direct" aria-labelledby="chapter-6-title">
 <header><div><p class="eyebrow">Chapter 6 · Symmetric cryptography</p><h2 id="chapter-6-title">Hash Functions and Applications</h2></div><span class="badge direct">Direct connection</span></header>
 
-<p class="chapter-reading"><strong>Learning focus:</strong> Name the hash property you actually need</p><p class="small chapter-sections"><strong>Read:</strong> §§6.1.1–6.1.2, 6.3.1, 6.4.1–6.4.3 and 6.6.2–6.6.3; Appendix A.4; §§6.5 and 6.6.5 for commitments</p>
+<p class="chapter-reading"><strong>Learning focus:</strong> Name the hash property you actually need</p><p class="small chapter-sections"><strong>Read:</strong> §§6.1.1–6.1.2, 6.3.1, 6.4.1–6.4.3 and 6.6.2–6.6.4; Appendix A.4; §§6.5 and 6.6.5 for commitments</p>
 <p class="predict"><strong>Predict before opening a lab:</strong> If two different letters have the same shortened digest, will a valid MAC over that digest distinguish them? What changes when a fresh salt is chosen after an inversion table was built?</p>
 <ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/">Hash Zoo</a><span class="badge direct">Direct connection</span><p>Inspect Merkle–Damgård, sponge and tree structures with actual hash computations.</p></li>
 <li><a href="https://systemslibrarian.github.io/crypto-lab-collision-vault/">Collision Vault</a><span class="badge direct">Direct connection</span><p>Verify collision examples and distinguish equal digests from recovering an original message.</p></li>
@@ -110,7 +110,7 @@
 <li><a href="https://systemslibrarian.github.io/crypto-lab-kdf-chain/">KDF Chain</a><span class="badge direct">Direct connection</span><p>Compare password derivation with extracting and expanding existing key material.</p></li></ul>
 <p class="exercise"><strong>Try this:</strong> In Hash Hunt, find a collision at a small output width and independently compare the displayed inputs and digests. Run Meaningful forgery, then the chain-table and salt experiments; separate endpoint matches from verified preimages. For the Merkle-tree connection, retain an original inclusion proof, use Tamper Leaf, and compare its reconstructed root with the changed tree’s root.</p>
 <p class="reflect"><strong>Explain the result:</strong> How do a collision, a preimage and a second preimage differ? Why must a verifier obtain the expected Merkle root from a trusted source? What role does unpredictable opening randomness play in a hash commitment?</p>
-<p><strong>Coverage boundary:</strong> Hash Hunt attacks deliberately shortened outputs and an insecure hash-then-MAC composition, not full SHA-256 or HMAC. Its rainbow chains are a later extension to the Hellman connection; probability models and measured outcomes remain separate. A concrete hash is not literally an ideal random oracle, and an avalanche picture is not a collision-resistance proof. Consult the author errata when comparing hash properties: second-preimage resistance does not imply preimage resistance without additional conditions.</p>
+<p><strong>Coverage boundary:</strong> Hash Hunt attacks deliberately shortened outputs and an insecure hash-then-MAC composition, not full SHA-256 or HMAC. Its rainbow chains are a later extension to the Hellman connection; probability models and measured outcomes remain separate. A concrete hash is not literally an ideal random oracle, and an avalanche picture is not a collision-resistance proof. Revised-edition §6.1.2 qualifies the implication from second-preimage resistance to preimage resistance: the hash must also be sufficiently compressing.</p>
 <label class="checkpoint"><input type="checkbox" data-chapter="6" disabled> I explored this chapter’s connections</label>
 </article>
 <article class="panel chapter" id="chapter-7" data-part="Symmetric cryptography" data-coverage="direct" aria-labelledby="chapter-7-title">
@@ -216,19 +216,19 @@
 <label class="checkpoint"><input type="checkbox" data-chapter="13" disabled> I explored this chapter’s connections</label>
 </article>
 <article class="panel chapter" id="chapter-14" data-part="Public-key cryptography" data-coverage="modern" aria-labelledby="chapter-14-title">
-<header><div><p class="eyebrow">Chapter 14 · Public-key cryptography</p><h2 id="chapter-14-title">Post-Quantum Cryptography</h2></div><span class="badge modern">Modern counterpart</span></header>
-<p class="small chapter-edition">Revised edition title: Quantum-Secure Cryptography</p>
-<p class="chapter-reading"><strong>Learning focus:</strong> Change the attacker’s computational model</p><p class="small chapter-sections"><strong>Read:</strong> §§14.1.1, 14.2–14.3 and 14.4.2–14.4.3</p>
+<header><div><p class="eyebrow">Chapter 14 · Public-key cryptography</p><h2 id="chapter-14-title">Quantum-Secure Cryptography</h2></div><span class="badge modern">Modern counterpart</span></header>
+<p class="small chapter-edition">2021 third-edition title: Post-Quantum Cryptography</p>
+<p class="chapter-reading"><strong>Learning focus:</strong> Change the attacker’s computational model</p><p class="small chapter-sections"><strong>Read:</strong> Chapter 14 introduction; §§14.1.1, 14.2–14.3 and 14.4.2–14.4.3; chapter references for the NIST standards</p>
 <p class="predict"><strong>Predict before opening a lab:</strong> Which hard problems does Shor’s algorithm threaten, and what could go wrong if a one-time signing key signs two different messages?</p>
 <ul class="chapter-labs"><li><a href="https://systemslibrarian.github.io/crypto-lab-grover/">Grover</a><span class="badge direct">Direct connection</span><p>Explore quantum search and distinguish query counts from practical attack time.</p></li>
 <li><a href="https://systemslibrarian.github.io/crypto-lab-shor/">Shor</a><span class="badge direct">Direct connection</span><p>Follow small period-finding and factoring examples in a classical simulation.</p></li>
 <li><a href="https://systemslibrarian.github.io/crypto-lab-frodo-vault/">Frodo Vault</a><span class="badge modern">Modern counterpart</span><p>Bridge the chapter’s LWE ideas to a practical KEM, keeping toy noise experiments distinct from real parameters.</p></li>
 <li><a href="https://systemslibrarian.github.io/crypto-lab-lms-ledger/">LMS Ledger</a><span class="badge modern">Modern counterpart</span><p>Explore one-time chains and signature trees in a teaching adaptation with explicit state limits.</p></li>
-<li><a href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/">Kyber Vault</a><span class="badge modern">Modern counterpart</span><p>Continue beyond the text’s examples to standardized ML-KEM.</p></li>
-<li><a href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/">Dilithium Seal</a><span class="badge modern">Modern counterpart</span><p>Continue beyond the text’s examples to standardized ML-DSA.</p></li></ul>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-kyber-vault/">Kyber Vault</a><span class="badge modern">Modern counterpart</span><p>Connect the revision’s Kyber/FIPS 203 discussion to ML-KEM, a practical counterpart to the chapter’s simplified LWE encryption.</p></li>
+<li><a href="https://systemslibrarian.github.io/crypto-lab-dilithium-seal/">Dilithium Seal</a><span class="badge modern">Modern counterpart</span><p>Connect the revision’s Dilithium/FIPS 204 discussion to ML-DSA, a lattice-based counterpart to the chapter’s hash-based signature constructions.</p></li></ul>
 <p class="exercise"><strong>Try this:</strong> Compare Grover’s search behavior with Shor’s period-finding route. Then inspect the one-time signing-state experiment in LMS Ledger before comparing a lattice-based signature.</p>
 <p class="reflect"><strong>Explain the result:</strong> Why are symmetric-key search and public-key factorization different migration problems? What state must a tree-based one-time signature scheme protect?</p>
-<p><strong>Coverage boundary:</strong> The quantum demos run on classical hardware. The final ML-KEM and ML-DSA standards are follow-on connections, not claimed textbook implementations. LMS Ledger’s small-tree/HSS teaching adaptation is not interoperable HSS. The chapter’s Lamport proofs and quantum collision analysis still need the reading.</p>
+<p><strong>Coverage boundary:</strong> The quantum demos run on classical hardware. The revised chapter discusses the 2024 standards corresponding to Kyber, Dilithium and SPHINCS+ (FIPS 203–205), while teaching simplified constructions. ML-KEM and ML-DSA remain practical counterparts rather than implementations of those textbook constructions. LMS Ledger’s small-tree/HSS teaching adaptation is not interoperable HSS. The chapter’s Lamport proofs and quantum collision analysis still need the reading.</p>
 <label class="checkpoint"><input type="checkbox" data-chapter="14" disabled> I explored this chapter’s connections</label>
 </article>
 <article class="panel chapter" id="chapter-15" data-part="Public-key cryptography" data-coverage="direct" aria-labelledby="chapter-15-title">
@@ -265,15 +265,16 @@
 
 <section class="panel sources" aria-labelledby="sources-title">
 <h2 id="sources-title">Book, edition and sources</h2>
-<p>Jonathan Katz and Yehuda Lindell. <cite>Introduction to Modern Cryptography</cite>. Third edition. CRC Press, 2021.</p>
+<p>Jonathan Katz and Yehuda Lindell. <cite>Introduction to Modern Cryptography</cite>. Revised third edition. CRC Press, 2025.</p>
 <ul class="source-links">
+<li><a href="https://www.routledge.com/Introduction-to-Modern-Cryptography-Revised-Third-Edition/Katz-Lindell/p/book/9781032496795">Publisher’s revised third edition (2025)</a></li>
+<li><a href="https://doi.org/10.1201/9781003398134">Revised third edition DOI</a></li>
 <li><a href="https://www.cs.umd.edu/~jkatz/imc.html">Jonathan Katz’s official book page</a></li>
-<li><a href="https://www.cs.umd.edu/~jkatz/imc/toc-preface-3rd.pdf">Official third-edition contents and preface</a></li>
-<li><a href="https://www.cs.umd.edu/~jkatz/imc/errata-3rd.pdf">Authors’ third-edition errata</a></li>
-<li><a href="https://www.routledge.com/Introduction-to-Modern-Cryptography-Revised-Third-Edition/Katz-Lindell/p/book/9781032496795">Publisher’s revised third edition</a></li>
+<li><a href="https://www.cs.umd.edu/~jkatz/imc/toc-preface-3rd.pdf">Original third-edition contents and preface (2021)</a></li>
+<li><a href="https://www.cs.umd.edu/~jkatz/imc/errata-3rd.pdf">Authors’ errata for the original third edition</a></li>
 </ul>
-<p><strong>Edition note:</strong> Chapter titles and section pointers were checked against the 2021 third edition, with the authors’ errata alongside it. The publisher’s revised third edition (2025) lists the same 15-chapter sequence, with Chapter 14 titled “Quantum-Secure Cryptography.” That outline has been cross-checked; revised-edition section and page numbering have not been verified. If you use the revision, match these topics to your copy’s section headings.</p>
-<p class="small">Chapter connections and reading references reviewed on 20 October 2026. The linked labs may evolve; their own sources and stated limits remain part of each activity.</p>
+<p><strong>Edition note:</strong> Chapter titles and the listed section references were checked directly against the 2025 revised third edition. References use chapter and section numbers, not PDF viewer page numbers. The 2021 third edition has the same 15-chapter sequence, but Chapter 14 was titled “Post-Quantum Cryptography.” The revision incorporates corrections and updates the discussion of NIST standards; the author-hosted 2021 contents and errata remain linked for comparison.</p>
+<p class="small">Reading references checked against the revised edition on 21 October 2026. The linked labs may evolve; their own sources and stated limits remain part of each activity.</p>
 <p>Follow each exhibit’s own sources and implementation limits. Statistical success, a failed attack attempt or a successful encryption round trip cannot establish a security proof.</p>
 <p>General zero-knowledge and multiparty-computation exhibits are further exploration in the <a href="../../">full catalog</a>; they are not presented as numbered chapters of this book.</p>
 <h3>Historical further reading</h3>

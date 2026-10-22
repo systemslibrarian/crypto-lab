@@ -22,7 +22,7 @@ their links in the hub's curated path summaries:
 | Companion | AES Anatomy | Clock Arithmetic |
 |---|---|---|
 | Understanding Cryptography, 2024 | Chapter 4: primary AES route, now a direct connection | Chapters 1, 6, 7 and 8: modular arithmetic, Euclid/Euler, CRT and finite-field groups |
-| Katz–Lindell, 2021 section numbering | §7.2.5, alongside SPNs and Feistel networks | §§9.1.2–9.1.5 and 9.3.1–9.3.3, with Appendix B arithmetic algorithms |
+| Katz–Lindell, 2025 revised third edition | §7.2.5, alongside SPNs and Feistel networks | §§9.1.2–9.1.5 and 9.3.1–9.3.3, with Appendix B arithmetic algorithms |
 | Boneh–Shoup, version 0.6 | Chapter 4: full cipher and deliberately weakened variants | Chapter 10: arithmetic preparation for RSA and DH |
 | Applied Cryptography, 1996 historical companion | No new AES placement | Chapter 11: Euclid, modular arithmetic and CRT |
 
@@ -30,7 +30,7 @@ The activities were checked against [AES Anatomy at `7abf61f`](https://github.co
 and [Clock Arithmetic at `5bb8684`](https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/tree/5bb86840fab4806e3681c1a378fd4c643831035d),
 including the displayed key-expansion/inverse traces, affine-only fixture,
 Euclid rows, subgroup examples and generalized CRT input contract. Katz–Lindell's
-section pointers were checked against the author-hosted third-edition contents.
+section pointers were rechecked against the supplied 2025 revised third edition.
 
 AES Anatomy implements AES-128/192/256; the four layer-removal attacks run on
 weakened AES-128 variants with full-AES controls. Clock Arithmetic teaches exact,
@@ -42,7 +42,7 @@ Existing chapter IDs, edition boundaries and saved-progress keys are preserved.
 ## Introduction to Modern Cryptography reading path
 
 `modern-cryptography/chapters.mjs` supplies 15 original chapter activities for
-Jonathan Katz and Yehuda Lindell’s third-edition structure. Chapters 1–2 form
+Jonathan Katz and Yehuda Lindell’s 2025 revised third edition. Chapters 1–2 form
 the foundations, 3–8 symmetric cryptography, and 9–15 public-key cryptography.
 The generated page has static links, chapter/area/coverage filtering, separate
 per-lab connection labels and explicit coverage limits. Each chapter uses the
@@ -58,27 +58,31 @@ node learn/modern-cryptography/build.mjs
 node learn/modern-cryptography/build.mjs --check
 ```
 
-### Sources and edition boundary — reviewed 20 October 2026
+### Sources and edition boundary — reviewed 21 October 2026
 
 - Reference edition: Jonathan Katz and Yehuda Lindell, *Introduction to Modern
-  Cryptography*, third edition, CRC Press, 2021. Chapter titles and targeted
-  activity references were checked against a supplied copy’s contents and
-  relevant interior sections. The textbook is not stored in this repository.
+  Cryptography*, revised third edition, CRC Press, 2025. ISBN 9781032496795
+  (hardback), 9781003398134 (ebook); DOI [10.1201/9781003398134](https://doi.org/10.1201/9781003398134).
+  All 15 chapter titles and listed section references were checked against the
+  supplied revised edition’s contents, with §6.1.2 and Chapter 14’s introduction and
+  references checked in the text. Figure 10.1 also remains the key-length figure.
+  References use the book’s section numbers, not the converted PDF’s viewer page
+  numbers. The textbook is not stored in this repository.
 - [Katz’s official book page](https://www.cs.umd.edu/~jkatz/imc.html) identifies
   the authors, third edition, intended scope, contents and errata.
 - [Author-hosted contents and preface](https://www.cs.umd.edu/~jkatz/imc/toc-preface-3rd.pdf)
-  establishes the 15-chapter sequence, three parts and section pointers used here.
+  documents the original 2021 third edition and is retained for comparison.
 - [Revised third edition publisher listing](https://www.routledge.com/Introduction-to-Modern-Cryptography-Revised-Third-Edition/Katz-Lindell/p/book/9781032496795)
-  and its [indexed alternate URL](https://www.routledge.com/Introduction-to-Modern-Cryptography-Third-Edition/Katz-Lindell/p/book/9781032496795)
-  identify the 2025 revision and the same chapter outline. The author’s contents
-  call chapter 14 “Post-Quantum Cryptography”; the publisher’s listing uses
-  “Quantum-Secure Cryptography.” That alternate title is also shown on chapter
-  14’s card and is searchable. The revised chapter outline was cross-checked;
-  revised-edition section and page numbering were not verified. The precise
-  section pointers on this page follow the 2021 edition.
-- [Author errata](https://www.cs.umd.edu/~jkatz/imc/errata-3rd.pdf), dated 23 July
-  2024, includes the qualification on second-preimage versus preimage resistance
-  reflected in chapter 6’s boundary.
+  identifies the edition used here. Chapter 14 is now headed “Quantum-Secure
+  Cryptography”; its original 2021 title, “Post-Quantum Cryptography,” remains
+  visible and searchable as an edition cross-reference. The numbered section
+  pointers used by the existing activities retain their numbering in the revision.
+  The chapter 6 pointer now also includes §6.6.4 for KDF Chain.
+- [Author errata](https://www.cs.umd.edu/~jkatz/imc/errata-3rd.pdf) remains linked
+  as a resource for the original third edition. Revised-edition §6.1.2 itself
+  includes the sufficient-compression condition for the implication from
+  second-preimage resistance to preimage resistance, so chapter 6’s boundary
+  points directly to that section.
 
 The page links official book resources and contains original activity prompts.
 It does not redistribute the textbook or copy its exercises. It is independent
@@ -119,9 +123,11 @@ These are educational capability checks, not new security audits of those labs.
   links. Factor Forge’s rho factors integers; Log Forge’s rho recovers exponents.
   Partial congruences, runtime caps and production-size cost formulas remain
   explicitly distinct from verified recovery at teaching sizes.
-- Chapter 14 separates quantum simulations and the text’s themes from later
-  standardized ML-KEM/ML-DSA examples. LMS Ledger is a teaching adaptation,
-  not interoperable HSS.
+- Chapter 14 now acknowledges the revision’s discussion of the 2024 standards
+  corresponding to Kyber, Dilithium and SPHINCS+ (FIPS 203–205). ML-KEM and
+  ML-DSA are still practical counterparts to the chapter’s simplified teaching
+  constructions, not exact textbook implementations. LMS Ledger is a teaching
+  adaptation, not interoperable HSS.
 - Chapter 15 now includes Residue Gate’s Goldwasser–Micali and restricted Rabin
   experiments beside Paillier, sharing and threshold concepts. The canonical
   root-oracle reduction, redundancy rule and one-bit Rabin construction have

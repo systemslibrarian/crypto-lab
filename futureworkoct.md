@@ -8,7 +8,7 @@ the generating command or Fleet Console is authoritative when they disagree.
 
 ## Current handoff — 2026-10-22
 
-`crypto-lab` `origin/main` is **`1e6f181`** and `crypto-counsel` `origin/main` is
+`crypto-lab` `origin/main` is **`a246d21`** and `crypto-counsel` `origin/main` is
 **`cc2979b`**. This queue branch is based directly on that crypto-lab main. The
 following completed changes are open for maintainer review and must not be
 treated as merged:
@@ -16,9 +16,11 @@ treated as merged:
 - crypto-counsel **#18** reviews the 28 genuinely stale corpus entries; **#19**
   is stacked on #18 and refreshes the catalog README snapshot.
 - crypto-lab **#244** refreshes card dates and generated metadata; **#245** is
-  stacked on #244 and refreshes catalog evidence.
+  stacked on #244 and refreshes catalog evidence. Both were rebased after the
+  22 October Lattice Fault provenance update and preserve that newer review.
 - crypto-lab **#246–#249** cover teach probes, advisory-chip controls, the
-  Cryptanalyst path split and knowledge-map tool metadata.
+  Cryptanalyst path split and knowledge-map tool metadata. #248 was rebased on
+  current main after the same provenance update.
 - AES Anatomy **#2**, Clock Arithmetic **#2**, Harvest Vault **#21**, Hybrid
   Wire **#17**, Shelf Oracle **#13**, Compression Leak **#6** and WebAuthn
   **#25** contain the completed lab-specific fixes and verification work.
@@ -42,16 +44,26 @@ treated as merged:
   Its 27 unit tests, 15 browser claims and both axe viewport sweeps pass at the
   exact repair head; the Fleet repair remains working until merge and
   deployment are verified.
+- What Is PQC **#3**, World Ciphers **#26**, Simon Period **#25** and Sleeve
+  Check **#9** contain the next four completed security-review repairs. They
+  harden input/verification boundaries and Pages workflows, retain focused
+  regression checks, and pass their exact-head Linux workflows.
+- SM2 Forge **#9** fixes the axe 4.14 brand-name mismatch exposed by its pending
+  dependency update, includes those verified dependency versions, and confines
+  Pages/OIDC permissions to the deploy job. Its 12 unit tests, five embedded
+  maintenance controls, both accessibility flows and all seven browser claims
+  pass at the exact repair head.
 - Adaptor Gate **#8** upgrades Vite to 8.3.4 and the Playwright image to 1.64.1,
   and fixes the accessibility regression found during validation. Its 127 unit
   and 116 browser tests pass, but its Fleet item stays working until the fix is
   on the default branch and the deployment is verified.
 - This current-state audit is crypto-lab **#243**.
 
-All of those PRs were open and GitHub reported them clean on 2026-10-22. Do not
-merge them here; maintainer review is still required.
+All of those PRs were open on 2026-10-22. The lab repair PRs have green
+exact-head checks; the three hub branches rebased after `a246d21` are re-running
+their checks. Do not merge them here; maintainer review is still required.
 
-**Pick up with:** What Is PQC, the next queued Fleet Console security-evidence
+**Pick up with:** SM9 Forge, the next queued Fleet Console security-evidence
 review. Read its committed README and implementation, query its exact lock
 versions and provider alerts, and record one evidence-backed disposition. Then
 continue the queue one lab at a time. Do not infer a clean security state from
@@ -81,19 +93,20 @@ six corrections.
 
 ## Active Fleet Console maintenance — measured 2026-10-22
 
-The work store has **1,183 total, 1,017 complete and 166 active** items:
-**155 queued, 6 working and 5 blocked**. Seventy-two work items have been
-completed since the preceding version of this file; 91 completions have now
+The work store has **1,188 total, 1,022 complete and 166 active** items:
+**150 queued, 11 working and 5 blocked**. Seventy-seven work items have been
+completed since the preceding version of this file; 96 completions have now
 been recorded in this maintenance pass, including newly discovered repairs.
 
 The active queue is:
 
-- **159 security-evidence items:** 155 queued, Adaptor Gate working, and Time
+- **154 security-evidence items:** 150 queued, Adaptor Gate working, and Time
   Trust, LLL Break and Confirmer Signatures blocked.
-- **5 green repairs awaiting merge/deployment:** Token Tell #25, VDF #23,
-  Vigenère Break #29, VRF Gate #22 and Web of Trust #21. Their implementation
-  and exact-head CI are complete, but Fleet correctly retains them as working
-  because required deployment is still unverified.
+- **10 green repairs awaiting merge/deployment:** Token Tell #25, VDF #23,
+  Vigenère Break #29, VRF Gate #22, Web of Trust #21, What Is PQC #3, World
+  Ciphers #26, Simon Period #25, Sleeve Check #9 and SM2 Forge #9. Their
+  implementation and exact-head CI are complete, but Fleet correctly retains
+  them as working because required deployment is still unverified.
 - **2 cross-repository blockers:** Dot's all-lab reading report and the Counsel
   primary API TLS route.
 - **0 dependency-change reviews:** all 33 were individually reviewed against
@@ -109,12 +122,13 @@ family fixed in Vite 8.3.3.
 
 - Adaptor Gate's source fix is PR #8; leave the item working until merge and a
   default-branch deployment prove the repair.
-- Token Tell, Traitor Trace, VDF, Vigenère Break, VRF Gate and Web of Trust each
-  received a committed-source review with exact-lock, provider and exact-head
-  workflow evidence. Traitor Trace needed no patch. The other five exposed the
-  repair work linked above; their security-evidence items are complete without
-  pretending the still-unmerged repairs are deployed. Web of Trust's review
-  verified the RFC 7638/8037 publications before changing its key binding.
+- Token Tell, Traitor Trace, VDF, Vigenère Break, VRF Gate, Web of Trust, What
+  Is PQC, World Ciphers, Simon Period, Sleeve Check and SM2 Forge each received
+  a committed-source review with exact-lock, provider and exact-head workflow
+  evidence. Traitor Trace needed no patch. The other ten exposed the repair
+  work linked above; their security-evidence items are complete without
+  pretending the still-unmerged repairs are deployed. Publication claims were
+  checked against the cited primary sources before prose or identifiers moved.
 - LLL Break and Time Trust already have Vite 8.3.4 and clean exact-lock registry
   results on current `main`, but GitHub still reports alerts against 8.3.2.
   Reconcile the provider record; do not downgrade or mark the alert fixed merely
@@ -185,13 +199,13 @@ decide whether to enable that counsel setting.
   entries untouched. #19 refreshes the README snapshot.
 - Catalog: crypto-lab #244–#249 contain the date/evidence refreshes, automated
   teach claims, advisory controls, path split and knowledge-map documentation.
-- Depth verification: the five lab PRs listed in the handoff pin production
+- Depth verification: the audited lab PRs listed in the handoff pin production
   paths to published vectors or independent implementations; all mutation
   controls failed as intended.
-- Fleet Console: 91 work items are complete with item-level evidence. This
+- Fleet Console: 96 work items are complete with item-level evidence. This
   includes both knowledge-map metadata gaps, all three missing real tool runs,
   five Signature Gate teaching-role reviews, Collision Vault's cascades,
-  interpretation work, all 33 dependency reviews and 39 security-evidence
+  interpretation work, all 33 dependency reviews and 44 security-evidence
   restorations, plus the repair tasks found while restoring that evidence.
 - Branch cleanup: 30 remote and four local branches were removed and 20 stale
   tracking refs pruned; the restore manifest is the file named above.

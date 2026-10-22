@@ -19,35 +19,38 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Fifteen open lab repairs have green exact-head Linux CI: Token Tell **#25**,
-  VDF **#23**, Vigenère Break **#29**, VRF Gate **#22**, Web of Trust **#21**,
-  What Is PQC **#3**, World Ciphers **#26**, Simon Period **#25**, Sleeve Check
-  **#9**, SM2 Forge **#9**, SM9 Forge **#10**, SNARK Arena **#24**, SPDZ Forge
-  **#25**, Split Point **#13** and STARK Tower **#21**.
-- Three newer repairs are open and waiting for authoritative Linux execution:
-  Subliminal Channels **#6** is in progress; Syndrome Drain **#26** and
-  Syndrome Hints **#23** are queued. Their local unit, maintenance and build
-  gates pass. The macOS browser cannot start because Chromium aborts at
-  `MachPortRendezvousServer` error 141, so no local browser pass is claimed.
+- Twenty-three open lab repairs have green exact-head Linux CI. The first
+  fifteen are Token Tell **#25**, VDF **#23**, Vigenère Break **#29**, VRF Gate
+  **#22**, Web of Trust **#21**, What Is PQC **#3**, World Ciphers **#26**,
+  Simon Period **#25**, Sleeve Check **#9**, SM2 Forge **#9**, SM9 Forge **#10**,
+  SNARK Arena **#24**, SPDZ Forge **#25**, Split Point **#13** and STARK Tower
+  **#21**.
+- The eight newer green repairs are Subliminal Channels **#6**, Syndrome Drain
+  **#26**, Syndrome Hints **#23**, TC26 Pair **#10**, Threshold Decrypt **#21**,
+  Return Path **#8**, Ring Sign **#24** and Educational RSA **#23**. Educational
+  RSA's separate security-evidence review is complete; its repair caps demo
+  primes at 65,537 and hardens publishing. The macOS browser still aborts before
+  startup with `MachPortRendezvousServer` error 141, so Linux is the browser
+  authority and no local browser pass is claimed.
 
 All repair items remain working until a maintainer merges them and the required
 Pages deployment is verified. Do not merge them from this maintenance pass.
 
-**Pick up with:** `crypto-lab-tc26-pair`, Fleet item
-`dcd53501-6546-4080-b882-0348906f5cb1`. Fetch fresh `origin/main`, inspect a
+**Pick up with:** `crypto-lab-rsa-forge`, Fleet item
+`bca74608-817d-4b2a-9473-2c923e68b717`. Fetch fresh `origin/main`, inspect a
 clean committed worktree, read the README and implementation, query the exact
 lock and authenticated providers, and record one evidence-backed disposition.
 Then continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-22
 
-The work store has **1,196 total, 1,029 complete and 167 active** items:
-**142 queued, 19 working and 6 blocked**.
+The work store has **1,201 total, 1,034 complete and 167 active** items:
+**137 queued, 24 working and 6 blocked**.
 
 Active work consists of:
 
-- **142 queued security-evidence reviews.** TC26 Pair is next.
-- **19 working items:** 18 repairs awaiting merge/deployment (the lab PRs listed
+- **137 queued security-evidence reviews.** RSA Forge is next.
+- **24 working items:** 23 repairs awaiting merge/deployment (the lab PRs listed
   above) plus Adaptor Gate's security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state
   reconciliation; Confirmer Signatures and Subliminal Channels return
@@ -107,11 +110,3 @@ belongs where the last writer puts it.
   cleanup decision.
 - `~/branch-cleanup-2026-10-21.txt` records deleted branches and restore SHAs.
   Keep it until the restore window is intentionally closed.
-
-## Settled — do not re-file
-
-- `key-rush` really checks shares by recombining their values.
-- `secret-council` derives its possibility count from the result.
-- Games deliberately use `games-sync` rather than catalog cards or exemptions.
-- `quantum-vault-kpqc`'s light theme, `blind-oracle-api`'s absent page and
-  `confirmer-signatures`' absent `dependabot.yml` are intentional.

@@ -3282,7 +3282,7 @@
             data-attacks="Brute force@index.html:348 | Discrete log@index.html:347 | Factoring@index.html:346 | Side-channel (unspecified)@README.md:37"
             data-standards="NIST"
             data-implementation="WebCrypto"
-            data-level="advanced" data-added="2026-04" data-added-on="2026-04-17" data-updated="2026-08"
+            data-level="advanced" data-added="2026-04" data-added-on="2026-04-17" data-updated="2026-10"
            
            
            
@@ -3355,7 +3355,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Quantum Key Distribution</div>
             <div class="project-title">BB84</div>
-            <div class="project-copy">A BB84 teaching simulation with polarization, basis sifting, and QBER under eavesdropping. It hashes sifted bits into an AES-256-GCM key, but does not perform information reconciliation or security-proven privacy amplification.</div>
+            <div class="project-copy">A classical BB84 teaching simulation with basis sifting, QBER, and illustrative SHA-256 key derivation for AES-GCM. An optional reconciliation and Toeplitz extraction exercise shows public leakage and an assumed entropy budget; it does not prove finite-key QKD security.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Photon Polarization</span>
@@ -7415,7 +7415,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Code-Based KEM</div>
             <div class="project-title">HQC Vault</div>
-            <div class="project-copy">Hamming Quasi-Cyclic post-quantum KEM with Reed-Muller/Reed-Solomon decoding, and three-way comparison against BIKE and ML-KEM.</div>
+            <div class="project-copy">Explore an illustrative HQC-style KEM with quasi-cyclic arithmetic, Reed-Muller/Reed-Solomon decoding, and AES-GCM messaging. Compare published 2026 HQC sizes with BIKE and ML-KEM; the small browser model retains an older FO tag and is not current-spec HQC.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">HQC</span>
@@ -12529,7 +12529,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Group Messaging Security</div>
             <div class="project-title">MLS Group</div>
-            <div class="project-copy">An RFC 9420-inspired teaching subset illustrating TreeKEM, epoch key schedules, member changes, and group messages. It omits credential signatures, authenticated framing, and confirmation tags, so it does not provide the full protocol's security guarantees.</div>
+            <div class="project-copy">An RFC 9420-inspired teaching subset for TreeKEM, epoch keys, member changes, and group messages, plus a conceptual comparison of proposed PQ MLS suites. The live flow remains classical and omits signatures, authenticated framing, and confirmation tags; it does not provide full MLS security guarantees.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">MLS Teaching Subset</span>
@@ -12909,8 +12909,8 @@
             data-attacks="Birthday bound@src/data.ts:436 | Chosen-ciphertext attack@src/data.ts:205 | Chosen-plaintext attack@src/data.ts:921 | Differential cryptanalysis@src/data.ts:551 | Discrete log@src/data.ts:777 | Factoring@src/data.ts:777 | Fault injection@src/data.ts:93 | Key recovery@src/data.ts:145 | Lattice reduction@src/data.ts:157 | Side-channel (unspecified)@src/data.ts:242 | Timing side-channel@src/data.ts:310"
             data-standards="NIST"
             data-implementation="WebCrypto"
-            data-review-commit="cc5b6526b65e5d41bd1724754edc1355136b74bb"
-            data-review-note="Reviewed the new isogeny attack/reference entries, README and crypto.ts&#x27;s executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus. Reviewed the 21 October source-note, README and browser-check diff against the previous pinned head. The deterministic-CSIDH/OSIDH-LD fault preprint is reported context: software key recovery and a separate hardware instruction-skip experiment, not an executed attack in this lab. Cryptographic implementation files are unchanged; retain existing classifications."
+            data-review-commit="ac2429239a3645c3c3455597f68f7c65856bb26d"
+            data-review-note="Reviewed the new isogeny attack/reference entries, README and crypto.ts&#x27;s executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus. Reviewed the 21 October source-note, README and browser-check diff against the previous pinned head. The deterministic-CSIDH/OSIDH-LD fault preprint is reported context: software key recovery and a separate hardware instruction-skip experiment, not an executed attack in this lab. Cryptographic implementation files are unchanged; retain existing classifications. Reviewed the 22 October family-status and HQC-size diff: code-based is selected rather than standardized; Rainbow and SIKE remain broken individual schemes while multivariate and isogeny families remain research. The HQC-1 reference values use the 12 October 2026 team specification, including a 32-byte default compressed decapsulation key. crypto.ts executable exhibits are unchanged; the SQIsign power-analysis and CSIDH fault papers remain cited context, not implemented attacks. Prior Power analysis exclusion remains valid."
             data-level="advanced" data-added="2026-06" data-added-on="2026-06-06" data-updated="2026-10"
            
            
@@ -12985,7 +12985,7 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Post-Quantum Overview</div>
             <div class="project-title">PQ Families</div>
-            <div class="project-copy">A guided tour of the five post-quantum problem families — lattice, code-based, hash-based, multivariate, and isogeny — with the assumptions, history, and standardization status of each.</div>
+            <div class="project-copy">Compare five post-quantum problem families, their assumptions, representative sizes, and scheme-level status. HQC is selected but not yet standardized; Rainbow and SIKE were broken, while other multivariate and isogeny schemes remain research.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Lattice</span>
@@ -13861,8 +13861,8 @@
             data-comment-only="E91@src/data.ts:1"
             data-references="BB84 | Grover's algorithm | Shor's algorithm"
             data-implementation="idealized statistical simulation"
-            data-review-commit="eccf9173e98ab1c54293e47cc79896a2a78930af"
-            data-review-note="Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review; runE91 and anchor375 are unchanged. The October 21 UI correction scopes full intercept-resend behavior and states that a Bell violation alone is not a finite-key security proof. Preserve the idealized statistical simulation classification and BB84/MITM/side-channel removals; no physical quantum channel is implemented."
+            data-review-commit="b598bc2173a342d88d4b7bbdd97dbac47c0cea03"
+            data-review-note="Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review; runE91 and anchor375 are unchanged. The October 21 UI correction scopes full intercept-resend behavior and states that a Bell violation alone is not a finite-key security proof. Preserve the idealized statistical simulation classification and BB84/MITM/side-channel removals; no physical quantum channel is implemented. Reviewed the 22 October UI, CSV, data and engine diff. Public verdict labels now describe Bell-test outcomes rather than secret-key security, and the old eavesdropperDetected alias is removed; internal classification identifiers remain legacy. The runE91 anchor and idealized statistical sampler still execute, while no physical channel or finite-key security proof is implemented. Preserve the existing BB84, man-in-the-middle and side-channel exclusions."
             data-level="advanced" data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-10"
            
            
@@ -17189,9 +17189,9 @@
             data-references="Classic McEliece | HQC | Hamming code | LWE"
             data-attacks="Fault injection@src/main.ts:605 | Power analysis@src/main.ts:603 | Side-channel (unspecified)@src/main.ts:830"
             data-implementation="hand-rolled"
-            data-review-commit="34b88b39ec647ac5fcc8d16c9b0194cbfd7c9a3c"
-            data-review-note="Runs Prange-style and Stern information-set decoding against toy instances"
-            data-level="advanced" data-added="2026-07" data-added-on="2026-07-20" data-updated="2026-08"
+            data-review-commit="ad09e97936353a54a7b57b5a49d8c17a12f463b3"
+            data-review-note="Runs Prange-style and Stern information-set decoding against toy instances. Reviewed the 22 October HQC-1 comparison diff. The cited 2026 team specification gives secret-vector weight omega = 67, while McEliece t = 64 is an injected-error weight; feeding these distinct quantities into the toy hint rule is explicitly not a real-scheme security ranking. Prange and Stern still execute only on toy instances, and their anchored code is unchanged."
+            data-level="advanced" data-added="2026-07" data-added-on="2026-07-20" data-updated="2026-10"
            
            
            
@@ -17251,7 +17251,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Hint-Assisted ISD</div>
             <div class="project-title">Syndrome Hints</div>
-            <div class="project-copy">A real information-set-decoding attack on syndrome decoding over F₂ — feed it leaked side-channel hints and watch the work factor slide from exponential toward polynomial.</div>
+            <div class="project-copy">Run Prange and Stern information-set decoding on toy syndrome instances, add leaked hints, and watch the modeled work factor fall. The cited McEliece and HQC weights have different roles and do not yield a real-scheme security ranking here.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Hint-ISD</span>
@@ -21052,13 +21052,13 @@
             data-attacks="Key recovery@src/data/risk.ts:43 | Side-channel (unspecified)@src/choose/rules.ts:63 | Timing side-channel@src/data/risk.ts:80"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="416ef46df27afdb679b947edc093736ab104658a"
-            data-review-note="Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design. Re-read adapters, registry, benchmark runner and the full prior-pin diff on 12 October: runtime crypto provider entries and execution source are unchanged. SP800-230 limited-use draft profiles are reference-only and are excluded from the scheme registry, shortlist, benchmark matrix and exports; no draft adapter is implemented. Re-read the full prior-pin diff on 15 October (cfe96fd to 416ef46, two commits): a prose scoping change and a devDependency bump. The Falcon caveat, exclusion message and risk row now scope the floating-point sampler to the implementation this chooser measures and cite ePrint 2026/2431 for a fixed-point alternative it explicitly does not evaluate; the conservative exclusion is retained. No adapter, registry, shortlist, benchmark-matrix, export or provider entry changed, so every claim above still holds of the pinned source."
+            data-review-commit="0a5bbb1060078b7fcbacb467a0cd7ccaddbad660"
+            data-review-note="Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design. Re-read adapters, registry, benchmark runner and the full prior-pin diff on 12 October: runtime crypto provider entries and execution source are unchanged. SP800-230 limited-use draft profiles are reference-only and are excluded from the scheme registry, shortlist, benchmark matrix and exports; no draft adapter is implemented. Re-read the full prior-pin diff on 15 October (cfe96fd to 416ef46, two commits): a prose scoping change and a devDependency bump. The Falcon caveat, exclusion message and risk row now scope the floating-point sampler to the implementation this chooser measures and cite ePrint 2026/2431 for a fixed-point alternative it explicitly does not evaluate; the conservative exclusion is retained. No adapter, registry, shortlist, benchmark-matrix, export or provider entry changed, so every claim above still holds of the pinned source. Reviewed the 22 October HQC chooser disclosure and README diff. HQC is NIST-selected with a forthcoming FIPS, but remains outside the executable shortlist, excluded list and measured matrix because no HQC adapter is installed. The added UI panel is contextual; the registry, adapters, benchmark runner, provider entries and export paths are unchanged, so the earlier claims that displayed sizes come from actual runs and that Falcon sampler caveats are scoped to this implementation still hold."
             data-level="advanced" data-added="2026-09" data-added-on="2026-09-29" data-updated="2026-10"
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Post-Quantum Selection</div>
             <div class="project-title">PQ Chooser</div>
-            <div class="project-copy">Set what constrains you and get a shortlist of two or three post-quantum schemes to investigate, built from sizes it derives by running the real algorithms in your browser rather than quoting a table.</div>
+            <div class="project-copy">Set constraints for a shortlist from schemes the browser can execute and measure; displayed sizes come from actual runs. A separate HQC note explains why the NIST-selected code-based KEM is outside that measured shortlist.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Derived Sizes</span>

@@ -83,15 +83,21 @@ test('generated catalog makes unmapped labs explicit, with scoped reviewed entri
   assert.match(catalog, /\*\*Observed result:\*\*/);
   assert.match(catalog, /\*\*Concepts taught:\*\*/);
   assert.match(catalog, /\*\*Limits:\*\*/);
-  assert.match(catalog, /\*\*Exhibit map:\*\* PARTIALLY REVIEWED/);
-  const lookup = catalog.split('## Find a concept in an exhibit\n')[1].split('## Reverse index')[0];
-  const rows = lookup.split('\n').filter((line) => line.startsWith('| ') && line.includes('github.io/'));
-  assert.equal(rows.length, Object.values(manifest.labs).reduce((n, review) => n + review.exhibits.length, 0));
-  const slugs = rows.map((row) => /github\.io\/(crypto-lab-[^/]+)\//.exec(row)[1]);
-  assert.deepEqual(slugs, [...slugs].sort());
+  const partialCount = Object.values(manifest.labs).filter((review) => review.reviewScope === 'selected').length;
+  if (partialCount) assert.match(catalog, /\*\*Exhibit map:\*\* PARTIALLY REVIEWED/);
+  else assert.doesNotMatch(catalog, /\*\*Exhibit map:\*\* PARTIALLY REVIEWED/);
+  assert.equal((catalog.match(/^- \*\*Exhibit map:\*\* COMPLETE SOURCE REVIEW/gm) || []).length,
+    Object.keys(manifest.labs).length - partialCount);
+  const guide = catalog.split('## Find a concept in an exhibit\n')[1].split('## Reverse index')[0];
+  const mapped = Object.values(manifest.labs).reduce((n, review) => n + review.exhibits.length, 0);
+  assert.ok(guide.includes(`**${mapped} sections in ${Object.keys(manifest.labs).length} of ${labCount} labs**`));
+  assert.ok(guide.includes('Search this document for a concept'));
   for (const [lab, review] of Object.entries(manifest.labs)) {
     const details = catalog.split(`\n[\`${lab}\`](https://systemslibrarian.github.io/${lab}/)`)[1].split('\n### ')[0];
     const ids = [...details.matchAll(/^  - \*\*[^*]+\*\* \(\`([^`]+)\`; (?:interactive|comparison|explanation);/gm)].map((match) => match[1]);
     assert.deepEqual(ids, review.exhibits.map((exhibit) => exhibit.id).sort(), `${lab}: exhibit order`);
+    for (const exhibit of review.exhibits) {
+      assert.ok(details.includes(`**Evidence at pinned commit:** \`${exhibit.evidence[0]}\``), `${lab}/${exhibit.id}: compact source path`);
+    }
   }
 });

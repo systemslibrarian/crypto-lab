@@ -18,7 +18,7 @@
  *
  *   per-lab entries      what one lab implements, references, and attacks,
  *                        plus source-reviewed actions, outcomes, and limits
- *   EXHIBIT LOOKUP       which reviewed section teaches a particular concept
+ *   EXHIBIT MAP          searchable source-reviewed sections within each lab
  *   REVERSE INDEX        which labs implement a given algorithm
  *   STANDARDS-BODY INDEX which bodies the fleet's algorithms answer to
  *   OVERLAP REPORT       which labs cover the same ground, and whether anyone
@@ -60,7 +60,7 @@ const path = require('path');
 const { ALGORITHMS, standardMetadataProblems } = require('./catalog-vocab.js');
 const REVIEWS = require('./catalog-reviewed.json');
 const EXHIBITS = require('./catalog-exhibits.json');
-const { validateExhibitManifest, sourceLink, reviewedExhibits } = require('./catalog-exhibits.js');
+const { validateExhibitManifest, reviewedExhibits } = require('./catalog-exhibits.js');
 const { sourceRoot, summary: cloneSummary } = require('./clone-source.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -232,16 +232,22 @@ function build(list) {
   L.push('Pin the full source commit and set the scope to `selected` unless every');
   L.push('section was checked. Run `node tools/catalog-exhibits.js verify` against');
   L.push('available lab checkouts, then regenerate and check this catalog.');
+  L.push('Each lab entry links its pinned source commit. Its `path:line` evidence');
+  L.push('anchors refer to that exact revision. Use ranged reads or search by concept');
+  L.push('or lab name in this large file.');
   L.push('');
 
-  /* --- compact exhibit lookup: early, before the large algorithm index ----- */
+  /* --- map guide: details are searchable in each lab entry below ----------- */
   const mapped = reviewedExhibits(EXHIBITS);
-  const bySlug = new Map(list.map((c) => [c.slug, c]));
   L.push('## Find a concept in an exhibit');
   L.push('');
-  L.push('Use this index to locate the exact learner action or explanation when assessing');
-  L.push('a new paper, book, or standard. **Interactive** changes a live result;');
-  L.push('**comparison** changes options and shows their differences; **explanation** is');
+  L.push('Search this document for a concept and read the matching **Concepts taught**');
+  L.push('line under its lab entry. That entry names the exact visible section, learner');
+  L.push('action, observed result, limitations, and source lines at a pinned commit.');
+  L.push('Search the lab source as well when its exhibit map is only partial.');
+  L.push('Use these section types when assessing a new paper, book, or standard.');
+  L.push('**Interactive** changes a live result;');
+  L.push('**comparison** juxtaposes options or outcomes (with controls when available); **explanation** is');
   L.push('text a learner can read, with no interactive implementation implied.');
   L.push('**Execution status** is separate: `real-crypto` runs cryptographic operations;');
   L.push('`real-operation` performs another actual computation (such as image encoding);');
@@ -253,25 +259,14 @@ function build(list) {
   const complete = Object.values(EXHIBITS.labs).filter((review) => review.reviewScope === 'complete').length;
   L.push(`The exhibit map currently records **${mapped.length} sections in ${Object.keys(EXHIBITS.labs).length} of ${list.length} labs**`);
   L.push(`(${complete} complete lab inventories, ${Object.keys(EXHIBITS.labs).length - complete} selected-section reviews).`);
+  L.push('**COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried');
+  L.push('at the pinned revision; it is not a security audit or a claim about future edits.');
   L.push('**PARTIALLY REVIEWED** means only selected sections were mapped: omission says');
-  L.push('nothing about the remaining panels. Other labs are **NOT REVIEWED**. Inspect');
+  L.push(`nothing about the remaining panels. ${Object.keys(EXHIBITS.labs).length < list.length ? 'Other labs are **NOT REVIEWED**.' : 'Every current lab has a source-pinned map.'} Inspect`);
   L.push('their current source before ruling out a concept, including for partial maps.');
   L.push('For a reviewed lab, verify the pinned commit is still its current default branch');
   L.push('before relying on this index for a fresh assessment.');
   L.push('');
-  if (mapped.length) {
-    L.push('| Concepts taught here | Interaction / execution | Lab / section | Review evidence |');
-    L.push('|---|---|---|---|');
-    const cell = (s) => s.replace(/\|/g, '\\|');
-    mapped.sort((a, b) => a.slug.localeCompare(b.slug) || a.exhibit.id.localeCompare(b.exhibit.id));
-    for (const { slug, review, exhibit } of mapped) {
-      const panel = exhibit.section && exhibit.section !== exhibit.title
-        ? `${exhibit.section} — ${exhibit.title}` : exhibit.title;
-      L.push(`| ${exhibit.concepts.map(cell).join('; ')} | ${exhibit.kind} / ${exhibit.execution} | [${cell(bySlug.get(slug).title)}](https://systemslibrarian.github.io/${slug}/) / ${cell(panel)} | ${sourceLink(slug, review.commit, exhibit.evidence[0])} |`);
-    }
-    L.push('');
-  }
-
   /* --- reverse index ------------------------------------------------------ */
   const impls = new Map();
   const refs = new Map();
@@ -437,7 +432,10 @@ function build(list) {
         L.push(`    - **Concepts taught:** ${e.concepts.join('; ')}`);
         if (e.related?.length) L.push(`    - **Related context only:** ${e.related.join('; ')}`);
         if (e.limits) L.push(`    - **Limits:** ${e.limits}`);
-        L.push(`    - **Evidence:** ${e.evidence.map((at) => sourceLink(c.slug, exhibitReview.commit, at)).join(', ')}`);
+        // The clickable commit pin above fixes the source revision; compact
+        // paths preserve every line anchor without repeating a full GitHub
+        // URL for every section in this fleet-wide single-file catalog.
+        L.push(`    - **Evidence at pinned commit:** ${e.evidence.map((at) => `\`${at}\``).join(', ')}`);
       }
     }
     L.push('');

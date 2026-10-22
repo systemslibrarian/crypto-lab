@@ -831,7 +831,6 @@ function labFiles(dir, clone = dir) {
   return { code, prose, unread };
 }
 
-/** Everything derivable about one lab. Never throws; a missing clone is a state. */
 /** Reasons each reviewed `add` entry does not parse; empty when the list is good.
  *  Exported so selftest asserts the production rule rather than a copy of it. */
 function invalidReviewedAdds(add) {
@@ -928,7 +927,9 @@ function referenceDrift(slug, dir, pin, head) {
  *    below is skipped whenever it is set.
  *  @param dirOverride  read this clone instead of the one named by the slug, so
  *    the selftest can drive the production derivation against a throwaway
- *    repository rather than against a second copy of the rules. */
+ *    repository rather than against a second copy of the rules. Production
+ *    always uses the canonical sibling clone path; this exists so a negative
+ *    control need not invent a fake fleet member to drive the real scanner. */
 function evidenceFor(slug, atCommit = null, dirOverride = null) {
   const dir = dirOverride || path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
@@ -2457,6 +2458,7 @@ function main() {
    spanning four hundred lines - are exactly where they would drift. */
 module.exports = {
   lex,
+  evidenceFor,
   reviewedReferenceNames,
   evidenceFor,
   treeAt,

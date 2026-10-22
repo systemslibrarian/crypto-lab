@@ -10,21 +10,21 @@ disagrees with its command, the command is right and the line is stale.
 ## Where this left off — 2026-10-21
 
 `crypto-lab` main was caught up to **`9d6ec44`** before this queue-only branch;
-`crypto-counsel` main is **`cc2979b`**. Crypto-counsel **#18** is open with the
-completed stale-corpus review. Besides the branch carrying this file, the
-catalog remote carries `draft/understanding-cryptography-2e`; counsel carries
-#18's review branch. Neither open change is merged here.
+`crypto-counsel` main is **`cc2979b`**. Completed work is open, not merged:
+crypto-counsel **#18** for the stale corpus; crypto-lab **#244** for card dates
+and generated metadata; crypto-lab **#245**, stacked on #244, for catalog
+evidence; and the AES Anatomy and Clock Arithmetic **#2** PRs for theme pins.
+This queue audit itself is crypto-lab **#243**.
 
-The fast loop is not green on fresh main. `knowledge-map-sync`, `theme-sync` and
-`lab-dates` fail for the measured reasons in items 10 and 11. The other fast-loop
-checks pass. The network-backed evidence verifier has separate work in item 12.
+Fresh `origin/main` remains red until those PRs merge, but the failures formerly
+listed as items 10–12 are implemented and verified on their branches. The
+remaining queue begins with counsel snapshot prose and the depth-audit rows.
 
 **Two things still wait on a maintainer DECISION** — items 6 and 7. Item 6 now
 needs its proposal refreshed before the old 20-step choice can be acted on.
 
-**Pick up with:** item 10 first because it is a regression already on `main`.
-After that, item 2 (#31 vectors, five rows left) is the largest judged work item;
-item 1 is a small, exactly re-derived snapshot correction.
+**Pick up with:** item 1, the small exactly re-derived snapshot correction.
+After that, item 2 (#31 vectors, five rows left) is the largest judged work item.
 
 Before touching anything, re-fetch and re-run the fast loop — the figures below
 were measured on the dates beside them and other sessions work in these repos:
@@ -248,47 +248,6 @@ merge.
 
 ---
 
-## 10. Base-main regression — stale generated knowledge map
-
-Fresh `crypto-lab` main **`9d6ec44`** changes which book companions appear on
-the homepage but does not refresh `knowledge-map/catalog.json`'s source hash.
-`node tools/knowledge-map-sync.js check` fails on clean main with "Knowledge map
-is stale." Run `node tools/knowledge-map-sync.js write`, review the generated
-diff, and rerun the fast loop. This predates this queue-only branch.
-
----
-
-## 11. Fresh fast-loop failures — two theme pins and three card dates
-
-`node tools/theme-sync.js check` finds two new labs whose `index.html` head does
-not literally pin `data-theme="dark"`: `crypto-lab-aes-anatomy` and
-`crypto-lab-clock-arithmetic`. Fix those in their own lab repositories, not in a
-catalog sweep.
-
-`node tools/lab-dates.js check` finds three stale card pins:
-`crypto-lab-protocol-compose` (2026-08 → 2026-10),
-`crypto-lab-threshold-decrypt` (2026-08 → 2026-10), and
-`crypto-lab-multivariate` (2026-09 → 2026-10). Re-run before writing because
-these dates move whenever a lab moves.
-
----
-
-## 12. Catalog evidence — seven stale reviews before anchor regeneration
-
-With GitHub resolution working, `node tools/catalog-evidence.js verify` reports
-**7 STALE-REVIEW**, **27 STALE-ANCHOR**, and **9 CLONE-BEHIND** on 2026-10-21.
-The reviews are `rsa-small-roots`, `frost-threshold`, `hash-hunt`, `log-forge`,
-`dvd-scramble`, `clock-arithmetic`, and `aes-anatomy`.
-
-Do this in the checker's enforced order: refresh the nine behind checkouts,
-individually re-read and re-pin the seven reviews, then run the writer to
-re-derive anchors. Do not treat all 27 current anchor lines as final work before
-that refresh: several were read from clones the checker explicitly says the
-labs have moved past. The stale-corpus review did not authorize changes to
-`tools/catalog-reviewed.json`, so none were made here.
-
----
-
 ## Done — one line each
 
 | item | where the detail is |
@@ -306,6 +265,9 @@ labs have moved past. The stale-corpus review did not authorize changes to
 | cryptanalyst path proposal at its then-current 20 steps | PROPOSAL ONLY in crypto-lab #240, `audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md`; current 21-step refresh is item 6 |
 | eleven stale `crypto_lab_readme` lines | crypto-counsel #17; Snow 2 was a MOVE to Related Projects, and `validate.mjs` was widened with M25-M27 as its controls |
 | corpus prose stale review | crypto-counsel #18; 28 re-derived rather than the noted 20: 16 accurate, 12 corrected, 0 unsettled; 190 never-reviewed entries left untouched |
+| generated knowledge map and card dates | crypto-lab #244; 243 repositories refreshed, 34 date-evidence records moved and six displayed months changed; knowledge map, catalog/date/level/readme/concept checks and six card-stamp tests pass |
+| AES Anatomy and Clock Arithmetic theme pins | each lab's #2; literal dark pin corrected, unit/build checks pass, and fleet theme-sync reports 255 pages with no violations; browser-owned mutation baselines remain unreadable here because Chromium exits with macOS bootstrap error 141 |
+| catalog evidence refresh | crypto-lab #245, stacked on #244; nine stale reviews individually re-read, 18 stale anchors regenerated, copied-tool and scanner false positives excluded, 1,554 anchors resolve, and 75 tests pass with 0 failures/skips |
 | branch cleanup, both repos | 30 remote + 4 local deleted, 20 tracking refs pruned; manifest `~/branch-cleanup-2026-10-21.txt`; auto-delete is now on only for `crypto-lab`. Decide from the PR, never `git branch --merged` — squash merges make almost every merged branch read as unmerged |
 | futureworkoct queue update | #241 |
 | futureworkoct current-state audit | this queue-only PR; caught main up through `9d6ec44`, removed the completed corpus item, and recorded the reproducible failures without fixing out-of-scope files |

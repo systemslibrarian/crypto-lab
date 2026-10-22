@@ -463,8 +463,8 @@
    "addedOn": "2026-04-07",
    "updated": "2026-10",
    "addedFrom": "2026-04-07T19:55:04Z",
-   "updatedFrom": "2026-10-22T15:00:58-04:00",
-   "updatedCommit": "aca3ce9b18a4a37397fe4455a6e2e685a5e72fbb"
+   "updatedFrom": "2026-10-22T21:07:16Z",
+   "updatedCommit": "3f4a0d6ad7697a9027f3c703dbcc935a08dd1e25"
   },
   "crypto-lab-frodo-vault": {
    "added": "2026-04",
@@ -1327,8 +1327,8 @@
    "addedOn": "2026-07-16",
    "updated": "2026-10",
    "addedFrom": "2026-07-16T23:09:28Z",
-   "updatedFrom": "2026-10-22T16:42:53-04:00",
-   "updatedCommit": "65e6a83757c7e1dde98368125de9af63e2887466"
+   "updatedFrom": "2026-10-22T17:02:50-04:00",
+   "updatedCommit": "c8635e31bbc5ec93f0617a3bf5ee3747a08c70f1"
   },
   "crypto-lab-protocol-checker": {
    "added": "2026-07",

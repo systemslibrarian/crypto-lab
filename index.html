@@ -7054,12 +7054,14 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-mceliece-gate/"
-            data-implements="AES@src/mceliece.ts:173 | AES-GCM@src/mceliece.ts:182 | Classic McEliece@src/mceliece.ts:15 | SHA-256@src/mceliece.ts:81"
-            data-comment-only="BIKE@src/compare.ts:62 | Kyber@src/keysize.ts:10 | LWE@src/keysize.ts:11 | ML-KEM@src/keysize.ts:10 | RSA@src/keysize.ts:59"
-            data-references="BIKE | Grover's algorithm | HQC | Information-set decoding | Isogeny walk | Kyber | LWE | ML-KEM | NTRU | RSA | Reed-Muller | Reed-Solomon"
-            data-attacks="Brute force@src/toy/goppa-code.ts:347 | Key recovery@src/ui.ts:309 | Man-in-the-middle@README.md:33"
-            data-standards="ISO | NIST"
-            data-implementation="WebCrypto"
+            data-implements="AES@src/mceliece.ts:173 | AES-GCM@src/mceliece.ts:182 | SHA-256@src/mceliece.ts:81"
+            data-comment-only="BIKE@src/compare.ts:62 | HQC@src/keysize.ts:38 | Kyber@src/keysize.ts:10 | LWE@src/keysize.ts:11 | ML-KEM@src/keysize.ts:10 | RSA@src/keysize.ts:60"
+            data-references="BIKE | Classic McEliece | Grover's algorithm | HQC | Information-set decoding | Isogeny walk | Kyber | LWE | ML-KEM | NTRU | RSA | Reed-Muller | Reed-Solomon"
+            data-attacks="Brute force@src/toy/goppa-code.ts:347"
+            data-standards="NIST"
+            data-implementation="toy GF(16) Goppa/Patterson model, simulated published-size key bytes, WebCrypto AES-GCM"
+            data-review-commit="3f4a0d6ad7697a9027f3c703dbcc935a08dd1e25"
+            data-review-note="Reviewed src/mceliece.ts, src/toy/goppa-code.ts, keysize and comparison modules, visible UI, README, LIMITATIONS and tests at this pin. The browser computes a genuine small GF(16) Goppa/Patterson teaching model and a toy brute-force syndrome decoder. Its published-size 261120-byte key visual is SHA-256-expanded simulated bytes, not a Classic McEliece public key; its encapsulation is not the submitted KEM API. Real WebCrypto AES-GCM protects the teaching message. Classic McEliece is a referenced later KEM, not an implemented primitive here. The 2026 structural key-recovery preprint and possible public-key-substitution MitM are research/deployment context, not attacks executed by this lab. Preserve actual toy brute force and real AES/SHA operations while excluding full Classic McEliece, key recovery and MitM implementation credits. The 1978 scheme was public-key encryption; CRYSTALS-Kyber was selected in 2022 and standardized as ML-KEM in 2024. NIST selected HQC rather than Classic McEliece in 2025."
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-07" data-updated="2026-10"
            
            
@@ -7134,11 +7136,11 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Post-Quantum KEM</div>
             <div class="project-title">McEliece Gate</div>
-            <div class="project-copy">The oldest post-quantum KEM (1978). Binary Goppa codes, visceral 261KB public key visualization, and four-way comparison against ML-KEM, BIKE, and HQC.</div>
+            <div class="project-copy">Run a toy binary Goppa code and Patterson decoder, then visualize Classic McEliece’s 261,120-byte public key using simulated bytes. McEliece began as public-key encryption in 1978; the later KEM was not selected when NIST chose HQC in 2025.</div>
             <div class="project-meta">
               <div class="stack">
-                <span class="chip">Classic McEliece</span>
-                <span class="chip">Goppa Codes</span>
+                <span class="chip">Toy Goppa Code</span>
+                <span class="chip">Simulated Key Sizes</span>
                 <span class="chip">Post-Quantum</span>
               </div>
               <span class="arrow">→</span>
@@ -16686,8 +16688,8 @@
             data-attacks="Key recovery@README.md:69 | Known-plaintext attack@src/ui/cache.ts:59 | Power analysis@src/attack/dpa.ts:112 | Side-channel (unspecified)@src/ui/ui.ts:70"
             data-standards="NIST"
             data-implementation="hand-rolled"
-            data-review-commit="9f7f50510aa811e17153699268438d8781d2a826"
-            data-review-note="Reviewed AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this pin. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection and timing side-channel claims as executed attacks. The followup commit changes only e2e/gate.ts to assert the new exhibit; production code and anchors remain unchanged."
+            data-review-commit="c8635e31bbc5ec93f0617a3bf5ee3747a08c70f1"
+            data-review-note="Reviewed AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this pin. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line address observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection and timing side-channel claims as executed attacks. Followup commits strengthen browser assertions and remove decorative aria-hidden attributes; AES and attack anchors remain unchanged."
             data-level="advanced" data-added="2026-07" data-added-on="2026-07-16" data-updated="2026-10"
            
            

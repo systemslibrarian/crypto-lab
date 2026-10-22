@@ -7,7 +7,7 @@ disagrees with its command, the command is right and the line is stale.
 
 ---
 
-## Where this left off — 2026-10-21
+## Where this left off — 2026-10-22
 
 `crypto-lab` main was caught up to **`1e6f181`** before this queue-only branch;
 `crypto-counsel` main is **`cc2979b`**. Completed work is open, not merged:
@@ -19,17 +19,21 @@ also complete in Harvest Vault **#21**, Hybrid Wire **#17**, Shelf Oracle **#13*
 Compression Leak **#6** and WebAuthn **#25**. This queue audit itself is crypto-lab
 **#243**. Crypto-lab **#246** completes the teach probes, **#247** validates the
 advisory chip rule end to end, and **#248** implements the selected 12+9
-Cryptanalyst path split.
+Cryptanalyst path split. Crypto-lab **#249** documents the two knowledge-map
+tools, and Adaptor Gate **#8** fixes the current Vite advisory plus the Playwright
+image and accessibility regression exposed while validating that upgrade.
 
 Fresh `origin/main` remains red until those PRs merge, but the failures formerly
 listed as items 10–12 are implemented and verified on their branches. The
 executable work through item 5 is complete on open PRs.
 
-The content queue is complete on open PRs. The six stale date pins visible on
-`main` are the six already corrected by #244, not a new queue item. Items 8 and
-9 are cleanup/settings choices, not unfinished content work.
+The original content queue is complete on open PRs. The six stale date pins
+visible on `main` are the six already corrected by #244, not a new queue item.
+The separate Fleet Console audit below is now the active maintenance queue.
+Items 8 and 9 remain cleanup/settings choices, not unfinished content work.
 
-**Pick up with:** the explicit cleanup/settings choices in items 8 and 9.
+**Pick up with:** the per-lab Fleet Console dependency and security evidence
+reviews below. Do not merge the open PRs; maintainer review is still required.
 
 Before touching anything, re-fetch and re-run the fast loop — the figures below
 were measured on the dates beside them and other sessions work in these repos:
@@ -46,6 +50,55 @@ done
 (Quote `"tools/$c.js"` and pass `check` as its own argument. zsh does not
 word-split an unquoted `$c`, so `node tools/$c` with `c="x.js check"` looks for a
 file literally named `x.js check` and every checker reports MODULE_NOT_FOUND.)
+
+---
+
+## Active Fleet Console maintenance — 2026-10-22
+
+The private Fleet Console's latest saved source snapshot is still from
+2026-10-19 at hub `b1b9876` and contains 232 labs; the current catalog has 243.
+Its daily 02:00 America/New_York refresh is disabled. Do not publish a partial
+snapshot or treat the saved completion time as current evidence.
+
+After 19 individually evidenced closures, the work store has **1,175 total,
+945 complete and 230 active** items: 226 queued, 1 working and 3 blocked. The
+active work is:
+
+- **197 security-evidence items.** Collision Vault is complete. Adaptor Gate is
+  working on PR #8 and must stay open until the default branch and deployment
+  carry the fix. Signature Gate is blocked because GitHub returns HTTP 403,
+  "Dependabot alerts are disabled"; its exact npm lock has no registry advisory,
+  but that does not replace provider evidence and its Python requirements are
+  not a complete transitive lock.
+- **31 dependency-change reviews.** Dead Sea Cipher and RSA Small Roots are
+  complete after current-source reviews and current-main CI; review the
+  remaining 31 one lab at a time.
+- **2 external/coverage blockers.** Dot's all-lab reading report still requires
+  the missing cited Library artifact or independent completion of the remaining
+  bounded reviews. Counsel's primary API TLS route still requires the recorded
+  Cloudflare certificate repair.
+
+The current security census found 230 repositories whose Dependabot alert API
+is readable, 15 where alerts are disabled, and 9 open alerts: three each in
+Adaptor Gate, LLL Break and Time Trust. All nine name the Vite/launch-editor
+family fixed in Vite 8.3.3. LLL Break and Time Trust already have Vite 8.3.4 on
+current `main`, so their provider records need reconciliation rather than a
+blind source downgrade. Adaptor Gate still had 8.3.2; PR #8 raises it to 8.3.4
+and passes 127 unit plus 116 browser tests in the matching Playwright image.
+
+Dependabot alerts are disabled in: AKE Ladder, AES Anatomy, Clock Arithmetic,
+Confirmer Signatures, Compression Leak, DVD Scramble, Hash Hunt, Key Lifecycle,
+Log Forge, Next Number, Prime Witness, Residue Gate, Subliminal Channels, TESLA
+Broadcast and Twist Trap. Enabling those repository settings is an explicit
+owner decision; do not silently report their missing alerts as zero.
+
+Already closed from this snapshot: both knowledge-map tool metadata gaps (#249),
+all three missing non-fixture tool runs, all five Signature Gate teaching-role
+reviews, Collision Vault's four catalog cascades and security evidence, Signature
+Gate's Python interpretation, Lattice Builder's comment-only interpretation,
+and the two dependency reviews above. PR #245 now carries the corresponding
+Collision Vault, Signature Gate, Attribute Gate, IBE Gate and Polynomial Forge
+catalog evidence.
 
 ---
 
@@ -116,10 +169,12 @@ merge.
 | #31 final five depth judgements | Harvest Vault #21 and Compression Leak #6 pin published vectors through production helpers; Hybrid Wire #17 and Shelf Oracle #13 add outside-library cross-checks; WebAuthn #25 pins its production SHA-256 helper to NIST CAVP. All five implementations were correct but incompletely verified; every mutation control failed as intended |
 | generated knowledge map and card dates | crypto-lab #244; 243 repositories refreshed, 34 date-evidence records moved and six displayed months changed; knowledge map, catalog/date/level/readme/concept checks and six card-stamp tests pass |
 | AES Anatomy and Clock Arithmetic theme pins | each lab's #2; literal dark pin corrected, unit/build checks pass, and fleet theme-sync reports 255 pages with no violations; browser-owned mutation baselines remain unreadable here because Chromium exits with macOS bootstrap error 141 |
-| catalog evidence refresh | crypto-lab #245, stacked on #244; nine stale reviews individually re-read, then Harvest Vault and Shelf Oracle rechecked after four more anchors moved (22 stale source-anchor claims total). Shelf Oracle's cited-but-unreproduced IND-CPA-D research is now excluded from attack credit; 1,554 anchors resolve against current remote commits, with 75 evidence fixtures and 60 catalog/map tests passing |
+| catalog evidence refresh | crypto-lab #245, stacked on #244; nine stale reviews individually re-read, then Harvest Vault and Shelf Oracle rechecked after four more anchors moved (22 stale source-anchor claims total). Collision Vault was re-pinned after full committed-source validation. Attribute Gate, IBE Gate and Polynomial Forge lost false BLS-signature credits; five Signature Gate teaching distinctions were recorded; Signature Gate's five Python files were manually classified while retaining the honest scanner-coverage warning. Shelf Oracle's cited-but-unreproduced IND-CPA-D research is excluded from attack credit |
 | teach-layer unchecked claims | crypto-lab #246; all 43 manual claims individually reviewed and converted, leaving 47 automated and 0 manual probes; the full Linux Chromium/Firefox/WebKit run reports 47 MATCHES, 0 GONE and 0 UNREADABLE |
 | advisory chip-rule validation | crypto-lab #247; the production classifier, all four declared relations, five qualifier words, uncertainty ordering and the scanner's comment/string boundary now have positive and mutation controls; live output remains 0 violations and the gate remains advisory |
 | Cryptanalyst path split | crypto-lab #248; the former 21-step path is now exact-cover 12+9 Structure and Statistics / Implementation and Composition paths, with the original id retained, ten generated paths and browser plus persistent-state regressions passing |
+| knowledge-map tool metadata | crypto-lab #249; both runnable tools now state their source-supported purpose and the collector reports 41 registered tools with 0 documentation gaps |
+| Fleet Console first repair pass | 19 findings closed with item-level evidence: 2 tool metadata, 3 real tool runs, 5 Signature Gate relationships, 5 Collision Vault findings, 2 interpretation findings and 2 dependency reviews. Adaptor Gate security remains working on #8 rather than falsely complete before merge |
 | branch cleanup, both repos | 30 remote + 4 local deleted, 20 tracking refs pruned; manifest `~/branch-cleanup-2026-10-21.txt`; auto-delete is now on only for `crypto-lab`. Decide from the PR, never `git branch --merged` — squash merges make almost every merged branch read as unmerged |
 | futureworkoct queue update | #241 |
 | futureworkoct current-state audit | this queue-only PR; caught main up through `1e6f181`, removed the completed corpus and depth items, and recorded the reproducible failures without fixing out-of-scope files |

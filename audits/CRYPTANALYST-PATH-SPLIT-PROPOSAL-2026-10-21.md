@@ -1,8 +1,10 @@
-# Proposal: retain or split the Cryptanalyst Path
+# Decision: split the Cryptanalyst Path 12 + 9
 
-**Proposal only. Nothing in `index.html` is changed by this document.** The decision is
-the maintainer's; this file exists so that retaining, splitting in two, or splitting in
-three can be compared against the current path rather than an obsolete count.
+The two-way split is implemented in this pull request. The original `cryptanalyst` id is
+retained for the 12-step Structure and Statistics path, preserving existing stored and
+linked selections; the 9-step Implementation and Composition path receives the new
+`cryptanalyst-implementation` id. This record keeps the alternatives and trade-offs that
+informed the choice rather than making the resulting path structure look inevitable.
 
 ## Re-derived state — 2026-10-21
 
@@ -118,23 +120,21 @@ top-level path.
 | choice | resulting lengths | trade-off |
 |---|---|---|
 | retain the current path | 21 | preserves one complete attack journey, but remains well above the approximate 12-step guideline |
-| split in two | 12 + 9 | both paths fit the guideline and retain substantial arcs; composition and implementation leakage share one path |
+| **split in two — selected** | **12 + 9** | both paths fit the guideline and retain substantial arcs; composition and implementation leakage share one path |
 | split in three | 12 + 6 + 3 | cleanest conceptual boundary, but the composition path may be too short for top-level navigation |
 
-No recommendation is encoded here. The current path remains valid until the maintainer
-chooses one of these three.
+The two-way split is the smallest change that brings both resulting paths within the
+roughly-12-step guideline. It avoids promoting a three-step seed to top-level navigation,
+keeps the full 21-step journey, and preserves substantial progressions on both sides.
 
-## What implementation would require after a decision
+## Implementation completed
 
-1. For **retain**, change nothing in `LEARNING_PATHS`; separately decide whether the
-   18-step Developer Path needs the same length exception.
-2. For a split, replace the `cryptanalyst` entry in `LEARNING_PATHS` with two or three
-   entries, each with its own `id`, `label`, `focus`, `blurb` and `steps`.
-3. Re-derive the split from the current path and assert that every current title appears
-   exactly once. The two-way lists above cover 12+9; the three-way lists cover 12+6+3.
-4. Run `node tools/readme-sync.js` — the Learning Paths table is generated.
-5. Run `node tools/knowledge-map-sync.js write` — the map currently records **nine**
-   paths and hashes `index.html`. It must run after any card stamper.
-6. Run `node tools/teach-build.js` and the usual checker sweep.
+1. `LEARNING_PATHS` now carries the two entries and their distinct focus/blurb text.
+2. The persistent knowledge-map test asserts the exact 12-step and 9-step sequences,
+   21 total titles and 21 unique titles, so an omission or duplicate fails visibly.
+3. `readme-sync` regenerates the public Learning Paths table from those entries.
+4. `knowledge-map-sync` runs after the index change, producing ten paths and the new
+   `index.html` source hash.
+5. `teach-build` and the normal checker sweep verify the derived surfaces.
 
-No card change and no new lab is part of this proposal.
+No card change and no new lab is part of this implementation.

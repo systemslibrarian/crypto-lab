@@ -21627,9 +21627,9 @@
       },
       {
         id: 'cryptanalyst',
-        label: 'Cryptanalyst Path',
-        focus: 'Each class of attack in turn, classical ciphers to post-quantum.',
-        blurb: 'Mathematical attacks exploit structure and statistics; oracles exploit response differences; side channels measure timing or power; faults alter computation. Follow each from classical ciphers to PQC.',
+        label: 'Cryptanalyst — Structure and Statistics',
+        focus: 'Attack the structure of an algorithm and the statistics of its outputs.',
+        blurb: 'Begin with historical ciphers and recurrences, then follow structural, differential, linear, lattice and randomness failures. These attacks work from the mathematics or the output distribution before implementation behavior enters the picture.',
         steps: [
           { title: 'Dead Sea Cipher' },
           { title: 'LFSR Forge' },
@@ -21637,18 +21637,26 @@
           { title: 'WEP Crack' },
           { title: 'AES Anatomy' },
           { title: 'Biham Lens' },
-          { title: 'RSA Small Roots' },
           { title: 'Matsui Line' },
+          { title: 'RSA Small Roots' },
+          { title: 'Next Number' },
+          { title: 'Nonce Lattice' },
+          { title: 'Entropy Collapse' },
+          { title: 'Nonce Collision' }
+        ]
+      },
+      {
+        id: 'cryptanalyst-implementation',
+        label: 'Cryptanalyst — Implementation and Composition',
+        focus: 'Attack what a running implementation reveals, accepts or fails to bind.',
+        blurb: 'Continue from structure into live attack surfaces: response oracles, timing and power leakage, missing validation, weak binding and injected faults. This path assumes the structural foundation from the companion Cryptanalyst path.',
+        steps: [
           { title: 'Padding Oracle' },
           { title: 'Timing Oracle' },
           { title: 'Twist Trap' },
           { title: 'Power Trace' },
           { title: 'Masked Core' },
           { title: 'Salamander' },
-          { title: 'Nonce Collision' },
-          { title: 'Entropy Collapse' },
-          { title: 'Next Number' },
-          { title: 'Nonce Lattice' },
           { title: 'Frozen Heart' },
           { title: 'KyberSlash' },
           { title: 'Lattice Fault' }

@@ -337,6 +337,7 @@
           "kind": "text-present",
           "needle": "\"Hi 3x!\" was recovered as \"Hi 3x!\"",
           "steps": [
+            "#tab-4",
             "#cfg-vulnerable"
           ],
           "note": "the live vulnerable-config result after actually running CRT and the integer cube root"
@@ -349,7 +350,11 @@
         "observable": {
           "kind": "text-present",
           "needle": "Watch them light up left to right as the interval shrinks",
-          "steps": [],
+          "steps": [
+            "#tab-5",
+            "#bb-setup",
+            "#bb-run-oracle-mode"
+          ],
           "note": "the live Bleichenbacher panel's explanation of the byte reveal; the committed attack and its re-encryption and wrong-oracle branches were reviewed with the panel"
         }
       },

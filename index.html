@@ -6334,10 +6334,10 @@
             data-implements="EC point arithmetic@src/math/curve-fp.ts:23 | secp256k1@src/math/curves.ts:73"
             data-comment-only="P-256@src/math/curves.ts:2 | Tonelli–Shanks@src/math/field.ts:5"
             data-references="Baby-step giant-step | ECDH | ECDSA | Ed25519 | EdDSA | Montgomery ladder | P-256 | Tonelli–Shanks | X25519"
-            data-attacks="Brute force@src/ui/panel-hard.ts:115 | Discrete log@src/ui/panel-hard.ts:164 | Nonce reuse@README.md:35"
+            data-attacks="Brute force@src/ui/panel-hard.ts:61 | Discrete log@src/ui/panel-hard.ts:65"
             data-standards="SECG"
             data-implementation="hand-rolled"
-            data-level="intermediate" data-added="2026-06" data-added-on="2026-06-28" data-updated="2026-08"
+            data-level="intermediate" data-added="2026-06" data-added-on="2026-06-28" data-updated="2026-10"
            
            
            
@@ -6407,7 +6407,7 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Elliptic Curves</div>
             <div class="project-title">Point Arithmetic</div>
-            <div class="project-copy">Drag P and Q to see the chord-and-tangent group law, flip ℝ↔𝔽ₚ to run the identical exact arithmetic, then step double-and-add and feel why the ECDLP is hard.</div>
+            <div class="project-copy">Drag P and Q to see the geometric group law over real numbers, then switch to distinct finite-field arithmetic. Step double-and-add and explore the small-group ECDLP; real key security needs suitable large subgroups.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Group Law</span>
@@ -8955,13 +8955,13 @@
           </a>
 
           <a class="project-card" data-category="PROTOCOLS | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-commit-gate/"
-            data-implements="EC point arithmetic@src/pedersen.ts:52 | Pedersen commitment@src/pedersen.ts:212 | SHA-256@src/hashcommit.ts:46"
-            data-comment-only="Hash-to-curve@src/pedersen.ts:144 | P-256@src/homomorphism-viz.ts:4"
+            data-implements="EC point arithmetic@src/pedersen.ts:52 | P-256@src/pedersen.ts:1 | Pedersen commitment@src/pedersen.ts:219 | SHA-256@src/hashcommit.ts:46"
+            data-comment-only="Hash-to-curve@src/pedersen.ts:168"
             data-references="Bulletproofs | FROST | Feldman VSS | Fiat-Shamir | Hash-to-curve | KZG commitment | Oblivious transfer | One-time pad | P-256 | Schnorr | ristretto255"
-            data-attacks="Birthday bound@src/main.ts:354 | Discrete log@src/main.ts:414"
+            data-attacks="Birthday bound@src/main.ts:371 | Discrete log@src/main.ts:433"
             data-standards="NIST"
             data-implementation="WebCrypto"
-            data-level="advanced" data-added="2026-04" data-added-on="2026-04-13" data-updated="2026-08"
+            data-level="advanced" data-added="2026-04" data-added-on="2026-04-13" data-updated="2026-10"
            
            
            
@@ -9035,7 +9035,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Commitment Schemes</div>
             <div class="project-title">Commit Gate</div>
-            <div class="project-copy">Hash commitments and Pedersen commitments — binding, hiding, sealed-bid auction, and homomorphic addition. The primitive beneath ZKPs, MPC, and VSS.</div>
+            <div class="project-copy">Compare hash and Pedersen commitments, verify openings and homomorphic addition, then test a sealed-bid auction and a coin flip where a participant selectively withholds an opening.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Hash Commitment</span>
@@ -9049,9 +9049,9 @@
 
           <a class="project-card" data-category="SIGNATURES | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-pki-chain/"
             data-implements="ECDSA@src/ct.ts:324 | Merkle tree@src/ct.ts:156 | P-256@src/ct.ts:359 | SHA-256@src/ct.ts:110"
-            data-comment-only="ML-DSA@src/main.ts:157"
+            data-comment-only="ML-DSA@src/main.ts:180"
             data-references="Dilithium | Kerberos | ML-DSA | Shor's algorithm"
-            data-standards="NIST"
+            data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-12" data-updated="2026-10"
            
@@ -9116,7 +9116,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">PKI &amp; Certificates</div>
             <div class="project-title">PKI Chain</div>
-            <div class="project-copy">X.509 certificate chains, trust store validation, CA compromise cascades, Certificate Transparency with Merkle inclusion proofs, and post-quantum migration to ML-DSA.</div>
+            <div class="project-copy">Model certificate-chain trust, CA compromise, signed revocation evidence and stale OCSP responses under fail-open versus strict policy. Check Certificate Transparency proofs and compare reference ML-DSA sizes.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">X.509</span>
@@ -12173,7 +12173,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Envelope Encryption</div>
             <div class="project-title">Envelope KMS</div>
-            <div class="project-copy">RFC 3394/5649 AES key wrap, DEK/KEK hierarchy, KMS-style key rotation, re-wrap without plaintext exposure, and a hash-chained audit log — the architecture behind AWS KMS and Google Cloud KMS.</div>
+            <div class="project-copy">Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, and caller authorization before unwrap. Trace a KMS-style rewrap and a teaching audit log.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">RFC 3394</span>
@@ -13514,12 +13514,12 @@
           </a>
 
           <a class="project-card" data-category="HISTORICAL | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-vigenere-break/"
-            data-implements="Vigenere cipher@src/samples/index.ts:6"
+            data-implements="Vigenere cipher@src/vigenere/cipher.ts:105"
             data-comment-only="Caesar cipher@src/samples/index.ts:68 | One-time pad@src/samples/index.ts:73"
             data-references="AES | AES-GCM | Caesar cipher | ChaCha20 | ChaCha20-Poly1305 | Enigma | One-time pad | Poly1305 | Substitution cipher"
-            data-attacks="Factoring@src/ui/transcript.ts:22 | Frequency analysis@src/main.ts:22 | Known-plaintext attack@README.md:24"
+            data-attacks="Frequency analysis@src/vigenere/frequency.ts:61"
             data-implementation="hand-rolled"
-            data-level="beginner" data-added="2026-06" data-added-on="2026-06-27" data-updated="2026-08"
+            data-level="beginner" data-added="2026-06" data-added-on="2026-06-27" data-updated="2026-10"
            
            
            
@@ -13579,7 +13579,7 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Polyalphabetic Cipher</div>
             <div class="project-title">Vigenère Break</div>
-            <div class="project-copy">Encrypt and decrypt with a repeating-key Vigenère cipher, then recover the key length with Kasiski examination and the index of coincidence and solve each column by frequency analysis.</div>
+            <div class="project-copy">Encrypt and decrypt with repeating-key Vigenère, then use Kasiski, coincidence counts and frequency scores to propose candidates. Verify a purported break against the supplied answer; a high English score alone can be wrong.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Vigenère</span>
@@ -13592,10 +13592,10 @@
           </a>
 
           <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-otp-vault/"
-            data-implements="One-time pad@src/otp/challenges.ts:22"
+            data-implements="One-time pad@src/otp/otp.ts:36"
             data-comment-only="AES@src/otp/cribdrag.ts:7 | AES-CTR@src/otp/cribdrag.ts:7 | AES-GCM@src/ui/keystreamReusePanel.ts:9 | ChaCha20@src/otp/cribdrag.ts:7"
             data-references="AES | AES-CTR | AES-GCM | AES-SIV | BB84 | ChaCha20 | Poly1305 | SNOW 2.0 | Vigenere cipher"
-            data-attacks="Chosen-plaintext attack@src/ui/perfectSecrecyPanel.ts:63 | Frequency analysis@README.md:73 | Nonce reuse@src/ui/keystreamReusePanel.ts:113"
+            data-attacks="Nonce reuse@src/ui/keystreamReusePanel.ts:42"
             data-implementation="hand-rolled"
             data-level="beginner" data-added="2026-06" data-added-on="2026-06-27" data-updated="2026-10"
            
@@ -13657,7 +13657,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Perfect Secrecy</div>
             <div class="project-title">OTP Vault</div>
-            <div class="project-copy">One-time pad encryption with provable perfect secrecy, then the two-time-pad break: XOR two ciphertexts under a reused key and crib-drag to recover both plaintexts.</div>
+            <div class="project-copy">Explore one-time-pad XOR and its precise uniform, secret, one-use key condition; compare message priors and biased pads, then try a two-time-pad reuse attack with crib dragging.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">One-Time Pad</span>
@@ -15599,10 +15599,9 @@
           </a>
 
           <a class="project-card" data-category="ATTACKS | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/"
-            data-implements="AES@src/crypto/aes.ts:78 | AES-CBC@src/crypto/aes.ts:94 | AES-CTR@src/crypto/aes.ts:78 | AES-GCM@src/crypto/aes.ts:136 | ChaCha20@src/crypto/chacha20.ts:44 | GHASH@src/crypto/aes.ts:183 | Poly1305@src/crypto/aead.ts:48"
-            data-comment-only="ChaCha20-Poly1305@src/crypto/aead.ts:2"
+            data-implements="AES@src/crypto/aes.ts:78 | AES-CBC@src/crypto/aes.ts:94 | AES-CTR@src/crypto/aes.ts:78 | AES-GCM@src/crypto/aes.ts:157 | ChaCha20@src/crypto/chacha20.ts:44 | ChaCha20-Poly1305@src/crypto/aead.ts:70 | GHASH@src/crypto/ghash-attack.ts:46 | Poly1305@src/crypto/aead.ts:48"
             data-references="AES-SIV | ChaCha20-Poly1305"
-            data-attacks="Birthday bound@README.md:28 | IV reuse@README.md:50 | Key recovery@src/crypto/aead.ts:96 | Nonce reuse@src/crypto/aes.ts:242 | Padding oracle@README.md:69"
+            data-attacks="Birthday bound@src/crypto/nonce.ts:16 | Chosen-plaintext attack@src/main.ts:391 | IV reuse@src/main.ts:343 | Key recovery@src/crypto/poly1305.ts:117 | Nonce reuse@src/crypto/aes.ts:242"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="intermediate" data-added="2026-07" data-added-on="2026-07-15" data-updated="2026-10"
@@ -15678,7 +15677,7 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Nonce Reuse</div>
             <div class="project-title">Nonce Collision</div>
-            <div class="project-copy">Reuse one nonce under one key across AES-CTR, AES-GCM, ChaCha20-Poly1305, and AES-CBC — crib-drag plaintext out of XOR'd ciphertexts and forge tags the real verifiers accept.</div>
+            <div class="project-copy">Compare nonce reuse in AES-CTR, AES-GCM and ChaCha20-Poly1305 with a separate AES-CBC predictable-IV chosen-plaintext exercise. Observe keystream reuse and authenticated-mode forgery under each stated condition.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">AES-GCM</span>
@@ -18048,10 +18047,10 @@
             data-implements="Toy SPN@src/crypto/spn.ts:66"
             data-comment-only="DES@src/crypto/spn.ts:16"
             data-references="AES | ChaCha20 | DES | Enigma | Serpent | Shamir secret sharing | Vigenere cipher"
-            data-attacks="Brute force@README.md:91 | Chosen-plaintext attack@index.html:521 | Differential cryptanalysis@README.md:73 | Key recovery@index.html:19 | Known-plaintext attack@src/ui/piling.ts:105 | Linear cryptanalysis@src/main.ts:264"
+            data-attacks="Key recovery@src/crypto/attack.ts:211 | Known-plaintext attack@src/crypto/attack.ts:46 | Linear cryptanalysis@src/crypto/attack.ts:211"
             data-implementation="hand-rolled"
-            data-review-commit="7e4c2c46d89e8bd59ebc83841b6835159d811404"
-            data-review-note="Re-read the prior-pin inventory: only package metadata changed before this review. The toy SPN source and anchor66 are unchanged. October 21 adds an opening toy-cipher disclaimer and a measured per-test timeout for exhaustive screening, preserving every candidate and key. This still executes a toy linear attack, not a full DES attack or the linked ChaCha paper attack."
+            data-review-commit="ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9"
+            data-review-note="Reviewed the current source and October 22 change inventory. The toy SPN implementation anchor at src/crypto/spn.ts:66 is unchanged. The lab now distinguishes single trails from the full key-dependent linear hull and compares repeated with distinct plaintext sampling at the same budget, with uncertainty intervals and coverage counts. These are bounded toy-SPN attack experiments, not a full DES attack or a reproduction of the linked ChaCha paper attack."
             data-level="advanced" data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
            
            
@@ -18112,7 +18111,7 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Linear Cryptanalysis</div>
             <div class="project-title">Matsui Line</div>
-            <div class="project-copy">Matsui's Algorithm 2 against the same toy SPN Biham Lens attacks — count the bias in real known-plaintext traffic, watch one subkey candidate separate, then watch the piling-up lemma's prediction miss.</div>
+            <div class="project-copy">Run Matsui-style linear analysis on a toy SPN, compare single-trail predictions with a hull's key-dependent cancellations, then sample known plaintexts with and without replacement to see uncertainty change.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Linear Cryptanalysis</span>
@@ -20324,12 +20323,12 @@
           </a>
 
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/"
-            data-implements="AES@src/schemes/aes-modes.ts:10 | AES-CBC@src/schemes/aes-modes.ts:37 | AES-CTR@src/schemes/aes-modes.ts:47 | AES-GCM@src/schemes/aes-modes.ts:59 | Diffie-Hellman@src/reduction/ddh.ts:87 | ECDSA@src/schemes/ecdsa.ts:10 | Ed25519@src/schemes/ed25519.ts:3 | ElGamal@src/game/cca.ts:34 | Hash-to-curve@src/schemes/elgamal.ts:29 | P-256@src/kats.ts:3 | ristretto255@src/schemes/elgamal.ts:22 | RSA@src/game/cca.ts:84 | RSA-OAEP@src/game/cca.ts:84 | RSA-PSS@src/schemes/rsa-pss.ts:4 | secp256k1@src/schemes/ecdsa.ts:1 | SHA-256@src/schemes/rsa-textbook.ts:52"
+            data-implements="AES@src/schemes/aes-modes.ts:10 | AES-CBC@src/schemes/aes-modes.ts:37 | AES-CTR@src/schemes/aes-modes.ts:47 | AES-GCM@src/schemes/aes-modes.ts:59 | Diffie-Hellman@src/reduction/ddh.ts:74 | ECDSA@src/schemes/ecdsa.ts:10 | Ed25519@src/schemes/ed25519.ts:3 | ElGamal@src/game/cca.ts:34 | Hash-to-curve@src/schemes/elgamal.ts:29 | P-256@src/kats.ts:21 | ristretto255@src/schemes/elgamal.ts:22 | RSA@src/game/cca.ts:84 | RSA-OAEP@src/game/cca.ts:84 | RSA-PSS@src/schemes/rsa-pss.ts:4 | secp256k1@src/schemes/ecdsa.ts:1 | SHA-256@src/schemes/rsa-textbook.ts:52"
             data-references="AES-ECB | Goldwasser–Micali | ML-KEM | SHA-512 | Simon"
-            data-attacks="Chosen-ciphertext attack@src/game/cca.ts:1 | Chosen-plaintext attack@src/game/challenger.ts:18 | Ciphertext malleability@README.md:41 | Signature malleability@README.md:43"
+            data-attacks="Chosen-ciphertext attack@src/game/cca.ts:34 | Chosen-plaintext attack@src/game/challenger.ts:24 | Ciphertext malleability@README.md:41 | Signature malleability@README.md:43"
             data-standards="IETF | NIST | SECG"
             data-implementation="WebCrypto"
-            data-level="advanced" data-added="2026-09" data-added-on="2026-09-11" data-updated="2026-09"
+            data-level="advanced" data-added="2026-09" data-added-on="2026-09-11" data-updated="2026-10"
            
            
            
@@ -20403,7 +20402,7 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Security Games</div>
             <div class="project-title">Hidden Bit</div>
-            <div class="project-copy">Run the game: a challenger hides one bit, an adversary guesses. A rising advantage proves a scheme broken; a flat one proves only that these adversaries failed — which is why security needs a reduction.</div>
+            <div class="project-copy">Test selected security games and reductions, then follow a three-level GGM tree built from an AES-based expansion beside a broken repeated-seed generator. Measured advantage depends on the stated attacker and trials.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">IND-CPA</span>

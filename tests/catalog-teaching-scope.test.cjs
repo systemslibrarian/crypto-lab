@@ -208,6 +208,59 @@ test('visible catalog summaries distinguish BBS naming and bounded DP advantage'
   assert.doesNotMatch(card('crypto-lab-rsa-educational'), /while a 2048-bit key holds/);
 });
 
+function checkBookReviewScope(source) {
+  // Current default branches inspected 2026-10-22. Related-lab links,
+  // comparison tables and ordinary-English uses of "chosen" or "factoring"
+  // must not become credits for attacks executed by the card's own lab.
+  const executed = {
+    'crypto-lab-ec-point-arithmetic': ['Brute force', 'Discrete log'],
+    'crypto-lab-vigenere-break': ['Frequency analysis'],
+    'crypto-lab-otp-vault': ['Nonce reuse'],
+    'crypto-lab-nonce-collision': [
+      'Birthday bound', 'Chosen-plaintext attack', 'IV reuse', 'Key recovery', 'Nonce reuse',
+    ],
+    'crypto-lab-matsui-line': ['Key recovery', 'Known-plaintext attack', 'Linear cryptanalysis'],
+  };
+  for (const [slug, attacks] of Object.entries(executed)) {
+    assert.deepEqual(attacksFor(source, slug), attacks, `${slug}: count only its own bounded exhibits`);
+  }
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-vigenere-break'), ['Vigenere cipher']);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-otp-vault'), ['One-time pad']);
+  assert.ok(implementationsFor(source, 'crypto-lab-nonce-collision').includes('ChaCha20-Poly1305'),
+    'Nonce Collision actually encrypts and verifies this AEAD, not just mentions it');
+  assert.ok(!implementationsFor(source, 'crypto-lab-pki-chain').includes('ML-DSA'),
+    'PKI Chain presents FIPS 204 reference sizes; it does not sign with ML-DSA');
+  const pki = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-pki-chain\/"[^>]*>/)?.[0] ?? '';
+  assert.match(pki, /data-comment-only="[^"]*ML-DSA@src\/main\.ts:180(?:\s|\")/);
+}
+
+test('book-review cards credit executed attacks and primitives, not related reading', () => {
+  checkBookReviewScope(html);
+});
+
+test('book-review scope rejects false credits and losing a real CBC experiment', () => {
+  const alterations = [
+    ['crypto-lab-ec-point-arithmetic', 'attacks', 'Nonce reuse@README.md:35'],
+    ['crypto-lab-vigenere-break', 'attacks', 'Factoring@src/ui/transcript.ts:22'],
+    ['crypto-lab-otp-vault', 'attacks', 'Chosen-plaintext attack@src/ui/perfectSecrecyPanel.ts:63'],
+    ['crypto-lab-nonce-collision', 'attacks', 'Padding oracle@README.md:73'],
+    ['crypto-lab-matsui-line', 'attacks', 'Differential cryptanalysis@README.md:73'],
+    ['crypto-lab-pki-chain', 'implements', 'ML-DSA@src/main.ts:180'],
+  ];
+  for (const [slug, field, falseCredit] of alterations) {
+    const cardPattern = new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[^>]*>');
+    const attribute = new RegExp(`data-${field}="([^"]*)"`);
+    const changed = html.replace(cardPattern, card => card.replace(attribute,
+      (_, current) => `data-${field}="${current} | ${falseCredit}"`));
+    assert.notEqual(changed, html, `${slug}: negative control must modify the card`);
+    assert.throws(() => checkBookReviewScope(changed), assert.AssertionError);
+  }
+  const missingCbc = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-nonce-collision\/"[^>]*>/,
+    card => card.replace(/Chosen-plaintext attack@src\/main\.ts:391\s*\|\s*/, ''));
+  assert.notEqual(missingCbc, html, 'CBC negative control must remove the executed exhibit');
+  assert.throws(() => checkBookReviewScope(missingCbc), assert.AssertionError);
+});
+
 function checkScope(source) {
   // HQC Timing Break cc4305c7: src/engine.ts runs a repetition-code cache
   // model. data.ts's 2020 chosen-ciphertext event and README's Lattice Fault

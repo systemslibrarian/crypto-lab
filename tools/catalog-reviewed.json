@@ -171,12 +171,12 @@
     ]
   },
   "crypto-lab-matsui-line": {
-    "commit": "7e4c2c46d89e8bd59ebc83841b6835159d811404",
-    "reviewed": "2026-10-21",
+    "commit": "ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9",
+    "reviewed": "2026-10-22",
     "add": [
       "Toy SPN@src/crypto/spn.ts:66"
     ],
-    "note": "Re-read the prior-pin inventory: only package metadata changed before this review. The toy SPN source and anchor66 are unchanged. October 21 adds an opening toy-cipher disclaimer and a measured per-test timeout for exhaustive screening, preserving every candidate and key. This still executes a toy linear attack, not a full DES attack or the linked ChaCha paper attack."
+    "note": "Reviewed the current source and October 22 change inventory. The toy SPN implementation anchor at src/crypto/spn.ts:66 is unchanged. The lab now distinguishes single trails from the full key-dependent linear hull and compares repeated with distinct plaintext sampling at the same budget, with uncertainty intervals and coverage counts. These are bounded toy-SPN attack experiments, not a full DES attack or a reproduction of the linked ChaCha paper attack."
   },
   "crypto-lab-model-breach": {
     "commit": "8558ee8cca7dcd38537adf621d75fee50b6b1a3e",

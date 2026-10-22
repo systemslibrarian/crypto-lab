@@ -22,6 +22,10 @@ treated as merged:
 - AES Anatomy **#2**, Clock Arithmetic **#2**, Harvest Vault **#21**, Hybrid
   Wire **#17**, Shelf Oracle **#13**, Compression Leak **#6** and WebAuthn
   **#25** contain the completed lab-specific fixes and verification work.
+- Time-lock Puzzle **#24** and Timing Oracle **#31** make their real npm publish
+  controls portable to Homebrew Node 26. Timing Sidechannel **#26** applies the
+  same repair, rejects non-terminating secret-generator inputs and corrects its
+  running-minimum score documentation. All three required Linux workflows pass.
 - Adaptor Gate **#8** upgrades Vite to 8.3.4 and the Playwright image to 1.64.1,
   and fixes the accessibility regression found during validation. Its 127 unit
   and 116 browser tests pass, but its Fleet item stays working until the fix is
@@ -31,10 +35,11 @@ treated as merged:
 All of those PRs were open and GitHub reported them clean on 2026-10-22. Do not
 merge them here; maintainer review is still required.
 
-**Pick up with:** the queued Fleet Console security-evidence reviews. Read each
-lab's committed README and implementation, query its exact lock versions and
-provider alerts, and record one evidence-backed disposition at a time. Do not
-infer a clean security state from an unavailable provider.
+**Pick up with:** Token Tell, the next queued Fleet Console security-evidence
+review. Read its committed README and implementation, query its exact lock
+versions and provider alerts, and record one evidence-backed disposition. Then
+continue the queue one lab at a time. Do not infer a clean security state from
+an unavailable provider.
 
 Before making another handoff, fetch both repositories and run the fast loop:
 
@@ -60,14 +65,14 @@ six corrections.
 
 ## Active Fleet Console maintenance — measured 2026-10-22
 
-The work store has **1,175 total, 1,001 complete and 174 active** items:
-**168 queued, 1 working and 5 blocked**. Fifty-six findings have been completed
-since the preceding version of this file; 75 findings have now been closed from
-the saved snapshot in total.
+The work store has **1,178 total, 1,011 complete and 167 active** items:
+**161 queued, 1 working and 5 blocked**. Sixty-six work items have been
+completed since the preceding version of this file; 85 completions have now
+been recorded in this maintenance pass, including newly discovered repairs.
 
 The active queue is:
 
-- **172 security-evidence items:** 168 queued, Adaptor Gate working, and Time
+- **165 security-evidence items:** 161 queued, Adaptor Gate working, and Time
   Trust, LLL Break and Confirmer Signatures blocked.
 - **2 cross-repository blockers:** Dot's all-lab reading report and the Counsel
   primary API TLS route.
@@ -157,11 +162,11 @@ decide whether to enable that counsel setting.
 - Depth verification: the five lab PRs listed in the handoff pin production
   paths to published vectors or independent implementations; all mutation
   controls failed as intended.
-- Fleet Console: 75 findings are complete with item-level evidence. This
+- Fleet Console: 85 work items are complete with item-level evidence. This
   includes both knowledge-map metadata gaps, all three missing real tool runs,
   five Signature Gate teaching-role reviews, Collision Vault's cascades,
-  interpretation work, all 33 dependency reviews and 26 security-evidence
-  restorations.
+  interpretation work, all 33 dependency reviews and 33 security-evidence
+  restorations, plus the repair tasks found while restoring that evidence.
 - Branch cleanup: 30 remote and four local branches were removed and 20 stale
   tracking refs pruned; the restore manifest is the file named above.
 

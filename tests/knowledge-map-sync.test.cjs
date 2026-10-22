@@ -31,6 +31,25 @@ test('saved map matches every current source and retains the complete card popul
   assert(data.paths.find(p=>p.id==='cryptanalyst').steps.includes('WEP Crack'));
   assert(data.concepts.find(c=>c.title==='Factoring').exhibits.includes('Factor Forge'));
 });
+test('the two Cryptanalyst paths are an exact 12+9 partition of the original journey', () => {
+  const data=build();
+  const structure=data.paths.find(p=>p.id==='cryptanalyst');
+  const implementation=data.paths.find(p=>p.id==='cryptanalyst-implementation');
+  const structureSteps=[
+    'Dead Sea Cipher', 'LFSR Forge', 'DVD Scramble', 'WEP Crack', 'AES Anatomy',
+    'Biham Lens', 'Matsui Line', 'RSA Small Roots', 'Next Number', 'Nonce Lattice',
+    'Entropy Collapse', 'Nonce Collision',
+  ];
+  const implementationSteps=[
+    'Padding Oracle', 'Timing Oracle', 'Twist Trap', 'Power Trace', 'Masked Core',
+    'Salamander', 'Frozen Heart', 'KyberSlash', 'Lattice Fault',
+  ];
+  assert.deepEqual(structure.steps,structureSteps);
+  assert.deepEqual(implementation.steps,implementationSteps);
+  const combined=[...structure.steps,...implementation.steps];
+  assert.equal(combined.length,21);
+  assert.equal(new Set(combined).size,21,'every former Cryptanalyst step must appear exactly once');
+});
 test('source changes move the output; unchanged input is deterministic', t => {
   const dir=fixture(t),before=build(dir);
   edit(dir,'index.html','Seven classical factoring methods','Seven classical factorisation methods');

@@ -643,7 +643,7 @@
     ]
   },
   "crypto-lab-e91": {
-    "commit": "b598bc2173a342d88d4b7bbdd97dbac47c0cea03",
+    "commit": "e9a3628c43e20c071b545a7214b6f4c27c418610",
     "reviewed": "2026-10-22",
     "add": [
       "E91@src/engine.ts:375"
@@ -654,7 +654,7 @@
       "Side-channel (unspecified)"
     ],
     "implementation": "idealized statistical simulation",
-    "note": "Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review; runE91 and anchor375 are unchanged. The October 21 UI correction scopes full intercept-resend behavior and states that a Bell violation alone is not a finite-key security proof. Preserve the idealized statistical simulation classification and BB84/MITM/side-channel removals; no physical quantum channel is implemented. Reviewed the 22 October UI, CSV, data and engine diff. Public verdict labels now describe Bell-test outcomes rather than secret-key security, and the old eavesdropperDetected alias is removed; internal classification identifiers remain legacy. The runE91 anchor and idealized statistical sampler still execute, while no physical channel or finite-key security proof is implemented. Preserve the existing BB84, man-in-the-middle and side-channel exclusions."
+    "note": "Reviewed current engine, comparison/protocol UI, README and browser assertions through this pin. The entangled-pair sampler executes an idealized E91 statistical model; public verdicts describe Bell-test evidence, not a certified quantum source or secret key. BB84 appears only as a simple intercept-resend contrast. Candidate bits require authenticated discussion, reconciliation, privacy amplification and a separate finite-key argument. Preserve the reviewed E91 source anchor and remove BB84/MITM/side-channel algorithm or attack credits that are not executed here."
   },
   "crypto-lab-lattice-fault": {
     "commit": "27a332b8d83845632a09046dd76c51343fb20514",
@@ -669,22 +669,23 @@
     "note": "Read README.md, src/main.ts, timing.ts, timing.worker.ts, loopabort.ts, rejection.ts, ntt.ts, shake256.ts and relevant tests at this exact commit. Kyber@src/timing.ts:88 models software-divide cycle counts only, not a complete KEM. ML-DSA@src/loopabort.ts:37 is a parameter object; runLoopAbortAttack constructs one 256-coefficient secret polynomial and z=y+c*s1 with selected real FIPS 204 ring/sampling operations, independently randomized challenge/nonce seeds and toy signer assumptions, not full ML-DSA key generation, signing or verification. Preserve actual Keccak-f[1600]/SHAKE256 and NTT. CPA in src/main.ts:40 means correlation power analysis rather than chosen-plaintext attack; padding-oracle at line618 is a sibling name rather than an executed attack. Keep the disclosed bounded power, fault, timing, key-recovery and LLL computations. No constant-time target-hardware, standards-conformance or full signing-key recovery claim is established. Fleet interpretation work 4ad4a3db-52c4-428e-9b19-d0f63199ef6c; this review does not complete its pending hub integration. Re-read the full prior-pin diff on 18 October (6b127eb to ae17f87, three commits): a claims correction, a devDependency bump and an audit-authorization note. src/main.ts gained a cited research note and one reworded result sentence, both of which NARROW the lab's claims rather than widening them: the ordinary ML-DSA-44 signing average is corrected from 4.25 to about 4.36 iterations per Kwiatkowski, ePrint 2026/2456, and the page now says explicitly that this is not an estimate of fault injections per usable signature and that the model checks only the z bound, not a full signer's acceptance conditions. No executable cryptographic operation changed. Verified the cited lines at the new commit: CPA at src/main.ts:40 is still correlation power analysis in the hero description, and the padding-oracle sibling name moved from line 618 to line 625 under Related demos, shifted by the seven-line note added above it, still a name rather than an executed attack. Every removal and limit above therefore still holds of the pinned source. Reviewed the full October 22 diff from ae17f87: only research text, the countermeasure table, README and browser checks changed. The z-bound model is unchanged; final-verification advice is now explicitly fault-model-dependent with ePrint 2026/2567 marked preprint. No full signer or verifier was added; preserve all prior removals and implementation limits."
   },
   "crypto-lab-stego-suite": {
-    "commit": "145f8f49b6e0a5ec649704472722a41d8df34ea8",
-    "reviewed": "2026-10-10",
+    "commit": "69e0ec8d7fb9d6c2b8b1e1b9d7ec8a926adef977",
+    "reviewed": "2026-10-22",
     "remove": [
       "Power analysis"
     ],
-    "note": "Read current README, src/main.ts and crypto/bits/stego/DCT/chi/image modules plus tests at this SHA. src/main.ts:326 lists SPA among stronger image steganalysis detectors; this is not Simple Power Analysis or an executed physical-power attack. Remove that abbreviation-derived attack credit. AES/AES-GCM are real WebCrypto encryption/decryption, with PBKDF2 and SHA-256 key derivation in src/lib/crypto.ts; retain all four implementation credits. F5-inspired raw-block DCT embedding and WOW-inspired adaptive placement are disclosed models, not complete named production schemes. The old interpretation candidates arose from a timed-out scan, now independently completed. Review scope is catalogue classification, not a blanket covert-channel/security guarantee. Fleet work3a0b1565-7f73-4412-a3e9-ebf5de96d515."
+    "note": "Reviewed current README, src/main.ts, crypto/bits/stego/DCT/chi/image modules and tests through this pin. AES-GCM is real WebCrypto encryption; PBKDF2-HMAC-SHA256 derives its optional passphrase key. Encrypted packet mode 2 uses 600000 iterations; mode 1 keeps 120000 only for legacy decoding with a warning. Unknown modes reject, and old/new PNG browser tests cover compatibility; neither mode rescues weak passphrases from offline guessing. F5-inspired DCT and WOW-inspired adaptive placement are disclosed models, not complete named schemes. SPA in steganalysis discussion is not Simple Power Analysis, so preserve that removal."
   },
   "crypto-lab-power-trace": {
-    "commit": "9323347c18f90224ebbd286bd78da5af74672e68",
-    "reviewed": "2026-10-10",
+    "commit": "9f7f50510aa811e17153699268438d8781d2a826",
+    "reviewed": "2026-10-22",
     "remove": [
       "Chosen-plaintext attack",
       "Fault injection",
-      "Timing side-channel"
+      "Timing side-channel",
+      "Cache timing"
     ],
-    "note": "Read current README, docs/TECHNICAL.md, src/attack/cpa.ts and dpa.ts, src/leakage/traces.ts and UI honesty/sibling panels at this exact SHA. CPA here means correlation power analysis, not chosen-plaintext attack: the code correlates known plaintext-byte leakage; no chosen-plaintext security game is demonstrated. Fault injection and timing attacks are explicitly sibling-only channels not covered here. Preserve real AES, encryption-key-byte recovery, power analysis and assumed simulated side-channel leakage. The model assumes constant-time execution; the shipped JavaScript AES has secret-dependent S-box lookups and GF branches and is explicitly not constant-time. Correct the hub description to match this distinction without asserting hardware/timing verification. Fleet work 41f92c93-e468-4ba8-ada6-4550accd9351. AES source anchor is encryptBlock at src/aes/aes.ts:123, exercised by three known-answer tests; browser traces use the real S-box intermediate rather than invoking full block encryption. An import of SBOX in cpa.ts is not the encryption implementation.",
+    "note": "Reviewed AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this pin. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection and timing side-channel claims as executed attacks. The followup commit changes only e2e/gate.ts to assert the new exhibit; production code and anchors remain unchanged.",
     "add": [
       "AES@src/aes/aes.ts:123"
     ]
@@ -928,5 +929,14 @@
     ],
     "implementation": "hand-rolled BigInt arithmetic",
     "note": "Reviewed exact modular arithmetic, extended Euclid, Euler phi, orders, generators, subgroup enumeration and generalized CRT. The small-number DH model computes both parties and searches possible shared secrets with an actual guess count at src/nt/toyDh.ts:3. It is not a discrete-log solver or MITM exhibit. Trial division supports the arithmetic lesson rather than an RSA factoring attack; RSA and adjacent algorithms are references only."
+  },
+  "crypto-lab-harvest-timeline": {
+    "commit": "ea407d665fd8a57676581de216cfc09afddf393a",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Grover's algorithm",
+      "Discrete log"
+    ],
+    "note": "Reviewed current confidentiality/HNDL pickers, risk engine, tiny RSA factoring engine, README and tests through this pin. Retrospective decryption requires vulnerable key establishment or encryption; signature-only migration addresses future authenticity, not past ciphertext. The Grover exponent reduction is theoretical and the chart 0.5 modifier is explicitly hypothetical, not a measured decryption probability or a Grover implementation. NIST guidance does not deem AES-128 practically broken by Grover; the lab no longer assigns it an actionable modeled decryption verdict. factorPollardRho at src/rekey.ts:140 factors an integer modulus for the bounded RSA example, not an elliptic-curve discrete log. Preserve toy RSA/AES credits and factoring attack; exclude Grover implementation and discrete-log attack credits."
   }
 }

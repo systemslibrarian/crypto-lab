@@ -5667,8 +5667,8 @@
           </a>
 
           <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-wire/"
-            data-implements="AES@demos/hybrid-wire/src/crypto/security.ts:50 | AES-GCM@demos/hybrid-wire/src/crypto/security.ts:52 | HKDF@demos/hybrid-wire/src/crypto/hybrid.ts:56 | ML-KEM@demos/hybrid-wire/src/crypto/mlkem768.ts:12 | X25519@demos/hybrid-wire/src/crypto/x25519.ts:17"
-            data-comment-only="Diffie-Hellman@demos/hybrid-wire/src/main.ts:597 | SHA-256@demos/hybrid-wire/src/crypto/security.ts:4 | TLS 1.3@demos/hybrid-wire/src/crypto/hybrid.ts:37"
+            data-implements="AES@demos/hybrid-wire/src/crypto/security.ts:50 | AES-GCM@demos/hybrid-wire/src/crypto/security.ts:52 | HKDF@demos/hybrid-wire/src/crypto/hybrid.ts:59 | ML-KEM@demos/hybrid-wire/src/crypto/mlkem768.ts:12 | X25519@demos/hybrid-wire/src/crypto/x25519.ts:17"
+            data-comment-only="Diffie-Hellman@demos/hybrid-wire/src/main.ts:597 | SHA-256@demos/hybrid-wire/src/crypto/hybrid.ts:36 | TLS 1.3@demos/hybrid-wire/src/crypto/hybrid.ts:37"
             data-references="Diffie-Hellman | Dilithium | Double Ratchet | ECDH | Ed25519 | Kyber | PQXDH | SHA-256 | SHA-512 | Serpent | TLS 1.3"
             data-standards="IETF | NIST"
             data-implementation="@noble"
@@ -5746,7 +5746,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Hybrid Key Exchange</div>
             <div class="project-title">Hybrid Wire</div>
-            <div class="project-copy">X25519 + ML-KEM-768 hybrid post-quantum key exchange as deployed in Chrome 131+ and Cloudflare. Chrome 124 shipped the Kyber draft, not ML-KEM. Six-step handshake visualization and encrypted chat.</div>
+            <div class="project-copy">Combine real X25519 and ML-KEM-768 in a custom teaching handshake, then step through an encrypted chat. Compare its key combiner with the standardized TLS 1.3 hybrid group; this demo is not wire-compatible with TLS.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">X25519</span>
@@ -6239,8 +6239,8 @@
 
           <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-curve-lens/"
             data-implements="EC point arithmetic@src/curve.ts:105 | ECDH@src/realcurve.ts:313 | P-256@src/realcurve.ts:1 | secp256k1@src/realcurve.ts:90 | X25519@src/realcurve.ts:257"
-            data-comment-only="HKDF@src/realcurve.ts:67 | SHA-1@src/sleeve.ts:139"
-            data-references="AES | ChaCha20 | Diffie-Hellman | Double Ratchet | ECDSA | Ed25519 | Ed448 | HKDF | Kuznyechik | ML-KEM | MLS | Montgomery ladder | RSA | Schnorr | Shor's algorithm | TLS 1.3 | WebAuthn | X3DH | X448"
+            data-comment-only="ECDSA@src/sleeve.ts:150 | HKDF@src/realcurve.ts:67 | SHA-1@src/sleeve.ts:139"
+            data-references="AES | ChaCha20 | Diffie-Hellman | Double Ratchet | ECDSA | Ed25519 | Ed448 | HKDF | Kuznyechik | ML-KEM | MLS | Montgomery ladder | PQXDH | RSA | Schnorr | Shor's algorithm | TLS 1.3 | WebAuthn | X3DH | X448"
             data-attacks="Brute force@src/ui.ts:610 | Discrete log@src/curve.ts:349 | Side-channel (unspecified)@README.md:33 | Timing side-channel@README.md:33"
             data-standards="IETF | NIST | SECG"
             data-implementation="@noble"
@@ -6420,9 +6420,9 @@
           </a>
 
           <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-x3dh-wire/"
-            data-implements="AES@src/x3dh.ts:174 | AES-GCM@src/x3dh.ts:185 | Diffie-Hellman@src/kdf.ts:66 | Ed25519@src/xeddsa.ts:43 | EdDSA@src/xeddsa.ts:136 | HKDF@src/kdf.ts:37 | HMAC@src/kdf.ts:21 | SHA-256@src/kdf.ts:31 | SHA-512@src/xeddsa.ts:145 | X25519@src/x3dh.ts:59 | X3DH@src/x3dh.ts:160"
+            data-implements="AES@src/x3dh.ts:179 | AES-GCM@src/x3dh.ts:190 | Diffie-Hellman@src/kdf.ts:66 | Ed25519@src/xeddsa.ts:43 | EdDSA@src/xeddsa.ts:136 | HKDF@src/kdf.ts:37 | HMAC@src/kdf.ts:21 | SHA-256@src/kdf.ts:31 | SHA-512@src/xeddsa.ts:145 | X25519@src/x3dh.ts:59 | X3DH@src/x3dh.ts:165"
             data-comment-only="EC point arithmetic@src/xeddsa.ts:84"
-            data-references="Double Ratchet | ECDH | ML-KEM | MLS | PQXDH | Pairing | X448"
+            data-references="Double Ratchet | ECDH | ML-KEM | MLS | PQXDH | X448"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="intermediate" data-added="2026-04" data-added-on="2026-04-07" data-updated="2026-10"
@@ -6485,7 +6485,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Asynchronous Key Agreement</div>
             <div class="project-title">X3DH Wire</div>
-            <div class="project-copy">The asynchronous handshake behind Signal. Real X25519 arithmetic, four DH operations, and HKDF-SHA-256 key derivation — no backends, no simulated math.</div>
+            <div class="project-copy">Explore classical X3DH with real X25519, three required DH terms, an optional fourth one-time prekey term, and HKDF. Replace a whole signed bundle to see why Bob’s identity key must be authenticated independently.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">X3DH</span>
@@ -6689,7 +6689,7 @@
             data-attacks="Side-channel (unspecified)@src/ui.ts:664"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-level="beginner" data-added="2026-04" data-added-on="2026-04-07" data-updated="2026-08"
+            data-level="beginner" data-added="2026-04" data-added-on="2026-04-07" data-updated="2026-10"
            
            
            
@@ -8584,12 +8584,12 @@
           </a>
 
           <a class="project-card" data-category="STEGANOGRAPHY" href="https://systemslibrarian.github.io/crypto-lab-stego-suite/"
-            data-implements="AES@src/lib/crypto.ts:8 | AES-GCM@src/lib/crypto.ts:8 | PBKDF2@src/lib/crypto.ts:13 | SHA-256@src/lib/crypto.ts:13"
-            data-references="SNOW 2.0"
+            data-implements="AES@src/lib/crypto.ts:12 | AES-GCM@src/lib/crypto.ts:24 | PBKDF2@src/lib/crypto.ts:15 | SHA-256@src/lib/crypto.ts:15"
+            data-references="HMAC | SNOW 2.0"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="145f8f49b6e0a5ec649704472722a41d8df34ea8"
-            data-review-note="Read current README, src/main.ts and crypto/bits/stego/DCT/chi/image modules plus tests at this SHA. src/main.ts:326 lists SPA among stronger image steganalysis detectors; this is not Simple Power Analysis or an executed physical-power attack. Remove that abbreviation-derived attack credit. AES/AES-GCM are real WebCrypto encryption/decryption, with PBKDF2 and SHA-256 key derivation in src/lib/crypto.ts; retain all four implementation credits. F5-inspired raw-block DCT embedding and WOW-inspired adaptive placement are disclosed models, not complete named production schemes. The old interpretation candidates arose from a timed-out scan, now independently completed. Review scope is catalogue classification, not a blanket covert-channel/security guarantee. Fleet work3a0b1565-7f73-4412-a3e9-ebf5de96d515."
+            data-review-commit="69e0ec8d7fb9d6c2b8b1e1b9d7ec8a926adef977"
+            data-review-note="Reviewed current README, src/main.ts, crypto/bits/stego/DCT/chi/image modules and tests through this pin. AES-GCM is real WebCrypto encryption; PBKDF2-HMAC-SHA256 derives its optional passphrase key. Encrypted packet mode 2 uses 600000 iterations; mode 1 keeps 120000 only for legacy decoding with a warning. Unknown modes reject, and old/new PNG browser tests cover compatibility; neither mode rescues weak passphrases from offline guessing. F5-inspired DCT and WOW-inspired adaptive placement are disclosed models, not complete named schemes. SPA in steganalysis discussion is not Simple Power Analysis, so preserve that removal."
             data-level="beginner" data-added="2026-04" data-added-on="2026-04-12" data-updated="2026-10"
            
            
@@ -8664,7 +8664,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Steganography</div>
             <div class="project-title">Stego Suite</div>
-            <div class="project-copy">LSB substitution, DCT-domain hiding, and adaptive embedding with live chi-squared steganalysis. Hide the message, not just the content.</div>
+            <div class="project-copy">Compare LSB, DCT, and adaptive image hiding with chi-squared steganalysis. Optional AES-GCM passphrase encryption versions its KDF and warns when opening legacy images.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">LSB</span>
@@ -10752,12 +10752,14 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-timeline/"
-            data-implements="AES@src/rekey.ts:197 | AES-GCM@src/rekey.ts:215 | Grover's algorithm@src/main.ts:1113 | RSA@src/rekey.ts:101 | SHA-256@src/rekey.ts:198"
-            data-comment-only="Floyd cycle finding@src/rekey.ts:134 | ML-KEM@src/main.ts:1643 | Shor's algorithm@src/main.ts:37"
-            data-references="Argon2 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | LMS | ML-DSA | ML-KEM | MLS | Miller–Rabin | P-256 | P-384 | Pairing | SHA-384 | SLH-DSA | Shor's algorithm | TLS 1.3 | X25519 | XMSS"
-            data-attacks="Discrete log@src/main.ts:19 | Factoring@src/main.ts:1761"
+            data-implements="AES@src/rekey.ts:197 | AES-GCM@src/rekey.ts:215 | RSA@src/rekey.ts:101 | SHA-256@src/rekey.ts:198"
+            data-comment-only="Floyd cycle finding@src/rekey.ts:134 | ML-KEM@src/main.ts:1676 | Shor's algorithm@src/main.ts:37"
+            data-references="Argon2 | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Grover's algorithm | Kyber | LMS | ML-DSA | ML-KEM | MLS | Miller–Rabin | P-256 | P-384 | Pairing | SHA-384 | SLH-DSA | Shor's algorithm | TLS 1.3 | X25519 | XMSS"
+            data-attacks="Factoring@src/main.ts:1794"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="ea407d665fd8a57676581de216cfc09afddf393a"
+            data-review-note="Reviewed current confidentiality/HNDL pickers, risk engine, tiny RSA factoring engine, README and tests through this pin. Retrospective decryption requires vulnerable key establishment or encryption; signature-only migration addresses future authenticity, not past ciphertext. The Grover exponent reduction is theoretical and the chart 0.5 modifier is explicitly hypothetical, not a measured decryption probability or a Grover implementation. NIST guidance does not deem AES-128 practically broken by Grover; the lab no longer assigns it an actionable modeled decryption verdict. factorPollardRho at src/rekey.ts:140 factors an integer modulus for the bounded RSA example, not an elliptic-curve discrete log. Preserve toy RSA/AES credits and factoring attack; exclude Grover implementation and discrete-log attack credits."
             data-level="beginner" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
            
            
@@ -13861,8 +13863,8 @@
             data-comment-only="E91@src/data.ts:1"
             data-references="BB84 | Grover's algorithm | Shor's algorithm"
             data-implementation="idealized statistical simulation"
-            data-review-commit="b598bc2173a342d88d4b7bbdd97dbac47c0cea03"
-            data-review-note="Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review; runE91 and anchor375 are unchanged. The October 21 UI correction scopes full intercept-resend behavior and states that a Bell violation alone is not a finite-key security proof. Preserve the idealized statistical simulation classification and BB84/MITM/side-channel removals; no physical quantum channel is implemented. Reviewed the 22 October UI, CSV, data and engine diff. Public verdict labels now describe Bell-test outcomes rather than secret-key security, and the old eavesdropperDetected alias is removed; internal classification identifiers remain legacy. The runE91 anchor and idealized statistical sampler still execute, while no physical channel or finite-key security proof is implemented. Preserve the existing BB84, man-in-the-middle and side-channel exclusions."
+            data-review-commit="e9a3628c43e20c071b545a7214b6f4c27c418610"
+            data-review-note="Reviewed current engine, comparison/protocol UI, README and browser assertions through this pin. The entangled-pair sampler executes an idealized E91 statistical model; public verdicts describe Bell-test evidence, not a certified quantum source or secret key. BB84 appears only as a simple intercept-resend contrast. Candidate bits require authenticated discussion, reconciliation, privacy amplification and a separate finite-key argument. Preserve the reviewed E91 source anchor and remove BB84/MITM/side-channel algorithm or attack credits that are not executed here."
             data-level="advanced" data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-10"
            
            
@@ -16680,12 +16682,12 @@
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-power-trace/"
             data-implements="AES@src/aes/aes.ts:123"
             data-comment-only="RSA@src/spa/modexp.ts:14"
-            data-references="NTT | RSA"
-            data-attacks="Key recovery@docs/TECHNICAL.md:64 | Power analysis@src/attack/dpa.ts:112 | Side-channel (unspecified)@src/ui/ui.ts:69"
+            data-references="NTT | RSA | Shamir secret sharing"
+            data-attacks="Key recovery@README.md:69 | Known-plaintext attack@src/ui/cache.ts:59 | Power analysis@src/attack/dpa.ts:112 | Side-channel (unspecified)@src/ui/ui.ts:70"
             data-standards="NIST"
             data-implementation="hand-rolled"
-            data-review-commit="9323347c18f90224ebbd286bd78da5af74672e68"
-            data-review-note="Read current README, docs/TECHNICAL.md, src/attack/cpa.ts and dpa.ts, src/leakage/traces.ts and UI honesty/sibling panels at this exact SHA. CPA here means correlation power analysis, not chosen-plaintext attack: the code correlates known plaintext-byte leakage; no chosen-plaintext security game is demonstrated. Fault injection and timing attacks are explicitly sibling-only channels not covered here. Preserve real AES, encryption-key-byte recovery, power analysis and assumed simulated side-channel leakage. The model assumes constant-time execution; the shipped JavaScript AES has secret-dependent S-box lookups and GF branches and is explicitly not constant-time. Correct the hub description to match this distinction without asserting hardware/timing verification. Fleet work 41f92c93-e468-4ba8-ada6-4550accd9351. AES source anchor is encryptBlock at src/aes/aes.ts:123, exercised by three known-answer tests; browser traces use the real S-box intermediate rather than invoking full block encryption. An import of SBOX in cpa.ts is not the encryption implementation."
+            data-review-commit="9f7f50510aa811e17153699268438d8781d2a826"
+            data-review-note="Reviewed AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this pin. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection and timing side-channel claims as executed attacks. The followup commit changes only e2e/gate.ts to assert the new exhibit; production code and anchors remain unchanged."
             data-level="advanced" data-added="2026-07" data-added-on="2026-07-16" data-updated="2026-10"
            
            
@@ -16760,7 +16762,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Power Side-Channel</div>
             <div class="project-title">Power Trace</div>
-            <div class="project-copy">Recover an AES-128 key byte from simulated power traces. Correlation and differential power analysis use real statistics on modelled leakage; the JavaScript AES is not constant-time.</div>
+            <div class="project-copy">Recover an AES-128 key byte from simulated power traces. Correlation and differential power analysis use real statistics on modeled leakage; the JavaScript AES is not constant-time. An idealized AES table cache-line observation leaves 16 candidates without measuring browser hardware leakage.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">CPA</span>

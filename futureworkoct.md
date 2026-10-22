@@ -1,93 +1,88 @@
 # Future work — October 2026
 
-This is a working queue. Remove work when it is complete; keep only enough
-history to avoid reopening settled questions. Counts are dated snapshots, and
-the generating command or Fleet Console is authoritative when they disagree.
+This is a working queue. Remove settled work instead of growing a history log.
+Counts are dated snapshots; the generating command or Fleet Console is
+authoritative when they disagree.
 
----
+## Live handoff — 2026-10-22
 
-## Current handoff — 2026-10-22
+`crypto-lab` `origin/main` is **`a246d21`** and `crypto-counsel`
+`origin/main` is **`cc2979b`**. The queue branch is based directly on that
+Hub main.
 
-`crypto-lab` `origin/main` is **`a246d21`** and `crypto-counsel` `origin/main` is
-**`cc2979b`**. This queue branch is based directly on that crypto-lab main. The
-following completed changes are open for maintainer review and must not be
-treated as merged:
+Nothing below is merged merely because its checks pass:
 
-- crypto-counsel **#18** reviews the 28 genuinely stale corpus entries; **#19**
-  is stacked on #18 and refreshes the catalog README snapshot.
-- crypto-lab **#244** refreshes card dates and generated metadata; **#245** is
-  stacked on #244 and refreshes catalog evidence. Both were rebased after the
-  22 October Lattice Fault provenance update and preserve that newer review.
-- crypto-lab **#246–#249** cover teach probes, advisory-chip controls, the
-  Cryptanalyst path split and knowledge-map tool metadata. #248 was rebased on
-  current main after the same provenance update.
-- AES Anatomy **#2**, Clock Arithmetic **#2**, Harvest Vault **#21**, Hybrid
-  Wire **#17**, Shelf Oracle **#13**, Compression Leak **#6** and WebAuthn
-  **#25** contain the completed lab-specific fixes and verification work.
-- Time-lock Puzzle **#24** and Timing Oracle **#31** make their real npm publish
-  controls portable to Homebrew Node 26. Timing Sidechannel **#26** applies the
-  same repair, rejects non-terminating secret-generator inputs and corrects its
-  running-minimum score documentation. All three required Linux workflows pass.
-- Token Tell **#25** protects cache ownership on the shared Pages origin,
-  preserves exact 64-bit verification integers and rejects inherited deep-link
-  names. VDF **#23** retires in-flight verification verdicts when their inputs
-  change and makes its publish test portable. Vigenère Break **#29** retires
-  animated solver transcripts when the workbench changes and applies the same
-  publish-test repair. VRF Gate **#22** enforces RFC 9381 proof decoding,
-  rejects non-canonical VDF proofs and incomplete beacon rounds, retires stale
-  asynchronous UI results, and makes its publish test portable. All four
-  exact-head Linux workflows pass; their Fleet repair items remain working
-  until merge and deployment are verified.
-- Web of Trust **#21** replaces collision-prone 8-byte signature bindings with
-  full RFC 7638 SHA-256 JWK thumbprints, enforces key self-revocation, rejects
-  silent identity replacement and prevents stale asynchronous trust results.
-  Its 27 unit tests, 15 browser claims and both axe viewport sweeps pass at the
-  exact repair head; the Fleet repair remains working until merge and
-  deployment are verified.
-- What Is PQC **#3**, World Ciphers **#26**, Simon Period **#25** and Sleeve
-  Check **#9** contain the next four completed security-review repairs. They
-  harden input/verification boundaries and Pages workflows, retain focused
-  regression checks, and pass their exact-head Linux workflows.
-- SM2 Forge **#9** fixes the axe 4.14 brand-name mismatch exposed by its pending
-  dependency update, includes those verified dependency versions, and confines
-  Pages/OIDC permissions to the deploy job. Its 12 unit tests, five embedded
-  maintenance controls, both accessibility flows and all seven browser claims
-  pass at the exact repair head.
-- SM9 Forge **#10** retires escrow and nonce-reuse evidence after identity or
-  message edits, corrects its Playwright port claims and hardens the Pages
-  workflow. Its 419 unit/KAT cases, 26 independent oracle cases, 37 rendered
-  claims, accessibility and geometry gates pass at the exact repair head.
-- SNARK Arena **#24** retires completed and in-flight Groth16 evidence when the
-  witness changes, locks and retires ceremony results correctly, rejects
-  malformed ceremony records, repairs the shared skip link and hardens the
-  Pages workflow. Its exact-head Linux workflow is still running.
-- SPDZ Forge **#25** retires addition, multiplication, MAC-check, variance and
-  nested attack evidence after control changes; corrects the actual dark-only
-  accessibility matrix and test counts; and hardens both workflows. Its 65
-  unit/KAT/adversarial tests, five maintenance controls and all 15 production
-  browser tests pass at the exact repair head.
-- Adaptor Gate **#8** upgrades Vite to 8.3.4 and the Playwright image to 1.64.1,
-  and fixes the accessibility regression found during validation. Its 127 unit
-  and 116 browser tests pass, but its Fleet item stays working until the fix is
-  on the default branch and the deployment is verified.
-- This current-state audit is crypto-lab **#243**.
+- crypto-counsel **#18** reviews the **28** genuinely stale corpus entries
+  (16 accurate, 12 corrected, 0 unsettled); **#19** is stacked on #18 and
+  refreshes the README snapshot. All 190 `reviewed: null` entries remain
+  untouched.
+- crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
+  advisory controls, learning-path split and knowledge-map metadata. **#245**
+  is stacked on #244. This handoff is **#243**.
+- Fifteen open lab repairs have green exact-head Linux CI: Token Tell **#25**,
+  VDF **#23**, Vigenère Break **#29**, VRF Gate **#22**, Web of Trust **#21**,
+  What Is PQC **#3**, World Ciphers **#26**, Simon Period **#25**, Sleeve Check
+  **#9**, SM2 Forge **#9**, SM9 Forge **#10**, SNARK Arena **#24**, SPDZ Forge
+  **#25**, Split Point **#13** and STARK Tower **#21**.
+- Three newer repairs are open and waiting for authoritative Linux execution:
+  Subliminal Channels **#6** is in progress; Syndrome Drain **#26** and
+  Syndrome Hints **#23** are queued. Their local unit, maintenance and build
+  gates pass. The macOS browser cannot start because Chromium aborts at
+  `MachPortRendezvousServer` error 141, so no local browser pass is claimed.
 
-All of those PRs were open on 2026-10-22. Every lab repair above except the
-still-running SNARK Arena workflow has green exact-head checks. Hub #243,
-#244 and #246–#249 have green exact-head checks; stacked #245 has no GitHub
-check suite because its base is #244's branch, but the complete local fast loop
-passed. Do not merge them here; maintainer review is still required.
+All repair items remain working until a maintainer merges them and the required
+Pages deployment is verified. Do not merge them from this maintenance pass.
 
-**Pick up with:** Split Point, the next queued Fleet Console security-evidence
-review. Read its committed README and implementation, query its exact lock
-versions and provider alerts, and record one evidence-backed disposition. Then
-continue the queue one lab at a time. Do not infer a clean security state from
-an unavailable provider.
+**Pick up with:** `crypto-lab-tc26-pair`, Fleet item
+`dcd53501-6546-4080-b882-0348906f5cb1`. Fetch fresh `origin/main`, inspect a
+clean committed worktree, read the README and implementation, query the exact
+lock and authenticated providers, and record one evidence-backed disposition.
+Then continue queued security reviews one lab at a time.
 
-Before making another handoff, fetch both repositories and run the fast loop:
+## Fleet Console state — measured 2026-10-22
+
+The work store has **1,196 total, 1,029 complete and 167 active** items:
+**142 queued, 19 working and 6 blocked**.
+
+Active work consists of:
+
+- **142 queued security-evidence reviews.** TC26 Pair is next.
+- **19 working items:** 18 repairs awaiting merge/deployment (the lab PRs listed
+  above) plus Adaptor Gate's security item for PR **#8**.
+- **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state
+  reconciliation; Confirmer Signatures and Subliminal Channels return
+  `Dependabot alerts are disabled`. Disabled or unreadable providers are not
+  zero-alert evidence.
+- **2 cross-repository blockers:** Dot's all-lab reading report and the Counsel
+  primary API TLS route.
+
+The evidence standard for every queued item is unchanged:
+
+1. Pin fresh committed `origin/main`; never describe an uncommitted working
+   tree.
+2. Read the committed README and implementation.
+3. Query authenticated Dependabot, secret-scanning and code-scanning endpoints,
+   preserving disabled/unavailable states.
+4. Query every exact lockfile version against the applicable registry.
+5. Run the repository's real unit/build/browser gates and inspect exact-head
+   workflow provenance. A timestamp or an absent alert list is not a pass.
+6. Track any source repair separately and leave deployment unverified while its
+   PR is open.
+
+The saved Fleet snapshot is still from 2026-10-19 at Hub **`b1b9876`** and
+contains **232 labs**, while the current catalog contains **243**. Its daily
+02:00 America/New_York refresh is disabled. After the open maintenance settles,
+run a complete 243-lab refresh and verify the saved readback before publishing
+it. Enabling the schedule or changing repository security settings is an owner
+decision.
+
+## Hub verification
+
+Before another handoff, fetch both repositories and run:
 
 ```sh
-git -C . fetch origin && git -C ../crypto-counsel fetch origin
+git -C . fetch origin
+git -C ../crypto-counsel fetch origin
 for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
          theme-sync gate-sync dispatch-sync port-sync lab-dates \
          games-sync teach-build knowledge-map-sync; do
@@ -96,139 +91,22 @@ for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
 done
 ```
 
-Quote `"tools/$c.js"` and pass `check` separately. zsh does not split an
-unquoted scalar containing both the script and argument.
-
 At this checkpoint, 12 of 13 checks pass on `origin/main`. `lab-dates` alone
-reports the six expected stale pins for BB84, Protocol Compose, Threshold
-Decrypt, Multivariate, Broken Trust and Time-lock Puzzle; #244 contains those
-six corrections.
-
----
-
-## Active Fleet Console maintenance — measured 2026-10-22
-
-The work store has **1,191 total, 1,025 complete and 166 active** items:
-**147 queued, 14 working and 5 blocked**. Eighty work items have been completed
-since the preceding version of this file; 99 completions have now
-been recorded in this maintenance pass, including newly discovered repairs.
-
-The active queue is:
-
-- **151 security-evidence items:** 147 queued, Adaptor Gate working, and Time
-  Trust, LLL Break and Confirmer Signatures blocked.
-- **13 repairs awaiting merge/deployment:** Token Tell #25, VDF #23,
-  Vigenère Break #29, VRF Gate #22, Web of Trust #21, What Is PQC #3, World
-  Ciphers #26, Simon Period #25, Sleeve Check #9, SM2 Forge #9, SM9 Forge #10,
-  SNARK Arena #24 and SPDZ Forge #25. Twelve have green exact-head CI; SNARK
-  Arena is still running. Fleet correctly retains all 13 as working because
-  required deployment is still unverified.
-- **2 cross-repository blockers:** Dot's all-lab reading report and the Counsel
-  primary API TLS route.
-- **0 dependency-change reviews:** all 33 were individually reviewed against
-  committed source and current evidence. The 31 that were open at the previous
-  checkpoint are now complete.
-
-### Security evidence still needing work
-
-The saved census found 230 repositories whose GitHub Dependabot-alert endpoint
-was readable, 15 where alerts were disabled, and nine open alerts: three each in
-Adaptor Gate, LLL Break and Time Trust. All nine name the Vite/launch-editor
-family fixed in Vite 8.3.3.
-
-- Adaptor Gate's source fix is PR #8; leave the item working until merge and a
-  default-branch deployment prove the repair.
-- Token Tell, Traitor Trace, VDF, Vigenère Break, VRF Gate, Web of Trust, What
-  Is PQC, World Ciphers, Simon Period, Sleeve Check, SM2 Forge, SM9 Forge,
-  SNARK Arena and SPDZ Forge each received a committed-source review with
-  exact-lock, provider and exact-head workflow evidence. Traitor Trace needed
-  no patch. The other 13 exposed the repair work linked above; their
-  security-evidence items are complete without pretending the still-unmerged
-  repairs are deployed. Publication claims were checked against the cited
-  primary sources before prose or identifiers moved.
-- LLL Break and Time Trust already have Vite 8.3.4 and clean exact-lock registry
-  results on current `main`, but GitHub still reports alerts against 8.3.2.
-  Reconcile the provider record; do not downgrade or mark the alert fixed merely
-  from local evidence.
-- Confirmer Signatures is blocked because GitHub returns HTTP 403,
-  `Dependabot alerts are disabled`. Its exact npm lock has no registry advisory,
-  but its Python requirements are not a complete transitive lock, so neither
-  fact substitutes for provider evidence.
-- Dependabot alerts are also disabled for AKE Ladder, AES Anatomy, Clock
-  Arithmetic, Compression Leak, DVD Scramble, Hash Hunt, Key Lifecycle, Log
-  Forge, Next Number, Prime Witness, Residue Gate, Subliminal Channels, TESLA
-  Broadcast and Twist Trap. Enabling those repository settings is an owner
-  decision; absent alerts must not be reported as zero.
-
-For the remaining queued items, continue the same per-lab evidence standard:
-confirm the inspected SHA is still current, avoid uncommitted working-tree
-content, read the committed README and implementation, query all exact lockfile
-versions, read the provider result, and verify current-head CI. A saved
-completion timestamp alone is not evidence.
-
-### Dashboard state after the queue
-
-The private Fleet Console still shows a saved 2026-10-19 source snapshot at hub
-**`b1b9876`**, containing **232 labs**, while the current catalog contains
-**243**. Its daily 02:00 America/New_York refresh is disabled. After the open
-maintenance is settled, run a complete refresh, verify all 243 labs and only
-then publish a replacement snapshot. Enabling the schedule or changing
-repository security settings remains an explicit owner decision.
-
-### External blockers
-
-- Dot's all-lab reading report needs the cited Library artifact or independent
-  completion of the remaining bounded reviews.
-- Counsel's primary API TLS route needs the recorded Cloudflare certificate
-  repair. Local repository changes cannot repair that external route.
-
----
-
-## Optional cleanup decisions
-
-### Detached counsel worktrees
-
-Nine clean detached `crypto-counsel` worktrees remain under
-`~/repos/.fleet-maintenance-20261009/`. Their commits (`0d032ee`, `051a93c`,
-`2186e49` twice, `4de0cfe`, `7631877`, `a6b1036`, and `08dade2` twice) are all
-ancestors of current counsel `main`; the worktrees no longer protect unique
-commits. Removing the directories is still destructive, so do it only as an
-explicit cleanup task.
-
-```sh
-git -C ../crypto-counsel worktree list
-```
-
-### Branch-cleanup restore window
-
-`~/branch-cleanup-2026-10-21.txt` records 30 deleted remote branches and four
-deleted local branches with full tip SHAs and PR numbers. Keep it until the
-restore window is intentionally closed, then delete it. GitHub automatically
-deletes merged head branches for `crypto-lab`, but not for `crypto-counsel`;
-decide whether to enable that counsel setting.
-
----
-
-## Completed work retained as pointers
-
-- Corpus: crypto-counsel #18 found **28**, not 20, stale reviewed entries:
-  16 accurate, 12 corrected and 0 unsettled. It left all 190 never-reviewed
-  entries untouched. #19 refreshes the README snapshot.
-- Catalog: crypto-lab #244–#249 contain the date/evidence refreshes, automated
-  teach claims, advisory controls, path split and knowledge-map documentation.
-- Depth verification: the audited lab PRs listed in the handoff pin production
-  paths to published vectors or independent implementations; all mutation
-  controls failed as intended.
-- Fleet Console: 99 work items are complete with item-level evidence. This
-  includes both knowledge-map metadata gaps, all three missing real tool runs,
-  five Signature Gate teaching-role reviews, Collision Vault's cascades,
-  interpretation work, all 33 dependency reviews and 47 security-evidence
-  restorations, plus the repair tasks found while restoring that evidence.
-- Branch cleanup: 30 remote and four local branches were removed and 20 stale
-  tracking refs pruned; the restore manifest is the file named above.
+reports the six expected stale pins corrected by #244. Hub #243, #244 and
+#246–#249 have green exact-head checks. Stacked #245 has no GitHub suite because
+its base is #244's branch, but the complete local fast loop passes.
 
 Finish any card-stamping pass with `node tools/level-sync.js`; `data-level`
 belongs where the last writer puts it.
+
+## Optional cleanup — not active maintenance
+
+- Nine clean detached `crypto-counsel` worktrees remain under
+  `~/repos/.fleet-maintenance-20261009/`. Their commits are ancestors of
+  current counsel `main`; removing them is destructive and needs an explicit
+  cleanup decision.
+- `~/branch-cleanup-2026-10-21.txt` records deleted branches and restore SHAs.
+  Keep it until the restore window is intentionally closed.
 
 ## Settled — do not re-file
 
@@ -236,4 +114,4 @@ belongs where the last writer puts it.
 - `secret-council` derives its possibility count from the result.
 - Games deliberately use `games-sync` rather than catalog cards or exemptions.
 - `quantum-vault-kpqc`'s light theme, `blind-oracle-api`'s absent page and
-  `confirmer-signatures`' absent `dependabot.yml` are intentional divergences.
+  `confirmer-signatures`' absent `dependabot.yml` are intentional.

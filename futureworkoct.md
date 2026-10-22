@@ -53,17 +53,32 @@ treated as merged:
   Pages/OIDC permissions to the deploy job. Its 12 unit tests, five embedded
   maintenance controls, both accessibility flows and all seven browser claims
   pass at the exact repair head.
+- SM9 Forge **#10** retires escrow and nonce-reuse evidence after identity or
+  message edits, corrects its Playwright port claims and hardens the Pages
+  workflow. Its 419 unit/KAT cases, 26 independent oracle cases, 37 rendered
+  claims, accessibility and geometry gates pass at the exact repair head.
+- SNARK Arena **#24** retires completed and in-flight Groth16 evidence when the
+  witness changes, locks and retires ceremony results correctly, rejects
+  malformed ceremony records, repairs the shared skip link and hardens the
+  Pages workflow. Its exact-head Linux workflow is still running.
+- SPDZ Forge **#25** retires addition, multiplication, MAC-check, variance and
+  nested attack evidence after control changes; corrects the actual dark-only
+  accessibility matrix and test counts; and hardens both workflows. Its 65
+  unit/KAT/adversarial tests, five maintenance controls and all 15 production
+  browser tests pass at the exact repair head.
 - Adaptor Gate **#8** upgrades Vite to 8.3.4 and the Playwright image to 1.64.1,
   and fixes the accessibility regression found during validation. Its 127 unit
   and 116 browser tests pass, but its Fleet item stays working until the fix is
   on the default branch and the deployment is verified.
 - This current-state audit is crypto-lab **#243**.
 
-All of those PRs were open on 2026-10-22. The lab repair PRs have green
-exact-head checks; the three hub branches rebased after `a246d21` are re-running
-their checks. Do not merge them here; maintainer review is still required.
+All of those PRs were open on 2026-10-22. Every lab repair above except the
+still-running SNARK Arena workflow has green exact-head checks. Hub #243,
+#244 and #246–#249 have green exact-head checks; stacked #245 has no GitHub
+check suite because its base is #244's branch, but the complete local fast loop
+passed. Do not merge them here; maintainer review is still required.
 
-**Pick up with:** SM9 Forge, the next queued Fleet Console security-evidence
+**Pick up with:** Split Point, the next queued Fleet Console security-evidence
 review. Read its committed README and implementation, query its exact lock
 versions and provider alerts, and record one evidence-backed disposition. Then
 continue the queue one lab at a time. Do not infer a clean security state from
@@ -93,20 +108,21 @@ six corrections.
 
 ## Active Fleet Console maintenance — measured 2026-10-22
 
-The work store has **1,188 total, 1,022 complete and 166 active** items:
-**150 queued, 11 working and 5 blocked**. Seventy-seven work items have been
-completed since the preceding version of this file; 96 completions have now
+The work store has **1,191 total, 1,025 complete and 166 active** items:
+**147 queued, 14 working and 5 blocked**. Eighty work items have been completed
+since the preceding version of this file; 99 completions have now
 been recorded in this maintenance pass, including newly discovered repairs.
 
 The active queue is:
 
-- **154 security-evidence items:** 150 queued, Adaptor Gate working, and Time
+- **151 security-evidence items:** 147 queued, Adaptor Gate working, and Time
   Trust, LLL Break and Confirmer Signatures blocked.
-- **10 green repairs awaiting merge/deployment:** Token Tell #25, VDF #23,
+- **13 repairs awaiting merge/deployment:** Token Tell #25, VDF #23,
   Vigenère Break #29, VRF Gate #22, Web of Trust #21, What Is PQC #3, World
-  Ciphers #26, Simon Period #25, Sleeve Check #9 and SM2 Forge #9. Their
-  implementation and exact-head CI are complete, but Fleet correctly retains
-  them as working because required deployment is still unverified.
+  Ciphers #26, Simon Period #25, Sleeve Check #9, SM2 Forge #9, SM9 Forge #10,
+  SNARK Arena #24 and SPDZ Forge #25. Twelve have green exact-head CI; SNARK
+  Arena is still running. Fleet correctly retains all 13 as working because
+  required deployment is still unverified.
 - **2 cross-repository blockers:** Dot's all-lab reading report and the Counsel
   primary API TLS route.
 - **0 dependency-change reviews:** all 33 were individually reviewed against
@@ -123,12 +139,13 @@ family fixed in Vite 8.3.3.
 - Adaptor Gate's source fix is PR #8; leave the item working until merge and a
   default-branch deployment prove the repair.
 - Token Tell, Traitor Trace, VDF, Vigenère Break, VRF Gate, Web of Trust, What
-  Is PQC, World Ciphers, Simon Period, Sleeve Check and SM2 Forge each received
-  a committed-source review with exact-lock, provider and exact-head workflow
-  evidence. Traitor Trace needed no patch. The other ten exposed the repair
-  work linked above; their security-evidence items are complete without
-  pretending the still-unmerged repairs are deployed. Publication claims were
-  checked against the cited primary sources before prose or identifiers moved.
+  Is PQC, World Ciphers, Simon Period, Sleeve Check, SM2 Forge, SM9 Forge,
+  SNARK Arena and SPDZ Forge each received a committed-source review with
+  exact-lock, provider and exact-head workflow evidence. Traitor Trace needed
+  no patch. The other 13 exposed the repair work linked above; their
+  security-evidence items are complete without pretending the still-unmerged
+  repairs are deployed. Publication claims were checked against the cited
+  primary sources before prose or identifiers moved.
 - LLL Break and Time Trust already have Vite 8.3.4 and clean exact-lock registry
   results on current `main`, but GitHub still reports alerts against 8.3.2.
   Reconcile the provider record; do not downgrade or mark the alert fixed merely
@@ -202,10 +219,10 @@ decide whether to enable that counsel setting.
 - Depth verification: the audited lab PRs listed in the handoff pin production
   paths to published vectors or independent implementations; all mutation
   controls failed as intended.
-- Fleet Console: 96 work items are complete with item-level evidence. This
+- Fleet Console: 99 work items are complete with item-level evidence. This
   includes both knowledge-map metadata gaps, all three missing real tool runs,
   five Signature Gate teaching-role reviews, Collision Vault's cascades,
-  interpretation work, all 33 dependency reviews and 44 security-evidence
+  interpretation work, all 33 dependency reviews and 47 security-evidence
   restorations, plus the repair tasks found while restoring that evidence.
 - Branch cleanup: 30 remote and four local branches were removed and 20 stale
   tracking refs pruned; the restore manifest is the file named above.

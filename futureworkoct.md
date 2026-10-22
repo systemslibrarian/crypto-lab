@@ -31,8 +31,11 @@ treated as merged:
   names. VDF **#23** retires in-flight verification verdicts when their inputs
   change and makes its publish test portable. Vigenère Break **#29** retires
   animated solver transcripts when the workbench changes and applies the same
-  publish-test repair. All three exact-head Linux workflows pass; their Fleet
-  repair items remain working until merge and deployment are verified.
+  publish-test repair. VRF Gate **#22** enforces RFC 9381 proof decoding,
+  rejects non-canonical VDF proofs and incomplete beacon rounds, retires stale
+  asynchronous UI results, and makes its publish test portable. All four
+  exact-head Linux workflows pass; their Fleet repair items remain working
+  until merge and deployment are verified.
 - Adaptor Gate **#8** upgrades Vite to 8.3.4 and the Playwright image to 1.64.1,
   and fixes the accessibility regression found during validation. Its 127 unit
   and 116 browser tests pass, but its Fleet item stays working until the fix is
@@ -42,7 +45,7 @@ treated as merged:
 All of those PRs were open and GitHub reported them clean on 2026-10-22. Do not
 merge them here; maintainer review is still required.
 
-**Pick up with:** VRF Gate, the next queued Fleet Console security-evidence
+**Pick up with:** Web of Trust, the next queued Fleet Console security-evidence
 review. Read its committed README and implementation, query its exact lock
 versions and provider alerts, and record one evidence-backed disposition. Then
 continue the queue one lab at a time. Do not infer a clean security state from
@@ -72,19 +75,19 @@ six corrections.
 
 ## Active Fleet Console maintenance — measured 2026-10-22
 
-The work store has **1,181 total, 1,015 complete and 166 active** items:
-**157 queued, 4 working and 5 blocked**. Seventy work items have been
-completed since the preceding version of this file; 89 completions have now
+The work store has **1,182 total, 1,016 complete and 166 active** items:
+**156 queued, 5 working and 5 blocked**. Seventy-one work items have been
+completed since the preceding version of this file; 90 completions have now
 been recorded in this maintenance pass, including newly discovered repairs.
 
 The active queue is:
 
-- **161 security-evidence items:** 157 queued, Adaptor Gate working, and Time
+- **160 security-evidence items:** 156 queued, Adaptor Gate working, and Time
   Trust, LLL Break and Confirmer Signatures blocked.
-- **3 green repairs awaiting merge/deployment:** Token Tell #25, VDF #23 and
-  Vigenère Break #29. Their implementation and exact-head CI are complete, but
-  Fleet correctly retains them as working because required deployment is still
-  unverified.
+- **4 green repairs awaiting merge/deployment:** Token Tell #25, VDF #23,
+  Vigenère Break #29 and VRF Gate #22. Their implementation and exact-head CI
+  are complete, but Fleet correctly retains them as working because required
+  deployment is still unverified.
 - **2 cross-repository blockers:** Dot's all-lab reading report and the Counsel
   primary API TLS route.
 - **0 dependency-change reviews:** all 33 were individually reviewed against
@@ -100,11 +103,11 @@ family fixed in Vite 8.3.3.
 
 - Adaptor Gate's source fix is PR #8; leave the item working until merge and a
   default-branch deployment prove the repair.
-- Token Tell, Traitor Trace, VDF and Vigenère Break each received a committed-
-  source review with exact-lock, provider and exact-head workflow evidence.
-  Traitor Trace needed no patch. The other three exposed the repair work linked
-  above; their security-evidence items are complete without pretending the
-  still-unmerged repairs are deployed.
+- Token Tell, Traitor Trace, VDF, Vigenère Break and VRF Gate each received a
+  committed-source review with exact-lock, provider and exact-head workflow
+  evidence. Traitor Trace needed no patch. The other four exposed the repair
+  work linked above; their security-evidence items are complete without
+  pretending the still-unmerged repairs are deployed.
 - LLL Break and Time Trust already have Vite 8.3.4 and clean exact-lock registry
   results on current `main`, but GitHub still reports alerts against 8.3.2.
   Reconcile the provider record; do not downgrade or mark the alert fixed merely
@@ -178,10 +181,10 @@ decide whether to enable that counsel setting.
 - Depth verification: the five lab PRs listed in the handoff pin production
   paths to published vectors or independent implementations; all mutation
   controls failed as intended.
-- Fleet Console: 89 work items are complete with item-level evidence. This
+- Fleet Console: 90 work items are complete with item-level evidence. This
   includes both knowledge-map metadata gaps, all three missing real tool runs,
   five Signature Gate teaching-role reviews, Collision Vault's cascades,
-  interpretation work, all 33 dependency reviews and 37 security-evidence
+  interpretation work, all 33 dependency reviews and 38 security-evidence
   restorations, plus the repair tasks found while restoring that evidence.
 - Branch cleanup: 30 remote and four local branches were removed and 20 stale
   tracking refs pruned; the restore manifest is the file named above.

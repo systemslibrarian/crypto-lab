@@ -317,12 +317,14 @@
       {
         "text": "Padding Oracle: Panels 3 and 4 print a byte-for-byte match badge against the plaintext the session encrypted, beside a running oracle-query count. In the Panel 6 bench the leaky server gives up its block, the silent and Encrypt-then-MAC servers exhaust the probes for a byte and stop, and the MAC-rejections column shows Encrypt-then-MAC queries rejected before decryption. Tampering with the AES-GCM ciphertext fails authentication with no plaintext shown. A WebKit-only failure recorded here until 2026-09-22 — WebCrypto accepting a final 0x00 byte as valid padding, which failed three worksheet steps — was re-derived against the live page that day in all three engines and no longer reproduces: the forced 0x00 row answers Invalid, Full Block completes, and the Panel 6 leaky server gives up its block. Whether the lab changed or the engine did is not established here.",
         "exhibit": "padding-oracle",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "the claim is about what a decryption oracle answers after a multi-step attack, which needs the exhibit driven through several panels and read per engine; teach-issues.js checks rendered text, not attack outcomes",
-          "cadence": "re-derive whenever the support block for this exhibit is re-observed, and at least every academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "Nothing is stubbed: when the attack fails it fails because it exhausted all 256 probes for a byte and the oracle never varied.",
+          "steps": [
+            "#tab-6"
+          ],
+          "note": "the live defense bench's explicit statement of what its shared attack runner measures; the committed three-server outcomes and AEAD branch were reviewed beside it"
         }
       },
       {

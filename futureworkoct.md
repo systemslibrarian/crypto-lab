@@ -17,16 +17,20 @@ crypto-lab **#245**, stacked on #244, for catalog evidence; and the AES Anatomy
 and Clock Arithmetic **#2** PRs for theme pins. The five current depth rows are
 also complete in Harvest Vault **#21**, Hybrid Wire **#17**, Shelf Oracle **#13**,
 Compression Leak **#6** and WebAuthn **#25**. This queue audit itself is crypto-lab
-**#243**.
+**#243**. Crypto-lab **#246** completes the teach probes, **#247** validates the
+advisory chip rule end to end, and **#248** refreshes the Cryptanalyst decision
+proposal against the current path.
 
 Fresh `origin/main` remains red until those PRs merge, but the failures formerly
 listed as items 10–12 are implemented and verified on their branches. The
-remaining executable queue begins with the teach-layer claims.
+executable work through item 5 is complete on open PRs.
 
-**Two things still wait on a maintainer DECISION** — items 6 and 7. Item 6 now
-needs its proposal refreshed before the old 20-step choice can be acted on.
+**Two content choices still wait on a maintainer DECISION** — items 6 and 7. Item
+6's proposal is current again; the path itself has deliberately not been changed.
+Items 8 and 9 are cleanup/settings choices, not unfinished content work.
 
-**Pick up with:** item 4 (teach layer), the largest executable work item.
+**Pick up with:** a maintainer decision on item 6 or 7. There is no remaining
+unblocked content change in this queue.
 
 Before touching anything, re-fetch and re-run the fast loop — the figures below
 were measured on the dates beside them and other sessions work in these repos:
@@ -46,65 +50,26 @@ file literally named `x.js check` and every checker reports MODULE_NOT_FOUND.)
 
 ---
 
-## 4. Teach layer — 43 unchecked claims
+## 6. DECISION: split or retain the current Cryptanalyst Path
 
-Each needs a needle taken from the live page and VERIFIED before it can become an
-automated probe, because an unverified needle reports a false failure. The report
-names a cadence per item. Judgement per item, not a sweep.
-
-Current result (2026-10-21): **43 UNCHECKED and 4 UNREADABLE**. The four are three
-AES Modes observations and one Nonce Collision observation. Reinstalling all
-three Playwright browsers did not clear them in this execution environment: a
-direct launch smoke test found Chromium's macOS Mach-port bootstrap failing with
-error 141, Firefox exiting by `SIGABRT`, and WebKit aborting. That is an
-environment-readability failure, not evidence that the four page claims moved.
-Re-run in a normal terminal before changing those records.
-
-Check: `node tools/teach-issues.js`
-
----
-
-## 5. Chip rule — advisory, and staying advisory for now
-
-The 23 findings are dispositioned in `audits/CHIP-DISPOSITION-2026-10-20.md`.
-The maintainer's decisions of 2026-10-21 are implemented in
-`tools/catalog-sync.js`: four new qualifier words scoped to the chip they appear
-in, a declared `ENTAILS` table keyed on anchored implementations, one declared
-`QUALIFYING_SIBLINGS` pair, and the executed-stack rule requiring a verified call
-site rather than a dependency listing.
-
-Re-derived 2026-10-21: **0 violations**, 26 names cleared by the rule, 11 by a
-declared relation, and 33 explicitly `Cannot judge`. **Remaining before anyone
-proposes enabling the gate:** finish validating the rules, and keep the
-distinction between implementing and discussing. The gate decision is the
-maintainer's.
-
-Check: `node tools/catalog-sync.js chips`
-
----
-
-## 6. DECISION: refresh the path proposal, then split or retain it
-
-**Waiting on the maintainer; no split is implemented.** The merged proposal in
-`audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md` is now a useful design
-note but no longer a current implementation plan.
+**Waiting on the maintainer; no split is implemented.** Crypto-lab #248 refreshes
+`audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md` into a current decision
+document without changing `LEARNING_PATHS`.
 
 Re-derived from `LEARNING_PATHS` on 2026-10-21: Cryptanalyst is **21 steps**, not
 20, because AES Anatomy is now in the path. There are **nine** paths, not eight,
-and Developer is now 18 steps. The proposal's claims that its 11+9 split covers
-every step and that Cryptanalyst is the only path past 17 are therefore false on
-current main. Current lengths are 13, 12, 12, 11, 18, 21, 12, 12 and 9.
-Those counts were rechecked at `1e6f181` after both textbook-alignment commits;
-the commits changed reading-guide content, not the nine path memberships.
+and Developer is now 18 steps. Current lengths are 13, 12, 12, 11, 18, 21, 12,
+12 and 9. Those counts were rechecked at `1e6f181`; #248 mechanically verifies
+both candidate partitions against all 21 current titles.
 
-Three choices remain, but use the current list:
+Three choices remain:
 
 1. **Leave Cryptanalyst at 21.** Delete this item, and separately decide whether
    Developer at 18 needs the same exception.
-2. **Two paths.** Refresh the old 11+9 proposal by placing AES Anatomy; placing
-   it with Structure and Statistics would make the natural split 12+9.
-3. **Three paths.** The proposal's composition seed remains Salamander, Frozen
-   Heart and Padding Oracle, matching `concept-coverage.md` §29.
+2. **Two paths, 12+9.** Structure and Statistics gains AES Anatomy;
+   Implementation and Composition retains the other nine.
+3. **Three paths, 12+6+3.** Split Oracles/Leakage/Faults from the three-step
+   Composition and Binding seed: Padding Oracle, Salamander and Frozen Heart.
 
 If 2 or 3 is chosen, re-verify that every current step appears exactly once.
 **The writer-order trap remains:** `knowledge-map-sync write` records the path
@@ -211,6 +176,9 @@ merge.
 | generated knowledge map and card dates | crypto-lab #244; 243 repositories refreshed, 34 date-evidence records moved and six displayed months changed; knowledge map, catalog/date/level/readme/concept checks and six card-stamp tests pass |
 | AES Anatomy and Clock Arithmetic theme pins | each lab's #2; literal dark pin corrected, unit/build checks pass, and fleet theme-sync reports 255 pages with no violations; browser-owned mutation baselines remain unreadable here because Chromium exits with macOS bootstrap error 141 |
 | catalog evidence refresh | crypto-lab #245, stacked on #244; nine stale reviews individually re-read, 18 stale anchors regenerated, copied-tool and scanner false positives excluded, 1,554 anchors resolve, and 75 tests pass with 0 failures/skips |
+| teach-layer unchecked claims | crypto-lab #246; all 43 manual claims individually reviewed and converted, leaving 47 automated and 0 manual probes; the full Linux Chromium/Firefox/WebKit run reports 47 MATCHES, 0 GONE and 0 UNREADABLE |
+| advisory chip-rule validation | crypto-lab #247; the production classifier, all four declared relations, five qualifier words, uncertainty ordering and the scanner's comment/string boundary now have positive and mutation controls; live output remains 0 violations and the gate remains advisory |
+| Cryptanalyst proposal refresh | crypto-lab #248; current 21-step path and all nine path lengths re-derived, with exact-cover 12+9 and 12+6+3 options; the retain/split decision remains item 6 |
 | branch cleanup, both repos | 30 remote + 4 local deleted, 20 tracking refs pruned; manifest `~/branch-cleanup-2026-10-21.txt`; auto-delete is now on only for `crypto-lab`. Decide from the PR, never `git branch --merged` — squash merges make almost every merged branch read as unmerged |
 | futureworkoct queue update | #241 |
 | futureworkoct current-state audit | this queue-only PR; caught main up through `1e6f181`, removed the completed corpus and depth items, and recorded the reproducible failures without fixing out-of-scope files |

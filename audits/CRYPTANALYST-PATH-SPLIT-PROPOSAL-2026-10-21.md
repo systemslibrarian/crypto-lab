@@ -1,64 +1,77 @@
-# Proposal: split the Cryptanalyst Path in two
+# Proposal: retain or split the Cryptanalyst Path
 
-**Proposal only. Nothing in `index.html` is changed by this PR.** The decision is the
-maintainer's; this file exists so the decision can be made from the step list rather
-than from a count.
+**Proposal only. Nothing in `index.html` is changed by this document.** The decision is
+the maintainer's; this file exists so that retaining, splitting in two, or splitting in
+three can be compared against the current path rather than an obsolete count.
 
-## Why
+## Re-derived state — 2026-10-21
 
-The Cryptanalyst Path reached **20 steps** when Next Number, DVD Scramble and Twist Trap
-were added in #239. `CLAUDE.md` says "Keep `steps` ≤ ~12 for readability". It was already
-17 before those three, so this is not a new problem and the three additions are not its
-cause — they are what made it worth raising.
+At catalog commit `1e6f181`, the Cryptanalyst Path has **21 steps**. AES Anatomy was
+added after the original 20-step proposal, so that proposal's 11+9 partition no longer
+covered the whole path. There are **nine** learning paths, with current lengths:
 
-For scale, the other seven paths: `developer` 16, `start-here` 13, `post-quantum` 12,
-`key-exchange` 11, `modern-cryptography` 10, `boneh-shoup` 9, `applied-cryptography` 8.
-Cryptanalyst is the longest and the only one past 17.
+| path | steps |
+|---|---:|
+| Start Here | 13 |
+| Understanding Cryptography | 12 |
+| Introduction to Modern Cryptography | 12 |
+| Boneh & Shoup | 11 |
+| Developer | 18 |
+| Cryptanalyst | **21** |
+| Post-Quantum | 12 |
+| Key Exchange | 12 |
+| Applied Cryptography | 9 |
 
-## The split line comes from the path's own blurb
+`CLAUDE.md` says to keep a path at roughly 12 steps for readability. Cryptanalyst is
+still the longest path, but it is no longer accurate to say it is the only path past 17:
+Developer now has 18. Length is a reason to decide, not a reason to assume a split.
 
-The existing blurb already names four classes:
+## The two-way split line comes from the path's own blurb
+
+The current blurb names four classes:
 
 > "Mathematical attacks exploit structure and statistics; oracles exploit response
 > differences; side channels measure timing or power; faults alter computation."
 
-That sentence is the proposed cut: **clause one** on one side, **clauses two to four** on
-the other. The distinction is what the attacker needs. The first group needs the maths —
-the algorithm's structure or the statistics of its output, and the attack works on paper.
-The second needs the running machine — an oracle's answers, a timing or power trace, a
-validation check that is missing, a fault. Nothing in the second group can be carried out
-against a specification.
+That sentence supplies a defensible two-way cut: **clause one** on one side and
+**clauses two to four** on the other. The distinction is what the attacker needs. The
+first group needs the mathematics — the algorithm's structure or the statistics of its
+output, and the attack works on paper. The second needs a running machine — an oracle's
+answers, a timing or power trace, a validation check that is missing, or a fault.
 
-## Proposed path A — Structure and Statistics (11 steps)
+## Two-way option A — Structure and Statistics (12 steps)
 
-Attacks on what the algorithm IS. Keeps the on-ramp: it is the only one of the two that
-starts at `beginner`, and five of its eleven are `intermediate`.
+Attacks on what the algorithm is. This is the only proposed path that starts at
+`beginner`; six of its twelve steps are `intermediate`. AES Anatomy belongs here because
+it exposes the primitive's round structure and the weakened structures attacked by the
+later differential and linear labs.
 
 | # | step | level | why here |
 |---|---|---|---|
-| 1 | Dead Sea Cipher | beginner | historical cipher; the entry point and the only `historical` card in the path |
+| 1 | Dead Sea Cipher | beginner | historical cipher; the entry point and the only `historical` card in the current path |
 | 2 | LFSR Forge | intermediate | Berlekamp–Massey fits a recurrence from output alone |
 | 3 | DVD Scramble | intermediate | the two-register structure algebraically determines the key |
 | 4 | WEP Crack | intermediate | RC4 keystream biases plus a CRC-32 that authenticates nothing |
-| 5 | Biham Lens | advanced | differential cryptanalysis — statistics of output differences |
-| 6 | Matsui Line | advanced | linear cryptanalysis — the same move with linear approximations |
-| 7 | RSA Small Roots | advanced | Coppersmith; a lattice over the algorithm's own structure |
-| 8 | Next Number | advanced | a generator's recurrence read off its output |
-| 9 | Nonce Lattice | advanced | the same lattice technique against signature nonces |
-| 10 | Entropy Collapse | intermediate | what fails when the input distribution is wrong |
-| 11 | Nonce Collision | intermediate | what fails when a value that must be unique repeats |
+| 5 | AES Anatomy | intermediate | the full primitive, key schedule and deliberately weakened round structures |
+| 6 | Biham Lens | advanced | differential cryptanalysis — statistics of output differences |
+| 7 | Matsui Line | advanced | linear cryptanalysis — the same move with linear approximations |
+| 8 | RSA Small Roots | advanced | Coppersmith; a lattice over the algorithm's own structure |
+| 9 | Next Number | advanced | a generator's recurrence read off its output |
+| 10 | Nonce Lattice | advanced | the same lattice technique against signature nonces |
+| 11 | Entropy Collapse | intermediate | what fails when the input distribution is wrong |
+| 12 | Nonce Collision | intermediate | what fails when a value that must be unique repeats |
 
-Levels: 1 beginner, 5 intermediate, 5 advanced.
+Levels: 1 beginner, 6 intermediate, 5 advanced.
 
-## Proposed path B — Implementation and Composition (9 steps)
+## Two-way option B — Implementation and Composition (9 steps)
 
-Attacks on what a RUNNING implementation reveals, or fails to bind. Assumes A.
+Attacks on what a running implementation reveals or fails to bind. This path assumes A.
 
 | # | step | level | why here |
 |---|---|---|---|
 | 1 | Padding Oracle | intermediate | the cleanest oracle: a response difference, nothing else |
 | 2 | Timing Oracle | advanced | the same idea when the difference is a duration |
-| 3 | Twist Trap | advanced | the oracle is a peer doing a scalar multiplication; the flaw is a missing validation check |
+| 3 | Twist Trap | advanced | the oracle is a peer doing scalar multiplication; the flaw is a missing validation check |
 | 4 | Power Trace | advanced | the leak moves from time to power |
 | 5 | Masked Core | advanced | second-order CPA — what a countermeasure still leaks |
 | 6 | Salamander | advanced | key commitment: the construction binds less than it appears to |
@@ -68,37 +81,60 @@ Attacks on what a RUNNING implementation reveals, or fails to bind. Assumes A.
 
 Levels: 1 intermediate, 8 advanced.
 
-## The three placements I am least sure of
+## Three-way option
 
-Named rather than buried, because they are where a reader would reasonably disagree.
+If implementation leakage and composition are too different to share a path, the same
+21 steps partition exactly into **12 + 6 + 3**:
 
-- **Salamander** and **Frozen Heart** are neither observation nor mathematics. They are
-  composition failures — something that should have been bound was not. They sit in B
-  because the failure is in what the construction does rather than in its algebra, but a
-  third path for composition and protocol failures would hold them better, and
-  `concept-coverage.md` already has a §29 "Composition and parsing failures" for exactly
-  this class. If you want three paths rather than two, these two plus Padding Oracle are
-  the seed.
-- **Entropy Collapse** and **Nonce Collision** are input-misuse rather than structural
-  analysis. They are in A because the attack is statistical once the misuse exists, and
-  because they are two of A's five intermediate steps — moving them leaves A with a
-  harder middle.
-- **Twist Trap** could sit in A, since the recovery itself is small-subgroup logs plus
-  CRT. It is in B because the exploitable condition is a validation check the
-  implementation skipped, which is B's subject.
+- **Structure and Statistics (12):** the option A list above.
+- **Oracles, Leakage and Faults (6):** Timing Oracle, Twist Trap, Power Trace, Masked
+  Core, KyberSlash, Lattice Fault.
+- **Composition and Binding (3):** Padding Oracle, Salamander, Frozen Heart.
 
-## What implementing it would need
+The third group's theme is not invented for this proposal. `concept-coverage.md` §29 is
+already **Composition and parsing failures** and files Padding Oracle and Salamander
+there. Frozen Heart is primarily filed under zero knowledge in §21, but its attack has
+the same operative failure: a transcript binds too little. The drawback is equally
+visible — a three-step path is small, so the conceptual purity may not justify another
+top-level path.
 
-Mechanical, once the split is agreed:
+## Placements on which a maintainer could reasonably disagree
 
-1. Replace the `cryptanalyst` entry in `LEARNING_PATHS` with two entries, each with its
-   own `id`, `label`, `focus`, `blurb` and `steps`.
-2. Split the existing blurb along the same clause boundary rather than writing two new
-   ones, so the reasoning that produced the split stays visible on the page.
-3. `node tools/readme-sync.js` — the Learning Paths table is generated.
-4. `node tools/knowledge-map-sync.js write` — the map records a path count, currently 8,
-   and hashes `index.html`. It must run AFTER any card stamper.
-5. `node tools/teach-build.js` and the usual checker sweep.
+- **Salamander** and **Frozen Heart** are neither observation nor classical
+  cryptanalysis. They remain in two-way B because the failure is in what a construction
+  binds, and form the three-way composition seed with Padding Oracle.
+- **Entropy Collapse** and **Nonce Collision** are input misuse rather than structural
+  analysis. They remain in A because the attack becomes statistical once the misuse
+  exists, and because they preserve an intermediate middle rather than leaving a jump
+  from WEP Crack to advanced-only material.
+- **Twist Trap** could sit in A because recovery uses small-subgroup logs and CRT. It
+  remains in B because the exploitable condition is a validation check the
+  implementation skipped.
+- **AES Anatomy** is not itself one attack. It sits in A as the bridge from the primitive
+  and key schedule to Biham Lens and Matsui Line; putting it in B would sever that arc.
 
-No card changes, no new labs, and no step leaves the catalog: all 20 appear exactly once
-across the two paths.
+## Decision table
+
+| choice | resulting lengths | trade-off |
+|---|---|---|
+| retain the current path | 21 | preserves one complete attack journey, but remains well above the approximate 12-step guideline |
+| split in two | 12 + 9 | both paths fit the guideline and retain substantial arcs; composition and implementation leakage share one path |
+| split in three | 12 + 6 + 3 | cleanest conceptual boundary, but the composition path may be too short for top-level navigation |
+
+No recommendation is encoded here. The current path remains valid until the maintainer
+chooses one of these three.
+
+## What implementation would require after a decision
+
+1. For **retain**, change nothing in `LEARNING_PATHS`; separately decide whether the
+   18-step Developer Path needs the same length exception.
+2. For a split, replace the `cryptanalyst` entry in `LEARNING_PATHS` with two or three
+   entries, each with its own `id`, `label`, `focus`, `blurb` and `steps`.
+3. Re-derive the split from the current path and assert that every current title appears
+   exactly once. The two-way lists above cover 12+9; the three-way lists cover 12+6+3.
+4. Run `node tools/readme-sync.js` — the Learning Paths table is generated.
+5. Run `node tools/knowledge-map-sync.js write` — the map currently records **nine**
+   paths and hashes `index.html`. It must run after any card stamper.
+6. Run `node tools/teach-build.js` and the usual checker sweep.
+
+No card change and no new lab is part of this proposal.

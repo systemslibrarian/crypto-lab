@@ -25,12 +25,11 @@ Fresh `origin/main` remains red until those PRs merge, but the failures formerly
 listed as items 10–12 are implemented and verified on their branches. The
 executable work through item 5 is complete on open PRs.
 
-The earlier content queue is complete on open PRs. Item 10 is newly detected
-catalog maintenance caused by six labs moving after their displayed dates were
-pinned. Items 8 and 9 are cleanup/settings choices, not unfinished content work.
+The content queue is complete on open PRs. The six stale date pins visible on
+`main` are the six already corrected by #244, not a new queue item. Items 8 and
+9 are cleanup/settings choices, not unfinished content work.
 
-**Pick up with:** item 10. Items 8 and 9 still require explicit cleanup/settings
-choices.
+**Pick up with:** the explicit cleanup/settings choices in items 8 and 9.
 
 Before touching anything, re-fetch and re-run the fast loop — the figures below
 were measured on the dates beside them and other sessions work in these repos:
@@ -93,20 +92,6 @@ head branches" is **ON for `crypto-lab` and OFF for `crypto-counsel`**. The old
 claim that both were on is stale. Decide whether to re-enable it for counsel;
 until then, counsel branches such as #18's will need deliberate cleanup after
 merge.
-
----
-
-## 10. Refresh six catalog date pins after current lab movement
-
-**Newly detected on 2026-10-21.** `node tools/lab-dates.js check` reports six
-cards whose pinned displayed month predates the current committed lab state:
-`bb84`, `protocol-compose`, `threshold-decrypt`, `multivariate`, `broken-trust`
-and `time-lock-puzzle`. Each is pinned to 2026-08 or 2026-09 while the lab now
-derives to 2026-10.
-
-Run the date writer, inspect the six cards rather than accepting unrelated
-output, then regenerate downstream artifacts in writer order and run the full
-checker sweep. Keep this separate from #248's path-only change.
 
 ---
 

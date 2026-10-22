@@ -879,6 +879,9 @@
       "Length extension",
       "Merkle tree"
     ],
+    "removeReferences": [
+      "Merkle tree"
+    ],
     "implementation": "noble SHA-256 / WebCrypto HMAC / local attack engines",
     "note": "Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint-chain regeneration, salt timing and the new Joux exhibit. Joux chains real compression-function collisions in a deliberately tiny, length-strengthened Merkle-Damgard construction into 2^b messages, then searches that family for a collision under a second hash with independent message and cascade verification. It is not a break of full SHA-256, a length-extension attack, a Merkle tree or a second-preimage claim. The tag transfer attacks hash-then-MAC rather than HMAC; Hellman and rainbow retain their distinct reductions. Joux multicollision is not in the current catalog vocabulary, so no unsupported label is added."
   },
@@ -903,7 +906,10 @@
     "commit": "2a02c59f611b1a3aca698b737a31611fccbdd0d8",
     "reviewed": "2026-10-21",
     "state": "N/A",
-    "note": "Read the committed bit-serial 17- and 25-bit LFSRs, full-carry byte combiner, guess-and-determine search and verifier. The attack exhaustively enumerates all 65,536 small-register seeds, derives the other 24 bits, and counts public candidates. The hardened verifier uses private continuation bytes only after the public set is unique, so private data cannot select a candidate; cancellation reports only completed work. N/A means no named algorithm in this index, not no computation: CSS and the LFSR family remain outside the vocabulary. This is the textbook generator with a documented full-carry correction, not deployed DVD CSS with its forced-bit positions, discarded early bytes, inverter modes or key hierarchy."
+    "removeReferences": [
+      "Schnorr"
+    ],
+    "note": "Read the committed bit-serial 17- and 25-bit LFSRs, full-carry byte combiner, guess-and-determine search and verifier. The attack exhaustively enumerates all 65,536 small-register seeds, derives the other 24 bits, and counts public candidates. The hardened verifier uses private continuation bytes only after the public set is unique, so private data cannot select a candidate; cancellation reports only completed work. N/A means no named algorithm in this index, not no computation: CSS and the LFSR family remain outside the vocabulary. This is the textbook generator with a documented full-carry correction, not deployed DVD CSS with its forced-bit positions, discarded early bytes, inverter modes or key hierarchy. Schnorr names only the accessibility-test machinery used as a template, not cryptography in this lab."
   },
   "crypto-lab-aes-anatomy": {
     "commit": "254a8069f7811e6b766199ef97f46c0c56a91c85",
@@ -930,8 +936,11 @@
       "Fault injection",
       "Man-in-the-middle"
     ],
+    "removeReferences": [
+      "SHA-256"
+    ],
     "implementation": "hand-rolled BigInt arithmetic",
-    "note": "Reviewed the committed exact modular arithmetic, extended Euclid, Euler phi, multiplicative-order checks, generator tests, subgroup enumeration, generalized CRT and toy Diffie-Hellman. The DH model computes both parties, enumerates the distinct shared-secret space and reports the actual guess position. It is not a discrete-log solver or MITM exhibit. Exact trial division supports the arithmetic lesson rather than an RSA factoring attack; software CRT faults appear only in a neighboring-lab link, and RSA and adjacent algorithms remain references. The latest audit adds independent exhaustive routes, fail-closed budgets and prediction/counterexample UI without changing those classifications."
+    "note": "Reviewed the committed exact modular arithmetic, extended Euclid, Euler phi, multiplicative-order checks, generator tests, subgroup enumeration, generalized CRT and toy Diffie-Hellman. The DH model computes both parties, enumerates the distinct shared-secret space and reports the actual guess position. It is not a discrete-log solver or MITM exhibit. Exact trial division supports the arithmetic lesson rather than an RSA factoring attack; software CRT faults appear only in a neighboring-lab link, and RSA and adjacent algorithms remain references. SHA-256 appears only as a mutation-bundle fingerprint, not lesson cryptography. The latest audit adds independent exhaustive routes, fail-closed budgets and prediction/counterexample UI without changing those classifications."
   },
   "crypto-lab-harvest-timeline": {
     "commit": "ea407d665fd8a57676581de216cfc09afddf393a",

@@ -961,5 +961,13 @@
     ],
     "implementation": "toy GF(16) Goppa/Patterson model, simulated published-size key bytes, WebCrypto AES-GCM",
     "note": "Reviewed src/mceliece.ts, src/toy/goppa-code.ts, keysize and comparison modules, visible UI, README, LIMITATIONS and tests at this pin. The browser computes a genuine small GF(16) Goppa/Patterson teaching model and a toy brute-force syndrome decoder. Its published-size 261120-byte key visual is SHA-256-expanded simulated bytes, not a Classic McEliece public key; its encapsulation is not the submitted KEM API. Real WebCrypto AES-GCM protects the teaching message. Classic McEliece is a referenced later KEM, not an implemented primitive here. The 2026 structural key-recovery preprint and possible public-key-substitution MitM are research/deployment context, not attacks executed by this lab. Preserve actual toy brute force and real AES/SHA operations while excluding full Classic McEliece, key recovery and MitM implementation credits. The 1978 scheme was public-key encryption; CRYSTALS-Kyber was selected in 2022 and standardized as ML-KEM in 2024. NIST selected HQC rather than Classic McEliece in 2025."
+  },
+  "crypto-lab-shelf-oracle": {
+    "commit": "7f1fd7f2fcb914759593e1c1cf38e49713d705cb",
+    "reviewed": "2026-10-21",
+    "remove": [
+      "Chosen-plaintext attack"
+    ],
+    "note": "Read the committed README, PIR implementation and learner-facing scope after the decryption-feedback research update and Noble ChaCha20 cross-check. The new IND-CPA/IND-CPA-D passage summarizes attacks reported against particular BFV/BGV configurations and explicitly says this browser lab neither reproduces them nor establishes that its implementation is vulnerable, so it is not an executed chosen-plaintext attack. Preserve the measured data-dependent server timing as the lab's actual side-channel demonstration, along with the existing BFV, PIR, ChaCha20 and SHA-256 implementation credits. This classification review does not establish production security, constant-time execution or vulnerability to the cited research attacks."
   }
 }

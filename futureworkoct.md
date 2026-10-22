@@ -9,23 +9,24 @@ disagrees with its command, the command is right and the line is stale.
 
 ## Where this left off — 2026-10-21
 
-`crypto-lab` main was caught up to **`9d6ec44`** before this queue-only branch;
+`crypto-lab` main was caught up to **`1e6f181`** before this queue-only branch;
 `crypto-counsel` main is **`cc2979b`**. Completed work is open, not merged:
 crypto-counsel **#18** for the stale corpus and **#19**, stacked on #18, for
 snapshot characters; crypto-lab **#244** for card dates and generated metadata;
 crypto-lab **#245**, stacked on #244, for catalog evidence; and the AES Anatomy
-and Clock Arithmetic **#2** PRs for theme pins. This queue audit itself is
-crypto-lab **#243**.
+and Clock Arithmetic **#2** PRs for theme pins. The five current depth rows are
+also complete in Harvest Vault **#21**, Hybrid Wire **#17**, Shelf Oracle **#13**,
+Compression Leak **#6** and WebAuthn **#25**. This queue audit itself is crypto-lab
+**#243**.
 
 Fresh `origin/main` remains red until those PRs merge, but the failures formerly
 listed as items 10–12 are implemented and verified on their branches. The
-remaining queue begins with the depth-audit rows.
+remaining executable queue begins with the teach-layer claims.
 
 **Two things still wait on a maintainer DECISION** — items 6 and 7. Item 6 now
 needs its proposal refreshed before the old 20-step choice can be acted on.
 
-**Pick up with:** item 2 (#31 vectors, five rows left), the largest judged work
-item.
+**Pick up with:** item 4 (teach layer), the largest executable work item.
 
 Before touching anything, re-fetch and re-run the fast loop — the figures below
 were measured on the dates beside them and other sessions work in these repos:
@@ -42,49 +43,6 @@ done
 (Quote `"tools/$c.js"` and pass `check` as its own argument. zsh does not
 word-split an unquoted `$c`, so `node tools/$c` with `c="x.js check"` looks for a
 file literally named `x.js check` and every checker reports MODULE_NOT_FOUND.)
-
----
-
-## 2. #31 — published test vectors, 13 of 18 rows done
-
-Five unnamed rows remain; the 13 completed judgements still match the lab
-histories checked on 2026-10-21. **The issue's own ranking is stale — refresh the
-remote exports before picking:** `node tools/depth-audit.js export && node
-tools/depth-audit.js`, then read `audits/DEPTH-AUDIT-<today>.md`. Running the
-second command alone rewrites a report from whatever is already in `.scratch/`.
-
-**How these rows have actually gone, after thirteen:**
-
-- **Where the vector lives.** The hand-rolled hard maths almost always has
-  tests; the primitive that seals, keys, tags or commits its output almost never
-  does. In nine of thirteen the untested module was the symmetric one. When a lab
-  has no obvious KAT, ask what standardized primitive its output passes through
-  before concluding none applies — `paillier-gate` (HMAC, RFC 4231) and
-  `spdz-forge` (SHA-256 commitment, CAVP) both looked like "no vector applies".
-- **Copy the bytes from the publication.** A vector regenerated from `@noble` or
-  WebCrypto agrees with the code for the same reason it agrees with itself.
-- **Assert THROUGH the lab's own function**, never against `crypto.subtle`
-  beside it. In `bike-vault` the second form let a SHA-1 mutation pass.
-- **Check the extraction against the publication's own octet counts.** Pulling
-  hex runs of 8+ characters out of RFC 8554 dropped a message's final `2e0a` —
-  160 bytes where Appendix F says 162 — and the truncated message made a correct
-  lab look broken. RFC 4231 Test Case 3 writes `Key` with no `=` sign, alone
-  among seven, so a reader keyed on `Key =` built a zero-length key.
-- **Pin what the KEY carries, not just what the function computes.** In
-  `paillier-gate` the exported `hmacSha256` takes a `CryptoKey`, so the hash
-  lives in the key: all seven RFC vectors stayed green when `generateBallotKey`
-  was switched to SHA-1. One assertion on `key.algorithm.hash` noticed.
-- **Check what a lab's "reference" actually IS.** `kyberslash`'s was its own
-  formula transcribed — a differential, blind to the same wrong constant in both
-  copies. The tell is that the reference expression and the implementation
-  expression are the same shape.
-- **Check what the GATE invokes, not that it went green.** `hqc-vault`'s build
-  job never ran `npm test`, so ten new tests ran nowhere.
-  `gh api .../jobs --jq '.jobs[] | .steps[] | .name'` settles it.
-- **Expect four outcomes**, not two. Of thirteen: three carried a real
-  conformance bug, eight were correct but unverified, one cannot take a vector at
-  all (`falcon-seal` — randomized signing, non-reference encoding), and one was
-  verified against a transcription of itself.
 
 ---
 
@@ -136,6 +94,8 @@ Re-derived from `LEARNING_PATHS` on 2026-10-21: Cryptanalyst is **21 steps**, no
 and Developer is now 18 steps. The proposal's claims that its 11+9 split covers
 every step and that Cryptanalyst is the only path past 17 are therefore false on
 current main. Current lengths are 13, 12, 12, 11, 18, 21, 12, 12 and 9.
+Those counts were rechecked at `1e6f181` after both textbook-alignment commits;
+the commits changed reading-guide content, not the nine path memberships.
 
 Three choices remain, but use the current list:
 
@@ -247,12 +207,13 @@ merge.
 | eleven stale `crypto_lab_readme` lines | crypto-counsel #17; Snow 2 was a MOVE to Related Projects, and `validate.mjs` was widened with M25-M27 as its controls |
 | corpus prose stale review | crypto-counsel #18; 28 re-derived rather than the noted 20: 16 accurate, 12 corrected, 0 unsettled; 190 never-reviewed entries left untouched |
 | nine snapshot character lines | crypto-counsel #19, stacked on #18; rendered cards plus the catalog README are canonical, and only the nine HTML/numeric entity spellings changed |
+| #31 final five depth judgements | Harvest Vault #21 and Compression Leak #6 pin published vectors through production helpers; Hybrid Wire #17 and Shelf Oracle #13 add outside-library cross-checks; WebAuthn #25 pins its production SHA-256 helper to NIST CAVP. All five implementations were correct but incompletely verified; every mutation control failed as intended |
 | generated knowledge map and card dates | crypto-lab #244; 243 repositories refreshed, 34 date-evidence records moved and six displayed months changed; knowledge map, catalog/date/level/readme/concept checks and six card-stamp tests pass |
 | AES Anatomy and Clock Arithmetic theme pins | each lab's #2; literal dark pin corrected, unit/build checks pass, and fleet theme-sync reports 255 pages with no violations; browser-owned mutation baselines remain unreadable here because Chromium exits with macOS bootstrap error 141 |
 | catalog evidence refresh | crypto-lab #245, stacked on #244; nine stale reviews individually re-read, 18 stale anchors regenerated, copied-tool and scanner false positives excluded, 1,554 anchors resolve, and 75 tests pass with 0 failures/skips |
 | branch cleanup, both repos | 30 remote + 4 local deleted, 20 tracking refs pruned; manifest `~/branch-cleanup-2026-10-21.txt`; auto-delete is now on only for `crypto-lab`. Decide from the PR, never `git branch --merged` — squash merges make almost every merged branch read as unmerged |
 | futureworkoct queue update | #241 |
-| futureworkoct current-state audit | this queue-only PR; caught main up through `9d6ec44`, removed the completed corpus item, and recorded the reproducible failures without fixing out-of-scope files |
+| futureworkoct current-state audit | this queue-only PR; caught main up through `1e6f181`, removed the completed corpus and depth items, and recorded the reproducible failures without fixing out-of-scope files |
 
 **Finish a card-stamping pass with `node tools/level-sync.js`.** `data-level` sits
 where the writer that ran last put it; running it last took a real repin's diff

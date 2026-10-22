@@ -11,20 +11,21 @@ disagrees with its command, the command is right and the line is stale.
 
 `crypto-lab` main was caught up to **`9d6ec44`** before this queue-only branch;
 `crypto-counsel` main is **`cc2979b`**. Completed work is open, not merged:
-crypto-counsel **#18** for the stale corpus; crypto-lab **#244** for card dates
-and generated metadata; crypto-lab **#245**, stacked on #244, for catalog
-evidence; and the AES Anatomy and Clock Arithmetic **#2** PRs for theme pins.
-This queue audit itself is crypto-lab **#243**.
+crypto-counsel **#18** for the stale corpus and **#19**, stacked on #18, for
+snapshot characters; crypto-lab **#244** for card dates and generated metadata;
+crypto-lab **#245**, stacked on #244, for catalog evidence; and the AES Anatomy
+and Clock Arithmetic **#2** PRs for theme pins. This queue audit itself is
+crypto-lab **#243**.
 
 Fresh `origin/main` remains red until those PRs merge, but the failures formerly
 listed as items 10–12 are implemented and verified on their branches. The
-remaining queue begins with counsel snapshot prose and the depth-audit rows.
+remaining queue begins with the depth-audit rows.
 
 **Two things still wait on a maintainer DECISION** — items 6 and 7. Item 6 now
 needs its proposal refreshed before the old 20-step choice can be acted on.
 
-**Pick up with:** item 1, the small exactly re-derived snapshot correction.
-After that, item 2 (#31 vectors, five rows left) is the largest judged work item.
+**Pick up with:** item 2 (#31 vectors, five rows left), the largest judged work
+item.
 
 Before touching anything, re-fetch and re-run the fast loop — the figures below
 were measured on the dates beside them and other sessions work in these repos:
@@ -41,26 +42,6 @@ done
 (Quote `"tools/$c.js"` and pass `check` as its own argument. zsh does not
 word-split an unquoted `$c`, so `node tools/$c` with `c="x.js check"` looks for a
 file literally named `x.js check` and every checker reports MODULE_NOT_FOUND.)
-
----
-
-## 1. Nine snapshot lines carry HTML entities where the card has the character
-
-**Verified 2026-10-21 against the current snapshot and catalog: exactly nine.**
-In `../crypto-counsel`'s `crypto_lab_readme` All Demos lines, eight carry
-`&amp;` where the card has `&`, and DP Noise carries `&#949;-&#948;` where the
-card and catalog README have `ε-δ`.
-
-Named: Commit Gate, PKI Chain, WebAuthn, Syndrome Drain, Chain of Trust, Lattice
-Gentle, MuSig Gate, DP Noise, Covert Channel Studio.
-
-Re-derive again before fixing it: read each card's kicker and chips out of
-`index.html`, cross-check the generated All Demos table in `README.md`, and
-compare with the snapshot. Decoding entities is separate from that comparison,
-so whatever closes this should also say which side is canonical.
-
-Do NOT bundle it with a drift pass: an entity fix touches lines no card changed,
-and mixing the two makes both unreviewable.
 
 ---
 
@@ -265,6 +246,7 @@ merge.
 | cryptanalyst path proposal at its then-current 20 steps | PROPOSAL ONLY in crypto-lab #240, `audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md`; current 21-step refresh is item 6 |
 | eleven stale `crypto_lab_readme` lines | crypto-counsel #17; Snow 2 was a MOVE to Related Projects, and `validate.mjs` was widened with M25-M27 as its controls |
 | corpus prose stale review | crypto-counsel #18; 28 re-derived rather than the noted 20: 16 accurate, 12 corrected, 0 unsettled; 190 never-reviewed entries left untouched |
+| nine snapshot character lines | crypto-counsel #19, stacked on #18; rendered cards plus the catalog README are canonical, and only the nine HTML/numeric entity spellings changed |
 | generated knowledge map and card dates | crypto-lab #244; 243 repositories refreshed, 34 date-evidence records moved and six displayed months changed; knowledge map, catalog/date/level/readme/concept checks and six card-stamp tests pass |
 | AES Anatomy and Clock Arithmetic theme pins | each lab's #2; literal dark pin corrected, unit/build checks pass, and fleet theme-sync reports 255 pages with no violations; browser-owned mutation baselines remain unreadable here because Chromium exits with macOS bootstrap error 141 |
 | catalog evidence refresh | crypto-lab #245, stacked on #244; nine stale reviews individually re-read, 18 stale anchors regenerated, copied-tool and scanner false positives excluded, 1,554 anchors resolve, and 75 tests pass with 0 failures/skips |

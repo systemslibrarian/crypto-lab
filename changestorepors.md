@@ -297,6 +297,57 @@ merged by this maintenance pass.
   failed during Mach-port bootstrap before any assertion; the successful Linux
   job is the browser authority.
 
+### Oblivious Shelf
+
+- PR: [crypto-lab-oblivious-shelf #21](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/pull/21)
+- Branch: `codex/repair-oblivious-shelf-2026-10-23`
+- Base: `13bf4fd8b0f560b717cbba7d1158e58a247d7339`
+- Head: `02a45933d2ad23f6dc9d0f744fdcbbe2267a3c02`
+- Commits: `36b6ca3096b2022f9312c17043c1db3c3e35d896` repairs the
+  implementation, claims and workflow evidence; `02a45933d2ad23f6dc9d0f744fdcbbe2267a3c02`
+  keeps inline source links visibly distinct after the first Linux accessibility
+  run found that they relied on color alone.
+- Scope: **9 files**, **439 insertions** and **168 deletions**. PIR inputs now
+  fail closed on malformed or out-of-range databases, query indices, key sets
+  and target sets; the implementation caps databases at one million bits,
+  snapshots caller-owned data and chunks Web Crypto work instead of issuing an
+  unbounded request. Focused regressions cover those boundaries and preserve
+  valid queries.
+- Documentation and UI now state the actual one-bit, two-server information-
+  theoretic demo boundary, including non-collusion, metadata and deployment
+  assumptions. The Dvir-Gopi, RAID-PIR, Popcorn and PIR-Tor descriptions were
+  checked against their publications. Section 215 expiration and National
+  Security Letter distinctions were checked against current US Code and the
+  cited library testimony before editing; no RFC, standard name or year was
+  changed by pattern matching.
+- Workflow authority is split so repository code runs read-only and Pages/OIDC
+  credentials exist only in no-checkout jobs. Pull requests retain no Pages
+  artifact, main deployments are not cancelled, Node 22/24/26 block publishing,
+  and dependency auto-merge is patch/minor-only and fail-closed. Six executable
+  controls pin those rules.
+- Authoritative Linux run:
+  [39980416851](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/actions/runs/39980416851)
+  passed `npm ci`, zero-vulnerability audit, **31/31** PIR tests, **6/6**
+  workflow-control tests and the production build independently on Node 22, 24
+  and 26. Linux Chromium passed all **13/13** tests: two WCAG A/AA desktop/mobile
+  drives and eleven functional/claim checks. The earlier run's two color-only
+  link failures were fixed before this green rerun rather than ignored.
+- Local verification also passed the exact install, unit/workflow suites,
+  production build, `npm audit`, `npm ls --all`, YAML parsing and
+  `git diff --check`. Local macOS Chromium failed during Mach-port bootstrap
+  before any assertion; the successful Linux job is the browser authority.
+- Authenticated provider evidence returned zero open Dependabot alerts and zero
+  open secret-scanning alerts, with secret scanning and push protection enabled.
+  GitHub returned HTTP 404 `no analysis found` for code scanning, so that
+  evidence remains explicitly incomplete. Dependabot security updates were
+  observed disabled and were not changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/pull/21#issuecomment-6368757731)
+- State: Fleet item `e2b8ae72-f38b-4e5a-addf-62de07a6f81b` read back complete
+  at revision **3**. The PR is open, non-draft, cleanly mergeable and green at
+  the recorded head. It remains intentionally unmerged; no deployment was
+  performed or claimed.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)
@@ -402,15 +453,22 @@ merged by this maintenance pass.
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)
 - Branch: `codex/refresh-futureworkoct-2026-10-21`
 - Base fetched immediately before this edit:
-  `cc49eb16881e1b4cf1c8a7a17c0a77aa7b1bda57`
+  `b930791ad17b48779435c5e58a1a2f5ccdaadf5b`. The branch incorporates that
+  fresh Hub main through merge commit `fa43187`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After NTRU Classic it measured **1,204 total**,
-  **1,059 complete** and **145 active** Fleet items: **112 queued**, **27
-  working** and **6 blocked**. Oblivious Shelf became the next queued review.
-- GitHub GraphQL readback on 2026-10-23 found all **50** named repair PRs open,
-  non-draft and carrying a successful current-head status rollup. Forty-nine
-  were mergeable; PQ Rotation **#24** was the one conflicting PR. Green checks
-  do not resolve that conflict.
+  growing history log. After Oblivious Shelf it measured **1,204 total**,
+  **1,060 complete** and **144 active** Fleet items: **111 queued**, **27
+  working** and **6 blocked**. Opaque Gate is the next queued review.
+- GitHub GraphQL readback on 2026-10-23 found all **51** named repair PRs open,
+  non-draft and carrying a successful current-head status rollup. Fifty were
+  mergeable; PQ Rotation **#24** was the one conflicting PR. Scloud Vault
+  **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
+  Shor **#21** had advanced beyond the head SHAs stored with their completed
+  Fleet evidence: `9956def` to `20569e3`, `715cec9` to `344a310`, `5d0ec55`
+  to `500ae61`, `66874ed` to `1968e53`, and `79a145d` to `5982efd`,
+  respectively. Their new heads were green, but the evidence must be reconciled
+  against those commits before merge. Green checks alone neither resolve a
+  conflict nor prove that earlier review evidence still applies.
 - The branch head will advance whenever this ledger or the current-state handoff
   is updated. Fetch the PR branch and use its live head rather than assuming the
   local checkout remains current.

@@ -6,9 +6,9 @@ authoritative when they disagree.
 
 ## Live handoff — 2026-10-23
 
-`crypto-lab` `origin/main` is **`cc49eb1`** and `crypto-counsel`
-`origin/main` is **`cc2979b`**. The queue branch is based directly on that
-Hub main.
+`crypto-lab` `origin/main` is **`b930791`** and `crypto-counsel`
+`origin/main` is **`cc2979b`**. The queue branch incorporates that freshly
+fetched Hub main.
 
 Nothing below is merged merely because its checks pass:
 
@@ -19,7 +19,7 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Fifty open lab repair PRs have green exact-head Linux CI: the 26
+- Fifty-one open lab repair PRs have green current-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
@@ -27,29 +27,36 @@ Nothing below is merged merely because its checks pass:
   **#26**, PQXDH Wire **#12**, Privacy Pass **#17**, Proof Tally **#18** and
   Protocol Compose **#23**, PSI Gate **#28**, Pulse Chain **#5**, Quantum
   Entropy **#23**, Quantum Vault KpqC **#21**, Ratchet Wire **#17**, Reshare
-  Circle **#23**, Nonce Lattice **#27** and NTRU Classic **#24**. A fresh GitHub
-  GraphQL readback found all 50 open and non-draft with successful current-head
-  status rollups. **PQ Rotation #24** remains the one conflicting PR; the other
-  49 are mergeable. NTRU Classic #24 is green at exact head `f81f1ce`. The
+  Circle **#23**, Nonce Lattice **#27**, NTRU Classic **#24** and Oblivious
+  Shelf **#21**. A fresh GitHub GraphQL readback found all 51 open and non-draft
+  with successful current-head status rollups. **PQ Rotation #24** remains the
+  one conflicting PR; the other
+  50 are mergeable. NTRU Classic #24 is green at exact head `f81f1ce`, and
+  Oblivious Shelf #21 is green at exact head `02a4593`. Scloud Vault #21,
+  Search Vault #23, Shadow Vault #31, Shamir Gate #17 and Shor #21 advanced
+  after the SHAs stored in their Fleet evidence; their new heads are green,
+  but their evidence must be reconciled before merge. The
   Fleet records and PR comments hold their per-lab evidence; do not duplicate
   that history here and do not merge them from this maintenance pass.
-- Twenty-two queued security-evidence reviews are complete. Each has readable
-  zero-open-alert Dependabot and secret-scanning results plus a zero-advisory
-  exact lock; code scanning remains explicitly incomplete because GitHub
-  reports no analysis. Their source repairs remain open, and their names and
-  evidence stay in the Fleet records rather than becoming history here.
+- Twenty-three queued security-evidence reviews are recorded complete. Each has
+  recorded-head readable zero-open-alert Dependabot and secret-scanning results
+  plus a zero-advisory exact lock; code scanning remains explicitly incomplete
+  because GitHub reports no analysis. The five moved heads named above now need
+  fresh evidence reconciliation. Their source repairs remain open, and their
+  names and evidence stay in the Fleet records rather than becoming history
+  here.
 
-**Next:** Oblivious Shelf item `e2b8ae72-f38b-4e5a-addf-62de07a6f81b`.
+**Next:** Opaque Gate item `a1c75cc7-0b77-4eed-b3d0-e27633375a3f`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,059 complete and 145 active** items:
-**112 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,060 complete and 144 active** items:
+**111 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **112 queued security-evidence reviews.** Oblivious Shelf is next.
+- **111 queued security-evidence reviews.** Opaque Gate is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state
@@ -96,15 +103,15 @@ for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
 done
 ```
 
-On this queue branch based directly on Hub `cc49eb1`, with counsel **#18**
+On this queue branch after incorporating Hub `b930791`, with counsel **#18**
 checked out, 12 of 13 checks pass. `lab-dates` reports six pins made stale by
 newer committed lab changes: Iron Letter, Protocol Compose, Threshold Decrypt,
 Multivariate, Broken Trust and Time Lock Puzzle. Re-derive those dates from
 freshly fetched lab heads before calling the Hub clean.
 
-A fresh PR readback found **#244** and **#248** conflicting despite successful
-current-head status rollups. **#245** remains stacked on #244 and has no status
-rollup of its own. **#243**, **#246**, **#247** and **#249** are open,
+A fresh PR readback found **#244**, **#246** and **#248** conflicting despite
+successful current-head status rollups. **#245** remains stacked on #244 and
+has no status rollup of its own. **#243**, **#247** and **#249** are open,
 mergeable and have successful current-head rollups. Refresh or supersede the
 conflicting branches, and re-evaluate every open Hub PR after any further
 Hub-main movement; historical green runs do not resolve a merge conflict.

@@ -4,17 +4,17 @@
 
 ## Current milestone
 
-**Three encyclopedia-gap milestones are now shipped, with the fourth in its final gate.** The first stateful key-handle exercise is live in Envelope KMS, L-R-09's query-result integrity exercise is live in Search Vault, and E-K-02's executable HIBE delegation is live in IBE Gate. A-D-06's AES differential-fault exercise is in progress in its merge gate. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/)
+**Four encyclopedia-gap milestones are now shipped.** The first stateful key-handle exercise is live in Envelope KMS, L-R-09's query-result integrity exercise is live in Search Vault, E-K-02's executable HIBE delegation is live in IBE Gate, and A-D-06's AES differential-fault exercise is live in AES Anatomy. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/)
 
-E-K-01 remains **in progress as a whole**: its first policy and wrap/decrypt trace is delivered, while import, alias and bounded-search extensions remain planned. L-R-09 is **live**. E-K-02 is **live**: IBE Gate now performs real Type-3 hierarchical delegation, recursive descendant derivation, sibling rejection through the pairing algebra and explicit subtree/root-escrow boundaries. A-D-06 is **in progress**: AES Anatomy has the executable DFA act and its normal gates are green; the full mutation-honesty gate remains the merge blocker. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
+E-K-01 remains **in progress as a whole**: its first policy and wrap/decrypt trace is delivered, while import, alias and bounded-search extensions remain planned. L-R-09 is **live**. E-K-02 is **live**: IBE Gate now performs real Type-3 hierarchical delegation, recursive descendant derivation, sibling rejection through the pairing algebra and explicit subtree/root-escrow boundaries. A-D-06 is **live**: AES Anatomy now performs bounded AES-128 differential-fault key recovery, held-out key verification, a recomputation/common-mode countermeasure comparison and a wrong-fault-model control. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
 
 | Proposal status | Count |
 | --- | ---: |
 | Planned | 44 |
-| In progress | 2 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
-| Live | 2 |
+| Live | 3 |
 | **Total accepted proposals** | **48** |
 
 The 48 proposals retain the audit’s stable IDs and priorities: **17 P1 — next, 24 P2 — depth, and 7 P3 — specialist**. Maintenance corrections are separate from that denominator. A proposal can share an implementation with related IDs, but each ID keeps its own acceptance criteria. These are not 48 requests for standalone labs.
@@ -33,9 +33,9 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Implement L-R-09 in Search Vault with deterministic current-snapshot checkpoints and explicit honest/omit/fabricate/stale cases.
 - [x] Pass the Search Vault PR gate, merge PR #24, rerun the complete gate on main, and deploy commit `97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26`.
 - [x] Verify E-K-02's real Type-3 HIBE delegation in IBE Gate, including recursive child derivation, sibling cryptographic failure, subtree compromise boundaries and retained root escrow; merge and deploy PR #24 as `7dfebaff27c4e20cd278a4d41a95c538e8807d31`.
-- [ ] Finish A-D-06's mutation-honesty gate, merge/deploy AES Anatomy PR #3, and verify the live eighth act.
+- [x] Pass A-D-06's complete gate, merge [AES Anatomy PR #3](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/pull/3) as `fffbc96eddebefe2e45bce51890a35d0297570c1`, repeat the 39-unit/20-browser/36-mutation gate on main, and deploy the eighth act.
 
-**Implementation work:** finish A-D-06's final gate and publication, then take E-K-06's accepted-output/ineffective-fault lesson. Retain the remaining E-K-01 extensions in this ledger. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** E-K-06's accepted-output/ineffective-fault lesson is now active in AES Anatomy draft PR #4; finish its learner-facing, browser/accessibility and mutation gates before merge. Retain the remaining E-K-01 extensions in this ledger. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -44,9 +44,8 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **A-D-06 — classical AES differential fault recovery:** finish the mutation gate, merge, deploy and verify the live eighth act.
-2. **E-K-06 — ineffective faults / SIFA:** build the accepted-output selection lesson on top of the explicit DFA/recomputation baseline.
-3. **E-K-01 later milestone — stateful API depth:** return to import, alias and bounded-search cases after the queued fault-analysis work.
+1. **E-K-06 — ineffective faults / SIFA:** finish the accepted-output selection lesson on top of the live DFA/recomputation baseline; draft PR #4 is active.
+2. **E-K-01 later milestone — stateful API depth:** return to import, alias and bounded-search cases after the queued fault-analysis work.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
@@ -119,7 +118,7 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | Phase 1 — First key-handle exercise | 1 | P1 | First exercise live; broader proposal in progress |
 | Phase 2 — Privacy, storage and query integrity | 11 | P1 | 1 live; 10 planned |
 | Phase 3 — Protocols and arithmetic | 5 | P1 | 1 live; 4 planned |
-| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 1 in progress; 15 planned |
+| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 1 live; 15 planned |
 | Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 8 planned |
 | Phase 6 — Optional specialist and research scope | 7 | P3 | 7 planned |
 
@@ -568,7 +567,7 @@ Build P2 lessons on existing mechanisms. Classical faulty-output DFA precedes in
 
 ### A-D-06 — Classic block-cipher differential fault recovery
 
-**Priority:** P2 — depth · **Status:** In progress · **Workstream:** Fault analysis.
+**Priority:** P2 — depth · **Status:** Live · **Workstream:** Fault analysis.
 
 **Target:** AES Anatomy extension.
 
@@ -580,7 +579,11 @@ Build P2 lessons on existing mechanisms. Classical faulty-output DFA precedes in
 - Derive and filter last-round-key candidates using only the permitted observations and verify them on held-out encryptions.
 - Exercise recomputation/output checking and a changed fault model, with unsuccessful recovery reported accurately.
 
-**Next action:** PR #3 now implements the eighth act, held-out verification, scoped recomputation defense, wrong-fault-model control, browser/a11y claims and dedicated mutation owners. Finish the full mutation gate, then merge/deploy and use the live result as the baseline for E-K-06.
+**Delivered implementation:** AES Anatomy Act 8 injects a declared one-byte fault immediately before AES-128 round-9 MixColumns, uses correct/faulty ciphertext pairs to isolate last-round key quartets without receiving the fault value, reconstructs round key 10, reverses the key schedule and verifies the recovered master key on a held-out plaintext. It also compares a one-sided recomputation defense with a common-mode failure case and changes the actual fault row while retaining the old solver model so the true quartet is not falsely claimed.
+
+**Verification:** [AES Anatomy PR #3](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/pull/3) merged as [`fffbc96eddeb`](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/tree/fffbc96eddebefe2e45bce51890a35d0297570c1). Pre-merge run `40007330722` passed 39 unit tests, 20 browser/accessibility tests and all 36 mutation-honesty cases. Post-merge run `40008442510` repeated the full gate on the merge commit and deployed successfully.
+
+**Next action:** Use the live DFA/recomputation lesson as the explicit baseline for E-K-06's accepted-output statistical leakage.
 
 **Scope and limits:** Layer removal is not DFA; browser faults model logical state errors. RSA-CRT absence was not established and is not added as an accepted gap.
 

@@ -568,6 +568,72 @@ merged by this maintenance pass.
   cleanly mergeable and green at the recorded head. It remains intentionally
   unmerged; no live Pages deployment was performed or claimed.
 
+### OTP Vault
+
+- PR: [crypto-lab-otp-vault #26](https://github.com/systemslibrarian/crypto-lab-otp-vault/pull/26)
+- Branch: `codex/repair-otp-vault-2026-10-23`
+- Base: `04b056901a337a23cafc9340e8e8bf36b01fc06b`
+- Head: `e1d30bad776a6ce40cb5acf2addf538ec1720bb9`
+- Commits: `bd0f5f56fd46db081889cdaf053ff4720db6233e` repairs the
+  lab and gates; `e1d30bad776a6ce40cb5acf2addf538ec1720bb9` records the
+  reproduced mutation evidence.
+- Scope: **22 files**, **699 insertions** and **134 deletions**. The original
+  clone was clean; freshly fetched `origin/main` remained unchanged through
+  the final checkpoint, and all reads and edits used an isolated worktree from
+  committed source.
+- Fixed: all user-controlled byte-column exhibits now reject inputs above 512
+  bytes before random generation, XOR work or DOM rendering. The reusable key
+  helper fills requests in Web Crypto's 65,536-byte quota-sized chunks and
+  rejects invalid lengths. Tests cover the quota and every UI boundary.
+- Fixed: imported hex no longer deletes an embedded `0x` and silently changes
+  the ciphertext; whitespace, commas, trailing separators and token-leading
+  prefixes remain supported. Contradictory overlapping crib pins are rejected
+  instead of overwriting earlier bytes, and pinned guesses are described as
+  candidate hypotheses rather than recovered facts.
+- Corrected: the perfect-secrecy explanation now says why both facts matter:
+  every same-length plaintext has a corresponding key, and a fresh independent
+  uniform pad gives those keys equal probability, so the ciphertext preserves
+  the plaintext prior. Shannon, Boneh-Shoup and Katz-Lindell material was
+  checked before editing. The existing RFC 8439 and NIST SP 800-38A nonce-
+  reuse claims were also checked; no publication identifier or year changed.
+- Repository code now runs read-only under immutable action pins. Pages/OIDC
+  authority exists only in the no-checkout deploy job. Node 22/24/26,
+  exact-lock audits, typechecks, unit, workflow-control, browser and live
+  mutation jobs feed the existing `build` context as a fail-closed aggregate.
+  Main deployments are not cancelled, PRs do not upload Pages artifacts, and
+  only successful patch/minor Dependabot updates may auto-merge; major updates
+  remain for human review.
+- Authoritative exact-head Linux run:
+  [40000360224](https://github.com/systemslibrarian/crypto-lab-otp-vault/actions/runs/40000360224)
+  passed clean installs, zero-vulnerability high audits, typechecks,
+  **67/67** Vitest tests, **8/8** executable workflow controls and the
+  24-module build on Node 22, 24 and 26. Linux Chromium passed **28/28** claim,
+  regression, prior and WCAG A/AA checks. The mutation runner printed
+  `baseline: unmutated copy PASSES` and `all 9 mutation(s) caught`; every
+  mutant moved the bundle, failed its named assertion owner with retries off,
+  restored the exact bundle hash and returned its owner green. Aggregate
+  `build` passed; deploy and auto-merge were correctly skipped.
+- Mutation artifact
+  [12521866514](https://github.com/systemslibrarian/crypto-lab-otp-vault/actions/runs/40000360224/artifacts/12521866514)
+  reproduced committed `mutation-evidence.json` byte-for-byte at SHA-256
+  `b7a7e2c086fa82ae6a8d9287b7aef69363bd4cd222ce29098ace09fb20f27e23`.
+- Local unit, workflow, build, exact-lock and audit checks passed. Playwright
+  enumerated all 28 tests, but local Chromium failed before every assertion at
+  macOS Mach rendezvous error 141. No local browser or mutation pass is
+  claimed; the exact-head Linux jobs are the authority.
+- Authenticated complete current reads found zero open Dependabot alerts and
+  zero open secret-scanning alerts, with secret scanning and push protection
+  enabled. The sole historical Dependabot alert is fixed. GitHub returned HTTP
+  404 `no analysis found` for code scanning, so that evidence remains
+  explicitly incomplete. Dependabot security updates were observed disabled
+  and were not changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-otp-vault/pull/26#issuecomment-6371619278)
+- State: Fleet item `7ad8972a-0cc4-4096-98bb-12e8e484137c` read back complete
+  at revision **3** with exact start/end SHAs. PR #26 is open, non-draft,
+  cleanly mergeable and green at the recorded head. It remains intentionally
+  unmerged; no live Pages deployment was performed or claimed.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)
@@ -676,15 +742,17 @@ merged by this maintenance pass.
   `0730c46f802237569c2e39fa0edc57729e158d68`. The branch incorporates that
   fresh Hub main through merge commit `b5e31dd`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After OT Gate it measured **1,204 total**,
-  **1,064 complete** and **140 active** Fleet items: **107 queued**, **27
-  working** and **6 blocked**. OTP Vault is the next queued review.
+  growing history log. After OTP Vault it measured **1,204 total**,
+  **1,065 complete** and **139 active** Fleet items: **106 queued**, **27
+  working** and **6 blocked**. Padding Oracle is the next queued review.
 - A full GitHub readback on 2026-10-23 found the preceding **54** named repair
   PRs open, non-draft and carrying a successful current-head workflow run.
   Fifty-three were mergeable; PQ Rotation **#24** was the one conflicting PR.
   OT Gate **#26** was subsequently read back separately as open, non-draft,
   cleanly mergeable and green at exact head `e4dcca4`, bringing the recorded
-  total to **55**. Scloud Vault
+  total to **55**. OTP Vault **#26** was then read back open, non-draft,
+  cleanly mergeable and green at exact head `e1d30ba`, bringing the total to
+  **56**. Scloud Vault
   **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
   Shor **#21** had advanced beyond the head SHAs stored with their completed
   Fleet evidence: `9956def` to `20569e3`, `715cec9` to `344a310`, `5d0ec55`

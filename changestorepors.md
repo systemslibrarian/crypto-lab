@@ -240,6 +240,63 @@ merged by this maintenance pass.
   was not used as evidence. Local macOS Chromium failed before page creation;
   the successful Ubuntu job is the browser authority.
 
+### NTRU Classic
+
+- PR: [crypto-lab-ntru-classic #24](https://github.com/systemslibrarian/crypto-lab-ntru-classic/pull/24)
+- Branch: `codex/repair-ntru-classic-2026-10-23`
+- Base: `df32c561aaa46be4032edbb152722b86ee4fa985`
+- Head: `f81f1ce3581c3046f9438ba2a8a2e1a16a7cd010`
+- Scope: **18 files**, **642 insertions** and **181 deletions**. Runtime
+  boundaries now reject malformed keys, ciphertexts, messages, witnesses and
+  polynomial parameters; bounded rejection sampling replaces modulo-biased
+  sampling; inverse helpers validate their rings; and a Gauss-reduction step
+  limit reports exhaustion instead of falsely declaring success.
+- Publication review found that the demo is a hybrid, not a published NTRU
+  parameter set: it combines the original HPS equations and distribution shapes
+  with a demo-chosen flat `df = dg = dr = 143` profile at the NTRU-443 scale.
+  README, UI and key-generation logs now say that explicitly and transfer no
+  security or wire-size estimate. The original paper's
+  `f in L(df,df-1)` and `g,r in L(d,d)` shapes were verified and retained; the
+  superficially tempting change to a balanced `f` was rejected.
+- Accuracy repairs remove an unsupported `~2^-80` decryption-failure estimate,
+  a false `~609 bytes` wire-size claim, global patent-expiry language and the
+  claim that NTRU was selected by NIST. The standards timeline, NIST selection
+  history, 2007 US patent dedication, sparse-coefficient counts, quantum/lattice
+  wording and raw-scheme tamper semantics were checked against the primary
+  publications before editing. A retained-plaintext comparison is no longer
+  presented as standalone ciphertext integrity.
+- The verifier now actually executes the production build instead of printing
+  an unconditional pass, and the inverse regression uses a genuinely
+  invertible monomial with an exact expected inverse. Focused tests cover the
+  new input boundaries, sampler and workflow invariants. An additional local
+  1,000 round trips across 10 keys had zero failures and a minimum centered
+  decode margin of **816**.
+- Workflow authority is split so repository code runs read-only and Pages/OIDC
+  authority exists only in no-checkout jobs. Pull requests retain and publish
+  no Pages artifact, Node 22/24/26 plus the browser gate block publication,
+  main deployments are not cancelled, and only successful patch/minor
+  Dependabot updates may auto-merge. Seven executable controls pin those rules.
+- Authoritative Linux run:
+  [39977313134](https://github.com/systemslibrarian/crypto-lab-ntru-classic/actions/runs/39977313134)
+  passed **60/60** unit tests, **12/12** real verification gates, **7/7**
+  workflow controls, TypeScript and the production build independently on Node
+  22, 24 and 26. Linux Chromium passed all **10/10** behavior and accessibility
+  tests, including publication boundaries, tamper semantics and lattice claims.
+- Exact-lock evidence: `npm audit` reported zero vulnerabilities and
+  `npm ls --all` exited successfully; omitted packages were ordinary optional
+  platform dependencies. Authenticated provider evidence at the exact head
+  returned zero open Dependabot alerts and zero open secret-scanning alerts.
+  GitHub returned HTTP 404 `no analysis found` for code scanning, so that
+  evidence remains explicitly incomplete.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-ntru-classic/pull/24#issuecomment-6368325998)
+- State: Fleet item `bebeaf26-38ac-4747-ae6c-48f8396a79ac` read back complete
+  at revision **3**. A fresh 50-PR GraphQL readback found this PR open,
+  non-draft, cleanly mergeable and green at its exact head. It remains
+  intentionally unmerged; no deployment was performed. Local macOS Chromium
+  failed during Mach-port bootstrap before any assertion; the successful Linux
+  job is the browser authority.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)
@@ -347,11 +404,11 @@ merged by this maintenance pass.
 - Base fetched immediately before this edit:
   `cc49eb16881e1b4cf1c8a7a17c0a77aa7b1bda57`
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Nonce Lattice it measured **1,204 total**,
-  **1,058 complete** and **146 active** Fleet items: **113 queued**, **27
-  working** and **6 blocked**. NTRU Classic became the next queued review.
-- GitHub GraphQL readback on 2026-10-23 found all **49** named repair PRs open,
-  non-draft and carrying a successful current-head status rollup. Forty-eight
+  growing history log. After NTRU Classic it measured **1,204 total**,
+  **1,059 complete** and **145 active** Fleet items: **112 queued**, **27
+  working** and **6 blocked**. Oblivious Shelf became the next queued review.
+- GitHub GraphQL readback on 2026-10-23 found all **50** named repair PRs open,
+  non-draft and carrying a successful current-head status rollup. Forty-nine
   were mergeable; PQ Rotation **#24** was the one conflicting PR. Green checks
   do not resolve that conflict.
 - The branch head will advance whenever this ledger or the current-state handoff

@@ -19,31 +19,31 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Thirty-nine open lab repair PRs have green exact-head Linux CI: the 26
+- Forty open lab repair PRs have green exact-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
   Tally **#29**, PQ Chooser **#5**, PQ Rotation **#24**, PQ TLS Handshake
-  **#26** and PQXDH Wire **#12**. The Fleet records and PR comments hold their
-  per-lab evidence; do not duplicate that history here and do not merge them
-  from this maintenance pass.
-- Eleven queued security-evidence reviews are complete. Each has readable
+  **#26**, PQXDH Wire **#12** and Privacy Pass **#17**. The Fleet records and PR
+  comments hold their per-lab evidence; do not duplicate that history here and
+  do not merge them from this maintenance pass.
+- Twelve queued security-evidence reviews are complete. Each has readable
   zero-open-alert Dependabot and secret-scanning results plus a zero-advisory
   exact lock; code scanning remains explicitly incomplete because GitHub
   reports no analysis. Their source repairs remain open, and their names and
   evidence stay in the Fleet records rather than becoming history here.
 
-**Next:** Privacy Pass item `2336bc5f-46c2-4564-8d73-5f7aa1e75bc2`.
+**Next:** Proof Tally item `a381f9db-7bd5-4692-94e9-eb7f81b0d03e`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,048 complete and 156 active** items:
-**123 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,049 complete and 155 active** items:
+**122 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **123 queued security-evidence reviews.** Privacy Pass is next.
+- **122 queued security-evidence reviews.** Proof Tally is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state

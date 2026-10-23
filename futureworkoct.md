@@ -19,37 +19,37 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Forty-seven open lab repair PRs have green exact-head Linux CI: the 26
+- Forty-eight open lab repair PRs have green exact-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
   Tally **#29**, PQ Chooser **#5**, PQ Rotation **#24**, PQ TLS Handshake
   **#26**, PQXDH Wire **#12**, Privacy Pass **#17**, Proof Tally **#18** and
   Protocol Compose **#23**, PSI Gate **#28**, Pulse Chain **#5**, Quantum
-  Entropy **#23**, Quantum Vault KpqC **#21** and Ratchet Wire **#17**. A fresh
-  GitHub readback found the prior 46 open with successful current-head status
-  rollups; **PQ Rotation #24** was the one conflicting PR, while the other 45
-  were mergeable. Ratchet Wire #17 is separately verified open, cleanly
-  mergeable and green at exact head `c22ad7b`. The Fleet
+  Entropy **#23**, Quantum Vault KpqC **#21**, Ratchet Wire **#17** and Reshare
+  Circle **#23**. A fresh GitHub GraphQL readback found all 48 open and
+  non-draft with successful current-head status rollups. **PQ Rotation #24**
+  remains the one conflicting PR; the other 47 are mergeable. Reshare Circle
+  #23 is green at exact head `3aaae4e`. The Fleet
   records and PR comments hold their per-lab evidence; do not duplicate that
   history here and do not merge them from this maintenance pass.
-- Nineteen queued security-evidence reviews are complete. Each has readable
+- Twenty queued security-evidence reviews are complete. Each has readable
   zero-open-alert Dependabot and secret-scanning results plus a zero-advisory
   exact lock; code scanning remains explicitly incomplete because GitHub
   reports no analysis. Their source repairs remain open, and their names and
   evidence stay in the Fleet records rather than becoming history here.
 
-**Next:** Reshare Circle item `e9291ee7-2885-40bf-8578-ebe454d38010`.
+**Next:** Nonce Lattice item `8c7d7401-76c3-4721-8c71-f0658c84b574`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,056 complete and 148 active** items:
-**115 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,057 complete and 147 active** items:
+**114 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **115 queued security-evidence reviews.** Reshare Circle is next.
+- **114 queued security-evidence reviews.** Nonce Lattice is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state

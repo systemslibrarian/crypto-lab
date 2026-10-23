@@ -135,6 +135,61 @@ merged by this maintenance pass.
   no shared images were pruned, and the successful isolated Linux job is the
   three-browser authority.
 
+### Reshare Circle
+
+- PR: [crypto-lab-reshare-circle #23](https://github.com/systemslibrarian/crypto-lab-reshare-circle/pull/23)
+- Branch: `codex/repair-reshare-circle-2026-10-23`
+- Base: `bdba3dc208b0bf347e9f06e20f001dbec2b7f3f5`
+- Head: `3aaae4e331bc85b40b31e8541840de8e7d7afc14`
+- Scope: **20 files**, **639 insertions** and **158 deletions**. The prior
+  verifier accepted commitment vectors without enforcing the advertised
+  threshold degree and sliced sub-share arrays instead of requiring an exact
+  receiver count. A correctly committed higher-degree update could therefore
+  pass verification, leave the state labelled `t`, make `t` shares stop
+  reconstructing, and leave the folded public commitments inconsistent with
+  the new shares.
+- Reshare application now checks exact protocol shapes, canonical scalar and
+  subgroup encodings, valid and unique dealers, internally consistent epoch
+  state, nonzero aggregate updates and preservation of the advertised degree.
+  Reconstruction, redistribution and mobile-adversary inputs fail closed. The
+  deliberately unchecked teaching counterfactual has a separate explicit API,
+  while the normal adversary simulation runs the real verifier.
+- Deterministic regressions cover the higher-degree defect, truncated/extended
+  arrays, non-canonical values, missing dealings, empty and cancelling updates,
+  duplicate dealers and thefts, invalid quorum coordinates, and the valid rare
+  case where a nonzero refresh evaluates to zero at one share coordinate.
+- README and UI prose no longer claim every numeric share must change, that old
+  same-epoch quorums become worthless, or that the teaching page never
+  reconstructs. Named vendor adoption claims without primary evidence were
+  removed. The HJKY title, authors, venue and DOI were checked against the
+  official Springer chapter before linking the citation.
+- Workflow authority is split so repository code runs read-only and Pages/OIDC
+  authority exists only in no-checkout jobs. Pull requests retain no Pages
+  bundle, Node 22/24/26 and the browser suite gate publication, main deploys are
+  not cancelled, and only successful patch/minor Dependabot updates can
+  auto-merge. Seven executable controls pin those properties.
+- Authoritative Linux run:
+  [39969438438](https://github.com/systemslibrarian/crypto-lab-reshare-circle/actions/runs/39969438438)
+  passed **44/44** unit tests, **7/7** workflow controls, TypeScript and the
+  production build independently on Node 22, 24 and 26. Linux Chromium passed
+  all **19/19** behavior and accessibility tests: two WCAG state sweeps and 17
+  application-claim tests.
+- Exact-lock evidence: **68** dependency nodes and zero npm advisories at every
+  severity. `npm ls --all` resolved the installed tree; absent entries were
+  declared platform/feature optional dependencies, not dependency errors.
+  Authenticated provider evidence at `2026-10-23T14:27:50Z` returned zero open
+  Dependabot alerts and zero open secret-scanning alerts, with secret scanning
+  and push protection enabled. Code scanning returned HTTP 404 `no analysis
+  found`, so it remains explicitly incomplete. Dependabot security updates were
+  observed disabled and were not changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-reshare-circle/pull/23#issuecomment-6367234972)
+- State: Fleet item `e9291ee7-2885-40bf-8578-ebe454d38010` read back complete
+  at revision **3**. The PR is open, cleanly mergeable at the recorded head,
+  intentionally unmerged, and the live Pages deployment is unverified. Local
+  macOS Chromium failed before application launch; the successful Linux job is
+  the browser authority.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)
@@ -242,15 +297,13 @@ merged by this maintenance pass.
 - Base fetched immediately before this edit:
   `cc49eb16881e1b4cf1c8a7a17c0a77aa7b1bda57`
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Ratchet Wire it measured **1,204 total**,
-  **1,056 complete** and **148 active** Fleet items: **115 queued**, **27
-  working** and **6 blocked**. Reshare Circle became the next queued review.
-- GitHub GraphQL readback on 2026-10-23 found all **46** previously named repair
-  PRs open with a successful current-head status rollup. Forty-five were
-  mergeable; PQ Rotation **#24** was the one conflicting PR. Ratchet Wire #17
-  is the 47th named repair PR and was separately read back open, cleanly
-  mergeable and green at exact head `c22ad7b`. Green checks do not resolve the
-  PQ Rotation conflict.
+  growing history log. After Reshare Circle it measured **1,204 total**,
+  **1,057 complete** and **147 active** Fleet items: **114 queued**, **27
+  working** and **6 blocked**. Nonce Lattice became the next queued review.
+- GitHub GraphQL readback on 2026-10-23 found all **48** named repair PRs open,
+  non-draft and carrying a successful current-head status rollup. Forty-seven
+  were mergeable; PQ Rotation **#24** was the one conflicting PR. Green checks
+  do not resolve that conflict.
 - The branch head will advance whenever this ledger or the current-state handoff
   is updated. Fetch the PR branch and use its live head rather than assuming the
   local checkout remains current.

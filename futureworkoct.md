@@ -6,7 +6,7 @@ authoritative when they disagree.
 
 ## Live handoff — 2026-10-22
 
-`crypto-lab` `origin/main` is **`a246d21`** and `crypto-counsel`
+`crypto-lab` `origin/main` is **`c58b1c4`** and `crypto-counsel`
 `origin/main` is **`cc2979b`**. The queue branch is based directly on that
 Hub main.
 
@@ -19,38 +19,43 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Twenty-three open lab repairs have green exact-head Linux CI. The first
+- Twenty-five open lab repairs have green exact-head Linux CI. The first
   fifteen are Token Tell **#25**, VDF **#23**, Vigenère Break **#29**, VRF Gate
   **#22**, Web of Trust **#21**, What Is PQC **#3**, World Ciphers **#26**,
   Simon Period **#25**, Sleeve Check **#9**, SM2 Forge **#9**, SM9 Forge **#10**,
   SNARK Arena **#24**, SPDZ Forge **#25**, Split Point **#13** and STARK Tower
   **#21**.
-- The eight newer green repairs are Subliminal Channels **#6**, Syndrome Drain
+- Eight newer green repairs are Subliminal Channels **#6**, Syndrome Drain
   **#26**, Syndrome Hints **#23**, TC26 Pair **#10**, Threshold Decrypt **#21**,
   Return Path **#8**, Ring Sign **#24** and Educational RSA **#23**. Educational
   RSA's separate security-evidence review is complete; its repair caps demo
   primes at 65,537 and hardens publishing. The macOS browser still aborts before
   startup with `MachPortRendezvousServer` error 141, so Linux is the browser
   authority and no local browser pass is claimed.
+- RSA Forge **#25** and RSA Small Roots **#3** are the two latest green repairs.
+  Their separate security-evidence reviews are complete. RSA Forge binds
+  results to current inputs, corrects protocol claims and hardens publishing;
+  RSA Small Roots corrects stale 55/18/28 evidence to the measured 63 unit,
+  23 browser and 30 mutation results and hardens publishing.
 
 All repair items remain working until a maintainer merges them and the required
 Pages deployment is verified. Do not merge them from this maintenance pass.
 
-**Pick up with:** `crypto-lab-rsa-forge`, Fleet item
-`bca74608-817d-4b2a-9473-2c923e68b717`. Fetch fresh `origin/main`, inspect a
+**Pick up with:** `crypto-lab-schnorr-forge`, Fleet item
+`2846962f-30f4-45a9-84b9-8c11f30c82a8`. Fetch fresh `origin/main`, inspect a
 clean committed worktree, read the README and implementation, query the exact
 lock and authenticated providers, and record one evidence-backed disposition.
 Then continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-22
 
-The work store has **1,201 total, 1,034 complete and 167 active** items:
-**137 queued, 24 working and 6 blocked**.
+The work store has **1,203 total, 1,036 complete and 167 active** items:
+**135 queued, 26 working and 6 blocked**.
 
 Active work consists of:
 
-- **137 queued security-evidence reviews.** RSA Forge is next.
-- **24 working items:** 23 repairs awaiting merge/deployment (the lab PRs listed
+- **135 queued security-evidence reviews.** Schnorr Forge is next.
+- **26 working items:** 25 repairs awaiting merge/deployment (the lab PRs listed
   above) plus Adaptor Gate's security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state
   reconciliation; Confirmer Signatures and Subliminal Channels return
@@ -61,8 +66,9 @@ Active work consists of:
 
 The evidence standard for every queued item is unchanged:
 
-1. Pin fresh committed `origin/main`; never describe an uncommitted working
-   tree.
+1. Fetch the repository immediately before evaluation, pin the fresh committed
+   `origin/main`, and re-fetch before recording the result so mid-review movement
+   is detected. Never describe an uncommitted working tree.
 2. Read the committed README and implementation.
 3. Query authenticated Dependabot, secret-scanning and code-scanning endpoints,
    preserving disabled/unavailable states.
@@ -94,10 +100,13 @@ for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
 done
 ```
 
-At this checkpoint, 12 of 13 checks pass on `origin/main`. `lab-dates` alone
-reports the six expected stale pins corrected by #244. Hub #243, #244 and
-#246–#249 have green exact-head checks. Stacked #245 has no GitHub suite because
-its base is #244's branch, but the complete local fast loop passes.
+At this checkpoint, 12 of 13 checks pass on current `origin/main`. `lab-dates`
+alone reports **11** stale pins after the seven recent Hub commits. The earlier
+#244 result covered six pins on its old base, so rebase it onto current main,
+regenerate the date ledger, and rerun its exact-head checks before treating it
+as current. Hub #243 and #246–#249 had green exact-head checks at their recorded
+heads; those results predate the latest main movement. Stacked #245 has no
+GitHub suite because its base is #244's branch.
 
 Finish any card-stamping pass with `node tools/level-sync.js`; `data-level`
 belongs where the last writer puts it.

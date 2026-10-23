@@ -16,39 +16,60 @@ merged by this maintenance pass.
 5. Treat deployment as unverified while a PR is open. Treat an unavailable
    provider as unknown, never as zero alerts.
 
-## Work in progress — do not treat as completed
+## Completed work, awaiting maintainer review
 
 ### Paillier Gate
 
-- Fleet item: `7f7f6d35-71d9-423e-9ac5-781df28d058e`, currently marked working.
-- Repository `origin/main` was fetched again immediately before this entry and
-  is still `6d73ec5564b75e3a595a74a0623e0b60380f6dfa`. Review is taking place in an
-  isolated worktree on `codex/repair-paillier-gate-2026-10-23`; the source
-  branch has **no repair commit yet**.
-- Baseline `npm ci`, the exact-lock audit, and `npm run check` passed; the check
-  covered **73/73** unit tests. The baseline production build is not green:
-  both publishing-control cases fail because the test assumes npm is installed
-  beside the Node executable, which is false for the current Homebrew layout.
-- Findings being repaired and tested: the page presents learner-visible raw
-  inputs as though the same UI were a confidentiality boundary; a randomized
-  ciphertext example is described as proof of semantic security rather than an
-  illustration whose security depends on DCRA; ballot MACs omit voter/context
-  binding, use an extractable key and ordinary string comparison, and accept
-  duplicate voter IDs; blank “optional” weights fail instead of defaulting to
-  one; modulo wraparound is labeled as a match to the unreduced sum; inputs lack
-  code-level workload limits; stale asynchronous factor/election results can
-  regain UI authority; and the Pages workflow has unpinned, over-privileged and
-  fail-open controls.
-- The Paillier publication was checked before changing its claim: the original
-  paper states semantic security under the decisional composite residuosity
-  assumption. Provider reads currently show zero open Dependabot alerts and
-  zero open secret-scanning alerts, while code scanning returns `no analysis
-  found` and therefore remains incomplete.
-- No Paillier source file, commit, pull request, deployment or repository
-  setting is claimed by this section. Replace this section with exact-head
-  commit, PR, Linux CI, mutation and provider evidence only after those exist.
-
-## Completed work, awaiting maintainer review
+- PR: [crypto-lab-paillier-gate #25](https://github.com/systemslibrarian/crypto-lab-paillier-gate/pull/25)
+- Branch: `codex/repair-paillier-gate-2026-10-23`
+- Base: `6d73ec5564b75e3a595a74a0623e0b60380f6dfa`
+- Head: `c665d8400e6fe10b2c053fa5ffc1cf4f4e4c767d`
+- Scope: **21 files**, **1,219 insertions** and **221 deletions**. The lesson now
+  says plainly that its single page owns the learner inputs and private key;
+  the displayed roles are a model, not a confidentiality boundary. Randomized
+  ciphertext samples are described as an illustration, with semantic security
+  correctly conditional on DCRA rather than claimed as proved by the samples.
+- Ballot authentication now uses a non-extractable HMAC key, a versioned and
+  domain-separated encoding of voter ID plus ciphertext, Web Crypto verification,
+  strict tag decoding, voter binding and duplicate-voter rejection. The UI also
+  states why this teaching construction is not a production election system.
+- Input parsing enforces integer and row bounds, blank optional weights really
+  default to one, explicit weights match the count rows, and aggregation output
+  distinguishes the unreduced sum from its modulo-N result. Key epochs and
+  worker request IDs revoke stale factor, election and forge results; a new key
+  terminates the old factor worker, and edited votes retire the old ballot state.
+- Workflow actions are pinned; source-reading jobs use read-only authority;
+  Node 22/24/26, browser, mutation and build results feed a fail-closed gate;
+  Pages authority exists only in the no-checkout main deploy job; and only
+  patch/minor Dependabot updates may auto-merge after successful checks.
+- Publication claims were checked before editing. The original Paillier
+  EUROCRYPT 1999 paper makes semantic security conditional on the decisional
+  composite residuosity assumption, and the GG18 primary paper uses Paillier
+  for its additive/MtA construction.
+- Authoritative Linux run:
+  [40010120737](https://github.com/systemslibrarian/crypto-lab-paillier-gate/actions/runs/40010120737)
+  passed audited Node 22/24/26 checks, **84/84** unit tests, **8/8** workflow
+  controls, **2/2** publishing controls, all verification gates, the production
+  build and **23/23** Chromium behavior/WCAG checks. The fail-closed aggregate
+  build succeeded; deploy and auto-merge were skipped on the pull request.
+- Mutation output says `baseline: unmutated copy PASSES` and
+  `all 10 mutation(s) caught`. Each mutant was killed, restored exactly and
+  reran its owning test green. Artifact
+  [12526326470](https://github.com/systemslibrarian/crypto-lab-paillier-gate/actions/runs/40010120737/artifacts/12526326470)
+  matches committed `mutation-evidence.json` byte-for-byte at SHA-256
+  `f4931ac27f5c37745be5370a6748dee66a1f2f6bf10eeb392761e8d154479719`.
+- Fresh provider reads returned zero open Dependabot alerts and zero open
+  secret-scanning alerts; the exact npm lock reports zero vulnerabilities;
+  secret scanning and push protection are enabled. Code scanning returned
+  `no analysis found` and remains explicitly incomplete. Dependabot security
+  updates remain disabled, and no repository setting was changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-paillier-gate/pull/25#issuecomment-6372906041)
+- State: Fleet item `7f7f6d35-71d9-423e-9ac5-781df28d058e` read back complete
+  at revision **3**. The PR is open, non-draft and cleanly mergeable at the
+  recorded head, intentionally unmerged, and not deployed. Local macOS
+  Chromium failed before executing an assertion with Mach rendezvous error 141;
+  the successful Linux job is the browser authority.
 
 ### Quantum Vault KpqC
 
@@ -803,9 +824,9 @@ merged by this maintenance pass.
   `0730c46f802237569c2e39fa0edc57729e158d68`. The branch incorporates that
   fresh Hub main through merge commit `b5e31dd`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Padding Oracle it measured **1,204 total**,
-  **1,066 complete** and **138 active** Fleet items: **105 queued**, **27
-  working** and **6 blocked**. Paillier Gate is the next queued review.
+  growing history log. After Paillier Gate it measured **1,204 total**,
+  **1,067 complete** and **137 active** Fleet items: **104 queued**, **27
+  working** and **6 blocked**. Pairing Gate is the next queued review.
 - A full GitHub readback on 2026-10-23 found the preceding **54** named repair
   PRs open, non-draft and carrying a successful current-head workflow run.
   Fifty-three were mergeable; PQ Rotation **#24** was the one conflicting PR.
@@ -815,6 +836,8 @@ merged by this maintenance pass.
   cleanly mergeable and green at exact head `e1d30ba`, bringing the total to
   **56**. Padding Oracle **#23** was then read back open, non-draft, cleanly
   mergeable and green at exact head `a8b1ab9`, bringing the total to **57**.
+  Paillier Gate **#25** was then read back open, non-draft, cleanly mergeable
+  and green at exact head `c665d84`, bringing the total to **58**.
   Scloud Vault
   **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
   Shor **#21** had advanced beyond the head SHAs stored with their completed

@@ -962,5 +962,14 @@
       "Pairing"
     ],
     "note": "Read the current device-pairing SHA-256 commitment and toy short-code model, original DH relay and README at this pin. The scanner inferred bilinear Pairing from the filename src/pairing.ts; this section models device pairing and computes no bilinear pairing. Preserve the SHA-256 call at src/pairing.ts:52 and the existing DH/ML-KEM operations. The three-digit toy code is not Bluetooth g2 and does not establish a Bluetooth attack probability or production authentication guarantee."
+  },
+  "crypto-lab-envelope-kms": {
+    "commit": "2663e075e1ff1500b95fe6f36acd3c50dc8a70be",
+    "reviewed": "2026-10-23",
+    "remove": [
+      "Fault injection",
+      "Side-channel (unspecified)"
+    ],
+    "note": "Reviewed the first E-K-01 key-handle model, interface, browser claims, unit vectors, security notes and complete change inventory. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged. The new browser policy model uses real RFC 3394 wrapping and WebCrypto AES-GCM; intentionally mutable usages disclose a sensitive wrappable key, while fixed roles reject the transition and preserve protected unwrap. A nonextractable target rejects wrapping under either policy. Remove Fault injection because SECURITY.md describes source-mutation verification of tests, not an executed cryptographic fault attack; remove Side-channel (unspecified) because the brief explicitly excludes that claim. The 96 unit tests, 2 publishing-command controls and 32 browser/accessibility tests passed locally; all four named source mutations were caught and exact original source and assets restored. This is one executed API trace with an internally generated nonextractable wrapping key, not HSM isolation, full PKCS #11 conformance, a side-channel claim or an exhaustive API-policy proof. Import, alias and bounded-search extensions remain planned. Merge and deployment evidence are recorded separately in the implementation roadmap."
   }
 }

@@ -259,6 +259,8 @@ Catalogued total moves to 225.*
 
 *Version 33 — files AES Anatomy under §4 for the full AES primitive, schedule, inverse and four deliberately weakened data-path attacks, with full-AES controls. Files Clock Arithmetic under §7 and §8 for the arithmetic prerequisites of RSA and finite-field DH: inverses, Euler φ, orders, generators, subgroups and generalized CRT. These deepen existing coverage without changing a concept status. Catalogued total moves to 243.*
 
+*Version 34 — records Envelope KMS's first stateful key-handle exercise under §39: an intentionally unsafe usage-policy transition composes valid AES key-wrap operations into key disclosure, while fixed roles preserve protected unwrap. This deepens an existing concept; import, alias and bounded-search extensions remain open in E-K-01. The encyclopedia implementation roadmap tracks 48 accepted additions and extensions without changing the forty-concept taxonomy or its statuses. Catalogued total remains 243.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1053,10 +1055,18 @@ adaptor arithmetic stays in view.
 **39. Operational key management — `COVERED`**
 Envelope KMS · PQ Rotation · Ghost Commit · Key Lifecycle.
 
-Ghost Commit is the failure case the other two only imply. Envelope KMS shows the safe path —
-a DEK/KEK hierarchy, rotation, re-wrap without plaintext exposure — and PQ Rotation shows
-migrating one. Neither shows what happens when the key never reached a manager at all. Ghost
-Commit does: a credential committed to git keeps its blob name and its contents forever, because
+Envelope KMS teaches a DEK/KEK hierarchy, rotation and rewrap without plaintext exposure;
+PQ Rotation teaches migration. Envelope KMS's advanced key-handle exercise adds a policy
+composition failure: permitted wrapping followed by a mutable byte-returning decrypt usage
+discloses a sensitive key, despite valid primitive checks. Fixed roles reject that transition
+while legitimate unwrap still returns a protected handle. This is one executed trace in a
+browser policy model using real AES-KW and AES-GCM, with an internally generated wrapping
+key. It does not establish hardware isolation, full PKCS #11 conformance or an exhaustive
+API-policy proof. Import, alias and bounded-search extensions remain in
+[E-K-01](docs/encyclopedia-roadmap.md#e-k-01).
+
+Ghost Commit shows what happens when the key never reached a manager at all: a credential
+committed to git keeps its blob name and its contents forever, because
 removing it writes a *new* blob and leaves the old one reachable from the commit that introduced
 it. Both operations feel like removal and are additions.
 
@@ -1108,6 +1118,12 @@ It does **not** mean the catalog is finished. Three things still generate work:
    the instrument for that, and it disagrees with this file by design.
 3. **Boundary movement.** New primitives and new attacks arrive; some will not fit any
    existing §, and that is the signal to move a boundary rather than force a placement.
+
+The [encyclopedia implementation roadmap](docs/encyclopedia-roadmap.md) records the accepted
+48 additions and extensions, their acceptance criteria and delivery evidence. They address
+specific construction, composition and teaching depth beyond this coarse taxonomy. This
+map retains the concept boundaries; the roadmap tracks the implementation work and does
+not count a first exercise as completion of its broader proposal.
 
 **Catalogued total: 243.**
 

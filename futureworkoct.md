@@ -19,7 +19,7 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Twenty-five open lab repairs have green exact-head Linux CI. The first
+- Twenty-six open lab repairs have green exact-head Linux CI. The first
   fifteen are Token Tell **#25**, VDF **#23**, Vigenère Break **#29**, VRF Gate
   **#22**, Web of Trust **#21**, What Is PQC **#3**, World Ciphers **#26**,
   Simon Period **#25**, Sleeve Check **#9**, SM2 Forge **#9**, SM9 Forge **#10**,
@@ -37,25 +37,31 @@ Nothing below is merged merely because its checks pass:
   results to current inputs, corrects protocol claims and hardens publishing;
   RSA Small Roots corrects stale 55/18/28 evidence to the measured 63 unit,
   23 browser and 30 mutation results and hardens publishing.
+- Schnorr Forge **#25** is also green at exact head. Its separate security
+  review is complete; the repair retires sign, verify, nonce-reuse and
+  aggregation evidence when inputs change, canonicalizes the visible BIP-340
+  key, removes the unused `innerHTML` sink, and runs the full browser matrix in
+  an immutable Playwright image. The measured gate is 69 unit, 11 maintenance
+  and 44 browser cases (40 passed, 4 intentional skips).
 
 All repair items remain working until a maintainer merges them and the required
 Pages deployment is verified. Do not merge them from this maintenance pass.
 
-**Pick up with:** `crypto-lab-schnorr-forge`, Fleet item
-`2846962f-30f4-45a9-84b9-8c11f30c82a8`. Fetch fresh `origin/main`, inspect a
+**Pick up with:** `crypto-lab-scloud-vault`, Fleet item
+`dc7ac446-3297-4b1d-8315-1eab7ec667ad`. Fetch fresh `origin/main`, inspect a
 clean committed worktree, read the README and implementation, query the exact
 lock and authenticated providers, and record one evidence-backed disposition.
 Then continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-22
 
-The work store has **1,203 total, 1,036 complete and 167 active** items:
-**135 queued, 26 working and 6 blocked**.
+The work store has **1,204 total, 1,037 complete and 167 active** items:
+**134 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **135 queued security-evidence reviews.** Schnorr Forge is next.
-- **26 working items:** 25 repairs awaiting merge/deployment (the lab PRs listed
+- **134 queued security-evidence reviews.** Scloud Vault is next.
+- **27 working items:** 26 repairs awaiting merge/deployment (the lab PRs listed
   above) plus Adaptor Gate's security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state
   reconciliation; Confirmer Signatures and Subliminal Channels return

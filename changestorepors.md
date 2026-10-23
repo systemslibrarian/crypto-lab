@@ -18,6 +18,68 @@ merged by this maintenance pass.
 
 ## Completed work, awaiting maintainer review
 
+### Matsui Line
+
+- PR: [crypto-lab-matsui-line #25](https://github.com/systemslibrarian/crypto-lab-matsui-line/pull/25)
+- Branch: `codex/repair-matsui-line-2026-10-23`
+- Base: `e218f2e71938d1514cbfde224fc61b1d68fc2e3a`
+- Head: `bfe03db63e07398d05aaa391e52787cafc345dad`
+- Scope: **26 files**, **1,066 insertions** and **81 deletions**. URL state
+  accepts only the six traffic sizes exposed by the lesson instead of arbitrary
+  values up to 2^20. The advanced observer enforces the toy cipher's 16-bit key
+  and supported sample counts; known-pair collection, attack advancement and
+  success-rate measurement now reject fractional, unsafe, negative and
+  above-ceiling workloads before allocation or iteration. Runtime S-box lookup
+  also fails closed on an unknown name instead of returning `undefined`.
+- Success-rate inputs now enforce the lesson's round, half, mask, sample,
+  sampling-mode, key-count, bias, seed and callback contracts. Focused tests
+  cover every repaired boundary while retaining the lesson's intentionally
+  small educational workloads.
+- The mixed deploy workflow was split into CI, a reusable browser/mutation gate
+  and a main-only Pages publisher. Actions are commit-pinned; source jobs are
+  read-only; Node 22/24/26 install and audit the exact lock; Pages/OIDC authority
+  exists only in the no-checkout deploy job; pull requests cannot deploy; main
+  publication is not canceled; and Dependabot leaves majors to a human and
+  fails closed. Six workflow controls and two publisher controls exercise those
+  boundaries.
+- An initially green run checked GitHub's synthetic pull-request merge commit
+  and is deliberately excluded. Both source workflows now explicitly check out
+  `${{ github.event.pull_request.head.sha || github.sha }}` and assert that
+  `git rev-parse HEAD` equals that expected SHA before any source check runs.
+- Primary-publication review retained the existing claims after checking
+  Matsui's 1993 and 1994 linear-cryptanalysis publications, Howard Heys's
+  tutorial, the PRESENT CHES 2007 paper, NIST FIPS 197 and IACR ePrint
+  2025/437. No publication identifier, year or cryptographic figure was
+  changed.
+- Authoritative exact-source Linux run:
+  [40029364121](https://github.com/systemslibrarian/crypto-lab-matsui-line/actions/runs/40029364121)
+  passed on attempt 1. Every source-running job logged and asserted the full
+  recorded head. Node 22/24/26 and the browser gate reported zero npm
+  vulnerabilities and passed **6/6** workflow controls, **2/2** publisher
+  controls, **102/102** tests across **8** files and the production build.
+  Linux Chromium passed **18/18** behavior, responsive, reduced-motion,
+  reproduction and WCAG A/AA cases.
+- Mutation output says `baseline: unmutated copy PASSES` and
+  `all 10 mutation(s) caught`. Artifact
+  [12533654470](https://github.com/systemslibrarian/crypto-lab-matsui-line/actions/runs/40029364121/artifacts/12533654470)
+  contains ten named assertion-failure logs, ten unique mutant hashes, zero
+  retries and restored-green records. Its `mutation-evidence.json` is
+  byte-identical to the committed file at SHA-256
+  `bbede603aa78da7169e4b5ff4763c513b308337b0f2b17c6879dd2ebfa74f572`.
+- Final authenticated reads returned zero open Dependabot alerts and zero open
+  secret-scanning alerts, each as a complete HTTP 200 response with no `Link`
+  header. Secret scanning and push protection are enabled. Code scanning
+  returned `no analysis found` and remains explicitly incomplete. Dependabot
+  security updates remain disabled, and no repository setting was changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-matsui-line/pull/25#issuecomment-6375526096)
+- State: Fleet item `0b267850-e5b5-49df-aef4-576e222fb0ec` read back complete
+  at revision **3**. The PR is open, non-draft and cleanly mergeable at the
+  recorded base and exact source head, intentionally unmerged, and not
+  deployed. Local macOS Chromium failed before executing an assertion with
+  Mach rendezvous error 141; the successful exact-head Linux job is the
+  browser authority.
+
 ### Poly1305 MAC
 
 - PR: [crypto-lab-poly1305-mac #27](https://github.com/systemslibrarian/crypto-lab-poly1305-mac/pull/27)

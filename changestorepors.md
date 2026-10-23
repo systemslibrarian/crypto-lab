@@ -80,6 +80,61 @@ merged by this maintenance pass.
   images were deleted, and the successful isolated Linux jobs are the browser
   and reproduction authority.
 
+### Ratchet Wire
+
+- PR: [crypto-lab-ratchet-wire #17](https://github.com/systemslibrarian/crypto-lab-ratchet-wire/pull/17)
+- Branch: `codex/repair-ratchet-wire-2026-10-23`
+- Base: `029bff5f44e6822c17c7ce8164ecb1b5ae88d258`
+- Head: `c22ad7b3aaa20797e014dd850c2d31ed5e118e17`
+- Scope: **25 files**, **649 insertions** and **261 deletions**. Wire messages
+  now reject malformed, non-canonical, oversized and unsafe-counter inputs
+  before ratchet work; outbound plaintext has the matching 1 MiB bound; and
+  failed decryption preserves receiver state while owned message, DH and KDF
+  intermediates are cleared on success and error paths.
+- Classical and hybrid session setup now checks public keys, signatures, KEM
+  fields, nonces, ciphertext, identifiers and booleans at runtime before doing
+  cryptographic work. Failed hybrid setup retains one-time prekeys and validates
+  the fixed confirmation plaintext. Focused tests cover those boundaries.
+- The lesson no longer claims that a signature under an in-band identity proves
+  the identity belongs to Bob. It accurately teaches that the signature binds a
+  pre-key to the supplied signing identity, while a fully substituted valid
+  bundle is accepted until the fingerprint is pinned or compared through a
+  trusted channel. The correction was checked against Signal X3DH section 4.1;
+  the existing PQXDH initial-ciphertext construction was also checked and left
+  unchanged because the specification permits it.
+- Workflow authority is split so source-reading jobs are read-only and Pages/OIDC
+  authority lives in no-checkout jobs. Pull requests neither retain nor deploy a
+  Pages artifact, Node 22/24/26 are gated, main deploys are not cancelled, and
+  only successful patch/minor Dependabot updates may auto-merge. Merge and
+  deployment dispatch failures now fail closed. The publishing control also
+  works with non-adjacent npm/Node installations such as Homebrew.
+- Authoritative Linux run:
+  [39963878702 attempt 2](https://github.com/systemslibrarian/crypto-lab-ratchet-wire/actions/runs/39963878702/attempts/2)
+  passed **82/82** unit tests, **2/2** publishing controls, **6/6** workflow
+  controls, **5/5** compiler controls and a production build independently on
+  Node 22, 24 and 26. Chromium, Firefox and WebKit ran all **54** Playwright
+  cases: **50 passed** and **4 intentionally skipped**.
+- The prior-head browser run found one stale locator after the teaching button
+  was renamed; commit `c22ad7b` corrected it. The first corrected-head attempt
+  was cancelled after its runner spent more than ten minutes stuck installing
+  browsers, while its three Node lanes were already green. The clean replacement
+  attempt used a fresh runner and completed normally; neither event was hidden.
+- Exact-lock evidence: **101** dependency nodes, no `npm ls` problems and zero
+  npm advisories at every severity. Authenticated provider evidence at
+  `2026-10-23T14:02:03Z` returned zero open Dependabot alerts and zero open
+  secret-scanning alerts, with secret scanning and push protection enabled.
+  Code scanning returned HTTP 404 `no analysis found`, so it remains explicitly
+  incomplete. Dependabot security updates and automated security fixes were
+  observed disabled and were not changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-ratchet-wire/pull/17#issuecomment-6366692468)
+- State: Fleet item `75d962ab-e4eb-45cf-9424-53196d255571` read back complete
+  at revision **3**. The PR is open, cleanly mergeable at the recorded head,
+  intentionally unmerged, and deployment is unverified. Local macOS Chromium
+  failed before application launch and the shared Docker content store was full;
+  no shared images were pruned, and the successful isolated Linux job is the
+  three-browser authority.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)
@@ -187,13 +242,15 @@ merged by this maintenance pass.
 - Base fetched immediately before this edit:
   `cc49eb16881e1b4cf1c8a7a17c0a77aa7b1bda57`
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Quantum Vault it measured **1,204 total**,
-  **1,055 complete** and **149 active** Fleet items: **116 queued**, **27
-  working** and **6 blocked**. Ratchet Wire became the next queued review.
-- GitHub GraphQL readback on 2026-10-23 found all **46** named repair PRs open
-  with a successful current-head status rollup. Forty-five were mergeable;
-  PQ Rotation **#24** was the one conflicting PR. Green checks do not resolve
-  that conflict.
+  growing history log. After Ratchet Wire it measured **1,204 total**,
+  **1,056 complete** and **148 active** Fleet items: **115 queued**, **27
+  working** and **6 blocked**. Reshare Circle became the next queued review.
+- GitHub GraphQL readback on 2026-10-23 found all **46** previously named repair
+  PRs open with a successful current-head status rollup. Forty-five were
+  mergeable; PQ Rotation **#24** was the one conflicting PR. Ratchet Wire #17
+  is the 47th named repair PR and was separately read back open, cleanly
+  mergeable and green at exact head `c22ad7b`. Green checks do not resolve the
+  PQ Rotation conflict.
 - The branch head will advance whenever this ledger or the current-state handoff
   is updated. Fetch the PR branch and use its live head rather than assuming the
   local checkout remains current.

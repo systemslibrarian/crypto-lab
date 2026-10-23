@@ -19,8 +19,8 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Sixty-two open lab repair PRs are recorded with green current-head Linux
-  CI: the 27 Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**,
+- Sixty-three open lab repair PRs are recorded with green current-head Linux
+  CI: the 28 Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**,
   Clock Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
   Tally **#29**, PQ Chooser **#5**, PQ Rotation **#24**, PQ TLS Handshake
@@ -30,8 +30,8 @@ Nothing below is merged merely because its checks pass:
   Circle **#23**, Nonce Lattice **#27**, NTRU Classic **#24**, Oblivious
   Shelf **#21**, Opaque Gate **#34**, ORAM Vault **#30**, Order Leak **#14**,
   OT Gate **#26**, OTP Vault **#26**, Padding Oracle **#23**, Paillier Gate
-  **#25**, Pairing Gate **#22**, PAKE Gate **#45**, Patron Shield **#20** and
-  Point Ledger **#21**. The earlier full GitHub
+  **#25**, Pairing Gate **#22**, PAKE Gate **#45**, Patron Shield **#20**,
+  Point Ledger **#21** and Poly1305 MAC **#27**. The earlier full GitHub
   readback found the first 54 open and non-draft with successful current-head
   workflow runs.
   OT Gate #26 and OTP Vault #26 were then opened, read back open, non-draft and
@@ -44,8 +44,10 @@ Nothing below is merged merely because its checks pass:
   cleanly mergeable, and passed its exact-head run. Patron Shield **#20** was
   then read back open, non-draft and cleanly mergeable, and passed its
   exact-head run. Point Ledger **#21** was then read back open, non-draft and
-  cleanly mergeable, and passed its exact-head run. **PQ Rotation #24** remains
-  the known conflicting PR; the other 61 were mergeable at their
+  cleanly mergeable, and passed its exact-head run. Poly1305 MAC **#27** was
+  then read back open, non-draft and cleanly mergeable, and passed its
+  exact-head run. **PQ Rotation #24** remains the known conflicting PR; the
+  other 62 were mergeable at their
   recorded readbacks. NTRU Classic #24 is
   green at exact head `f81f1ce`, Oblivious Shelf #21 at `02a4593`, and Opaque Gate #34
   at `131cb9f`; ORAM Vault #30 is green at `921428c`; Order Leak #14 is
@@ -53,13 +55,14 @@ Nothing below is merged merely because its checks pass:
   green at `e1d30ba`; Padding Oracle #23 is green at `a8b1ab9`; Paillier Gate
   #25 is green at `c665d84`; Pairing Gate #22 is green at `8bc055a`; PAKE Gate
   #45 is green at `1a8b239`; Patron Shield #20 is green at `ff90e19`; Point
-  Ledger #21 is green at `0935f8c`. Scloud Vault #21,
+  Ledger #21 is green at `0935f8c`; Poly1305 MAC #27 is green at `b7b07f1`.
+  Scloud Vault #21,
   Search Vault #23, Shadow Vault #31, Shamir Gate #17 and Shor #21 advanced
   after the SHAs stored in their Fleet evidence; their new heads are green,
   but their evidence must be reconciled before merge. The
   Fleet records and PR comments hold their per-lab evidence; do not duplicate
   that history here and do not merge them from this maintenance pass.
-- Thirty-four queued security-evidence reviews are recorded complete. The first
+- Thirty-five queued security-evidence reviews are recorded complete. The first
   23 have recorded-head readable zero-open-alert Dependabot and secret-scanning
   results plus a zero-advisory exact lock; code scanning remains explicitly
   incomplete because GitHub reports no analysis. Opaque Gate has a complete
@@ -106,21 +109,25 @@ Nothing below is merged merely because its checks pass:
   reads, zero-vulnerability exact-lock audits on Node 22/24/26, **12/12** Linux
   browser/WCAG checks and **10/10** killed mutations after a green baseline;
   code scanning remains incomplete because GitHub reports no analysis.
+  Poly1305 MAC has complete zero-open-alert Dependabot and secret-scanning
+  reads, zero-vulnerability exact-lock audits on Node 22/24/26, **15/15** Linux
+  browser/WCAG checks and **10/10** killed mutations after a green baseline;
+  code scanning remains incomplete because GitHub reports no analysis.
   The five moved heads named above now need fresh evidence reconciliation.
   Their source repairs remain open, and their names and evidence stay in the
   Fleet records rather than becoming history here.
 
-**Next:** Poly1305 MAC item `e5aed760-23a4-4623-9c9b-15df910698cc`.
+**Next:** Matsui Line item `0b267850-e5b5-49df-aef4-576e222fb0ec`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,071 complete and 133 active** items:
-**100 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,072 complete and 132 active** items:
+**99 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **100 queued security-evidence reviews.** Poly1305 MAC is next.
+- **99 queued security-evidence reviews.** Matsui Line is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state

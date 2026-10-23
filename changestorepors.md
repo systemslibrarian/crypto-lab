@@ -18,6 +18,61 @@ merged by this maintenance pass.
 
 ## Completed work, awaiting maintainer review
 
+### Poly1305 MAC
+
+- PR: [crypto-lab-poly1305-mac #27](https://github.com/systemslibrarian/crypto-lab-poly1305-mac/pull/27)
+- Branch: `codex/repair-poly1305-mac-2026-10-23`
+- Base: `eb3adcc6b9c489eb6729920d31468ce049ece162`
+- Head: `b7b07f1680458be356d2753ad127f6af30475fef`
+- Scope: **11 files**, **627 insertions** and **83 deletions**. The exported
+  polynomial-step visualizer now rejects keys that are not exactly 32 bytes,
+  instead of accepting oversized values that the real MAC rejects. The tag
+  decoder likewise rejects truncated and extended inputs instead of silently
+  slicing them to 16 bytes. Focused tests cover both sides of each boundary.
+- The rule that two captured pairs yield a usable key only when exactly one
+  clamped candidate survives now has one shared production implementation for
+  the helper and live forgery UI. Ambiguous pairs remain explicitly
+  unforgeable rather than selecting the first plausible key.
+- The mixed PR/deploy workflow was separated into CI, one reusable browser and
+  mutation gate, and a main-only Pages publisher. Third-party actions are
+  commit-pinned; source-running jobs have read-only authority; Node 22/24/26
+  install the exact lockfile and audit it; Pages/OIDC authority exists only in
+  the no-checkout deploy job; main publication is not canceled; and Dependabot
+  leaves majors to a human and fails closed. Six workflow controls and two
+  publisher-boundary controls exercise those rules.
+- Primary-publication checks retained the existing claims. [RFC 8439
+  §2.5.2](https://www.rfc-editor.org/rfc/rfc8439#section-2.5.2) matches the
+  key, clamped `r`, message and tag vector. [Bernstein's Poly1305
+  paper](https://cr.yp.to/mac/poly1305-20050329.pdf) supports the 22-bit clamp,
+  2^106 key space, performance tradeoff and
+  `8·ceil(L/16)/2^106` differential bound. No publication identifier or
+  cryptographic figure was changed.
+- Authoritative Linux run:
+  [40026822326](https://github.com/systemslibrarian/crypto-lab-poly1305-mac/actions/runs/40026822326)
+  passed on attempt 1 at the recorded PR head. Node 22/24/26 each reported zero
+  npm vulnerabilities and passed **6/6** workflow controls, **2/2** publisher
+  controls, **19/19** unit/accessibility tests and the production build. Linux
+  Chromium passed **15/15** functional, claim, responsive and WCAG A/AA cases.
+- Mutation output says `baseline: unmutated copy PASSES` and
+  `all 10 mutation(s) caught`. Artifact
+  [12533226818](https://github.com/systemslibrarian/crypto-lab-poly1305-mac/actions/runs/40026822326/artifacts/12533226818)
+  contains ten named assertion-failure logs, ten unique mutant artifacts, zero
+  retries and restored-green records. Its `mutation-evidence.json` is
+  byte-identical to the committed file at SHA-256
+  `cbe3699d41822f4b8866b703900fbdbdb13661b9b06f441ee8b478464aeb71d1`.
+- Final authenticated reads returned zero open Dependabot alerts and zero open
+  secret-scanning alerts, each as a complete HTTP 200 response with no `Link`
+  header. Secret scanning and push protection are enabled. Code scanning
+  returned `no analysis found` and remains explicitly incomplete. Dependabot
+  security updates remain disabled, and no repository setting was changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-poly1305-mac/pull/27#issuecomment-6375102718)
+- State: Fleet item `e5aed760-23a4-4623-9c9b-15df910698cc` read back complete
+  at revision **3**. The PR is open, non-draft and cleanly mergeable at the
+  recorded head, intentionally unmerged, and not deployed. No local browser
+  result is claimed; the successful exact-head Linux job is the browser
+  authority.
+
 ### Point Ledger
 
 - PR: [crypto-lab-point-ledger #21](https://github.com/systemslibrarian/crypto-lab-point-ledger/pull/21)

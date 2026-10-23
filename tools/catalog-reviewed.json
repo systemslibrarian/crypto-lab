@@ -30,13 +30,13 @@
     "note": "secp256k1 is added by review because the scanner now reads `import { schnorr } from '@noble/curves/secp256k1.js'` as a module path rather than an implementation, which is right in general and wrong here: src/crypto/secp.ts wraps that import into the lab's own point and scalar layer (N, G, mulG, mul, liftX, invModN) and src/crypto/adaptor.ts computes the adaptor construction on it directly. The anchor is the defining point addition, R + T, not the import. Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
   },
   "crypto-lab-biham-lens": {
-    "commit": "8544ee0ff488f74ce437be57ac5cfd494bbe134c",
+    "commit": "864ee0572f3e90496a240347a6094580a88a6318",
     "reviewed": "2026-10-21",
     "add": [
       "Toy SPN@src/crypto/spn.ts:95",
       "PRESENT@src/crypto/present/present.ts:21"
     ],
-    "note": "Re-read the complete prior-pin change inventory, SPN/FEAL source and added PRESENT-80 core, inverse schedule, analysis, worker and UI. The original toy SPN anchor remains; FEAL-4 and full-round PRESENT-80 are distinct engines. PRESENT recovery assumes known K32 and exhausts 16 missing register bits; it does not obtain K32 or break full PRESENT. The October 21 correction changes teaching prose and the DES comparison, not these engines. DES is reference context only; an independent FIPS-table test establishes its nonzero-input DDT maximum of 16/64, with a successful wrong-value mutation kill. No round count guarantees attack immunity. Remove chosen-ciphertext, collision and padding-oracle credits sourced only from Related Demos links, and linear-cryptanalysis credit sourced only from Serpent context; these attacks are not executed here.",
+    "note": "Re-read the committed toy SPN, FEAL-4 and full-round PRESENT-80 engines, inverse schedule, analysis, worker and UI. PRESENT recovery assumes already-known K32 and exhausts the 16 missing register bits; it does not obtain K32. The latest hardening checks the exact pLayer grouping conditions and reports recovery only when the visible master key is among the worker's candidates. DES remains reference context, and no generic round count proves immunity. Chosen-ciphertext, collision and padding-oracle credits come only from Related Demos links, while linear cryptanalysis is Serpent context; none is executed here.",
     "remove": [
       "Chosen-ciphertext attack",
       "Collision attack",
@@ -53,13 +53,13 @@
     "note": "Runs den Boer's physical-card AND protocol; no encryption"
   },
   "crypto-lab-collision-vault": {
-    "commit": "9e4c26555dfea4cd4b82bb6a07968495f7c9eb76",
-    "reviewed": "2026-10-12",
+    "commit": "dd7066fc82752008b73bfd21507d823569e5dee0",
+    "reviewed": "2026-10-21",
     "add": [
       "SHA-256@demos/collision-vault/src/hashing/index.ts:79",
       "SHA-512@demos/collision-vault/src/hashing/index.ts:81"
     ],
-    "note": "Reviewed the published 12 October change, Table 2 fixture and complete Python verifier. Existing full-round providers and SHA-256/SHA-512 call-site anchors 79/81 remain unchanged. The isolated JavaScript research backend computes SHA-256 compression over big-endian blocks with the standard IV, explicit step count, per-block feed-forward and no added padding. The supplied two-block messages reproduce the 36-step Table 2 value from the 9 September 2026 preprint; this is distinct from its semi-free-start appendix examples. Normal WebCrypto SHA-256 with message padding produces different digests. Independent Python and TypeScript checks reproduce the result, reject all 1,024 one-bit mutations and distinguish incorrect round/IV/padding interpretations. Common padding preserves the reduced-round collision but changes the reported chaining value. The 64-step engine matches independent noble SHA-256 at padding boundaries. Local checks passed 118 units, lint/build and 35 browser tests, with one existing intentional skip; deployment passed separately. The sole Python file is the fully reviewed independent CI verifier, not an opaque browser component. The fixture records mirror retrieval and PDF fingerprint. This verifies a supplied pair, not its search cost, a full-round break, conformance certification or constant-time behavior.",
+    "note": "Reviewed the published 12 October change, Table 2 fixture and complete Python verifier. Existing full-round providers and SHA-256/SHA-512 call-site anchors 79/81 remain unchanged. The isolated JavaScript research backend computes SHA-256 compression over big-endian blocks with the standard IV, explicit step count, per-block feed-forward and no added padding. The supplied two-block messages reproduce the 36-step Table 2 value from the 9 September 2026 preprint; this is distinct from its semi-free-start appendix examples. Normal WebCrypto SHA-256 with message padding produces different digests. Independent Python and TypeScript checks reproduce the result, reject all 1,024 one-bit mutations and distinguish incorrect round/IV/padding interpretations. Common padding preserves the reduced-round collision but changes the reported chaining value. The 64-step engine matches independent noble SHA-256 at padding boundaries. The sole Python file is the fully reviewed independent CI verifier, not an opaque browser component. The fixture records mirror retrieval and PDF fingerprint. This verifies a supplied pair, not its search cost, a full-round break, conformance certification or constant-time behavior. Re-read the current README, implementation inventory and complete movement since the prior pin. The only runtime-source change removes an unused empty-array initializer after @eslint/js 10 enabled no-useless-assignment; hashing, pair verification, reduced-round research code and every evidence anchor are byte-identical. In the exact Playwright 1.64.0 Linux image, 118 units, lint, type-check, production build and 35 browser tests passed with one intentional skip; the independent Python verifier reproduced Table 2 and rejected all 1,024 one-bit mutations.",
     "implementation": "WebCrypto / noble / local reduced-round SHA-256",
     "covered": [
       "Python"
@@ -101,8 +101,8 @@
     "note": "Runs TETRA TEA1 and a bounded state-recovery demonstration. Exhibits 5 and 6 add no cryptography: src/attack/rate.ts is arithmetic over the search Exhibit 3 already runs, and src/data/attacks.ts is a sourced citation table. AES-128/192/256 are named throughout that table and implemented nowhere in this lab."
   },
   "crypto-lab-frost-threshold": {
-    "commit": "f5fba38fe404741b8c72e83921d1025f12ca36d2",
-    "reviewed": "2026-10-12",
+    "commit": "0fe5f12bf39412ec0c5ffb9301f1b66cb46df647",
+    "reviewed": "2026-10-21",
     "add": [
       "FROST@crate/src/round2.rs:54",
       "Shamir secret sharing@src/exhibits/attacks.ts:105"
@@ -110,10 +110,11 @@
     "covered": [
       "Rust"
     ],
-    "implementation": "Rust FROST crate / WASM",
-    "note": "Re-read Rust round2 bridge, TypeScript keygen/signing/binding transcript and honest-response consistency experiment after verified PR23 at this exact SHA. Rust FROST/WASM signing remains distinct from the local RFC9591 Ed25519 teaching engine; SHA-512 is computed by WebCrypto. Shamir samples scalar coefficients and evaluates f(id); Lagrange weights reconstruct. AppendixE.1 transcript/rho/share/signature controls and real nonce-reuse forgery inspected; the rho=1 honest control and R-only inconsistency rejection do not mount a concurrent ROS/Drijvers forgery. Prior successful10Rust/9unit/7browser gates and exact published artifact byte checks retained, not independent compiler reproduction. Re-read the 12 October adaptive-research integration and full prior-pin diff: Rust/core arithmetic and runtime crypto provider lock entries are unchanged. The new context and contrast repairs do not implement masking or an LDVR attack. Local 10 Rust, 9 unit and 7 browser checks passed; the standard GitHub build and deployment also passed at this pin. The discrete-log bounds quoted in the new research panel are not an attack executed here, so that attack credit is removed; actual nonce-reuse and recovery exhibits remain.",
+    "implementation": "Rust FROST crate / WASM + @noble BLS12-381 ATS",
+    "note": "Re-read the committed Rust round2 bridge, TypeScript FROST keygen/signing/binding transcript, Shamir arithmetic and accountable-threshold-signature extension. FROST/WASM signing remains distinct from the local RFC 9591 teaching engine. The new ATS exhibit uses real @noble BLS12-381 G1 signatures and G2 public keys, proof-of-possession registration, pairing verification, a signer bitmap, exact threshold checks, trace output, corrupted-share blame, framing attempts and an explicitly unsafe no-PoP rogue-key control. It does not solve dealer framing. Discrete-log bounds remain explanatory rather than an executed attack, and THREAT_MODEL.md explicitly places side channels outside scope; the nonce-reuse and recovery exhibits remain real.",
     "remove": [
-      "Discrete log"
+      "Discrete log",
+      "Side-channel (unspecified)"
     ]
   },
   "crypto-lab-function-key": {
@@ -170,13 +171,78 @@
       "Differential cryptanalysis"
     ]
   },
+  "crypto-lab-kpqc-pair": {
+    "commit": "5829644c4dde3034b23839542e47f91a27dc8bd4",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Lattice reduction"
+    ],
+    "note": "Read the committed README and NTRU+ implementation and UI at this pin. The October research note summarizes model estimates for a module-lattice attack and explicitly says this lab does not execute that attack. Preserve the real NTRU+ and AIMer implementations while excluding the research-only lattice-reduction credit."
+  },
+  "crypto-lab-aes-modes": {
+    "commit": "ca6ef490ac16b98c77c1fee964c32eb3e186c053",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Ciphertext malleability"
+    ],
+    "note": "Read the committed README, active mode implementations and both extension briefs at this pin. The chosen-plaintext and ciphertext-malleability matches occur in briefs proposing future AES-CFB and AES-OFB exhibits, not in the shipped lab. Preserve the active CBC, CTR and padding-oracle experiments while excluding credits for unimplemented extension plans."
+  },
+  "crypto-lab-mac-race": {
+    "commit": "06b1646ca40d49a8805ddee5b2d6d78b17ce8bcd",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Padding oracle"
+    ],
+    "note": "Read the committed README, MAC implementations and CBC-MAC extension brief at this pin. Padding oracle appears only in that future-work brief's inventory of sibling labs; Mac Race does not execute a padding-oracle attack. Preserve its actual MAC, length-extension, timing and forgery exhibits while excluding the sibling-only credit."
+  },
+  "crypto-lab-commit-gate": {
+    "commit": "b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9",
+    "reviewed": "2026-10-22",
+    "add": [
+      "P-256@src/pedersen.ts:1"
+    ],
+    "note": "Read the committed README and complete hash/Pedersen commitment implementation at this pin. src/pedersen.ts defines the P-256 field, curve, order and standard generator, then performs point addition and scalar multiplication directly for the live Pedersen commitment exhibit. Credit P-256 at its defining field constant instead of leaving this real implementation as a prose-only reference."
+  },
+  "crypto-lab-protocol-compose": {
+    "commit": "5dd48e8f4abf8d222985d1578da699c61c07b0ee",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Chosen-ciphertext attack"
+    ],
+    "note": "Read the committed README and the complete sign-and-encrypt panel and implementation at this pin. The lab executes strip-and-resign, forwarding, ciphertext-tamper and signature-malleability controls over real ECDH, HKDF, AES-GCM and Ed25519. Chosen-ciphertext security is a requirement quoted from Katz–Lindell, not an attack mounted by this lab, so exclude that vocabulary match."
+  },
+  "crypto-lab-threshold-decrypt": {
+    "commit": "512acdf680f4715bb3e0e44a427943204fb13b30",
+    "reviewed": "2026-10-22",
+    "add": [
+      "Feldman VSS@src/threshold.ts:149"
+    ],
+    "remove": [
+      "Pedersen commitment"
+    ],
+    "note": "Read the committed README, distributed-key-generation, ElGamal, proof and election source at this pin. Each dealer commits to polynomial coefficients as G times the coefficient and receivers verify shares against those public points, which is a live Feldman VSS implementation. The Pedersen match comes only from Chaum-Pedersen type names; there is no independently blinded Pedersen commitment scheme. Credit Feldman VSS and remove the false Pedersen-commitment credit."
+  },
+  "crypto-lab-mpcith-sign": {
+    "commit": "6b50a953311753ba20adc61c4ac4172789b4a2fa",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Power analysis"
+    ],
+    "note": "Read the committed README, toy PERK-style signing source and research disclosure at this pin. The disclosure summarizes published DPA-style attacks on FAEST and SDitH, then explicitly says this lab implements neither scheme and does not reproduce the attacks. Preserve the live toy MPC-in-the-head signing work while excluding the research-only power-analysis credit."
+  },
   "crypto-lab-matsui-line": {
     "commit": "ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9",
     "reviewed": "2026-10-22",
     "add": [
       "Toy SPN@src/crypto/spn.ts:66"
     ],
-    "note": "Reviewed the current source and October 22 change inventory. The toy SPN implementation anchor at src/crypto/spn.ts:66 is unchanged. The lab now distinguishes single trails from the full key-dependent linear hull and compares repeated with distinct plaintext sampling at the same budget, with uncertainty intervals and coverage counts. These are bounded toy-SPN attack experiments, not a full DES attack or a reproduction of the linked ChaCha paper attack."
+    "remove": [
+      "Brute force",
+      "Chosen-plaintext attack",
+      "Differential cryptanalysis"
+    ],
+    "note": "Reviewed the current source and October 22 change inventory. The toy SPN implementation anchor at src/crypto/spn.ts:66 is unchanged. The lab now distinguishes single trails from the full key-dependent linear hull and compares repeated with distinct plaintext sampling at the same budget, with uncertainty intervals and coverage counts. These are bounded toy-SPN attack experiments, not a full DES attack or a reproduction of the linked ChaCha paper attack. The README's ‘brute-force count’ describes independent exhaustive verification, not the catalog's brute-force attack; chosen plaintexts and differential cryptanalysis appear in the pair-mate comparison, not an attack executed by this lab. Preserve the actual known-plaintext linear key-recovery experiment while excluding those three false credits."
   },
   "crypto-lab-model-breach": {
     "commit": "8558ee8cca7dcd38537adf621d75fee50b6b1a3e",
@@ -471,16 +537,16 @@
     "note": "Read RC4 KSA/PRGA, WEP protected-body/CRC-32 and PTW engines, public attacker contracts, receiver/secret validation, README and tests at this SHA. Generated traffic only, not complete 802.11 frames or a real-network capture tool. The RC4 anchor points to the keystream engine rather than a UI type. Chosen-ciphertext attack was picked from a build brief and Padding oracle from a sibling link, neither a demonstrated oracle attack here; remove those credits. CRC-32 ciphertext forgery and bounded probabilistic PTW recovery are actual computations; exact key equality is checked separately. 149 unit, 2 accessibility and 49 claims/interaction tests passed."
   },
   "crypto-lab-rsa-small-roots": {
-    "commit": "71e571b0b8524400a2c0e1f299adff8c46ee1087",
-    "reviewed": "2026-10-09",
+    "commit": "763afac1320d2778d3b95e028c22d427e9b8d223",
+    "reviewed": "2026-10-21",
     "add": [
-      "RSA@src/simulator/oracle.ts:23"
+      "RSA@src/simulator/oracle.ts:57"
     ],
     "remove": [
       "RSA-OAEP",
       "RSA-PSS"
     ],
-    "note": "Read exact public challenge, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, strict finite/norm bounds, bounded Sturm search, worker allowlists and simulator acceptance at this SHA. Implements textbook exponent-3 RSA and larger-prime high-bit leakage attacks, not RSA-OAEP or RSA-PSS. Prediction, certificate, recovery and incomplete search remain distinct; not arbitrary RSA decryption. 43 unit/fixture and 14 browser/claim tests executed successfully. The inspected source is unchanged from the tested implementation; this SHA adds a JSON-report unit-count gate. Existing main run 37894238587 passed and published; live JavaScript and CSS matched the inspected build byte for byte. Publication was observed, not triggered by this maintenance session."
+    "note": "Read the committed public challenges, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, bounded root search, worker allowlists and simulators. The new Wiener exhibit computes exact continued fractions and convergents, validates phi and the quadratic discriminant, recovers factors, and confirms an RSA round trip under the stated 81 d^4 < N guarantee. Boneh-Durfee is cited but not implemented. The lab implements textbook exponent-3 RSA, larger-prime high-bit leakage and Wiener's small-private-exponent attack, not RSA-OAEP or RSA-PSS; prediction, certificate, recovery and incomplete search remain distinct."
   },
   "crypto-lab-bitcoin-script": {
     "commit": "6c2dc4b5873d933bf124e71cc849927bebf9105e",
@@ -525,12 +591,12 @@
     "note": "Read current hash-only assumption/comparison panel, noble SLH-DSA adapter, selected-set params.ts equations and reduced complete-WOTS+ source, README/scaled-values limits, verified PR12/13 controls. Factoring/discrete-log remain comparisons/negations, not executed attacks. Standard 35/67-chain comparison is distinct from the real-hash reduced 8-chain teaching model; no FIPS-conformance claim for that model. Re-read the 12 October signature-budget panel, BigInt arithmetic, noble adapter and prior-pin diff: cryptographic source is unchanged. The calculator is a balanced workload teaching model, not a durable signing counter or implementation of draft limited-use profiles. Factoring/discrete-log remain comparison context, not executed attacks."
   },
   "crypto-lab-dead-sea-cipher": {
-    "commit": "f0bf09cc973e79eeabc7e1401b7ea66c36175094",
-    "reviewed": "2026-10-09",
+    "commit": "be9d4ad49dc40641f16d1366434e4c14353c3070",
+    "reviewed": "2026-10-21",
     "remove": [
       "Side-channel (unspecified)"
     ],
-    "note": "Read current README production limitation and classical cipher/AES source. Missing protection from side-channel extraction is a limitation; preserve real brute-force and frequency-analysis demonstrations."
+    "note": "Read the committed README, classical cipher/AES source and affine extension. The affine exhibit enumerates all 312 keys, exposes collisions from noninvertible multipliers, ranks candidates by frequency, and solves known-letter constraints with independent checks. Affine cipher is not in the current catalog vocabulary, so no unsupported label is added. Missing protection from side-channel extraction remains a limitation; preserve the real brute-force and frequency-analysis demonstrations."
   },
   "crypto-lab-kyber-vault": {
     "commit": "394479e8df1e941e4618de5f407fe810bdc7ba26",
@@ -820,8 +886,8 @@
     "note": "Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus. Reviewed the 21 October source-note, README and browser-check diff against the previous pinned head. The deterministic-CSIDH/OSIDH-LD fault preprint is reported context: software key recovery and a separate hardware instruction-skip experiment, not an executed attack in this lab. Cryptographic implementation files are unchanged; retain existing classifications. Reviewed the 22 October family-status and HQC-size diff: code-based is selected rather than standardized; Rainbow and SIKE remain broken individual schemes while multivariate and isogeny families remain research. The HQC-1 reference values use the 12 October 2026 team specification, including a 32-byte default compressed decapsulation key. crypto.ts executable exhibits are unchanged; the SQIsign power-analysis and CSIDH fault papers remain cited context, not implemented attacks. Prior Power analysis exclusion remains valid."
   },
   "crypto-lab-confirmer-signatures": {
-    "commit": "7c7f74d7efff3a6c1cac227ef08b93d42cd184c1",
-    "reviewed": "2026-10-18",
+    "commit": "4cf5a00f4fd11eb1dd3a343930859813f6e8da5d",
+    "reviewed": "2026-10-22",
     "add": [
       "BLS signatures@research/real-pairing/core.mjs:136",
       "BLS12-381@research/real-pairing/core.mjs:106",
@@ -835,7 +901,31 @@
       "Side-channel (unspecified)"
     ],
     "implementation": "WebCrypto / @noble/curves / local research protocols",
-    "note": "Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged."
+    "note": "Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged. Re-read the current README, the full five-file scanner-unparsed Python set and the two-file diff from the prior pin. The Python consists of the independent py_ecc public-transcript verifier, symbolic algebra and exhaustive small-field checks, the Lean axiom-output guard and their negative/regression tests; it adds no uncredited named primitive or executed attack. Eight cross-library verifier tests, eight polynomial identities, 100,972 extraction cases and four axiom-guard controls pass from the committed archive. The application cryptography is unchanged; the intervening diff only expands a workflow path trigger and aligns a browser assertion with the already-published scope wording. Keep Python:5 visible as a scanner-coverage limit rather than pretending automatic coverage."
+  },
+  "crypto-lab-attribute-gate": {
+    "commit": "d0bb24262e9b2b6e47044ef49e5941bdb332e17c",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "BLS signatures"
+    ],
+    "note": "Read the committed README and src/fame implementation at this pin. Attribute Gate implements FAME CP-ABE with BLS12-381 group arithmetic, pairing, policy reconstruction and an HKDF/AES-GCM KEM wrapper. The bls12_381 namespace import is the scanner's only BLS-signature hit; the lab does not issue or verify BLS signatures. Remove that false credit while preserving the actual BLS12-381, hash-to-curve and pairing operations. The comparison with Signature Gate is a teaching-role review, not a new security or conformance claim."
+  },
+  "crypto-lab-ibe-gate": {
+    "commit": "b249b17c883b4472ca4ef702866fc609d2c7e943",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "BLS signatures"
+    ],
+    "note": "Read the committed README and src implementation at this pin. IBE Gate implements Boneh-Franklin BasicIdent setup, extraction, encryption and decryption with BLS12-381 group arithmetic and pairings, including the PKG escrow lesson. Its bls binding supplies curve and pairing operations; no BLS signature is created or verified. Remove that false signature credit while preserving the actual IBE, BLS12-381, hash-to-curve and pairing operations. The comparison with Signature Gate is a teaching-role review, not a new security or conformance claim."
+  },
+  "crypto-lab-polynomial-forge": {
+    "commit": "24aa348a654b5521489aa5d607a3f99add7f34dd",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "BLS signatures"
+    ],
+    "note": "Read the committed README and src implementation at this pin. Polynomial Forge implements and compares KZG, IPA and FRI polynomial commitments; its BLS12-381 module performs KZG group, hash-to-field and pairing work, not BLS signing or verification. Remove the scanner's import-based BLS-signature credit while preserving the actual BLS12-381, hash-to-curve, pairing and commitment operations. The comparison with Signature Gate is a teaching-role review, not a new security or conformance claim."
   },
   "crypto-lab-prime-witness": {
     "commit": "c85f91a26720f4f2d63b8b4471720cfcce49bb25",
@@ -866,8 +956,8 @@
     "note": "Read binary Jacobi, Euler Legendre, modular roots/CRT, Goldwasser\u2013Micali encryption and the Rabin key-holder closure. The Tonelli anchor executes order halving; the Rabin anchor actually squares the validated message. A public attacker receives N and one root-query closure, never p/q. The canonical QR root oracle yields independently verified factors; redundancy can refuse or accidentally admit a query and is not called CCA security. One-bit Rabin is distinct from GM. Cocks IBE is an extension mention, not Boneh\u2013Franklin IBE. All 17 units, six browser claims, two accessibility views and six mutations passed at the code-identical deployment; this pin changes only integration documentation."
   },
   "crypto-lab-hash-hunt": {
-    "commit": "3c766455e051b48adb6af5356cb81257770f4ab4",
-    "reviewed": "2026-10-20",
+    "commit": "187c35ca4dd295df7a17d8eef4b6bae442790d51",
+    "reviewed": "2026-10-21",
     "add": [
       "HMAC@src/mac/hashAndMac.ts:2",
       "Floyd cycle finding@src/attack/floyd.ts:2",
@@ -875,14 +965,18 @@
       "Rainbow chains@src/attack/tmto/tables.ts:8"
     ],
     "remove": [
-      "Length extension"
+      "Length extension",
+      "Merkle tree"
+    ],
+    "removeReferences": [
+      "Merkle tree"
     ],
     "implementation": "noble SHA-256 / WebCrypto HMAC / local attack engines",
-    "note": "Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint chain regeneration and salts sampled after precomputation. The tag transfer attacks a deliberately collision-prone hash-then-MAC composition, not HMAC or full SHA-256. Hellman uses one reduction column per table; rainbow varies the column. Coverage sets and diagnostic traces are additional memory. Length extension is a neighboring topic, not an executed exhibit. All 21 units, eight browser claims, two accessibility views and eleven mutations passed; this pin only clarifies README scope and integration."
+    "note": "Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint-chain regeneration, salt timing and the new Joux exhibit. Joux chains real compression-function collisions in a deliberately tiny, length-strengthened Merkle-Damgard construction into 2^b messages, then searches that family for a collision under a second hash with independent message and cascade verification. It is not a break of full SHA-256, a length-extension attack, a Merkle tree or a second-preimage claim. The tag transfer attacks hash-then-MAC rather than HMAC; Hellman and rainbow retain their distinct reductions. Joux multicollision is not in the current catalog vocabulary, so no unsupported label is added."
   },
   "crypto-lab-log-forge": {
-    "commit": "2b5ade3940e3ae2879823c40cbc0587be6655aef",
-    "reviewed": "2026-10-20",
+    "commit": "d81c706537f4946c60b5f9dcc24f6ba2e5e3d15e",
+    "reviewed": "2026-10-21",
     "add": [
       "EC point arithmetic@src/group/ec.ts:4",
       "Pollard rho (discrete log)@src/dlog/generic/rho.ts:3",
@@ -895,40 +989,47 @@
       "Man-in-the-middle"
     ],
     "implementation": "local generic group solvers / finite-field and toy-curve arithmetic",
-    "note": "Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig\u2013Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation."
+    "note": "Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig-Hellman digit lifting and CRT, safe-prime index calculus, the toy curve and the new static-DH exhibit. The committed oracle validates subgroup inputs yet returns raw v^alpha answers; Cheon's q-1 construction consumes the answer chain, runs two exponent-subgroup BSGS passes and independently verifies the recovered exponent. The q+1 variant and attacks on the displayed real groups are not implemented, and TLS/OPRF are scope context rather than protocol implementations. Cheon is not in the current catalog vocabulary. Factored group order remains input rather than an integer-factoring attack, and MITM remains a related-demo link."
   },
   "crypto-lab-dvd-scramble": {
-    "commit": "f3d4bad6c5cf660ebea5306460481099521d927d",
+    "commit": "2a02c59f611b1a3aca698b737a31611fccbdd0d8",
     "reviewed": "2026-10-21",
     "state": "N/A",
-    "note": "Source review of src/css/lfsr.ts, src/css/css.ts, src/attack/divide.ts and src/verify/verify.ts. lfsr.ts cites Boneh-Shoup v0.6 section 3.8 Figure 3.10 and computes a bit-serial LFSR: step() returns bit 0, XORs the declared taps, right-shifts and feeds back into the top bit; byte() clocks eight steps LSB- or MSB-first. css.ts generate() seeds a 17-bit register with taps [14,0] and a 25-bit register with taps [12,4,3,0], clocks a byte from each and adds them with carry, so z = (x+y+carry) mod 256 and the carry persists -- the CSS byte-serial combiner. The key space is 16 bits plus 24 bits, validated as such, which is the 40 bits the attack exhibit is about. divide.ts recover() enumerates smaller-register seeds and returns counted candidates; verify.ts checks a candidate against continuation bytes the search never saw. Zero runtime dependencies. N/A means no named algorithm IN THIS INDEX, not no computation: the Content Scrambling System and the LFSR family are outside the current vocabulary, the same reason crypto-lab-lfsr-forge was reviewed N/A on 2026-10-09. Scope recorded with it: this is the textbook generator, and the source says so in its own extension note -- deployed CSS changes insertion positions, discards early bytes and has inverter modes, none of which are implemented here. So the card must not be read as a deployed-CSS implementation."
+    "removeReferences": [
+      "Schnorr"
+    ],
+    "note": "Read the committed bit-serial 17- and 25-bit LFSRs, full-carry byte combiner, guess-and-determine search and verifier. The attack exhaustively enumerates all 65,536 small-register seeds, derives the other 24 bits, and counts public candidates. The hardened verifier uses private continuation bytes only after the public set is unique, so private data cannot select a candidate; cancellation reports only completed work. N/A means no named algorithm in this index, not no computation: CSS and the LFSR family remain outside the vocabulary. This is the textbook generator with a documented full-carry correction, not deployed DVD CSS with its forced-bit positions, discarded early bytes, inverter modes or key hierarchy. Schnorr names only the accessibility-test machinery used as a template, not cryptography in this lab."
   },
   "crypto-lab-aes-anatomy": {
-    "commit": "7abf61f7fdcef076c5f536c81ec0e1b729b05118",
+    "commit": "254a8069f7811e6b766199ef97f46c0c56a91c85",
     "reviewed": "2026-10-21",
     "add": [
-      "AES@src/aes/cipher.ts:6"
+      "AES@src/aes/cipher.ts:26"
     ],
     "remove": [
       "Side-channel (unspecified)",
       "Timing side-channel"
     ],
     "implementation": "hand-rolled AES / WebCrypto cross-check",
-    "note": "Reviewed the full AES-128/192/256 data path, inverse, key expansion and four opt-in layer ablations. Known-pair affine recovery, known-column transplantation and chosen-plaintext byte codebooks execute against weakened variants with independently recomputed full-AES controls. Side-channel and timing mentions describe limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson."
+    "note": "Reviewed the committed AES-128/192/256 data path, inverse, key expansion and four opt-in layer ablations. Known-pair affine recovery, known-column transplantation and chosen-plaintext byte codebooks execute against weakened variants, with the same attacks run as full-AES controls. The verifier constructs a domain-separated held-out stream only after the attack resolves; source invariants prevent attack modules from receiving the victim key or held-out instances. Side-channel and timing mentions remain limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson."
   },
   "crypto-lab-clock-arithmetic": {
-    "commit": "5bb86840fab4806e3681c1a378fd4c643831035d",
+    "commit": "ba94fa18e4272db71173984a2e2fe00d5818cf91",
     "reviewed": "2026-10-21",
     "add": [
-      "Diffie-Hellman@src/nt/toyDh.ts:4"
+      "Diffie-Hellman@src/nt/toyDh.ts:22"
     ],
     "remove": [
       "Discrete log",
       "Factoring",
+      "Fault injection",
       "Man-in-the-middle"
     ],
+    "removeReferences": [
+      "SHA-256"
+    ],
     "implementation": "hand-rolled BigInt arithmetic",
-    "note": "Reviewed exact modular arithmetic, extended Euclid, Euler phi, orders, generators, subgroup enumeration and generalized CRT. The small-number DH model computes both parties and searches possible shared secrets with an actual guess count at src/nt/toyDh.ts:3. It is not a discrete-log solver or MITM exhibit. Trial division supports the arithmetic lesson rather than an RSA factoring attack; RSA and adjacent algorithms are references only."
+    "note": "Reviewed the committed exact modular arithmetic, extended Euclid, Euler phi, multiplicative-order checks, generator tests, subgroup enumeration, generalized CRT and toy Diffie-Hellman. The DH model computes both parties, enumerates the distinct shared-secret space and reports the actual guess position. It is not a discrete-log solver or MITM exhibit. Exact trial division supports the arithmetic lesson rather than an RSA factoring attack; software CRT faults appear only in a neighboring-lab link, and RSA and adjacent algorithms remain references. SHA-256 appears only as a mutation-bundle fingerprint, not lesson cryptography. The latest audit adds independent exhaustive routes, fail-closed budgets and prediction/counterexample UI without changing those classifications."
   },
   "crypto-lab-harvest-timeline": {
     "commit": "ea407d665fd8a57676581de216cfc09afddf393a",
@@ -949,5 +1050,50 @@
     ],
     "implementation": "toy GF(16) Goppa/Patterson model, simulated published-size key bytes, WebCrypto AES-GCM",
     "note": "Reviewed src/mceliece.ts, src/toy/goppa-code.ts, keysize and comparison modules, visible UI, README, LIMITATIONS and tests at this pin. The browser computes a genuine small GF(16) Goppa/Patterson teaching model and a toy brute-force syndrome decoder. Its published-size 261120-byte key visual is SHA-256-expanded simulated bytes, not a Classic McEliece public key; its encapsulation is not the submitted KEM API. Real WebCrypto AES-GCM protects the teaching message. Classic McEliece is a referenced later KEM, not an implemented primitive here. The 2026 structural key-recovery preprint and possible public-key-substitution MitM are research/deployment context, not attacks executed by this lab. Preserve actual toy brute force and real AES/SHA operations while excluding full Classic McEliece, key recovery and MitM implementation credits. The 1978 scheme was public-key encryption; CRYSTALS-Kyber was selected in 2022 and standardized as ML-KEM in 2024. NIST selected HQC rather than Classic McEliece in 2025."
+  },
+  "crypto-lab-shelf-oracle": {
+    "commit": "7f1fd7f2fcb914759593e1c1cf38e49713d705cb",
+    "reviewed": "2026-10-21",
+    "remove": [
+      "Chosen-plaintext attack"
+    ],
+    "note": "Read the committed README, PIR implementation and learner-facing scope after the decryption-feedback research update and Noble ChaCha20 cross-check. The new IND-CPA/IND-CPA-D passage summarizes attacks reported against particular BFV/BGV configurations and explicitly says this browser lab neither reproduces them nor establishes that its implementation is vulnerable, so it is not an executed chosen-plaintext attack. Preserve the measured data-dependent server timing as the lab's actual side-channel demonstration, along with the existing BFV, PIR, ChaCha20 and SHA-256 implementation credits. This classification review does not establish production security, constant-time execution or vulnerability to the cited research attacks."
+  },
+  "crypto-lab-ec-point-arithmetic": {
+    "commit": "9b0ec4204aa0b36aa4ed4ca6b8763c197f1d0764",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Nonce reuse"
+    ],
+    "note": "Read the committed README and point-arithmetic source at this pin. The lab executes finite-field point addition, scalar multiplication and a bounded small-group discrete-log walk. Nonce reuse appears only in the Related Demos description of ECDSA Forge; this lab does not sign, reuse a nonce or perform the resulting recovery attack. Preserve its real brute-force and discrete-log teaching exhibits while excluding the neighboring-lab attack credit."
+  },
+  "crypto-lab-nonce-collision": {
+    "commit": "67b5574673ca767f9ad4d594663665c6075b9ca4",
+    "reviewed": "2026-10-22",
+    "add": [
+      "ChaCha20-Poly1305@src/crypto/aead.ts:70"
+    ],
+    "remove": [
+      "Padding oracle"
+    ],
+    "note": "Read the committed README and nonce-reuse implementation at this pin. The hand-written chachaPolyEncrypt/chachaPolyVerify path performs ChaCha20-Poly1305 AEAD with Poly1305 framing and verification, although the local function name omits the scanner's literal ‘20’. Keep that real implementation credit. Padding oracle appears only in wording that explicitly distinguishes and skips that attack and in a Related Demos link; it is not executed here. Preserve the real CTR/AEAD/CBC reuse, predictable-IV, authentication-key and one-time-key recovery exhibits."
+  },
+  "crypto-lab-vigenere-break": {
+    "commit": "b3c2f04f4d575a734a065d8fc96dcf3ec431264b",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Factoring",
+      "Known-plaintext attack"
+    ],
+    "note": "Read the committed README and Vigenère/Kasiski workbench source at this pin. The lab factors measured Kasiski spacings into candidate key lengths; it does not factor cryptographic integers or execute the catalog's factoring attack. ‘Known plaintext language’ describes the English distribution assumed by its chi-squared scoring, not an attacker holding a plaintext/ciphertext pair. Preserve the real frequency-analysis break and Vigenère implementation while excluding those two vocabulary collisions."
+  },
+  "crypto-lab-otp-vault": {
+    "commit": "04b056901a337a23cafc9340e8e8bf36b01fc06b",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Frequency analysis"
+    ],
+    "note": "Read the committed README, OTP panels and new exact prior/posterior comparison at this pin. Choosing a target plaintext for a fixed ciphertext demonstrates that every plaintext has a valid one-time-pad key; it is not a chosen-plaintext attack. Frequency analysis appears only in the Related Demos description of Vigenère Break. The new reuse model does execute a genuine known-plaintext attack: a known first plaintext/ciphertext pair reveals the reused pad and fixes the independent second message. Preserve that credit and the lab's nonce/key-reuse attack while excluding the two false matches."
   }
 }

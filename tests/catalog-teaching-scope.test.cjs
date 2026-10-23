@@ -215,7 +215,7 @@ function checkBookReviewScope(source) {
   const executed = {
     'crypto-lab-ec-point-arithmetic': ['Brute force', 'Discrete log'],
     'crypto-lab-vigenere-break': ['Frequency analysis'],
-    'crypto-lab-otp-vault': ['Nonce reuse'],
+    'crypto-lab-otp-vault': ['Known-plaintext attack', 'Nonce reuse'],
     'crypto-lab-nonce-collision': [
       'Birthday bound', 'Chosen-plaintext attack', 'IV reuse', 'Key recovery', 'Nonce reuse',
     ],
@@ -225,7 +225,7 @@ function checkBookReviewScope(source) {
     assert.deepEqual(attacksFor(source, slug), attacks, `${slug}: count only its own bounded exhibits`);
   }
   assert.deepEqual(implementationsFor(source, 'crypto-lab-vigenere-break'), ['Vigenere cipher']);
-  assert.deepEqual(implementationsFor(source, 'crypto-lab-otp-vault'), ['One-time pad']);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-otp-vault'), ['One-time pad', 'Vigenere cipher']);
   assert.ok(implementationsFor(source, 'crypto-lab-nonce-collision').includes('ChaCha20-Poly1305'),
     'Nonce Collision actually encrypts and verifies this AEAD, not just mentions it');
   assert.ok(!implementationsFor(source, 'crypto-lab-pki-chain').includes('ML-DSA'),
@@ -256,7 +256,7 @@ test('book-review scope rejects false credits and losing a real CBC experiment',
     assert.throws(() => checkBookReviewScope(changed), assert.AssertionError);
   }
   const missingCbc = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-nonce-collision\/"[^>]*>/,
-    card => card.replace(/Chosen-plaintext attack@src\/main\.ts:391\s*\|\s*/, ''));
+    card => card.replace(/Chosen-plaintext attack@README\.md:13\s*\|\s*/, ''));
   assert.notEqual(missingCbc, html, 'CBC negative control must remove the executed exhibit');
   assert.throws(() => checkBookReviewScope(missingCbc), assert.AssertionError);
 });

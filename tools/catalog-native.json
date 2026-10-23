@@ -1,0 +1,15 @@
+{
+  "studies": [
+    {
+      "title": "Chip transaction authentication",
+      "url": "https://crypto-lab.systemslibrarian.dev/learn/emv-chip/",
+      "section": "Follow the packet",
+      "action": "Approve a synthetic card packet, alter its amount, replay it, and compare a different checkout challenge.",
+      "outcome": "Observe issuer decisions for matching, modified, repeated, and wrong-checkout packets.",
+      "concepts": ["EMV online-authentication idea", "transaction data binding", "terminal challenge", "replay", "card counter"],
+      "execution": "real-crypto teaching model",
+      "limits": "HMAC-SHA-256 over invented fields; not an EMV application cryptogram, test vector, chip command, issuer policy, or offline-authentication implementation.",
+      "evidence": ["learn/emv-chip/index.html:23", "learn/emv-chip/index.html:30", "learn/emv-chip/model.mjs:43", "learn/emv-chip/model.mjs:54"]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore a card–terminal–issuer online transaction authentication model with fresh challenges, tampering, and replay.">
+  <title>Chip transaction authentication — Crypto Lab</title>
+  <link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/learn/emv-chip/">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the experiment</a>
+  <header class="site-head"><a href="../../">← Crypto Lab</a><span>Interactive study · Payments</span></header>
+  <main id="main">
+    <div class="intro">
+      <p class="eyebrow">Card · Terminal · Issuer</p>
+      <h1>Why a chip transaction needs a fresh authenticator</h1>
+      <p class="lede">A card authenticates data for a particular checkout. Change the amount or repeat a previously accepted packet and ask the issuer what it would do.</p>
+      <p class="boundary"><strong>Teaching model:</strong> This page computes HMAC-SHA-256 over synthetic fields to show the <em>online authentication idea</em>. It does not implement EMV application cryptograms, chip commands, payment-network rules, offline card authentication, or cardholder verification. Do not enter real card information.</p>
+    </div>
+
+    <section class="workbench" aria-labelledby="workbench-title">
+      <div class="workbench-head"><div><p class="eyebrow">One checkout</p><h2 id="workbench-title">Follow the packet</h2></div><button id="fresh" type="button">New checkout</button></div>
+      <div class="lanes">
+        <article><span class="step">01 · Terminal</span><h3>Starts a checkout</h3><dl><div><dt>Amount</dt><dd>$12.99</dd></div><div><dt>Terminal</dt><dd>TERMINAL-1</dd></div><div><dt>Fresh challenge</dt><dd><code id="challenge">Preparing…</code></dd></div></dl></article>
+        <article><span class="step">02 · Card</span><h3>Authenticates its data</h3><dl><div><dt>Card</dt><dd>DEMO-CARD</dd></div><div><dt>Counter</dt><dd id="counter">Preparing…</dd></div><div><dt>Model authenticator</dt><dd><code id="authenticator">Preparing…</code></dd></div></dl></article>
+        <article><span class="step">03 · Issuer</span><h3>Checks the packet</h3><p>Its copy of the synthetic key verifies the amount, terminal, challenge, card ID and counter. It remembers accepted counters in this page.</p></article>
+      </div>
+      <div class="actions" role="group" aria-label="Transaction scenarios">
+        <button id="honest" type="button">Approve original</button>
+        <button id="tamper" type="button">Change amount to $13.99</button>
+        <button id="replay" type="button">Replay original</button>
+        <button id="challenge-test" type="button">Use another checkout’s challenge</button>
+      </div>
+      <output id="result" aria-live="polite">Preparing a synthetic checkout…</output>
+      <p class="hint">Try the original first, then replay it. “New checkout” creates a new terminal challenge and increments the model card counter. The real issuer has much more risk and authorization logic.</p>
+    </section>
+
+    <section class="meaning" aria-labelledby="meaning-title">
+      <h2 id="meaning-title">What this experiment establishes</h2>
+      <div class="columns"><p><strong>Changing a bound field:</strong> the issuer cannot validate the altered packet under the card’s secret. A visible card number alone cannot create the authenticator.</p><p><strong>Freshness and replay:</strong> a challenge ties the request to a checkout; the model issuer also tracks accepted counters. These are illustrative controls, not a promise that every real EMV deployment uses this exact replay policy.</p></div>
+      <p>Actual EMV chip payments distinguish online cryptograms checked remotely by issuers, commonly with symmetric cryptography, from offline authentication that a terminal can verify with public-key cryptography. The latter is <strong>outside</strong> this model. Tokenizing a stored card number, as in <a href="https://systemslibrarian.github.io/crypto-lab-format-ward/">Format Ward</a>, solves a different problem.</p>
+    </section>
+
+    <section class="sources" aria-labelledby="sources-title"><h2 id="sources-title">Sources and limits</h2><ul>
+      <li><a href="https://www.emvco.com/emv-technologies/emv-contact-chip/">EMVCo, EMV Contact Chip</a>: card–terminal exchange and one-time transaction cryptograms (accessed 23 October 2026).</li>
+      <li><a href="https://www.emvco.com/wp-content/uploads/2025/05/EMVCo_Cybersecurity_QRG_MAY25_FINAL-TAGGED.pdf">EMVCo, EMV Security quick reference (May 2025)</a>: terminal challenge and the online-versus-offline distinction.</li>
+    </ul><p>The buttons are a browser demonstration of authentication and replay decisions with invented data. They are not EMV test vectors or a certified payment application. <a href="https://github.com/systemslibrarian/crypto-lab/tree/main/learn/emv-chip">Read the model source</a>.</p></section>
+  </main>
+  <footer><a href="../../">Crypto Lab catalog</a> · © Paul A. Clark · Educational demonstrations only</footer>
+</body>
+</html>

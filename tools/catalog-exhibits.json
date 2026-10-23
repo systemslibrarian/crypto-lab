@@ -9331,8 +9331,8 @@
       ]
     },
     "crypto-lab-e91": {
-      "commit": "e9a3628c43e20c071b545a7214b6f4c27c418610",
-      "reviewed": "2026-10-22",
+      "commit": "1d47ca1b8b41189ccee14e708d03bb8ed62b08ef",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "bell-test-scenario",
@@ -9373,7 +9373,7 @@
             "QKD attack models"
           ],
           "evidence": [
-            "src/ui.ts:249",
+            "src/ui.ts:250",
             "src/ui.ts:282",
             "src/engine.ts:18",
             "src/engine.ts:140",
@@ -9397,9 +9397,8 @@
             "Bell test"
           ],
           "evidence": [
-            "src/ui.ts:639",
-            "src/ui.ts:664",
-            "src/ui.ts:674",
+            "src/ui.ts:669",
+            "src/ui.ts:712",
             "src/ui.ts:723",
             "src/engine.ts:1"
           ],
@@ -9419,9 +9418,9 @@
             "prepare-and-measure"
           ],
           "evidence": [
-            "src/ui.ts:744",
-            "src/ui.ts:758",
-            "src/ui.ts:762"
+            "src/ui.ts:760",
+            "src/ui.ts:781",
+            "src/ui.ts:798"
           ],
           "section": "E91 vs BB84",
           "execution": "conceptual"
@@ -9438,10 +9437,9 @@
             "device-independent QKD"
           ],
           "evidence": [
-            "src/ui.ts:785",
             "src/ui.ts:801",
-            "src/ui.ts:805",
-            "src/ui.ts:817"
+            "src/ui.ts:824",
+            "src/ui.ts:830"
           ],
           "section": "In the real world",
           "execution": "conceptual"
@@ -9457,13 +9455,37 @@
             "quantum security scope"
           ],
           "evidence": [
-            "src/ui.ts:817",
-            "src/ui.ts:843",
-            "src/ui.ts:847",
-            "src/ui.ts:891"
+            "src/ui.ts:835",
+            "src/ui.ts:866",
+            "src/ui.ts:886"
           ],
           "section": "Sources & further reading",
           "execution": "conceptual"
+        },
+        {
+          "id": "selective-detection",
+          "title": "Selective detection and fair sampling",
+          "section": "The Bell test, explained — biased coincidences",
+          "kind": "interactive",
+          "execution": "simulation",
+          "action": "Switch between all emitted rounds and only two-click rounds in an eight-instruction local classical model.",
+          "outcome": "Compare the same preassigned instructions at |S|=2 with a selectively retained 25% of each setting pair that yields apparent |S|=4.",
+          "concepts": [
+            "fair-sampling assumption",
+            "detection loophole",
+            "coincidence postselection",
+            "local hidden-variable model",
+            "Bell statistic"
+          ],
+          "evidence": [
+            "src/ui.ts:674",
+            "src/ui.ts:678",
+            "src/ui.ts:680",
+            "src/ui.ts:690",
+            "src/postselection.ts:1",
+            "src/postselection.ts:43"
+          ],
+          "limits": "Exact constructed classical toy, not a physical detector exploit or a QKD key-security proof; the main E91 loss slider remains setting- and outcome-independent."
         }
       ],
       "reviewScope": "complete"
@@ -12156,8 +12178,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-frost-threshold": {
-      "commit": "0fe5f12bf39412ec0c5ffb9301f1b66cb46df647",
-      "reviewed": "2026-10-22",
+      "commit": "a9beb37a9ce72b0b06ff725c840c9a8ffe952aac",
+      "reviewed": "2026-10-23",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -12342,19 +12364,22 @@
           "kind": "explanation",
           "execution": "conceptual",
           "action": "Read parameter-dependent research context and roster/corruption notation.",
-          "outcome": "Separates public verifying shares from secret shares and describes attacks outside the lab execution.",
+          "outcome": "Distinguish public verifying shares from secret shares, the 2025 proof baseline, and the October 2026 canonical-point 488/173 attack versus adversarial-point 228/114 subset-search measurement.",
           "concepts": [
             "adaptive corruption",
             "threshold Schnorr",
             "verifying shares",
-            "erasure assumption"
+            "erasure assumption",
+            "LDVR attack model",
+            "canonical versus adversarial evaluation points"
           ],
           "evidence": [
             "src/exhibits/adaptive-research.ts:3",
             "src/exhibits/adaptive-research.ts:5",
-            "src/exhibits/adaptive-research.ts:8"
+            "src/exhibits/adaptive-research.ts:8",
+            "src/exhibits/adaptive-research.ts:9"
           ],
-          "limits": "The cited 5,020-signer attack is not executed on this page."
+          "limits": "The cited preprint has distinct attack models; the 228/114 measurement is a successful subset search, not an end-to-end attack on this small browser signing lesson. This panel does not execute adaptive corruption."
         }
       ]
     },
@@ -14566,8 +14591,8 @@
       ]
     },
     "crypto-lab-hash-hunt": {
-      "commit": "187c35ca4dd295df7a17d8eef4b6bae442790d51",
-      "reviewed": "2026-10-22",
+      "commit": "072a9531796a1c2f9936197077aee2ee0d57b144",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "birthday",
@@ -14582,7 +14607,7 @@
             "rejection mapping"
           ],
           "evidence": [
-            "src/main.ts:11",
+            "src/main.ts:12",
             "src/math/birthday.ts:1",
             "src/worker/tasks.ts:1"
           ],
@@ -14603,9 +14628,9 @@
             "time–memory tradeoff"
           ],
           "evidence": [
-            "src/main.ts:14",
-            "src/main.ts:17",
+            "src/main.ts:15",
             "src/main.ts:18",
+            "src/main.ts:19",
             "src/attack/birthday.ts:1",
             "src/attack/floyd.ts:1"
           ],
@@ -14626,8 +14651,8 @@
             "semantic collision"
           ],
           "evidence": [
-            "src/main.ts:21",
             "src/main.ts:22",
+            "src/main.ts:23",
             "src/mac/hashAndMac.ts:1",
             "src/attack/meaningful.ts:1"
           ],
@@ -14648,8 +14673,8 @@
             "preimage recovery"
           ],
           "evidence": [
-            "src/main.ts:25",
-            "src/main.ts:28",
+            "src/main.ts:26",
+            "src/main.ts:29",
             "src/worker/tasks.ts:1"
           ],
           "section": "A lookup table is not a rainbow table",
@@ -14669,7 +14694,7 @@
             "preimage versus original password"
           ],
           "evidence": [
-            "src/main.ts:32",
+            "src/main.ts:33",
             "src/salt/experiment.ts:1"
           ],
           "section": "Precompute first. Learn the salt afterward.",
@@ -14689,13 +14714,42 @@
             "length strengthening"
           ],
           "evidence": [
-            "src/main.ts:88",
+            "src/main.ts:87",
             "src/attack/joux.ts:1",
             "src/md/toyMd.ts:1"
           ],
           "section": "Build exponentially many messages from a linear chain of forks",
           "execution": "real-values",
           "limits": "The compression output is deliberately tiny; this does not attack full SHA-256 or contradict Merkle–Damgård collision-preservation results."
+        },
+        {
+          "id": "table-flood",
+          "title": "Unkeyed versus secret-key hash-table buckets",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "section": "When the hash table becomes the target",
+          "action": "Search attacker-chosen names for one exposed bucket, insert them with linear probing, then reuse the same names under a fresh secret HMAC-SHA-256 bucket map.",
+          "outcome": "Compare measured slot visits and per-insertion probes for public versus keyed starting buckets in the same small table.",
+          "concepts": [
+            "hash-table flooding",
+            "chosen input",
+            "keyed hashing",
+            "linear probing",
+            "hash denial-of-service"
+          ],
+          "evidence": [
+            "src/main.ts:104",
+            "src/main.ts:108",
+            "src/main.ts:112",
+            "src/main.ts:113",
+            "src/main.ts:133",
+            "src/attack/hashFlood.ts:7",
+            "src/attack/hashFlood.ts:15",
+            "src/attack/hashFlood.ts:35",
+            "src/attack/hashFlood.ts:54",
+            "src/attack/hashFlood.ts:60"
+          ],
+          "limits": "The public mapping is a deliberately weak FNV-1a bucket index and the keyed comparator uses WebCrypto HMAC, not SipHash. Slot visits in this toy are not a SHA-256 collision, a server benchmark, or a proven denial-of-service exploit."
         }
       ],
       "reviewScope": "complete"
@@ -15103,8 +15157,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hidden-bit": {
-      "commit": "cb12d6008ee43d8335cf413bcd1cb0895e672ec2",
-      "reviewed": "2026-10-22",
+      "commit": "e3d4a8ddcda3c03b9e901ecfd2dc7071745b5ad9",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "ind-cpa",
@@ -15242,6 +15296,33 @@
             "index.html:201"
           ],
           "section": "What this lab is, and is not"
+        },
+        {
+          "id": "multi-key-rare-signal",
+          "title": "Multi-key rare-signal advantage toy",
+          "kind": "interactive",
+          "execution": "simulation",
+          "section": "One hidden bit, several independent keys",
+          "action": "Set independent user instances, queries per user, and a per-query reveal chance, then run a sample game.",
+          "outcome": "Compare the toy’s exact distinguishing advantage 1−(1−ε)^Q with the union ceiling min(1,Qε); see whether any tagged leak disclosed the shared challenge bit.",
+          "concepts": [
+            "multi-user security",
+            "shared challenge bit",
+            "union bound",
+            "query accounting",
+            "independent leak opportunities"
+          ],
+          "evidence": [
+            "index.html:158",
+            "src/ui/multiKey.ts:8",
+            "src/ui/multiKey.ts:13",
+            "src/ui/multiKey.ts:22",
+            "src/ui/multiKey.ts:41",
+            "src/game/multiKey.ts:18",
+            "src/game/multiKey.ts:28",
+            "src/game/multiKey.ts:45"
+          ],
+          "limits": "Abstract tagged-leak game, not encryption, AES, a proof for a real scheme, or a reason to multiply a bound that already counted queries. One sample outcome does not estimate advantage."
         }
       ],
       "reviewScope": "complete"
@@ -16922,8 +17003,8 @@
       ]
     },
     "crypto-lab-iron-letter": {
-      "commit": "0d6257cdad496fa93e880dc6d78493dd6987a14f",
-      "reviewed": "2026-10-22",
+      "commit": "e5326a46e85923e95083baffbad57c9d68af3b16",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "keygen",
@@ -16938,12 +17019,10 @@
             "recipient key"
           ],
           "evidence": [
-            "src/main.ts:57",
-            "src/main.ts:632",
-            "src/main.ts:633",
-            "src/main.ts:657",
-            "src/main.ts:660",
-            "src/main.ts:992"
+            "src/main.ts:760",
+            "src/main.ts:761",
+            "src/main.ts:769",
+            "src/main.ts:777"
           ],
           "section": "Key Generation",
           "execution": "real-crypto",
@@ -16964,9 +17043,9 @@
             "hybrid encryption"
           ],
           "evidence": [
-            "src/main.ts:673",
-            "src/main.ts:701",
-            "src/main.ts:714",
+            "src/main.ts:801",
+            "src/main.ts:805",
+            "src/main.ts:812",
             "src/crypto/ecies.ts:1",
             "src/crypto/rsa.ts:1"
           ],
@@ -16985,9 +17064,9 @@
             "wrong-key rejection"
           ],
           "evidence": [
-            "src/main.ts:733",
-            "src/main.ts:751",
-            "src/main.ts:756",
+            "src/main.ts:861",
+            "src/main.ts:865",
+            "src/main.ts:879",
             "src/crypto/ecies.ts:1"
           ],
           "section": "Open (Decrypt) — Bob's private key",
@@ -17005,10 +17084,10 @@
             "ephemeral key"
           ],
           "evidence": [
-            "src/main.ts:377",
-            "src/main.ts:389",
-            "src/main.ts:397",
-            "src/main.ts:406"
+            "src/main.ts:503",
+            "src/main.ts:517",
+            "src/main.ts:525",
+            "src/main.ts:531"
           ],
           "section": "Why only Bob can open it: the ECDH handshake",
           "execution": "real-values"
@@ -17026,12 +17105,10 @@
             "public-key substitution"
           ],
           "evidence": [
-            "src/main.ts:470",
-            "src/main.ts:458",
-            "src/main.ts:461",
-            "src/main.ts:510",
-            "src/main.ts:546",
-            "src/main.ts:572",
+            "src/main.ts:598",
+            "src/main.ts:602",
+            "src/main.ts:606",
+            "src/main.ts:612",
             "src/crypto/mitm.ts:1"
           ],
           "section": "Mount the attack: Eve on the wire",
@@ -17051,10 +17128,10 @@
             "browser benchmark"
           ],
           "evidence": [
-            "src/main.ts:788",
-            "src/main.ts:789",
-            "src/main.ts:837",
-            "src/main.ts:975"
+            "src/main.ts:916",
+            "src/main.ts:917",
+            "src/main.ts:923",
+            "src/main.ts:929"
           ],
           "section": "Side-by-Side Comparison",
           "execution": "real-values",
@@ -17072,13 +17149,46 @@
             "key encapsulation pattern"
           ],
           "evidence": [
-            "src/main.ts:882",
-            "src/main.ts:893",
-            "src/main.ts:905",
-            "src/main.ts:916"
+            "src/main.ts:1005",
+            "src/main.ts:1010",
+            "src/main.ts:1016",
+            "src/main.ts:1017"
           ],
           "section": "How It Works",
           "execution": "conceptual"
+        },
+        {
+          "id": "suci-profile-a",
+          "title": "5G subscriber identity concealment",
+          "section": "5G identity tab",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Enter synthetic subscriber digits, generate Profile A outputs, alter one encrypted bit, and compare null-scheme or emergency Identity Response behavior.",
+          "outcome": "Displays clear home-network/routing fields beside the protected MSIN, fresh ephemeral key/ciphertext/tag, home-network recovery or MAC rejection; the null scheme exposes the identifier bytes.",
+          "concepts": [
+            "SUCI",
+            "SUPI",
+            "IMSI-based subscriber identity concealment",
+            "ECIES Profile A",
+            "X25519",
+            "ANSI X9.63 KDF",
+            "AES-128-CTR",
+            "HMAC-SHA-256",
+            "null scheme"
+          ],
+          "evidence": [
+            "src/main.ts:197",
+            "src/main.ts:278",
+            "src/main.ts:284",
+            "src/main.ts:303",
+            "src/main.ts:310",
+            "src/main.ts:323",
+            "src/main.ts:331",
+            "src/main.ts:333",
+            "src/crypto/suci.ts:120",
+            "src/crypto/suci.ts:129"
+          ],
+          "limits": "IMSI-based teaching subset, not a full 5G NAS encoder, Profile B, base-station authentication, operator provisioning or privacy against all tracking; official Annex C.4.3.1 values are checked separately in unit tests."
         }
       ],
       "reviewScope": "complete"
@@ -18799,8 +18909,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-key-exchange": {
-      "commit": "82024ed0adb0a55130304851fa2f7c3f9c191a3c",
-      "reviewed": "2026-10-22",
+      "commit": "95121cd4939143bc30604ea2db2bd2510727a606",
+      "reviewed": "2026-10-23",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -18886,9 +18996,9 @@
             "Curve25519 context"
           ],
           "evidence": [
-            "src/ui.ts:739",
-            "src/ui.ts:761",
-            "src/ui.ts:778",
+            "src/ui.ts:799",
+            "src/ui.ts:800",
+            "src/ui.ts:825",
             "src/engine.ts:386",
             "src/engine.ts:422"
           ],
@@ -18910,9 +19020,9 @@
             "Module-LWE"
           ],
           "evidence": [
-            "src/ui.ts:1022",
-            "src/ui.ts:1042",
-            "src/ui.ts:1057",
+            "src/ui.ts:1082",
+            "src/ui.ts:1083",
+            "src/ui.ts:1090",
             "src/engine.ts:476"
           ],
           "limits": "The page executes library ML-KEM; a differing secret after tampering is not a visible explicit reject bit."
@@ -18932,9 +19042,9 @@
             "dual-PRF assumption"
           ],
           "evidence": [
-            "src/ui.ts:1117",
-            "src/ui.ts:1142",
-            "src/ui.ts:1146",
+            "src/ui.ts:1177",
+            "src/ui.ts:1178",
+            "src/ui.ts:1228",
             "src/engine.ts:538"
           ],
           "limits": "The DH half is a toy integer, not X25519; this panel is not a production authenticated TLS handshake."
@@ -18954,10 +19064,10 @@
             "quantum threat to discrete logarithm"
           ],
           "evidence": [
-            "src/ui.ts:1490",
-            "src/ui.ts:1547",
-            "src/ui.ts:1563",
-            "src/ui.ts:1576"
+            "src/ui.ts:1607",
+            "src/ui.ts:1608",
+            "src/ui.ts:1708",
+            "src/ui.ts:1824"
           ],
           "limits": "The period is found by classical brute force; no quantum Fourier transform or quantum hardware is run."
         },
@@ -18976,10 +19086,10 @@
             "Gaussian elimination"
           ],
           "evidence": [
-            "src/ui.ts:1785",
-            "src/ui.ts:1797",
-            "src/ui.ts:1798",
-            "src/ui.ts:1803"
+            "src/ui.ts:1845",
+            "src/ui.ts:1846",
+            "src/ui.ts:1851",
+            "src/ui.ts:2080"
           ],
           "limits": "q=11 and 3×3 matrices are illustrations; wrong naive elimination does not establish hardness of ML-KEM parameters."
         },
@@ -18998,14 +19108,37 @@
             "authentication limits"
           ],
           "evidence": [
-            "src/ui.ts:155",
-            "src/ui.ts:1313",
             "src/ui.ts:1373",
-            "src/ui.ts:1410",
-            "src/ui.ts:1443",
-            "src/ui.ts:1474"
+            "src/ui.ts:1434",
+            "src/ui.ts:1470",
+            "src/ui.ts:1503"
           ],
           "limits": "Static context and estimates are not live protocol interoperability tests."
+        },
+        {
+          "id": "numeric-comparison",
+          "title": "Short-code pairing and commitment",
+          "section": "What DH does NOT give you — Pairing check",
+          "kind": "interactive",
+          "execution": "simulation",
+          "action": "Run honest, active-relay-without-commitment, and active-relay-with-commitment scenarios; compare the displayed codes and commitment check.",
+          "outcome": "The toy short code can collide across two substituted key-share transcripts; binding a nonce before reveal causes the attempted late choice to fail verification and abort.",
+          "concepts": [
+            "numeric comparison",
+            "short authentication string",
+            "commitment before nonce reveal",
+            "active relay",
+            "Bluetooth Secure Connections context"
+          ],
+          "evidence": [
+            "src/ui.ts:537",
+            "src/ui.ts:669",
+            "src/ui.ts:687",
+            "src/pairing.ts:45",
+            "src/pairing.ts:57",
+            "src/pairing.ts:93"
+          ],
+          "limits": "A three-digit toy code and SHA-256 demonstration, not Bluetooth f4/f5/f6/g2 or its six-digit security probability. The original DH/Ed25519 panel remains separate."
         }
       ]
     },
@@ -21654,8 +21787,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-matsui-line": {
-      "commit": "ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9",
-      "reviewed": "2026-10-22",
+      "commit": "e218f2e71938d1514cbfde224fc61b1d68fc2e3a",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "attack",
@@ -21673,10 +21806,10 @@
           ],
           "evidence": [
             "index.html:190",
-            "index.html:217",
-            "index.html:257",
-            "src/main.ts:599",
-            "src/main.ts:699"
+            "index.html:218",
+            "index.html:260",
+            "src/main.ts:600",
+            "src/main.ts:700"
           ],
           "limits": "Only an 8-bit toy SPN and a four-bit subkey nibble are attacked; a successful run is not a modern cipher break.",
           "section": "Break the toy cipher",
@@ -21697,8 +21830,8 @@
           "evidence": [
             "index.html:370",
             "index.html:380",
-            "src/main.ts:335",
-            "src/main.ts:736"
+            "src/main.ts:336",
+            "src/main.ts:739"
           ],
           "limits": "Eight-bit classroom cipher; the walkthrough is not DES or AES.",
           "section": "Inspect the cipher",
@@ -21717,10 +21850,10 @@
             "trivial zero mask"
           ],
           "evidence": [
-            "index.html:391",
+            "index.html:394",
             "src/ui/lat.ts:17",
             "src/ui/lat.ts:66",
-            "src/main.ts:729"
+            "src/main.ts:733"
           ],
           "limits": "The statistics are exact for a four-bit teaching S-box; LAT cells are not direct attack success probabilities.",
           "section": "Inspect one S-box leak",
@@ -21741,11 +21874,11 @@
             "round-count effect"
           ],
           "evidence": [
-            "index.html:414",
+            "index.html:417",
             "src/ui/piling.ts:19",
             "src/ui/piling.ts:51",
             "src/ui/piling.ts:130",
-            "src/main.ts:741"
+            "src/main.ts:742"
           ],
           "limits": "The lemma assumes independent approximations; real whole-cipher bias can differ, as the panel itself measures.",
           "section": "Watch the bias compound",
@@ -21766,11 +21899,13 @@
             "finite-population correction"
           ],
           "evidence": [
-            "index.html:444",
+            "index.html:466",
+            "index.html:478",
+            "index.html:485",
             "src/ui/samples.ts:9",
             "src/ui/samples.ts:44",
             "src/ui/samples.ts:92",
-            "src/main.ts:768"
+            "src/main.ts:769"
           ],
           "limits": "Measurements are over random keys of an 8-bit toy cipher; intervals describe across-key proportions, not guarantees for a key or a real cipher.",
           "section": "How much traffic do you need?",
@@ -21788,8 +21923,8 @@
             "toy SPN cross-lab comparison"
           ],
           "evidence": [
-            "index.html:474",
-            "index.html:484"
+            "index.html:497",
+            "index.html:505"
           ],
           "limits": "The comparison is explanatory; this section does not run a differential attack.",
           "section": "The pair-mate attack",
@@ -21808,7 +21943,7 @@
             "known plaintext"
           ],
           "evidence": [
-            "index.html:304",
+            "index.html:305",
             "index.html:307",
             "index.html:313",
             "index.html:320"
@@ -21830,10 +21965,10 @@
             "cryptanalysis scope"
           ],
           "evidence": [
-            "index.html:548",
-            "index.html:551",
-            "index.html:562",
-            "index.html:570"
+            "index.html:568",
+            "index.html:573",
+            "index.html:589",
+            "index.html:597"
           ],
           "section": "What this is, and what it does not prove",
           "execution": "conceptual"
@@ -21850,12 +21985,41 @@
             "research scope"
           ],
           "evidence": [
-            "index.html:596",
-            "index.html:597",
-            "index.html:598"
+            "index.html:615",
+            "index.html:617",
+            "index.html:618"
           ],
           "section": "Research context: reduced-round ChaCha",
           "execution": "conceptual"
+        },
+        {
+          "id": "multiple-relations",
+          "title": "Two masks and a structural zero",
+          "kind": "comparison",
+          "execution": "real-operation",
+          "section": "Look at more than one relation",
+          "action": "Choose one of three fixed toy keys and 16, 64, or all 256 distinct plaintexts; compare two mask relations and their joint outcomes with a no-trail pair.",
+          "outcome": "The table counts all four joint outcomes on the same traffic; a no-trail pair has zero full-codebook correlation for every toy round key, though a short sample can look biased.",
+          "concepts": [
+            "multiple linear cryptanalysis",
+            "joint parity distribution",
+            "structural zero correlation",
+            "finite sample bias",
+            "linear trail"
+          ],
+          "evidence": [
+            "index.html:445",
+            "index.html:447",
+            "index.html:455",
+            "index.html:459",
+            "src/ui/advanced.ts:18",
+            "src/ui/advanced.ts:26",
+            "src/ui/advanced.ts:37",
+            "src/crypto/advanced.ts:31",
+            "src/crypto/advanced.ts:44",
+            "src/crypto/advanced.ts:64"
+          ],
+          "limits": "Fixed 8-bit toy SPN. This is a counted two-mask observation and structural-zero example, not a full multidimensional key-recovery attack or an attack on production DES or ChaCha."
         }
       ],
       "reviewScope": "complete"
@@ -28122,8 +28286,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-pq-rotation": {
-      "commit": "dca588dacfd4ca8fe03edc05e9fd4c32025f2532",
-      "reviewed": "2026-10-22",
+      "commit": "733b8e9c6c2a94f94b9f80d6ded6bd6697d8a35f",
+      "reviewed": "2026-10-23",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -28133,21 +28297,25 @@
           "kind": "interactive",
           "execution": "conceptual",
           "action": "Load a sample enterprise, government or finance inventory and change assumed quantum arrival and migration duration.",
-          "outcome": "Calculates HNDL exposure and systems past Mosca’s inequality under the selected assumptions.",
+          "outcome": "Computes an HNDL planning score only for explicitly inventoried classical key-establishment or public-key encryption paths; separately explains signature migration urgency.",
           "concepts": [
             "PQC inventory",
             "Mosca inequality",
             "harvest now decrypt later",
-            "migration urgency"
+            "migration urgency",
+            "confidentiality versus authenticity",
+            "key-establishment inventory"
           ],
           "evidence": [
-            "src/main.ts:526",
-            "src/main.ts:530",
-            "src/main.ts:554",
-            "src/main.ts:566",
-            "src/timeline-engine.ts:1"
+            "src/main.ts:531",
+            "src/main.ts:559",
+            "src/main.ts:563",
+            "src/main.ts:588",
+            "src/main.ts:592",
+            "src/timeline-engine.ts:400",
+            "src/timeline-engine.ts:484"
           ],
-          "limits": "Inventories and CRQC year are illustrative assumptions, not an arrival forecast or assessment of a real fleet."
+          "limits": "Inventories, CRQC year and migration time are illustrative; a signing key alone does not establish recorded-traffic decryption exposure."
         },
         {
           "id": "source-timeline",
@@ -28164,9 +28332,9 @@
             "sequencing"
           ],
           "evidence": [
-            "src/main.ts:660",
-            "src/main.ts:674",
-            "src/main.ts:692",
+            "src/main.ts:667",
+            "src/main.ts:669",
+            "src/main.ts:698",
             "src/timeline-engine.ts:1"
           ],
           "limits": "The modeled schedule and meter are scenario outputs, not official deadlines."
@@ -28188,10 +28356,10 @@
             "dual verification"
           ],
           "evidence": [
-            "src/main.ts:894",
-            "src/main.ts:899",
+            "src/main.ts:901",
             "src/main.ts:904",
             "src/main.ts:920",
+            "src/main.ts:930",
             "src/hybrid-cert.ts:1"
           ],
           "limits": "Uses a JSON body and modeled X.509 envelope, not DER or an interoperable certificate chain; backward-compatible policy needs explicit downgrade protection."
@@ -28212,8 +28380,8 @@
             "availability"
           ],
           "evidence": [
-            "src/main.ts:1054",
-            "src/main.ts:1060",
+            "src/main.ts:1061",
+            "src/main.ts:1063",
             "src/main.ts:1070",
             "src/rotation-sim.ts:1"
           ],
@@ -28234,8 +28402,9 @@
             "known-answer testing"
           ],
           "evidence": [
-            "src/main.ts:1174",
-            "src/main.ts:1178",
+            "src/main.ts:1181",
+            "src/main.ts:1183",
+            "src/main.ts:1215",
             "src/hybrid-cert.ts:1"
           ],
           "limits": "Passing selected tests is not a complete certificate implementation audit."
@@ -28576,8 +28745,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-prime-witness": {
-      "commit": "c85f91a26720f4f2d63b8b4471720cfcce49bb25",
-      "reviewed": "2026-10-22",
+      "commit": "271adc969b9793eac7472dae90a99a9a57e77560",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "chain",
@@ -28707,6 +28876,34 @@
           ],
           "limits": "Teaching shape only: no validated DRBG, RSA exponent or p−q constraints, and no primality certificate.",
           "section": "Make a 1024-bit probable prime"
+        },
+        {
+          "id": "small-prime-certificate",
+          "title": "Prove a small prime with a recursive certificate",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "section": "Prove a small prime",
+          "action": "Generate a Lucas–Pratt certificate for a candidate up to 1,000,000, edit or paste its JSON, and run an independent recursive verifier.",
+          "outcome": "A complete factor tree and full-order modular witness prove primality; changing a factor, subproof, or witness makes verification fail.",
+          "concepts": [
+            "Lucas–Pratt certificate",
+            "recursive primality proof",
+            "factorization of p−1",
+            "modular witness",
+            "independent verification"
+          ],
+          "evidence": [
+            "src/ui/certificate.ts:5",
+            "src/ui/certificate.ts:8",
+            "src/ui/certificate.ts:12",
+            "src/ui/certificate.ts:14",
+            "src/primality/certificate.ts:49",
+            "src/primality/certificate.ts:75",
+            "src/primality/certificate.ts:110",
+            "src/primality/certificate.ts:117",
+            "src/main.ts:44"
+          ],
+          "limits": "Generation uses trial division and is capped at 1,000,000; verification checks the supplied proof without factoring or calling the generator. It does not certify the separate 1024-bit probable-prime output or implement ECPP/AKS."
         }
       ],
       "reviewScope": "complete"
@@ -32722,8 +32919,8 @@
       ]
     },
     "crypto-lab-shamir-vs-frost": {
-      "commit": "80adf78ce5e8115dbbce30216bb56a98bac324b4",
-      "reviewed": "2026-10-22",
+      "commit": "ccc55f6488b199d64ba9ddcbe9f2f51b5b9a8239",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "shamir",
@@ -32901,12 +33098,14 @@
           "kind": "explanation",
           "execution": "conceptual",
           "action": "Read the source-linked adaptive-security panel and parameter examples.",
-          "outcome": "Distinguish static from adaptive compromise and limits of applying published FROST theorems to this teaching implementation.",
+          "outcome": "Distinguish static from adaptive corruption, the 2025 proof baseline, and the October 2026 canonical-point 488/173 attack versus the adversarial-point 228/114 subset-search measurement.",
           "concepts": [
             "adaptive corruption",
             "FROST security model",
             "erasure assumptions",
-            "binding-factor transcript"
+            "binding-factor transcript",
+            "LDVR attack model",
+            "canonical versus adversarial evaluation points"
           ],
           "evidence": [
             "src/main.ts:129",
@@ -32916,9 +33115,10 @@
             "src/ui/adaptive-research.ts:11",
             "src/ui/adaptive-research.ts:12",
             "src/ui/adaptive-research.ts:15",
-            "src/ui/adaptive-research.ts:16"
+            "src/ui/adaptive-research.ts:16",
+            "src/ui/adaptive-research.ts:13"
           ],
-          "limits": "The lab does not execute an adaptive corruption attack or establish adaptive security for its deliberately nonconformant binding transcript.",
+          "limits": "Distinct attack models: the 228/114 result measures successful subset search, not end-to-end browser compromise. The panel executes no adaptive attack or proof; the lab uses a deliberately nonconformant binding transcript.",
           "section": "Adaptive corruption: what this lesson does and does not show"
         }
       ],

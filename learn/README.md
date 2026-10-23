@@ -1,5 +1,26 @@
 # Reading path and protocol workshops
 
+## Chip transaction authentication — reviewed 23 October 2026
+
+[`emv-chip/`](emv-chip/) is a hub-hosted interactive study of an online
+card–terminal–issuer exchange. It creates a browser-local synthetic HMAC key,
+generates a fresh terminal challenge and monotonic card counter, and binds an
+invented amount and terminal ID into an authenticator. The learner can approve
+the original packet, alter the amount, replay it after acceptance, or compare a
+different checkout challenge. No card number or real payment data is used.
+
+This is deliberately **not** an EMV application cryptogram, chip command,
+issuer policy, offline card authentication, cardholder verification, or
+certified implementation. The [EMVCo Contact Chip overview](https://www.emvco.com/emv-technologies/emv-contact-chip/)
+explains the card–terminal exchange and transaction-unique cryptograms; its
+[May 2025 security quick reference](https://www.emvco.com/wp-content/uploads/2025/05/EMVCo_Cybersecurity_QRG_MAY25_FINAL-TAGGED.pdf)
+distinguishes the online issuer check from offline public-key authentication.
+The source-backed section is indexed in `CATALOG.md` through
+`tools/catalog-native.json`, outside the count of separate lab repositories.
+
+Run `node --test learn/emv-chip/model.test.mjs` for fresh, changed-field,
+wrong-challenge, wrong-card and replay decisions.
+
 These pages live in the hub and deploy with its existing GitHub Pages site. They
 do not require new repositories or add standalone cards to the catalog count.
 The three primary book companions are Understanding Cryptography,

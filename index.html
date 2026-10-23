@@ -2219,6 +2219,10 @@
         <span class="nav-menu-educators-label">Explore the evidence</span>
         <span class="nav-menu-educators-sub">Labs, algorithms, standards and source-backed connections <span aria-hidden="true">&rarr;</span></span>
       </a>
+      <a class="nav-menu-educators" href="learn/emv-chip/">
+        <span class="nav-menu-educators-label">Chip transaction authentication</span>
+        <span class="nav-menu-educators-sub">A card, terminal and issuer; try a changed amount and a replay <span aria-hidden="true">&rarr;</span></span>
+      </a>
       <a class="nav-menu-educators" href="learn/understanding-cryptography/">
         <span class="nav-menu-educators-label">Understanding Cryptography reading path</span>
         <span class="nav-menu-educators-sub">Paar, Pelzl &amp; Güneysu · second edition, 14 chapters plus a SHA-3 focus →</span>
@@ -3617,14 +3621,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-iron-letter/"
-            data-implements="AES@src/crypto/ecies.ts:153 | AES-GCM@src/crypto/ecies.ts:142 | ECDH@src/crypto/ecies.ts:204 | ECDSA@src/crypto/mitm.ts:16 | HKDF@src/crypto/ecies.ts:134 | P-256@src/crypto/mitm.ts:16 | RSA@src/crypto/selftest.ts:20 | RSA-OAEP@src/crypto/rsa.ts:78 | SHA-256@src/crypto/ecies.ts:142"
+          <a class="project-card" data-category="ENCRYPTION | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-iron-letter/"
+            data-implements="AES@src/crypto/ecies.ts:153 | AES-CTR@src/crypto/suci.ts:104 | AES-GCM@src/crypto/ecies.ts:142 | ECDH@src/crypto/ecies.ts:204 | ECDSA@src/crypto/mitm.ts:16 | HKDF@src/crypto/ecies.ts:134 | HMAC@src/crypto/suci.ts:92 | P-256@src/crypto/mitm.ts:16 | RSA@src/crypto/selftest.ts:20 | RSA-OAEP@src/crypto/rsa.ts:78 | SHA-256@src/crypto/ecies.ts:142 | X25519@src/crypto/suci.ts:117"
             data-comment-only="BCH@src/qr.ts:542 | EC point arithmetic@src/crypto/mitm.ts:197 | Reed-Solomon@src/qr.ts:279"
-            data-references="Boneh-Franklin IBE | ElGamal | HMAC | RSA-PSS"
-            data-attacks="Brute force@src/main.ts:822 | IV reuse@README.md:24 | Man-in-the-middle@src/main.ts:7"
+            data-references="Boneh-Franklin IBE | ElGamal | RSA-PSS"
+            data-attacks="Brute force@src/main.ts:950 | IV reuse@README.md:29 | Man-in-the-middle@src/main.ts:7"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-level="intermediate" data-added="2026-04" data-added-on="2026-04-04" data-updated="2026-08"
+            data-level="intermediate" data-added="2026-04" data-added-on="2026-04-04" data-updated="2026-10"
            
            
            
@@ -3698,12 +3702,13 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Asymmetric Encryption</div>
             <div class="project-title">Iron Letter</div>
-            <div class="project-copy">ECIES P-256 and RSA-OAEP compared side by side with live timing, key-size tradeoffs, and a simple sealed-letter mental model.</div>
+            <div class="project-copy">Compare ECIES P-256 and RSA-OAEP for sealed messages. A separate 5G tab generates SUCI Profile A, checks a tampered subscriber identity, and shows which routing fields remain clear.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">ECIES P-256</span>
                 <span class="chip">RSA-OAEP</span>
                 <span class="chip">AES-256-GCM</span>
+                <span class="chip">SUCI Profile A</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -4716,14 +4721,14 @@
           </a>
 
           <a class="project-card" data-category="SIGNATURES | PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/"
-            data-implements="Ed25519@src/exhibits/attacks.ts:31 | FROST@crate/src/round2.rs:54 | SHA-512@src/exhibits/attacks.ts:75 | Shamir secret sharing@src/exhibits/attacks.ts:105"
-            data-comment-only="Schnorr@src/ui/state.ts:201 | Shamir secret sharing@src/exhibits/attacks.ts:9"
-            data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | Schnorr | X25519 | secp256k1"
+            data-implements="BLS signatures@src/ats/bls-ats.ts:224 | BLS12-381@src/ats/bls-ats.ts:20 | Ed25519@src/exhibits/attacks.ts:31 | FROST@crate/src/round2.rs:54 | Hash-to-curve@src/ats/bls-ats.ts:163 | Pairing@src/ats/bls-ats.ts:205 | SHA-512@src/exhibits/attacks.ts:75 | Shamir secret sharing@src/exhibits/attacks.ts:105"
+            data-comment-only="Schnorr@src/ui/state.ts:204 | Shamir secret sharing@src/exhibits/attacks.ts:9"
+            data-references="ECDSA | Feldman VSS | ML-DSA | Pedersen commitment | SHA-256 | Schnorr | X25519 | secp256k1"
             data-attacks="Key recovery@src/exhibits/round1.ts:60 | Nonce reuse@src/exhibits/attacks-view.ts:2 | Side-channel (unspecified)@THREAT_MODEL.md:47"
             data-standards="IETF | NIST"
             data-implementation="Rust FROST crate / WASM"
-            data-review-commit="f5fba38fe404741b8c72e83921d1025f12ca36d2"
-            data-review-note="Re-read Rust round2 bridge, TypeScript keygen/signing/binding transcript and honest-response consistency experiment after verified PR23 at this exact SHA. Rust FROST/WASM signing remains distinct from the local RFC9591 Ed25519 teaching engine; SHA-512 is computed by WebCrypto. Shamir samples scalar coefficients and evaluates f(id); Lagrange weights reconstruct. AppendixE.1 transcript/rho/share/signature controls and real nonce-reuse forgery inspected; the rho=1 honest control and R-only inconsistency rejection do not mount a concurrent ROS/Drijvers forgery. Prior successful10Rust/9unit/7browser gates and exact published artifact byte checks retained, not independent compiler reproduction. Re-read the 12 October adaptive-research integration and full prior-pin diff: Rust/core arithmetic and runtime crypto provider lock entries are unchanged. The new context and contrast repairs do not implement masking or an LDVR attack. Local 10 Rust, 9 unit and 7 browser checks passed; the standard GitHub build and deployment also passed at this pin. The discrete-log bounds quoted in the new research panel are not an attack executed here, so that attack credit is removed; actual nonce-reuse and recovery exhibits remain."
+            data-review-commit="a9beb37a9ce72b0b06ff725c840c9a8ffe952aac"
+            data-review-note="Re-read Rust round2 bridge, TypeScript keygen/signing/binding transcript and honest-response consistency experiment after verified PR23 at this exact SHA. Rust FROST/WASM signing remains distinct from the local RFC9591 Ed25519 teaching engine; SHA-512 is computed by WebCrypto. Shamir samples scalar coefficients and evaluates f(id); Lagrange weights reconstruct. AppendixE.1 transcript/rho/share/signature controls and real nonce-reuse forgery inspected; the rho=1 honest control and R-only inconsistency rejection do not mount a concurrent ROS/Drijvers forgery. Prior successful10Rust/9unit/7browser gates and exact published artifact byte checks retained, not independent compiler reproduction. Re-read the 12 October adaptive-research integration and full prior-pin diff: Rust/core arithmetic and runtime crypto provider lock entries are unchanged. The new context and contrast repairs do not implement masking or an LDVR attack. Local 10 Rust, 9 unit and 7 browser checks passed; the standard GitHub build and deployment also passed at this pin. The discrete-log bounds quoted in the new research panel are not an attack executed here, so that attack credit is removed; actual nonce-reuse and recovery exhibits remain. Re-read the 23 October research-only update at this pin: Bacho ePrint 2026/2554 distinguishes canonical Curve25519 evaluation points (488 signers/173 corruptions, concrete LDVR attack) from adversarially chosen points (228/114, measured subset search). The source-linked panel and README do not alter the signing engine or claim a browser compromise."
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-05" data-updated="2026-10"
            
            
@@ -11651,7 +11656,8 @@
 
           <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-pq-rotation/"
             data-implements="ML-DSA@src/hybrid-cert.ts:2 | P-256@src/hybrid-cert.ts:1 | SHA-256@src/hybrid-cert.ts:70"
-            data-references="AES | DSA | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | ML-KEM | Pairing | RSA | TLS 1.3 | X25519"
+            data-comment-only="ECDSA@src/timeline-engine.ts:398 | RSA@src/timeline-engine.ts:398"
+            data-references="AES | DSA | Diffie-Hellman | Dilithium | ECDH | ECDSA | Ed25519 | Kyber | ML-KEM | RSA | RSA-OAEP | TLS 1.3 | X25519"
             data-standards="NIST"
             data-implementation="WebCrypto"
             data-level="intermediate" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
@@ -11714,7 +11720,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Migration Operations</div>
             <div class="project-title">PQ Rotation</div>
-            <div class="project-copy">A post-quantum migration planner for composite-style hybrid certificate models with mandatory AND verification, multi-jurisdiction timelines, rolling key rotation, canary deployment, and rollback strategy.</div>
+            <div class="project-copy">Plan post-quantum migration with separate recorded-traffic confidentiality and signing risks. Test hybrid certificate verification, deadlines, canary rotation, and rollback.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Hybrid X.509</span>
@@ -13003,12 +13009,14 @@
           </a>
 
           <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-key-exchange/"
-            data-implements="AES@src/engine.ts:181 | AES-GCM@src/engine.ts:181 | Diffie-Hellman@src/engine.ts:55 | EC point arithmetic@src/engine.ts:404 | ECDH@src/engine.ts:422 | Ed25519@src/engine.ts:24 | HKDF@src/engine.ts:164 | LWE@src/ui.ts:1860 | Merkle tree@src/merkle/aes.ts:11 | ML-KEM@src/engine.ts:476 | SHA-256@src/engine.ts:26 | Shor's algorithm@src/ui.ts:1491 | X25519@src/engine.ts:24"
-            data-comment-only="Grover's algorithm@src/merkle/eve.worker.ts:35 | Index calculus@src/ui.ts:405 | NTT@src/engine.ts:11 | TLS 1.3@src/engine.ts:533"
-            data-references="AES-CBC | AES-ECB | Double Ratchet | Grover's algorithm | Index calculus | Isogeny walk | Kyber | NTT | Noise protocol | P-256 | PQXDH | RSA | SIKE | TLS 1.3 | X3DH"
-            data-attacks="Brute force@src/merkle/eve-core.ts:83 | Chosen-ciphertext attack@src/data.ts:330 | Discrete log@src/data.ts:29 | Factoring@src/data.ts:151 | Invalid curve attack@README.md:42 | Key recovery@src/data.ts:292 | Man-in-the-middle@src/engine.ts:99"
+            data-implements="AES@src/engine.ts:181 | AES-GCM@src/engine.ts:181 | Diffie-Hellman@src/engine.ts:55 | EC point arithmetic@src/engine.ts:404 | ECDH@src/engine.ts:422 | Ed25519@src/engine.ts:24 | HKDF@src/engine.ts:164 | LWE@src/ui.ts:1921 | Merkle tree@src/merkle/aes.ts:11 | ML-KEM@src/engine.ts:476 | SHA-256@src/pairing.ts:52 | Shor's algorithm@src/ui.ts:1552 | X25519@src/engine.ts:24"
+            data-comment-only="Grover's algorithm@src/merkle/eve.worker.ts:35 | Index calculus@src/ui.ts:406 | NTT@src/engine.ts:11 | TLS 1.3@src/engine.ts:533"
+            data-references="AES-CBC | AES-ECB | Double Ratchet | Grover's algorithm | Index calculus | Isogeny walk | Kyber | NTT | Noise protocol | P-256 | PQXDH | Pairing | RSA | SIKE | TLS 1.3 | X3DH"
+            data-attacks="Brute force@src/merkle/eve-core.ts:83 | Chosen-ciphertext attack@src/data.ts:330 | Discrete log@src/data.ts:29 | Factoring@src/data.ts:151 | Invalid curve attack@README.md:51 | Key recovery@src/data.ts:292 | Man-in-the-middle@src/engine.ts:99"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="95121cd4939143bc30604ea2db2bd2510727a606"
+            data-review-note="Read the current device-pairing SHA-256 commitment and toy short-code model, original DH relay and README at this pin. The scanner inferred bilinear Pairing from the filename src/pairing.ts; this section models device pairing and computes no bilinear pairing. Preserve the SHA-256 call at src/pairing.ts:52 and the existing DH/ML-KEM operations. The three-digit toy code is not Bluetooth g2 and does not establish a Bluetooth attack probability or production authentication guarantee."
             data-level="advanced" data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-10"
            
            
@@ -13083,7 +13091,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Key Exchange Overview</div>
             <div class="project-title">Key Exchange</div>
-            <div class="project-copy">A walkthrough of key exchange across history and protocol families — from Diffie-Hellman to modern hybrid post-quantum handshakes, with shared assumptions and threat models per era.</div>
+            <div class="project-copy">Walk from Diffie-Hellman to hybrid post-quantum exchange, then test a short-code pairing relay to see why commitment order and identity checks matter.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Diffie-Hellman</span>
@@ -13865,8 +13873,8 @@
             data-comment-only="E91@src/data.ts:1"
             data-references="BB84 | Grover's algorithm | Shor's algorithm"
             data-implementation="idealized statistical simulation"
-            data-review-commit="e9a3628c43e20c071b545a7214b6f4c27c418610"
-            data-review-note="Reviewed current engine, comparison/protocol UI, README and browser assertions through this pin. The entangled-pair sampler executes an idealized E91 statistical model; public verdicts describe Bell-test evidence, not a certified quantum source or secret key. BB84 appears only as a simple intercept-resend contrast. Candidate bits require authenticated discussion, reconciliation, privacy amplification and a separate finite-key argument. Preserve the reviewed E91 source anchor and remove BB84/MITM/side-channel algorithm or attack credits that are not executed here."
+            data-review-commit="1d47ca1b8b41189ccee14e708d03bb8ed62b08ef"
+            data-review-note="Reviewed current engine, comparison/protocol UI, README and browser assertions through this pin. The entangled-pair sampler executes an idealized E91 statistical model; public verdicts describe Bell-test evidence, not a certified quantum source or secret key. BB84 appears only as a simple intercept-resend contrast. Candidate bits require authenticated discussion, reconciliation, privacy amplification and a separate finite-key argument. Preserve the reviewed E91 source anchor and remove BB84/MITM/side-channel algorithm or attack credits that are not executed here. Re-read the 23 October source-only postselection module, UI and README: an eight-instruction local classical model with selective coincidences changes the apparent CHSH statistic from 2 to 4 while retaining one quarter per setting. It executes no quantum source, detector attack or finite-key proof; the existing E91 engine anchor remains unchanged."
             data-level="advanced" data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-10"
            
            
@@ -13930,7 +13938,7 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Entanglement-Based QKD</div>
             <div class="project-title">E91</div>
-            <div class="project-copy">An idealized simulation of entanglement-based QKD: measure correlated pairs, estimate a CHSH Bell statistic, and sift a key. A Bell violation in this model alone is not a finite-key or device-independent security proof.</div>
+            <div class="project-copy">Simulate E91, estimate a CHSH Bell statistic, and test how biased coincidence selection can mislead a Bell check. The model does not prove finite-key or device-independent security.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">E91</span>
@@ -14917,11 +14925,11 @@
             data-implements="Ed25519@src/frost/verify.ts:14 | FROST@src/frost/round2.ts:84 | HMAC@src/ui/shamir-panel.ts:542 | SHA-256@src/ui/shamir-panel.ts:542 | SHA-512@src/frost/keygen.ts:14 | Shamir secret sharing@src/frost/field.ts:80"
             data-comment-only="AES@src/shamir/gf256.ts:1 | Dilithium@src/ui/decision-guide.ts:2 | Kyber@src/ui/decision-guide.ts:2 | Pedersen commitment@src/frost/keygen.ts:2 | Schnorr@src/frost/verify.ts:7"
             data-references="Schnorr | X25519"
-            data-attacks="Key recovery@src/ui/decision-guide.ts:22 | Nonce reuse@src/ui/adaptive-research.ts:16"
+            data-attacks="Key recovery@src/ui/decision-guide.ts:22 | Nonce reuse@src/ui/adaptive-research.ts:17"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="86b59789bca744b9e032bd121ef0d8df75bbe5b4"
-            data-review-note="Read keygen/round2/verify and Shamir signing caller at exact439f integration. Actual Ed25519 aggregate verification, participant-local threshold arithmetic and HMAC-SHA256 computation replace import/UI/key-import-only anchors. Preserve actual GF256/scalar Shamir and SHA512 source. This is genuine two-round threshold Schnorr arithmetic producing an Ed25519 signature, but documented simplified binding-factor hashing lacks RFC9591 ContextString and is not conformant; trusted dealer holds the setup secret. Standard/native tests do not establish full RFC9591 conformance or constant-time behavior. Re-read the 12 October adaptive-research panel and its integration: signing, keygen and verifier source are byte-identical to the prior pin. The new panel is research context only; it does not execute LDVR attacks or certify adaptive security. HMAC still computes at line542. The discrete-log bounds quoted in the new research panel are not an attack executed here, so that attack credit is removed; actual nonce-reuse and recovery exhibits remain."
+            data-review-commit="ccc55f6488b199d64ba9ddcbe9f2f51b5b9a8239"
+            data-review-note="Read keygen/round2/verify and Shamir signing caller at exact439f integration. Actual Ed25519 aggregate verification, participant-local threshold arithmetic and HMAC-SHA256 computation replace import/UI/key-import-only anchors. Preserve actual GF256/scalar Shamir and SHA512 source. This is genuine two-round threshold Schnorr arithmetic producing an Ed25519 signature, but documented simplified binding-factor hashing lacks RFC9591 ContextString and is not conformant; trusted dealer holds the setup secret. Standard/native tests do not establish full RFC9591 conformance or constant-time behavior. Re-read the 12 October adaptive-research panel and its integration: signing, keygen and verifier source are byte-identical to the prior pin. The new panel is research context only; it does not execute LDVR attacks or certify adaptive security. HMAC still computes at line542. The discrete-log bounds quoted in the new research panel are not an attack executed here, so that attack credit is removed; actual nonce-reuse and recovery exhibits remain. Re-read the 23 October research-only update at this pin: Bacho ePrint 2026/2554 distinguishes canonical Curve25519 evaluation points (488 signers/173 corruptions, concrete LDVR attack) from adversarially chosen points (228/114, measured subset search). The source-linked panel and README do not alter the signing engine or claim a browser compromise."
             data-level="advanced" data-added="2026-06" data-added-on="2026-06-28" data-updated="2026-10"
            
            
@@ -18051,10 +18059,10 @@
             data-implements="Toy SPN@src/crypto/spn.ts:66"
             data-comment-only="DES@src/crypto/spn.ts:16"
             data-references="AES | ChaCha20 | DES | Enigma | Serpent | Shamir secret sharing | Vigenere cipher"
-            data-attacks="Key recovery@src/crypto/attack.ts:211 | Known-plaintext attack@src/crypto/attack.ts:46 | Linear cryptanalysis@src/crypto/attack.ts:211"
+            data-attacks="Brute force@README.md:97 | Chosen-plaintext attack@index.html:547 | Differential cryptanalysis@README.md:76 | Key recovery@index.html:19 | Known-plaintext attack@src/ui/piling.ts:105 | Linear cryptanalysis@src/main.ts:264"
             data-implementation="hand-rolled"
-            data-review-commit="ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9"
-            data-review-note="Reviewed the current source and October 22 change inventory. The toy SPN implementation anchor at src/crypto/spn.ts:66 is unchanged. The lab now distinguishes single trails from the full key-dependent linear hull and compares repeated with distinct plaintext sampling at the same budget, with uncertainty intervals and coverage counts. These are bounded toy-SPN attack experiments, not a full DES attack or a reproduction of the linked ChaCha paper attack."
+            data-review-commit="e218f2e71938d1514cbfde224fc61b1d68fc2e3a"
+            data-review-note="Reviewed the toy SPN, attack and new two-mask/structural-zero panel at this exact commit. It counts two parity relations and all four joint outcomes on the same 16/64/256 plaintexts, and checks a no-nonzero-trail pair whose full-codebook correlation is zero across keys. This is a bounded toy-SPN observation, not a multidimensional key-recovery attack or a reproduction of the cited ChaCha research. Existing single-trail versus full linear-hull and repeated versus distinct plaintext comparisons remain separate. The toy SPN implementation anchor is unchanged; no full DES or production cipher is attacked."
             data-level="advanced" data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
            
            
@@ -18115,13 +18123,14 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Linear Cryptanalysis</div>
             <div class="project-title">Matsui Line</div>
-            <div class="project-copy">Run Matsui-style linear analysis on a toy SPN, compare single-trail predictions with a hull's key-dependent cancellations, then sample known plaintexts with and without replacement to see uncertainty change.</div>
+            <div class="project-copy">Run linear analysis on a toy SPN: compare trails with key-dependent hulls, count two masks and a structural zero, then measure repeated versus distinct known plaintexts.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Linear Cryptanalysis</span>
                 <span class="chip">LAT</span>
                 <span class="chip">Piling-Up Lemma</span>
                 <span class="chip">Known-Plaintext</span>
+                <span class="chip">Multiple Masks</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -20327,9 +20336,9 @@
           </a>
 
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/"
-            data-implements="AES@src/schemes/aes-modes.ts:10 | AES-CBC@src/schemes/aes-modes.ts:37 | AES-CTR@src/schemes/aes-modes.ts:47 | AES-GCM@src/schemes/aes-modes.ts:59 | Diffie-Hellman@src/reduction/ddh.ts:74 | ECDSA@src/schemes/ecdsa.ts:10 | Ed25519@src/schemes/ed25519.ts:3 | ElGamal@src/game/cca.ts:34 | Hash-to-curve@src/schemes/elgamal.ts:29 | P-256@src/kats.ts:21 | ristretto255@src/schemes/elgamal.ts:22 | RSA@src/game/cca.ts:84 | RSA-OAEP@src/game/cca.ts:84 | RSA-PSS@src/schemes/rsa-pss.ts:4 | secp256k1@src/schemes/ecdsa.ts:1 | SHA-256@src/schemes/rsa-textbook.ts:52"
-            data-references="AES-ECB | Goldwasser–Micali | ML-KEM | SHA-512 | Simon"
-            data-attacks="Chosen-ciphertext attack@src/game/cca.ts:34 | Chosen-plaintext attack@src/game/challenger.ts:24 | Ciphertext malleability@README.md:41 | Signature malleability@README.md:43"
+            data-implements="AES@src/prf/ggm.ts:21 | AES-CBC@src/schemes/aes-modes.ts:37 | AES-CTR@src/schemes/aes-modes.ts:47 | AES-GCM@src/schemes/aes-modes.ts:59 | Diffie-Hellman@src/reduction/ddh.ts:87 | ECDSA@src/schemes/ecdsa.ts:10 | Ed25519@src/schemes/ed25519.ts:3 | ElGamal@src/game/cca.ts:34 | Hash-to-curve@src/schemes/elgamal.ts:29 | P-256@src/kats.ts:3 | ristretto255@src/schemes/elgamal.ts:22 | RSA@src/game/cca.ts:84 | RSA-OAEP@src/game/cca.ts:84 | RSA-PSS@src/schemes/rsa-pss.ts:4 | secp256k1@src/schemes/ecdsa.ts:1 | SHA-256@src/schemes/rsa-textbook.ts:52"
+            data-references="AES-ECB | AES-SIV | Goldwasser–Micali | ML-KEM | SHA-512 | Simon"
+            data-attacks="Chosen-ciphertext attack@src/game/cca.ts:1 | Chosen-plaintext attack@src/game/challenger.ts:18 | Ciphertext malleability@README.md:42 | Signature malleability@README.md:44"
             data-standards="IETF | NIST | SECG"
             data-implementation="WebCrypto"
             data-level="advanced" data-added="2026-09" data-added-on="2026-09-11" data-updated="2026-10"
@@ -20406,13 +20415,14 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Security Games</div>
             <div class="project-title">Hidden Bit</div>
-            <div class="project-copy">Test selected security games and reductions, then follow a three-level GGM tree built from an AES-based expansion beside a broken repeated-seed generator. Measured advantage depends on the stated attacker and trials.</div>
+            <div class="project-copy">Test selected security games, trace an AES-based GGM tree, and compare exact and union-bound advantage in an abstract multi-key rare-signal game. Each result has a stated attacker and scope.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">IND-CPA</span>
                 <span class="chip">EUF-CMA</span>
                 <span class="chip">PRP/PRF Switching</span>
                 <span class="chip">DDH Reduction</span>
+                <span class="chip">Multi-Key Toy</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -21345,14 +21355,14 @@
             data-comment-only="RSA@src/gen/fips186.ts:9"
             data-references="RSA"
             data-implementation="local BigInt primality engines"
-            data-review-commit="c85f91a26720f4f2d63b8b4471720cfcce49bb25"
-            data-review-note="Read the six exhibits, independent sieve/trial-prime checks, fixed-base counterexamples, exhaustive liar counting and generation workers. These are primality tests, not primality proofs. FIPS 186-5 Table B.1 is an explicitly limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and displayed factors; the lab does not teach a separate factoring attack. All 34 units, seven browser claims, two accessibility views and seven mutations passed at the prior code-identical build; this pin updates only integration documentation."
+            data-review-commit="271adc969b9793eac7472dae90a99a9a57e77560"
+            data-review-note="Read seven exhibits including the new bounded Lucas–Pratt certificate generator and independent recursive verifier. Trial division creates factor proofs only for p ≤ 1,000,000; the verifier checks the complete factorization of p−1, recursive primality proofs and full-order modular witness without calling the generator. Separate Miller–Rabin outputs remain probable for large candidates; the FIPS 186-5 Table B.1 path is a limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and the small proof generator, not a general factoring attack. Unit and browser checks are lab-specific and do not constitute machine verification or production security."
             data-level="intermediate" data-added="2026-10" data-added-on="2026-10-20" data-updated="2026-10"
             data-overlaps="crypto-lab-factor-forge: Factor Forge attacks composite integers; Prime Witness tests candidate primes and distinguishes witnesses, probable primes and proofs." target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Primality Testing</div>
             <div class="project-title">Prime Witness</div>
-            <div class="project-copy">Follow Miller–Rabin witnesses, count lying bases, defeat fixed-base lists, and measure real prime generation without mistaking probable primes for proofs.</div>
-            <div class="project-meta"><div class="stack"><span class="chip">Miller–Rabin</span><span class="chip">Fermat Test</span><span class="chip">Carmichael Numbers</span><span class="chip">Prime Generation</span></div><span class="arrow">&rarr;</span></div>
+            <div class="project-copy">Count Miller–Rabin lying bases, test fixed-base lists, and measure probable-prime generation. Then build and independently check a recursive proof for a small prime.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Miller–Rabin</span><span class="chip">Fermat Test</span><span class="chip">Prime Certificates</span><span class="chip">Prime Generation</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
           <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-residue-gate/"
@@ -21373,18 +21383,19 @@
 
           <a class="project-card" data-category="HASHING &amp; KDFS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hash-hunt/"
             data-implements="Floyd cycle finding@src/attack/floyd.ts:2 | Hellman chains@src/attack/tmto/tables.ts:8 | HMAC@src/mac/hashAndMac.ts:2 | Rainbow chains@src/attack/tmto/tables.ts:8 | SHA-256@src/hash/truncate.ts:3"
+            data-comment-only="Merkle tree@src/md/toyMd.ts:26"
             data-references="Grover's algorithm | MD5 | Merkle tree | SHA-1 | bcrypt"
-            data-attacks="Collision attack@README.md:14"
+            data-attacks="Birthday bound@brief-extension.md:61 | Collision attack@README.md:14 | Hash-flooding@src/main.ts:2"
             data-standards="IETF | NIST"
             data-implementation="noble SHA-256 / WebCrypto HMAC / local attack engines"
-            data-review-commit="3c766455e051b48adb6af5356cb81257770f4ab4"
-            data-review-note="Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint chain regeneration and salts sampled after precomputation. The tag transfer attacks a deliberately collision-prone hash-then-MAC composition, not HMAC or full SHA-256. Hellman uses one reduction column per table; rainbow varies the column. Coverage sets and diagnostic traces are additional memory. Length extension is a neighboring topic, not an executed exhibit. All 21 units, eight browser claims, two accessibility views and eleven mutations passed; this pin only clarifies README scope and integration."
+            data-review-commit="072a9531796a1c2f9936197077aee2ee0d57b144"
+            data-review-note="Reviewed the existing shortened-SHA-256 collision, meaningful-letter HMAC composition, chain and salt exhibits plus the new bounded table-flood panel. It searches distinct names that hit one public FNV-1a bucket, counts linear-probing slot visits, then reuses the same names with fresh secret WebCrypto HMAC-SHA-256 buckets. It does not implement SipHash or measure a real server. The separate tag transfer attacks a deliberately collision-prone hash-then-MAC composition, not HMAC or full SHA-256; Hellman/rainbow and salt limits remain. Unit, browser and mutation gates passed on the lab main build."
             data-level="intermediate" data-added="2026-10" data-added-on="2026-10-20" data-updated="2026-10"
             data-overlaps="crypto-lab-collision-vault: Collision Vault studies published collision examples and hash constructions; Hash Hunt runs generic searches on deliberately truncated SHA-256, meaningful-message forgery and measured table tradeoffs. crypto-lab-kdf-arena: KDF Arena compares password derivation; Hash Hunt demonstrates why fresh salts prevent reuse of an unsalted table." target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Generic Hash Attacks</div>
             <div class="project-title">Hash Hunt</div>
-            <div class="project-copy">Find truncated-SHA-256 collisions, transfer a tag in an insecure hash-then-MAC construction, and measure chained-table tradeoffs and the limits of salt.</div>
-            <div class="project-meta"><div class="stack"><span class="chip">Truncated SHA-256</span><span class="chip">Floyd Cycle Finding</span><span class="chip">Hellman / Rainbow Chains</span><span class="chip">HMAC-SHA-256</span></div><span class="arrow">&rarr;</span></div>
+            <div class="project-copy">Find shortened-hash collisions, test an insecure hash-then-MAC composition, and measure chain and salt tradeoffs. Compare attacker-chosen public hash-table buckets with a secret keyed map.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Truncated SHA-256</span><span class="chip">Floyd Cycle Finding</span><span class="chip">Hellman / Rainbow Chains</span><span class="chip">HMAC-SHA-256</span><span class="chip">Hash-Table Flood</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
           <a class="project-card" data-category="KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-log-forge/"

@@ -113,6 +113,9 @@ jobs:
       - name: CATALOG.md matches the cards, and every claim has its evidence
         run: node tools/catalog-sync.js check
 
+      - name: Hub card model authenticates, rejects changes, and detects replay
+        run: node --test learn/emv-chip/model.test.mjs
+
       - name: Catalog document structure
         run: node tools/catalog-structure-check.js
 

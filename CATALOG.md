@@ -71,11 +71,11 @@ A lab in *italics* references the algorithm without implementing it.
 #### AES-CCM
 
 - **Implemented by:** [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/ccm.ts:174`
-- **Also referenced by:** *Quantum Vault KpqC*, *Padding Oracle*, *AEGIS Gate*
+- **Also referenced by:** *Quantum Vault KpqC*, *MAC Race*, *Padding Oracle*, *AEGIS Gate*
 
 #### AES-GCM
 
-- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/aes.ts:10`; [Key Lifecycle](https://systemslibrarian.github.io/crypto-lab-key-lifecycle/) `src/crypto/aead.ts:14`; [Compression Leak](https://systemslibrarian.github.io/crypto-lab-compression-leak/) `src/crypto/oracle.ts:23`; [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) `src/encrypt.ts:37`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:142`; [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:240`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/double-ratchet.ts:253`; [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/hybrid.ts:63`; [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/benchmark.ts:82`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/src/crypto.ts:72`; [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/aes.ts:79`; [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) `demos/hybrid-wire/src/crypto/security.ts:52`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/compare.ts:120`; [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/hybrid.ts:66`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/x3dh.ts:190`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:103`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/ui.ts:866`; [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) `src/mceliece.ts:182`; [BIKE Vault](https://systemslibrarian.github.io/crypto-lab-bike-vault/) `src/bike.ts:795`; [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) `src/hqc.ts:370`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ot.ts:120`; [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) `src/crypto.ts:28`; [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) `src/lib/crypto.ts:24`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:57`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/elgamal.ts:117`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:121`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:253`; [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) `src/benchmark.ts:116`; [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) `src/ui/benchmark.ts:101`; [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) `src/rekey.ts:215`; [ORAM Vault](https://systemslibrarian.github.io/crypto-lab-oram-vault/) `src/client/encryption.ts:27`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/aead.ts:9`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hpke.ts:32`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:181`; [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) `src/engine.ts:115`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:396`; [Time-Lock Puzzle](https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/) `src/crypto/aes.ts:48`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:241`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:157`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:54`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/e2ee/box.ts:63`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/aes.ts:83`; [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) `src/core/primitives.ts:64`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/primitives.ts:107`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/aead.rs:5`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/envelope.ts:46`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/kem.ts:76`; [Sector Vault](https://systemslibrarian.github.io/crypto-lab-sector-vault/) `src/crypto/gcm.ts:78`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/kem.ts:107`; [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) `src/ppe/dte.ts:28`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/aes-modes.ts:59`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/crypto/aead.ts:20`; [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) `src/crypto/cipher.ts:38`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/crypto.ts:10`
+- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/aes.ts:10`; [Key Lifecycle](https://systemslibrarian.github.io/crypto-lab-key-lifecycle/) `src/crypto/aead.ts:14`; [Compression Leak](https://systemslibrarian.github.io/crypto-lab-compression-leak/) `src/crypto/oracle.ts:23`; [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) `src/encrypt.ts:37`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:142`; [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:240`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/double-ratchet.ts:253`; [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/hybrid.ts:63`; [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/benchmark.ts:82`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/src/crypto.ts:72`; [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/aes.ts:79`; [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) `demos/hybrid-wire/src/crypto/security.ts:52`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/compare.ts:126`; [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/hybrid.ts:66`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/x3dh.ts:190`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:103`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/ui.ts:866`; [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) `src/mceliece.ts:182`; [BIKE Vault](https://systemslibrarian.github.io/crypto-lab-bike-vault/) `src/bike.ts:795`; [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) `src/hqc.ts:374`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ot.ts:120`; [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) `src/crypto.ts:28`; [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) `src/lib/crypto.ts:24`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:57`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/elgamal.ts:117`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:121`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:253`; [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) `src/benchmark.ts:116`; [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) `src/ui/benchmark.ts:101`; [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) `src/rekey.ts:215`; [ORAM Vault](https://systemslibrarian.github.io/crypto-lab-oram-vault/) `src/client/encryption.ts:27`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/aead.ts:9`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hpke.ts:32`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:181`; [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) `src/engine.ts:115`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:396`; [Time-Lock Puzzle](https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/) `src/crypto/aes.ts:48`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:241`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:157`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:54`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/e2ee/box.ts:63`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/aes.ts:83`; [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) `src/core/primitives.ts:64`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/primitives.ts:107`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/aead.rs:5`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/envelope.ts:46`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/kem.ts:76`; [Sector Vault](https://systemslibrarian.github.io/crypto-lab-sector-vault/) `src/crypto/gcm.ts:78`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/kem.ts:107`; [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) `src/ppe/dte.ts:28`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/aes-modes.ts:59`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/crypto/aead.ts:20`; [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) `src/crypto/cipher.ts:38`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/crypto.ts:13`
 - **Also referenced by:** *MAC Race*, *Format Ward*, *Timing Oracle*, *ChaCha20 Stream*, *Poly1305 MAC*, *SSH Handshake*, *Vigenère Break*, *OTP Vault*, *Search Vault*, *Stream Ward*, *Feistel Forge*, *MGM Mode*, *WEP Crack*
 
 #### AES-SIV
@@ -91,7 +91,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### ChaCha20-Poly1305
 
 - **Implemented by:** [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) `crate/src/lib.rs:13`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aead.ts:70`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:51`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/main.ts:3`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/aead.rs:6`
-- **Also referenced by:** *Iron Serpent*, *AES Modes*, *RSA Forge*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *ChaCha20 Stream*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *SSH Handshake*, *Vigenère Break*, *Nonce Collision*, *Blind Hello*, *Salamander*, *Beacon Lock*, *Stream Ward*, *HTTPS Padlock*
+- **Also referenced by:** *Iron Serpent*, *AES Modes*, *RSA Forge*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *ChaCha20 Stream*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *MLS Group*, *SSH Handshake*, *Vigenère Break*, *Blind Hello*, *Salamander*, *Beacon Lock*, *Stream Ward*, *HTTPS Padlock*
 
 #### MGM
 
@@ -125,7 +125,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### CKKS
 
 - **Implemented by:** [CKKS Lab](https://systemslibrarian.github.io/crypto-lab-ckks-lab/) `src/toyCkks.ts:209`
-- **Also referenced by:** *Blind Oracle*, *FHE Arena*, *Oblivious Shelf*, *LWE Hints*, *DP Noise*, *Function Key*
+- **Also referenced by:** *Blind Oracle*, *FHE Arena*, *Oblivious Shelf*, *LWE Hints*, *DP Noise*, *Function Key*, *Log Forge*
 
 #### TFHE
 
@@ -141,8 +141,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### HKDF
 
-- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `crates/qv-core/src/encrypt.rs:20`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:134`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/hkdf.ts:32`; [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/hybrid.ts:55`; [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/mac.ts:17`; [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) `demos/hybrid-wire/src/crypto/hybrid.ts:59`; [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) `src/negotiation/transcript.ts:18`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/kdf.ts:37`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:59`; [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) `src/hkdf.ts:14`; [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) `src/bench.ts:85`; [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) `src/kdf.ts:14`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:113`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:82`; [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) `src/primitives.ts:116`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/kdf.ts:1`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hkdf.ts:11`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:164`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/kem.ts:79`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/hashes.ts:22`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:152`; [KEM Trap](https://systemslibrarian.github.io/crypto-lab-kem-trap/) `src/kem/callers.ts:33`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/kdf.ts:7`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/ohttp/response.ts:22`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/e2ee/box.ts:40`; [SPAKE Gate](https://systemslibrarian.github.io/crypto-lab-spake-gate/) `src/spake/transcript.ts:52`; [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) `src/core/primitives.ts:27`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/primitives.ts:85`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/kdf.rs:4`; [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) `src/primitives.ts:28`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/schedule.ts:76`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/ui/vectors.ts:185`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/kem.ts:56`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/model/ratchet-step.ts:11`; [Drift Key](https://systemslibrarian.github.io/crypto-lab-drift-key/) `src/crypto/kdf.ts:34`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/crypto.ts:5`
-- **Also referenced by:** *Phantom Vault*, *DRBG Arena*, *Shadow Vault*, *Babel Hash*, *Curve Lens*, *Hash Zoo*, *Bcrypt Forge*, *PSI Gate*, *Blind Hello*, *Beacon Lock*, *Stream Ward*
+- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `crates/qv-core/src/encrypt.rs:20`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:134`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/hkdf.ts:32`; [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/hybrid.ts:55`; [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/mac.ts:17`; [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) `demos/hybrid-wire/src/crypto/hybrid.ts:59`; [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) `src/negotiation/transcript.ts:18`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/kdf.ts:37`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:59`; [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) `src/hkdf.ts:14`; [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) `src/bench.ts:85`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/signcrypt.ts:34`; [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) `src/kdf.ts:14`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:113`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:82`; [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) `src/primitives.ts:116`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/kdf.ts:1`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hkdf.ts:11`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:164`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/kem.ts:79`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/hashes.ts:22`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:152`; [KEM Trap](https://systemslibrarian.github.io/crypto-lab-kem-trap/) `src/kem/callers.ts:33`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/kdf.ts:7`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/ohttp/response.ts:22`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/e2ee/box.ts:40`; [SPAKE Gate](https://systemslibrarian.github.io/crypto-lab-spake-gate/) `src/spake/transcript.ts:52`; [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) `src/core/primitives.ts:27`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/primitives.ts:85`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/kdf.rs:4`; [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) `src/primitives.ts:28`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/schedule.ts:76`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/ui/vectors.ts:185`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/kem.ts:56`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/model/ratchet-step.ts:11`; [Drift Key](https://systemslibrarian.github.io/crypto-lab-drift-key/) `src/crypto/kdf.ts:34`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/crypto.ts:6`
+- **Also referenced by:** *Phantom Vault*, *DRBG Arena*, *Shadow Vault*, *Babel Hash*, *Curve Lens*, *Hash Zoo*, *Bcrypt Forge*, *PSI Gate*, *Blind Hello*, *Beacon Lock*, *Stream Ward*, *Log Forge*
 
 ### KEM
 
@@ -162,18 +162,18 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### CMAC
 
-- **Implemented by:** [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:113`
+- **Implemented by:** [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:114`
 - **Also referenced by:** *Hash Zoo*, *World Hashes*, *Poly1305 MAC*, *Protocol Compose*, *Collision Vault*, *TESLA Broadcast*
 
 #### GHASH
 
-- **Implemented by:** [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/ghash.ts:82`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/forbidden.ts:99`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/ghash.ts:97`; [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) `src/crypto.ts:300`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/ghash-attack.ts:46`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/ghash.ts:35`
+- **Implemented by:** [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/ghash.ts:82`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/forbidden.ts:99`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/ghash.ts:97`; [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) `src/crypto.ts:300`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:204`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/ghash.ts:35`
 - **Also referenced by:** *Hash Zoo*, *World Hashes*, *Poly1305 MAC*, *Protocol Compose*, *AEGIS Gate*, *Ascon*, *Collision Vault*, *MGM Mode*, *WEP Crack*
 
 #### HMAC
 
 - **Implemented by:** [Phantom Vault](https://systemslibrarian.github.io/crypto-lab-phantom-vault/) `src/crypto/hmac-drbg.ts:36`; [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) `src/algorithms/hmac-drbg.ts:18`; [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/hmac-drbg.ts:20`; [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/mac.ts:42`; [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) `src/negotiation/transcript.ts:19`; [Babel Hash](https://systemslibrarian.github.io/crypto-lab-babel-hash/) `demos/babel-hash/src/crypto/hmac.ts:9`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/kdf.ts:21`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:46`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/crc/hmac-receiver.ts:2`; [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) `src/pbkdf2.ts:105`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/oracle.ts:82`; [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) `src/hmac.ts:60`; [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) `src/length-extension.ts:507`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:95`; [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) `src/steg/Embedder.ts:168`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:61`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/ecvrf.ts:92`; [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) `src/rfc6979.ts:72`; [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/authenticated.ts:83`; [Paillier Gate](https://systemslibrarian.github.io/crypto-lab-paillier-gate/) `src/ballots.ts:46`; [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) `src/primitives.ts:71`; [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) `src/crypto/biased-nonce.ts:26`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/crypto/etype-aes256.ts:49`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/cbc-and-mac.ts:24`; [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) `src/engine.ts:250`; [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) `src/jwt/sign.ts:66`; [Bitcoin Script](https://systemslibrarian.github.io/crypto-lab-bitcoin-script/) `src/engine.ts:21`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/hashes.ts:17`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/ui/shamir-panel.ts:542`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:88`; [KEM Trap](https://systemslibrarian.github.io/crypto-lab-kem-trap/) `src/kem/callers.ts:38`; [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) `src/crypto/hmac.ts:10`; [SPAKE Gate](https://systemslibrarian.github.io/crypto-lab-spake-gate/) `src/spake/transcript.ts:41`; [Entropy Collapse](https://systemslibrarian.github.io/crypto-lab-entropy-collapse/) `src/crypto/hmac.ts:6`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/aes.ts:104`; [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) `src/core/primitives.ts:43`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/primitives.ts:66`; [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/core/prf.ts:25`; [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) `src/primitives.ts:16`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/schedule.ts:156`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kdf.ts:19`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/core/hmac.ts:15`; [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) `src/ppe/ope-bclo.ts:31`; [Hash Hunt](https://systemslibrarian.github.io/crypto-lab-hash-hunt/) `src/mac/hashAndMac.ts:2`; [TESLA Broadcast](https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/) `src/crypto/hmac.ts:4`
-- **Also referenced by:** *Quantum Vault KpqC*, *Grover*, *Iron Letter*, *Shadow Vault*, *Kyber Vault*, *AES Modes*, *Hash Zoo*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Stego Suite*, *Bcrypt Forge*, *HQC Timing*, *Collision Vault*, *Timing Side-Channel*, *Simon's Period*, *Stream Ward*, *KMAC Gate*, *Drift Key*
+- **Also referenced by:** *Quantum Vault KpqC*, *Grover*, *Iron Letter*, *Shadow Vault*, *Kyber Vault*, *AES Modes*, *Hash Zoo*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Stego Suite*, *Bcrypt Forge*, *Threshold Decrypt*, *HQC Timing*, *Collision Vault*, *Timing Side-Channel*, *Simon's Period*, *Stream Ward*, *KMAC Gate*, *Drift Key*
 
 #### KMAC
 
@@ -183,7 +183,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Poly1305
 
 - **Implemented by:** [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/poly1305.ts:110`; [Poly1305 MAC](https://systemslibrarian.github.io/crypto-lab-poly1305-mac/) `src/poly-math.ts:43`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/chachapoly.ts:55`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aead.ts:48`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:51`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/main.ts:3`; [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) `src/stream/chained.ts:119`
-- **Also referenced by:** *Quantum Vault KpqC*, *Shadow Vault*, *Iron Serpent*, *AES Modes*, *RSA Forge*, *Noise Pipe*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *ChaCha20 Stream*, *Hash Zoo*, *World Hashes*, *KDF Arena*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *Vigenère Break*, *OTP Vault*, *Collision Vault*, *Blind Hello*, *Salamander*, *Ablation Wire*, *Beacon Lock*, *Shelf Oracle*, *HTTPS Padlock*
+- **Also referenced by:** *Quantum Vault KpqC*, *Shadow Vault*, *Iron Serpent*, *AES Modes*, *RSA Forge*, *Noise Pipe*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *ChaCha20 Stream*, *Hash Zoo*, *World Hashes*, *KDF Arena*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *MLS Group*, *Vigenère Break*, *OTP Vault*, *Collision Vault*, *Blind Hello*, *Salamander*, *Ablation Wire*, *Beacon Lock*, *Shelf Oracle*, *HTTPS Padlock*
 
 ### MPC
 
@@ -251,7 +251,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### HQC
 
 - **Implemented by:** [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) `src/budget.ts:8`
-- **Also referenced by:** *Kyber Vault*, *Timing Oracle*, *McEliece Gate*, *Frodo Vault*, *BIKE Vault*, *Isogeny Gate*, *Lattice Fault*, *HQC Timing Break*, *KyberSlash*, *Scloud+ Vault*, *Ciphertext Mirror*, *HQC Timing*, *PQ Families*, *Syndrome Drain*, *Timing Side-Channel*, *Syndrome Hints*
+- **Also referenced by:** *Kyber Vault*, *Timing Oracle*, *McEliece Gate*, *Frodo Vault*, *BIKE Vault*, *Isogeny Gate*, *Lattice Fault*, *HQC Timing Break*, *KyberSlash*, *Scloud+ Vault*, *Ciphertext Mirror*, *HQC Timing*, *PQ Families*, *Syndrome Drain*, *Timing Side-Channel*, *Syndrome Hints*, *Masked Core*, *PQ Chooser*
 
 #### Kyber
 
@@ -308,7 +308,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### ML-DSA
 
 - **Implemented by:** [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) `src/crypto/mldsa.ts:47`; [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) `src/mldsa-primitives.ts:6`; [HAWK](https://systemslibrarian.github.io/crypto-lab-hawk/) `src/hawk.ts:976`; [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) `src/composite.ts:171`; [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) `src/hybrid-cert.ts:2`; [Threshold ML-DSA](https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/) `src/threshold-sign.ts:114`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/attack.ts:118`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/identity.rs:221`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/derive/adapters.ts:16`
-- **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Shor*, *Grover*, *FROST Threshold*, *Shamir Gate*, *SPHINCS+ Ledger*, *Educational RSA*, *RSA Forge*, *Frodo Vault*, *BIKE Vault*, *Falcon Seal*, *LMS Ledger*, *GG20 Wallet*, *PKI Chain*, *Harvest Vault*, *Isogeny Gate*, *LLL Break*, *MPCitH Sign*, *Curve448*, *Harvest Timeline*, *HQC Timing Break*, *KyberSlash*, *LMS/XMSS*, *Jevil*, *Ciphertext Mirror*, *PQ Families*, *SSH Handshake*, *Multivariate UOV*, *MAYO Seal*, *LWE Hints*, *Broken Trust*, *Reshare Circle*, *Lattice Gentle*, *KMAC Gate*, *GGH Trapdoor*
+- **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Shor*, *Grover*, *FROST Threshold*, *Shamir Gate*, *SPHINCS+ Ledger*, *Educational RSA*, *RSA Forge*, *Frodo Vault*, *BIKE Vault*, *Falcon Seal*, *LMS Ledger*, *GG20 Wallet*, *PKI Chain*, *Harvest Vault*, *Isogeny Gate*, *LLL Break*, *MPCitH Sign*, *Curve448*, *Harvest Timeline*, *HQC Timing Break*, *KyberSlash*, *LMS/XMSS*, *MLS Group*, *Jevil*, *Ciphertext Mirror*, *PQ Families*, *SSH Handshake*, *Multivariate UOV*, *MAYO Seal*, *LWE Hints*, *Broken Trust*, *Reshare Circle*, *Lattice Gentle*, *KMAC Gate*, *GGH Trapdoor*
 
 #### SLH-DSA
 
@@ -354,13 +354,13 @@ A lab in *italics* references the algorithm without implementing it.
 #### Merkle tree
 
 - **Implemented by:** [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) `src/merkle.ts:71`; [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) `demos/sphincs-ledger/src/crypto/merkle.ts:15`; [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) `src/consistency.ts:48`; [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) `src/ct.ts:156`; [MPCitH Sign](https://systemslibrarian.github.io/crypto-lab-mpcith-sign/) `src/sharing.ts:155`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/merkle/aes.ts:11`; [Merkle Proofs](https://systemslibrarian.github.io/crypto-lab-merkle-proofs/) `src/main.ts:10`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/merkle/tree.ts:38`; [Accumulator](https://systemslibrarian.github.io/crypto-lab-accumulator/) `src/merkle/merkle.ts:53`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/compare.ts:30`
-- **Also referenced by:** *TC26 Pair*, *Babel Hash*, *Hash Zoo*, *World Hashes*, *LMS Ledger*, *LMS/XMSS*, *ORAM Vault*, *ZK Arena*, *Jevil*, *PQ Families*, *Web of Trust*, *Bitcoin Wallet*, *Collision Vault*, *Bitcoin Script*, *Stream Ward*, *KMAC Gate*, *DNSSEC Chain*, *Sector Vault*, *Attestation Gate*, *Ghost Commit*, *Hash Hunt*
+- **Also referenced by:** *TC26 Pair*, *Babel Hash*, *Hash Zoo*, *World Hashes*, *LMS Ledger*, *LMS/XMSS*, *ORAM Vault*, *ZK Arena*, *Jevil*, *PQ Families*, *Web of Trust*, *Bitcoin Wallet*, *Collision Vault*, *Bitcoin Script*, *Stream Ward*, *KMAC Gate*, *DNSSEC Chain*, *Sector Vault*, *Attestation Gate*, *Ghost Commit*
 
 ### block cipher
 
 #### AES
 
-- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/aes.ts:9`; [Key Lifecycle](https://systemslibrarian.github.io/crypto-lab-key-lifecycle/) `src/crypto/aead.ts:14`; [Compression Leak](https://systemslibrarian.github.io/crypto-lab-compression-leak/) `src/crypto/oracle.ts:23`; [Air Stream](https://systemslibrarian.github.io/crypto-lab-air-stream/) `src/aes/eea2.ts:18`; [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:56`; [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) `src/encrypt.ts:37`; [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) `src/aes-impact.ts:71`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:153`; [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:236`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/double-ratchet.ts:262`; [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/hybrid.ts:47`; [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/benchmark.ts:86`; [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) `src/main.ts:115`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/src/crypto.ts:55`; [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/aes.ts:73`; [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) `demos/hybrid-wire/src/crypto/security.ts:50`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/ccm.ts:32`; [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/hybrid.ts:73`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/x3dh.ts:179`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:103`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:39`; [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) `src/ff1.ts:47`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/oracle.ts:96`; [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) `src/mceliece.ts:173`; [BIKE Vault](https://systemslibrarian.github.io/crypto-lab-bike-vault/) `src/bike.ts:779`; [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) `src/main.ts:721`; [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) `src/blockcipher/dm.ts:21`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/prf.ts:9`; [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) `src/crypto.ts:28`; [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) `src/lib/crypto.ts:12`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:47`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/elgamal.ts:96`; [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) `src/stc-keys.ts:37`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:121`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:253`; [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) `src/aes-round-vis.ts:32`; [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) `src/ui/benchmark.ts:103`; [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) `src/rekey.ts:197`; [ORAM Vault](https://systemslibrarian.github.io/crypto-lab-oram-vault/) `src/client/encryption.ts:27`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/aead.ts:9`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/crypto/cts.ts:21`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hpke.ts:32`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:181`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/cbc-and-mac.ts:49`; [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) `src/engine.ts:99`; [MAYO Seal](https://systemslibrarian.github.io/crypto-lab-mayo-seal/) `src/mayo/prf.ts:23`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:396`; [Time-Lock Puzzle](https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/) `src/crypto/aes.ts:48`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:241`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:78`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:35`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/e2ee/box.ts:63`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/aes.ts:25`; [Power Trace](https://systemslibrarian.github.io/crypto-lab-power-trace/) `src/aes/aes.ts:123`; [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) `src/core/primitives.ts:17`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/primitives.ts:107`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/envelope.ts:46`; [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/core/aead.ts:14`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/ff1.ts:86`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/kem.ts:76`; [Masked Core](https://systemslibrarian.github.io/crypto-lab-masked-core/) `src/attack/cpa.ts:23`; [Sector Vault](https://systemslibrarian.github.io/crypto-lab-sector-vault/) `src/crypto/eme2.ts:75`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/kem.ts:81`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/tpm/credential.ts:43`; [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) `src/ppe/dte.ts:28`; [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) `src/dpf/prg.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/aes-modes.ts:10`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/crypto/aead.ts:20`; [Sleeve Check](https://systemslibrarian.github.io/crypto-lab-sleeve-check/) `src/gost/aes.ts:31`; [Glass Box](https://systemslibrarian.github.io/crypto-lab-glass-box/) `src/aes/aes-ref.ts:162`; [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) `src/crypto/cipher.ts:29`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/crypto.ts:10`; [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/) `src/aes/cipher.ts:6`
+- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/aes.ts:9`; [Key Lifecycle](https://systemslibrarian.github.io/crypto-lab-key-lifecycle/) `src/crypto/aead.ts:14`; [Compression Leak](https://systemslibrarian.github.io/crypto-lab-compression-leak/) `src/crypto/oracle.ts:23`; [Air Stream](https://systemslibrarian.github.io/crypto-lab-air-stream/) `src/aes/eea2.ts:18`; [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:56`; [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) `src/encrypt.ts:37`; [Grover](https://systemslibrarian.github.io/crypto-lab-grover/) `src/aes-impact.ts:71`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:153`; [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:236`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/double-ratchet.ts:262`; [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/hybrid.ts:47`; [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/benchmark.ts:86`; [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) `src/main.ts:115`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/src/crypto.ts:55`; [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/aes.ts:73`; [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) `demos/hybrid-wire/src/crypto/security.ts:50`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/ccm.ts:32`; [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/hybrid.ts:73`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/x3dh.ts:179`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:103`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:39`; [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) `src/ff1.ts:47`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/oracle.ts:96`; [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) `src/mceliece.ts:173`; [BIKE Vault](https://systemslibrarian.github.io/crypto-lab-bike-vault/) `src/bike.ts:779`; [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) `src/main.ts:735`; [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) `src/blockcipher/dm.ts:21`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/prf.ts:9`; [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) `src/crypto.ts:28`; [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) `src/lib/crypto.ts:12`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:47`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/elgamal.ts:96`; [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) `src/stc-keys.ts:37`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:121`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:253`; [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) `src/aes-round-vis.ts:32`; [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) `src/ui/benchmark.ts:103`; [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) `src/rekey.ts:197`; [ORAM Vault](https://systemslibrarian.github.io/crypto-lab-oram-vault/) `src/client/encryption.ts:27`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/aead.ts:9`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/crypto/cts.ts:21`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hpke.ts:32`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:181`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/cbc-and-mac.ts:49`; [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) `src/engine.ts:99`; [MAYO Seal](https://systemslibrarian.github.io/crypto-lab-mayo-seal/) `src/mayo/prf.ts:23`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:396`; [Time-Lock Puzzle](https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/) `src/crypto/aes.ts:48`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:241`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:78`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:35`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/e2ee/box.ts:63`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/aes.ts:25`; [Power Trace](https://systemslibrarian.github.io/crypto-lab-power-trace/) `src/aes/aes.ts:123`; [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) `src/core/primitives.ts:17`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/primitives.ts:107`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/envelope.ts:46`; [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/core/aead.ts:14`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/ff1.ts:86`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/kem.ts:76`; [Masked Core](https://systemslibrarian.github.io/crypto-lab-masked-core/) `src/attack/cpa.ts:23`; [Sector Vault](https://systemslibrarian.github.io/crypto-lab-sector-vault/) `src/crypto/eme2.ts:75`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/kem.ts:81`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/tpm/credential.ts:43`; [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) `src/ppe/dte.ts:28`; [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) `src/dpf/prg.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/prf/ggm.ts:21`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/crypto/aead.ts:20`; [Sleeve Check](https://systemslibrarian.github.io/crypto-lab-sleeve-check/) `src/gost/aes.ts:31`; [Glass Box](https://systemslibrarian.github.io/crypto-lab-glass-box/) `src/aes/aes-ref.ts:162`; [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) `src/crypto/cipher.ts:29`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/crypto.ts:13`; [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/) `src/aes/cipher.ts:26`
 - **Also referenced by:** *Export Grade*, *Shor*, *Model Breach*, *Shadow Vault*, *Dilithium Seal*, *Biham Lens*, *Curve Lens*, *Timing Oracle*, *Frodo Vault*, *ChaCha20 Stream*, *World Hashes*, *Poly1305 MAC*, *Bcrypt Forge*, *MPCitH Sign*, *HAWK*, *PQ Rotation*, *PQ TLS Handshake*, *PQ Families*, *Vigenère Break*, *OTP Vault*, *Multivariate UOV*, *Timing Side-Channel*, *Blind Hello*, *Blind Relay*, *Ablation Wire*, *Matsui Line*, *Simon's Period*, *Stream Ward*, *Context Ward*, *Feistel Forge*, *Lattice Builder*, *Covert Channel Studio*, *MGM Mode*, *Return Path*, *SAT Break*, *WEP Crack*, *TESLA Broadcast*, *Clock Arithmetic*
 
 #### ARIA
@@ -375,7 +375,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### DES
 
-- **Implemented by:** [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) `src/attacks/mitm.ts:80`
+- **Implemented by:** [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) `src/attacks/lubyRackoff.ts:46`
 - **Also referenced by:** *Export Grade*, *Iron Serpent*, *Shamir Gate*, *Dead Sea Cipher*, *Biham Lens*, *Hash Zoo*, *HAWK*, *Matsui Line*, *Shelf Oracle*, *Sphinx Mix*, *Glass Box*, *Return Path*
 
 #### KASUMI
@@ -421,18 +421,18 @@ A lab in *italics* references the algorithm without implementing it.
 #### Simon
 
 - **Implemented by:** [Simon's Period](https://systemslibrarian.github.io/crypto-lab-simon-period/) `src/quantum/simon.ts:66`
-- **Also referenced by:** *Patron Shield*, *Biham Lens*, *Feistel Forge*, *Hidden Bit*
+- **Also referenced by:** *Patron Shield*, *Biham Lens*, *MAC Race*, *Feistel Forge*, *Hidden Bit*
 
 ### block cipher mode
 
 #### AES-CBC
 
-- **Implemented by:** [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:62`; [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) `src/main.ts:177`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/cbc.ts:30`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:73`; [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) `src/ff1.ts:150`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/oracle.ts:96`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:47`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/crypto/simplified-profile.ts:80`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/cbc-and-mac.ts:49`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:94`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/ff1.ts:90`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/aes-modes.ts:37`
+- **Implemented by:** [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:62`; [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) `src/main.ts:177`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/cbc.ts:30`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:74`; [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) `src/ff1.ts:150`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/oracle.ts:96`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:47`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/crypto/simplified-profile.ts:80`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/cbc-and-mac.ts:49`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:94`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/ff1.ts:90`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/aes-modes.ts:37`
 - **Also referenced by:** *Quantum Vault KpqC*, *Air Stream*, *Biham Lens*, *Key Exchange*, *Sector Vault*, *Glass Box*, *AES Anatomy*
 
 #### AES-CTR
 
-- **Implemented by:** [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/ghash.ts:118`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/compare.ts:113`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/prf.ts:27`; [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) `src/stc-keys.ts:37`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/security/properties.ts:90`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/ctr.ts:5`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:78`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/aes.ts:28`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/keys.ts:106`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/aes-modes.ts:47`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/pke/eeg-ctr.ts:9`
+- **Implemented by:** [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/ghash.ts:118`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/compare.ts:116`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/prf.ts:27`; [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) `src/stc-keys.ts:37`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/security/properties.ts:90`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/ctr.ts:5`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:78`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/aes.ts:28`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/keys.ts:106`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/aes-modes.ts:47`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/pke/eeg-ctr.ts:14`
 - **Also referenced by:** *Air Stream*, *Nonce Guard*, *OTP Vault*, *Stream Ward*
 
 #### AES-XTS
@@ -458,7 +458,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### One-time pad
 
-- **Implemented by:** [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/otp.ts:8`; [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) `src/otp/otp.ts:36`
+- **Implemented by:** [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/otp.ts:8`; [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) `src/otp/challenges.ts:22`
 - **Also referenced by:** *ChaCha20 Stream*, *Commit Gate*, *Vigenère Break*, *SPDZ Forge*, *Beacon Lock*, *Card Trick*, *Noise to Numbers*, *SM9 Forge*
 
 ### code attack
@@ -478,7 +478,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Pedersen commitment
 
 - **Implemented by:** [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:1410`; [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/pedersen.ts:29`; [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) `src/pedersen.ts:219`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/app.ts:16`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:261`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/predicate/ageProof.ts:127`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/attack/r-first.ts:1`
-- **Also referenced by:** *ZK Proof Lab*, *Silent Tally*, *FROST Threshold*, *Shamir Gate*, *GG20 Wallet*, *Threshold Decrypt*, *ZK Arena*, *Salamander*, *Icy DVRF*, *Polynomial Forge*, *Pulse Chain*, *Signature Gate*
+- **Also referenced by:** *ZK Proof Lab*, *Silent Tally*, *FROST Threshold*, *Shamir Gate*, *GG20 Wallet*, *ZK Arena*, *Salamander*, *Icy DVRF*, *Polynomial Forge*, *Pulse Chain*, *Signature Gate*
 
 ### cycle finding
 
@@ -503,7 +503,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Baby-step giant-step
 
-- **Implemented by:** [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/attacks.ts:35`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/pohlig.ts:71`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:135`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/dlog.ts:130`; [Log Forge](https://systemslibrarian.github.io/crypto-lab-log-forge/) `src/dlog/generic/bsgs.ts:2`; [Twist Trap](https://systemslibrarian.github.io/crypto-lab-twist-trap/) `src/dlog/bsgs.ts:2`
+- **Implemented by:** [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/attacks.ts:35`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/pohlig.ts:71`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:135`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/dlog.ts:130`; [Log Forge](https://systemslibrarian.github.io/crypto-lab-log-forge/) `src/dlog/aux/cheon.ts:10`; [Twist Trap](https://systemslibrarian.github.io/crypto-lab-twist-trap/) `src/dlog/bsgs.ts:2`
 - **Also referenced by:** *Point Arithmetic*, *Clock Arithmetic*
 
 #### Index calculus
@@ -535,7 +535,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Hash-to-curve
 
-- **Implemented by:** [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/group.ts:29`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/ring.ts:129`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/oprf.ts:54`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/pairing.ts:58`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/group.ts:142`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/generators.ts:18`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/group.ts:60`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/bls.ts:63`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:171`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:368`; [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/oprf/voprf.ts:47`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/commit/pedersen.ts:10`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/elgamal.ts:29`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:85`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:81`
+- **Implemented by:** [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/group.ts:29`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/ats/bls-ats.ts:163`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/ring.ts:129`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/oprf.ts:54`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/pairing.ts:58`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/group.ts:142`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/generators.ts:18`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/group.ts:60`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/bls.ts:63`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:171`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:368`; [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/oprf/voprf.ts:47`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/commit/pedersen.ts:10`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/elgamal.ts:29`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:85`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:81`
 - **Also referenced by:** *VSS Gate*, *Pairing Gate*, *Commit Gate*, *VRF Gate*, *Key Mirror*, *SPAKE Gate*, *SM9 Forge*, *Function Key*
 
 #### Montgomery ladder
@@ -545,23 +545,23 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### P-256
 
-- **Implemented by:** [Subliminal Channels](https://systemslibrarian.github.io/crypto-lab-subliminal-channels/) `src/ecdsa/channel.ts:3`; [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) `src/algorithms/dual-ec-drbg.ts:29`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/mitm.ts:16`; [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) `src/realcurve.ts:1`; [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) `src/ecdsa.ts:25`; [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) `src/pedersen.ts:1`; [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) `src/ct.ts:359`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/group.ts:81`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/elgamal.ts:1`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/ake.ts:35`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/ecvrf.ts:272`; [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) `src/ecdsa.ts:2`; [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) `src/hybrid-cert.ts:1`; [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) `src/analysis.ts:5`; [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) `src/engine.ts:33`; [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) `src/engine.ts:17`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/ca.ts:25`; [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) `src/jwt/keys.ts:58`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:291`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/groups.ts:139`; [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) `src/pki/certgen.ts:20`; [SPAKE Gate](https://systemslibrarian.github.io/crypto-lab-spake-gate/) `src/spake/group.ts:66`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/endpoint/architecture.ts:7`; [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) `src/c2pa/sign.ts:25`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/handshake.ts:75`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:160`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/tpm/credential.ts:44`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/kats.ts:21`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/bench/runner.ts:329`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `prototype/crypto.mjs:10`
-- **Also referenced by:** *SM2 Forge*, *BB84*, *Shor*, *Dilithium Seal*, *Downgrade Wire*, *RSA Forge*, *Point Arithmetic*, *Pairing Gate*, *Commit Gate*, *Harvest Vault*, *Curve448*, *Dilithium Reject*, *Harvest Timeline*, *Hybrid Sign*, *PQ Families*, *Key Exchange*, *Bitcoin Wallet*, *Locks and Keys*, *HTTPS Padlock*, *Twist Trap*
+- **Implemented by:** [Subliminal Channels](https://systemslibrarian.github.io/crypto-lab-subliminal-channels/) `src/ecdsa/channel.ts:3`; [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) `src/algorithms/dual-ec-drbg.ts:29`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/mitm.ts:16`; [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) `src/realcurve.ts:1`; [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) `src/ecdsa.ts:25`; [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) `src/pedersen.ts:1`; [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) `src/ct.ts:359`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/signcrypt.ts:25`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/group.ts:81`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/election.ts:3`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/ake.ts:35`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/ecvrf.ts:272`; [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) `src/ecdsa.ts:2`; [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) `src/hybrid-cert.ts:1`; [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) `src/analysis.ts:5`; [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) `src/engine.ts:33`; [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) `src/engine.ts:17`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/ca.ts:25`; [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) `src/jwt/keys.ts:58`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:291`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/groups.ts:139`; [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) `src/pki/certgen.ts:20`; [SPAKE Gate](https://systemslibrarian.github.io/crypto-lab-spake-gate/) `src/spake/group.ts:66`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/endpoint/architecture.ts:7`; [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) `src/c2pa/sign.ts:25`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/handshake.ts:75`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:160`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/tpm/credential.ts:44`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/kats.ts:3`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/bench/runner.ts:329`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `prototype/crypto.mjs:10`
+- **Also referenced by:** *SM2 Forge*, *BB84*, *Shor*, *Dilithium Seal*, *Downgrade Wire*, *RSA Forge*, *Point Arithmetic*, *Pairing Gate*, *Harvest Vault*, *Curve448*, *Dilithium Reject*, *Harvest Timeline*, *Hybrid Sign*, *PQ Families*, *Key Exchange*, *Bitcoin Wallet*, *Locks and Keys*, *HTTPS Padlock*, *Log Forge*, *Twist Trap*
 
 #### P-384
 
 - **Implemented by:** [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/oprf/voprf.ts:1`
-- **Also referenced by:** *Corrupted Oracle*, *SM2 Forge*, *Harvest Timeline*, *Nonce Lattice*, *DNSSEC Chain*, *PQ Chooser*, *HTTPS Padlock*
+- **Also referenced by:** *Corrupted Oracle*, *SM2 Forge*, *Harvest Timeline*, *Nonce Lattice*, *DNSSEC Chain*, *PQ Chooser*, *HTTPS Padlock*, *Log Forge*
 
 #### ristretto255
 
-- **Implemented by:** [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/group.ts:13`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/attacks.ts:348`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/crypto/ristretto.ts:53`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/factories.ts:131`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/group.ts:77`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/group.ts:13`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kat/vectors.ts:23`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/commit/pedersen.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/elgamal.ts:22`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/dlog.ts:25`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/advanced.ts:1`
-- **Also referenced by:** *Garbled Gate*, *Blind Sign*, *Commit Gate*, *OPAQUE Gate*, *ElGamal Plain*
+- **Implemented by:** [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/group.ts:13`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/attacks.ts:348`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/crypto/ristretto.ts:53`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/factories.ts:131`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/group.ts:77`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/group.ts:13`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kat/vectors.ts:23`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/commit/pedersen.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/elgamal.ts:22`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/dlog.ts:25`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/ake1.ts:1`
+- **Also referenced by:** *Garbled Gate*, *Blind Sign*, *Commit Gate*, *OPAQUE Gate*, *ElGamal Plain*, *Log Forge*
 
 #### secp256k1
 
 - **Implemented by:** [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) `src/realcurve.ts:90`; [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) `src/math/curves.ts:73`; [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) `src/gg20.ts:7`; [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) `src/ecdsa.ts:1`; [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) `src/schnorr/field.ts:10`; [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) `src/curves/secp256k1.ts:8`; [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) `src/engine.ts:9`; [Bitcoin Script](https://systemslibrarian.github.io/crypto-lab-bitcoin-script/) `src/engine.ts:301`; [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) `src/musig/field.ts:16`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/ecdsa.ts:1`; [Adaptor Gate](https://systemslibrarian.github.io/crypto-lab-adaptor-gate/) `src/crypto/adaptor.ts:156`
-- **Also referenced by:** *ZK Proof Lab*, *FROST Threshold*, *Noise Pipe*, *Ed25519 Forge*, *Harvest Vault*, *ZK Arena*, *Point Ledger*, *Twist Trap*
+- **Also referenced by:** *ZK Proof Lab*, *FROST Threshold*, *Noise Pipe*, *Ed25519 Forge*, *Harvest Vault*, *ZK Arena*, *Point Ledger*, *Log Forge*, *Twist Trap*
 
 ### error-correcting code
 
@@ -580,7 +580,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### FF1
 
 - **Implemented by:** [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) `src/attack.ts:23`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/aead.ts:54`
-- **Also referenced by:** *Envelope KMS*, *Feistel Forge*, *Sphinx Mix*, *Order Leak*
+- **Also referenced by:** *MAC Race*, *Envelope KMS*, *Feistel Forge*, *Sphinx Mix*, *Order Leak*
 
 ### functional encryption
 
@@ -613,8 +613,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### SHA-256
 
-- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/keywrap.ts:40`; [Subliminal Channels](https://systemslibrarian.github.io/crypto-lab-subliminal-channels/) `src/ecdsa/channel.ts:14`; [Phantom Vault](https://systemslibrarian.github.io/crypto-lab-phantom-vault/) `src/crypto/hmac-drbg.ts:42`; [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) `src/algorithms/chacha20-drbg.ts:151`; [TC26 Pair](https://systemslibrarian.github.io/crypto-lab-tc26-pair/) `src/fixtures.ts:65`; [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:38`; [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) `src/bb84.ts:175`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:142`; [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) `crate/src/lib.rs:17`; [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/shared.js:358`; [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) `src/merkle.ts:54`; [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:255`; [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) `src/crypto/seal.ts:49`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/hkdf.ts:53`; [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/hybrid.ts:43`; [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/mac.ts:25`; [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) `demos/sphincs-ledger/src/crypto/fors.ts:58`; [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) `src/negotiation/transcript.ts:60`; [Babel Hash](https://systemslibrarian.github.io/crypto-lab-babel-hash/) `demos/babel-hash/src/crypto/length-extension.ts:61`; [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/oaep-encode.ts:15`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/kdf.ts:31`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:46`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/lengthext.ts:39`; [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) `src/pbkdf2.ts:41`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/oracle.ts:116`; [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) `src/hmac.ts:70`; [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) `src/mceliece.ts:81`; [Frodo Vault](https://systemslibrarian.github.io/crypto-lab-frodo-vault/) `src/main.ts:244`; [BIKE Vault](https://systemslibrarian.github.io/crypto-lab-bike-vault/) `src/bike.ts:244`; [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) `src/hqc.ts:222`; [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) `src/falcon.ts:130`; [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) `src/ecdsa.ts:52`; [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) `src/hasher.ts:241`; [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) `src/length-extension.ts:70`; [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) `src/bench.ts:5`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/base.ts:52`; [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) `src/lms.ts:70`; [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) `src/merkle.ts:113`; [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) `src/lib/crypto.ts:15`; [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) `src/gg20.ts:347`; [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) `src/crypto-worker.ts:75`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/blind.ts:265`; [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) `src/hashcommit.ts:46`; [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) `src/ct.ts:110`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:52`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/group.ts:53`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/elgamal.ts:75`; [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) `src/kdf.ts:23`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:98`; [MPCitH Sign](https://systemslibrarian.github.io/crypto-lab-mpcith-sign/) `src/mpcith.ts:160`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:56`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/beacon.ts:23`; [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) `src/ui/benchmark.ts:109`; [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) `src/mldsa-primitives.ts:74`; [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) `src/rfc6979.ts:67`; [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) `src/schnorr/bip340.ts:46`; [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/authenticated.ts:62`; [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) `src/rekey.ts:198`; [HAWK](https://systemslibrarian.github.io/crypto-lab-hawk/) `src/hawk.ts:139`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/pairing.ts:79`; [LMS/XMSS](https://systemslibrarian.github.io/crypto-lab-lms-xmss/) `src/lmots.ts:22`; [Paillier Gate](https://systemslibrarian.github.io/crypto-lab-paillier-gate/) `src/ballots.ts:46`; [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) `src/hybrid-cert.ts:70`; [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) `src/primitives.ts:66`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/oprf-psi.ts:90`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/kdf.ts:1`; [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) `src/crypto/biased-nonce.ts:26`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/protocols/needham-schroeder.ts:34`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/ciphersuite.ts:36`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/schnorr.ts:121`; [PQ Families](https://systemslibrarian.github.io/crypto-lab-pq-families/) `src/crypto.ts:35`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:26`; [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) `src/engine.ts:34`; [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) `src/engine.ts:46`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/cbc-and-mac.ts:34`; [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) `src/engine.ts:40`; [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) `demos/collision-vault/src/hashing/index.ts:79`; [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) `src/jwt/keys.ts:41`; [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) `src/engine.ts:50`; [Bitcoin Script](https://systemslibrarian.github.io/crypto-lab-bitcoin-script/) `src/engine.ts:59`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:329`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/kem.ts:19`; [Merkle Proofs](https://systemslibrarian.github.io/crypto-lab-merkle-proofs/) `src/merkle/hash.ts:65`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/hashes.ts:22`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/ui/shamir-panel.ts:542`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:83`; [VDF](https://systemslibrarian.github.io/crypto-lab-vdf/) `src/vdf/wesolowski.ts:53`; [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) `src/pki/certgen.ts:77`; [KEM Trap](https://systemslibrarian.github.io/crypto-lab-kem-trap/) `src/kem/callers.ts:22`; [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) `src/core/hash.ts:6`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/kdf.ts:8`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/ohttp/response.ts:23`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/core/sha256.ts:3`; [SPAKE Gate](https://systemslibrarian.github.io/crypto-lab-spake-gate/) `src/spake/transcript.ts:37`; [Entropy Collapse](https://systemslibrarian.github.io/crypto-lab-entropy-collapse/) `src/crypto/hmac.ts:6`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/aes.ts:104`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/ciphersuite.ts:91`; [SPDZ Forge](https://systemslibrarian.github.io/crypto-lab-spdz-forge/) `src/spdz/cavp-sha256-vectors.ts:37`; [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) `src/core/primitives.ts:27`; [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) `src/dilithium/toyDilithium.ts:81`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/primitives.ts:66`; [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) `src/musig/field.ts:176`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/kdf.rs:5`; [Accumulator](https://systemslibrarian.github.io/crypto-lab-accumulator/) `src/core/hashToPrime.ts:58`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/beacon.ts:92`; [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/core/prf.ts:37`; [Simon's Period](https://systemslibrarian.github.io/crypto-lab-simon-period/) `src/crypto/prp.ts:36`; [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) `src/stream/chained.ts:80`; [KMAC Gate](https://systemslibrarian.github.io/crypto-lab-kmac-gate/) `src/demo/naive-mac.ts:22`; [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) `src/c2pa/manifest.ts:97`; [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) `src/primitives.ts:12`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/handshake.ts:143`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/records.ts:80`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/kem.ts:46`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/kzg.ts:115`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:53`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/kem.ts:56`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kdf.ts:14`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/core/hmac.ts:15`; [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/oprf/voprf.ts:25`; [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) `src/ppe/ope-bclo.ts:2`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/rsa-textbook.ts:52`; [Ghost Commit](https://systemslibrarian.github.io/crypto-lab-ghost-commit/) `src/git/objects.ts:16`; [Point Ledger](https://systemslibrarian.github.io/crypto-lab-point-ledger/) `src/fuzz.ts:111`; [Drift Key](https://systemslibrarian.github.io/crypto-lab-drift-key/) `src/crypto/kdf.ts:34`; [Noise to Numbers](https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/) `src/entropy/counter-hash.ts:85`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:48`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/bench/runner.ts:330`; [Adaptor Gate](https://systemslibrarian.github.io/crypto-lab-adaptor-gate/) `src/crypto/vectors.ts:23`; [Locks and Keys](https://systemslibrarian.github.io/crypto-lab-locks-and-keys/) `src/crypto/pair.ts:35`; [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) `src/crypto/seeded.ts:66`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:74`; [Hash Hunt](https://systemslibrarian.github.io/crypto-lab-hash-hunt/) `src/hash/truncate.ts:3`; [TESLA Broadcast](https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/) `src/crypto/sha256.ts:1`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/crypto.ts:5`
-- **Also referenced by:** *KpqC Pair*, *Grover*, *SNARK Arena*, *Dead Sea Cipher*, *Hybrid Wire*, *Educational RSA*, *ChaCha20 Stream*, *Poly1305 MAC*, *Nonce Guard*, *Pairing Gate*, *Hybrid Sign*, *Multivariate UOV*, *Time-Lock Puzzle*, *Time Trust*, *Blind Hello*, *Feistel Forge*, *Sector Vault*, *Factor Forge*, *Proof Tally*, *Sleeve Check*, *Lattice Builder*, *Covert Channel Studio*, *MGM Mode*, *SAT Break*, *SM9 Forge*, *Function Key*, *HTTPS Padlock*, *Vector Gate*, *LFSR Forge*, *RSA Small Roots*, *AES Anatomy*
+- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/keywrap.ts:40`; [Subliminal Channels](https://systemslibrarian.github.io/crypto-lab-subliminal-channels/) `src/ecdsa/channel.ts:14`; [Phantom Vault](https://systemslibrarian.github.io/crypto-lab-phantom-vault/) `src/crypto/hmac-drbg.ts:42`; [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) `src/algorithms/chacha20-drbg.ts:151`; [TC26 Pair](https://systemslibrarian.github.io/crypto-lab-tc26-pair/) `src/fixtures.ts:65`; [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:38`; [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) `src/bb84.ts:175`; [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:142`; [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) `crate/src/lib.rs:17`; [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/shared.js:358`; [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) `src/merkle.ts:54`; [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:255`; [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) `src/crypto/seal.ts:49`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/hkdf.ts:53`; [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/hybrid.ts:43`; [Iron Serpent](https://systemslibrarian.github.io/crypto-lab-iron-serpent/) `demos/iron-serpent/src/mac.ts:25`; [SPHINCS+ Ledger](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) `demos/sphincs-ledger/src/crypto/fors.ts:58`; [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) `src/negotiation/transcript.ts:60`; [Babel Hash](https://systemslibrarian.github.io/crypto-lab-babel-hash/) `demos/babel-hash/src/crypto/length-extension.ts:61`; [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/oaep-encode.ts:15`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/kdf.ts:31`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:46`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/lengthext.ts:39`; [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) `src/pbkdf2.ts:41`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/oracle.ts:116`; [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) `src/hmac.ts:70`; [McEliece Gate](https://systemslibrarian.github.io/crypto-lab-mceliece-gate/) `src/mceliece.ts:81`; [Frodo Vault](https://systemslibrarian.github.io/crypto-lab-frodo-vault/) `src/main.ts:244`; [BIKE Vault](https://systemslibrarian.github.io/crypto-lab-bike-vault/) `src/bike.ts:244`; [HQC Vault](https://systemslibrarian.github.io/crypto-lab-hqc-vault/) `src/hqc.ts:226`; [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) `src/falcon.ts:130`; [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) `src/ecdsa.ts:52`; [Hash Zoo](https://systemslibrarian.github.io/crypto-lab-hash-zoo/) `src/hasher.ts:241`; [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) `src/length-extension.ts:70`; [KDF Arena](https://systemslibrarian.github.io/crypto-lab-kdf-arena/) `src/bench.ts:5`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/base.ts:78`; [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) `src/lms.ts:70`; [Merkle Vault](https://systemslibrarian.github.io/crypto-lab-merkle-vault/) `src/merkle.ts:113`; [Stego Suite](https://systemslibrarian.github.io/crypto-lab-stego-suite/) `src/lib/crypto.ts:15`; [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) `src/gg20.ts:347`; [Bcrypt Forge](https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/) `src/crypto-worker.ts:75`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/blind.ts:265`; [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) `src/hashcommit.ts:46`; [PKI Chain](https://systemslibrarian.github.io/crypto-lab-pki-chain/) `src/ct.ts:110`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:52`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/group.ts:53`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/elgamal.ts:75`; [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) `src/kdf.ts:23`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:98`; [MPCitH Sign](https://systemslibrarian.github.io/crypto-lab-mpcith-sign/) `src/mpcith.ts:160`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:56`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/beacon.ts:23`; [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) `src/ui/benchmark.ts:109`; [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) `src/mldsa-primitives.ts:74`; [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) `src/rfc6979.ts:67`; [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) `src/schnorr/bip340.ts:46`; [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/authenticated.ts:62`; [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) `src/rekey.ts:198`; [HAWK](https://systemslibrarian.github.io/crypto-lab-hawk/) `src/hawk.ts:139`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/pairing.ts:79`; [LMS/XMSS](https://systemslibrarian.github.io/crypto-lab-lms-xmss/) `src/lmots.ts:22`; [Paillier Gate](https://systemslibrarian.github.io/crypto-lab-paillier-gate/) `src/ballots.ts:46`; [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) `src/hybrid-cert.ts:70`; [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) `src/primitives.ts:66`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/oprf-psi.ts:90`; [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) `src/crypto/kdf.ts:1`; [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) `src/crypto/biased-nonce.ts:26`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/protocols/needham-schroeder.ts:34`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/ciphersuite.ts:36`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/schnorr.ts:121`; [PQ Families](https://systemslibrarian.github.io/crypto-lab-pq-families/) `src/crypto.ts:35`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:26`; [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) `src/engine.ts:34`; [WebAuthn](https://systemslibrarian.github.io/crypto-lab-webauthn/) `src/engine.ts:46`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/cbc-and-mac.ts:34`; [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) `src/engine.ts:40`; [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) `demos/collision-vault/src/hashing/index.ts:79`; [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) `src/jwt/keys.ts:41`; [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) `src/engine.ts:50`; [Bitcoin Script](https://systemslibrarian.github.io/crypto-lab-bitcoin-script/) `src/engine.ts:59`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:329`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/kem.ts:19`; [Merkle Proofs](https://systemslibrarian.github.io/crypto-lab-merkle-proofs/) `src/merkle/hash.ts:65`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/hashes.ts:22`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/ui/shamir-panel.ts:542`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:83`; [VDF](https://systemslibrarian.github.io/crypto-lab-vdf/) `src/vdf/wesolowski.ts:53`; [Chain of Trust](https://systemslibrarian.github.io/crypto-lab-chain-of-trust/) `src/pki/certgen.ts:77`; [KEM Trap](https://systemslibrarian.github.io/crypto-lab-kem-trap/) `src/kem/callers.ts:22`; [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) `src/core/hash.ts:6`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/kdf.ts:8`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/ohttp/response.ts:23`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/core/sha256.ts:3`; [SPAKE Gate](https://systemslibrarian.github.io/crypto-lab-spake-gate/) `src/spake/transcript.ts:37`; [Entropy Collapse](https://systemslibrarian.github.io/crypto-lab-entropy-collapse/) `src/crypto/hmac.ts:6`; [Salamander](https://systemslibrarian.github.io/crypto-lab-salamander/) `src/crypto/aes.ts:104`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/ciphersuite.ts:91`; [SPDZ Forge](https://systemslibrarian.github.io/crypto-lab-spdz-forge/) `src/spdz/cavp-sha256-vectors.ts:37`; [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) `src/core/primitives.ts:27`; [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) `src/dilithium/toyDilithium.ts:81`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/primitives.ts:66`; [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) `src/musig/field.ts:176`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/kdf.rs:5`; [Accumulator](https://systemslibrarian.github.io/crypto-lab-accumulator/) `src/core/hashToPrime.ts:58`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/beacon.ts:92`; [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/core/prf.ts:37`; [Simon's Period](https://systemslibrarian.github.io/crypto-lab-simon-period/) `src/crypto/prp.ts:36`; [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) `src/stream/chained.ts:80`; [KMAC Gate](https://systemslibrarian.github.io/crypto-lab-kmac-gate/) `src/demo/naive-mac.ts:22`; [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) `src/c2pa/manifest.ts:97`; [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) `src/primitives.ts:12`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/handshake.ts:143`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/records.ts:80`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/kem.ts:46`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/kzg.ts:115`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:53`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/kem.ts:56`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kdf.ts:14`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/core/hmac.ts:15`; [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/oprf/voprf.ts:25`; [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) `src/ppe/ope-bclo.ts:2`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/rsa-textbook.ts:52`; [Ghost Commit](https://systemslibrarian.github.io/crypto-lab-ghost-commit/) `src/git/objects.ts:16`; [Point Ledger](https://systemslibrarian.github.io/crypto-lab-point-ledger/) `src/fuzz.ts:111`; [Drift Key](https://systemslibrarian.github.io/crypto-lab-drift-key/) `src/crypto/kdf.ts:34`; [Noise to Numbers](https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/) `src/entropy/counter-hash.ts:85`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:48`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/bench/runner.ts:330`; [Adaptor Gate](https://systemslibrarian.github.io/crypto-lab-adaptor-gate/) `src/crypto/vectors.ts:23`; [Locks and Keys](https://systemslibrarian.github.io/crypto-lab-locks-and-keys/) `src/crypto/pair.ts:35`; [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) `src/crypto/seeded.ts:66`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:74`; [Hash Hunt](https://systemslibrarian.github.io/crypto-lab-hash-hunt/) `src/hash/truncate.ts:3`; [TESLA Broadcast](https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/) `src/crypto/sha256.ts:1`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/crypto.ts:8`
+- **Also referenced by:** *KpqC Pair*, *Grover*, *SNARK Arena*, *FROST Threshold*, *Dead Sea Cipher*, *Hybrid Wire*, *Educational RSA*, *ChaCha20 Stream*, *Poly1305 MAC*, *Nonce Guard*, *Pairing Gate*, *Hybrid Sign*, *OTP Vault*, *Multivariate UOV*, *Time-Lock Puzzle*, *Time Trust*, *Blind Hello*, *Feistel Forge*, *Sector Vault*, *Factor Forge*, *Proof Tally*, *Sleeve Check*, *Lattice Builder*, *Covert Channel Studio*, *MGM Mode*, *SAT Break*, *SM9 Forge*, *Function Key*, *HTTPS Padlock*, *Vector Gate*, *LFSR Forge*, *RSA Small Roots*, *AES Anatomy*
 
 #### SHA-3
 
@@ -624,7 +624,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### SHA-384
 
 - **Implemented by:** [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/rfc9474.ts:53`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:55`; [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/oprf/voprf.ts:64`
-- **Also referenced by:** *Grover*, *Nonce Guard*, *Harvest Vault*, *Harvest Timeline*, *PQ Families*, *Regex Veil — FTE*, *Attestation Gate*, *HTTPS Padlock*
+- **Also referenced by:** *Grover*, *Nonce Guard*, *Harvest Vault*, *Harvest Timeline*, *MLS Group*, *PQ Families*, *Regex Veil — FTE*, *Attestation Gate*, *HTTPS Padlock*, *Log Forge*
 
 #### SHA-512
 
@@ -691,8 +691,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Vigenere cipher
 
-- **Implemented by:** [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/vigenere.ts:11`; [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) `src/vigenere/cipher.ts:105`
-- **Also referenced by:** *Biham Lens*, *Enigma Forge*, *OTP Vault*, *Matsui Line*
+- **Implemented by:** [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/vigenere.ts:11`; [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) `src/samples/index.ts:6`; [OTP Vault](https://systemslibrarian.github.io/crypto-lab-otp-vault/) `src/otp/limits.ts:45`
+- **Also referenced by:** *Biham Lens*, *Enigma Forge*, *Matsui Line*
 
 ### homomorphic encryption
 
@@ -706,7 +706,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### HPKE
 
 - **Implemented by:** [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hpke.ts:65`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/consts.ts:62`; [Blind Hello](https://systemslibrarian.github.io/crypto-lab-blind-hello/) `src/ech/ech.ts:196`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `vite.config.ts:15`
-- **Also referenced by:** *ElGamal Plain*, *Syndrome Drain*, *Stream Ward*, *Attribute Gate*, *Locks and Keys*
+- **Also referenced by:** *Protocol Compose*, *ElGamal Plain*, *Syndrome Drain*, *Stream Ward*, *Attribute Gate*, *Locks and Keys*, *AKE Ladder*
 
 ### identity-based encryption
 
@@ -736,18 +736,18 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Diffie-Hellman
 
-- **Implemented by:** [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/dh-ratchet.ts:72`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/kdf.ts:66`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:26`; [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) `src/gf128poly.ts:177`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:64`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:209`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hpke.ts:48`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:55`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:99`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/kem.ts:76`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/dhkem.ts:22`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/e2ee/box.ts:30`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/double-ratchet.ts:160`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/reduction/ddh.ts:74`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/model/ratchet-step.ts:74`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/advanced.ts:64`; [Clock Arithmetic](https://systemslibrarian.github.io/crypto-lab-clock-arithmetic/) `src/nt/toyDh.ts:4`
+- **Implemented by:** [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/dh-ratchet.ts:72`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/kdf.ts:66`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:26`; [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) `src/gf128poly.ts:177`; [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/transcript.ts:64`; [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/kdf.ts:209`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hpke.ts:48`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:55`; [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) `src/engine.ts:99`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/kem.ts:76`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/dhkem.ts:22`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/e2ee/box.ts:30`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/double-ratchet.ts:160`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/reduction/ddh.ts:87`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/model/ratchet-step.ts:74`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/ake5.ts:13`; [Clock Arithmetic](https://systemslibrarian.github.io/crypto-lab-clock-arithmetic/) `src/nt/toyDh.ts:22`
 - **Also referenced by:** *Quantum Vault KpqC*, *Shor*, *Grover*, *ZK Proof Lab*, *Hybrid Wire*, *Downgrade Wire*, *RSA Forge*, *Curve Lens*, *KDF Chain*, *Timing Oracle*, *Ed25519 Forge*, *OT Gate*, *Pairing Gate*, *Oblivious Shelf*, *Curve448*, *ElGamal Plain*, *Harvest Timeline*, *Hybrid Sign*, *IBE Gate*, *PQ Rotation*, *PQ TLS Handshake*, *PSI Gate*, *Hybrid Guide*, *PAKE Gate*, *Timing Side-Channel*, *Blind Relay*, *SPAKE Gate*, *Protocol Checker*, *Ablation Wire*, *Simon's Period*, *Rekey Relay*, *Attribute Gate*, *Sphinx Mix*, *Agreeing in Public*, *Log Forge*
 
 #### ECDH
 
-- **Implemented by:** [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:204`; [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) `src/realcurve.ts:313`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/ecvrf.ts:272`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:422`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/engine.ts:45`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/handshake.ts:75`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/tpm/credential.ts:87`
+- **Implemented by:** [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:204`; [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) `src/realcurve.ts:313`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/signcrypt.ts:25`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/ecvrf.ts:272`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:422`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/engine.ts:45`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/handshake.ts:75`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/tpm/credential.ts:87`
 - **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Shor*, *Ratchet Wire*, *Kyber Vault*, *Hybrid Wire*, *Downgrade Wire*, *RSA Forge*, *Point Arithmetic*, *X3DH Wire*, *Noise Pipe*, *Frodo Vault*, *Harvest Vault*, *Curve448*, *Harvest Timeline*, *Hybrid Sign*, *PQ Rotation*, *PQ TLS Handshake*, *Scloud+ Vault*, *Bitcoin Wallet*, *DH MITM*, *Hybrid PQC*, *TLS Handshake*, *Key Mirror*, *SPAKE Gate*, *PQ Chooser*, *HTTPS Padlock*, *Agreeing in Public*
 
 #### X25519
 
 - **Implemented by:** [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/dh-ratchet.ts:20`; [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/benchmark.ts:103`; [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) `demos/hybrid-wire/src/crypto/x25519.ts:17`; [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) `src/kex/x25519.ts:27`; [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) `src/realcurve.ts:257`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/x3dh.ts:59`; [Noise Pipe](https://systemslibrarian.github.io/crypto-lab-noise-pipe/) `src/crypto.ts:8`; [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) `src/main.ts:914`; [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) `src/primitives.ts:77`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/crypto/hpke.ts:1`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:24`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/kex.ts:77`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/kem.ts:57`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:105`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/dhkem.ts:10`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/e2ee/box.ts:31`; [Encrochat](https://systemslibrarian.github.io/crypto-lab-encrochat/) `src/crypto/x25519.ts:28`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/kem.rs:97`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/handshake.ts:75`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/model/quantum.ts:1`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/bench/runner.ts:250`; [What Is PQC](https://systemslibrarian.github.io/crypto-lab-what-is-pqc/) `src/exchange/x25519.ts:38`; [HTTPS Padlock](https://systemslibrarian.github.io/crypto-lab-https-padlock/) `src/tls/clienthello.ts:282`; [Agreeing in Public](https://systemslibrarian.github.io/crypto-lab-agreeing-in-public/) `src/x25519/agree.ts:64`; [Twist Trap](https://systemslibrarian.github.io/crypto-lab-twist-trap/) `src/real/x25519.ts:7`
-- **Also referenced by:** *Garbled Gate*, *FROST Threshold*, *Educational RSA*, *RSA Forge*, *Point Arithmetic*, *Ed25519 Forge*, *OT Gate*, *Harvest Vault*, *OPAQUE Gate*, *Harvest Timeline*, *Hybrid Sign*, *PQ Rotation*, *PSI Gate*, *Ciphertext Mirror*, *PQ Families*, *Bitcoin Wallet*, *Hybrid Guide*, *DH MITM*, *Shamir vs FROST*, *Blind Hello*, *Blind Relay*, *Lattice Gentle*, *Sphinx Mix*
+- **Also referenced by:** *Garbled Gate*, *FROST Threshold*, *Educational RSA*, *RSA Forge*, *Point Arithmetic*, *Ed25519 Forge*, *OT Gate*, *Harvest Vault*, *OPAQUE Gate*, *Harvest Timeline*, *Hybrid Sign*, *PQ Rotation*, *PSI Gate*, *Ciphertext Mirror*, *PQ Families*, *Bitcoin Wallet*, *Hybrid Guide*, *DH MITM*, *Shamir vs FROST*, *Blind Hello*, *Blind Relay*, *Lattice Gentle*, *Sphinx Mix*, *Log Forge*
 
 #### X448
 
@@ -822,7 +822,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### OPRF
 
 - **Implemented by:** [OPAQUE Gate](https://systemslibrarian.github.io/crypto-lab-opaque-gate/) `src/envelope.ts:102`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/attacks.ts:384`; [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/main.ts:3`
-- **Also referenced by:** *PAKE Gate*, *SPAKE Gate*
+- **Also referenced by:** *PAKE Gate*, *SPAKE Gate*, *Log Forge*
 
 ### one-time password
 
@@ -840,14 +840,14 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Pairing
 
-- **Implemented by:** [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) `src/main.ts:111`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/ibe.ts:176`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/ciphersuite.ts:152`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/bls.ts:66`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/group.ts:41`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:83`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:183`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:86`; [SM9 Forge](https://systemslibrarian.github.io/crypto-lab-sm9-forge/) `src/sm9/encrypt.ts:223`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:89`
-- **Also referenced by:** *Quantum Vault KpqC*, *STARK Tower*, *SNARK Arena*, *Dilithium Seal*, *GG20 Wallet*, *Blind Sign*, *Ring Sign*, *OPAQUE Gate*, *Harvest Timeline*, *Hybrid Sign*, *PQ Rotation*, *ZK Arena*, *PQ Families*, *Syndrome Drain*, *Hybrid PQC*, *SPAKE Gate*, *Quantum Entropy*, *Icy DVRF*, *MuSig Gate*, *Ablation Wire*, *Accumulator*, *Context Ward*, *Masked Core*, *Covert Channel Studio*, *Point Ledger*, *PQ Chooser*, *Agreeing in Public*, *LFSR Forge*
+- **Implemented by:** [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/ats/bls-ats.ts:205`; [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) `src/main.ts:111`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/ibe.ts:176`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/ciphersuite.ts:152`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/bls.ts:66`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/group.ts:41`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:83`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:183`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:86`; [SM9 Forge](https://systemslibrarian.github.io/crypto-lab-sm9-forge/) `src/sm9/encrypt.ts:223`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:89`
+- **Also referenced by:** *Quantum Vault KpqC*, *STARK Tower*, *SNARK Arena*, *Dilithium Seal*, *GG20 Wallet*, *Blind Sign*, *Ring Sign*, *OPAQUE Gate*, *Harvest Timeline*, *Hybrid Sign*, *PQ Rotation*, *MLS Group*, *ZK Arena*, *PQ Families*, *Syndrome Drain*, *Hybrid PQC*, *SPAKE Gate*, *Quantum Entropy*, *Icy DVRF*, *MuSig Gate*, *Ablation Wire*, *Accumulator*, *Context Ward*, *Masked Core*, *Covert Channel Studio*, *Point Ledger*, *PQ Chooser*, *Agreeing in Public*, *LFSR Forge*
 
 ### pairing curve
 
 #### BLS12-381
 
-- **Implemented by:** [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) `src/main.ts:14`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/pairing.ts:11`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/ciphersuite.ts:152`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/bls.ts:24`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/group.ts:1`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:15`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:17`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:25`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:106`
+- **Implemented by:** [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/ats/bls-ats.ts:20`; [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) `src/main.ts:14`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/pairing.ts:11`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/ciphersuite.ts:152`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/bls.ts:24`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/group.ts:1`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:15`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:17`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:25`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:106`
 - **Also referenced by:** *SNARK Arena*, *Bulletproofs*, *Icy DVRF*, *SM9 Forge*, *Function Key*
 
 ### password KDF
@@ -895,8 +895,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Miller–Rabin
 
-- **Implemented by:** [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/textbook.ts:38`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/vdf.ts:77`; [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) `src/factor/primality.ts:52`; [Prime Witness](https://systemslibrarian.github.io/crypto-lab-prime-witness/) `src/primality/millerRabin.ts:11`; [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/nt/primes.ts:3`
-- **Also referenced by:** *Educational RSA*, *GG20 Wallet*, *Harvest Timeline*, *Accumulator*, *RSA Small Roots*
+- **Implemented by:** [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/textbook.ts:38`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/vdf.ts:77`; [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) `src/factor/primality.ts:52`; [Prime Witness](https://systemslibrarian.github.io/crypto-lab-prime-witness/) `src/primality/millerRabin.ts:11`; [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/nt/primes.ts:3`; [Log Forge](https://systemslibrarian.github.io/crypto-lab-log-forge/) `src/data/orders.ts:17`
+- **Also referenced by:** *Educational RSA*, *GG20 Wallet*, *Harvest Timeline*, *Accumulator*, *RSA Small Roots*, *Clock Arithmetic*
 
 ### proof system
 
@@ -927,11 +927,11 @@ A lab in *italics* references the algorithm without implementing it.
 #### Kerberos
 
 - **Implemented by:** [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/app.ts:140`
-- **Also referenced by:** *PKI Chain*, *MLS Group*, *WebAuthn*, *SSH Handshake*, *Time Trust*, *SPAKE Gate*, *Protocol Checker*, *DNSSEC Chain*
+- **Also referenced by:** *PKI Chain*, *MLS Group*, *WebAuthn*, *SSH Handshake*, *Time Trust*, *SPAKE Gate*, *Protocol Checker*, *DNSSEC Chain*, *AKE Ladder*
 
 #### MLS
 
-- **Implemented by:** [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/app.ts:471`
+- **Implemented by:** [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/app.ts:472`
 - **Also referenced by:** *Ratchet Wire*, *Curve Lens*, *X3DH Wire*, *Noise Pipe*, *Harvest Timeline*, *HPKE Envelope*, *Key Mirror*, *Traitor Trace*, *Stream Ward*
 
 #### Noise protocol
@@ -947,12 +947,12 @@ A lab in *italics* references the algorithm without implementing it.
 #### Privacy Pass
 
 - **Implemented by:** [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) `src/main.ts:4`
-- **Also referenced by:** *RSA Forge*, *Blind Sign*, *Blind Relay*
+- **Also referenced by:** *RSA Forge*, *Blind Sign*, *Blind Relay*, *Log Forge*
 
 #### TLS 1.3
 
 - **Implemented by:** [Downgrade Wire](https://systemslibrarian.github.io/crypto-lab-downgrade-wire/) `src/negotiation/handshake.ts:62`; [PQ TLS Handshake](https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/) `src/handshake.ts:27`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/antireplay.ts:101`
-- **Also referenced by:** *Quantum Vault KpqC*, *SM2 Forge*, *Shadow Vault*, *World Ciphers*, *Hybrid Wire*, *AES Modes*, *Educational RSA*, *RSA Forge*, *Curve Lens*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Padding Oracle*, *ChaCha20 Stream*, *Ed25519 Forge*, *Hash Zoo*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Curve448*, *Harvest Timeline*, *Hybrid Sign*, *KyberSlash*, *PQ Rotation*, *Scloud+ Vault*, *PQ Families*, *Key Exchange*, *SSH Handshake*, *Hybrid Guide*, *DH MITM*, *Hybrid PQC*, *KEM Trap*, *Blind Hello*, *Protocol Checker*, *Simon's Period*, *Stream Ward*, *Context Ward*, *MGM Mode*, *PQ Chooser*, *Locks and Keys*, *What Is PQC*, *HTTPS Padlock*, *Good Randomness*, *Agreeing in Public*, *AES Anatomy*
+- **Also referenced by:** *Quantum Vault KpqC*, *SM2 Forge*, *Shadow Vault*, *World Ciphers*, *Hybrid Wire*, *AES Modes*, *Educational RSA*, *RSA Forge*, *Curve Lens*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Padding Oracle*, *ChaCha20 Stream*, *Ed25519 Forge*, *Hash Zoo*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Curve448*, *Harvest Timeline*, *Hybrid Sign*, *KyberSlash*, *PQ Rotation*, *Scloud+ Vault*, *PQ Families*, *Key Exchange*, *SSH Handshake*, *Hybrid Guide*, *DH MITM*, *Hybrid PQC*, *KEM Trap*, *Blind Hello*, *Protocol Checker*, *Simon's Period*, *Stream Ward*, *Context Ward*, *MGM Mode*, *PQ Chooser*, *Locks and Keys*, *What Is PQC*, *HTTPS Padlock*, *Good Randomness*, *Agreeing in Public*, *Log Forge*, *AES Anatomy*
 
 #### WebAuthn
 
@@ -961,15 +961,15 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### X3DH
 
-- **Implemented by:** [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/session-init.ts:133`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/x3dh.ts:165`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/app.ts:469`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/main.ts:17`
-- **Also referenced by:** *SPHINCS+ Ledger*, *Curve Lens*, *Noise Pipe*, *Ed25519 Forge*, *OPAQUE Gate*, *Curve448*, *Hybrid Sign*, *Key Exchange*, *SSH Handshake*, *DH MITM*, *Hybrid PQC*, *Key Mirror*, *Encrochat*, *Function Key*, *Agreeing in Public*
+- **Implemented by:** [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/session-init.ts:133`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/x3dh.ts:165`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/app.ts:470`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/main.ts:17`
+- **Also referenced by:** *SPHINCS+ Ledger*, *Curve Lens*, *Noise Pipe*, *Ed25519 Forge*, *OPAQUE Gate*, *Curve448*, *Hybrid Sign*, *Key Exchange*, *SSH Handshake*, *DH MITM*, *Hybrid PQC*, *Key Mirror*, *Encrochat*, *Function Key*, *Agreeing in Public*, *AKE Ladder*
 
 ### public key
 
 #### RSA
 
-- **Implemented by:** [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/selftest.ts:20`; [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/sigma.js:334`; [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) `src/rsa/textbook.ts:21`; [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/textbook.ts:212`; [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) `src/rsa.ts:156`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/blind.ts:39`; [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) `src/rekey.ts:101`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/attacks/lowe-attack.ts:26`; [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) `src/jwt/keys.ts:46`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:78`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/game/cca.ts:84`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/core/der.ts:114`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/bench/runner.ts:374`; [Locks and Keys](https://systemslibrarian.github.io/crypto-lab-locks-and-keys/) `src/crypto/lock.ts:40`; [RSA Small Roots](https://systemslibrarian.github.io/crypto-lab-rsa-small-roots/) `src/simulator/oracle.ts:23`
-- **Also referenced by:** *Quantum Vault KpqC*, *Corrupted Oracle*, *BB84*, *Shor*, *Grover*, *Shadow Vault*, *Dilithium Seal*, *Kyber Vault*, *Iron Serpent*, *Shamir Gate*, *SPHINCS+ Ledger*, *Biham Lens*, *Downgrade Wire*, *Curve Lens*, *Format Ward*, *McEliece Gate*, *BIKE Vault*, *HQC Vault*, *Ed25519 Forge*, *LMS Ledger*, *Pairing Gate*, *GG20 Wallet*, *Harvest Vault*, *LLL Break*, *OPAQUE Gate*, *VRF Gate*, *ECDSA Forge*, *ElGamal Plain*, *Hybrid Sign*, *IBE Gate*, *KyberSlash*, *NTRU Classic*, *PQ Rotation*, *PQ TLS Handshake*, *Scloud+ Vault*, *Envelope KMS*, *Jevil*, *HQC Timing*, *PQ Families*, *Key Exchange*, *SSH Handshake*, *Broken Trust*, *Time-Lock Puzzle*, *Timing Side-Channel*, *TLS Handshake*, *VDF*, *Reshare Circle*, *Entropy Collapse*, *Credential Veil*, *Power Trace*, *Lattice Gentle*, *Accumulator*, *Beacon Lock*, *Simon's Period*, *Attestation Gate*, *Factor Forge*, *Privacy Pass*, *Covert Channel Studio*, *Function Key*, *HTTPS Padlock*, *Prime Witness*, *Residue Gate*, *Clock Arithmetic*
+- **Implemented by:** [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/selftest.ts:20`; [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/sigma.js:334`; [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) `src/rsa/textbook.ts:21`; [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/jwk.ts:7`; [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) `src/rsa.ts:156`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/blind.ts:39`; [Harvest Timeline](https://systemslibrarian.github.io/crypto-lab-harvest-timeline/) `src/rekey.ts:101`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/attacks/lowe-attack.ts:26`; [JWT Forge](https://systemslibrarian.github.io/crypto-lab-jwt-forge/) `src/jwt/keys.ts:46`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:78`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/game/cca.ts:84`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/core/der.ts:114`; [PQ Chooser](https://systemslibrarian.github.io/crypto-lab-pq-chooser/) `src/bench/runner.ts:374`; [Locks and Keys](https://systemslibrarian.github.io/crypto-lab-locks-and-keys/) `src/crypto/lock.ts:40`; [RSA Small Roots](https://systemslibrarian.github.io/crypto-lab-rsa-small-roots/) `src/simulator/oracle.ts:57`
+- **Also referenced by:** *Quantum Vault KpqC*, *Corrupted Oracle*, *BB84*, *Shor*, *Grover*, *Shadow Vault*, *Dilithium Seal*, *Kyber Vault*, *Iron Serpent*, *Shamir Gate*, *SPHINCS+ Ledger*, *Biham Lens*, *Downgrade Wire*, *Curve Lens*, *Format Ward*, *McEliece Gate*, *BIKE Vault*, *HQC Vault*, *Ed25519 Forge*, *LMS Ledger*, *Pairing Gate*, *GG20 Wallet*, *Harvest Vault*, *LLL Break*, *OPAQUE Gate*, *VRF Gate*, *ECDSA Forge*, *ElGamal Plain*, *Hybrid Sign*, *IBE Gate*, *KyberSlash*, *NTRU Classic*, *PQ Rotation*, *PQ TLS Handshake*, *Scloud+ Vault*, *Envelope KMS*, *Jevil*, *HQC Timing*, *PQ Families*, *Key Exchange*, *SSH Handshake*, *Broken Trust*, *Time-Lock Puzzle*, *Timing Side-Channel*, *TLS Handshake*, *VDF*, *Reshare Circle*, *Entropy Collapse*, *Credential Veil*, *Power Trace*, *Lattice Gentle*, *Accumulator*, *Beacon Lock*, *Simon's Period*, *Attestation Gate*, *Factor Forge*, *Privacy Pass*, *Covert Channel Studio*, *Function Key*, *HTTPS Padlock*, *Prime Witness*, *Residue Gate*, *AKE Ladder*, *Clock Arithmetic*
 
 #### SM2
 
@@ -980,7 +980,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### ElGamal
 
-- **Implemented by:** [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:11`; [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/attacks.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/game/cca.ts:34`
+- **Implemented by:** [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:12`; [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/attacks.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/game/cca.ts:34`
 - **Also referenced by:** *Iron Letter*, *Blind Oracle*, *CKKS Lab*, *FHE Arena*, *Silent Tally*, *Paillier Gate*, *Rekey Relay*, *Function Key*, *Signature Gate*, *Log Forge*, *Clock Arithmetic*
 
 #### Goldwasser–Micali
@@ -1008,13 +1008,13 @@ A lab in *italics* references the algorithm without implementing it.
 #### Shor's algorithm
 
 - **Implemented by:** [Shor](https://systemslibrarian.github.io/crypto-lab-shor/) `src/shor.ts:80`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/ui.ts:1491`; [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) `src/ui/shor.ts:98`
-- **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Grover*, *STARK Tower*, *SNARK Arena*, *Dilithium Seal*, *SPHINCS+ Ledger*, *Educational RSA*, *RSA Forge*, *Curve Lens*, *OT Gate*, *Pairing Gate*, *PKI Chain*, *Harvest Vault*, *VRF Gate*, *Curve448*, *ElGamal Plain*, *Harvest Timeline*, *Hybrid Sign*, *PQ TLS Handshake*, *Scloud+ Vault*, *PQ Families*, *E91*, *Hybrid PQC*, *Accumulator*, *Beacon Lock*, *Simon's Period*, *Polynomial Forge*, *PQXDH Wire*, *Point Ledger*, *What Is PQC*, *Log Forge*
+- **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Grover*, *STARK Tower*, *SNARK Arena*, *Dilithium Seal*, *SPHINCS+ Ledger*, *Educational RSA*, *RSA Forge*, *Curve Lens*, *OT Gate*, *Pairing Gate*, *PKI Chain*, *Harvest Vault*, *VRF Gate*, *Curve448*, *ElGamal Plain*, *Harvest Timeline*, *Hybrid Sign*, *PQ TLS Handshake*, *Scloud+ Vault*, *PQ Families*, *E91*, *Hybrid PQC*, *Accumulator*, *Beacon Lock*, *Simon's Period*, *Polynomial Forge*, *PQXDH Wire*, *Point Ledger*, *What Is PQC*, *RSA Small Roots*, *Log Forge*
 
 ### randomness extractor
 
 #### Toeplitz extractor
 
-- **Implemented by:** [Quantum Entropy](https://systemslibrarian.github.io/crypto-lab-quantum-entropy/) `src/entropy/toeplitz.ts:21`
+- **Implemented by:** [BB84](https://systemslibrarian.github.io/crypto-lab-bb84/) `src/teaching.ts:76`; [Quantum Entropy](https://systemslibrarian.github.io/crypto-lab-quantum-entropy/) `src/entropy/toeplitz.ts:21`
 - **Also referenced by:** *Noise to Numbers*
 
 #### von Neumann extractor
@@ -1033,12 +1033,12 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Feldman VSS
 
-- **Implemented by:** [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:1388`; [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/dkg.ts:32`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:228`
-- **Also referenced by:** *Silent Tally*, *FROST Threshold*, *Shamir Gate*, *GG20 Wallet*, *Commit Gate*, *Threshold Decrypt*
+- **Implemented by:** [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:1388`; [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/dkg.ts:32`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/threshold.ts:149`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:228`
+- **Also referenced by:** *Silent Tally*, *FROST Threshold*, *Shamir Gate*, *GG20 Wallet*, *Commit Gate*
 
 #### Shamir secret sharing
 
-- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:123`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:105`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:291`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`
+- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:123`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:105`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:294`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`
 - **Also referenced by:** *Key Lifecycle*, *KpqC Pair*, *Misty Lens*, *ZK Proof Lab*, *Patron Shield*, *DKG Gate*, *Garbled Gate*, *Iron Serpent*, *Biham Lens*, *Babel Hash*, *OT Gate*, *Oblivious Shelf*, *GG20 Wallet*, *Ring Sign*, *Lattice Fault*, *VRF Gate*, *Schnorr Forge*, *IBE Gate*, *ORAM Vault*, *Paillier Gate*, *Threshold ML-DSA*, *Bulletproofs*, *ZK Arena*, *Jevil*, *PQ Families*, *Multivariate UOV*, *Time-Lock Puzzle*, *VDF*, *Frozen Heart*, *Credential Veil*, *Power Trace*, *SPDZ Forge*, *Traitor Trace*, *Lattice Gentle*, *Beacon Lock*, *Card Trick*, *Matsui Line*, *Attribute Gate*, *Fold Gate*, *Covert Channel Studio*, *Return Path*, *Function Key*, *WEP Crack*, *LFSR Forge*, *Signature Gate*
 
 ### signature
@@ -1050,7 +1050,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### BLS signatures
 
-- **Implemented by:** [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) `src/main.ts:14`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/pairing.ts:11`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/beacon.ts:37`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:15`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:17`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:25`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:136`
+- **Implemented by:** [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/ats/bls-ats.ts:224`; [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) `src/main.ts:14`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/beacon.ts:37`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:25`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:136`
 - **Also referenced by:** *VSS Gate*, *Ed25519 Forge*, *Blind Sign*, *Ring Sign*, *Threshold ML-DSA*, *MuSig Gate*, *SM9 Forge*, *Function Key*
 
 #### ECDSA
@@ -1060,7 +1060,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Ed25519
 
-- **Implemented by:** [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:1`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:31`; [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) `src/bench/runner.ts:111`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/ed25519.ts:24`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/xeddsa.ts:43`; [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) `src/ecdsa.ts:192`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/base.ts:10`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/ecblind.ts:1`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/ring.ts:382`; [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) `src/main.ts:846`; [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) `src/composite.ts:181`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:24`; [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) `src/engine.ts:24`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/kex.ts:95`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/sign.ts:13`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/verify.ts:14`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:124`; [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) `src/crypto/ed25519.ts:7`; [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) `src/crypto/ed25519.ts:16`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/directory/client.ts:35`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/baseline/ed25519.ts:29`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/identity.rs:172`; [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) `src/primitives.ts:43`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:244`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/ed25519.ts:3`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/pqxdh/bundle.ts:1`; [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) `src/crypto/ed25519.ts:74`; [TESLA Broadcast](https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/) `src/crypto/anchor.ts:1`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/advanced.ts:4`
+- **Implemented by:** [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:1`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:31`; [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) `src/bench/runner.ts:111`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/ed25519.ts:24`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/xeddsa.ts:43`; [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) `src/ecdsa.ts:192`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/base.ts:10`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/ecblind.ts:1`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/signcrypt.ts:26`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/ring.ts:382`; [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) `src/main.ts:846`; [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) `src/composite.ts:181`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:24`; [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) `src/engine.ts:24`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/kex.ts:95`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/sign.ts:13`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/verify.ts:14`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:124`; [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) `src/crypto/ed25519.ts:7`; [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) `src/crypto/ed25519.ts:16`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/directory/client.ts:35`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/baseline/ed25519.ts:29`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/identity.rs:172`; [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) `src/primitives.ts:43`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:244`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/ed25519.ts:3`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/pqxdh/bundle.ts:1`; [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) `src/crypto/ed25519.ts:74`; [TESLA Broadcast](https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/) `src/crypto/anchor.ts:1`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/ake1.ts:2`
 - **Also referenced by:** *Quantum Vault KpqC*, *DKG Gate*, *Silent Tally*, *Shamir Gate*, *SPHINCS+ Ledger*, *Hybrid Wire*, *Downgrade Wire*, *Educational RSA*, *RSA Forge*, *Curve Lens*, *Point Arithmetic*, *Noise Pipe*, *LMS Ledger*, *Pairing Gate*, *Dilithium Reject*, *ECDSA Forge*, *Harvest Timeline*, *HAWK*, *PQ Rotation*, *PQ TLS Handshake*, *PSI Gate*, *Threshold ML-DSA*, *Bulletproofs*, *MLS Group*, *WebAuthn*, *JWT Forge*, *Broken Trust*, *Bitcoin Script*, *PAKE Gate*, *HPKE Envelope*, *Frozen Heart*, *Encrochat*, *Icy DVRF*, *Sphinx Mix*, *Fold Gate*, *Function Key*, *Locks and Keys*, *What Is PQC*, *Agreeing in Public*
 
 #### Ed448
@@ -1071,7 +1071,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### EdDSA
 
 - **Implemented by:** [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/xeddsa.ts:136`
-- **Also referenced by:** *Ratchet Wire*, *Point Arithmetic*, *Ed25519 Forge*, *Pairing Gate*, *Blind Sign*, *Ring Sign*, *Curve448*, *SSH Handshake*, *Reshare Circle*, *Frozen Heart*, *PQXDH Wire*
+- **Also referenced by:** *Ratchet Wire*, *Point Arithmetic*, *Ed25519 Forge*, *Pairing Gate*, *Blind Sign*, *Protocol Compose*, *Ring Sign*, *Curve448*, *SSH Handshake*, *Reshare Circle*, *Frozen Heart*, *PQXDH Wire*
 
 #### RSA-PSS
 
@@ -1081,21 +1081,21 @@ A lab in *italics* references the algorithm without implementing it.
 #### Schnorr
 
 - **Implemented by:** [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/schnorr.js:46`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/main.ts:1199`; [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) `src/ui/attackPanel.ts:2`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/app.ts:764`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/ui.ts:1046`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/schnorr-nizk.ts:27`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/verify.ts:49`; [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) `src/musig/bip340.ts:14`; [Adaptor Gate](https://systemslibrarian.github.io/crypto-lab-adaptor-gate/) `src/crypto/attacks.ts:8`
-- **Also referenced by:** *Quantum Vault KpqC*, *Subliminal Channels*, *SM2 Forge*, *STARK Tower*, *SNARK Arena*, *DKG Gate*, *Garbled Gate*, *FROST Threshold*, *Dilithium Seal*, *Shamir Gate*, *Curve Lens*, *Pairing Gate*, *GG20 Wallet*, *Commit Gate*, *Threshold ML-DSA*, *PQ Families*, *Bitcoin Script*, *Shamir vs FROST*, *Credential Veil*, *Rekey Relay*, *Sphinx Mix*, *Pulse Chain*, *Function Key*, *Locks and Keys*, *RSA Small Roots*, *Signature Gate*
+- **Also referenced by:** *Quantum Vault KpqC*, *Subliminal Channels*, *SM2 Forge*, *STARK Tower*, *SNARK Arena*, *DKG Gate*, *Garbled Gate*, *FROST Threshold*, *Dilithium Seal*, *Shamir Gate*, *RSA Forge*, *Curve Lens*, *Pairing Gate*, *GG20 Wallet*, *Commit Gate*, *Threshold ML-DSA*, *PQ Families*, *Bitcoin Script*, *Shamir vs FROST*, *Credential Veil*, *Rekey Relay*, *Sphinx Mix*, *Pulse Chain*, *Function Key*, *Locks and Keys*, *RSA Small Roots*, *Signature Gate*, *AKE Ladder*
 
 ### steganography
 
 #### Format-transforming encryption
 
 - **Implemented by:** [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/aead.ts:45`
-- **Also referenced by:** —
+- **Also referenced by:** *MAC Race*
 
 ### stream cipher
 
 #### ChaCha20
 
 - **Implemented by:** [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) `src/algorithms/chacha20-drbg.ts:58`; [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) `src/cipher.ts:14`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/chachapoly.ts:41`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/chacha20.ts:44`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:51`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/main.ts:3`; [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) `src/stream/chained.ts:119`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/chacha20.ts:123`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kat/vectors.ts:57`; [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) `src/crypto/chacha20.ts:86`; [Next Number](https://systemslibrarian.github.io/crypto-lab-next-number/) `src/gen/chacha.ts:5`
-- **Also referenced by:** *Quantum Vault KpqC*, *Air Stream*, *Shadow Vault*, *Iron Serpent*, *World Ciphers*, *Biham Lens*, *AES Modes*, *RSA Forge*, *Curve Lens*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *Vigenère Break*, *OTP Vault*, *Blind Hello*, *Salamander*, *Ablation Wire*, *Beacon Lock*, *Matsui Line*, *HTTPS Padlock*, *WEP Crack*, *LFSR Forge*
+- **Also referenced by:** *Quantum Vault KpqC*, *Air Stream*, *Shadow Vault*, *Iron Serpent*, *World Ciphers*, *Biham Lens*, *AES Modes*, *RSA Forge*, *Curve Lens*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *MLS Group*, *Vigenère Break*, *OTP Vault*, *Blind Hello*, *Salamander*, *Ablation Wire*, *Beacon Lock*, *Matsui Line*, *HTTPS Padlock*, *WEP Crack*, *LFSR Forge*
 
 #### RC4
 
@@ -1209,7 +1209,7 @@ disagree about who owns SHA-256.
 | Argon2 | RFC 9106 | 4 |
 | ARIA | RFC 5794 | 1 |
 | BBS signatures | draft-irtf-cfrg-bbs-signatures | 1 |
-| BLS signatures | draft-irtf-cfrg-bls-signature | 7 |
+| BLS signatures | draft-irtf-cfrg-bls-signature | 5 |
 | Boneh-Franklin IBE | RFC 5091 | 1 |
 | Camellia | RFC 3713 | 1 |
 | ChaCha20 | RFC 8439 | 11 |
@@ -1218,13 +1218,13 @@ disagree about who owns SHA-256.
 | DHKEM | RFC 9180 | 3 |
 | Diffie-Hellman | RFC 2631 | 17 |
 | Dragonfly | RFC 7664 | 1 |
-| Ed25519 | RFC 8032 | 29 |
+| Ed25519 | RFC 8032 | 30 |
 | Ed448 | RFC 8032 | 2 |
 | EdDSA | RFC 8032 | 1 |
 | Encrypted Client Hello | draft-ietf-tls-esni | 1 |
 | FROST | RFC 9591 | 2 |
-| Hash-to-curve | RFC 9380 | 15 |
-| HKDF | RFC 5869 | 36 |
+| Hash-to-curve | RFC 9380 | 16 |
+| HKDF | RFC 5869 | 37 |
 | HMAC | RFC 2104 | 45 |
 | HOTP | RFC 4226 | 1 |
 | HPKE | RFC 9180 | 4 |
@@ -1280,7 +1280,7 @@ disagree about who owns SHA-256.
 | CTR-DRBG | SP 800-90A | 2 |
 | DES | FIPS 46-3 (withdrawn) | 1 |
 | Dilithium | FIPS 204 (as ML-DSA) | 1 |
-| ECDH | SP 800-56A | 7 |
+| ECDH | SP 800-56A | 8 |
 | ECDSA | FIPS 186-5 | 21 |
 | Falcon | FIPS 206 (in development, as FN-DSA) | 3 |
 | FF1 | SP 800-38G | 2 |
@@ -1292,7 +1292,7 @@ disagree about who owns SHA-256.
 | Kyber | FIPS 203 (as ML-KEM) | 4 |
 | ML-DSA | FIPS 204 | 9 |
 | ML-KEM | FIPS 203 | 16 |
-| P-256 | SP 800-186 | 30 |
+| P-256 | SP 800-186 | 31 |
 | P-384 | SP 800-186 | 1 |
 | SHA-1 | FIPS 180-4 (deprecated) | 5 |
 | SHA-256 | FIPS 180-4 | 135 |
@@ -1329,7 +1329,7 @@ disagree about who owns SHA-256.
 | BFV | — | 2 |
 | BIKE | — | 1 |
 | BLAKE3 | — | 2 |
-| BLS12-381 | — | 9 |
+| BLS12-381 | — | 10 |
 | Bulletproofs | — | 1 |
 | Caesar cipher | — | 1 |
 | CKKS | — | 1 |
@@ -1340,7 +1340,7 @@ disagree about who owns SHA-256.
 | EC point arithmetic | — | 16 |
 | ElGamal | — | 3 |
 | Enigma | — | 1 |
-| Feldman VSS | — | 3 |
+| Feldman VSS | — | 4 |
 | Fermat primality test | — | 1 |
 | Fiat-Shamir | — | 6 |
 | Five-card trick | — | 1 |
@@ -1367,7 +1367,7 @@ disagree about who owns SHA-256.
 | Laplace mechanism | — | 1 |
 | LWE | — | 7 |
 | Merkle tree | — | 10 |
-| Miller–Rabin | — | 5 |
+| Miller–Rabin | — | 6 |
 | Montgomery ladder | — | 1 |
 | Noise protocol | — | 1 |
 | NTRU | — | 2 |
@@ -1376,7 +1376,7 @@ disagree about who owns SHA-256.
 | Oblivious transfer | — | 1 |
 | One-time pad | — | 2 |
 | Paillier | — | 2 |
-| Pairing | — | 10 |
+| Pairing | — | 11 |
 | Pedersen commitment | — | 7 |
 | Pohlig–Hellman | — | 2 |
 | Pollard kangaroo | — | 1 |
@@ -1399,12 +1399,12 @@ disagree about who owns SHA-256.
 | STARK | — | 1 |
 | Stern decoding | — | 1 |
 | TFHE | — | 1 |
-| Toeplitz extractor | — | 1 |
+| Toeplitz extractor | — | 2 |
 | Tonelli–Shanks | — | 1 |
 | Toy HiAE | — | 1 |
 | Toy SPN | — | 4 |
 | UOV | — | 2 |
-| Vigenere cipher | — | 2 |
+| Vigenere cipher | — | 3 |
 | von Neumann extractor | — | 1 |
 | White-box AES | — | 1 |
 | Winternitz | — | 2 |
@@ -1419,7 +1419,7 @@ may teach the same primitive from different angles — but an overlap **with no 
 difference** is a question nobody has answered, and a visitor choosing between the
 two has nothing to go on.
 
-82 pairs: 10 with a stated difference, **0 examined and found to be duplication**, 72 nobody has looked at.
+74 pairs: 10 with a stated difference, **0 examined and found to be duplication**, 64 nobody has looked at.
 
 A pair marked DUPLICATION is a finding, not a description: someone read both and
 found no difference worth having. It is listed first because it is the only row here
@@ -1435,6 +1435,11 @@ that asks for a decision.
 - **Shared:** Groth16, KZG commitment
 - **Stated difference:** **none stated**
 
+**Dead Sea Cipher / OTP Vault**
+
+- **Shared:** One-time pad, Vigenere cipher
+- **Stated difference:** **none stated**
+
 **Frodo Vault / Scloud+ Vault**
 
 - **Shared:** FrodoKEM, LWE, ML-KEM
@@ -1445,14 +1450,14 @@ that asks for a decision.
 - **Shared:** Argon2, HKDF, PBKDF2, scrypt, SHA-256
 - **Stated difference:** kdf-chain teaches what problem each KDF solves and walks a decision tree for choosing one; kdf-arena benchmarks the same four side by side and reports attacker cost against wall-clock time
 
-**Factor Forge / Residue Gate**
-
-- **Shared:** Jacobi symbol, Miller–Rabin
-- **Stated difference:** **none stated**
-
 **FROST Threshold / Shamir vs FROST**
 
 - **Shared:** Ed25519, FROST, SHA-512, Shamir secret sharing
+- **Stated difference:** **none stated**
+
+**Factor Forge / Residue Gate**
+
+- **Shared:** Jacobi symbol, Miller–Rabin
 - **Stated difference:** **none stated**
 
 **ZK Arena / Log Forge**
@@ -1479,11 +1484,6 @@ that asks for a decision.
 
 - **Shared:** AES, AES-CBC, FF1
 - **Stated difference:** format-ward PRESERVES an existing format with FF1 and FF3-1, so ciphertext keeps the length and alphabet of the input; fte TRANSFORMS ciphertext into whatever language a regular expression defines, by ranking a DFA slice
-
-**VSS Gate / Reshare Circle**
-
-- **Shared:** Feldman VSS, Pedersen commitment, Shamir secret sharing
-- **Stated difference:** vss-gate adds VERIFIABILITY to Shamir sharing at deal time, through Feldman and Pedersen commitments; reshare-circle leaves the dealing alone and refreshes shares over time, using HJKY proactive sharing against perpetual leakage
 
 **Blind Hello / Blind Relay**
 
@@ -1550,9 +1550,19 @@ that asks for a decision.
 - **Shared:** SHA-256, Streebog
 - **Stated difference:** **none stated**
 
+**VSS Gate / Reshare Circle**
+
+- **Shared:** Feldman VSS, Pedersen commitment, Shamir secret sharing
+- **Stated difference:** vss-gate adds VERIFIABILITY to Shamir sharing at deal time, through Feldman and Pedersen commitments; reshare-circle leaves the dealing alone and refreshes shares over time, using HJKY proactive sharing against perpetual leakage
+
 **Ratchet Wire / PQXDH Wire**
 
 - **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, ML-KEM, X25519, X3DH
+- **Stated difference:** **none stated**
+
+**FROST Threshold / Pulse Chain**
+
+- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-512
 - **Stated difference:** **none stated**
 
 **Downgrade Wire / PQ TLS Handshake**
@@ -1565,24 +1575,34 @@ that asks for a decision.
 - **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-512, X25519, X3DH
 - **Stated difference:** **none stated**
 
-**DKG Gate / Reshare Circle**
-
-- **Shared:** Feldman VSS, Pedersen commitment
-- **Stated difference:** **none stated**
-
-**VSS Gate / DKG Gate**
-
-- **Shared:** Feldman VSS, Pedersen commitment
-- **Stated difference:** **none stated**
-
 **Nonce Collision / HPKE Envelope**
 
 - **Shared:** AES, AES-GCM, ChaCha20, ChaCha20-Poly1305, Poly1305
 - **Stated difference:** **none stated**
 
-**Beacon Lock / Attribute Gate**
+**Beacon Lock / Pulse Chain**
 
-- **Shared:** AES, AES-GCM, BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
+- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
+- **Stated difference:** **none stated**
+
+**Beacon Lock / Signature Gate**
+
+- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
+- **Stated difference:** **none stated**
+
+**Pulse Chain / Signature Gate**
+
+- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
+- **Stated difference:** **none stated**
+
+**FROST Threshold / Beacon Lock**
+
+- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing
+- **Stated difference:** **none stated**
+
+**FROST Threshold / Signature Gate**
+
+- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing
 - **Stated difference:** **none stated**
 
 **HAWK / PQ Chooser**
@@ -1610,11 +1630,6 @@ that asks for a decision.
 - **Shared:** ChaCha20, ChaCha20-Poly1305, Poly1305
 - **Stated difference:** **none stated**
 
-**SSH Handshake / Regex Veil — FTE**
-
-- **Shared:** AES, AES-CBC, AES-CTR, ECDH, HMAC, P-256, SHA-256, X25519
-- **Stated difference:** **none stated**
-
 **Downgrade Wire / TLS Handshake**
 
 - **Shared:** HKDF, HMAC, SHA-256, TLS 1.3, X25519
@@ -1625,84 +1640,9 @@ that asks for a decision.
 - **Shared:** HKDF, HMAC, SHA-256, TLS 1.3, X25519
 - **Stated difference:** **none stated**
 
-**Attribute Gate / Pulse Chain**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Attribute Gate / Signature Gate**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Beacon Lock / Polynomial Forge**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Beacon Lock / Pulse Chain**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Beacon Lock / Signature Gate**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**IBE Gate / Beacon Lock**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**IBE Gate / Polynomial Forge**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**IBE Gate / Attribute Gate**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**IBE Gate / Pulse Chain**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**IBE Gate / Signature Gate**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Polynomial Forge / Attribute Gate**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Polynomial Forge / Pulse Chain**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Polynomial Forge / Signature Gate**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
-**Pulse Chain / Signature Gate**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
-- **Stated difference:** **none stated**
-
 **SSH Handshake / Nonce Collision**
 
 - **Shared:** AES, AES-CBC, AES-CTR, ChaCha20, Poly1305
-- **Stated difference:** **none stated**
-
-**MLS Group / HPKE Envelope**
-
-- **Shared:** AES, AES-GCM, Diffie-Hellman, HKDF, HPKE, SHA-256, X25519
 - **Stated difference:** **none stated**
 
 **Ratchet Wire / MLS Group**
@@ -1713,6 +1653,16 @@ that asks for a decision.
 **X3DH Wire / MLS Group**
 
 - **Shared:** AES, AES-GCM, Diffie-Hellman, HKDF, SHA-256, X25519, X3DH
+- **Stated difference:** **none stated**
+
+**MLS Group / HPKE Envelope**
+
+- **Shared:** AES, AES-GCM, Diffie-Hellman, HKDF, HPKE, SHA-256, X25519
+- **Stated difference:** **none stated**
+
+**SSH Handshake / Regex Veil — FTE**
+
+- **Shared:** AES, AES-CBC, AES-CTR, ECDH, HMAC, P-256, SHA-256, X25519
 - **Stated difference:** **none stated**
 
 **MLS Group / PQXDH Wire**
@@ -1730,6 +1680,16 @@ that asks for a decision.
 - **Shared:** RSA, RSA-OAEP, RSA-PSS, SHA-256
 - **Stated difference:** **none stated**
 
+**MAC Race / Nonce Collision**
+
+- **Shared:** AES, AES-CBC, GHASH, Poly1305
+- **Stated difference:** **none stated**
+
+**Threshold Decrypt / Hidden Bit**
+
+- **Shared:** AES, AES-GCM, ElGamal, P-256, SHA-256
+- **Stated difference:** **none stated**
+
 **OPAQUE Gate / PSI Gate**
 
 - **Shared:** Hash-to-curve, OPRF, SHA-256
@@ -1743,16 +1703,6 @@ that asks for a decision.
 **PSI Gate / Privacy Pass**
 
 - **Shared:** Hash-to-curve, OPRF, SHA-256
-- **Stated difference:** **none stated**
-
-**MAC Race / Nonce Collision**
-
-- **Shared:** AES, AES-CBC, GHASH, Poly1305
-- **Stated difference:** **none stated**
-
-**Threshold Decrypt / Hidden Bit**
-
-- **Shared:** AES, AES-GCM, ElGamal, P-256, SHA-256
 - **Stated difference:** **none stated**
 
 **Scloud+ Vault / Ciphertext Mirror**
@@ -1769,6 +1719,36 @@ that asks for a decision.
 
 - **Shared:** Kyber, LWE, SHA-256
 - **Stated difference:** **none stated**
+
+**DKG Gate / Reshare Circle**
+
+- **Shared:** Feldman VSS, Pedersen commitment
+- **Stated difference:** **none stated**
+
+**VSS Gate / DKG Gate**
+
+- **Shared:** Feldman VSS, Pedersen commitment
+- **Stated difference:** **none stated**
+
+**FROST Threshold / Pairing Gate**
+
+- **Shared:** BLS signatures, BLS12-381, Pairing
+- **Stated difference:** **none stated**
+
+**Pairing Gate / Beacon Lock**
+
+- **Shared:** BLS signatures, BLS12-381, Pairing
+- **Stated difference:** **none stated**
+
+**Pairing Gate / Pulse Chain**
+
+- **Shared:** BLS signatures, BLS12-381, Pairing
+- **Stated difference:** **none stated**
+
+**Pairing Gate / Signature Gate**
+
+- **Shared:** BLS signatures, BLS12-381, Pairing
+- **Stated difference:** Pairing Gate teaches BLS signatures, aggregation and pairing primitives; Signature Gate explores interactive confirmation, candidate disavowal and challenge timing in an explicitly experimental construction.
 
 **KDF Chain / OPAQUE Gate**
 
@@ -1795,35 +1775,15 @@ that asks for a decision.
 - **Shared:** Keccak, NTT, SHAKE
 - **Stated difference:** **none stated**
 
-**Pairing Gate / IBE Gate**
+**Threshold Decrypt / Reshare Circle**
 
-- **Shared:** BLS signatures, BLS12-381, Pairing
+- **Shared:** Feldman VSS, Shamir secret sharing
 - **Stated difference:** **none stated**
 
-**Pairing Gate / Beacon Lock**
+**VSS Gate / Threshold Decrypt**
 
-- **Shared:** BLS signatures, BLS12-381, Pairing
+- **Shared:** Feldman VSS, Shamir secret sharing
 - **Stated difference:** **none stated**
-
-**Pairing Gate / Polynomial Forge**
-
-- **Shared:** BLS signatures, BLS12-381, Pairing
-- **Stated difference:** **none stated**
-
-**Pairing Gate / Attribute Gate**
-
-- **Shared:** BLS signatures, BLS12-381, Pairing
-- **Stated difference:** **none stated**
-
-**Pairing Gate / Pulse Chain**
-
-- **Shared:** BLS signatures, BLS12-381, Pairing
-- **Stated difference:** **none stated**
-
-**Pairing Gate / Signature Gate**
-
-- **Shared:** BLS signatures, BLS12-381, Pairing
-- **Stated difference:** Pairing Gate teaches BLS signatures, aggregation and pairing primitives; Signature Gate explores interactive confirmation, candidate disavowal and challenge timing in an explicitly experimental construction.
 
 **Iron Letter / Hidden Bit**
 
@@ -2132,10 +2092,10 @@ AEGIS-256 as described in CFRG Informational RFC 10032, with AES round-function 
 Build AES from field arithmetic to full encryption and decryption, then remove one layer and run four concrete attacks beside independently verified real-AES controls.
 
 - **Card topics (discovery only):** AES-128/192/256, GF(2⁸), Key Expansion, Inverse Cipher — labels do not establish what any section runs.
-- **Implements:** AES `src/aes/cipher.ts:6`
-- **Source review:** [7abf61f7fdce](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/commit/7abf61f7fdcef076c5f536c81ec0e1b729b05118) — Reviewed the full AES-128/192/256 data path, inverse, key expansion and four opt-in layer ablations. Known-pair affine recovery, known-column transplantation and chosen-plaintext byte codebooks execute against weakened variants with independently recomputed full-AES controls. Side-channel and timing mentions describe limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson.
+- **Implements:** AES `src/aes/cipher.ts:26`
+- **Source review:** [254a8069f781](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/commit/254a8069f7811e6b766199ef97f46c0c56a91c85) — Reviewed the committed AES-128/192/256 data path, inverse, key expansion and four opt-in layer ablations. Known-pair affine recovery, known-column transplantation and chosen-plaintext byte codebooks execute against weakened variants, with the same attacks run as full-AES controls. The verifier constructs a domain-separated held-out stream only after the attack resolves; source invariants prevent attack modules from receiving the victim key or held-out instances. Side-channel and timing mentions remain limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson.
 - **References:** AEGIS-256, AES-CBC, SHA-256, TLS 1.3
-- **Attacks shown:** Chosen-plaintext attack `src/ui/act7.ts:6`, Known-plaintext attack `src/ui/act7.ts:5`
+- **Attacks shown:** Chosen-plaintext attack `src/ui/act7.ts:85`, Known-plaintext attack `src/ui/act7.ts:78`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled AES / WebCrypto cross-check
 - **Overlaps:** `crypto-lab-aegis-gate` — AEGIS Gate shows one AES round inside another construction; AES Anatomy adds the full cipher, key schedule and inverse; `crypto-lab-aes-modes` — AES Anatomy builds the block primitive; AES Modes composes blocks into encryption schemes
@@ -2197,9 +2157,10 @@ Build AES from field arithmetic to full encryption and decryption, then remove o
 ECB, CBC, CTR, GCM, and CCM with live padding oracle attack. Real WebCrypto operations, ECB penguin visualization, and authenticated encryption comparison.
 
 - **Card topics (discovery only):** AES, AES-GCM, AES-CBC, Authenticated Encryption — labels do not establish what any section runs.
-- **Implements:** AES `src/ccm.ts:32`, AES-CBC `src/cbc.ts:30`, AES-CCM `src/ccm.ts:174`, AES-CTR `src/compare.ts:113`, AES-GCM `src/compare.ts:120`, GHASH `src/forbidden.ts:99`
-- **References:** 3DES, Ascon, ChaCha20, ChaCha20-Poly1305, HMAC, Poly1305, RC4, Serpent, TLS 1.3
-- **Attacks shown:** IV reuse `src/cbc.ts:97`, Known-plaintext attack `index.html:567`, Nonce reuse `src/ctr.ts:113`, Padding oracle `src/cbc.ts:307`
+- **Implements:** AES `src/ccm.ts:32`, AES-CBC `src/cbc.ts:30`, AES-CCM `src/ccm.ts:174`, AES-CTR `src/compare.ts:116`, AES-GCM `src/compare.ts:126`, GHASH `src/forbidden.ts:99`
+- **Source review:** [ca6ef490ac16](https://github.com/systemslibrarian/crypto-lab-aes-modes/commit/ca6ef490ac16b98c77c1fee964c32eb3e186c053) — Read the committed README, active mode implementations and both extension briefs at this pin. The chosen-plaintext and ciphertext-malleability matches occur in briefs proposing future AES-CFB and AES-OFB exhibits, not in the shipped lab. Preserve the active CBC, CTR and padding-oracle experiments while excluding credits for unimplemented extension plans.
+- **References:** 3DES, AES-CFB, AES-OFB, Ascon, ChaCha20, ChaCha20-Poly1305, HMAC, Poly1305, RC4, Serpent, TLS 1.3
+- **Attacks shown:** IV reuse `src/cbc.ts:97`, Known-plaintext attack `index.html:571`, Malleability (unspecified) `README.md:36`, Nonce reuse `src/ctr.ts:113`, Padding oracle `src/cbc.ts:307`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ca6ef490ac16](https://github.com/systemslibrarian/crypto-lab-aes-modes/commit/ca6ef490ac16b98c77c1fee964c32eb3e186c053) reviewed 2026-10-22; 12 mapped sections.
@@ -2375,8 +2336,9 @@ Generate 128-EEA1, 128-EEA2 and 128-EEA3 keystream from one key, COUNT, bearer a
 Walk Boneh-Shoup's authenticated key exchange: remove one protection at a time and watch a scripted attack land on real transcripts, then compare both parties' actual session-key fingerprints.
 
 - **Card topics (discovery only):** ristretto255, Ed25519, HKDF-SHA-256, AES-GCM — labels do not establish what any section runs.
-- **Implements:** AES `src/crypto.ts:10`, AES-CTR `src/pke/eeg-ctr.ts:9`, AES-GCM `src/crypto.ts:10`, Diffie-Hellman `src/ake/advanced.ts:64`, Ed25519 `src/ake/advanced.ts:4`, HKDF `src/crypto.ts:5`, ristretto255 `src/ake/advanced.ts:1`, SHA-256 `src/crypto.ts:5`
-- **Attacks shown:** Chosen-ciphertext attack `README.md:9`, Ciphertext malleability `src/main.ts:19`, Man-in-the-middle `README.md:40`
+- **Implements:** AES `src/crypto.ts:13`, AES-CTR `src/pke/eeg-ctr.ts:14`, AES-GCM `src/crypto.ts:13`, Diffie-Hellman `src/ake/ake5.ts:13`, Ed25519 `src/ake/ake1.ts:2`, HKDF `src/crypto.ts:6`, ristretto255 `src/ake/ake1.ts:1`, SHA-256 `src/crypto.ts:8`
+- **References:** HPKE, Kerberos, OPAQUE, RSA, Schnorr, X3DH
+- **Attacks shown:** Chosen-ciphertext attack `README.md:9`, Ciphertext malleability `src/ui/acts.ts:20`, Man-in-the-middle `src/ui/acts.ts:20`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [113e7918f040](https://github.com/systemslibrarian/crypto-lab-ake-ladder/commit/113e7918f040f8b6bca6d431d35681f505cf814f) reviewed 2026-10-22; 5 mapped sections.
@@ -2568,7 +2530,8 @@ Measured boot into PCRs, a real TPMS_ATTEST quote, a verifier with reference val
 Encrypt to a policy instead of to a person. Then splice two real keys whose attributes only jointly satisfy that policy, run the genuine decryption, and watch the term that refuses to cancel.
 
 - **Card topics (discovery only):** FAME CP-ABE, BLS12-381, Access Policy, Collusion Resistance — labels do not establish what any section runs.
-- **Implements:** AES `src/fame/kem.ts:81`, AES-GCM `src/fame/kem.ts:107`, BLS signatures `src/fame/bls.ts:17`, BLS12-381 `src/fame/bls.ts:17`, Hash-to-curve `src/fame/bls.ts:368`, HKDF `src/fame/kem.ts:56`, Pairing `src/fame/bls.ts:183`, SHA-256 `src/fame/kem.ts:56`
+- **Implements:** AES `src/fame/kem.ts:81`, AES-GCM `src/fame/kem.ts:107`, BLS12-381 `src/fame/bls.ts:17`, Hash-to-curve `src/fame/bls.ts:368`, HKDF `src/fame/kem.ts:56`, Pairing `src/fame/bls.ts:183`, SHA-256 `src/fame/kem.ts:56`
+- **Source review:** [d0bb24262e9b](https://github.com/systemslibrarian/crypto-lab-attribute-gate/commit/d0bb24262e9b2b6e47044ef49e5941bdb332e17c) — Read the committed README and src/fame implementation at this pin. Attribute Gate implements FAME CP-ABE with BLS12-381 group arithmetic, pairing, policy reconstruction and an HKDF/AES-GCM KEM wrapper. The bls12_381 namespace import is the scanner's only BLS-signature hit; the lab does not issue or verify BLS signatures. Remove that false credit while preserving the actual BLS12-381, hash-to-curve and pairing operations. The comparison with Signature Gate is a teaching-role review, not a new security or conformance claim.
 - **References:** Boneh-Franklin IBE, Diffie-Hellman, HPKE, Shamir secret sharing
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
@@ -2688,9 +2651,9 @@ SHA-256, SHA3-256, and BLAKE3 side by side with live avalanche visualization, le
 A classical BB84 teaching simulation with basis sifting, QBER, and illustrative SHA-256 key derivation for AES-GCM. An optional reconciliation and Toeplitz extraction exercise shows public leakage and an assumed entropy budget; it does not prove finite-key QKD security.
 
 - **Card topics (discovery only):** Photon Polarization, Basis Sifting, QBER, SHA-256 Key Derivation — labels do not establish what any section runs.
-- **Implements:** AES `src/encrypt.ts:37`, AES-GCM `src/encrypt.ts:37`, BB84 `src/bb84.ts:186`, SHA-256 `src/bb84.ts:175`
+- **Implements:** AES `src/encrypt.ts:37`, AES-GCM `src/encrypt.ts:37`, BB84 `src/bb84.ts:186`, SHA-256 `src/bb84.ts:175`, Toeplitz extractor `src/teaching.ts:76`
 - **References:** E91, ECDH, ECDSA, Grover's algorithm, Kyber, ML-DSA, ML-KEM, P-256, RSA, Shor's algorithm
-- **Attacks shown:** Brute force `index.html:348`, Discrete log `index.html:347`, Factoring `index.html:346`, Side-channel (unspecified) `README.md:37`
+- **Attacks shown:** Brute force `index.html:348`, Discrete log `index.html:347`, Factoring `index.html:346`, Side-channel (unspecified) `README.md:44`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7c5f98a250a0](https://github.com/systemslibrarian/crypto-lab-bb84/commit/7c5f98a250a0bc2bc789cc21047a28170b242880) reviewed 2026-10-22; 6 mapped sections.
@@ -2862,7 +2825,7 @@ Differential cryptanalysis on a toy SPN and real FEAL-4: inspect difference tabl
 
 - **Card topics (discovery only):** Differential Cryptanalysis, SPN, DDT, Chosen-Plaintext — labels do not establish what any section runs.
 - **Implements:** PRESENT `src/crypto/present/present.ts:21`, Toy SPN `src/crypto/spn.ts:95`
-- **Source review:** [8544ee0ff488](https://github.com/systemslibrarian/crypto-lab-biham-lens/commit/8544ee0ff488f74ce437be57ac5cfd494bbe134c) — Re-read the complete prior-pin change inventory, SPN/FEAL source and added PRESENT-80 core, inverse schedule, analysis, worker and UI. The original toy SPN anchor remains; FEAL-4 and full-round PRESENT-80 are distinct engines. PRESENT recovery assumes known K32 and exhausts 16 missing register bits; it does not obtain K32 or break full PRESENT. The October 21 correction changes teaching prose and the DES comparison, not these engines. DES is reference context only; an independent FIPS-table test establishes its nonzero-input DDT maximum of 16/64, with a successful wrong-value mutation kill. No round count guarantees attack immunity. Remove chosen-ciphertext, collision and padding-oracle credits sourced only from Related Demos links, and linear-cryptanalysis credit sourced only from Serpent context; these attacks are not executed here.
+- **Source review:** [864ee0572f3e](https://github.com/systemslibrarian/crypto-lab-biham-lens/commit/864ee0572f3e90496a240347a6094580a88a6318) — Re-read the committed toy SPN, FEAL-4 and full-round PRESENT-80 engines, inverse schedule, analysis, worker and UI. PRESENT recovery assumes already-known K32 and exhausts the 16 missing register bits; it does not obtain K32. The latest hardening checks the exact pLayer grouping conditions and reports recovery only when the visible master key is among the worker's candidates. DES remains reference context, and no generic round count proves immunity. Chosen-ciphertext, collision and padding-oracle credits come only from Related Demos links, while linear cryptanalysis is Serpent context; none is executed here.
 - **References:** AES, AES-CBC, ChaCha20, DES, Enigma, MD5, RSA, SHA-1, Serpent, Shamir secret sharing, Simon, Speck, Vigenere cipher
 - **Attacks shown:** Brute force `README.md:15`, Chosen-plaintext attack `src/feal-tab.ts:16`, Differential cryptanalysis `src/main.ts:1086`, Impossible differential `src/main.ts:787`, Key recovery `README.md:24`, Known-plaintext attack `brief-extension-present.md:117`
 - **Standards body:** ISO
@@ -3846,10 +3809,10 @@ Approximate FHE for encrypted floating-point arithmetic, homomorphic neural netw
 Step through the integer arithmetic under RSA and Diffie–Hellman: inverses, Euler φ, powers, orders, generators, subgroups and generalized CRT. Inspect what happens when each precondition fails.
 
 - **Card topics (discovery only):** Modular Arithmetic, Extended Euclid, Euler φ, CRT — labels do not establish what any section runs.
-- **Implements:** Diffie-Hellman `src/nt/toyDh.ts:4`
-- **Source review:** [5bb86840fab4](https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/commit/5bb86840fab4806e3681c1a378fd4c643831035d) — Reviewed exact modular arithmetic, extended Euclid, Euler phi, orders, generators, subgroup enumeration and generalized CRT. The small-number DH model computes both parties and searches possible shared secrets with an actual guess count at src/nt/toyDh.ts:3. It is not a discrete-log solver or MITM exhibit. Trial division supports the arithmetic lesson rather than an RSA factoring attack; RSA and adjacent algorithms are references only.
-- **References:** AES, Baby-step giant-step, ElGamal, Jacobi symbol, Pohlig–Hellman, RSA
-- **Attacks shown:** Brute force `README.md:62`
+- **Implements:** Diffie-Hellman `src/nt/toyDh.ts:22`
+- **Source review:** [ba94fa18e427](https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/commit/ba94fa18e4272db71173984a2e2fe00d5818cf91) — Reviewed the committed exact modular arithmetic, extended Euclid, Euler phi, multiplicative-order checks, generator tests, subgroup enumeration, generalized CRT and toy Diffie-Hellman. The DH model computes both parties, enumerates the distinct shared-secret space and reports the actual guess position. It is not a discrete-log solver or MITM exhibit. Exact trial division supports the arithmetic lesson rather than an RSA factoring attack; software CRT faults appear only in a neighboring-lab link, and RSA and adjacent algorithms remain references. SHA-256 appears only as a mutation-bundle fingerprint, not lesson cryptography. The latest audit adds independent exhaustive routes, fail-closed budgets and prediction/counterexample UI without changing those classifications.
+- **References:** AES, Baby-step giant-step, ElGamal, Jacobi symbol, Miller–Rabin, Pohlig–Hellman, RSA
+- **Attacks shown:** Brute force `README.md:63`
 - **Standards body:** IETF
 - **Implementation:** hand-rolled BigInt arithmetic
 - **Overlaps:** `crypto-lab-rsa-educational` — Clock Arithmetic exposes inverses and generalized CRT before RSA uses them; `crypto-lab-log-forge` — Clock Arithmetic teaches orders, generators and subgroup sizes before Log Forge attacks discrete logs
@@ -3905,7 +3868,7 @@ Verify published MD5 and SHA-1 collision pairs, then compare full-round SHA-256 
 
 - **Card topics (discovery only):** MD5, SHA-1, SHAttered, Chosen-Prefix Collision — labels do not establish what any section runs.
 - **Implements:** MD5 `demos/collision-vault/src/hashing/md5.ts:10`, SHA-1 `demos/collision-vault/src/hashing/trace.ts:111`, SHA-256 `demos/collision-vault/src/hashing/index.ts:79`, SHA-3 `demos/collision-vault/src/hashing/sha3.ts:9`, SHA-512 `demos/collision-vault/src/hashing/index.ts:81`
-- **Source review:** [9e4c26555dfe](https://github.com/systemslibrarian/crypto-lab-collision-vault/commit/9e4c26555dfea4cd4b82bb6a07968495f7c9eb76) — Reviewed the published 12 October change, Table 2 fixture and complete Python verifier. Existing full-round providers and SHA-256/SHA-512 call-site anchors 79/81 remain unchanged. The isolated JavaScript research backend computes SHA-256 compression over big-endian blocks with the standard IV, explicit step count, per-block feed-forward and no added padding. The supplied two-block messages reproduce the 36-step Table 2 value from the 9 September 2026 preprint; this is distinct from its semi-free-start appendix examples. Normal WebCrypto SHA-256 with message padding produces different digests. Independent Python and TypeScript checks reproduce the result, reject all 1,024 one-bit mutations and distinguish incorrect round/IV/padding interpretations. Common padding preserves the reduced-round collision but changes the reported chaining value. The 64-step engine matches independent noble SHA-256 at padding boundaries. Local checks passed 118 units, lint/build and 35 browser tests, with one existing intentional skip; deployment passed separately. The sole Python file is the fully reviewed independent CI verifier, not an opaque browser component. The fixture records mirror retrieval and PDF fingerprint. This verifies a supplied pair, not its search cost, a full-round break, conformance certification or constant-time behavior.
+- **Source review:** [dd7066fc8275](https://github.com/systemslibrarian/crypto-lab-collision-vault/commit/dd7066fc82752008b73bfd21507d823569e5dee0) — Reviewed the published 12 October change, Table 2 fixture and complete Python verifier. Existing full-round providers and SHA-256/SHA-512 call-site anchors 79/81 remain unchanged. The isolated JavaScript research backend computes SHA-256 compression over big-endian blocks with the standard IV, explicit step count, per-block feed-forward and no added padding. The supplied two-block messages reproduce the 36-step Table 2 value from the 9 September 2026 preprint; this is distinct from its semi-free-start appendix examples. Normal WebCrypto SHA-256 with message padding produces different digests. Independent Python and TypeScript checks reproduce the result, reject all 1,024 one-bit mutations and distinguish incorrect round/IV/padding interpretations. Common padding preserves the reduced-round collision but changes the reported chaining value. The 64-step engine matches independent noble SHA-256 at padding boundaries. The sole Python file is the fully reviewed independent CI verifier, not an opaque browser component. The fixture records mirror retrieval and PDF fingerprint. This verifies a supplied pair, not its search cost, a full-round break, conformance certification or constant-time behavior. Re-read the current README, implementation inventory and complete movement since the prior pin. The only runtime-source change removes an unused empty-array initializer after @eslint/js 10 enabled no-useless-assignment; hashing, pair verification, reduced-round research code and every evidence anchor are byte-identical. In the exact Playwright 1.64.0 Linux image, 118 units, lint, type-check, production build and 35 browser tests passed with one intentional skip; the independent Python verifier reproduced Table 2 and rejected all 1,024 one-bit mutations.
 - **References:** BLAKE3, CMAC, GHASH, HMAC, Keccak, Kupyna, Merkle tree, Poly1305, Streebog
 - **Attacks shown:** Brute force `demos/collision-vault/src/pairs/manifest.ts:64`, Collision attack `demos/collision-vault/src/hashing/index.ts:44`, Length extension `README.md:60`
 - **Standards body:** IETF, NIST
@@ -3978,8 +3941,9 @@ Compare hash and Pedersen commitments, verify openings and homomorphic addition,
 
 - **Card topics (discovery only):** Hash Commitment, Pedersen, Binding & Hiding, Homomorphic — labels do not establish what any section runs.
 - **Implements:** EC point arithmetic `src/pedersen.ts:52`, P-256 `src/pedersen.ts:1`, Pedersen commitment `src/pedersen.ts:219`, SHA-256 `src/hashcommit.ts:46`
-- **References:** Bulletproofs, FROST, Feldman VSS, Fiat-Shamir, Hash-to-curve, KZG commitment, Oblivious transfer, One-time pad, P-256, Schnorr, ristretto255
-- **Attacks shown:** Birthday bound `src/main.ts:371`, Discrete log `src/main.ts:433`
+- **Source review:** [b2cadf431b80](https://github.com/systemslibrarian/crypto-lab-commit-gate/commit/b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9) — Read the committed README and complete hash/Pedersen commitment implementation at this pin. src/pedersen.ts defines the P-256 field, curve, order and standard generator, then performs point addition and scalar multiplication directly for the live Pedersen commitment exhibit. Credit P-256 at its defining field constant instead of leaving this real implementation as a prose-only reference.
+- **References:** Bulletproofs, FROST, Feldman VSS, Fiat-Shamir, Hash-to-curve, KZG commitment, Oblivious transfer, One-time pad, Schnorr, ristretto255
+- **Attacks shown:** Birthday bound `src/main.ts:371`, Discrete log `src/main.ts:431`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b2cadf431b80](https://github.com/systemslibrarian/crypto-lab-commit-gate/commit/b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9) reviewed 2026-10-22; 7 mapped sections.
@@ -4559,9 +4523,9 @@ Substitution and polyalphabetic ciphers from Atbash to Vigenère, through to mod
 
 - **Card topics (discovery only):** Substitution, Vigenère, Atbash — labels do not establish what any section runs.
 - **Implements:** AES `demos/dead-sea-cipher/src/ciphers/aes.ts:73`, AES-CTR `demos/dead-sea-cipher/src/ciphers/ghash.ts:118`, AES-GCM `demos/dead-sea-cipher/src/ciphers/aes.ts:79`, Caesar cipher `demos/dead-sea-cipher/src/analysis/caesar-crack.ts:15`, GHASH `demos/dead-sea-cipher/src/ciphers/ghash.ts:82`, One-time pad `demos/dead-sea-cipher/src/ciphers/otp.ts:8`, PBKDF2 `demos/dead-sea-cipher/src/ciphers/aes.ts:48`, Vigenere cipher `demos/dead-sea-cipher/src/ciphers/vigenere.ts:11`
-- **Source review:** [f0bf09cc973e](https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher/commit/f0bf09cc973e79eeabc7e1401b7ea66c36175094) — Read current README production limitation and classical cipher/AES source. Missing protection from side-channel extraction is a limitation; preserve real brute-force and frequency-analysis demonstrations.
-- **References:** DES, Enigma, Grover's algorithm, SHA-256, Serpent, Substitution cipher
-- **Attacks shown:** Brute force `demos/dead-sea-cipher/src/ciphers/caesar.ts:38`, Frequency analysis `demos/dead-sea-cipher/src/content/scripture.ts:65`
+- **Source review:** [be9d4ad49dc4](https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher/commit/be9d4ad49dc40641f16d1366434e4c14353c3070) — Read the committed README, classical cipher/AES source and affine extension. The affine exhibit enumerates all 312 keys, exposes collisions from noninvertible multipliers, ranks candidates by frequency, and solves known-letter constraints with independent checks. Affine cipher is not in the current catalog vocabulary, so no unsupported label is added. Missing protection from side-channel extraction remains a limitation; preserve the real brute-force and frequency-analysis demonstrations.
+- **References:** DES, Enigma, Grover's algorithm, Hill cipher, SHA-256, Serpent, Substitution cipher
+- **Attacks shown:** Brute force `demos/dead-sea-cipher/src/ciphers/caesar.ts:38`, Frequency analysis `demos/dead-sea-cipher/src/content/scripture.ts:65`, Key recovery `extension-handoff-affine.md:13`, Known-plaintext attack `brief-extension-affine.md:109`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [be9d4ad49dc4](https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher/commit/be9d4ad49dc40641f16d1366434e4c14353c3070) reviewed 2026-10-22; 6 mapped sections.
@@ -5148,9 +5112,9 @@ Break the two-LFSR Content Scrambling System: guess the smaller register, let al
 
 - **Card topics (discovery only):** CSS, LFSR, Known-Plaintext, Key Recovery — labels do not establish what any section runs.
 - **Implements:** N/A — reviewed source implements no named algorithm in this index
-- **Source review:** [f3d4bad6c5cf](https://github.com/systemslibrarian/crypto-lab-dvd-scramble/commit/f3d4bad6c5cf660ebea5306460481099521d927d) — Source review of src/css/lfsr.ts, src/css/css.ts, src/attack/divide.ts and src/verify/verify.ts. lfsr.ts cites Boneh-Shoup v0.6 section 3.8 Figure 3.10 and computes a bit-serial LFSR: step() returns bit 0, XORs the declared taps, right-shifts and feeds back into the top bit; byte() clocks eight steps LSB- or MSB-first. css.ts generate() seeds a 17-bit register with taps [14,0] and a 25-bit register with taps [12,4,3,0], clocks a byte from each and adds them with carry, so z = (x+y+carry) mod 256 and the carry persists -- the CSS byte-serial combiner. The key space is 16 bits plus 24 bits, validated as such, which is the 40 bits the attack exhibit is about. divide.ts recover() enumerates smaller-register seeds and returns counted candidates; verify.ts checks a candidate against continuation bytes the search never saw. Zero runtime dependencies. N/A means no named algorithm IN THIS INDEX, not no computation: the Content Scrambling System and the LFSR family are outside the current vocabulary, the same reason crypto-lab-lfsr-forge was reviewed N/A on 2026-10-09. Scope recorded with it: this is the textbook generator, and the source says so in its own extension note -- deployed CSS changes insertion positions, discards early bytes and has inverter modes, none of which are implemented here. So the card must not be read as a deployed-CSS implementation.
+- **Source review:** [2a02c59f611b](https://github.com/systemslibrarian/crypto-lab-dvd-scramble/commit/2a02c59f611b1a3aca698b737a31611fccbdd0d8) — Read the committed bit-serial 17- and 25-bit LFSRs, full-carry byte combiner, guess-and-determine search and verifier. The attack exhaustively enumerates all 65,536 small-register seeds, derives the other 24 bits, and counts public candidates. The hardened verifier uses private continuation bytes only after the public set is unique, so private data cannot select a candidate; cancellation reports only completed work. N/A means no named algorithm in this index, not no computation: CSS and the LFSR family remain outside the vocabulary. This is the textbook generator with a documented full-carry correction, not deployed DVD CSS with its forced-bit positions, discarded early bytes, inverter modes or key hierarchy. Schnorr names only the accessibility-test machinery used as a template, not cryptography in this lab.
 - **References:** RC4
-- **Attacks shown:** Brute force `src/main.ts:88`, Key recovery `README.md:51`
+- **Attacks shown:** Brute force `src/main.ts:100`, Key recovery `README.md:51`
 - **Standards body:** —
 - **Implementation:** N/A (model or attack)
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2a02c59f611b](https://github.com/systemslibrarian/crypto-lab-dvd-scramble/commit/2a02c59f611b1a3aca698b737a31611fccbdd0d8) reviewed 2026-10-22; 3 mapped sections.
@@ -5903,9 +5867,9 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
 Real DES stepped round by round, where the round function need not be invertible — and DES's is not. Then double DES falls to meet-in-the-middle, and a 64-bit block collides at the birthday bound.
 
 - **Card topics (discovery only):** DES, Feistel Network, Meet-in-the-Middle, Sweet32 — labels do not establish what any section runs.
-- **Implements:** DES `src/attacks/mitm.ts:80`
+- **Implements:** DES `src/attacks/lubyRackoff.ts:46`
 - **References:** 3DES, AES, AES-GCM, Blowfish, Camellia, FF1, KASUMI, MISTY1, SHA-256, Serpent, Simon, Speck, Toy SPN, Twofish
-- **Attacks shown:** Birthday bound `src/ui/mitmPanel.ts:296`, Brute force `src/attacks/complement.ts:138`, Chosen-plaintext attack `src/ui/complementPanel.ts:173`, Differential cryptanalysis `README.md:276`, Key recovery `README.md:303`, Known-plaintext attack `src/attacks/sweet32.ts:351`, Man-in-the-middle `src/main.ts:28`, Nonce reuse `src/ui/sweet32Panel.ts:590`, Padding oracle `README.md:203`, Side-channel (unspecified) `README.md:204`
+- **Attacks shown:** Birthday bound `src/ui/mitmPanel.ts:296`, Brute force `src/attacks/complement.ts:138`, Chosen-plaintext attack `src/ui/complementPanel.ts:173`, Differential cryptanalysis `README.md:286`, Key recovery `README.md:313`, Known-plaintext attack `src/attacks/sweet32.ts:351`, Man-in-the-middle `src/main.ts:29`, Nonce reuse `src/ui/sweet32Panel.ts:590`, Padding oracle `README.md:213`, Side-channel (unspecified) `README.md:214`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b9ef3e97fbed](https://github.com/systemslibrarian/crypto-lab-feistel-forge/commit/b9ef3e97fbed60c2484c007ad4b3fc6660aeac06) reviewed 2026-10-22; 7 mapped sections.
@@ -6228,12 +6192,12 @@ Conservative post-quantum KEM using plain LWE with no ring structure. LWE from f
 A browser-based FROST (RFC 9591) walkthrough where any qualified signer subset can produce one standard Ed25519 signature without key reassembly.
 
 - **Card topics (discovery only):** FROST (RFC 9591), Ed25519, Nonce Commitments, VSS Commitments — labels do not establish what any section runs.
-- **Implements:** Ed25519 `src/exhibits/attacks.ts:31`, FROST `crate/src/round2.rs:54`, SHA-512 `src/exhibits/attacks.ts:75`, Shamir secret sharing `src/exhibits/attacks.ts:105`
-- **Source review:** [f5fba38fe404](https://github.com/systemslibrarian/crypto-lab-frost-threshold/commit/f5fba38fe404741b8c72e83921d1025f12ca36d2) — Re-read Rust round2 bridge, TypeScript keygen/signing/binding transcript and honest-response consistency experiment after verified PR23 at this exact SHA. Rust FROST/WASM signing remains distinct from the local RFC9591 Ed25519 teaching engine; SHA-512 is computed by WebCrypto. Shamir samples scalar coefficients and evaluates f(id); Lagrange weights reconstruct. AppendixE.1 transcript/rho/share/signature controls and real nonce-reuse forgery inspected; the rho=1 honest control and R-only inconsistency rejection do not mount a concurrent ROS/Drijvers forgery. Prior successful10Rust/9unit/7browser gates and exact published artifact byte checks retained, not independent compiler reproduction. Re-read the 12 October adaptive-research integration and full prior-pin diff: Rust/core arithmetic and runtime crypto provider lock entries are unchanged. The new context and contrast repairs do not implement masking or an LDVR attack. Local 10 Rust, 9 unit and 7 browser checks passed; the standard GitHub build and deployment also passed at this pin. The discrete-log bounds quoted in the new research panel are not an attack executed here, so that attack credit is removed; actual nonce-reuse and recovery exhibits remain.
-- **References:** ECDSA, Feldman VSS, ML-DSA, Pedersen commitment, Schnorr, X25519, secp256k1
-- **Attacks shown:** Key recovery `src/exhibits/round1.ts:60`, Nonce reuse `src/exhibits/attacks-view.ts:2`, Side-channel (unspecified) `THREAT_MODEL.md:47`
+- **Implements:** BLS signatures `src/ats/bls-ats.ts:224`, BLS12-381 `src/ats/bls-ats.ts:20`, Ed25519 `src/exhibits/attacks.ts:31`, FROST `crate/src/round2.rs:54`, Hash-to-curve `src/ats/bls-ats.ts:163`, Pairing `src/ats/bls-ats.ts:205`, SHA-512 `src/exhibits/attacks.ts:75`, Shamir secret sharing `src/exhibits/attacks.ts:105`
+- **Source review:** [0fe5f12bf394](https://github.com/systemslibrarian/crypto-lab-frost-threshold/commit/0fe5f12bf39412ec0c5ffb9301f1b66cb46df647) — Re-read the committed Rust round2 bridge, TypeScript FROST keygen/signing/binding transcript, Shamir arithmetic and accountable-threshold-signature extension. FROST/WASM signing remains distinct from the local RFC 9591 teaching engine. The new ATS exhibit uses real @noble BLS12-381 G1 signatures and G2 public keys, proof-of-possession registration, pairing verification, a signer bitmap, exact threshold checks, trace output, corrupted-share blame, framing attempts and an explicitly unsafe no-PoP rogue-key control. It does not solve dealer framing. Discrete-log bounds remain explanatory rather than an executed attack, and THREAT_MODEL.md explicitly places side channels outside scope; the nonce-reuse and recovery exhibits remain real.
+- **References:** ECDSA, Feldman VSS, ML-DSA, Pedersen commitment, SHA-256, Schnorr, X25519, secp256k1
+- **Attacks shown:** Key recovery `src/exhibits/round1.ts:60`, Nonce reuse `src/exhibits/attacks-view.ts:2`
 - **Standards body:** IETF, NIST
-- **Implementation:** Rust FROST crate / WASM
+- **Implementation:** Rust FROST crate / WASM + @noble BLS12-381 ATS
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0fe5f12bf394](https://github.com/systemslibrarian/crypto-lab-frost-threshold/commit/0fe5f12bf39412ec0c5ffb9301f1b66cb46df647) reviewed 2026-10-22; 9 mapped sections.
   - **Private FROST versus accountable BLS** (`accountable-bls`; comparison; real-crypto)
     - **Visible section:** Who signed? Private versus accountable
@@ -6986,9 +6950,9 @@ Find truncated-SHA-256 collisions, transfer a tag in an insecure hash-then-MAC c
 
 - **Card topics (discovery only):** Truncated SHA-256, Floyd Cycle Finding, Hellman / Rainbow Chains, HMAC-SHA-256 — labels do not establish what any section runs.
 - **Implements:** Floyd cycle finding `src/attack/floyd.ts:2`, Hellman chains `src/attack/tmto/tables.ts:8`, HMAC `src/mac/hashAndMac.ts:2`, Rainbow chains `src/attack/tmto/tables.ts:8`, SHA-256 `src/hash/truncate.ts:3`
-- **Source review:** [3c766455e051](https://github.com/systemslibrarian/crypto-lab-hash-hunt/commit/3c766455e051b48adb6af5356cb81257770f4ab4) — Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint chain regeneration and salts sampled after precomputation. The tag transfer attacks a deliberately collision-prone hash-then-MAC composition, not HMAC or full SHA-256. Hellman uses one reduction column per table; rainbow varies the column. Coverage sets and diagnostic traces are additional memory. Length extension is a neighboring topic, not an executed exhibit. All 21 units, eight browser claims, two accessibility views and eleven mutations passed; this pin only clarifies README scope and integration.
-- **References:** Grover's algorithm, MD5, Merkle tree, SHA-1, bcrypt
-- **Attacks shown:** Collision attack `README.md:14`
+- **Source review:** [187c35ca4dd2](https://github.com/systemslibrarian/crypto-lab-hash-hunt/commit/187c35ca4dd295df7a17d8eef4b6bae442790d51) — Read exact MSB truncation, independent SHA checks, collision predecessor recovery, injective meaningful-letter mapping, platform HMAC sign/verify, endpoint-chain regeneration, salt timing and the new Joux exhibit. Joux chains real compression-function collisions in a deliberately tiny, length-strengthened Merkle-Damgard construction into 2^b messages, then searches that family for a collision under a second hash with independent message and cascade verification. It is not a break of full SHA-256, a length-extension attack, a Merkle tree or a second-preimage claim. The tag transfer attacks hash-then-MAC rather than HMAC; Hellman and rainbow retain their distinct reductions. Joux multicollision is not in the current catalog vocabulary, so no unsupported label is added.
+- **References:** Grover's algorithm, MD5, SHA-1, bcrypt
+- **Attacks shown:** Birthday bound `brief-extension.md:61`, Collision attack `README.md:14`
 - **Standards body:** IETF, NIST
 - **Implementation:** noble SHA-256 / WebCrypto HMAC / local attack engines
 - **Overlaps:** `crypto-lab-collision-vault` — Collision Vault studies published collision examples and hash constructions; Hash Hunt runs generic searches on deliberately truncated SHA-256, meaningful-message forgery and measured table tradeoffs. crypto-lab-kdf-arena: KDF Arena compares password derivation; Hash Hunt demonstrates why fresh salts prevent reuse of an unsalted table.
@@ -7179,9 +7143,9 @@ An educational HAWK lab covering integer-only lattice signatures, discrete Gauss
 Test selected security games and reductions, then follow a three-level GGM tree built from an AES-based expansion beside a broken repeated-seed generator. Measured advantage depends on the stated attacker and trials.
 
 - **Card topics (discovery only):** IND-CPA, EUF-CMA, PRP/PRF Switching, DDH Reduction — labels do not establish what any section runs.
-- **Implements:** AES `src/schemes/aes-modes.ts:10`, AES-CBC `src/schemes/aes-modes.ts:37`, AES-CTR `src/schemes/aes-modes.ts:47`, AES-GCM `src/schemes/aes-modes.ts:59`, Diffie-Hellman `src/reduction/ddh.ts:74`, ECDSA `src/schemes/ecdsa.ts:10`, Ed25519 `src/schemes/ed25519.ts:3`, ElGamal `src/game/cca.ts:34`, Hash-to-curve `src/schemes/elgamal.ts:29`, P-256 `src/kats.ts:21`, ristretto255 `src/schemes/elgamal.ts:22`, RSA `src/game/cca.ts:84`, RSA-OAEP `src/game/cca.ts:84`, RSA-PSS `src/schemes/rsa-pss.ts:4`, secp256k1 `src/schemes/ecdsa.ts:1`, SHA-256 `src/schemes/rsa-textbook.ts:52`
+- **Implements:** AES `src/prf/ggm.ts:21`, AES-CBC `src/schemes/aes-modes.ts:37`, AES-CTR `src/schemes/aes-modes.ts:47`, AES-GCM `src/schemes/aes-modes.ts:59`, Diffie-Hellman `src/reduction/ddh.ts:87`, ECDSA `src/schemes/ecdsa.ts:10`, Ed25519 `src/schemes/ed25519.ts:3`, ElGamal `src/game/cca.ts:34`, Hash-to-curve `src/schemes/elgamal.ts:29`, P-256 `src/kats.ts:3`, ristretto255 `src/schemes/elgamal.ts:22`, RSA `src/game/cca.ts:84`, RSA-OAEP `src/game/cca.ts:84`, RSA-PSS `src/schemes/rsa-pss.ts:4`, secp256k1 `src/schemes/ecdsa.ts:1`, SHA-256 `src/schemes/rsa-textbook.ts:52`
 - **References:** AES-ECB, Goldwasser–Micali, ML-KEM, SHA-512, Simon
-- **Attacks shown:** Chosen-ciphertext attack `src/game/cca.ts:34`, Chosen-plaintext attack `src/game/challenger.ts:24`, Ciphertext malleability `README.md:41`, Signature malleability `README.md:43`
+- **Attacks shown:** Chosen-ciphertext attack `src/game/cca.ts:1`, Chosen-plaintext attack `src/game/challenger.ts:18`, Ciphertext malleability `README.md:41`, Signature malleability `README.md:43`
 - **Standards body:** IETF, NIST, SECG
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [cb12d6008ee4](https://github.com/systemslibrarian/crypto-lab-hidden-bit/commit/cb12d6008ee43d8335cf413bcd1cb0895e672ec2) reviewed 2026-10-22; 6 mapped sections.
@@ -7376,9 +7340,9 @@ A cache-channel simulation inspired by HQC decryption-oracle attacks, using a re
 Explore an illustrative HQC-style KEM with quasi-cyclic arithmetic, Reed-Muller/Reed-Solomon decoding, and AES-GCM messaging. Compare published 2026 HQC sizes with BIKE and ML-KEM; the small browser model retains an older FO tag and is not current-spec HQC.
 
 - **Card topics (discovery only):** HQC, Reed-Muller, Reed-Solomon, Post-Quantum — labels do not establish what any section runs.
-- **Implements:** AES `src/main.ts:721`, AES-GCM `src/hqc.ts:370`, HQC `src/budget.ts:8`, SHA-256 `src/hqc.ts:222`
+- **Implements:** AES `src/main.ts:735`, AES-GCM `src/hqc.ts:374`, HQC `src/budget.ts:8`, SHA-256 `src/hqc.ts:226`
 - **References:** BIKE, Classic McEliece, Dilithium, Fujisaki-Okamoto transform, Kyber, LWE, ML-KEM, RSA, Reed-Muller, Reed-Solomon
-- **Attacks shown:** Chosen-ciphertext attack `src/glossary.ts:6`, Chosen-plaintext attack `src/glossary.ts:14`, Fault injection `src/main.ts:274`, Key recovery `src/main.ts:271`, Side-channel (unspecified) `src/glossary.ts:72`, Timing side-channel `README.md:30`
+- **Attacks shown:** Chosen-ciphertext attack `src/glossary.ts:6`, Chosen-plaintext attack `src/glossary.ts:14`, Fault injection `src/main.ts:286`, Key recovery `src/main.ts:283`, Side-channel (unspecified) `src/glossary.ts:72`, Timing side-channel `README.md:32`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [55575851a069](https://github.com/systemslibrarian/crypto-lab-hqc-vault/commit/55575851a069914cddc33e5025edd519a7f9e391) reviewed 2026-10-22; 13 mapped sections.
@@ -7756,7 +7720,8 @@ Combine real X25519 and ML-KEM-768 in a custom teaching handshake, then step thr
 Boneh-Franklin identity-based encryption on BLS12-381 with setup, private-key extraction, encrypt/decrypt flow, and an honest look at the escrow tradeoff.
 
 - **Card topics (discovery only):** Boneh-Franklin, BLS12-381, Identity-Based Encryption, Key Escrow — labels do not establish what any section runs.
-- **Implements:** BLS signatures `src/pairing.ts:11`, BLS12-381 `src/pairing.ts:11`, Boneh-Franklin IBE `src/main.ts:583`, Hash-to-curve `src/pairing.ts:58`, Pairing `src/ibe.ts:176`, SHA-256 `src/pairing.ts:79`
+- **Implements:** BLS12-381 `src/pairing.ts:11`, Boneh-Franklin IBE `src/main.ts:583`, Hash-to-curve `src/pairing.ts:58`, Pairing `src/ibe.ts:176`, SHA-256 `src/pairing.ts:79`
+- **Source review:** [b249b17c883b](https://github.com/systemslibrarian/crypto-lab-ibe-gate/commit/b249b17c883b4472ca4ef702866fc609d2c7e943) — Read the committed README and src implementation at this pin. IBE Gate implements Boneh-Franklin BasicIdent setup, extraction, encryption and decryption with BLS12-381 group arithmetic and pairings, including the PKG escrow lesson. Its bls binding supplies curve and pairing operations; no BLS signature is created or verified. Remove that false signature credit while preserving the actual IBE, BLS12-381, hash-to-curve and pairing operations. The comparison with Signature Gate is a teaching-role review, not a new security or conformance claim.
 - **References:** Diffie-Hellman, EC point arithmetic, FROST, Fujisaki-Okamoto transform, RSA, RSA-OAEP, Shamir secret sharing
 - **Attacks shown:** Chosen-ciphertext attack `README.md:49`, Chosen-plaintext attack `src/main.ts:402`, Ciphertext malleability `src/main.ts:405`
 - **Standards body:** IETF, NIST
@@ -8341,7 +8306,7 @@ HKDF, PBKDF2, scrypt, and Argon2id compared side by side with live parameter tun
 - **Card topics (discovery only):** HKDF, PBKDF2, scrypt, Argon2id — labels do not establish what any section runs.
 - **Implements:** Argon2 `src/argon2.ts:26`, HKDF `src/hkdf.ts:14`, HMAC `src/pbkdf2.ts:105`, PBKDF2 `src/pbkdf2.ts:20`, scrypt `src/scrypt.ts:43`, SHA-256 `src/pbkdf2.ts:41`, SHA-512 `src/pbkdf2.ts:48`
 - **References:** BLAKE2, ChaCha20, ChaCha20-Poly1305, Diffie-Hellman, Double Ratchet, MD5, Noise protocol, Poly1305, Salsa20, TLS 1.3, bcrypt
-- **Attacks shown:** Side-channel (unspecified) `src/ui.ts:664`
+- **Attacks shown:** Side-channel (unspecified) `src/decision.ts:59`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-kdf-arena` — kdf-chain teaches what problem each KDF solves and walks a decision tree for choosing one; kdf-arena benchmarks the same four side by side and reports attacker cost against wall-clock time
@@ -8545,7 +8510,7 @@ A walkthrough of key exchange across history and protocol families — from Diff
 - **Card topics (discovery only):** Diffie-Hellman, ECDH, X25519, ML-KEM — labels do not establish what any section runs.
 - **Implements:** AES `src/engine.ts:181`, AES-GCM `src/engine.ts:181`, Diffie-Hellman `src/engine.ts:55`, EC point arithmetic `src/engine.ts:404`, ECDH `src/engine.ts:422`, Ed25519 `src/engine.ts:24`, HKDF `src/engine.ts:164`, LWE `src/ui.ts:1860`, Merkle tree `src/merkle/aes.ts:11`, ML-KEM `src/engine.ts:476`, SHA-256 `src/engine.ts:26`, Shor's algorithm `src/ui.ts:1491`, X25519 `src/engine.ts:24`
 - **References:** AES-CBC, AES-ECB, Double Ratchet, Grover's algorithm, Index calculus, Isogeny walk, Kyber, NTT, Noise protocol, P-256, PQXDH, RSA, SIKE, TLS 1.3, X3DH
-- **Attacks shown:** Brute force `src/merkle/eve-core.ts:83`, Chosen-ciphertext attack `src/data.ts:330`, Discrete log `src/data.ts:29`, Factoring `src/data.ts:151`, Invalid curve attack `README.md:42`, Key recovery `src/data.ts:292`, Man-in-the-middle `src/engine.ts:99`
+- **Attacks shown:** Brute force `src/merkle/eve-core.ts:83`, Chosen-ciphertext attack `src/data.ts:330`, Discrete log `src/data.ts:29`, Factoring `src/data.ts:151`, Invalid curve attack `README.md:50`, Key recovery `src/data.ts:292`, Man-in-the-middle `src/engine.ts:99`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [82024ed0adb0](https://github.com/systemslibrarian/crypto-lab-key-exchange/commit/82024ed0adb0a55130304851fa2f7c3f9c191a3c) reviewed 2026-10-22; 9 mapped sections.
@@ -8769,6 +8734,7 @@ Historical AIM2-based AIMer signing, with a reported public-key-only forgery vul
 
 - **Card topics (discovery only):** AIMer, NTRU+, KpqC, Lattice — labels do not establish what any section runs.
 - **Implements:** AIMer `src/aimer/reference.ts:12`, NTRU+ `src/ntruplus/reference.ts:22`, SHAKE `src/aimer/aim.ts:127`
+- **Source review:** [5829644c4dde](https://github.com/systemslibrarian/crypto-lab-kpqc-pair/commit/5829644c4dde3034b23839542e47f91a27dc8bd4) — Read the committed README and NTRU+ implementation and UI at this pin. The October research note summarizes model estimates for a module-lattice attack and explicitly says this lab does not execute that attack. Preserve the real NTRU+ and AIMer implementations while excluding the research-only lattice-reduction credit.
 - **References:** Fiat-Shamir, HAETAE, NTRU, SHA-256, SHA-3, SMAUG-T, Shamir secret sharing
 - **Standards body:** NIST
 - **Implementation:** @noble
@@ -9383,10 +9349,10 @@ Generate a public key and a separate, mathematically related private key. Encryp
 Recover exponents in fields and a toy curve, then expose how smooth order, short secrets and field representation change the attack.
 
 - **Card topics (discovery only):** BSGS, Pollard Rho / Kangaroo, Pohlig–Hellman, Index Calculus — labels do not establish what any section runs.
-- **Implements:** Baby-step giant-step `src/dlog/generic/bsgs.ts:2`, EC point arithmetic `src/group/ec.ts:4`, Index calculus `src/dlog/index/calculus.ts:4`, Pohlig–Hellman `src/dlog/pohlig.ts:3`, Pollard kangaroo `src/dlog/generic/kangaroo.ts:3`, Pollard rho (discrete log) `src/dlog/generic/rho.ts:3`
-- **Source review:** [2b5ade3940e3](https://github.com/systemslibrarian/crypto-lab-log-forge/commit/2b5ade3940e3ae2879823c40cbc0587be6655aef) — Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig–Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation.
-- **References:** Diffie-Hellman, ElGamal, Floyd cycle finding, Shor's algorithm
-- **Attacks shown:** Brute force `src/main.ts:3`, Discrete log `src/main.ts:3`
+- **Implements:** Baby-step giant-step `src/dlog/aux/cheon.ts:10`, EC point arithmetic `src/group/ec.ts:4`, Index calculus `src/dlog/index/calculus.ts:4`, Miller–Rabin `src/data/orders.ts:17`, Pohlig–Hellman `src/dlog/pohlig.ts:3`, Pollard kangaroo `src/dlog/generic/kangaroo.ts:3`, Pollard rho (discrete log) `src/dlog/generic/rho.ts:3`
+- **Source review:** [d81c706537f4](https://github.com/systemslibrarian/crypto-lab-log-forge/commit/d81c706537f4946c60b5f9dcc24f6ba2e5e3d15e) — Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig-Hellman digit lifting and CRT, safe-prime index calculus, the toy curve and the new static-DH exhibit. The committed oracle validates subgroup inputs yet returns raw v^alpha answers; Cheon's q-1 construction consumes the answer chain, runs two exponent-subgroup BSGS passes and independently verifies the recovered exponent. The q+1 variant and attacks on the displayed real groups are not implemented, and TLS/OPRF are scope context rather than protocol implementations. Cheon is not in the current catalog vocabulary. Factored group order remains input rather than an integer-factoring attack, and MITM remains a related-demo link.
+- **References:** CKKS, Diffie-Hellman, ElGamal, Floyd cycle finding, HKDF, OPRF, P-256, P-384, Privacy Pass, SHA-384, Shor's algorithm, TLS 1.3, X25519, ristretto255, secp256k1
+- **Attacks shown:** Brute force `src/main.ts:3`, Discrete log `src/main.ts:3`, Key recovery `src/ui/static.ts:41`
 - **Standards body:** —
 - **Implementation:** local generic group solvers / finite-field and toy-curve arithmetic
 - **Overlaps:** `crypto-lab-function-key` — Function Key uses bounded discrete logarithms to decode an inner product; Log Forge compares recovery algorithms and weak-parameter choices. crypto-lab-factor-forge: Factor Forge attacks integer factorisation; Log Forge attacks exponent recovery in finite fields and a toy curve.
@@ -9503,9 +9469,10 @@ Counts how many leakage hints collapse an LWE lattice problem on sparse ternary 
 HMAC, CMAC, Poly1305, and GHASH compared with live length extension attack, timing attack, and nonce reuse demonstrations. Real WebCrypto operations.
 
 - **Card topics (discovery only):** HMAC, CMAC, Poly1305, GHASH — labels do not establish what any section runs.
-- **Implements:** AES `src/cmac.ts:39`, AES-CBC `src/cmac.ts:73`, CMAC `src/cmac.ts:113`, CRC-32 `src/crc/crc32.ts:14`, GHASH `src/ghash.ts:97`, HMAC `src/crc/hmac-receiver.ts:2`, Poly1305 `src/poly1305.ts:110`, SHA-256 `src/lengthext.ts:39`
-- **References:** AES-GCM, BLAKE3, ChaCha20, ChaCha20-Poly1305, MD5, SHA-1, SHA-3, SHA-512, TLS 1.3
-- **Attacks shown:** Brute force `src/ui.ts:466`, Length extension `src/lengthext.ts:5`, Nonce reuse `src/crc/panel.ts:57`, Side-channel (unspecified) `src/ui.ts:465`, Timing side-channel `src/crc/panel.ts:60`
+- **Implements:** AES `src/cmac.ts:39`, AES-CBC `src/cmac.ts:74`, CMAC `src/cmac.ts:114`, CRC-32 `src/crc/crc32.ts:14`, GHASH `src/ghash.ts:97`, HMAC `src/crc/hmac-receiver.ts:2`, Poly1305 `src/poly1305.ts:110`, SHA-256 `src/lengthext.ts:39`
+- **Source review:** [06b1646ca40d](https://github.com/systemslibrarian/crypto-lab-mac-race/commit/06b1646ca40d49a8805ddee5b2d6d78b17ce8bcd) — Read the committed README, MAC implementations and CBC-MAC extension brief at this pin. Padding oracle appears only in that future-work brief's inventory of sibling labs; Mac Race does not execute a padding-oracle attack. Preserve its actual MAC, length-extension, timing and forgery exhibits while excluding the sibling-only credit.
+- **References:** AES-CCM, AES-GCM, BLAKE3, ChaCha20, ChaCha20-Poly1305, FF1, Format-transforming encryption, MD5, SHA-1, SHA-3, SHA-512, Simon, TLS 1.3
+- **Attacks shown:** Brute force `src/ui.ts:470`, Length extension `src/lengthext.ts:5`, Nonce reuse `src/crc/panel.ts:57`, Side-channel (unspecified) `src/ui.ts:469`, Timing side-channel `src/crc/panel.ts:60`
 - **Standards body:** IEEE, IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [06b1646ca40d](https://github.com/systemslibrarian/crypto-lab-mac-race/commit/06b1646ca40d49a8805ddee5b2d6d78b17ce8bcd) reviewed 2026-10-22; 8 mapped sections.
@@ -9574,7 +9541,7 @@ First-order Boolean masking flattens the CPA that Power Trace runs — so combin
 
 - **Card topics (discovery only):** Boolean Masking, Second-Order CPA, AES-128, Centered Product — labels do not establish what any section runs.
 - **Implements:** AES `src/attack/cpa.ts:23`
-- **References:** Pairing
+- **References:** HQC, Pairing
 - **Attacks shown:** Chosen-plaintext attack `src/attack/dpa.ts:24`, Power analysis `src/claims/bands.ts:150`, Side-channel (unspecified) `src/main.ts:60`, Timing side-channel `README.md:18`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
@@ -9627,9 +9594,9 @@ Run Matsui-style linear analysis on a toy SPN, compare single-trail predictions 
 
 - **Card topics (discovery only):** Linear Cryptanalysis, LAT, Piling-Up Lemma, Known-Plaintext — labels do not establish what any section runs.
 - **Implements:** Toy SPN `src/crypto/spn.ts:66`
-- **Source review:** [ab776f90b3b6](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9) — Reviewed the current source and October 22 change inventory. The toy SPN implementation anchor at src/crypto/spn.ts:66 is unchanged. The lab now distinguishes single trails from the full key-dependent linear hull and compares repeated with distinct plaintext sampling at the same budget, with uncertainty intervals and coverage counts. These are bounded toy-SPN attack experiments, not a full DES attack or a reproduction of the linked ChaCha paper attack.
+- **Source review:** [ab776f90b3b6](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9) — Reviewed the current source and October 22 change inventory. The toy SPN implementation anchor at src/crypto/spn.ts:66 is unchanged. The lab now distinguishes single trails from the full key-dependent linear hull and compares repeated with distinct plaintext sampling at the same budget, with uncertainty intervals and coverage counts. These are bounded toy-SPN attack experiments, not a full DES attack or a reproduction of the linked ChaCha paper attack. The README's ‘brute-force count’ describes independent exhaustive verification, not the catalog's brute-force attack; chosen plaintexts and differential cryptanalysis appear in the pair-mate comparison, not an attack executed by this lab. Preserve the actual known-plaintext linear key-recovery experiment while excluding those three false credits.
 - **References:** AES, ChaCha20, DES, Enigma, Serpent, Shamir secret sharing, Vigenere cipher
-- **Attacks shown:** Key recovery `src/crypto/attack.ts:211`, Known-plaintext attack `src/crypto/attack.ts:46`, Linear cryptanalysis `src/crypto/attack.ts:211`
+- **Attacks shown:** Key recovery `index.html:19`, Known-plaintext attack `src/ui/piling.ts:105`, Linear cryptanalysis `src/main.ts:263`
 - **Standards body:** —
 - **Implementation:** hand-rolled
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ab776f90b3b6](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9) reviewed 2026-10-22; 9 mapped sections.
@@ -10061,8 +10028,8 @@ Run MISTY1 and KASUMI side by side, map the design changes between them, and exe
 An RFC 9420-inspired teaching subset for TreeKEM, epoch keys, member changes, and group messages, plus a conceptual comparison of proposed PQ MLS suites. The live flow remains classical and omits signatures, authenticated framing, and confirmation tags; it does not provide full MLS security guarantees.
 
 - **Card topics (discovery only):** MLS Teaching Subset, TreeKEM, Epoch Key Schedule, Group Epochs — labels do not establish what any section runs.
-- **Implements:** AES `src/crypto/hpke.ts:32`, AES-GCM `src/crypto/hpke.ts:32`, Diffie-Hellman `src/crypto/hpke.ts:48`, HKDF `src/crypto/hkdf.ts:11`, HPKE `src/crypto/hpke.ts:65`, MLS `src/app.ts:471`, SHA-256 `src/crypto/ciphersuite.ts:36`, X25519 `src/crypto/hpke.ts:1`, X3DH `src/app.ts:469`
-- **References:** DHKEM, Double Ratchet, EC point arithmetic, Ed25519, Kerberos, ML-KEM, Noise protocol
+- **Implements:** AES `src/crypto/hpke.ts:32`, AES-GCM `src/crypto/hpke.ts:32`, Diffie-Hellman `src/crypto/hpke.ts:48`, HKDF `src/crypto/hkdf.ts:11`, HPKE `src/crypto/hpke.ts:65`, MLS `src/app.ts:472`, SHA-256 `src/crypto/ciphersuite.ts:36`, X25519 `src/crypto/hpke.ts:1`, X3DH `src/app.ts:470`
+- **References:** ChaCha20, ChaCha20-Poly1305, DHKEM, Double Ratchet, EC point arithmetic, Ed25519, Kerberos, ML-DSA, ML-KEM, Noise protocol, Pairing, Poly1305, SHA-384
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fbb4b35a457e](https://github.com/systemslibrarian/crypto-lab-mls-group/commit/fbb4b35a457e5d005e6fda21e829913301a6ac22) reviewed 2026-10-22; 11 mapped sections.
@@ -10205,6 +10172,7 @@ Post-quantum signatures from MPC-in-the-Head with additive secret sharing, SHA-2
 
 - **Card topics (discovery only):** MPC-in-the-Head, Fiat-Shamir, SHA-256 Commitments, Merkle Proofs — labels do not establish what any section runs.
 - **Implements:** Fiat-Shamir `src/main.ts:447`, Merkle tree `src/sharing.ts:155`, SHA-256 `src/mpcith.ts:160`
+- **Source review:** [6b50a9533117](https://github.com/systemslibrarian/crypto-lab-mpcith-sign/commit/6b50a953311753ba20adc61c4ac4172789b4a2fa) — Read the committed README, toy PERK-style signing source and research disclosure at this pin. The disclosure summarizes published DPA-style attacks on FAEST and SDitH, then explicitly says this lab implements neither scheme and does not reproduce the attacks. Preserve the live toy MPC-in-the-head signing work while excluding the research-only power-analysis credit.
 - **References:** AES, Dilithium, Falcon, ML-DSA, NTRU, SLH-DSA, SPHINCS+, UOV
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
@@ -10560,9 +10528,10 @@ Compare pinned SP 800-90B and Theseus results on seven reproducible inputs, insp
 Compare nonce reuse in AES-CTR, AES-GCM and ChaCha20-Poly1305 with a separate AES-CBC predictable-IV chosen-plaintext exercise. Observe keystream reuse and authenticated-mode forgery under each stated condition.
 
 - **Card topics (discovery only):** AES-GCM, ChaCha20-Poly1305, Forbidden Attack, Crib Dragging — labels do not establish what any section runs.
-- **Implements:** AES `src/crypto/aes.ts:78`, AES-CBC `src/crypto/aes.ts:94`, AES-CTR `src/crypto/aes.ts:78`, AES-GCM `src/crypto/aes.ts:157`, ChaCha20 `src/crypto/chacha20.ts:44`, ChaCha20-Poly1305 `src/crypto/aead.ts:70`, GHASH `src/crypto/ghash-attack.ts:46`, Poly1305 `src/crypto/aead.ts:48`
-- **References:** AES-SIV, ChaCha20-Poly1305
-- **Attacks shown:** Birthday bound `src/crypto/nonce.ts:16`, Chosen-plaintext attack `src/main.ts:391`, IV reuse `src/main.ts:343`, Key recovery `src/crypto/poly1305.ts:117`, Nonce reuse `src/crypto/aes.ts:242`
+- **Implements:** AES `src/crypto/aes.ts:78`, AES-CBC `src/crypto/aes.ts:94`, AES-CTR `src/crypto/aes.ts:78`, AES-GCM `src/crypto/aes.ts:157`, ChaCha20 `src/crypto/chacha20.ts:44`, ChaCha20-Poly1305 `src/crypto/aead.ts:70`, GHASH `src/crypto/aes.ts:204`, Poly1305 `src/crypto/aead.ts:48`
+- **Source review:** [67b5574673ca](https://github.com/systemslibrarian/crypto-lab-nonce-collision/commit/67b5574673ca767f9ad4d594663665c6075b9ca4) — Read the committed README and nonce-reuse implementation at this pin. The hand-written chachaPolyEncrypt/chachaPolyVerify path performs ChaCha20-Poly1305 AEAD with Poly1305 framing and verification, although the local function name omits the scanner's literal ‘20’. Keep that real implementation credit. Padding oracle appears only in wording that explicitly distinguishes and skips that attack and in a Related Demos link; it is not executed here. Preserve the real CTR/AEAD/CBC reuse, predictable-IV, authentication-key and one-time-key recovery exhibits.
+- **References:** AES-SIV
+- **Attacks shown:** Birthday bound `README.md:29`, Chosen-plaintext attack `README.md:13`, IV reuse `README.md:13`, Key recovery `src/crypto/aead.ts:96`, Nonce reuse `src/crypto/aes.ts:263`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [67b5574673ca](https://github.com/systemslibrarian/crypto-lab-nonce-collision/commit/67b5574673ca767f9ad4d594663665c6075b9ca4) reviewed 2026-10-22; 10 mapped sections.
@@ -11020,9 +10989,9 @@ A column you can still sort or match on has already published the shape of its a
 Explore 1-of-2 private choice with real Edwards25519 arithmetic and AES-GCM, then connect it to all-or-nothing disclosure. A teaching version of Chou–Orlandi with explicit KDF and validation limits.
 
 - **Card topics (discovery only):** Simplest OT, Chou-Orlandi 2015, Edwards25519, AES-256-GCM — labels do not establish what any section runs.
-- **Implements:** AES `src/ext/prf.ts:9`, AES-CTR `src/ext/prf.ts:27`, AES-GCM `src/ot.ts:120`, Ed25519 `src/ext/base.ts:10`, Oblivious transfer `src/andos.ts:2`, SHA-256 `src/ext/base.ts:52`
+- **Implements:** AES `src/ext/prf.ts:9`, AES-CTR `src/ext/prf.ts:27`, AES-GCM `src/ot.ts:120`, Ed25519 `src/ext/base.ts:10`, Oblivious transfer `src/andos.ts:2`, SHA-256 `src/ext/base.ts:78`
 - **References:** Diffie-Hellman, EC point arithmetic, FROST, Garbled circuits, LWE, Private information retrieval, Private set intersection, Shamir secret sharing, Shor's algorithm, X25519
-- **Attacks shown:** Ciphertext malleability `README.md:47`, Discrete log `src/main.ts:156`, Known-plaintext attack `src/ext/corrupt-receiver.ts:161`
+- **Attacks shown:** Ciphertext malleability `README.md:55`, Discrete log `src/main.ts:156`, Known-plaintext attack `src/ext/corrupt-receiver.ts:165`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [32efdf590b9c](https://github.com/systemslibrarian/crypto-lab-ot-gate/commit/32efdf590b9cbc2d5b93639bdf1cff3a148d145e) reviewed 2026-10-22; 6 mapped sections.
@@ -11076,9 +11045,10 @@ Explore 1-of-2 private choice with real Edwards25519 arithmetic and AES-GCM, the
 Explore one-time-pad XOR and its precise uniform, secret, one-use key condition; compare message priors and biased pads, then try a two-time-pad reuse attack with crib dragging.
 
 - **Card topics (discovery only):** One-Time Pad, Perfect Secrecy, Two-Time Pad, Crib Dragging — labels do not establish what any section runs.
-- **Implements:** One-time pad `src/otp/otp.ts:36`
-- **References:** AES, AES-CTR, AES-GCM, AES-SIV, BB84, ChaCha20, Poly1305, SNOW 2.0, Vigenere cipher
-- **Attacks shown:** Nonce reuse `src/ui/keystreamReusePanel.ts:42`
+- **Implements:** One-time pad `src/otp/challenges.ts:22`, Vigenere cipher `src/otp/limits.ts:45`
+- **Source review:** [04b056901a33](https://github.com/systemslibrarian/crypto-lab-otp-vault/commit/04b056901a337a23cafc9340e8e8bf36b01fc06b) — Read the committed README, OTP panels and new exact prior/posterior comparison at this pin. Choosing a target plaintext for a fixed ciphertext demonstrates that every plaintext has a valid one-time-pad key; it is not a chosen-plaintext attack. Frequency analysis appears only in the Related Demos description of Vigenère Break. The new reuse model does execute a genuine known-plaintext attack: a known first plaintext/ciphertext pair reveals the reused pad and fixes the independent second message. Preserve that credit and the lab's nonce/key-reuse attack while excluding the two false matches.
+- **References:** AES, AES-CTR, AES-GCM, AES-SIV, BB84, ChaCha20, Poly1305, SHA-256, SNOW 2.0
+- **Attacks shown:** Known-plaintext attack `src/ui/priorComparison.ts:44`, Nonce reuse `src/ui/keystreamReusePanel.ts:113`
 - **Standards body:** —
 - **Implementation:** hand-rolled
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [04b056901a33](https://github.com/systemslibrarian/crypto-lab-otp-vault/commit/04b056901a337a23cafc9340e8e8bf36b01fc06b) reviewed 2026-10-22; 8 mapped sections.
@@ -11217,7 +11187,7 @@ Paillier's additive homomorphic cryptosystem with encrypt/decrypt, tallying with
 - **Card topics (discovery only):** Paillier, Additive HE, Private Voting, Aggregation — labels do not establish what any section runs.
 - **Implements:** HMAC `src/ballots.ts:46`, Paillier `src/aggregation.ts:1`, SHA-256 `src/ballots.ts:46`
 - **References:** BFV, BGV, EC point arithmetic, ECDSA, ElGamal, Shamir secret sharing
-- **Attacks shown:** Ciphertext malleability `src/main.ts:1285`, Discrete log `src/main.ts:144`, Factoring `src/factor.worker.ts:44`, Side-channel (unspecified) `README.md:36`
+- **Attacks shown:** Ciphertext malleability `src/main.ts:1292`, Discrete log `src/main.ts:144`, Factoring `src/factor.worker.ts:44`, Side-channel (unspecified) `README.md:36`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6d73ec5564b7](https://github.com/systemslibrarian/crypto-lab-paillier-gate/commit/6d73ec5564b75e3a595a74a0623e0b60380f6dfa) reviewed 2026-10-22; 6 mapped sections.
@@ -11491,7 +11461,7 @@ Model certificate-chain trust, CA compromise, signed revocation evidence and sta
 - **Card topics (discovery only):** X.509, Certificate Transparency, CA Compromise, ML-DSA Sizes Only — labels do not establish what any section runs.
 - **Implements:** ECDSA `src/ct.ts:324`, Merkle tree `src/ct.ts:156`, P-256 `src/ct.ts:359`, SHA-256 `src/ct.ts:110`
 - **References:** Dilithium, Kerberos, ML-DSA, Shor's algorithm
-- **Standards body:** IETF, NIST
+- **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0ee9ca34cecd](https://github.com/systemslibrarian/crypto-lab-pki-chain/commit/0ee9ca34cecdc1d434f013fa07b23865c56c382b) reviewed 2026-10-22; 8 mapped sections.
   - **Unauthorized Certificate Issuance** (`certificate-issuance`; explanation; conceptual)
@@ -11558,8 +11528,9 @@ Drag P and Q to see the geometric group law over real numbers, then switch to di
 
 - **Card topics (discovery only):** Group Law, Chord-and-Tangent, Scalar Mult, secp256k1 — labels do not establish what any section runs.
 - **Implements:** EC point arithmetic `src/math/curve-fp.ts:23`, secp256k1 `src/math/curves.ts:73`
+- **Source review:** [9b0ec4204aa0](https://github.com/systemslibrarian/crypto-lab-ec-point-arithmetic/commit/9b0ec4204aa0b36aa4ed4ca6b8763c197f1d0764) — Read the committed README and point-arithmetic source at this pin. The lab executes finite-field point addition, scalar multiplication and a bounded small-group discrete-log walk. Nonce reuse appears only in the Related Demos description of ECDSA Forge; this lab does not sign, reuse a nonce or perform the resulting recovery attack. Preserve its real brute-force and discrete-log teaching exhibits while excluding the neighboring-lab attack credit.
 - **References:** Baby-step giant-step, ECDH, ECDSA, Ed25519, EdDSA, Montgomery ladder, P-256, Tonelli–Shanks, X25519
-- **Attacks shown:** Brute force `src/ui/panel-hard.ts:61`, Discrete log `src/ui/panel-hard.ts:65`
+- **Attacks shown:** Brute force `src/ui/panel-hard.ts:115`, Discrete log `src/ui.ts:31`
 - **Standards body:** SECG
 - **Implementation:** hand-rolled
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9b0ec4204aa0](https://github.com/systemslibrarian/crypto-lab-ec-point-arithmetic/commit/9b0ec4204aa0b36aa4ed4ca6b8763c197f1d0764) reviewed 2026-10-22; 5 mapped sections.
@@ -11747,7 +11718,8 @@ Polynomial evaluation over GF(2¹³⁰−5), constant-time tag verification, key
 One polynomial committed three ways — KZG, IPA, FRI — then the failure nothing else teaches: omit the degree bound and every cryptographic check still passes while the low-degree claim is gone.
 
 - **Card topics (discovery only):** KZG, IPA, FRI, Degree Bound — labels do not establish what any section runs.
-- **Implements:** BLS signatures `src/crypto/bls.ts:15`, BLS12-381 `src/crypto/bls.ts:15`, FRI `src/crypto/fri.ts:83`, Groth16 `src/ui/act-compare.ts:170`, Hash-to-curve `src/crypto/bls.ts:171`, KZG commitment `src/crypto/compare.ts:108`, Merkle tree `src/crypto/compare.ts:30`, Pairing `src/crypto/bls.ts:83`, SHA-256 `src/crypto/kzg.ts:115`
+- **Implements:** BLS12-381 `src/crypto/bls.ts:15`, FRI `src/crypto/fri.ts:83`, Groth16 `src/ui/act-compare.ts:170`, Hash-to-curve `src/crypto/bls.ts:171`, KZG commitment `src/crypto/compare.ts:108`, Merkle tree `src/crypto/compare.ts:30`, Pairing `src/crypto/bls.ts:83`, SHA-256 `src/crypto/kzg.ts:115`
+- **Source review:** [24aa348a654b](https://github.com/systemslibrarian/crypto-lab-polynomial-forge/commit/24aa348a654b5521489aa5d607a3f99add7f34dd) — Read the committed README and src implementation at this pin. Polynomial Forge implements and compares KZG, IPA and FRI polynomial commitments; its BLS12-381 module performs KZG group, hash-to-field and pairing work, not BLS signing or verification. Remove the scanner's import-based BLS-signature credit while preserving the actual BLS12-381, hash-to-curve, pairing and commitment operations. The comparison with Signature Gate is a teaching-role review, not a new security or conformance claim.
 - **References:** Bulletproofs, EC point arithmetic, Fiat-Shamir, Grover's algorithm, Halo2, NTT, PLONK, Pedersen commitment, Reed-Solomon, STARK, Shor's algorithm
 - **Attacks shown:** Discrete log `src/crypto/compare.ts:159`
 - **Standards body:** IETF, NIST
@@ -11880,7 +11852,7 @@ Set constraints for a shortlist from schemes the browser can execute and measure
 - **Card topics (discovery only):** Derived Sizes, FIPS 203/204/205, Live Benchmark, TLS Wire Cost — labels do not establish what any section runs.
 - **Implements:** ECDSA `src/bench/runner.ts:324`, Falcon `src/derive/adapters.ts:30`, ML-DSA `src/derive/adapters.ts:16`, ML-KEM `src/derive/adapters.ts:15`, P-256 `src/bench/runner.ts:329`, RSA `src/bench/runner.ts:374`, SHA-256 `src/bench/runner.ts:330`, SLH-DSA `src/derive/adapters.ts:24`, X25519 `src/bench/runner.ts:250`
 - **Source review:** [0a5bbb106007](https://github.com/systemslibrarian/crypto-lab-pq-chooser/commit/0a5bbb1060078b7fcbacb467a0cd7ccaddbad660) — Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design. Re-read adapters, registry, benchmark runner and the full prior-pin diff on 12 October: runtime crypto provider entries and execution source are unchanged. SP800-230 limited-use draft profiles are reference-only and are excluded from the scheme registry, shortlist, benchmark matrix and exports; no draft adapter is implemented. Re-read the full prior-pin diff on 15 October (cfe96fd to 416ef46, two commits): a prose scoping change and a devDependency bump. The Falcon caveat, exclusion message and risk row now scope the floating-point sampler to the implementation this chooser measures and cite ePrint 2026/2431 for a fixed-point alternative it explicitly does not evaluate; the conservative exclusion is retained. No adapter, registry, shortlist, benchmark-matrix, export or provider entry changed, so every claim above still holds of the pinned source. Reviewed the 22 October HQC chooser disclosure and README diff. HQC is NIST-selected with a forthcoming FIPS, but remains outside the executable shortlist, excluded list and measured matrix because no HQC adapter is installed. The added UI panel is contextual; the registry, adapters, benchmark runner, provider entries and export paths are unchanged, so the earlier claims that displayed sizes come from actual runs and that Falcon sampler caveats are scoped to this implementation still hold.
-- **References:** Dilithium, ECDH, Kyber, NTRU, P-384, Pairing, SPHINCS+, TLS 1.3, UOV
+- **References:** Dilithium, ECDH, HQC, Kyber, NTRU, P-384, Pairing, SPHINCS+, TLS 1.3, UOV
 - **Attacks shown:** Key recovery `src/data/risk.ts:43`, Side-channel (unspecified) `src/choose/rules.ts:63`, Timing side-channel `src/data/risk.ts:80`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
@@ -11942,7 +11914,7 @@ Compare five post-quantum problem families, their assumptions, representative si
 - **Implements:** Information-set decoding `src/crypto.ts:240`, Lamport `src/crypto.ts:55`, SHA-256 `src/crypto.ts:35`
 - **Source review:** [ac2429239a36](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/ac2429239a3645c3c3455597f68f7c65856bb26d) — Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus. Reviewed the 21 October source-note, README and browser-check diff against the previous pinned head. The deterministic-CSIDH/OSIDH-LD fault preprint is reported context: software key recovery and a separate hardware instruction-skip experiment, not an executed attack in this lab. Cryptographic implementation files are unchanged; retain existing classifications. Reviewed the 22 October family-status and HQC-size diff: code-based is selected rather than standardized; Rainbow and SIKE remain broken individual schemes while multivariate and isogeny families remain research. The HQC-1 reference values use the 12 October 2026 team specification, including a 32-byte default compressed decapsulation key. crypto.ts executable exhibits are unchanged; the SQIsign power-analysis and CSIDH fault papers remain cited context, not implemented attacks. Prior Power analysis exclusion remains valid.
 - **References:** AES, ARIA, BIKE, CSIDH, Classic McEliece, Dilithium, ECDSA, Falcon, Fujisaki-Okamoto transform, Grover's algorithm, HQC, Isogeny walk, Kyber, LMS, LWE, ML-DSA, ML-KEM, Merkle tree, NTRU, P-256, Pairing, RSA, SHA-384, SHAKE, SIKE, SLH-DSA, SPHINCS+, Schnorr, Shamir secret sharing, Shor's algorithm, TLS 1.3, UOV, Winternitz, X25519, XMSS
-- **Attacks shown:** Birthday bound `src/data.ts:436`, Chosen-ciphertext attack `src/data.ts:205`, Chosen-plaintext attack `src/data.ts:921`, Differential cryptanalysis `src/data.ts:551`, Discrete log `src/data.ts:777`, Factoring `src/data.ts:777`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:157`, Side-channel (unspecified) `src/data.ts:242`, Timing side-channel `src/data.ts:310`
+- **Attacks shown:** Birthday bound `src/data.ts:449`, Chosen-ciphertext attack `src/data.ts:206`, Chosen-plaintext attack `src/data.ts:946`, Differential cryptanalysis `src/data.ts:564`, Discrete log `src/data.ts:802`, Factoring `src/data.ts:802`, Fault injection `src/data.ts:94`, Key recovery `src/data.ts:146`, Lattice reduction `src/data.ts:158`, Side-channel (unspecified) `src/data.ts:243`, Timing side-channel `src/data.ts:311`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ac2429239a36](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/ac2429239a3645c3c3455597f68f7c65856bb26d) reviewed 2026-10-22; 14 mapped sections.
@@ -12422,9 +12394,10 @@ A Dolev-Yao symbolic model checker that rediscovers Lowe's attack on Needham-Sch
 MAC-then-Encrypt vs Encrypt-then-MAC, padding oracle attack, CRIME, and the composition failures that drove TLS 1.3. Safe primitives composed unsafely break everything.
 
 - **Card topics (discovery only):** MAC-then-Encrypt, Encrypt-then-MAC, CRIME, TLS 1.3 context — labels do not establish what any section runs.
-- **Implements:** AES `src/compose.ts:47`, AES-CBC `src/compose.ts:47`, AES-GCM `src/compose.ts:57`, HMAC `src/compose.ts:95`, SHA-256 `src/compose.ts:52`
-- **References:** CMAC, ChaCha20, ChaCha20-Poly1305, GHASH, Poly1305, TLS 1.3
-- **Attacks shown:** Chosen-plaintext attack `README.md:27`, Length extension `src/main.ts:384`, Nonce reuse `README.md:20`, Padding oracle `src/attacks.ts:21`, Side-channel (unspecified) `src/attacks.ts:160`, Timing side-channel `src/main.ts:313`
+- **Implements:** AES `src/compose.ts:47`, AES-CBC `src/compose.ts:47`, AES-GCM `src/compose.ts:57`, ECDH `src/signcrypt.ts:25`, Ed25519 `src/signcrypt.ts:26`, HKDF `src/signcrypt.ts:34`, HMAC `src/compose.ts:95`, P-256 `src/signcrypt.ts:25`, SHA-256 `src/compose.ts:52`
+- **Source review:** [5dd48e8f4abf](https://github.com/systemslibrarian/crypto-lab-protocol-compose/commit/5dd48e8f4abf8d222985d1578da699c61c07b0ee) — Read the committed README and the complete sign-and-encrypt panel and implementation at this pin. The lab executes strip-and-resign, forwarding, ciphertext-tamper and signature-malleability controls over real ECDH, HKDF, AES-GCM and Ed25519. Chosen-ciphertext security is a requirement quoted from Katz–Lindell, not an attack mounted by this lab, so exclude that vocabulary match.
+- **References:** CMAC, ChaCha20, ChaCha20-Poly1305, EdDSA, GHASH, HPKE, Poly1305, TLS 1.3
+- **Attacks shown:** Chosen-plaintext attack `README.md:34`, Length extension `src/main.ts:385`, Nonce reuse `README.md:22`, Padding oracle `src/attacks.ts:21`, Side-channel (unspecified) `src/attacks.ts:160`, Timing side-channel `src/main.ts:314`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5dd48e8f4abf](https://github.com/systemslibrarian/crypto-lab-protocol-compose/commit/5dd48e8f4abf8d222985d1578da699c61c07b0ee) reviewed 2026-10-22; 6 mapped sections.
@@ -13208,9 +13181,9 @@ LSAG ring signatures — key image linkability, double-spend detection, group si
 Textbook RSA, OAEP, PSS signatures, and live attacks including small exponent and Bleichenbacher PKCS#1 v1.5 padding oracle. Real WebCrypto operations.
 
 - **Card topics (discovery only):** RSA, OAEP, PSS, PKCS#1 — labels do not establish what any section runs.
-- **Implements:** AES `src/hybrid.ts:73`, AES-GCM `src/hybrid.ts:66`, Miller–Rabin `src/textbook.ts:38`, RSA `src/textbook.ts:212`, RSA-OAEP `src/oaep-encode.ts:65`, RSA-PSS `src/pss-encode.ts:51`, SHA-256 `src/oaep-encode.ts:15`
-- **References:** ChaCha20, ChaCha20-Poly1305, Diffie-Hellman, Dilithium, ECDH, ECDSA, Ed25519, Kyber, ML-DSA, ML-KEM, P-256, Poly1305, Privacy Pass, Shor's algorithm, TLS 1.3, X25519
-- **Attacks shown:** Brute force `README.md:5`, Cache timing `index.html:1560`, Chosen-ciphertext attack `src/glossary.ts:42`, Chosen-plaintext attack `src/determinism.ts:68`, Ciphertext malleability `src/glossary.ts:46`, Factoring `src/attacks.ts:76`, Known-plaintext attack `index.html:1496`, Nonce reuse `README.md:60`, Padding oracle `src/attacks.ts:857`, Side-channel (unspecified) `index.html:1560`, Signature malleability `src/attacks.ts:124`
+- **Implements:** AES `src/hybrid.ts:73`, AES-GCM `src/hybrid.ts:66`, Miller–Rabin `src/textbook.ts:38`, RSA `src/jwk.ts:7`, RSA-OAEP `src/oaep-encode.ts:65`, RSA-PSS `src/pss-encode.ts:51`, SHA-256 `src/oaep-encode.ts:15`
+- **References:** ChaCha20, ChaCha20-Poly1305, Diffie-Hellman, Dilithium, ECDH, ECDSA, Ed25519, Kyber, ML-DSA, ML-KEM, P-256, Poly1305, Privacy Pass, Schnorr, Shor's algorithm, TLS 1.3, X25519
+- **Attacks shown:** Brute force `README.md:5`, Cache timing `index.html:1562`, Chosen-ciphertext attack `src/glossary.ts:42`, Chosen-plaintext attack `src/determinism.ts:68`, Ciphertext malleability `src/glossary.ts:46`, Factoring `src/attacks.ts:76`, Fault injection `src/extension-panels.ts:35`, Known-plaintext attack `index.html:1498`, Nonce reuse `README.md:68`, Padding oracle `src/attacks.ts:857`, Side-channel (unspecified) `index.html:1562`, Signature malleability `src/attacks.ts:124`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-hidden-bit` — rsa-forge is about RSA itself, its padding schemes and the attacks on them; hidden-bit is about the security DEFINITIONS, running IND-CPA, IND-CCA2 and EUF-CMA experiments in which RSA and AES are merely the schemes under test
@@ -13286,10 +13259,10 @@ Textbook RSA, OAEP, PSS signatures, and live attacks including small exponent an
 Recover a known-prefix textbook RSA message suffix or a larger prime from its high bits, then inspect exact lattice reduction, bounded integer-root search and public verification.
 
 - **Card topics (discovery only):** Textbook RSA, Coppersmith, Exact LLL, Sturm Search — labels do not establish what any section runs.
-- **Implements:** RSA `src/simulator/oracle.ts:23`
-- **Source review:** [71e571b0b852](https://github.com/systemslibrarian/crypto-lab-rsa-small-roots/commit/71e571b0b8524400a2c0e1f299adff8c46ee1087) — Read exact public challenge, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, strict finite/norm bounds, bounded Sturm search, worker allowlists and simulator acceptance at this SHA. Implements textbook exponent-3 RSA and larger-prime high-bit leakage attacks, not RSA-OAEP or RSA-PSS. Prediction, certificate, recovery and incomplete search remain distinct; not arbitrary RSA decryption. 43 unit/fixture and 14 browser/claim tests executed successfully. The inspected source is unchanged from the tested implementation; this SHA adds a JSON-report unit-count gate. Existing main run 37894238587 passed and published; live JavaScript and CSS matched the inspected build byte for byte. Publication was observed, not triggered by this maintenance session.
-- **References:** GGH, ML-KEM, Miller–Rabin, RSA-OAEP, SHA-256, Schnorr
-- **Attacks shown:** Factoring `README.md:57`, Lattice reduction `src/attacks/public.ts:3`
+- **Implements:** RSA `src/simulator/oracle.ts:57`
+- **Source review:** [763afac1320d](https://github.com/systemslibrarian/crypto-lab-rsa-small-roots/commit/763afac1320d2778d3b95e028c22d427e9b8d223) — Read the committed public challenges, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, bounded root search, worker allowlists and simulators. The new Wiener exhibit computes exact continued fractions and convergents, validates phi and the quadratic discriminant, recovers factors, and confirms an RSA round trip under the stated 81 d^4 < N guarantee. Boneh-Durfee is cited but not implemented. The lab implements textbook exponent-3 RSA, larger-prime high-bit leakage and Wiener's small-private-exponent attack, not RSA-OAEP or RSA-PSS; prediction, certificate, recovery and incomplete search remain distinct.
+- **References:** GGH, ML-KEM, Miller–Rabin, RSA-OAEP, SHA-256, Schnorr, Shor's algorithm
+- **Attacks shown:** Factoring `README.md:61`, Lattice reduction `src/attacks/public.ts:3`
 - **Standards body:** IETF
 - **Implementation:** hand-rolled
 - **Overlaps:** `crypto-lab-rsa-forge` — RSA Forge teaches CRT broadcast and other textbook-RSA failures; RSA Small Roots uses a known prefix or larger-prime high bits through exact integer lattices. crypto-lab-lll-break: LLL Break teaches reduction and toy attacks; RSA Small Roots separates a finite bound, a norm certificate and public verification in two RSA leakage models.
@@ -13887,8 +13860,9 @@ Classic PIR needs two servers that never collude. This needs one, under RLWE. Wa
 
 - **Card topics (discovery only):** BFV, RLWE, Single-Server PIR, Noise Budget — labels do not establish what any section runs.
 - **Implements:** BFV `src/pir/pir.ts:8`, ChaCha20 `src/pir/chacha20.ts:123`, Private information retrieval `src/pir/errors.ts:57`, SHA-256 `src/pir/records.ts:80`
+- **Source review:** [7f1fd7f2fcb9](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/commit/7f1fd7f2fcb914759593e1c1cf38e49713d705cb) — Read the committed README, PIR implementation and learner-facing scope after the decryption-feedback research update and Noble ChaCha20 cross-check. The new IND-CPA/IND-CPA-D passage summarizes attacks reported against particular BFV/BGV configurations and explicitly says this browser lab neither reproduces them nor establishes that its implementation is vulnerable, so it is not an executed chosen-plaintext attack. Preserve the measured data-dependent server timing as the lab's actual side-channel demonstration, along with the existing BFV, PIR, ChaCha20 and SHA-256 implementation credits. This classification review does not establish production security, constant-time execution or vulnerability to the cited research attacks.
 - **References:** BGV, DES, NTT, Poly1305, Private set intersection, Ring-LWE
-- **Attacks shown:** Side-channel (unspecified) `README.md:88`
+- **Attacks shown:** Side-channel (unspecified) `README.md:90`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [852f23ff8b40](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/commit/852f23ff8b406bd7f98f06cbea34f5cec6cca389) reviewed 2026-10-22; 9 mapped sections.
@@ -14005,7 +13979,7 @@ Become Bob: challenge real BLS12-381 proofs, change the claim, and expose Eve’
 
 - **Card topics (discovery only):** BLS12-381, OR Proofs, Challenge Timing, Research Preview — labels do not establish what any section runs.
 - **Implements:** BLS signatures `research/real-pairing/core.mjs:136`, BLS12-381 `research/real-pairing/core.mjs:106`, ECDSA `prototype/crypto.mjs:9`, Hash-to-curve `research/real-pairing/core.mjs:81`, P-256 `prototype/crypto.mjs:10`, Pairing `research/real-pairing/core.mjs:89`, SHA-256 `research/real-pairing/core.mjs:74`
-- **Source review:** [7c7f74d7efff](https://github.com/systemslibrarian/crypto-lab-confirmer-signatures/commit/7c7f74d7efff3a6c1cac227ef08b93d42cd184c1) — Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged.
+- **Source review:** [4cf5a00f4fd1](https://github.com/systemslibrarian/crypto-lab-confirmer-signatures/commit/4cf5a00f4fd11eb1dd3a343930859813f6e8da5d) — Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged. Re-read the current README, the full five-file scanner-unparsed Python set and the two-file diff from the prior pin. The Python consists of the independent py_ecc public-transcript verifier, symbolic algebra and exhaustive small-field checks, the Lean axiom-output guard and their negative/regression tests; it adds no uncredited named primitive or executed attack. Eight cross-library verifier tests, eight polynomial identities, 100,972 extraction cases and four axiom-guard controls pass from the committed archive. The application cryptography is unchanged; the intervening diff only expands a workflow path trigger and aligns a browser assertion with the already-published scope wording. Keep Python:5 visible as a scanner-coverage limit rather than pretending automatic coverage.
 - **Partially unread:** Python:5 — source or compiled binary not fully available for review here.
 - **References:** EC point arithmetic, ElGamal, Pedersen commitment, Schnorr, Shamir secret sharing, Sigma protocol
 - **Standards body:** IETF, NIST
@@ -15322,8 +15296,9 @@ Authenticate a broadcast with a one-way HMAC key chain and delayed disclosure: f
 ElGamal over P-256 — distributed key generation, verifiable partial decryptions with NIZK proofs, and t-of-n combination without any party holding the full private key.
 
 - **Card topics (discovery only):** ElGamal, P-256, NIZK Proofs, t-of-n — labels do not establish what any section runs.
-- **Implements:** AES `src/elgamal.ts:96`, AES-GCM `src/elgamal.ts:117`, ElGamal `src/main.ts:11`, P-256 `src/elgamal.ts:1`, SHA-256 `src/elgamal.ts:75`, Shamir secret sharing `src/main.ts:291`
-- **References:** FROST, Feldman VSS, Fiat-Shamir, Paillier, Pedersen commitment
+- **Implements:** AES `src/elgamal.ts:96`, AES-GCM `src/elgamal.ts:117`, ElGamal `src/main.ts:12`, Feldman VSS `src/threshold.ts:149`, P-256 `src/election.ts:3`, SHA-256 `src/elgamal.ts:75`, Shamir secret sharing `src/main.ts:294`
+- **Source review:** [512acdf680f4](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/commit/512acdf680f4715bb3e0e44a427943204fb13b30) — Read the committed README, distributed-key-generation, ElGamal, proof and election source at this pin. Each dealer commits to polynomial coefficients as G times the coefficient and receivers verify shares against those public points, which is a live Feldman VSS implementation. The Pedersen match comes only from Chaum-Pedersen type names; there is no independently blinded Pedersen commitment scheme. Credit Feldman VSS and remove the false Pedersen-commitment credit.
+- **References:** FROST, Fiat-Shamir, HMAC, Paillier
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [512acdf680f4](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/commit/512acdf680f4715bb3e0e44a427943204fb13b30) reviewed 2026-10-22; 8 mapped sections.
@@ -16168,9 +16143,10 @@ Switch off Ed25519's required scalar-range check and watch the verifier accept a
 Encrypt and decrypt with repeating-key Vigenère, then use Kasiski, coincidence counts and frequency scores to propose candidates. Verify a purported break against the supplied answer; a high English score alone can be wrong.
 
 - **Card topics (discovery only):** Vigenère, Kasiski Examination, Index of Coincidence, Frequency Analysis — labels do not establish what any section runs.
-- **Implements:** Vigenere cipher `src/vigenere/cipher.ts:105`
+- **Implements:** Vigenere cipher `src/samples/index.ts:6`
+- **Source review:** [b3c2f04f4d57](https://github.com/systemslibrarian/crypto-lab-vigenere-break/commit/b3c2f04f4d575a734a065d8fc96dcf3ec431264b) — Read the committed README and Vigenère/Kasiski workbench source at this pin. The lab factors measured Kasiski spacings into candidate key lengths; it does not factor cryptographic integers or execute the catalog's factoring attack. ‘Known plaintext language’ describes the English distribution assumed by its chi-squared scoring, not an attacker holding a plaintext/ciphertext pair. Preserve the real frequency-analysis break and Vigenère implementation while excluding those two vocabulary collisions.
 - **References:** AES, AES-GCM, Caesar cipher, ChaCha20, ChaCha20-Poly1305, Enigma, One-time pad, Poly1305, Substitution cipher
-- **Attacks shown:** Frequency analysis `src/vigenere/frequency.ts:61`
+- **Attacks shown:** Frequency analysis `src/main.ts:22`
 - **Standards body:** —
 - **Implementation:** hand-rolled
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b3c2f04f4d57](https://github.com/systemslibrarian/crypto-lab-vigenere-break/commit/b3c2f04f4d575a734a065d8fc96dcf3ec431264b) reviewed 2026-10-22; 5 mapped sections.

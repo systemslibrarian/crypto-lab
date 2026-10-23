@@ -171,13 +171,78 @@
       "Differential cryptanalysis"
     ]
   },
+  "crypto-lab-kpqc-pair": {
+    "commit": "5829644c4dde3034b23839542e47f91a27dc8bd4",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Lattice reduction"
+    ],
+    "note": "Read the committed README and NTRU+ implementation and UI at this pin. The October research note summarizes model estimates for a module-lattice attack and explicitly says this lab does not execute that attack. Preserve the real NTRU+ and AIMer implementations while excluding the research-only lattice-reduction credit."
+  },
+  "crypto-lab-aes-modes": {
+    "commit": "ca6ef490ac16b98c77c1fee964c32eb3e186c053",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Ciphertext malleability"
+    ],
+    "note": "Read the committed README, active mode implementations and both extension briefs at this pin. The chosen-plaintext and ciphertext-malleability matches occur in briefs proposing future AES-CFB and AES-OFB exhibits, not in the shipped lab. Preserve the active CBC, CTR and padding-oracle experiments while excluding credits for unimplemented extension plans."
+  },
+  "crypto-lab-mac-race": {
+    "commit": "06b1646ca40d49a8805ddee5b2d6d78b17ce8bcd",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Padding oracle"
+    ],
+    "note": "Read the committed README, MAC implementations and CBC-MAC extension brief at this pin. Padding oracle appears only in that future-work brief's inventory of sibling labs; Mac Race does not execute a padding-oracle attack. Preserve its actual MAC, length-extension, timing and forgery exhibits while excluding the sibling-only credit."
+  },
+  "crypto-lab-commit-gate": {
+    "commit": "b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9",
+    "reviewed": "2026-10-22",
+    "add": [
+      "P-256@src/pedersen.ts:1"
+    ],
+    "note": "Read the committed README and complete hash/Pedersen commitment implementation at this pin. src/pedersen.ts defines the P-256 field, curve, order and standard generator, then performs point addition and scalar multiplication directly for the live Pedersen commitment exhibit. Credit P-256 at its defining field constant instead of leaving this real implementation as a prose-only reference."
+  },
+  "crypto-lab-protocol-compose": {
+    "commit": "5dd48e8f4abf8d222985d1578da699c61c07b0ee",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Chosen-ciphertext attack"
+    ],
+    "note": "Read the committed README and the complete sign-and-encrypt panel and implementation at this pin. The lab executes strip-and-resign, forwarding, ciphertext-tamper and signature-malleability controls over real ECDH, HKDF, AES-GCM and Ed25519. Chosen-ciphertext security is a requirement quoted from Katz–Lindell, not an attack mounted by this lab, so exclude that vocabulary match."
+  },
+  "crypto-lab-threshold-decrypt": {
+    "commit": "512acdf680f4715bb3e0e44a427943204fb13b30",
+    "reviewed": "2026-10-22",
+    "add": [
+      "Feldman VSS@src/threshold.ts:149"
+    ],
+    "remove": [
+      "Pedersen commitment"
+    ],
+    "note": "Read the committed README, distributed-key-generation, ElGamal, proof and election source at this pin. Each dealer commits to polynomial coefficients as G times the coefficient and receivers verify shares against those public points, which is a live Feldman VSS implementation. The Pedersen match comes only from Chaum-Pedersen type names; there is no independently blinded Pedersen commitment scheme. Credit Feldman VSS and remove the false Pedersen-commitment credit."
+  },
+  "crypto-lab-mpcith-sign": {
+    "commit": "6b50a953311753ba20adc61c4ac4172789b4a2fa",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Power analysis"
+    ],
+    "note": "Read the committed README, toy PERK-style signing source and research disclosure at this pin. The disclosure summarizes published DPA-style attacks on FAEST and SDitH, then explicitly says this lab implements neither scheme and does not reproduce the attacks. Preserve the live toy MPC-in-the-head signing work while excluding the research-only power-analysis credit."
+  },
   "crypto-lab-matsui-line": {
     "commit": "ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9",
     "reviewed": "2026-10-22",
     "add": [
       "Toy SPN@src/crypto/spn.ts:66"
     ],
-    "note": "Reviewed the current source and October 22 change inventory. The toy SPN implementation anchor at src/crypto/spn.ts:66 is unchanged. The lab now distinguishes single trails from the full key-dependent linear hull and compares repeated with distinct plaintext sampling at the same budget, with uncertainty intervals and coverage counts. These are bounded toy-SPN attack experiments, not a full DES attack or a reproduction of the linked ChaCha paper attack."
+    "remove": [
+      "Brute force",
+      "Chosen-plaintext attack",
+      "Differential cryptanalysis"
+    ],
+    "note": "Reviewed the current source and October 22 change inventory. The toy SPN implementation anchor at src/crypto/spn.ts:66 is unchanged. The lab now distinguishes single trails from the full key-dependent linear hull and compares repeated with distinct plaintext sampling at the same budget, with uncertainty intervals and coverage counts. These are bounded toy-SPN attack experiments, not a full DES attack or a reproduction of the linked ChaCha paper attack. The README's ‘brute-force count’ describes independent exhaustive verification, not the catalog's brute-force attack; chosen plaintexts and differential cryptanalysis appear in the pair-mate comparison, not an attack executed by this lab. Preserve the actual known-plaintext linear key-recovery experiment while excluding those three false credits."
   },
   "crypto-lab-model-breach": {
     "commit": "8558ee8cca7dcd38537adf621d75fee50b6b1a3e",
@@ -993,5 +1058,42 @@
       "Chosen-plaintext attack"
     ],
     "note": "Read the committed README, PIR implementation and learner-facing scope after the decryption-feedback research update and Noble ChaCha20 cross-check. The new IND-CPA/IND-CPA-D passage summarizes attacks reported against particular BFV/BGV configurations and explicitly says this browser lab neither reproduces them nor establishes that its implementation is vulnerable, so it is not an executed chosen-plaintext attack. Preserve the measured data-dependent server timing as the lab's actual side-channel demonstration, along with the existing BFV, PIR, ChaCha20 and SHA-256 implementation credits. This classification review does not establish production security, constant-time execution or vulnerability to the cited research attacks."
+  },
+  "crypto-lab-ec-point-arithmetic": {
+    "commit": "9b0ec4204aa0b36aa4ed4ca6b8763c197f1d0764",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Nonce reuse"
+    ],
+    "note": "Read the committed README and point-arithmetic source at this pin. The lab executes finite-field point addition, scalar multiplication and a bounded small-group discrete-log walk. Nonce reuse appears only in the Related Demos description of ECDSA Forge; this lab does not sign, reuse a nonce or perform the resulting recovery attack. Preserve its real brute-force and discrete-log teaching exhibits while excluding the neighboring-lab attack credit."
+  },
+  "crypto-lab-nonce-collision": {
+    "commit": "67b5574673ca767f9ad4d594663665c6075b9ca4",
+    "reviewed": "2026-10-22",
+    "add": [
+      "ChaCha20-Poly1305@src/crypto/aead.ts:70"
+    ],
+    "remove": [
+      "Padding oracle"
+    ],
+    "note": "Read the committed README and nonce-reuse implementation at this pin. The hand-written chachaPolyEncrypt/chachaPolyVerify path performs ChaCha20-Poly1305 AEAD with Poly1305 framing and verification, although the local function name omits the scanner's literal ‘20’. Keep that real implementation credit. Padding oracle appears only in wording that explicitly distinguishes and skips that attack and in a Related Demos link; it is not executed here. Preserve the real CTR/AEAD/CBC reuse, predictable-IV, authentication-key and one-time-key recovery exhibits."
+  },
+  "crypto-lab-vigenere-break": {
+    "commit": "b3c2f04f4d575a734a065d8fc96dcf3ec431264b",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Factoring",
+      "Known-plaintext attack"
+    ],
+    "note": "Read the committed README and Vigenère/Kasiski workbench source at this pin. The lab factors measured Kasiski spacings into candidate key lengths; it does not factor cryptographic integers or execute the catalog's factoring attack. ‘Known plaintext language’ describes the English distribution assumed by its chi-squared scoring, not an attacker holding a plaintext/ciphertext pair. Preserve the real frequency-analysis break and Vigenère implementation while excluding those two vocabulary collisions."
+  },
+  "crypto-lab-otp-vault": {
+    "commit": "04b056901a337a23cafc9340e8e8bf36b01fc06b",
+    "reviewed": "2026-10-22",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Frequency analysis"
+    ],
+    "note": "Read the committed README, OTP panels and new exact prior/posterior comparison at this pin. Choosing a target plaintext for a fixed ciphertext demonstrates that every plaintext has a valid one-time-pad key; it is not a chosen-plaintext attack. Frequency analysis appears only in the Related Demos description of Vigenère Break. The new reuse model does execute a genuine known-plaintext attack: a known first plaintext/ciphertext pair reveals the reused pad and fixes the independent second message. Preserve that credit and the lab's nonce/key-reuse attack while excluding the two false matches."
   }
 }

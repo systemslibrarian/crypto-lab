@@ -19,7 +19,7 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Fifty-eight open lab repair PRs are recorded with green current-head Linux
+- Fifty-nine open lab repair PRs are recorded with green current-head Linux
   CI: the 27 Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**,
   Clock Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
@@ -29,27 +29,29 @@ Nothing below is merged merely because its checks pass:
   Entropy **#23**, Quantum Vault KpqC **#21**, Ratchet Wire **#17**, Reshare
   Circle **#23**, Nonce Lattice **#27**, NTRU Classic **#24**, Oblivious
   Shelf **#21**, Opaque Gate **#34**, ORAM Vault **#30**, Order Leak **#14**,
-  OT Gate **#26**, OTP Vault **#26**, Padding Oracle **#23** and Paillier Gate
-  **#25**. The earlier full GitHub readback found
+  OT Gate **#26**, OTP Vault **#26**, Padding Oracle **#23**, Paillier Gate
+  **#25** and Pairing Gate **#22**. The earlier full GitHub readback found
   the first 54 open and non-draft with successful current-head workflow runs.
   OT Gate #26 and OTP Vault #26 were then opened, read back open, non-draft and
   cleanly mergeable, and passed their exact-head runs. Padding Oracle **#23**
   was subsequently read back open, non-draft and cleanly mergeable, and passed
   its exact-head run. Paillier Gate **#25** was then read back open, non-draft
-  and cleanly mergeable, and passed its exact-head run. **PQ Rotation #24**
-  remains the known conflicting PR; the other 57 were mergeable at their
+  and cleanly mergeable, and passed its exact-head run. Pairing Gate **#22**
+  was then read back open, non-draft and cleanly mergeable, and passed its
+  exact-head run. **PQ Rotation #24**
+  remains the known conflicting PR; the other 58 were mergeable at their
   recorded readbacks. NTRU Classic #24 is
   green at exact head `f81f1ce`, Oblivious Shelf #21 at `02a4593`, and Opaque Gate #34
   at `131cb9f`; ORAM Vault #30 is green at `921428c`; Order Leak #14 is
   green at `8a0b35e`; OT Gate #26 is green at `e4dcca4`; OTP Vault #26 is
   green at `e1d30ba`; Padding Oracle #23 is green at `a8b1ab9`; Paillier Gate
-  #25 is green at `c665d84`. Scloud Vault #21,
+  #25 is green at `c665d84`; Pairing Gate #22 is green at `8bc055a`. Scloud Vault #21,
   Search Vault #23, Shadow Vault #31, Shamir Gate #17 and Shor #21 advanced
   after the SHAs stored in their Fleet evidence; their new heads are green,
   but their evidence must be reconciled before merge. The
   Fleet records and PR comments hold their per-lab evidence; do not duplicate
   that history here and do not merge them from this maintenance pass.
-- Thirty queued security-evidence reviews are recorded complete. The first
+- Thirty-one queued security-evidence reviews are recorded complete. The first
   23 have recorded-head readable zero-open-alert Dependabot and secret-scanning
   results plus a zero-advisory exact lock; code scanning remains explicitly
   incomplete because GitHub reports no analysis. Opaque Gate has a complete
@@ -78,22 +80,26 @@ Nothing below is merged merely because its checks pass:
   scanning reads, zero-vulnerability exact-lock audits on Node 22/24/26,
   **23/23** Linux browser checks and **10/10** killed mutations after a green
   baseline; code scanning remains incomplete because GitHub reports no
-  analysis.
+  analysis. Pairing Gate has complete zero-open-alert Dependabot and secret-
+  scanning reads, a zero-vulnerability exact-lock audit, audited Node 22/24/26
+  builds, **12/12** Linux browser/WCAG checks and **10/10** killed mutations
+  after a green baseline; code scanning remains incomplete because GitHub
+  reports no analysis.
   The five moved heads named above now need fresh evidence reconciliation.
   Their source repairs remain open, and their names and evidence stay in the
   Fleet records rather than becoming history here.
 
-**Next:** Pairing Gate item `19ffe3a7-7135-4c2c-ad5b-89afd551c3f6`.
+**Next:** PAKE Gate item `e904c4fe-a9c2-44ac-bcbb-a218a8285e2f`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,067 complete and 137 active** items:
-**104 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,068 complete and 136 active** items:
+**103 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **104 queued security-evidence reviews.** Pairing Gate is next.
+- **103 queued security-evidence reviews.** PAKE Gate is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state

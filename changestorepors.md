@@ -71,6 +71,65 @@ merged by this maintenance pass.
   Chromium failed before executing an assertion with Mach rendezvous error 141;
   the successful Linux job is the browser authority.
 
+### Pairing Gate
+
+- PR: [crypto-lab-pairing-gate #22](https://github.com/systemslibrarian/crypto-lab-pairing-gate/pull/22)
+- Branch: `codex/repair-pairing-gate-2026-10-23`
+- Base: `dddce0a39d0dd5f42c771c65392b3b12d45d368e`
+- Head: `8bc055a76100925074728620af92ec7ca42ea6cd`
+- Scope: **14 files**, **1,564 insertions** and **169 deletions**. Ordinary
+  signatures now use the July 2026 CFRG draft's exact
+  `BLS_SIG_BLS12381G1_XMD:SHA-256_SSWU_RO_POP_` domain, while proofs of
+  possession use the distinct `BLS_POP_BLS12381G1_XMD:SHA-256_SSWU_RO_POP_`
+  domain through one protocol boundary shared by the app and tests.
+- The lesson now distinguishes O(n) aggregate construction from the two pairing
+  terms in the final same-message equation, identifies the 576-byte GT value as
+  a library diagnostic rather than a standardized wire encoding, and explains
+  that type-3 G1/G2 roles are not interchangeable. Ethereum is correctly
+  described as using 48-byte G1 public keys and 96-byte G2 signatures; its
+  domain-separated deposit signature is not mislabeled as CFRG `PopProve(PK)`,
+  and validators are described as committee members attesting once per epoch.
+- Signer counts and UTF-8 message bytes are bounded even when DOM hints are
+  bypassed. Operation epochs retire stale key-generation, signing and aggregate
+  work when learner input changes, replaced teaching secrets are cleared, and
+  old async results cannot overwrite newer learner state.
+- Workflow actions are immutable; source-reading jobs have read-only authority;
+  Node 22/24/26, browser, mutation and build results feed a fail-closed gate;
+  Pages authority is isolated in the no-checkout main deploy job; main deploys
+  are not cancelled; and only patch/minor Dependabot PRs may auto-merge after
+  the full gate succeeds.
+- Publication claims were checked against
+  [draft-irtf-cfrg-bls-signature-07](https://datatracker.ietf.org/doc/draft-irtf-cfrg-bls-signature/),
+  [RFC 9380](https://www.rfc-editor.org/rfc/rfc9380.html), the
+  [Ethereum consensus specifications](https://github.com/ethereum/consensus-specs)
+  and [EIP-2537](https://eips.ethereum.org/EIPS/eip-2537) before editing.
+- Authoritative Linux run:
+  [40015801269](https://github.com/systemslibrarian/crypto-lab-pairing-gate/actions/runs/40015801269)
+  passed clean audited Node 22/24/26 builds, **10/10** protocol/unit tests,
+  **8/8** workflow controls, **2/2** publishing controls and **12/12** Chromium
+  behavior/WCAG checks. The fail-closed aggregate build succeeded; deploy and
+  auto-merge were skipped on the pull request.
+- Mutation output says `baseline: unmutated copy PASSES` and
+  `all 10 mutation(s) caught`. Each mutant moved the production artifact, was
+  killed by its named assertion with zero retries, restored the exact artifact
+  and reran green. Artifact
+  [12528008351](https://github.com/systemslibrarian/crypto-lab-pairing-gate/actions/runs/40015801269/artifacts/12528008351)
+  matches committed `mutation-evidence.json` byte-for-byte at SHA-256
+  `cc5891a23dee83f19f0bdc87285fc39df785d75ce89256456250c4a1dbb3b8cc`.
+- Fresh authenticated provider reads returned zero open Dependabot alerts and
+  zero open secret-scanning alerts from complete first pages with no pagination
+  link; the exact npm lock reports zero vulnerabilities; secret scanning and
+  push protection are enabled. Code scanning returned `no analysis found` and
+  remains explicitly incomplete. Dependabot security updates remain disabled,
+  and no repository setting was changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-pairing-gate/pull/22#issuecomment-6373688786)
+- State: Fleet item `19ffe3a7-7135-4c2c-ad5b-89afd551c3f6` read back complete
+  at revision **3**. The PR is open, non-draft and cleanly mergeable at the
+  recorded head, intentionally unmerged, and not deployed. Local macOS
+  Chromium failed before executing an assertion with Mach rendezvous error 141;
+  the successful Linux job is the browser authority.
+
 ### Quantum Vault KpqC
 
 - PR: [crypto-lab-quantum-vault-kpqc #21](https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc/pull/21)
@@ -824,9 +883,9 @@ merged by this maintenance pass.
   `0730c46f802237569c2e39fa0edc57729e158d68`. The branch incorporates that
   fresh Hub main through merge commit `b5e31dd`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Paillier Gate it measured **1,204 total**,
-  **1,067 complete** and **137 active** Fleet items: **104 queued**, **27
-  working** and **6 blocked**. Pairing Gate is the next queued review.
+  growing history log. After Pairing Gate it measured **1,204 total**,
+  **1,068 complete** and **136 active** Fleet items: **103 queued**, **27
+  working** and **6 blocked**. PAKE Gate is the next queued review.
 - A full GitHub readback on 2026-10-23 found the preceding **54** named repair
   PRs open, non-draft and carrying a successful current-head workflow run.
   Fifty-three were mergeable; PQ Rotation **#24** was the one conflicting PR.
@@ -838,6 +897,8 @@ merged by this maintenance pass.
   mergeable and green at exact head `a8b1ab9`, bringing the total to **57**.
   Paillier Gate **#25** was then read back open, non-draft, cleanly mergeable
   and green at exact head `c665d84`, bringing the total to **58**.
+  Pairing Gate **#22** was then read back open, non-draft, cleanly mergeable
+  and green at exact head `8bc055a`, bringing the total to **59**.
   Scloud Vault
   **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
   Shor **#21** had advanced beyond the head SHAs stored with their completed

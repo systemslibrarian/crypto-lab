@@ -16,6 +16,38 @@ merged by this maintenance pass.
 5. Treat deployment as unverified while a PR is open. Treat an unavailable
    provider as unknown, never as zero alerts.
 
+## Work in progress — do not treat as completed
+
+### Paillier Gate
+
+- Fleet item: `7f7f6d35-71d9-423e-9ac5-781df28d058e`, currently marked working.
+- Repository `origin/main` was fetched again immediately before this entry and
+  is still `6d73ec5564b75e3a595a74a0623e0b60380f6dfa`. Review is taking place in an
+  isolated worktree on `codex/repair-paillier-gate-2026-10-23`; the source
+  branch has **no repair commit yet**.
+- Baseline `npm ci`, the exact-lock audit, and `npm run check` passed; the check
+  covered **73/73** unit tests. The baseline production build is not green:
+  both publishing-control cases fail because the test assumes npm is installed
+  beside the Node executable, which is false for the current Homebrew layout.
+- Findings being repaired and tested: the page presents learner-visible raw
+  inputs as though the same UI were a confidentiality boundary; a randomized
+  ciphertext example is described as proof of semantic security rather than an
+  illustration whose security depends on DCRA; ballot MACs omit voter/context
+  binding, use an extractable key and ordinary string comparison, and accept
+  duplicate voter IDs; blank “optional” weights fail instead of defaulting to
+  one; modulo wraparound is labeled as a match to the unreduced sum; inputs lack
+  code-level workload limits; stale asynchronous factor/election results can
+  regain UI authority; and the Pages workflow has unpinned, over-privileged and
+  fail-open controls.
+- The Paillier publication was checked before changing its claim: the original
+  paper states semantic security under the decisional composite residuosity
+  assumption. Provider reads currently show zero open Dependabot alerts and
+  zero open secret-scanning alerts, while code scanning returns `no analysis
+  found` and therefore remains incomplete.
+- No Paillier source file, commit, pull request, deployment or repository
+  setting is claimed by this section. Replace this section with exact-head
+  commit, PR, Linux CI, mutation and provider evidence only after those exist.
+
 ## Completed work, awaiting maintainer review
 
 ### Quantum Vault KpqC

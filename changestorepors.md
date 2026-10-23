@@ -190,6 +190,56 @@ merged by this maintenance pass.
   macOS Chromium failed before application launch; the successful Linux job is
   the browser authority.
 
+### Nonce Lattice
+
+- PR: [crypto-lab-nonce-lattice #27](https://github.com/systemslibrarian/crypto-lab-nonce-lattice/pull/27)
+- Branch: `codex/repair-nonce-lattice-2026-10-23`
+- Base: `6cd0b424d212f330debee615b026893339e7c135`
+- Head: `cbccecb2f0a38ebc58bd2fce3acba13853f31651`
+- Scope: **26 files**, **710 insertions** and **262 deletions**. Untrusted
+  shared-origin configuration values could reach `innerHTML`; impossible nonce
+  ranges could loop forever; and invalid custom nonces could be replaced by a
+  random nonce while the UI still described the requested leak. Runtime config,
+  scalar, hex, modular-arithmetic, public-key and worker boundaries now fail
+  closed, rendered values are escaped, and nonce sampling is bounded.
+- Regressions cover stored-config markup injection, impossible constant-prefix
+  inputs, invalid and non-canonical scalars, malformed public keys, exact
+  protocol shapes and the RFC 6979 P-256/SHA-256 Appendix A.2.5 vector.
+- Accuracy repairs distinguish the on-screen bit-count heuristic from a hard
+  recovery boundary; state the assumptions around the Nguyen–Shparlinski
+  asymptotic result; limit RFC 6979's defense claim to RNG-driven bias/reuse;
+  correct TPM-FAIL sample counts; narrow the Android and PS3 narratives; and
+  replace unrelated ePrint references with the verified publication records.
+  RFC 6979, both lattice-paper records, Minerva, TPM-FAIL, Bitcoin.org,
+  OpenSSL CVE-2026-54872 and the official 27C3 slides were checked before the
+  citations or claims changed.
+- Workflow authority is split so repository code runs read-only while Pages and
+  OIDC authority exists only in no-checkout jobs. Pull requests keep no Pages
+  artifact, Node 22/24/26 and the browser gate block publication, main deploys
+  are not cancelled midway, and only successful patch/minor Dependabot updates
+  may auto-merge. Seven executable controls pin those properties.
+- Authoritative Linux run:
+  [39972898369](https://github.com/systemslibrarian/crypto-lab-nonce-lattice/actions/runs/39972898369)
+  passed **46/46** unit tests across 12 files, **7/7** workflow controls,
+  TypeScript and the production build independently on Node 22, 24 and 26.
+  Ubuntu Chromium passed all **20/20** behavior, security-regression, claim and
+  WCAG A/AA tests.
+- Exact-lock evidence: **68** dependency nodes, a successful `npm ls --all`,
+  and zero npm advisories at every severity. Authenticated provider evidence at
+  the exact head returned zero open Dependabot alerts and zero open
+  secret-scanning alerts, with secret scanning and push protection enabled.
+  GitHub returned HTTP 404 `no analysis found` for code scanning, so that
+  evidence remains explicitly incomplete. Dependabot security updates and
+  automated security fixes were observed disabled and were not changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-nonce-lattice/pull/27#issuecomment-6367747115)
+- State: Fleet item `8c7d7401-76c3-4721-8c71-f0658c84b574` read back complete
+  at revision **3**. A fresh 49-PR GraphQL readback found this PR open,
+  non-draft, cleanly mergeable and green at its exact head. It remains
+  intentionally unmerged; no deployment was performed and the live Pages site
+  was not used as evidence. Local macOS Chromium failed before page creation;
+  the successful Ubuntu job is the browser authority.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)
@@ -297,11 +347,11 @@ merged by this maintenance pass.
 - Base fetched immediately before this edit:
   `cc49eb16881e1b4cf1c8a7a17c0a77aa7b1bda57`
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Reshare Circle it measured **1,204 total**,
-  **1,057 complete** and **147 active** Fleet items: **114 queued**, **27
-  working** and **6 blocked**. Nonce Lattice became the next queued review.
-- GitHub GraphQL readback on 2026-10-23 found all **48** named repair PRs open,
-  non-draft and carrying a successful current-head status rollup. Forty-seven
+  growing history log. After Nonce Lattice it measured **1,204 total**,
+  **1,058 complete** and **146 active** Fleet items: **113 queued**, **27
+  working** and **6 blocked**. NTRU Classic became the next queued review.
+- GitHub GraphQL readback on 2026-10-23 found all **49** named repair PRs open,
+  non-draft and carrying a successful current-head status rollup. Forty-eight
   were mergeable; PQ Rotation **#24** was the one conflicting PR. Green checks
   do not resolve that conflict.
 - The branch head will advance whenever this ledger or the current-state handoff

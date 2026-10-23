@@ -32370,8 +32370,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-search-vault": {
-      "commit": "715cec98e0dd03344c0fabc1efd71d0103786bd5",
-      "reviewed": "2026-10-22",
+      "commit": "97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26",
+      "reviewed": "2026-10-23",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -32422,6 +32422,31 @@
             "src/sse/server.ts:1"
           ],
           "limits": "The server learns prescribed leakage; this lab does not hide search or access patterns, nor model network metadata."
+        },
+        {
+          "id": "query-integrity",
+          "title": "Can the server lie about the answer?",
+          "section": "Can the server lie about the answer?",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Choose an honest answer, omission, fabrication or stale replay and test it against the client-retained checkpoint.",
+          "outcome": "Distinguishes per-record AES-GCM authenticity from completeness and freshness of the answer as a whole.",
+          "concepts": [
+            "query integrity",
+            "result completeness",
+            "freshness",
+            "snapshot commitment",
+            "replay detection",
+            "per-record authenticity"
+          ],
+          "evidence": [
+            "src/ui/search.ts:1",
+            "src/ui/state.ts:1",
+            "src/sse/query-integrity.ts:1",
+            "src/sse/query-integrity.test.ts:1",
+            "e2e/query-integrity.spec.ts:1"
+          ],
+          "limits": "Static teaching checkpoint only; assumes a trusted client-retained current snapshot id, expected count and exact encrypted-answer digest, not a general verifiable-SSE protocol."
         },
         {
           "id": "pattern-leakage",

@@ -118,8 +118,8 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | --- | ---: | --- | --- |
 | Phase 1 — First key-handle exercise | 1 | P1 | First exercise live; broader proposal in progress |
 | Phase 2 — Privacy, storage and query integrity | 11 | P1 | 1 live; 10 planned |
-| Phase 3 — Protocols and arithmetic | 5 | P1 | 5 planned |
-| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 16 planned |
+| Phase 3 — Protocols and arithmetic | 5 | P1 | 1 live; 4 planned |
+| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 1 in progress; 15 planned |
 | Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 8 planned |
 | Phase 6 — Optional specialist and research scope | 7 | P3 | 7 planned |
 

@@ -6,7 +6,7 @@ authoritative when they disagree.
 
 ## Live handoff — 2026-10-23
 
-`crypto-lab` `origin/main` is **`743f03b`** and `crypto-counsel`
+`crypto-lab` `origin/main` is **`cc49eb1`** and `crypto-counsel`
 `origin/main` is **`cc2979b`**. The queue branch is based directly on that
 Hub main.
 
@@ -19,33 +19,35 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Forty-five open lab repair PRs have green exact-head Linux CI: the 26
+- Forty-six open lab repair PRs have green exact-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
   Tally **#29**, PQ Chooser **#5**, PQ Rotation **#24**, PQ TLS Handshake
   **#26**, PQXDH Wire **#12**, Privacy Pass **#17**, Proof Tally **#18** and
-  Protocol Compose **#23**, PSI Gate **#28**, Pulse Chain **#5** and Quantum
-  Entropy **#23**. The Fleet records and PR comments hold their per-lab
-  evidence; do not duplicate that history here and do not merge them from this
-  maintenance pass.
-- Seventeen queued security-evidence reviews are complete. Each has readable
+  Protocol Compose **#23**, PSI Gate **#28**, Pulse Chain **#5**, Quantum
+  Entropy **#23** and Quantum Vault KpqC **#21**. A fresh GitHub readback found
+  all 46 open with successful current-head status rollups; **PQ Rotation #24**
+  is the one conflicting PR, while the other 45 are mergeable. The Fleet
+  records and PR comments hold their per-lab evidence; do not duplicate that
+  history here and do not merge them from this maintenance pass.
+- Eighteen queued security-evidence reviews are complete. Each has readable
   zero-open-alert Dependabot and secret-scanning results plus a zero-advisory
   exact lock; code scanning remains explicitly incomplete because GitHub
   reports no analysis. Their source repairs remain open, and their names and
   evidence stay in the Fleet records rather than becoming history here.
 
-**Next:** Quantum Vault KpqC item `fba6e64e-80e6-4b94-b284-ff76daf3eb51`.
+**Next:** Ratchet Wire item `75d962ab-e4eb-45cf-9424-53196d255571`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,054 complete and 150 active** items:
-**117 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,055 complete and 149 active** items:
+**116 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **117 queued security-evidence reviews.** Quantum Vault KpqC is next.
+- **116 queued security-evidence reviews.** Ratchet Wire is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state
@@ -92,18 +94,18 @@ for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
 done
 ```
 
-At this checkpoint on Hub `743f03b`, 12 of 13 checks pass. `lab-dates`
-reports six pins made stale by newer committed lab changes: Iron Letter,
-Protocol Compose, Threshold Decrypt, Multivariate, Broken Trust and Time Lock
-Puzzle. Re-derive those dates from freshly fetched lab heads before calling the
-Hub clean. The open #244 refresh predates this movement and must be refreshed
-or superseded; do not assume its green historical runs cover the six current
-drifts. #245 is stacked on #244 and likewise needs its base rechecked. The
-exact-head Teach drift dispatch was green after one transient host-package
-timeout: 24 worksheets had zero drift and all 47 recorded issue states were
-accounted for (4 automated matches, 43 explicit manual-cadence checks). Hub
-#243 and #246–#249 had green exact-head checks at their recorded heads, but all
-open Hub PRs must be evaluated against the latest Hub-main movement.
+On this queue branch based directly on Hub `cc49eb1`, with counsel **#18**
+checked out, 12 of 13 checks pass. `lab-dates` reports six pins made stale by
+newer committed lab changes: Iron Letter, Protocol Compose, Threshold Decrypt,
+Multivariate, Broken Trust and Time Lock Puzzle. Re-derive those dates from
+freshly fetched lab heads before calling the Hub clean.
+
+A fresh PR readback found **#244** and **#248** conflicting despite successful
+current-head status rollups. **#245** remains stacked on #244 and has no status
+rollup of its own. **#243**, **#246**, **#247** and **#249** are open,
+mergeable and have successful current-head rollups. Refresh or supersede the
+conflicting branches, and re-evaluate every open Hub PR after any further
+Hub-main movement; historical green runs do not resolve a merge conflict.
 
 Finish any card-stamping pass with `node tools/level-sync.js`; `data-level`
 belongs where the last writer puts it.

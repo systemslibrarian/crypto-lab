@@ -16,69 +16,69 @@ merged by this maintenance pass.
 5. Treat deployment as unverified while a PR is open. Treat an unavailable
    provider as unknown, never as zero alerts.
 
-## Work in progress — not yet a completed repair
+## Completed work, awaiting maintainer review
 
 ### Quantum Vault KpqC
 
-- Repository: `crypto-lab-quantum-vault-kpqc`
-- Source base fetched 2026-10-23: `252c7e9c749c09642e4e6ae82b7bab45ecb9d8e0`
-- Local branch: `codex/repair-quantum-vault-kpqc-2026-10-23`
-- State: uncommitted and unpushed; there is no reviewable PR head yet. Do not
-  treat the items below as complete until this section is replaced by a commit,
-  PR, authoritative CI run and final provider evidence.
-- Current verification surface: **48 tracked files changed plus 4 new focused
-  tests** in the isolated worktree `/tmp/quantum-vault-kpqc-fix.5LJkaM`. The
-  source checkout and all other agents' worktrees remain untouched. The current
-  worktree still resolves to the fetched base above, so every result in this
-  section is explicitly interim and uncommitted.
-- Findings addressed in the working tree so far: release builds could include
-  the forgeable development crypto backend; an error-only `kpqc-wasm` scaffold
-  could be described as if it supplied native Level-3 crypto; container and UI
-  prose overstated the password-plus-KEM security model; registry metadata could
-  label non-production implementations production-safe; Shamir work left extra
-  garbage-collected secret copies; PBKDF and serialized-state bounds were not
-  consistently enforced; and workflow permissions, cancellation and automatic
-  major-update handling were too broad.
-- Rust and CLI changes already made: fail-closed backend labeling and release
-  guards; the development backend is feature-gated; algorithm/backend mismatch
-  is rejected before backend use; sensitive buffers use explicit cleanup;
-  compile-time size assertions and feature-off tests were added; and the CLI no
-  longer presents the error-only `kpqc-wasm` scaffold as an operational native
-  KpqC implementation.
-- Browser changes already made: PBKDF, serialized-state, wrapped-key and date
-  fields are bounded and validated; HAETAE output lengths are checked; key-wrap
-  and pipeline buffers are cleared on success and error; Shamir interpolation
-  avoids ordinary JavaScript-array copies of secret material; and vault-open
-  error paths clear working and display copies.
-- Workflow changes already made: repository source jobs have read-only token
-  permissions; Pages and OIDC authority is isolated into no-checkout jobs; pull
-  requests build and test without retaining a deploy artifact; main deployments
-  cannot be cancelled by a newer run; the Node matrix is 22/24/26; automatic
-  Dependabot merging is limited to patch/minor updates and fails closed; and
-  Rust feature-boundary checks are explicit.
-- Documentation corrections already made include the KpqC competition versus
-  Korean-standard status, the unpinned embedded HAETAE verification-key trust
-  boundary, the forgeability of the development signature backend, the actual
-  password-or-KEM attack paths, the derived Rust outer nonce, the signed-field
-  set and the limits of zeroization claims. The KpqC publication claims were
-  checked against the official KpqC final-result, status and SMAUG-T documents
-  before editing them.
-- Focused tests added so far cover key-wrap cleanup, serialized-state rejection,
-  active WASM export/length contracts and workflow privilege/control policy.
-  Existing pipeline, Shamir, vault-file, tamper, property, vector and
-  differential tests were extended where behavior changed.
-- Evidence already obtained during development: the full Rust workspace and
-  no-default-feature core suites passed; the web unit suite passed **81** tests;
-  Python WASM tests passed **28/28**; RustSec reported zero vulnerabilities; and
-  GitHub reported zero open Dependabot and secret-scanning alerts while code
-  scanning returned `no analysis found`. These are interim results because the
-  working tree has changed since some runs.
-- Remaining before completion: finish the claim-by-claim review; refetch and
-  reconcile with `origin/main`; rerun every local gate on the exact committed
-  tree; push and open a PR; inspect all exact-head Linux CI logs; refetch provider
-  evidence; and only then mark the Fleet item complete.
-
-## Completed work, awaiting maintainer review
+- PR: [crypto-lab-quantum-vault-kpqc #21](https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc/pull/21)
+- Branch: `codex/repair-quantum-vault-kpqc-2026-10-23`
+- Base: `252c7e9c749c09642e4e6ae82b7bab45ecb9d8e0`
+- Head: `7443ba118b6cde2f44b8e549de821874b1fac90e`
+- Scope: **64 files**, **2,921 insertions** and **2,250 deletions**. The
+  development backend is now feature-gated and rejected in an ordinary release;
+  the error-only `kpqc-wasm` scaffold is no longer presented as working native
+  crypto; the CLI reads private keys from indexed files instead of raw argv;
+  backend/algorithm IDs and native sizes fail closed; and secret buffers are
+  cleared on success and error paths.
+- Browser state/import handling now enforces exact algorithms, lengths, dates,
+  PBKDF bounds and input-size limits. HAETAE contracts are typed and checked,
+  Shamir work avoids ordinary JavaScript-array secret copies, and focused tests
+  cover cleanup, state rejection, shipped-WASM contracts and workflow controls.
+- Native FFI now uses the actual SMAUG mode/symbols and ABI, excludes conflicting
+  RNG sources, authenticates pinned source archives before extraction, runs a
+  native smoke/differential suite, and reproduces the exact four shipped loader
+  and WASM artifacts. The source archive SHA-256 values are
+  `2a202ba4fb3a4946d6d028aef180a1fc1637d78bdc0fe9200f6e30f2c4c71107`
+  (SMAUG-T) and
+  `9b69afb5fd72d8be61b994ef625ddfab2e43838f3752aaafc8071e88d136ca72`
+  (HAETAE).
+- Documentation now distinguishes KpqC competition selection from publication
+  as a Korean Standard, states that an embedded unpinned HAETAE key does not
+  authenticate the original sender, describes the password-or-KEM attack paths,
+  and limits timing, zeroization and reproduction claims to the evidence actually
+  present. The publication changes were checked against the official KpqC final
+  selection and April 2026 status notices before editing.
+- Workflow authority is split so source-reading jobs are read-only and Pages/OIDC
+  authority lives in no-checkout jobs. Pull requests do not retain or deploy a
+  Pages artifact; main deploys are not cancelled; Node 22/24/26 are gated; and
+  only patch/minor Dependabot updates may auto-merge after successful checks.
+- Authoritative Linux run:
+  [39957731907](https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc/actions/runs/39957731907)
+  passed the Rust default, WASM and no-default suites, release guard, clippy,
+  formatting, five 30-second fuzz targets, RustSec and cargo-deny; Node 22/24/26
+  each passed **88** unit tests, **14** workflow/WASM controls, **3** strict
+  TypeScript controls, lint and build; Linux Chromium passed **23/23** behavior
+  and accessibility tests; and native source reproduction passed. Artifact:
+  [`kpqc-source-rebuild`](https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc/actions/runs/39957731907/artifacts/12503082936).
+- Separate exact-head run
+  [39957731774](https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc/actions/runs/39957731774)
+  built all **8** fuzz targets. Its scheduled smoke job was skipped for the pull
+  request as designed; the five security-boundary smoke targets ran above.
+- Provider evidence at `2026-10-23T13:12:35Z`: authenticated Dependabot and
+  secret-scanning endpoints each returned HTTP 200 with zero open alerts; secret
+  scanning and push protection are enabled. Code scanning returned HTTP 404
+  `no analysis found`, so it remains explicitly incomplete. Dependabot security
+  updates are disabled, and update PR **#20** remains open. The exact npm lock
+  contains **179** dependency entries and reports zero vulnerabilities at every
+  severity; RustSec scanned **164** locked crate dependencies successfully.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc/pull/21#issuecomment-6365703487)
+- State: Fleet item `fba6e64e-80e6-4b94-b284-ff76daf3eb51` read back complete
+  at revision **4**. The PR is open, cleanly mergeable at the recorded head,
+  intentionally unmerged, and deployment is unverified. Local macOS Chromium
+  failed before launch and the shared Docker content store was full; no unrelated
+  images were deleted, and the successful isolated Linux jobs are the browser
+  and reproduction authority.
 
 ### crypto-counsel corpus review
 
@@ -184,16 +184,19 @@ merged by this maintenance pass.
 
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)
 - Branch: `codex/refresh-futureworkoct-2026-10-21`
-- Base at the last fetch: `cc49eb16881e1b4cf1c8a7a17c0a77aa7b1bda57`
-- Rebased tracker checkpoint before this ledger update:
-  `8a5f1441b5325c75effcb3836afc4b713609ec99`
+- Base fetched immediately before this edit:
+  `cc49eb16881e1b4cf1c8a7a17c0a77aa7b1bda57`
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Quantum Entropy it measured **1,204 total**,
-  **1,054 complete** and **150 active** Fleet items: **117 queued**, **27
-  working** and **6 blocked**. Quantum Vault KpqC became the next queued review.
+  growing history log. After Quantum Vault it measured **1,204 total**,
+  **1,055 complete** and **149 active** Fleet items: **116 queued**, **27
+  working** and **6 blocked**. Ratchet Wire became the next queued review.
+- GitHub GraphQL readback on 2026-10-23 found all **46** named repair PRs open
+  with a successful current-head status rollup. Forty-five were mergeable;
+  PQ Rotation **#24** was the one conflicting PR. Green checks do not resolve
+  that conflict.
 - The branch head will advance whenever this ledger or the current-state handoff
   is updated. Fetch the PR branch and use its live head rather than assuming the
-  checkpoint above remains current.
+  local checkout remains current.
 
 ## Known limitations and non-actions
 

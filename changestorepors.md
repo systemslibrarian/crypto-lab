@@ -734,6 +734,35 @@ merged by this maintenance pass.
 - State: Fleet item complete; PR open, cleanly mergeable at the recorded head,
   intentionally unmerged, and deployment unverified.
 
+### Padding Oracle
+
+- PR: [crypto-lab-padding-oracle #23](https://github.com/systemslibrarian/crypto-lab-padding-oracle/pull/23)
+- Base: `c3806072edec3fe143f48bfcd5e7511bda1797f5`
+- Head: `a8b1ab9d5c462d92cf6d109330fc53f6ff34bf1c`
+- Fixed: overbroad ciphertext-recovery claims; an unreliable live-invalid
+  oracle example; the omitted final-byte disambiguation cost; block-aligned
+  plaintext being stripped as padding; UTF-8 workload and malformed-input
+  boundaries; stale asynchronous sessions regaining UI authority; inaccurate
+  ASP.NET, Lucky Thirteen, CBC-remediation and authenticated-decryption prose;
+  and over-privileged or fail-open Pages controls. RFC **9846** was verified as
+  the real July 2026 TLS 1.3 publication that obsoletes RFC 8446 and was kept.
+- Authoritative Linux run:
+  [40005207776](https://github.com/systemslibrarian/crypto-lab-padding-oracle/actions/runs/40005207776)
+  passed clean audited Node 22/24/26 type-check, **19/19** unit-test and
+  **8/8** workflow-control lanes; **12/12** Playwright functional/WCAG checks;
+  and all **9/9** claim mutations after `baseline: unmutated copy PASSES`.
+  Every mutant moved the production artifact, was killed by its named
+  assertion with zero retries, restored the exact artifact and retested green.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-padding-oracle/pull/23#issuecomment-6372255879)
+- Provider evidence at review time: zero open Dependabot alerts and zero open
+  secret-scanning alerts; secret scanning and push protection enabled; zero
+  vulnerabilities in the exact npm lock. Code scanning returned
+  `no analysis found` and remains explicitly incomplete.
+- State: Fleet item `4d3a55cf-f5a4-4262-870b-a629ac1e96f9` read back complete
+  at revision 3; PR open, non-draft and cleanly mergeable at the recorded head,
+  intentionally unmerged, and deployment not performed.
+
 ### Hub handoff
 
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)
@@ -742,9 +771,9 @@ merged by this maintenance pass.
   `0730c46f802237569c2e39fa0edc57729e158d68`. The branch incorporates that
   fresh Hub main through merge commit `b5e31dd`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After OTP Vault it measured **1,204 total**,
-  **1,065 complete** and **139 active** Fleet items: **106 queued**, **27
-  working** and **6 blocked**. Padding Oracle is the next queued review.
+  growing history log. After Padding Oracle it measured **1,204 total**,
+  **1,066 complete** and **138 active** Fleet items: **105 queued**, **27
+  working** and **6 blocked**. Paillier Gate is the next queued review.
 - A full GitHub readback on 2026-10-23 found the preceding **54** named repair
   PRs open, non-draft and carrying a successful current-head workflow run.
   Fifty-three were mergeable; PQ Rotation **#24** was the one conflicting PR.
@@ -752,7 +781,9 @@ merged by this maintenance pass.
   cleanly mergeable and green at exact head `e4dcca4`, bringing the recorded
   total to **55**. OTP Vault **#26** was then read back open, non-draft,
   cleanly mergeable and green at exact head `e1d30ba`, bringing the total to
-  **56**. Scloud Vault
+  **56**. Padding Oracle **#23** was then read back open, non-draft, cleanly
+  mergeable and green at exact head `a8b1ab9`, bringing the total to **57**.
+  Scloud Vault
   **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
   Shor **#21** had advanced beyond the head SHAs stored with their completed
   Fleet evidence: `9956def` to `20569e3`, `715cec9` to `344a310`, `5d0ec55`

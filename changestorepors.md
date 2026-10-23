@@ -397,6 +397,63 @@ merged by this maintenance pass.
   non-draft, cleanly mergeable and green at its exact head. It remains
   intentionally unmerged and undeployed.
 
+### ORAM Vault
+
+- PR: [crypto-lab-oram-vault #30](https://github.com/systemslibrarian/crypto-lab-oram-vault/pull/30)
+- Branch: `codex/repair-oram-vault-2026-10-23`
+- Base: `8a2aa66111da27768a42510c02a2391ee409f1e6`
+- Head and commit: `921428c083692821539c45ce22267d3b347f4354`
+  hardens the protocol, UI and deployment boundaries.
+- Scope: **17 files**, **1,128 insertions** and **611 deletions**. Initialization
+  now reabsorbs real blocks before overwriting shared path buckets, so every
+  logical block survives setup exactly once. Client accesses serialize mutable
+  state and fail closed on missing, duplicated, malformed, tampered, wrong-key
+  or stale-generation data. Server paths validate and copy every fixed-size
+  blob before an atomic write; returned bytes and tree snapshots no longer
+  alias owned state.
+- AES-256-GCM keys are non-extractable and use a private random prefix plus a
+  monotonic per-key counter to prevent nonce reuse within the supported space.
+  Oversized binary and UTF-8 inputs are rejected instead of truncated, stash
+  plaintext is rendered through text nodes, and overlapping tree controls no
+  longer race a replaced client.
+- Accuracy repairs qualify the 1996 Goldreich–Ostrovsky lower bound, add the
+  general Larsen–Nielsen result and OptORAMa, distinguish research prototypes
+  from deployments, identify Obladi as Ring-ORAM-based, retain visible timing
+  leakage, and explain that AES-GCM does not provide path completeness or
+  freshness. Path ORAM, Goldreich–Ostrovsky, Larsen–Nielsen, OptORAMa,
+  ZeroTrace, OBLIVIATE, Obladi and Onion ORAM publications were checked before
+  changing those names, dates or construction relationships.
+- Workflow authority is split so repository code runs read-only and Pages/OIDC
+  credentials exist only in a no-checkout deploy job. Pull requests cannot
+  package a Pages artifact, main deployments are not cancelled, Node 22/24/26
+  quality gates block the browser job, and Dependabot auto-merge is patch/minor
+  only and fail-closed. All five actions are pinned to independently resolved
+  release SHAs, with seven executable policy controls.
+- Authoritative Linux run:
+  [39988138511](https://github.com/systemslibrarian/crypto-lab-oram-vault/actions/runs/39988138511)
+  passed clean install, zero-vulnerability audit, typecheck, **48/48**
+  unit/boundary tests, **7/7** workflow controls and production build on Node
+  22, 24 and 26. Linux Chromium passed all **17/17** claim, behavior and WCAG
+  A/AA tests in 29.2 seconds; PR artifact, deploy and dependency-merge jobs were
+  correctly skipped.
+- Local verification passed the same deterministic gates, coverage at
+  **90.85%** statements / **94.42%** lines, clean `npm ls --all`, YAML parsing,
+  action-SHA resolution and `git diff --check`. Local macOS Chromium died at Mach
+  bootstrap before assertions. A separate Linux-container attempt also never
+  launched because Docker's internal storage was full; neither was counted as
+  a test result, and the successful Linux workflow is the browser authority.
+- Authenticated cursor-based provider reads found zero open Dependabot alerts
+  and zero open secret-scanning alerts, with secret scanning and push protection
+  enabled. GitHub returned HTTP 404 `no analysis found` for code scanning, so
+  that evidence remains explicitly incomplete. Dependabot security updates were
+  observed disabled and were not changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-oram-vault/pull/30#issuecomment-6370060864)
+- State: Fleet item `3f2be34b-4e8c-4a27-8213-85da5c15a172` read back complete
+  at revision **3** with exact start/end SHAs. PR #30 is open, non-draft,
+  cleanly mergeable and green at the recorded head. It remains intentionally
+  unmerged; no live Pages deployment was performed or claimed.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)
@@ -505,11 +562,11 @@ merged by this maintenance pass.
   `0730c46f802237569c2e39fa0edc57729e158d68`. The branch incorporates that
   fresh Hub main through merge commit `b5e31dd`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Opaque Gate it measured **1,204 total**,
-  **1,061 complete** and **143 active** Fleet items: **110 queued**, **27
-  working** and **6 blocked**. ORAM Vault is the next queued review.
-- GitHub GraphQL readback on 2026-10-23 found all **52** named repair PRs open,
-  non-draft and carrying a successful current-head status rollup. Fifty-one were
+  growing history log. After ORAM Vault it measured **1,204 total**,
+  **1,062 complete** and **142 active** Fleet items: **109 queued**, **27
+  working** and **6 blocked**. Order Leak is the next queued review.
+- GitHub readback on 2026-10-23 found all **53** named repair PRs open,
+  non-draft and carrying a successful current-head status rollup. Fifty-two were
   mergeable; PQ Rotation **#24** was the one conflicting PR. Scloud Vault
   **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
   Shor **#21** had advanced beyond the head SHAs stored with their completed
@@ -518,7 +575,8 @@ merged by this maintenance pass.
   respectively. Their new heads were green, but the evidence must be reconciled
   against those commits before merge. Green checks alone neither resolve a
   conflict nor prove that earlier review evidence still applies. Opaque Gate
-  **#34** was green and mergeable at exact head `131cb9f`.
+  **#34** was green and mergeable at exact head `131cb9f`; ORAM Vault **#30**
+  was green and mergeable at exact head `921428c`.
 - The complete Hub consistency pass against this freshly incorporated main and
   counsel **#18** produced **11 passes and 2 failures**. `catalog-sync` showed
   that main commit `0730c46` fixed Search Vault's generated section count and
@@ -539,6 +597,8 @@ merged by this maintenance pass.
   checks finish.
 - Local Chromium on this Mac can fail before page launch with a Mach bootstrap
   error. Linux Playwright logs are the browser authority when that occurs.
+- Docker's internal storage was full during the ORAM Vault fallback attempt; no
+  container launched and no Docker data was deleted to conceal that limitation.
 - Repository security settings were observed but not changed. Dependabot
   security updates remain an owner decision where GitHub reports them disabled.
 - The refreshed Hub baseline has one generated `CATALOG.md` drift and six stale

@@ -19,7 +19,7 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Fifty-two open lab repair PRs have green current-head Linux CI: the 26
+- Fifty-three open lab repair PRs have green current-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
@@ -28,38 +28,41 @@ Nothing below is merged merely because its checks pass:
   Protocol Compose **#23**, PSI Gate **#28**, Pulse Chain **#5**, Quantum
   Entropy **#23**, Quantum Vault KpqC **#21**, Ratchet Wire **#17**, Reshare
   Circle **#23**, Nonce Lattice **#27**, NTRU Classic **#24**, Oblivious
-  Shelf **#21** and Opaque Gate **#34**. A fresh GitHub GraphQL readback found
-  all 52 open and non-draft with successful current-head status rollups. **PQ
-  Rotation #24** remains the
-  one conflicting PR; the other 51 are mergeable. NTRU Classic #24 is green at
+  Shelf **#21**, Opaque Gate **#34** and ORAM Vault **#30**. A fresh GitHub
+  readback found all 53 open and non-draft with successful current-head status
+  rollups. **PQ Rotation #24** remains the one conflicting PR; the other 52 are
+  mergeable. NTRU Classic #24 is green at
   exact head `f81f1ce`, Oblivious Shelf #21 at `02a4593`, and Opaque Gate #34
-  at `131cb9f`. Scloud Vault #21,
+  at `131cb9f`; ORAM Vault #30 is green at `921428c`. Scloud Vault #21,
   Search Vault #23, Shadow Vault #31, Shamir Gate #17 and Shor #21 advanced
   after the SHAs stored in their Fleet evidence; their new heads are green,
   but their evidence must be reconciled before merge. The
   Fleet records and PR comments hold their per-lab evidence; do not duplicate
   that history here and do not merge them from this maintenance pass.
-- Twenty-four queued security-evidence reviews are recorded complete. The first
+- Twenty-five queued security-evidence reviews are recorded complete. The first
   23 have recorded-head readable zero-open-alert Dependabot and secret-scanning
   results plus a zero-advisory exact lock; code scanning remains explicitly
   incomplete because GitHub reports no analysis. Opaque Gate has a complete
   cursor-paginated zero-open-alert Dependabot read and a zero-vulnerability
-  exact-lock audit; no uncollected provider was converted into a pass. The five
+  exact-lock audit; no uncollected provider was converted into a pass. ORAM
+  Vault has complete cursor-paginated zero-open-alert Dependabot and secret-
+  scanning reads plus a zero-vulnerability exact-lock audit; code scanning
+  remains explicitly incomplete because GitHub reports no analysis. The five
   moved heads named above now need fresh evidence reconciliation. Their source
   repairs remain open, and their names and evidence stay in the Fleet records
   rather than becoming history here.
 
-**Next:** ORAM Vault item `3f2be34b-4e8c-4a27-8213-85da5c15a172`.
+**Next:** Order Leak item `5e9e35d1-4c92-49a6-936a-6ba0d0ffff50`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,061 complete and 143 active** items:
-**110 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,062 complete and 142 active** items:
+**109 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **110 queued security-evidence reviews.** ORAM Vault is next.
+- **109 queued security-evidence reviews.** Order Leak is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state
@@ -118,10 +121,11 @@ calling the Hub clean; keep those fixes out of this tracker-only PR.
 
 A fresh PR readback found **#244**, **#246** and **#248** conflicting despite
 successful current-head status rollups. **#245** remains stacked on #244 and
-has no status rollup of its own. **#243**, **#247** and **#249** are open,
-mergeable and have successful current-head rollups. Refresh or supersede the
-conflicting branches, and re-evaluate every open Hub PR after any further
-Hub-main movement; historical green runs do not resolve a merge conflict.
+has no status rollup of its own. **#247** and **#249** are open, mergeable and
+green. **#243** is mergeable, but its current README-catalog workflow correctly
+fails on the same two generated `CATALOG.md` lines recorded above. Refresh or
+supersede the conflicting branches, and re-evaluate every open Hub PR after any
+further Hub-main movement; historical green runs do not resolve a merge conflict.
 
 Finish any card-stamping pass with `node tools/level-sync.js`; `data-level`
 belongs where the last writer puts it.

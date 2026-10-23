@@ -16,6 +16,40 @@ merged by this maintenance pass.
 5. Treat deployment as unverified while a PR is open. Treat an unavailable
    provider as unknown, never as zero alerts.
 
+## Work in progress — not yet a completed repair
+
+### Quantum Vault KpqC
+
+- Repository: `crypto-lab-quantum-vault-kpqc`
+- Source base fetched 2026-10-23: `252c7e9c749c09642e4e6ae82b7bab45ecb9d8e0`
+- Local branch: `codex/repair-quantum-vault-kpqc-2026-10-23`
+- State: uncommitted and unpushed; there is no reviewable PR head yet. Do not
+  treat the items below as complete until this section is replaced by a commit,
+  PR, authoritative CI run and final provider evidence.
+- Findings addressed in the working tree so far: release builds could include
+  the forgeable development crypto backend; an error-only `kpqc-wasm` scaffold
+  could be described as if it supplied native Level-3 crypto; container and UI
+  prose overstated the password-plus-KEM security model; registry metadata could
+  label non-production implementations production-safe; Shamir work left extra
+  garbage-collected secret copies; PBKDF and serialized-state bounds were not
+  consistently enforced; and workflow permissions, cancellation and automatic
+  major-update handling were too broad.
+- Implemented but not yet final: fail-closed backend labeling and release
+  guards, algorithm/backend mismatch rejection, typed secret cleanup, bounded
+  vault parsing, Shamir reconstruction without ordinary-array secret copies,
+  corrected KpqC/candidate and security-model prose, constrained Pages jobs,
+  and focused regression/control tests.
+- Evidence already obtained during development: the full Rust workspace and
+  no-default-feature core suites passed; the web unit suite passed **81** tests;
+  Python WASM tests passed **28/28**; RustSec reported zero vulnerabilities; and
+  GitHub reported zero open Dependabot and secret-scanning alerts while code
+  scanning returned `no analysis found`. These are interim results because the
+  working tree has changed since some runs.
+- Remaining before completion: finish the claim-by-claim review; refetch and
+  reconcile with `origin/main`; rerun every local gate on the exact committed
+  tree; push and open a PR; inspect all exact-head Linux CI logs; refetch provider
+  evidence; and only then mark the Fleet item complete.
+
 ## Completed work, awaiting maintainer review
 
 ### crypto-counsel corpus review
@@ -122,9 +156,9 @@ merged by this maintenance pass.
 
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)
 - Branch: `codex/refresh-futureworkoct-2026-10-21`
-- Base at the last fetch: `743f03b9c6134cdcf51b79189e4eadab41bf85ea`
+- Base at the last fetch: `cc49eb16881e1b4cf1c8a7a17c0a77aa7b1bda57`
 - Rebased tracker checkpoint before this ledger update:
-  `ea6018655fe2004155d5a9b5a6646311e4753647`
+  `8a5f1441b5325c75effcb3836afc4b713609ec99`
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
   growing history log. After Quantum Entropy it measured **1,204 total**,
   **1,054 complete** and **150 active** Fleet items: **117 queued**, **27

@@ -871,8 +871,8 @@
    "addedOn": "2026-04-19",
    "updated": "2026-10",
    "addedFrom": "2026-04-19T19:52:51Z",
-   "updatedFrom": "2026-10-23T06:55:57-04:00",
-   "updatedCommit": "733b8e9c6c2a94f94b9f80d6ded6bd6697d8a35f"
+   "updatedFrom": "2026-10-23T07:21:45-04:00",
+   "updatedCommit": "64ae2a4688357f388440fa56d05dbc4edfddfca4"
   },
   "crypto-lab-pq-tls-handshake": {
    "added": "2026-04",
@@ -1655,8 +1655,8 @@
    "addedOn": "2026-09-11",
    "updated": "2026-10",
    "addedFrom": "2026-09-11T18:10:48Z",
-   "updatedFrom": "2026-10-23T07:00:51-04:00",
-   "updatedCommit": "e3d4a8ddcda3c03b9e901ecfd2dc7071745b5ad9"
+   "updatedFrom": "2026-10-23T07:24:33-04:00",
+   "updatedCommit": "5c74e5bf8a1826bc2bc60ac42559eec0033f2da0"
   },
   "crypto-lab-pqxdh-wire": {
    "added": "2026-09",

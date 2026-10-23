@@ -7223,7 +7223,7 @@ Test selected security games, trace an AES-based GGM tree, and compare exact and
 - **Attacks shown:** Chosen-ciphertext attack `src/game/cca.ts:1`, Chosen-plaintext attack `src/game/challenger.ts:18`, Ciphertext malleability `README.md:42`, Signature malleability `README.md:44`
 - **Standards body:** IETF, NIST, SECG
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e3d4a8ddcda3](https://github.com/systemslibrarian/crypto-lab-hidden-bit/commit/e3d4a8ddcda3c03b9e901ecfd2dc7071745b5ad9) reviewed 2026-10-23; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5c74e5bf8a18](https://github.com/systemslibrarian/crypto-lab-hidden-bit/commit/5c74e5bf8a1826bc2bc60ac42559eec0033f2da0) reviewed 2026-10-23; 7 mapped sections.
   - **Security game boundaries** (`definition-boundaries`; explanation; conceptual)
     - **Visible section:** What this lab is, and is not
     - **Learner action:** Expand the scope comparison and nearby-definition table.
@@ -7905,7 +7905,7 @@ Compare ECIES P-256 and RSA-OAEP for sealed messages. A separate 5G tab generate
 - **Attacks shown:** Brute force `src/main.ts:950`, IV reuse `README.md:29`, Man-in-the-middle `src/main.ts:7`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e5326a46e859](https://github.com/systemslibrarian/crypto-lab-iron-letter/commit/e5326a46e85923e95083baffbad57c9d68af3b16) reviewed 2026-10-23; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f0fed901fc32](https://github.com/systemslibrarian/crypto-lab-iron-letter/commit/f0fed901fc32852d74e6054fbe571bba4e666e15) reviewed 2026-10-23; 8 mapped sections.
   - **ECIES and RSA Size/Timing Comparison** (`comparison`; comparison; real-values)
     - **Visible section:** Side-by-Side Comparison
     - **Learner action:** Run a local benchmark and compare public-key and envelope sizes.
@@ -12124,7 +12124,7 @@ Plan post-quantum migration with separate recorded-traffic confidentiality and s
 - **References:** AES, DSA, Diffie-Hellman, Dilithium, ECDH, ECDSA, Ed25519, Kyber, ML-KEM, RSA, RSA-OAEP, TLS 1.3, X25519
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [733b8e9c6c2a](https://github.com/systemslibrarian/crypto-lab-pq-rotation/commit/733b8e9c6c2a94f94b9f80d6ded6bd6697d8a35f) reviewed 2026-10-23; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [64ae2a468835](https://github.com/systemslibrarian/crypto-lab-pq-rotation/commit/64ae2a4688357f388440fa56d05dbc4edfddfca4) reviewed 2026-10-23; 5 mapped sections.
   - **Canary fleet rollout** (`fleet-rotation`; interactive; simulation)
     - **Visible section:** Step 5 — How to deploy safely (Fleet rotation)
     - **Learner action:** Set canary share, monitoring window, rollout stages and injected failure, then run rotation.

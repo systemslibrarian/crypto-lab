@@ -157,10 +157,10 @@
   "crypto-lab-iron-letter": {
    "added": "2026-04",
    "addedOn": "2026-04-04",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-04T15:29:35Z",
-   "updatedFrom": "2026-08-15T21:19:50-04:00",
-   "updatedCommit": "001249a34e5b4456e2c782b538420a4f9ee385fe"
+   "updatedFrom": "2026-10-23T06:58:10-04:00",
+   "updatedCommit": "e5326a46e85923e95083baffbad57c9d68af3b16"
   },
   "crypto-lab-shadow-vault": {
    "added": "2026-04",
@@ -263,8 +263,8 @@
    "addedOn": "2026-04-05",
    "updated": "2026-10",
    "addedFrom": "2026-04-05T15:23:14Z",
-   "updatedFrom": "2026-10-12T11:58:29-04:00",
-   "updatedCommit": "f5fba38fe404741b8c72e83921d1025f12ca36d2"
+   "updatedFrom": "2026-10-23T06:53:25-04:00",
+   "updatedCommit": "a9beb37a9ce72b0b06ff725c840c9a8ffe952aac"
   },
   "crypto-lab-dilithium-seal": {
    "added": "2026-04",
@@ -871,8 +871,8 @@
    "addedOn": "2026-04-19",
    "updated": "2026-10",
    "addedFrom": "2026-04-19T19:52:51Z",
-   "updatedFrom": "2026-10-12T11:51:43-04:00",
-   "updatedCommit": "faa2ab7b71691dbcbc62c13ade5dfd80d31fe7d9"
+   "updatedFrom": "2026-10-23T06:55:57-04:00",
+   "updatedCommit": "733b8e9c6c2a94f94b9f80d6ded6bd6697d8a35f"
   },
   "crypto-lab-pq-tls-handshake": {
    "added": "2026-04",
@@ -991,8 +991,8 @@
    "addedOn": "2026-06-09",
    "updated": "2026-10",
    "addedFrom": "2026-06-09T07:38:07Z",
-   "updatedFrom": "2026-10-20T23:09:28-04:00",
-   "updatedCommit": "859a048cee7bc95f63afe77bade2e8f7c877ae17"
+   "updatedFrom": "2026-10-23T06:59:48-04:00",
+   "updatedCommit": "95121cd4939143bc30604ea2db2bd2510727a606"
   },
   "crypto-lab-web-of-trust": {
    "added": "2026-06",
@@ -1071,8 +1071,8 @@
    "addedOn": "2026-06-09",
    "updated": "2026-10",
    "addedFrom": "2026-06-09T11:07:24Z",
-   "updatedFrom": "2026-10-22T16:47:55-04:00",
-   "updatedCommit": "e9a3628c43e20c071b545a7214b6f4c27c418610"
+   "updatedFrom": "2026-10-23T06:54:04-04:00",
+   "updatedCommit": "1d47ca1b8b41189ccee14e708d03bb8ed62b08ef"
   },
   "crypto-lab-hybrid-guide": {
    "added": "2026-06",
@@ -1167,8 +1167,8 @@
    "addedOn": "2026-06-28",
    "updated": "2026-10",
    "addedFrom": "2026-06-28T16:39:28Z",
-   "updatedFrom": "2026-10-12T11:34:58-04:00",
-   "updatedCommit": "86b59789bca744b9e032bd121ef0d8df75bbe5b4"
+   "updatedFrom": "2026-10-23T06:53:36-04:00",
+   "updatedCommit": "ccc55f6488b199d64ba9ddcbe9f2f51b5b9a8239"
   },
   "crypto-lab-time-lock-puzzle": {
    "added": "2026-06",
@@ -1455,8 +1455,8 @@
    "addedOn": "2026-08-01",
    "updated": "2026-10",
    "addedFrom": "2026-08-01T00:19:05Z",
-   "updatedFrom": "2026-10-22T20:19:26Z",
-   "updatedCommit": "ab776f90b3b6ced0d56a25b2ae5c3de7ff4a40b9"
+   "updatedFrom": "2026-10-23T07:00:40-04:00",
+   "updatedCommit": "e004db682cee90b73afd5f7c75f42a7cc20ce96a"
   },
   "crypto-lab-search-vault": {
    "added": "2026-08",
@@ -1655,8 +1655,8 @@
    "addedOn": "2026-09-11",
    "updated": "2026-10",
    "addedFrom": "2026-09-11T18:10:48Z",
-   "updatedFrom": "2026-10-22T20:23:54Z",
-   "updatedCommit": "ebba09ea1bbd1fff710955ed3904fa85da2c8692"
+   "updatedFrom": "2026-10-23T07:00:51-04:00",
+   "updatedCommit": "e3d4a8ddcda3c03b9e901ecfd2dc7071745b5ad9"
   },
   "crypto-lab-pqxdh-wire": {
    "added": "2026-09",
@@ -1879,8 +1879,8 @@
    "addedOn": "2026-10-20",
    "updated": "2026-10",
    "addedFrom": "2026-10-20T19:23:36Z",
-   "updatedFrom": "2026-10-20T15:57:46-04:00",
-   "updatedCommit": "aea4987eb664b595e57193c74cc2951ffdb39b5f"
+   "updatedFrom": "2026-10-23T07:06:27-04:00",
+   "updatedCommit": "271adc969b9793eac7472dae90a99a9a57e77560"
   },
   "crypto-lab-residue-gate": {
    "added": "2026-10",
@@ -1895,8 +1895,8 @@
    "addedOn": "2026-10-20",
    "updated": "2026-10",
    "addedFrom": "2026-10-20T19:23:03Z",
-   "updatedFrom": "2026-10-20T16:21:49-04:00",
-   "updatedCommit": "c71418642477df5aa3dc7bb940f6c54fadc7f4e0"
+   "updatedFrom": "2026-10-23T07:00:40-04:00",
+   "updatedCommit": "072a9531796a1c2f9936197077aee2ee0d57b144"
   },
   "crypto-lab-log-forge": {
    "added": "2026-10",

@@ -9690,7 +9690,7 @@ Run linear analysis on a toy SPN: compare trails with key-dependent hulls, count
 - **Implements:** Toy SPN `src/crypto/spn.ts:66`
 - **Source review:** [e218f2e71938](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/e218f2e71938d1514cbfde224fc61b1d68fc2e3a) — Reviewed the toy SPN, attack and new two-mask/structural-zero panel at this exact commit. It counts two parity relations and all four joint outcomes on the same 16/64/256 plaintexts, and checks a no-nonzero-trail pair whose full-codebook correlation is zero across keys. This is a bounded toy-SPN observation, not a multidimensional key-recovery attack or a reproduction of the cited ChaCha research. Existing single-trail versus full linear-hull and repeated versus distinct plaintext comparisons remain separate. The toy SPN implementation anchor is unchanged; no full DES or production cipher is attacked.
 - **References:** AES, ChaCha20, DES, Enigma, Serpent, Shamir secret sharing, Vigenere cipher
-- **Attacks shown:** Brute force `README.md:97`, Chosen-plaintext attack `index.html:547`, Differential cryptanalysis `README.md:76`, Key recovery `index.html:19`, Known-plaintext attack `src/ui/piling.ts:105`, Linear cryptanalysis `src/main.ts:264`
+- **Attacks shown:** Key recovery `index.html:19`, Known-plaintext attack `src/ui/piling.ts:105`, Linear cryptanalysis `src/main.ts:264`
 - **Standards body:** —
 - **Implementation:** hand-rolled
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e218f2e71938](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/e218f2e71938d1514cbfde224fc61b1d68fc2e3a) reviewed 2026-10-23; 10 mapped sections.

@@ -821,10 +821,10 @@
   "crypto-lab-ibe-gate": {
    "added": "2026-04",
    "addedOn": "2026-04-19",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-19T12:04:44Z",
-   "updatedFrom": "2026-08-19T01:22:26-04:00",
-   "updatedCommit": "8ea0455b530bf0bb4ed5da3c8943eddc38fd1474"
+   "updatedFrom": "2026-10-23T14:11:03-04:00",
+   "updatedCommit": "7dfebaff27c4e20cd278a4d41a95c538e8807d31"
   },
   "crypto-lab-kyberslash": {
    "added": "2026-04",

@@ -472,6 +472,7 @@ const ALGORITHMS = [
   { name: 'CPace', kind: 'algorithm', family: 'PAKE', re: /\bcpace\b/i, std: 'IETF:RFC 9383' },
   { name: 'Dragonfly', kind: 'algorithm', family: 'PAKE', re: /\bdragonfly\b|\bsae\b/i, std: 'IETF:RFC 7664' },
   { name: 'Boneh-Franklin IBE', kind: 'algorithm', family: 'identity-based encryption', re: /boneh[-_ ]?franklin|basic[-_ ]?ident|\bibe\b/i, std: 'IETF:RFC 5091' },
+  { name: 'HIBE', kind: 'algorithm', family: 'identity-based encryption', re: /hierarchical[-_ ]?identity[-_ ]?based[-_ ]?encryption|\bhibe\b/i, std: null },
   /* Inner-product functional encryption. Keyed on the CONSTRUCTION's name and on
      `FunctionalKey`, the scheme's own object, and deliberately NOT on the bare
      phrase "inner product": `crypto-lab-bulletproofs` is built around the
@@ -522,6 +523,7 @@ const ATTACKS = [
      credit, which is asserted as the positive control below. */
   { name: 'Power analysis', re: /\bdpa\b|\bspa\b|(?<!statistical[-_ ])power[-_ ]?analysis/i },
   { name: 'Fault injection', re: /fault[-_ ]?(?:injection|attack)|rowhammer/i },
+  { name: 'Differential fault analysis', re: /differential[-_ ]?fault[-_ ]?(?:analysis|recovery)/i },
   { name: 'Nonce reuse', re: /nonce[-_ ]?(?:reuse|collision|misuse)/i },
   { name: 'IV reuse', re: /iv[-_ ]?reuse/i },
   { name: 'Length extension', re: /length[-_ ]?extension/i },

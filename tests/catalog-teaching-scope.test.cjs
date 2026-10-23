@@ -457,6 +457,22 @@ test('scanner retains computations and positive demonstrations beside bounded li
   }
 });
 
+test('differential fault analysis vocabulary does not claim deterministic finite automata', () => {
+  const term = ATTACKS.find(t => t.name === 'Differential fault analysis');
+  assert.ok(term, 'The catalog must be able to name the AES fault-recovery lesson');
+  assert.ok(term.re.test('differential fault analysis'));
+  assert.ok(term.re.test('run differential fault recovery'));
+  for (const line of [
+    'DFA transition table',
+    'deterministic finite automaton',
+    'export function buildDFA() { return compileRegex(); }',
+  ]) assert.equal(term.re.test(line), false, line);
+  assert.equal(
+    attackContextAllows(term, 'Run differential fault recovery and verify the recovered AES key.'),
+    true,
+  );
+});
+
 test('an independent recovery clause survives an earlier key-access negation', () => {
   const term = ATTACKS.find(t => t.name === 'Frequency analysis');
   // Actual learner-facing source, independently checked against the grouping /

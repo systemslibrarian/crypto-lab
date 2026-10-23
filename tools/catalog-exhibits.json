@@ -759,8 +759,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-aes-anatomy": {
-      "commit": "254a8069f7811e6b766199ef97f46c0c56a91c85",
-      "reviewed": "2026-10-22",
+      "commit": "fffbc96eddebefe2e45bce51890a35d0297570c1",
+      "reviewed": "2026-10-23",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -926,6 +926,40 @@
             "src/heldout.ts:1"
           ],
           "limits": "Attacks apply to deliberately broken AES-128 variants, not practical key recovery against full AES; key schedule retains the real S-box."
+        },
+        {
+          "id": "aes-dfa",
+          "title": "Inject a fault, recover the key",
+          "section": "Inject a fault, recover the key",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Inject known-location round-9 byte faults into AES-128, compare correct and faulty ciphertexts, then intersect last-round-key candidates.",
+          "outcome": "Two faults per affected quartet isolate round key 10; reversing the key schedule and a held-out encryption independently verify the recovered master key.",
+          "concepts": [
+            "AES-128",
+            "differential fault analysis",
+            "last-round key recovery",
+            "inverse S-box differential",
+            "fault detection"
+          ],
+          "evidence": [
+            "src/main.ts:94",
+            "src/dfa-fixture.ts:14",
+            "src/dfa-fixture.ts:35",
+            "src/attack/dfa.ts:53",
+            "src/attack/dfa.ts:59",
+            "src/attack/dfa.ts:83",
+            "src/ui/act8.ts:30",
+            "src/ui/act8.ts:48",
+            "src/ui/act8.ts:87",
+            "src/ui/act8.ts:93",
+            "src/ui/act8.ts:98",
+            "src/ui/act8.ts:106",
+            "src/ui/act8.ts:125",
+            "src/ui/act8.ts:184",
+            "src/ui/act8.ts:195"
+          ],
+          "limits": "Logical known-location single-byte fault model; not physical injection, not arbitrary ciphertext corruption, and the recomputation comparison is not a universal defense."
         }
       ]
     },
@@ -16809,8 +16843,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-ibe-gate": {
-      "commit": "b249b17c883b4472ca4ef702866fc609d2c7e943",
-      "reviewed": "2026-10-22",
+      "commit": "7dfebaff27c4e20cd278a4d41a95c538e8807d31",
+      "reviewed": "2026-10-23",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -16828,10 +16862,10 @@
             "BLS12-381"
           ],
           "evidence": [
-            "src/main.ts:475",
             "src/main.ts:496",
-            "src/main.ts:500",
-            "src/main.ts:509",
+            "src/main.ts:530",
+            "src/main.ts:568",
+            "src/main.ts:604",
             "src/ibe.ts:51",
             "src/ibe.ts:76"
           ],
@@ -16852,12 +16886,15 @@
             "pairing-based IBE"
           ],
           "evidence": [
-            "src/main.ts:650",
-            "src/main.ts:663",
-            "src/main.ts:667",
-            "src/main.ts:673",
+            "src/main.ts:671",
+            "src/main.ts:718",
+            "src/main.ts:727",
+            "src/main.ts:777",
+            "src/main.ts:805",
+            "src/main.ts:810",
             "src/ibe.ts:100",
-            "src/ibe.ts:117"
+            "src/ibe.ts:117",
+            "src/ibe.ts:154"
           ],
           "limits": "BasicIdent is a teaching construction and does not supply modern authenticated-encryption or chosen-ciphertext security by itself."
         },
@@ -16875,8 +16912,12 @@
             "wrong-key decryption"
           ],
           "evidence": [
-            "src/main.ts:844",
-            "src/main.ts:861",
+            "src/main.ts:865",
+            "src/main.ts:911",
+            "src/main.ts:913",
+            "src/main.ts:916",
+            "src/main.ts:928",
+            "src/main.ts:929",
             "src/ibe.ts:154",
             "src/ibe.ts:189"
           ],
@@ -16897,8 +16938,13 @@
             "temporal access"
           ],
           "evidence": [
-            "src/main.ts:964",
+            "src/main.ts:985",
             "src/main.ts:1009",
+            "src/main.ts:1072",
+            "src/main.ts:1085",
+            "src/main.ts:1086",
+            "src/main.ts:1113",
+            "src/main.ts:1114",
             "src/scenarios.ts:1"
           ],
           "limits": "Time scoping depends on PKG key issuance and ciphertext identity conventions; it does not revoke an already issued matching key."
@@ -16917,13 +16963,57 @@
             "key generation authority"
           ],
           "evidence": [
-            "src/main.ts:1150",
-            "src/main.ts:1159",
-            "src/main.ts:1163",
-            "src/main.ts:1192",
+            "src/main.ts:1166",
+            "src/main.ts:1167",
+            "src/main.ts:1171",
+            "src/main.ts:1245",
+            "src/main.ts:1253",
+            "src/main.ts:1265",
+            "src/main.ts:1270",
             "src/ibe.ts:100"
           ],
           "limits": "BasicIdent implements none of the listed escrow mitigations; the PKG must be trusted with all identities."
+        },
+        {
+          "id": "hibe-delegation",
+          "title": "Exhibit 6 — A Parent Key Really Derives Its Descendant",
+          "section": "Exhibit 6 — A Parent Key Really Derives Its Descendant",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Build a three-level identity, delegate parent-to-child keys without the master secret, then compare descendant, sibling and root-PKG results.",
+          "outcome": "The delegated descendant and fresh PKG key recover the target message; the same-depth sibling runs the pairing algebra but recovers a different secret, while root escrow remains.",
+          "concepts": [
+            "hierarchical identity-based encryption",
+            "HIBE delegation",
+            "subtree compromise",
+            "pairing-based access boundary",
+            "PKG escrow"
+          ],
+          "evidence": [
+            "src/main.ts:1298",
+            "src/main.ts:1327",
+            "src/main.ts:1365",
+            "src/main.ts:1367",
+            "src/main.ts:1368",
+            "src/main.ts:1372",
+            "src/main.ts:1373",
+            "src/main.ts:1376",
+            "src/main.ts:1380",
+            "src/main.ts:1382",
+            "src/main.ts:1389",
+            "src/main.ts:1420",
+            "src/main.ts:1424",
+            "src/main.ts:1432",
+            "src/main.ts:1437",
+            "src/hibe.ts:179",
+            "src/hibe.ts:229",
+            "src/hibe.ts:274",
+            "src/hibe.ts:333",
+            "src/hibe.ts:382",
+            "src/hibe.ts:416",
+            "src/hibe.ts:426"
+          ],
+          "limits": "Bounded depth-three Type-3 KEM/DEM teaching adaptation; it does not claim the paper's full proof and delegation does not remove root escrow."
         }
       ]
     },

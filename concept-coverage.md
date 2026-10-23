@@ -261,6 +261,8 @@ Catalogued total moves to 225.*
 
 *Version 34 — records Envelope KMS's first stateful key-handle exercise under §39: an intentionally unsafe usage-policy transition composes valid AES key-wrap operations into key disclosure, while fixed roles preserve protected unwrap. This deepens an existing concept; import, alias and bounded-search extensions remain open in E-K-01. The encyclopedia implementation roadmap tracks 48 accepted additions and extensions without changing the forty-concept taxonomy or its statuses. Catalogued total remains 243.*
 
+*Version 35 — records three shipped extensions without adding a lab or changing a concept status. IBE Gate now executes bounded Type-3 HIBE delegation under §9, including sibling and subtree boundaries while retaining root escrow. Search Vault's §23 exercise separates per-record authenticity from client-checked result completeness and freshness. AES Anatomy's §27 lesson performs structured round-9 AES-128 differential fault recovery and independently verifies the recovered key; it does not label arbitrary corruption as DFA. Catalogued total remains 243.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -481,6 +483,14 @@ on a non-standard hash interoperate perfectly — a passing check establishes th
 sides agreed, not that either conformed. SM9's real verifier still refuses a key extracted
 under a different hash, at HASH-MISMATCH; identity is checked, agreement is simply not
 conformance.
+
+IBE Gate now carries that identity-based family one level upward: its separate Type-3 HIBE
+exercise derives a department key from a root key and a user key from that department without
+giving either delegate the master secret. A fresh PKG key and the delegated descendant key open
+the target ciphertext, while a same-depth sibling runs the real pairing algebra and reaches a
+different target-group secret. This is bounded depth-three teaching code with a fixed-size
+KEM/DEM adaptation, not a claim of the source paper's full proof; hierarchy limits a compromised
+delegate to its prefix but does not remove the root PKG's escrow over every branch.
 
 **10. Lattices (LWE / SIS / NTRU) — `DEEP`**
 Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · GGH Trapdoor · Dilithium Seal ·
@@ -738,7 +748,12 @@ the same as making the answer safe to release.
 Search Vault is the complement to ORAM Vault. Searchable symmetric encryption is the
 construction whose access-pattern leakage ORAM exists to hide, and running the count and IKK
 leakage-abuse attacks against a log the learner generated makes "secure relative to a stated
-leakage function" concrete rather than abstract.
+leakage function" concrete rather than abstract. Its query-integrity exercise then separates
+three properties that an authenticated posting alone cannot collapse: each record's AES-GCM
+authenticity, completeness of the ordered answer, and freshness of the snapshot. Omission and
+stale replay can leave returned records individually authentic while failing a trusted
+client-retained count, digest or snapshot id. That checkpoint is deliberately static and is not
+presented as a general verifiable-SSE protocol.
 
 Order Leak is the leakage that needs no access pattern at all, which stretches this concept in a
 direction worth naming. Everything else here leaks as a consequence of being **used** — ORAM hides
@@ -854,7 +869,7 @@ still passes. A boot quote proves what was measured, not what is running.
 
 **27. Side channels — timing, power, fault — `DEEP`**
 Timing Oracle · Timing Side-Channel · Power Trace · KyberSlash · HQC Timing · HQC Timing
-Break · Lattice Fault · Ciphertext Mirror · Broken Trust · Masked Core · Glass Box. Saturated; new
+Break · Lattice Fault · Ciphertext Mirror · Broken Trust · Masked Core · AES Anatomy · Glass Box. Saturated; new
 side-channel papers should be judged as *variants* unless they teach a new leakage
 **mechanism**.
 
@@ -865,6 +880,15 @@ also the only demo here that makes the *countermeasure* the object under measure
 Power Trace already ships first-order masking in its Exhibit 6 countermeasure selector and
 names second-order as out of scope by design, so this lab starts where that one stops; the
 two cross-link.
+
+AES Anatomy adds classical differential fault analysis rather than another generic fault toggle.
+It injects one nonzero byte at a declared location before round-9 MixColumns in real AES-128,
+derives inverse-S-box constraints from correct and faulty ciphertext differences, intersects
+candidate quartets, reverses round key 10 and verifies the recovered master key on a held-out
+block. A fault in a different row analyzed under the original model produces no false recovery,
+and identical common-mode corruption shows why simple recomputation is only a scoped detection
+example. The exercise models logical known-location faults, not a physical injection apparatus
+or arbitrary ciphertext corruption.
 
 **28. Nonce and randomness misuse — `COVERED`**
 Nonce Collision · Nonce Guard · Nonce Lattice · Entropy Collapse · ECDSA Forge · Schnorr

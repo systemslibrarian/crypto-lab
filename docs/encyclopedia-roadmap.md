@@ -4,17 +4,17 @@
 
 ## Current milestone
 
-**The first stateful key-handle exercise is live in Envelope KMS.** [Open the exercise](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) and expand **Open the security lab & wire internals → What may this key do?** [PR #43](https://github.com/systemslibrarian/crypto-lab-envelope-kms/pull/43) merged as `2663e075e1ff1500b95fe6f36acd3c50dc8a70be`; the post-merge deployment and public-page behavior were verified on 23 October 2026.
+**Two encyclopedia-gap milestones are now shipped.** The first stateful key-handle exercise is live in Envelope KMS, and L-R-09's query-result integrity exercise is live in Search Vault. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/)
 
-E-K-01 remains **in progress as a whole**: its first policy and wrap/decrypt trace is delivered, while import, alias and bounded-search extensions remain planned. Shelf Oracle's PIR scope correction is merged and verified. This hub update records LFSR Forge's sixth Trivium section and Envelope KMS's ninth section. The counts below describe whole proposals, so a delivered first exercise does not turn the broader proposal into a completed one.
+E-K-01 remains **in progress as a whole**: its first policy and wrap/decrypt trace is delivered, while import, alias and bounded-search extensions remain planned. L-R-09 is **live**: Search Vault now distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
 
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 47 |
+| Planned | 46 |
 | In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
-| Live | 0 |
+| Live | 1 |
 | **Total accepted proposals** | **48** |
 
 The 48 proposals retain the audit’s stable IDs and priorities: **17 P1 — next, 24 P2 — depth, and 7 P3 — specialist**. Maintenance corrections are separate from that denominator. A proposal can share an implementation with related IDs, but each ID keeps its own acceptance criteria. These are not 48 requests for standalone labs.
@@ -30,8 +30,10 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Complete local production-build browser, accessibility and mutation verification: 96 unit tests, 2 publishing-command controls, 32 browser/accessibility tests with zero retries, and four named mutation kills with exact source/assets restored. The final runner was verified at local `2e8efe0fb9d6a07f2c6ce45d658da44fe4f28a1e`; hosted checks gate integration separately.
 - [x] Merge the Envelope KMS and Shelf Oracle changes after their registered checks complete successfully; refresh changed source pins and generated catalog files.
 - [x] Verify the Envelope KMS deployment revision, exact served assets and live learner behavior; record the evidence below.
+- [x] Implement L-R-09 in Search Vault with deterministic current-snapshot checkpoints and explicit honest/omit/fabricate/stale cases.
+- [x] Pass the Search Vault PR gate, merge PR #24, rerun the complete gate on main, and deploy commit `97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26`.
 
-**Implementation work:** take L-R-09 next after rechecking its target lab, while retaining the remaining E-K-01 extensions in this ledger. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** take E-K-02 next after rechecking IBE Gate and selecting a published HIBE construction compatible with the lab's asymmetric BLS12-381 pairing. Retain the remaining E-K-01 extensions in this ledger. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -40,9 +42,9 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **L-R-09 — verifiable query results:** distinguish hidden query choice from correct and complete answers, with explicit tampering and omission cases.
-2. **E-K-02 — hierarchical identity-based encryption:** add actual descendant-key delegation and its limits to the existing identity-based encryption teaching.
-3. **A-D-06, then E-K-06 — fault analysis:** teach classical AES faulty-output recovery before accepted-output selection leakage.
+1. **E-K-02 — hierarchical identity-based encryption:** add actual descendant-key delegation and its limits to the existing identity-based encryption teaching.
+2. **A-D-06, then E-K-06 — fault analysis:** teach classical AES faulty-output recovery before accepted-output selection leakage.
+3. **E-K-01 later milestone — stateful API depth:** return to import, alias and bounded-search cases after the queued HIBE and fault-analysis work.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
@@ -113,7 +115,7 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | Phase | Proposals | Priority | Current state |
 | --- | ---: | --- | --- |
 | Phase 1 — First key-handle exercise | 1 | P1 | First exercise live; broader proposal in progress |
-| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 11 planned |
+| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 1 live; 10 planned |
 | Phase 3 — Protocols and arithmetic | 5 | P1 | 5 planned |
 | Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 16 planned |
 | Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 8 planned |
@@ -286,25 +288,27 @@ Extend existing labs through the strongest P1 composition gaps; coordinate relat
 
 ### L-R-09 — Query-result correctness, completeness and freshness
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** Query integrity.
+**Priority:** P1 — next · **Status:** Live · **Workstream:** Query integrity.
 
-**Target:** Query Integrity companion or Search Vault/Merkle extension.
+**Target:** Search Vault extension.
 
 **Existing base:** Search Vault authenticates each returned posting with AES-GCM and address-associated data. Merkle Proofs/Vault teach inclusion, tampering and append-only consistency. ORAM Vault explicitly describes malicious-server/freshness limits in prose.
 
 **Acceptance criteria:**
 
-- Let a server omit a genuine match, fabricate a row and return an old snapshot; distinguish row authentication from completeness and freshness.
-- Verify one query type against an independently expected root/version, including boundary or completeness evidence.
-- If a sentinel/twin comparison is included, compute its detection probability separately from deterministic proof checking.
+- [x] Let a server omit a genuine match, fabricate a row and return an old snapshot; distinguish row authentication from completeness and freshness.
+- [x] Verify one query type against an independently expected root/version, including boundary or completeness evidence.
+- [x] If a sentinel/twin comparison is included, compute its detection probability separately from deterministic proof checking. No probabilistic sentinel/twin mechanism was added; the delivered check is deterministic for the retained snapshot metadata.
 
-**Next action:** Choose one query predicate and define the trusted snapshot/root source before implementing its result proof.
+**Delivered implementation:** Search Vault now retains, client-side, a snapshot id, expected result count and SHA-256 digest of the complete ordered encrypted answer for each indexed token. The normal `SearchServer` remains honest-but-curious; the learner integrity exercise alters only a copied reply to produce four explicit cases: honest current answer, omission of one authentic posting, one fabricated posting, and an older-snapshot replay. The omission and stale cases demonstrate the intended distinction: returned records can still authenticate individually while the answer as a whole fails completeness or freshness.
 
-**Scope and limits:** A server-supplied hash by itself cannot prove completeness or freshness.
+**Verification:** [PR #24](https://github.com/systemslibrarian/crypto-lab-search-vault/pull/24) merged as [`97d9e0ff6fbb`](https://github.com/systemslibrarian/crypto-lab-search-vault/tree/97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26). The PR gate [run 39982380580](https://github.com/systemslibrarian/crypto-lab-search-vault/actions/runs/39982380580) passed 82 unit tests, TypeScript/production build, Chromium functional claims and axe WCAG A/AA checks. The post-merge [run 39982763839](https://github.com/systemslibrarian/crypto-lab-search-vault/actions/runs/39982763839) repeated the full gate and deployed successfully. The Playwright dependency step uses the runner's official Ubuntu HTTPS fallback mirror after the Azure HTTP mirror stalled; no browser dependency or test gate was removed.
+
+**Scope and limits:** This is a static teaching checkpoint, not a general verifiable-SSE construction. It assumes the client retained a trusted current snapshot reference and exact expected-answer commitment. A server-supplied hash by itself still cannot prove completeness or freshness.
 
 **Audit references:** [Query Integrity (original PDF pp. 5034–5037)](https://doi.org/10.1007/978-3-030-71522-9_1818); [Probabilistic Query Integrity (original PDF pp. 4863–4868)](https://doi.org/10.1007/978-3-030-71522-9_1819).
 
-**Pinned baseline:** [Search Vault 715cec98e0dd](https://github.com/systemslibrarian/crypto-lab-search-vault/blob/715cec98e0dd03344c0fabc1efd71d0103786bd5/src/sse/client.ts); [Merkle Proofs bc58ccd5b628](https://github.com/systemslibrarian/crypto-lab-merkle-proofs/tree/bc58ccd5b628403e8c5002df74fa304b0ce16021); [Merkle Vault 60c4a0f7a952](https://github.com/systemslibrarian/crypto-lab-merkle-vault/tree/60c4a0f7a952f75a119fc6243d8970b6ddecbf18).
+**Pinned delivered source:** [Search Vault 97d9e0ff6fbb](https://github.com/systemslibrarian/crypto-lab-search-vault/tree/97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26); [Merkle Proofs bc58ccd5b628](https://github.com/systemslibrarian/crypto-lab-merkle-proofs/tree/bc58ccd5b628403e8c5002df74fa304b0ce16021); [Merkle Vault 60c4a0f7a952](https://github.com/systemslibrarian/crypto-lab-merkle-vault/tree/60c4a0f7a952f75a119fc6243d8970b6ddecbf18).
 
 <a id="a-d-03"></a>
 

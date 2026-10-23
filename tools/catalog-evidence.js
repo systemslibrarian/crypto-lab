@@ -824,7 +824,6 @@ function labFiles(dir, clone = dir) {
   return { code, prose, unread };
 }
 
-/** Everything derivable about one lab. Never throws; a missing clone is a state. */
 /** Reasons each reviewed `add` entry does not parse; empty when the list is good.
  *  Exported so selftest asserts the production rule rather than a copy of it. */
 function invalidReviewedAdds(add) {
@@ -840,8 +839,12 @@ function invalidReviewedAdds(add) {
   return bad;
 }
 
-function evidenceFor(slug) {
-  const dir = path.join(REPOS, slug);
+/** Everything derivable about one lab. Never throws; a missing clone is a state.
+ * `options.dir` is an explicit fixture checkout for tests; production always uses
+ * the canonical sibling clone path. This avoids creating a fake fleet member just
+ * to drive the complete scanner in a negative control. */
+function evidenceFor(slug, options = {}) {
+  const dir = options.dir || path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
     /* A lab with no clone here is NOT-SCANNED, not UNKNOWN. UNKNOWN means every
        file this tool reads was read and nothing was derivable; this is the tool
@@ -2121,6 +2124,7 @@ function main() {
    spanning four hundred lines - are exactly where they would drift. */
 module.exports = {
   lex,
+  evidenceFor,
   reviewedReferenceNames,
   attackContextAllows,
   camelSplit,

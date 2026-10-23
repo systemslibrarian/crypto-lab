@@ -6,7 +6,7 @@ authoritative when they disagree.
 
 ## Live handoff — 2026-10-23
 
-`crypto-lab` `origin/main` is **`b8555e2`** and `crypto-counsel`
+`crypto-lab` `origin/main` is **`0730c46`** and `crypto-counsel`
 `origin/main` is **`cc2979b`**. The queue branch incorporates that freshly
 fetched Hub main.
 
@@ -106,15 +106,15 @@ for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
 done
 ```
 
-On this queue branch after incorporating Hub `b8555e2`, with counsel **#18**
-checked out, 11 of 13 checks pass. `catalog-sync` reports that `CATALOG.md` was
-not regenerated after Search Vault's query-integrity exhibit changed: the
-generated count moves from 1,728 to 1,729 sections and the section's generated
-position and wording change. `lab-dates` reports six pins made stale by newer
-committed lab changes: Iron Letter, Protocol Compose, Threshold Decrypt,
-Multivariate, Broken Trust and Time Lock Puzzle. Regenerate the catalog and
-re-derive those dates from freshly fetched lab heads before calling the Hub
-clean; keep those fixes out of this tracker-only PR.
+On this queue branch after incorporating Hub `0730c46`, with counsel **#18**
+checked out, 11 of 13 checks pass. Main commit `0730c46` fixed Search Vault's
+generated section count and ordering, but `catalog-sync` still reports a
+two-line wording drift: the query-integrity outcome and limit in `CATALOG.md`
+do not match `tools/catalog-exhibits.json`. `lab-dates` reports six pins made
+stale by newer committed lab changes: Iron Letter, Protocol Compose, Threshold
+Decrypt, Multivariate, Broken Trust and Time Lock Puzzle. Regenerate the final
+catalog wording and re-derive those dates from freshly fetched lab heads before
+calling the Hub clean; keep those fixes out of this tracker-only PR.
 
 A fresh PR readback found **#244**, **#246** and **#248** conflicting despite
 successful current-head status rollups. **#245** remains stacked on #244 and

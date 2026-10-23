@@ -502,8 +502,8 @@ merged by this maintenance pass.
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)
 - Branch: `codex/refresh-futureworkoct-2026-10-21`
 - Base fetched immediately before this edit:
-  `b8555e295b401e5c3e237aa05293ec407fb9d47b`. The branch incorporates that
-  fresh Hub main through merge commit `22f598d`.
+  `0730c46f802237569c2e39fa0edc57729e158d68`. The branch incorporates that
+  fresh Hub main through merge commit `b5e31dd`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
   growing history log. After Opaque Gate it measured **1,204 total**,
   **1,061 complete** and **143 active** Fleet items: **110 queued**, **27
@@ -521,9 +521,9 @@ merged by this maintenance pass.
   **#34** was green and mergeable at exact head `131cb9f`.
 - The complete Hub consistency pass against this freshly incorporated main and
   counsel **#18** produced **11 passes and 2 failures**. `catalog-sync` showed
-  the exact uncommitted generator delta introduced by Search Vault's newly
-  integrated query-integrity exhibit: 1,728 becomes 1,729 sections and that
-  section's generated position/wording changes. `lab-dates` still identified
+  that main commit `0730c46` fixed Search Vault's generated section count and
+  ordering but left two generated lines stale: the query-integrity outcome and
+  limit differ from `tools/catalog-exhibits.json`. `lab-dates` still identified
   Iron Letter, Protocol Compose, Threshold Decrypt, Multivariate, Broken Trust
   and Time Lock Puzzle as stale. No catalog output or date pin was mixed into
   this tracker-only PR.

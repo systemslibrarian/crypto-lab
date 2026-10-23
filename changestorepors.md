@@ -875,6 +875,34 @@ merged by this maintenance pass.
   at revision 3; PR open, non-draft and cleanly mergeable at the recorded head,
   intentionally unmerged, and deployment not performed.
 
+## Work in progress — not yet a completed repair
+
+### PAKE Gate
+
+- Repository: `crypto-lab-pake-gate`
+- Audit branch: `codex/repair-pake-gate-2026-10-23`
+- Freshly fetched committed base and current branch head:
+  `5019b2060e6a91edc3dee460c0d190e4b064fcb9`.
+- State: Fleet item `e904c4fe-a9c2-44ac-bcbb-a218a8285e2f` is **working** at
+  revision **2**. No PAKE Gate repair commit or PR exists yet, and no source
+  change is represented here as complete.
+- Baseline already earned: the exact lock reports zero npm vulnerabilities;
+  `test:fast` passed **120/120** tests across **19** files; type checking,
+  linting, the **7/7** lint-configuration controls and the production build
+  passed. Playwright discovered **28** browser cases, but those cases have not
+  yet been accepted as passing merely from discovery.
+- Initial review findings still to be settled include mutable action tags,
+  Pages/OIDC write authority reaching source-running workflow code, cancellation
+  behavior for main deployments, and Dependabot automation that does not yet
+  enforce its stated patch/minor-only policy or fail closed on merge/dispatch
+  errors. These are findings, not recorded fixes.
+- Remaining review work includes reading every relevant committed PAKE and UI
+  source file, checking current protocol/publication claims against primary
+  sources, running the full tests and coverage, deciding the smallest justified
+  repairs, and obtaining exact-head Linux/browser/mutation evidence before the
+  Fleet item can be completed. Fetch again before relying on this checkpoint;
+  another agent may advance the repository.
+
 ### Hub handoff
 
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)

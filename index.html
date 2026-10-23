@@ -12109,6 +12109,8 @@
             data-references="Argon2 | FF1 | PBKDF2 | RSA | scrypt"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="2663e075e1ff1500b95fe6f36acd3c50dc8a70be"
+            data-review-note="Reviewed the first E-K-01 key-handle model, interface, browser claims, unit vectors, security notes and complete change inventory. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged. The new browser policy model uses real RFC 3394 wrapping and WebCrypto AES-GCM; intentionally mutable usages disclose a sensitive wrappable key, while fixed roles reject the transition and preserve protected unwrap. A nonextractable target rejects wrapping under either policy. Remove Fault injection because SECURITY.md describes source-mutation verification of tests, not an executed cryptographic fault attack; remove Side-channel (unspecified) because the brief explicitly excludes that claim. The 96 unit tests, 2 publishing-command controls and 32 browser/accessibility tests passed locally; all four named source mutations were caught and exact original source and assets restored. This is one executed API trace with an internally generated nonextractable wrapping key, not HSM isolation, full PKCS #11 conformance, a side-channel claim or an exhaustive API-policy proof. Import, alias and bounded-search extensions remain planned. Merge and deployment evidence are recorded separately in the implementation roadmap."
             data-level="beginner" data-added="2026-04" data-added-on="2026-04-22" data-updated="2026-10"
            
            
@@ -12183,7 +12185,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Envelope Encryption</div>
             <div class="project-title">Envelope KMS</div>
-            <div class="project-copy">Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, and caller authorization before unwrap. Trace a KMS-style rewrap and a teaching audit log.</div>
+            <div class="project-copy">Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, and caller authorization before unwrap. Trace a KMS-style rewrap and a teaching audit log. Compare fixed roles and intentionally unsafe mutable usages in a modeled key-handle wrap-then-decrypt trace.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">RFC 3394</span>

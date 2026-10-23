@@ -511,6 +511,59 @@ merged by this maintenance pass.
   cleanly mergeable and green at the recorded head. It remains intentionally
   unmerged; no live Pages deployment was performed or claimed.
 
+### OT Gate — audit in progress
+
+- Fleet item: `ed693591-071e-49c0-a61b-47c83dc25eac`, finding
+  `security:crypto-lab-ot-gate:unavailable`. It was moved from queued to working
+  at revision **2** with start SHA
+  `32efdf590b9cbc2d5b93639bdf1cff3a148d145e`.
+- Freshness boundary: the saved finding referred to `e1b7f4a`; the repository
+  had advanced. The original clone was fetched first and was clean with local
+  `main`, `origin/main` and `HEAD` all exactly `32efdf5`. Review and baseline
+  execution use a detached isolated worktree at that committed SHA, not another
+  agent's uncommitted files.
+- Material reviewed so far: the full README; core `src/` implementation,
+  extension implementation and UI state handling; unit and browser tests;
+  mutation scripts; package/lock metadata; Dependabot configuration; and the
+  Pages workflow. No lab file has been edited at this checkpoint.
+- Earned local baseline at `32efdf5`: exact-lock `npm ci` passed;
+  `npm test` passed **41/41** Vitest tests plus **6/6** Node mutation-report
+  tests; `npm run build` passed with **28 modules**; `npm ls --all` was clean;
+  YAML parsing passed; Playwright enumerated **27** browser tests; and a fresh
+  registry-backed `npm audit --audit-level=high` reported **0 vulnerabilities**.
+- Confirmed cryptographic defect: the current scalar generator reduces 64
+  random bytes modulo `q - 1` and adds one. That is biased and excludes zero.
+  The receiver therefore does not sample all of the group, so the README/UI's
+  claim that `rG` and `A + rG` are identical distributions is not exactly true:
+  one branch excludes the identity and the other excludes `A`. The planned
+  repair is exact rejection sampling, nonzero sampling only where the sender's
+  secret requires it, explicit safe handling for a receiver scalar of zero,
+  and regression coverage for both choices and matching keys.
+- Confirmed implementation defects: `randomIndex(n)` can loop forever for an
+  integer above `2^32`; extension `receiverMessage` does not snapshot its
+  caller-owned choices until after awaited work; and form controls can change
+  while or after a displayed transfer, allowing visible inputs to disagree
+  with the evidence being shown. These require focused tests before a fix is
+  claimed.
+- Confirmed workflow defects: repository code runs with global Pages/OIDC write
+  authority; actions use floating tags; PRs upload Pages artifacts; main runs
+  can be cancelled; the claimed major-version Dependabot guard is not enforced;
+  merge/deploy-dispatch exhaustion fails open; and there is no exact-lock audit,
+  supported adjacent-Node coverage or executable workflow-policy test. The
+  existing `build` context must remain as an aggregate fail-closed gate.
+- Publication checks completed so far: the Chou–Orlandi ePrint record and its
+  later security-analysis caveat, IKNP's CRYPTO 2003 publication, MASCOT's
+  primary ePrint, and the current VDAF Internet-Draft record were checked before
+  changing prose. The VDAF reference is still an Internet-Draft, not RFC 9657.
+  Broader Google/Meta deployment wording still needs primary-source resolution
+  and must not be changed on recollection alone.
+- State: **in progress, not fixed**. There is no OT Gate repair branch, commit,
+  push, PR, Linux browser result, mutation result or completed Fleet evidence at
+  this checkpoint. The next verifier should re-fetch immediately because this
+  is one of the repositories under concurrent agent work; if `origin/main`
+  moves beyond `32efdf5`, review the intervening committed diff before relying
+  on this entry.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)

@@ -19,32 +19,32 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Forty-two open lab repair PRs have green exact-head Linux CI: the 26
+- Forty-three open lab repair PRs have green exact-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
   Tally **#29**, PQ Chooser **#5**, PQ Rotation **#24**, PQ TLS Handshake
   **#26**, PQXDH Wire **#12**, Privacy Pass **#17**, Proof Tally **#18** and
-  Protocol Compose **#23**. The Fleet records and PR comments hold their
-  per-lab evidence; do not duplicate that history here and do not merge them
-  from this maintenance pass.
-- Fourteen queued security-evidence reviews are complete. Each has readable
+  Protocol Compose **#23** and PSI Gate **#28**. The Fleet records and PR
+  comments hold their per-lab evidence; do not duplicate that history here and
+  do not merge them from this maintenance pass.
+- Fifteen queued security-evidence reviews are complete. Each has readable
   zero-open-alert Dependabot and secret-scanning results plus a zero-advisory
   exact lock; code scanning remains explicitly incomplete because GitHub
   reports no analysis. Their source repairs remain open, and their names and
   evidence stay in the Fleet records rather than becoming history here.
 
-**Next:** PSI Gate item `0b8c548f-1c0f-4773-bbd4-15607e5b213e`.
+**Next:** Pulse Chain item `ec5e2fdf-d57d-4ae0-88ee-9a5ecdda65ea`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,051 complete and 153 active** items:
-**120 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,052 complete and 152 active** items:
+**119 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **120 queued security-evidence reviews.** PSI Gate is next.
+- **119 queued security-evidence reviews.** Pulse Chain is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state

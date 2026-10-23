@@ -19,29 +19,30 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Thirty-four open lab repair PRs have green exact-head Linux CI: the 26
+- Thirty-five open lab repair PRs have green exact-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
-  **#31**, Shamir Gate **#17**, Shor **#21** and Signed Bytes **#23**. The Fleet
-  records and PR comments hold their per-lab evidence; do not duplicate that
-  history here and do not merge them from this maintenance pass.
-- Scloud Vault, Search Vault, Shadow Vault, Shamir Gate, Shor and Signed Bytes'
-  security-evidence reviews are complete. All six have readable zero-open-alert
-  Dependabot and secret-scanning results plus zero-advisory exact locks; code
-  scanning remains explicitly incomplete because GitHub reports no analysis.
-  Their source repairs remain open.
+  **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23** and Silent
+  Tally **#29**. The Fleet records and PR comments hold their per-lab evidence;
+  do not duplicate that history here and do not merge them from this maintenance
+  pass.
+- Scloud Vault, Search Vault, Shadow Vault, Shamir Gate, Shor, Signed Bytes and
+  Silent Tally's security-evidence reviews are complete. All seven have readable
+  zero-open-alert Dependabot and secret-scanning results plus zero-advisory exact
+  locks; code scanning remains explicitly incomplete because GitHub reports no
+  analysis. Their source repairs remain open.
 
-**Next:** Silent Tally item `a21964ab-93d7-4dd9-be18-ed703c632cd7`.
+**Next:** PQ Chooser item `2262bb6d-6820-4c09-8083-9af9174c3f66`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,043 complete and 161 active** items:
-**128 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,044 complete and 160 active** items:
+**127 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **128 queued security-evidence reviews.** Silent Tally is next.
+- **127 queued security-evidence reviews.** PQ Chooser is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state

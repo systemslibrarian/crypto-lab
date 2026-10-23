@@ -69,50 +69,47 @@ merged by this maintenance pass.
 - State: Fleet item complete; PR open, cleanly mergeable at the recorded head,
   intentionally unmerged, and deployment unverified.
 
+### Pulse Chain
+
+- PR: [crypto-lab-pulse-chain #5](https://github.com/systemslibrarian/crypto-lab-pulse-chain/pull/5)
+- Base: `2dc17f8647a4219557139bd9b94dd7a83d8fe74a`
+- Head: `202c287dd311524915642a1801520ee12c576355`
+- Fixed: repository code no longer runs with Pages/OIDC write authority; PRs
+  cannot publish artifacts or deploy; main deploys are no longer cancelled;
+  major Dependabot updates remain human-reviewed; exhausted merge retries fail
+  closed; and README/config prose now uses the catalogued Playwright port 4717.
+- Authoritative Linux run:
+  [39944842583](https://github.com/systemslibrarian/crypto-lab-pulse-chain/actions/runs/39944842583)
+  passed Node 22/24 builds, typechecks, audits and **52/52** tests in each lane,
+  plus **32/32** production-browser checks.
+- Fresh live-source run:
+  [39944346982](https://github.com/systemslibrarian/crypto-lab-pulse-chain/actions/runs/39944346982)
+  reproduced NIST pulse **#1995909**, retained the explicitly demonstrated
+  signature/certificate mismatch, and verified current drand default and
+  quicknet rounds including their derived randomness.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-pulse-chain/pull/5#issuecomment-6363672315)
+- Provider evidence at review time: zero open Dependabot alerts and zero open
+  secret-scanning alerts; zero advisories across **90** exact locked
+  package/version pairs. Code scanning returned `no analysis found` and remains
+  explicitly incomplete.
+- State: Fleet item complete; PR open, cleanly mergeable at the recorded head,
+  intentionally unmerged, and deployment unverified.
+
 ### Hub handoff
 
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)
 - Branch: `codex/refresh-futureworkoct-2026-10-21`
-- Base at the last fetch: `c58b1c43c94dbd00a8bc8c4599fd27fdac9e2854`
-- Last tracker-only checkpoint before this ledger: `07037fa616a5b48a271eb4145e6195206ad93bb1`
+- Base at the last fetch: `db07bd5bbef3c26d4a9d9905b5cf910355a821cf`
+- Rebased tracker checkpoint before this ledger update:
+  `1147fb2b3a19f4d172d1a757f384dc6db9c09002`
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After PSI Gate it measured **1,204 total**, **1,052
-  complete** and **152 active** Fleet items: **119 queued**, **27 working** and
-  **6 blocked**. Pulse Chain became the next queued review.
+  growing history log. After Pulse Chain it measured **1,204 total**, **1,053
+  complete** and **151 active** Fleet items: **118 queued**, **27 working** and
+  **6 blocked**. Quantum Entropy became the next queued review.
 - The branch head will advance whenever this ledger or the current-state handoff
   is updated. Fetch the PR branch and use its live head rather than assuming the
   checkpoint above remains current.
-
-## In progress — do not treat as completed
-
-### Pulse Chain
-
-- Fleet item: `ec5e2fdf-d57d-4ae0-88ee-9a5ecdda65ea`
-- Fresh committed base: `2dc17f8647a4219557139bd9b94dd7a83d8fe74a`
-- Isolated branch: `codex/repair-pulse-chain-2026-10-23`
-- Local worktree at this checkpoint: `/tmp/pulse-chain-fix.LCnxMq`
-- Local source checks already passed: **4/4 files, 52/52 Vitest tests**, both
-  TypeScript builds, and the Vite production build.
-- Exact lock evidence: **90 exact package/version pairs** returned no advisories
-  from npm's bulk advisory endpoint. GitHub returned zero open Dependabot alerts
-  and zero open secret-scanning alerts. Code scanning returned `no analysis
-  found` and remains explicitly incomplete.
-- Fresh live drift run:
-  [39944346982](https://github.com/systemslibrarian/crypto-lab-pulse-chain/actions/runs/39944346982)
-  ran at base SHA on 2026-10-23. Its log—not merely its badge—showed zero npm
-  vulnerabilities; reproduced NIST pulse **#1995909** under the deployed layout;
-  confirmed the current 4096-bit-signature/2048-bit-certificate mismatch; and
-  verified current drand default round **6577429** and quicknet round
-  **33316845**, including `SHA-256(signature)` randomness.
-- Findings being fixed: repository code currently executes in a job with
-  Pages/OIDC write authority; main deploys can be cancelled; major Dependabot
-  updates can auto-merge; and a failed auto-merge reports success. The working
-  patch isolates privileged Pages jobs, limits cancellation to PRs, tests Node
-  22/24, adds an explicit audit and post-deploy route check, leaves major bumps
-  for humans, and fails closed when merge retries are exhausted.
-- Not yet done at this checkpoint: final local validation, fresh pre-commit
-  upstream fetch, commit, push, PR, exact-head Linux CI, final evidence comment,
-  Fleet completion, and the next Hub handoff update.
 
 ## Known limitations and non-actions
 
@@ -124,3 +121,5 @@ merged by this maintenance pass.
   error. Linux Playwright logs are the browser authority when that occurs.
 - Repository security settings were observed but not changed. Dependabot
   security updates remain an owner decision where GitHub reports them disabled.
+- The refreshed Hub baseline has six stale `lab-dates` pins. They were recorded
+  in `futureworkoct.md`; this tracker-only update did not rewrite catalog data.

@@ -6,7 +6,7 @@ authoritative when they disagree.
 
 ## Live handoff — 2026-10-23
 
-`crypto-lab` `origin/main` is **`c58b1c4`** and `crypto-counsel`
+`crypto-lab` `origin/main` is **`db07bd5`** and `crypto-counsel`
 `origin/main` is **`cc2979b`**. The queue branch is based directly on that
 Hub main.
 
@@ -19,32 +19,32 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Forty-three open lab repair PRs have green exact-head Linux CI: the 26
+- Forty-four open lab repair PRs have green exact-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
   Tally **#29**, PQ Chooser **#5**, PQ Rotation **#24**, PQ TLS Handshake
   **#26**, PQXDH Wire **#12**, Privacy Pass **#17**, Proof Tally **#18** and
-  Protocol Compose **#23** and PSI Gate **#28**. The Fleet records and PR
+  Protocol Compose **#23**, PSI Gate **#28** and Pulse Chain **#5**. The Fleet records and PR
   comments hold their per-lab evidence; do not duplicate that history here and
   do not merge them from this maintenance pass.
-- Fifteen queued security-evidence reviews are complete. Each has readable
+- Sixteen queued security-evidence reviews are complete. Each has readable
   zero-open-alert Dependabot and secret-scanning results plus a zero-advisory
   exact lock; code scanning remains explicitly incomplete because GitHub
   reports no analysis. Their source repairs remain open, and their names and
   evidence stay in the Fleet records rather than becoming history here.
 
-**Next:** Pulse Chain item `ec5e2fdf-d57d-4ae0-88ee-9a5ecdda65ea`.
+**Next:** Quantum Entropy item `54bf50d9-f1e8-4a26-93af-e1f410b0cffc`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,052 complete and 152 active** items:
-**119 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,053 complete and 151 active** items:
+**118 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **119 queued security-evidence reviews.** Pulse Chain is next.
+- **118 queued security-evidence reviews.** Quantum Entropy is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state
@@ -91,19 +91,18 @@ for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
 done
 ```
 
-At this checkpoint, 11 of 13 checks pass on current `origin/main`: `lab-dates`
-needs the generated refresh in #244, and `theme-sync` names the two open theme
-repairs above. #244 is now rebased directly onto current Hub main, derives all
-243 records from freshly fetched lab heads, changes five displayed months,
-refreshes 31 content pins, normalizes 14 same-SHA timestamps, and is green in
-all six exact-head workflows. #245 is restacked on that exact #244 head; its
-fresh 243-lab pass re-derived 78 source anchors, checked 1,551 final anchors and
-recorded 27 human source judgments. Its manually dispatched exact-head README
-catalog workflow is green. The exact-head Teach drift dispatch is also green
-after one transient host-package timeout: 24 worksheets had zero drift and all
-47 recorded issue states were accounted for (4 automated matches, 43 explicit
-manual-cadence checks). Hub #243 and #246–#249 had green exact-head checks at
-their recorded heads; #246–#249 still predate the latest Hub-main movement.
+At this checkpoint, 12 of 13 checks pass on current `origin/main`. `lab-dates`
+reports six pins made stale by newer committed lab changes: Iron Letter,
+Protocol Compose, Threshold Decrypt, Multivariate, Broken Trust and Time Lock
+Puzzle. Re-derive those dates from freshly fetched lab heads before calling the
+Hub clean. The earlier #244 refresh predates this movement and must be refreshed
+or superseded; do not assume its green historical runs cover the six current
+drifts. #245 is stacked on #244 and likewise needs its base rechecked. The
+exact-head Teach drift dispatch was green after one transient host-package
+timeout: 24 worksheets had zero drift and all 47 recorded issue states were
+accounted for (4 automated matches, 43 explicit manual-cadence checks). Hub
+#243 and #246–#249 had green exact-head checks at their recorded heads, but all
+open Hub PRs must be evaluated against the latest Hub-main movement.
 
 Finish any card-stamping pass with `node tools/level-sync.js`; `data-level`
 belongs where the last writer puts it.

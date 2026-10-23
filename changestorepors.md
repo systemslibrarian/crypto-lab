@@ -511,58 +511,62 @@ merged by this maintenance pass.
   cleanly mergeable and green at the recorded head. It remains intentionally
   unmerged; no live Pages deployment was performed or claimed.
 
-### OT Gate — audit in progress
+### OT Gate
 
-- Fleet item: `ed693591-071e-49c0-a61b-47c83dc25eac`, finding
-  `security:crypto-lab-ot-gate:unavailable`. It was moved from queued to working
-  at revision **2** with start SHA
-  `32efdf590b9cbc2d5b93639bdf1cff3a148d145e`.
-- Freshness boundary: the saved finding referred to `e1b7f4a`; the repository
-  had advanced. The original clone was fetched first and was clean with local
-  `main`, `origin/main` and `HEAD` all exactly `32efdf5`. Review and baseline
-  execution use a detached isolated worktree at that committed SHA, not another
-  agent's uncommitted files.
-- Material reviewed so far: the full README; core `src/` implementation,
-  extension implementation and UI state handling; unit and browser tests;
-  mutation scripts; package/lock metadata; Dependabot configuration; and the
-  Pages workflow. No lab file has been edited at this checkpoint.
-- Earned local baseline at `32efdf5`: exact-lock `npm ci` passed;
-  `npm test` passed **41/41** Vitest tests plus **6/6** Node mutation-report
-  tests; `npm run build` passed with **28 modules**; `npm ls --all` was clean;
-  YAML parsing passed; Playwright enumerated **27** browser tests; and a fresh
-  registry-backed `npm audit --audit-level=high` reported **0 vulnerabilities**.
-- Confirmed cryptographic defect: the current scalar generator reduces 64
-  random bytes modulo `q - 1` and adds one. That is biased and excludes zero.
-  The receiver therefore does not sample all of the group, so the README/UI's
-  claim that `rG` and `A + rG` are identical distributions is not exactly true:
-  one branch excludes the identity and the other excludes `A`. The planned
-  repair is exact rejection sampling, nonzero sampling only where the sender's
-  secret requires it, explicit safe handling for a receiver scalar of zero,
-  and regression coverage for both choices and matching keys.
-- Confirmed implementation defects: `randomIndex(n)` can loop forever for an
-  integer above `2^32`; extension `receiverMessage` does not snapshot its
-  caller-owned choices until after awaited work; and form controls can change
-  while or after a displayed transfer, allowing visible inputs to disagree
-  with the evidence being shown. These require focused tests before a fix is
-  claimed.
-- Confirmed workflow defects: repository code runs with global Pages/OIDC write
-  authority; actions use floating tags; PRs upload Pages artifacts; main runs
-  can be cancelled; the claimed major-version Dependabot guard is not enforced;
-  merge/deploy-dispatch exhaustion fails open; and there is no exact-lock audit,
-  supported adjacent-Node coverage or executable workflow-policy test. The
-  existing `build` context must remain as an aggregate fail-closed gate.
-- Publication checks completed so far: the Chou–Orlandi ePrint record and its
-  later security-analysis caveat, IKNP's CRYPTO 2003 publication, MASCOT's
-  primary ePrint, and the current VDAF Internet-Draft record were checked before
-  changing prose. The VDAF reference is still an Internet-Draft, not RFC 9657.
-  Broader Google/Meta deployment wording still needs primary-source resolution
-  and must not be changed on recollection alone.
-- State: **in progress, not fixed**. There is no OT Gate repair branch, commit,
-  push, PR, Linux browser result, mutation result or completed Fleet evidence at
-  this checkpoint. The next verifier should re-fetch immediately because this
-  is one of the repositories under concurrent agent work; if `origin/main`
-  moves beyond `32efdf5`, review the intervening committed diff before relying
-  on this entry.
+- PR: [crypto-lab-ot-gate #26](https://github.com/systemslibrarian/crypto-lab-ot-gate/pull/26)
+- Branch: `codex/repair-ot-gate-2026-10-23`
+- Base: `32efdf590b9cbc2d5b93639bdf1cff3a148d145e`
+- Head and commit: `e4dcca4e6be2c36d39cb0c6e0a91fc4f10be964b`
+- Scope: **12 files**, **437 insertions** and **112 deletions**. The original
+  clone was fetched and clean; the base stayed unchanged through the final
+  re-fetch, and all work used an isolated worktree from committed state.
+- Fixed: scalar generation now uses exact Ed25519 subgroup rejection sampling.
+  Receiver and DDH scalars cover the complete subgroup including zero, while
+  sender secrets remain exactly uniform and nonzero. Explicit zero-scalar point
+  handling and forced boundary tests make the page's identical-distribution
+  claim true rather than approximately true.
+- Fixed: `randomIndex` rejects bounds beyond its 32-bit sample space; extension
+  receiver choices are copied before awaited work; and message/choice controls
+  stay bound to in-flight or completed evidence until reset. Unit and browser
+  regressions exercise each boundary or race.
+- Corrected only unsupported deployment prose: MASCOT is described as an
+  OT-based preprocessing route for SPDZ-style MPC; Google's published deployed
+  private intersection-sum protocol is distinguished from its random-OT
+  alternatives; Meta's published PSI application is not called an IKNP
+  deployment; and Path ORAM/PySyft OT claims without primary support were
+  removed. Chou–Orlandi, its later security analyses, IKNP, MASCOT, Google,
+  Meta, EMP, Path ORAM and the current VDAF Internet-Draft were checked first.
+- Repository code now runs read-only and actions are pinned. Pages/OIDC
+  authority exists only in the no-checkout deploy job. Node 22/24/26,
+  exact-lock audit, unit, workflow, browser and live mutation gates feed the
+  existing `build` context as an aggregate fail-closed gate. Dependabot merge
+  automation is patch/minor only, verifies that the merge actually landed, and
+  fails closed if merge or deploy dispatch does not complete.
+- Authoritative Linux run:
+  [39996221650](https://github.com/systemslibrarian/crypto-lab-ot-gate/actions/runs/39996221650)
+  passed clean installs, zero-vulnerability high audits, typechecks,
+  **44/44** Vitest tests, **6/6** mutation-report tests, **8/8** workflow
+  controls and the 28-module build on Node 22, 24 and 26. Linux Chromium passed
+  **28/28** production-browser claim, race, ANDOS and WCAG A/AA checks. The
+  mutation baseline was green and all **10/10** live mutations were killed,
+  each with a non-empty source diff, changed bundle, exact red owner and exact
+  green/hash restoration. Aggregate `build` passed; deploy and auto-merge were
+  correctly skipped.
+- Local verification passed the non-browser gates. Chromium failed before any
+  assertion at macOS Mach rendezvous error 141, so the local mutation runner
+  correctly stopped at its required unmutated browser baseline before applying
+  mutation 1. No local browser or mutation pass is claimed.
+- Authenticated complete-page provider reads found zero open Dependabot alerts
+  and zero open secret-scanning alerts, with secret scanning and push
+  protection enabled. GitHub returned HTTP 404 `no analysis found` for code
+  scanning, so that evidence remains explicitly incomplete. Dependabot security
+  updates were observed disabled and were not changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-ot-gate/pull/26#issuecomment-6371008695)
+- State: Fleet item `ed693591-071e-49c0-a61b-47c83dc25eac` read back complete
+  at revision **3** with exact start/end SHAs. PR #26 is open, non-draft,
+  cleanly mergeable and green at the recorded head. It remains intentionally
+  unmerged; no live Pages deployment was performed or claimed.
 
 ### crypto-counsel corpus review
 
@@ -672,12 +676,15 @@ merged by this maintenance pass.
   `0730c46f802237569c2e39fa0edc57729e158d68`. The branch incorporates that
   fresh Hub main through merge commit `b5e31dd`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Order Leak it measured **1,204 total**,
-  **1,063 complete** and **141 active** Fleet items: **108 queued**, **27
-  working** and **6 blocked**. OT Gate is the next queued review.
-- GitHub readback on 2026-10-23 found all **54** named repair PRs open,
-  non-draft and carrying a successful current-head workflow run. Fifty-three were
-  mergeable; PQ Rotation **#24** was the one conflicting PR. Scloud Vault
+  growing history log. After OT Gate it measured **1,204 total**,
+  **1,064 complete** and **140 active** Fleet items: **107 queued**, **27
+  working** and **6 blocked**. OTP Vault is the next queued review.
+- A full GitHub readback on 2026-10-23 found the preceding **54** named repair
+  PRs open, non-draft and carrying a successful current-head workflow run.
+  Fifty-three were mergeable; PQ Rotation **#24** was the one conflicting PR.
+  OT Gate **#26** was subsequently read back separately as open, non-draft,
+  cleanly mergeable and green at exact head `e4dcca4`, bringing the recorded
+  total to **55**. Scloud Vault
   **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
   Shor **#21** had advanced beyond the head SHAs stored with their completed
   Fleet evidence: `9956def` to `20569e3`, `715cec9` to `344a310`, `5d0ec55`

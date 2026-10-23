@@ -4,16 +4,16 @@
 
 ## Current milestone
 
-**Two encyclopedia-gap milestones are now shipped.** The first stateful key-handle exercise is live in Envelope KMS, and L-R-09's query-result integrity exercise is live in Search Vault. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/)
+**Two encyclopedia-gap milestones are live, and a third is merged and deployed.** The first stateful key-handle exercise is live in Envelope KMS, L-R-09's query-result integrity exercise is live in Search Vault, and E-K-02's executable HIBE delegation is merged in IBE Gate with a successful GitHub Pages deployment. A fresh independent fetch of the public HIBE page remains pending before this ledger promotes E-K-02 from Merged to Live. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/)
 
-E-K-01 remains **in progress as a whole**: its first policy and wrap/decrypt trace is delivered, while import, alias and bounded-search extensions remain planned. L-R-09 is **live**: Search Vault now distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
+E-K-01 remains **in progress as a whole**: its first policy and wrap/decrypt trace is delivered, while import, alias and bounded-search extensions remain planned. L-R-09 is **live**. E-K-02 is **merged with deployment successful**: IBE Gate now executes Type-3 parent→child delegation, recursive descendant delegation, same-depth sibling cryptographic failure and retained root escrow. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
 
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 46 |
+| Planned | 45 |
 | In progress | 1 |
 | Verified | 0 |
-| Merged | 0 |
+| Merged | 1 |
 | Live | 1 |
 | **Total accepted proposals** | **48** |
 
@@ -33,7 +33,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Implement L-R-09 in Search Vault with deterministic current-snapshot checkpoints and explicit honest/omit/fabricate/stale cases.
 - [x] Pass the Search Vault PR gate, merge PR #24, rerun the complete gate on main, and deploy commit `97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26`.
 
-**Implementation work:** take E-K-02 next after rechecking IBE Gate and selecting a published HIBE construction compatible with the lab's asymmetric BLS12-381 pairing. Retain the remaining E-K-01 extensions in this ledger. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** take A-D-06 next, then E-K-06, so the fault-analysis sequence teaches classical AES faulty-output recovery before accepted-output selection leakage. Retain the remaining E-K-01 extensions in this ledger for the later stateful-API milestone. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -42,9 +42,9 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **E-K-02 — hierarchical identity-based encryption:** add actual descendant-key delegation and its limits to the existing identity-based encryption teaching.
-2. **A-D-06, then E-K-06 — fault analysis:** teach classical AES faulty-output recovery before accepted-output selection leakage.
-3. **E-K-01 later milestone — stateful API depth:** return to import, alias and bounded-search cases after the queued HIBE and fault-analysis work.
+1. **A-D-06 — classical AES differential fault analysis:** add an explicit correct/faulty-ciphertext key-candidate recovery progression to AES Anatomy.
+2. **E-K-06 — ineffective-fault depth:** follow the classical DFA lesson with accepted-output selection leakage and countermeasure limits.
+3. **E-K-01 later milestone — stateful API depth:** return to import, alias and bounded-search cases after the queued fault-analysis work.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
@@ -115,7 +115,7 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | Phase | Proposals | Priority | Current state |
 | --- | ---: | --- | --- |
 | Phase 1 — First key-handle exercise | 1 | P1 | First exercise live; broader proposal in progress |
-| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 1 live; 10 planned |
+| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 1 live; 1 merged/deployed; 9 planned |
 | Phase 3 — Protocols and arithmetic | 5 | P1 | 5 planned |
 | Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 16 planned |
 | Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 8 planned |
@@ -150,7 +150,7 @@ The first bounded exercise is delivered, and the two maintenance corrections are
 - Compare a vulnerable policy with a specific restrictive policy; show the same attack being rejected at the responsible transition and keep legitimate operations working. Derive every disclosure/rejection verdict from the current state.
 - Complete the broader proposal later with import/attribute-confusion and alias-state cases plus bounded state search. Record the invariant, attacker knowledge, transition rules and search bound; a manual trace alone does not complete these extensions.
 
-**Next action:** Review the delivered first exercise, then design the later import, alias and bounded-search milestone. L-R-09 is the next fleet implementation in the queue above.
+**Next action:** Review the delivered first exercise, then design the later import, alias and bounded-search milestone after the queued fault-analysis work.
 
 **Delivered scope:** The first key-handle exercise is live at the source commit and deployment recorded in the delivery evidence above. Its fixed-role refusal, unsafe key disclosure, legitimate protected unwrap and nonextractable-target refusal were exercised on the public page.
 
@@ -362,7 +362,7 @@ Extend existing labs through the strongest P1 composition gaps; coordinate relat
 
 ### E-K-02 — Executable HIBE delegation and subtree compromise
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** Identity-based alternatives.
+**Priority:** P1 — next · **Status:** Merged (deployment successful; independent public-page refresh pending) · **Workstream:** Identity-based alternatives.
 
 **Target:** IBE Gate extension.
 
@@ -374,9 +374,13 @@ Extend existing labs through the strongest P1 composition gaps; coordinate relat
 - Encrypt to several identity vectors and compute child, sibling and ancestor authorization results.
 - Compromise one delegated node and show its affected subtree while retaining the root-escrow boundary.
 
-**Next action:** Choose a published HIBE construction and specify Delegate and its supported identity-depth bounds.
+**Delivered implementation:** [IBE Gate PR #24](https://github.com/systemslibrarian/crypto-lab-ibe-gate/pull/24) merged as [`7dfebaff27c4`](https://github.com/systemslibrarian/crypto-lab-ibe-gate/tree/7dfebaff27c4e20cd278a4d41a95c538e8807d31). The new sixth exhibit uses the Appendix-G Type-3 asymmetric HIBE construction from Ramanna, Chatterjee & Sarkar. The PKG freshly extracts a root key; that key delegates a department key without the master secret; the department delegates a user key recursively. The learner encrypts to the descendant vector, verifies the delegated key's recovered G_T secret against the sender's encapsulated secret, and compares it with a same-depth sibling key that is allowed to execute the actual pairing algebra and recovers a different secret/plaintext. A fresh root-PKG extraction for the same target still decrypts, so root escrow remains explicit.
 
-**Scope and limits:** BasicIdent over slash-separated strings and a KMS key hierarchy do not implement HIBE delegation.
+**Verification:** The exact PR head passed 35 Vitest tests, TypeScript/production build, full Playwright functional claims and axe WCAG A/AA checks in [run 40000889916](https://github.com/systemslibrarian/crypto-lab-ibe-gate/actions/runs/40000889916). The post-merge main run [40001216587](https://github.com/systemslibrarian/crypto-lab-ibe-gate/actions/runs/40001216587) repeated the same gate and completed the GitHub Pages deployment successfully. The workflow now cancels superseded runs and uses Ubuntu's official HTTPS package mirror for Playwright dependencies; no browser dependency, functional assertion or accessibility threshold was removed.
+
+**Next action:** Independently refresh the public page and learner behavior when the public fetch path is available; then promote this proposal from Merged to Live. In parallel, begin A-D-06.
+
+**Scope and limits:** This is a bounded teaching HIBE over BLS12-381 Type-3 pairings. Text identity components are domain-separated and mapped to scalars in Z_r. The cited paper encrypts a G_T message element directly; the lab hashes the recovered G_T element to a fixed-size byte mask as an explicitly labeled teaching KEM/DEM adaptation and does not claim the paper's full proof for that adaptation. BasicIdent over slash-separated strings and a KMS key hierarchy do not implement HIBE delegation. Root-PKG escrow is retained.
 
 **Audit references:** [Hierarchical Identity-Based Encryption and Attribute-Based Encryption (original PDF pp. 2810–2815)](https://doi.org/10.1007/978-3-030-71522-9_1457).
 

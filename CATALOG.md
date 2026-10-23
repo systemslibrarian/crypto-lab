@@ -13669,15 +13669,15 @@ China's conservative LWE-based KEM with ternary secrets, BW32 lattice coding, an
 
 [`crypto-lab-search-vault`](https://systemslibrarian.github.io/crypto-lab-search-vault/) · Searchable Encryption · PRIVACY, ATTACKS
 
-An encrypted inverted index the server searches without a key — then the count and IKK leakage-abuse attacks turn the access pattern it observed back into your queries.
+An encrypted inverted index the server searches without a key — then leakage-abuse attacks recover queries, while a malicious-server exercise shows why authentic records can still form incomplete or stale answers.
 
-- **Card topics (discovery only):** SSE, HMAC-SHA-256, AES-256-GCM, Leakage Abuse — labels do not establish what any section runs.
+- **Card topics (discovery only):** SSE, HMAC-SHA-256, AES-256-GCM, Leakage Abuse, Query Integrity — labels do not establish what any section runs.
 - **Implements:** AES `src/core/aead.ts:14`, HMAC `src/core/prf.ts:25`, SHA-256 `src/core/prf.ts:37`
 - **References:** AES-GCM, Private information retrieval, Private set intersection
-- **Attacks shown:** Fault injection `src/sse/attack.ts:29`
+- **Attacks shown:** Keyword inference `src/sse/attack.ts:1`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [715cec98e0dd](https://github.com/systemslibrarian/crypto-lab-search-vault/commit/715cec98e0dd03344c0fabc1efd71d0103786bd5) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [97d9e0ff6fbb](https://github.com/systemslibrarian/crypto-lab-search-vault/commit/97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26) reviewed 2026-10-23; 8 mapped sections.
   - **Build the encrypted index** (`build-index`; interactive; real-crypto)
     - **Visible section:** Build the encrypted index
     - **Learner action:** Choose a keyword and step or build its encrypted posting rows.
@@ -13706,6 +13706,13 @@ An encrypted inverted index the server searches without a key — then the count
     - **Concepts taught:** SSE search token; access pattern; search pattern; result volume; honest-but-curious server
     - **Limits:** The server learns prescribed leakage; this lab does not hide search or access patterns, nor model network metadata.
     - **Evidence at pinned commit:** `src/ui/search.ts:15`, `src/ui/search.ts:37`, `src/ui/search.ts:45`, `src/ui/search.ts:69`, `src/sse/server.ts:1`
+  - **Can the server lie about the answer?** (`query-integrity`; interactive; real-operation)
+    - **Visible section:** Can the server lie about the answer?
+    - **Learner action:** Choose an honest answer, omission, fabrication or stale replay and test it against the client-retained checkpoint.
+    - **Observed result:** Honest current answers verify; an omitted subset can still authenticate record-by-record while failing completeness; fabricated postings fail authentication and the full-answer digest; stale replies fail the independent snapshot check.
+    - **Concepts taught:** query integrity; result completeness; freshness; snapshot commitment; replay detection; per-record authenticity
+    - **Limits:** This is a static teaching checkpoint that assumes the client retained a trusted current snapshot id, expected count and exact encrypted-answer digest; it is not a general verifiable-SSE construction.
+    - **Evidence at pinned commit:** `src/ui/search.ts:1`, `src/ui/state.ts:1`, `src/sse/query-integrity.ts:1`, `src/sse/query-integrity.test.ts:1`, `e2e/query-integrity.spec.ts:1`
   - **What is real here, what is scaled down, and what is not proved** (`scope`; explanation; conceptual)
     - **Visible section:** What is real here, what is scaled down, and what is not proved
     - **Learner action:** Read the scope panel and introductory glossary.

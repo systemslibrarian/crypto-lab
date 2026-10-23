@@ -18141,7 +18141,7 @@
           <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-search-vault/"
             data-implements="AES@src/core/aead.ts:14 | HMAC@src/core/prf.ts:25 | SHA-256@src/core/prf.ts:37"
             data-references="AES-GCM | Private information retrieval | Private set intersection"
-            data-attacks="Fault injection@src/sse/attack.ts:29"
+            data-attacks="Keyword inference@src/sse/attack.ts:1"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="intermediate" data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
@@ -18218,13 +18218,14 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Searchable Encryption</div>
             <div class="project-title">Search Vault</div>
-            <div class="project-copy">An encrypted inverted index the server searches without a key — then the count and IKK leakage-abuse attacks turn the access pattern it observed back into your queries.</div>
+            <div class="project-copy">An encrypted inverted index the server searches without a key — then leakage-abuse attacks recover queries, while a malicious-server exercise shows why authentic records can still form incomplete or stale answers.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">SSE</span>
                 <span class="chip">HMAC-SHA-256</span>
                 <span class="chip">AES-256-GCM</span>
                 <span class="chip">Leakage Abuse</span>
+                <span class="chip">Query Integrity</span>
               </div>
               <span class="arrow">→</span>
             </div>

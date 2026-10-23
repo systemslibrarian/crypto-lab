@@ -18,6 +18,64 @@ merged by this maintenance pass.
 
 ## Completed work, awaiting maintainer review
 
+### Point Ledger
+
+- PR: [crypto-lab-point-ledger #21](https://github.com/systemslibrarian/crypto-lab-point-ledger/pull/21)
+- Branch: `codex/repair-point-ledger-2026-10-23`
+- Base: `b7bf1099557c0323e9d84f408c34efb56458c3d8`
+- Head: `0935f8ceb4f08e27f05d02d2f6d23ca16bdfc2a1`
+- Scope: **16 files**, **647 insertions** and **80 deletions**. Statistical
+  draw bounds now require positive safe-integer counts in the model and UI,
+  rather than silently accepting fractional “numbers of draws.” Worker requests
+  reject unknown operation kinds, unsupported fields and out-of-range margins
+  before sampling; clock calculations reject non-finite or negative operation
+  counts.
+- The supported demo fields are now an explicit runtime boundary. This prevents
+  a crafted worker message from supplying an arbitrarily large modulus before
+  the random sampler allocates or loops. Focused unit and Linux-browser tests
+  cover the new contracts while retaining the lesson's classical-only and
+  finite-sample limitations.
+- Workflow actions are pinned; source-running jobs have read-only authority;
+  Node 22/24/26, browser, mutation and build results feed fail-closed gates;
+  Pages/OIDC authority exists only in the no-checkout main deploy job; pull
+  requests cannot deploy; main publication is not canceled; and only gated
+  patch/minor Dependabot updates may auto-merge. Six executable workflow
+  controls and two publisher-boundary controls exercise these rules.
+- Publication checks retained the claims supported by the primary sources:
+  [Babbush et al.](https://arxiv.org/abs/2603.28846) supplies the full-run bounds
+  and roughly nine-minute primed model;
+  [Schrottenloher](https://arxiv.org/abs/2606.02235) supplies the codec and
+  resource figures; [ECDSA.Fail](https://arxiv.org/abs/2609.09582) supplies the
+  operating points; and the [Trail of Bits postmortem](https://blog.trailofbits.com/2026/04/17/we-beat-googles-zero-knowledge-proof-of-quantum-cryptanalysis/)
+  documents the checker bypasses. No publication identifier or scientific
+  figure was changed.
+- Authoritative Linux run:
+  [40024837928](https://github.com/systemslibrarian/crypto-lab-point-ledger/actions/runs/40024837928)
+  passed on attempt 1 at the recorded PR head. Node 22/24/26 each reported zero
+  npm vulnerabilities, passed **37/37** unit tests across **5** files, **6/6**
+  workflow controls, **2/2** publisher controls, type checking and the
+  production build. Linux Chromium passed **12/12** behavior/WCAG cases.
+- Mutation output says `baseline: unmutated copy PASSES` and
+  `all 10 mutation(s) caught`. Artifact
+  [12531704366](https://github.com/systemslibrarian/crypto-lab-point-ledger/actions/runs/40024837928/artifacts/12531704366)
+  contains ten distinct assertion-failure logs, zero retries and restored-green
+  records. Its `mutation-evidence.json` exactly matches the committed file at
+  SHA-256
+  `9d564ffb88199c71f37f5a141b5115934aaaa2ece73d999b9da0e923acf11fc4`.
+- Final authenticated reads returned zero open Dependabot alerts and zero open
+  secret-scanning alerts, each as a complete HTTP 200 response with no `Link`
+  header; the exact npm lock reports zero vulnerabilities on Node 22/24/26.
+  Secret scanning and push protection are enabled. Code scanning returned
+  `no analysis found` and remains explicitly incomplete. Dependabot security
+  updates remain disabled, and no repository setting was changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-point-ledger/pull/21#issuecomment-6374872312)
+- State: Fleet item `7b5a0d9b-ee69-495a-9b07-28287319a33f` read back complete
+  at revision **3**. The PR is open, non-draft and cleanly mergeable at the
+  recorded head, intentionally unmerged, and not deployed. Local macOS
+  Chromium failed before executing an assertion with Mach rendezvous error 141;
+  the successful Linux job is the browser authority.
+
 ### Patron Shield
 
 - PR: [crypto-lab-patron-shield #20](https://github.com/systemslibrarian/crypto-lab-patron-shield/pull/20)

@@ -7905,7 +7905,7 @@ Compare ECIES P-256 and RSA-OAEP for sealed messages. A separate 5G tab generate
 - **Attacks shown:** Brute force `src/main.ts:950`, IV reuse `README.md:29`, Man-in-the-middle `src/main.ts:7`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f0fed901fc32](https://github.com/systemslibrarian/crypto-lab-iron-letter/commit/f0fed901fc32852d74e6054fbe571bba4e666e15) reviewed 2026-10-23; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [79343dd899d8](https://github.com/systemslibrarian/crypto-lab-iron-letter/commit/79343dd899d81ae2c94151cd24ce759e466fbb46) reviewed 2026-10-23; 8 mapped sections.
   - **ECIES and RSA Size/Timing Comparison** (`comparison`; comparison; real-values)
     - **Visible section:** Side-by-Side Comparison
     - **Learner action:** Run a local benchmark and compare public-key and envelope sizes.
@@ -12286,12 +12286,12 @@ Count Miller–Rabin lying bases, test fixed-base lists, and measure probable-pr
 
 - **Card topics (discovery only):** Miller–Rabin, Fermat Test, Prime Certificates, Prime Generation — labels do not establish what any section runs.
 - **Implements:** Fermat primality test `src/primality/fermat.ts:2`, Miller–Rabin `src/primality/millerRabin.ts:11`
-- **Source review:** [271adc969b97](https://github.com/systemslibrarian/crypto-lab-prime-witness/commit/271adc969b9793eac7472dae90a99a9a57e77560) — Read seven exhibits including the new bounded Lucas–Pratt certificate generator and independent recursive verifier. Trial division creates factor proofs only for p ≤ 1,000,000; the verifier checks the complete factorization of p−1, recursive primality proofs and full-order modular witness without calling the generator. Separate Miller–Rabin outputs remain probable for large candidates; the FIPS 186-5 Table B.1 path is a limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and the small proof generator, not a general factoring attack. Unit and browser checks are lab-specific and do not constitute machine verification or production security.
+- **Source review:** [b2f3fb06c1ed](https://github.com/systemslibrarian/crypto-lab-prime-witness/commit/b2f3fb06c1ed1729ab194cb8623c52188aed24cc) — Read seven exhibits including the new bounded Lucas–Pratt certificate generator and independent recursive verifier. Trial division creates factor proofs only for p ≤ 1,000,000; the verifier checks the complete factorization of p−1, recursive primality proofs and full-order modular witness without calling the generator. Separate Miller–Rabin outputs remain probable for large candidates; the FIPS 186-5 Table B.1 path is a limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and the small proof generator, not a general factoring attack. Unit and browser checks are lab-specific and do not constitute machine verification or production security.
 - **References:** RSA
 - **Standards body:** —
 - **Implementation:** local BigInt primality engines
 - **Overlaps:** `crypto-lab-factor-forge` — Factor Forge attacks composite integers; Prime Witness tests candidate primes and distinguishes witnesses, probable primes and proofs.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [271adc969b97](https://github.com/systemslibrarian/crypto-lab-prime-witness/commit/271adc969b9793eac7472dae90a99a9a57e77560) reviewed 2026-10-23; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b2f3fb06c1ed](https://github.com/systemslibrarian/crypto-lab-prime-witness/commit/b2f3fb06c1ed1729ab194cb8623c52188aed24cc) reviewed 2026-10-23; 7 mapped sections.
   - **Miller–Rabin square chain** (`chain`; interactive; real-operation)
     - **Visible section:** Find a reason this number is not prime
     - **Learner action:** Enter a candidate and base, inspect and step the modular-square chain.

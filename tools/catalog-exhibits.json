@@ -17003,7 +17003,7 @@
       ]
     },
     "crypto-lab-iron-letter": {
-      "commit": "f0fed901fc32852d74e6054fbe571bba4e666e15",
+      "commit": "79343dd899d81ae2c94151cd24ce759e466fbb46",
       "reviewed": "2026-10-23",
       "exhibits": [
         {
@@ -28745,7 +28745,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-prime-witness": {
-      "commit": "271adc969b9793eac7472dae90a99a9a57e77560",
+      "commit": "b2f3fb06c1ed1729ab194cb8623c52188aed24cc",
       "reviewed": "2026-10-23",
       "exhibits": [
         {

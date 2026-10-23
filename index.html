@@ -21355,7 +21355,7 @@
             data-comment-only="RSA@src/gen/fips186.ts:9"
             data-references="RSA"
             data-implementation="local BigInt primality engines"
-            data-review-commit="271adc969b9793eac7472dae90a99a9a57e77560"
+            data-review-commit="b2f3fb06c1ed1729ab194cb8623c52188aed24cc"
             data-review-note="Read seven exhibits including the new bounded Lucas–Pratt certificate generator and independent recursive verifier. Trial division creates factor proofs only for p ≤ 1,000,000; the verifier checks the complete factorization of p−1, recursive primality proofs and full-order modular witness without calling the generator. Separate Miller–Rabin outputs remain probable for large candidates; the FIPS 186-5 Table B.1 path is a limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and the small proof generator, not a general factoring attack. Unit and browser checks are lab-specific and do not constitute machine verification or production security."
             data-level="intermediate" data-added="2026-10" data-added-on="2026-10-20" data-updated="2026-10"
             data-overlaps="crypto-lab-factor-forge: Factor Forge attacks composite integers; Prime Witness tests candidate primes and distinguishes witnesses, probable primes and proofs." target="_blank" rel="noopener" style="--accent: #35d6bb;">

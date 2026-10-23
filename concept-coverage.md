@@ -263,6 +263,8 @@ Catalogued total moves to 225.*
 
 *Version 35 — records three shipped extensions without adding a lab or changing a concept status. IBE Gate now executes bounded Type-3 HIBE delegation under §9, including sibling and subtree boundaries while retaining root escrow. Search Vault's §23 exercise separates per-record authenticity from client-checked result completeness and freshness. AES Anatomy's §27 lesson performs structured round-9 AES-128 differential fault recovery and independently verifies the recovered key; it does not label arbitrary corruption as DFA. Catalogued total remains 243.*
 
+*Version 36 — records AES Anatomy's accepted-output fault lesson under §27 without adding a lab or changing a concept status. Seeded finite samples execute correct and first-round-faulted AES-128 and classify ciphertext equality, while the separate 2,048-row census is explicitly analytic. Rejection, a secret-independent null and bounded infection/reference-oracle cases expose the modeled selection boundary without presenting the teaching transform as a hardened or universal defense. Catalogued total remains 243.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -889,6 +891,17 @@ block. A fault in a different row analyzed under the original model produces no 
 and identical common-mode corruption shows why simple recomputation is only a scoped detection
 example. The exercise models logical known-location faults, not a physical injection apparatus
 or arbitrary ciphertext corruption.
+
+AES Anatomy's next act contrasts that faulty-output recovery with accepted-output leakage. Its
+seeded finite-sample experiment clears a declared bit immediately after first-round SubBytes,
+continues real AES-128 and classifies correct/fault-path ciphertext equality on every trial; the
+separate 2,048-row population census derives the expected selection relation analytically and is
+not sampled evidence. Rejection exposes output absence. A deterministic teaching infection
+returns every output and closes only the selection-only view when no classifier is available;
+granting the exact clean ciphertext for the same plaintext restores selection. The transform is
+not timing- or latency-oblivious, not the circuit defense analyzed by Daemen et al., and not a
+hardened or universal SIFA countermeasure; physical injection and full multi-byte AES SIFA remain
+outside the result.
 
 **28. Nonce and randomness misuse — `COVERED`**
 Nonce Collision · Nonce Guard · Nonce Lattice · Entropy Collapse · ECDSA Forge · Schnorr

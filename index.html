@@ -21500,18 +21500,18 @@
           <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-aes-anatomy/"
             data-implements="AES@src/aes/cipher.ts:6"
             data-references="AEGIS-256 | AES-CBC | SHA-256 | TLS 1.3"
-            data-attacks="Chosen-plaintext attack@src/ui/act7.ts:85 | Differential fault analysis@src/main.ts:100 | Key recovery@src/ui/act8.ts:155 | Known-plaintext attack@src/ui/act7.ts:78"
+            data-attacks="Chosen-plaintext attack@src/ui/act7.ts:85 | Differential fault analysis@src/main.ts:102 | Key recovery@src/ui/act8.ts:155 | Known-plaintext attack@src/ui/act7.ts:78 | Statistical ineffective fault attack@src/attack/sifa.ts:22"
             data-standards="NIST"
             data-implementation="hand-rolled AES / WebCrypto cross-check"
-            data-review-commit="fffbc96eddebefe2e45bce51890a35d0297570c1"
-            data-review-note="Reviewed the full AES-128/192/256 data path, inverse, key expansion, four opt-in layer ablations and the round-9 AES-128 differential-fault exercise. The DFA injects known-location nonzero byte faults before round-9 MixColumns, derives inverse-S-box constraints from genuine correct/faulty ciphertexts, intersects candidates, reverses round key 10 and verifies the recovered master key on a held-out block. Its logical fault simulator is not physical injection or arbitrary corruption; its recomputation example explicitly retains a common-mode failure. Side-channel and timing mentions outside that exercise describe limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson."
+            data-review-commit="1f0f6b86a2dd5b631df13377b5e1a205e712a502"
+            data-review-note="Reviewed the complete nine-act AES-128/192/256 data path, inverse, key expansion, four opt-in layer ablations, structured round-9 DFA and first-round ineffective-fault lesson. Act 9 executes correct and fault-path AES-128 for each finite-sample trial and classifies exact ciphertext equality; its separate 2,048-row census is analytic, not sampled execution evidence. The selection-only ranker receives selected plaintext bytes and a target bit. A secret-independent null removes key-dependent selection. Rejection exposes output absence; the bounded teaching infection hides selection without a classifier, while an explicitly granted exact clean-reference oracle restores it. The transform is not timing-oblivious, hardened, universal or an implementation of the cited circuit defenses. Side-channel and generic timing mentions remain limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson."
             data-added="2026-10" data-added-on="2026-10-21" data-updated="2026-10"
             data-level="intermediate" target="_blank" rel="noopener" style="--accent: #9f88ff;"
             data-overlaps="crypto-lab-aegis-gate: AEGIS Gate shows one AES round inside another construction; AES Anatomy adds the full cipher, key schedule and inverse | crypto-lab-aes-modes: AES Anatomy builds the block primitive; AES Modes composes blocks into encryption schemes">
             <div class="card-kicker">Build AES, Then Attack a Fault</div>
             <div class="project-title">AES Anatomy</div>
-            <div class="project-copy">Build AES from field arithmetic through encryption and decryption, break four deliberately weakened variants, then recover an AES-128 key from structured round-9 faults.</div>
-            <div class="project-meta"><div class="stack"><span class="chip">AES-128/192/256</span><span class="chip">GF(2⁸)</span><span class="chip">Key Expansion</span><span class="chip">Differential Fault Analysis</span></div><span class="arrow">&rarr;</span></div>
+            <div class="project-copy">Build AES from field arithmetic through encryption and decryption, break weakened variants, recover a key from structured round-9 DFA, then rank one byte from accepted-output bias in a bounded statistical ineffective fault attack (SIFA) model.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">AES-128/192/256</span><span class="chip">GF(2⁸)</span><span class="chip">Differential Fault Analysis</span><span class="chip">Bounded SIFA</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
         </div>

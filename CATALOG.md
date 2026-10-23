@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1731 sections in 243 of 243 labs**
+The exhibit map currently records **1732 sections in 243 of 243 labs**
 (243 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -2160,73 +2160,80 @@ AEGIS-256 as described in CFRG Informational RFC 10032, with AES round-function 
 
 [`crypto-lab-aes-anatomy`](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/) · Build AES, Then Attack a Fault · ENCRYPTION, ATTACKS
 
-Build AES from field arithmetic through encryption and decryption, break four deliberately weakened variants, then recover an AES-128 key from structured round-9 faults.
+Build AES from field arithmetic through encryption and decryption, break weakened variants, recover a key from structured round-9 DFA, then rank one byte from accepted-output bias in a bounded statistical ineffective fault attack (SIFA) model.
 
-- **Card topics (discovery only):** AES-128/192/256, GF(2⁸), Key Expansion, Differential Fault Analysis — labels do not establish what any section runs.
+- **Card topics (discovery only):** AES-128/192/256, GF(2⁸), Differential Fault Analysis, Bounded SIFA — labels do not establish what any section runs.
 - **Implements:** AES `src/aes/cipher.ts:6`
-- **Source review:** [fffbc96eddeb](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/commit/fffbc96eddebefe2e45bce51890a35d0297570c1) — Reviewed the full AES-128/192/256 data path, inverse, key expansion, four opt-in layer ablations and the round-9 AES-128 differential-fault exercise. The DFA injects known-location nonzero byte faults before round-9 MixColumns, derives inverse-S-box constraints from genuine correct/faulty ciphertexts, intersects candidates, reverses round key 10 and verifies the recovered master key on a held-out block. Its logical fault simulator is not physical injection or arbitrary corruption; its recomputation example explicitly retains a common-mode failure. Side-channel and timing mentions outside that exercise describe limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson.
+- **Source review:** [1f0f6b86a2dd](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/commit/1f0f6b86a2dd5b631df13377b5e1a205e712a502) — Reviewed the complete nine-act AES-128/192/256 data path, inverse, key expansion, four opt-in layer ablations, structured round-9 DFA and first-round ineffective-fault lesson. Act 9 executes correct and fault-path AES-128 for each finite-sample trial and classifies exact ciphertext equality; its separate 2,048-row census is analytic, not sampled execution evidence. The selection-only ranker receives selected plaintext bytes and a target bit. A secret-independent null removes key-dependent selection. Rejection exposes output absence; the bounded teaching infection hides selection without a classifier, while an explicitly granted exact clean-reference oracle restores it. The transform is not timing-oblivious, hardened, universal or an implementation of the cited circuit defenses. Side-channel and generic timing mentions remain limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson.
 - **References:** AEGIS-256, AES-CBC, SHA-256, TLS 1.3
-- **Attacks shown:** Chosen-plaintext attack `src/ui/act7.ts:85`, Differential fault analysis `src/main.ts:100`, Key recovery `src/ui/act8.ts:155`, Known-plaintext attack `src/ui/act7.ts:78`
+- **Attacks shown:** Chosen-plaintext attack `src/ui/act7.ts:85`, Differential fault analysis `src/main.ts:102`, Key recovery `src/ui/act8.ts:155`, Known-plaintext attack `src/ui/act7.ts:78`, Statistical ineffective fault attack `src/attack/sifa.ts:22`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled AES / WebCrypto cross-check
 - **Overlaps:** `crypto-lab-aegis-gate` — AEGIS Gate shows one AES round inside another construction; AES Anatomy adds the full cipher, key schedule and inverse; `crypto-lab-aes-modes` — AES Anatomy builds the block primitive; AES Modes composes blocks into encryption schemes
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fffbc96eddeb](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/commit/fffbc96eddebefe2e45bce51890a35d0297570c1) reviewed 2026-10-23; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1f0f6b86a2dd](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/commit/1f0f6b86a2dd5b631df13377b5e1a205e712a502) reviewed 2026-10-23; 9 mapped sections.
   - **Remove a layer, run the break** (`ablated-attacks`; comparison; real-operation)
     - **Visible section:** Remove a layer, run the break
     - **Learner action:** Remove SubBytes, inversion, ShiftRows or MixColumns from the AES-128 data path, run the matching attack and compare with full AES controls.
     - **Observed result:** Inspect attack recoveries, matrices or codebooks, avalanche diagnostics and fresh held-out verification; partial codebook coverage is marked unknown.
     - **Concepts taught:** AES component ablation; affine cipher recovery; column splicing; chosen-plaintext codebook; avalanche criterion
     - **Limits:** Attacks apply to deliberately broken AES-128 variants, not practical key recovery against full AES; key schedule retains the real S-box.
-    - **Evidence at pinned commit:** `src/main.ts:71`, `src/main.ts:90`, `src/main.ts:227`, `src/ui/act7.ts:18`, `src/attack.worker.ts:1`, `src/heldout.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:74`, `src/main.ts:93`, `src/main.ts:402`, `src/main.ts:417`, `src/main.ts:436`, `src/ui/act7.ts:18`, `src/attack.worker.ts:1`, `src/heldout.ts:1`
   - **Inject a fault, recover the key** (`aes-dfa`; interactive; real-operation)
     - **Visible section:** Inject a fault, recover the key
     - **Learner action:** Inject known-location round-9 byte faults into AES-128, compare correct and faulty ciphertexts, then intersect last-round-key candidates.
     - **Observed result:** Two faults per affected quartet isolate round key 10; reversing the key schedule and a held-out encryption independently verify the recovered master key.
     - **Concepts taught:** AES-128; differential fault analysis; last-round key recovery; inverse S-box differential; fault detection
     - **Limits:** Logical known-location single-byte fault model; not physical injection, not arbitrary ciphertext corruption, and the recomputation comparison is not a universal defense.
-    - **Evidence at pinned commit:** `src/main.ts:94`, `src/dfa-fixture.ts:14`, `src/dfa-fixture.ts:35`, `src/attack/dfa.ts:53`, `src/attack/dfa.ts:59`, `src/attack/dfa.ts:83`, `src/ui/act8.ts:30`, `src/ui/act8.ts:48`, `src/ui/act8.ts:87`, `src/ui/act8.ts:93`, `src/ui/act8.ts:98`, `src/ui/act8.ts:106`, `src/ui/act8.ts:125`, `src/ui/act8.ts:184`, `src/ui/act8.ts:195`
+    - **Evidence at pinned commit:** `src/main.ts:96`, `src/main.ts:102`, `src/main.ts:292`, `src/main.ts:295`, `src/dfa-fixture.ts:14`, `src/dfa-fixture.ts:35`, `src/attack/dfa.ts:53`, `src/attack/dfa.ts:59`, `src/attack/dfa.ts:83`, `src/ui/act8.ts:30`, `src/ui/act8.ts:48`, `src/ui/act8.ts:87`, `src/ui/act8.ts:93`, `src/ui/act8.ts:98`, `src/ui/act8.ts:106`, `src/ui/act8.ts:125`, `src/ui/act8.ts:184`, `src/ui/act8.ts:195`
+  - **Keep only accepted outputs, recover a byte** (`aes-sifa`; interactive; real-operation)
+    - **Visible section:** Keep only accepted outputs, recover a byte
+    - **Learner action:** Choose a first-round S-box bit, fault model and output policy; execute correct and faulted AES-128 trials, then rank all 256 first-key-byte guesses from the inputs selected by observable output handling.
+    - **Observed result:** Inspect real-AES fault witnesses, a separately labeled analytic census and seeded finite-sample ranks; a secret-independent null and hidden-selection case remove the modeled signal, while an exact clean-reference oracle restores selection.
+    - **Concepts taught:** AES-128; ineffective fault analysis; statistical ineffective fault attack; selected-output leakage; key-byte ranking; infective output handling
+    - **Limits:** Chosen-input one-byte logical model with a declared profiled landing rate; the census is analytic rather than sampled evidence, and the deterministic teaching infection is not timing-oblivious, hardened, universal or the cited circuit defense.
+    - **Evidence at pinned commit:** `src/main.ts:105`, `src/main.ts:111`, `src/main.ts:310`, `src/main.ts:316`, `src/sifa-fixture.ts:102`, `src/sifa-fixture.ts:105`, `src/sifa-fixture.ts:110`, `src/sifa-fixture.ts:116`, `src/sifa-fixture.ts:181`, `src/sifa-fixture.ts:200`, `src/sifa-fixture.ts:277`, `src/sifa-fixture.ts:295`, `src/sifa-fixture.ts:302`, `src/sifa-fixture.ts:318`, `src/sifa-fixture.ts:353`, `src/sifa-fixture.ts:392`, `src/sifa-fixture.ts:404`, `src/attack/sifa.ts:22`, `src/attack/sifa.ts:44`, `src/attack/sifa.ts:50`, `src/ui/act9.ts:45`, `src/ui/act9.ts:100`, `src/ui/act9.ts:164`, `src/ui/act9.ts:214`, `src/ui/act9.ts:235`, `src/ui/act9.ts:264`
   - **The whole cipher** (`cipher-trace`; interactive; real-crypto)
     - **Visible section:** The whole cipher
     - **Learner action:** Step a complete encryption layer by layer and run the WebCrypto cross-check.
     - **Observed result:** Inspect intermediate round states and ciphertext; AES-128/256 are cross-checked against WebCrypto and AES-192 against pinned FIPS vectors.
     - **Concepts taught:** AES encryption; AddRoundKey; final round; round trace; FIPS vectors
     - **Limits:** Hand-built inspectable AES is not constant-time or production encryption; the WebCrypto check uses the first CBC block.
-    - **Evidence at pinned commit:** `src/main.ts:57`, `src/main.ts:61`, `src/main.ts:185`, `src/ui/act5.ts:6`, `src/crosscheck.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:60`, `src/main.ts:64`, `src/main.ts:208`, `src/main.ts:351`, `src/main.ts:375`, `src/ui/act5.ts:6`, `src/crosscheck.ts:1`
   - **Bytes are polynomials** (`field-arithmetic`; interactive; real-operation)
     - **Visible section:** Bytes are polynomials
     - **Learner action:** Enter two hex bytes and compute their XOR, xtime, finite-field product and extended-Euclid inverse.
     - **Observed result:** Inspect the polynomial steps and AES field reduction; zero has no multiplicative inverse.
     - **Concepts taught:** GF(2^8); AES field polynomial; XOR addition; xtime; multiplicative inverse
     - **Limits:** Single-byte teaching arithmetic, not a constant-time cryptographic implementation.
-    - **Evidence at pinned commit:** `src/main.ts:27`, `src/main.ts:32`, `src/main.ts:169`, `src/ui/act1.ts:4`, `src/ui/act1.ts:18`
+    - **Evidence at pinned commit:** `src/main.ts:30`, `src/main.ts:35`, `src/main.ts:190`, `src/main.ts:193`, `src/ui/act1.ts:4`, `src/ui/act1.ts:18`
   - **Reverse the cipher** (`inverse-cipher`; comparison; real-operation)
     - **Visible section:** Reverse the cipher
     - **Learner action:** Decrypt using correct InvCipher or deliberately select forward round keys or forward MixColumns.
     - **Observed result:** The correct inverse restores the block; each wrong operation leaves an invalid but full-length output.
     - **Concepts taught:** AES decryption; InvCipher; inverse MixColumns; reverse round keys
     - **Limits:** This steps InvCipher; EqInvCipher is described but not implemented.
-    - **Evidence at pinned commit:** `src/main.ts:64`, `src/main.ts:68`, `src/ui/act6.ts:5`, `src/aes/cipher.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:67`, `src/main.ts:71`, `src/main.ts:213`, `src/main.ts:217`, `src/ui/act6.ts:5`, `src/aes/cipher.ts:1`
   - **Expand the key** (`key-expansion`; interactive; real-operation)
     - **Visible section:** Expand the key
     - **Learner action:** Choose AES-128, AES-192 or AES-256, inspect expanded words and step through the schedule.
     - **Observed result:** Trace RotWord, SubWord and round constants, including the extra AES-256 SubWord case.
     - **Concepts taught:** AES key schedule; RotWord; SubWord; Rcon; AES-256
     - **Limits:** A deterministic preset or seeded teaching generator is not secret-key generation.
-    - **Evidence at pinned commit:** `index.html:122`, `src/main.ts:49`, `src/main.ts:54`, `src/ui/act4.ts:5`, `src/aes/keyExpansion.ts:1`
+    - **Evidence at pinned commit:** `index.html:122`, `src/main.ts:52`, `src/main.ts:57`, `src/main.ts:203`, `src/main.ts:346`, `src/ui/act4.ts:5`, `src/aes/keyExpansion.ts:1`
   - **Move and mix** (`linear-layers`; interactive; real-operation)
     - **Visible section:** Move and mix
     - **Learner action:** Step ShiftRows and MixColumns on the state grid for the selected key and block.
     - **Observed result:** See byte locations, column mixing and structural dependencies as the state changes.
     - **Concepts taught:** AES state; ShiftRows; MixColumns; diffusion; column-major layout
     - **Limits:** Structural dependency does not ensure a visible difference on every chosen input.
-    - **Evidence at pinned commit:** `src/main.ts:42`, `src/main.ts:46`, `src/main.ts:176`, `src/ui/act3.ts:14`
+    - **Evidence at pinned commit:** `src/main.ts:45`, `src/main.ts:49`, `src/main.ts:198`, `src/main.ts:324`, `src/main.ts:332`, `src/ui/act3.ts:14`
   - **Build the S-box** (`sbox-construction`; comparison; real-operation)
     - **Visible section:** Build the S-box
     - **Learner action:** Construct all S-box entries and toggle the deliberately affine-only table.
     - **Observed result:** Compare computed inversion-plus-affine S-box entries with the standard and inspect how removing inversion changes the mapping.
     - **Concepts taught:** AES S-box; finite-field inversion; affine transformation; nonlinearity
     - **Limits:** The affine-only variant deliberately removes an essential nonlinear step.
-    - **Evidence at pinned commit:** `src/main.ts:35`, `src/main.ts:39`, `src/ui/act2.ts:5`, `src/aes/sbox.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:38`, `src/main.ts:42`, `src/main.ts:194`, `src/main.ts:195`, `src/ui/act2.ts:5`, `src/aes/sbox.ts:1`
 
 ### AES Modes
 

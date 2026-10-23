@@ -96,17 +96,39 @@ merged by this maintenance pass.
 - State: Fleet item complete; PR open, cleanly mergeable at the recorded head,
   intentionally unmerged, and deployment unverified.
 
+### Quantum Entropy
+
+- PR: [crypto-lab-quantum-entropy #23](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/23)
+- Base: `44b945c15d5de424f4209239b6d96063eccc82f0`
+- Head: `c329e9f2f27130ee876bd4ea489aea3527597c63`
+- Fixed: the false claim that SP 800-90B's worked RCT example uses H = 7.3
+  (the publication uses H = 2.0 and C = 11); the stale 47-test count; wording
+  that called extractor output perfectly uniform and key-ready; and
+  over-privileged, major-auto-merging or fail-open Pages controls.
+- Authoritative Linux run:
+  [39946321379](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/39946321379)
+  passed Node 22/24 builds, audits and **51/51** tests in each lane, plus all
+  **24/24** production-browser accessibility, claims and workshop checks.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/23#issuecomment-6363875418)
+- Provider evidence at review time: zero open Dependabot alerts and zero open
+  secret-scanning alerts; zero advisories across **66** exact locked
+  package/version pairs. Code scanning returned `no analysis found` and remains
+  explicitly incomplete.
+- State: Fleet item complete; PR open, cleanly mergeable at the recorded head,
+  intentionally unmerged, and deployment unverified.
+
 ### Hub handoff
 
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)
 - Branch: `codex/refresh-futureworkoct-2026-10-21`
-- Base at the last fetch: `db07bd5bbef3c26d4a9d9905b5cf910355a821cf`
+- Base at the last fetch: `743f03b9c6134cdcf51b79189e4eadab41bf85ea`
 - Rebased tracker checkpoint before this ledger update:
-  `1147fb2b3a19f4d172d1a757f384dc6db9c09002`
+  `ea6018655fe2004155d5a9b5a6646311e4753647`
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Pulse Chain it measured **1,204 total**, **1,053
-  complete** and **151 active** Fleet items: **118 queued**, **27 working** and
-  **6 blocked**. Quantum Entropy became the next queued review.
+  growing history log. After Quantum Entropy it measured **1,204 total**,
+  **1,054 complete** and **150 active** Fleet items: **117 queued**, **27
+  working** and **6 blocked**. Quantum Vault KpqC became the next queued review.
 - The branch head will advance whenever this ledger or the current-state handoff
   is updated. Fetch the PR branch and use its live head rather than assuming the
   checkpoint above remains current.

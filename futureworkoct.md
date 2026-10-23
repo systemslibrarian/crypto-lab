@@ -6,7 +6,7 @@ authoritative when they disagree.
 
 ## Live handoff — 2026-10-23
 
-`crypto-lab` `origin/main` is **`db07bd5`** and `crypto-counsel`
+`crypto-lab` `origin/main` is **`743f03b`** and `crypto-counsel`
 `origin/main` is **`cc2979b`**. The queue branch is based directly on that
 Hub main.
 
@@ -19,32 +19,33 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Forty-four open lab repair PRs have green exact-head Linux CI: the 26
+- Forty-five open lab repair PRs have green exact-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
   Tally **#29**, PQ Chooser **#5**, PQ Rotation **#24**, PQ TLS Handshake
   **#26**, PQXDH Wire **#12**, Privacy Pass **#17**, Proof Tally **#18** and
-  Protocol Compose **#23**, PSI Gate **#28** and Pulse Chain **#5**. The Fleet records and PR
-  comments hold their per-lab evidence; do not duplicate that history here and
-  do not merge them from this maintenance pass.
-- Sixteen queued security-evidence reviews are complete. Each has readable
+  Protocol Compose **#23**, PSI Gate **#28**, Pulse Chain **#5** and Quantum
+  Entropy **#23**. The Fleet records and PR comments hold their per-lab
+  evidence; do not duplicate that history here and do not merge them from this
+  maintenance pass.
+- Seventeen queued security-evidence reviews are complete. Each has readable
   zero-open-alert Dependabot and secret-scanning results plus a zero-advisory
   exact lock; code scanning remains explicitly incomplete because GitHub
   reports no analysis. Their source repairs remain open, and their names and
   evidence stay in the Fleet records rather than becoming history here.
 
-**Next:** Quantum Entropy item `54bf50d9-f1e8-4a26-93af-e1f410b0cffc`.
+**Next:** Quantum Vault KpqC item `fba6e64e-80e6-4b94-b284-ff76daf3eb51`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,053 complete and 151 active** items:
-**118 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,054 complete and 150 active** items:
+**117 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **118 queued security-evidence reviews.** Quantum Entropy is next.
+- **117 queued security-evidence reviews.** Quantum Vault KpqC is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state
@@ -91,11 +92,11 @@ for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
 done
 ```
 
-At this checkpoint, 12 of 13 checks pass on current `origin/main`. `lab-dates`
+At this checkpoint on Hub `743f03b`, 12 of 13 checks pass. `lab-dates`
 reports six pins made stale by newer committed lab changes: Iron Letter,
 Protocol Compose, Threshold Decrypt, Multivariate, Broken Trust and Time Lock
 Puzzle. Re-derive those dates from freshly fetched lab heads before calling the
-Hub clean. The earlier #244 refresh predates this movement and must be refreshed
+Hub clean. The open #244 refresh predates this movement and must be refreshed
 or superseded; do not assume its green historical runs cover the six current
 drifts. #245 is stacked on #244 and likewise needs its base rechecked. The
 exact-head Teach drift dispatch was green after one transient host-package

@@ -26,6 +26,11 @@ merged by this maintenance pass.
 - State: uncommitted and unpushed; there is no reviewable PR head yet. Do not
   treat the items below as complete until this section is replaced by a commit,
   PR, authoritative CI run and final provider evidence.
+- Current verification surface: **48 tracked files changed plus 4 new focused
+  tests** in the isolated worktree `/tmp/quantum-vault-kpqc-fix.5LJkaM`. The
+  source checkout and all other agents' worktrees remain untouched. The current
+  worktree still resolves to the fetched base above, so every result in this
+  section is explicitly interim and uncommitted.
 - Findings addressed in the working tree so far: release builds could include
   the forgeable development crypto backend; an error-only `kpqc-wasm` scaffold
   could be described as if it supplied native Level-3 crypto; container and UI
@@ -34,11 +39,34 @@ merged by this maintenance pass.
   garbage-collected secret copies; PBKDF and serialized-state bounds were not
   consistently enforced; and workflow permissions, cancellation and automatic
   major-update handling were too broad.
-- Implemented but not yet final: fail-closed backend labeling and release
-  guards, algorithm/backend mismatch rejection, typed secret cleanup, bounded
-  vault parsing, Shamir reconstruction without ordinary-array secret copies,
-  corrected KpqC/candidate and security-model prose, constrained Pages jobs,
-  and focused regression/control tests.
+- Rust and CLI changes already made: fail-closed backend labeling and release
+  guards; the development backend is feature-gated; algorithm/backend mismatch
+  is rejected before backend use; sensitive buffers use explicit cleanup;
+  compile-time size assertions and feature-off tests were added; and the CLI no
+  longer presents the error-only `kpqc-wasm` scaffold as an operational native
+  KpqC implementation.
+- Browser changes already made: PBKDF, serialized-state, wrapped-key and date
+  fields are bounded and validated; HAETAE output lengths are checked; key-wrap
+  and pipeline buffers are cleared on success and error; Shamir interpolation
+  avoids ordinary JavaScript-array copies of secret material; and vault-open
+  error paths clear working and display copies.
+- Workflow changes already made: repository source jobs have read-only token
+  permissions; Pages and OIDC authority is isolated into no-checkout jobs; pull
+  requests build and test without retaining a deploy artifact; main deployments
+  cannot be cancelled by a newer run; the Node matrix is 22/24/26; automatic
+  Dependabot merging is limited to patch/minor updates and fails closed; and
+  Rust feature-boundary checks are explicit.
+- Documentation corrections already made include the KpqC competition versus
+  Korean-standard status, the unpinned embedded HAETAE verification-key trust
+  boundary, the forgeability of the development signature backend, the actual
+  password-or-KEM attack paths, the derived Rust outer nonce, the signed-field
+  set and the limits of zeroization claims. The KpqC publication claims were
+  checked against the official KpqC final-result, status and SMAUG-T documents
+  before editing them.
+- Focused tests added so far cover key-wrap cleanup, serialized-state rejection,
+  active WASM export/length contracts and workflow privilege/control policy.
+  Existing pipeline, Shamir, vault-file, tamper, property, vector and
+  differential tests were extended where behavior changed.
 - Evidence already obtained during development: the full Rust workspace and
   no-default-feature core suites passed; the web unit suite passed **81** tests;
   Python WASM tests passed **28/28**; RustSec reported zero vulnerabilities; and

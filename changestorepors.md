@@ -348,6 +348,55 @@ merged by this maintenance pass.
   the recorded head. It remains intentionally unmerged; no deployment was
   performed or claimed.
 
+### Opaque Gate
+
+- PR: [crypto-lab-opaque-gate #34](https://github.com/systemslibrarian/crypto-lab-opaque-gate/pull/34)
+- Branch: `codex/repair-opaque-gate-2026-10-23`
+- Base: `6fffc04fec90bb396016dfa12f8bd0a9f862823f`
+- Head: `131cb9f33ee28c2c38fe5fda7f697aee283c5aa1`
+- Commits: `4b17e9c` hardens the protocol and deployment boundaries;
+  `131cb9f` aligns one browser regression with the corrected deployment claim.
+- Scope: **14 files**, **725 insertions** and **207 deletions**. OPRF, envelope,
+  KE1/KE2/KE3, key-schedule and AEAD boundaries now reject malformed lengths,
+  non-canonical P-256 encodings, mismatched keypairs and ambiguous ephemeral
+  state. Caller-owned nonces, OPRF keys and protocol state are copied, inputs
+  are bounded, and the UI restores its action button through `try/finally`.
+- Accuracy repairs distinguish raw OPRF output from `randomized_password` and
+  remove claims that a stolen database is useless, pre-computation is
+  impossible, rate limiting prevents offline guessing, or a strong password is
+  automatically out of reach. The stale 10-test count, unsupported 1Password
+  OPAQUE claim, overbroad WCAG language and adjacent-system descriptions were
+  corrected. RFC 9807, RFC 9497, current OWASP guidance, Meta's WhatsApp
+  deployment, Cloudflare, Apple Private Cloud Compute and the 1Password
+  whitepaper/CPace material were checked before changing those claims.
+- Workflow authority is split so repository code runs read-only while Pages and
+  OIDC write scopes exist only in no-checkout jobs. Pull requests cannot retain
+  or publish a Pages artifact, Node 22/24/26 quality gates block the browser and
+  deploy jobs, main deployments are not cancelled, and dependency automation is
+  patch/minor-only and fail-closed. All actions are pinned to verified release
+  SHAs, with seven executable controls covering those invariants.
+- Authoritative Linux run:
+  [39984273312](https://github.com/systemslibrarian/crypto-lab-opaque-gate/actions/runs/39984273312)
+  passed the clean install, high-severity audit, **21/21** protocol/boundary
+  tests, **7/7** workflow controls and production build on Node 22, 24 and 26.
+  Linux Chromium passed all **6/6** claim, behavior and accessibility tests. An
+  earlier run's one wording-only assertion failure was corrected and rerun
+  rather than ignored.
+- Local verification passed the same 21 protocol tests, seven workflow tests,
+  strict production build, zero-vulnerability `npm audit`, clean `npm ls`, YAML
+  parsing and `git diff --check`. Local macOS Chromium died during Mach-port
+  bootstrap before assertions; the successful Linux job is the browser
+  authority.
+- Authenticated Dependabot evidence used the current cursor-based GitHub API,
+  exhausted its Link pagination and found zero open alerts. The initial legacy
+  `page=1` request returned HTTP 400 and was not misread as an empty result.
+  Exact-lock `npm audit` also found zero vulnerabilities. No uncollected
+  provider was silently converted into a clean result.
+- State: Fleet item `a1c75cc7-0b77-4eed-b3d0-e27633375a3f` read back complete
+  at revision **4**. A fresh 52-PR GraphQL readback found this PR open,
+  non-draft, cleanly mergeable and green at its exact head. It remains
+  intentionally unmerged and undeployed.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)
@@ -453,14 +502,14 @@ merged by this maintenance pass.
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)
 - Branch: `codex/refresh-futureworkoct-2026-10-21`
 - Base fetched immediately before this edit:
-  `b930791ad17b48779435c5e58a1a2f5ccdaadf5b`. The branch incorporates that
-  fresh Hub main through merge commit `fa43187`.
+  `b8555e295b401e5c3e237aa05293ec407fb9d47b`. The branch incorporates that
+  fresh Hub main through merge commit `22f598d`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Oblivious Shelf it measured **1,204 total**,
-  **1,060 complete** and **144 active** Fleet items: **111 queued**, **27
-  working** and **6 blocked**. Opaque Gate is the next queued review.
-- GitHub GraphQL readback on 2026-10-23 found all **51** named repair PRs open,
-  non-draft and carrying a successful current-head status rollup. Fifty were
+  growing history log. After Opaque Gate it measured **1,204 total**,
+  **1,061 complete** and **143 active** Fleet items: **110 queued**, **27
+  working** and **6 blocked**. ORAM Vault is the next queued review.
+- GitHub GraphQL readback on 2026-10-23 found all **52** named repair PRs open,
+  non-draft and carrying a successful current-head status rollup. Fifty-one were
   mergeable; PQ Rotation **#24** was the one conflicting PR. Scloud Vault
   **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
   Shor **#21** had advanced beyond the head SHAs stored with their completed
@@ -468,7 +517,16 @@ merged by this maintenance pass.
   to `500ae61`, `66874ed` to `1968e53`, and `79a145d` to `5982efd`,
   respectively. Their new heads were green, but the evidence must be reconciled
   against those commits before merge. Green checks alone neither resolve a
-  conflict nor prove that earlier review evidence still applies.
+  conflict nor prove that earlier review evidence still applies. Opaque Gate
+  **#34** was green and mergeable at exact head `131cb9f`.
+- The complete Hub consistency pass against this freshly incorporated main and
+  counsel **#18** produced **11 passes and 2 failures**. `catalog-sync` showed
+  the exact uncommitted generator delta introduced by Search Vault's newly
+  integrated query-integrity exhibit: 1,728 becomes 1,729 sections and that
+  section's generated position/wording changes. `lab-dates` still identified
+  Iron Letter, Protocol Compose, Threshold Decrypt, Multivariate, Broken Trust
+  and Time Lock Puzzle as stale. No catalog output or date pin was mixed into
+  this tracker-only PR.
 - The branch head will advance whenever this ledger or the current-state handoff
   is updated. Fetch the PR branch and use its live head rather than assuming the
   local checkout remains current.
@@ -483,5 +541,6 @@ merged by this maintenance pass.
   error. Linux Playwright logs are the browser authority when that occurs.
 - Repository security settings were observed but not changed. Dependabot
   security updates remain an owner decision where GitHub reports them disabled.
-- The refreshed Hub baseline has six stale `lab-dates` pins. They were recorded
-  in `futureworkoct.md`; this tracker-only update did not rewrite catalog data.
+- The refreshed Hub baseline has one generated `CATALOG.md` drift and six stale
+  `lab-dates` pins. They were recorded in `futureworkoct.md`; this tracker-only
+  update did not rewrite catalog data.

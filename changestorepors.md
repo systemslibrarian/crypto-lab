@@ -18,6 +18,64 @@ merged by this maintenance pass.
 
 ## Completed work, awaiting maintainer review
 
+### Patron Shield
+
+- PR: [crypto-lab-patron-shield #20](https://github.com/systemslibrarian/crypto-lab-patron-shield/pull/20)
+- Branch: `codex/repair-patron-shield-2026-10-23`
+- Base: `f8a82cf820f7e4d1135fb2fdca214d6b0e553f91`
+- Head: `ff90e19fd0f71d815fed03a3ec7b1bcfaba52355`
+- Scope: **14 files**, **563 insertions** and **87 deletions**. Query-mask
+  validation now rejects non-finite, fractional, negative and greater-than-
+  uint32 values before JavaScript bitwise coercion. The query control also
+  keeps its native disabled state and `aria-disabled` value synchronized while
+  a request is in flight and after it finishes.
+- The Node publishing-boundary test no longer derives npm's location from
+  `process.execPath`, which failed under Homebrew Node 26 where npm and Node
+  have separate Cellar paths. It invokes `npm` (or `npm.cmd`) from `PATH`
+  without a shell. The old implementation reproduced both control failures;
+  the replacement passes them.
+- The UI and README no longer say the teaching server always or permanently
+  logs queries; they state the narrower demonstrated boundary that a server can
+  log or retain them. The RAID-PIR description was corrected after checking the
+  primary paper: optimized SB/MB queries expand short seeds with an AES-CTR PRG
+  and reduce privacy to PRG security, so the old information-theoretic claim
+  was wrong. Unsupported “millions of records” wording was removed. The basic
+  Chor et al. linear-XOR attribution remains supported by its primary paper.
+- Workflows are split into CI, a reusable browser gate and deploy; actions are
+  pinned; source-running jobs are read-only; Node 22/24/26 run audited exact-lock
+  installs; Pages/OIDC authority is limited to a no-checkout deploy job; pull
+  requests cannot deploy; main deploys are not canceled mid-flight; and
+  Dependabot leaves major updates to a human and fails closed. Six executable
+  workflow controls and an eight-case claim-mutation runner protect the new
+  boundaries.
+- Authoritative Linux run:
+  [40022738082](https://github.com/systemslibrarian/crypto-lab-patron-shield/actions/runs/40022738082)
+  passed on attempt 1 at the recorded PR head. Node 22/24/26 each passed
+  **48/48** protocol/reference tests across **2** files, **6/6** workflow
+  controls, **2/2** publishing controls, npm audit, type checking and the
+  production build. Linux Chromium passed **24/24** behavior/WCAG cases. A
+  superseded-head run was canceled and is not used as evidence.
+- Mutation output says `baseline: unmutated copy PASSES` and
+  `all 8 mutation(s) caught`. Artifact
+  [12531451902](https://github.com/systemslibrarian/crypto-lab-patron-shield/actions/runs/40022738082/artifacts/12531451902)
+  contains eight unique, zero-retry assertion kills followed by restored-green
+  checks. Its `mutation-evidence.json` exactly matches the committed file at
+  SHA-256
+  `cbbfc9ff710478e4162f54e0a2da354c0c5b00c4aec95ad5b89540715de284a2`.
+- Final authenticated reads returned zero open Dependabot alerts and zero open
+  secret-scanning alerts, each as a complete first response with no `Link`
+  header; npm audit reported zero vulnerabilities on Node 22/24/26. Secret
+  scanning and push protection are enabled. Code scanning returned
+  `no analysis found` and remains explicitly incomplete. Dependabot security
+  updates remain disabled, and no repository setting was changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-patron-shield/pull/20#issuecomment-6374579912)
+- State: Fleet item `6c09c0e1-ce03-45aa-8920-84fcda63e76e` read back complete
+  at revision **4**. The PR is open, non-draft and cleanly mergeable at the
+  recorded head, intentionally unmerged, and not deployed. Local macOS
+  Chromium failed before executing an assertion with Mach rendezvous error 141;
+  the successful Linux job is the browser authority.
+
 ### PAKE Gate
 
 - PR: [crypto-lab-pake-gate #45](https://github.com/systemslibrarian/crypto-lab-pake-gate/pull/45)

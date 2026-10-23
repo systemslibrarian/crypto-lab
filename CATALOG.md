@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1728 sections in 243 of 243 labs**
+The exhibit map currently records **1729 sections in 243 of 243 labs**
 (243 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -13699,13 +13699,6 @@ An encrypted inverted index the server searches without a key — then leakage-a
     - **Concepts taught:** SSE leakage profile; query repetition; access-pattern overlap; volume leakage
     - **Limits:** Pattern richness by itself does not prove inversion; the attack needs external background statistics.
     - **Evidence at pinned commit:** `src/ui/leakage-view.ts:19`, `src/ui/leakage-view.ts:28`, `src/ui/leakage-view.ts:37`, `src/sse/leakage.ts:1`
-  - **Search it — and watch what the server learns** (`query-log`; interactive; real-crypto)
-    - **Visible section:** Search it — and watch what the server learns
-    - **Learner action:** Search a keyword, run all keywords once or clear the server log.
-    - **Observed result:** The server returns matching encrypted documents from tokens and logs repeated tokens, result sizes and document identities.
-    - **Concepts taught:** SSE search token; access pattern; search pattern; result volume; honest-but-curious server
-    - **Limits:** The server learns prescribed leakage; this lab does not hide search or access patterns, nor model network metadata.
-    - **Evidence at pinned commit:** `src/ui/search.ts:15`, `src/ui/search.ts:37`, `src/ui/search.ts:45`, `src/ui/search.ts:69`, `src/sse/server.ts:1`
   - **Can the server lie about the answer?** (`query-integrity`; interactive; real-operation)
     - **Visible section:** Can the server lie about the answer?
     - **Learner action:** Choose an honest answer, omission, fabrication or stale replay and test it against the client-retained checkpoint.
@@ -13713,6 +13706,13 @@ An encrypted inverted index the server searches without a key — then leakage-a
     - **Concepts taught:** query integrity; result completeness; freshness; snapshot commitment; replay detection; per-record authenticity
     - **Limits:** This is a static teaching checkpoint that assumes the client retained a trusted current snapshot id, expected count and exact encrypted-answer digest; it is not a general verifiable-SSE construction.
     - **Evidence at pinned commit:** `src/ui/search.ts:1`, `src/ui/state.ts:1`, `src/sse/query-integrity.ts:1`, `src/sse/query-integrity.test.ts:1`, `e2e/query-integrity.spec.ts:1`
+  - **Search it — and watch what the server learns** (`query-log`; interactive; real-crypto)
+    - **Visible section:** Search it — and watch what the server learns
+    - **Learner action:** Search a keyword, run all keywords once or clear the server log.
+    - **Observed result:** The server returns matching encrypted documents from tokens and logs repeated tokens, result sizes and document identities.
+    - **Concepts taught:** SSE search token; access pattern; search pattern; result volume; honest-but-curious server
+    - **Limits:** The server learns prescribed leakage; this lab does not hide search or access patterns, nor model network metadata.
+    - **Evidence at pinned commit:** `src/ui/search.ts:15`, `src/ui/search.ts:37`, `src/ui/search.ts:45`, `src/ui/search.ts:69`, `src/sse/server.ts:1`
   - **What is real here, what is scaled down, and what is not proved** (`scope`; explanation; conceptual)
     - **Visible section:** What is real here, what is scaled down, and what is not proved
     - **Learner action:** Read the scope panel and introductory glossary.

@@ -18,6 +18,65 @@ merged by this maintenance pass.
 
 ## Completed work, awaiting maintainer review
 
+### PAKE Gate
+
+- PR: [crypto-lab-pake-gate #45](https://github.com/systemslibrarian/crypto-lab-pake-gate/pull/45)
+- Branch: `codex/repair-pake-gate-2026-10-23`
+- Base: `5019b2060e6a91edc3dee460c0d190e4b064fcb9`
+- Head: `1a8b239759753efa62076d07f4f777e568623117`
+- Scope: **19 files**, **592 insertions** and **59 deletions**. Password edits on
+  an untouched tab now rebuild the runner captured at construction, so manual
+  stepping uses the credentials visible in the inputs instead of silently
+  running the default `hunter2` pair. A focused jsdom regression first failed
+  against the old behavior, then passed after the lifecycle fix; the Linux
+  browser suite exercises the same boundary end to end.
+- J-PAKE now enforces the pinned profile's exact 384-byte encoding for received
+  group elements and both Schnorr proof fields. Numerically equivalent shortened
+  encodings abort before verification instead of being accepted as canonical.
+- The hero and README no longer collapse passive transcript resistance and
+  compromised server storage into one claim. They now state the demonstrated
+  boundary: a passive PAKE transcript supplies no direct offline password test,
+  while a stolen SRP verifier permits per-user offline guessing. The README also
+  labels the implementations profile-explicit rather than universally
+  spec-accurate.
+- Workflow actions are pinned to commits; source-running jobs have read-only
+  repository authority; Node 22/24/26 are audited; main Pages publication is not
+  canceled mid-flight; Pages/OIDC authority exists only on the no-checkout
+  deploy job; and Dependabot automation leaves majors for a human and fails
+  closed on merge or dispatch errors. Six executable workflow controls and a
+  10-case claim-mutation runner protect those boundaries.
+- Publication checks retained the claims that primary sources support. The
+  12 October 2026 CFRG disclosure really says no concrete OQUAKE attack is
+  currently known; CPace `draft-irtf-cfrg-cpace-21` remains an Internet-Draft,
+  not an RFC; and Meta's `opaque-ke` repository attributes its audit to
+  WhatsApp end-to-end encrypted backups.
+- Authoritative Linux run:
+  [40019207465](https://github.com/systemslibrarian/crypto-lab-pake-gate/actions/runs/40019207465)
+  passed on attempt 1 at the recorded PR head. Node 22/24/26 each passed
+  **132/132** tests across **22** files, lint controls **7/7**, workflow
+  controls **6/6**, type checking, coverage and the production build. Core
+  coverage was **92.09%** statements, **83.49%** branches, **96.2%** functions
+  and **95.77%** lines. Linux Playwright passed **28/28** behavior and WCAG
+  cases.
+- Mutation output says `baseline: unmutated copy PASSES` and
+  `all 10 mutation(s) caught`. Artifact
+  [12530655707](https://github.com/systemslibrarian/crypto-lab-pake-gate/actions/runs/40019207465/artifacts/12530655707)
+  contains ten zero-retry assertion failures and ten restored-green records.
+  Its `mutation-evidence.json` exactly matches the committed file at SHA-256
+  `113b8aa5e7bb2cf7b94c630d5eb2d4b06a8fdd4ee2d37563b7c7f7903bf85194`.
+- Final authenticated reads returned zero open Dependabot alerts and zero open
+  secret-scanning alerts, each as a complete first page with no `Link` header;
+  the exact npm lock reports zero vulnerabilities. Secret scanning and push
+  protection are enabled. Code scanning returned `no analysis found` and
+  remains explicitly incomplete; no repository setting was changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-pake-gate/pull/45#issuecomment-6374214380)
+- State: Fleet item `e904c4fe-a9c2-44ac-bcbb-a218a8285e2f` read back complete
+  at revision **3**. The PR is open, non-draft and cleanly mergeable at the
+  recorded head, intentionally unmerged, and not deployed. Local macOS
+  Chromium failed before executing an assertion with Mach rendezvous error 141;
+  the successful Linux job is the browser authority.
+
 ### Paillier Gate
 
 - PR: [crypto-lab-paillier-gate #25](https://github.com/systemslibrarian/crypto-lab-paillier-gate/pull/25)
@@ -875,34 +934,6 @@ merged by this maintenance pass.
   at revision 3; PR open, non-draft and cleanly mergeable at the recorded head,
   intentionally unmerged, and deployment not performed.
 
-## Work in progress — not yet a completed repair
-
-### PAKE Gate
-
-- Repository: `crypto-lab-pake-gate`
-- Audit branch: `codex/repair-pake-gate-2026-10-23`
-- Freshly fetched committed base and current branch head:
-  `5019b2060e6a91edc3dee460c0d190e4b064fcb9`.
-- State: Fleet item `e904c4fe-a9c2-44ac-bcbb-a218a8285e2f` is **working** at
-  revision **2**. No PAKE Gate repair commit or PR exists yet, and no source
-  change is represented here as complete.
-- Baseline already earned: the exact lock reports zero npm vulnerabilities;
-  `test:fast` passed **120/120** tests across **19** files; type checking,
-  linting, the **7/7** lint-configuration controls and the production build
-  passed. Playwright discovered **28** browser cases, but those cases have not
-  yet been accepted as passing merely from discovery.
-- Initial review findings still to be settled include mutable action tags,
-  Pages/OIDC write authority reaching source-running workflow code, cancellation
-  behavior for main deployments, and Dependabot automation that does not yet
-  enforce its stated patch/minor-only policy or fail closed on merge/dispatch
-  errors. These are findings, not recorded fixes.
-- Remaining review work includes reading every relevant committed PAKE and UI
-  source file, checking current protocol/publication claims against primary
-  sources, running the full tests and coverage, deciding the smallest justified
-  repairs, and obtaining exact-head Linux/browser/mutation evidence before the
-  Fleet item can be completed. Fetch again before relying on this checkpoint;
-  another agent may advance the repository.
-
 ### Hub handoff
 
 - PR: [crypto-lab #243](https://github.com/systemslibrarian/crypto-lab/pull/243)
@@ -911,9 +942,9 @@ merged by this maintenance pass.
   `0730c46f802237569c2e39fa0edc57729e158d68`. The branch incorporates that
   fresh Hub main through merge commit `b5e31dd`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After Pairing Gate it measured **1,204 total**,
-  **1,068 complete** and **136 active** Fleet items: **103 queued**, **27
-  working** and **6 blocked**. PAKE Gate is the next queued review.
+  growing history log. After PAKE Gate it measured **1,204 total**,
+  **1,069 complete** and **135 active** Fleet items: **102 queued**, **27
+  working** and **6 blocked**. Patron Shield is the next queued review.
 - A full GitHub readback on 2026-10-23 found the preceding **54** named repair
   PRs open, non-draft and carrying a successful current-head workflow run.
   Fifty-three were mergeable; PQ Rotation **#24** was the one conflicting PR.
@@ -927,6 +958,8 @@ merged by this maintenance pass.
   and green at exact head `c665d84`, bringing the total to **58**.
   Pairing Gate **#22** was then read back open, non-draft, cleanly mergeable
   and green at exact head `8bc055a`, bringing the total to **59**.
+  PAKE Gate **#45** was then read back open, non-draft, cleanly mergeable and
+  green at exact head `1a8b239`, bringing the total to **60**.
   Scloud Vault
   **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
   Shor **#21** had advanced beyond the head SHAs stored with their completed

@@ -10567,8 +10567,8 @@
       ]
     },
     "crypto-lab-envelope-kms": {
-      "commit": "3fcc80aa1e36576d8e728aa05f0efcdc5e4862ff",
-      "reviewed": "2026-10-22",
+      "commit": "2663e075e1ff1500b95fe6f36acd3c50dc8a70be",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "envelope-operations",
@@ -10586,14 +10586,15 @@
             "rewrapping"
           ],
           "evidence": [
-            "src/app.ts:433",
-            "src/app.ts:441",
-            "src/app.ts:449",
-            "src/app.ts:452",
-            "src/app.ts:464",
-            "src/app.ts:735",
-            "src/app.ts:753",
-            "src/app.ts:782"
+            "src/app.ts:435",
+            "src/app.ts:444",
+            "src/app.ts:451",
+            "src/app.ts:454",
+            "src/app.ts:467",
+            "src/app.ts:739",
+            "src/app.ts:757",
+            "src/app.ts:786",
+            "src/app.ts:795"
           ],
           "limits": "The payload context is GCM AAD; RFC 3394 wrapping does not accept separate AAD. In-browser key storage is not a hosted KMS or HSM.",
           "section": "Envelope Operations",
@@ -10612,15 +10613,48 @@
             "least privilege"
           ],
           "evidence": [
-            "src/app.ts:502",
             "src/app.ts:505",
-            "src/app.ts:509",
-            "src/app.ts:816",
-            "src/kms/access-policy.ts:28"
+            "src/app.ts:507",
+            "src/app.ts:511",
+            "src/app.ts:821",
+            "src/kms/access-policy.ts:31"
           ],
           "limits": "Alice and Mallory are caller-supplied labels; no login, verified IAM principal, HSM, or real non-extractable key boundary.",
           "section": "Who may use this key?",
           "execution": "simulation"
+        },
+        {
+          "id": "key-handles",
+          "title": "Key-Handle Roles and Wrap-Then-Decrypt Disclosure",
+          "kind": "interactive",
+          "action": "Choose fixed roles or intentionally unsafe mutable usages and a sensitive wrappable or nonextractable target, then run the wrap-then-decrypt trace or wrap and unwrap to a handle.",
+          "outcome": "For a wrappable target, the unsafe policy returns 32 key bytes that independently open an AES-GCM challenge. Fixed roles refuse byte-returning decrypt while protected unwrap still opens the challenge; a nonextractable target refuses wrapping under either policy.",
+          "concepts": [
+            "stateful cryptographic API",
+            "key handle",
+            "sensitive versus extractable keys",
+            "key usage policy",
+            "wrap-then-decrypt composition",
+            "key role separation",
+            "protected unwrap"
+          ],
+          "evidence": [
+            "src/ui/key-handles.ts:41",
+            "src/ui/key-handles.ts:44",
+            "src/ui/key-handles.ts:48",
+            "src/ui/key-handles.ts:56",
+            "src/kms/key-handles.ts:129",
+            "src/kms/key-handles.ts:141",
+            "src/kms/key-handles.ts:153",
+            "src/ui/key-handles.ts:179",
+            "src/ui/key-handles.ts:230",
+            "src/ui/key-handles.ts:247",
+            "src/app.ts:476",
+            "src/app.ts:949"
+          ],
+          "limits": "The token policy is a browser model using real RFC 3394 AES-KW and WebCrypto AES-GCM, not a hardware token or full PKCS #11 emulator. Only one API trace is exercised; fixed roles are not an exhaustive security proof. The wrapping key is generated internally and is nonextractable. General import, copy, derive, authenticated callers and cross-session security are outside scope. Protected unwrap cannot revoke existing key copies.",
+          "section": "What may this key do?",
+          "execution": "real-crypto"
         },
         {
           "id": "compromise-lab",
@@ -10637,9 +10671,10 @@
           ],
           "evidence": [
             "src/ui/compromise.ts:7",
-            "src/ui/compromise.ts:12",
-            "src/ui/compromise.ts:24",
-            "src/ui/compromise.ts:40"
+            "src/ui/compromise.ts:10",
+            "src/ui/compromise.ts:28",
+            "src/ui/compromise.ts:34",
+            "src/ui/compromise.ts:35"
           ],
           "limits": "Attacker holds stolen raw KEK material and archived envelopes, with no further KMS API access; results do not imply re-wrapping erases archived plaintext.",
           "section": "Steal one KEK: what still opens?",
@@ -10660,10 +10695,11 @@
           ],
           "evidence": [
             "src/ui/hierarchy-view.ts:12",
-            "src/ui/hierarchy-view.ts:45",
-            "src/ui/hierarchy-view.ts:69",
-            "src/ui/hierarchy-view.ts:92",
-            "src/app.ts:465"
+            "src/ui/hierarchy-view.ts:48",
+            "src/ui/hierarchy-view.ts:57",
+            "src/ui/hierarchy-view.ts:77",
+            "src/ui/hierarchy-view.ts:93",
+            "src/app.ts:466"
           ],
           "section": "Hierarchy View",
           "execution": "real-values",
@@ -10683,9 +10719,11 @@
           ],
           "evidence": [
             "src/ui/request-flow.ts:3",
-            "src/ui/request-flow.ts:29",
-            "src/ui/request-flow.ts:38",
-            "src/app.ts:477"
+            "src/ui/request-flow.ts:34",
+            "src/ui/request-flow.ts:39",
+            "src/ui/request-flow.ts:42",
+            "src/app.ts:479",
+            "src/app.ts:889"
           ],
           "section": "Request Flow",
           "execution": "simulation",
@@ -10704,10 +10742,13 @@
             "envelope migration"
           ],
           "evidence": [
-            "src/ui/rotation-panel.ts:11",
-            "src/app.ts:782",
-            "src/app.ts:791",
-            "src/app.ts:482"
+            "src/ui/rotation-panel.ts:13",
+            "src/ui/rotation-panel.ts:15",
+            "src/app.ts:484",
+            "src/app.ts:638",
+            "src/app.ts:648",
+            "src/app.ts:786",
+            "src/app.ts:795"
           ],
           "section": "Rotation Drill",
           "execution": "real-operation",
@@ -10717,7 +10758,7 @@
           "id": "audit",
           "title": "Hash-Linked KMS Audit Log",
           "kind": "interactive",
-          "action": "Inspect operation entries, tamper a selected event, and verify the hash chain.",
+          "action": "Inspect operation entries, tamper entry #1, and inspect the resulting hash-chain verification.",
           "outcome": "The viewer identifies a changed content hash or broken predecessor link in the modeled log.",
           "concepts": [
             "audit trail",
@@ -10726,10 +10767,12 @@
             "key operation"
           ],
           "evidence": [
-            "src/ui/audit-view.ts:41",
+            "src/ui/audit-view.ts:37",
+            "src/ui/audit-view.ts:59",
             "src/ui/audit-view.ts:69",
-            "src/app.ts:483",
-            "src/app.ts:891"
+            "src/ui/audit-view.ts:76",
+            "src/app.ts:485",
+            "src/app.ts:896"
           ],
           "section": "Audit Log",
           "execution": "real-values",
@@ -10740,7 +10783,7 @@
           "title": "Security Properties Under Weakened Conditions",
           "kind": "interactive",
           "action": "Run all security experiments in defended or weakened mode and inspect each result.",
-          "outcome": "The panel tests context binding, key separation, key lifecycle, and audit behavior through the local API model.",
+          "outcome": "Compare defended and weakened results for context binding, ciphertext authentication, tenant key isolation, wrapped-key integrity and rotation preserving access.",
           "concepts": [
             "security property test",
             "AAD binding",
@@ -10749,9 +10792,13 @@
           ],
           "evidence": [
             "src/ui/security-lab.ts:59",
-            "src/app.ts:475",
-            "src/app.ts:879",
-            "src/app.ts:882"
+            "src/ui/security-lab.ts:62",
+            "src/ui/security-lab.ts:63",
+            "src/security/properties.ts:478",
+            "src/app.ts:477",
+            "src/app.ts:866",
+            "src/app.ts:882",
+            "src/app.ts:885"
           ],
           "section": "Security Properties — Try to Break It",
           "execution": "real-operation",
@@ -20512,7 +20559,7 @@
     },
     "crypto-lab-lfsr-forge": {
       "commit": "2800c76acf9ddc7bd79210327372b95b64d444e6",
-      "reviewed": "2026-10-22",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "register",
@@ -20609,6 +20656,32 @@
           "section": "Recover hidden states",
           "execution": "real-values",
           "limits": "A failed finite-budget scan is not proof of cryptographic security, and this attack is not claimed against SNOW 3G or ZUC."
+        },
+        {
+          "id": "trivium",
+          "title": "Trivium Initialization and Zero-Round Key Recovery",
+          "kind": "interactive",
+          "action": "Clock Trivium's 288-bit state, measure Berlekamp–Massey profiles and freeze 64-bit forecasts, then compare full initialization with a zero-round key-recovery experiment.",
+          "outcome": "The eSTREAM-vector-checked generator produces measured recurrence fits and forecast checks. A worker uses the public IV and 1,024 output bits to solve 66 equations and test 16,384 candidate keys before a separate hidden-key comparison.",
+          "concepts": [
+            "Trivium",
+            "nonlinear feedback shift register",
+            "initialization rounds",
+            "Berlekamp–Massey",
+            "finite-prefix linear complexity",
+            "zero-round key recovery"
+          ],
+          "evidence": [
+            "src/trivium/panel.ts:17",
+            "src/trivium/trivium.ts:23",
+            "src/trivium/panel.ts:98",
+            "src/trivium/zero-round.ts:46",
+            "src/trivium/panel.ts:114",
+            "src/trivium/vectors.ts:95"
+          ],
+          "section": "The deployed answer: Trivium",
+          "execution": "real-crypto",
+          "limits": "The recovery equations target zero initialization, not the specified 1,152-round cipher; this is not a cube attack. Finite-prefix profiles and failed recovery do not certify security."
         }
       ],
       "reviewScope": "complete"
@@ -33125,8 +33198,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-shelf-oracle": {
-      "commit": "852f23ff8b406bd7f98f06cbea34f5cec6cca389",
-      "reviewed": "2026-10-22",
+      "commit": "882c4f0083fd6b6513b77c2e8e1acfba4b624e65",
+      "reviewed": "2026-10-23",
       "exhibits": [
         {
           "id": "selection-vector",

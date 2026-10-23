@@ -19,32 +19,31 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Thirty-eight open lab repair PRs have green exact-head Linux CI: the 26
+- Thirty-nine open lab repair PRs have green exact-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
-  Tally **#29**, PQ Chooser **#5**, PQ Rotation **#24** and PQ TLS Handshake
-  **#26**. The Fleet records and PR comments hold their per-lab evidence; do
-  not duplicate that history here and do not merge them from this maintenance
-  pass.
-- Scloud Vault, Search Vault, Shadow Vault, Shamir Gate, Shor, Signed Bytes,
-  Silent Tally, PQ Chooser, PQ Rotation and PQ TLS Handshake's security-evidence
-  reviews are complete. All ten have readable zero-open-alert Dependabot and
-  secret-scanning results plus zero-advisory exact locks; code scanning remains
-  explicitly incomplete because GitHub reports no analysis. Their source
-  repairs remain open.
+  Tally **#29**, PQ Chooser **#5**, PQ Rotation **#24**, PQ TLS Handshake
+  **#26** and PQXDH Wire **#12**. The Fleet records and PR comments hold their
+  per-lab evidence; do not duplicate that history here and do not merge them
+  from this maintenance pass.
+- Eleven queued security-evidence reviews are complete. Each has readable
+  zero-open-alert Dependabot and secret-scanning results plus a zero-advisory
+  exact lock; code scanning remains explicitly incomplete because GitHub
+  reports no analysis. Their source repairs remain open, and their names and
+  evidence stay in the Fleet records rather than becoming history here.
 
-**Next:** PQXDH Wire item `985c7dea-37b1-49b4-bbe4-c6fc9c7260d7`.
+**Next:** Privacy Pass item `2336bc5f-46c2-4564-8d73-5f7aa1e75bc2`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,047 complete and 157 active** items:
-**124 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,048 complete and 156 active** items:
+**123 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **124 queued security-evidence reviews.** PQXDH Wire is next.
+- **123 queued security-evidence reviews.** Privacy Pass is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state

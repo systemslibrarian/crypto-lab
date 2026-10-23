@@ -19,7 +19,7 @@ Nothing below is merged merely because its checks pass:
 - crypto-lab **#244–#249** contain the date/evidence refreshes, teach probes,
   advisory controls, learning-path split and knowledge-map metadata. **#245**
   is stacked on #244. This handoff is **#243**.
-- Fifty-three open lab repair PRs have green current-head Linux CI: the 26
+- Fifty-four open lab repair PRs have green current-head Linux CI: the 26
   Fleet-tracked repairs awaiting merge/deployment, AES Anatomy **#2**, Clock
   Arithmetic **#2**, Scloud Vault **#21**, Search Vault **#23** and Shadow Vault
   **#31**, Shamir Gate **#17**, Shor **#21**, Signed Bytes **#23**, Silent
@@ -28,18 +28,19 @@ Nothing below is merged merely because its checks pass:
   Protocol Compose **#23**, PSI Gate **#28**, Pulse Chain **#5**, Quantum
   Entropy **#23**, Quantum Vault KpqC **#21**, Ratchet Wire **#17**, Reshare
   Circle **#23**, Nonce Lattice **#27**, NTRU Classic **#24**, Oblivious
-  Shelf **#21**, Opaque Gate **#34** and ORAM Vault **#30**. A fresh GitHub
-  readback found all 53 open and non-draft with successful current-head status
-  rollups. **PQ Rotation #24** remains the one conflicting PR; the other 52 are
-  mergeable. NTRU Classic #24 is green at
+  Shelf **#21**, Opaque Gate **#34**, ORAM Vault **#30** and Order Leak
+  **#14**. A fresh GitHub readback found all 54 open and non-draft with
+  successful current-head workflow runs. **PQ Rotation #24** remains the one
+  conflicting PR; the other 53 are mergeable. NTRU Classic #24 is green at
   exact head `f81f1ce`, Oblivious Shelf #21 at `02a4593`, and Opaque Gate #34
-  at `131cb9f`; ORAM Vault #30 is green at `921428c`. Scloud Vault #21,
+  at `131cb9f`; ORAM Vault #30 is green at `921428c`; Order Leak #14 is
+  green at `8a0b35e`. Scloud Vault #21,
   Search Vault #23, Shadow Vault #31, Shamir Gate #17 and Shor #21 advanced
   after the SHAs stored in their Fleet evidence; their new heads are green,
   but their evidence must be reconciled before merge. The
   Fleet records and PR comments hold their per-lab evidence; do not duplicate
   that history here and do not merge them from this maintenance pass.
-- Twenty-five queued security-evidence reviews are recorded complete. The first
+- Twenty-six queued security-evidence reviews are recorded complete. The first
   23 have recorded-head readable zero-open-alert Dependabot and secret-scanning
   results plus a zero-advisory exact lock; code scanning remains explicitly
   incomplete because GitHub reports no analysis. Opaque Gate has a complete
@@ -47,22 +48,26 @@ Nothing below is merged merely because its checks pass:
   exact-lock audit; no uncollected provider was converted into a pass. ORAM
   Vault has complete cursor-paginated zero-open-alert Dependabot and secret-
   scanning reads plus a zero-vulnerability exact-lock audit; code scanning
-  remains explicitly incomplete because GitHub reports no analysis. The five
-  moved heads named above now need fresh evidence reconciliation. Their source
-  repairs remain open, and their names and evidence stay in the Fleet records
-  rather than becoming history here.
+  remains explicitly incomplete because GitHub reports no analysis. Order Leak
+  has complete zero-open-alert Dependabot and secret-scanning reads, a
+  zero-vulnerability exact-lock audit, and a successful Linux run that killed
+  all 12 recorded mutations after a green 20-spec baseline; code scanning
+  likewise remains explicitly incomplete because GitHub reports no analysis.
+  The five moved heads named above now need fresh evidence reconciliation.
+  Their source repairs remain open, and their names and evidence stay in the
+  Fleet records rather than becoming history here.
 
-**Next:** Order Leak item `5e9e35d1-4c92-49a6-936a-6ba0d0ffff50`.
+**Next:** OT Gate item `ed693591-071e-49c0-a61b-47c83dc25eac`.
 Continue queued security reviews one lab at a time.
 
 ## Fleet Console state — measured 2026-10-23
 
-The work store has **1,204 total, 1,062 complete and 142 active** items:
-**109 queued, 27 working and 6 blocked**.
+The work store has **1,204 total, 1,063 complete and 141 active** items:
+**108 queued, 27 working and 6 blocked**.
 
 Active work consists of:
 
-- **109 queued security-evidence reviews.** Order Leak is next.
+- **108 queued security-evidence reviews.** OT Gate is next.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break need GitHub alert-state

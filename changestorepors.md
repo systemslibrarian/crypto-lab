@@ -454,6 +454,63 @@ merged by this maintenance pass.
   cleanly mergeable and green at the recorded head. It remains intentionally
   unmerged; no live Pages deployment was performed or claimed.
 
+### Order Leak
+
+- PR: [crypto-lab-order-leak #14](https://github.com/systemslibrarian/crypto-lab-order-leak/pull/14)
+- Branch: `codex/repair-order-leak-2026-10-23`
+- Base: `37b98a13be0293ca2dfd857604e23c4da244ec9a`
+- Head and commit: `8a0b35eb247174dbe0819dfd13965edf1c814b4c`
+  hardens state transitions, evidence gates and dependency automation.
+- Scope: **11 files**, **421 insertions** and **64 deletions**. Row resealing is
+  transactional and generation-bound, so overlapping row-count changes cannot
+  pair a new plaintext table with an older sealed table. Delayed randomized
+  queries capture their experiment and cannot overwrite a newer column,
+  scheme, population or row-count selection. Recovery controls remain disabled
+  while resealing, and a failed seal retains the last coherent table.
+- The shifted age auxiliary population now actually moves eight percent of its
+  low-age mass to age 65 while retaining dense support; the mismatch fixture
+  removes 65. Unit and browser regressions distinguish matching, shifted and
+  mismatched inference and cover both asynchronous races.
+- AES-GCM-SIV/RFC 8452, Boldyreva–Chenette–Lee–O'Neill OPE,
+  Chenette–Lewi–Weis–Wu ORE, Naveed–Kamara–Wright inference attacks, and the
+  cited Durak and Grubbs publications were checked before retaining the lab's
+  terminology and claims. No publication number or year was changed by
+  pattern matching.
+- Repository code now runs read-only; Pages/OIDC authority exists only in a
+  no-checkout deploy job. The protected `build` and `verdict-coverage`
+  contexts remain present, with verdict coverage failing closed unless every
+  upstream gate succeeds. Node 22/24/26, exact-lock audit, unit, workflow,
+  browser and live mutation gates are explicit. Dependabot auto-merge is
+  patch/minor only; major or unknown updates remain human-reviewed and
+  merge/dispatch exhaustion fails closed. Eight executable policy tests guard
+  these controls.
+- Authoritative Linux run:
+  [39992669360](https://github.com/systemslibrarian/crypto-lab-order-leak/actions/runs/39992669360)
+  passed clean installs, zero-vulnerability high audits, **30/30** unit tests,
+  **8/8** workflow controls and the production build on Node 22, 24 and 26.
+  Linux Chromium passed **22/22** claim, race, WCAG A/AA and verdict tests. The
+  mutation baseline was green with **20** specs, then all **12/12** recorded
+  mutations were killed with **0 survived** and **0 neither**. The required
+  verdict job separately passed **20/20** claim/verdict specs; PR deploy and
+  dependency-merge jobs were correctly skipped.
+- Local verification passed the high-severity audit, **30/30** unit tests,
+  **8/8** workflow controls, a 27-module production build, clean dependency
+  resolution, YAML parsing, and the 12-record/14-edit mutation preflight.
+  Chromium failed during macOS Mach bootstrap and Firefox aborted before any
+  assertion. The local mutation runner correctly stopped when its unmutated
+  browser baseline could not run; no local browser or mutation pass is claimed.
+- Authenticated provider reads found zero open Dependabot alerts and zero open
+  secret-scanning alerts, with secret scanning and push protection enabled.
+  GitHub returned HTTP 404 `no analysis found` for code scanning, so that
+  evidence remains explicitly incomplete. Dependabot security updates were
+  observed disabled and were not changed.
+- Evidence comment:
+  [final verification](https://github.com/systemslibrarian/crypto-lab-order-leak/pull/14#issuecomment-6370548754)
+- State: Fleet item `5e9e35d1-4c92-49a6-936a-6ba0d0ffff50` read back complete
+  at revision **3** with exact start/end SHAs. PR #14 is open, non-draft,
+  cleanly mergeable and green at the recorded head. It remains intentionally
+  unmerged; no live Pages deployment was performed or claimed.
+
 ### crypto-counsel corpus review
 
 - PR: [crypto-counsel #18](https://github.com/systemslibrarian/crypto-counsel/pull/18)
@@ -562,11 +619,11 @@ merged by this maintenance pass.
   `0730c46f802237569c2e39fa0edc57729e158d68`. The branch incorporates that
   fresh Hub main through merge commit `b5e31dd`.
 - `futureworkoct.md` is deliberately a shrinking current-state handoff, not a
-  growing history log. After ORAM Vault it measured **1,204 total**,
-  **1,062 complete** and **142 active** Fleet items: **109 queued**, **27
-  working** and **6 blocked**. Order Leak is the next queued review.
-- GitHub readback on 2026-10-23 found all **53** named repair PRs open,
-  non-draft and carrying a successful current-head status rollup. Fifty-two were
+  growing history log. After Order Leak it measured **1,204 total**,
+  **1,063 complete** and **141 active** Fleet items: **108 queued**, **27
+  working** and **6 blocked**. OT Gate is the next queued review.
+- GitHub readback on 2026-10-23 found all **54** named repair PRs open,
+  non-draft and carrying a successful current-head workflow run. Fifty-three were
   mergeable; PQ Rotation **#24** was the one conflicting PR. Scloud Vault
   **#21**, Search Vault **#23**, Shadow Vault **#31**, Shamir Gate **#17** and
   Shor **#21** had advanced beyond the head SHAs stored with their completed
@@ -576,7 +633,8 @@ merged by this maintenance pass.
   against those commits before merge. Green checks alone neither resolve a
   conflict nor prove that earlier review evidence still applies. Opaque Gate
   **#34** was green and mergeable at exact head `131cb9f`; ORAM Vault **#30**
-  was green and mergeable at exact head `921428c`.
+  was green and mergeable at exact head `921428c`; Order Leak **#14** was
+  green and mergeable at exact head `8a0b35e`.
 - The complete Hub consistency pass against this freshly incorporated main and
   counsel **#18** produced **11 passes and 2 failures**. `catalog-sync` showed
   that main commit `0730c46` fixed Search Vault's generated section count and

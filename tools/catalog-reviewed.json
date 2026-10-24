@@ -995,6 +995,27 @@
     "implementation": "@noble/ciphers AES-CTR and AES-SIV / @noble/curves RFC 9497 P256-SHA256 VOPRF / local storage and attack models",
     "note": "Read the complete merged README, source, tests, learner interface and limits at this exact main commit. Two equal synthetic uploads execute fresh random AES-CTR keys, local first128(SHA-256(P || M)) message-locked derivation and RFC 9497 P256-SHA256 VOPRF derivation. Per-user RFC 5297 AES-SIV capsules bind scheme version, owner, reference and the complete data ciphertext; storage uses a digest only to select a bucket and deduplicates after full ciphertext-byte equality. The attack lesson computes local offline guesses, allowlisted per-principal/per-epoch online guesses, changed identities and epochs, proof tampering and key-server compromise. Separate executed cases distinguish bounded whole-ciphertext possession, reference authorization, last-reference deletion, prospective revocation with cached-copy limits and nonretroactive rotation. This is a DupLESS-shaped adaptation, not byte-for-byte DupLESS, a formal scalable proof-of-ownership protocol, process isolation, enforceable production rate limiting or a hardened storage service. Each derived AES-CTR key/counter pair is confined to one distinct plaintext value; repeats of that exact value intentionally reuse the pair and ciphertext. Hosted PR run 40055127586 passed 38 unit tests, 7 learner claims, 11 accessibility/reflow tests and all 24 named mutations; CodeQL run 40055127584 passed."
   },
+  "crypto-lab-shelf-oracle": {
+    "commit": "4d31c5b3ec5e239a170bb4d10c0ba501d95ae7e0",
+    "reviewed": "2026-10-24",
+    "add": [
+      "BFV@src/pir/bfv.ts:88",
+      "NTT@src/pir/ntt.ts:61",
+      "Private information retrieval@src/pir/pir.ts:191",
+      "Ring-LWE@src/pir/bfv.ts:88"
+    ],
+    "remove": [
+      "Chosen-plaintext attack",
+      "Keyword inference",
+      "Side-channel (unspecified)"
+    ],
+    "removeReferences": [
+      "DES",
+      "Gaussian mechanism"
+    ],
+    "implementation": "hand-rolled BFV/PIR/NTT/ChaCha20; WebCrypto SHA-256",
+    "note": "Read the complete merged README, source, unit and browser tests, learner interface and visible limitations at this exact main commit. The mature direct path still encrypts one selector per record and performs the full BFV plaintext-ciphertext fold. The new bounded route serializes four fixed ciphertext blocks, expands each into sixteen selectors through the implemented odd Galois substitutions and noisy binary-gadget key switching, scans all 64 records and returns four fixed responses so neither query nor response count exposes the selected block. Its exact two-prime NTT/CRT products fail closed against a proved coefficient bound; the page derives evaluation-key, per-query, response, operation, timing and teacher-side noise ledgers from the executed run. The selected compressed response, direct response and independently built catalog bytes must agree while the other three compressed responses decrypt to zero. Adding the four folds into one response is deliberately discarded because its correctness margin is sample-dependent; the embedded SHA-256 tag detects decode failure rather than a malicious server. The route does not implement SealPIR's multidimensional recursion, sublinear server work, modulus switching, seeded ciphertext compression or production parameter sets, and its key-dependent evaluation material adds a stated circular-security assumption. The HES 2018 comparison uses only the published modulus-bit ceiling because the lab's centered-binomial error differs from that table's discrete Gaussian. Chosen-plaintext attack is an IND-CPA prose match, Keyword inference belongs only to a Search Vault link, and Side-channel is a visible implementation limitation rather than an executed attack. DES is a false match inside a catalog note about the Journal des Debats, and Gaussian mechanism is a false classification of discrete-Gaussian error prose; neither is a Shelf Oracle algorithm reference. PR run 40094177906 passed all 99 unit tests, the production build and all 33 hosted browser/accessibility tests."
+  },
   "crypto-lab-search-vault": {
     "commit": "d904972690e1514d70d5f36fc25b75840b0e4590",
     "reviewed": "2026-10-24",

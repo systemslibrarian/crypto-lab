@@ -18804,12 +18804,13 @@
 
 
           <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-shelf-oracle/"
-            data-implements="BFV@src/pir/pir.ts:8 | ChaCha20@src/pir/chacha20.ts:123 | Private information retrieval@src/pir/errors.ts:57 | SHA-256@src/pir/records.ts:80"
-            data-comment-only="Kyber@src/pir/rng.ts:121 | NTT@src/pir/ring.ts:15 | Poly1305@src/pir/chacha20.ts:24 | Ring-LWE@src/pir/bfv.ts:56"
-            data-references="BGV | DES | NTT | Poly1305 | Private set intersection | Ring-LWE"
-            data-attacks="Side-channel (unspecified)@README.md:88"
+            data-implements="BFV@src/pir/bfv.ts:88 | ChaCha20@src/pir/chacha20.ts:123 | NTT@src/pir/ntt.ts:61 | Private information retrieval@src/pir/pir.ts:191 | Ring-LWE@src/pir/bfv.ts:88 | SHA-256@src/pir/records.ts:80"
+            data-comment-only="Gaussian mechanism@src/pir/params.ts:55 | Kyber@src/pir/rng.ts:122 | Poly1305@src/pir/chacha20.ts:24 | Ring-LWE@src/pir/bfv.ts:57"
+            data-references="BGV | Poly1305 | Private set intersection"
             data-standards="IETF | NIST"
-            data-implementation="WebCrypto"
+            data-implementation="hand-rolled BFV/PIR/NTT/ChaCha20; WebCrypto SHA-256"
+            data-review-commit="4d31c5b3ec5e239a170bb4d10c0ba501d95ae7e0"
+            data-review-note="Read the complete merged README, source, unit and browser tests, learner interface and visible limitations at this exact main commit. The mature direct path still encrypts one selector per record and performs the full BFV plaintext-ciphertext fold. The new bounded route serializes four fixed ciphertext blocks, expands each into sixteen selectors through the implemented odd Galois substitutions and noisy binary-gadget key switching, scans all 64 records and returns four fixed responses so neither query nor response count exposes the selected block. Its exact two-prime NTT/CRT products fail closed against a proved coefficient bound; the page derives evaluation-key, per-query, response, operation, timing and teacher-side noise ledgers from the executed run. The selected compressed response, direct response and independently built catalog bytes must agree while the other three compressed responses decrypt to zero. Adding the four folds into one response is deliberately discarded because its correctness margin is sample-dependent; the embedded SHA-256 tag detects decode failure rather than a malicious server. The route does not implement SealPIR's multidimensional recursion, sublinear server work, modulus switching, seeded ciphertext compression or production parameter sets, and its key-dependent evaluation material adds a stated circular-security assumption. The HES 2018 comparison uses only the published modulus-bit ceiling because the lab's centered-binomial error differs from that table's discrete Gaussian. Chosen-plaintext attack is an IND-CPA prose match, Keyword inference belongs only to a Search Vault link, and Side-channel is a visible implementation limitation rather than an executed attack. DES is a false match inside a catalog note about the Journal des Debats, and Gaussian mechanism is a false classification of discrete-Gaussian error prose; neither is a Shelf Oracle algorithm reference. PR run 40094177906 passed all 99 unit tests, the production build and all 33 hosted browser/accessibility tests."
             data-level="advanced" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-10"
            
            
@@ -18884,12 +18885,12 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Single-Server PIR</div>
             <div class="project-title">Shelf Oracle</div>
-            <div class="project-copy">Classic PIR needs two servers that never collude. This needs one, under RLWE. Watch the noise budget fall as the server folds in every record — it cannot see which one you asked for.</div>
+            <div class="project-copy">Retrieve the same 64-record shelf entry through direct one-hot BFV or four fixed compressed blocks with executable Galois key switching. Both routes still scan all records, and the compressed teaching path returns four ciphertexts; it does not claim multidimensional or sublinear-server PIR.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">BFV</span>
                 <span class="chip">RLWE</span>
-                <span class="chip">Single-Server PIR</span>
+                <span class="chip">Query Expansion</span>
                 <span class="chip">Noise Budget</span>
               </div>
               <span class="arrow">→</span>

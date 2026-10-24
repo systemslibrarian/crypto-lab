@@ -782,6 +782,15 @@ Each compressed block expands to sixteen selectors; all four blocks are expanded
 are touched, and four fixed responses return, so this is a measured communication trade rather
 than a claim of multidimensional or sublinear-server PIR.
 
+Shelf Oracle separately executes a bounded Piano-style stateful preprocessing lesson over the
+same static public database of 64 512-byte records. Client-specific setup streams the database
+into private, one-use parity state; each of at most 33 committed requests sends eight index bytes,
+probes eight records and receives one 512-byte parity. Loss or any database update requires full
+setup again. This fixed teaching adaptation does not transfer Piano's theorem, asymptotic regime,
+wire format or benchmark, and it is not ORAM, the Lin–Mook–Wichs doubly-efficient construction,
+malicious-answer integrity, authenticated freshness or incremental update. Its server-side
+`ProcessDB` step is identity/none; preprocessing cost and retained state belong to the client.
+
 DP Noise closes what was the largest hole in the map. Every other privacy demo hides a
 *message, identity, relationship, or access pattern*; differential privacy is the only
 technique that protects an **aggregate statistic** while deliberately publishing it — a

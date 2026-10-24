@@ -193,6 +193,42 @@ test('Search Vault scope controls reject removed or invented implementation cred
   assert.throws(() => checkSearchVaultScope(inventedEd25519), assert.AssertionError);
 });
 
+function checkHybridSignScope(source) {
+  const slug = 'crypto-lab-hybrid-sign';
+  assert.deepEqual(implementationsFor(source, slug), ['Ed25519', 'ML-DSA', 'SHA-512']);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Modeled component compromise and explanatory Shor/factoring text are not executed attacks');
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hybrid-sign\/"[^>]*>/)[0];
+  assert.match(card, /data-review-commit="e9e4ddb545c6f934064483f43e924416d26f009d"/);
+  assert.match(card, /TBD7/);
+  const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
+  assert.ok(!references.includes('Pairing'),
+    'Ordinary-language pairing of two signatures is not a bilinear-pairing reference');
+}
+
+test('Hybrid Sign retains real signatures without crediting modeled or explanatory attacks', () => {
+  checkHybridSignScope(html);
+});
+
+test('Hybrid Sign scope controls reject false attacks, pairing, and loss of real primitives', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-hybrid-sign/"';
+  for (const attack of ['Discrete log', 'Factoring', 'Side-channel (unspecified)']) {
+    const changed = html.replace(marker, `${marker} data-attacks="${attack}@src/breaks.ts:101"`);
+    assert.notEqual(changed, html);
+    assert.throws(() => checkHybridSignScope(changed), assert.AssertionError);
+  }
+  const falsePairing = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hybrid-sign\/"[^>]*>/,
+    card => card.replace('data-references="', 'data-references="Pairing | '));
+  assert.notEqual(falsePairing, html);
+  assert.throws(() => checkHybridSignScope(falsePairing), assert.AssertionError);
+  for (const name of ['Ed25519', 'ML-DSA', 'SHA-512']) {
+    const removed = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hybrid-sign\/"[^>]*>/,
+      card => card.replace(new RegExp(`${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}@[^|" ]+(?: \\| )?`), ''));
+    assert.notEqual(removed, html, `${name}: mutation must remove a real implementation anchor`);
+    assert.throws(() => checkHybridSignScope(removed), assert.AssertionError);
+  }
+});
+
 function checkRekeyScope(source) {
   // Inspected5780db419dd548127908286d19b146057329b301: vectors.ts:296
   // encrypts with BBS98 PRE; group.ts:1 uses curve/pairing arithmetic, not

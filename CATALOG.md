@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1732 sections in 243 of 243 labs**
+The exhibit map currently records **1733 sections in 243 of 243 labs**
 (243 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -5695,29 +5695,29 @@ Restore two copies of a VM snapshot and watch an honest, standards-conformant HM
 
 [`crypto-lab-envelope-kms`](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · Envelope Encryption · ENCRYPTION, KEY EXCHANGE, PROTOCOLS
 
-Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, and caller authorization before unwrap. Trace a KMS-style rewrap and a teaching audit log. Compare fixed roles and intentionally unsafe mutable usages in a modeled key-handle wrap-then-decrypt trace.
+Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, and caller authorization before unwrap. Trace a KMS-style rewrap and audit log. Search a bounded key-handle model for mutable-role, known-key-import, and same-value-handle disclosure witnesses, then replay found traces with real AES-KW and verify recovered material with AES-GCM.
 
 - **Card topics (discovery only):** RFC 3394, AES Key Wrap, DEK/KEK, Key Rotation — labels do not establish what any section runs.
 - **Implements:** AES `src/crypto/aead.ts:9`, AES-CTR `src/security/properties.ts:90`, AES-GCM `src/crypto/aead.ts:9`, AES-KW `src/crypto/aes-kw.ts:78`, HKDF `src/crypto/kdf.ts:1`, SHA-256 `src/crypto/kdf.ts:1`
-- **Source review:** [2663e075e1ff](https://github.com/systemslibrarian/crypto-lab-envelope-kms/commit/2663e075e1ff1500b95fe6f36acd3c50dc8a70be) — Reviewed the first E-K-01 key-handle model, interface, browser claims, unit vectors, security notes and complete change inventory. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged. The new browser policy model uses real RFC 3394 wrapping and WebCrypto AES-GCM; intentionally mutable usages disclose a sensitive wrappable key, while fixed roles reject the transition and preserve protected unwrap. A nonextractable target rejects wrapping under either policy. Remove Fault injection because SECURITY.md describes source-mutation verification of tests, not an executed cryptographic fault attack; remove Side-channel (unspecified) because the brief explicitly excludes that claim. The 96 unit tests, 2 publishing-command controls and 32 browser/accessibility tests passed locally; all four named source mutations were caught and exact original source and assets restored. This is one executed API trace with an internally generated nonextractable wrapping key, not HSM isolation, full PKCS #11 conformance, a side-channel claim or an exhaustive API-policy proof. Import, alias and bounded-search extensions remain planned. Merge and deployment evidence are recorded separately in the implementation roadmap.
+- **Source review:** [50fcf5130274](https://github.com/systemslibrarian/crypto-lab-envelope-kms/commit/50fcf5130274de940aba5a3ada405d95243e4fcb) — Reviewed the complete E-K-01 key-handle model, interfaces, browser claims, tests, security notes and change inventory at the merged source. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged. The first exercise still uses real RFC 3394 wrapping and WebCrypto AES-GCM: unsafe mutable usages disclose a sensitive wrappable key, fixed roles preserve protected unwrap and a nonextractable target refuses wrapping. The later deterministic breadth-first explorer covers mutable-role, known-key-import/template-confusion and distinct same-value-handle presets under the displayed four-call, four-handle, four-blob and three-template model. It distinguishes bounded no-witness from incomplete cutoff, retains terminal symbolic evidence, replays found witnesses with real RFC 3394 and independently checks the recovered target with AES-GCM. Hosted run 40047035613 passed 119 unit tests, 2 publishing-command controls, 39 browser/accessibility tests and all 10 named mutation cases; CodeQL run 40047035602 passed. Remove Fault injection because source mutation verifies tests rather than executing a cryptographic fault attack; remove Side-channel (unspecified) because the briefs exclude that claim. This is not PKCS #11 conformance, HSM isolation, a vendor vulnerability or an unbounded API-policy security proof. Merge, deployment and live evidence are recorded separately in the implementation roadmap.
 - **References:** Argon2, FF1, PBKDF2, RSA, scrypt
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2663e075e1ff](https://github.com/systemslibrarian/crypto-lab-envelope-kms/commit/2663e075e1ff1500b95fe6f36acd3c50dc8a70be) reviewed 2026-10-23; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [50fcf5130274](https://github.com/systemslibrarian/crypto-lab-envelope-kms/commit/50fcf5130274de940aba5a3ada405d95243e4fcb) reviewed 2026-10-23; 10 mapped sections.
   - **Who may use this key?** (`access-policy`; interactive; simulation)
     - **Visible section:** Who may use this key?
     - **Learner action:** Run the same wrapped DEK through a log-only decrypt API and an opt-in caller/key/operation grant.
     - **Observed result:** Compare unauthorized Mallory receiving a DEK from an unguarded API, denial by a grant check, and allowed Alice unwrapping the same DEK.
     - **Concepts taught:** KMS authorization; key use policy; wrap integrity versus access control; least privilege
     - **Limits:** Alice and Mallory are caller-supplied labels; no login, verified IAM principal, HSM, or real non-extractable key boundary.
-    - **Evidence at pinned commit:** `src/app.ts:505`, `src/app.ts:507`, `src/app.ts:511`, `src/app.ts:821`, `src/kms/access-policy.ts:31`
+    - **Evidence at pinned commit:** `src/app.ts:507`, `src/app.ts:509`, `src/app.ts:513`, `src/app.ts:824`, `src/kms/access-policy.ts:31`
   - **Hash-Linked KMS Audit Log** (`audit`; interactive; real-values)
     - **Visible section:** Audit Log
     - **Learner action:** Inspect operation entries, tamper entry #1, and inspect the resulting hash-chain verification.
     - **Observed result:** The viewer identifies a changed content hash or broken predecessor link in the modeled log.
     - **Concepts taught:** audit trail; hash chain; tamper detection; key operation
     - **Limits:** A local hash chain is not an independently protected external audit service.
-    - **Evidence at pinned commit:** `src/ui/audit-view.ts:37`, `src/ui/audit-view.ts:59`, `src/ui/audit-view.ts:69`, `src/ui/audit-view.ts:76`, `src/app.ts:485`, `src/app.ts:896`
+    - **Evidence at pinned commit:** `src/ui/audit-view.ts:37`, `src/ui/audit-view.ts:59`, `src/ui/audit-view.ts:69`, `src/ui/audit-view.ts:76`, `src/app.ts:487`, `src/app.ts:899`
   - **Steal one KEK: what still opens?** (`compromise-lab`; comparison; real-crypto)
     - **Visible section:** Steal one KEK: what still opens?
     - **Learner action:** Choose isolated tenant KEKs or one shared KEK, then run the compromise experiment.
@@ -5731,42 +5731,49 @@ Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, a
     - **Observed result:** Inspect the envelope and operation timeline; changing the authenticated context makes AES-GCM opening fail, while key version rotation and re-wrap are visible.
     - **Concepts taught:** envelope encryption; key-encryption key; data-encryption key; AES-GCM AAD; AES-KW; key rotation; rewrapping
     - **Limits:** The payload context is GCM AAD; RFC 3394 wrapping does not accept separate AAD. In-browser key storage is not a hosted KMS or HSM.
-    - **Evidence at pinned commit:** `src/app.ts:435`, `src/app.ts:444`, `src/app.ts:451`, `src/app.ts:454`, `src/app.ts:467`, `src/app.ts:739`, `src/app.ts:757`, `src/app.ts:786`, `src/app.ts:795`
+    - **Evidence at pinned commit:** `src/app.ts:436`, `src/app.ts:445`, `src/app.ts:452`, `src/app.ts:455`, `src/app.ts:468`, `src/app.ts:741`, `src/app.ts:759`, `src/app.ts:788`, `src/app.ts:797`
   - **KMS Request Flow** (`flows`; interactive; simulation)
     - **Visible section:** Request Flow
     - **Learner action:** Switch GenerateDataKey, Encrypt, Decrypt, and ReEncrypt request paths.
     - **Observed result:** A step list identifies client, KMS, and storage exchanges and approximate wire bytes for each operation.
     - **Concepts taught:** KMS API; GenerateDataKey; ReEncrypt; wrapped DEK
     - **Limits:** The request/response paths and byte estimates are modeled rather than live network KMS calls.
-    - **Evidence at pinned commit:** `src/ui/request-flow.ts:3`, `src/ui/request-flow.ts:34`, `src/ui/request-flow.ts:39`, `src/ui/request-flow.ts:42`, `src/app.ts:479`, `src/app.ts:889`
+    - **Evidence at pinned commit:** `src/ui/request-flow.ts:3`, `src/ui/request-flow.ts:34`, `src/ui/request-flow.ts:39`, `src/ui/request-flow.ts:42`, `src/app.ts:481`, `src/app.ts:892`
   - **Root, KEK, and Wrapped DEK Hierarchy** (`hierarchy`; comparison; real-values)
     - **Visible section:** Hierarchy View
     - **Learner action:** Create keys and envelopes, then inspect the evolving hierarchy diagram.
     - **Observed result:** The diagram links root boundary, versioned KEKs, and wrapped DEKs to show which key protects which envelope.
     - **Concepts taught:** envelope encryption; KEK; DEK; key hierarchy; key version
     - **Limits:** The root/HSM boundary is modeled in browser, not an actual hardware security module.
-    - **Evidence at pinned commit:** `src/ui/hierarchy-view.ts:12`, `src/ui/hierarchy-view.ts:48`, `src/ui/hierarchy-view.ts:57`, `src/ui/hierarchy-view.ts:77`, `src/ui/hierarchy-view.ts:93`, `src/app.ts:466`
+    - **Evidence at pinned commit:** `src/ui/hierarchy-view.ts:12`, `src/ui/hierarchy-view.ts:48`, `src/ui/hierarchy-view.ts:57`, `src/ui/hierarchy-view.ts:77`, `src/ui/hierarchy-view.ts:93`, `src/app.ts:467`
+  - **Bounded Key-Handle State Search** (`key-handle-state-search`; interactive; real-crypto)
+    - **Visible section:** Can another call sequence expose it?
+    - **Learner action:** Choose the mutable-role, known-key-import or same-value-handle preset, fixed or intentionally unsafe policy, and state cap, then explore the bounded state space.
+    - **Observed result:** Compare bounded no-witness, explicit incomplete-cutoff and shortest-disclosure results. Found witnesses are revalidated from terminal symbolic state, replayed with real RFC 3394 and independently checked with a fresh AES-GCM challenge; the same-value case retains two distinct equal-byte handles with complementary roles.
+    - **Concepts taught:** stateful cryptographic API; bounded breadth-first search; attacker knowledge; key import and template confusion; distinct handles with equal key values; key role separation; incomplete search result
+    - **Limits:** The result covers exactly the displayed three presets, four successful calls, at most four handles and blobs, three templates and the selected operational cap. A cap hit is incomplete, while fixed-policy exhaustion means only no witness within these bounds. This is not a PKCS #11 implementation, HSM assessment, vendor vulnerability claim, exhaustive search or security proof.
+    - **Evidence at pinned commit:** `src/ui/key-handle-search.ts:101`, `src/ui/key-handle-search.ts:104`, `src/ui/key-handle-search.ts:124`, `src/ui/key-handle-search.ts:127`, `src/ui/key-handle-search.ts:135`, `src/ui/key-handle-search.ts:170`, `src/ui/key-handle-search.ts:178`, `src/ui/key-handle-search.ts:218`, `src/ui/key-handle-search.ts:222`, `src/ui/key-handle-search.ts:229`, `src/ui/key-handle-search.ts:233`, `src/kms/key-handle-search.ts:120`, `src/kms/key-handle-search.ts:135`, `src/kms/key-handle-search.ts:188`, `src/kms/key-handle-search.ts:317`, `src/kms/key-handle-search.ts:334`, `src/kms/key-handle-search.ts:413`, `src/kms/key-handle-search.ts:447`, `src/kms/key-handle-search.ts:461`, `src/kms/key-handle-search.ts:507`, `src/kms/key-handle-search.ts:545`, `src/kms/key-handle-search.ts:570`, `src/kms/key-handle-search.ts:657`, `src/kms/key-handle-search.ts:693`, `src/kms/key-handle-search.ts:790`, `src/app.ts:478`, `src/app.ts:954`
   - **Key-Handle Roles and Wrap-Then-Decrypt Disclosure** (`key-handles`; interactive; real-crypto)
     - **Visible section:** What may this key do?
     - **Learner action:** Choose fixed roles or intentionally unsafe mutable usages and a sensitive wrappable or nonextractable target, then run the wrap-then-decrypt trace or wrap and unwrap to a handle.
     - **Observed result:** For a wrappable target, the unsafe policy returns 32 key bytes that independently open an AES-GCM challenge. Fixed roles refuse byte-returning decrypt while protected unwrap still opens the challenge; a nonextractable target refuses wrapping under either policy.
     - **Concepts taught:** stateful cryptographic API; key handle; sensitive versus extractable keys; key usage policy; wrap-then-decrypt composition; key role separation; protected unwrap
-    - **Limits:** The token policy is a browser model using real RFC 3394 AES-KW and WebCrypto AES-GCM, not a hardware token or full PKCS #11 emulator. Only one API trace is exercised; fixed roles are not an exhaustive security proof. The wrapping key is generated internally and is nonextractable. General import, copy, derive, authenticated callers and cross-session security are outside scope. Protected unwrap cannot revoke existing key copies.
-    - **Evidence at pinned commit:** `src/ui/key-handles.ts:41`, `src/ui/key-handles.ts:44`, `src/ui/key-handles.ts:48`, `src/ui/key-handles.ts:56`, `src/kms/key-handles.ts:129`, `src/kms/key-handles.ts:141`, `src/kms/key-handles.ts:153`, `src/ui/key-handles.ts:179`, `src/ui/key-handles.ts:230`, `src/ui/key-handles.ts:247`, `src/app.ts:476`, `src/app.ts:949`
+    - **Limits:** The token policy is a browser model using real RFC 3394 AES-KW and WebCrypto AES-GCM, not a hardware token or full PKCS #11 emulator. This section executes one API trace; the separate bounded explorer covers declared additional presets but not unmodeled calls. The wrapping key is generated internally and is nonextractable. Copy, derive, authenticated callers and cross-session security are outside scope. Protected unwrap cannot revoke existing key copies.
+    - **Evidence at pinned commit:** `src/ui/key-handles.ts:41`, `src/ui/key-handles.ts:44`, `src/ui/key-handles.ts:48`, `src/ui/key-handles.ts:56`, `src/kms/key-handles.ts:129`, `src/kms/key-handles.ts:141`, `src/kms/key-handles.ts:153`, `src/ui/key-handles.ts:179`, `src/ui/key-handles.ts:230`, `src/ui/key-handles.ts:247`, `src/app.ts:477`, `src/app.ts:953`
   - **KEK Rotation and Rewrap Drill** (`rotation`; interactive; real-operation)
     - **Visible section:** Rotation Drill
     - **Learner action:** Rotate a KEK and rewrap envelopes, then inspect the ordered timeline.
     - **Observed result:** Version changes and rewrapping distinguish replacing a KEK wrapper from re-encrypting payload data.
     - **Concepts taught:** KEK rotation; DEK rewrap; versioned key; envelope migration
     - **Limits:** The KMS is an in-browser model; persistent cloud key custody is absent.
-    - **Evidence at pinned commit:** `src/ui/rotation-panel.ts:13`, `src/ui/rotation-panel.ts:15`, `src/app.ts:484`, `src/app.ts:638`, `src/app.ts:648`, `src/app.ts:786`, `src/app.ts:795`
+    - **Evidence at pinned commit:** `src/ui/rotation-panel.ts:13`, `src/ui/rotation-panel.ts:15`, `src/app.ts:486`, `src/app.ts:640`, `src/app.ts:650`, `src/app.ts:788`, `src/app.ts:797`
   - **Security Properties Under Weakened Conditions** (`security`; interactive; real-operation)
     - **Visible section:** Security Properties — Try to Break It
     - **Learner action:** Run all security experiments in defended or weakened mode and inspect each result.
     - **Observed result:** Compare defended and weakened results for context binding, ciphertext authentication, tenant key isolation, wrapped-key integrity and rotation preserving access.
     - **Concepts taught:** security property test; AAD binding; key isolation; threat modeling
     - **Limits:** The browser model does not reproduce IAM, HSM, operational logging, or cloud service failure modes.
-    - **Evidence at pinned commit:** `src/ui/security-lab.ts:59`, `src/ui/security-lab.ts:62`, `src/ui/security-lab.ts:63`, `src/security/properties.ts:478`, `src/app.ts:477`, `src/app.ts:866`, `src/app.ts:882`, `src/app.ts:885`
+    - **Evidence at pinned commit:** `src/ui/security-lab.ts:59`, `src/ui/security-lab.ts:62`, `src/ui/security-lab.ts:63`, `src/security/properties.ts:478`, `src/app.ts:479`, `src/app.ts:869`, `src/app.ts:885`, `src/app.ts:888`
 
 ### Export Grade
 

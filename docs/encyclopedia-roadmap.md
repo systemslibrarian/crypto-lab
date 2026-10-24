@@ -1,20 +1,20 @@
 # Encyclopedia implementation roadmap
 
-**Updated:** 2026-10-23 (UTC).
+**Updated:** 2026-10-24 (UTC).
 
 ## Current milestone
 
-**Five encyclopedia-gap milestones are now shipped.** The first stateful key-handle exercise is live in Envelope KMS, L-R-09's query-result integrity exercise is live in Search Vault, E-K-02's executable HIBE delegation exercise is live in IBE Gate, and AES Anatomy now carries both A-D-06's classical differential fault analysis and E-K-06's accepted-output fault analysis. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) · [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/)
+**Six implementation milestones are shipped across five live proposals.** E-K-01 is now live end to end in Envelope KMS: its first key-handle exercise and its later import, alias and bounded-search milestone are both deployed. L-R-09's query-result integrity exercise is live in Search Vault, E-K-02's executable HIBE delegation exercise is live in IBE Gate, and AES Anatomy carries both A-D-06's classical differential fault analysis and E-K-06's accepted-output fault analysis. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) · [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/)
 
-E-K-01 remains **in progress as a whole**: its first policy and wrap/decrypt trace is delivered, while import, alias and bounded-search extensions remain planned. L-R-09 is **live**: Search Vault now distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. E-K-02 is **live**: IBE Gate now executes bounded descendant-key delegation, sibling/ancestor failure boundaries, subtree compromise and retained root escrow. A-D-06 is **live**: AES Anatomy derives last-round key constraints from real round-9 AES-128 faults, intersects candidates, reverses the key schedule and verifies the recovered master key. E-K-06 is also **live**: finite samples execute correct and first-round-faulted AES-128, classify exact ciphertext equality and rank one key byte from the selected inputs, while a separate analytic census, a secret-independent null and bounded infection/reference-oracle cases keep the statistical claim scoped. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
+E-K-01 is **live**: Envelope KMS now searches a declared finite state model for mutable-role, known-key-import and distinct same-value-handle disclosures, distinguishes a completed bounded miss from an incomplete cutoff, and replays found witnesses with real RFC 3394 and AES-GCM. L-R-09 is **live**: Search Vault distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. E-K-02 is **live**: IBE Gate executes bounded descendant-key delegation, sibling/ancestor failure boundaries, subtree compromise and retained root escrow. A-D-06 is **live**: AES Anatomy derives last-round key constraints from real round-9 AES-128 faults, intersects candidates, reverses the key schedule and verifies the recovered master key. E-K-06 is also **live**: finite samples execute correct and first-round-faulted AES-128, classify exact ciphertext equality and rank one key byte from the selected inputs, while a separate analytic census, a secret-independent null and bounded infection/reference-oracle cases keep the statistical claim scoped. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
 
 | Proposal status | Count |
 | --- | ---: |
 | Planned | 43 |
-| In progress | 1 |
+| In progress | 0 |
 | Verified | 0 |
 | Merged | 0 |
-| Live | 4 |
+| Live | 5 |
 | **Total accepted proposals** | **48** |
 
 The 48 proposals retain the audit’s stable IDs and priorities: **17 P1 — next, 24 P2 — depth, and 7 P3 — specialist**. Maintenance corrections are separate from that denominator. A proposal can share an implementation with related IDs, but each ID keeps its own acceptance criteria. These are not 48 requests for standalone labs.
@@ -35,8 +35,9 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Reconcile E-K-02 against current IBE Gate, verify its executable HIBE delegation acceptance criteria, hosted tests, deployment revision and served production assets, and record it as live rather than duplicating the work.
 - [x] Reconcile A-D-06 against current AES Anatomy, verify its primary-source fault model, recovery and negative/countermeasure cases, complete hosted gate, deployment revision and exact served assets, and record it as live rather than duplicating the work.
 - [x] Complete and independently audit E-K-06; merge it only after its full unit, browser/accessibility and mutation gate, then verify the exact deployed assets and learner-visible scope.
+- [x] Complete E-K-01's later import, alias and bounded-search milestone; independently audit the model and sources, pass its full hosted gate, and verify its exact deployment and public learner behavior.
 
-**Implementation work:** return to E-K-01's remaining import, alias and bounded-search extensions. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** begin A-D-01's encrypted-deduplication and message-locked-encryption lesson from current source and reviewed primary constructions. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -45,11 +46,11 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **E-K-01 later milestone — stateful API depth:** implement the remaining import, alias and bounded-search cases without expanding the first exercise's claims.
+1. **A-D-01 — encrypted deduplication and message-locked encryption:** choose a reviewed construction and specify the two-user storage, attacker and server views before implementation.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
-## Delivery evidence for the first milestone
+## Delivery evidence for completed milestones
 
 ### Envelope KMS — first E-K-01 exercise
 
@@ -69,9 +70,28 @@ The phase tables below group the whole backlog; this short queue records the nex
 
 Both served assets matched the locally tested production build byte-for-byte. The source-mutation runner's own file-read races were corrected before merge, and the final security scan passed. The local runtime's certificate authority was placed in a separate test-only browser trust store; TLS validation, page-error checks and accessibility thresholds remained enabled.
 
+### Envelope KMS — complete E-K-01 bounded state search
+
+- **Merged source:** [PR #44](https://github.com/systemslibrarian/crypto-lab-envelope-kms/pull/44), commit [`50fcf5130274`](https://github.com/systemslibrarian/crypto-lab-envelope-kms/tree/50fcf5130274de940aba5a3ada405d95243e4fcb).
+- **Pre-merge gates:** [build, browser, coverage, audit and mutation gate](https://github.com/systemslibrarian/crypto-lab-envelope-kms/actions/runs/40047035613) passed; [CodeQL](https://github.com/systemslibrarian/crypto-lab-envelope-kms/actions/runs/40047035602) passed.
+- **Deployment:** [exact-main build and deployment](https://github.com/systemslibrarian/crypto-lab-envelope-kms/actions/runs/40047769606) passed for the merge commit, including its complete mutation gate; exact-main [CodeQL run 40047769622](https://github.com/systemslibrarian/crypto-lab-envelope-kms/actions/runs/40047769622) passed.
+- **Observed live artifact, 2026-10-24 01:08 UTC:** the public URL returned HTTP 200 and named the new JavaScript and CSS assets. The served HTML, JavaScript and CSS matched both the exact-main Pages artifact and a fresh production build of `50fcf5130274` byte-for-byte. The served JavaScript is also the browser-tested mutation baseline and contains the new learner section, all three presets, complementary role labels, AES-GCM verification label and visible PKCS #11 limitation.
+
+| Verification | Observed result |
+| --- | --- |
+| Unit and publishing-command controls | 119 unit tests and 2 publishing-command controls passed on exact main. |
+| Browser and accessibility | All 39 production-browser/accessibility tests passed. They exercise the fixed-policy bounded miss, a one-state incomplete cutoff, the known-key-import witness at depth 3, the same-value-handle witness at depth 4, two distinct equal-value terminal handles with exact complementary roles, concrete AES-KW replay, AES-GCM verification, keyboard operation, mobile reflow and accessibility. |
+| Claim mutation verification | The clean browser baseline passed before mutation, and all ten named cases `KHI-01` through `KHI-04` and `KHS-01` through `KHS-06` were killed with restoration verified. [The exact-main evidence artifact](https://github.com/systemslibrarian/crypto-lab-envelope-kms/actions/runs/40047769606/artifacts/12541513913) retains each mutant and restored-control result. |
+| Coverage and dependency audit | Hosted coverage was 91.29% statements, 87.83% branches, 95.18% functions and 92.30% lines. The high-severity dependency audit found zero vulnerabilities. |
+| Served HTML | `index.html`, 10,786 bytes; SHA-256 `0b05bdadafa1efda6bd9033a2c34947e9fb68dd5b0ddc7b6b063c584d7badfd1`. |
+| Served JavaScript | `assets/index-BZNp5uDZ.js`, 119,979 bytes; SHA-256 `a676607d20756ade334ecd906108c54adafaeebdc04df4c1300777efe3485230`. |
+| Served CSS | `assets/index-DDJxzCQC.css`, 34,923 bytes; SHA-256 `7c7ce8066efd7b1d2f2c4e3d832a4129d53c34242cee707dad9d7ba10e866c66`. |
+
+This completes the roadmap's bounded teaching model, not a general API-security proof. Fixed-policy exhaustion means no witness within the displayed bounds; a cap hit remains incomplete. The same-value case uses distinct handles containing equal bytes, and the concrete replay validates a symbolic witness rather than establishing PKCS #11 conformance, HSM isolation or a vendor vulnerability.
+
 ### Hub catalog and roadmap
 
-The current integration keeps **243 labs** and records **1,732 reviewed sections**, three more than the 1,729 on the prior Hub baseline. In addition to preserving the existing LFSR Trivium, Envelope KMS key-handle and Search Vault query-integrity sections, it maps IBE Gate's executable HIBE delegation plus AES Anatomy's classical DFA and accepted-output fault lessons, updates their cards and the knowledge map, pins the current reviewed source revisions, and retains Search Vault's repaired query-integrity catalog prose. The forty concept boundaries and their statuses remain unchanged.
+The current integration keeps **243 labs** and records **1,733 reviewed sections**, four more than the 1,729 on the prior Hub baseline. In addition to preserving the existing LFSR Trivium, first Envelope KMS key-handle and Search Vault query-integrity sections, it maps Envelope KMS's bounded key-handle state search, IBE Gate's executable HIBE delegation and AES Anatomy's classical DFA and accepted-output fault lessons, updates their cards and the knowledge map, pins the current reviewed source revisions, and retains Search Vault's repaired query-integrity catalog prose. The forty concept boundaries and their statuses remain unchanged.
 
 The source mappings were checked against committed AES Anatomy `1f0f6b86a2dd` and IBE Gate `7dfebaff27c4`; Envelope KMS, LFSR Forge and Shelf Oracle were separately re-reconciled against current main and live deployments. The scoped algorithm review keeps excluded side-channel mentions out of implementation credit, distinguishes differential fault analysis from ordinary differential cryptanalysis and deterministic finite automata, and records SIFA and HIBE as bounded teaching adaptations rather than inheriting their papers' full results. Catalog schema/source checks, generated-file freshness checks, search/structure checks, knowledge-map assertions, teaching-scope controls and the broader non-browser CI suites gate this integration. This is verification of the changed mappings, not a new runtime test of all 243 labs. The containing Hub commit and hosted checks provide the publication record for this catalog and ledger.
 
@@ -115,7 +135,7 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 
 | Phase | Proposals | Priority | Current state |
 | --- | ---: | --- | --- |
-| Phase 1 — First key-handle exercise | 1 | P1 | First exercise live; broader proposal in progress |
+| Phase 1 — Stateful key-handle policy | 1 | P1 | 1 live |
 | Phase 2 — Privacy, storage and query integrity | 11 | P1 | 2 live; 9 planned |
 | Phase 3 — Protocols and arithmetic | 5 | P1 | 5 planned |
 | Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 2 live; 14 planned |
@@ -131,15 +151,15 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 - S03 and E-K-05 are explicitly optional P2 workshop extensions. Their existing hub workshops already execute basic timestamping and direct/ideal-intermediary fair exchange.
 - All seven Phase 6 proposals are optional specialist/research scope. Implementation must first select a faithful primary construction and precise model; a conceptual version must be labeled conceptual.
 
-## Phase 1 — First key-handle exercise
+## Phase 1 — Stateful key-handle policy
 
-The first bounded exercise is delivered, and the two maintenance corrections are recorded above. Keep the remaining API-model work explicit when choosing later milestones.
+The complete bounded E-K-01 proposal is delivered, and the two maintenance corrections are recorded above.
 
 <a id="e-k-01"></a>
 
 ### E-K-01 — Stateful cryptographic API misuse and nonextractable key policies
 
-**Priority:** P1 — next · **Status:** In progress · **Workstream:** Stateful key APIs.
+**Priority:** P1 — next · **Status:** Live · **Workstream:** Stateful key APIs.
 
 **Target:** Envelope KMS, linked to Protocol Checker.
 
@@ -147,19 +167,19 @@ The first bounded exercise is delivered, and the two maintenance corrections are
 
 **Acceptance criteria:**
 
-- First exercise: create protected key handles, expose an explicit attribute/operation policy, and execute a reproducible wrap/decrypt trace that discloses a protected key using only permitted modeled API calls.
-- Compare a vulnerable policy with a specific restrictive policy; show the same attack being rejected at the responsible transition and keep legitimate operations working. Derive every disclosure/rejection verdict from the current state.
-- Complete the broader proposal later with import/attribute-confusion and alias-state cases plus bounded state search. Record the invariant, attacker knowledge, transition rules and search bound; a manual trace alone does not complete these extensions.
+- [x] First exercise: create protected key handles, expose an explicit attribute/operation policy, and execute a reproducible wrap/decrypt trace that discloses a protected key using only permitted modeled API calls.
+- [x] Compare a vulnerable policy with a specific restrictive policy; show the same attack being rejected at the responsible transition and keep legitimate operations working. Derive every disclosure/rejection verdict from the current state.
+- [x] Complete the broader proposal with import/attribute-confusion and alias-state cases plus bounded state search. Record the invariant, attacker knowledge, transition rules and search bound; a manual trace alone does not complete these extensions.
 
-**Next action:** Review the delivered first exercise, then design the later import, alias and bounded-search milestone when this proposal returns to the queue.
+**Next action:** Preserve the verified model boundaries and source pins while the implementation queue advances to A-D-01.
 
-**Delivered scope:** The first key-handle exercise is live at the source commit and deployment recorded in the delivery evidence above. Its fixed-role refusal, unsafe key disclosure, legitimate protected unwrap and nonextractable-target refusal were exercised on the public page.
+**Delivered scope:** The first exercise's fixed-role refusal, unsafe key disclosure, legitimate protected unwrap and nonextractable-target refusal remain live. The later milestone adds deterministic breadth-first searches for mutable-role, known-key-import/template-confusion and distinct same-value-handle cases. It publishes the invariant, initial knowledge, transition alphabet and exact four-call/four-handle/four-blob/three-template bounds; distinguishes bounded exhaustion from a one-state incomplete cutoff; reports shortest witnesses; retains terminal symbolic handle evidence; and replays every found witness with real RFC 3394 before independently verifying the recovered target with AES-GCM.
 
-**Scope and limits:** The whole proposal remains in progress because import, alias and bounded-search extensions remain planned. Browser objects model API policy; they do not supply HSM isolation or establish PKCS#11 conformance.
+**Scope and limits:** This is exhaustive only for the displayed finite teaching model. A cap hit is incomplete, and fixed-policy exhaustion means only no witness within those bounds. Same-value handles are distinct objects containing equal bytes, not two handles to one PKCS #11 object. Browser objects do not supply HSM isolation, establish PKCS #11 conformance, assess a vendor product or prove security for unmodeled calls, resources, sessions, concurrency or side channels.
 
 **Audit references:** [Formal Analysis of Cryptographic APIs (original PDF pp. 2438–2440)](https://doi.org/10.1007/978-3-030-71522-9_873).
 
-**Pinned baseline:** [Envelope KMS 3fcc80aa1e36](https://github.com/systemslibrarian/crypto-lab-envelope-kms/blob/3fcc80aa1e36576d8e728aa05f0efcdc5e4862ff/README.md#L42); [Protocol Checker adbe6c0612e5](https://github.com/systemslibrarian/crypto-lab-protocol-checker/blob/adbe6c0612e583924ebb0cda3f281521ace9a693/src/symbolic/search.ts#L1).
+**Pinned delivered source:** [Envelope KMS 50fcf5130274](https://github.com/systemslibrarian/crypto-lab-envelope-kms/tree/50fcf5130274de940aba5a3ada405d95243e4fcb); [Protocol Checker adbe6c0612e5](https://github.com/systemslibrarian/crypto-lab-protocol-checker/blob/adbe6c0612e583924ebb0cda3f281521ace9a693/src/symbolic/search.ts#L1).
 
 ## Phase 2 — Privacy, storage and query integrity
 
@@ -1331,6 +1351,7 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-23 | E-K-06 accepted-output fault analysis | Draft PR #4 is active in AES Anatomy and is therefore **In progress**, not Planned. At this snapshot typecheck, unit and production build steps passed, while the browser gate failed and mutation/deployment did not run. No acceptance criterion, merge, deployment or learner behavior is credited until the draft is complete and independently checked against primary sources. |
 | 2026-10-23 | Hub reconciliation and catalog integration | [Hub PR #252](https://github.com/systemslibrarian/crypto-lab/pull/252), initial commit `9df3ae449107`, maps the two newly reconciled lessons, updates cards and the knowledge map, repairs Search Vault's generated catalog drift, and records the verified maintenance state. All 11 applicable hosted jobs passed: [catalog and checker regressions](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387335), [teach/layout](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387279), [learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387232), [protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387354), [public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387701) and [arcade browser playthrough](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387230). The scheduled-only drift job was correctly skipped. Merge and Hub deployment remain pending at this ledger entry. |
 | 2026-10-23 | E-K-06 accepted-output fault analysis | [AES Anatomy PR #4](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/pull/4) merged at `1f0f6b86a2dd`; exact-main run 40041039537 passed 51 unit, 21 production-browser/accessibility and 44 mutation cases and deployed. The served HTML, JavaScript, CSS and worker matched the exact tested build byte-for-byte. Real fault-path equality, sampled selected-output ranking, the separate analytic census, secret-independent null, rejection, bounded hidden infection and exact-reference failure case were independently checked against the primary papers. Marked **Live** with the one-byte logical model and non-hardened/non-universal defense limits retained. |
+| 2026-10-23 | E-K-01 complete bounded key-handle model | [Envelope KMS PR #44](https://github.com/systemslibrarian/crypto-lab-envelope-kms/pull/44) merged at `50fcf5130274`; exact-main run 40047769606 passed 119 unit tests, 2 publishing controls, 39 production-browser/accessibility tests and all 10 claim mutations before deploying. CodeQL passed. The served HTML, JavaScript and CSS matched a fresh build byte-for-byte. Fixed-policy bounded exhaustion, incomplete cutoff, depth-3 import and depth-4 distinct same-value-handle witnesses, terminal complementary roles, real AES-KW replay and independent AES-GCM verification were checked. Marked **Live** with the finite-model, non-PKCS #11 and non-HSM limits retained. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

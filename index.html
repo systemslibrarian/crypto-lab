@@ -9141,7 +9141,7 @@
             data-attacks="Chosen-plaintext attack@README.md:27 | Length extension@src/main.ts:384 | Nonce reuse@README.md:20 | Padding oracle@src/attacks.ts:21 | Side-channel (unspecified)@src/attacks.ts:160 | Timing side-channel@src/main.ts:313"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-level="intermediate" data-added="2026-04" data-added-on="2026-04-13" data-updated="2026-08"
+            data-level="intermediate" data-added="2026-04" data-added-on="2026-04-13" data-updated="2026-10"
            
            
            
@@ -9310,7 +9310,7 @@
             data-references="FROST | Feldman VSS | Fiat-Shamir | Paillier | Pedersen commitment"
             data-standards="NIST"
             data-implementation="WebCrypto"
-            data-level="advanced" data-added="2026-04" data-added-on="2026-04-13" data-updated="2026-08"
+            data-level="advanced" data-added="2026-04" data-added-on="2026-04-13" data-updated="2026-10"
            
            
            
@@ -12109,8 +12109,8 @@
             data-references="Argon2 | FF1 | PBKDF2 | RSA | scrypt"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="2663e075e1ff1500b95fe6f36acd3c50dc8a70be"
-            data-review-note="Reviewed the first E-K-01 key-handle model, interface, browser claims, unit vectors, security notes and complete change inventory. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged. The new browser policy model uses real RFC 3394 wrapping and WebCrypto AES-GCM; intentionally mutable usages disclose a sensitive wrappable key, while fixed roles reject the transition and preserve protected unwrap. A nonextractable target rejects wrapping under either policy. Remove Fault injection because SECURITY.md describes source-mutation verification of tests, not an executed cryptographic fault attack; remove Side-channel (unspecified) because the brief explicitly excludes that claim. The 96 unit tests, 2 publishing-command controls and 32 browser/accessibility tests passed locally; all four named source mutations were caught and exact original source and assets restored. This is one executed API trace with an internally generated nonextractable wrapping key, not HSM isolation, full PKCS #11 conformance, a side-channel claim or an exhaustive API-policy proof. Import, alias and bounded-search extensions remain planned. Merge and deployment evidence are recorded separately in the implementation roadmap."
+            data-review-commit="50fcf5130274de940aba5a3ada405d95243e4fcb"
+            data-review-note="Reviewed the complete E-K-01 key-handle model, interfaces, browser claims, tests, security notes and change inventory at the merged source. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged. The first exercise still uses real RFC 3394 wrapping and WebCrypto AES-GCM: unsafe mutable usages disclose a sensitive wrappable key, fixed roles preserve protected unwrap and a nonextractable target refuses wrapping. The later deterministic breadth-first explorer covers mutable-role, known-key-import/template-confusion and distinct same-value-handle presets under the displayed four-call, four-handle, four-blob and three-template model. It distinguishes bounded no-witness from incomplete cutoff, retains terminal symbolic evidence, replays found witnesses with real RFC 3394 and independently checks the recovered target with AES-GCM. Hosted run 40047035613 passed 119 unit tests, 2 publishing-command controls, 39 browser/accessibility tests and all 10 named mutation cases; CodeQL run 40047035602 passed. Remove Fault injection because source mutation verifies tests rather than executing a cryptographic fault attack; remove Side-channel (unspecified) because the briefs exclude that claim. This is not PKCS #11 conformance, HSM isolation, a vendor vulnerability or an unbounded API-policy security proof. Merge, deployment and live evidence are recorded separately in the implementation roadmap."
             data-level="beginner" data-added="2026-04" data-added-on="2026-04-22" data-updated="2026-10"
            
            
@@ -12185,7 +12185,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Envelope Encryption</div>
             <div class="project-title">Envelope KMS</div>
-            <div class="project-copy">Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, and caller authorization before unwrap. Trace a KMS-style rewrap and a teaching audit log. Compare fixed roles and intentionally unsafe mutable usages in a modeled key-handle wrap-then-decrypt trace.</div>
+            <div class="project-copy">Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, and caller authorization before unwrap. Trace a KMS-style rewrap and audit log. Search a bounded key-handle model for mutable-role, known-key-import, and same-value-handle disclosure witnesses, then replay found traces with real AES-KW and verify recovered material with AES-GCM.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">RFC 3394</span>
@@ -14054,7 +14054,7 @@
             data-references="AES | ARIA | Dilithium | Falcon | ML-DSA | ML-KEM | NTRU | SHA-256 | SLH-DSA | SPHINCS+ | Shamir secret sharing"
             data-attacks="Key recovery@src/data.ts:19"
             data-implementation="hand-rolled"
-            data-level="advanced" data-added="2026-06" data-added-on="2026-06-06" data-updated="2026-09"
+            data-level="advanced" data-added="2026-06" data-added-on="2026-06-06" data-updated="2026-10"
            
            
            
@@ -14386,7 +14386,7 @@
             data-implementation="N/A (model or attack)"
             data-review-commit="ea17f0ca883ac0181b05ab21727b5b5b0d7305ed"
             data-review-note="Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review. The dimension-eight model and published-parameter data are unchanged. The October 21 opening panel now explicitly says its key is a generated toy and real-scale numbers are quoted. It executes no real ML-DSA signature or key recovery; preserve N/A and the ML-DSA removal."
-            data-level="advanced" data-added="2026-06" data-added-on="2026-06-14" data-updated="2026-08"
+            data-level="advanced" data-added="2026-06" data-added-on="2026-06-14" data-updated="2026-10"
            
            
            
@@ -15024,7 +15024,7 @@
             data-attacks="Factoring@src/ui/solve.ts:123"
             data-standards="NIST"
             data-implementation="hand-rolled"
-            data-level="advanced" data-added="2026-06" data-added-on="2026-06-28" data-updated="2026-08"
+            data-level="advanced" data-added="2026-06" data-added-on="2026-06-28" data-updated="2026-10"
            
            
            

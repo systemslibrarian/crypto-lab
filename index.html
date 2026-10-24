@@ -20171,10 +20171,10 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="MPC & THRESHOLD | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-proof-tally/"
-            data-implements="NTT@src/field/field64.ts:95 | SHA-3@src/xof/turboshake.ts:1 | SHAKE@src/xof/turboshake.ts:33"
+          <a class="project-card" data-category="MPC & THRESHOLD | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-proof-tally/"
+            data-implements="Laplace mechanism@src/distributed/noise.ts:95 | NTT@src/field/field64.ts:95 | SHA-3@src/xof/turboshake.ts:1 | SHAKE@src/xof/turboshake.ts:33"
             data-comment-only="MD5@tools/verdict-kill.mjs:15 | PQXDH@tools/verdict-kill.mjs:77"
-            data-references="MD5 | SHA-256"
+            data-references="Gaussian mechanism | MD5 | SHA-256"
             data-standards="NIST"
             data-implementation="@noble"
             data-level="advanced" data-added="2026-09" data-added-on="2026-09-11" data-updated="2026-10"
@@ -20251,13 +20251,13 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Verifiable Aggregation</div>
             <div class="project-title">Proof Tally</div>
-            <div class="project-copy">Secret sharing hides a measurement and will happily add a lie to the total. A fully linear proof carried in the same shares lets two aggregators reject a malformed report neither of them can read.</div>
+            <div class="project-copy">Prio3 lets two aggregators reject a malformed report without reading it. A separate bounded-cohort exercise contrasts 12-slot exact-total differencing with one clipped, participant-noised release, then aborts on collusion, too few honest contributors, mid-report dropout, repeated release, or noise-cap overflow.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Prio3</span>
                 <span class="chip">Fully Linear PCP</span>
                 <span class="chip">Field64</span>
-                <span class="chip">TurboSHAKE128</span>
+                <span class="chip">Discrete Laplace</span>
               </div>
               <span class="arrow">→</span>
             </div>

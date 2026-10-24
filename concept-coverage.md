@@ -324,6 +324,17 @@ separately trusted current state and performs owner-assisted DEK rewrap without
 rewriting the payload. It is explicitly not RW15 revocation, revocable ABE,
 public ciphertext update or a combined theorem. Catalogued total remains 244.*
 
+*Version 43 — records Proof Tally's S04 distributed differential-privacy
+extension under §23 without adding a lab or changing a concept status. Two real,
+equal-size Prio3Sum releases first expose a zero-replaced bounded contribution by
+differencing. A separate all-or-nothing cohort then combines clamp-and-floor
+quantization with independently activated exact discrete-Laplace participant
+noise, one release attempt and explicit collusion, threshold, dropout and
+output-cap refusals. Collector-visible output remains separate from an
+explicitly omniscient teaching trace; sender authentication, durable atomic
+accounting, DAP transport and shuffle amplification remain outside the claim.
+Catalogued total remains 244.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -800,7 +811,7 @@ additive.
 
 **23. Obliviousness — access-pattern and metadata privacy — `COVERED`**
 ORAM Vault · Oblivious Shelf · Patron Shield · PSI Gate · Blind Relay · Blind Hello ·
-DP Noise · Search Vault · Shelf Oracle · Order Leak · Split Point · Dedup Vault.
+DP Noise · Proof Tally · Search Vault · Shelf Oracle · Order Leak · Split Point · Dedup Vault.
 
 Shelf Oracle completes the PIR axis. Oblivious Shelf and Patron Shield are
 information-theoretic and buy that guarantee with a second server that must never collude;
@@ -831,6 +842,17 @@ categorically different guarantee, and the one most people meet in the wild (cen
 telemetry, analytics). It pairs with `silent-tally` exactly as predicted: MPC protects the
 **inputs**, DP protects the **output**, and together they teach that hiding the data is not
 the same as making the answer safe to release.
+
+Proof Tally now executes that composition boundary rather than merely naming it. Its exact
+control subtracts two real equal-size Prio3Sum outputs and recovers the zero-replaced bounded
+contribution, showing why secret-shared inputs do not make an exact public answer private. The
+separate S04 route clamps and floor-quantizes each record, has honest clients independently
+activate exact discrete-Laplace noise inside one committed cohort and permits only one release
+attempt. Fewer than six honest noise contributors, aggregator collusion, incomplete delivery,
+duplicate reports, proof rejection and noise-cap overflow release no aggregate. This is a
+bounded distributed-DP teaching adaptation, not DAP or shuffle DP: sender-to-slot
+authentication, durable atomic accounting and production attestation remain external, and the
+per-client decomposition is an explicitly omniscient learner trace rather than collector data.
 
 Search Vault is the complement to ORAM Vault. Searchable symmetric encryption is the
 construction whose access-pattern leakage ORAM exists to hide, and running the count and IKK
@@ -890,7 +912,7 @@ rather than the retrieval.
 the Scope note above — the catalog's boundary is "checkable mathematical guarantee the
 learner can break," which DP satisfies cleanly.)*
 
-Status stays `COVERED` at twelve demos, which is not an oversight. This concept is a bundle of
+Status stays `COVERED` at thirteen demos, which is not an oversight. This concept is a bundle of
 thin axes — access pattern, set intersection, metadata, aggregate release, searchable index,
 property-preserving leakage — most of them taught once, so the count is high while no single axis
 is covered several times over. A reader who split it into three concepts, as the taxonomy note

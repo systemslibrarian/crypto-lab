@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1745 sections in 244 of 244 labs**
+The exhibit map currently records **1748 sections in 244 of 244 labs**
 (244 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -507,11 +507,11 @@ A lab in *italics* references the algorithm without implementing it.
 #### Gaussian mechanism
 
 - **Implemented by:** [HAWK](https://systemslibrarian.github.io/crypto-lab-hawk/) `src/gaussian.ts:82`; [DP Noise](https://systemslibrarian.github.io/crypto-lab-dp-noise/) `src/dp/discrete.ts:40`
-- **Also referenced by:** *Quantum Vault KpqC*, *Frodo Vault*, *Falcon Seal*, *LLL Break*, *GGH Trapdoor*
+- **Also referenced by:** *Quantum Vault KpqC*, *Frodo Vault*, *Falcon Seal*, *LLL Break*, *GGH Trapdoor*, *Proof Tally*
 
 #### Laplace mechanism
 
-- **Implemented by:** [DP Noise](https://systemslibrarian.github.io/crypto-lab-dp-noise/) `src/dp/laplace.ts:45`
+- **Implemented by:** [DP Noise](https://systemslibrarian.github.io/crypto-lab-dp-noise/) `src/dp/laplace.ts:45`; [Proof Tally](https://systemslibrarian.github.io/crypto-lab-proof-tally/) `src/distributed/noise.ts:95`
 - **Also referenced by:** —
 
 ### discrete log algorithm
@@ -1409,7 +1409,7 @@ disagree about who owns SHA-256.
 | Jacobi symbol | — | 2 |
 | KZG commitment | — | 2 |
 | Lamport | — | 1 |
-| Laplace mechanism | — | 1 |
+| Laplace mechanism | — | 2 |
 | LWE | — | 7 |
 | Merkle tree | — | 10 |
 | Message-Locked Encryption | — | 1 |
@@ -12499,56 +12499,77 @@ A token proves the issuer authorised someone without anyone — issuer, origin, 
 
 ### Proof Tally
 
-[`crypto-lab-proof-tally`](https://systemslibrarian.github.io/crypto-lab-proof-tally/) · Verifiable Aggregation · MPC & THRESHOLD, ZERO-KNOWLEDGE
+[`crypto-lab-proof-tally`](https://systemslibrarian.github.io/crypto-lab-proof-tally/) · Verifiable Aggregation · MPC & THRESHOLD, PRIVACY, ZERO-KNOWLEDGE
 
-Secret sharing hides a measurement and will happily add a lie to the total. A fully linear proof carried in the same shares lets two aggregators reject a malformed report neither of them can read.
+Prio3 lets two aggregators reject a malformed report without reading it. A separate bounded-cohort exercise contrasts 12-slot exact-total differencing with one clipped, participant-noised release, then aborts on collusion, too few honest contributors, mid-report dropout, repeated release, or noise-cap overflow.
 
-- **Card topics (discovery only):** Prio3, Fully Linear PCP, Field64, TurboSHAKE128 — labels do not establish what any section runs.
-- **Implements:** NTT `src/field/field64.ts:95`, SHA-3 `src/xof/turboshake.ts:1`, SHAKE `src/xof/turboshake.ts:33`
-- **References:** MD5, SHA-256
+- **Card topics (discovery only):** Prio3, Fully Linear PCP, Field64, Discrete Laplace — labels do not establish what any section runs.
+- **Implements:** Laplace mechanism `src/distributed/noise.ts:95`, NTT `src/field/field64.ts:95`, SHA-3 `src/xof/turboshake.ts:1`, SHAKE `src/xof/turboshake.ts:33`
+- **References:** Gaussian mechanism, MD5, SHA-256
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fe703a3d31e2](https://github.com/systemslibrarian/crypto-lab-proof-tally/commit/fe703a3d31e22fd6961d736af428abf0eda8108a) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f1220e93baa5](https://github.com/systemslibrarian/crypto-lab-proof-tally/commit/f1220e93baa5a5cf549915a1d8a6104748e56303) reviewed 2026-10-24; 9 mapped sections.
   - **Collector Tally** (`aggregate`; interactive; real-crypto)
     - **Visible section:** Collector tally
     - **Learner action:** Add accepted reports and compare the unsharded total with a separately computed plain sum.
     - **Observed result:** Shows private input shares combine into an aggregate output.
     - **Concepts taught:** Prio3 aggregation; output share; unsharding
     - **Limits:** No differential privacy is added to the aggregate.
-    - **Evidence at pinned commit:** `index.html:108`, `src/ui/app.ts:157`, `src/ui/app.ts:207`, `src/prio3/aggregate.ts:1`
+    - **Evidence at pinned commit:** `index.html:108`, `src/ui/app.ts:159`, `src/ui/app.ts:216`, `src/prio3/aggregate.ts:1`
   - **Aggregator Collusion** (`collusion`; interactive; real-values)
     - **Visible section:** Put both envelopes on one desk
     - **Learner action:** Toggle collusion and put both report envelopes in one view.
     - **Observed result:** Shows combined input shares reveal the encoded measurement.
     - **Concepts taught:** non-collusion assumption; secret-share privacy; aggregation trust
-    - **Evidence at pinned commit:** `index.html:136`, `index.html:138`, `src/ui/app.ts:340`
+    - **Evidence at pinned commit:** `index.html:194`, `index.html:195`, `index.html:196`, `src/ui/app.ts:360`
+  - **Exact-Release Differencing** (`distributed-exact-disclosure`; interactive; real-crypto)
+    - **Visible section:** Subtract two exact 12-slot totals
+    - **Learner action:** Run two equal-size twelve-slot Prio3Sum queries, replace one bounded slot with zero, and subtract the exact totals.
+    - **Observed result:** Shows the difference equals Lane's clamped, floor-quantized contribution even though each aggregator sees only its own shares.
+    - **Concepts taught:** Prio3Sum; aggregate differencing; fixed-size replace-one adjacency; output privacy
+    - **Limits:** This is a deliberately insecure exact-release control. It preserves cohort size and demonstrates output differencing; it does not claim Prio3 hides released totals.
+    - **Evidence at pinned commit:** `index.html:124`, `index.html:125`, `index.html:126`, `src/distributed/exact.ts:64`, `src/distributed/exact.ts:79`, `src/distributed/exact.ts:81`, `src/distributed/exact.ts:87`, `src/ui/distributed.ts:218`
+  - **Participant-Contributed Noisy Release** (`distributed-release`; interactive; real-crypto)
+    - **Visible section:** Commit one cohort, release once
+    - **Learner action:** Choose an honest/corrupt, dropout, collusion, output-cap, or repeat scenario, then commit one cohort and attempt one release.
+    - **Observed result:** Releases one collector-visible noisy Prio3Sum only when the bounded trust and delivery conditions hold; every listed failure path releases no aggregate.
+    - **Concepts taught:** distributed differential privacy; discrete Laplace mechanism; clipping and quantization; all-or-nothing aggregation; one-release accounting
+    - **Limits:** The bounded claim assumes non-colluding aggregators, externally authenticated sender-to-slot bindings, independent honest randomness, at least six honest noise contributors, complete delivery and one accounted release. The browser supplies no durable atomic ledger, DAP transport or production attestation.
+    - **Evidence at pinned commit:** `index.html:130`, `index.html:134`, `index.html:146`, `index.html:168`, `src/distributed/noise.ts:95`, `src/distributed/report.ts:310`, `src/distributed/release.ts:133`, `src/ui/distributed.ts:285`
+  - **Differential-Privacy Trust Boundary Comparison** (`dp-trust-boundaries`; comparison; conceptual)
+    - **Visible section:** Same goal, different trust boundary
+    - **Learner action:** Compare central, local, this distributed lesson, and shuffle DP while opening the separate collector and omniscient teaching views.
+    - **Observed result:** Separates who sees inputs, where noise is trusted, the advertised activation and cap accounting, and which collusion or threshold failures invalidate the release claim.
+    - **Concepts taught:** central differential privacy; local differential privacy; distributed differential privacy; shuffle differential privacy; collector view
+    - **Limits:** Only the bounded distributed route is implemented here. Central, local and shuffle DP are comparison rows; the lab implements no shuffler or amplification theorem, and the per-client trace is explicitly not collector-visible.
+    - **Evidence at pinned commit:** `index.html:153`, `index.html:161`, `index.html:168`, `src/distributed/parameters.ts:117`, `src/ui/distributed.ts:234`, `src/ui/distributed.ts:246`, `src/ui/distributed.ts:261`, `src/ui/distributed.ts:271`
   - **Invalid and Replayed Report Tests** (`invalid-reports`; interactive; real-crypto)
     - **Visible section:** Make the verifier say no
     - **Learner action:** Try out-of-range salary, damaged proof share, and repeated report controls.
     - **Observed result:** Shows proof rejection of invalid input and corruption; replay passes proof preparation but is refused by a separate nonce registry.
     - **Concepts taught:** range proof; proof-share tampering; report replay; nonce registry
     - **Limits:** Replay protection is outside the VDAF proof.
-    - **Evidence at pinned commit:** `index.html:114`, `index.html:117`, `index.html:123`, `index.html:129`, `src/ui/app.ts:256`, `src/ui/app.ts:278`
+    - **Evidence at pinned commit:** `index.html:172`, `index.html:175`, `index.html:181`, `index.html:187`, `src/ui/app.ts:276`, `src/ui/app.ts:288`, `src/ui/app.ts:298`
   - **Valid Lie and Single-Report Leakage** (`proof-limits`; interactive; real-crypto)
     - **Visible section:** What a valid proof cannot prove
     - **Learner action:** Run well-formed false-report and one-report fixtures.
     - **Observed result:** Shows a valid circuit proof cannot attest real-world truth or hide a one-person public total.
     - **Concepts taught:** proof scope; validity versus truth; aggregate privacy
-    - **Evidence at pinned commit:** `index.html:144`, `index.html:148`, `index.html:150`, `index.html:155`, `index.html:157`, `src/ui/app.ts:356`, `src/ui/app.ts:373`
+    - **Evidence at pinned commit:** `index.html:201`, `index.html:205`, `index.html:208`, `index.html:213`, `index.html:215`, `src/ui/app.ts:376`, `src/ui/app.ts:393`
   - **Prio3 Report Preparation** (`report-shares`; interactive; real-crypto)
     - **Visible section:** One report, two envelopes
     - **Learner action:** Choose a count or bounded sum measurement, split a report, and prepare each aggregator share.
     - **Observed result:** Shows two envelopes, verifier shares, and the validity decision from real field/proof code.
     - **Concepts taught:** Prio3; VDAF; FLP; secret sharing; bounded sum
     - **Limits:** Two-aggregator teaching implementation without DAP transport or constant-time guarantees.
-    - **Evidence at pinned commit:** `index.html:71`, `index.html:74`, `src/ui/app.ts:186`, `src/ui/app.ts:198`, `src/prio3/core.ts:1`
+    - **Evidence at pinned commit:** `index.html:71`, `index.html:74`, `src/ui/app.ts:193`, `src/ui/app.ts:207`, `src/prio3/core.ts:1`
   - **Prio3 Reference Vector Checks and Scope** (`vdaf-vectors`; comparison; real-values)
     - **Visible section:** Pinned evidence
     - **Learner action:** Read the pinned-evidence panel and compare runtime Count and bounded Sum output shares to reference vectors.
     - **Observed result:** Reports three known-answer checks and identifies implemented Field64, TurboSHAKE128, FLP, and Prio3 components.
     - **Concepts taught:** Prio3; VDAF; BBCGGI19 FLP; Field64; known-answer test; TurboSHAKE128
-    - **Limits:** No DAP transport, differential privacy, additional aggregator count, or production hardening; vector agreement does not prove security.
-    - **Evidence at pinned commit:** `index.html:163`, `index.html:164`, `index.html:166`, `index.html:168`, `index.html:169`, `src/ui/app.ts:385`, `src/ui/app.ts:395`, `src/ui/app.ts:401`
+    - **Limits:** The vector panel does not test differential privacy. The lab provides no DAP transport, production differential-privacy deployment, additional aggregator count, or production hardening; vector agreement does not prove security.
+    - **Evidence at pinned commit:** `index.html:221`, `index.html:222`, `index.html:224`, `index.html:226`, `index.html:227`, `src/ui/app.ts:405`, `src/ui/app.ts:411`, `src/ui/app.ts:421`
 
 ### Protocol Checker
 

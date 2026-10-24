@@ -1575,8 +1575,8 @@
    "addedOn": "2026-08-21",
    "updated": "2026-10",
    "addedFrom": "2026-08-21T21:11:56Z",
-   "updatedFrom": "2026-10-24T11:58:08-04:00",
-   "updatedCommit": "a4cd1973f99b925863b7f83260851ca439edfd81"
+   "updatedFrom": "2026-10-24T13:33:32-04:00",
+   "updatedCommit": "ab293fd0386fac2a4e89cede2b414056df3188eb"
   },
   "crypto-lab-sphinx-mix": {
    "added": "2026-08",

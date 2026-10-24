@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1743 sections in 244 of 244 labs**
+The exhibit map currently records **1745 sections in 244 of 244 labs**
 (244 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -2588,29 +2588,36 @@ Measured boot into PCRs, a real TPMS_ATTEST quote, a verifier with reference val
 
 [`crypto-lab-attribute-gate`](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) · Attribute-Based Encryption · ENCRYPTION
 
-Run FAME CP-ABE and splice two keys to expose collusion resistance, then compare a separate FABESA lesson that hides attribute values while names, structure, dimensions, and lengths remain public.
+Run four separate ABE lessons: FAME policy encryption and collusion, bounded FABESA hidden values, RW15 independent issuers bound to one GID, and application-layer epoch gating with owner-assisted header rewrap and rollback checks.
 
-- **Card topics (discovery only):** FAME CP-ABE, FABESA CP-A2BE, BLS12-381, Collusion Resistance, Partial Policy Hiding — labels do not establish what any section runs.
+- **Card topics (discovery only):** FAME CP-ABE, FABESA CP-A2BE, RW15 Multi-Authority ABE, BLS12-381, Collusion Resistance, Partial Policy Hiding, Epoch Gating & DEK Rewrap — labels do not establish what any section runs.
 - **Implements:** AES `src/fabesa/kem.ts:119`, AES-GCM `src/fame/kem.ts:107`, BLS12-381 `src/fabesa/fabesa.ts:29`, Hash-to-curve `src/fabesa/fabesa.ts:200`, HKDF `src/fame/kem.ts:56`, Pairing `src/fame/bls.ts:191`, SHA-256 `src/fame/kem.ts:56`
-- **Source review:** [a4cd1973f99b](https://github.com/systemslibrarian/crypto-lab-attribute-gate/commit/a4cd1973f99b925863b7f83260851ca439edfd81) — Read the merged README, complete FAME and FABESA source, tests, learner interface and visible limitations at this exact main commit. Attribute Gate executes BLS12-381 source-group and target-group arithmetic and pairings but never calls a BLS signing or verification operation; `src/fabesa/fabesa.ts:29` and `src/fame/bls.ts:17` import the `bls12_381` group namespace, so BLS signatures is a scanner false positive and is removed. The reviewed pairing anchor points to the actual wrapper at `src/fame/bls.ts:191`, not the counter reset at line 183. The original FAME CP-ABE route still executes policy sealing, key issuance, threshold reconstruction, collusion failure, authority escrow and the absence of cryptographic revocation. The separate FABESA lesson uses Figure 5's CP-ABE equations with §3.3's partially hidden CP-A2BE payload. Its ciphertext policy payload exposes the matrix, row map and names; displayed ciphertext/public-key encodings and lengths are public; the presented key exposes its names; and candidate count is derived from that selected policy and key. Attribute values remain hidden. The implemented profile permits one value per public name and no repeated policy names; it does not implement §3.4's multi-use extension. The lesson uses canonical domain-separated encodings, real four-term candidate decryption, a 32-candidate cap and AES-GCM tag acceptance as a recognition oracle. The wrapper is a bounded teaching adaptation and does not inherit the paper's theorem, provide sender provenance or establish CCA, constant-time or production security. Exact-main run 40109374693 passed 162 unit tests, 30 learner-claim tests and three accessibility/reflow tests, then deployed assets matching a fresh build byte for byte.
+- **Source review:** [ab293fd0386f](https://github.com/systemslibrarian/crypto-lab-attribute-gate/commit/ab293fd0386fac2a4e89cede2b414056df3188eb) — Read the merged README, complete FAME, FABESA, RW15 and epoch-adaptation source, tests, learner interface and visible limitations at this exact main commit. Attribute Gate executes BLS12-381 source-group and target-group arithmetic and pairings but never calls a BLS signing or verification operation; `src/fabesa/fabesa.ts:29` and `src/fame/bls.ts:17` import the `bls12_381` group namespace, so BLS signatures is a scanner false positive and is removed. The README's explicit CCA-security limit is not an executed chosen-ciphertext attack and is removed too. The reviewed pairing anchor points to the actual wrapper at `src/fame/bls.ts:191`, not the counter reset at line 183. The original FAME route still executes public-policy sealing, key issuance, threshold reconstruction, same-authority collusion failure, authority escrow and its native lack of revocation. The separate FABESA route retains its bounded partial policy-hiding profile (values hidden; names, structure, dimensions and lengths public) and theorem limits. The new RW15 route executes two independent authority setups, authority-qualified attributes, byte-exact GID binding, same-GID opening, the strongest raw cross-GID pool and one-issuer compromise; its hybrid record wrapper does not inherit the paper's theorem. The separately labeled epoch lesson is an owner-assisted application adaptation around single-authority FAME, HKDF-SHA-256 and AES-256-GCM: it executes complete-key reissue, issuance withholding, retained old access, trusted-checkpoint rollback detection, payload-preserving DEK rewrap, both escrow paths and a measured ledger. It is not RW15 revocation, revocable ABE, revocable-storage ABE, self-updatable encryption or public ciphertext update. Exact-main run 40116671435 passed 226 unit tests, 36 learner-claim tests and three accessibility/reflow drives, then deployed assets matching a fresh build byte for byte.
 - **References:** Boneh-Franklin IBE, Diffie-Hellman, HPKE, Shamir secret sharing
 - **Standards body:** IETF, NIST
-- **Implementation:** WebCrypto / @noble BLS12-381 pairings / local FAME and FABESA teaching implementations
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a4cd1973f99b](https://github.com/systemslibrarian/crypto-lab-attribute-gate/commit/a4cd1973f99b925863b7f83260851ca439edfd81) reviewed 2026-10-24; 9 mapped sections.
+- **Implementation:** WebCrypto / @noble BLS12-381 pairings / local FAME, FABESA and RW15 teaching implementations / bounded application-layer epoch gating
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ab293fd0386f](https://github.com/systemslibrarian/crypto-lab-attribute-gate/commit/ab293fd0386fac2a4e89cede2b414056df3188eb) reviewed 2026-10-24; 11 mapped sections.
   - **The authority can read everything** (`authority-escrow`; interactive; real-crypto)
     - **Visible section:** The authority can read everything
     - **Learner action:** Mint an authority key satisfying the policy, then decrypt with it.
     - **Observed result:** The authority obtains a qualifying key through KeyGen and opens the sealed record.
     - **Concepts taught:** single-authority ABE; master secret; key escrow; KeyGen
-    - **Limits:** The master secret itself is not passed directly to the Decrypt function; trust in the issuer is required.
-    - **Evidence at pinned commit:** `src/ui/app.ts:490`, `src/ui/app.ts:501`, `src/ui/app.ts:1100`, `src/fame/system.ts:384`
+    - **Limits:** The master secret itself is not passed directly to the Decrypt function; trust in the issuer is required. This is the original single-authority FAME route; RW15 later splits namespaces, but each issuer can still mint its own attributes.
+    - **Evidence at pinned commit:** `src/ui/app.ts:499`, `src/ui/app.ts:510`, `src/ui/app.ts:1109`, `src/fame/system.ts:384`
   - **Collusion: pool two keys and watch it fail anyway** (`collusion`; interactive; real-crypto)
     - **Visible section:** Collusion: pool two keys and watch it fail anyway
     - **Learner action:** Choose two holders whose union covers a policy, splice their key material and try decryption.
     - **Observed result:** The policy rows may cover the matrix, but mismatched key blinding leaves a wrong group value and AES-GCM rejects the record.
     - **Concepts taught:** CP-ABE collusion resistance; per-key blinding; pooled attributes; AEAD tag rejection
     - **Limits:** One splicing attempt demonstrates the mechanism, not a proof of FAME security; FAME itself supplies no collusion-detection verdict.
-    - **Evidence at pinned commit:** `src/ui/app.ts:442`, `src/ui/app.ts:455`, `src/ui/app.ts:997`, `src/fame/collusion.ts:50`, `src/fame/system.ts:341`
+    - **Evidence at pinned commit:** `src/ui/app.ts:451`, `src/ui/app.ts:464`, `src/ui/app.ts:1006`, `src/fame/collusion.ts:50`, `src/fame/system.ts:341`
+  - **Advance an epoch and account for revocation work** (`epoch-gating-rewrap`; interactive; real-crypto)
+    - **Visible section:** Advance an epoch and account for revocation work
+    - **Learner action:** Run the complete lifecycle: seal once, advance the epoch, withhold a revoked holder's new key, test retained and current snapshots, compare rollback with and without trusted state, rewrap the header, and inspect escrow and measured work.
+    - **Observed result:** A fresh complete business-plus-epoch FAME key opens current data while the revoked holder receives none; retained old material still opens the old snapshot. A separately trusted checkpoint detects an old header, owner-assisted rewrap changes the access header without changing payload ciphertext, and the page exposes both escrow paths and counters from the executed run.
+    - **Concepts taught:** application-layer epoch gating; complete ABE key reissue; retained old access; trusted rollback checkpoint; owner-assisted DEK rewrap; key escrow
+    - **Limits:** This owner-assisted per-record application adaptation is not RW15, revocable ABE, revocable-storage ABE, self-updatable encryption or public ciphertext update. It assumes authenticated issuer state and key delivery, cannot erase retained keys, ciphertexts or plaintext, and detects rollback only against separately trusted current state; no combined theorem or scalable bulk-revocation claim is made.
+    - **Evidence at pinned commit:** `src/ui/revocation.ts:167`, `src/ui/revocation.ts:206`, `src/ui/revocation.ts:302`, `src/ui/revocation.ts:325`, `src/ui/revocation.ts:402`, `src/ui/revocation.ts:420`, `src/ui/revocation.ts:476`, `src/ui/revocation.ts:522`, `src/revocation/epoch.ts:391`, `src/revocation/epoch.ts:438`, `src/revocation/epoch.ts:453`, `src/revocation/epoch.ts:467`, `src/revocation/epoch.ts:782`, `src/revocation/epoch.ts:1250`, `src/revocation/epoch.ts:1418`, `src/revocation/epoch.ts:1448`, `src/revocation/epoch.ts:1476`
   - **Hide attribute values with bounded FABESA CP-A2BE** (`fabesa-hidden-values`; interactive; real-crypto)
     - **Visible section:** Hide attribute values with bounded FABESA CP-A2BE
     - **Learner action:** Compare World A and World B's public views, select a key and ciphertext condition, then run bounded candidate opening or the candidate-cap fixture.
@@ -2620,46 +2627,53 @@ Run FAME CP-ABE and splice two keys to expose collusion resistance, then compare
     - **Evidence at pinned commit:** `src/ui/fabesa.ts:276`, `src/ui/fabesa.ts:546`, `src/ui/fabesa.ts:711`, `src/ui/fabesa.ts:819`, `src/ui/fabesa.ts:891`, `src/fabesa/fabesa.ts:325`, `src/fabesa/fabesa.ts:620`, `src/fabesa/kem.ts:148`, `src/fabesa/kem.ts:201`
   - **Failure codes** (`failure-codes`; explanation; real-operation)
     - **Visible section:** Failure codes
-    - **Learner action:** Inspect the table of named success, refusal and internal outcome codes.
+    - **Learner action:** Inspect the original FAME workflow's table of named success, refusal and internal outcome codes.
     - **Observed result:** The reference explains which condition each code reports and which invariant should never appear as a user verdict.
     - **Concepts taught:** ABE failure diagnostics; policy refusal; internal invariant
-    - **Limits:** A UI failure code is diagnostic, not a cryptographic security proof.
-    - **Evidence at pinned commit:** `src/ui/app.ts:637`, `src/ui/app.ts:656`, `src/ui/app.ts:677`
+    - **Limits:** A UI failure code is diagnostic, not a cryptographic security proof. This table covers exhibits 1–8 only; FABESA, RW15 and epoch lessons define their own outcome codes beside their results.
+    - **Evidence at pinned commit:** `src/ui/app.ts:646`, `src/ui/app.ts:665`, `src/ui/app.ts:686`
   - **Issue keys, then try to open the record** (`issue-open`; interactive; real-crypto)
     - **Visible section:** Issue keys, then try to open the record
     - **Learner action:** Issue or re-issue attribute keys and attempt to decrypt the sealed record as each person.
     - **Observed result:** Satisfied policies open the record; denied attempts show the missing row or gate and a named failure reason.
     - **Concepts taught:** FAME KeyGen; attribute key; policy satisfaction; ABE decryption
     - **Limits:** The scheme enforces the selected policy, which may itself be inappropriate; key material stays in the browser tab.
-    - **Evidence at pinned commit:** `src/ui/app.ts:378`, `src/ui/app.ts:386`, `src/ui/app.ts:932`, `src/fame/system.ts:165`, `src/fame/system.ts:325`
+    - **Evidence at pinned commit:** `src/ui/app.ts:387`, `src/ui/app.ts:395`, `src/ui/app.ts:941`, `src/fame/system.ts:165`, `src/fame/system.ts:325`
   - **Threshold gates and the Lagrange step** (`lagrange-reconstruction`; interactive; real-operation)
     - **Visible section:** Threshold gates and the Lagrange step
     - **Learner action:** Set a threshold such as 2 of 3 and choose whose key to reconstruct with.
     - **Observed result:** Inspect Lagrange coefficients and the linear combination of held rows, including whether it reaches the target vector.
     - **Concepts taught:** Lagrange interpolation; threshold gate; MSP reconstruction coefficients
     - **Limits:** This displays the algebra for the chosen policy and holders, not a security proof.
-    - **Evidence at pinned commit:** `src/ui/app.ts:407`, `src/ui/app.ts:420`, `src/ui/app.ts:909`, `src/fame/msp.ts:186`, `src/fame/msp.ts:205`
+    - **Evidence at pinned commit:** `src/ui/app.ts:416`, `src/ui/app.ts:429`, `src/ui/app.ts:918`, `src/fame/msp.ts:186`, `src/fame/msp.ts:205`
   - **The tree becomes a matrix** (`msp-transform`; explanation; real-operation)
     - **Visible section:** The tree becomes a matrix
     - **Learner action:** Change a tree to include repeated attributes and threshold gates, then inspect the one-use row-label transform and matrix.
     - **Observed result:** The UI displays the monotone span program, injective labels, key-copy cost and reconstruction target vector.
     - **Concepts taught:** monotone span program; threshold access tree; one-use attribute transform; FAME row labels; linear reconstruction
     - **Limits:** General k-of-n gates can produce nontrivial field coefficients; the dynamic copy registry can make older issued keys stale.
-    - **Evidence at pinned commit:** `src/ui/app.ts:322`, `src/ui/app.ts:360`, `src/fame/oneuse.ts:74`, `src/fame/msp.ts:65`
+    - **Evidence at pinned commit:** `src/ui/app.ts:331`, `src/ui/app.ts:369`, `src/fame/oneuse.ts:74`, `src/fame/msp.ts:65`
   - **Compose a policy and seal a record under it** (`policy-seal`; interactive; real-crypto)
     - **Visible section:** Compose a policy and seal a record under it
     - **Learner action:** Edit threshold gates and attributes or select a preset, then seal a chosen record.
     - **Observed result:** The browser builds a FAME ciphertext-policy encapsulation under BLS12-381 and protects the record with derived AES-256-GCM key and policy AAD.
     - **Concepts taught:** CP-ABE; FAME; access policy; hybrid KEM; HKDF-SHA-256; AES-256-GCM
     - **Limits:** A teaching browser implementation; editing a policy requires resealing, and pairings in JavaScript do not provide timing protection.
-    - **Evidence at pinned commit:** `src/ui/app.ts:229`, `src/ui/app.ts:274`, `src/ui/app.ts:285`, `src/fame/system.ts:227`, `src/fame/kem.ts:1`
+    - **Evidence at pinned commit:** `src/ui/app.ts:238`, `src/ui/app.ts:283`, `src/ui/app.ts:294`, `src/fame/system.ts:227`, `src/fame/kem.ts:1`
   - **There is no revocation** (`revocation`; interactive; real-crypto)
     - **Visible section:** There is no revocation
     - **Learner action:** Revoke a holder in the UI, seal a new record and try the old key.
     - **Observed result:** A previously issued qualifying key still opens the new ciphertext, showing that list removal does not revoke cryptographic access.
     - **Concepts taught:** ABE revocation; issued key persistence; epoch policies
-    - **Limits:** No cryptographic revocation mechanism is implemented; schemes with epochs or re-issuance require extra work.
-    - **Evidence at pinned commit:** `src/ui/app.ts:511`, `src/ui/app.ts:529`, `src/ui/app.ts:1161`, `src/ui/app.ts:1166`
+    - **Limits:** The original FAME route itself has no cryptographic revocation. Exhibit 11 separately executes bounded application-layer epoch gating and owner-assisted DEK rewrap; it does not turn native FAME into a revocable-ABE construction.
+    - **Evidence at pinned commit:** `src/ui/app.ts:520`, `src/ui/app.ts:538`, `src/ui/app.ts:1170`, `src/ui/app.ts:1175`
+  - **Combine independent issuers with RW15** (`rw15-multi-authority`; interactive; real-crypto)
+    - **Visible section:** Combine independent issuers with RW15
+    - **Learner action:** Run the same-GID opening, bypass the normal interface for the raw cross-GID pool, then compromise Hospital and mint its attribute for a new GID.
+    - **Observed result:** Hospital and Board use independent authority secrets. Components issued to one byte-exact canonical GID open the two-authority policy; a raw pool from two GIDs satisfies the LSSS labels but recovers the wrong target-group element and fails the record tag; exposing Hospital's secret breaks a Hospital-only branch while Board remains required.
+    - **Concepts taught:** RW15; decentralized multi-authority CP-ABE; global identifier binding; cross-user collusion resistance; authority compromise
+    - **Limits:** The cited RW15 theorem is static random-oracle q-DPBDHE2 security with statically declared corrupt authorities under its challenge restriction. The page tests a narrower exposed-authority-secret case and assumes authenticated, byte-identical GIDs across issuers; it does not establish rogue-key, adaptive-corruption, directory, CCA, policy-privacy, sender-authentication, side-channel or production security.
+    - **Evidence at pinned commit:** `src/ui/rw15.ts:282`, `src/ui/rw15.ts:488`, `src/ui/rw15.ts:550`, `src/ui/rw15.ts:623`, `src/ui/rw15.ts:700`, `src/rw15/rw15.ts:145`, `src/rw15/rw15.ts:160`, `src/rw15/rw15.ts:200`, `src/rw15/rw15.ts:250`, `src/rw15/rw15.ts:323`, `src/rw15/rw15.ts:346`, `src/rw15/kem.ts:41`, `src/rw15/kem.ts:66`
 
 ### Babel Hash
 

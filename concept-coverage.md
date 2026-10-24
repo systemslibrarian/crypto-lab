@@ -314,6 +314,16 @@ implement §3.4's multi-use extension. The AES-GCM candidate-recognition wrapper
 is a labeled teaching adaptation and does not inherit the paper's theorem.
 Catalogued total remains 244.*
 
+*Version 42 — records Attribute Gate's L-R-03 extension under §9 without adding
+a lab or changing a concept status. Its RW15 route runs independent Hospital
+and Board authority setups, combines components issued to one canonical GID,
+rejects a raw cross-GID pool cryptographically and exposes the boundary of one
+compromised issuer. A separate application-layer FAME adaptation reissues a
+complete epoch key, preserves retained old access, detects rollback only against
+separately trusted current state and performs owner-assisted DEK rewrap without
+rewriting the payload. It is explicitly not RW15 revocation, revocable ABE,
+public ciphertext update or a combined theorem. Catalogued total remains 244.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -517,13 +527,19 @@ Pairing Gate · IBE Gate · Credential Veil · Rekey Relay · Attribute Gate · 
 
 Rekey Relay and Attribute Gate are a **declared pair** — same curve, same section, both with
 an escrow subplot — and they are kept distinct by which question each leads on. Attribute
-Gate leads on two ABE boundaries: its FAME CP-ABE route splices two real keys and exposes the
-term that refuses to cancel, while its separate FABESA route uses Figure 5's CP-ABE equations
-with §3.3's partially hidden CP-A2BE payload. It hides attribute values but deliberately leaves
-names, structure, dimensions and lengths public, and its interface derives a bounded candidate
-count from the selected policy and key. This one-value-per-name profile does not implement
-§3.4's multi-use extension. The FABESA wrapper uses tag acceptance to recognize a candidate
-and does not claim that the paper's theorem transfers to the hybrid envelope. Rekey Relay leads on
+Gate leads on four distinct ABE boundaries. Its FAME CP-ABE route splices two real keys and
+exposes the term that refuses to cancel. Its FABESA route uses Figure 5's CP-ABE equations with
+§3.3's partially hidden CP-A2BE payload: attribute values are hidden while names, structure,
+dimensions and lengths remain public, and the interface derives a bounded candidate count from
+the selected policy and key. This one-value-per-name profile does not implement §3.4's multi-use
+extension, and its tag-recognition wrapper does not inherit the paper's theorem. Its RW15 route
+then gives Hospital and Board independent authority secrets, succeeds only when selected
+components share one canonical GID, exercises the strongest raw cross-GID pool and shows what
+one compromised issuer can mint without collapsing the other namespace. Finally, a separately
+labeled application adaptation around FAME reissues complete business-plus-epoch keys, retains
+old-key/old-header access, checks rollback against trusted current state and performs
+owner-assisted DEK rewrap. That adaptation is not RW15 revocation, revocable ABE, public update
+or a combined theorem. Rekey Relay leads on
 **delegation**: BBS98 against AFGH, where the older scheme's re-encryption key is `b·a⁻¹`, so
 the relay and the delegatee together recover the delegator's private key in one modular
 division. Read either as the other's mirror and the point of both is lost.

@@ -292,10 +292,11 @@ function checkAttributeGateScope(source) {
   ]);
   assert.deepEqual(attacksFor(source, slug), []);
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-attribute-gate\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="a4cd1973f99b925863b7f83260851ca439edfd81"/);
+  assert.match(card, /data-review-commit="ab293fd0386fac2a4e89cede2b414056df3188eb"/);
   assert.match(card, /Pairing@src\/fame\/bls\.ts:191/);
   assert.doesNotMatch(card, /Pairing@src\/fame\/bls\.ts:183/);
   assert.match(card, /BLS signatures is a scanner false positive and is removed/);
+  assert.match(card, /CCA-security limit is not an executed chosen-ciphertext attack/);
 }
 
 test('Attribute Gate credits pairing operations without inventing BLS signatures', () => {
@@ -308,6 +309,11 @@ test('Attribute Gate scope rejects false signature credit and loss of real primi
     card.replace('data-implements="', 'data-implements="BLS signatures@src/fabesa/fabesa.ts:29 | '));
   assert.notEqual(inventedSignature, html);
   assert.throws(() => checkAttributeGateScope(inventedSignature), assert.AssertionError);
+
+  const inventedCca = html.replace(cardRe, (card) =>
+    card.replace('data-standards="', 'data-attacks="Chosen-ciphertext attack@README.md:53" data-standards="'));
+  assert.notEqual(inventedCca, html);
+  assert.throws(() => checkAttributeGateScope(inventedCca), assert.AssertionError);
 
   const resetCounterAnchor = html.replace(cardRe, (card) =>
     card.replace('Pairing@src/fame/bls.ts:191', 'Pairing@src/fame/bls.ts:183'));

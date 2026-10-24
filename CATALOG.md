@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1739 sections in 244 of 244 labs**
+The exhibit map currently records **1740 sections in 244 of 244 labs**
 (244 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -73,7 +73,7 @@ before relying on this index for a fresh assessment.
 
 ## Reverse index — which labs implement what
 
-194 algorithms are implemented somewhere in the fleet, grouped by family.
+195 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -570,7 +570,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### ristretto255
 
-- **Implemented by:** [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/group.ts:13`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/attacks.ts:348`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/crypto/ristretto.ts:53`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/factories.ts:131`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/group.ts:77`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/group.ts:13`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kat/vectors.ts:23`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/commit/pedersen.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/elgamal.ts:22`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/dlog.ts:25`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/advanced.ts:1`
+- **Implemented by:** [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/group.ts:13`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/attacks.ts:348`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/crypto/ristretto.ts:53`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/factories.ts:131`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/group.ts:77`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/group.ts:13`; [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/oxt/core.ts:22`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kat/vectors.ts:23`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/commit/pedersen.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/elgamal.ts:22`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/dlog.ts:25`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/advanced.ts:1`
 - **Also referenced by:** *Garbled Gate*, *Blind Sign*, *Commit Gate*, *OPAQUE Gate*, *ElGamal Plain*
 
 #### secp256k1
@@ -650,7 +650,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### SHA-512
 
-- **Implemented by:** [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:43`; [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/testutil.ts:12`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:75`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/xeddsa.ts:145`; [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) `src/pbkdf2.ts:48`; [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) `src/main.ts:236`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/ecblind.ts:117`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/ring.ts:107`; [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) `src/hashdemo.ts:34`; [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) `src/primitives.ts:6`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/crypto/ristretto.ts:55`; [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) `src/engine.ts:191`; [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) `demos/collision-vault/src/hashing/index.ts:81`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/hashes.ts:14`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/keygen.ts:14`; [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) `src/crypto/ed25519.ts:17`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/vrf/ecvrf.ts:27`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/group.ts:115`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/group.ts:77`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kat/vectors.ts:138`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/nifs/transcript.ts:26`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/model/ratchet-step.ts:3`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/nist/verify.ts:61`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/prng.ts:47`; [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) `src/crypto/ed25519.ts:85`
+- **Implemented by:** [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:43`; [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/testutil.ts:12`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:75`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/xeddsa.ts:145`; [KDF Chain](https://systemslibrarian.github.io/crypto-lab-kdf-chain/) `src/pbkdf2.ts:48`; [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) `src/main.ts:236`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/ecblind.ts:117`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/ring.ts:107`; [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) `src/hashdemo.ts:34`; [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) `src/primitives.ts:6`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/crypto/ristretto.ts:55`; [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) `src/engine.ts:191`; [Collision Vault](https://systemslibrarian.github.io/crypto-lab-collision-vault/) `demos/collision-vault/src/hashing/index.ts:81`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/hashes.ts:14`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/keygen.ts:14`; [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) `src/crypto/ed25519.ts:17`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/vrf/ecvrf.ts:27`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/group.ts:115`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/group.ts:77`; [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/core/prf.ts:46`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kat/vectors.ts:138`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/nifs/transcript.ts:26`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/model/ratchet-step.ts:3`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/nist/verify.ts:61`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/prng.ts:47`; [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) `src/crypto/ed25519.ts:85`
 - **Also referenced by:** *Grover*, *Iron Serpent*, *SPHINCS+ Ledger*, *Hybrid Wire*, *Babel Hash*, *MAC Race*, *Ed25519 Forge*, *Hash Zoo*, *Merkle Vault*, *Bcrypt Forge*, *Harvest Vault*, *OPAQUE Gate*, *PSI Gate*, *SSH Handshake*, *Hybrid PQC*, *Merkle Proofs*, *Time Trust*, *DNSSEC Chain*, *Attestation Gate*, *Hidden Bit*
 
 #### SM3
@@ -1058,6 +1058,11 @@ A lab in *italics* references the algorithm without implementing it.
 
 ### searchable encryption
 
+#### OXT
+
+- **Implemented by:** [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/oxt/core.ts:226`
+- **Also referenced by:** —
+
 #### PEKS
 
 - **Implemented by:** [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/peks/core.ts:113`
@@ -1271,7 +1276,7 @@ disagree about who owns SHA-256.
 | PBKDF2 | RFC 8018 | 12 |
 | Poly1305 | RFC 8439 | 7 |
 | Privacy Pass | RFC 9576 | 1 |
-| ristretto255 | RFC 9496 | 11 |
+| ristretto255 | RFC 9496 | 12 |
 | RSA | RFC 8017 | 15 |
 | RSA-OAEP | RFC 8017 | 6 |
 | RSA-PSS | RFC 8017 | 6 |
@@ -1332,7 +1337,7 @@ disagree about who owns SHA-256.
 | SHA-256 | FIPS 180-4 | 136 |
 | SHA-3 | FIPS 202 | 10 |
 | SHA-384 | FIPS 180-4 | 3 |
-| SHA-512 | FIPS 180-4 | 25 |
+| SHA-512 | FIPS 180-4 | 26 |
 | SHAKE | FIPS 202 | 14 |
 | SLH-DSA | FIPS 205 | 2 |
 | SPHINCS+ | FIPS 205 (as SLH-DSA) | 1 |
@@ -1411,6 +1416,7 @@ disagree about who owns SHA-256.
 | NTT | — | 8 |
 | Oblivious transfer | — | 1 |
 | One-time pad | — | 2 |
+| OXT | — | 1 |
 | Paillier | — | 2 |
 | Pairing | — | 12 |
 | Pedersen commitment | — | 7 |
@@ -1717,14 +1723,14 @@ that asks for a decision.
 - **Shared:** Kyber, LWE, SHA-256
 - **Stated difference:** **none stated**
 
-**FROST Threshold / Pulse Chain**
-
-- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-512
-- **Stated difference:** **none stated**
-
 **Beacon Lock / Attribute Gate**
 
 - **Shared:** AES, AES-GCM, BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-256
+- **Stated difference:** **none stated**
+
+**FROST Threshold / Pulse Chain**
+
+- **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing, SHA-512
 - **Stated difference:** **none stated**
 
 **KDF Chain / OPAQUE Gate**
@@ -13763,16 +13769,24 @@ China's conservative LWE-based KEM with ternary secrets, BW32 lattice coding, an
 
 [`crypto-lab-search-vault`](https://systemslibrarian.github.io/crypto-lab-search-vault/) · Searchable Encryption · PRIVACY, ATTACKS
 
-Real single-keyword SSE and Type-3 BLS12-381 PEKS side by side — run query-leakage inference, exposed-trapdoor dictionary guessing, and a malicious-server integrity exercise that separates authentic records from complete, fresh answers.
+Real single-keyword SSE, bounded two-keyword OXT, and Type-3 BLS12-381 PEKS side by side — compare query transcripts, run leakage inference and exposed-trapdoor guessing, then test completeness and freshness against a malicious server.
 
-- **Card topics (discovery only):** SSE, PEKS, BLS12-381, Leakage Abuse, Query Integrity — labels do not establish what any section runs.
-- **Implements:** AES `src/core/aead.ts:14`, AES-GCM `src/core/aead.ts:65`, BLS12-381 `src/peks/core.ts:19`, Hash-to-curve `src/peks/core.ts:109`, HMAC `src/core/prf.ts:25`, Pairing `src/peks/core.ts:137`, PEKS `src/peks/core.ts:113`, SHA-256 `src/core/prf.ts:37`
-- **Source review:** [1f0b50595608](https://github.com/systemslibrarian/crypto-lab-search-vault/commit/1f0b505956087721c7ec3ec3f1221a2df26ae205) — Read the complete merged README, SSE and PEKS source, tests, learner interface, primary-source boundary and visible limitations at this exact main commit. The existing static SSE executes HMAC-derived search tokens, AES-256-GCM postings, count and IKK keyword inference, and a client-retained result-integrity checkpoint. The new public-key exhibit executes a Type-3 BLS12-381 adaptation of PEKS: a public sender randomizes keyword tags, the recipient issues a deterministic trapdoor, the server scans every tag with public Test, and a bounded attacker creates fresh public tags to test candidates against an exposed trapdoor. RFC 9380 hash-to-G1, a fixed independent transcript, strict point decoding and separate search-pattern, volume, access-pattern and active-guessing views support the lesson. This algebra-preserving adaptation does not claim that the original symmetric-pairing security proof transfers, that noble's GT bytes are a standardized wire encoding, or that a bounded miss establishes security. Tags are not body encryption and provide no sender authentication, tag/body binding, result completeness, freshness, process isolation, post-quantum security or hardened side-channel behavior. BLS signatures is a false positive from the imported module alias; no signature is computed. Fault injection is a false positive from DEFAULT_ATTACK; no computational fault is injected. Final PR run 40060915246 passed 117 unit tests and all 30 browser/accessibility tests with zero dependency vulnerabilities.
-- **References:** Boneh-Franklin IBE, Private information retrieval, Private set intersection
+- **Card topics (discovery only):** SSE, OXT, PEKS, BLS12-381, Leakage Abuse, Query Integrity — labels do not establish what any section runs.
+- **Implements:** AES `src/core/aead.ts:14`, AES-GCM `src/core/aead.ts:65`, BLS12-381 `src/peks/core.ts:19`, Hash-to-curve `src/peks/core.ts:109`, HMAC `src/core/prf.ts:25`, OXT `src/oxt/core.ts:226`, Pairing `src/peks/core.ts:137`, PEKS `src/peks/core.ts:113`, ristretto255 `src/oxt/core.ts:22`, SHA-256 `src/core/prf.ts:37`, SHA-512 `src/core/prf.ts:46`
+- **Source review:** [d904972690e1](https://github.com/systemslibrarian/crypto-lab-search-vault/commit/d904972690e1514d70d5f36fc25b75840b0e4590) — Read the complete merged README, SSE, query-integrity, PEKS and OXT source, tests, learner interface, primary-source boundaries and visible limitations at this exact main commit. The static SSE still executes HMAC-derived search tokens, AES-256-GCM postings, count and IKK keyword inference, and a client-retained result-integrity checkpoint. The PEKS exhibit retains its Type-3 BLS12-381 adaptation, randomized public tags, deterministic trapdoor, public Test scan and bounded exposed-trapdoor dictionary attack. The new Boolean-search exhibit compares two actual isolated SSE lookups with a static two-distinct-keyword OXT adapter. Five independent keys, framed HMAC-SHA-512 scalar derivation, canonical RFC 9496 ristretto255 operations, shuffled flat TSet rows, AES-GCM identifier ciphertexts and a sorted exact XSet execute the cancellation equation; all 91 keyword pairs in both operand orders are checked against plaintext intersections. Learners observe exact query volume, list sizes, matches, repeated stags and conditional candidate-point equality through overlapping, disjoint, changed-x, repeated-s and identical-query controls. The Path ORAM table is derived arithmetic for N=24, Z=4 and L=5, not an ORAM execution or a claim that ORAM composition hides the OXT transcript. This bounded adapter supports one AND over two known distinct terms, does not transfer the paper's full theorem, and does not establish active-server soundness, completeness or freshness. The original Type-3 PEKS proof and GT-encoding limitations also remain. BLS signatures is still a false positive from an imported module alias, Fault injection is still a false positive from a UI default, and Ed25519 is a reference false positive from noble's ristretto module filename; none is implemented here. Exact-main run 40088072088 passed 180 unit tests and all 37 browser/accessibility tests with zero dependency vulnerabilities, then deployed byte-matching assets.
+- **References:** Bloom filter, Boneh-Franklin IBE, Private information retrieval, Private set intersection
 - **Attacks shown:** Dictionary attack `src/peks/dictionary.ts:12`, Keyword inference `src/ui/attack-view.ts:43`
 - **Standards body:** IETF, NIST
-- **Implementation:** WebCrypto / @noble/curves BLS12-381 / local leakage and bounded attack models
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1f0b50595608](https://github.com/systemslibrarian/crypto-lab-search-vault/commit/1f0b505956087721c7ec3ec3f1221a2df26ae205) reviewed 2026-10-24; 9 mapped sections.
+- **Implementation:** WebCrypto / @noble/curves BLS12-381 and ristretto255 / local leakage and bounded attack models
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d904972690e1](https://github.com/systemslibrarian/crypto-lab-search-vault/commit/d904972690e1514d70d5f36fc25b75840b0e4590) reviewed 2026-10-24; 10 mapped sections.
+  - **Two-keyword AND — naïve SSE versus bounded OXT** (`boolean-oxt`; interactive; real-crypto)
+    - **Visible section:** Two-keyword AND — naïve SSE versus bounded OXT
+    - **Learner action:** Enter exactly two indexed keywords joined by AND, compare two actual isolated SSE searches with the bounded OXT route, run five controlled trace pairs and inspect the derived fixed-volume Path ORAM cost.
+    - **Observed result:** Both routes return the same plaintext intersection while exposing different measured query volumes, posting-list boundaries, exact ristretto255 membership tests, repeated stags, conditional candidate-point equality and final access patterns.
+    - **Concepts taught:** Boolean encrypted search; OXT; searchable symmetric encryption; ristretto255; TSet and XSet; search-pattern leakage; intersection-pattern leakage; Path ORAM
+    - **Related context only:** Cash et al. OXT; RFC 9496; ORAM Vault
+    - **Limits:** Static two-known-distinct-keyword teaching adapter only: no OR, NOT, parentheses, longer formulas, dynamic or multi-user search, transfer of the full OXT theorem, active-server soundness, completeness, freshness or hardened constant-time behavior. Exact XSet membership removes probabilistic-filter false positives only for honest execution. The Path ORAM table is arithmetic for a separate non-colluding semi-honest storage server, not an ORAM implementation or concealment of the OXT transcript.
+    - **Evidence at pinned commit:** `src/ui/conjunctive.ts:15`, `src/ui/conjunctive.ts:188`, `src/ui/conjunctive.ts:200`, `src/ui/conjunctive.ts:206`, `src/ui/conjunctive.ts:241`, `src/ui/conjunctive.ts:263`, `src/ui/conjunctive.ts:368`, `src/ui/conjunctive.ts:383`, `src/ui/conjunctive.ts:433`, `src/ui/conjunctive.ts:446`, `src/oxt/core.ts:226`, `src/oxt/core.ts:283`, `src/oxt/server.ts:97`, `src/oxt/lesson.ts:167`, `src/oxt/lesson.ts:185`, `src/oxt/lesson.ts:279`, `src/oxt/lesson.ts:326`, `src/oxt/core.test.ts:500`, `src/oxt/lesson.test.ts:63`, `src/oxt/lesson.test.ts:142`, `src/oxt/lesson.test.ts:183`, `e2e/oxt.spec.ts:35`
   - **Build the encrypted index** (`build-index`; interactive; real-crypto)
     - **Visible section:** Build the encrypted index
     - **Learner action:** Choose a keyword and step or build its encrypted posting rows.
@@ -13819,10 +13833,10 @@ Real single-keyword SSE and Type-3 BLS12-381 PEKS side by side — run query-lea
   - **What is real here, what is scaled down, and what is not proved** (`scope`; explanation; conceptual)
     - **Visible section:** What is real here, what is scaled down, and what is not proved
     - **Learner action:** Read the scope panel and introductory glossary.
-    - **Observed result:** It labels real WebCrypto and pairing operations, the scaled corpus and tag store, exact-statistics controls, the Type-3 proof boundary and excluded dynamic or volume-hiding schemes.
-    - **Concepts taught:** SSE threat model; PEKS threat model; Type-3 pairing adaptation; static index; forward privacy; volume hiding
-    - **Limits:** No claim is made about the security of AES-GCM or HMAC themselves, all searchable-encryption designs, transfer of the original PEKS proof, standardized GT bytes, production role isolation or security after a bounded dictionary miss.
-    - **Evidence at pinned commit:** `src/ui/intro.ts:5`, `src/ui/scope.ts:5`, `src/ui/scope.ts:18`, `src/ui/scope.ts:47`
+    - **Observed result:** It labels real WebCrypto, pairing and ristretto255 operations, the scaled corpus and stores, exact-statistics controls, the bounded OXT and Type-3 PEKS proof boundaries, and excluded dynamic or volume-hiding schemes.
+    - **Concepts taught:** SSE threat model; OXT threat model; PEKS threat model; RFC 9496 ristretto255; Type-3 pairing adaptation; static index; forward privacy; volume hiding
+    - **Limits:** No claim is made about the security of AES-GCM or HMAC themselves, all searchable-encryption designs, transfer of the full OXT theorem or original PEKS proof, standardized GT bytes, active-server OXT completeness or freshness, production role isolation, executed ORAM, or security after a bounded dictionary miss.
+    - **Evidence at pinned commit:** `src/ui/intro.ts:5`, `src/ui/scope.ts:5`, `src/ui/scope.ts:18`, `src/ui/scope.ts:23`, `src/ui/scope.ts:36`, `src/ui/scope.ts:51`, `src/ui/scope.ts:62`
   - **Your turn: you are the server** (`server-challenge`; interactive; real-operation)
     - **Visible section:** Your turn: you are the server
     - **Learner action:** Guess token labels from result sizes and overlap, check answers or ask the machine to solve.

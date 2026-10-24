@@ -32718,7 +32718,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-search-vault": {
-      "commit": "1f0b505956087721c7ec3ec3f1221a2df26ae205",
+      "commit": "d904972690e1514d70d5f36fc25b75840b0e4590",
       "reviewed": "2026-10-24",
       "reviewScope": "complete",
       "exhibits": [
@@ -32888,6 +32888,55 @@
           "limits": "Only SSE is timed locally; ORAM and FHE rows are conceptual, not executable implementations."
         },
         {
+          "id": "boolean-oxt",
+          "title": "Two-keyword AND — naïve SSE versus bounded OXT",
+          "section": "Two-keyword AND — naïve SSE versus bounded OXT",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Enter exactly two indexed keywords joined by AND, compare two actual isolated SSE searches with the bounded OXT route, run five controlled trace pairs and inspect the derived fixed-volume Path ORAM cost.",
+          "outcome": "Both routes return the same plaintext intersection while exposing different measured query volumes, posting-list boundaries, exact ristretto255 membership tests, repeated stags, conditional candidate-point equality and final access patterns.",
+          "concepts": [
+            "Boolean encrypted search",
+            "OXT",
+            "searchable symmetric encryption",
+            "ristretto255",
+            "TSet and XSet",
+            "search-pattern leakage",
+            "intersection-pattern leakage",
+            "Path ORAM"
+          ],
+          "related": [
+            "Cash et al. OXT",
+            "RFC 9496",
+            "ORAM Vault"
+          ],
+          "evidence": [
+            "src/ui/conjunctive.ts:15",
+            "src/ui/conjunctive.ts:188",
+            "src/ui/conjunctive.ts:200",
+            "src/ui/conjunctive.ts:206",
+            "src/ui/conjunctive.ts:241",
+            "src/ui/conjunctive.ts:263",
+            "src/ui/conjunctive.ts:368",
+            "src/ui/conjunctive.ts:383",
+            "src/ui/conjunctive.ts:433",
+            "src/ui/conjunctive.ts:446",
+            "src/oxt/core.ts:226",
+            "src/oxt/core.ts:283",
+            "src/oxt/server.ts:97",
+            "src/oxt/lesson.ts:167",
+            "src/oxt/lesson.ts:185",
+            "src/oxt/lesson.ts:279",
+            "src/oxt/lesson.ts:326",
+            "src/oxt/core.test.ts:500",
+            "src/oxt/lesson.test.ts:63",
+            "src/oxt/lesson.test.ts:142",
+            "src/oxt/lesson.test.ts:183",
+            "e2e/oxt.spec.ts:35"
+          ],
+          "limits": "Static two-known-distinct-keyword teaching adapter only: no OR, NOT, parentheses, longer formulas, dynamic or multi-user search, transfer of the full OXT theorem, active-server soundness, completeness, freshness or hardened constant-time behavior. Exact XSet membership removes probabilistic-filter false positives only for honest execution. The Path ORAM table is arithmetic for a separate non-colluding semi-honest storage server, not an ORAM implementation or concealment of the OXT transcript."
+        },
+        {
           "id": "peks-public-search",
           "title": "Public-key search — and the trapdoor dictionary attack",
           "section": "Public-key search — and the trapdoor dictionary attack",
@@ -32940,10 +32989,12 @@
           "kind": "explanation",
           "execution": "conceptual",
           "action": "Read the scope panel and introductory glossary.",
-          "outcome": "It labels real WebCrypto and pairing operations, the scaled corpus and tag store, exact-statistics controls, the Type-3 proof boundary and excluded dynamic or volume-hiding schemes.",
+          "outcome": "It labels real WebCrypto, pairing and ristretto255 operations, the scaled corpus and stores, exact-statistics controls, the bounded OXT and Type-3 PEKS proof boundaries, and excluded dynamic or volume-hiding schemes.",
           "concepts": [
             "SSE threat model",
+            "OXT threat model",
             "PEKS threat model",
+            "RFC 9496 ristretto255",
             "Type-3 pairing adaptation",
             "static index",
             "forward privacy",
@@ -32953,9 +33004,12 @@
             "src/ui/intro.ts:5",
             "src/ui/scope.ts:5",
             "src/ui/scope.ts:18",
-            "src/ui/scope.ts:47"
+            "src/ui/scope.ts:23",
+            "src/ui/scope.ts:36",
+            "src/ui/scope.ts:51",
+            "src/ui/scope.ts:62"
           ],
-          "limits": "No claim is made about the security of AES-GCM or HMAC themselves, all searchable-encryption designs, transfer of the original PEKS proof, standardized GT bytes, production role isolation or security after a bounded dictionary miss."
+          "limits": "No claim is made about the security of AES-GCM or HMAC themselves, all searchable-encryption designs, transfer of the full OXT theorem or original PEKS proof, standardized GT bytes, active-server OXT completeness or freshness, production role isolation, executed ORAM, or security after a bounded dictionary miss."
         }
       ]
     },

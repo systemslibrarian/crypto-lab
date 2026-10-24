@@ -2092,8 +2092,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-attribute-gate": {
-      "commit": "d0bb24262e9b2b6e47044ef49e5941bdb332e17c",
-      "reviewed": "2026-10-22",
+      "commit": "a4cd1973f99b925863b7f83260851ca439edfd81",
+      "reviewed": "2026-10-24",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -2113,9 +2113,9 @@
             "AES-256-GCM"
           ],
           "evidence": [
-            "src/ui/app.ts:217",
-            "src/ui/app.ts:262",
-            "src/ui/app.ts:273",
+            "src/ui/app.ts:229",
+            "src/ui/app.ts:274",
+            "src/ui/app.ts:285",
             "src/fame/system.ts:227",
             "src/fame/kem.ts:1"
           ],
@@ -2137,8 +2137,8 @@
             "linear reconstruction"
           ],
           "evidence": [
-            "src/ui/app.ts:310",
-            "src/ui/app.ts:348",
+            "src/ui/app.ts:322",
+            "src/ui/app.ts:360",
             "src/fame/oneuse.ts:74",
             "src/fame/msp.ts:65"
           ],
@@ -2159,9 +2159,9 @@
             "ABE decryption"
           ],
           "evidence": [
-            "src/ui/app.ts:366",
-            "src/ui/app.ts:374",
-            "src/ui/app.ts:920",
+            "src/ui/app.ts:378",
+            "src/ui/app.ts:386",
+            "src/ui/app.ts:932",
             "src/fame/system.ts:165",
             "src/fame/system.ts:325"
           ],
@@ -2181,9 +2181,9 @@
             "MSP reconstruction coefficients"
           ],
           "evidence": [
-            "src/ui/app.ts:395",
-            "src/ui/app.ts:408",
-            "src/ui/app.ts:897",
+            "src/ui/app.ts:407",
+            "src/ui/app.ts:420",
+            "src/ui/app.ts:909",
             "src/fame/msp.ts:186",
             "src/fame/msp.ts:205"
           ],
@@ -2204,9 +2204,9 @@
             "AEAD tag rejection"
           ],
           "evidence": [
-            "src/ui/app.ts:430",
-            "src/ui/app.ts:443",
-            "src/ui/app.ts:985",
+            "src/ui/app.ts:442",
+            "src/ui/app.ts:455",
+            "src/ui/app.ts:997",
             "src/fame/collusion.ts:50",
             "src/fame/system.ts:341"
           ],
@@ -2227,9 +2227,9 @@
             "KeyGen"
           ],
           "evidence": [
-            "src/ui/app.ts:478",
-            "src/ui/app.ts:489",
-            "src/ui/app.ts:1088",
+            "src/ui/app.ts:490",
+            "src/ui/app.ts:501",
+            "src/ui/app.ts:1100",
             "src/fame/system.ts:384"
           ],
           "limits": "The master secret itself is not passed directly to the Decrypt function; trust in the issuer is required."
@@ -2248,10 +2248,10 @@
             "epoch policies"
           ],
           "evidence": [
-            "src/ui/app.ts:499",
-            "src/ui/app.ts:517",
-            "src/ui/app.ts:1149",
-            "src/ui/app.ts:1154"
+            "src/ui/app.ts:511",
+            "src/ui/app.ts:529",
+            "src/ui/app.ts:1161",
+            "src/ui/app.ts:1166"
           ],
           "limits": "No cryptographic revocation mechanism is implemented; schemes with epochs or re-issuance require extra work."
         },
@@ -2269,11 +2269,40 @@
             "internal invariant"
           ],
           "evidence": [
-            "src/ui/app.ts:625",
-            "src/ui/app.ts:644",
-            "src/ui/app.ts:665"
+            "src/ui/app.ts:637",
+            "src/ui/app.ts:656",
+            "src/ui/app.ts:677"
           ],
           "limits": "A UI failure code is diagnostic, not a cryptographic security proof."
+        },
+        {
+          "id": "fabesa-hidden-values",
+          "title": "Hide attribute values with bounded FABESA CP-A2BE",
+          "section": "Hide attribute values with bounded FABESA CP-A2BE",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Compare World A and World B's public views, select a key and ciphertext condition, then run bounded candidate opening or the candidate-cap fixture.",
+          "outcome": "The ciphertext policy exposes names, structure, matrix and dimensions; ciphertext/public-key group encodings and lengths are visible; the selected key exposes its names; and the page derives candidate count from that policy and key. Attribute values and record plaintext remain hidden; a matching hidden-value key opens through AES-GCM tag acceptance while negative and over-bound cases reject or refuse.",
+          "concepts": [
+            "FABESA",
+            "CP-A2BE",
+            "partial policy hiding",
+            "attribute-value privacy",
+            "bounded candidate search",
+            "AES-GCM candidate recognition"
+          ],
+          "evidence": [
+            "src/ui/fabesa.ts:276",
+            "src/ui/fabesa.ts:546",
+            "src/ui/fabesa.ts:711",
+            "src/ui/fabesa.ts:819",
+            "src/ui/fabesa.ts:891",
+            "src/fabesa/fabesa.ts:325",
+            "src/fabesa/fabesa.ts:620",
+            "src/fabesa/kem.ts:148",
+            "src/fabesa/kem.ts:201"
+          ],
+          "limits": "Only attribute values are hidden; names, structure, dimensions and lengths remain public. The profile permits one value per public name and no repeated policy names; it does not implement §3.4's multi-use extension. Candidate/tag recognition is a bounded teaching adaptation and does not transfer the paper's theorem or provide production hardening."
         }
       ]
     },

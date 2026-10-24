@@ -302,6 +302,18 @@ the accompanying Path ORAM figures are derived arithmetic for a separate
 non-colluding storage server, not an executed ORAM or a claim that composition
 hides OXT leakage. Catalogued total remains 244.*
 
+*Version 41 — records Attribute Gate's A-D-03 extension under §9 without adding
+a lab or changing a concept status. Its existing FAME route still exposes the
+whole access policy and demonstrates collusion resistance. A separate FABESA
+lesson uses Figure 5's CP-ABE equations with §3.3's partially hidden CP-A2BE
+payload, compares equal-public-payload worlds whose attribute values differ and
+opens a bounded candidate set with real Type-3 pairings. Its interface keeps
+names, structure, dimensions and lengths visible and derives candidate count
+from the selected policy and key. The one-value-per-name profile does not
+implement §3.4's multi-use extension. The AES-GCM candidate-recognition wrapper
+is a labeled teaching adaptation and does not inherit the paper's theorem.
+Catalogued total remains 244.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -505,11 +517,16 @@ Pairing Gate · IBE Gate · Credential Veil · Rekey Relay · Attribute Gate · 
 
 Rekey Relay and Attribute Gate are a **declared pair** — same curve, same section, both with
 an escrow subplot — and they are kept distinct by which question each leads on. Attribute
-Gate leads on **collusion resistance**: FAME CP-ABE, two real keys spliced into one, and the
-term that refuses to cancel. Rekey Relay leads on **delegation**: BBS98 against AFGH, where
-the older scheme's re-encryption key is `b·a⁻¹`, so the relay and the delegatee together
-recover the delegator's private key in one modular division. Read either as the other's
-mirror and the point of both is lost.
+Gate leads on two ABE boundaries: its FAME CP-ABE route splices two real keys and exposes the
+term that refuses to cancel, while its separate FABESA route uses Figure 5's CP-ABE equations
+with §3.3's partially hidden CP-A2BE payload. It hides attribute values but deliberately leaves
+names, structure, dimensions and lengths public, and its interface derives a bounded candidate
+count from the selected policy and key. This one-value-per-name profile does not implement
+§3.4's multi-use extension. The FABESA wrapper uses tag acceptance to recognize a candidate
+and does not claim that the paper's theorem transfers to the hybrid envelope. Rekey Relay leads on
+**delegation**: BBS98 against AFGH, where the older scheme's re-encryption key is `b·a⁻¹`, so
+the relay and the delegatee together recover the delegator's private key in one modular
+division. Read either as the other's mirror and the point of both is lost.
 
 SM9 Forge is the pair's counterpart one level down, on how the private key is MADE. Where
 Boneh-Franklin hashes an identity to a curve point and multiplies it by the master secret —

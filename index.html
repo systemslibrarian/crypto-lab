@@ -19460,12 +19460,14 @@
           </a>
 
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-attribute-gate/"
-            data-implements="AES@src/fame/kem.ts:81 | AES-GCM@src/fame/kem.ts:107 | BLS signatures@src/fame/bls.ts:17 | BLS12-381@src/fame/bls.ts:17 | Hash-to-curve@src/fame/bls.ts:368 | HKDF@src/fame/kem.ts:56 | Pairing@src/fame/bls.ts:183 | SHA-256@src/fame/kem.ts:56"
+            data-implements="AES@src/fabesa/kem.ts:119 | AES-GCM@src/fame/kem.ts:107 | BLS12-381@src/fabesa/fabesa.ts:29 | Hash-to-curve@src/fabesa/fabesa.ts:200 | HKDF@src/fame/kem.ts:56 | Pairing@src/fame/bls.ts:191 | SHA-256@src/fame/kem.ts:56"
             data-comment-only="Diffie-Hellman@src/fame/kem.ts:23 | HPKE@src/fame/kem.ts:22 | Shamir secret sharing@src/fame/msp.ts:11"
             data-references="Boneh-Franklin IBE | Diffie-Hellman | HPKE | Shamir secret sharing"
             data-standards="IETF | NIST"
-            data-implementation="WebCrypto"
-            data-level="advanced" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-08"
+            data-implementation="WebCrypto / @noble BLS12-381 pairings / local FAME and FABESA teaching implementations"
+            data-review-commit="a4cd1973f99b925863b7f83260851ca439edfd81"
+            data-review-note="Read the merged README, complete FAME and FABESA source, tests, learner interface and visible limitations at this exact main commit. Attribute Gate executes BLS12-381 source-group and target-group arithmetic and pairings but never calls a BLS signing or verification operation; `src/fabesa/fabesa.ts:29` and `src/fame/bls.ts:17` import the `bls12_381` group namespace, so BLS signatures is a scanner false positive and is removed. The reviewed pairing anchor points to the actual wrapper at `src/fame/bls.ts:191`, not the counter reset at line 183. The original FAME CP-ABE route still executes policy sealing, key issuance, threshold reconstruction, collusion failure, authority escrow and the absence of cryptographic revocation. The separate FABESA lesson uses Figure 5's CP-ABE equations with §3.3's partially hidden CP-A2BE payload. Its ciphertext policy payload exposes the matrix, row map and names; displayed ciphertext/public-key encodings and lengths are public; the presented key exposes its names; and candidate count is derived from that selected policy and key. Attribute values remain hidden. The implemented profile permits one value per public name and no repeated policy names; it does not implement §3.4's multi-use extension. The lesson uses canonical domain-separated encodings, real four-term candidate decryption, a 32-candidate cap and AES-GCM tag acceptance as a recognition oracle. The wrapper is a bounded teaching adaptation and does not inherit the paper's theorem, provide sender provenance or establish CCA, constant-time or production security. Exact-main run 40109374693 passed 162 unit tests, 30 learner-claim tests and three accessibility/reflow tests, then deployed assets matching a fresh build byte for byte."
+            data-level="advanced" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-10"
            
            
            
@@ -19539,13 +19541,14 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Attribute-Based Encryption</div>
             <div class="project-title">Attribute Gate</div>
-            <div class="project-copy">Encrypt to a policy instead of to a person. Then splice two real keys whose attributes only jointly satisfy that policy, run the genuine decryption, and watch the term that refuses to cancel.</div>
+            <div class="project-copy">Run FAME CP-ABE and splice two keys to expose collusion resistance, then compare a separate FABESA lesson that hides attribute values while names, structure, dimensions, and lengths remain public.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">FAME CP-ABE</span>
+                <span class="chip">FABESA CP-A2BE</span>
                 <span class="chip">BLS12-381</span>
-                <span class="chip">Access Policy</span>
                 <span class="chip">Collusion Resistance</span>
+                <span class="chip">Partial Policy Hiding</span>
               </div>
               <span class="arrow">→</span>
             </div>

@@ -8,10 +8,12 @@
 
 E-K-01 is **live**: Envelope KMS now searches a declared finite state model for mutable-role, known-key-import and distinct same-value-handle disclosures, distinguishes a completed bounded miss from an incomplete cutoff, and replays found witnesses with real RFC 3394 and AES-GCM. L-R-09 is **live**: Search Vault distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. A-D-02 is **live** there too: a public sender creates randomized Type-3 BLS12-381 PEKS tags, the recipient issues a deterministic trapdoor, the server runs public Test, and a bounded attacker exercises exposed-trapdoor dictionary guessing while the interface keeps search, access, volume and active-guessing leakage separate. L-R-07 is now **live** in the same repository: two actual isolated SSE searches are compared with a bounded two-term OXT adapter over canonical ristretto255 points, five controls measure equality/intersection leakage, and the Path ORAM comparison keeps its separate-server assumptions explicit. E-K-02 is **live**: IBE Gate executes bounded descendant-key delegation, sibling/ancestor failure boundaries, subtree compromise and retained root escrow. A-D-06 is **live**: AES Anatomy derives last-round key constraints from real round-9 AES-128 faults, intersects candidates, reverses the key schedule and verifies the recovered master key. E-K-06 is also **live**: finite samples execute correct and first-round-faulted AES-128, classify exact ciphertext equality and rank one key byte from the selected inputs, while a separate analytic census, a secret-independent null and bounded infection/reference-oracle cases keep the statistical claim scoped. A-D-01 is **live**: Dedup Vault executes fresh-key, local message-locked and RFC 9497 VOPRF-aided modes, measures exact-byte deduplication, and keeps dictionary, role and lifecycle boundaries separate. L-R-04 is **live** in Shelf Oracle: four fixed compressed blocks expand to 64 selectors through executable automorphisms and key switching while the lesson keeps its full scan, four-response shape, circular-security assumption and non-claim of multidimensional or sublinear-server PIR explicit. Hybrid Sign's TLS assignment-status correction is also live. The counts below describe whole proposals.
 
+L-R-05 and its shared A-D-10 cost-model sub-scope are now **in progress** against exact Shelf Oracle main `4d31c5b3ec5e`. The active design is a bounded Piano-style parity-and-refresh lesson for a static public database, not a claim that the existing BFV routes gained sublinear server work. It keeps client setup, server preprocessing, retained client state, online bytes, records touched, refresh, loss and update costs separate.
+
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 39 |
-| In progress | 0 |
+| Planned | 37 |
+| In progress | 2 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 9 |
@@ -41,7 +43,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Implement L-R-07 in Search Vault; independently audit the bounded OXT algebra, grammar and leakage controls, pass its complete unit and hosted browser/accessibility gate, and verify the exact-main deployment and learner-visible limitations.
 - [x] Implement L-R-04 in Shelf Oracle; independently audit its fixed four-block query expansion, direct/expanded agreement, operation and byte accounting, negative cases and visible limits, then verify its exact-main gate and deployed assets.
 
-**Implementation work:** advance to L-R-05's offline/online and stateful-PIR design against the newly delivered Shelf Oracle baseline, sharing implementation planning with A-D-10 while keeping their acceptance criteria distinct. Preserve L-R-04's fixed-shape, full-scan and circular-security boundaries and the live L-R-07 source and proof boundaries. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** implement and adversarially test L-R-05's bounded offline/online stateful-PIR lesson against the newly delivered Shelf Oracle baseline, sharing its executed cost ledger with A-D-10 while keeping both proposals' acceptance criteria distinct. Preserve L-R-04's fixed-shape, full-scan and circular-security boundaries and the live L-R-07 source and proof boundaries. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -50,7 +52,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **L-R-05 — Offline/online and stateful PIR:** design one executable preprocessing/stateful construction against current Shelf Oracle, shared with A-D-10 where appropriate, and separate setup, retained state, refresh/update work and amortized online costs from the existing direct and compressed full-scan paths.
+1. **L-R-05 — Offline/online and stateful PIR:** implementation is active in a clean worktree from current Shelf Oracle main. Complete the executable bounded Piano-style construction and its A-D-10 ledger, then independently verify setup, state, refresh, loss, update, fixed-shape failure and repeated-query costs beside the existing direct and compressed full-scan paths.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
@@ -190,6 +192,8 @@ The A-D-01, A-D-02, L-R-07 and L-R-04 integrations close vocabulary gaps rather 
 
 [Hub PR #260](https://github.com/systemslibrarian/crypto-lab/pull/260) published the completed L-R-07 OXT exhibit map, Search Vault source pin and reviewed teaching boundaries as squash commit [`89215362ee59`](https://github.com/systemslibrarian/crypto-lab/tree/89215362ee5980571c1e75760085c67709b7ec3f). All seven exact-main workflows passed: [Three arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500907), [Pages deployment](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500502), [Public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500906), [Protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500957), [Learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500972), [README catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500919) and [Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500924). Fourteen jobs succeeded and the event-inapplicable scheduled drift job alone was skipped. The deployed `index.html` matched exact main byte for byte at 792,411 bytes and SHA-256 `3a13bc46b45bb1584e683f64b1085c244f717de3b32b4d499580f36a2d5823a2`; the served roadmap also matched exact main at 156,366 bytes and SHA-256 `b24c8103a270908f0d59465091e077d8cf8763baf9701eba39ccff84b28daf2` before this later status update.
 
+[Hub PR #263](https://github.com/systemslibrarian/crypto-lab/pull/263) published L-R-04's ten Shelf Oracle exhibits, exact source pin, catalog card, concept coverage and roadmap state as squash commit [`a475735174b0`](https://github.com/systemslibrarian/crypto-lab/tree/a475735174b01f2c71a548abd3413507d26cc7bc). All seven exact-main workflows passed: [Learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40096447666), [Protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40096447705), [Three arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40096447658), [Public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40096447688), [README catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40096447676), [Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40096447721) and [Pages deployment](https://github.com/systemslibrarian/crypto-lab/actions/runs/40096447252). Fourteen jobs succeeded and the event-inapplicable scheduled drift job alone was skipped. The deployed 794,684-byte `index.html` matched exact main at SHA-256 `ac0a43032b66fc7956161f3c4a42cbd18235491b0f40ae84539c9ad6a6d86ff6`; the served 167,613-byte roadmap matched at SHA-256 `4936d30155f2c8065fbfaeddebda4328707a81c84208af133462d28b5c392a5f` before this later status update. README, CATALOG, knowledge-map and both reviewed-evidence JSON files also matched exact main byte for byte. The completed local branch and worktree were removed; GitHub had already removed the remote feature branch.
+
 ## Progress definitions
 
 | Stage | Evidence required |
@@ -232,10 +236,10 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | Phase | Proposals | Priority | Current state |
 | --- | ---: | --- | --- |
 | Phase 1 — Stateful key-handle policy | 1 | P1 | 1 live |
-| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 6 live; 5 planned |
+| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 6 live; 1 in progress; 4 planned |
 | Phase 3 — Protocols and arithmetic | 5 | P1 | 5 planned |
 | Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 2 live; 14 planned |
-| Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 8 planned |
+| Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 1 in progress; 7 planned |
 | Phase 6 — Optional specialist and research scope | 7 | P3 | 7 planned |
 
 ### Coordination and optional scope
@@ -405,7 +409,7 @@ Use the OXT core equations over the standalone prime-order ristretto255 group al
 
 ### L-R-05 — Offline/online and stateful PIR
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** Advanced PIR.
+**Priority:** P1 — next · **Status:** In progress · **Workstream:** Advanced PIR.
 
 **Target:** Shelf Oracle advanced mode or companion, linked to ORAM Vault.
 
@@ -417,11 +421,15 @@ Use the OXT core equations over the standalone prime-order ristretto255 group al
 - Exercise hint consumption/refresh, client-state loss and a database update; show their effect on correctness and cost.
 - State the construction's lower-bound and trust model and distinguish PIR state from ORAM state.
 
-**Next action:** Design one shared advanced-PIR implementation with A-D-10, including update and lost-state cases; preserve L-R-04's separation between communication compression and server work.
+**Active design, 2026-10-24:** Implement a bounded Piano-style parity-and-refresh adaptation over the fixed 64-record, 512-byte public database, split into eight chunks of eight records. The candidate epoch supports at most `floor(sqrt(64) ln(64)) = 33` queries; its 256 primary hints follow the pinned authors' client parameter calculation at this scale rather than the smaller tutorial parameters. The implementation must preserve valid `replacement = target` and duplicate replacement cases, keep cached answers separate from consumed targets, consume state after a sent request even when its response is malformed, and send the same eight-index request and 512-byte response shape for cache covers and local preflight failures. The conservative primary-hint availability bound for the whole distinct-target epoch is `33 · (7/8)^249 ≈ 2^-42.92` under the stated independence and target-choice assumptions; this is neither a 128-bit claim nor a transferred Piano correctness theorem.
+
+State loss requires fresh client setup. This bounded main construction treats any database update as invalidating parities, replacement copies and caches, then demonstrates full rebuild; it does not implement Piano's separate hierarchical dynamic extension. Record hashes detect accidental decoding mismatch but do not authenticate answers or establish freshness: an old database and its old hashes remain internally consistent. The live path uses private entropy; deterministic setup is test-only and explicitly privacy-void. Final displayed costs must be derived from serialized requests, responses, retained buffers and executed contribution counters rather than copied benchmarks.
+
+**Next action:** Complete the executable state machine, learner UI, independent invariants and negative tests; preserve L-R-04's separation between communication compression and server work and ORAM Vault's distinct position-map/stash model.
 
 **Scope and limits:** Correcting the README does not implement preprocessing. No universal speedup or universal O(N) online-work claim.
 
-**Audit references:** [Private Information Retrieval with Preprocessing (original PDF pp. 4826–4832)](https://doi.org/10.1007/978-3-030-71522-9_1470); [Private Stateful Information Retrieval (original PDF pp. 4840–4845)](https://doi.org/10.1007/978-3-030-71522-9_1466).
+**Audit references:** [Piano: Extremely Simple, Single-Server PIR with Sublinear Server Computation (ePrint 2023/452)](https://eprint.iacr.org/2023/452); [pinned authors' implementation](https://github.com/wuwuz/Piano-PIR-new/tree/f7107cfadc15a0ac3df20f0bc64f126bf359b702); [On the Communication Lower Bounds for Private Information Retrieval (ePrint 2022/081)](https://eprint.iacr.org/2022/081); [Private Information Retrieval with Preprocessing (original PDF pp. 4826–4832)](https://doi.org/10.1007/978-3-030-71522-9_1470); [Private Stateful Information Retrieval (original PDF pp. 4840–4845)](https://doi.org/10.1007/978-3-030-71522-9_1466).
 
 **Pinned baseline:** [Shelf Oracle 4d31c5b3ec5e](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/tree/4d31c5b3ec5e239a170bb4d10c0ba501d95ae7e0); [ORAM Vault 8a2aa66111da](https://github.com/systemslibrarian/crypto-lab-oram-vault/blob/8a2aa66111da27768a42510c02a2391ee409f1e6/README.md).
 
@@ -1099,7 +1107,7 @@ Deepen query models and network/privacy composition; timestamp renewal and optim
 
 ### A-D-10 — Preprocessing and server work in doubly efficient PIR
 
-**Priority:** P2 — depth · **Status:** Planned · **Workstream:** Advanced PIR.
+**Priority:** P2 — depth · **Status:** In progress · **Workstream:** Advanced PIR.
 
 **Target:** Shared advanced-PIR project with Shelf Oracle.
 
@@ -1111,11 +1119,13 @@ Deepen query models and network/privacy composition; timestamp renewal and optim
 - Implement or clearly label a specified preprocessing model with ProcessDB cost, storage, client state and online response work.
 - Measure total-cost crossover and update overhead across repeated queries in the shared L-R-05 project.
 
-**Next action:** Define the cost ledger jointly with L-R-05 and select a construction whose online-work claim can be demonstrated faithfully.
+**Active sub-scope, 2026-10-24:** The shared implementation compares the existing direct and compressed BFV routes with the bounded Piano-style lesson without merging unlike operations. For the selected construction, server `ProcessDB` is identity/none: the client performs setup by streaming the ordinary database and privately retaining its own hints. The ledger separately derives setup-stream bytes, explicit retained client state, online request/response bytes, records touched, record contributions and refresh/rebuild work. It will show repeated-query amortization, the full-download wire crossover and database-update rebuild cost, but it will not report modeled operation counts as browser timing measurements or transfer Piano's near-optimal-storage theorem to an explicit toy state that can exceed the database size.
+
+**Next action:** Connect the executed L-R-05 counters to the comparison UI and independently test every displayed byte, contribution, crossover and update value.
 
 **Scope and limits:** Sublinear communication is not sublinear server work; modeled cost curves must not be reported as implementation timings.
 
-**Audit references:** [Doubly Efficient Private Information Retrieval (original PDF pp. 1817–1822)](https://doi.org/10.1007/978-3-030-71522-9_1479).
+**Audit references:** [Piano (ePrint 2023/452)](https://eprint.iacr.org/2023/452); [Doubly Efficient Private Information Retrieval with Linear Preprocessing (ePrint 2022/1703)](https://eprint.iacr.org/2022/1703); [Doubly Efficient Private Information Retrieval (original PDF pp. 1817–1822)](https://doi.org/10.1007/978-3-030-71522-9_1479).
 
 **Pinned baseline:** [Shelf Oracle 4d31c5b3ec5e](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/tree/4d31c5b3ec5e239a170bb4d10c0ba501d95ae7e0); [Patron Shield f8a82cf820f7](https://github.com/systemslibrarian/crypto-lab-patron-shield/blob/f8a82cf820f7e4d1135fb2fdca214d6b0e553f91/README.md); [Split Point e0b0a2d565e9](https://github.com/systemslibrarian/crypto-lab-split-point/blob/e0b0a2d565e9668af3ad2d9a32889296e4a22dda/README.md).
 
@@ -1487,6 +1497,8 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-24 | L-R-04 compressed-query implementation start | Shelf Oracle was freshly reconciled at `882c4f0083fd`, and implementation is active on the local `codex/lr04-compressed-pir-20261024` branch. The bounded design uses four fixed 16-selector ciphertext blocks to cover all 64 records, sends no selected block or index to the server, expands all four blocks, scans every record and returns four fixed ciphertext responses. Marked **In progress** only: the independent audit and final local gates are still active, and no verified, merged, deployed or live credit is claimed. |
 | 2026-10-24 | L-R-04 compressed-query delivery | [Shelf Oracle PR #16](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/pull/16) merged at `4d31c5b3ec5e`; exact-main [run 40094580465](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/actions/runs/40094580465) passed 99 unit and 33 production-browser/accessibility tests with zero dependency vulnerabilities, built successfully and deployed. Served HTML, JavaScript and CSS matched the exact-main build byte for byte. Direct and four-block expanded BFV retrieval, evaluation-key and wire-format failures, actual operation/byte/noise accounting and fixed response shape were checked. Marked **Live** with the circular-security, four-block, four-response, full-scan, honest-but-curious and non-multidimensional limits retained. |
 | 2026-10-24 | Hybrid Sign TLS assignment-status correction | [Hybrid Sign PR #25](https://github.com/systemslibrarian/crypto-lab-hybrid-sign/pull/25) merged at `e9e4ddb545c6`; exact-main [run 40092067603](https://github.com/systemslibrarian/crypto-lab-hybrid-sign/actions/runs/40092067603) passed 19 unit tests, the production build and 11 hosted browser/accessibility tests and deployed. The public assets matched a fresh exact-main build byte-for-byte. The learner page and README no longer call `0x090A` or `0x090B` assigned, identify the October 20, 2026 TLS working-group draft's `mldsa65_ed25519_sha512` value as pending `TBD7`, and keep that proposal distinct from the lab's LAMPS draft-16 implementation baseline. No Hub catalog correction was required. |
+| 2026-10-24 | L-R-04 Hub publication | [Hub PR #263](https://github.com/systemslibrarian/crypto-lab/pull/263) merged at `a475735174b0`; all seven exact-main workflows passed with 14 successful jobs and one correctly skipped schedule-only drift job. The public 794,684-byte `index.html` matched exact main at SHA-256 `ac0a43032b66fc7956161f3c4a42cbd18235491b0f40ae84539c9ad6a6d86ff6`, and the served 167,613-byte roadmap matched at SHA-256 `4936d30155f2c8065fbfaeddebda4328707a81c84208af133462d28b5c392a5f`. README, CATALOG, knowledge-map and reviewed-evidence files also matched exactly; the finished branch/worktree were removed. |
+| 2026-10-24 | L-R-05 and A-D-10 implementation start | Shelf Oracle was fetched and confirmed current at `4d31c5b3ec5e`; implementation began in a clean worktree, so both proposals moved from **Planned** to **In progress** for their distinct shared-project sub-scopes. The reviewed design selects a bounded Piano-style static parity-and-refresh adaptation, corrects the session primary-hint union bound to `33 · (7/8)^249`, treats server `ProcessDB` as identity/none and client setup separately, and requires fixed-shape failure, consumed-state, loss, update, replay/freshness and executed-cost checks. No implementation, verification, merge, deployment or learner-behavior credit is claimed by this status change. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

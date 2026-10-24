@@ -6,12 +6,12 @@
 
 **Nine implementation milestones are shipped across eight live proposals.** E-K-01 is live end to end in Envelope KMS: its first key-handle exercise and its later import, alias and bounded-search milestone are both deployed. Search Vault now carries L-R-09's query-result integrity exercise, A-D-02's public-key searchable-encryption lesson and L-R-07's bounded Boolean-search lesson. E-K-02's executable HIBE delegation exercise is live in IBE Gate, AES Anatomy carries both A-D-06's classical differential fault analysis and E-K-06's accepted-output fault analysis, and Dedup Vault delivers A-D-01's encrypted-deduplication lesson. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) · [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/) · [Dedup Vault](https://systemslibrarian.github.io/crypto-lab-dedup-vault/)
 
-E-K-01 is **live**: Envelope KMS now searches a declared finite state model for mutable-role, known-key-import and distinct same-value-handle disclosures, distinguishes a completed bounded miss from an incomplete cutoff, and replays found witnesses with real RFC 3394 and AES-GCM. L-R-09 is **live**: Search Vault distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. A-D-02 is **live** there too: a public sender creates randomized Type-3 BLS12-381 PEKS tags, the recipient issues a deterministic trapdoor, the server runs public Test, and a bounded attacker exercises exposed-trapdoor dictionary guessing while the interface keeps search, access, volume and active-guessing leakage separate. L-R-07 is now **live** in the same repository: two actual isolated SSE searches are compared with a bounded two-term OXT adapter over canonical ristretto255 points, five controls measure equality/intersection leakage, and the Path ORAM comparison keeps its separate-server assumptions explicit. E-K-02 is **live**: IBE Gate executes bounded descendant-key delegation, sibling/ancestor failure boundaries, subtree compromise and retained root escrow. A-D-06 is **live**: AES Anatomy derives last-round key constraints from real round-9 AES-128 faults, intersects candidates, reverses the key schedule and verifies the recovered master key. E-K-06 is also **live**: finite samples execute correct and first-round-faulted AES-128, classify exact ciphertext equality and rank one key byte from the selected inputs, while a separate analytic census, a secret-independent null and bounded infection/reference-oracle cases keep the statistical claim scoped. A-D-01 is **live**: Dedup Vault executes fresh-key, local message-locked and RFC 9497 VOPRF-aided modes, measures exact-byte deduplication, and keeps dictionary, role and lifecycle boundaries separate. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
+E-K-01 is **live**: Envelope KMS now searches a declared finite state model for mutable-role, known-key-import and distinct same-value-handle disclosures, distinguishes a completed bounded miss from an incomplete cutoff, and replays found witnesses with real RFC 3394 and AES-GCM. L-R-09 is **live**: Search Vault distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. A-D-02 is **live** there too: a public sender creates randomized Type-3 BLS12-381 PEKS tags, the recipient issues a deterministic trapdoor, the server runs public Test, and a bounded attacker exercises exposed-trapdoor dictionary guessing while the interface keeps search, access, volume and active-guessing leakage separate. L-R-07 is now **live** in the same repository: two actual isolated SSE searches are compared with a bounded two-term OXT adapter over canonical ristretto255 points, five controls measure equality/intersection leakage, and the Path ORAM comparison keeps its separate-server assumptions explicit. E-K-02 is **live**: IBE Gate executes bounded descendant-key delegation, sibling/ancestor failure boundaries, subtree compromise and retained root escrow. A-D-06 is **live**: AES Anatomy derives last-round key constraints from real round-9 AES-128 faults, intersects candidates, reverses the key schedule and verifies the recovered master key. E-K-06 is also **live**: finite samples execute correct and first-round-faulted AES-128, classify exact ciphertext equality and rank one key byte from the selected inputs, while a separate analytic census, a secret-independent null and bounded infection/reference-oracle cases keep the statistical claim scoped. A-D-01 is **live**: Dedup Vault executes fresh-key, local message-locked and RFC 9497 VOPRF-aided modes, measures exact-byte deduplication, and keeps dictionary, role and lifecycle boundaries separate. Shelf Oracle's PIR scope correction is merged and verified, and L-R-04 compressed-query implementation is now **in progress** there. The counts below describe whole proposals.
 
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 40 |
-| In progress | 0 |
+| Planned | 39 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 8 |
@@ -40,7 +40,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Implement A-D-02 in Search Vault; independently audit its Type-3 PEKS equations and visible proof boundaries, pass its complete unit and hosted browser/accessibility gate, and verify the exact-main deployment and learner-visible attack outcomes.
 - [x] Implement L-R-07 in Search Vault; independently audit the bounded OXT algebra, grammar and leakage controls, pass its complete unit and hosted browser/accessibility gate, and verify the exact-main deployment and learner-visible limitations.
 
-**Implementation work:** reconcile L-R-04 against freshly fetched Shelf Oracle source, then select and implement a bounded compressed-query/expansion construction only if current main does not already satisfy it. Preserve the live L-R-07 source and proof boundaries. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** complete the active L-R-04 Shelf Oracle extension: independently review its bounded four-block compressed-query construction, finish the learner-visible comparison and negative cases, and run the complete unit, build, hosted browser/accessibility and publication gates before any merge or live credit. Preserve the live L-R-07 source and proof boundaries. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -49,7 +49,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **L-R-04 — PIR compressed queries:** re-read current Shelf Oracle, choose a bounded expansion construction compatible with its BFV teaching engine, and compare actual compressed and direct one-hot query representations while deriving evaluation-key, upload, response, server-operation and noise costs from the implementation.
+1. **L-R-04 — PIR compressed queries:** finish and independently audit the active four-block expansion lesson against current Shelf Oracle, then compare actual compressed and direct one-hot query representations while deriving evaluation-key, upload, response, server-operation and noise costs from the implementation.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
@@ -168,6 +168,8 @@ The A-D-01, A-D-02 and L-R-07 integrations close vocabulary gaps rather than lea
 
 [Hub PR #258](https://github.com/systemslibrarian/crypto-lab/pull/258) published the A-D-02 card, PEKS exhibit map, reviewed algorithm/attack boundaries and L-R-07 design as merge commit [`402f87ed4198`](https://github.com/systemslibrarian/crypto-lab/tree/402f87ed419872d22b34391c4b46dee80e4956e2). All seven exact-main workflows passed: 14 jobs succeeded and only the event-inapplicable scheduled drift job was skipped. The [Pages run 40062710009](https://github.com/systemslibrarian/crypto-lab/actions/runs/40062710009) built and deployed that exact revision. The public `index.html` matched the merge commit byte for byte at 791,777 bytes and SHA-256 `21f7bdcbf7f41ebe2b0f1f132ac788ad437f5d8f4ccc2cd657d8c4cf4a2bcd1b`; the Search Vault PEKS card, source pin and GitHub Pages link each occur exactly once. The served roadmap also matched exact main byte for byte at 147,109 bytes and SHA-256 `4280cd4ed07b9ddd67ba85788b5ae013fc6a1ab9297b55b5fd8039a28777267a` before this later status update.
 
+[Hub PR #260](https://github.com/systemslibrarian/crypto-lab/pull/260) published the completed L-R-07 OXT exhibit map, Search Vault source pin and reviewed teaching boundaries as squash commit [`89215362ee59`](https://github.com/systemslibrarian/crypto-lab/tree/89215362ee5980571c1e75760085c67709b7ec3f). All seven exact-main workflows passed: [Three arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500907), [Pages deployment](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500502), [Public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500906), [Protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500957), [Learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500972), [README catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500919) and [Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40089500924). Fourteen jobs succeeded and the event-inapplicable scheduled drift job alone was skipped. The deployed `index.html` matched exact main byte for byte at 792,411 bytes and SHA-256 `3a13bc46b45bb1584e683f64b1085c244f717de3b32b4d499580f36a2d5823a2`; the served roadmap also matched exact main at 156,366 bytes and SHA-256 `b24c8103a270908f0d59465091e077d8cf8763baf9701eba39ccff84b28daf2` before this later status update.
+
 ## Progress definitions
 
 | Stage | Evidence required |
@@ -209,7 +211,7 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | Phase | Proposals | Priority | Current state |
 | --- | ---: | --- | --- |
 | Phase 1 — Stateful key-handle policy | 1 | P1 | 1 live |
-| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 4 live; 7 planned |
+| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 5 live; 1 in progress; 5 planned |
 | Phase 3 — Protocols and arithmetic | 5 | P1 | 5 planned |
 | Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 2 live; 14 planned |
 | Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 8 planned |
@@ -358,11 +360,11 @@ Use the OXT core equations over the standalone prime-order ristretto255 group al
 
 ### L-R-04 — PIR compressed queries and server-side expansion
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** Advanced PIR.
+**Priority:** P1 — next · **Status:** In progress · **Workstream:** Advanced PIR.
 
 **Target:** Shelf Oracle extension.
 
-**Existing base:** Shelf Oracle implements real BFV ciphertext arithmetic and one encrypted selection bit per record; the server folds every record. The README explicitly says SealPIR query expansion is absent.
+**Existing base:** Shelf Oracle `882c4f0083fd` implements real BFV ciphertext arithmetic and one encrypted selection bit per record; the server folds every record. Its README explicitly says SealPIR query expansion is absent. Active local implementation adds a bounded adaptation that covers the 64-record catalog with four fixed 16-selector ciphertext blocks: the client keeps the selected block and index private, the server receives no plaintext selector metadata, expands every block, scans all 64 records and returns four fixed response ciphertexts.
 
 **Acceptance criteria:**
 
@@ -370,13 +372,13 @@ Use the OXT core equations over the standalone prime-order ristretto255 group al
 - Trace server expansion and account for evaluation keys, serialized upload, response bytes, server operations and noise.
 - Compute the comparison from the implementation instead of copying SealPIR paper measurements.
 
-**Next action:** Select a bounded expansion construction compatible with the BFV teaching engine and specify its evaluation-key requirements.
+**Next action:** Complete the independent cryptographic/source audit and the unit, build, browser/accessibility and mutation gates for the active implementation. Reconcile any finding without weakening existing checks, then open a Shelf Oracle PR only after the complete local evidence is final.
 
-**Scope and limits:** Query compression and sublinear server work are separate claims.
+**Scope and limits:** Query compression and sublinear server work are separate claims. This bounded teaching adaptation uses four fixed blocks and four fixed responses to avoid revealing which 16-record block contains the selection; it does not claim one-ciphertext expansion across all 64 records. No final test, merge, deployment or live learner-behavior credit is recorded yet.
 
 **Audit references:** [PIR with Compressed Queries (original PDF pp. 4502–4509)](https://doi.org/10.1007/978-3-030-71522-9_1792).
 
-**Pinned baseline:** [Shelf Oracle 852f23ff8b40](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/blob/852f23ff8b406bd7f98f06cbea34f5cec6cca389/README.md).
+**Pinned baseline:** [Shelf Oracle 882c4f0083fd](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/blob/882c4f0083fd6b6513b77c2e8e1acfba4b624e65/README.md).
 
 <a id="l-r-05"></a>
 
@@ -1460,6 +1462,8 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-24 | A-D-02 Hub publication | [Hub PR #258](https://github.com/systemslibrarian/crypto-lab/pull/258) merged at `402f87ed4198`; all seven exact-main workflows completed with 14 successful jobs and one correctly skipped schedule-only drift job. Pages deployment `7294037180` published the exact merge. The live 791,777-byte catalog matched exact main at SHA-256 `21f7bdcbf7f41ebe2b0f1f132ac788ad437f5d8f4ccc2cd657d8c4cf4a2bcd1b`, with the reviewed Search Vault PEKS card and correct GitHub Pages link each appearing once. |
 | 2026-10-24 | L-R-07 implementation start | Search Vault was fetched and confirmed clean at `1f0b50595608`; implementation began on `codex/lr07-oxt-20261024`, so the proposal moved from **Planned** to **In progress**. The OXT, HXT leakage, RFC 9496, Path ORAM and ORAM/SSE-composition sources are being checked before code is credited. No implementation, test, merge or deployment result is claimed by this status change. |
 | 2026-10-24 | L-R-07 Boolean-search delivery | [Search Vault PR #26](https://github.com/systemslibrarian/crypto-lab-search-vault/pull/26) merged at `d904972690e1`; exact-main [run 40088072088](https://github.com/systemslibrarian/crypto-lab-search-vault/actions/runs/40088072088) passed 180 unit and 37 hosted browser/accessibility tests with zero dependency vulnerabilities, then deployed. All six public files matched the reviewed build byte for byte. Two actual SSE searches, the bounded ristretto255 OXT route, all 91 keyword pairs in both orders, five equality/intersection controls, strict invalid grammar and the `N=24`, `Z=4`, `L=5` Path ORAM arithmetic were checked. Marked **Live** with the two-term/static, full-proof-transfer, active completeness/freshness, separate-server ORAM and non-hardened-JavaScript limits retained; the completed local and remote lab branches were removed. |
+| 2026-10-24 | L-R-07 Hub publication | [Hub PR #260](https://github.com/systemslibrarian/crypto-lab/pull/260) merged at `89215362ee59`; all seven exact-main workflows passed with 14 successful jobs and one correctly skipped schedule-only drift job. The public 792,411-byte `index.html` matched exact main at SHA-256 `3a13bc46b45bb1584e683f64b1085c244f717de3b32b4d499580f36a2d5823a2`, and the served 156,366-byte roadmap matched at SHA-256 `b24c8103a270908f0d59465091e077d8cf8763baf9701eba39ccff84b28daf2`. |
+| 2026-10-24 | L-R-04 compressed-query implementation start | Shelf Oracle was freshly reconciled at `882c4f0083fd`, and implementation is active on the local `codex/lr04-compressed-pir-20261024` branch. The bounded design uses four fixed 16-selector ciphertext blocks to cover all 64 records, sends no selected block or index to the server, expands all four blocks, scans every record and returns four fixed ciphertext responses. Marked **In progress** only: the independent audit and final local gates are still active, and no verified, merged, deployed or live credit is claimed. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

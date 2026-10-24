@@ -32,6 +32,7 @@ function checkDictionaryScope(source) {
     'crypto-lab-spake-gate',
     'crypto-lab-dnssec-chain',
     'crypto-lab-dedup-vault',
+    'crypto-lab-search-vault',
   ];
   for (const slug of executable) {
     assert.ok(attacksFor(source, slug).includes('Dictionary attack'),
@@ -64,6 +65,43 @@ test('dictionary and message-locked vocabulary recognizes the executable symbols
   assert.equal(mle.re.test('deriveLocalDataKeys'), false);
 });
 
+test('PEKS and keyword-inference vocabulary names the construction and the attack narrowly', () => {
+  const peks = ALGORITHMS.find((term) => term.name === 'PEKS');
+  const inference = ATTACKS.find((term) => term.name === 'Keyword inference');
+  assert.ok(peks);
+  assert.ok(inference);
+  assert.ok(peks.re.test('PEKS'));
+  assert.ok(peks.re.test('public-key encryption with keyword search'));
+  assert.equal(peks.re.test('ordinary keyword search'), false);
+  assert.ok(inference.re.test('IKK attack'));
+  assert.ok(inference.re.test('keyword-inference'));
+  assert.ok(inference.re.test('query recovery'));
+  assert.equal(inference.re.test('keyword search'), false);
+});
+
+function checkSearchVaultScope(source) {
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-search-vault'), [
+    'AES',
+    'AES-GCM',
+    'BLS12-381',
+    'Hash-to-curve',
+    'HMAC',
+    'Pairing',
+    'PEKS',
+    'SHA-256',
+  ]);
+  assert.deepEqual(attacksFor(source, 'crypto-lab-search-vault'), [
+    'Dictionary attack',
+    'Keyword inference',
+  ]);
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-search-vault\/"[^>]*>/)[0];
+  assert.match(card, /data-review-commit="1f0b505956087721c7ec3ec3f1221a2df26ae205"/);
+}
+
+test('Search Vault credits real SSE and PEKS operations without signature or fault false positives', () => {
+  checkSearchVaultScope(html);
+});
+
 test('dictionary and message-locked scope controls reject lost or invented credit', () => {
   for (const slug of [
     'crypto-lab-phantom-vault',
@@ -75,6 +113,7 @@ test('dictionary and message-locked scope controls reject lost or invented credi
     'crypto-lab-spake-gate',
     'crypto-lab-dnssec-chain',
     'crypto-lab-dedup-vault',
+    'crypto-lab-search-vault',
   ]) {
     const re = new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[^>]*>');
     const removed = html.replace(re, (card) =>
@@ -104,6 +143,30 @@ test('dictionary and message-locked scope controls reject lost or invented credi
     card.replace(/data-implements="/, 'data-implements="Hash-to-curve@src/pedersen.ts:168 | '));
   assert.notEqual(inventedHashToCurve, html);
   assert.throws(() => checkDictionaryScope(inventedHashToCurve), assert.AssertionError);
+});
+
+test('Search Vault scope controls reject removed or invented implementation credit', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-search-vault\/"[^>]*>/;
+  for (const name of ['AES-GCM', 'BLS12-381', 'Hash-to-curve', 'Pairing', 'PEKS']) {
+    const removed = html.replace(cardRe, (card) =>
+      card.replace(new RegExp(`${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}@[^|" ]+(?: \\| )?`), ''));
+    assert.notEqual(removed, html, `${name}: mutation must remove the reviewed anchor`);
+    assert.throws(() => checkSearchVaultScope(removed), assert.AssertionError);
+  }
+  for (const name of ['Dictionary attack', 'Keyword inference']) {
+    const removed = html.replace(cardRe, (card) =>
+      card.replace(new RegExp(`${name}@[^|" ]+(?: \\| )?`), ''));
+    assert.notEqual(removed, html, `${name}: mutation must remove the attack anchor`);
+    assert.throws(() => checkSearchVaultScope(removed), assert.AssertionError);
+  }
+  const inventedSignature = html.replace(cardRe, (card) =>
+    card.replace('data-implements="', 'data-implements="BLS signatures@src/peks/core.ts:19 | '));
+  assert.notEqual(inventedSignature, html);
+  assert.throws(() => checkSearchVaultScope(inventedSignature), assert.AssertionError);
+  const inventedFault = html.replace(cardRe, (card) =>
+    card.replace('data-attacks="', 'data-attacks="Fault injection@src/sse/attack.ts:29 | '));
+  assert.notEqual(inventedFault, html);
+  assert.throws(() => checkSearchVaultScope(inventedFault), assert.AssertionError);
 });
 
 function checkRekeyScope(source) {

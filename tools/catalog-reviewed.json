@@ -994,5 +994,19 @@
     ],
     "implementation": "@noble/ciphers AES-CTR and AES-SIV / @noble/curves RFC 9497 P256-SHA256 VOPRF / local storage and attack models",
     "note": "Read the complete merged README, source, tests, learner interface and limits at this exact main commit. Two equal synthetic uploads execute fresh random AES-CTR keys, local first128(SHA-256(P || M)) message-locked derivation and RFC 9497 P256-SHA256 VOPRF derivation. Per-user RFC 5297 AES-SIV capsules bind scheme version, owner, reference and the complete data ciphertext; storage uses a digest only to select a bucket and deduplicates after full ciphertext-byte equality. The attack lesson computes local offline guesses, allowlisted per-principal/per-epoch online guesses, changed identities and epochs, proof tampering and key-server compromise. Separate executed cases distinguish bounded whole-ciphertext possession, reference authorization, last-reference deletion, prospective revocation with cached-copy limits and nonretroactive rotation. This is a DupLESS-shaped adaptation, not byte-for-byte DupLESS, a formal scalable proof-of-ownership protocol, process isolation, enforceable production rate limiting or a hardened storage service. Each derived AES-CTR key/counter pair is confined to one distinct plaintext value; repeats of that exact value intentionally reuse the pair and ciphertext. Hosted PR run 40055127586 passed 38 unit tests, 7 learner claims, 11 accessibility/reflow tests and all 24 named mutations; CodeQL run 40055127584 passed."
+  },
+  "crypto-lab-search-vault": {
+    "commit": "1f0b505956087721c7ec3ec3f1221a2df26ae205",
+    "reviewed": "2026-10-24",
+    "add": [
+      "AES-GCM@src/core/aead.ts:65",
+      "PEKS@src/peks/core.ts:113"
+    ],
+    "remove": [
+      "BLS signatures",
+      "Fault injection"
+    ],
+    "implementation": "WebCrypto / @noble/curves BLS12-381 / local leakage and bounded attack models",
+    "note": "Read the complete merged README, SSE and PEKS source, tests, learner interface, primary-source boundary and visible limitations at this exact main commit. The existing static SSE executes HMAC-derived search tokens, AES-256-GCM postings, count and IKK keyword inference, and a client-retained result-integrity checkpoint. The new public-key exhibit executes a Type-3 BLS12-381 adaptation of PEKS: a public sender randomizes keyword tags, the recipient issues a deterministic trapdoor, the server scans every tag with public Test, and a bounded attacker creates fresh public tags to test candidates against an exposed trapdoor. RFC 9380 hash-to-G1, a fixed independent transcript, strict point decoding and separate search-pattern, volume, access-pattern and active-guessing views support the lesson. This algebra-preserving adaptation does not claim that the original symmetric-pairing security proof transfers, that noble's GT bytes are a standardized wire encoding, or that a bounded miss establishes security. Tags are not body encryption and provide no sender authentication, tag/body binding, result completeness, freshness, process isolation, post-quantum security or hardened side-channel behavior. BLS signatures is a false positive from the imported module alias; no signature is computed. Fault injection is a false positive from DEFAULT_ATTACK; no computational fault is injected. Final PR run 40060915246 passed 117 unit tests and all 30 browser/accessibility tests with zero dependency vulnerabilities."
   }
 }

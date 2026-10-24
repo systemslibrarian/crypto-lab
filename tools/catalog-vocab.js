@@ -178,6 +178,7 @@ const ALGORITHMS = [
   { name: 'secp256k1', kind: 'algorithm', family: 'elliptic curve', re: /secp256k1/i, std: 'SECG:SEC 2' },
   { name: 'BLS12-381', kind: 'algorithm', family: 'pairing curve', re: /bls12[-_]?381/i, std: null },
   { name: 'BLS signatures', kind: 'algorithm', family: 'signature', re: /\bbls\b(?![-_]?12)/i, std: 'IETF:draft-irtf-cfrg-bls-signature' },
+  { name: 'PEKS', kind: 'algorithm', family: 'searchable encryption', re: /\bpeks\b|public[-_ ]?key[-_ ]?encryption[-_ ]?with[-_ ]?keyword[-_ ]?search/i, std: null },
   /* The CFRG BBS scheme uses (A,e), not BBS+'s (A,e,s). The group's
      BLS12-381 name is not evidence of BLS signing. Credential Veil computes
      BBS sign/verify/proofs in src/bbs and checks official draft vectors. */
@@ -549,6 +550,10 @@ const ATTACKS = [
      optional separator catches executable camelCase names after or before the
      scanner's camel-case normalization. */
   { name: 'Dictionary attack', re: /dictionary[-_ ]?attack/i },
+  /* IKK-style query recovery is statistical inference over an SSE leakage
+     profile, not the active candidate enumeration recorded above. Keep the
+     spelling narrow: ordinary "keyword search" is not evidence of an attack. */
+  { name: 'Keyword inference', re: /\bikk[-_ ]?attack\b|keyword[-_ ]?inference|query[-_ ]?recovery/i },
   { name: 'Differential cryptanalysis', re: /differential[-_ ]?cryptanalysis/i },
   { name: 'Linear cryptanalysis', re: /linear[-_ ]?cryptanalysis/i },
   { name: 'Lattice reduction', re: /\blll\b|lattice[-_ ]?reduction|\bbkz\b/i },

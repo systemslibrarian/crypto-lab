@@ -10,8 +10,8 @@ E-K-01 is **live**: Envelope KMS now searches a declared finite state model for 
 
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 42 |
-| In progress | 0 |
+| Planned | 41 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 6 |
@@ -38,7 +38,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Complete E-K-01's later import, alias and bounded-search milestone; independently audit the model and sources, pass its full hosted gate, and verify its exact deployment and public learner behavior.
 - [x] Implement A-D-01 in Dedup Vault; independently audit its cryptographic constructions and boundaries, pass its full hosted unit, learner-claim, accessibility and mutation gate, and verify exact-main deployment and served assets.
 
-**Implementation work:** reconcile A-D-02 against the current Search Vault and related encrypted-search labs, then select and review a primary PEKS construction before coding. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** implement the reviewed A-D-02 Type-3 PEKS teaching adaptation as a focused Search Vault extension, preserving its existing SSE and query-integrity lessons. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -47,7 +47,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **A-D-02 — public-key searchable encryption:** reconcile current Search Vault and related source, select a precise primary PEKS construction, and specify sender, recipient, search-server and dictionary-attacker interfaces before implementation.
+1. **A-D-02 — public-key searchable encryption:** implement the reviewed sender, recipient, search-server and dictionary-attacker interfaces in Search Vault, then independently check the real pairing computations, leakage claims and bounded guessing outcomes.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
@@ -120,6 +120,8 @@ The source mappings were checked against committed AES Anatomy `1f0f6b86a2dd`, I
 The A-D-01 integration also closes two vocabulary gaps rather than leaving its central claims as unchecked card labels. Message-locked encryption now has a reviewed implementation anchor in Dedup Vault. Dictionary attack credit was checked one lab at a time against committed source and retained for nine learner-executed searches: Dedup Vault, Phantom Vault, Bcrypt Forge, Commit Gate, OPAQUE Gate, PSI Gate, PAKE Gate, SPAKE Gate and DNSSEC Chain. Quantum Vault's only matching text is an explicitly out-of-scope threat, so its exact-source review excludes that false credit. Commit Gate's live P-256 point arithmetic remains implementation credit under an exact-source review, while its expressly non-RFC 9380 try-and-increment teaching map remains comment-only. Teaching-scope mutations now fail if any positive dictionary credit or Dedup's message-locked implementation disappears, or if the Quantum threat-only mention is promoted to an executed attack.
 
 [Hub PR #254](https://github.com/systemslibrarian/crypto-lab/pull/254) published the completed E-K-01 mapping as merge commit [`8e1880454949`](https://github.com/systemslibrarian/crypto-lab/tree/8e18804549499bac2581bedc660e56c1514300df). All seven exact-main workflows passed: [Learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369430), [Protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369432), [Three arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369426), [Public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369462), [README catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369460), [Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369425) and [Pages deployment](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369417). The deployed catalog was fetched after that deployment and matched `index.html` from the merge commit byte for byte: 784,834 bytes, SHA-256 `9a97c1be9c6e39844ed92c8fe43bd43ec6a7c45290d349fd399f0f5931a74304`; its updated Envelope KMS card appeared exactly once.
+
+[Hub PR #256](https://github.com/systemslibrarian/crypto-lab/pull/256) published the A-D-01 card, five-exhibit map and reviewed vocabulary boundaries as merge commit [`5a4387d63b7c`](https://github.com/systemslibrarian/crypto-lab/tree/5a4387d63b7c1a904f7d6be89253e4f027893af3). All seven exact-main workflows passed: [Learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40057915563), [Protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40057915687), [Three arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40057915590), [Public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40057915598), [README catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40057915569), [Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40057915594) and [Pages deployment](https://github.com/systemslibrarian/crypto-lab/actions/runs/40057915954). Fourteen executed jobs passed; the event-inapplicable drift job alone was skipped. The deployed `index.html` matched the merge commit byte for byte: 789,782 bytes, SHA-256 `db0287a91fddf4a9588820adee4ef547f75cb8b53c395a4a641105c0080c53f3`; it contains 244 project cards and exactly one Dedup Vault card with the correct GitHub Pages link. Hosted logs also reported action-runtime deprecation notices and one moderate npm dependency finding in each shared npm install; no test or deployment gate was bypassed, and those maintenance signals are not counted as cryptographic acceptance evidence.
 
 ## Progress definitions
 
@@ -227,7 +229,7 @@ Extend existing labs through the strongest P1 composition gaps; coordinate relat
 - [x] Execute a low-entropy file dictionary attack, then compare a specified server-aided derivation with its server trust and rate assumptions.
 - [x] Separate proof of possession, authorization, equality leakage and deletion/revocation limits.
 
-**Next action:** Preserve the exact-main source pin, complete Hub catalog publication, and retain the verified adaptation and non-claim boundaries while the implementation queue advances to A-D-02. The Crypto Counsel corpus entry is already merged and live.
+**Next action:** Preserve the exact-main source and Hub pins and retain the verified adaptation and non-claim boundaries while the implementation queue advances through A-D-02. The Hub catalog and Crypto Counsel corpus publications are merged and live.
 
 **Delivered scope:** Dedup Vault executes fresh-key, local message-locked and RFC 9497 P256-SHA256 VOPRF-aided modes over the same input. It measures physical ciphertext equality, unique blobs, per-user AES-SIV capsules, byte accounting and deduplication ratio; executes offline and bounded online dictionary cases; rejects tampered VOPRF proofs; separates storage, key-server and client compromise views; and derives possession, authorization, deletion, revocation and rotation outcomes from current state. Exact-main unit, learner-claim, accessibility, coverage, dependency, mutation and CodeQL gates passed, and the public assets match the reviewed build byte-for-byte.
 
@@ -245,11 +247,11 @@ Extend existing labs through the strongest P1 composition gaps; coordinate relat
 
 ### A-D-02 — Public-key searchable encryption (PEKS)
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** Encrypted search.
+**Priority:** P1 — next · **Status:** In progress · **Workstream:** Encrypted search.
 
 **Target:** Search Vault extension, linked to IBE Gate.
 
-**Existing base:** Search Vault implements static single-keyword SSE. Its actual client derives search tokens with a secret HMAC key, stores encrypted inverted-index postings, and demonstrates count/co-occurrence inference from leakage.
+**Existing base:** Search Vault `97d9e0ff6fbb` implements static single-keyword SSE. Its actual client derives search tokens with a secret HMAC key, stores encrypted inverted-index postings, demonstrates count/co-occurrence inference from leakage and separately checks result integrity. Fresh local, remote-branch and deployed-asset reconciliation found no PEKS, public-key search or pairing implementation to duplicate. IBE Gate `7dfebaff27c4` and Pairing Gate `dddce0a39d0d` provide reviewed Type-3 BLS12-381 and RFC 9380 precedents, but neither supplies this PEKS ciphertext or its role separation.
 
 **Acceptance criteria:**
 
@@ -257,13 +259,17 @@ Extend existing labs through the strongest P1 composition gaps; coordinate relat
 - Compare the PEKS role separation with existing SSE and execute a bounded keyword dictionary attack against an exposed trapdoor.
 - Display keyword-guessing exposure separately from access/search-pattern leakage.
 
-**Next action:** Select a primary PEKS construction and write sender, recipient, search-server and dictionary-attacker interfaces.
+**Next action:** Implement and independently test the reviewed construction as a focused, lazy-loaded Search Vault exhibit without changing its existing SSE or result-integrity outcomes.
 
-**Scope and limits:** Do not treat incomplete extracted book equations as implementation pseudocode or claim that public-key search hides keyword distributions.
+**Reviewed design, 2026-10-24:** Adapt the Boneh–Di Crescenzo–Ostrovsky–Persiano bilinear construction to the Type-3 pairing `e: G1 × G2 → GT` available for BLS12-381. Hash a normalized keyword to G1 with the RFC 9380 `BLS12381G1_XMD:SHA-256_SSWU_RO_` suite under a PEKS-specific domain separation tag. The recipient samples nonzero `x` and publishes `X = xP2`; a sender with only `X` samples fresh nonzero `r` and emits `A = rP2` plus a domain-separated SHA-256 digest of `e(H1(w), X)^r`; the recipient emits `T_w = xH1(w)`; and the server tests the digest of `e(T_w, A)`. Correctness follows from bilinearity, but an independent fixed-scalar computation and RFC hash-to-curve vector must test it rather than relying only on the implementation's own Test path.
 
-**Audit references:** [Asymmetric Setting for Searchable Encryption (original PDF pp. 387–391)](https://doi.org/10.1007/978-3-030-71522-9_1482).
+**Required attack and leakage cases:** A bounded attacker given only the public key, a captured trapdoor and candidate words must generate legitimate randomized PEKS tags and invoke public Test, succeeding only when a candidate is present and reporting an incomplete bounded miss otherwise. Keep that active keyword-guessing result separate from deterministic repeated-trapdoor linkage, access pattern (matching opaque record identifiers) and volume. Equal-keyword tags must differ before a query because sender randomness is fresh; once a trapdoor is released, the server can test retained and future tags. Show that any public sender can make a valid tag, so the construction alone provides neither sender authentication nor proof that a tag describes a separately encrypted body.
 
-**Pinned baseline:** [Search Vault 715cec98e0dd](https://github.com/systemslibrarian/crypto-lab-search-vault/blob/715cec98e0dd03344c0fabc1efd71d0103786bd5/src/sse/client.ts#L1-L44); [IBE Gate b249b17c883b](https://github.com/systemslibrarian/crypto-lab-ibe-gate/blob/b249b17c883b4472ca4ef702866fc609d2c7e943/README.md).
+**Scope and limits:** This is an algebra-preserving Type-3 teaching adaptation, not the original symmetric-pairing instantiation and not a claim that its random-oracle BDH reduction transfers unchanged; the lab supplies executable correctness, not a new asymmetric-pairing proof. PEKS covers keyword tags, not body encryption, tag/body binding, result completeness/freshness, access-pattern hiding or post-quantum security. It must not claim CCA security, exact 128-bit security, anonymous-IBE security or that public-key search hides keyword distributions. The current CFRG draft estimates the BLS12-381 pairing near 126 bits and remains an Internet-Draft.
+
+**Audit references:** [Asymmetric Setting for Searchable Encryption (original PDF pp. 387–391)](https://doi.org/10.1007/978-3-030-71522-9_1482); [Public Key Encryption with Keyword Search](https://web.cs.ucla.edu/~rafail/PUBLIC/61.pdf); [offline keyword-guessing attack](https://doi.org/10.1007/11844662_6); [RFC 9380](https://www.rfc-editor.org/rfc/rfc9380.html); [CFRG pairing-friendly-curves draft](https://datatracker.ietf.org/doc/draft-irtf-cfrg-pairing-friendly-curves/).
+
+**Pinned baseline:** [Search Vault 97d9e0ff6fbb](https://github.com/systemslibrarian/crypto-lab-search-vault/tree/97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26); [IBE Gate 7dfebaff27c4](https://github.com/systemslibrarian/crypto-lab-ibe-gate/tree/7dfebaff27c4e20cd278a4d41a95c538e8807d31); [Pairing Gate dddce0a39d0d](https://github.com/systemslibrarian/crypto-lab-pairing-gate/tree/dddce0a39d0dd5f42c771c65392b3b12d45d368e).
 
 <a id="l-r-07"></a>
 
@@ -1388,6 +1394,8 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-23 | A-D-01 encrypted deduplication design | Fresh current-source and public-repository reconciliation found no existing MLE/deduplication lab. Envelope KMS `50fcf5130274` and OPAQUE Gate `6fffc04fec90` were read as related baselines. The reviewed design selects a DupLESS-shaped adaptation with local convergent and RFC 9497 P256-SHA256 VOPRF-derived modes, AES-CTR under a key/counter pair confined to one distinct plaintext value with intentional reuse for exact repeats, per-user RFC 5297 AES-SIV key capsules, exact-byte deduplication, executable dictionary/rate/proof failures and separate possession, authorization, deletion and revocation transitions. Marked **In progress**; no implementation, test, merge or deployment credit is claimed yet. |
 | 2026-10-23 | A-D-01 encrypted deduplication delivery | [Dedup Vault PR #1](https://github.com/systemslibrarian/crypto-lab-dedup-vault/pull/1) merged at `3cbf467bdb1a`; exact-main [run 40055618704](https://github.com/systemslibrarian/crypto-lab-dedup-vault/actions/runs/40055618704) passed 38 unit, 7 learner-claim, 11 accessibility/reflow and all 24 mutation cases after the clean baseline, then deployed. Exact-main CodeQL passed. Served HTML, JavaScript, CSS and notices matched a fresh build byte-for-byte. Equality and storage accounting, offline and budgeted VOPRF-aided guesses, proof tampering, separate compromise views and possession/authorization/deletion/revocation/rotation boundaries were independently checked. Marked **Live** with the DupLESS-shaped substitution, per-distinct-plaintext AES-CTR key/counter confinement with intentional reuse for exact repeats, bounded possession/rate model and non-production role-isolation limits retained. |
 | 2026-10-23 | A-D-01 advisor publication | [Crypto Counsel PR #20](https://github.com/systemslibrarian/crypto-counsel/pull/20) merged at `cf378a975fc8`. Exact-main [run 40056253650](https://github.com/systemslibrarian/crypto-counsel/actions/runs/40056253650) validated 344 entries and 245 demos, passed its ancestry and evidence controls, reported `baseline: unmutated copy PASSES`, caught all 27 corpus mutations and deployed. The generated Pages pipeline also passed. Served `index.html` and `corpus.json` matched the merge commit byte-for-byte; the live corpus contains the Dedup Vault review pin and correct github.io demo link, and the live retrieval logic selects it for a Dedup query. The finished local and remote integration branches were removed after verification. |
+| 2026-10-23 | A-D-01 Hub publication | [Hub PR #256](https://github.com/systemslibrarian/crypto-lab/pull/256) merged at `5a4387d63b7c`; 14 executed jobs across all seven exact-main workflows passed and the event-inapplicable drift job was correctly skipped. The hosted gates retained 244 cards, 1,738 reviewed sections, five Dedup exhibits, nine source-checked Dictionary attack implementations, Dedup's Message-Locked Encryption implementation credit, Commit Gate's P-256 implementation credit and Quantum Vault's threat-only exclusion. Pages deployed the exact merge; live `index.html` was byte-identical at 789,782 bytes and SHA-256 `db0287a91fddf4a9588820adee4ef547f75cb8b53c395a4a641105c0080c53f3`, with Dedup Vault and its correct GitHub Pages link each appearing once. |
+| 2026-10-23 | A-D-02 PEKS reconciliation and design | Fresh Search Vault `97d9e0ff6fbb`, IBE Gate `7dfebaff27c4`, Pairing Gate `dddce0a39d0d`, fetched branches and the deployed Search Vault assets were reconciled before implementation. No PEKS implementation or new repository was found or needed. The reviewed design adapts the original bilinear PEKS equations to Type-3 BLS12-381, retains RFC 9380 hash-to-G1 and exact role boundaries, executes a public-encryption/Test keyword guess against an exposed trapdoor, and separates guessing, search, access and volume leakage. Marked **In progress**; no implementation, test, merge, deployment or original-proof-transfer claim is credited by this entry. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

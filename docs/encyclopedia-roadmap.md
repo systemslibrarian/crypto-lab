@@ -1125,7 +1125,7 @@ Deepen query models and network/privacy composition; timestamp renewal and optim
 
 **Scope and limits:** Sublinear communication is not sublinear server work; modeled cost curves must not be reported as implementation timings.
 
-**Audit references:** [Piano (ePrint 2023/452)](https://eprint.iacr.org/2023/452); [Doubly Efficient Private Information Retrieval with Linear Preprocessing (ePrint 2022/1703)](https://eprint.iacr.org/2022/1703); [Doubly Efficient Private Information Retrieval (original PDF pp. 1817–1822)](https://doi.org/10.1007/978-3-030-71522-9_1479).
+**Audit references:** [Piano (ePrint 2023/452)](https://eprint.iacr.org/2023/452); [Doubly Efficient Private Information Retrieval and Fully Homomorphic RAM Computation from Ring LWE (ePrint 2022/1703)](https://eprint.iacr.org/2022/1703); [Doubly Efficient Private Information Retrieval (original PDF pp. 1817–1822)](https://doi.org/10.1007/978-3-030-71522-9_1479).
 
 **Pinned baseline:** [Shelf Oracle 4d31c5b3ec5e](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/tree/4d31c5b3ec5e239a170bb4d10c0ba501d95ae7e0); [Patron Shield f8a82cf820f7](https://github.com/systemslibrarian/crypto-lab-patron-shield/blob/f8a82cf820f7e4d1135fb2fdca214d6b0e553f91/README.md); [Split Point e0b0a2d565e9](https://github.com/systemslibrarian/crypto-lab-split-point/blob/e0b0a2d565e9668af3ad2d9a32889296e4a22dda/README.md).
 
@@ -1507,7 +1507,6 @@ Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and t
 
 - Source audit: `audit-deliverable.json`, 2026-10-23; SHA-256 `89fa56f83d8b2b30347b2b9c967bbdb09cb81ad2035c55bb069178e7375da4a8`. All 48 findings are represented once in the numbered proposal sections above.
 - Audit baseline: [main 743f03b9c6134cdcf51b79189e4eadab41bf85ea](https://github.com/systemslibrarian/crypto-lab/blob/743f03b9c6134cdcf51b79189e4eadab41bf85ea/CATALOG.md), with 243 standalone labs and 1,726 mapped standalone sections; hub workshops were reviewed separately. The rollout checkout observed while writing this ledger was `cc49eb16881e1b4cf1c8a7a17c0a77aa7b1bda57`. These are snapshot revisions, not permanent claims about current main.
-- Book: [supplied encyclopedia PDF](https://drive.google.com/file/d/1SzZkTCSygwEKIBenMLpM9r3o2nbdGrto/view), 6,913 pages. Original-page references above mean one-based PDF positions, not publisher printed page labels.
 - Screening covered the titles/definitions of all 2,029 named entries, including 969 cross-references and 1,060 substantive entries; 69 selected entry bodies received full-entry review, and 41 targeted repository heads were checked. It was not a word-for-word review of the whole encyclopedia or every repository file.
 - The original audit did not runtime-test apps. Existing-coverage statements above retain their source-review scope. The new rollout must supply runtime evidence for any implemented learner behavior.
 - Priorities are curriculum judgments. A partial/depth proposal does not mean the entire subject is absent. Re-evaluate a proposal when current source changes; record narrowing or withdrawal without recycling its ID.

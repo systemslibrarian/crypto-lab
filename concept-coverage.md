@@ -265,6 +265,15 @@ Catalogued total moves to 225.*
 
 *Version 36 — records AES Anatomy's accepted-output fault lesson under §27 without adding a lab or changing a concept status. Seeded finite samples execute correct and first-round-faulted AES-128 and classify ciphertext equality, while the separate 2,048-row census is explicitly analytic. Rejection, a secret-independent null and bounded infection/reference-oracle cases expose the modeled selection boundary without presenting the teaching transform as a hardened or universal defense. Catalogued total remains 243.*
 
+*Version 37 — completes E-K-01 under §39 without adding a lab or changing a
+concept status. Envelope KMS now breadth-first searches the declared
+four-call, four-handle, four-blob and three-template model for mutable-role,
+known-key-import/template-confusion and distinct same-value-handle disclosure
+witnesses. Fixed-policy exhaustion is only a bounded no-witness result; a
+one-state cap is incomplete. Found witnesses replay real RFC 3394 and verify
+recovered material with AES-GCM, without claiming PKCS #11 conformance, HSM
+isolation or an unbounded security proof. Catalogued total remains 243.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1093,13 +1102,16 @@ adaptor arithmetic stays in view.
 Envelope KMS · PQ Rotation · Ghost Commit · Key Lifecycle.
 
 Envelope KMS teaches a DEK/KEK hierarchy, rotation and rewrap without plaintext exposure;
-PQ Rotation teaches migration. Envelope KMS's advanced key-handle exercise adds a policy
-composition failure: permitted wrapping followed by a mutable byte-returning decrypt usage
-discloses a sensitive key, despite valid primitive checks. Fixed roles reject that transition
-while legitimate unwrap still returns a protected handle. This is one executed trace in a
-browser policy model using real AES-KW and AES-GCM, with an internally generated wrapping
-key. It does not establish hardware isolation, full PKCS #11 conformance or an exhaustive
-API-policy proof. Import, alias and bounded-search extensions remain in
+PQ Rotation teaches migration. Envelope KMS's advanced key-handle work first executes a
+policy-composition failure: permitted wrapping followed by a mutable byte-returning decrypt
+usage discloses a sensitive key despite valid primitive checks, while fixed roles preserve
+protected unwrap. It then breadth-first searches a declared four-call, four-handle,
+four-blob and three-template model for mutable-role, known-key-import/template-confusion
+and distinct same-value-handle disclosures. Fixed-policy exhaustion is only a bounded
+no-witness result, and a one-state cap is reported as incomplete. Found witnesses replay
+real RFC 3394 and independently verify recovered target material with AES-GCM. This browser
+model does not establish hardware isolation, PKCS #11 conformance, a vendor vulnerability
+or an unbounded API-policy proof. The exact delivered scope and evidence remain in
 [E-K-01](docs/encyclopedia-roadmap.md#e-k-01).
 
 Ghost Commit shows what happens when the key never reached a manager at all: a credential

@@ -645,10 +645,10 @@
   "crypto-lab-protocol-compose": {
    "added": "2026-04",
    "addedOn": "2026-04-13",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-13T02:17:54Z",
-   "updatedFrom": "2026-08-19T03:02:54-04:00",
-   "updatedCommit": "f0443b77db6ede6068ba01799e8ef78ce43158d0"
+   "updatedFrom": "2026-10-21T11:55:08-04:00",
+   "updatedCommit": "5dd48e8f4abf8d222985d1578da699c61c07b0ee"
   },
   "crypto-lab-ring-sign": {
    "added": "2026-04",
@@ -661,10 +661,10 @@
   "crypto-lab-threshold-decrypt": {
    "added": "2026-04",
    "addedOn": "2026-04-13",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-13T02:20:25Z",
-   "updatedFrom": "2026-08-19T03:49:53-04:00",
-   "updatedCommit": "6e21492bddfb26824258dd1ee3170f318aa3a18a"
+   "updatedFrom": "2026-10-21T10:49:02-04:00",
+   "updatedCommit": "512acdf680f4715bb3e0e44a427943204fb13b30"
   },
   "crypto-lab-j-uniward": {
    "added": "2026-04",
@@ -911,8 +911,8 @@
    "addedOn": "2026-04-22",
    "updated": "2026-10",
    "addedFrom": "2026-04-22T23:45:11Z",
-   "updatedFrom": "2026-10-22T20:19:03Z",
-   "updatedCommit": "3fcc80aa1e36576d8e728aa05f0efcdc5e4862ff"
+   "updatedFrom": "2026-10-23T21:00:30-04:00",
+   "updatedCommit": "50fcf5130274de940aba5a3ada405d95243e4fcb"
   },
   "crypto-lab-bulletproofs": {
    "added": "2026-04",
@@ -1085,10 +1085,10 @@
   "crypto-lab-multivariate": {
    "added": "2026-06",
    "addedOn": "2026-06-06",
-   "updated": "2026-09",
+   "updated": "2026-10",
    "addedFrom": "2026-06-06T16:12:26Z",
-   "updatedFrom": "2026-09-30T03:47:43-04:00",
-   "updatedCommit": "e90c5117b4b00dab389a382d74ad76637bbd442f"
+   "updatedFrom": "2026-10-21T18:23:06-04:00",
+   "updatedCommit": "e475888c7a6a09634a1f2e4e5b69115d2b44807b"
   },
   "crypto-lab-mayo-seal": {
    "added": "2026-07",
@@ -1117,10 +1117,10 @@
   "crypto-lab-broken-trust": {
    "added": "2026-06",
    "addedOn": "2026-06-14",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-06-14T21:18:47Z",
-   "updatedFrom": "2026-08-15T21:19:48-04:00",
-   "updatedCommit": "e14c81c90522bcc1bd79ec19594d2f8890f5871e"
+   "updatedFrom": "2026-10-21T18:22:45-04:00",
+   "updatedCommit": "ea17f0ca883ac0181b05ab21727b5b5b0d7305ed"
   },
   "crypto-lab-bitcoin-script": {
    "added": "2026-06",
@@ -1173,10 +1173,10 @@
   "crypto-lab-time-lock-puzzle": {
    "added": "2026-06",
    "addedOn": "2026-06-28",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-06-28T17:00:58Z",
-   "updatedFrom": "2026-08-15T21:19:54-04:00",
-   "updatedCommit": "c45925c540207056a93c9a7927aeb0b900452910"
+   "updatedFrom": "2026-10-21T18:23:11-04:00",
+   "updatedCommit": "d7d0f68ed56ec9ca1b50d5e25cdf86a036873616"
   },
   "crypto-lab-timing-sidechannel": {
    "added": "2026-06",

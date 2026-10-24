@@ -16783,8 +16783,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hybrid-sign": {
-      "commit": "f9345275be11b5ce59c5fc6f5f386a4e4a689eca",
-      "reviewed": "2026-10-22",
+      "commit": "e9e4ddb545c6f934064483f43e924416d26f009d",
+      "reviewed": "2026-10-24",
       "exhibits": [
         {
           "id": "keypair",
@@ -16799,11 +16799,11 @@
             "post-quantum cryptography"
           ],
           "evidence": [
-            "src/main.ts:246",
-            "src/main.ts:250",
-            "src/main.ts:269",
-            "src/main.ts:286",
-            "src/main.ts:581"
+            "src/main.ts:257",
+            "src/main.ts:261",
+            "src/main.ts:280",
+            "src/main.ts:297",
+            "src/main.ts:597"
           ],
           "section": "The Composite Keypair",
           "execution": "real-crypto"
@@ -16821,11 +16821,11 @@
             "AND verification"
           ],
           "evidence": [
-            "src/main.ts:297",
-            "src/main.ts:311",
-            "src/main.ts:314",
-            "src/main.ts:323",
-            "src/main.ts:701",
+            "src/main.ts:308",
+            "src/main.ts:322",
+            "src/main.ts:325",
+            "src/main.ts:334",
+            "src/main.ts:717",
             "src/composite.ts:1"
           ],
           "section": "Sign and Verify",
@@ -16844,11 +16844,11 @@
             "component compromise"
           ],
           "evidence": [
-            "src/main.ts:371",
-            "src/main.ts:440",
-            "src/main.ts:449",
-            "src/main.ts:458",
-            "src/main.ts:467",
+            "src/main.ts:382",
+            "src/main.ts:451",
+            "src/main.ts:460",
+            "src/main.ts:469",
+            "src/main.ts:478",
             "src/breaks.ts:1"
           ],
           "section": "The Break Scenarios",
@@ -16859,33 +16859,40 @@
           "id": "composite-comparison",
           "title": "Composite versus Single Signatures",
           "kind": "comparison",
-          "action": "Compare Ed25519, ML-DSA-65, and their composite key and signature sizes and one-break posture.",
-          "outcome": "Shows the size cost of two signatures and why acceptance requires both components across different algorithm failures.",
+          "action": "Compare Ed25519, ML-DSA-65, and their composite sizes and one-break posture, then inspect the dated TLS proposal and registry table.",
+          "outcome": "Shows the size cost of two signatures, why acceptance requires both components, and that the TLS draft still uses unassigned TBD6 and TBD7 placeholders.",
           "concepts": [
             "composite signature",
             "Ed25519",
             "ML-DSA-65",
             "algorithm diversity",
-            "post-quantum authentication"
+            "post-quantum authentication",
+            "TLS SignatureScheme registry"
           ],
           "evidence": [
-            "src/main.ts:481",
-            "src/main.ts:485",
-            "src/main.ts:495",
-            "src/main.ts:497",
-            "src/main.ts:500",
-            "src/main.ts:501"
+            "src/main.ts:492",
+            "src/main.ts:496",
+            "src/main.ts:506",
+            "src/main.ts:508",
+            "src/main.ts:511",
+            "src/main.ts:512",
+            "src/main.ts:518",
+            "src/main.ts:519",
+            "src/main.ts:520",
+            "src/main.ts:521",
+            "src/main.ts:522",
+            "src/main.ts:523"
           ],
           "section": "Composite vs Single Algorithm",
           "execution": "conceptual",
-          "limits": "Security estimates and standardization labels are claims in this pinned demo, not independent current-status verification."
+          "limits": "Security estimates remain teaching claims. The TLS table is a dated 2026-10-24 snapshot: TBD7 is a draft placeholder, not an assigned codepoint or final standard, and the lab implements neither TLS negotiation nor the newer LAMPS draft-19 construction."
         },
         {
           "id": "long-lived-auth",
           "title": "Long-Lived Signature Threat Model",
           "kind": "explanation",
-          "action": "Read the durable-verification use case and deployment examples.",
-          "outcome": "Frames authentication of records signed today under future single-algorithm failure and cites registry or certificate integration.",
+          "action": "Read the durable-verification use case and the separate LAMPS-construction, TLS-proposal, SSH and deployment-status boundaries.",
+          "outcome": "Frames authentication of records signed today under future single-algorithm failure while separating the older LAMPS draft-16 construction from a pending TLS assignment.",
           "concepts": [
             "long-term authenticity",
             "post-quantum transition",
@@ -16893,16 +16900,20 @@
             "TLS SignatureScheme"
           ],
           "evidence": [
-            "src/main.ts:519",
-            "src/main.ts:523",
-            "src/main.ts:524",
-            "src/main.ts:525",
-            "src/main.ts:545",
-            "src/main.ts:547"
+            "src/main.ts:531",
+            "src/main.ts:535",
+            "src/main.ts:536",
+            "src/main.ts:537",
+            "src/main.ts:557",
+            "src/main.ts:559",
+            "src/main.ts:561",
+            "src/main.ts:563",
+            "src/main.ts:564",
+            "src/main.ts:565"
           ],
           "section": "Why This Matters for Long-Lived Signatures",
           "execution": "conceptual",
-          "limits": "Named drafts and ecosystem examples reflect this pinned source, not a live standards status check."
+          "limits": "The TLS draft and IANA status are a dated 2026-10-24 check; vendor and ecosystem examples remain source claims, and the lab executes no deployed certificate, SSH or TLS integration."
         },
         {
           "id": "euf-versus-suf",
@@ -16918,12 +16929,12 @@
             "component compromise"
           ],
           "evidence": [
-            "src/main.ts:381",
-            "src/main.ts:382",
-            "src/main.ts:383",
-            "src/main.ts:384",
-            "src/main.ts:385",
-            "src/main.ts:387"
+            "src/main.ts:392",
+            "src/main.ts:393",
+            "src/main.ts:394",
+            "src/main.ts:395",
+            "src/main.ts:396",
+            "src/main.ts:398"
           ],
           "section": "The Break Scenarios",
           "execution": "conceptual",
@@ -16943,14 +16954,14 @@
             "assumption diversity"
           ],
           "evidence": [
-            "src/main.ts:409",
-            "src/main.ts:411",
-            "src/main.ts:413",
-            "src/main.ts:416",
-            "src/main.ts:421",
+            "src/main.ts:420",
+            "src/main.ts:422",
             "src/main.ts:424",
-            "src/main.ts:425",
-            "src/main.ts:429"
+            "src/main.ts:427",
+            "src/main.ts:432",
+            "src/main.ts:435",
+            "src/main.ts:436",
+            "src/main.ts:440"
           ],
           "section": "A bit more depth",
           "execution": "conceptual",
@@ -33674,7 +33685,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-shelf-oracle": {
-      "commit": "4d31c5b3ec5e239a170bb4d10c0ba501d95ae7e0",
+      "commit": "d08691c9e17aaf624781adb127ac4a161f993690",
       "reviewed": "2026-10-24",
       "exhibits": [
         {
@@ -33876,11 +33887,11 @@
             "src/ui/scope.ts:71",
             "src/ui/scope.ts:83",
             "src/ui/scope.ts:88",
-            "src/ui/scope.ts:223",
-            "src/ui/scope.ts:257",
-            "src/ui/scope.ts:270",
-            "src/ui/scope.ts:425",
-            "src/ui/scope.ts:441"
+            "src/ui/scope.ts:240",
+            "src/ui/scope.ts:274",
+            "src/ui/scope.ts:287",
+            "src/ui/scope.ts:443",
+            "src/ui/scope.ts:459"
           ],
           "limits": "The parties and observer are objects in one browser; client identity, routing and real network timing are not measured."
         },
@@ -33905,14 +33916,14 @@
             "src/ui/scope.ts:96",
             "src/ui/scope.ts:100",
             "src/ui/scope.ts:105",
-            "src/ui/scope.ts:116",
-            "src/ui/scope.ts:129",
-            "src/ui/scope.ts:142",
-            "src/ui/scope.ts:143",
-            "src/ui/scope.ts:280",
+            "src/ui/scope.ts:117",
+            "src/ui/scope.ts:132",
+            "src/ui/scope.ts:148",
+            "src/ui/scope.ts:149",
             "src/ui/scope.ts:297",
-            "src/ui/scope.ts:299",
-            "src/ui/scope.ts:301"
+            "src/ui/scope.ts:314",
+            "src/ui/scope.ts:316",
+            "src/ui/scope.ts:318"
           ],
           "limits": "The cited BFV/BGV research concerns particular configurations and feedback conditions; the lab does not reproduce those attacks or prove this configuration vulnerable."
         },
@@ -33935,7 +33946,7 @@
             "noise budget"
           ],
           "evidence": [
-            "index.html:205",
+            "index.html:215",
             "src/ui/expand.ts:147",
             "src/ui/expand.ts:171",
             "src/ui/expand.ts:257",
@@ -33957,6 +33968,66 @@
             "src/pir/ntt.ts:181"
           ],
           "limits": "This bounded path uses four 16-selector blocks at q = 2^27 - 39, scans all 64 records and returns four responses under an honest-but-curious model and circular-security assumption. The SHA-256 tag detects decode failure only, the summed response is discarded because its margin is sample-dependent, and the lab does not implement SealPIR multidimensional recursion, sublinear server work or malicious-server integrity."
+        },
+        {
+          "id": "stateful-preprocessing-pir",
+          "title": "Stateful Preprocessing PIR",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "section": "Stateful PIR / Run the bounded stateful lesson",
+          "action": "Preprocess the fixed shelf, retrieve and repeat a record, inspect recovery and refresh, then lose state, change the database and rebuild the invalidated epoch.",
+          "outcome": "Streams the actual database into private parity state, sends an eight-byte fixed-shape request, probes and XORs eight records into one 512-byte response, refreshes the consumed hint and derives separate setup, state, wire, probe, update and crossover costs from the executed session.",
+          "concepts": [
+            "client-preprocessing PIR",
+            "stateful PIR",
+            "Piano-style parity hints",
+            "punctured backup refresh",
+            "fixed-shape query",
+            "consumable client state",
+            "rollback detection",
+            "database-update invalidation",
+            "amortized communication"
+          ],
+          "evidence": [
+            "index.html:216",
+            "src/ui/stateful.ts:180",
+            "src/ui/stateful.ts:184",
+            "src/ui/stateful.ts:221",
+            "src/ui/stateful.ts:442",
+            "src/ui/stateful.ts:452",
+            "src/ui/stateful.ts:470",
+            "src/ui/stateful.ts:501",
+            "src/ui/stateful.ts:559",
+            "src/ui/stateful.ts:592",
+            "src/ui/stateful.ts:611",
+            "src/ui/stateful.ts:753",
+            "src/ui/stateful.ts:816",
+            "src/ui/stateful.ts:819",
+            "src/ui/stateful.ts:994",
+            "src/pir/piano.ts:25",
+            "src/pir/piano.ts:34",
+            "src/pir/piano.ts:62",
+            "src/pir/piano.ts:86",
+            "src/pir/piano.ts:114",
+            "src/pir/piano.ts:146",
+            "src/pir/piano.ts:379",
+            "src/pir/piano.ts:406",
+            "src/pir/piano.ts:420",
+            "src/pir/piano.ts:490",
+            "src/pir/piano.ts:527",
+            "src/pir/piano.ts:541",
+            "src/pir/piano.ts:684",
+            "src/pir/piano.ts:765",
+            "src/pir/piano.ts:898",
+            "src/pir/piano.ts:991",
+            "src/pir/piano.ts:1017",
+            "src/pir/piano.ts:1068",
+            "src/pir/piano.ts:1141",
+            "src/pir/piano.ts:1209",
+            "src/pir/piano.ts:1242",
+            "src/pir/piano.ts:1476"
+          ],
+          "limits": "This is a fixed N = 64, B = 512, Q = 33 Piano-style teaching adaptation with client-specific linear setup and retained state larger than the database, not Piano's theorem, reference wire format, benchmark or asymptotic regime. The server has no derived ProcessDB artifact. The scoped availability bound covers primary-hint misses only; hashes do not authenticate freshness, and dynamic updates, malicious-server integrity or privacy, availability, traffic hiding, ORAM, multi-client sharing, hardened storage and crash consistency remain outside the lesson."
         }
       ],
       "reviewScope": "complete"

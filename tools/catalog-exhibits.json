@@ -759,7 +759,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-aes-anatomy": {
-      "commit": "fffbc96eddebefe2e45bce51890a35d0297570c1",
+      "commit": "1f0f6b86a2dd5b631df13377b5e1a205e712a502",
       "reviewed": "2026-10-23",
       "reviewScope": "complete",
       "exhibits": [
@@ -779,9 +779,10 @@
             "multiplicative inverse"
           ],
           "evidence": [
-            "src/main.ts:27",
-            "src/main.ts:32",
-            "src/main.ts:169",
+            "src/main.ts:30",
+            "src/main.ts:35",
+            "src/main.ts:190",
+            "src/main.ts:193",
             "src/ui/act1.ts:4",
             "src/ui/act1.ts:18"
           ],
@@ -802,8 +803,10 @@
             "nonlinearity"
           ],
           "evidence": [
-            "src/main.ts:35",
-            "src/main.ts:39",
+            "src/main.ts:38",
+            "src/main.ts:42",
+            "src/main.ts:194",
+            "src/main.ts:195",
             "src/ui/act2.ts:5",
             "src/aes/sbox.ts:1"
           ],
@@ -825,9 +828,11 @@
             "column-major layout"
           ],
           "evidence": [
-            "src/main.ts:42",
-            "src/main.ts:46",
-            "src/main.ts:176",
+            "src/main.ts:45",
+            "src/main.ts:49",
+            "src/main.ts:198",
+            "src/main.ts:324",
+            "src/main.ts:332",
             "src/ui/act3.ts:14"
           ],
           "limits": "Structural dependency does not ensure a visible difference on every chosen input."
@@ -849,8 +854,10 @@
           ],
           "evidence": [
             "index.html:122",
-            "src/main.ts:49",
-            "src/main.ts:54",
+            "src/main.ts:52",
+            "src/main.ts:57",
+            "src/main.ts:203",
+            "src/main.ts:346",
             "src/ui/act4.ts:5",
             "src/aes/keyExpansion.ts:1"
           ],
@@ -872,9 +879,11 @@
             "FIPS vectors"
           ],
           "evidence": [
-            "src/main.ts:57",
-            "src/main.ts:61",
-            "src/main.ts:185",
+            "src/main.ts:60",
+            "src/main.ts:64",
+            "src/main.ts:208",
+            "src/main.ts:351",
+            "src/main.ts:375",
             "src/ui/act5.ts:6",
             "src/crosscheck.ts:1"
           ],
@@ -895,8 +904,10 @@
             "reverse round keys"
           ],
           "evidence": [
-            "src/main.ts:64",
-            "src/main.ts:68",
+            "src/main.ts:67",
+            "src/main.ts:71",
+            "src/main.ts:213",
+            "src/main.ts:217",
             "src/ui/act6.ts:5",
             "src/aes/cipher.ts:1"
           ],
@@ -918,9 +929,11 @@
             "avalanche criterion"
           ],
           "evidence": [
-            "src/main.ts:71",
-            "src/main.ts:90",
-            "src/main.ts:227",
+            "src/main.ts:74",
+            "src/main.ts:93",
+            "src/main.ts:402",
+            "src/main.ts:417",
+            "src/main.ts:436",
             "src/ui/act7.ts:18",
             "src/attack.worker.ts:1",
             "src/heldout.ts:1"
@@ -943,7 +956,10 @@
             "fault detection"
           ],
           "evidence": [
-            "src/main.ts:94",
+            "src/main.ts:96",
+            "src/main.ts:102",
+            "src/main.ts:292",
+            "src/main.ts:295",
             "src/dfa-fixture.ts:14",
             "src/dfa-fixture.ts:35",
             "src/attack/dfa.ts:53",
@@ -960,6 +976,52 @@
             "src/ui/act8.ts:195"
           ],
           "limits": "Logical known-location single-byte fault model; not physical injection, not arbitrary ciphertext corruption, and the recomputation comparison is not a universal defense."
+        },
+        {
+          "id": "aes-sifa",
+          "title": "Keep only accepted outputs, recover a byte",
+          "section": "Keep only accepted outputs, recover a byte",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Choose a first-round S-box bit, fault model and output policy; execute correct and faulted AES-128 trials, then rank all 256 first-key-byte guesses from the inputs selected by observable output handling.",
+          "outcome": "Inspect real-AES fault witnesses, a separately labeled analytic census and seeded finite-sample ranks; a secret-independent null and hidden-selection case remove the modeled signal, while an exact clean-reference oracle restores selection.",
+          "concepts": [
+            "AES-128",
+            "ineffective fault analysis",
+            "statistical ineffective fault attack",
+            "selected-output leakage",
+            "key-byte ranking",
+            "infective output handling"
+          ],
+          "evidence": [
+            "src/main.ts:105",
+            "src/main.ts:111",
+            "src/main.ts:310",
+            "src/main.ts:316",
+            "src/sifa-fixture.ts:102",
+            "src/sifa-fixture.ts:105",
+            "src/sifa-fixture.ts:110",
+            "src/sifa-fixture.ts:116",
+            "src/sifa-fixture.ts:181",
+            "src/sifa-fixture.ts:200",
+            "src/sifa-fixture.ts:277",
+            "src/sifa-fixture.ts:295",
+            "src/sifa-fixture.ts:302",
+            "src/sifa-fixture.ts:318",
+            "src/sifa-fixture.ts:353",
+            "src/sifa-fixture.ts:392",
+            "src/sifa-fixture.ts:404",
+            "src/attack/sifa.ts:22",
+            "src/attack/sifa.ts:44",
+            "src/attack/sifa.ts:50",
+            "src/ui/act9.ts:45",
+            "src/ui/act9.ts:100",
+            "src/ui/act9.ts:164",
+            "src/ui/act9.ts:214",
+            "src/ui/act9.ts:235",
+            "src/ui/act9.ts:264"
+          ],
+          "limits": "Chosen-input one-byte logical model with a declared profiled landing rate; the census is analytic rather than sampled evidence, and the deterministic teaching infection is not timing-oblivious, hardened, universal or the cited circuit defense."
         }
       ]
     },

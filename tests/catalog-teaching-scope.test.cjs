@@ -473,6 +473,65 @@ test('differential fault analysis vocabulary does not claim deterministic finite
   );
 });
 
+test('statistical ineffective fault vocabulary names the executable SIFA lesson narrowly', () => {
+  const term = ATTACKS.find(t => t.name === 'Statistical ineffective fault attack');
+  assert.ok(term, 'The catalog must be able to name the bounded AES SIFA lesson');
+  for (const line of [
+    'statistical ineffective fault attack',
+    'statistical_ineffective_fault_analysis',
+    'export function rankSifaKeyByte(selected, bit) {',
+    'DFA + bounded SIFA',
+  ]) assert.ok(term.re.test(line), line);
+  for (const line of [
+    'reliable ineffective fault analysis',
+    'IFA witness',
+    'SIFA: Exploiting Ineffective Fault Inductions',
+    'statistical power analysis',
+  ]) assert.equal(term.re.test(line), false, line);
+  const negated = 'This lab does not implement statistical ineffective fault attacks.';
+  assert.ok(term.re.test(negated));
+  assert.equal(attackContextAllows(term, negated), false);
+  assert.equal(
+    attackContextAllows(term, 'Rank SIFA key byte candidates from accepted-output selection.'),
+    true,
+  );
+});
+
+function checkAesFaultScope(source) {
+  const slug = 'crypto-lab-aes-anatomy';
+  assert.deepEqual(attacksFor(source, slug), [
+    'Chosen-plaintext attack',
+    'Differential fault analysis',
+    'Key recovery',
+    'Known-plaintext attack',
+    'Statistical ineffective fault attack',
+  ]);
+  assert.deepEqual(implementationsFor(source, slug), ['AES']);
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-aes-anatomy\/"[\s\S]*?<\/a>/)[0];
+  assert.match(card, /rank one byte from accepted-output bias in a bounded statistical ineffective fault attack \(SIFA\) model/);
+  assert.match(card, /<span class="chip">Bounded SIFA<\/span>/);
+  assert.doesNotMatch(card, /data-attacks="[^"]*(?:Timing side-channel|Side-channel \(unspecified\))/);
+}
+
+test('AES Anatomy card separates executed DFA and bounded SIFA from excluded channels', () => {
+  checkAesFaultScope(html);
+});
+
+test('AES fault-scope controls reject a bare acronym, IFA-only text and lost attack credits', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-aes-anatomy/"';
+  for (const falseCredit of ['SIFA', 'Ineffective fault analysis', 'Timing side-channel']) {
+    const changed = html.replace(marker, `${marker} data-attacks="${falseCredit}@README.md:1"`);
+    assert.notEqual(changed, html);
+    assert.throws(() => checkAesFaultScope(changed), assert.AssertionError);
+  }
+  for (const name of ['Differential fault analysis', 'Statistical ineffective fault attack']) {
+    const changed = html.replace(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-aes-anatomy\/"[\s\S]*?<\/a>/,
+      card => card.replace(new RegExp(name + '@[^|" ]+'), ''));
+    assert.notEqual(changed, html, `${name} control must remove an actual card credit`);
+    assert.throws(() => checkAesFaultScope(changed), assert.AssertionError);
+  }
+});
+
 test('an independent recovery clause survives an earlier key-access negation', () => {
   const term = ATTACKS.find(t => t.name === 'Frequency analysis');
   // Actual learner-facing source, independently checked against the grouping /

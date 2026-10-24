@@ -524,6 +524,7 @@ const ATTACKS = [
   { name: 'Power analysis', re: /\bdpa\b|\bspa\b|(?<!statistical[-_ ])power[-_ ]?analysis/i },
   { name: 'Fault injection', re: /fault[-_ ]?(?:injection|attack)|rowhammer/i },
   { name: 'Differential fault analysis', re: /differential[-_ ]?fault[-_ ]?(?:analysis|recovery)/i },
+  { name: 'Statistical ineffective fault attack', re: /statistical[-_ ]?ineffective[-_ ]?fault[-_ ]?(?:analysis|attacks?)|\brank[-_ ]?sifa[-_ ]?key[-_ ]?byte\b|\bbounded[-_ ]?sifa\b/i },
   { name: 'Nonce reuse', re: /nonce[-_ ]?(?:reuse|collision|misuse)/i },
   { name: 'IV reuse', re: /iv[-_ ]?reuse/i },
   { name: 'Length extension', re: /length[-_ ]?extension/i },

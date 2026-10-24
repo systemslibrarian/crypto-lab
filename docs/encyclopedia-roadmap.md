@@ -4,17 +4,17 @@
 
 ## Current milestone
 
-**Four encyclopedia-gap milestones are now shipped.** The first stateful key-handle exercise is live in Envelope KMS, L-R-09's query-result integrity exercise is live in Search Vault, E-K-02's executable HIBE delegation exercise is live in IBE Gate, and A-D-06's classical AES differential fault analysis exercise is live in AES Anatomy. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) · [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/)
+**Five encyclopedia-gap milestones are now shipped.** The first stateful key-handle exercise is live in Envelope KMS, L-R-09's query-result integrity exercise is live in Search Vault, E-K-02's executable HIBE delegation exercise is live in IBE Gate, and AES Anatomy now carries both A-D-06's classical differential fault analysis and E-K-06's accepted-output fault analysis. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) · [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/)
 
-E-K-01 remains **in progress as a whole**: its first policy and wrap/decrypt trace is delivered, while import, alias and bounded-search extensions remain planned. L-R-09 is **live**: Search Vault now distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. E-K-02 is **live**: IBE Gate now executes bounded descendant-key delegation, sibling/ancestor failure boundaries, subtree compromise and retained root escrow. A-D-06 is **live**: AES Anatomy now derives last-round key constraints from real round-9 AES-128 faults, intersects candidates, reverses the key schedule and verifies the recovered master key. E-K-06 has an active draft implementation but remains **in progress** with no acceptance credit until its complete gate passes. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
+E-K-01 remains **in progress as a whole**: its first policy and wrap/decrypt trace is delivered, while import, alias and bounded-search extensions remain planned. L-R-09 is **live**: Search Vault now distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. E-K-02 is **live**: IBE Gate now executes bounded descendant-key delegation, sibling/ancestor failure boundaries, subtree compromise and retained root escrow. A-D-06 is **live**: AES Anatomy derives last-round key constraints from real round-9 AES-128 faults, intersects candidates, reverses the key schedule and verifies the recovered master key. E-K-06 is also **live**: finite samples execute correct and first-round-faulted AES-128, classify exact ciphertext equality and rank one key byte from the selected inputs, while a separate analytic census, a secret-independent null and bounded infection/reference-oracle cases keep the statistical claim scoped. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
 
 | Proposal status | Count |
 | --- | ---: |
 | Planned | 43 |
-| In progress | 2 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
-| Live | 3 |
+| Live | 4 |
 | **Total accepted proposals** | **48** |
 
 The 48 proposals retain the audit’s stable IDs and priorities: **17 P1 — next, 24 P2 — depth, and 7 P3 — specialist**. Maintenance corrections are separate from that denominator. A proposal can share an implementation with related IDs, but each ID keeps its own acceptance criteria. These are not 48 requests for standalone labs.
@@ -34,9 +34,9 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Pass the Search Vault PR gate, merge PR #24, rerun the complete gate on main, and deploy commit `97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26`.
 - [x] Reconcile E-K-02 against current IBE Gate, verify its executable HIBE delegation acceptance criteria, hosted tests, deployment revision and served production assets, and record it as live rather than duplicating the work.
 - [x] Reconcile A-D-06 against current AES Anatomy, verify its primary-source fault model, recovery and negative/countermeasure cases, complete hosted gate, deployment revision and exact served assets, and record it as live rather than duplicating the work.
-- [ ] Complete and independently audit the active E-K-06 draft; a draft branch and partial green checks are evidence of work in progress, not delivery.
+- [x] Complete and independently audit E-K-06; merge it only after its full unit, browser/accessibility and mutation gate, then verify the exact deployed assets and learner-visible scope.
 
-**Implementation work:** finish and independently audit E-K-06 next without colliding with its active draft owner. Retain the remaining E-K-01 extensions in this ledger. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** return to E-K-01's remaining import, alias and bounded-search extensions. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -45,8 +45,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **E-K-06 — ineffective/statistical fault analysis:** finish the active draft, then independently verify accepted-output selection leakage, the control distribution and the scoped defense/failure cases before integration.
-2. **E-K-01 later milestone — stateful API depth:** return to import, alias and bounded-search cases after the queued fault-analysis work.
+1. **E-K-01 later milestone — stateful API depth:** implement the remaining import, alias and bounded-search cases without expanding the first exercise's claims.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
@@ -72,9 +71,9 @@ Both served assets matched the locally tested production build byte-for-byte. Th
 
 ### Hub catalog and roadmap
 
-The current integration keeps **243 labs** and records **1,731 reviewed sections**, two more than the 1,729 on the current Hub baseline. In addition to preserving the existing LFSR Trivium, Envelope KMS key-handle and Search Vault query-integrity sections, it maps IBE Gate's executable HIBE delegation and AES Anatomy's classical DFA lesson, updates both cards and the knowledge map, pins the current reviewed source revisions, and repairs Search Vault's generated query-integrity catalog prose. The forty concept boundaries and their statuses remain unchanged.
+The current integration keeps **243 labs** and records **1,732 reviewed sections**, three more than the 1,729 on the prior Hub baseline. In addition to preserving the existing LFSR Trivium, Envelope KMS key-handle and Search Vault query-integrity sections, it maps IBE Gate's executable HIBE delegation plus AES Anatomy's classical DFA and accepted-output fault lessons, updates their cards and the knowledge map, pins the current reviewed source revisions, and retains Search Vault's repaired query-integrity catalog prose. The forty concept boundaries and their statuses remain unchanged.
 
-The two new source mappings were checked against committed AES Anatomy `fffbc96eddeb` and IBE Gate `7dfebaff27c4`; Envelope KMS, LFSR Forge and Shelf Oracle were separately re-reconciled against current main and live deployments. The scoped algorithm review keeps excluded side-channel mentions out of implementation credit, distinguishes differential fault analysis from ordinary differential cryptanalysis and deterministic finite automata, and records HIBE as a bounded teaching adaptation rather than inheriting the paper's proof. Catalog schema/source checks, all generated-file freshness checks, search/structure checks, 643 knowledge-map assertions, 31 teaching-scope controls and the broader non-browser CI suites passed locally. This is verification of the changed mappings, not a new runtime test of all 243 labs. The containing Hub commit and hosted checks provide the publication record for this catalog and ledger.
+The source mappings were checked against committed AES Anatomy `1f0f6b86a2dd` and IBE Gate `7dfebaff27c4`; Envelope KMS, LFSR Forge and Shelf Oracle were separately re-reconciled against current main and live deployments. The scoped algorithm review keeps excluded side-channel mentions out of implementation credit, distinguishes differential fault analysis from ordinary differential cryptanalysis and deterministic finite automata, and records SIFA and HIBE as bounded teaching adaptations rather than inheriting their papers' full results. Catalog schema/source checks, generated-file freshness checks, search/structure checks, knowledge-map assertions, teaching-scope controls and the broader non-browser CI suites gate this integration. This is verification of the changed mappings, not a new runtime test of all 243 labs. The containing Hub commit and hosted checks provide the publication record for this catalog and ledger.
 
 ## Progress definitions
 
@@ -119,7 +118,7 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | Phase 1 — First key-handle exercise | 1 | P1 | First exercise live; broader proposal in progress |
 | Phase 2 — Privacy, storage and query integrity | 11 | P1 | 2 live; 9 planned |
 | Phase 3 — Protocols and arithmetic | 5 | P1 | 5 planned |
-| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 1 live; 1 in progress; 14 planned |
+| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 2 live; 14 planned |
 | Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 8 planned |
 | Phase 6 — Optional specialist and research scope | 7 | P3 | 7 planned |
 
@@ -594,7 +593,7 @@ Build P2 lessons on existing mechanisms. Classical faulty-output DFA precedes in
 
 ### E-K-06 — Ineffective faults and leakage from accepted outputs
 
-**Priority:** P2 — depth · **Status:** In progress · **Workstream:** Fault analysis.
+**Priority:** P2 — depth · **Status:** Live · **Workstream:** Fault analysis.
 
 **Target:** AES Anatomy follow-on, linked to Lattice Fault and Masked Core.
 
@@ -602,19 +601,19 @@ Build P2 lessons on existing mechanisms. Classical faulty-output DFA precedes in
 
 **Acceptance criteria:**
 
-- Apply a specified fault to a secret-dependent intermediate and retain only outputs classified as unchanged.
-- Recover a bit or rank candidates from accepted-output selection, then expose a distinct statistical-bias experiment if claiming SIFA.
-- Compare reject-on-detection and one scoped infective defense, including a fault model where the protection fails.
+- [x] Apply a specified fault to a secret-dependent intermediate and retain only outputs classified as unchanged.
+- [x] Recover a bit or rank candidates from accepted-output selection, then expose a distinct statistical-bias experiment if claiming SIFA.
+- [x] Compare reject-on-detection and one scoped infective defense, including a fault model where the protection fails.
 
-**Active implementation:** [Draft PR #4](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/pull/4) is developing a bounded accepted-output teaching model. At the reconciliation snapshot its typecheck, unit tests and production build passed, but its production-browser gate failed and the mutation gate was consequently skipped. None of the acceptance criteria above is checked off and no merge, deployment or learner claim is credited from that draft.
+**Delivered implementation:** Act 9 clears a selected bit of state byte 0 immediately after first-round SubBytes, continues the existing real AES-128 implementation and compares the correct and fault-path ciphertexts exactly. Its seeded finite-sample experiment draws plaintext bytes and landing events, then gives the ranker only the inputs observable under the selected output policy and the target bit; it does not give the ranker the victim key, internal state or individual fault labels. A separate 2,048-row analytic census derives the declared six-of-eight population and is explicitly not sampled evidence. The secret-independent bit-flip control removes key-dependent selection. Reject-on-detection exposes absence; the deterministic teaching infection returns an output for every attempt and removes this ranker's selection signal when no classifier exists, while granting an exact clean ciphertext for the same plaintext restores the equality classifier and demonstrates the bounded protection's failure case.
 
-**Next action:** Finish the learner-visible implementation and full gate, then independently review the ineffective-fault distribution, estimator/control, scoped defense and failure case against the primary literature before changing this status.
+**Verification:** [PR #4](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/pull/4) merged as [`1f0f6b86a2dd`](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/tree/1f0f6b86a2dd5b631df13377b5e1a205e712a502). The [pre-merge run 40040111072](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/actions/runs/40040111072) and exact-main [post-merge/deployment run 40041039537](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/actions/runs/40041039537) passed 51 unit tests, all 21 production-browser/accessibility checks and all 44 mutation cases. The independent audit checked that finite samples execute the real fault path and equality classifier, that the ranker and null do not receive the secret, that the analytic census is labeled separately, and that infection/reference cases execute their claimed boundaries. A fresh exact-main build matched the served `index.html` (SHA-256 `13b8421118e1f55e03aaa0921069db5a07b52bb8b21f7ba9095f58dc05062cb4`), JavaScript (`assets/index-CWXSlZHY.js`, SHA-256 `156e93eafc66c5fdff4719176182aa3c702132d35cf1e81994c5a89c7334e040`), CSS (`assets/index-DsfsZ8HC.css`, SHA-256 `bf0f46a5df84323fa0119d3920a2937f657e4212a154696059b889aacf40e2ce`) and worker (`assets/attack.worker-BuntoPYK.js`, SHA-256 `fc863e3b4488665e75a3f8d82f052592d843a229fe986447b47ede91c3eaa6ae`) byte-for-byte.
 
-**Scope and limits:** IFA, SIFA and physical measurements are different claims; final verification and generic output scrambling are not universal defenses.
+**Scope and limits:** This is a chosen-input, one-byte logical teaching model with a declared profiled landing rate, not physical injection or a full multi-byte AES SIFA reproduction. The deterministic infection is not timing- or latency-oblivious, hardened, universal or the circuit defense analyzed by Daemen et al.; output-value, timing, common-mode, multi-fault and physical-oracle attacks remain outside the result. The exact-reference failure case deliberately grants an oracle the unprotected scheme would not normally provide.
 
-**Audit references:** [Ineffective Fault Attack (original PDF pp. 3020–3023)](https://doi.org/10.1007/978-3-030-71522-9_1711); [Infective Countermeasure (original PDF pp. 3032–3038)](https://doi.org/10.1007/978-3-030-71522-9_1712).
+**Audit references:** [Clavier, *Secret External Encodings Do Not Prevent Transient Fault Analysis*](https://doi.org/10.1007/978-3-540-74735-2_13); [Dobraunig et al., *SIFA: Exploiting Ineffective Fault Inductions on Symmetric Cryptography*, ePrint 2018/071](https://eprint.iacr.org/2018/071); [Daemen et al., *Protecting against Statistical Ineffective Fault Attacks*, ePrint 2019/536](https://eprint.iacr.org/2019/536).
 
-**Pinned baseline:** [AES Anatomy fffbc96eddeb](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/tree/fffbc96eddebefe2e45bce51890a35d0297570c1); [Lattice Fault 27a332b8d838](https://github.com/systemslibrarian/crypto-lab-lattice-fault/blob/27a332b8d83845632a09046dd76c51343fb20514/README.md#L25).
+**Pinned delivered source:** [AES Anatomy 1f0f6b86a2dd](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/tree/1f0f6b86a2dd5b631df13377b5e1a205e712a502); [Lattice Fault 27a332b8d838](https://github.com/systemslibrarian/crypto-lab-lattice-fault/blob/27a332b8d83845632a09046dd76c51343fb20514/README.md#L25).
 
 <a id="a-d-05"></a>
 
@@ -1331,6 +1330,7 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-23 | A-D-06 classical AES DFA | Reconciled current AES Anatomy rather than duplicating completed work. PR #3 is merged at `fffbc96eddeb`; 39 unit tests, 20 hosted production-browser/accessibility checks and all 36 mutation cases passed, deployment completed, and freshly built assets matched the served site byte-for-byte. The round-9 single-byte fault and candidate equations were checked against Dusart–Letourneux–Vivolo, and recovery, held-out verification, changed-location failure and common-mode recomputation limit were independently exercised. Marked **Live** with the logical known-location AES-128 fault-model limit retained. |
 | 2026-10-23 | E-K-06 accepted-output fault analysis | Draft PR #4 is active in AES Anatomy and is therefore **In progress**, not Planned. At this snapshot typecheck, unit and production build steps passed, while the browser gate failed and mutation/deployment did not run. No acceptance criterion, merge, deployment or learner behavior is credited until the draft is complete and independently checked against primary sources. |
 | 2026-10-23 | Hub reconciliation and catalog integration | [Hub PR #252](https://github.com/systemslibrarian/crypto-lab/pull/252), initial commit `9df3ae449107`, maps the two newly reconciled lessons, updates cards and the knowledge map, repairs Search Vault's generated catalog drift, and records the verified maintenance state. All 11 applicable hosted jobs passed: [catalog and checker regressions](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387335), [teach/layout](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387279), [learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387232), [protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387354), [public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387701) and [arcade browser playthrough](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387230). The scheduled-only drift job was correctly skipped. Merge and Hub deployment remain pending at this ledger entry. |
+| 2026-10-23 | E-K-06 accepted-output fault analysis | [AES Anatomy PR #4](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/pull/4) merged at `1f0f6b86a2dd`; exact-main run 40041039537 passed 51 unit, 21 production-browser/accessibility and 44 mutation cases and deployed. The served HTML, JavaScript, CSS and worker matched the exact tested build byte-for-byte. Real fault-path equality, sampled selected-output ranking, the separate analytic census, secret-independent null, rejection, bounded hidden infection and exact-reference failure case were independently checked against the primary papers. Marked **Live** with the one-byte logical model and non-hardened/non-universal defense limits retained. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

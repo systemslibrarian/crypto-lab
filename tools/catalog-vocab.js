@@ -64,6 +64,11 @@ const ALGORITHMS = [
   { name: 'EME2', kind: 'algorithm', family: 'wide-block cipher mode', re: /\beme2\b/i, std: 'IEEE:1619.2' },
   { name: 'AES-KW', kind: 'algorithm', family: 'key wrap', re: /(?<![a-z0-9])aes(?:[-_ ]?kw|[-_ ]?key[-_ ]?wrap)(?![a-z0-9])/i, std: 'NIST:SP 800-38F' },
   { name: 'AES-SIV', kind: 'algorithm', family: 'AEAD', re: /\bsiv\b/i, std: 'IETF:RFC 5297' },
+  /* Message-locked encryption is a construction, not a standards-body mode.
+     Dedup Vault names the executable derivation `deriveLocalDataKey`; including
+     that deliberately specific symbol keeps the implementation anchor on the
+     computation rather than on explanatory prose. */
+  { name: 'Message-Locked Encryption', kind: 'algorithm', family: 'encrypted deduplication', re: /message[-_ ]?locked[-_ ]?encryption|\bmle\b|\bderiveLocalDataKey\b/i, std: null },
   { name: 'AES-CCM', kind: 'algorithm', family: 'AEAD', re: /\bccm\b/i, std: 'NIST:SP 800-38C' },
   { name: 'ChaCha20', kind: 'algorithm', family: 'stream cipher', re: /chacha20?/i, std: 'IETF:RFC 8439' },
   { name: 'Poly1305', kind: 'algorithm', family: 'MAC', re: /poly1305/i, std: 'IETF:RFC 8439' },
@@ -539,6 +544,11 @@ const ATTACKS = [
   { name: 'Frequency analysis', re: /frequency[-_ ]?analysis/i },
   { name: 'Known-plaintext attack', re: /known[-_ ]?plaintext/i },
   { name: 'Brute force', re: /brute[-_ ]?force/i },
+  /* Keep dictionary search distinct from undirected brute force: these lessons
+     enumerate a chosen candidate corpus and compare its derived evidence. The
+     optional separator catches executable camelCase names after or before the
+     scanner's camel-case normalization. */
+  { name: 'Dictionary attack', re: /dictionary[-_ ]?attack/i },
   { name: 'Differential cryptanalysis', re: /differential[-_ ]?cryptanalysis/i },
   { name: 'Linear cryptanalysis', re: /linear[-_ ]?cryptanalysis/i },
   { name: 'Lattice reduction', re: /\blll\b|lattice[-_ ]?reduction|\bbkz\b/i },

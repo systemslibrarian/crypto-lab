@@ -120,6 +120,10 @@
   "lab": "crypto-lab-prime-witness"
  },
  {
+  "port": 4229,
+  "lab": "crypto-lab-dedup-vault"
+ },
+ {
   "port": 4230,
   "lab": "crypto-lab-lwe-hints"
  },

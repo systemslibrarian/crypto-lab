@@ -274,6 +274,15 @@ one-state cap is incomplete. Found witnesses replay real RFC 3394 and verify
 recovered material with AES-GCM, without claiming PKCS #11 conformance, HSM
 isolation or an unbounded security proof. Catalogued total remains 243.*
 
+*Version 38 — files Dedup Vault under §23. Equal files pass through fresh-key,
+local message-locked and RFC 9497 VOPRF-derived encryption so the lesson can
+measure the storage benefit and the equality signal together. Its computed
+offline and rate-bounded dictionary cases show that the key server changes the
+guessing boundary without hiding equality, while separate possession,
+authorization, deletion, revocation and rotation cases keep those properties
+distinct. This adds depth to an already `COVERED` concept without changing its
+status. Catalogued total moves to 244.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -739,7 +748,7 @@ additive.
 
 **23. Obliviousness — access-pattern and metadata privacy — `COVERED`**
 ORAM Vault · Oblivious Shelf · Patron Shield · PSI Gate · Blind Relay · Blind Hello ·
-DP Noise · Search Vault · Shelf Oracle · Order Leak · Split Point.
+DP Noise · Search Vault · Shelf Oracle · Order Leak · Split Point · Dedup Vault.
 
 Shelf Oracle completes the PIR axis. Oblivious Shelf and Patron Shield are
 information-theoretic and buy that guarantee with a second server that must never collude;
@@ -791,7 +800,7 @@ rather than the retrieval.
 the Scope note above — the catalog's boundary is "checkable mathematical guarantee the
 learner can break," which DP satisfies cleanly.)*
 
-Status stays `COVERED` at eleven demos, which is not an oversight. This concept is a bundle of
+Status stays `COVERED` at twelve demos, which is not an oversight. This concept is a bundle of
 thin axes — access pattern, set intersection, metadata, aggregate release, searchable index,
 property-preserving leakage — most of them taught once, so the count is high while no single axis
 is covered several times over. A reader who split it into three concepts, as the taxonomy note
@@ -1174,7 +1183,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 243.**
+**Catalogued total: 244.**
 
 ---
 

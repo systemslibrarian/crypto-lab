@@ -1474,6 +1474,12 @@
       "level": "intermediate",
       "why": "Works through signed congruences, Bezout coefficients, Euler phi, orders, subgroups and CRT with guided examples; algebra and basic modular arithmetic are useful prerequisites.",
       "reviewed": "2026-10-21: source, README and six-act learner flow"
+    },
+    "crypto-lab-dedup-vault": {
+      "title": "Dedup Vault",
+      "level": "advanced",
+      "why": "Assumes comfort with deterministic encryption leakage, VOPRF proof roles, authenticated key capsules and the distinction among possession, authorization and revocation.",
+      "reviewed": "2026-10-23: complete README, source, tests and five-exhibit learner flow"
     }
   }
 }

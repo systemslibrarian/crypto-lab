@@ -27,7 +27,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | `advanced` | an AEAD design built on the AES round function: kept advanced for the internals |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | `intermediate` | same: policy reasoning about PQC without PQC internals |
 | [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) | `beginner` | Kasiski and the index of coincidence are statistics; the cipher work needs no algebra but that analysis may ask for some |
-| [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) | `intermediate` | The final exhibit exposes advanced bilinear-group equations, but the executable role, leakage and bounded-guessing path does not require deriving them. |
+| [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) | `intermediate` | Later exhibits expose ristretto255 cancellation and bilinear-group equations, but the executable query, role, leakage and bounded-guessing paths do not require deriving them. |
 | [KMAC Gate](https://systemslibrarian.github.io/crypto-lab-kmac-gate/) | `advanced` | KMAC is a MAC from Keccak; kept advanced for the permutation, but it is used as a primitive |
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | `advanced` | systems security rather than cryptography; advanced on the trust reasoning |
 | [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) | `intermediate` | The main rejection-rule lesson needs only modular arithmetic; the optional curve-equation trace and validation-program distinctions may suit an advanced audience. |
@@ -127,7 +127,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | rule | school-level primitives: ECDSA, Ed25519, signature |
 | [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) | hand | its own README opens with "a plain-language, no-math on-ramp — a padlock analogy"; RSA, OAEP/PSS and padding-oracle attacks **(flagged)** |
 | [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) | rule | school-level primitives: ECDSA, signature, nonce |
-| [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) | hand | plain-language SSE and PEKS roles lead the lesson; optional Type-3 pairing algebra is explicitly scoped **(flagged)** |
+| [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) | hand | plain-language SSE, two-term OXT and PEKS roles lead the lesson; optional group algebra is explicitly scoped **(flagged)** |
 | [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) | hand | Argon2id + ChaCha20-Poly1305 in a deniable container — school-level primitives, one security-model idea on top **(flagged)** |
 | [Sleeve Check](https://systemslibrarian.github.io/crypto-lab-sleeve-check/) | rule | school-level primitives: hash function, AES, block cipher |
 | [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) | hand | sign/encrypt under a national standard plus a reused-nonce key recovery: asymmetric basics and a simple attack **(flagged)** |

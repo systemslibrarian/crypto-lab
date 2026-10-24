@@ -1079,9 +1079,9 @@
     "crypto-lab-search-vault": {
       "title": "Search Vault",
       "level": "intermediate",
-      "why": "plain-language SSE and PEKS roles lead the lesson; optional Type-3 pairing algebra is explicitly scoped",
+      "why": "plain-language SSE, two-term OXT and PEKS roles lead the lesson; optional group algebra is explicitly scoped",
       "reviewed": "hand",
-      "uncertain": "The final exhibit exposes advanced bilinear-group equations, but the executable role, leakage and bounded-guessing path does not require deriving them."
+      "uncertain": "Later exhibits expose ristretto255 cancellation and bilinear-group equations, but the executable query, role, leakage and bounded-guessing paths do not require deriving them."
     },
     "crypto-lab-simon-period": {
       "title": "Simon's Period",

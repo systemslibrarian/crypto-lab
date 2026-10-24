@@ -65,14 +65,19 @@ test('dictionary and message-locked vocabulary recognizes the executable symbols
   assert.equal(mle.re.test('deriveLocalDataKeys'), false);
 });
 
-test('PEKS and keyword-inference vocabulary names the construction and the attack narrowly', () => {
+test('PEKS, OXT and keyword-inference vocabulary name the constructions and attack narrowly', () => {
   const peks = ALGORITHMS.find((term) => term.name === 'PEKS');
+  const oxt = ALGORITHMS.find((term) => term.name === 'OXT');
   const inference = ATTACKS.find((term) => term.name === 'Keyword inference');
   assert.ok(peks);
+  assert.ok(oxt);
   assert.ok(inference);
   assert.ok(peks.re.test('PEKS'));
   assert.ok(peks.re.test('public-key encryption with keyword search'));
   assert.equal(peks.re.test('ordinary keyword search'), false);
+  assert.ok(oxt.re.test('OXT'));
+  assert.ok(oxt.re.test('oxt'));
+  assert.equal(oxt.re.test('next'), false);
   assert.ok(inference.re.test('IKK attack'));
   assert.ok(inference.re.test('keyword-inference'));
   assert.ok(inference.re.test('query recovery'));
@@ -86,19 +91,25 @@ function checkSearchVaultScope(source) {
     'BLS12-381',
     'Hash-to-curve',
     'HMAC',
+    'OXT',
     'Pairing',
     'PEKS',
+    'ristretto255',
     'SHA-256',
+    'SHA-512',
   ]);
   assert.deepEqual(attacksFor(source, 'crypto-lab-search-vault'), [
     'Dictionary attack',
     'Keyword inference',
   ]);
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-search-vault\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="1f0b505956087721c7ec3ec3f1221a2df26ae205"/);
+  assert.match(card, /data-review-commit="d904972690e1514d70d5f36fc25b75840b0e4590"/);
+  const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
+  assert.ok(!references.includes('Ed25519'),
+    'noble’s ristretto module filename must not invent an Ed25519 reference');
 }
 
-test('Search Vault credits real SSE and PEKS operations without signature or fault false positives', () => {
+test('Search Vault credits real SSE, OXT and PEKS operations without signature, Ed25519 or fault false positives', () => {
   checkSearchVaultScope(html);
 });
 
@@ -147,7 +158,16 @@ test('dictionary and message-locked scope controls reject lost or invented credi
 
 test('Search Vault scope controls reject removed or invented implementation credit', () => {
   const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-search-vault\/"[^>]*>/;
-  for (const name of ['AES-GCM', 'BLS12-381', 'Hash-to-curve', 'Pairing', 'PEKS']) {
+  for (const name of [
+    'AES-GCM',
+    'BLS12-381',
+    'Hash-to-curve',
+    'OXT',
+    'Pairing',
+    'PEKS',
+    'ristretto255',
+    'SHA-512',
+  ]) {
     const removed = html.replace(cardRe, (card) =>
       card.replace(new RegExp(`${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}@[^|" ]+(?: \\| )?`), ''));
     assert.notEqual(removed, html, `${name}: mutation must remove the reviewed anchor`);
@@ -167,6 +187,10 @@ test('Search Vault scope controls reject removed or invented implementation cred
     card.replace('data-attacks="', 'data-attacks="Fault injection@src/sse/attack.ts:29 | '));
   assert.notEqual(inventedFault, html);
   assert.throws(() => checkSearchVaultScope(inventedFault), assert.AssertionError);
+  const inventedEd25519 = html.replace(cardRe, (card) =>
+    card.replace('data-references="', 'data-references="Ed25519 | '));
+  assert.notEqual(inventedEd25519, html);
+  assert.throws(() => checkSearchVaultScope(inventedEd25519), assert.AssertionError);
 });
 
 function checkRekeyScope(source) {

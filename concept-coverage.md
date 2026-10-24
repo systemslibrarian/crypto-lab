@@ -293,6 +293,15 @@ and access-pattern leakage. This is a scoped Type-3 teaching adaptation, not a
 claim that the original symmetric-pairing proof transfers. Catalogued total
 remains 244.*
 
+*Version 40 — records Search Vault's L-R-07 Boolean-search extension under §23
+without adding a lab or changing a concept status. Exactly two known distinct
+keywords joined by AND run through both two actual isolated SSE queries and a
+bounded OXT adapter over canonical ristretto255 points. Exact TSet/XSet evidence
+and controlled repeat traces expose the constructions' different transcripts;
+the accompanying Path ORAM figures are derived arithmetic for a separate
+non-colluding storage server, not an executed ORAM or a claim that composition
+hides OXT leakage. Catalogued total remains 244.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -795,6 +804,18 @@ and matching opaque record identifiers. It also keeps the construction boundary 
 an algebra-preserving Type-3 BLS12-381 adaptation with no claimed transfer of the original proof,
 not body encryption, sender authentication, tag/body binding, general result verification or
 production role isolation.
+
+Its Boolean-search extension changes the query shape and measures the changed transcript. The
+naïve route sends two deterministic SSE tokens and returns both complete posting lists; the
+bounded OXT route chooses the lower-frequency s-term, retrieves only that TSet list and tests
+one blinded ristretto255 point per row against an exact XSet. Five controlled query pairs
+separate repeated stag equality from conditional candidate-point equality, including the
+important negative result that zero repeated points does not prove the x-term changed. The
+lesson supports only two known distinct terms joined by AND, keeps the observations out of the
+single-keyword IKK attack, and claims neither the paper's full theorem nor active-server
+soundness, completeness or freshness. Its fixed-volume Path ORAM comparison hides final
+document addresses only under a separate non-colluding semi-honest storage model; it does not
+hide the OXT search transcript.
 
 Order Leak is the leakage that needs no access pattern at all, which stretches this concept in a
 direction worth naming. Everything else here leaks as a consequence of being **used** — ORAM hides

@@ -2092,7 +2092,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-attribute-gate": {
-      "commit": "a4cd1973f99b925863b7f83260851ca439edfd81",
+      "commit": "ab293fd0386fac2a4e89cede2b414056df3188eb",
       "reviewed": "2026-10-24",
       "reviewScope": "complete",
       "exhibits": [
@@ -2113,9 +2113,9 @@
             "AES-256-GCM"
           ],
           "evidence": [
-            "src/ui/app.ts:229",
-            "src/ui/app.ts:274",
-            "src/ui/app.ts:285",
+            "src/ui/app.ts:238",
+            "src/ui/app.ts:283",
+            "src/ui/app.ts:294",
             "src/fame/system.ts:227",
             "src/fame/kem.ts:1"
           ],
@@ -2137,8 +2137,8 @@
             "linear reconstruction"
           ],
           "evidence": [
-            "src/ui/app.ts:322",
-            "src/ui/app.ts:360",
+            "src/ui/app.ts:331",
+            "src/ui/app.ts:369",
             "src/fame/oneuse.ts:74",
             "src/fame/msp.ts:65"
           ],
@@ -2159,9 +2159,9 @@
             "ABE decryption"
           ],
           "evidence": [
-            "src/ui/app.ts:378",
-            "src/ui/app.ts:386",
-            "src/ui/app.ts:932",
+            "src/ui/app.ts:387",
+            "src/ui/app.ts:395",
+            "src/ui/app.ts:941",
             "src/fame/system.ts:165",
             "src/fame/system.ts:325"
           ],
@@ -2181,9 +2181,9 @@
             "MSP reconstruction coefficients"
           ],
           "evidence": [
-            "src/ui/app.ts:407",
-            "src/ui/app.ts:420",
-            "src/ui/app.ts:909",
+            "src/ui/app.ts:416",
+            "src/ui/app.ts:429",
+            "src/ui/app.ts:918",
             "src/fame/msp.ts:186",
             "src/fame/msp.ts:205"
           ],
@@ -2204,9 +2204,9 @@
             "AEAD tag rejection"
           ],
           "evidence": [
-            "src/ui/app.ts:442",
-            "src/ui/app.ts:455",
-            "src/ui/app.ts:997",
+            "src/ui/app.ts:451",
+            "src/ui/app.ts:464",
+            "src/ui/app.ts:1006",
             "src/fame/collusion.ts:50",
             "src/fame/system.ts:341"
           ],
@@ -2227,12 +2227,12 @@
             "KeyGen"
           ],
           "evidence": [
-            "src/ui/app.ts:490",
-            "src/ui/app.ts:501",
-            "src/ui/app.ts:1100",
+            "src/ui/app.ts:499",
+            "src/ui/app.ts:510",
+            "src/ui/app.ts:1109",
             "src/fame/system.ts:384"
           ],
-          "limits": "The master secret itself is not passed directly to the Decrypt function; trust in the issuer is required."
+          "limits": "The master secret itself is not passed directly to the Decrypt function; trust in the issuer is required. This is the original single-authority FAME route; RW15 later splits namespaces, but each issuer can still mint its own attributes."
         },
         {
           "id": "revocation",
@@ -2248,12 +2248,12 @@
             "epoch policies"
           ],
           "evidence": [
-            "src/ui/app.ts:511",
-            "src/ui/app.ts:529",
-            "src/ui/app.ts:1161",
-            "src/ui/app.ts:1166"
+            "src/ui/app.ts:520",
+            "src/ui/app.ts:538",
+            "src/ui/app.ts:1170",
+            "src/ui/app.ts:1175"
           ],
-          "limits": "No cryptographic revocation mechanism is implemented; schemes with epochs or re-issuance require extra work."
+          "limits": "The original FAME route itself has no cryptographic revocation. Exhibit 11 separately executes bounded application-layer epoch gating and owner-assisted DEK rewrap; it does not turn native FAME into a revocable-ABE construction."
         },
         {
           "id": "failure-codes",
@@ -2261,7 +2261,7 @@
           "section": "Failure codes",
           "kind": "explanation",
           "execution": "real-operation",
-          "action": "Inspect the table of named success, refusal and internal outcome codes.",
+          "action": "Inspect the original FAME workflow's table of named success, refusal and internal outcome codes.",
           "outcome": "The reference explains which condition each code reports and which invariant should never appear as a user verdict.",
           "concepts": [
             "ABE failure diagnostics",
@@ -2269,11 +2269,11 @@
             "internal invariant"
           ],
           "evidence": [
-            "src/ui/app.ts:637",
-            "src/ui/app.ts:656",
-            "src/ui/app.ts:677"
+            "src/ui/app.ts:646",
+            "src/ui/app.ts:665",
+            "src/ui/app.ts:686"
           ],
-          "limits": "A UI failure code is diagnostic, not a cryptographic security proof."
+          "limits": "A UI failure code is diagnostic, not a cryptographic security proof. This table covers exhibits 1–8 only; FABESA, RW15 and epoch lessons define their own outcome codes beside their results."
         },
         {
           "id": "fabesa-hidden-values",
@@ -2303,6 +2303,75 @@
             "src/fabesa/kem.ts:201"
           ],
           "limits": "Only attribute values are hidden; names, structure, dimensions and lengths remain public. The profile permits one value per public name and no repeated policy names; it does not implement §3.4's multi-use extension. Candidate/tag recognition is a bounded teaching adaptation and does not transfer the paper's theorem or provide production hardening."
+        },
+        {
+          "id": "rw15-multi-authority",
+          "title": "Combine independent issuers with RW15",
+          "section": "Combine independent issuers with RW15",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Run the same-GID opening, bypass the normal interface for the raw cross-GID pool, then compromise Hospital and mint its attribute for a new GID.",
+          "outcome": "Hospital and Board use independent authority secrets. Components issued to one byte-exact canonical GID open the two-authority policy; a raw pool from two GIDs satisfies the LSSS labels but recovers the wrong target-group element and fails the record tag; exposing Hospital's secret breaks a Hospital-only branch while Board remains required.",
+          "concepts": [
+            "RW15",
+            "decentralized multi-authority CP-ABE",
+            "global identifier binding",
+            "cross-user collusion resistance",
+            "authority compromise"
+          ],
+          "evidence": [
+            "src/ui/rw15.ts:282",
+            "src/ui/rw15.ts:488",
+            "src/ui/rw15.ts:550",
+            "src/ui/rw15.ts:623",
+            "src/ui/rw15.ts:700",
+            "src/rw15/rw15.ts:145",
+            "src/rw15/rw15.ts:160",
+            "src/rw15/rw15.ts:200",
+            "src/rw15/rw15.ts:250",
+            "src/rw15/rw15.ts:323",
+            "src/rw15/rw15.ts:346",
+            "src/rw15/kem.ts:41",
+            "src/rw15/kem.ts:66"
+          ],
+          "limits": "The cited RW15 theorem is static random-oracle q-DPBDHE2 security with statically declared corrupt authorities under its challenge restriction. The page tests a narrower exposed-authority-secret case and assumes authenticated, byte-identical GIDs across issuers; it does not establish rogue-key, adaptive-corruption, directory, CCA, policy-privacy, sender-authentication, side-channel or production security."
+        },
+        {
+          "id": "epoch-gating-rewrap",
+          "title": "Advance an epoch and account for revocation work",
+          "section": "Advance an epoch and account for revocation work",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Run the complete lifecycle: seal once, advance the epoch, withhold a revoked holder's new key, test retained and current snapshots, compare rollback with and without trusted state, rewrap the header, and inspect escrow and measured work.",
+          "outcome": "A fresh complete business-plus-epoch FAME key opens current data while the revoked holder receives none; retained old material still opens the old snapshot. A separately trusted checkpoint detects an old header, owner-assisted rewrap changes the access header without changing payload ciphertext, and the page exposes both escrow paths and counters from the executed run.",
+          "concepts": [
+            "application-layer epoch gating",
+            "complete ABE key reissue",
+            "retained old access",
+            "trusted rollback checkpoint",
+            "owner-assisted DEK rewrap",
+            "key escrow"
+          ],
+          "evidence": [
+            "src/ui/revocation.ts:167",
+            "src/ui/revocation.ts:206",
+            "src/ui/revocation.ts:302",
+            "src/ui/revocation.ts:325",
+            "src/ui/revocation.ts:402",
+            "src/ui/revocation.ts:420",
+            "src/ui/revocation.ts:476",
+            "src/ui/revocation.ts:522",
+            "src/revocation/epoch.ts:391",
+            "src/revocation/epoch.ts:438",
+            "src/revocation/epoch.ts:453",
+            "src/revocation/epoch.ts:467",
+            "src/revocation/epoch.ts:782",
+            "src/revocation/epoch.ts:1250",
+            "src/revocation/epoch.ts:1418",
+            "src/revocation/epoch.ts:1448",
+            "src/revocation/epoch.ts:1476"
+          ],
+          "limits": "This owner-assisted per-record application adaptation is not RW15, revocable ABE, revocable-storage ABE, self-updatable encryption or public ciphertext update. It assumes authenticated issuer state and key delivery, cannot erase retained keys, ciphertexts or plaintext, and detects rollback only against separately trusted current state; no combined theorem or scalable bulk-revocation claim is made."
         }
       ]
     },

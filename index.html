@@ -19464,9 +19464,9 @@
             data-comment-only="Diffie-Hellman@src/fame/kem.ts:23 | HPKE@src/fame/kem.ts:22 | Shamir secret sharing@src/fame/msp.ts:11"
             data-references="Boneh-Franklin IBE | Diffie-Hellman | HPKE | Shamir secret sharing"
             data-standards="IETF | NIST"
-            data-implementation="WebCrypto / @noble BLS12-381 pairings / local FAME and FABESA teaching implementations"
-            data-review-commit="a4cd1973f99b925863b7f83260851ca439edfd81"
-            data-review-note="Read the merged README, complete FAME and FABESA source, tests, learner interface and visible limitations at this exact main commit. Attribute Gate executes BLS12-381 source-group and target-group arithmetic and pairings but never calls a BLS signing or verification operation; `src/fabesa/fabesa.ts:29` and `src/fame/bls.ts:17` import the `bls12_381` group namespace, so BLS signatures is a scanner false positive and is removed. The reviewed pairing anchor points to the actual wrapper at `src/fame/bls.ts:191`, not the counter reset at line 183. The original FAME CP-ABE route still executes policy sealing, key issuance, threshold reconstruction, collusion failure, authority escrow and the absence of cryptographic revocation. The separate FABESA lesson uses Figure 5's CP-ABE equations with §3.3's partially hidden CP-A2BE payload. Its ciphertext policy payload exposes the matrix, row map and names; displayed ciphertext/public-key encodings and lengths are public; the presented key exposes its names; and candidate count is derived from that selected policy and key. Attribute values remain hidden. The implemented profile permits one value per public name and no repeated policy names; it does not implement §3.4's multi-use extension. The lesson uses canonical domain-separated encodings, real four-term candidate decryption, a 32-candidate cap and AES-GCM tag acceptance as a recognition oracle. The wrapper is a bounded teaching adaptation and does not inherit the paper's theorem, provide sender provenance or establish CCA, constant-time or production security. Exact-main run 40109374693 passed 162 unit tests, 30 learner-claim tests and three accessibility/reflow tests, then deployed assets matching a fresh build byte for byte."
+            data-implementation="WebCrypto / @noble BLS12-381 pairings / local FAME, FABESA and RW15 teaching implementations / bounded application-layer epoch gating"
+            data-review-commit="ab293fd0386fac2a4e89cede2b414056df3188eb"
+            data-review-note="Read the merged README, complete FAME, FABESA, RW15 and epoch-adaptation source, tests, learner interface and visible limitations at this exact main commit. Attribute Gate executes BLS12-381 source-group and target-group arithmetic and pairings but never calls a BLS signing or verification operation; `src/fabesa/fabesa.ts:29` and `src/fame/bls.ts:17` import the `bls12_381` group namespace, so BLS signatures is a scanner false positive and is removed. The README's explicit CCA-security limit is not an executed chosen-ciphertext attack and is removed too. The reviewed pairing anchor points to the actual wrapper at `src/fame/bls.ts:191`, not the counter reset at line 183. The original FAME route still executes public-policy sealing, key issuance, threshold reconstruction, same-authority collusion failure, authority escrow and its native lack of revocation. The separate FABESA route retains its bounded partial policy-hiding profile (values hidden; names, structure, dimensions and lengths public) and theorem limits. The new RW15 route executes two independent authority setups, authority-qualified attributes, byte-exact GID binding, same-GID opening, the strongest raw cross-GID pool and one-issuer compromise; its hybrid record wrapper does not inherit the paper's theorem. The separately labeled epoch lesson is an owner-assisted application adaptation around single-authority FAME, HKDF-SHA-256 and AES-256-GCM: it executes complete-key reissue, issuance withholding, retained old access, trusted-checkpoint rollback detection, payload-preserving DEK rewrap, both escrow paths and a measured ledger. It is not RW15 revocation, revocable ABE, revocable-storage ABE, self-updatable encryption or public ciphertext update. Exact-main run 40116671435 passed 226 unit tests, 36 learner-claim tests and three accessibility/reflow drives, then deployed assets matching a fresh build byte for byte."
             data-level="advanced" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-10"
            
            
@@ -19541,14 +19541,16 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Attribute-Based Encryption</div>
             <div class="project-title">Attribute Gate</div>
-            <div class="project-copy">Run FAME CP-ABE and splice two keys to expose collusion resistance, then compare a separate FABESA lesson that hides attribute values while names, structure, dimensions, and lengths remain public.</div>
+            <div class="project-copy">Run four separate ABE lessons: FAME policy encryption and collusion, bounded FABESA hidden values, RW15 independent issuers bound to one GID, and application-layer epoch gating with owner-assisted header rewrap and rollback checks.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">FAME CP-ABE</span>
                 <span class="chip">FABESA CP-A2BE</span>
+                <span class="chip">RW15 Multi-Authority ABE</span>
                 <span class="chip">BLS12-381</span>
                 <span class="chip">Collusion Resistance</span>
                 <span class="chip">Partial Policy Hiding</span>
+                <span class="chip">Epoch Gating &amp; DEK Rewrap</span>
               </div>
               <span class="arrow">→</span>
             </div>

@@ -10,10 +10,12 @@ E-K-01 is **live**: Envelope KMS now searches a declared finite state model for 
 
 L-R-05 and its shared A-D-10 cost-model sub-scope are **live** at exact Shelf Oracle main `d08691c9e17a`. The delivered route is a bounded Piano-style parity-and-refresh lesson for a static public database, not a claim that the existing BFV routes gained sublinear server work or that this small adaptation inherits Piano's full theorem. Its exact-main gate and deployment passed, and the public HTML, JavaScript and CSS matched a fresh build byte for byte.
 
+A-D-03 is **in progress** against fresh Attribute Gate main `d0bb24262e9b`. The selected construction is the paper's Type-3 FABESA CP-A2BE from Figure 5, kept as a separate lesson so the existing FAME results and public-policy interface remain intact. Primary-source equation review and independent audit are active; no implementation, test, merge, deployment or live credit is claimed yet.
+
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 37 |
-| In progress | 0 |
+| Planned | 36 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 11 |
@@ -264,7 +266,7 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | Phase | Proposals | Priority | Current state |
 | --- | ---: | --- | --- |
 | Phase 1 — Stateful key-handle policy | 1 | P1 | 1 live |
-| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 7 live; 4 planned |
+| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 7 live; 1 in progress; 3 planned |
 | Phase 3 — Protocols and arithmetic | 5 | P1 | 5 planned |
 | Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 2 live; 14 planned |
 | Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 1 live; 7 planned |
@@ -504,7 +506,7 @@ State loss requires fresh client setup. This bounded construction treats any dat
 
 ### A-D-03 — Hide the access policy, not only the ABE plaintext
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** Advanced ABE.
+**Priority:** P1 — next · **Status:** In progress · **Workstream:** Advanced ABE.
 
 **Target:** Attribute Gate advanced extension.
 
@@ -516,11 +518,13 @@ State loss requires fresh client setup. This bounded construction treats any dat
 - Execute a specified policy-hiding construction and distinguish hidden attribute values from hidden names and structure.
 - Demonstrate authorized decryption while displaying the unauthorized observer's remaining leakage.
 
-**Next action:** Select the precise policy-privacy model and a primary construction before changing the current FAME interface.
+**Next action:** Complete the separately labeled FABESA CP-A2BE lesson, independent equation/claim audit and existing full unit, browser, accessibility and deployment gates without changing the current FAME results.
+
+**Reviewed design, 2026-10-24:** Implement Figure 5's CP-A2BE equations over the existing Type-3 BLS12-381 plumbing. Compare equal-length records under two policies with the same public names, matrix, row map, structure and dimensions but different private values. The public payload deliberately retains `M`, `pi`, attribute names and all resulting sizes; only attribute values and the GT message are absent from it. Use unambiguous length-prefixed, domain-separated encodings for the paper's `H(0 || u)` and `H(1 || u)`. Decryption costs four pairings **for each candidate matching subset**, not four total across a search. The bounded teaching wrapper may use its AES-GCM tag to identify a successful recovered GT element, but that validation oracle is an adaptation: do not transfer Theorem 4 to the KEM/HKDF/AEAD wrapper, and keep the theorem's equal-public-payload and non-satisfying-key-query restrictions visible.
 
 **Scope and limits:** Removing the policy tree from the UI does not hide it cryptographically; current FAME remains labeled as public-policy ABE.
 
-**Audit references:** [Attribute Based Encryption with Access Policy Hiding (original PDF pp. 432–436)](https://doi.org/10.1007/978-3-030-71522-9_1461).
+**Audit references:** [FABESA (ePrint 2024/986)](https://eprint.iacr.org/2024/986); [Attribute Based Encryption with Access Policy Hiding (original PDF pp. 432–436)](https://doi.org/10.1007/978-3-030-71522-9_1461).
 
 **Pinned baseline:** [Attribute Gate d0bb24262e9b](https://github.com/systemslibrarian/crypto-lab-attribute-gate/blob/d0bb24262e9b2b6e47044ef49e5941bdb332e17c/src/fame/system.ts#L71-L80).
 
@@ -1546,6 +1550,7 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-24 | L-R-05/A-D-10 Hub publication and Hybrid Sign evidence refresh | [Hub PR #267](https://github.com/systemslibrarian/crypto-lab/pull/267) merged at `938283101233`; all seven exact-main workflows passed with 14 successful jobs and one correctly skipped schedule-only drift job. Pages deployed the exact merge. The public 796,849-byte catalog matched exact main at SHA-256 `878d21baf312a609990352bfe08409e2cda44c5623451acf83d85c68ebf4181d`; the served 182,999-byte roadmap matched at SHA-256 `0018143df3e28f6b73841c3ba381e6d761927cd913e74634c2d3948e53b82975` before this evidence entry. README, CATALOG, concept coverage, the knowledge map and both reviewed-evidence JSON files also matched exact main byte for byte. The Hub now records 244 labs and 1,742 reviewed sections, including Shelf Oracle's eleventh exhibit, while Hybrid Sign retains no false executed discrete-log, factoring, side-channel or bilinear-pairing credit. |
 | 2026-10-24 | Refreshed reading-review reconciliation | Reconciled the report's older `409bac75db17` roadmap snapshot against current Hub main `ab57d21c09e8`, all four tracking documents and fresh target-repository mains. The report observed 9 live and 2 active proposals; current main has 11 live and 0 active, so the short queue remains A-D-03 then L-R-03. Retained three concrete maintenance items and five bounded, unprioritized `RR-*` follow-ups; attached the guided-hybrid recommendation to E-K-04/S09 instead of creating a duplicate proposal. Current source already covers Wheatstone's historical 27/26 gearing, Quantum Entropy RCT/APT, certificate-chain and CT mechanics, TLS resumption/0-RTT replay, Masked Core second-order CPA and final SP 800-90C references. NIST's May 29, 2025 potential SP 800-90B corrections are not embedded in the reviewed lab values. No proposal status, phase count or implementation order changed. |
 | 2026-10-24 | Refreshed reading-review publication | [Hub PR #269](https://github.com/systemslibrarian/crypto-lab/pull/269) merged at `72f06a7e26d8`. All seven exact-main workflows passed: [Protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40106141648), [Three arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40106141659), [Learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40106141676), [Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40106141652), [README catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40106141655), [Public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40106141668) and [Pages deployment](https://github.com/systemslibrarian/crypto-lab/actions/runs/40106141710). Fourteen jobs succeeded and the event-inapplicable schedule-only drift job was skipped. The public 195,298-byte roadmap matched exact main byte for byte at SHA-256 `0846699c60bb0f83fe7cd64cf9f5977619d446951f1a405f57bc7babaca90223` before this publication-evidence entry; the live document contained the three planned maintenance rows, all five `RR-*` follow-ups and the E-K-04/S09 shared-scaffold boundary. |
+| 2026-10-24 | A-D-03 FABESA implementation start | Attribute Gate was fetched and confirmed clean at `d0bb24262e9b`; implementation began on `codex/ad03-fabesa-20261024`, so A-D-03 moved from **Planned** to **In progress**. The reviewed design follows FABESA Figure 5's CP-A2BE equations, keeps names/structure/dimensions public while hiding values, counts four pairings per candidate, uses canonical hash encodings and separates the paper's core theorem from the lab's AEAD-validation wrapper. The authors' Python artifact was treated only as a cross-check because it omits Figure 5's independent `g3` and contains an apparent exponentiation transcription error. No implementation, test, merge, deployment or learner-behavior credit is claimed by this status change. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

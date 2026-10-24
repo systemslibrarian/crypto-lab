@@ -1639,8 +1639,8 @@
    "addedOn": "2026-09-11",
    "updated": "2026-10",
    "addedFrom": "2026-09-11T18:11:34Z",
-   "updatedFrom": "2026-10-01T06:29:29-04:00",
-   "updatedCommit": "80a414d1cc4cb41d8626a1ea6a8023c95565a2f3"
+   "updatedFrom": "2026-10-24T15:30:06-04:00",
+   "updatedCommit": "f1220e93baa5a5cf549915a1d8a6104748e56303"
   },
   "crypto-lab-fold-gate": {
    "added": "2026-09",

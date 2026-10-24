@@ -29613,8 +29613,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-proof-tally": {
-      "commit": "fe703a3d31e22fd6961d736af428abf0eda8108a",
-      "reviewed": "2026-10-22",
+      "commit": "f1220e93baa5a5cf549915a1d8a6104748e56303",
+      "reviewed": "2026-10-24",
       "exhibits": [
         {
           "id": "report-shares",
@@ -29632,8 +29632,8 @@
           "evidence": [
             "index.html:71",
             "index.html:74",
-            "src/ui/app.ts:186",
-            "src/ui/app.ts:198",
+            "src/ui/app.ts:193",
+            "src/ui/app.ts:207",
             "src/prio3/core.ts:1"
           ],
           "section": "One report, two envelopes",
@@ -29653,8 +29653,8 @@
           ],
           "evidence": [
             "index.html:108",
-            "src/ui/app.ts:157",
-            "src/ui/app.ts:207",
+            "src/ui/app.ts:159",
+            "src/ui/app.ts:216",
             "src/prio3/aggregate.ts:1"
           ],
           "section": "Collector tally",
@@ -29674,12 +29674,13 @@
             "nonce registry"
           ],
           "evidence": [
-            "index.html:114",
-            "index.html:117",
-            "index.html:123",
-            "index.html:129",
-            "src/ui/app.ts:256",
-            "src/ui/app.ts:278"
+            "index.html:172",
+            "index.html:175",
+            "index.html:181",
+            "index.html:187",
+            "src/ui/app.ts:276",
+            "src/ui/app.ts:288",
+            "src/ui/app.ts:298"
           ],
           "section": "Make the verifier say no",
           "execution": "real-crypto",
@@ -29697,9 +29698,10 @@
             "aggregation trust"
           ],
           "evidence": [
-            "index.html:136",
-            "index.html:138",
-            "src/ui/app.ts:340"
+            "index.html:194",
+            "index.html:195",
+            "index.html:196",
+            "src/ui/app.ts:360"
           ],
           "section": "Put both envelopes on one desk",
           "execution": "real-values"
@@ -29716,13 +29718,13 @@
             "aggregate privacy"
           ],
           "evidence": [
-            "index.html:144",
-            "index.html:148",
-            "index.html:150",
-            "index.html:155",
-            "index.html:157",
-            "src/ui/app.ts:356",
-            "src/ui/app.ts:373"
+            "index.html:201",
+            "index.html:205",
+            "index.html:208",
+            "index.html:213",
+            "index.html:215",
+            "src/ui/app.ts:376",
+            "src/ui/app.ts:393"
           ],
           "section": "What a valid proof cannot prove",
           "execution": "real-crypto"
@@ -29742,18 +29744,98 @@
             "TurboSHAKE128"
           ],
           "evidence": [
-            "index.html:163",
-            "index.html:164",
-            "index.html:166",
-            "index.html:168",
-            "index.html:169",
-            "src/ui/app.ts:385",
-            "src/ui/app.ts:395",
-            "src/ui/app.ts:401"
+            "index.html:221",
+            "index.html:222",
+            "index.html:224",
+            "index.html:226",
+            "index.html:227",
+            "src/ui/app.ts:405",
+            "src/ui/app.ts:411",
+            "src/ui/app.ts:421"
           ],
           "section": "Pinned evidence",
           "execution": "real-values",
-          "limits": "No DAP transport, differential privacy, additional aggregator count, or production hardening; vector agreement does not prove security."
+          "limits": "The vector panel does not test differential privacy. The lab provides no DAP transport, production differential-privacy deployment, additional aggregator count, or production hardening; vector agreement does not prove security."
+        },
+        {
+          "id": "distributed-exact-disclosure",
+          "title": "Exact-Release Differencing",
+          "kind": "interactive",
+          "action": "Run two equal-size twelve-slot Prio3Sum queries, replace one bounded slot with zero, and subtract the exact totals.",
+          "outcome": "Shows the difference equals Lane's clamped, floor-quantized contribution even though each aggregator sees only its own shares.",
+          "concepts": [
+            "Prio3Sum",
+            "aggregate differencing",
+            "fixed-size replace-one adjacency",
+            "output privacy"
+          ],
+          "evidence": [
+            "index.html:124",
+            "index.html:125",
+            "index.html:126",
+            "src/distributed/exact.ts:64",
+            "src/distributed/exact.ts:79",
+            "src/distributed/exact.ts:81",
+            "src/distributed/exact.ts:87",
+            "src/ui/distributed.ts:218"
+          ],
+          "section": "Subtract two exact 12-slot totals",
+          "execution": "real-crypto",
+          "limits": "This is a deliberately insecure exact-release control. It preserves cohort size and demonstrates output differencing; it does not claim Prio3 hides released totals."
+        },
+        {
+          "id": "distributed-release",
+          "title": "Participant-Contributed Noisy Release",
+          "kind": "interactive",
+          "action": "Choose an honest/corrupt, dropout, collusion, output-cap, or repeat scenario, then commit one cohort and attempt one release.",
+          "outcome": "Releases one collector-visible noisy Prio3Sum only when the bounded trust and delivery conditions hold; every listed failure path releases no aggregate.",
+          "concepts": [
+            "distributed differential privacy",
+            "discrete Laplace mechanism",
+            "clipping and quantization",
+            "all-or-nothing aggregation",
+            "one-release accounting"
+          ],
+          "evidence": [
+            "index.html:130",
+            "index.html:134",
+            "index.html:146",
+            "index.html:168",
+            "src/distributed/noise.ts:95",
+            "src/distributed/report.ts:310",
+            "src/distributed/release.ts:133",
+            "src/ui/distributed.ts:285"
+          ],
+          "section": "Commit one cohort, release once",
+          "execution": "real-crypto",
+          "limits": "The bounded claim assumes non-colluding aggregators, externally authenticated sender-to-slot bindings, independent honest randomness, at least six honest noise contributors, complete delivery and one accounted release. The browser supplies no durable atomic ledger, DAP transport or production attestation."
+        },
+        {
+          "id": "dp-trust-boundaries",
+          "title": "Differential-Privacy Trust Boundary Comparison",
+          "kind": "comparison",
+          "action": "Compare central, local, this distributed lesson, and shuffle DP while opening the separate collector and omniscient teaching views.",
+          "outcome": "Separates who sees inputs, where noise is trusted, the advertised activation and cap accounting, and which collusion or threshold failures invalidate the release claim.",
+          "concepts": [
+            "central differential privacy",
+            "local differential privacy",
+            "distributed differential privacy",
+            "shuffle differential privacy",
+            "collector view"
+          ],
+          "evidence": [
+            "index.html:153",
+            "index.html:161",
+            "index.html:168",
+            "src/distributed/parameters.ts:117",
+            "src/ui/distributed.ts:234",
+            "src/ui/distributed.ts:246",
+            "src/ui/distributed.ts:261",
+            "src/ui/distributed.ts:271"
+          ],
+          "section": "Same goal, different trust boundary",
+          "execution": "conceptual",
+          "limits": "Only the bounded distributed route is implemented here. Central, local and shuffle DP are comparison rows; the lab implements no shuffler or amplification theorem, and the per-client trace is explicitly not collector-visible."
         }
       ],
       "reviewScope": "complete"

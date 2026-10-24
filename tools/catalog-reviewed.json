@@ -29,6 +29,18 @@
     ],
     "note": "secp256k1 is added by review because the scanner now reads `import { schnorr } from '@noble/curves/secp256k1.js'` as a module path rather than an implementation, which is right in general and wrong here: src/crypto/secp.ts wraps that import into the lab's own point and scalar layer (N, G, mulG, mul, liftX, invModN) and src/crypto/adaptor.ts computes the adaptor construction on it directly. The anchor is the defining point addition, R + T, not the import. Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
   },
+  "crypto-lab-attribute-gate": {
+    "commit": "a4cd1973f99b925863b7f83260851ca439edfd81",
+    "reviewed": "2026-10-24",
+    "add": [
+      "Pairing@src/fame/bls.ts:191"
+    ],
+    "remove": [
+      "BLS signatures"
+    ],
+    "implementation": "WebCrypto / @noble BLS12-381 pairings / local FAME and FABESA teaching implementations",
+    "note": "Read the merged README, complete FAME and FABESA source, tests, learner interface and visible limitations at this exact main commit. Attribute Gate executes BLS12-381 source-group and target-group arithmetic and pairings but never calls a BLS signing or verification operation; `src/fabesa/fabesa.ts:29` and `src/fame/bls.ts:17` import the `bls12_381` group namespace, so BLS signatures is a scanner false positive and is removed. The reviewed pairing anchor points to the actual wrapper at `src/fame/bls.ts:191`, not the counter reset at line 183. The original FAME CP-ABE route still executes policy sealing, key issuance, threshold reconstruction, collusion failure, authority escrow and the absence of cryptographic revocation. The separate FABESA lesson uses Figure 5's CP-ABE equations with §3.3's partially hidden CP-A2BE payload. Its ciphertext policy payload exposes the matrix, row map and names; displayed ciphertext/public-key encodings and lengths are public; the presented key exposes its names; and candidate count is derived from that selected policy and key. Attribute values remain hidden. The implemented profile permits one value per public name and no repeated policy names; it does not implement §3.4's multi-use extension. The lesson uses canonical domain-separated encodings, real four-term candidate decryption, a 32-candidate cap and AES-GCM tag acceptance as a recognition oracle. The wrapper is a bounded teaching adaptation and does not inherit the paper's theorem, provide sender provenance or establish CCA, constant-time or production security. Exact-main run 40109374693 passed 162 unit tests, 30 learner-claim tests and three accessibility/reflow tests, then deployed assets matching a fresh build byte for byte."
+  },
   "crypto-lab-biham-lens": {
     "commit": "8544ee0ff488f74ce437be57ac5cfd494bbe134c",
     "reviewed": "2026-10-21",

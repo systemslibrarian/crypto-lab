@@ -1573,10 +1573,10 @@
   "crypto-lab-attribute-gate": {
    "added": "2026-08",
    "addedOn": "2026-08-21",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-08-21T21:11:56Z",
-   "updatedFrom": "2026-08-23T04:02:47-04:00",
-   "updatedCommit": "9d68579d7daf04d9b423d8ed5877af96ded3ceba"
+   "updatedFrom": "2026-10-24T11:58:08-04:00",
+   "updatedCommit": "a4cd1973f99b925863b7f83260851ca439edfd81"
   },
   "crypto-lab-sphinx-mix": {
    "added": "2026-08",

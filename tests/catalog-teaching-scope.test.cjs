@@ -279,6 +279,49 @@ test('Rekey scope catches false credits while retaining executed primitives', ()
   }
 });
 
+function checkAttributeGateScope(source) {
+  const slug = 'crypto-lab-attribute-gate';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'AES',
+    'AES-GCM',
+    'BLS12-381',
+    'Hash-to-curve',
+    'HKDF',
+    'Pairing',
+    'SHA-256',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), []);
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-attribute-gate\/"[^>]*>/)[0];
+  assert.match(card, /data-review-commit="a4cd1973f99b925863b7f83260851ca439edfd81"/);
+  assert.match(card, /Pairing@src\/fame\/bls\.ts:191/);
+  assert.doesNotMatch(card, /Pairing@src\/fame\/bls\.ts:183/);
+  assert.match(card, /BLS signatures is a scanner false positive and is removed/);
+}
+
+test('Attribute Gate credits pairing operations without inventing BLS signatures', () => {
+  checkAttributeGateScope(html);
+});
+
+test('Attribute Gate scope rejects false signature credit and loss of real primitives', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-attribute-gate\/"[^>]*>/;
+  const inventedSignature = html.replace(cardRe, (card) =>
+    card.replace('data-implements="', 'data-implements="BLS signatures@src/fabesa/fabesa.ts:29 | '));
+  assert.notEqual(inventedSignature, html);
+  assert.throws(() => checkAttributeGateScope(inventedSignature), assert.AssertionError);
+
+  const resetCounterAnchor = html.replace(cardRe, (card) =>
+    card.replace('Pairing@src/fame/bls.ts:191', 'Pairing@src/fame/bls.ts:183'));
+  assert.notEqual(resetCounterAnchor, html);
+  assert.throws(() => checkAttributeGateScope(resetCounterAnchor), assert.AssertionError);
+
+  for (const name of ['AES-GCM', 'BLS12-381', 'Hash-to-curve', 'Pairing']) {
+    const removed = html.replace(cardRe, (card) =>
+      card.replace(new RegExp(`${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}@[^|" ]+(?: \\| )?`), ''));
+    assert.notEqual(removed, html, `${name}: mutation must remove the reviewed anchor`);
+    assert.throws(() => checkAttributeGateScope(removed), assert.AssertionError);
+  }
+});
+
 function checkAblationScope(source) {
   // Inspected f0c5328848ca7de14af3df18751050352c556131:
   // codetalker-core/src/threat.rs:144 marks A5 OutOfScope and explicitly

@@ -14,10 +14,12 @@ A-D-03 is **live** at exact Attribute Gate main `a4cd1973f99b`. The delivered le
 
 L-R-03 is **live** at exact Attribute Gate main `ab293fd0386f`. RW15 and the bounded epoch adaptation remain visibly separate: the former implements the paper's decentralized multi-authority equations and GID binding, while the latter is an owner-assisted application-layer FAME composition with no revocable-ABE, public-update or combined-theorem claim. The exact-main gate and deployment passed, and the public HTML, JavaScript and CSS matched a fresh build byte for byte.
 
+S04 is **in progress** in Proof Tally from exact maintained main `395e990e1980`. Current Proof Tally, DP Noise, Silent Tally and SPDZ Forge were fetched, read and tested before the construction was selected. The active implementation keeps standardized Prio3 draft-22 and its known-answer values unchanged, and adds a separate bounded lesson for fixed-size replace-one salary sums, exact-discrete-Laplace participant noise, an all-or-nothing committed cohort and one release. No S04 implementation, test, merge, deployment or learner-behavior credit is claimed yet.
+
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 35 |
-| In progress | 0 |
+| Planned | 34 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 13 |
@@ -49,8 +51,9 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Implement L-R-05 and A-D-10 in Shelf Oracle; independently audit the bounded state machine, fixed online shape, recovery/refresh equations, state loss, rollback, update/rebuild behavior and separated cost units, then verify exact-main CI, deployment and served assets.
 - [x] Implement A-D-03 in Attribute Gate as a separate bounded FABESA CP-A2BE lesson using Figure 5's CP-ABE equations and §3.3's partially hidden payload; independently audit its equations, anonymity boundary, canonical encodings, candidate search and failure handling, then verify exact-main CI, deployment and served assets.
 - [x] Implement L-R-03 in Attribute Gate as an exact RW15 decentralized multi-authority lesson plus a separately labeled application-layer epoch-gating and owner-assisted DEK-rewrap adaptation; independently audit the equations, identity and compromise boundaries, retained access, rollback model, update costs and escrow, then verify exact-main CI, deployment and served assets.
+- [ ] Implement S04 in Proof Tally as a bounded participant-contributed differential-privacy lesson without changing its standardized Prio3 route; independently audit its sampler, clipping, adjacency, sensitivity, honest-party, dropout, one-release, wrap and collector-view boundaries, then verify the complete hosted gate, deployment and served assets.
 
-**Implementation work:** reconcile S04's current Proof Tally, Silent Tally, DP Noise and SPDZ Forge baselines before selecting a secure-aggregation plus differential-privacy composition. Derive clipping, adjacency, sensitivity, noise generation, honest-party and dropout requirements before coding. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** S04 implementation is active in Proof Tally. The four target baselines have been reconciled and the construction has been independently checked against Shi et al., the exact Canonne–Kamath–Steinke sampler, VDAF draft-22 and final NIST SP 800-226. The lesson uses a fixed committed cohort, record-level clamp and floor quantization before aggregation, fixed-size replace-one adjacency, independently activated participant noise, an explicit finite-sampler failure term, strict no-release aborts and a one-release ledger. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -59,7 +62,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **S04 — Compose secure aggregation with differential privacy:** first reconcile the four current target repositories, then select one composition and derive its clipping, adjacency, sensitivity, jointly generated noise, corrupt-party and dropout requirements before implementation. Keep exact secure aggregation, central DP, local DP and distributed/shuffled trust claims distinct.
+1. **S04 — Compose secure aggregation with differential privacy:** implement and independently verify the selected bounded Proof Tally composition. Preserve standardized Prio3; execute exact fixed-size differencing as the disclosure baseline, then a single participant-noised release with strict cohort, cap, corruption and dropout boundaries. Keep exact secure aggregation, central DP, local DP and distributed/shuffled trust claims distinct.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
@@ -633,7 +636,7 @@ Exhibit 11 is deliberately separate: a bounded application layer around single-a
 
 ### S04 — Compose secure aggregation with differential privacy
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** Private aggregation and DP.
+**Priority:** P1 — next · **Status:** In progress · **Workstream:** Private aggregation and DP.
 
 **Target:** Cross-lab extension using Proof Tally/Silent Tally and DP Noise.
 
@@ -645,13 +648,19 @@ Exhibit 11 is deliberately separate: a bounded application layer around single-a
 - Declare clipping, adjacency, sensitivity, distribution and accounting, and vary corrupt or dropped participants.
 - Compare central, local and distributed/shuffled trust assumptions and show precisely when the stated guarantee no longer applies.
 
-**Next action:** Select one secure-aggregation plus DP composition and derive its honest-party and dropout requirements before coding.
+**Reviewed design, 2026-10-24:** Preserve draft-22 Prio3 unchanged and add a separate application composition over one committed cohort of at most twelve slots. Clamp each salary to `[0, $250,000]`, floor it to `$5,000` units before aggregation and use fixed-size replace-one adjacency, giving `q in [0, 50]` and sensitivity `Delta = 50` units. An honest client independently activates with exact probability `9/10`; on activation it uses the exact integer-only Canonne–Kamath–Steinke algorithms to sample `Lap_Z(50)`. At least six included honest clients make the exact no-honest-activation event `(1/10)^6 = 10^-6`; this is a tighter, explicitly labeled Shi-inspired teaching calibration rather than Shi et al.'s stated beta rule or PSA theorem.
 
-**Scope and limits:** Secret sharing and arbitrary summed party noise do not themselves establish differential privacy.
+Allow `|Y| = 4096` and abort the whole batch without release when `|Y| > 4096`. The exact per-active-draw tail is `2 exp(-4096/50) / (exp(1/50) + 1)`, and the conservative twelve-client union bound is `3.143493953710e-35`; generic total-variation coupling adds at most `(1 + exp(1))` times that bound, or `1.168839644595e-34`, to delta. Encode the bounded contribution as `q + Y + 4096 in [0, 8242]`, prove that range with real `Prio3Sum(8242)`, require every committed report to arrive and prepare successfully, then subtract the cohort offset with ordinary signed integer arithmetic. Even for twelve maximum contributions, `98,904` is far below the Field64 modulus, so no modular wrap is permitted or silently decoded.
 
-**Audit references:** [Secure Computation of Differentially Private Mechanisms (original PDF pp. 5492–5499)](https://doi.org/10.1007/978-3-030-71522-9_1714).
+The exact-disclosure control uses two equal-size twelve-slot real-Prio3 queries and replaces Lane's bounded slot with zero; it does not change cohort cardinality. The collector API exposes only one noisy aggregate. Per-client values, activation and noise remain an explicitly omniscient learner trace; Prio3 proves only the combined shifted range, not truth, clipping, decomposition or honest randomness. The combined claim separately requires a non-colluding aggregator, six eligible honest noise contributors using independent CSPRNG coins, atomic complete delivery, no later noise disclosure and one accounted release. Corrupt clients can choose valid false values or fixed noise and destroy utility; pre-report dropout requires a newly committed cohort, while mid-report dropout, a duplicate, rejection or cap overflow aborts with no output. Shuffle DP remains comparison-only because no unlinkable shuffler is implemented.
 
-**Pinned baseline:** [Proof Tally fe703a3d31e2](https://github.com/systemslibrarian/crypto-lab-proof-tally/tree/fe703a3d31e22fd6961d736af428abf0eda8108a); [DP Noise ea6eac3e9fc1](https://github.com/systemslibrarian/crypto-lab-dp-noise/tree/ea6eac3e9fc145c9f3306d4f6610b0662f8a794f); [SPDZ Forge d5d8b60211fa](https://github.com/systemslibrarian/crypto-lab-spdz-forge/tree/d5d8b60211fa4842cd83ebab27699a9b097a9b10); [Silent Tally 108c5da4c880](https://github.com/systemslibrarian/crypto-lab-silent-tally/tree/108c5da4c880472187ee14dc093b952429ea5af8).
+**Next action:** Complete the isolated core, UI and negative tests; independently review the full diff, then run the complete local and hosted gates before any merge or delivery claim.
+
+**Scope and limits:** Secret sharing and arbitrary summed party noise do not themselves establish differential privacy. This is an executable bounded teaching composition, not the Shi private-stream-aggregation system, DAP, a production sampler or a proof that clients generated noise honestly.
+
+**Audit references:** [Secure Computation of Differentially Private Mechanisms (original PDF pp. 5492–5499)](https://doi.org/10.1007/978-3-030-71522-9_1714); [Shi et al., *Privacy-Preserving Aggregation of Time-Series Data*](https://www.ndss-symposium.org/wp-content/uploads/2017/09/shi.pdf); [Canonne, Kamath and Steinke, *The Discrete Gaussian for Differential Privacy*](https://arxiv.org/abs/2004.00010) (Algorithms 1 and 2 supply the exact Bernoulli and discrete-Laplace sampler); [VDAF draft-22](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-vdaf-22) (IRTF Internet-Draft, work in progress); [NIST SP 800-226 final](https://doi.org/10.6028/NIST.SP.800-226).
+
+**Pinned baseline:** [Proof Tally 395e990e1980](https://github.com/systemslibrarian/crypto-lab-proof-tally/tree/395e990e198029a5ab417db28d1ed341e7d41005); [DP Noise ea6eac3e9fc1](https://github.com/systemslibrarian/crypto-lab-dp-noise/tree/ea6eac3e9fc145c9f3306d4f6610b0662f8a794f); [SPDZ Forge d5d8b60211fa](https://github.com/systemslibrarian/crypto-lab-spdz-forge/tree/d5d8b60211fa4842cd83ebab27699a9b097a9b10); [Silent Tally 108c5da4c880](https://github.com/systemslibrarian/crypto-lab-silent-tally/tree/108c5da4c880472187ee14dc093b952429ea5af8).
 
 <a id="s02"></a>
 
@@ -1604,6 +1613,7 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-24 | A-D-03 FABESA implementation start | Attribute Gate was fetched and confirmed clean at `d0bb24262e9b`; implementation began on `codex/ad03-fabesa-20261024`, so A-D-03 moved from **Planned** to **In progress**. The reviewed design uses Figure 5's CP-ABE equations with §3.3's partially hidden CP-A2BE payload, keeps names/structure/dimensions public while hiding values, counts four pairings per candidate, uses canonical hash encodings and separates the paper's core theorem from the lab's AEAD-validation wrapper. The authors' Python artifact was treated only as a cross-check because it omits Figure 5's independent `g3` and contains an apparent exponentiation transcription error. No implementation, test, merge, deployment or learner-behavior credit is claimed by this status change. |
 | 2026-10-24 | A-D-03 FABESA delivery | [Attribute Gate PR #12](https://github.com/systemslibrarian/crypto-lab-attribute-gate/pull/12) merged as `a4cd1973f99b`; [PR run 40109066723](https://github.com/systemslibrarian/crypto-lab-attribute-gate/actions/runs/40109066723) and [exact-main run 40109374693](https://github.com/systemslibrarian/crypto-lab-attribute-gate/actions/runs/40109374693) passed. The hosted gate reports 162 unit tests, 30 Chromium learner-claim tests and three accessibility/reflow tests. Two targeted mutations were killed. A disposable exact-main build matched all three served assets byte for byte, and the live page contains the separately scoped FABESA lesson using Figure 5's CP-ABE equations and §3.3 payload, public/hidden boundary, bounded candidate workflow, negative cases and theorem/non-claim wording. A-D-03 is **Live**; L-R-03 is next. |
 | 2026-10-24 | L-R-03 multi-authority and epoch delivery | [Attribute Gate PR #13](https://github.com/systemslibrarian/crypto-lab-attribute-gate/pull/13) merged as `ab293fd0386f`; [PR run 40116256609](https://github.com/systemslibrarian/crypto-lab-attribute-gate/actions/runs/40116256609) and [exact-main run 40116671435](https://github.com/systemslibrarian/crypto-lab-attribute-gate/actions/runs/40116671435) passed. Both hosted runs report 226 unit tests, 36 Chromium learner-claim tests and three accessibility/reflow drives; the latter deployed the exact merge. Three L-R-03-specific mutations were killed. The public HTML, JavaScript and CSS matched a fresh merged-tree build byte for byte, and the live page contains exact RW15 same-/cross-GID and compromised-issuer outcomes plus the separately scoped epoch reissue, retained-access, rollback, owner-rewrap, escrow and work-ledger cases. L-R-03 is **Live**; S04 is next for repository reconciliation and construction selection. |
+| 2026-10-24 | S04 reconciliation and implementation start | Proof Tally, DP Noise, Silent Tally and SPDZ Forge were fetched and read at the pins above. Proof Tally maintenance PR #18 merged at `395e990e1980`; exact-main run `40118954034` passed 62 unit tests, 26 hosted Chromium tests and 22 verdict-coverage tests, deployed, and the served HTML, CSS and JavaScript matched a fresh exact-main build byte for byte. Independent design review selected the bounded fixed-cohort, exact discrete-Laplace construction recorded in S04, including equal-size exact differencing, `beta = 9/10`, six-honest `delta_activation = 10^-6`, explicit sampler-cap coupling, all-or-nothing delivery and separate collector/omniscient views. Implementation is active on a clean branch from that merge. S04 is **In progress** only; no new lesson, test, merge, deployment or public behavior is credited by this entry. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

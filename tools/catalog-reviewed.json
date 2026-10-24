@@ -239,6 +239,7 @@
       "Key recovery",
       "Brute force",
       "Chosen-plaintext attack",
+      "Dictionary attack",
       "Ciphertext malleability",
       "Downgrade attack",
       "Length extension",
@@ -971,5 +972,27 @@
       "Side-channel (unspecified)"
     ],
     "note": "Reviewed the complete E-K-01 key-handle model, interfaces, browser claims, tests, security notes and change inventory at the merged source. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged. The first exercise still uses real RFC 3394 wrapping and WebCrypto AES-GCM: unsafe mutable usages disclose a sensitive wrappable key, fixed roles preserve protected unwrap and a nonextractable target refuses wrapping. The later deterministic breadth-first explorer covers mutable-role, known-key-import/template-confusion and distinct same-value-handle presets under the displayed four-call, four-handle, four-blob and three-template model. It distinguishes bounded no-witness from incomplete cutoff, retains terminal symbolic evidence, replays found witnesses with real RFC 3394 and independently checks the recovered target with AES-GCM. Hosted run 40047035613 passed 119 unit tests, 2 publishing-command controls, 39 browser/accessibility tests and all 10 named mutation cases; CodeQL run 40047035602 passed. Remove Fault injection because source mutation verifies tests rather than executing a cryptographic fault attack; remove Side-channel (unspecified) because the briefs exclude that claim. This is not PKCS #11 conformance, HSM isolation, a vendor vulnerability or an unbounded API-policy security proof. Merge, deployment and live evidence are recorded separately in the implementation roadmap."
+  },
+  "crypto-lab-commit-gate": {
+    "commit": "b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9",
+    "reviewed": "2026-10-23",
+    "add": [
+      "P-256@src/pedersen.ts:138"
+    ],
+    "note": "Read the complete committed README and P-256 Pedersen implementation at this exact main commit. src/pedersen.ts hard-codes the P-256 field, order and standard generator, executes point addition and scalar multiplication, derives a second on-curve generator, and uses those operations for live commit, opening and homomorphic checks. Preserve P-256 implementation credit even though the conservative scanner sees the curve name only in explanatory source comments. The teaching try-and-increment map is explicitly not an RFC 9380 hash-to-curve suite, so Hash-to-curve remains comment-only rather than implementation credit. The separate broken unblinded commitment hashes and compares each learner-supplied dictionary candidate."
+  },
+  "crypto-lab-dedup-vault": {
+    "commit": "3cbf467bdb1a67cce39466e2e335e443530ac171",
+    "reviewed": "2026-10-23",
+    "add": [
+      "AES@src/crypto/aes.ts:74",
+      "AES-CTR@src/crypto/aes.ts:74",
+      "AES-SIV@src/crypto/aes.ts:115",
+      "Message-Locked Encryption@src/crypto/aes.ts:57",
+      "OPRF@src/crypto/voprf.ts:208",
+      "P-256@src/crypto/voprf.ts:85"
+    ],
+    "implementation": "@noble/ciphers AES-CTR and AES-SIV / @noble/curves RFC 9497 P256-SHA256 VOPRF / local storage and attack models",
+    "note": "Read the complete merged README, source, tests, learner interface and limits at this exact main commit. Two equal synthetic uploads execute fresh random AES-CTR keys, local first128(SHA-256(P || M)) message-locked derivation and RFC 9497 P256-SHA256 VOPRF derivation. Per-user RFC 5297 AES-SIV capsules bind scheme version, owner, reference and the complete data ciphertext; storage uses a digest only to select a bucket and deduplicates after full ciphertext-byte equality. The attack lesson computes local offline guesses, allowlisted per-principal/per-epoch online guesses, changed identities and epochs, proof tampering and key-server compromise. Separate executed cases distinguish bounded whole-ciphertext possession, reference authorization, last-reference deletion, prospective revocation with cached-copy limits and nonretroactive rotation. This is a DupLESS-shaped adaptation, not byte-for-byte DupLESS, a formal scalable proof-of-ownership protocol, process isolation, enforceable production rate limiting or a hardened storage service. Each derived AES-CTR key/counter pair is confined to one distinct plaintext value; repeats of that exact value intentionally reuse the pair and ciphertext. Hosted PR run 40055127586 passed 38 unit tests, 7 learner claims, 11 accessibility/reflow tests and all 24 named mutations; CodeQL run 40055127584 passed."
   }
 }

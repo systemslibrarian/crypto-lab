@@ -8942,6 +8942,154 @@
       ],
       "reviewScope": "complete"
     },
+    "crypto-lab-dedup-vault": {
+      "commit": "3cbf467bdb1a67cce39466e2e335e443530ac171",
+      "reviewed": "2026-10-23",
+      "reviewScope": "complete",
+      "exhibits": [
+        {
+          "id": "mode-comparison",
+          "title": "Equal file, three encryption choices",
+          "section": "Equal file, three encryption choices",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Edit one synthetic file and run fresh-key, local message-locked and server-aided uploads for Alice and Bob.",
+          "outcome": "Displays both data keys and ciphertexts, exact equality, unique blobs, distinct capsules, counted bytes and the data-deduplication ratio for each mode.",
+          "concepts": [
+            "message-locked encryption",
+            "encrypted deduplication",
+            "randomized encryption",
+            "equality leakage",
+            "AES-CTR",
+            "AES-SIV"
+          ],
+          "evidence": [
+            "src/main.ts:50",
+            "src/main.ts:162",
+            "src/model/scenario.ts:60",
+            "src/model/scenario.ts:142",
+            "src/model/scenario.ts:159",
+            "src/model/scenario.ts:167",
+            "src/model/scenario.ts:175"
+          ],
+          "limits": "Counted storage includes unique data ciphertext and capsules but excludes identifiers, indexes, allocator overhead and protocol traffic."
+        },
+        {
+          "id": "dictionary-pressure",
+          "title": "Dictionary pressure and the online boundary",
+          "section": "Dictionary pressure and the online boundary",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Run equal-length local guesses and RFC 9497 VOPRF guesses across request budgets, identities, epochs, proof tampering and key-server compromise.",
+          "outcome": "Shows exact ciphertext confirmation offline, recovery or delay within a modeled online budget, principal refusal, renewed budgets and proof rejection.",
+          "concepts": [
+            "dictionary attack",
+            "offline confirmation",
+            "rate-limited guessing",
+            "VOPRF",
+            "DLEQ proof",
+            "key-server compromise"
+          ],
+          "evidence": [
+            "src/main.ts:65",
+            "src/main.ts:257",
+            "src/main.ts:383",
+            "src/attacks/dictionary.ts:18",
+            "src/attacks/dictionary.ts:47",
+            "src/attacks/dictionary.ts:95",
+            "src/crypto/voprf.ts:116",
+            "src/crypto/voprf.ts:189",
+            "src/crypto/voprf.ts:235"
+          ],
+          "limits": "The allowlist and quota are teaching state, not an authentication protocol, Sybil defense or enforceable production rate limit."
+        },
+        {
+          "id": "role-views",
+          "title": "Who learns what?",
+          "section": "Who learns what?",
+          "kind": "comparison",
+          "execution": "real-values",
+          "action": "Compare the values and capabilities exposed to the client, key server, storage server and three attacker views for the computed run.",
+          "outcome": "Separates blinded VOPRF traffic, stored equality and metadata, quota-bound guessing, local-MLE guessing and combined-compromise confirmation.",
+          "concepts": [
+            "role separation",
+            "equality leakage",
+            "metadata leakage",
+            "blinded evaluation",
+            "combined compromise"
+          ],
+          "evidence": [
+            "src/main.ts:72",
+            "src/main.ts:449",
+            "src/main.ts:454",
+            "src/main.ts:458",
+            "src/main.ts:462",
+            "src/main.ts:466",
+            "src/main.ts:470",
+            "src/main.ts:474"
+          ],
+          "limits": "All roles execute in one browser origin, so the distinct views are a pedagogical model rather than process, network or hardware isolation."
+        },
+        {
+          "id": "lifecycle-boundaries",
+          "title": "Boundaries: possession, authorization, deletion, revocation, rotation",
+          "section": "Boundaries: possession, authorization, deletion, revocation, rotation",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Execute fresh-nonce possession, owner reads, cross-owner refusal, reference-count deletion, revocation, cached opening, VOPRF rotation and proof tampering.",
+          "outcome": "Reports each boundary independently, including replay rejection, last-reference deletion, prospective revocation and old-capsule survival after rotation.",
+          "concepts": [
+            "proof of possession",
+            "authorization",
+            "reference counting",
+            "revocation",
+            "key rotation",
+            "replay rejection"
+          ],
+          "evidence": [
+            "src/main.ts:78",
+            "src/main.ts:502",
+            "src/model/boundaries.ts:130",
+            "src/model/boundaries.ts:143",
+            "src/model/boundaries.ts:167",
+            "src/model/boundaries.ts:174",
+            "src/model/boundaries.ts:186",
+            "src/model/boundaries.ts:208",
+            "src/model/boundaries.ts:231"
+          ],
+          "limits": "The short response still makes both modeled parties read the complete ciphertext and is not a scalable leakage-resilient proof-of-ownership construction."
+        },
+        {
+          "id": "construction-limits",
+          "title": "Construction, adaptation, and limits",
+          "section": "Construction, adaptation, and limits",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "action": "Inspect the exact local and server-aided formulas, primitive choices, primary sources, adaptations and nonclaims beside the executable results.",
+          "outcome": "Distinguishes the modern P-256 VOPRF and RFC 5297 capsule substitutions from exact DupLESS and keeps the fixed-counter, proof, isolation and revocation assumptions visible.",
+          "concepts": [
+            "DupLESS adaptation",
+            "RFC 9497",
+            "RFC 5297",
+            "AES-CTR counter discipline",
+            "proof-of-ownership boundary",
+            "teaching-model limitations"
+          ],
+          "evidence": [
+            "src/main.ts:85",
+            "src/main.ts:87",
+            "src/main.ts:94",
+            "src/main.ts:106",
+            "src/main.ts:116",
+            "src/crypto/aes.ts:57",
+            "src/crypto/aes.ts:67",
+            "src/crypto/aes.ts:106",
+            "src/crypto/voprf.ts:189"
+          ],
+          "limits": "The original DupLESS proof does not automatically transfer to the substituted VOPRF and capsule construction, and no production hardening is claimed."
+        }
+      ]
+    },
     "crypto-lab-drbg-arena": {
       "commit": "4739c152e1ce7a143e359dc671663a5fb82e7b4d",
       "reviewed": "2026-10-22",

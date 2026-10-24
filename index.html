@@ -2275,7 +2275,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">242</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">243</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -2453,7 +2453,7 @@
           <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-phantom-vault/"
             data-implements="HMAC@src/crypto/hmac-drbg.ts:36 | HMAC-DRBG@src/crypto/hmac-drbg.ts:53 | PBKDF2@src/crypto/pbkdf2.ts:32 | SHA-256@src/crypto/hmac-drbg.ts:42"
             data-references="Argon2 | CTR-DRBG | HKDF | SHA-1 | bcrypt | scrypt"
-            data-attacks="Brute force@src/main.ts:140"
+            data-attacks="Brute force@src/main.ts:140 | Dictionary attack@README.md:32"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-04" data-updated="2026-10"
@@ -8780,7 +8780,7 @@
             data-implements="bcrypt@src/lib.ts:20 | MD5@src/lib.ts:116 | PBKDF2@src/crypto-client.ts:108 | SHA-256@src/crypto-worker.ts:75"
             data-comment-only="Blowfish@src/crypto-client.ts:114 | HMAC@src/crypto-client.ts:107"
             data-references="AES | Argon2 | Blowfish | ChaCha20 | ChaCha20-Poly1305 | Falcon | HKDF | HMAC | Poly1305 | Rainbow chains | SHA-512 | scrypt"
-            data-attacks="Brute force@src/exhibits.ts:528 | Timing side-channel@README.md:28"
+            data-attacks="Brute force@src/exhibits.ts:528 | Dictionary attack@src/exhibits.ts:1177 | Timing side-channel@README.md:28"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="beginner" data-added="2026-04" data-added-on="2026-04-12" data-updated="2026-10"
@@ -8962,12 +8962,14 @@
           </a>
 
           <a class="project-card" data-category="PROTOCOLS | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-commit-gate/"
-            data-implements="EC point arithmetic@src/pedersen.ts:52 | P-256@src/pedersen.ts:1 | Pedersen commitment@src/pedersen.ts:219 | SHA-256@src/hashcommit.ts:46"
-            data-comment-only="Hash-to-curve@src/pedersen.ts:168"
-            data-references="Bulletproofs | FROST | Feldman VSS | Fiat-Shamir | Hash-to-curve | KZG commitment | Oblivious transfer | One-time pad | P-256 | Schnorr | ristretto255"
-            data-attacks="Birthday bound@src/main.ts:371 | Discrete log@src/main.ts:433"
+            data-implements="EC point arithmetic@src/pedersen.ts:52 | P-256@src/pedersen.ts:138 | Pedersen commitment@src/pedersen.ts:219 | SHA-256@src/hashcommit.ts:46"
+            data-comment-only="Hash-to-curve@src/pedersen.ts:161 | P-256@src/homomorphism-viz.ts:4"
+            data-references="Bulletproofs | FROST | Feldman VSS | Fiat-Shamir | Hash-to-curve | KZG commitment | Oblivious transfer | One-time pad | Schnorr | ristretto255"
+            data-attacks="Birthday bound@src/main.ts:371 | Dictionary attack@src/hashcommit.ts:134 | Discrete log@src/main.ts:431"
             data-standards="NIST"
             data-implementation="WebCrypto"
+            data-review-commit="b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9"
+            data-review-note="Read the complete committed README and P-256 Pedersen implementation at this exact main commit. src/pedersen.ts hard-codes the P-256 field, order and standard generator, executes point addition and scalar multiplication, derives a second on-curve generator, and uses those operations for live commit, opening and homomorphic checks. Preserve P-256 implementation credit even though the conservative scanner sees the curve name only in explanatory source comments. The teaching try-and-increment map is explicitly not an RFC 9380 hash-to-curve suite, so Hash-to-curve remains comment-only rather than implementation credit. The separate broken unblinded commitment hashes and compares each learner-supplied dictionary candidate."
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-13" data-updated="2026-10"
            
            
@@ -9925,6 +9927,7 @@
             data-comment-only="Argon2@src/kdf.ts:132 | OPAQUE@src/ake.ts:2"
             data-protocol-partial="OPAQUE@src/ake.ts:77"
             data-references="EC point arithmetic | OPAQUE | Pairing | RSA | SHA-512 | SRP | WebAuthn | X25519 | X3DH | bcrypt | ristretto255"
+            data-attacks="Dictionary attack@src/main.ts:577"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-18" data-updated="2026-10"
@@ -11829,7 +11832,7 @@
             data-implements="EC point arithmetic@src/group.ts:166 | Hash-to-curve@src/group.ts:142 | OPRF@src/attacks.ts:384 | Private set intersection@src/oprf-psi.ts:86 | ristretto255@src/attacks.ts:348 | SHA-256@src/oprf-psi.ts:90"
             data-comment-only="Diffie-Hellman@src/attacks.ts:2 | Ed25519@src/attacks.ts:313 | Merkle tree@src/attacks.ts:380 | OPAQUE@src/group.ts:131 | secp256k1@src/attacks.ts:244 | X25519@src/attacks.ts:244"
             data-references="Bloom filter | Diffie-Hellman | Double Ratchet | Ed25519 | HKDF | OPAQUE | Oblivious transfer | Paillier | Private information retrieval | SHA-512 | TFHE | X25519"
-            data-attacks="Replay attack@src/attacks.ts:121 | Side-channel (unspecified)@src/main.ts:1926 | Signature malleability@src/attacks.ts:293"
+            data-attacks="Dictionary attack@src/attacks.ts:75 | Replay attack@src/attacks.ts:121 | Side-channel (unspecified)@src/main.ts:1926 | Signature malleability@src/attacks.ts:293"
             data-standards="IETF | NIST"
             data-implementation="@noble"
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
@@ -14832,7 +14835,7 @@
             data-comment-only="Diffie-Hellman@src/pake/types.ts:121 | ECDSA@src/pake/dragonfly.ts:67 | Ed25519@src/pake/cpace.ts:44 | Hash-to-curve@src/pake/groups.ts:124 | OPAQUE@src/pake/taxonomy.ts:1 | OPRF@src/pake/taxonomy.ts:4 | Schnorr identification@src/pake/jpake.ts:123"
             data-protocol-partial="TLS 1.3@src/pake/srp6a.ts:149"
             data-references="Diffie-Hellman | EC point arithmetic | Ed25519 | ML-KEM | OPAQUE | OPRF | Schnorr identification"
-            data-attacks="Discrete log@src/ui/glossary.ts:20 | Side-channel (unspecified)@src/pake/dragonblood.ts:18 | Timing side-channel@src/ui/dragonbloodPanel.ts:48"
+            data-attacks="Dictionary attack@src/pake/taxonomy.ts:51 | Discrete log@src/ui/glossary.ts:20 | Side-channel (unspecified)@src/pake/dragonblood.ts:18 | Timing side-channel@src/ui/dragonbloodPanel.ts:48"
             data-standards="IETF | NIST"
             data-implementation="@noble"
             data-level="advanced" data-added="2026-07" data-added-on="2026-07-10" data-updated="2026-10"
@@ -16150,7 +16153,7 @@
             data-implements="HKDF@src/spake/transcript.ts:52 | HMAC@src/spake/transcript.ts:41 | P-256@src/spake/group.ts:66 | PBKDF2@src/spake/password.ts:49 | SHA-256@src/spake/transcript.ts:37 | SPAKE2@src/spake/spake2.ts:119"
             data-comment-only="Argon2@src/spake/password.ts:4 | CPace@src/ui/comparison.ts:4 | Diffie-Hellman@src/attack/offline.ts:56 | Hash-to-curve@src/ui/constants.ts:9 | J-PAKE@src/ui/comparison.ts:4 | OPAQUE@src/ui/comparison.ts:1 | OPRF@src/ui/comparison.ts:4 | scrypt@src/spake/password.ts:4 | SRP@src/ui/comparison.ts:4"
             data-references="CPace | Diffie-Hellman | Dragonfly | EC point arithmetic | ECDH | Hash-to-curve | J-PAKE | Kerberos | OPAQUE | OPRF | Pairing | SRP"
-            data-attacks="Discrete log@src/main.ts:97 | Man-in-the-middle@src/ui/constants.ts:60 | Side-channel (unspecified)@README.md:72"
+            data-attacks="Dictionary attack@src/attack/offline.ts:106 | Discrete log@src/main.ts:97 | Man-in-the-middle@src/ui/constants.ts:60 | Side-channel (unspecified)@README.md:72"
             data-standards="IETF | NIST"
             data-implementation="@noble"
             data-review-commit="50137f12b70db584e5ace6a7bf264d45baecb351"
@@ -19173,6 +19176,7 @@
             data-implements="ECDSA@src/dnssec/crypto.ts:221 | Ed25519@src/dnssec/crypto.ts:244 | Ed448@src/vectors/rfc.ts:88 | P-256@src/dnssec/crypto.ts:160 | RSA@src/dnssec/crypto.ts:78 | SHA-1@src/dnssec/crypto.ts:51 | SHA-256@src/dnssec/crypto.ts:53 | SHA-384@src/dnssec/crypto.ts:55"
             data-comment-only="EdDSA@src/dnssec/crypto.ts:104 | MD5@src/dnssec/keytag.ts:34 | P-384@src/ui/panels/break.ts:18"
             data-references="Encrypted Client Hello | Kerberos | MD5 | Merkle tree | P-384 | RSA-OAEP | SHA-512"
+            data-attacks="Dictionary attack@src/ui/panels/nsec3.ts:143"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="beginner" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-10"
@@ -21514,6 +21518,23 @@
             <div class="project-meta"><div class="stack"><span class="chip">AES-128/192/256</span><span class="chip">GF(2⁸)</span><span class="chip">Differential Fault Analysis</span><span class="chip">Bounded SIFA</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
+          <a class="project-card" data-category="ENCRYPTION | PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-dedup-vault/"
+            data-implements="AES@src/crypto/aes.ts:74 | AES-CTR@src/crypto/aes.ts:74 | AES-SIV@src/crypto/aes.ts:115 | Message-Locked Encryption@src/crypto/aes.ts:57 | OPRF@src/crypto/voprf.ts:208 | P-256@src/crypto/voprf.ts:85 | SHA-256@src/crypto/bytes.ts:72"
+            data-references="CMAC | HMAC | OPAQUE | RSA"
+            data-attacks="Dictionary attack@src/attacks/dictionary.ts:18"
+            data-standards="IETF | NIST"
+            data-implementation="@noble/ciphers AES-CTR and AES-SIV / @noble/curves RFC 9497 P256-SHA256 VOPRF / local storage and attack models"
+            data-review-commit="3cbf467bdb1a67cce39466e2e335e443530ac171"
+            data-review-note="Read the complete merged README, source, tests, learner interface and limits at this exact main commit. Two equal synthetic uploads execute fresh random AES-CTR keys, local first128(SHA-256(P || M)) message-locked derivation and RFC 9497 P256-SHA256 VOPRF derivation. Per-user RFC 5297 AES-SIV capsules bind scheme version, owner, reference and the complete data ciphertext; storage uses a digest only to select a bucket and deduplicates after full ciphertext-byte equality. The attack lesson computes local offline guesses, allowlisted per-principal/per-epoch online guesses, changed identities and epochs, proof tampering and key-server compromise. Separate executed cases distinguish bounded whole-ciphertext possession, reference authorization, last-reference deletion, prospective revocation with cached-copy limits and nonretroactive rotation. This is a DupLESS-shaped adaptation, not byte-for-byte DupLESS, a formal scalable proof-of-ownership protocol, process isolation, enforceable production rate limiting or a hardened storage service. Each derived AES-CTR key/counter pair is confined to one distinct plaintext value; repeats of that exact value intentionally reuse the pair and ciphertext. Hosted PR run 40055127586 passed 38 unit tests, 7 learner claims, 11 accessibility/reflow tests and all 24 named mutations; CodeQL run 40055127584 passed."
+            data-added="2026-10" data-added-on="2026-10-24" data-updated="2026-10" data-level="advanced"
+            target="_blank" rel="noopener" style="--accent: #ffb84d;"
+            data-overlaps="crypto-lab-envelope-kms: Envelope KMS uses random per-upload DEKs and KEK wrapping; Dedup Vault compares that baseline with content-derived shared ciphertext. | crypto-lab-opaque-gate: OPAQUE Gate uses an OPRF inside a PAKE; Dedup Vault uses RFC 9497 VOPRF output for a rate-bounded content-key derivation. | crypto-lab-oram-vault: Dedup Vault exposes equality for deduplication; ORAM Vault instead studies hiding access patterns. | crypto-lab-order-leak: Order Leak compares equality- and order-preserving encryption and inference; Dedup Vault intentionally exposes equality for deduplication and measures its dictionary-attack economics.">
+            <div class="card-kicker">Encrypted Deduplication</div>
+            <div class="project-title">Dedup Vault</div>
+            <div class="project-copy">Compare fresh-key, local message-locked and server-aided encryption for equal files; measure deduplication and dictionary pressure, then separate possession, authorization, deletion, revocation and rotation.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Message-Locked Encryption</span><span class="chip">AES-CTR</span><span class="chip">AES-SIV</span><span class="chip">VOPRF</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -21721,6 +21742,7 @@
     ];
 
     var TITLE_TO_SECTION = {
+      'Dedup Vault': 'privacy',
       'Clock Arithmetic': 'foundations',
       'AES Anatomy': 'symmetric',
       'TESLA Broadcast': 'foundations',

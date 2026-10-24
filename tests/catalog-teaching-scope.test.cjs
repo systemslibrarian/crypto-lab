@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { attackContextAllows, lex } = require('../tools/catalog-evidence.js');
-const { ATTACKS } = require('../tools/catalog-vocab.js');
+const { ALGORITHMS, ATTACKS } = require('../tools/catalog-vocab.js');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 
@@ -20,6 +20,91 @@ function implementationsFor(source, slug) {
   return (card[0].match(/\bdata-implements="([^"]*)"/)?.[1] ?? '')
     .split(' | ').map(value => value.split('@')[0]);
 }
+
+function checkDictionaryScope(source) {
+  const executable = [
+    'crypto-lab-phantom-vault',
+    'crypto-lab-bcrypt-forge',
+    'crypto-lab-commit-gate',
+    'crypto-lab-opaque-gate',
+    'crypto-lab-psi-gate',
+    'crypto-lab-pake-gate',
+    'crypto-lab-spake-gate',
+    'crypto-lab-dnssec-chain',
+    'crypto-lab-dedup-vault',
+  ];
+  for (const slug of executable) {
+    assert.ok(attacksFor(source, slug).includes('Dictionary attack'),
+      `${slug}: keep the learner-executed dictionary attack`);
+  }
+  assert.ok(!attacksFor(source, 'crypto-lab-quantum-vault-kpqc').includes('Dictionary attack'),
+    'Quantum Vault describes this threat as out of scope; it does not execute the attack');
+  assert.ok(implementationsFor(source, 'crypto-lab-dedup-vault').includes('Message-Locked Encryption'),
+    'Dedup Vault must credit its executable message-locked construction');
+  assert.ok(implementationsFor(source, 'crypto-lab-commit-gate').includes('P-256'),
+    'Commit Gate must retain its reviewed live P-256 point arithmetic');
+  assert.ok(!implementationsFor(source, 'crypto-lab-commit-gate').includes('Hash-to-curve'),
+    'Commit Gate explicitly uses a non-RFC 9380 teaching map, not a credited hash-to-curve suite');
+}
+
+test('dictionary-attack credit follows executable lessons, not a threat-only mention', () => {
+  checkDictionaryScope(html);
+});
+
+test('dictionary and message-locked vocabulary recognizes the executable symbols', () => {
+  const dictionary = ATTACKS.find((term) => term.name === 'Dictionary attack');
+  const mle = ALGORITHMS.find((term) => term.name === 'Message-Locked Encryption');
+  assert.ok(dictionary);
+  assert.ok(mle);
+  assert.ok(dictionary.re.test('offlineDictionaryAttack'));
+  assert.ok(dictionary.re.test('online-server-dictionary-attack'));
+  assert.equal(dictionary.re.test('dictionary lookup'), false);
+  assert.ok(mle.re.test('Message-Locked Encryption'));
+  assert.ok(mle.re.test('deriveLocalDataKey'));
+  assert.equal(mle.re.test('deriveLocalDataKeys'), false);
+});
+
+test('dictionary and message-locked scope controls reject lost or invented credit', () => {
+  for (const slug of [
+    'crypto-lab-phantom-vault',
+    'crypto-lab-bcrypt-forge',
+    'crypto-lab-commit-gate',
+    'crypto-lab-opaque-gate',
+    'crypto-lab-psi-gate',
+    'crypto-lab-pake-gate',
+    'crypto-lab-spake-gate',
+    'crypto-lab-dnssec-chain',
+    'crypto-lab-dedup-vault',
+  ]) {
+    const re = new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[^>]*>');
+    const removed = html.replace(re, (card) =>
+      card.replace(/Dictionary attack@[^|" ]+(?: \| )?/, ''));
+    assert.notEqual(removed, html, `${slug}: mutation must remove the real anchor`);
+    assert.throws(() => checkDictionaryScope(removed), assert.AssertionError);
+  }
+
+  const dedupRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-dedup-vault\/"[^>]*>/;
+  const lostMle = html.replace(dedupRe, (card) =>
+    card.replace(/Message-Locked Encryption@[^|" ]+(?: \| )?/, ''));
+  assert.notEqual(lostMle, html);
+  assert.throws(() => checkDictionaryScope(lostMle), assert.AssertionError);
+
+  const quantum = 'href="https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/"';
+  const invented = html.replace(quantum,
+    `${quantum} data-attacks="Dictionary attack@docs/threat-model.md:239"`);
+  assert.notEqual(invented, html);
+  assert.throws(() => checkDictionaryScope(invented), assert.AssertionError);
+
+  const commitRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-commit-gate\/"[^>]*>/;
+  const lostP256 = html.replace(commitRe, (card) =>
+    card.replace(/P-256@[^|" ]+(?: \| )?/, ''));
+  assert.notEqual(lostP256, html);
+  assert.throws(() => checkDictionaryScope(lostP256), assert.AssertionError);
+  const inventedHashToCurve = html.replace(commitRe, (card) =>
+    card.replace(/data-implements="/, 'data-implements="Hash-to-curve@src/pedersen.ts:168 | '));
+  assert.notEqual(inventedHashToCurve, html);
+  assert.throws(() => checkDictionaryScope(inventedHashToCurve), assert.AssertionError);
+});
 
 function checkRekeyScope(source) {
   // Inspected5780db419dd548127908286d19b146057329b301: vectors.ts:296

@@ -32718,8 +32718,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-search-vault": {
-      "commit": "97d9e0ff6fbbcd8d5e526b83497fe7a911fbab26",
-      "reviewed": "2026-10-23",
+      "commit": "1f0b505956087721c7ec3ec3f1221a2df26ae205",
+      "reviewed": "2026-10-24",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -32763,10 +32763,11 @@
             "honest-but-curious server"
           ],
           "evidence": [
-            "src/ui/search.ts:15",
-            "src/ui/search.ts:37",
-            "src/ui/search.ts:45",
-            "src/ui/search.ts:69",
+            "src/ui/search.ts:16",
+            "src/ui/search.ts:38",
+            "src/ui/search.ts:42",
+            "src/ui/search.ts:44",
+            "src/ui/search.ts:104",
             "src/sse/server.ts:1"
           ],
           "limits": "The server learns prescribed leakage; this lab does not hide search or access patterns, nor model network metadata."
@@ -32887,15 +32888,63 @@
           "limits": "Only SSE is timed locally; ORAM and FHE rows are conceptual, not executable implementations."
         },
         {
+          "id": "peks-public-search",
+          "title": "Public-key search — and the trapdoor dictionary attack",
+          "section": "Public-key search — and the trapdoor dictionary attack",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Generate a recipient key, build randomized tags with only its public key, issue and repeat a trapdoor, scan every tag and run included, absent and zero-guess dictionary bounds.",
+          "outcome": "Executes the Type-3 BLS12-381 PEKS equation and shows randomized pre-query tags, deterministic repeated trapdoors, full-scan matches and bounded public-Test keyword recovery.",
+          "concepts": [
+            "public-key encryption with keyword search",
+            "BLS12-381 pairing",
+            "RFC 9380 hash-to-curve",
+            "public sender and recipient roles",
+            "randomized keyword tag",
+            "deterministic trapdoor",
+            "full tag scan",
+            "offline dictionary attack",
+            "search, volume and access leakage"
+          ],
+          "related": [
+            "Boneh–Di Crescenzo–Ostrovsky–Persiano PEKS",
+            "IBE Gate",
+            "Pairing Gate"
+          ],
+          "evidence": [
+            "src/ui/peks.ts:33",
+            "src/ui/peks.ts:221",
+            "src/ui/peks.ts:227",
+            "src/ui/peks.ts:285",
+            "src/ui/peks.ts:288",
+            "src/ui/peks.ts:376",
+            "src/ui/peks.ts:438",
+            "src/ui/peks.ts:453",
+            "src/ui/peks.ts:481",
+            "src/ui/peks.ts:713",
+            "src/peks/core.ts:88",
+            "src/peks/core.ts:109",
+            "src/peks/core.ts:113",
+            "src/peks/core.ts:137",
+            "src/peks/core.ts:145",
+            "src/peks/core.ts:151",
+            "src/peks/server.ts:49",
+            "src/peks/dictionary.ts:40"
+          ],
+          "limits": "Algebra-preserving Type-3 teaching adaptation only: no transfer of the original symmetric-pairing proof, standardized GT encoding, exact 128-bit claim, body encryption, sender authentication, tag/body binding, completeness, freshness, production isolation, hardened side-channel behavior or post-quantum security; a bounded miss proves only that tested candidates did not pass."
+        },
+        {
           "id": "scope",
           "title": "What is real here, what is scaled down, and what is not proved",
           "section": "What is real here, what is scaled down, and what is not proved",
           "kind": "explanation",
           "execution": "conceptual",
           "action": "Read the scope panel and introductory glossary.",
-          "outcome": "It labels real WebCrypto operations, scaled corpus, exact-statistics control and excluded dynamic or volume-hiding schemes.",
+          "outcome": "It labels real WebCrypto and pairing operations, the scaled corpus and tag store, exact-statistics controls, the Type-3 proof boundary and excluded dynamic or volume-hiding schemes.",
           "concepts": [
             "SSE threat model",
+            "PEKS threat model",
+            "Type-3 pairing adaptation",
             "static index",
             "forward privacy",
             "volume hiding"
@@ -32906,7 +32955,7 @@
             "src/ui/scope.ts:18",
             "src/ui/scope.ts:47"
           ],
-          "limits": "No claim is made about the security of AES-GCM or HMAC themselves or all searchable-encryption designs."
+          "limits": "No claim is made about the security of AES-GCM or HMAC themselves, all searchable-encryption designs, transfer of the original PEKS proof, standardized GT bytes, production role isolation or security after a bounded dictionary miss."
         }
       ]
     },

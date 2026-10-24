@@ -283,6 +283,16 @@ authorization, deletion, revocation and rotation cases keep those properties
 distinct. This adds depth to an already `COVERED` concept without changing its
 status. Catalogued total moves to 244.*
 
+*Version 39 — records Search Vault's A-D-02 public-key searchable-encryption
+extension under §23 without adding a lab or changing a concept status. A public
+sender now creates randomized keyword tags with only the recipient's key; the
+recipient issues a deterministic trapdoor and the server performs real
+BLS12-381 pairing tests. The executed bounded dictionary attack uses that
+exposed trapdoor while the lesson separately displays search-pattern, volume
+and access-pattern leakage. This is a scoped Type-3 teaching adaptation, not a
+claim that the original symmetric-pairing proof transfers. Catalogued total
+remains 244.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -774,6 +784,17 @@ authenticity, completeness of the ordered answer, and freshness of the snapshot.
 stale replay can leave returned records individually authentic while failing a trusted
 client-retained count, digest or snapshot id. That checkpoint is deliberately static and is not
 presented as a general verifiable-SSE protocol.
+
+Its public-key extension changes the roles rather than erasing the leakage. A sender holding
+only the recipient's public key builds fresh randomized PEKS tags, the recipient releases a
+deterministic trapdoor, and the server scans every tag with public Test. Once exposed, that
+trapdoor also lets a server or captor verify low-entropy keyword guesses without the recipient
+secret; the bounded included, absent and zero-guess cases make success and non-recovery distinct.
+The exhibit keeps that active guessing separate from repeated-trapdoor linkage, result volume
+and matching opaque record identifiers. It also keeps the construction boundary visible: this is
+an algebra-preserving Type-3 BLS12-381 adaptation with no claimed transfer of the original proof,
+not body encryption, sender authentication, tag/body binding, general result verification or
+production role isolation.
 
 Order Leak is the leakage that needs no access pattern at all, which stretches this concept in a
 direction worth naming. Everything else here leaks as a consequence of being **used** — ORAM hides

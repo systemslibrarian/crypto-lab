@@ -18142,11 +18142,14 @@
           </a>
 
           <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-search-vault/"
-            data-implements="AES@src/core/aead.ts:14 | HMAC@src/core/prf.ts:25 | SHA-256@src/core/prf.ts:37"
-            data-references="AES-GCM | Private information retrieval | Private set intersection"
-            data-attacks="Keyword inference@src/sse/attack.ts:1"
+            data-implements="AES@src/core/aead.ts:14 | AES-GCM@src/core/aead.ts:65 | BLS12-381@src/peks/core.ts:19 | Hash-to-curve@src/peks/core.ts:109 | HMAC@src/core/prf.ts:25 | Pairing@src/peks/core.ts:137 | PEKS@src/peks/core.ts:113 | SHA-256@src/core/prf.ts:37"
+            data-comment-only="EC point arithmetic@src/peks/core.ts:134"
+            data-references="Boneh-Franklin IBE | Private information retrieval | Private set intersection"
+            data-attacks="Dictionary attack@src/peks/dictionary.ts:12 | Keyword inference@src/ui/attack-view.ts:43"
             data-standards="IETF | NIST"
-            data-implementation="WebCrypto"
+            data-implementation="WebCrypto / @noble/curves BLS12-381 / local leakage and bounded attack models"
+            data-review-commit="1f0b505956087721c7ec3ec3f1221a2df26ae205"
+            data-review-note="Read the complete merged README, SSE and PEKS source, tests, learner interface, primary-source boundary and visible limitations at this exact main commit. The existing static SSE executes HMAC-derived search tokens, AES-256-GCM postings, count and IKK keyword inference, and a client-retained result-integrity checkpoint. The new public-key exhibit executes a Type-3 BLS12-381 adaptation of PEKS: a public sender randomizes keyword tags, the recipient issues a deterministic trapdoor, the server scans every tag with public Test, and a bounded attacker creates fresh public tags to test candidates against an exposed trapdoor. RFC 9380 hash-to-G1, a fixed independent transcript, strict point decoding and separate search-pattern, volume, access-pattern and active-guessing views support the lesson. This algebra-preserving adaptation does not claim that the original symmetric-pairing security proof transfers, that noble's GT bytes are a standardized wire encoding, or that a bounded miss establishes security. Tags are not body encryption and provide no sender authentication, tag/body binding, result completeness, freshness, process isolation, post-quantum security or hardened side-channel behavior. BLS signatures is a false positive from the imported module alias; no signature is computed. Fault injection is a false positive from DEFAULT_ATTACK; no computational fault is injected. Final PR run 40060915246 passed 117 unit tests and all 30 browser/accessibility tests with zero dependency vulnerabilities."
             data-level="intermediate" data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
            
            
@@ -18221,12 +18224,12 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Searchable Encryption</div>
             <div class="project-title">Search Vault</div>
-            <div class="project-copy">An encrypted inverted index the server searches without a key — then leakage-abuse attacks recover queries, while a malicious-server exercise shows why authentic records can still form incomplete or stale answers.</div>
+            <div class="project-copy">Real single-keyword SSE and Type-3 BLS12-381 PEKS side by side — run query-leakage inference, exposed-trapdoor dictionary guessing, and a malicious-server integrity exercise that separates authentic records from complete, fresh answers.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">SSE</span>
-                <span class="chip">HMAC-SHA-256</span>
-                <span class="chip">AES-256-GCM</span>
+                <span class="chip">PEKS</span>
+                <span class="chip">BLS12-381</span>
                 <span class="chip">Leakage Abuse</span>
                 <span class="chip">Query Integrity</span>
               </div>

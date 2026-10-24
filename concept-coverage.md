@@ -774,7 +774,13 @@ information-theoretic and buy that guarantee with a second server that must neve
 Shelf Oracle removes the second server and pays in the other currency — RLWE, a
 *computational* assumption, and a noise budget that visibly falls as the server folds in
 every record because it cannot tell which one was asked for. The two-server and one-server
-columns run over the same shelf, so the trade is measured rather than described.
+columns run over the same shelf, so the trade is measured rather than described. Shelf
+Oracle also runs that 64-record catalog through both its direct one-hot BFV query under
+decision-RLWE and an executable four-block expansion route with Galois automorphisms and noisy
+key switching. The published evaluation keys add the lab's stated circular-security assumption.
+Each compressed block expands to sixteen selectors; all four blocks are expanded, all 64 records
+are touched, and four fixed responses return, so this is a measured communication trade rather
+than a claim of multidimensional or sublinear-server PIR.
 
 DP Noise closes what was the largest hole in the map. Every other privacy demo hides a
 *message, identity, relationship, or access pattern*; differential privacy is the only

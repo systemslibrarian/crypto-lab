@@ -33674,38 +33674,40 @@
       "reviewScope": "complete"
     },
     "crypto-lab-shelf-oracle": {
-      "commit": "882c4f0083fd6b6513b77c2e8e1acfba4b624e65",
-      "reviewed": "2026-10-23",
+      "commit": "4d31c5b3ec5e239a170bb4d10c0ba501d95ae7e0",
+      "reviewed": "2026-10-24",
       "exhibits": [
         {
           "id": "selection-vector",
           "title": "Encrypted Selection Vector",
           "kind": "interactive",
-          "action": "Pick a book and inspect the ciphertext sent for each shelf position, then guess its hidden one.",
-          "outcome": "Shows randomized encryptions of zero or one and obscured selected index under the modeled server view.",
+          "action": "Pick a book, inspect the BFV ciphertext sent for every shelf position and guess which one hides the selected bit.",
+          "outcome": "Shows independently randomized encryptions of zero and one while the modeled server receives no plaintext index.",
           "concepts": [
             "private information retrieval",
             "BFV",
             "encrypted selector",
-            "semantic security"
+            "decision-RLWE"
           ],
           "evidence": [
             "src/ui/shelf.ts:24",
             "src/ui/serverview.ts:73",
-            "src/ui/serverview.ts:95",
-            "src/ui/serverview.ts:104",
-            "src/pir/pir.ts:1"
+            "src/ui/serverview.ts:77",
+            "src/ui/serverview.ts:99",
+            "src/ui/serverview.ts:111",
+            "src/pir/pir.ts:91",
+            "src/pir/pir.ts:191"
           ],
-          "section": "What you send",
+          "section": "The Server's View / What you send",
           "execution": "real-crypto",
-          "limits": "Single-server honest-but-curious model with local computation."
+          "limits": "This is the direct one-hot path in a local, single-server honest-but-curious model; it does not prove RLWE hardness or deployment privacy."
         },
         {
           "id": "inner-product",
           "title": "Homomorphic Shelf Fold",
           "kind": "interactive",
-          "action": "Step or run the encrypted selector times each record through a fold.",
-          "outcome": "Displays accumulated ciphertext, measured noise budget, and decrypted chosen record.",
+          "action": "Step one, eight or all remaining records through the encrypted-selector fold.",
+          "outcome": "Displays the accumulated ciphertext, measured invariant-noise budget and decrypted selected record after every record has been scanned.",
           "concepts": [
             "homomorphic inner product",
             "BFV addition",
@@ -33714,41 +33716,48 @@
           ],
           "evidence": [
             "src/ui/fold.ts:97",
+            "src/ui/fold.ts:101",
+            "src/ui/fold.ts:114",
             "src/ui/fold.ts:193",
             "src/ui/fold.ts:218",
             "src/ui/fold.ts:365",
-            "src/pir/bfv.ts:1"
+            "src/pir/pir.ts:161"
           ],
-          "section": "The homomorphic inner product",
-          "execution": "real-crypto"
+          "section": "Homomorphic Selection / The homomorphic inner product",
+          "execution": "real-crypto",
+          "limits": "The server performs a full schoolbook record scan; the teacher-side noise meter uses the secret key and true record, which a deployed client would not possess."
         },
         {
           "id": "randomness-break",
           "title": "Reused Encryption Randomness",
           "kind": "interactive",
-          "action": "Force repeated encryption randomness and try to identify the selected ciphertext.",
-          "outcome": "Shows identical zero ciphertexts betray the encrypted one under the deliberately broken mode.",
+          "action": "Reuse one encryption-randomness pair, run the same distinguisher against fresh and broken queries and compare its accuracy.",
+          "outcome": "Shows identical zero ciphertexts expose the encrypted one in the deliberately broken mode while fresh-query guesses stay at chance.",
           "concepts": [
             "encryption randomness",
             "PIR query privacy",
             "ciphertext equality"
           ],
           "evidence": [
-            "src/ui/serverview.ts:139",
-            "src/ui/serverview.ts:151",
+            "src/ui/serverview.ts:140",
+            "src/ui/serverview.ts:159",
             "src/ui/serverview.ts:167",
-            "src/ui/serverview.ts:289"
+            "src/ui/serverview.ts:280",
+            "src/ui/serverview.ts:284",
+            "src/ui/serverview.ts:372",
+            "src/ui/serverview.ts:374",
+            "src/ui/serverview.ts:376"
           ],
-          "section": "Break it yourself",
+          "section": "The Server's View / Break it yourself",
           "execution": "real-crypto",
-          "limits": "Broken mode is off by default."
+          "limits": "The randomness-reuse mode is explicitly broken, off by default and is not the protocol's honest path."
         },
         {
           "id": "parameter-noise",
           "title": "Noise and Failure Lab",
           "kind": "interactive",
-          "action": "Change modulus, record width, and shelf size, then retrieve and trip boundary failure inputs.",
-          "outcome": "Shows measured decryption budget, out-of-range coefficients, and named failure codes.",
+          "action": "Change the modulus, record width and shelf size, retrieve, then exercise each named boundary-failure input.",
+          "outcome": "Shows the measured decryption budget, impossible coefficients, record-tag result and four reachable failure codes.",
           "concepts": [
             "RLWE noise",
             "correctness bound",
@@ -33758,20 +33767,25 @@
           "evidence": [
             "src/ui/noise.ts:105",
             "src/ui/noise.ts:116",
-            "src/ui/noise.ts:150",
-            "src/ui/noise.ts:200",
-            "src/ui/noise.ts:253"
+            "src/ui/noise.ts:130",
+            "src/ui/noise.ts:140",
+            "src/ui/noise.ts:157",
+            "src/ui/noise.ts:253",
+            "src/ui/noise.ts:265",
+            "src/ui/noise.ts:340",
+            "src/ui/noise.ts:350",
+            "src/ui/noise.ts:492"
           ],
-          "section": "Push it until it breaks",
+          "section": "Noise Exhaustion / Push it until it breaks",
           "execution": "real-crypto",
-          "limits": "Published parameter-table inclusion is not a complete security proof."
+          "limits": "The HES 2018 row is used only for its modulus-bit ceiling; its discrete-Gaussian security estimate is not transferred to the lab's centered-binomial error or JavaScript implementation."
         },
         {
           "id": "protocol-compare",
           "title": "Single-Server versus Two-Server PIR",
           "kind": "comparison",
-          "action": "Run homomorphic and two-server XOR retrieval over identical records.",
-          "outcome": "Compares traffic and timings and demonstrates the separate non-collusion assumption of XOR PIR.",
+          "action": "Run BFV and two-server XOR retrieval over identical records, then let the two XOR servers collude.",
+          "outcome": "Measures serialized traffic and browser timings for both routes and recovers the target index when the XOR servers compare masks.",
           "concepts": [
             "single-server PIR",
             "two-server XOR PIR",
@@ -33780,22 +33794,28 @@
           ],
           "evidence": [
             "src/ui/versus.ts:89",
-            "src/ui/versus.ts:119",
-            "src/ui/versus.ts:339",
-            "src/pir/xorpir.ts:1"
+            "src/ui/versus.ts:94",
+            "src/ui/versus.ts:102",
+            "src/ui/versus.ts:162",
+            "src/ui/versus.ts:249",
+            "src/ui/versus.ts:350",
+            "src/ui/versus.ts:381",
+            "src/pir/xorpir.ts:53",
+            "src/pir/xorpir.ts:74",
+            "src/pir/xorpir.ts:111"
           ],
-          "section": "Run both protocols over the same shelf",
+          "section": "One Server vs Two / Run both protocols over the same shelf",
           "execution": "real-operation",
-          "limits": "Local browser measurements are not network deployment benchmarks."
+          "limits": "Both protocols run as objects in one browser; their local timings are not network or production benchmarks."
         },
         {
           "id": "record-polynomial",
           "title": "Byte-to-Polynomial Record Encoding",
           "kind": "explanation",
           "execution": "real-values",
-          "section": "Pick a book / How a record becomes a polynomial",
-          "action": "Open the byte-to-coefficient packing disclosure and change the record size.",
-          "outcome": "Shows each record byte split into two 4-bit coefficients in plaintext modulus 17; the unused coefficient 16 flags decoding failure and longer records consume more noise budget.",
+          "section": "The Shelf / Pick a book / How a record becomes a polynomial",
+          "action": "Open the selected record's byte-to-coefficient packing disclosure and change the record size.",
+          "outcome": "Shows two four-bit coefficients per byte in plaintext modulus 17, leaving coefficient 16 as a decoding-failure sentinel while wider records consume more noise budget.",
           "concepts": [
             "BFV plaintext packing",
             "plaintext modulus",
@@ -33803,22 +33823,23 @@
             "record width and noise growth"
           ],
           "evidence": [
-            "src/ui/shelf.ts:215",
+            "src/ui/shelf.ts:120",
             "src/ui/shelf.ts:228",
             "src/ui/shelf.ts:232",
             "src/ui/shelf.ts:240",
-            "src/ui/shelf.ts:245"
+            "src/pir/records.ts:43",
+            "src/pir/records.ts:59"
           ],
-          "limits": "The encoding is specific to this small direct one-hot PIR implementation."
+          "limits": "This packing is shared by the direct and compressed paths, but is specific to this bounded teaching implementation and is not a general BFV or PIR wire format; coefficient 16 and the record tag detect decode failure, not malicious-server dishonesty."
         },
         {
           "id": "decryption-trace",
           "title": "BFV Coefficient Decryption Trace",
           "kind": "interactive",
           "execution": "real-crypto",
-          "section": "The homomorphic inner product / Open the decryption identity for one coefficient",
-          "action": "Fold more records and open the current ciphertext coefficient trace.",
-          "outcome": "Displays c0+c1·s, Delta times the message, residual error, the half-Delta correctness ceiling, and the decoded coefficient.",
+          "section": "Homomorphic Selection / Open the decryption identity for one coefficient",
+          "action": "Fold more records and open the current accumulator's coefficient-level decryption trace.",
+          "outcome": "Displays c0+c1·s, Delta times the expected message, residual error, the half-Delta correctness ceiling and the decoded coefficient.",
           "concepts": [
             "BFV decryption identity",
             "noise budget",
@@ -33830,9 +33851,11 @@
             "src/ui/fold.ts:315",
             "src/ui/fold.ts:319",
             "src/ui/fold.ts:323",
-            "src/ui/fold.ts:338"
+            "src/ui/fold.ts:338",
+            "src/pir/bfv.ts:127",
+            "src/pir/bfv.ts:140"
           ],
-          "limits": "This one-coefficient trace and observed budget do not establish deployment security."
+          "limits": "The trace examines one coefficient using the secret key and expected plaintext; it does not establish deployment security."
         },
         {
           "id": "observer-metadata",
@@ -33840,8 +33863,8 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "section": "What It Does Not Hide / What a network observer sees",
-          "action": "Issue random and repeated book queries, then compare serialized upload/download sizes with the timestamps in the observer log.",
-          "outcome": "Shows fixed-size query and response within one parameter set while request occurrence, timing, count, and rate remain visible.",
+          "action": "Issue random and repeated book queries, then compare serialized upload and response sizes with the observer timestamps.",
+          "outcome": "Shows fixed query and response sizes within one parameter set while request occurrence, timing, count and rate remain visible.",
           "concepts": [
             "PIR metadata leakage",
             "fixed response size",
@@ -33850,14 +33873,16 @@
             "network observer"
           ],
           "evidence": [
-            "src/ui/scope.ts:65",
             "src/ui/scope.ts:71",
-            "src/ui/scope.ts:82",
-            "src/ui/scope.ts:235",
-            "src/ui/scope.ts:258",
-            "src/ui/scope.ts:267"
+            "src/ui/scope.ts:83",
+            "src/ui/scope.ts:88",
+            "src/ui/scope.ts:223",
+            "src/ui/scope.ts:257",
+            "src/ui/scope.ts:270",
+            "src/ui/scope.ts:425",
+            "src/ui/scope.ts:441"
           ],
-          "limits": "Both parties and the observer are objects in one browser; client identity, real network routing, and network timing are not measured."
+          "limits": "The parties and observer are objects in one browser; client identity, routing and real network timing are not measured."
         },
         {
           "id": "scope-feedback",
@@ -33865,25 +33890,73 @@
           "kind": "explanation",
           "execution": "conceptual",
           "section": "What It Does Not Hide / Honest scope",
-          "action": "Read the hidden-versus-visible property table and the dated decryption-feedback research note.",
-          "outcome": "Separates index privacy from integrity, access-pattern privacy, deployment timing, and the IND-CPA-D feedback model; names browser implementation limits.",
+          "action": "Read the hidden-versus-visible table, implementation boundary and dated decryption-feedback research note.",
+          "outcome": "Separates index privacy from integrity and traffic metadata, names the compressed path's circular-security assumption and scopes the cited IND-CPA-D attacks.",
           "concepts": [
             "single-server PIR threat model",
             "IND-CPA-D",
             "decryption feedback",
             "response integrity",
-            "access patterns",
+            "traffic metadata",
+            "circular security",
             "BFV implementation scope"
           ],
           "evidence": [
             "src/ui/scope.ts:96",
             "src/ui/scope.ts:100",
-            "src/ui/scope.ts:127",
-            "src/ui/scope.ts:136",
-            "src/ui/scope.ts:138",
-            "src/ui/scope.ts:267"
+            "src/ui/scope.ts:105",
+            "src/ui/scope.ts:116",
+            "src/ui/scope.ts:129",
+            "src/ui/scope.ts:142",
+            "src/ui/scope.ts:143",
+            "src/ui/scope.ts:280",
+            "src/ui/scope.ts:297",
+            "src/ui/scope.ts:299",
+            "src/ui/scope.ts:301"
           ],
-          "limits": "The cited BFV/BGV research concerns particular configurations and feedback conditions; this lab does not reproduce those attacks or prove its configuration vulnerable."
+          "limits": "The cited BFV/BGV research concerns particular configurations and feedback conditions; the lab does not reproduce those attacks or prove this configuration vulnerable."
+        },
+        {
+          "id": "compressed-query-expansion",
+          "title": "Compressed Query Expansion",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "section": "Compressed Query / Four encrypted blocks in, sixty-four encrypted selectors out",
+          "action": "Run direct and compressed retrieval for one fixed-catalog record, then inspect the expansion, cost, noise and discarded one-response ledgers.",
+          "outcome": "Expands four serialized ciphertext blocks into 64 encrypted selectors with Galois key switching; the selected response agrees with direct retrieval and the independently built tagged record while the other three decrypt to zero, and the panel accounts for setup, traffic, fixed responses, record products and switching work.",
+          "concepts": [
+            "SealPIR-style query expansion",
+            "Galois automorphism",
+            "key switching",
+            "evaluation-key setup",
+            "NTT/CRT convolution",
+            "communication amortization",
+            "fixed response shape",
+            "noise budget"
+          ],
+          "evidence": [
+            "index.html:205",
+            "src/ui/expand.ts:147",
+            "src/ui/expand.ts:171",
+            "src/ui/expand.ts:257",
+            "src/ui/expand.ts:311",
+            "src/ui/expand.ts:389",
+            "src/ui/expand.ts:396",
+            "src/ui/expand.ts:414",
+            "src/ui/expand.ts:423",
+            "src/ui/expand.ts:529",
+            "src/ui/expand.ts:537",
+            "src/ui/expand.ts:557",
+            "src/ui/expand.ts:564",
+            "src/ui/expand.ts:598",
+            "src/ui/expand.ts:602",
+            "src/pir/expand.ts:275",
+            "src/pir/expand.ts:342",
+            "src/pir/expand.ts:388",
+            "src/pir/ntt.ts:116",
+            "src/pir/ntt.ts:181"
+          ],
+          "limits": "This bounded path uses four 16-selector blocks at q = 2^27 - 39, scans all 64 records and returns four responses under an honest-but-curious model and circular-security assumption. The SHA-256 tag detects decode failure only, the summed response is discarded because its margin is sample-dependent, and the lab does not implement SealPIR multidimensional recursion, sublinear server work or malicious-server integrity."
         }
       ],
       "reviewScope": "complete"

@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1740 sections in 244 of 244 labs**
+The exhibit map currently records **1741 sections in 244 of 244 labs**
 (244 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -73,7 +73,7 @@ before relying on this index for a fresh assessment.
 
 ## Reverse index — which labs implement what
 
-195 algorithms are implemented somewhere in the fleet, grouped by family.
+196 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -134,7 +134,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### BFV
 
-- **Implemented by:** [FHE Arena](https://systemslibrarian.github.io/crypto-lab-fhe-arena/) `src/toyFhe.ts:132`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/pir.ts:8`
+- **Implemented by:** [FHE Arena](https://systemslibrarian.github.io/crypto-lab-fhe-arena/) `src/toyFhe.ts:132`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/bfv.ts:88`
 - **Also referenced by:** *Blind Oracle*, *CKKS Lab*, *Oblivious Shelf*, *Paillier Gate*, *LWE Hints*
 
 #### CKKS
@@ -248,7 +248,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Private information retrieval
 
-- **Implemented by:** [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) `src/pir.ts:245`; [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) `src/pir.ts:89`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/errors.ts:57`; [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) `src/ui/app.ts:9`
+- **Implemented by:** [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) `src/pir.ts:245`; [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) `src/pir.ts:89`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/pir.ts:191`; [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) `src/ui/app.ts:9`
 - **Also referenced by:** *CKKS Lab*, *FHE Arena*, *Garbled Gate*, *OT Gate*, *J-UNIWARD*, *ORAM Vault*, *PSI Gate*, *Blind Relay*, *Credential Veil*, *Search Vault*
 
 ### PQ KEM
@@ -391,7 +391,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### DES
 
 - **Implemented by:** [Feistel Forge](https://systemslibrarian.github.io/crypto-lab-feistel-forge/) `src/attacks/mitm.ts:80`
-- **Also referenced by:** *Export Grade*, *Iron Serpent*, *Shamir Gate*, *Dead Sea Cipher*, *Biham Lens*, *Hash Zoo*, *HAWK*, *Matsui Line*, *Shelf Oracle*, *Sphinx Mix*, *Glass Box*, *Return Path*
+- **Also referenced by:** *Export Grade*, *Iron Serpent*, *Shamir Gate*, *Dead Sea Cipher*, *Biham Lens*, *Hash Zoo*, *HAWK*, *Matsui Line*, *Sphinx Mix*, *Glass Box*, *Return Path*
 
 #### KASUMI
 
@@ -806,8 +806,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### NTT
 
-- **Implemented by:** [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/ntt.ts:53`; [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) `src/ntt.ts:45`; [Lattice Fault](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) `src/loopabort.ts:116`; [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) `src/real-sign.ts:164`; [Ciphertext Mirror](https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/) `src/lib/mlkem/fips203.ts:55`; [KEM Trap](https://systemslibrarian.github.io/crypto-lab-kem-trap/) `src/kem/fo-transform.ts:76`; [Proof Tally](https://systemslibrarian.github.io/crypto-lab-proof-tally/) `src/field/field64.ts:95`; [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/) `src/mlkem-poly.ts:133`
-- **Also referenced by:** *Quantum Vault KpqC*, *STARK Tower*, *CKKS Lab*, *FHE Arena*, *Dilithium Seal*, *World Ciphers*, *Frodo Vault*, *HAWK*, *NTRU Classic*, *Key Exchange*, *LWE Hints*, *Power Trace*, *Shelf Oracle*, *Polynomial Forge*, *What Is PQC*
+- **Implemented by:** [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/ntt.ts:53`; [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) `src/ntt.ts:45`; [Lattice Fault](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) `src/loopabort.ts:116`; [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) `src/real-sign.ts:164`; [Ciphertext Mirror](https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/) `src/lib/mlkem/fips203.ts:55`; [KEM Trap](https://systemslibrarian.github.io/crypto-lab-kem-trap/) `src/kem/fo-transform.ts:76`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/ntt.ts:61`; [Proof Tally](https://systemslibrarian.github.io/crypto-lab-proof-tally/) `src/field/field64.ts:95`; [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/) `src/mlkem-poly.ts:133`
+- **Also referenced by:** *Quantum Vault KpqC*, *STARK Tower*, *CKKS Lab*, *FHE Arena*, *Dilithium Seal*, *World Ciphers*, *Frodo Vault*, *HAWK*, *NTRU Classic*, *Key Exchange*, *LWE Hints*, *Power Trace*, *Polynomial Forge*, *What Is PQC*
 
 ### lattice cryptosystem
 
@@ -822,6 +822,11 @@ A lab in *italics* references the algorithm without implementing it.
 
 - **Implemented by:** [Kyber Vault](https://systemslibrarian.github.io/crypto-lab-kyber-vault/) `demos/kyber-vault/src/crypto/lwe.ts:141`; [Frodo Vault](https://systemslibrarian.github.io/crypto-lab-frodo-vault/) `src/math.ts:173`; [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) `src/bkz.ts:222`; [Scloud+ Vault](https://systemslibrarian.github.io/crypto-lab-scloud-vault/) `src/crypto/kem.ts:422`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/ui.ts:1921`; [LWE Hints](https://systemslibrarian.github.io/crypto-lab-lwe-hints/) `src/attack.ts:103`; [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) `src/fq/lwe.ts:51`
 - **Also referenced by:** *Quantum Vault KpqC*, *CKKS Lab*, *Dilithium Seal*, *SPHINCS+ Ledger*, *McEliece Gate*, *BIKE Vault*, *HQC Vault*, *Falcon Seal*, *OT Gate*, *Oblivious Shelf*, *Harvest Vault*, *HAWK*, *Hybrid Sign*, *NTRU Classic*, *Nonce Lattice*, *PQ Families*, *Broken Trust*, *Hybrid PQC*, *KEM Trap*, *Syndrome Hints*, *Lattice Builder*, *Function Key*, *What Is PQC*
+
+#### Ring-LWE
+
+- **Implemented by:** [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/bfv.ts:88`
+- **Also referenced by:** *CKKS Lab*, *FHE Arena*, *Kyber Vault*, *Frodo Vault*, *Harvest Vault*, *NTRU Classic*, *Scloud+ Vault*
 
 ### modular square root
 
@@ -1413,7 +1418,7 @@ disagree about who owns SHA-256.
 | Noise protocol | — | 1 |
 | NTRU | — | 2 |
 | NTRU+ | — | 1 |
-| NTT | — | 8 |
+| NTT | — | 9 |
 | Oblivious transfer | — | 1 |
 | One-time pad | — | 2 |
 | OXT | — | 1 |
@@ -1432,6 +1437,7 @@ disagree about who owns SHA-256.
 | Rainbow chains | — | 1 |
 | RC4 | — | 1 |
 | Repetition code | — | 1 |
+| Ring-LWE | — | 1 |
 | Schnorr | — | 9 |
 | Serpent | — | 1 |
 | Shamir secret sharing | — | 9 |
@@ -1462,7 +1468,7 @@ may teach the same primitive from different angles — but an overlap **with no 
 difference** is a question nobody has answered, and a visitor choosing between the
 two has nothing to go on.
 
-82 pairs: 10 with a stated difference, **0 examined and found to be duplication**, 72 nobody has looked at.
+80 pairs: 10 with a stated difference, **0 examined and found to be duplication**, 70 nobody has looked at.
 
 A pair marked DUPLICATION is a finding, not a description: someone read both and
 found no difference worth having. It is listed first because it is the only row here
@@ -1548,14 +1554,14 @@ that asks for a decision.
 - **Shared:** Ed25519, Ed448
 - **Stated difference:** **none stated**
 
-**Ciphertext Mirror / Lattice Builder**
-
-- **Shared:** Keccak, ML-KEM, NTT, SHA-3, SHAKE
-- **Stated difference:** **none stated**
-
 **DRBG Arena / MAYO Seal**
 
 - **Shared:** AES, CTR-DRBG
+- **Stated difference:** **none stated**
+
+**Ciphertext Mirror / Lattice Builder**
+
+- **Shared:** Keccak, ML-KEM, NTT, SHA-3, SHAKE
 - **Stated difference:** **none stated**
 
 **Bcrypt Forge / Collision Vault**
@@ -1821,16 +1827,6 @@ that asks for a decision.
 **Nonce Guard / Order Leak**
 
 - **Shared:** AES, AES-GCM, AES-SIV
-- **Stated difference:** **none stated**
-
-**Lattice Fault / Ciphertext Mirror**
-
-- **Shared:** Keccak, NTT, SHAKE
-- **Stated difference:** **none stated**
-
-**Lattice Fault / Lattice Builder**
-
-- **Shared:** Keccak, NTT, SHAKE
 - **Stated difference:** **none stated**
 
 **Iron Letter / Regex Veil — FTE**
@@ -14097,77 +14093,85 @@ Compare Shamir secret sharing against FROST signatures side by side — watch Sh
 
 [`crypto-lab-shelf-oracle`](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) · Single-Server PIR · PRIVACY
 
-Classic PIR needs two servers that never collude. This needs one, under RLWE. Watch the noise budget fall as the server folds in every record — it cannot see which one you asked for.
+Retrieve the same 64-record shelf entry through direct one-hot BFV or four fixed compressed blocks with executable Galois key switching. Both routes still scan all records, and the compressed teaching path returns four ciphertexts; it does not claim multidimensional or sublinear-server PIR.
 
-- **Card topics (discovery only):** BFV, RLWE, Single-Server PIR, Noise Budget — labels do not establish what any section runs.
-- **Implements:** BFV `src/pir/pir.ts:8`, ChaCha20 `src/pir/chacha20.ts:123`, Private information retrieval `src/pir/errors.ts:57`, SHA-256 `src/pir/records.ts:80`
-- **References:** BGV, DES, NTT, Poly1305, Private set intersection, Ring-LWE
-- **Attacks shown:** Side-channel (unspecified) `README.md:88`
+- **Card topics (discovery only):** BFV, RLWE, Query Expansion, Noise Budget — labels do not establish what any section runs.
+- **Implements:** BFV `src/pir/bfv.ts:88`, ChaCha20 `src/pir/chacha20.ts:123`, NTT `src/pir/ntt.ts:61`, Private information retrieval `src/pir/pir.ts:191`, Ring-LWE `src/pir/bfv.ts:88`, SHA-256 `src/pir/records.ts:80`
+- **Source review:** [4d31c5b3ec5e](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/commit/4d31c5b3ec5e239a170bb4d10c0ba501d95ae7e0) — Read the complete merged README, source, unit and browser tests, learner interface and visible limitations at this exact main commit. The mature direct path still encrypts one selector per record and performs the full BFV plaintext-ciphertext fold. The new bounded route serializes four fixed ciphertext blocks, expands each into sixteen selectors through the implemented odd Galois substitutions and noisy binary-gadget key switching, scans all 64 records and returns four fixed responses so neither query nor response count exposes the selected block. Its exact two-prime NTT/CRT products fail closed against a proved coefficient bound; the page derives evaluation-key, per-query, response, operation, timing and teacher-side noise ledgers from the executed run. The selected compressed response, direct response and independently built catalog bytes must agree while the other three compressed responses decrypt to zero. Adding the four folds into one response is deliberately discarded because its correctness margin is sample-dependent; the embedded SHA-256 tag detects decode failure rather than a malicious server. The route does not implement SealPIR's multidimensional recursion, sublinear server work, modulus switching, seeded ciphertext compression or production parameter sets, and its key-dependent evaluation material adds a stated circular-security assumption. The HES 2018 comparison uses only the published modulus-bit ceiling because the lab's centered-binomial error differs from that table's discrete Gaussian. Chosen-plaintext attack is an IND-CPA prose match, Keyword inference belongs only to a Search Vault link, and Side-channel is a visible implementation limitation rather than an executed attack. DES is a false match inside a catalog note about the Journal des Debats, and Gaussian mechanism is a false classification of discrete-Gaussian error prose; neither is a Shelf Oracle algorithm reference. PR run 40094177906 passed all 99 unit tests, the production build and all 33 hosted browser/accessibility tests.
+- **References:** BGV, Poly1305, Private set intersection
 - **Standards body:** IETF, NIST
-- **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [882c4f0083fd](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/commit/882c4f0083fd6b6513b77c2e8e1acfba4b624e65) reviewed 2026-10-23; 9 mapped sections.
+- **Implementation:** hand-rolled BFV/PIR/NTT/ChaCha20; WebCrypto SHA-256
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4d31c5b3ec5e](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/commit/4d31c5b3ec5e239a170bb4d10c0ba501d95ae7e0) reviewed 2026-10-24; 10 mapped sections.
+  - **Compressed Query Expansion** (`compressed-query-expansion`; comparison; real-crypto)
+    - **Visible section:** Compressed Query / Four encrypted blocks in, sixty-four encrypted selectors out
+    - **Learner action:** Run direct and compressed retrieval for one fixed-catalog record, then inspect the expansion, cost, noise and discarded one-response ledgers.
+    - **Observed result:** Expands four serialized ciphertext blocks into 64 encrypted selectors with Galois key switching; the selected response agrees with direct retrieval and the independently built tagged record while the other three decrypt to zero, and the panel accounts for setup, traffic, fixed responses, record products and switching work.
+    - **Concepts taught:** SealPIR-style query expansion; Galois automorphism; key switching; evaluation-key setup; NTT/CRT convolution; communication amortization; fixed response shape; noise budget
+    - **Limits:** This bounded path uses four 16-selector blocks at q = 2^27 - 39, scans all 64 records and returns four responses under an honest-but-curious model and circular-security assumption. The SHA-256 tag detects decode failure only, the summed response is discarded because its margin is sample-dependent, and the lab does not implement SealPIR multidimensional recursion, sublinear server work or malicious-server integrity.
+    - **Evidence at pinned commit:** `index.html:205`, `src/ui/expand.ts:147`, `src/ui/expand.ts:171`, `src/ui/expand.ts:257`, `src/ui/expand.ts:311`, `src/ui/expand.ts:389`, `src/ui/expand.ts:396`, `src/ui/expand.ts:414`, `src/ui/expand.ts:423`, `src/ui/expand.ts:529`, `src/ui/expand.ts:537`, `src/ui/expand.ts:557`, `src/ui/expand.ts:564`, `src/ui/expand.ts:598`, `src/ui/expand.ts:602`, `src/pir/expand.ts:275`, `src/pir/expand.ts:342`, `src/pir/expand.ts:388`, `src/pir/ntt.ts:116`, `src/pir/ntt.ts:181`
   - **BFV Coefficient Decryption Trace** (`decryption-trace`; interactive; real-crypto)
-    - **Visible section:** The homomorphic inner product / Open the decryption identity for one coefficient
-    - **Learner action:** Fold more records and open the current ciphertext coefficient trace.
-    - **Observed result:** Displays c0+c1·s, Delta times the message, residual error, the half-Delta correctness ceiling, and the decoded coefficient.
+    - **Visible section:** Homomorphic Selection / Open the decryption identity for one coefficient
+    - **Learner action:** Fold more records and open the current accumulator's coefficient-level decryption trace.
+    - **Observed result:** Displays c0+c1·s, Delta times the expected message, residual error, the half-Delta correctness ceiling and the decoded coefficient.
     - **Concepts taught:** BFV decryption identity; noise budget; correctness threshold; homomorphic accumulation
-    - **Limits:** This one-coefficient trace and observed budget do not establish deployment security.
-    - **Evidence at pinned commit:** `src/ui/fold.ts:312`, `src/ui/fold.ts:315`, `src/ui/fold.ts:319`, `src/ui/fold.ts:323`, `src/ui/fold.ts:338`
+    - **Limits:** The trace examines one coefficient using the secret key and expected plaintext; it does not establish deployment security.
+    - **Evidence at pinned commit:** `src/ui/fold.ts:312`, `src/ui/fold.ts:315`, `src/ui/fold.ts:319`, `src/ui/fold.ts:323`, `src/ui/fold.ts:338`, `src/pir/bfv.ts:127`, `src/pir/bfv.ts:140`
   - **Homomorphic Shelf Fold** (`inner-product`; interactive; real-crypto)
-    - **Visible section:** The homomorphic inner product
-    - **Learner action:** Step or run the encrypted selector times each record through a fold.
-    - **Observed result:** Displays accumulated ciphertext, measured noise budget, and decrypted chosen record.
+    - **Visible section:** Homomorphic Selection / The homomorphic inner product
+    - **Learner action:** Step one, eight or all remaining records through the encrypted-selector fold.
+    - **Observed result:** Displays the accumulated ciphertext, measured invariant-noise budget and decrypted selected record after every record has been scanned.
     - **Concepts taught:** homomorphic inner product; BFV addition; PIR response; noise budget
-    - **Evidence at pinned commit:** `src/ui/fold.ts:97`, `src/ui/fold.ts:193`, `src/ui/fold.ts:218`, `src/ui/fold.ts:365`, `src/pir/bfv.ts:1`
+    - **Limits:** The server performs a full schoolbook record scan; the teacher-side noise meter uses the secret key and true record, which a deployed client would not possess.
+    - **Evidence at pinned commit:** `src/ui/fold.ts:97`, `src/ui/fold.ts:101`, `src/ui/fold.ts:114`, `src/ui/fold.ts:193`, `src/ui/fold.ts:218`, `src/ui/fold.ts:365`, `src/pir/pir.ts:161`
   - **Network Observer Metadata Log** (`observer-metadata`; interactive; real-crypto)
     - **Visible section:** What It Does Not Hide / What a network observer sees
-    - **Learner action:** Issue random and repeated book queries, then compare serialized upload/download sizes with the timestamps in the observer log.
-    - **Observed result:** Shows fixed-size query and response within one parameter set while request occurrence, timing, count, and rate remain visible.
+    - **Learner action:** Issue random and repeated book queries, then compare serialized upload and response sizes with the observer timestamps.
+    - **Observed result:** Shows fixed query and response sizes within one parameter set while request occurrence, timing, count and rate remain visible.
     - **Concepts taught:** PIR metadata leakage; fixed response size; query timing; cover traffic; network observer
-    - **Limits:** Both parties and the observer are objects in one browser; client identity, real network routing, and network timing are not measured.
-    - **Evidence at pinned commit:** `src/ui/scope.ts:65`, `src/ui/scope.ts:71`, `src/ui/scope.ts:82`, `src/ui/scope.ts:235`, `src/ui/scope.ts:258`, `src/ui/scope.ts:267`
+    - **Limits:** The parties and observer are objects in one browser; client identity, routing and real network timing are not measured.
+    - **Evidence at pinned commit:** `src/ui/scope.ts:71`, `src/ui/scope.ts:83`, `src/ui/scope.ts:88`, `src/ui/scope.ts:223`, `src/ui/scope.ts:257`, `src/ui/scope.ts:270`, `src/ui/scope.ts:425`, `src/ui/scope.ts:441`
   - **Noise and Failure Lab** (`parameter-noise`; interactive; real-crypto)
-    - **Visible section:** Push it until it breaks
-    - **Learner action:** Change modulus, record width, and shelf size, then retrieve and trip boundary failure inputs.
-    - **Observed result:** Shows measured decryption budget, out-of-range coefficients, and named failure codes.
+    - **Visible section:** Noise Exhaustion / Push it until it breaks
+    - **Learner action:** Change the modulus, record width and shelf size, retrieve, then exercise each named boundary-failure input.
+    - **Observed result:** Shows the measured decryption budget, impossible coefficients, record-tag result and four reachable failure codes.
     - **Concepts taught:** RLWE noise; correctness bound; PIR parameter selection; failure modes
-    - **Limits:** Published parameter-table inclusion is not a complete security proof.
-    - **Evidence at pinned commit:** `src/ui/noise.ts:105`, `src/ui/noise.ts:116`, `src/ui/noise.ts:150`, `src/ui/noise.ts:200`, `src/ui/noise.ts:253`
+    - **Limits:** The HES 2018 row is used only for its modulus-bit ceiling; its discrete-Gaussian security estimate is not transferred to the lab's centered-binomial error or JavaScript implementation.
+    - **Evidence at pinned commit:** `src/ui/noise.ts:105`, `src/ui/noise.ts:116`, `src/ui/noise.ts:130`, `src/ui/noise.ts:140`, `src/ui/noise.ts:157`, `src/ui/noise.ts:253`, `src/ui/noise.ts:265`, `src/ui/noise.ts:340`, `src/ui/noise.ts:350`, `src/ui/noise.ts:492`
   - **Single-Server versus Two-Server PIR** (`protocol-compare`; comparison; real-operation)
-    - **Visible section:** Run both protocols over the same shelf
-    - **Learner action:** Run homomorphic and two-server XOR retrieval over identical records.
-    - **Observed result:** Compares traffic and timings and demonstrates the separate non-collusion assumption of XOR PIR.
+    - **Visible section:** One Server vs Two / Run both protocols over the same shelf
+    - **Learner action:** Run BFV and two-server XOR retrieval over identical records, then let the two XOR servers collude.
+    - **Observed result:** Measures serialized traffic and browser timings for both routes and recovers the target index when the XOR servers compare masks.
     - **Concepts taught:** single-server PIR; two-server XOR PIR; communication cost; non-collusion
-    - **Limits:** Local browser measurements are not network deployment benchmarks.
-    - **Evidence at pinned commit:** `src/ui/versus.ts:89`, `src/ui/versus.ts:119`, `src/ui/versus.ts:339`, `src/pir/xorpir.ts:1`
+    - **Limits:** Both protocols run as objects in one browser; their local timings are not network or production benchmarks.
+    - **Evidence at pinned commit:** `src/ui/versus.ts:89`, `src/ui/versus.ts:94`, `src/ui/versus.ts:102`, `src/ui/versus.ts:162`, `src/ui/versus.ts:249`, `src/ui/versus.ts:350`, `src/ui/versus.ts:381`, `src/pir/xorpir.ts:53`, `src/pir/xorpir.ts:74`, `src/pir/xorpir.ts:111`
   - **Reused Encryption Randomness** (`randomness-break`; interactive; real-crypto)
-    - **Visible section:** Break it yourself
-    - **Learner action:** Force repeated encryption randomness and try to identify the selected ciphertext.
-    - **Observed result:** Shows identical zero ciphertexts betray the encrypted one under the deliberately broken mode.
+    - **Visible section:** The Server's View / Break it yourself
+    - **Learner action:** Reuse one encryption-randomness pair, run the same distinguisher against fresh and broken queries and compare its accuracy.
+    - **Observed result:** Shows identical zero ciphertexts expose the encrypted one in the deliberately broken mode while fresh-query guesses stay at chance.
     - **Concepts taught:** encryption randomness; PIR query privacy; ciphertext equality
-    - **Limits:** Broken mode is off by default.
-    - **Evidence at pinned commit:** `src/ui/serverview.ts:139`, `src/ui/serverview.ts:151`, `src/ui/serverview.ts:167`, `src/ui/serverview.ts:289`
+    - **Limits:** The randomness-reuse mode is explicitly broken, off by default and is not the protocol's honest path.
+    - **Evidence at pinned commit:** `src/ui/serverview.ts:140`, `src/ui/serverview.ts:159`, `src/ui/serverview.ts:167`, `src/ui/serverview.ts:280`, `src/ui/serverview.ts:284`, `src/ui/serverview.ts:372`, `src/ui/serverview.ts:374`, `src/ui/serverview.ts:376`
   - **Byte-to-Polynomial Record Encoding** (`record-polynomial`; explanation; real-values)
-    - **Visible section:** Pick a book / How a record becomes a polynomial
-    - **Learner action:** Open the byte-to-coefficient packing disclosure and change the record size.
-    - **Observed result:** Shows each record byte split into two 4-bit coefficients in plaintext modulus 17; the unused coefficient 16 flags decoding failure and longer records consume more noise budget.
+    - **Visible section:** The Shelf / Pick a book / How a record becomes a polynomial
+    - **Learner action:** Open the selected record's byte-to-coefficient packing disclosure and change the record size.
+    - **Observed result:** Shows two four-bit coefficients per byte in plaintext modulus 17, leaving coefficient 16 as a decoding-failure sentinel while wider records consume more noise budget.
     - **Concepts taught:** BFV plaintext packing; plaintext modulus; decoding failure sentinel; record width and noise growth
-    - **Limits:** The encoding is specific to this small direct one-hot PIR implementation.
-    - **Evidence at pinned commit:** `src/ui/shelf.ts:215`, `src/ui/shelf.ts:228`, `src/ui/shelf.ts:232`, `src/ui/shelf.ts:240`, `src/ui/shelf.ts:245`
+    - **Limits:** This packing is shared by the direct and compressed paths, but is specific to this bounded teaching implementation and is not a general BFV or PIR wire format; coefficient 16 and the record tag detect decode failure, not malicious-server dishonesty.
+    - **Evidence at pinned commit:** `src/ui/shelf.ts:120`, `src/ui/shelf.ts:228`, `src/ui/shelf.ts:232`, `src/ui/shelf.ts:240`, `src/pir/records.ts:43`, `src/pir/records.ts:59`
   - **PIR Security Boundaries and Decryption Feedback** (`scope-feedback`; explanation; conceptual)
     - **Visible section:** What It Does Not Hide / Honest scope
-    - **Learner action:** Read the hidden-versus-visible property table and the dated decryption-feedback research note.
-    - **Observed result:** Separates index privacy from integrity, access-pattern privacy, deployment timing, and the IND-CPA-D feedback model; names browser implementation limits.
-    - **Concepts taught:** single-server PIR threat model; IND-CPA-D; decryption feedback; response integrity; access patterns; BFV implementation scope
-    - **Limits:** The cited BFV/BGV research concerns particular configurations and feedback conditions; this lab does not reproduce those attacks or prove its configuration vulnerable.
-    - **Evidence at pinned commit:** `src/ui/scope.ts:96`, `src/ui/scope.ts:100`, `src/ui/scope.ts:127`, `src/ui/scope.ts:136`, `src/ui/scope.ts:138`, `src/ui/scope.ts:267`
+    - **Learner action:** Read the hidden-versus-visible table, implementation boundary and dated decryption-feedback research note.
+    - **Observed result:** Separates index privacy from integrity and traffic metadata, names the compressed path's circular-security assumption and scopes the cited IND-CPA-D attacks.
+    - **Concepts taught:** single-server PIR threat model; IND-CPA-D; decryption feedback; response integrity; traffic metadata; circular security; BFV implementation scope
+    - **Limits:** The cited BFV/BGV research concerns particular configurations and feedback conditions; the lab does not reproduce those attacks or prove this configuration vulnerable.
+    - **Evidence at pinned commit:** `src/ui/scope.ts:96`, `src/ui/scope.ts:100`, `src/ui/scope.ts:105`, `src/ui/scope.ts:116`, `src/ui/scope.ts:129`, `src/ui/scope.ts:142`, `src/ui/scope.ts:143`, `src/ui/scope.ts:280`, `src/ui/scope.ts:297`, `src/ui/scope.ts:299`, `src/ui/scope.ts:301`
   - **Encrypted Selection Vector** (`selection-vector`; interactive; real-crypto)
-    - **Visible section:** What you send
-    - **Learner action:** Pick a book and inspect the ciphertext sent for each shelf position, then guess its hidden one.
-    - **Observed result:** Shows randomized encryptions of zero or one and obscured selected index under the modeled server view.
-    - **Concepts taught:** private information retrieval; BFV; encrypted selector; semantic security
-    - **Limits:** Single-server honest-but-curious model with local computation.
-    - **Evidence at pinned commit:** `src/ui/shelf.ts:24`, `src/ui/serverview.ts:73`, `src/ui/serverview.ts:95`, `src/ui/serverview.ts:104`, `src/pir/pir.ts:1`
+    - **Visible section:** The Server's View / What you send
+    - **Learner action:** Pick a book, inspect the BFV ciphertext sent for every shelf position and guess which one hides the selected bit.
+    - **Observed result:** Shows independently randomized encryptions of zero and one while the modeled server receives no plaintext index.
+    - **Concepts taught:** private information retrieval; BFV; encrypted selector; decision-RLWE
+    - **Limits:** This is the direct one-hot path in a local, single-server honest-but-curious model; it does not prove RLWE hardness or deployment privacy.
+    - **Evidence at pinned commit:** `src/ui/shelf.ts:24`, `src/ui/serverview.ts:73`, `src/ui/serverview.ts:77`, `src/ui/serverview.ts:99`, `src/ui/serverview.ts:111`, `src/pir/pir.ts:91`, `src/pir/pir.ts:191`
 
 ### Shor
 

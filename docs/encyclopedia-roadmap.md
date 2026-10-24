@@ -4,14 +4,14 @@
 
 ## Current milestone
 
-**Six implementation milestones are shipped across five live proposals.** E-K-01 is now live end to end in Envelope KMS: its first key-handle exercise and its later import, alias and bounded-search milestone are both deployed. L-R-09's query-result integrity exercise is live in Search Vault, E-K-02's executable HIBE delegation exercise is live in IBE Gate, and AES Anatomy carries both A-D-06's classical differential fault analysis and E-K-06's accepted-output fault analysis. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) · [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/)
+**Six implementation milestones are shipped across five live proposals; A-D-01 is in progress.** E-K-01 is now live end to end in Envelope KMS: its first key-handle exercise and its later import, alias and bounded-search milestone are both deployed. L-R-09's query-result integrity exercise is live in Search Vault, E-K-02's executable HIBE delegation exercise is live in IBE Gate, and AES Anatomy carries both A-D-06's classical differential fault analysis and E-K-06's accepted-output fault analysis. A-D-01's current-source reconciliation and construction review are complete, but the new executable lab has not yet earned implementation credit. [Envelope KMS](https://systemslibrarian.github.io/crypto-lab-envelope-kms/) · [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) · [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) · [AES Anatomy](https://systemslibrarian.github.io/crypto-lab-aes-anatomy/)
 
 E-K-01 is **live**: Envelope KMS now searches a declared finite state model for mutable-role, known-key-import and distinct same-value-handle disclosures, distinguishes a completed bounded miss from an incomplete cutoff, and replays found witnesses with real RFC 3394 and AES-GCM. L-R-09 is **live**: Search Vault distinguishes per-record authenticity from completeness and freshness with honest, omission, fabrication and stale-snapshot cases. E-K-02 is **live**: IBE Gate executes bounded descendant-key delegation, sibling/ancestor failure boundaries, subtree compromise and retained root escrow. A-D-06 is **live**: AES Anatomy derives last-round key constraints from real round-9 AES-128 faults, intersects candidates, reverses the key schedule and verifies the recovered master key. E-K-06 is also **live**: finite samples execute correct and first-round-faulted AES-128, classify exact ciphertext equality and rank one key byte from the selected inputs, while a separate analytic census, a secret-independent null and bounded infection/reference-oracle cases keep the statistical claim scoped. Shelf Oracle's PIR scope correction is merged and verified. The counts below describe whole proposals.
 
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 43 |
-| In progress | 0 |
+| Planned | 42 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 5 |
@@ -37,7 +37,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Complete and independently audit E-K-06; merge it only after its full unit, browser/accessibility and mutation gate, then verify the exact deployed assets and learner-visible scope.
 - [x] Complete E-K-01's later import, alias and bounded-search milestone; independently audit the model and sources, pass its full hosted gate, and verify its exact deployment and public learner behavior.
 
-**Implementation work:** begin A-D-01's encrypted-deduplication and message-locked-encryption lesson from current source and reviewed primary constructions. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** build A-D-01's new Dedup Vault from the reconciled design below. The active implementation must execute fresh-key, local message-locked and server-aided modes; preserve the separate storage, key-server, client and attacker views; and keep its adaptation and non-claims visible. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -46,7 +46,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **A-D-01 — encrypted deduplication and message-locked encryption:** choose a reviewed construction and specify the two-user storage, attacker and server views before implementation.
+1. **A-D-01 — encrypted deduplication and message-locked encryption:** implement and independently gate the reviewed Dedup Vault design, including two-user storage accounting, offline and rate-limited dictionary attacks, VOPRF proof failure, equality leakage, bounded possession, authorization and reference-count deletion.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
@@ -93,7 +93,9 @@ This completes the roadmap's bounded teaching model, not a general API-security 
 
 The current integration keeps **243 labs** and records **1,733 reviewed sections**, four more than the 1,729 on the prior Hub baseline. In addition to preserving the existing LFSR Trivium, first Envelope KMS key-handle and Search Vault query-integrity sections, it maps Envelope KMS's bounded key-handle state search, IBE Gate's executable HIBE delegation and AES Anatomy's classical DFA and accepted-output fault lessons, updates their cards and the knowledge map, pins the current reviewed source revisions, and retains Search Vault's repaired query-integrity catalog prose. The forty concept boundaries and their statuses remain unchanged.
 
-The source mappings were checked against committed AES Anatomy `1f0f6b86a2dd` and IBE Gate `7dfebaff27c4`; Envelope KMS, LFSR Forge and Shelf Oracle were separately re-reconciled against current main and live deployments. The scoped algorithm review keeps excluded side-channel mentions out of implementation credit, distinguishes differential fault analysis from ordinary differential cryptanalysis and deterministic finite automata, and records SIFA and HIBE as bounded teaching adaptations rather than inheriting their papers' full results. Catalog schema/source checks, generated-file freshness checks, search/structure checks, knowledge-map assertions, teaching-scope controls and the broader non-browser CI suites gate this integration. This is verification of the changed mappings, not a new runtime test of all 243 labs. The containing Hub commit and hosted checks provide the publication record for this catalog and ledger.
+The source mappings were checked against committed AES Anatomy `1f0f6b86a2dd` and IBE Gate `7dfebaff27c4`; Envelope KMS, LFSR Forge and Shelf Oracle were separately re-reconciled against current main and live deployments. The scoped algorithm review keeps excluded side-channel mentions out of implementation credit, distinguishes differential fault analysis from ordinary differential cryptanalysis and deterministic finite automata, and records SIFA and HIBE as bounded teaching adaptations rather than inheriting their papers' full results. Catalog schema/source checks, generated-file freshness checks, search/structure checks, knowledge-map assertions, teaching-scope controls and the broader non-browser CI suites gate this integration. This is verification of the changed mappings, not a new runtime test of all 243 labs.
+
+[Hub PR #254](https://github.com/systemslibrarian/crypto-lab/pull/254) published the completed E-K-01 mapping as merge commit [`8e1880454949`](https://github.com/systemslibrarian/crypto-lab/tree/8e18804549499bac2581bedc660e56c1514300df). All seven exact-main workflows passed: [Learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369430), [Protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369432), [Three arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369426), [Public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369462), [README catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369460), [Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369425) and [Pages deployment](https://github.com/systemslibrarian/crypto-lab/actions/runs/40049369417). The deployed catalog was fetched after that deployment and matched `index.html` from the merge commit byte for byte: 784,834 bytes, SHA-256 `9a97c1be9c6e39844ed92c8fe43bd43ec6a7c45290d349fd399f0f5931a74304`; its updated Envelope KMS card appeared exactly once.
 
 ## Progress definitions
 
@@ -136,7 +138,7 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | Phase | Proposals | Priority | Current state |
 | --- | ---: | --- | --- |
 | Phase 1 — Stateful key-handle policy | 1 | P1 | 1 live |
-| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 2 live; 9 planned |
+| Phase 2 — Privacy, storage and query integrity | 11 | P1 | 2 live; 1 in progress; 8 planned |
 | Phase 3 — Protocols and arithmetic | 5 | P1 | 5 planned |
 | Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 2 live; 14 planned |
 | Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 8 planned |
@@ -189,11 +191,11 @@ Extend existing labs through the strongest P1 composition gaps; coordinate relat
 
 ### A-D-01 — Encrypted deduplication and message-locked encryption
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** Encrypted storage and ownership.
+**Priority:** P1 — next · **Status:** In progress · **Workstream:** Encrypted storage and ownership.
 
-**Target:** New focused encrypted-deduplication lab; link Envelope KMS and OPAQUE Gate.
+**Target:** New focused Dedup Vault lab; link Envelope KMS, OPAQUE Gate and ORAM Vault.
 
-**Existing base:** Envelope KMS encrypts records with random 256-bit DEKs and wraps them under KEKs, then teaches rewrapping and compromise scope. OPAQUE Gate separately exposes blind/unblind OPRF operations in a password-authentication protocol.
+**Existing base:** Envelope KMS encrypts records with random 256-bit DEKs and wraps them under KEKs, then teaches rewrapping and compromise scope. OPAQUE Gate separately exposes blind/unblind OPRF operations in a password-authentication protocol. Current source and public-repository reconciliation found no existing encrypted-deduplication or message-locked-encryption lab to extend.
 
 **Acceptance criteria:**
 
@@ -201,13 +203,17 @@ Extend existing labs through the strongest P1 composition gaps; coordinate relat
 - Execute a low-entropy file dictionary attack, then compare a specified server-aided derivation with its server trust and rate assumptions.
 - Separate proof of possession, authorization, equality leakage and deletion/revocation limits.
 
-**Next action:** Choose a reviewed message-locked construction and specify the two-user storage, attacker and server views.
+**Next action:** Implement the new `crypto-lab-dedup-vault` repository from the reviewed design, add independent known-answer, negative, browser/accessibility and mutation gates, then publish only after exact-main deployment and served-behavior verification.
 
-**Scope and limits:** An existing OPRF primitive is not a complete DupLESS or proof-of-ownership protocol.
+**Reviewed design, 2026-10-24:** Compare a random 128-bit data key with local convergent encryption `K = first128(SHA-256(P || M))` and a server-aided key derived from RFC 9497 P256-SHA256 VOPRF output. Encrypt file bytes using one-time AES-CTR with the lesson's fixed counter, and protect each user's copy of the data key in a separate RFC 5297 AES-SIV capsule bound to the complete data ciphertext and that user's reference. Deduplicate only after exact ciphertext-byte equality, not a storage-index digest alone. Execute an actual low-entropy ciphertext dictionary attack in local mode; then show authenticated, identity-scoped and epoch-bounded VOPRF requests, including a target within the request budget, a target beyond it, another identity, proof tampering and key-server compromise. Keep client, storage, key-server, storage-attacker, authorized-client-attacker and combined-compromise views distinct.
 
-**Audit references:** [Deduplication of Encrypted Data (original PDF pp. 1589–1593)](https://doi.org/10.1007/978-3-030-71522-9_1463).
+**Required boundaries:** Equality leakage, bounded whole-ciphertext possession, reference authorization and deletion/revocation are separate transitions. A fresh-nonce whole-ciphertext challenge must reject a blob identifier alone and replay, but must not grant another user's reference or be presented as the scalable Merkle/encoding proof-of-ownership construction. Reference deletion removes the shared service blob only after the last reference. Revocation blocks future modeled API/VOPRF operations but cannot retract cached ciphertext, capsules, keys or plaintext. VOPRF key rotation changes future deterministic ciphertext and is not retroactive revocation.
 
-**Pinned baseline:** [Envelope KMS 3fcc80aa1e36](https://github.com/systemslibrarian/crypto-lab-envelope-kms/blob/3fcc80aa1e36576d8e728aa05f0efcdc5e4862ff/README.md); [OPAQUE Gate 6fffc04fec90](https://github.com/systemslibrarian/crypto-lab-opaque-gate/blob/6fffc04fec90bb396016dfa12f8bd0a9f862823f/README.md).
+**Scope and limits:** This is a modern DupLESS-shaped teaching adaptation using RFC 9497 VOPRF, not byte-for-byte DupLESS or a claim that the original RSA-OPRF proof transfers to the substitution. An existing OPAQUE OPRF primitive is not a complete DupLESS or proof-of-ownership protocol. The fixed AES-CTR counter is confined to one key per message; reusing a key for different messages would be unsafe. The co-located browser roles do not provide process isolation, TLS authentication, HSM protection or enforceable production rate limits. Rate limiting delays guesses outside the modeled budget; it does not make low-entropy messages safe or defeat distributed identities. Equality, length, timing and reference information remain visible to the stated storage view.
+
+**Audit references:** [Deduplication of Encrypted Data (original PDF pp. 1589–1593)](https://doi.org/10.1007/978-3-030-71522-9_1463); [Message-Locked Encryption and Secure Deduplication](https://eprint.iacr.org/2012/631.pdf); [DupLESS](https://www.usenix.org/system/files/conference/usenixsecurity13/sec13-paper_bellare.pdf); [RFC 9497 VOPRF](https://www.rfc-editor.org/rfc/rfc9497.html); [RFC 5297 AES-SIV](https://www.rfc-editor.org/rfc/rfc5297.html); [Proofs of Ownership in Remote Storage Systems](https://eprint.iacr.org/2011/207.pdf).
+
+**Pinned baseline:** [Envelope KMS 50fcf5130274](https://github.com/systemslibrarian/crypto-lab-envelope-kms/blob/50fcf5130274de940aba5a3ada405d95243e4fcb/README.md); [OPAQUE Gate 6fffc04fec90](https://github.com/systemslibrarian/crypto-lab-opaque-gate/blob/6fffc04fec90bb396016dfa12f8bd0a9f862823f/README.md).
 
 <a id="a-d-02"></a>
 
@@ -1352,6 +1358,8 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-23 | Hub reconciliation and catalog integration | [Hub PR #252](https://github.com/systemslibrarian/crypto-lab/pull/252), initial commit `9df3ae449107`, maps the two newly reconciled lessons, updates cards and the knowledge map, repairs Search Vault's generated catalog drift, and records the verified maintenance state. All 11 applicable hosted jobs passed: [catalog and checker regressions](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387335), [teach/layout](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387279), [learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387232), [protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387354), [public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387701) and [arcade browser playthrough](https://github.com/systemslibrarian/crypto-lab/actions/runs/40033387230). The scheduled-only drift job was correctly skipped. Merge and Hub deployment remain pending at this ledger entry. |
 | 2026-10-23 | E-K-06 accepted-output fault analysis | [AES Anatomy PR #4](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/pull/4) merged at `1f0f6b86a2dd`; exact-main run 40041039537 passed 51 unit, 21 production-browser/accessibility and 44 mutation cases and deployed. The served HTML, JavaScript, CSS and worker matched the exact tested build byte-for-byte. Real fault-path equality, sampled selected-output ranking, the separate analytic census, secret-independent null, rejection, bounded hidden infection and exact-reference failure case were independently checked against the primary papers. Marked **Live** with the one-byte logical model and non-hardened/non-universal defense limits retained. |
 | 2026-10-23 | E-K-01 complete bounded key-handle model | [Envelope KMS PR #44](https://github.com/systemslibrarian/crypto-lab-envelope-kms/pull/44) merged at `50fcf5130274`; exact-main run 40047769606 passed 119 unit tests, 2 publishing controls, 39 production-browser/accessibility tests and all 10 claim mutations before deploying. CodeQL passed. The served HTML, JavaScript and CSS matched a fresh build byte-for-byte. Fixed-policy bounded exhaustion, incomplete cutoff, depth-3 import and depth-4 distinct same-value-handle witnesses, terminal complementary roles, real AES-KW replay and independent AES-GCM verification were checked. Marked **Live** with the finite-model, non-PKCS #11 and non-HSM limits retained. |
+| 2026-10-23 | E-K-01 Hub publication | [Hub PR #254](https://github.com/systemslibrarian/crypto-lab/pull/254) merged at `8e1880454949`; all seven exact-main workflow runs passed, including catalog/public-evidence checks and Pages deployment. The deployed 784,834-byte catalog matched the merge commit byte for byte at SHA-256 `9a97c1be9c6e39844ed92c8fe43bd43ec6a7c45290d349fd399f0f5931a74304`, and the updated Envelope KMS card appeared exactly once. The temporary local and remote feature branches were removed after verification. |
+| 2026-10-23 | A-D-01 encrypted deduplication design | Fresh current-source and public-repository reconciliation found no existing MLE/deduplication lab. Envelope KMS `50fcf5130274` and OPAQUE Gate `6fffc04fec90` were read as related baselines. The reviewed design selects a DupLESS-shaped adaptation with local convergent and RFC 9497 P256-SHA256 VOPRF-derived modes, one-time AES-CTR data ciphertext, per-user RFC 5297 AES-SIV key capsules, exact-byte deduplication, executable dictionary/rate/proof failures and separate possession, authorization, deletion and revocation transitions. Marked **In progress**; no implementation, test, merge or deployment credit is claimed yet. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

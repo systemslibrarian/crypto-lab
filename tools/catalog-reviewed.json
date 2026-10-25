@@ -1031,6 +1031,20 @@
     "implementation": "@noble/curves and @noble/post-quantum with a local LAMPS draft-16 composite combiner",
     "note": "Read the complete committed README and source at this exact main revision after the TLS assignment-status correction. The lab executes Ed25519 and ML-DSA-65 signing and AND-gated verification through a local LAMPS draft-16 composite combiner. Its break scenarios grant the honest signing key for a modeled broken component; they do not execute Shor's algorithm, discrete-log, factoring, lattice or side-channel attacks. The word pairing describes combining the two signatures and is not a bilinear-pairing reference. The TLS working-group draft-00 and IANA registry were checked on 2026-10-24: mldsa65_ed25519_sha512 still uses placeholder TBD7, no SignatureScheme value is assigned, and the TLS draft references LAMPS draft-19. The lab remains explicitly pinned to its older draft-16 construction and implements no TLS negotiation, X.509 or CMS encoding, draft-19 construction, real cryptanalysis or hardened production signing. Exact-main run 40092067603 passed 19 unit tests, the production build and 11 hosted browser/accessibility tests before deploying byte-matching public assets."
   },
+  "crypto-lab-hpke-envelope": {
+    "commit": "fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8",
+    "reviewed": "2026-10-25",
+    "add": [
+      "Ed25519@src/signcryption/ste.ts:325",
+      "Sign-then-Encrypt@src/signcryption/ste.ts:311"
+    ],
+    "remove": [
+      "Key recovery",
+      "Nonce reuse"
+    ],
+    "implementation": "WebCrypto AES-GCM / @noble X25519, HKDF and strict Ed25519 / local RFC 9180 and bounded Sign-then-Encrypt teaching profile",
+    "note": "Read the complete merged README, HPKE implementation, Sign-then-Encrypt core, learner interface, unit/browser tests, mutation runner and visible limitations at this exact main commit. The original RFC 9180 pipeline, all four modes, context-binding failures, replay and non-goals remain. The S01 comparison now executes the RFC 9180 Auth recipient-key KCI forgery with recipient skR and public sender pkS, without sender skS. Its separate versioned multi-user Sign-then-Encrypt profile signs sender, recipient, independently expected application context and message with strict Ed25519, then encrypts the framed signed payload with Base HPKE; pinned identity-to-key records are external to the packet. Executed cases cover outsider tampering, recipient/sender/both-key compromise, recipient forwarding, public signature evidence and replay. Application plaintext and evidence remain quarantined until signature and all identity/context bindings pass. The profile is an An-Dodis-Rabin-style teaching instantiation, not a standardized wire format, production protocol or automatic transfer of the paper's proof. Public evidence establishes only that the separately pinned signing key signed the exact disclosed fields; it does not prove ciphertext authorship, transmission, receipt, time, human intent or legal non-repudiation. The phrase Apple iCloud key recovery names a provider feature, and the nonce-collision URL is a related-lab link; neither is an attack executed here, so both old scanner credits are removed. Exact-main run 40179028196 passed 258 unit tests, all 19 clean-baseline mutations, the production build and all 27 hosted browser/accessibility tests, deployed, and the served HTML, JavaScript and CSS matched the exact reviewed tree byte for byte."
+  },
   "crypto-lab-shelf-oracle": {
     "commit": "d08691c9e17aaf624781adb127ac4a161f993690",
     "reviewed": "2026-10-24",

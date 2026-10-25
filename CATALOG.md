@@ -73,7 +73,7 @@ before relying on this index for a fresh assessment.
 
 ## Reverse index — which labs implement what
 
-197 algorithms are implemented somewhere in the fleet, grouped by family.
+198 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -1111,8 +1111,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Ed25519
 
-- **Implemented by:** [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:1`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:31`; [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) `src/bench/runner.ts:111`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/ed25519.ts:24`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/xeddsa.ts:43`; [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) `src/ecdsa.ts:192`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/base.ts:10`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/ecblind.ts:1`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/ring.ts:382`; [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) `src/main.ts:846`; [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) `src/composite.ts:182`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:24`; [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) `src/engine.ts:24`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/kex.ts:95`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/sign.ts:13`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/verify.ts:14`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:124`; [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) `src/crypto/ed25519.ts:7`; [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) `src/crypto/ed25519.ts:16`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/directory/client.ts:35`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/baseline/ed25519.ts:29`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/identity.rs:172`; [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) `src/primitives.ts:43`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:244`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/ed25519.ts:3`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/pqxdh/bundle.ts:1`; [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) `src/crypto/ed25519.ts:74`; [TESLA Broadcast](https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/) `src/crypto/anchor.ts:1`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/advanced.ts:4`
-- **Also referenced by:** *Quantum Vault KpqC*, *DKG Gate*, *Silent Tally*, *Shamir Gate*, *SPHINCS+ Ledger*, *Hybrid Wire*, *Downgrade Wire*, *Educational RSA*, *RSA Forge*, *Curve Lens*, *Point Arithmetic*, *Noise Pipe*, *LMS Ledger*, *Pairing Gate*, *Dilithium Reject*, *ECDSA Forge*, *Harvest Timeline*, *HAWK*, *PQ Rotation*, *PQ TLS Handshake*, *PSI Gate*, *Threshold ML-DSA*, *Bulletproofs*, *MLS Group*, *WebAuthn*, *JWT Forge*, *Broken Trust*, *Bitcoin Script*, *PAKE Gate*, *HPKE Envelope*, *Frozen Heart*, *Encrochat*, *Icy DVRF*, *Sphinx Mix*, *Fold Gate*, *Function Key*, *Locks and Keys*, *What Is PQC*, *Agreeing in Public*
+- **Implemented by:** [Garbled Gate](https://systemslibrarian.github.io/crypto-lab-garbled-gate/) `src/yao.ts:1`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:31`; [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) `src/bench/runner.ts:111`; [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/ed25519.ts:24`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/xeddsa.ts:43`; [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) `src/ecdsa.ts:192`; [OT Gate](https://systemslibrarian.github.io/crypto-lab-ot-gate/) `src/ext/base.ts:10`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/ecblind.ts:1`; [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) `src/ring.ts:382`; [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) `src/main.ts:846`; [Hybrid Sign](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) `src/composite.ts:182`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:24`; [Web of Trust](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) `src/engine.ts:24`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/kex.ts:95`; [Hybrid PQC](https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/) `src/crypto/sign.ts:13`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/verify.ts:14`; [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) `src/primitives.ts:124`; [Time Trust](https://systemslibrarian.github.io/crypto-lab-time-trust/) `src/crypto/ed25519.ts:7`; [Signed Bytes](https://systemslibrarian.github.io/crypto-lab-signed-bytes/) `src/crypto/ed25519.ts:16`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/signcryption/ste.ts:325`; [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) `src/directory/client.ts:35`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/baseline/ed25519.ts:29`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/identity.rs:172`; [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) `src/primitives.ts:43`; [DNSSEC Chain](https://systemslibrarian.github.io/crypto-lab-dnssec-chain/) `src/dnssec/crypto.ts:244`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/ed25519.ts:3`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/pqxdh/bundle.ts:1`; [Vector Gate](https://systemslibrarian.github.io/crypto-lab-vector-gate/) `src/crypto/ed25519.ts:74`; [TESLA Broadcast](https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/) `src/crypto/anchor.ts:1`; [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) `src/ake/advanced.ts:4`
+- **Also referenced by:** *Quantum Vault KpqC*, *DKG Gate*, *Silent Tally*, *Shamir Gate*, *SPHINCS+ Ledger*, *Hybrid Wire*, *Downgrade Wire*, *Educational RSA*, *RSA Forge*, *Curve Lens*, *Point Arithmetic*, *Noise Pipe*, *LMS Ledger*, *Pairing Gate*, *Dilithium Reject*, *ECDSA Forge*, *Harvest Timeline*, *HAWK*, *PQ Rotation*, *PQ TLS Handshake*, *PSI Gate*, *Threshold ML-DSA*, *Bulletproofs*, *MLS Group*, *WebAuthn*, *JWT Forge*, *Broken Trust*, *Bitcoin Script*, *PAKE Gate*, *Frozen Heart*, *Encrochat*, *Icy DVRF*, *Sphinx Mix*, *Fold Gate*, *Function Key*, *Locks and Keys*, *What Is PQC*, *Agreeing in Public*
 
 #### Ed448
 
@@ -1133,6 +1133,13 @@ A lab in *italics* references the algorithm without implementing it.
 
 - **Implemented by:** [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/schnorr.js:46`; [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) `src/main.ts:1199`; [Schnorr Forge](https://systemslibrarian.github.io/crypto-lab-schnorr-forge/) `src/ui/attackPanel.ts:2`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/app.ts:764`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/ui.ts:1046`; [PAKE Gate](https://systemslibrarian.github.io/crypto-lab-pake-gate/) `src/pake/schnorr-nizk.ts:27`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/verify.ts:49`; [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) `src/musig/bip340.ts:14`; [Adaptor Gate](https://systemslibrarian.github.io/crypto-lab-adaptor-gate/) `src/crypto/attacks.ts:8`
 - **Also referenced by:** *Quantum Vault KpqC*, *Subliminal Channels*, *SM2 Forge*, *STARK Tower*, *SNARK Arena*, *DKG Gate*, *Garbled Gate*, *FROST Threshold*, *Dilithium Seal*, *Shamir Gate*, *Curve Lens*, *Pairing Gate*, *GG20 Wallet*, *Commit Gate*, *Threshold ML-DSA*, *PQ Families*, *Bitcoin Script*, *Shamir vs FROST*, *Credential Veil*, *Rekey Relay*, *Sphinx Mix*, *Pulse Chain*, *Function Key*, *Locks and Keys*, *RSA Small Roots*, *Signature Gate*
+
+### signcryption composition
+
+#### Sign-then-Encrypt
+
+- **Implemented by:** [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/signcryption/ste.ts:311`
+- **Also referenced by:** —
 
 ### steganography
 
@@ -1269,7 +1276,7 @@ disagree about who owns SHA-256.
 | DHKEM | RFC 9180 | 3 |
 | Diffie-Hellman | RFC 2631 | 17 |
 | Dragonfly | RFC 7664 | 1 |
-| Ed25519 | RFC 8032 | 29 |
+| Ed25519 | RFC 8032 | 30 |
 | Ed448 | RFC 8032 | 2 |
 | EdDSA | RFC 8032 | 1 |
 | Encrypted Client Hello | draft-ietf-tls-esni | 1 |
@@ -1451,6 +1458,7 @@ disagree about who owns SHA-256.
 | Shamir secret sharing | — | 9 |
 | Shipovnik | — | 1 |
 | Shor's algorithm | — | 3 |
+| Sign-then-Encrypt | — | 1 |
 | Simon | — | 1 |
 | SMAUG-T | — | 1 |
 | STARK | — | 1 |
@@ -7432,17 +7440,18 @@ Test selected security games, trace an AES-based GGM tree, and compare exact and
 
 ### HPKE Envelope
 
-[`crypto-lab-hpke-envelope`](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) · Hybrid Encryption · ENCRYPTION, KEY EXCHANGE
+[`crypto-lab-hpke-envelope`](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) · Hybrid Encryption · ENCRYPTION, KEY EXCHANGE, SIGNATURES, ATTACKS
 
-RFC 9180 with every stage exposed — a KEM, a KDF, and an AEAD composed into one scheme; edit the info string or AAD and watch the real AEAD reject.
+RFC 9180 with every stage exposed, plus an executable Auth recipient-key KCI forgery beside a bounded identity- and context-bound Base-HPKE + Ed25519 Sign-then-Encrypt comparison with explicit evidence limits.
 
-- **Card topics (discovery only):** DHKEM X25519, HKDF-SHA256, AES-GCM, RFC 9180 — labels do not establish what any section runs.
-- **Implements:** AES `src/hpke/aead.ts:35`, AES-GCM `src/hpke/aead.ts:54`, ChaCha20 `src/hpke/aead.ts:51`, ChaCha20-Poly1305 `src/hpke/aead.ts:51`, DHKEM `src/hpke/hpke.ts:14`, Diffie-Hellman `src/hpke/dhkem.ts:22`, HKDF `src/hpke/kdf.ts:7`, HPKE `src/hpke/consts.ts:62`, Poly1305 `src/hpke/aead.ts:51`, SHA-256 `src/hpke/kdf.ts:8`, X25519 `src/hpke/dhkem.ts:10`
-- **References:** AEGIS-256, Ascon, Ed25519, Encrypted Client Hello, Kyber, ML-KEM, MLS
-- **Attacks shown:** Key recovery `src/ui/statics.ts:21`, Nonce reuse `src/ui/links.ts:12`
+- **Card topics (discovery only):** DHKEM X25519, HKDF-SHA256, AES-GCM, RFC 9180, Auth KCI, Sign-then-Encrypt — labels do not establish what any section runs.
+- **Implements:** AES `src/hpke/aead.ts:35`, AES-GCM `src/hpke/aead.ts:54`, ChaCha20 `src/hpke/aead.ts:51`, ChaCha20-Poly1305 `src/hpke/aead.ts:51`, DHKEM `src/hpke/hpke.ts:14`, Diffie-Hellman `src/hpke/dhkem.ts:22`, Ed25519 `src/signcryption/ste.ts:325`, HKDF `src/hpke/kdf.ts:7`, HPKE `src/hpke/consts.ts:62`, Poly1305 `src/hpke/aead.ts:51`, SHA-256 `src/hpke/kdf.ts:8`, Sign-then-Encrypt `src/signcryption/ste.ts:311`, X25519 `src/hpke/dhkem.ts:10`
+- **Source review:** [fcf3b56c06e1](https://github.com/systemslibrarian/crypto-lab-hpke-envelope/commit/fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8) — Read the complete merged README, HPKE implementation, Sign-then-Encrypt core, learner interface, unit/browser tests, mutation runner and visible limitations at this exact main commit. The original RFC 9180 pipeline, all four modes, context-binding failures, replay and non-goals remain. The S01 comparison now executes the RFC 9180 Auth recipient-key KCI forgery with recipient skR and public sender pkS, without sender skS. Its separate versioned multi-user Sign-then-Encrypt profile signs sender, recipient, independently expected application context and message with strict Ed25519, then encrypts the framed signed payload with Base HPKE; pinned identity-to-key records are external to the packet. Executed cases cover outsider tampering, recipient/sender/both-key compromise, recipient forwarding, public signature evidence and replay. Application plaintext and evidence remain quarantined until signature and all identity/context bindings pass. The profile is an An-Dodis-Rabin-style teaching instantiation, not a standardized wire format, production protocol or automatic transfer of the paper's proof. Public evidence establishes only that the separately pinned signing key signed the exact disclosed fields; it does not prove ciphertext authorship, transmission, receipt, time, human intent or legal non-repudiation. The phrase Apple iCloud key recovery names a provider feature, and the nonce-collision URL is a related-lab link; neither is an attack executed here, so both old scanner credits are removed. Exact-main run 40179028196 passed 258 unit tests, all 19 clean-baseline mutations, the production build and all 27 hosted browser/accessibility tests, deployed, and the served HTML, JavaScript and CSS matched the exact reviewed tree byte for byte.
+- **References:** AEGIS-256, Ascon, Encrypted Client Hello, Kyber, ML-KEM, MLS
+- **Attacks shown:** Key-compromise impersonation `src/signcryption/ste.ts:641`
 - **Standards body:** IETF, NIST
-- **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bb39ab7a5f04](https://github.com/systemslibrarian/crypto-lab-hpke-envelope/commit/bb39ab7a5f048ffd51396de8dc8b99c255f61948) reviewed 2026-10-22; 7 mapped sections.
+- **Implementation:** WebCrypto AES-GCM / @noble X25519, HKDF and strict Ed25519 / local RFC 9180 and bounded Sign-then-Encrypt teaching profile
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fcf3b56c06e1](https://github.com/systemslibrarian/crypto-lab-hpke-envelope/commit/fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8) reviewed 2026-10-25; 7 mapped sections.
   - **Sender and Receiver Binding Breaker** (`binding`; interactive; real-crypto)
     - **Visible section:** Break the binding yourself
     - **Learner action:** Change info, AAD, or mode on one side, seal and open, then replay into a fresh context.
@@ -7456,13 +7465,13 @@ RFC 9180 with every stage exposed — a KEM, a KDF, and an AEAD composed into on
     - **Observed result:** Highlights mode byte, PSK identifier hash, and authenticated second DH differences.
     - **Concepts taught:** HPKE modes; PSK; authenticated KEM; domain separation
     - **Evidence at pinned commit:** `src/ui/modes.ts:53`, `src/ui/modes.ts:94`, `src/ui/modes.ts:108`, `src/ui/pipeline.ts:68`
-  - **HPKE Auth Mode KCI Boundary** (`hpke-kci-boundary`; explanation; conceptual)
-    - **Visible section:** What this lab isn’t
-    - **Learner action:** Read the scope note about recipient-key compromise and the cited Auth and AuthPSK conditions.
-    - **Observed result:** Explains that DHKEM Auth sender authentication can fail when the recipient secret is compromised, and AuthPSK adds a PSK-compromise condition.
-    - **Concepts taught:** HPKE; key-compromise impersonation; DHKEM Auth; AuthPSK; signature binding
-    - **Limits:** KCI is named and scoped here, not exercised by the interactive modes.
-    - **Evidence at pinned commit:** `src/ui/statics.ts:127`, `src/ui/statics.ts:135`, `src/ui/statics.ts:136`, `src/ui/modes.ts:46`
+  - **HPKE Auth KCI and Identity-Bound Sign-then-Encrypt** (`hpke-kci-signcryption`; comparison; real-crypto)
+    - **Visible section:** Sender evidence under key compromise: Auth versus Sign-then-Encrypt
+    - **Learner action:** Generate a fresh three-party key set, then run nine cases spanning honest delivery, outsider tampering, recipient-key KCI, recipient and sender compromise, forwarding, public evidence and replay.
+    - **Observed result:** Executes an Auth ciphertext forgery with recipient skR and public sender pkS, then contrasts it with strict Ed25519 evidence over sender, recipient, independently expected context and message.
+    - **Concepts taught:** HPKE Auth; key-compromise impersonation; Sign-then-Encrypt; Ed25519; insider security; transferable evidence
+    - **Limits:** Bounded teaching profile, not a standardized signcryption wire format or proof transfer. Evidence proves only that a separately pinned key signed the exact disclosed fields; it does not prove transmission, receipt, time, human intent or legal non-repudiation, and replay remains application state.
+    - **Evidence at pinned commit:** `src/ui/signcryption.ts:127`, `src/ui/signcryption.ts:130`, `src/ui/signcryption.ts:205`, `src/ui/signcryption.ts:225`, `src/ui/signcryption.ts:265`, `src/ui/signcryption.ts:289`, `src/ui/signcryption.ts:301`, `src/ui/signcryption.ts:322`, `src/ui/signcryption.ts:339`, `src/ui/signcryption.ts:379`, `src/ui/signcryption.ts:399`, `src/signcryption/ste.ts:311`, `src/signcryption/ste.ts:360`, `src/signcryption/ste.ts:441`, `src/signcryption/ste.ts:484`, `src/signcryption/ste.ts:641`
   - **HPKE Application Responsibilities** (`hpke-non-goals`; explanation; conceptual)
     - **Visible section:** What HPKE deliberately does not do (RFC 9180 §9.7)
     - **Learner action:** Read RFC 9180 non-goals covering ordering, negotiation, replay, compromise, randomness, and plaintext length.

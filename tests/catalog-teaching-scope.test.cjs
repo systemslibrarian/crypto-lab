@@ -126,6 +126,70 @@ test('DC-net scope controls reject lost, moved or invented credit', () => {
   }
 });
 
+function checkHpkeS01Scope(source) {
+  const slug = 'crypto-lab-hpke-envelope';
+  const implementations = implementationsFor(source, slug);
+  assert.ok(implementations.includes('Ed25519'),
+    'S01 executes strict Ed25519 signing and verification, not merely a comparison label');
+  assert.ok(implementations.includes('Sign-then-Encrypt'),
+    'S01 executes the reviewed identity-bound Sign-then-Encrypt construction');
+  assert.ok(attacksFor(source, slug).includes('Key-compromise impersonation'),
+    'S01 executes the RFC 9180 Auth recipient-key KCI forgery');
+  assert.ok(!attacksFor(source, slug).includes('Key recovery'),
+    'Apple iCloud key recovery is a provider feature, not an executed recovery attack');
+  assert.ok(!attacksFor(source, slug).includes('Nonce reuse'),
+    'a sibling nonce-collision link is not an executed nonce-reuse attack');
+
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hpke-envelope\/"[^>]*>/)[0];
+  assert.match(card, /data-review-commit="fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8"/);
+  assert.match(card, /Ed25519@src\/signcryption\/ste\.ts:325/);
+  assert.match(card, /Sign-then-Encrypt@src\/signcryption\/ste\.ts:311/);
+  assert.match(card, /bounded Sign-then-Encrypt teaching profile/);
+}
+
+test('HPKE Envelope credits executable S01 construction and KCI without overstating evidence', () => {
+  checkHpkeS01Scope(html);
+  assert.ok(!attacksFor(html, 'crypto-lab-ake-ladder').includes('Key-compromise impersonation'),
+    'AKE Ladder has a related-link mention, not this executable KCI forgery');
+});
+
+test('S01 vocabulary names the construction and only executable KCI-forgery spellings', () => {
+  const ste = ALGORITHMS.find((term) => term.name === 'Sign-then-Encrypt');
+  const kci = ATTACKS.find((term) => term.name === 'Key-compromise impersonation');
+  assert.ok(ste);
+  assert.ok(kci);
+  assert.ok(ste.re.test('Sign-then-Encrypt'));
+  assert.ok(ste.re.test('signcrypt'));
+  assert.equal(ste.re.test('sign and later encrypt'), false);
+  assert.ok(kci.re.test('forgeAuthAfterRecipientCompromise'));
+  assert.ok(kci.re.test('KCI-forgery'));
+  assert.equal(kci.re.test('key-compromise impersonation'), false);
+  assert.equal(kci.re.test('see the KCI lesson'), false);
+});
+
+test('HPKE S01 scope controls reject lost or displaced reviewed credit', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hpke-envelope\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(/Sign-then-Encrypt@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'Ed25519@src/signcryption/ste.ts:325',
+      'Ed25519@src/signcryption/ste.ts:673',
+    )),
+    html.replace(cardRe, (card) => card.replace(/Key-compromise impersonation@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'data-attacks="Key-compromise impersonation@src/signcryption/ste.ts:641"',
+      'data-attacks="Key recovery@src/ui/statics.ts:21 | Key-compromise impersonation@src/signcryption/ste.ts:641"',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-attacks="Key-compromise impersonation@src/signcryption/ste.ts:641"',
+      'data-attacks="Key-compromise impersonation@src/signcryption/ste.ts:641 | Nonce reuse@src/ui/links.ts:12"',
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the HPKE Envelope card');
+    assert.throws(() => checkHpkeS01Scope(changed), assert.AssertionError);
+  }
+});
+
 function checkDictionaryScope(source) {
   const executable = [
     'crypto-lab-phantom-vault',

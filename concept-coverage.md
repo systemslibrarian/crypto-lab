@@ -357,6 +357,16 @@ knowledge assumptions. §24 remains `COVERED`: anonymous group broadcast adds a
 distinct object and failure model rather than a second treatment of an existing
 one. Catalogued total moves to 245.*
 
+*Version 46 — records HPKE Envelope's S01 public-key composition extension under
+§29 without adding a lab or changing a concept status. The new comparison executes
+RFC 9180 Auth's recipient-key KCI limit and a separately bounded, identity- and
+context-bound Base-HPKE + strict-Ed25519 Sign-then-Encrypt profile across outsider,
+recipient, sender, forwarding, evidence and replay cases. Transferable evidence is
+kept narrow: it verifies exact signed fields under an independently pinned key, not
+ciphertext authorship, transmission, receipt, time, human intent or legal
+non-repudiation. The profile is not a standardized wire format or a transfer of the
+cited construction's proof. Catalogued total remains 245.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1070,7 +1080,7 @@ Forge · SM2 Forge.
 
 **29. Composition and parsing failures — `COVERED`**
 Protocol Compose · Signed Bytes · Salamander · KEM Trap · JWT Forge · Padding Oracle ·
-Ablation Wire · Sector Vault · Compression Leak. The first six break a composition; Ablation Wire inverts the
+Ablation Wire · Sector Vault · Compression Leak · HPKE Envelope. The first six break a composition; Ablation Wire inverts the
 question and asks which layer was carrying the guarantee all along — switch one off and watch
 what an adversary recovers. It also separates hybrid-PQ confidentiality from authentication,
 which is the distinction a single "PQ" badge hides.
@@ -1080,6 +1090,16 @@ Sector Vault is the same inversion against a mode that is behaving exactly as sp
 plaintext and raise nothing — and then real AES-GCM is switched on and stops two of those
 three, with the third needing a monotonic version bound as associated data. The absent
 guarantee is the lesson; the mode is not broken.
+
+HPKE Envelope adds the public-key composition boundary: RFC 9180 Auth is accepted
+after an executable recipient-key KCI forgery, while a separate bounded
+Sign-then-Encrypt profile signs sender, recipient, independently expected context
+and message before Base HPKE encryption. Its compromise matrix keeps confidentiality,
+sender authenticity and public signature evidence distinct. Forwarding preserves a
+valid signature but fails the signed-recipient binding; replay remains valid
+cryptography requiring application state. The disclosed signature is transferable
+only as evidence that a separately pinned key signed those exact fields, not as proof
+of ciphertext creation, delivery, timing, intent or legal non-repudiation.
 
 **30. Classical cryptanalytic technique — `COVERED`**
 Biham Lens (differential) · Matsui Line (linear) · Vigenère Break · Collision Vault ·

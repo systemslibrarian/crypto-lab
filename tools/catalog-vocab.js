@@ -42,6 +42,11 @@ const ALGORITHMS = [
   { name: 'Fermat primality test', kind: 'algorithm', family: 'primality test', re: /fermat[-_ –]?(?:primality|test)/i, std: null },
   { name: 'Jacobi symbol', kind: 'algorithm', family: 'number theory', re: /\bjacobi\b/i, std: null },
   { name: 'Tonelli–Shanks', kind: 'algorithm', family: 'modular square root', re: /tonelli[-_ –]?shanks/i, std: null },
+  /* Montgomery multiplication is modular reduction in a residue representation,
+     not the Montgomery ladder used for exponentiation or scalar multiplication.
+     Keep the executable REDC/multiply spellings narrow so ordinary references to
+     the ladder cannot earn this implementation credit. */
+  { name: 'Montgomery multiplication', kind: 'algorithm', family: 'modular arithmetic', re: /montgomery[-_ ]?(?:multiplication|multiply|reduction|redc)\b|\bredc\b/i, chipRe: /^montgomery[-_ ]?(?:multiplication|reduction|redc)$/i, std: null },
   { name: 'Goldwasser–Micali', kind: 'algorithm', family: 'public-key encryption', re: /goldwasser[-_ –]?micali/i, std: null },
   { name: 'Rabin encryption', kind: 'algorithm', family: 'public-key encryption', re: /rabin[-_ ]?encryption/i, std: null },
   { name: 'Pohlig–Hellman', kind: 'algorithm', family: 'discrete log algorithm', re: /pohlig(?:[-_ –]?hellman)?/i, std: null },
@@ -73,6 +78,11 @@ const ALGORITHMS = [
   { name: 'ChaCha20', kind: 'algorithm', family: 'stream cipher', re: /chacha20?/i, std: 'IETF:RFC 8439' },
   { name: 'Poly1305', kind: 'algorithm', family: 'MAC', re: /poly1305/i, std: 'IETF:RFC 8439' },
   { name: 'Salsa20', kind: 'algorithm', family: 'stream cipher', re: /salsa20/i, std: null },
+  /* A5/1's public teaching baseline is the reverse-engineered historical BGW
+     definition. ETSI documents Kc, COUNT and the burst interface but refers the
+     internal algorithm elsewhere, so this entry intentionally names no standards
+     body. `A51` admits the executable TypeScript identifiers as well as A5/1. */
+  { name: 'A5/1', kind: 'algorithm', family: 'historical stream cipher', re: /(?<![a-z0-9])a5(?:[\/_-]?1)(?![a-z0-9])/i, chipRe: /^(?:historical[-_ ]?)?a5[\/_-]?1$/i, std: null },
   /* eSTREAM hardware-profile cipher. Absent from this vocabulary until 2026-10-21,
      which is the ZUC and Kupyna situation a third time: crypto-lab-lfsr-forge
      implements it in src/trivium/trivium.ts with the specification's own constants

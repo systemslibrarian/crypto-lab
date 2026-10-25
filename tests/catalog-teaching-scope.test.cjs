@@ -5,6 +5,7 @@ const path = require('node:path');
 const { attackContextAllows, lex } = require('../tools/catalog-evidence.js');
 const { ALGORITHMS, ATTACKS } = require('../tools/catalog-vocab.js');
 const exhibitManifest = require('../tools/catalog-exhibits.json');
+const catalogReviewed = require('../tools/catalog-reviewed.json');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 
@@ -212,15 +213,18 @@ test('HPKE S01 scope controls reject lost or displaced reviewed credit', () => {
   }
 });
 
-function checkLfsrForgeScope(source, manifest = exhibitManifest) {
+function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = catalogReviewed) {
   const slug = 'crypto-lab-lfsr-forge';
-  assert.deepEqual(implementationsFor(source, slug), ['Trivium'],
-    'Only the vocabulary-named, executed Trivium primitive belongs in data-implements');
+  assert.deepEqual(implementationsFor(source, slug), ['A5/1', 'Trivium'],
+    'Credit the executed historical A5/1 and Trivium primitives without promoting comparisons');
   assert.deepEqual(attacksFor(source, slug), ['Cube attack', 'Key recovery'],
     'Credit the executed toy-oracle cube attack and retain executable zero-round recovery');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4"/);
+  assert.match(opening, /data-category="[^"]*\bHISTORICAL\b/);
+  assert.match(opening, /data-review-commit="c4ef2da4b33fd08382a4309d9665745cb30bbda5"/);
+  assert.match(opening, /A5\/1@src\/a51\/a51\.ts:125/,
+    'A5/1 must anchor at the actual majority-controlled clock step');
   assert.match(opening, /Trivium@src\/trivium\/trivium\.ts:29/,
     'Trivium must anchor at the actual state advance, not a panel mount');
   assert.match(opening, /Cube attack@src\/cube\/panel\.ts:24/,
@@ -233,17 +237,48 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest) {
   const block = blockFor(source, slug);
   assert.match(block, /inspect real Trivium clocking/);
   assert.match(block, /audit editable Boolean combiners/);
-  assert.match(block, /execute cube sums that recover and validate affine superpolys/);
+  assert.match(block, /execute toy-oracle cube sums that recover affine superpolys/);
+  assert.match(block, /reverse-engineered historical A5\/1 majority clocking/);
+  assert.match(block, /bounded leaked-state completion/);
   const chips = chipsFor(source, slug);
   assert.ok(chips.includes('Trivium'), 'The learner-facing card must expose its Trivium lesson');
   assert.ok(chips.includes('Boolean Function Audit'), 'The learner-facing card must expose the Boolean audit');
   assert.ok(chips.includes('Cube Sums'), 'The learner-facing card must expose the cube-sum lesson');
   assert.ok(chips.includes('Superpolys'), 'The learner-facing card must expose superpoly recovery');
+  assert.ok(chips.includes('Historical A5/1'), 'The learner-facing card must identify the historical cipher');
+  assert.ok(chips.includes('Majority Clocking'), 'The learner-facing card must expose irregular clocking');
+
+  const sourceReview = reviewed[slug];
+  assert.equal(sourceReview.commit, 'c4ef2da4b33fd08382a4309d9665745cb30bbda5');
+  assert.deepEqual(sourceReview.add, [
+    'A5/1@src/a51/a51.ts:125',
+    'Trivium@src/trivium/trivium.ts:29',
+  ]);
+  assert.deepEqual(sourceReview.remove, ['Brute force', 'Known-plaintext attack']);
+  assert.match(sourceReview.implementation, /historical A5\/1/);
+  assert.match(sourceReview.implementation, /bounded state completion/);
+  assert.match(sourceReview.note, /Independently transcribed setup code derives the post-key, post-COUNT and post-100 checkpoint states/);
+  assert.match(sourceReview.note, /matches the two published consecutive 114-bit bursts/);
+  assert.match(sourceReview.note, /separate controller-state comparison/);
+  assert.match(sourceReview.note, /masked 52-bit disclosure, copied observations, clock model and run identifier/);
+  assert.match(sourceReview.note, /no full hidden state or Kc/);
+  assert.match(sourceReview.note, /not a published A5\/1 attack/);
+  assert.match(sourceReview.note, /does not recover Kc/);
+  for (const claimSource of [opening, sourceReview.note]) {
+    assert.match(claimSource,
+      /literal Brute force scanner hit appears only in the independent unit-test oracle/);
+    assert.match(claimSource,
+      /Panel 09 separately exhausts 2\^12 state completions under disclosure of 52 exact post-100 state bits/);
+    assert.match(claimSource,
+      /bounded state completion, not as a generic brute-force attack or A5\/1\/Kc attack/);
+    assert.match(claimSource,
+      /Known plaintext\/ciphertext remains prose[\s\S]*is not an attack workflow executed by this lab/);
+  }
 
   const review = manifest.labs[slug];
-  assert.equal(review.commit, '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4');
+  assert.equal(review.commit, 'c4ef2da4b33fd08382a4309d9665745cb30bbda5');
   assert.equal(review.reviewScope, 'complete');
-  assert.equal(review.exhibits.length, 8);
+  assert.equal(review.exhibits.length, 9);
   const trivium = review.exhibits.find(exhibit => exhibit.id === 'trivium');
   assert.ok(trivium);
   assert.ok(trivium.evidence.includes('src/trivium/trivium.ts:29'));
@@ -286,15 +321,51 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest) {
   assert.match(cube.limits, /three-secret\/four-public degree-four toy oracle/);
   assert.match(cube.limits, /C34 is a valid cube whose quadratic superpoly is not a maxterm/);
   assert.match(cube.limits, /executes no Trivium state or round/);
+
+  const a51 = review.exhibits.find(exhibit => exhibit.id === 'historical-a51');
+  assert.ok(a51);
+  for (const anchor of [
+    'src/a51/a51.ts:16',
+    'src/a51/a51.ts:94',
+    'src/a51/a51.ts:113',
+    'src/a51/a51.ts:125',
+    'src/a51/a51.ts:139',
+    'src/a51/a51.ts:158',
+    'src/a51/a51.ts:182',
+    'src/a51/recovery.ts:7',
+    'src/a51/recovery.ts:58',
+    'src/a51/recovery.ts:107',
+    'src/a51/panel.ts:91',
+    'src/a51/panel.ts:105',
+    'src/a51/panel.ts:117',
+  ]) assert.ok(a51.evidence.includes(anchor), `Missing historical A5/1 evidence ${anchor}`);
+  assert.equal(a51.execution, 'real-crypto');
+  assert.match(a51.action, /derive the post-key, post-COUNT and post-100 checkpoints/);
+  assert.match(a51.action, /reproduce both 114-bit burst values/);
+  assert.match(a51.outcome, /three derived setup checkpoints/);
+  assert.match(a51.outcome, /candidate 1425/);
+  assert.match(a51.outcome, /held-out bits before a separate controller-state comparison/);
+  assert.match(a51.outcome, /Sixteen observations leave 11 completions/);
+  assert.match(a51.outcome, /regular-clock model leaves none after two bits/);
+  assert.match(a51.outcome, /candidate 1409/);
+  assert.match(a51.outcome, /11 held-out mismatches reject it/);
+  assert.match(a51.limits, /reverse-engineered historical BGW version/);
+  assert.match(a51.limits, /52 exact post-100 state bits/);
+  assert.match(a51.limits, /not proved reachable from Kc setup/);
+  assert.match(a51.limits, /not a published A5\/1 attack/);
+  assert.match(a51.limits, /does not recover Kc/);
+  assert.match(a51.limits, /nothing about modern cellular encryption/);
 }
 
-test('LFSR Forge publishes Trivium and exact Boolean analysis without inherited false credits', () => {
+test('LFSR Forge publishes historical A5/1, Trivium and exact Boolean analysis without false credits', () => {
   checkLfsrForgeScope(html);
 });
 
 test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', () => {
   const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-lfsr-forge\/"[\s\S]*?<\/a>/;
   for (const changed of [
+    html.replace(cardRe, card => card.replace(/A5\/1@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, card => card.replace('A5/1@src/a51/a51.ts:125', 'A5/1@src/a51/a51.ts:124')),
     html.replace(cardRe, card => card.replace(/Trivium@[^|" ]+(?: \| )?/, '')),
     html.replace(cardRe, card => card.replace('Trivium@src/trivium/trivium.ts:29', 'Trivium@src/trivium/trivium.ts:28')),
     html.replace(cardRe, card => card.replace(/Cube attack@[^|" ]+(?: \| )?/, '')),
@@ -302,12 +373,17 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
     html.replace(cardRe, card => card.replace('data-attacks="Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37"',
       'data-attacks="Brute force@README.md:80 | Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:140"')),
     html.replace(cardRe, card => card.replace('data-references="', 'data-references="Pairing | RC4 | Shamir secret sharing | ')),
-    html.replace(cardRe, card => card.replace('66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4', '7c6246133b9ea5d2acda5ee1cddeada6e5b1e607')),
+    html.replace(cardRe, card => card.replace('c4ef2da4b33fd08382a4309d9665745cb30bbda5', '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4')),
+    html.replace(cardRe, card => card.replace(' | HISTORICAL', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Trivium</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Boolean Function Audit</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Cube Sums</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Superpolys</span>', '')),
-    html.replace(cardRe, card => card.replace('execute cube sums that recover and validate affine superpolys', 'describe cube terminology')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Historical A5/1</span>', '')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Majority Clocking</span>', '')),
+    html.replace(cardRe, card => card.replace('execute toy-oracle cube sums that recover affine superpolys', 'describe cube terminology')),
+    html.replace(cardRe, card => card.replace('reverse-engineered historical A5/1 majority clocking', 'a cellular cipher')),
+    html.replace(cardRe, card => card.replace('bounded leaked-state completion', 'key recovery')),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the LFSR Forge card');
     assert.throws(() => checkLfsrForgeScope(changed), assert.AssertionError);
@@ -333,6 +409,336 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
     .find(exhibit => exhibit.id === 'cube-superpoly-recovery');
   cube.limits = cube.limits.replace('executes no Trivium state or round', 'executes reduced-round Trivium');
   assert.throws(() => checkLfsrForgeScope(html, mislabeledCube), assert.AssertionError);
+
+  const missingA51 = JSON.parse(JSON.stringify(exhibitManifest));
+  missingA51.labs['crypto-lab-lfsr-forge'].exhibits = missingA51.labs['crypto-lab-lfsr-forge'].exhibits
+    .filter(exhibit => exhibit.id !== 'historical-a51');
+  assert.throws(() => checkLfsrForgeScope(html, missingA51), assert.AssertionError);
+
+  const missingA51Checkpoint = JSON.parse(JSON.stringify(exhibitManifest));
+  const a51 = missingA51Checkpoint.labs['crypto-lab-lfsr-forge'].exhibits
+    .find(exhibit => exhibit.id === 'historical-a51');
+  a51.evidence = a51.evidence.filter(anchor => anchor !== 'src/a51/a51.ts:182');
+  assert.throws(() => checkLfsrForgeScope(html, missingA51Checkpoint), assert.AssertionError);
+
+  const overclaimedA51 = JSON.parse(JSON.stringify(exhibitManifest));
+  overclaimedA51.labs['crypto-lab-lfsr-forge'].exhibits
+    .find(exhibit => exhibit.id === 'historical-a51').limits = 'A published A5/1 attack recovers Kc.';
+  assert.throws(() => checkLfsrForgeScope(html, overclaimedA51), assert.AssertionError);
+
+  const missingReviewedA51 = JSON.parse(JSON.stringify(catalogReviewed));
+  missingReviewedA51['crypto-lab-lfsr-forge'].add = ['Trivium@src/trivium/trivium.ts:29'];
+  assert.throws(
+    () => checkLfsrForgeScope(html, exhibitManifest, missingReviewedA51),
+    assert.AssertionError,
+  );
+
+  const blurredPublicationBoundary = JSON.parse(JSON.stringify(catalogReviewed));
+  blurredPublicationBoundary['crypto-lab-lfsr-forge'].note = blurredPublicationBoundary['crypto-lab-lfsr-forge'].note
+    .replace(
+      'Independently transcribed setup code derives the post-key, post-COUNT and post-100 checkpoint states',
+      'The published source supplies the three internal checkpoint states',
+    );
+  assert.throws(
+    () => checkLfsrForgeScope(html, exhibitManifest, blurredPublicationBoundary),
+    assert.AssertionError,
+  );
+});
+
+test('historical A5/1 and Montgomery multiplication vocabulary stays narrow', () => {
+  const a51 = ALGORITHMS.find(term => term.name === 'A5/1');
+  assert.ok(a51);
+  assert.equal(a51.std, null);
+  for (const spelling of ['A5/1', 'A5-1', 'A5_1', 'A51']) assert.ok(a51.re.test(spelling));
+  for (const falseMatch of ['A5/2', 'A5/10', 'A51x', 'A5', 'SHA51'])
+    assert.equal(a51.re.test(falseMatch), false);
+  assert.ok(a51.chipRe.test('Historical A5/1'));
+  assert.equal(a51.chipRe.test('Historical A5/2'), false);
+
+  const montgomery = ALGORITHMS.find(term => term.name === 'Montgomery multiplication');
+  assert.ok(montgomery);
+  assert.equal(montgomery.std, null);
+  for (const spelling of ['Montgomery multiplication', 'montgomeryMultiply', 'Montgomery reduction', 'REDC'])
+    assert.ok(montgomery.re.test(spelling));
+  for (const falseMatch of ['Montgomery ladder', 'Montgomery curve'])
+    assert.equal(montgomery.re.test(falseMatch), false);
+  assert.ok(montgomery.chipRe.test('Montgomery REDC'));
+  assert.equal(montgomery.chipRe.test('Montgomery ladder'), false);
+});
+
+function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed = catalogReviewed) {
+  const slug = 'crypto-lab-clock-arithmetic';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'Diffie-Hellman',
+    'Montgomery multiplication',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Bounded enumeration, trial division and historical CRT-fault prose are not attack exhibits');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-review-commit="e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e"/);
+  assert.match(opening, /Diffie-Hellman@src\/nt\/toyDh\.ts:26/,
+    'Diffie-Hellman credit must anchor at the executable toy exchange');
+  assert.match(opening, /Montgomery multiplication@src\/nt\/montgomery\.ts:96/,
+    'Montgomery credit must anchor at the executed REDC implementation');
+  assert.doesNotMatch(opening, /\bdata-attacks=/);
+  const references = referencesFor(source, slug);
+  assert.ok(references.includes('Montgomery ladder'),
+    'The learner-facing distinction may retain Montgomery ladder as a reference');
+  assert.equal(references.includes('Montgomery multiplication'), false,
+    'The executed construction belongs in implementations, not references');
+
+  const block = blockFor(source, slug);
+  assert.match(block, /exact BigInt arithmetic under RSA and finite-field Diffie–Hellman/);
+  assert.match(block, /encode, multiply and square through Montgomery REDC/);
+  assert.match(block, /cancellation, radix shifts, final subtraction and bounded fixed-work timings/);
+  assert.ok(chipsFor(source, slug).includes('Montgomery REDC'));
+
+  const sourceReview = reviewed[slug];
+  assert.equal(sourceReview.commit, 'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e');
+  assert.equal(sourceReview.reviewed, '2026-10-25');
+  assert.deepEqual(sourceReview.add, [
+    'Diffie-Hellman@src/nt/toyDh.ts:26',
+    'Montgomery multiplication@src/nt/montgomery.ts:96',
+  ]);
+  assert.deepEqual(sourceReview.remove, [
+    'Brute force',
+    'Discrete log',
+    'Factoring',
+    'Fault injection',
+    'Man-in-the-middle',
+  ]);
+  assert.equal(sourceReview.implementation,
+    'hand-rolled exact BigInt arithmetic, including power-of-two Montgomery REDC');
+  assert.match(sourceReview.note, /power-of-two Montgomery specialization for odd N at most 10\^12/);
+  assert.match(sourceReview.note, /N=9, R=16 fixture exposes candidate 9 before subtraction to 0/);
+  assert.match(sourceReview.note, /same 4,096-operation alternating multiply\/square schedule/);
+  assert.match(sourceReview.note,
+    /not a benchmark, a speedup claim or evidence of constant-time behavior/);
+  assert.match(sourceReview.note, /Montgomery multiplication is distinct from the Montgomery ladder/);
+  assert.match(sourceReview.note,
+    /software CRT faults and adjacent algorithms occur only in historical handoff prose or related links/);
+
+  const review = manifest.labs[slug];
+  assert.equal(review.commit, 'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e');
+  assert.equal(review.reviewed, '2026-10-25');
+  assert.equal(review.reviewScope, 'complete');
+  assert.equal(review.exhibits.length, 7);
+
+  const expectedLegacyEvidence = {
+    'wrap-around': [
+      'src/main.ts:15',
+      'src/main.ts:29',
+      'src/ui/act1.ts:10',
+      'src/ui/act1.ts:25',
+      'src/main.ts:323',
+      'src/worker.ts:12',
+    ],
+    'inverse-euclid': [
+      'src/main.ts:35',
+      'src/main.ts:42',
+      'src/main.ts:44',
+      'src/ui/act2.ts:9',
+      'src/ui/act2.ts:19',
+      'src/ui/act2.ts:32',
+      'src/main.ts:323',
+    ],
+    'euler-units': [
+      'src/main.ts:51',
+      'src/main.ts:62',
+      'src/ui/act3.ts:9',
+      'src/ui/act3.ts:15',
+      'src/ui/act3.ts:17',
+      'src/main.ts:323',
+    ],
+    'power-cycles': [
+      'src/main.ts:70',
+      'src/main.ts:79',
+      'src/main.ts:80',
+      'src/ui/act4.ts:17',
+      'src/ui/act4.ts:21',
+      'src/ui/act4.ts:44',
+      'src/ui/act4.ts:49',
+      'src/ui/clock.ts:41',
+      'src/main.ts:323',
+    ],
+    'subgroups-dh': [
+      'src/nt/toyDh.ts:26',
+      'src/main.ts:86',
+      'src/main.ts:115',
+      'src/main.ts:116',
+      'src/main.ts:117',
+      'src/ui/act5.ts:13',
+      'src/ui/act5.ts:15',
+      'src/ui/act5.ts:16',
+      'src/ui/act5.ts:17',
+      'src/ui/act5.ts:29',
+      'src/ui/act5.ts:31',
+      'src/ui/act5.ts:35',
+      'src/ui/act5.ts:36',
+      'src/main.ts:323',
+    ],
+    'crt-recombine': [
+      'src/main.ts:123',
+      'src/main.ts:135',
+      'src/main.ts:136',
+      'src/ui/act6.ts:8',
+      'src/ui/act6.ts:24',
+      'src/ui/act6.ts:52',
+      'src/ui/act6.ts:62',
+      'src/main.ts:323',
+      'src/ui/act6.ts:80',
+    ],
+  };
+  for (const [id, evidence] of Object.entries(expectedLegacyEvidence)) {
+    const exhibit = review.exhibits.find(candidate => candidate.id === id);
+    assert.ok(exhibit, `Missing Clock Arithmetic exhibit ${id}`);
+    assert.deepEqual(exhibit.evidence, evidence,
+      `${id} must use semantic anchors from the merged seven-exhibit source`);
+  }
+
+  const montgomery = review.exhibits.find(exhibit => exhibit.id === 'montgomery-redc');
+  assert.ok(montgomery);
+  assert.equal(montgomery.execution, 'real-values');
+  for (const anchor of [
+    'src/main.ts:140',
+    'src/main.ts:163',
+    'src/nt/montgomery.ts:69',
+    'src/nt/montgomery.ts:76',
+    'src/nt/montgomery.ts:96',
+    'src/nt/montgomery.ts:123',
+    'src/nt/montgomery.ts:153',
+    'src/nt/montgomery.ts:176',
+    'src/nt/montgomery.ts:196',
+    'src/nt/montgomery.ts:213',
+    'src/ui/act7.ts:22',
+    'src/ui/act7.ts:93',
+    'src/ui/act7.ts:98',
+    'src/ui/act7.ts:100',
+    'src/ui/act7.ts:130',
+    'src/ui/act7.ts:138',
+    'src/ui/act7.ts:143',
+    'src/ui/act7.ts:157',
+    'src/ui/act7.ts:165',
+    'src/ui/predictions.ts:40',
+    'src/worker.ts:12',
+  ]) assert.ok(montgomery.evidence.includes(anchor), `Missing Montgomery evidence ${anchor}`);
+  assert.match(montgomery.action, /fixed 4,096-operation ordinary\/Montgomery comparison/);
+  assert.match(montgomery.outcome, /N = 17 and R = 32/);
+  assert.match(montgomery.outcome, /N′ = 15/);
+  assert.match(montgomery.outcome, /keeps \(a·b\)²·a encoded to result 12/);
+  assert.match(montgomery.outcome, /N = 9 and R = 16 expose raw candidate 9/);
+  assert.match(montgomery.outcome, /both fixed schedules agree/);
+  assert.match(montgomery.limits, /odd N at most 10\^12/);
+  assert.match(montgomery.limits, /neither a general performance result nor constant-time behavior/);
+  assert.match(montgomery.limits, /JavaScript BigInt is not constant-time/);
+  assert.match(montgomery.limits, /distinct from the Montgomery ladder/);
+}
+
+test('Clock Arithmetic publishes executable Montgomery REDC without inherited false attack credit', () => {
+  checkClockArithmeticScope(html);
+});
+
+test('Clock Arithmetic scope controls reject lost, stale, moved or invented credit', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-clock-arithmetic\/"[\s\S]*?<\/a>/;
+  for (const changed of [
+    html.replace(cardRe, card => card.replace(
+      ' | Montgomery multiplication@src/nt/montgomery.ts:96',
+      '',
+    )),
+    html.replace(cardRe, card => card.replace(
+      'Montgomery multiplication@src/nt/montgomery.ts:96',
+      'Montgomery multiplication@src/nt/montgomery.ts:95',
+    )),
+    html.replace(cardRe, card => card.replace(
+      'Montgomery multiplication@src/nt/montgomery.ts:96',
+      'Montgomery multiplication@src/nt/montgomery.ts:96 | Montgomery ladder@src/ui/act7.ts:165',
+    )),
+    html.replace(cardRe, card => card.replace(
+      '            data-standards="IETF"',
+      '            data-attacks="Fault injection@catalog-handoff.md:67"\n            data-standards="IETF"',
+    )),
+    html.replace(cardRe, card => card.replace(
+      'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e',
+      '5bb86840fab4806e3681c1a378fd4c643831035d',
+    )),
+    html.replace(cardRe, card => card.replace('<span class="chip">Montgomery REDC</span>', '')),
+    html.replace(cardRe, card => card.replace(
+      'encode, multiply and square through Montgomery REDC',
+      'read about Montgomery arithmetic',
+    )),
+    html.replace(cardRe, card => card.replace(
+      'cancellation, radix shifts, final subtraction and bounded fixed-work timings',
+      'implementation details',
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Clock Arithmetic card');
+    assert.throws(() => checkClockArithmeticScope(changed), assert.AssertionError);
+  }
+
+  const missingMontgomery = JSON.parse(JSON.stringify(exhibitManifest));
+  missingMontgomery.labs['crypto-lab-clock-arithmetic'].exhibits =
+    missingMontgomery.labs['crypto-lab-clock-arithmetic'].exhibits
+      .filter(exhibit => exhibit.id !== 'montgomery-redc');
+  assert.throws(() => checkClockArithmeticScope(html, missingMontgomery), assert.AssertionError);
+
+  for (const anchor of [
+    'src/nt/montgomery.ts:96',
+    'src/ui/act7.ts:100',
+    'src/ui/act7.ts:130',
+    'src/ui/act7.ts:143',
+    'src/ui/act7.ts:157',
+  ]) {
+    const missingEvidence = JSON.parse(JSON.stringify(exhibitManifest));
+    const exhibit = missingEvidence.labs['crypto-lab-clock-arithmetic'].exhibits
+      .find(candidate => candidate.id === 'montgomery-redc');
+    exhibit.evidence = exhibit.evidence.filter(candidate => candidate !== anchor);
+    assert.throws(() => checkClockArithmeticScope(html, missingEvidence), assert.AssertionError);
+  }
+
+  const staleLegacyAnchor = JSON.parse(JSON.stringify(exhibitManifest));
+  const euler = staleLegacyAnchor.labs['crypto-lab-clock-arithmetic'].exhibits
+    .find(exhibit => exhibit.id === 'euler-units');
+  euler.evidence = euler.evidence.map(anchor => anchor === 'src/main.ts:51'
+    ? 'src/main.ts:69'
+    : anchor);
+  assert.throws(() => checkClockArithmeticScope(html, staleLegacyAnchor), assert.AssertionError);
+
+  const overclaimedTiming = JSON.parse(JSON.stringify(exhibitManifest));
+  overclaimedTiming.labs['crypto-lab-clock-arithmetic'].exhibits
+    .find(exhibit => exhibit.id === 'montgomery-redc').limits =
+      'The benchmark proves a constant-time speedup over ordinary modular arithmetic.';
+  assert.throws(() => checkClockArithmeticScope(html, overclaimedTiming), assert.AssertionError);
+
+  const missingReviewedMontgomery = JSON.parse(JSON.stringify(catalogReviewed));
+  missingReviewedMontgomery['crypto-lab-clock-arithmetic'].add = [
+    'Diffie-Hellman@src/nt/toyDh.ts:26',
+  ];
+  assert.throws(
+    () => checkClockArithmeticScope(html, exhibitManifest, missingReviewedMontgomery),
+    assert.AssertionError,
+  );
+
+  const creditedHistoricalFault = JSON.parse(JSON.stringify(catalogReviewed));
+  creditedHistoricalFault['crypto-lab-clock-arithmetic'].remove =
+    creditedHistoricalFault['crypto-lab-clock-arithmetic'].remove
+      .filter(name => name !== 'Fault injection');
+  assert.throws(
+    () => checkClockArithmeticScope(html, exhibitManifest, creditedHistoricalFault),
+    assert.AssertionError,
+  );
+
+  const blurredLadderBoundary = JSON.parse(JSON.stringify(catalogReviewed));
+  blurredLadderBoundary['crypto-lab-clock-arithmetic'].note =
+    blurredLadderBoundary['crypto-lab-clock-arithmetic'].note
+      .replace(
+        'Montgomery multiplication is distinct from the Montgomery ladder.',
+        'Montgomery arithmetic includes the Montgomery ladder.',
+      );
+  assert.throws(
+    () => checkClockArithmeticScope(html, exhibitManifest, blurredLadderBoundary),
+    assert.AssertionError,
+  );
 });
 
 test('cube-attack vocabulary credits execution but rejects a negated full-Trivium claim', () => {

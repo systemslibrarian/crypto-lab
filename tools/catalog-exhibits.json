@@ -5747,8 +5747,8 @@
       ]
     },
     "crypto-lab-clock-arithmetic": {
-      "commit": "ba94fa18e4272db71173984a2e2fe00d5818cf91",
-      "reviewed": "2026-10-22",
+      "commit": "e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -5764,10 +5764,12 @@
             "zero divisors"
           ],
           "evidence": [
-            "src/main.ts:16",
-            "src/main.ts:26",
-            "src/main.ts:290",
-            "src/worker.ts:1"
+            "src/main.ts:15",
+            "src/main.ts:29",
+            "src/ui/act1.ts:10",
+            "src/ui/act1.ts:25",
+            "src/main.ts:323",
+            "src/worker.ts:12"
           ],
           "limits": "Small-number arithmetic lesson with input limits and no production cryptography.",
           "section": "1. Wrap around"
@@ -5786,10 +5788,13 @@
             "coprimality"
           ],
           "evidence": [
-            "src/main.ts:38",
-            "src/main.ts:46",
-            "src/main.ts:290",
-            "src/ui/act2.ts:9"
+            "src/main.ts:35",
+            "src/main.ts:42",
+            "src/main.ts:44",
+            "src/ui/act2.ts:9",
+            "src/ui/act2.ts:19",
+            "src/ui/act2.ts:32",
+            "src/main.ts:323"
           ],
           "limits": "Exact arithmetic within the lab’s supported modulus range.",
           "section": "2. Undo multiplication"
@@ -5807,10 +5812,12 @@
             "prime factorization"
           ],
           "evidence": [
-            "src/main.ts:60",
-            "src/main.ts:69",
+            "src/main.ts:51",
+            "src/main.ts:62",
+            "src/ui/act3.ts:9",
+            "src/ui/act3.ts:15",
             "src/ui/act3.ts:17",
-            "src/main.ts:290"
+            "src/main.ts:323"
           ],
           "limits": "Direct counting has a tighter bound than factorization and is unavailable for large supported inputs.",
           "section": "3. Count the units"
@@ -5829,10 +5836,15 @@
             "nonunits"
           ],
           "evidence": [
-            "src/main.ts:78",
-            "src/main.ts:89",
+            "src/main.ts:70",
+            "src/main.ts:79",
+            "src/main.ts:80",
+            "src/ui/act4.ts:17",
+            "src/ui/act4.ts:21",
+            "src/ui/act4.ts:44",
+            "src/ui/act4.ts:49",
             "src/ui/clock.ts:41",
-            "src/main.ts:290"
+            "src/main.ts:323"
           ],
           "limits": "Euler theorem applies to units; a nonunit need not return to one.",
           "section": "4. Watch powers cycle"
@@ -5851,10 +5863,20 @@
             "Diffie-Hellman"
           ],
           "evidence": [
-            "src/main.ts:98",
+            "src/nt/toyDh.ts:26",
+            "src/main.ts:86",
+            "src/main.ts:115",
+            "src/main.ts:116",
             "src/main.ts:117",
+            "src/ui/act5.ts:13",
+            "src/ui/act5.ts:15",
+            "src/ui/act5.ts:16",
+            "src/ui/act5.ts:17",
             "src/ui/act5.ts:29",
-            "src/ui/act5.ts:36"
+            "src/ui/act5.ts:31",
+            "src/ui/act5.ts:35",
+            "src/ui/act5.ts:36",
+            "src/main.ts:323"
           ],
           "limits": "Small public teaching exponents and primes are not secure Diffie-Hellman parameters.",
           "section": "5. Generators and subgroups"
@@ -5873,13 +5895,60 @@
             "least common multiple"
           ],
           "evidence": [
-            "src/main.ts:126",
-            "src/main.ts:145",
-            "src/main.ts:290",
+            "src/main.ts:123",
+            "src/main.ts:135",
+            "src/main.ts:136",
+            "src/ui/act6.ts:8",
+            "src/ui/act6.ts:24",
+            "src/ui/act6.ts:52",
+            "src/ui/act6.ts:62",
+            "src/main.ts:323",
             "src/ui/act6.ts:80"
           ],
           "limits": "The example range is bounded; noncoprime moduli require compatibility, not automatic product modulus.",
           "section": "6. Recombine remainders"
+        },
+        {
+          "id": "montgomery-redc",
+          "title": "Montgomery REDC, Encoded Chaining and Fixed Work",
+          "kind": "interactive",
+          "action": "Choose two integers, an odd modulus N and a power-of-two radix R greater than N; encode through REDC, inspect one encoded product and a product-and-square chain, then run the fixed 4,096-operation ordinary/Montgomery comparison.",
+          "outcome": "For N = 17 and R = 32, the panel derives N′ = 15, R² mod N = 4, low-word cancellation and decoded product 15; it keeps (a·b)²·a encoded to result 12, while N = 9 and R = 16 expose raw candidate 9 and the required 9 − 9 final subtraction. Setup, ordinary-loop, Montgomery-loop and final-decode measurements remain separate, and both fixed schedules agree.",
+          "concepts": [
+            "Montgomery multiplication",
+            "Montgomery reduction",
+            "REDC",
+            "residue representation",
+            "modular multiplication",
+            "encoded chaining",
+            "fixed-work comparison"
+          ],
+          "evidence": [
+            "src/main.ts:140",
+            "src/main.ts:163",
+            "src/nt/montgomery.ts:69",
+            "src/nt/montgomery.ts:76",
+            "src/nt/montgomery.ts:96",
+            "src/nt/montgomery.ts:123",
+            "src/nt/montgomery.ts:153",
+            "src/nt/montgomery.ts:176",
+            "src/nt/montgomery.ts:196",
+            "src/nt/montgomery.ts:213",
+            "src/ui/act7.ts:22",
+            "src/ui/act7.ts:93",
+            "src/ui/act7.ts:98",
+            "src/ui/act7.ts:100",
+            "src/ui/act7.ts:130",
+            "src/ui/act7.ts:138",
+            "src/ui/act7.ts:143",
+            "src/ui/act7.ts:157",
+            "src/ui/act7.ts:165",
+            "src/ui/predictions.ts:40",
+            "src/worker.ts:12"
+          ],
+          "section": "7. Montgomery multiplication",
+          "execution": "real-values",
+          "limits": "This is a bounded TypeScript BigInt power-of-two specialization for odd N at most 10^12 and a supplied power-of-two R greater than N. The single Worker timings include validation and trace-object work and establish neither a general performance result nor constant-time behavior; JavaScript BigInt is not constant-time. This is teaching code, not production cryptography, and Montgomery multiplication is distinct from the Montgomery ladder."
         }
       ]
     },
@@ -21294,7 +21363,7 @@
       ]
     },
     "crypto-lab-lfsr-forge": {
-      "commit": "66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4",
+      "commit": "c4ef2da4b33fd08382a4309d9665745cb30bbda5",
       "reviewed": "2026-10-25",
       "exhibits": [
         {
@@ -21309,7 +21378,7 @@
             "keystream observation"
           ],
           "evidence": [
-            "src/main.ts:143",
+            "src/main.ts:144",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Watch a register run",
@@ -21328,7 +21397,7 @@
             "minimal recurrence"
           ],
           "evidence": [
-            "src/main.ts:144",
+            "src/main.ts:145",
             "src/lfsr/bm.ts:1"
           ],
           "section": "Follow Berlekamp–Massey",
@@ -21347,7 +21416,7 @@
             "ambiguous prefix"
           ],
           "evidence": [
-            "src/main.ts:145",
+            "src/main.ts:146",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Predict, freeze, check",
@@ -21365,7 +21434,7 @@
             "correlation bias"
           ],
           "evidence": [
-            "src/main.ts:146",
+            "src/main.ts:147",
             "src/geffe/geffe.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -21385,7 +21454,7 @@
             "search budget"
           ],
           "evidence": [
-            "src/main.ts:147",
+            "src/main.ts:148",
             "src/geffe/attack.worker.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -21484,6 +21553,40 @@
           "section": "Sum a cube, recover a superpoly",
           "execution": "real-values",
           "limits": "This is a separate three-secret/four-public degree-four toy oracle. Preprocessing enumerates all eight teaching keys; online recovery assumes repeated chosen-public-input queries under one fixed secret. C34 is a valid cube whose quadratic superpoly is not a maxterm and is excluded only from this bounded affine solve. The lesson executes no Trivium state or round and makes no attack or performance claim against reduced-round or full Trivium."
+        },
+        {
+          "id": "historical-a51",
+          "title": "Historical A5/1 Majority Clocking and Bounded State Completion",
+          "kind": "interactive",
+          "action": "Run the reverse-engineered BGW Kc/COUNT setup, derive the post-key, post-COUNT and post-100 checkpoints, reproduce both 114-bit burst values, predict a pre-clock majority decision, compare regular clocking, then enumerate 4,096 completions of a 52-disclosed/12-hidden post-warm-up state.",
+          "outcome": "An independent transcription agrees at three derived setup checkpoints and reproduces both BGW burst values; the first fixture step advances R1/R2. The bounded route filters to candidate 1425, whose frozen continuation matches 32 disjoint held-out bits before a separate controller-state comparison confirms the state. Sixteen observations leave 11 completions; for this fixture the regular-clock model leaves none after two bits, while corrupted observation 29 selects candidate 1409 before 11 held-out mismatches reject it.",
+          "concepts": [
+            "A5/1",
+            "irregular clocking",
+            "majority clocking",
+            "known keystream",
+            "state completion",
+            "held-out validation",
+            "historical cryptanalysis"
+          ],
+          "evidence": [
+            "src/a51/a51.ts:16",
+            "src/a51/a51.ts:94",
+            "src/a51/a51.ts:113",
+            "src/a51/a51.ts:125",
+            "src/a51/a51.ts:139",
+            "src/a51/a51.ts:158",
+            "src/a51/a51.ts:182",
+            "src/a51/recovery.ts:7",
+            "src/a51/recovery.ts:58",
+            "src/a51/recovery.ts:107",
+            "src/a51/panel.ts:91",
+            "src/a51/panel.ts:105",
+            "src/a51/panel.ts:117"
+          ],
+          "section": "Clock historical A5/1",
+          "execution": "real-crypto",
+          "limits": "The internal cipher definition is the reverse-engineered historical BGW version, not public modern-standard text. The state-completion exercise assumes an aligned 32-bit known keystream and extraordinary disclosure of 52 exact post-100 state bits; its 4,096 raw completions are not proved reachable from Kc setup. It is not a published A5/1 attack, does not recover Kc, processes no radio capture and says nothing about modern cellular encryption."
         }
       ],
       "reviewScope": "complete"

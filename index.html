@@ -18106,11 +18106,11 @@
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-matsui-line/"
             data-implements="Toy SPN@src/crypto/spn.ts:66"
             data-comment-only="DES@src/crypto/spn.ts:16"
-            data-references="AES | ChaCha20 | DES | Enigma | Serpent | Shamir secret sharing | Vigenere cipher"
-            data-attacks="Key recovery@index.html:19 | Known-plaintext attack@src/ui/piling.ts:105 | Linear cryptanalysis@src/main.ts:264"
+            data-references="AES | ChaCha20 | DES | Enigma | Serpent | Vigenere cipher"
+            data-attacks="Chosen-plaintext attack@src/crypto/difflin.ts:310 | Differential cryptanalysis@src/crypto/difflin.ts:136 | Key recovery@src/crypto/attack.ts:159 | Known-plaintext attack@src/crypto/attack.ts:46 | Linear cryptanalysis@src/crypto/attack.ts:159"
             data-implementation="hand-rolled"
-            data-review-commit="e218f2e71938d1514cbfde224fc61b1d68fc2e3a"
-            data-review-note="Reviewed the toy SPN, attack and new two-mask/structural-zero panel at this exact commit. It counts two parity relations and all four joint outcomes on the same 16/64/256 plaintexts, and checks a no-nonzero-trail pair whose full-codebook correlation is zero across keys. This is a bounded toy-SPN observation, not a multidimensional key-recovery attack or a reproduction of the cited ChaCha research. Existing single-trail versus full linear-hull and repeated versus distinct plaintext comparisons remain separate. The toy SPN implementation anchor is unchanged; no full DES or production cipher is attacked."
+            data-review-commit="7a85fbf1e6f566f7b0b718cb93f5dd737950faaa"
+            data-review-note="Read the complete README, index, source, tests, browser gates and mutation runner at this exact commit. The existing real 8-bit toy SPN, Matsui Algorithm 2 nibble recovery, LAT/trail/hull teaching, two-mask/structural-zero panel and repeated-versus-distinct sampling remain. The new fixed three-round Heys-S-box exercise uses chosen pairs with difference 0x0B, joins at the round-2 input, computes the DDT row, suffix correlations, naive 9/64 and signed-path 9/32 estimates, measures the real key-dependent 1/4 or 5/16 codebook bias, ranks 256 observable final-whitening-byte hypotheses, and independently checks a winner on unused pairs when the selected budget leaves a holdout. Its cancelling lambda-in 0x04 control exposes the naive 1/16 estimate versus exact zero signed-path and full-codebook bias and ranks only 16 visible high-nibble hypotheses. The deterministic 512-key odd-stride curve is bounded reproducible evidence, not a random population estimate. Credit the real chosen-plaintext, differential, linear and key-recovery work alongside the legacy known-plaintext attack. Brute-force count is unit-test and exhaustive-oracle wording, not a learner attack, and the scanner's Fault injection hit is the substring across default attack; remove both. Biham and Shamir names the differential-cryptanalysis authors, not Shamir secret sharing, so remove that reference. The lesson does not recover the 16-bit master key, attack the full four-round toy cipher, establish optimal masks, reproduce DES, or attack production cryptography."
             data-level="advanced" data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
            
            
@@ -18171,7 +18171,7 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Linear Cryptanalysis</div>
             <div class="project-title">Matsui Line</div>
-            <div class="project-copy">Run linear analysis on a toy SPN: compare trails with key-dependent hulls, count two masks and a structural zero, then measure repeated versus distinct known plaintexts.</div>
+            <div class="project-copy">Run linear and differential–linear attacks on a toy SPN: compare trails with key-dependent hulls, join a chosen-difference prefix to a parity suffix, rank a last-round whitening byte, and test a cancelling control.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Linear Cryptanalysis</span>
@@ -18179,6 +18179,7 @@
                 <span class="chip">Piling-Up Lemma</span>
                 <span class="chip">Known-Plaintext</span>
                 <span class="chip">Multiple Masks</span>
+                <span class="chip">Differential Cryptanalysis</span>
               </div>
               <span class="arrow">→</span>
             </div>

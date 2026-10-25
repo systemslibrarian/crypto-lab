@@ -401,6 +401,18 @@ fresh SPIs, keys, counters and replay windows. The IPv4-only, certificate-free p
 does not claim VPN interoperability or production credential handling. Section §16 was
 already `DEEP`; no concept status changes. Catalogued total moves to 246.*
 
+*Version 50 — records Matsui Line's A-D-14 differential–linear extension under §30
+without adding a lab or changing a concept status. A fixed three-round Heys toy joins
+the `0x0B` chosen-difference prefix at the round-2 input to a linear suffix, computes
+the 9/64 Biham–Dunkelman–Keller heuristic and 9/32 signed-path estimate, and measures
+the real key-dependent 1/4 or 5/16 full-codebook bias. Its cancelling control has a
+nonzero naive 1/16 estimate but zero signed-path and full-codebook bias. The executable
+ranking uses its attack pairs for observable last-round whitening material and checks
+only the winner on disjoint unused pairs when the budget leaves a holdout, while the
+deterministic 512-key curve is bounded reproducible evidence rather than a population
+estimate. It recovers no master key, does not attack the full four-round toy or DES,
+and makes no production-cipher claim. Catalogued total remains 246.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1146,6 +1158,18 @@ approximation table in place of the DDT, bias accumulation in place of character
 probability, with 96 cross-implementation vectors reproducing Biham Lens's ciphertexts. It
 also earns its place by showing where the lemma *fails*: over three rounds the linear hull
 effect scatters the true bias across keys while the piling-up prediction sits unmoved.
+
+Its separate A-D-14 exercise now composes those two techniques on one fixed three-round
+Heys toy. Chosen pairs with input difference `0x0B` cross an explicit round-2 joining
+state; the page derives the DDT row and signed suffix contributions, contrasts the naive
+9/64 heuristic with the 9/32 path-aware estimate and the measured 1/4-or-5/16
+key-dependent bias, then ranks all 256 observable whitening-byte hypotheses and checks a
+winner on unused pairs. A second mask is a deliberately failing-assumption control: its
+naive estimate is 1/16, while signed paths cancel and the full-codebook bias is zero. The
+31.3% / 66.8% / 90.2% / 99.8% / 100% success curve uses 512 deterministic stride-walked
+keys at 16 / 32 / 64 / 96 / 128 pairs; it is reproducible bounded evidence, not a random
+population estimate. No 16-bit master key, full four-round cipher, DES or production
+cipher is recovered or attacked.
 
 LFSR Forge now makes the Boolean-combiner design tradeoffs executable instead of
 leaving correlation at the Geffe example. Learners can edit all 16 rows of a

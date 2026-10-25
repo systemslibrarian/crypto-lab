@@ -1209,7 +1209,13 @@ function checkBookReviewScope(source) {
     'crypto-lab-nonce-collision': [
       'Birthday bound', 'Chosen-plaintext attack', 'IV reuse', 'Key recovery', 'Nonce reuse',
     ],
-    'crypto-lab-matsui-line': ['Key recovery', 'Known-plaintext attack', 'Linear cryptanalysis'],
+    'crypto-lab-matsui-line': [
+      'Chosen-plaintext attack',
+      'Differential cryptanalysis',
+      'Key recovery',
+      'Known-plaintext attack',
+      'Linear cryptanalysis',
+    ],
   };
   for (const [slug, attacks] of Object.entries(executed)) {
     assert.deepEqual(attacksFor(source, slug), attacks, `${slug}: count only its own bounded exhibits`);
@@ -1234,7 +1240,7 @@ test('book-review scope rejects false credits and losing a real CBC experiment',
     ['crypto-lab-vigenere-break', 'attacks', 'Factoring@src/ui/transcript.ts:22'],
     ['crypto-lab-otp-vault', 'attacks', 'Chosen-plaintext attack@src/ui/perfectSecrecyPanel.ts:63'],
     ['crypto-lab-nonce-collision', 'attacks', 'Padding oracle@README.md:73'],
-    ['crypto-lab-matsui-line', 'attacks', 'Differential cryptanalysis@README.md:73'],
+    ['crypto-lab-matsui-line', 'attacks', 'Fault injection@README.md:102'],
     ['crypto-lab-pki-chain', 'implements', 'ML-DSA@src/main.ts:180'],
   ];
   for (const [slug, field, falseCredit] of alterations) {
@@ -1249,6 +1255,130 @@ test('book-review scope rejects false credits and losing a real CBC experiment',
     card => card.replace(/Chosen-plaintext attack@src\/main\.ts:391\s*\|\s*/, ''));
   assert.notEqual(missingCbc, html, 'CBC negative control must remove the executed exhibit');
   assert.throws(() => checkBookReviewScope(missingCbc), assert.AssertionError);
+});
+
+function checkMatsuiAd14Scope(source, manifest = exhibitManifest, reviewed = catalogReviewed) {
+  const slug = 'crypto-lab-matsui-line';
+  const opening = openingFor(source, slug);
+  const block = blockFor(source, slug);
+  assert.deepEqual(attacksFor(source, slug), [
+    'Chosen-plaintext attack',
+    'Differential cryptanalysis',
+    'Key recovery',
+    'Known-plaintext attack',
+    'Linear cryptanalysis',
+  ]);
+  assert.match(opening, /data-review-commit="7a85fbf1e6f566f7b0b718cb93f5dd737950faaa"/);
+  assert.ok(!referencesFor(source, slug).includes('Shamir secret sharing'),
+    'Biham and Shamir names authors here; it is not a secret-sharing reference');
+  assert.match(block, /join a chosen-difference prefix to a parity suffix/);
+  assert.match(block, /rank a last-round whitening byte/);
+  assert.deepEqual(chipsFor(source, slug), [
+    'Linear Cryptanalysis',
+    'LAT',
+    'Piling-Up Lemma',
+    'Known-Plaintext',
+    'Multiple Masks',
+    'Differential Cryptanalysis',
+  ]);
+
+  const sourceReview = reviewed[slug];
+  assert.equal(sourceReview.commit, '7a85fbf1e6f566f7b0b718cb93f5dd737950faaa');
+  assert.deepEqual(sourceReview.remove, ['Brute force', 'Fault injection']);
+  assert.deepEqual(sourceReview.removeReferences, ['Shamir secret sharing']);
+  assert.deepEqual(sourceReview.addAttacks, [
+    'Chosen-plaintext attack@src/crypto/difflin.ts:310',
+    'Differential cryptanalysis@src/crypto/difflin.ts:136',
+    'Key recovery@src/crypto/attack.ts:159',
+    'Known-plaintext attack@src/crypto/attack.ts:46',
+    'Linear cryptanalysis@src/crypto/attack.ts:159',
+  ]);
+
+  const mapped = manifest.labs[slug];
+  assert.equal(mapped.commit, '7a85fbf1e6f566f7b0b718cb93f5dd737950faaa');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.equal(mapped.exhibits.length, 11);
+  const composition = mapped.exhibits.find(exhibit => exhibit.id === 'differential-linear-composition');
+  assert.ok(composition);
+  assert.equal(composition.execution, 'real-operation');
+  assert.equal(composition.section, 'Weld the two attacks together');
+  for (const anchor of [
+    'src/crypto/difflin.ts:136',
+    'src/crypto/difflin.ts:310',
+    'src/crypto/difflin.ts:419',
+    'src/ui/difflin.ts:344',
+    'src/workers/dl.worker.ts:24',
+  ]) {
+    assert.ok(composition.evidence.includes(anchor), `A-D-14 must retain evidence ${anchor}`);
+  }
+  assert.ok(composition.concepts.includes('explicit joining state'));
+  assert.ok(composition.concepts.includes('failing-assumption control'));
+  assert.match(composition.limits, /does not recover the 16-bit master key/);
+  assert.match(composition.limits, /full four-round toy cipher/);
+  assert.match(composition.limits, /deterministic 512-key sample/);
+  const fidelity = mapped.exhibits.find(exhibit => exhibit.id === 'fidelity');
+  assert.ok(fidelity.concepts.includes('heuristic boundary'));
+  assert.match(fidelity.outcome, /legacy linear attack recovers four final-subkey bits/);
+  assert.match(fidelity.outcome, /differential–linear route ranks a final whitening byte/);
+  assert.match(fidelity.limits, /does not recover the master key/);
+  assert.match(fidelity.limits, /production cryptography/);
+}
+
+test('Matsui Line credits the executable A-D-14 composition with bounded claims', () => {
+  checkMatsuiAd14Scope(html);
+});
+
+test('Matsui Line A-D-14 controls reject lost credit, stale pins and weakened limits', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-matsui-line\/"[\s\S]*?<\/a>/;
+  const mutations = [
+    html.replace(cardRe, card => card.replace(
+      /Chosen-plaintext attack@src\/crypto\/difflin\.ts:310\s*\|\s*/, '')),
+    html.replace(cardRe, card => card.replace(
+      'Linear cryptanalysis@src/crypto/attack.ts:159',
+      'Linear cryptanalysis@src/crypto/attack.ts:159 | Brute force@README.md:100')),
+    html.replace(cardRe, card => card.replace(
+      'data-references="AES', 'data-references="Shamir secret sharing | AES')),
+    html.replace(cardRe, card => card.replace(
+      '7a85fbf1e6f566f7b0b718cb93f5dd737950faaa',
+      'e218f2e71938d1514cbfde224fc61b1d68fc2e3a')),
+    html.replace(cardRe, card => card.replace(
+      'join a chosen-difference prefix to a parity suffix',
+      'compare only linear trails')),
+    html.replace(cardRe, card => card.replace(
+      '<span class="chip">Differential Cryptanalysis</span>', '')),
+  ];
+  for (const changed of mutations) {
+    assert.notEqual(changed, html, 'Matsui negative control must change its card');
+    assert.throws(() => checkMatsuiAd14Scope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = JSON.parse(JSON.stringify(exhibitManifest));
+  missingExhibit.labs['crypto-lab-matsui-line'].exhibits =
+    missingExhibit.labs['crypto-lab-matsui-line'].exhibits
+      .filter(exhibit => exhibit.id !== 'differential-linear-composition');
+  assert.throws(() => checkMatsuiAd14Scope(html, missingExhibit), assert.AssertionError);
+
+  const missingAnchor = JSON.parse(JSON.stringify(exhibitManifest));
+  const composition = missingAnchor.labs['crypto-lab-matsui-line'].exhibits
+    .find(exhibit => exhibit.id === 'differential-linear-composition');
+  composition.evidence = composition.evidence.filter(anchor => anchor !== 'src/crypto/difflin.ts:310');
+  assert.throws(() => checkMatsuiAd14Scope(html, missingAnchor), assert.AssertionError);
+
+  const overclaim = JSON.parse(JSON.stringify(exhibitManifest));
+  overclaim.labs['crypto-lab-matsui-line'].exhibits
+    .find(exhibit => exhibit.id === 'differential-linear-composition').limits =
+      'This recovers the full key of a production cipher.';
+  assert.throws(() => checkMatsuiAd14Scope(html, overclaim), assert.AssertionError);
+
+  const staleFidelity = JSON.parse(JSON.stringify(exhibitManifest));
+  staleFidelity.labs['crypto-lab-matsui-line'].exhibits
+    .find(exhibit => exhibit.id === 'fidelity').outcome =
+      'The text limits the result to four final-subkey bits of the toy cipher.';
+  assert.throws(() => checkMatsuiAd14Scope(html, staleFidelity), assert.AssertionError);
+
+  const staleReview = JSON.parse(JSON.stringify(catalogReviewed));
+  staleReview['crypto-lab-matsui-line'].commit = 'e218f2e71938d1514cbfde224fc61b1d68fc2e3a';
+  assert.throws(() => checkMatsuiAd14Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
 
 function checkScope(source) {

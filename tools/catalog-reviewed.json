@@ -184,16 +184,25 @@
     ]
   },
   "crypto-lab-matsui-line": {
-    "commit": "e218f2e71938d1514cbfde224fc61b1d68fc2e3a",
-    "reviewed": "2026-10-23",
+    "commit": "7a85fbf1e6f566f7b0b718cb93f5dd737950faaa",
+    "reviewed": "2026-10-25",
     "add": [
       "Toy SPN@src/crypto/spn.ts:66"
     ],
-    "note": "Reviewed the toy SPN, attack and new two-mask/structural-zero panel at this exact commit. It counts two parity relations and all four joint outcomes on the same 16/64/256 plaintexts, and checks a no-nonzero-trail pair whose full-codebook correlation is zero across keys. This is a bounded toy-SPN observation, not a multidimensional key-recovery attack or a reproduction of the cited ChaCha research. Existing single-trail versus full linear-hull and repeated versus distinct plaintext comparisons remain separate. The toy SPN implementation anchor is unchanged; no full DES or production cipher is attacked.",
+    "addAttacks": [
+      "Chosen-plaintext attack@src/crypto/difflin.ts:310",
+      "Differential cryptanalysis@src/crypto/difflin.ts:136",
+      "Key recovery@src/crypto/attack.ts:159",
+      "Known-plaintext attack@src/crypto/attack.ts:46",
+      "Linear cryptanalysis@src/crypto/attack.ts:159"
+    ],
+    "note": "Read the complete README, index, source, tests, browser gates and mutation runner at this exact commit. The existing real 8-bit toy SPN, Matsui Algorithm 2 nibble recovery, LAT/trail/hull teaching, two-mask/structural-zero panel and repeated-versus-distinct sampling remain. The new fixed three-round Heys-S-box exercise uses chosen pairs with difference 0x0B, joins at the round-2 input, computes the DDT row, suffix correlations, naive 9/64 and signed-path 9/32 estimates, measures the real key-dependent 1/4 or 5/16 codebook bias, ranks 256 observable final-whitening-byte hypotheses, and independently checks a winner on unused pairs when the selected budget leaves a holdout. Its cancelling lambda-in 0x04 control exposes the naive 1/16 estimate versus exact zero signed-path and full-codebook bias and ranks only 16 visible high-nibble hypotheses. The deterministic 512-key odd-stride curve is bounded reproducible evidence, not a random population estimate. Credit the real chosen-plaintext, differential, linear and key-recovery work alongside the legacy known-plaintext attack. Brute-force count is unit-test and exhaustive-oracle wording, not a learner attack, and the scanner's Fault injection hit is the substring across default attack; remove both. Biham and Shamir names the differential-cryptanalysis authors, not Shamir secret sharing, so remove that reference. The lesson does not recover the 16-bit master key, attack the full four-round toy cipher, establish optimal masks, reproduce DES, or attack production cryptography.",
     "remove": [
       "Brute force",
-      "Chosen-plaintext attack",
-      "Differential cryptanalysis"
+      "Fault injection"
+    ],
+    "removeReferences": [
+      "Shamir secret sharing"
     ]
   },
   "crypto-lab-model-breach": {

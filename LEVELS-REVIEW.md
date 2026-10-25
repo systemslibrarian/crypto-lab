@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 65 · Advanced — 146. Total 244.
+**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 146. Total 245.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -70,7 +70,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (65)
+## Intermediate — `intermediate` (66)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -87,6 +87,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) | rule | school-level primitives: SHA-256, HMAC, HKDF |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | rule | school-level primitives: Diffie-Hellman, X25519 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | rule | school-level primitives: Diffie-Hellman, Ed25519, key exchange |
+| [DC-net](https://systemslibrarian.github.io/crypto-lab-dc-net/) | 2026-10-25: complete README, source, tests and five-part learner flow | Assumes byte XOR, graph connectivity, component parity and basic probability; it introduces the observer and coalition model without requiring groups, fields or lattices. |
 | [DH MITM](https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/) | rule | school-level primitives: Diffie-Hellman, modular arithmetic, key exchange |
 | [DVD Scramble](https://systemslibrarian.github.io/crypto-lab-dvd-scramble/) | 2026-10-21: README exhibits and src | GF(2) register algebra and an enumeration; no group or lattice background needed |
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | rule | school-level primitives: digital signature, ECDSA, signature |

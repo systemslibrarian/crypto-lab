@@ -283,6 +283,7 @@ const ALGORITHMS = [
   { name: 'Schnorr identification', kind: 'algorithm', family: 'proof system', re: /schnorr[-_ ]?(?:id|identification|proof)/i, std: null },
 
   // --- MPC, PIR, FHE ---
+  { name: 'DC-net', kind: 'algorithm', family: 'anonymous broadcast', re: /(?:\bdc[-_ ]?nets?\b|dining[-_ ]cryptographers?)/i, pathRe: /(?:^|\/)dcnet(?:[-_./]|$)/i, std: null },
   { name: 'Garbled circuits', kind: 'algorithm', family: 'MPC', re: /garbled[-_ ]?circuit|(?<!dolev[-_ ])\byao\b/i, std: null },
   { name: 'Oblivious transfer', kind: 'algorithm', family: 'MPC', re: /oblivious[-_ ]?transfer/i, pathRe: /(^|\/)ot(?:[-_./]|$)/i, std: null },
   /* PSI the protocol against psi the Greek letter, which is the more common
@@ -544,7 +545,12 @@ const ATTACKS = [
   { name: 'Man-in-the-middle', re: /man[-_ ]in[-_ ]the[-_ ]middle|\bmitm\b/i },
   { name: 'Key recovery', re: /key[-_ ]?recovery/i },
   { name: 'Frequency analysis', re: /frequency[-_ ]?analysis/i },
-  { name: 'Known-plaintext attack', re: /known[-_ ]?plaintext/i },
+  /* A declared known-empty input is a known all-zero plaintext, and mask/pad
+     reuse can make it the crib that recovers the paired unknown input. Keep
+     this spelling narrow: it occurs only in the executable DC-net reuse lesson
+     across the current fleet, while generic empty-message handling is not an
+     attack claim. */
+  { name: 'Known-plaintext attack', re: /known[-_ ]?plaintext|known[-_ ]+empty/i },
   { name: 'Brute force', re: /brute[-_ ]?force/i },
   /* Keep dictionary search distinct from undirected brute force: these lessons
      enumerate a chosen candidate corpus and compare its derived evidence. The

@@ -128,6 +128,10 @@
   "lab": "crypto-lab-lwe-hints"
  },
  {
+  "port": 4231,
+  "lab": "crypto-lab-dc-net"
+ },
+ {
   "port": 4232,
   "lab": "crypto-lab-mceliece-gate"
  },

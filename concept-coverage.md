@@ -346,6 +346,17 @@ from collapsing into one claim. This is a bounded private-verifier teaching
 adaptation, not the cited papers' exact construction or a production logging
 proof. Catalogued total remains 244.*
 
+*Version 45 — files DC-net under §24 as a seventh anonymity axis and a new
+catalogued lab. Its five-participant cycle executes pairwise one-use-mask
+cancellation, observer and coalition components, collision parity, shaped
+jamming, dropout and reformation, full incident-mask reuse and later disclosure.
+The separate SHA-256 commit/reveal exercise is a bounded teaching adaptation,
+not Dissent or Verdict accountability, and the anonymity claim retains its
+declared graph, independent uniform secret one-use-mask, synchrony and observer-
+knowledge assumptions. §24 remains `COVERED`: anonymous group broadcast adds a
+distinct object and failure model rather than a second treatment of an existing
+one. Catalogued total moves to 245.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -944,10 +955,11 @@ concept in the right place without invalidating every one of those references. P
 renumbering whenever a concept is added mid-list.
 
 **24. Anonymity and unlinkability — `COVERED`**
-Ring Sign · Blind Sign · Credential Veil · Traitor Trace · Sphinx Mix · Privacy Pass.
+Ring Sign · Blind Sign · Credential Veil · Traitor Trace · Sphinx Mix · Privacy Pass ·
+DC-net.
 
-Sphinx Mix adds the network layer the other four do not touch: they unlink a *signature* or a
-*credential* from its holder, while Sphinx unlinks a *packet* from its sender across three
+Sphinx Mix adds a network layer the signature- and credential-oriented demos do not touch:
+they unlink a *signature* or a *credential* from its holder, while Sphinx unlinks a *packet* from its sender across three
 hops. It also carries the distinction that most explanations of anonymity systems blur —
 bitwise unlinkability is a property of the packet format, anonymity is a property of the
 traffic, and the first does not produce the second. One sender on a quiet network is traced
@@ -969,9 +981,17 @@ redeeming — key consistency is a separate protocol and deliberately absent. An
 a property of the token population a deployment actually has, not of the construction; Sphinx
 Mix's traffic-versus-format distinction is the same observation one layer down.
 
-Status stays `COVERED` at six demos rather than moving to `DEEP`, on the same test applied to §20:
-six objects unlinked, none of them taught twice, and mix networks beyond Sphinx, DC-nets, and
-anonymous e-cash would each still add an axis rather than repeat one.
+DC-net adds anonymous group broadcast rather than another signature, credential or mix
+packet. Five participants publish masked contributions whose pairwise XOR masks cancel,
+revealing the public aggregate while leaving a lone compatible sender ambiguous under the
+declared key graph and observer knowledge. Its executable coalition, collision, shaped-
+jammer, dropout, commitment, reuse and later-disclosure cases keep parity, availability and
+accountability separate; the bounded SHA-256 commitment does not inherit Dissent or Verdict
+properties.
+
+Status stays `COVERED` at seven demos rather than moving to `DEEP`, on the same test applied to §20:
+seven distinct anonymity or unlinkability axes are taught, none is taught twice, and additional
+traffic-analysis systems or anonymous e-cash would still add an axis rather than repeat one.
 
 **25. Trust distribution and transparency — `COVERED`**
 PKI Chain · Chain of Trust · Web of Trust · Key Mirror · Merkle Vault · Merkle Proofs ·
@@ -1318,7 +1338,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 244.**
+**Catalogued total: 245.**
 
 ---
 

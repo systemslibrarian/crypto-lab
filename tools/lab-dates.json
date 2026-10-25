@@ -1879,8 +1879,8 @@
    "addedOn": "2026-10-17",
    "updated": "2026-10",
    "addedFrom": "2026-10-17T20:11:12Z",
-   "updatedFrom": "2026-10-18T15:46:34-04:00",
-   "updatedCommit": "7c7f74d7efff3a6c1cac227ef08b93d42cd184c1"
+   "updatedFrom": "2026-10-25T19:06:42-04:00",
+   "updatedCommit": "db6695e0f136507572dcc10e652bff83ea357383"
   },
   "crypto-lab-prime-witness": {
    "added": "2026-10",

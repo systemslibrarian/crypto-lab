@@ -6363,8 +6363,8 @@
       ]
     },
     "crypto-lab-confirmer-signatures": {
-      "commit": "4cf5a00f4fd11eb1dd3a343930859813f6e8da5d",
-      "reviewed": "2026-10-22",
+      "commit": "db6695e0f136507572dcc10e652bff83ea357383",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "public-signature",
@@ -6406,10 +6406,12 @@
           "evidence": [
             "research/real-pairing/index.html:8",
             "research/real-pairing/index.html:10",
-            "research/real-pairing/app.mjs:80",
-            "research/real-pairing/app.mjs:101",
-            "research/real-pairing/app.mjs:113",
-            "research/real-pairing/app.mjs:123"
+            "research/real-pairing/app.mjs:104",
+            "research/real-pairing/app.mjs:123",
+            "research/real-pairing/app.mjs:125",
+            "research/real-pairing/app.mjs:136",
+            "research/real-pairing/app.mjs:142",
+            "research/real-pairing/app.mjs:143"
           ],
           "limits": "Experimental Type-3 adaptation; full-scheme security and non-transferability are not established.",
           "section": "Make the prover answer you."
@@ -6429,10 +6431,12 @@
           ],
           "evidence": [
             "research/real-pairing/index.html:11",
-            "research/real-pairing/app.mjs:133",
-            "research/real-pairing/app.mjs:136",
-            "research/real-pairing/app.mjs:144",
-            "research/real-pairing/app.mjs:147"
+            "research/real-pairing/app.mjs:154",
+            "research/real-pairing/app.mjs:157",
+            "research/real-pairing/app.mjs:158",
+            "research/real-pairing/app.mjs:168",
+            "research/real-pairing/app.mjs:169",
+            "research/real-pairing/app.mjs:174"
           ],
           "limits": "The comparison illustrates transcript simulation but does not prove malicious-verifier or concurrent-session guarantees.",
           "section": "A passing recording. A failing live answer."
@@ -6453,12 +6457,14 @@
           "evidence": [
             "research/real-pairing/index.html:9",
             "research/real-pairing/index.html:10",
-            "research/real-pairing/app.mjs:90",
-            "research/real-pairing/app.mjs:99",
             "research/real-pairing/app.mjs:112",
-            "research/real-pairing/app.mjs:119",
+            "research/real-pairing/app.mjs:121",
             "research/real-pairing/app.mjs:123",
-            "research/real-pairing/app.mjs:125"
+            "research/real-pairing/app.mjs:127",
+            "research/real-pairing/app.mjs:134",
+            "research/real-pairing/app.mjs:142",
+            "research/real-pairing/app.mjs:145",
+            "research/real-pairing/app.mjs:147"
           ],
           "limits": "The inequality proof is an experimental Type-3 reconstruction; complete DCS security and malicious-verifier guarantees are unproved.",
           "section": "Same signed object. Different words."
@@ -6479,11 +6485,11 @@
           "evidence": [
             "research/real-pairing/index.html:5",
             "research/real-pairing/index.html:12",
-            "research/real-pairing/app.mjs:70",
-            "research/real-pairing/app.mjs:73",
-            "research/real-pairing/app.mjs:122",
-            "research/real-pairing/app.mjs:128",
-            "research/real-pairing/app.mjs:156"
+            "research/real-pairing/index.html:13",
+            "research/real-pairing/app.mjs:92",
+            "research/real-pairing/app.mjs:144",
+            "research/real-pairing/app.mjs:150",
+            "research/real-pairing/app.mjs:178"
           ],
           "limits": "The abstract field model and independent sample verifier do not establish security of the complete browser protocol.",
           "section": "Inspect the claim. Reproduce the check."
@@ -6515,6 +6521,40 @@
           ],
           "limits": "Public toy exponents expose secrets; the symbolic model offers no secrecy or zero knowledge and does not implement disavowal.",
           "section": "Can Carol prove Alice signed it?"
+        },
+        {
+          "id": "designated-verifier-proof",
+          "title": "One-message designated-verifier proof",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Create a registered verifier key, ask the selected signer or confirmer to prove with the branch witness, make a second accepted proof with the verifier secret, forge an accepted false-statement transcript, and compare both with the separate public-equation proof.",
+          "outcome": "One verification algorithm accepts both permitted designated-proof origins. The exact randomness bijection makes their true-statement transcript distributions identical, while the verifier-secret path also accepts for a false statement; the public comparison instead exposes equations any reader can recompute.",
+          "concepts": [
+            "designated-verifier proof",
+            "trapdoor commitment",
+            "transcript origin",
+            "Fiat-Shamir",
+            "verifier-key registration",
+            "non-transferability limits"
+          ],
+          "evidence": [
+            "research/real-pairing/index.html:11",
+            "research/real-pairing/app.mjs:201",
+            "research/real-pairing/app.mjs:210",
+            "research/real-pairing/app.mjs:226",
+            "research/real-pairing/app.mjs:241",
+            "research/real-pairing/app.mjs:256",
+            "research/real-pairing/app.mjs:265",
+            "research/real-pairing/designated-verifier.mjs:139",
+            "research/real-pairing/designated-verifier.mjs:195",
+            "research/real-pairing/designated-verifier.mjs:225",
+            "research/real-pairing/designated-verifier.mjs:272",
+            "research/real-pairing/designated-verifier.mjs:323",
+            "research/real-pairing/designated-verifier.mjs:337",
+            "research/real-pairing/designated-verifier.mjs:374"
+          ],
+          "limits": "This adapts the paper's section 5 construction to the lab's Type-3 confirmation relation and implements Definition 1 only. It is not the generic Cramer–Damgård–Schoenmakers OR composition, a strong designated-verifier protocol, a designated-verifier signature or a completed designated-confirmer signature. The lab supplies no section 5 security theorem, and the public comparison has no lab-supplied proof-of-knowledge, soundness or unforgeability theorem.",
+          "section": "A proof addressed to one verifier."
         }
       ],
       "reviewScope": "complete"

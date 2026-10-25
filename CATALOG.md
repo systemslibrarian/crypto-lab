@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1778 sections in 246 of 246 labs**
+The exhibit map currently records **1779 sections in 246 of 246 labs**
 (246 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -1173,7 +1173,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Sign-then-Encrypt
 
 - **Implemented by:** [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/signcryption/ste.ts:311`
-- **Also referenced by:** —
+- **Also referenced by:** *Signature Gate*
 
 ### steganography
 
@@ -14495,31 +14495,38 @@ Modular period finding with QFT and continued fractions to recover integer facto
 
 [`crypto-lab-confirmer-signatures`](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) · Confirmer Signatures · Research Preview · SIGNATURES, ZERO-KNOWLEDGE, PROTOCOLS
 
-Become Bob: challenge real BLS12-381 proofs, change the claim, and expose Eve’s fabricated recording. Explore a candidate disavowal reconstruction with machine-checked mathematics; full designated-confirmer security remains under review.
+Challenge real BLS12-381 confirmation proofs, then compare a one-message designated-verifier proof that either the branch witness or its verifier can make with a public equation check. The lesson remains a research preview, not a security proof of the complete confirmer scheme.
 
-- **Card topics (discovery only):** BLS12-381, OR Proofs, Challenge Timing, Research Preview — labels do not establish what any section runs.
+- **Card topics (discovery only):** BLS12-381, Designated-Verifier Proof, Challenge Timing, Research Preview — labels do not establish what any section runs.
 - **Implements:** BLS signatures `research/real-pairing/core.mjs:136`, BLS12-381 `research/real-pairing/core.mjs:106`, ECDSA `prototype/crypto.mjs:9`, Hash-to-curve `research/real-pairing/core.mjs:81`, P-256 `prototype/crypto.mjs:10`, Pairing `research/real-pairing/core.mjs:89`, SHA-256 `research/real-pairing/core.mjs:74`
-- **Source review:** [7c7f74d7efff](https://github.com/systemslibrarian/crypto-lab-confirmer-signatures/commit/7c7f74d7efff3a6c1cac227ef08b93d42cd184c1) — Reviewed real-pairing core, verifier statement reconstruction, browser workbench, source-specific protocol notes, security ledger and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. Eve demonstrates challenge-timing transcript simulation. The candidate disavowal reconstruction has scoped Lean algebraic and distribution results plus independent arithmetic checks; neither the browser implementation nor full designated-confirmer security is formally verified. Owner-approved Advanced Research Preview listing preserves those limits. Reviewed the plain-language scope and expanded evidence obligations at this pin; cryptographic code is unchanged.
+- **Source review:** [db6695e0f136](https://github.com/systemslibrarian/crypto-lab-confirmer-signatures/commit/db6695e0f136507572dcc10e652bff83ea357383) — Re-read exact merged main db6695e0f136, including the real-pairing core, verifier statement reconstruction, five-chapter browser workbench, source notes, security ledger, tests, mutation runner, workflows and publication routes. Anchor the actual BLS-shaped signature computation, BLS12-381 key multiplication and SHA-256 call rather than library imports. The default demo runs real point and pairing operations with a local hash-to-curve domain; it is not a standards-conformance claim. The ordinary ECDSA/P-256 chapter remains separately reachable. Remove Paillier from the card implementation credits because its separate research model uses deliberately insecure toy parameters. Remove chosen-ciphertext, discrete-log, factoring and side-channel attack credits: the matched passages discuss limitations or proof obligations, not executed attacks. The new A-D-09 chapter executes Jakobsson, Sako and Impagliazzo section 5's concrete trapdoor-commitment realization of the semantic disjunction, not a generic Cramer–Damgård–Schoenmakers OR composition. One verifier accepts a proof made with the selected signer or confirmer witness and one made with the registered verifier secret; the explicit randomness bijection establishes identical transcript distributions on a true statement, and the verifier-secret path can also produce an accepting false-statement transcript. The separate public Fiat-Shamir comparison establishes only publicly recomputable equations here; the lab supplies no proof-of-knowledge, soundness or unforgeability theorem for it. This is Definition 1, not strong designated verification, a designated-verifier signature or a completed designated-confirmer-signature security result. Eve's older challenge-timing lesson and the candidate disavowal reconstruction retain their prior limits; the latter has scoped Lean algebraic and distribution results plus independent arithmetic checks, but neither the full browser protocol nor complete designated-confirmer security is formally verified. Exact-main runs 40243267066, 40243267074 and 40243267458 passed 138 root tests, 55 real-pairing tests, all 8 clean-baseline designated-verifier mutations, 15 independent py_ecc checks, 8 symbolic identities, 100972 exhaustive extractions, 6 browser flows, the Lean build and axiom gate, production build and deployment. Pages artifact 12617637496 names exact main and all 12 served files matched it byte for byte. Owner-approved Advanced Research Preview listing preserves these limits.
 - **Partially unread:** Python:5 — source or compiled binary not fully available for review here.
-- **References:** EC point arithmetic, ElGamal, Pedersen commitment, Schnorr, Shamir secret sharing, Sigma protocol
+- **References:** EC point arithmetic, ElGamal, Pedersen commitment, Schnorr, Schnorr identification, Shamir secret sharing, Sigma protocol, Sign-then-Encrypt
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto / @noble/curves / local research protocols
-- **Overlaps:** `crypto-lab-pairing-gate` — Pairing Gate teaches BLS signatures, aggregation and pairing primitives; Signature Gate explores interactive confirmation, candidate disavowal and challenge timing in an explicitly experimental construction.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4cf5a00f4fd1](https://github.com/systemslibrarian/crypto-lab-confirmer-signatures/commit/4cf5a00f4fd11eb1dd3a343930859813f6e8da5d) reviewed 2026-10-22; 6 mapped sections.
+- **Overlaps:** `crypto-lab-pairing-gate` — Pairing Gate teaches BLS signatures, aggregation and pairing primitives; Signature Gate uses those primitives inside experimental confirmer and designated-verifier proof lessons. crypto-lab-zk-proof-lab: ZK Proof Lab teaches general interactive-proof and bounded GKR mechanics; Signature Gate compares one source-specific interactive confirmer exchange, a one-message designated-verifier proof and a public equation check, with narrower scheme-specific claims.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [db6695e0f136](https://github.com/systemslibrarian/crypto-lab-confirmer-signatures/commit/db6695e0f136507572dcc10e652bff83ea357383) reviewed 2026-10-25; 7 mapped sections.
   - **Designated confirmer exchange** (`confirmation`; interactive; real-crypto)
     - **Visible section:** Make the prover answer you.
     - **Learner action:** Seal a fictional statement, select Alice or Carol and ask for a commitment before Bob chooses a fresh challenge and checks the response.
     - **Observed result:** The live verifier checks confirmation equations for the signed claim; the candidate inequality branch is separately labeled experimental.
     - **Concepts taught:** designated confirmer signatures; interactive proof; commitment-challenge order; pairings; confirmation
     - **Limits:** Experimental Type-3 adaptation; full-scheme security and non-transferability are not established.
-    - **Evidence at pinned commit:** `research/real-pairing/index.html:8`, `research/real-pairing/index.html:10`, `research/real-pairing/app.mjs:80`, `research/real-pairing/app.mjs:101`, `research/real-pairing/app.mjs:113`, `research/real-pairing/app.mjs:123`
+    - **Evidence at pinned commit:** `research/real-pairing/index.html:8`, `research/real-pairing/index.html:10`, `research/real-pairing/app.mjs:104`, `research/real-pairing/app.mjs:123`, `research/real-pairing/app.mjs:125`, `research/real-pairing/app.mjs:136`, `research/real-pairing/app.mjs:142`, `research/real-pairing/app.mjs:143`
+  - **One-message designated-verifier proof** (`designated-verifier-proof`; interactive; real-crypto)
+    - **Visible section:** A proof addressed to one verifier.
+    - **Learner action:** Create a registered verifier key, ask the selected signer or confirmer to prove with the branch witness, make a second accepted proof with the verifier secret, forge an accepted false-statement transcript, and compare both with the separate public-equation proof.
+    - **Observed result:** One verification algorithm accepts both permitted designated-proof origins. The exact randomness bijection makes their true-statement transcript distributions identical, while the verifier-secret path also accepts for a false statement; the public comparison instead exposes equations any reader can recompute.
+    - **Concepts taught:** designated-verifier proof; trapdoor commitment; transcript origin; Fiat-Shamir; verifier-key registration; non-transferability limits
+    - **Limits:** This adapts the paper's section 5 construction to the lab's Type-3 confirmation relation and implements Definition 1 only. It is not the generic Cramer–Damgård–Schoenmakers OR composition, a strong designated-verifier protocol, a designated-verifier signature or a completed designated-confirmer signature. The lab supplies no section 5 security theorem, and the public comparison has no lab-supplied proof-of-knowledge, soundness or unforgeability theorem.
+    - **Evidence at pinned commit:** `research/real-pairing/index.html:11`, `research/real-pairing/app.mjs:201`, `research/real-pairing/app.mjs:210`, `research/real-pairing/app.mjs:226`, `research/real-pairing/app.mjs:241`, `research/real-pairing/app.mjs:256`, `research/real-pairing/app.mjs:265`, `research/real-pairing/designated-verifier.mjs:139`, `research/real-pairing/designated-verifier.mjs:195`, `research/real-pairing/designated-verifier.mjs:225`, `research/real-pairing/designated-verifier.mjs:272`, `research/real-pairing/designated-verifier.mjs:323`, `research/real-pairing/designated-verifier.mjs:337`, `research/real-pairing/designated-verifier.mjs:374`
   - **Candidate affirmative inequality proof** (`disavowal`; interactive; real-crypto)
     - **Visible section:** Same signed object. Different words.
     - **Learner action:** Alter Alice’s signed claim, request the separate inequality commitment, choose a fresh challenge and verify the response.
     - **Observed result:** Inspect candidate inequality equations as affirmative evidence for invalidity, distinct from a refusal or failed confirmation.
     - **Concepts taught:** designated confirmer signature; disavowal; inequality proof; interactive challenge
     - **Limits:** The inequality proof is an experimental Type-3 reconstruction; complete DCS security and malicious-verifier guarantees are unproved.
-    - **Evidence at pinned commit:** `research/real-pairing/index.html:9`, `research/real-pairing/index.html:10`, `research/real-pairing/app.mjs:90`, `research/real-pairing/app.mjs:99`, `research/real-pairing/app.mjs:112`, `research/real-pairing/app.mjs:119`, `research/real-pairing/app.mjs:123`, `research/real-pairing/app.mjs:125`
+    - **Evidence at pinned commit:** `research/real-pairing/index.html:9`, `research/real-pairing/index.html:10`, `research/real-pairing/app.mjs:112`, `research/real-pairing/app.mjs:121`, `research/real-pairing/app.mjs:123`, `research/real-pairing/app.mjs:127`, `research/real-pairing/app.mjs:134`, `research/real-pairing/app.mjs:142`, `research/real-pairing/app.mjs:145`, `research/real-pairing/app.mjs:147`
   - **Ordinary public signature** (`public-signature`; interactive; real-crypto)
     - **Visible section:** An agreement anyone can check
     - **Learner action:** Generate Alice’s signing key, sign a statement and let Bob and Dave verify the same public evidence; change the words.
@@ -14532,14 +14539,14 @@ Become Bob: challenge real BLS12-381 proofs, change the claim, and expose Eve’
     - **Observed result:** The recorded equations pass under Eve’s chosen challenge while the same answer fails Bob’s later challenge.
     - **Concepts taught:** transcript simulation; honest-verifier zero knowledge; challenge ordering; non-transferability limits
     - **Limits:** The comparison illustrates transcript simulation but does not prove malicious-verifier or concurrent-session guarantees.
-    - **Evidence at pinned commit:** `research/real-pairing/index.html:11`, `research/real-pairing/app.mjs:133`, `research/real-pairing/app.mjs:136`, `research/real-pairing/app.mjs:144`, `research/real-pairing/app.mjs:147`
+    - **Evidence at pinned commit:** `research/real-pairing/index.html:11`, `research/real-pairing/app.mjs:154`, `research/real-pairing/app.mjs:157`, `research/real-pairing/app.mjs:158`, `research/real-pairing/app.mjs:168`, `research/real-pairing/app.mjs:169`, `research/real-pairing/app.mjs:174`
   - **Designated confirmer research evidence desk** (`research-evidence`; explanation; conceptual)
     - **Visible section:** Inspect the claim. Reproduce the check.
     - **Learner action:** Open the research view and inspect formal field-model claims, independent checks, open obligations and a public transcript export.
     - **Observed result:** Distinguish what was implemented or checked from full-protocol and privacy claims that remain open.
     - **Concepts taught:** formal verification scope; independent verifier; public transcript; security proof obligations
     - **Limits:** The abstract field model and independent sample verifier do not establish security of the complete browser protocol.
-    - **Evidence at pinned commit:** `research/real-pairing/index.html:5`, `research/real-pairing/index.html:12`, `research/real-pairing/app.mjs:70`, `research/real-pairing/app.mjs:73`, `research/real-pairing/app.mjs:122`, `research/real-pairing/app.mjs:128`, `research/real-pairing/app.mjs:156`
+    - **Evidence at pinned commit:** `research/real-pairing/index.html:5`, `research/real-pairing/index.html:12`, `research/real-pairing/index.html:13`, `research/real-pairing/app.mjs:92`, `research/real-pairing/app.mjs:144`, `research/real-pairing/app.mjs:150`, `research/real-pairing/app.mjs:178`
   - **Symbolic confirmer protocol and message-order attack** (`symbolic-model`; interactive; simulation)
     - **Visible section:** Can Carol prove Alice signed it?
     - **Learner action:** Generate toy signer and confirmer keys, issue a symbolic object, ask either role for a proof and try Eve’s challenge-first trick.

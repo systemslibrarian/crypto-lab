@@ -1561,6 +1561,103 @@ test('Sum-check/GKR controls reject lost credit, stale pins and theorem overclai
   assert.throws(() => checkSumcheckGkrScope(html, overclaim), assert.AssertionError);
 });
 
+function checkConfirmerAd09Scope(source, manifest = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-confirmer-signatures';
+  const opening = openingFor(source, slug);
+  const block = blockFor(source, slug);
+  assert.match(opening, /data-review-commit="db6695e0f136507572dcc10e652bff83ea357383"/);
+  assert.match(block, /one-message designated-verifier proof that either the branch witness or its verifier can make/);
+  assert.match(block, /not a security proof of the complete confirmer scheme/);
+  assert.ok(chipsFor(source, slug).includes('Designated-Verifier Proof'));
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Research limitations and proof obligations are not executed cryptanalytic attacks');
+
+  const review = reviews[slug];
+  assert.equal(review.commit, 'db6695e0f136507572dcc10e652bff83ea357383');
+  assert.match(review.note, /concrete trapdoor-commitment realization of the semantic disjunction/);
+  assert.match(review.note, /not a generic Cramer–Damgård–Schoenmakers OR composition/);
+  assert.match(review.note, /no proof-of-knowledge, soundness or unforgeability theorem/);
+  assert.match(review.note, /all 8 clean-baseline designated-verifier mutations/);
+  assert.match(review.note, /all 12 served files matched it byte for byte/);
+
+  const mapped = manifest.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewed, '2026-10-25');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.equal(mapped.exhibits.length, 7);
+  const lesson = mapped.exhibits.find(exhibit => exhibit.id === 'designated-verifier-proof');
+  assert.ok(lesson);
+  assert.equal(lesson.execution, 'real-crypto');
+  assert.equal(lesson.section, 'A proof addressed to one verifier.');
+  assert.match(lesson.outcome, /accepts both permitted designated-proof origins/);
+  assert.match(lesson.outcome, /false statement/);
+  assert.match(lesson.outcome, /equations any reader can recompute/);
+  for (const anchor of [
+    'research/real-pairing/index.html:11',
+    'research/real-pairing/app.mjs:210',
+    'research/real-pairing/app.mjs:226',
+    'research/real-pairing/app.mjs:241',
+    'research/real-pairing/app.mjs:256',
+    'research/real-pairing/app.mjs:265',
+    'research/real-pairing/designated-verifier.mjs:195',
+    'research/real-pairing/designated-verifier.mjs:225',
+    'research/real-pairing/designated-verifier.mjs:272',
+    'research/real-pairing/designated-verifier.mjs:323',
+    'research/real-pairing/designated-verifier.mjs:337',
+    'research/real-pairing/designated-verifier.mjs:374',
+  ]) {
+    assert.ok(lesson.evidence.includes(anchor), `A-D-09 must retain evidence ${anchor}`);
+  }
+  assert.match(lesson.limits, /implements Definition 1 only/);
+  assert.match(lesson.limits, /not the generic Cramer–Damgård–Schoenmakers OR composition/);
+  assert.match(lesson.limits, /not .* strong designated-verifier protocol/);
+  assert.match(lesson.limits, /no section 5 security theorem/);
+  assert.match(lesson.limits, /no lab-supplied proof-of-knowledge, soundness or unforgeability theorem/);
+}
+
+test('Signature Gate records A-D-09 as a bounded designated-verifier proof, not a full DCS theorem', () => {
+  checkConfirmerAd09Scope(html);
+});
+
+test('Signature Gate A-D-09 controls reject stale evidence and stronger proof claims', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-confirmer-signatures\/"[\s\S]*?<\/a>/;
+  for (const changed of [
+    html.replace(cardRe, card => card.replace(
+      'one-message designated-verifier proof that either the branch witness or its verifier can make',
+      'one-message proof')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Designated-Verifier Proof</span>', '')),
+    html.replace(cardRe, card => card.replace(
+      'data-review-commit="db6695e0f136507572dcc10e652bff83ea357383"',
+      'data-review-commit="4cf5a00f4fd11eb1dd3a343930859813f6e8da5d"')),
+  ]) {
+    assert.notEqual(changed, html, 'A-D-09 negative control must change its card');
+    assert.throws(() => checkConfirmerAd09Scope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = structuredClone(exhibitManifest);
+  missingExhibit.labs['crypto-lab-confirmer-signatures'].exhibits =
+    missingExhibit.labs['crypto-lab-confirmer-signatures'].exhibits
+      .filter(exhibit => exhibit.id !== 'designated-verifier-proof');
+  assert.throws(() => checkConfirmerAd09Scope(html, missingExhibit), assert.AssertionError);
+
+  const missingAnchor = structuredClone(exhibitManifest);
+  const lesson = missingAnchor.labs['crypto-lab-confirmer-signatures'].exhibits
+    .find(exhibit => exhibit.id === 'designated-verifier-proof');
+  lesson.evidence = lesson.evidence
+    .filter(anchor => anchor !== 'research/real-pairing/designated-verifier.mjs:225');
+  assert.throws(() => checkConfirmerAd09Scope(html, missingAnchor), assert.AssertionError);
+
+  const overclaim = structuredClone(exhibitManifest);
+  overclaim.labs['crypto-lab-confirmer-signatures'].exhibits
+    .find(exhibit => exhibit.id === 'designated-verifier-proof').limits =
+      'This is a strong designated-verifier signature with a complete security theorem.';
+  assert.throws(() => checkConfirmerAd09Scope(html, overclaim), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-confirmer-signatures'].commit = '4cf5a00f4fd11eb1dd3a343930859813f6e8da5d';
+  assert.throws(() => checkConfirmerAd09Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});
+
 function checkScope(source) {
   // HQC Timing Break cc4305c7: src/engine.ts runs a repetition-code cache
   // model. data.ts's 2020 chosen-ciphertext event and README's Lattice Fault

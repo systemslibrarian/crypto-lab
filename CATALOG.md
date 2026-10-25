@@ -8125,7 +8125,7 @@ Apply an ordered SPD, run a four-message PSK IKEv2 exchange, derive two simplex 
     - **Observed result:** Shows SAD lookup, pure replay precheck, AES-GCM authentication and replay-state commit in order, including that an invalid tag cannot advance the window.
     - **Concepts taught:** anti-replay window; SAD lookup; authentication ordering; packet reordering
     - **Limits:** Uses a 64-packet non-ESN window and synthetic in-browser packets; it does not measure network timing or loss.
-    - **Evidence at pinned commit:** `src/main.ts:263`, `src/protocol/esp.ts:130`, `src/protocol/esp.ts:305`
+    - **Evidence at pinned commit:** `src/main.ts:263`, `src/protocol/esp.ts:125`, `src/protocol/esp.ts:305`
   - **Two Directional Child Security Associations** (`child-sa-directions`; explanation; real-values)
     - **Visible section:** Two simplex SAs
     - **Learner action:** Inspect the receiver-selected SPI, AES key and salt for each simplex direction after initial Child KEYMAT derivation.

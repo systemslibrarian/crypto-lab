@@ -12256,7 +12256,7 @@ Compare five post-quantum problem families, their assumptions, representative si
 - **Attacks shown:** Birthday bound `src/data.ts:436`, Chosen-ciphertext attack `src/data.ts:205`, Chosen-plaintext attack `src/data.ts:921`, Differential cryptanalysis `src/data.ts:551`, Discrete log `src/data.ts:777`, Factoring `src/data.ts:777`, Fault injection `src/data.ts:93`, Key recovery `src/data.ts:145`, Lattice reduction `src/data.ts:157`, Side-channel (unspecified) `src/data.ts:242`, Timing side-channel `src/data.ts:310`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ac2429239a36](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/ac2429239a3645c3c3455597f68f7c65856bb26d) reviewed 2026-10-22; 14 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6f52ee3228a7](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/6f52ee3228a7df0cf8c0bdc88dd415bbf557bd5f) reviewed 2026-10-25; 14 mapped sections.
   - **Read the head-to-head family comparison** (`family-head-to-head`; comparison; real-values)
     - **Visible section:** Head to Head
     - **Learner action:** Pin representative schemes in the explorer and compare the resulting highlighted family rows.
@@ -12267,10 +12267,10 @@ Compare five post-quantum problem families, their assumptions, representative si
   - **Explore five post-quantum families** (`five-families`; comparison; conceptual)
     - **Visible section:** The Five Families
     - **Learner action:** Select lattice, code, hash, multivariate or isogeny family, then switch between overview, math, notable cryptanalysis and primary-source tabs.
-    - **Observed result:** The page displays sourced representative schemes, status, assumptions, tradeoffs and dated research summaries; it warns when an individual scheme was broken rather than declaring an entire family broken.
-    - **Concepts taught:** post-quantum cryptography; lattice cryptography; code-based cryptography; hash-based signatures; multivariate cryptography; isogeny cryptography; standardization status
+    - **Observed result:** The page displays sourced representative schemes, status, assumptions, tradeoffs and dated research summaries; it warns when an individual scheme was broken rather than declaring an entire family broken. The hash-based view distinguishes mathematical assumptions from implementation leakage, citing the October 2026 SLH-DSA-SHAKE power-analysis preprint with its physical-access condition.
+    - **Concepts taught:** post-quantum cryptography; lattice cryptography; code-based cryptography; hash-based signatures; multivariate cryptography; isogeny cryptography; standardization status; SLH-DSA-SHAKE; implementation leakage; non-profiled correlation power analysis
     - **Limits:** This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity.
-    - **Evidence at pinned commit:** `src/ui.ts:219`, `src/ui.ts:223`, `src/ui.ts:244`, `src/ui.ts:264`, `src/ui.ts:334`, `src/ui.ts:349`, `src/ui.ts:386`
+    - **Evidence at pinned commit:** `src/ui.ts:219`, `src/ui.ts:223`, `src/ui.ts:244`, `src/ui.ts:264`, `src/ui.ts:334`, `src/ui.ts:349`, `src/ui.ts:386`, `src/data.ts:459`, `src/data.ts:503`
   - **Read four closing post-quantum takeaways** (`four-takeaways`; explanation; conceptual)
     - **Visible section:** If You Remember Only Four Things
     - **Learner action:** Read the final four-part summary after the interactive sections.
@@ -12284,7 +12284,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** Displays short authored definitions for the cryptographic jargon and points back to the representative family sources.
     - **Concepts taught:** post-quantum terminology; cryptography glossary
     - **Limits:** The glossary is an explanatory reference, not a runnable construction or formal security definition.
-    - **Evidence at pinned commit:** `src/ui.ts:2397`, `src/ui.ts:2407`, `src/data.ts:939`
+    - **Evidence at pinned commit:** `src/ui.ts:2397`, `src/ui.ts:2407`, `src/data.ts:952`
   - **Estimate post-quantum TLS handshake bytes** (`handshake-bytes`; interactive; real-operation)
     - **Visible section:** Handshake Bytes
     - **Learner action:** Choose a KEM and signature, vary intermediate certificate count, toggle the classical hybrid, or load presets.
@@ -12298,7 +12298,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** Shows dated authored milestones from McEliece through the 2024 FIPS publications, with scheme breakages distinguished from family-wide claims.
     - **Concepts taught:** post-quantum history; cryptanalysis timeline; NIST FIPS 203; NIST FIPS 204; NIST FIPS 205
     - **Limits:** A curated historical summary, not an automatically refreshed standards feed or implementation.
-    - **Evidence at pinned commit:** `src/ui.ts:952`, `src/ui.ts:955`, `src/ui.ts:971`, `src/data.ts:791`
+    - **Evidence at pinned commit:** `src/ui.ts:952`, `src/ui.ts:955`, `src/ui.ts:971`, `src/data.ts:804`
   - **Compare approximate library support** (`implementation-status-matrix`; explanation; real-values)
     - **Visible section:** Where Each Scheme Actually Ships
     - **Learner action:** Read the scheme-by-library matrix and its shipped, experimental and planned legend.
@@ -14994,7 +14994,7 @@ Run authenticated sharing, Beaver multiplication, and ordinary tamper detection 
 
 [`crypto-lab-sphincs-ledger`](https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/) · Hash-Based Signatures · SIGNATURES, HASHING & KDFS
 
-Stateless hash-based signatures (SLH-DSA) in the browser. A post-quantum signing scheme that relies only on the security of hash functions.
+Stateless hash-based signatures (SLH-DSA) in the browser. Explore hash-based mathematical assumptions and why implementations must also protect against secret leakage.
 
 - **Card topics (discovery only):** SLH-DSA, FIPS 205, SPHINCS+, SHA-256, WOTS+ — labels do not establish what any section runs.
 - **Implements:** Merkle tree `demos/sphincs-ledger/src/crypto/merkle.ts:15`, SHA-256 `demos/sphincs-ledger/src/crypto/fors.ts:58`, SLH-DSA `demos/sphincs-ledger/src/crypto/params.ts:17`, SPHINCS+ `demos/sphincs-ledger/src/crypto/params.ts:18`, Winternitz `demos/sphincs-ledger/src/crypto/params.ts:65`
@@ -15002,7 +15002,7 @@ Stateless hash-based signatures (SLH-DSA) in the browser. A post-quantum signing
 - **References:** Dilithium, ECDSA, Ed25519, Falcon, Grover's algorithm, HAETAE, LMS, LWE, ML-DSA, ML-KEM, NTRU, RSA, SHA-3, SHA-512, SHAKE, Shor's algorithm, X3DH, XMSS
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d218fb257cb6](https://github.com/systemslibrarian/crypto-lab-sphincs-ledger/commit/d218fb257cb6ce8458cae4c1d84703e51fa456bb) reviewed 2026-10-22; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [66b52142e40f](https://github.com/systemslibrarian/crypto-lab-sphincs-ledger/commit/66b52142e40fe0e435a011eb04d11393a62e1b42) reviewed 2026-10-25; 11 mapped sections.
   - **FORS Few-Time Collision Tolerance** (`collision-tolerance`; interactive; simulation)
     - **Visible section:** Collision Tolerance — Why FORS Degrades Gracefully
     - **Learner action:** Sign two messages with the same key, compare index vectors, then estimate a reuse margin for N signatures.
@@ -15038,19 +15038,20 @@ Stateless hash-based signatures (SLH-DSA) in the browser. A post-quantum signing
     - **Concepts taught:** Merkle tree; SHA-256; authentication path
     - **Limits:** The small tree teaches authentication paths, not full FIPS 205 signing.
     - **Evidence at pinned commit:** `demos/sphincs-ledger/index.html:263`, `demos/sphincs-ledger/index.html:268`, `demos/sphincs-ledger/index.html:279`, `demos/sphincs-ledger/src/main.ts:333`, `demos/sphincs-ledger/src/main.ts:365`
-  - **Hash-Only Security Basis** (`security-basis`; explanation; conceptual)
+  - **Hash-Based Mathematical Assumptions and Implementation Leakage** (`security-basis`; explanation; conceptual)
     - **Visible section:** Security Basis: Hash-Only Assumption
-    - **Learner action:** Read the hash-function assumption, Grover impact and scheme maturity discussion.
-    - **Observed result:** The narrative separates quantum impact on hash functions from the lattice assumptions of other signatures.
-    - **Concepts taught:** hash-based signature; Grover algorithm; post-quantum security
-    - **Evidence at pinned commit:** `demos/sphincs-ledger/index.html:521`, `demos/sphincs-ledger/src/main.ts:1179`, `demos/sphincs-ledger/src/main.ts:1192`, `demos/sphincs-ledger/src/main.ts:1214`
+    - **Learner action:** Read the hash-function assumptions, Grover impact and implementation-leakage note, then follow the primary source for SLH-DSA-SHAKE power analysis.
+    - **Observed result:** Distinguishes mathematical assumptions from physical power leakage and the SHAKE research target from this SHA-2 browser implementation.
+    - **Concepts taught:** hash-based signature; Grover algorithm; post-quantum security; SLH-DSA-SHAKE; non-profiled correlation power analysis; implementation leakage; attack-model conditions
+    - **Limits:** The cited October 2026 preprint requires physical power measurements. The lab does not reproduce the microcontroller experiment; the paper does not establish vulnerability of this SHA-2 browser engine.
+    - **Evidence at pinned commit:** `demos/sphincs-ledger/index.html:521`, `demos/sphincs-ledger/src/main.ts:1179`, `demos/sphincs-ledger/src/main.ts:1205`, `demos/sphincs-ledger/src/main.ts:1227`, `demos/sphincs-ledger/src/main.ts:1195`
   - **Signature Scheme Sizes and Local Signing Speed** (`signature-comparison`; comparison; real-values)
     - **Visible section:** Signature Scheme Comparison
     - **Learner action:** Compare SLH-DSA parameter signatures with RSA and ML-DSA and inspect session signing-speed bars.
     - **Observed result:** The table exposes the signature-size cost of the hash-based choice alongside browser timings.
     - **Concepts taught:** SLH-DSA; RSA; ML-DSA; signature size; browser benchmark
     - **Limits:** Timing is local and not a controlled cross-algorithm benchmark.
-    - **Evidence at pinned commit:** `demos/sphincs-ledger/index.html:529`, `demos/sphincs-ledger/index.html:531`, `demos/sphincs-ledger/src/main.ts:1261`, `demos/sphincs-ledger/src/main.ts:1270`
+    - **Evidence at pinned commit:** `demos/sphincs-ledger/index.html:529`, `demos/sphincs-ledger/index.html:531`, `demos/sphincs-ledger/src/main.ts:1274`, `demos/sphincs-ledger/src/main.ts:1283`
   - **Test the boundary of independently signed messages** (`signed-messages-ledger`; comparison; real-crypto)
     - **Visible section:** Independently Signed Messages
     - **Learner action:** Add signed messages, verify all, then change message bytes, edit the unsigned author/time, reorder or remove entries, or replace a key and re-sign.

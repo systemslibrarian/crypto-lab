@@ -28982,8 +28982,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-pq-families": {
-      "commit": "ac2429239a3645c3c3455597f68f7c65856bb26d",
-      "reviewed": "2026-10-22",
+      "commit": "6f52ee3228a7df0cf8c0bdc88dd415bbf557bd5f",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "five-families",
@@ -28992,7 +28992,7 @@
           "kind": "comparison",
           "execution": "conceptual",
           "action": "Select lattice, code, hash, multivariate or isogeny family, then switch between overview, math, notable cryptanalysis and primary-source tabs.",
-          "outcome": "The page displays sourced representative schemes, status, assumptions, tradeoffs and dated research summaries; it warns when an individual scheme was broken rather than declaring an entire family broken.",
+          "outcome": "The page displays sourced representative schemes, status, assumptions, tradeoffs and dated research summaries; it warns when an individual scheme was broken rather than declaring an entire family broken. The hash-based view distinguishes mathematical assumptions from implementation leakage, citing the October 2026 SLH-DSA-SHAKE power-analysis preprint with its physical-access condition.",
           "concepts": [
             "post-quantum cryptography",
             "lattice cryptography",
@@ -29000,7 +29000,10 @@
             "hash-based signatures",
             "multivariate cryptography",
             "isogeny cryptography",
-            "standardization status"
+            "standardization status",
+            "SLH-DSA-SHAKE",
+            "implementation leakage",
+            "non-profiled correlation power analysis"
           ],
           "evidence": [
             "src/ui.ts:219",
@@ -29009,7 +29012,9 @@
             "src/ui.ts:264",
             "src/ui.ts:334",
             "src/ui.ts:349",
-            "src/ui.ts:386"
+            "src/ui.ts:386",
+            "src/data.ts:459",
+            "src/data.ts:503"
           ],
           "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity."
         },
@@ -29218,7 +29223,7 @@
             "src/ui.ts:952",
             "src/ui.ts:955",
             "src/ui.ts:971",
-            "src/data.ts:791"
+            "src/data.ts:804"
           ],
           "limits": "A curated historical summary, not an automatically refreshed standards feed or implementation."
         },
@@ -29312,7 +29317,7 @@
           "evidence": [
             "src/ui.ts:2397",
             "src/ui.ts:2407",
-            "src/data.ts:939"
+            "src/data.ts:952"
           ],
           "limits": "The glossary is an explanatory reference, not a runnable construction or formal security definition."
         },
@@ -36421,8 +36426,8 @@
       ]
     },
     "crypto-lab-sphincs-ledger": {
-      "commit": "d218fb257cb6ce8458cae4c1d84703e51fa456bb",
-      "reviewed": "2026-10-22",
+      "commit": "66b52142e40fe0e435a011eb04d11393a62e1b42",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -36644,23 +36649,29 @@
         },
         {
           "id": "security-basis",
-          "title": "Hash-Only Security Basis",
+          "title": "Hash-Based Mathematical Assumptions and Implementation Leakage",
           "kind": "explanation",
-          "action": "Read the hash-function assumption, Grover impact and scheme maturity discussion.",
-          "outcome": "The narrative separates quantum impact on hash functions from the lattice assumptions of other signatures.",
+          "action": "Read the hash-function assumptions, Grover impact and implementation-leakage note, then follow the primary source for SLH-DSA-SHAKE power analysis.",
+          "outcome": "Distinguishes mathematical assumptions from physical power leakage and the SHAKE research target from this SHA-2 browser implementation.",
           "concepts": [
             "hash-based signature",
             "Grover algorithm",
-            "post-quantum security"
+            "post-quantum security",
+            "SLH-DSA-SHAKE",
+            "non-profiled correlation power analysis",
+            "implementation leakage",
+            "attack-model conditions"
           ],
           "evidence": [
             "demos/sphincs-ledger/index.html:521",
             "demos/sphincs-ledger/src/main.ts:1179",
-            "demos/sphincs-ledger/src/main.ts:1192",
-            "demos/sphincs-ledger/src/main.ts:1214"
+            "demos/sphincs-ledger/src/main.ts:1205",
+            "demos/sphincs-ledger/src/main.ts:1227",
+            "demos/sphincs-ledger/src/main.ts:1195"
           ],
           "section": "Security Basis: Hash-Only Assumption",
-          "execution": "conceptual"
+          "execution": "conceptual",
+          "limits": "The cited October 2026 preprint requires physical power measurements. The lab does not reproduce the microcontroller experiment; the paper does not establish vulnerability of this SHA-2 browser engine."
         },
         {
           "id": "signature-comparison",
@@ -36678,8 +36689,8 @@
           "evidence": [
             "demos/sphincs-ledger/index.html:529",
             "demos/sphincs-ledger/index.html:531",
-            "demos/sphincs-ledger/src/main.ts:1261",
-            "demos/sphincs-ledger/src/main.ts:1270"
+            "demos/sphincs-ledger/src/main.ts:1274",
+            "demos/sphincs-ledger/src/main.ts:1283"
           ],
           "section": "Signature Scheme Comparison",
           "execution": "real-values",
@@ -37300,7 +37311,7 @@
             "src/stark.ts:754",
             "src/merkle.ts:72"
           ],
-      "limits": "The executed folds and final-code membership are component checks. A complete FRI or end-to-end STARK soundness bound additionally needs proximity, fold-MCA, composition, commitment/hash and Fiat–Shamir/BCS terms that this run does not establish.",
+          "limits": "The executed folds and final-code membership are component checks. A complete FRI or end-to-end STARK soundness bound additionally needs proximity, fold-MCA, composition, commitment/hash and Fiat–Shamir/BCS terms that this run does not establish.",
           "section": "Step 2 — FRI: The Heart of STARKs"
         },
         {
@@ -37384,19 +37395,19 @@
         },
         {
           "id": "stark-size-tradeoff",
-      "title": "Recompute FRI query terms and proof-size costs",
+          "title": "Recompute FRI query terms and proof-size costs",
           "section": "The Cost: Proof Size",
           "kind": "interactive",
           "execution": "real-values",
-      "action": "Move blowup and query sliders, then compare capacity-model arithmetic, conditional query-only references, missing theorem terms, authentication bytes and measured proof-size rows.",
-      "outcome": "Recomputes every displayed value while classifying the capacity formula as heuristic, theorem-based references as conditional or limiting, and complete FRI and STARK bounds as unestablished when required inputs are absent.",
+          "action": "Move blowup and query sliders, then compare capacity-model arithmetic, conditional query-only references, missing theorem terms, authentication bytes and measured proof-size rows.",
+          "outcome": "Recomputes every displayed value while classifying the capacity formula as heuristic, theorem-based references as conditional or limiting, and complete FRI and STARK bounds as unestablished when required inputs are absent.",
           "concepts": [
             "FRI soundness",
             "blowup factor",
             "query count",
-        "proof size",
-        "soundness ledger",
-        "union bound"
+            "proof size",
+            "soundness ledger",
+            "union bound"
           ],
           "evidence": [
             "index.html:354",
@@ -37404,18 +37415,18 @@
             "index.html:370",
             "index.html:373",
             "index.html:376",
-        "index.html:380",
-        "index.html:404",
-        "src/main.ts:450",
-        "src/main.ts:458",
-        "src/main.ts:497",
-        "src/main.ts:503",
-        "src/soundness.ts:107",
-        "src/soundness.ts:137",
-        "src/soundness.ts:152",
-        "src/soundness.ts:190"
+            "index.html:380",
+            "index.html:404",
+            "src/main.ts:450",
+            "src/main.ts:458",
+            "src/main.ts:497",
+            "src/main.ts:503",
+            "src/soundness.ts:107",
+            "src/soundness.ts:137",
+            "src/soundness.ts:152",
+            "src/soundness.ts:190"
           ],
-      "limits": "The rate^queries figure is only capacity-model query arithmetic. Unique-radius and Johnson rows are query-only references under stated distance/MCA hypotheses; sampled fixture rejection and representative size rows do not establish universal soundness or production security."
+          "limits": "The rate^queries figure is only capacity-model query arithmetic. Unique-radius and Johnson rows are query-only references under stated distance/MCA hypotheses; sampled fixture rejection and representative size rows do not establish universal soundness or production security."
         },
         {
           "id": "stark-deployments",

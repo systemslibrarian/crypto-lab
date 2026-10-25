@@ -66,6 +66,66 @@ test('Envelope KMS scope controls reject lost, misplaced, or invented S02 credit
   }
 });
 
+function checkDcNetScope(source) {
+  const slug = 'crypto-lab-dc-net';
+  assert.deepEqual(implementationsFor(source, slug), ['DC-net', 'SHA-256']);
+  assert.deepEqual(attacksFor(source, slug), ['Known-plaintext attack'],
+    'The known-empty first round and exact mask reuse recover the next private inputs; other failure cases are not catalogued as cryptanalytic attacks');
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-dc-net\/"[^>]*>/)[0];
+  assert.match(card, /data-review-commit="8de5cb25042cc70b991fe53211d85e3324bc9684"/);
+  assert.match(card, /DC-net@src\/dcnet\/round\.ts:171/);
+  assert.match(card, /bounded collect-all-then-reveal teaching adaptation/);
+  assert.match(card, /does not prove hiding, equation compliance, identity, availability, accountability or Dissent\/Verdict properties/);
+  const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
+  assert.ok(references.includes('Shamir secret sharing'),
+    'Silent Tally is a comparison to Shamir aggregation, not a DC-net implementation dependency');
+}
+
+test('DC-net credits the executable anonymous broadcast without importing comparison-system guarantees', () => {
+  checkDcNetScope(html);
+});
+
+test('DC-net vocabulary recognizes the construction without matching generic network prose', () => {
+  const dcnet = ALGORITHMS.find((term) => term.name === 'DC-net');
+  assert.ok(dcnet);
+  assert.ok(dcnet.re.test('DC-net'));
+  assert.ok(dcnet.re.test('dcnet'));
+  assert.ok(dcnet.re.test('Dining Cryptographers'));
+  assert.equal(dcnet.re.test('DC network configuration'), false);
+  assert.ok(dcnet.pathRe.test('src/dcnet/round.ts'));
+
+  const knownPlaintext = ATTACKS.find((term) => term.name === 'Known-plaintext attack');
+  assert.ok(knownPlaintext);
+  assert.ok(knownPlaintext.re.test('known plaintext'));
+  assert.ok(knownPlaintext.re.test('known-empty inputs'));
+  assert.equal(knownPlaintext.re.test('firstRoundKnownEmpty'), false);
+  assert.equal(knownPlaintext.re.test('empty-message handling'), false);
+});
+
+test('DC-net scope controls reject lost, moved or invented credit', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-dc-net\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(/DC-net@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'DC-net@src/dcnet/round.ts:171',
+      'DC-net@src/dcnet/round.ts:170',
+    )),
+    html.replace(cardRe, (card) => card.replace(/Known-plaintext attack@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'data-attacks="',
+      'data-attacks="Fault injection@src/ui/disruption.ts:287 | ',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-implements="',
+      'data-implements="Dissent@README.md:113 | Verdict@README.md:114 | ',
+    )),
+    html.replace(cardRe, (card) => card.replace('Shamir secret sharing', '')),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the DC-net card');
+    assert.throws(() => checkDcNetScope(changed), assert.AssertionError);
+  }
+});
+
 function checkDictionaryScope(source) {
   const executable = [
     'crypto-lab-phantom-vault',

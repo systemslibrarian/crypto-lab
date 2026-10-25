@@ -2275,7 +2275,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">243</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">244</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21548,6 +21548,23 @@
             <div class="project-meta"><div class="stack"><span class="chip">Message-Locked Encryption</span><span class="chip">AES-CTR</span><span class="chip">AES-SIV</span><span class="chip">VOPRF</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
+          <a class="project-card" data-category="PRIVACY | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-dc-net/"
+            data-implements="DC-net@src/dcnet/round.ts:171 | SHA-256@src/dcnet/commitment.ts:148"
+            data-references="Shamir secret sharing"
+            data-attacks="Known-plaintext attack@src/ui/app.ts:166"
+            data-standards="NIST"
+            data-implementation="WebCrypto SHA-256 and random generation / local TypeScript DC-net and exhaustive finite observer models"
+            data-review-commit="8de5cb25042cc70b991fe53211d85e3324bc9684"
+            data-review-note="Read the complete merged README, security notes, implementation, tests and learner interface at this exact main commit. The five-participant cycle computes each one-byte broadcast from one input and every incident pairwise XOR mask, aggregates the public transcript, and independently exhausts small mask assignments for observer-view comparisons. Participant and coalition views remove exactly the masks they know, derive remaining connected components and component parities, and retain supplied priors when the explicit exactly-one-sender assumption is compatible. Separate executable cases cover zero through three senders, one-byte XOR collisions, malformed and correctly shaped dishonest contributions, current-round dropout, graph reformation with replacement masks, complete incident-mask reuse and later disclosure. The SHA-256 commit/reveal route is a bounded collect-all-then-reveal teaching adaptation: under collision and second-preimage resistance it binds the encoded context and contribution, while the nonce raises exhaustive-opening cost; it does not prove hiding, equation compliance, identity, availability, accountability or Dissent/Verdict properties. The anonymity result assumes the declared key graph, independent uniform secret one-use masks, synchrony and the stated observer knowledge; WebCrypto randomness is a concrete CSPRNG-backed execution, not proof of the information-theoretic theorem, and all roles share one browser origin. Hosted final-head and exact-main gates passed 44 unit tests, 11 learner-claim tests, 12 accessibility/reflow tests, zero audited dependency vulnerabilities and all 22 named mutations; exact-main CodeQL and Pages deployment passed, and the live HTML, JavaScript and CSS matched the reviewed build byte for byte."
+            data-level="intermediate" data-added="2026-10" data-added-on="2026-10-24" data-updated="2026-10"
+            target="_blank" rel="noopener" style="--accent: #35d6bb;"
+            data-overlaps="crypto-lab-sphinx-mix: Sphinx Mix constructs and peels layered packets across a mix path and separates packet-format unlinkability from traffic anonymity; DC-net cancels pairwise masks in one group broadcast and exposes collision, disruption and key-reuse limits. | crypto-lab-blind-relay: Blind Relay splits source identity and HTTP content across two non-colluding operators; DC-net instead derives sender ambiguity from a declared pairwise-key graph and observer knowledge. | crypto-lab-silent-tally: Silent Tally reconstructs a Shamir-shared aggregate without revealing individual counts; DC-net makes the XOR aggregate public while hiding which compatible participant supplied a lone message.">
+            <div class="card-kicker">Anonymous Broadcast</div>
+            <div class="project-title">DC-net</div>
+            <div class="project-copy">Cancel five participants’ pairwise XOR masks to reveal one anonymous public message, compare observer and coalition views, then execute collisions, jamming, dropout, commitment, reuse and later-disclosure failures.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">DC-net</span><span class="chip">Pairwise XOR</span><span class="chip">Coalition Views</span><span class="chip">Disruption</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -21755,6 +21772,7 @@
     ];
 
     var TITLE_TO_SECTION = {
+      'DC-net': 'privacy',
       'Dedup Vault': 'privacy',
       'Clock Arithmetic': 'foundations',
       'AES Anatomy': 'symmetric',

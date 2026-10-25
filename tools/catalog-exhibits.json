@@ -9040,6 +9040,160 @@
       ],
       "reviewScope": "complete"
     },
+    "crypto-lab-dc-net": {
+      "commit": "8de5cb25042cc70b991fe53211d85e3324bc9684",
+      "reviewed": "2026-10-25",
+      "exhibits": [
+        {
+          "id": "fresh-round",
+          "title": "Fresh masks cancel",
+          "section": "One sender, five broadcasts",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Choose one sender and one message byte, draw a new mask for every edge, or load the fixed independently checked fixture.",
+          "outcome": "Displays every participant input, pairwise mask and public broadcast, then recomputes the XOR aggregate and its equality with the input XOR.",
+          "concepts": [
+            "DC-net",
+            "pairwise one-use masks",
+            "XOR cancellation",
+            "anonymous broadcast",
+            "public aggregate"
+          ],
+          "evidence": [
+            "src/ui/app.ts:59",
+            "src/ui/round.ts:173",
+            "src/ui/model-adapter.ts:647",
+            "src/dcnet/round.ts:160",
+            "src/dcnet/round.ts:171"
+          ],
+          "limits": "Information-theoretic anonymity is conditional on independent uniform secret one-use masks and the declared observer model; WebCrypto random generation is a concrete CSPRNG-backed execution, not a proof of that theorem."
+        },
+        {
+          "id": "coalition-views",
+          "title": "Observer and coalition views",
+          "section": "What a coalition can narrow",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Select an external observer, one participant or a coalition and compare uniform with deliberately skewed sender priors.",
+          "outcome": "Removes exactly the masks known to the selected view, derives remaining connected components and component XORs, then enumerates compatible exactly-one-sender distributions and renormalizes the supplied priors.",
+          "concepts": [
+            "observer knowledge",
+            "coalition view",
+            "connected components",
+            "component parity",
+            "prior-preserving posterior"
+          ],
+          "evidence": [
+            "src/ui/views.ts:63",
+            "src/ui/views.ts:122",
+            "src/ui/views.ts:174",
+            "src/ui/views.ts:261",
+            "src/ui/model-adapter.ts:132",
+            "src/dcnet/view.ts:177"
+          ],
+          "limits": "The compatible-sender set requires the displayed exactly-one-sender assumption; with multiple senders, component parity is not a sender list, and equal likelihoods do not create uniform priors."
+        },
+        {
+          "id": "collision-parity",
+          "title": "Collision parity and byte XOR",
+          "section": "The output is parity, not a headcount",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Run zero, one, two or three simultaneous one-bit senders, then compare identical and distinct one-byte concurrent payloads.",
+          "outcome": "Shows the public broadcasts and XOR result beside the private simulator trace, demonstrating even/odd parity and byte values that cancel or remain structurally plausible.",
+          "concepts": [
+            "collision parity",
+            "simultaneous senders",
+            "XOR collision",
+            "sender-count ambiguity"
+          ],
+          "evidence": [
+            "src/ui/collisions.ts:13",
+            "src/ui/collisions.ts:100",
+            "src/ui/collisions.ts:143",
+            "src/ui/model-adapter.ts:201",
+            "src/ui/model-adapter.ts:657"
+          ],
+          "limits": "Basic DC-net reveals an XOR, not a sender count or a reliable collision marker; the private sender trace is omniscient teaching state and is not available to protocol observers."
+        },
+        {
+          "id": "disruption-dropout",
+          "title": "Malformed, jammer and dropout cases",
+          "section": "Shape checks are not honesty checks",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Compare an honest round with a wrong-width contribution, a correctly shaped arbitrary contribution, a missing participant and a reformed graph using replacement masks.",
+          "outcome": "Rejects malformed input, accepts but exposes the changed aggregate from the shaped jammer, aborts the incomplete round with its uncancelled boundary-mask equation, and runs a new four-member round.",
+          "concepts": [
+            "malformed contribution",
+            "disruption",
+            "valid-shaped jamming",
+            "dropout abort",
+            "membership reformation"
+          ],
+          "evidence": [
+            "src/ui/disruption.ts:37",
+            "src/ui/disruption.ts:279",
+            "src/ui/model-adapter.ts:248",
+            "src/dcnet/failures.ts:112",
+            "src/dcnet/failures.ts:195"
+          ],
+          "limits": "Structural validation does not prove equation compliance or identify a jammer. A missing contribution aborts the current round; continuing requires new membership, a new graph and genuinely fresh masks."
+        },
+        {
+          "id": "commit-reveal",
+          "title": "Bounded commit before reveal",
+          "section": "Commit before reveal",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Compute SHA-256 commitments for every encoded contribution and context before reveal, then change each bound field, precommit a dishonest byte and withhold one reveal.",
+          "outcome": "Accepts the honest openings, rejects changed openings under the stated hash assumptions, still accepts a precommitted jammer and aborts when a participant withholds its reveal.",
+          "concepts": [
+            "SHA-256 commitment",
+            "canonical encoding",
+            "collect-all-then-reveal",
+            "binding assumption",
+            "availability failure"
+          ],
+          "evidence": [
+            "src/ui/disruption.ts:185",
+            "src/ui/disruption.ts:293",
+            "src/ui/model-adapter.ts:348",
+            "src/ui/model-adapter.ts:440",
+            "src/dcnet/commitment.ts:137",
+            "src/dcnet/commitment.ts:164"
+          ],
+          "limits": "This narrow adaptation assumes SHA-256 collision and second-preimage resistance and claims no formal hiding theorem; it does not authenticate identity, prove the DC-net equation, force reveal or provide Dissent/Verdict accountability."
+        },
+        {
+          "id": "reuse-disclosure",
+          "title": "Mask reuse and later disclosure",
+          "section": "One-use masks mean one use",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Reuse every edge mask across a known-empty and a message round, compare a distinct deterministic-mask control, then disclose both masks incident to one recorded participant.",
+          "outcome": "Cancels each participant’s reused masks to recover every second input, shows the distinct control does not retain that identity, and reconstructs the recorded participant’s past input after full incident-mask disclosure.",
+          "concepts": [
+            "one-time mask reuse",
+            "known-plaintext recovery",
+            "transcript differencing",
+            "late key disclosure",
+            "erasure assumption"
+          ],
+          "evidence": [
+            "src/ui/reuse.ts:12",
+            "src/ui/reuse.ts:172",
+            "src/ui/reuse.ts:231",
+            "src/ui/model-adapter.ts:543",
+            "src/ui/model-adapter.ts:586",
+            "src/dcnet/failures.ts:43",
+            "src/dcnet/view.ts:280"
+          ],
+          "limits": "The identity requires every mask incident to a participant to repeat; the distinct deterministic control is not a randomness proof. JavaScript cannot establish secure erasure or prevent later key retention."
+        }
+      ],
+      "reviewScope": "complete"
+    },
     "crypto-lab-dedup-vault": {
       "commit": "3cbf467bdb1a67cce39466e2e335e443530ac171",
       "reviewed": "2026-10-23",

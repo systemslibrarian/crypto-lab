@@ -1481,6 +1481,12 @@
       "level": "advanced",
       "why": "Assumes comfort with deterministic encryption leakage, VOPRF proof roles, authenticated key capsules and the distinction among possession, authorization and revocation.",
       "reviewed": "2026-10-23: complete README, source, tests and five-exhibit learner flow"
+    },
+    "crypto-lab-dc-net": {
+      "title": "DC-net",
+      "level": "intermediate",
+      "why": "Assumes byte XOR, graph connectivity, component parity and basic probability; it introduces the observer and coalition model without requiring groups, fields or lattices.",
+      "reviewed": "2026-10-25: complete README, source, tests and five-part learner flow"
     }
   }
 }

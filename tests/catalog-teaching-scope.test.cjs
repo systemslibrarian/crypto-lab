@@ -5,8 +5,10 @@ const path = require('node:path');
 const { attackContextAllows, lex } = require('../tools/catalog-evidence.js');
 const { ALGORITHMS, ATTACKS } = require('../tools/catalog-vocab.js');
 const exhibitManifest = require('../tools/catalog-exhibits.json');
+const catalogReviewed = require('../tools/catalog-reviewed.json');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const paperReview = fs.readFileSync(path.join(__dirname, '..', 'docs', 'paper-review-extensions.md'), 'utf8');
 
 function attacksFor(source, slug) {
   const card = source.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[^>]*>'));
@@ -212,15 +214,18 @@ test('HPKE S01 scope controls reject lost or displaced reviewed credit', () => {
   }
 });
 
-function checkLfsrForgeScope(source, manifest = exhibitManifest) {
+function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = catalogReviewed) {
   const slug = 'crypto-lab-lfsr-forge';
-  assert.deepEqual(implementationsFor(source, slug), ['Trivium'],
-    'Only the vocabulary-named, executed Trivium primitive belongs in data-implements');
+  assert.deepEqual(implementationsFor(source, slug), ['A5/1', 'Trivium'],
+    'Credit the executed historical A5/1 and Trivium primitives without promoting comparisons');
   assert.deepEqual(attacksFor(source, slug), ['Cube attack', 'Key recovery'],
     'Credit the executed toy-oracle cube attack and retain executable zero-round recovery');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4"/);
+  assert.match(opening, /data-category="[^"]*\bHISTORICAL\b/);
+  assert.match(opening, /data-review-commit="c4ef2da4b33fd08382a4309d9665745cb30bbda5"/);
+  assert.match(opening, /A5\/1@src\/a51\/a51\.ts:125/,
+    'A5/1 must anchor at the actual majority-controlled clock step');
   assert.match(opening, /Trivium@src\/trivium\/trivium\.ts:29/,
     'Trivium must anchor at the actual state advance, not a panel mount');
   assert.match(opening, /Cube attack@src\/cube\/panel\.ts:24/,
@@ -233,17 +238,48 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest) {
   const block = blockFor(source, slug);
   assert.match(block, /inspect real Trivium clocking/);
   assert.match(block, /audit editable Boolean combiners/);
-  assert.match(block, /execute cube sums that recover and validate affine superpolys/);
+  assert.match(block, /execute toy-oracle cube sums that recover affine superpolys/);
+  assert.match(block, /reverse-engineered historical A5\/1 majority clocking/);
+  assert.match(block, /bounded leaked-state completion/);
   const chips = chipsFor(source, slug);
   assert.ok(chips.includes('Trivium'), 'The learner-facing card must expose its Trivium lesson');
   assert.ok(chips.includes('Boolean Function Audit'), 'The learner-facing card must expose the Boolean audit');
   assert.ok(chips.includes('Cube Sums'), 'The learner-facing card must expose the cube-sum lesson');
   assert.ok(chips.includes('Superpolys'), 'The learner-facing card must expose superpoly recovery');
+  assert.ok(chips.includes('Historical A5/1'), 'The learner-facing card must identify the historical cipher');
+  assert.ok(chips.includes('Majority Clocking'), 'The learner-facing card must expose irregular clocking');
+
+  const sourceReview = reviewed[slug];
+  assert.equal(sourceReview.commit, 'c4ef2da4b33fd08382a4309d9665745cb30bbda5');
+  assert.deepEqual(sourceReview.add, [
+    'A5/1@src/a51/a51.ts:125',
+    'Trivium@src/trivium/trivium.ts:29',
+  ]);
+  assert.deepEqual(sourceReview.remove, ['Brute force', 'Known-plaintext attack']);
+  assert.match(sourceReview.implementation, /historical A5\/1/);
+  assert.match(sourceReview.implementation, /bounded state completion/);
+  assert.match(sourceReview.note, /Independently transcribed setup code derives the post-key, post-COUNT and post-100 checkpoint states/);
+  assert.match(sourceReview.note, /matches the two published consecutive 114-bit bursts/);
+  assert.match(sourceReview.note, /separate controller-state comparison/);
+  assert.match(sourceReview.note, /masked 52-bit disclosure, copied observations, clock model and run identifier/);
+  assert.match(sourceReview.note, /no full hidden state or Kc/);
+  assert.match(sourceReview.note, /not a published A5\/1 attack/);
+  assert.match(sourceReview.note, /does not recover Kc/);
+  for (const claimSource of [opening, sourceReview.note]) {
+    assert.match(claimSource,
+      /literal Brute force scanner hit appears only in the independent unit-test oracle/);
+    assert.match(claimSource,
+      /Panel 09 separately exhausts 2\^12 state completions under disclosure of 52 exact post-100 state bits/);
+    assert.match(claimSource,
+      /bounded state completion, not as a generic brute-force attack or A5\/1\/Kc attack/);
+    assert.match(claimSource,
+      /Known plaintext\/ciphertext remains prose[\s\S]*is not an attack workflow executed by this lab/);
+  }
 
   const review = manifest.labs[slug];
-  assert.equal(review.commit, '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4');
+  assert.equal(review.commit, 'c4ef2da4b33fd08382a4309d9665745cb30bbda5');
   assert.equal(review.reviewScope, 'complete');
-  assert.equal(review.exhibits.length, 8);
+  assert.equal(review.exhibits.length, 9);
   const trivium = review.exhibits.find(exhibit => exhibit.id === 'trivium');
   assert.ok(trivium);
   assert.ok(trivium.evidence.includes('src/trivium/trivium.ts:29'));
@@ -286,15 +322,51 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest) {
   assert.match(cube.limits, /three-secret\/four-public degree-four toy oracle/);
   assert.match(cube.limits, /C34 is a valid cube whose quadratic superpoly is not a maxterm/);
   assert.match(cube.limits, /executes no Trivium state or round/);
+
+  const a51 = review.exhibits.find(exhibit => exhibit.id === 'historical-a51');
+  assert.ok(a51);
+  for (const anchor of [
+    'src/a51/a51.ts:16',
+    'src/a51/a51.ts:94',
+    'src/a51/a51.ts:113',
+    'src/a51/a51.ts:125',
+    'src/a51/a51.ts:139',
+    'src/a51/a51.ts:158',
+    'src/a51/a51.ts:182',
+    'src/a51/recovery.ts:7',
+    'src/a51/recovery.ts:58',
+    'src/a51/recovery.ts:107',
+    'src/a51/panel.ts:91',
+    'src/a51/panel.ts:105',
+    'src/a51/panel.ts:117',
+  ]) assert.ok(a51.evidence.includes(anchor), `Missing historical A5/1 evidence ${anchor}`);
+  assert.equal(a51.execution, 'real-crypto');
+  assert.match(a51.action, /derive the post-key, post-COUNT and post-100 checkpoints/);
+  assert.match(a51.action, /reproduce both 114-bit burst values/);
+  assert.match(a51.outcome, /three derived setup checkpoints/);
+  assert.match(a51.outcome, /candidate 1425/);
+  assert.match(a51.outcome, /held-out bits before a separate controller-state comparison/);
+  assert.match(a51.outcome, /Sixteen observations leave 11 completions/);
+  assert.match(a51.outcome, /regular-clock model leaves none after two bits/);
+  assert.match(a51.outcome, /candidate 1409/);
+  assert.match(a51.outcome, /11 held-out mismatches reject it/);
+  assert.match(a51.limits, /reverse-engineered historical BGW version/);
+  assert.match(a51.limits, /52 exact post-100 state bits/);
+  assert.match(a51.limits, /not proved reachable from Kc setup/);
+  assert.match(a51.limits, /not a published A5\/1 attack/);
+  assert.match(a51.limits, /does not recover Kc/);
+  assert.match(a51.limits, /nothing about modern cellular encryption/);
 }
 
-test('LFSR Forge publishes Trivium and exact Boolean analysis without inherited false credits', () => {
+test('LFSR Forge publishes historical A5/1, Trivium and exact Boolean analysis without false credits', () => {
   checkLfsrForgeScope(html);
 });
 
 test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', () => {
   const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-lfsr-forge\/"[\s\S]*?<\/a>/;
   for (const changed of [
+    html.replace(cardRe, card => card.replace(/A5\/1@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, card => card.replace('A5/1@src/a51/a51.ts:125', 'A5/1@src/a51/a51.ts:124')),
     html.replace(cardRe, card => card.replace(/Trivium@[^|" ]+(?: \| )?/, '')),
     html.replace(cardRe, card => card.replace('Trivium@src/trivium/trivium.ts:29', 'Trivium@src/trivium/trivium.ts:28')),
     html.replace(cardRe, card => card.replace(/Cube attack@[^|" ]+(?: \| )?/, '')),
@@ -302,12 +374,17 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
     html.replace(cardRe, card => card.replace('data-attacks="Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37"',
       'data-attacks="Brute force@README.md:80 | Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:140"')),
     html.replace(cardRe, card => card.replace('data-references="', 'data-references="Pairing | RC4 | Shamir secret sharing | ')),
-    html.replace(cardRe, card => card.replace('66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4', '7c6246133b9ea5d2acda5ee1cddeada6e5b1e607')),
+    html.replace(cardRe, card => card.replace('c4ef2da4b33fd08382a4309d9665745cb30bbda5', '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4')),
+    html.replace(cardRe, card => card.replace(' | HISTORICAL', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Trivium</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Boolean Function Audit</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Cube Sums</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Superpolys</span>', '')),
-    html.replace(cardRe, card => card.replace('execute cube sums that recover and validate affine superpolys', 'describe cube terminology')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Historical A5/1</span>', '')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Majority Clocking</span>', '')),
+    html.replace(cardRe, card => card.replace('execute toy-oracle cube sums that recover affine superpolys', 'describe cube terminology')),
+    html.replace(cardRe, card => card.replace('reverse-engineered historical A5/1 majority clocking', 'a cellular cipher')),
+    html.replace(cardRe, card => card.replace('bounded leaked-state completion', 'key recovery')),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the LFSR Forge card');
     assert.throws(() => checkLfsrForgeScope(changed), assert.AssertionError);
@@ -333,6 +410,336 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
     .find(exhibit => exhibit.id === 'cube-superpoly-recovery');
   cube.limits = cube.limits.replace('executes no Trivium state or round', 'executes reduced-round Trivium');
   assert.throws(() => checkLfsrForgeScope(html, mislabeledCube), assert.AssertionError);
+
+  const missingA51 = JSON.parse(JSON.stringify(exhibitManifest));
+  missingA51.labs['crypto-lab-lfsr-forge'].exhibits = missingA51.labs['crypto-lab-lfsr-forge'].exhibits
+    .filter(exhibit => exhibit.id !== 'historical-a51');
+  assert.throws(() => checkLfsrForgeScope(html, missingA51), assert.AssertionError);
+
+  const missingA51Checkpoint = JSON.parse(JSON.stringify(exhibitManifest));
+  const a51 = missingA51Checkpoint.labs['crypto-lab-lfsr-forge'].exhibits
+    .find(exhibit => exhibit.id === 'historical-a51');
+  a51.evidence = a51.evidence.filter(anchor => anchor !== 'src/a51/a51.ts:182');
+  assert.throws(() => checkLfsrForgeScope(html, missingA51Checkpoint), assert.AssertionError);
+
+  const overclaimedA51 = JSON.parse(JSON.stringify(exhibitManifest));
+  overclaimedA51.labs['crypto-lab-lfsr-forge'].exhibits
+    .find(exhibit => exhibit.id === 'historical-a51').limits = 'A published A5/1 attack recovers Kc.';
+  assert.throws(() => checkLfsrForgeScope(html, overclaimedA51), assert.AssertionError);
+
+  const missingReviewedA51 = JSON.parse(JSON.stringify(catalogReviewed));
+  missingReviewedA51['crypto-lab-lfsr-forge'].add = ['Trivium@src/trivium/trivium.ts:29'];
+  assert.throws(
+    () => checkLfsrForgeScope(html, exhibitManifest, missingReviewedA51),
+    assert.AssertionError,
+  );
+
+  const blurredPublicationBoundary = JSON.parse(JSON.stringify(catalogReviewed));
+  blurredPublicationBoundary['crypto-lab-lfsr-forge'].note = blurredPublicationBoundary['crypto-lab-lfsr-forge'].note
+    .replace(
+      'Independently transcribed setup code derives the post-key, post-COUNT and post-100 checkpoint states',
+      'The published source supplies the three internal checkpoint states',
+    );
+  assert.throws(
+    () => checkLfsrForgeScope(html, exhibitManifest, blurredPublicationBoundary),
+    assert.AssertionError,
+  );
+});
+
+test('historical A5/1 and Montgomery multiplication vocabulary stays narrow', () => {
+  const a51 = ALGORITHMS.find(term => term.name === 'A5/1');
+  assert.ok(a51);
+  assert.equal(a51.std, null);
+  for (const spelling of ['A5/1', 'A5-1', 'A5_1', 'A51']) assert.ok(a51.re.test(spelling));
+  for (const falseMatch of ['A5/2', 'A5/10', 'A51x', 'A5', 'SHA51'])
+    assert.equal(a51.re.test(falseMatch), false);
+  assert.ok(a51.chipRe.test('Historical A5/1'));
+  assert.equal(a51.chipRe.test('Historical A5/2'), false);
+
+  const montgomery = ALGORITHMS.find(term => term.name === 'Montgomery multiplication');
+  assert.ok(montgomery);
+  assert.equal(montgomery.std, null);
+  for (const spelling of ['Montgomery multiplication', 'montgomeryMultiply', 'Montgomery reduction', 'REDC'])
+    assert.ok(montgomery.re.test(spelling));
+  for (const falseMatch of ['Montgomery ladder', 'Montgomery curve'])
+    assert.equal(montgomery.re.test(falseMatch), false);
+  assert.ok(montgomery.chipRe.test('Montgomery REDC'));
+  assert.equal(montgomery.chipRe.test('Montgomery ladder'), false);
+});
+
+function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed = catalogReviewed) {
+  const slug = 'crypto-lab-clock-arithmetic';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'Diffie-Hellman',
+    'Montgomery multiplication',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Bounded enumeration, trial division and historical CRT-fault prose are not attack exhibits');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-review-commit="e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e"/);
+  assert.match(opening, /Diffie-Hellman@src\/nt\/toyDh\.ts:26/,
+    'Diffie-Hellman credit must anchor at the executable toy exchange');
+  assert.match(opening, /Montgomery multiplication@src\/nt\/montgomery\.ts:96/,
+    'Montgomery credit must anchor at the executed REDC implementation');
+  assert.doesNotMatch(opening, /\bdata-attacks=/);
+  const references = referencesFor(source, slug);
+  assert.ok(references.includes('Montgomery ladder'),
+    'The learner-facing distinction may retain Montgomery ladder as a reference');
+  assert.equal(references.includes('Montgomery multiplication'), false,
+    'The executed construction belongs in implementations, not references');
+
+  const block = blockFor(source, slug);
+  assert.match(block, /exact BigInt arithmetic under RSA and finite-field Diffie–Hellman/);
+  assert.match(block, /encode, multiply and square through Montgomery REDC/);
+  assert.match(block, /cancellation, radix shifts, final subtraction and bounded fixed-work timings/);
+  assert.ok(chipsFor(source, slug).includes('Montgomery REDC'));
+
+  const sourceReview = reviewed[slug];
+  assert.equal(sourceReview.commit, 'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e');
+  assert.equal(sourceReview.reviewed, '2026-10-25');
+  assert.deepEqual(sourceReview.add, [
+    'Diffie-Hellman@src/nt/toyDh.ts:26',
+    'Montgomery multiplication@src/nt/montgomery.ts:96',
+  ]);
+  assert.deepEqual(sourceReview.remove, [
+    'Brute force',
+    'Discrete log',
+    'Factoring',
+    'Fault injection',
+    'Man-in-the-middle',
+  ]);
+  assert.equal(sourceReview.implementation,
+    'hand-rolled exact BigInt arithmetic, including power-of-two Montgomery REDC');
+  assert.match(sourceReview.note, /power-of-two Montgomery specialization for odd N at most 10\^12/);
+  assert.match(sourceReview.note, /N=9, R=16 fixture exposes candidate 9 before subtraction to 0/);
+  assert.match(sourceReview.note, /same 4,096-operation alternating multiply\/square schedule/);
+  assert.match(sourceReview.note,
+    /not a benchmark, a speedup claim or evidence of constant-time behavior/);
+  assert.match(sourceReview.note, /Montgomery multiplication is distinct from the Montgomery ladder/);
+  assert.match(sourceReview.note,
+    /software CRT faults and adjacent algorithms occur only in historical handoff prose or related links/);
+
+  const review = manifest.labs[slug];
+  assert.equal(review.commit, 'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e');
+  assert.equal(review.reviewed, '2026-10-25');
+  assert.equal(review.reviewScope, 'complete');
+  assert.equal(review.exhibits.length, 7);
+
+  const expectedLegacyEvidence = {
+    'wrap-around': [
+      'src/main.ts:15',
+      'src/main.ts:29',
+      'src/ui/act1.ts:10',
+      'src/ui/act1.ts:25',
+      'src/main.ts:323',
+      'src/worker.ts:12',
+    ],
+    'inverse-euclid': [
+      'src/main.ts:35',
+      'src/main.ts:42',
+      'src/main.ts:44',
+      'src/ui/act2.ts:9',
+      'src/ui/act2.ts:19',
+      'src/ui/act2.ts:32',
+      'src/main.ts:323',
+    ],
+    'euler-units': [
+      'src/main.ts:51',
+      'src/main.ts:62',
+      'src/ui/act3.ts:9',
+      'src/ui/act3.ts:15',
+      'src/ui/act3.ts:17',
+      'src/main.ts:323',
+    ],
+    'power-cycles': [
+      'src/main.ts:70',
+      'src/main.ts:79',
+      'src/main.ts:80',
+      'src/ui/act4.ts:17',
+      'src/ui/act4.ts:21',
+      'src/ui/act4.ts:44',
+      'src/ui/act4.ts:49',
+      'src/ui/clock.ts:41',
+      'src/main.ts:323',
+    ],
+    'subgroups-dh': [
+      'src/nt/toyDh.ts:26',
+      'src/main.ts:86',
+      'src/main.ts:115',
+      'src/main.ts:116',
+      'src/main.ts:117',
+      'src/ui/act5.ts:13',
+      'src/ui/act5.ts:15',
+      'src/ui/act5.ts:16',
+      'src/ui/act5.ts:17',
+      'src/ui/act5.ts:29',
+      'src/ui/act5.ts:31',
+      'src/ui/act5.ts:35',
+      'src/ui/act5.ts:36',
+      'src/main.ts:323',
+    ],
+    'crt-recombine': [
+      'src/main.ts:123',
+      'src/main.ts:135',
+      'src/main.ts:136',
+      'src/ui/act6.ts:8',
+      'src/ui/act6.ts:24',
+      'src/ui/act6.ts:52',
+      'src/ui/act6.ts:62',
+      'src/main.ts:323',
+      'src/ui/act6.ts:80',
+    ],
+  };
+  for (const [id, evidence] of Object.entries(expectedLegacyEvidence)) {
+    const exhibit = review.exhibits.find(candidate => candidate.id === id);
+    assert.ok(exhibit, `Missing Clock Arithmetic exhibit ${id}`);
+    assert.deepEqual(exhibit.evidence, evidence,
+      `${id} must use semantic anchors from the merged seven-exhibit source`);
+  }
+
+  const montgomery = review.exhibits.find(exhibit => exhibit.id === 'montgomery-redc');
+  assert.ok(montgomery);
+  assert.equal(montgomery.execution, 'real-values');
+  for (const anchor of [
+    'src/main.ts:140',
+    'src/main.ts:163',
+    'src/nt/montgomery.ts:69',
+    'src/nt/montgomery.ts:76',
+    'src/nt/montgomery.ts:96',
+    'src/nt/montgomery.ts:123',
+    'src/nt/montgomery.ts:153',
+    'src/nt/montgomery.ts:176',
+    'src/nt/montgomery.ts:196',
+    'src/nt/montgomery.ts:213',
+    'src/ui/act7.ts:22',
+    'src/ui/act7.ts:93',
+    'src/ui/act7.ts:98',
+    'src/ui/act7.ts:100',
+    'src/ui/act7.ts:130',
+    'src/ui/act7.ts:138',
+    'src/ui/act7.ts:143',
+    'src/ui/act7.ts:157',
+    'src/ui/act7.ts:165',
+    'src/ui/predictions.ts:40',
+    'src/worker.ts:12',
+  ]) assert.ok(montgomery.evidence.includes(anchor), `Missing Montgomery evidence ${anchor}`);
+  assert.match(montgomery.action, /fixed 4,096-operation ordinary\/Montgomery comparison/);
+  assert.match(montgomery.outcome, /N = 17 and R = 32/);
+  assert.match(montgomery.outcome, /N′ = 15/);
+  assert.match(montgomery.outcome, /keeps \(a·b\)²·a encoded to result 12/);
+  assert.match(montgomery.outcome, /N = 9 and R = 16 expose raw candidate 9/);
+  assert.match(montgomery.outcome, /both fixed schedules agree/);
+  assert.match(montgomery.limits, /odd N at most 10\^12/);
+  assert.match(montgomery.limits, /neither a general performance result nor constant-time behavior/);
+  assert.match(montgomery.limits, /JavaScript BigInt is not constant-time/);
+  assert.match(montgomery.limits, /distinct from the Montgomery ladder/);
+}
+
+test('Clock Arithmetic publishes executable Montgomery REDC without inherited false attack credit', () => {
+  checkClockArithmeticScope(html);
+});
+
+test('Clock Arithmetic scope controls reject lost, stale, moved or invented credit', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-clock-arithmetic\/"[\s\S]*?<\/a>/;
+  for (const changed of [
+    html.replace(cardRe, card => card.replace(
+      ' | Montgomery multiplication@src/nt/montgomery.ts:96',
+      '',
+    )),
+    html.replace(cardRe, card => card.replace(
+      'Montgomery multiplication@src/nt/montgomery.ts:96',
+      'Montgomery multiplication@src/nt/montgomery.ts:95',
+    )),
+    html.replace(cardRe, card => card.replace(
+      'Montgomery multiplication@src/nt/montgomery.ts:96',
+      'Montgomery multiplication@src/nt/montgomery.ts:96 | Montgomery ladder@src/ui/act7.ts:165',
+    )),
+    html.replace(cardRe, card => card.replace(
+      '            data-standards="IETF"',
+      '            data-attacks="Fault injection@catalog-handoff.md:67"\n            data-standards="IETF"',
+    )),
+    html.replace(cardRe, card => card.replace(
+      'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e',
+      '5bb86840fab4806e3681c1a378fd4c643831035d',
+    )),
+    html.replace(cardRe, card => card.replace('<span class="chip">Montgomery REDC</span>', '')),
+    html.replace(cardRe, card => card.replace(
+      'encode, multiply and square through Montgomery REDC',
+      'read about Montgomery arithmetic',
+    )),
+    html.replace(cardRe, card => card.replace(
+      'cancellation, radix shifts, final subtraction and bounded fixed-work timings',
+      'implementation details',
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Clock Arithmetic card');
+    assert.throws(() => checkClockArithmeticScope(changed), assert.AssertionError);
+  }
+
+  const missingMontgomery = JSON.parse(JSON.stringify(exhibitManifest));
+  missingMontgomery.labs['crypto-lab-clock-arithmetic'].exhibits =
+    missingMontgomery.labs['crypto-lab-clock-arithmetic'].exhibits
+      .filter(exhibit => exhibit.id !== 'montgomery-redc');
+  assert.throws(() => checkClockArithmeticScope(html, missingMontgomery), assert.AssertionError);
+
+  for (const anchor of [
+    'src/nt/montgomery.ts:96',
+    'src/ui/act7.ts:100',
+    'src/ui/act7.ts:130',
+    'src/ui/act7.ts:143',
+    'src/ui/act7.ts:157',
+  ]) {
+    const missingEvidence = JSON.parse(JSON.stringify(exhibitManifest));
+    const exhibit = missingEvidence.labs['crypto-lab-clock-arithmetic'].exhibits
+      .find(candidate => candidate.id === 'montgomery-redc');
+    exhibit.evidence = exhibit.evidence.filter(candidate => candidate !== anchor);
+    assert.throws(() => checkClockArithmeticScope(html, missingEvidence), assert.AssertionError);
+  }
+
+  const staleLegacyAnchor = JSON.parse(JSON.stringify(exhibitManifest));
+  const euler = staleLegacyAnchor.labs['crypto-lab-clock-arithmetic'].exhibits
+    .find(exhibit => exhibit.id === 'euler-units');
+  euler.evidence = euler.evidence.map(anchor => anchor === 'src/main.ts:51'
+    ? 'src/main.ts:69'
+    : anchor);
+  assert.throws(() => checkClockArithmeticScope(html, staleLegacyAnchor), assert.AssertionError);
+
+  const overclaimedTiming = JSON.parse(JSON.stringify(exhibitManifest));
+  overclaimedTiming.labs['crypto-lab-clock-arithmetic'].exhibits
+    .find(exhibit => exhibit.id === 'montgomery-redc').limits =
+      'The benchmark proves a constant-time speedup over ordinary modular arithmetic.';
+  assert.throws(() => checkClockArithmeticScope(html, overclaimedTiming), assert.AssertionError);
+
+  const missingReviewedMontgomery = JSON.parse(JSON.stringify(catalogReviewed));
+  missingReviewedMontgomery['crypto-lab-clock-arithmetic'].add = [
+    'Diffie-Hellman@src/nt/toyDh.ts:26',
+  ];
+  assert.throws(
+    () => checkClockArithmeticScope(html, exhibitManifest, missingReviewedMontgomery),
+    assert.AssertionError,
+  );
+
+  const creditedHistoricalFault = JSON.parse(JSON.stringify(catalogReviewed));
+  creditedHistoricalFault['crypto-lab-clock-arithmetic'].remove =
+    creditedHistoricalFault['crypto-lab-clock-arithmetic'].remove
+      .filter(name => name !== 'Fault injection');
+  assert.throws(
+    () => checkClockArithmeticScope(html, exhibitManifest, creditedHistoricalFault),
+    assert.AssertionError,
+  );
+
+  const blurredLadderBoundary = JSON.parse(JSON.stringify(catalogReviewed));
+  blurredLadderBoundary['crypto-lab-clock-arithmetic'].note =
+    blurredLadderBoundary['crypto-lab-clock-arithmetic'].note
+      .replace(
+        'Montgomery multiplication is distinct from the Montgomery ladder.',
+        'Montgomery arithmetic includes the Montgomery ladder.',
+      );
+  assert.throws(
+    () => checkClockArithmeticScope(html, exhibitManifest, blurredLadderBoundary),
+    assert.AssertionError,
+  );
 });
 
 test('cube-attack vocabulary credits execution but rejects a negated full-Trivium claim', () => {
@@ -1145,10 +1552,10 @@ test('coordinated negation lists and risk prose remain excluded', () => {
 function checkPowerScope(source) {
   const slug = 'crypto-lab-power-trace';
   const attacks = attacksFor(source, slug);
-  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel']) {
+  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel', 'Side-channel (unspecified)']) {
     assert.ok(!attacks.includes(name), `Power Trace does not demonstrate ${name}`);
   }
-  for (const name of ['Power analysis', 'Key recovery', 'Side-channel (unspecified)']) {
+  for (const name of ['Power analysis', 'Key recovery', 'Known-plaintext attack']) {
     assert.ok(attacks.includes(name), `Preserve Power Trace's actual ${name} exhibit`);
   }
   assert.ok(implementationsFor(source, slug).includes('AES'));
@@ -1162,16 +1569,16 @@ function checkPowerScope(source) {
   assert.doesNotMatch(copy, /(?:cipher is correct and|JavaScript AES is) constant-time/);
 }
 
-test('Power Trace distinguishes correlation CPA, sibling attacks and simulated leakage', () => {
+test('Power Trace distinguishes correlation CPA, the known-plaintext cache model, sibling attacks and simulated leakage', () => {
   checkPowerScope(html);
 });
 
 test('Power Trace controls reject false attacks, timing guarantees and loss of actual analysis', () => {
   const marker = 'href="https://systemslibrarian.github.io/crypto-lab-power-trace/"';
-  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel']) {
+  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel', 'Side-channel (unspecified)']) {
     assert.throws(() => checkPowerScope(html.replace(marker, `${marker} data-attacks="${name}@README.md:1"`)), assert.AssertionError);
   }
-  for (const name of ['Power analysis', 'Key recovery', 'Side-channel (unspecified)']) {
+  for (const name of ['Power analysis', 'Key recovery', 'Known-plaintext attack']) {
     const token = new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '@[^"|]+');
     const markerAt = html.indexOf(marker);
     const prefix = html.slice(0, markerAt);
@@ -1185,6 +1592,232 @@ test('Power Trace controls reject false attacks, timing guarantees and loss of a
   const importAnchor = html.replace('AES@src/aes/aes.ts:123', 'AES@src/attack/cpa.ts:15');
   assert.notEqual(importAnchor, html, 'The negative control must replace the actual implementation anchor');
   assert.throws(() => checkPowerScope(importAnchor), assert.AssertionError);
+});
+
+test('selective-failure vocabulary does not turn an ordinary abort into an attack', () => {
+  const term = ATTACKS.find(t => t.name === 'Selective failure');
+  assert.ok(term.re.test('selective-failure attack'));
+  assert.ok(term.re.test('selective failure oracle'));
+  assert.equal(term.re.test('ordinary MAC check abort'), false);
+  assert.equal(term.re.test('fail closed after malformed input'), false);
+  assert.equal(attackContextAllows(term,
+    '- **Selective-failure attacks.** If the garbler can make evaluation depend on the private input, the abort leaks a bit — a known pitfall that careful protocol design must close.'), false);
+  assert.equal(attackContextAllows(term,
+    'Run the selective-failure oracle and derive the hidden bit from the observed abort.'), true);
+});
+
+function checkSpdzOffKeyScope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-spdz-forge';
+  const attacks = attacksFor(source, slug);
+  assert.ok(attacks.includes('Selective failure'), 'SPDZ Forge keeps its executable Off-Key selective-failure credit');
+  for (const name of ['Key recovery', 'Side-channel (unspecified)']) {
+    assert.ok(!attacks.includes(name), `recovering shared input y must not become ${name}`);
+  }
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-spdz-forge\/"[\s\S]*?<\/a>/)[0];
+  assert.match(card, /data-attacks="Selective failure@src\/ui\/panels\/offkey\.ts:128"/);
+  assert.match(card, /bounded Off-Key fixture/);
+  assert.match(card, /consistent α with β=α\+Δ preprocessing/);
+  assert.match(card, /masked one-bit selective-failure result/);
+  assert.match(card, /<span class="chip">Selective Failure<\/span>/);
+  assert.match(card, /data-review-commit="2bfdc83b0ef587a598afad95d6ef0e72bdfd904b"/);
+  assert.match(card, /omniscient audit is separately labeled/);
+  assert.match(card, /three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation/);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '2bfdc83b0ef587a598afad95d6ef0e72bdfd904b');
+  assert.deepEqual(review.addAttacks, ['Selective failure@src/ui/panels/offkey.ts:128']);
+  assert.match(review.note, /same-context comparison restores the modeled assumption through protocol state/);
+  assert.match(review.note, /not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.ok(mapped.exhibits.find((item) => item.id === 'preprocessing').evidence.includes('index.html:260'));
+  assert.ok(mapped.exhibits.find((item) => item.id === 'hospital-variance').evidence.includes('index.html:266'));
+  const offkey = mapped.exhibits.find((item) => item.id === 'off-key-selective-failure');
+  assert.ok(offkey.evidence.includes('src/ui/panels/offkey.ts:128'));
+  assert.match(offkey.limits, /three-party trusted-dealer algebraic adaptation/);
+  assert.match(offkey.limits, /omniscient audit is not attacker-visible/);
+}
+
+test('SPDZ Forge credits the protocol-derived Off-Key privacy oracle without calling its input a key', () => {
+  checkSpdzOffKeyScope(html);
+});
+
+test('SPDZ Off-Key scope control rejects lost or invented attack credit', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/"';
+  const lost = html.replace('Selective failure@src/ui/panels/offkey.ts:128', '');
+  assert.notEqual(lost, html);
+  assert.throws(() => checkSpdzOffKeyScope(lost), assert.AssertionError);
+  for (const name of ['Key recovery', 'Side-channel (unspecified)']) {
+    const invented = html.replace(marker, `${marker} data-attacks="${name}@README.md:20"`);
+    assert.notEqual(invented, html);
+    assert.throws(() => checkSpdzOffKeyScope(invented), assert.AssertionError);
+  }
+  const wrongReview = structuredClone(catalogReviewed);
+  wrongReview['crypto-lab-spdz-forge'].commit = '0'.repeat(40);
+  assert.throws(() => checkSpdzOffKeyScope(html, exhibitManifest, wrongReview), assert.AssertionError);
+  const missingBoundary = structuredClone(exhibitManifest);
+  missingBoundary.labs['crypto-lab-spdz-forge'].exhibits
+    .find((item) => item.id === 'off-key-selective-failure').limits = 'Teaching model.';
+  assert.throws(() => checkSpdzOffKeyScope(html, missingBoundary, catalogReviewed), assert.AssertionError);
+});
+
+function checkProofTallyImplementationScope(source, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-proof-tally';
+  const opening = openingFor(source, slug);
+  assert.match(opening,
+    /data-implementation="local TypeScript Field64\/Prio3 and exact BigInt DP model; @noble TurboSHAKE128"/);
+  assert.match(opening, /data-review-commit="9394e3fd3fd84cab5cfa95016f21808ca9f4e395"/);
+  assert.match(opening, /local two-aggregator Prio3Count\/Prio3Sum teaching implementation/);
+  assert.match(opening, /@noble supplies TurboSHAKE128 only, not Prio3 or field\/proof logic/);
+  const review = reviews[slug];
+  assert.equal(review.commit, '9394e3fd3fd84cab5cfa95016f21808ca9f4e395');
+  assert.match(review.note, /public, aborter-only and omniscient teaching views remain distinct/i);
+  assert.match(review.note, /does not establish the paper's general bounds or imply that every abort violates differential privacy/);
+}
+
+test('Proof Tally attributes its local Prio3 and exact DP work instead of assigning the whole lab to noble', () => {
+  checkProofTallyImplementationScope(html);
+});
+
+test('Proof Tally implementation provenance rejects a stale pin or library-only label', () => {
+  const libraryOnly = html.replace(
+    'local TypeScript Field64/Prio3 and exact BigInt DP model; @noble TurboSHAKE128',
+    '@noble',
+  );
+  assert.notEqual(libraryOnly, html);
+  assert.throws(() => checkProofTallyImplementationScope(libraryOnly), assert.AssertionError);
+  const stale = structuredClone(catalogReviewed);
+  stale['crypto-lab-proof-tally'].commit = '0'.repeat(40);
+  assert.throws(() => checkProofTallyImplementationScope(html, stale), assert.AssertionError);
+});
+
+test('paper-extension exhibit maps keep their reviewed UI sections, not merely nonblank lines', () => {
+  const proof = exhibitManifest.labs['crypto-lab-proof-tally'];
+  assert.deepEqual(proof.exhibits.find((item) => item.id === 'collusion').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:210', 'index.html:211', 'index.html:212', 'index.html:213']);
+  assert.deepEqual(proof.exhibits.find((item) => item.id === 'proof-limits').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:217', 'index.html:218', 'index.html:222', 'index.html:224', 'index.html:229', 'index.html:231']);
+  assert.deepEqual(proof.exhibits.find((item) => item.id === 'vdaf-vectors').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:236', 'index.html:237', 'index.html:238', 'index.html:242', 'index.html:243']);
+  const abortRetry = proof.exhibits.find((item) => item.id === 'abort-retry-transcript');
+  assert.match(abortRetry.action, /one- through three-attempt cap/);
+  assert.doesNotMatch(abortRetry.action, /five-attempt/);
+
+  const stark = exhibitManifest.labs['crypto-lab-stark-tower'];
+  assert.equal(stark.commit, '51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af');
+  assert.deepEqual(stark.exhibits.find((item) => item.id === 'stark-proof').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:401', 'index.html:403', 'index.html:404', 'index.html:418', 'index.html:419', 'index.html:420']);
+  assert.deepEqual(stark.exhibits.find((item) => item.id === 'zk-masking').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:452', 'index.html:454', 'index.html:456', 'index.html:463', 'index.html:472']);
+  assert.deepEqual(stark.exhibits.find((item) => item.id === 'stark-deployments').evidence,
+    ['index.html:496', 'index.html:498', 'index.html:501', 'index.html:505', 'index.html:509', 'index.html:513']);
+  assert.deepEqual(stark.exhibits.find((item) => item.id === 'stark-size-tradeoff').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:354', 'index.html:359', 'index.html:370', 'index.html:373', 'index.html:376', 'index.html:380', 'index.html:404']);
+});
+
+test('PR-06 ledger attributes CL084 correctly and retains the implemented retry cap', () => {
+  assert.match(paperReview, /Source: Fredrik Meisingseth, \*On Aborts in Differential Privacy\*/);
+  assert.doesNotMatch(paperReview, /Source: (?!Fredrik Meisingseth)[^\n]+, \*On Aborts in Differential Privacy\*/);
+  assert.match(exhibitManifest.labs['crypto-lab-proof-tally'].exhibits
+    .find((item) => item.id === 'abort-retry-transcript').action, /one- through three-attempt cap/);
+});
+
+function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-snark-arena';
+  assert.deepEqual(implementationsFor(source, slug), ['Groth16', 'KZG commitment']);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'A computation/constraint inconsistency and retained-toxic-waste KZG forgery must not borrow an unrelated attack name');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /Groth16@src\/ui\/realproof\.ts:92/);
+  assert.match(opening, /KZG commitment@src\/crypto\/setup\.ts:116/);
+  assert.match(opening, /data-unscanned="WebAssembly:3"/);
+  assert.match(opening, /data-review-commit="025f878b22b2fa3df945359548c2422d9548c1f4"/);
+  assert.match(opening, /snarkjs Groth16 over compiled Circom WASM\/BN254; local TypeScript toy-field arithmetic/);
+  assert.doesNotMatch(opening, /data-attacks=/);
+
+  const block = blockFor(source, slug);
+  assert.match(block, /deliberately weak XOR relation/);
+  assert.match(block, /in-circuit bit-constrained repair/);
+  assert.match(block, /PLONK remains comparison-only/);
+  assert.deepEqual(chipsFor(source, slug), ['Groth16', 'R1CS', 'Constraint Gap', 'Trusted Setup', 'vs. PLONK']);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '025f878b22b2fa3df945359548c2422d9548c1f4');
+  assert.deepEqual(review.add, ['Groth16@src/ui/realproof.ts:92']);
+  assert.deepEqual(review.remove, ['PLONK', 'Discrete log']);
+  assert.match(review.note, /browser input check is not the repair/);
+  assert.match(review.note, /does not implement CCC-Check/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewed, '2026-10-25');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.equal(mapped.exhibits.length, 9);
+  assert.deepEqual(mapped.exhibits.find((item) => item.id === 'r1cs').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:177', 'index.html:200', 'index.html:202', 'index.html:216']);
+  assert.deepEqual(mapped.exhibits.find((item) => item.id === 'groth16-real').evidence.filter((at) => at.startsWith('src/ui/realproof.ts:')),
+    ['src/ui/realproof.ts:92', 'src/ui/realproof.ts:133', 'src/ui/realproof.ts:158']);
+  const gap = mapped.exhibits.find((item) => item.id === 'constraint-gap');
+  assert.equal(gap.execution, 'real-crypto');
+  assert.ok(gap.evidence.includes('public/zk/xor_weak.circom:11'));
+  assert.ok(gap.evidence.includes('public/zk/xor_repaired.circom:10'));
+  assert.ok(gap.evidence.includes('src/ui/constraint-gap.ts:129'));
+  assert.ok(gap.evidence.includes('src/ui/constraint-gap.ts:192'));
+  assert.ok(gap.evidence.includes('src/ui/constraint-gap.ts:230'));
+  assert.match(gap.outcome, /unmodified proof/);
+  assert.match(gap.outcome, /prevent proof generation/);
+  assert.match(gap.limits, /public-input Circom\/Groth16 relations/);
+  assert.match(gap.limits, /does not implement CCC-Check/);
+  assert.match(gap.limits, /does not .*treat a browser input check as a relation repair/);
+}
+
+test('SNARK Arena catalogs the real constraint-gap lesson without inventing attack or PLONK credit', () => {
+  checkSnarkConstraintGapScope(html);
+});
+
+test('SNARK Arena constraint-gap controls reject stale pins, moved anchors and weakened scope', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-snark-arena\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace('Groth16@src/ui/realproof.ts:92', 'Groth16@src/ui/realproof.ts:97')),
+    html.replace(cardRe, (card) => card.replace('KZG commitment@src/crypto/setup.ts:116', 'KZG commitment@src/crypto/setup.ts:101')),
+    html.replace(cardRe, (card) => card.replace('data-unscanned="WebAssembly:3"', 'data-unscanned="WebAssembly:1"')),
+    html.replace(cardRe, (card) => card.replace('data-review-commit="025f878b22b2fa3df945359548c2422d9548c1f4"', 'data-review-commit="5999c14d2565ad4393f505b7f5c00ac9fdba7f49"')),
+    html.replace(cardRe, (card) => card.replace('data-references="', 'data-attacks="Discrete log@src/ui/ceremony.ts:122" data-references="')),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the SNARK Arena card');
+    assert.throws(() => checkSnarkConstraintGapScope(changed), assert.AssertionError);
+  }
+
+  const wrongPin = structuredClone(exhibitManifest);
+  wrongPin.labs['crypto-lab-snark-arena'].commit = '0'.repeat(40);
+  assert.throws(() => checkSnarkConstraintGapScope(html, wrongPin, catalogReviewed), assert.AssertionError);
+
+  const missingGap = structuredClone(exhibitManifest);
+  missingGap.labs['crypto-lab-snark-arena'].exhibits = missingGap.labs['crypto-lab-snark-arena'].exhibits
+    .filter((item) => item.id !== 'constraint-gap');
+  assert.throws(() => checkSnarkConstraintGapScope(html, missingGap, catalogReviewed), assert.AssertionError);
+
+  const weakened = structuredClone(exhibitManifest);
+  weakened.labs['crypto-lab-snark-arena'].exhibits
+    .find((item) => item.id === 'constraint-gap').limits = 'Real Groth16 proof.';
+  assert.throws(() => checkSnarkConstraintGapScope(html, weakened, catalogReviewed), assert.AssertionError);
+});
+
+test('STARK Tower card pins executable Fiat-Shamir and current implementation anchors', () => {
+  const opening = openingFor(html, 'crypto-lab-stark-tower');
+  const implementations = implementationsFor(html, 'crypto-lab-stark-tower');
+  assert.deepEqual(implementations, ['Fiat-Shamir', 'FRI', 'Merkle tree', 'SHA-256', 'STARK']);
+  assert.match(opening, /Fiat-Shamir@src\/stark\.ts:421/);
+  assert.match(opening, /FRI@src\/stark\.ts:754/);
+  assert.match(opening, /Merkle tree@src\/merkle\.ts:72/);
+  assert.match(opening, /SHA-256@src\/merkle\.ts:55/);
+  assert.match(opening, /STARK@src\/stark\.ts:189/);
+  assert.doesNotMatch(opening, /data-attacks=/);
+  assert.doesNotMatch(opening, /data-comment-only="[^"]*Fiat-Shamir/);
+  assert.match(opening, /data-review-commit="51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af"/);
+  assert.match(opening, /data-updated="2026-10"/);
 });
 
 function checkNewResearchScope(source) {

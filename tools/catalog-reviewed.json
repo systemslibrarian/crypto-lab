@@ -216,6 +216,12 @@
     ],
     "note": "Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review. Inspected current dialog/fuzz computations and source-scope text; the October 21 change adds README guidance and limits, with no executable changes. Resource estimates remain cited data and experiments remain classical; no quantum circuit, real-key recovery, ZK proof or benchmark submission is executed. Preserve the ECDSA/SHA-3 removals and existing SHAKE/SHA-256 anchors."
   },
+  "crypto-lab-proof-tally": {
+    "commit": "9394e3fd3fd84cab5cfa95016f21808ca9f4e395",
+    "reviewed": "2026-10-25",
+    "implementation": "local TypeScript Field64/Prio3 and exact BigInt DP model; @noble TurboSHAKE128",
+    "note": "Re-read the current Field64 arithmetic and transforms, BBCGGI19-style FLP circuits, Prio3 report preparation/verification/aggregation, TurboSHAKE128 XOF wrapper, S04 distributed report/release path, exact CL084 abort/retry model, learner UI, tests, mutation records and README through this exact pin. The lab executes a local two-aggregator Prio3Count/Prio3Sum teaching implementation; @noble supplies TurboSHAKE128 only, not Prio3 or field/proof logic. The separate abort lesson uses reduced BigInt rational arithmetic over a finite additive-noise model with neighboring answers zero and one; it computes ordinary, selective-abort, conditioned-publication, capped fresh-retry and independent-abort transcripts without modifying or attacking the Prio3 route. Public, aborter-only and omniscient teaching views remain distinct. The S04 claim still assumes authenticated roster bindings, non-collusion, honest independent noise contributors, complete delivery and one accounted release, while the browser supplies no DAP transport, durable atomic ledger, production attestation or constant-time assurance. The CL084 adaptation does not establish the paper's general bounds or imply that every abort violates differential privacy."
+  },
   "crypto-lab-quantum-entropy": {
     "commit": "44b945c15d5de424f4209239b6d96063eccc82f0",
     "reviewed": "2026-10-19",
@@ -317,15 +323,17 @@
     "note": "Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses Re-read current Rust field/sampler/sharing/reconstruction and README at this exact SHA after Vitest/publisher integrations; implementation unchanged from prior reviewed pin. Current18Rust/18TypeScript/12browser gates and published artifact checks retained; no compiler reproduction claim."
   },
   "crypto-lab-snark-arena": {
-    "commit": "9e6e0c68b6bb0bfc1f7ecd74d4e2dff08a2cb220",
-    "reviewed": "2026-10-11",
+    "commit": "025f878b22b2fa3df945359548c2422d9548c1f4",
+    "reviewed": "2026-10-25",
     "remove": [
-      "PLONK"
+      "PLONK",
+      "Discrete log"
     ],
     "add": [
-      "Groth16@src/ui/realproof.ts:97"
+      "Groth16@src/ui/realproof.ts:92"
     ],
-    "note": "Read current Groth16 fullProve/verify calls, cubic.circom, setup explanations and complete PR21 diff; real proof mechanics disclose the bounded witness through public cubic output, while PLONK remains a comparison. Actual independent Mac and Linux builds from authenticated Circom2.2.3 source ad44e915 with selected Rust1.87 reproduce the exact shipped witness WASM45784cb8; CI retains source-bound receipts and negative controls. The original compiler, ceremony inputs and secret destruction remain unknown; published entropy alone does not establish a leak. Setup trust and vendored snarkjs source reproduction are unverified. Preserve raw WebAssembly scanner coverage separately. Fleet8b6b8411; labPR21."
+    "implementation": "snarkjs Groth16 over compiled Circom WASM/BN254; local TypeScript toy-field arithmetic",
+    "note": "Re-read the complete cubic, weak-XOR and repaired-XOR Groth16 paths; Circom sources and artifacts; toy-field R1CS/KZG setup and ceremony paths; provenance, mutation, browser and unit controls; README; and current main through this exact pin. The weak public-input relation accepts an unmodified proof for (a,b,out)=(2,2,r-4) because it encodes only out=a+b-2ab. The repaired relation adds in-circuit a(a-1)=b(b-1)=0 constraints, uses regenerated circuit-specific WASM/zkey/verification-key material and rejects that assignment while retaining all four binary rows. A browser input check is not the repair, ordinary proof-element tampering is a separate rejected control, and these public inputs establish neither secret nor key recovery. Real cubic proof mechanics disclose the bounded witness through public output; PLONK remains comparison-only. The executable toy KZG lesson forges an opening when the toxic scalar is retained, but the current attack vocabulary has no honest term for that specific failure; discrete-log wording names a hardness assumption rather than an executed attack. Authenticated Circom 2.2.3 rebuilds reproduce all three shipped witness WASM files and bind the XOR R1CS/PTAU/zkey/vkey material, but the single-party demo ceremony, secret destruction and vendored snarkjs source reproduction remain unverified. This bounded CL098 adaptation does not implement CCC-Check, reproduce its evaluation or establish universal circuit correctness. Preserve raw WebAssembly scanner coverage separately."
   },
   "crypto-lab-syndrome-drain": {
     "commit": "7187714a9cadf1570726228f02e00dae48abc9df",
@@ -473,9 +481,10 @@
     "note": "Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain. Re-reviewed PR2 at integrated38b92b51cb4264c325824d9dd3dbafcfa725a769: the SPN, CNF encoder, solver and exhaustive workers, direct verifier, UI, README, C++ wrapper and both shipped assets are byte-identical to the preceding pin. The clean build recipe captures immutable CaDiCaL c60730422e758ef1cebe7aeddf2dda31c996bf04 source and fresh objects/caches, with fourteen offline hygiene/failure controls. Integrated workflow38102731905 independently reproduces both shipped assets using the pinned official SDK, establishing measured source-to-byte correspondence. The original compiler identity remains unknown; static C/C++ and WASM coverage limits and cryptographic/constant-time limits remain. Documentation hash checks alone still do not establish reproduction."
   },
   "crypto-lab-lfsr-forge": {
-    "commit": "66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4",
+    "commit": "c4ef2da4b33fd08382a4309d9665745cb30bbda5",
     "reviewed": "2026-10-25",
     "add": [
+      "A5/1@src/a51/a51.ts:125",
       "Trivium@src/trivium/trivium.ts:29"
     ],
     "remove": [
@@ -487,8 +496,8 @@
       "RC4",
       "Shamir secret sharing"
     ],
-    "implementation": "hand-rolled TypeScript LFSR, Berlekamp–Massey, Geffe, Trivium, exact four-input Boolean analysis and toy-oracle cube/superpoly analysis",
-    "note": "Read the complete merged README, source, tests, learner interface and visible limitations at this exact main commit. The existing binary Fibonacci LFSR, Berlekamp-Massey, Geffe-correlation and eSTREAM-vector-checked Trivium lessons remain, and the Trivium implementation anchors directly at the state-advance function rather than at a panel mount. The zero-round recovery builds 66 public equations over 80 key bits, exhausts the remaining 14-bit space, rechecks every candidate against the complete 1,024-bit observation and compares a unique candidate with the hidden key separately; the specified 1,152-round route rejects this model, and the lesson does not claim a cube attack against full Trivium. The Boolean panel exhaustively analyzes an editable four-input truth table: exact ANF and degree, all 16 Walsh coefficients, balance, nonlinearity, every fixed-subset distribution, correlation immunity, resiliency and 4,094 candidate-side checks over all 2,047 nonzero degree-at-most-two polynomials. Its deterministic counterexamples fit parity with Berlekamp-Massey, scan all 105 R1/R2 state pairs against an order-one-resilient function and scan all 127 R4 states against an algebraic-immunity-two function; worker inputs contain only copied output and the fixed public profile, while hidden-state comparisons stay in the controller. The eighth panel executes a cube attack on its own explicit three-secret/four-public degree-four GF(2) toy oracle. Preprocessing exhausts four two-variable cube faces over all eight teaching keys, computes 128 raw evaluations covering 72 distinct secret/public-row pairs and derives each superpoly by Möbius transform. C12, C13 and C24 are affine maxterms whose rank-three system filters 8 → 4 → 2 → 1 to key 110 from sums 111; C34 is a valid cube with the quadratic superpoly k1k2 ⊕ k3, is not a maxterm, and is excluded only from this bounded affine solve. The candidate is frozen before four disjoint held-out public rows; their 1011 fingerprint is injective over the eight teaching keys and precedes a separate controller comparison. Dropping C24 leaves 001 and 110, while flipping C13 recovers wrong candidate 000 before held-outs reject it. Online work is 12 raw cube-vertex evaluations plus four held-outs, 16 raw evaluations across 12 distinct public rows. The panel executes no Trivium state or round and makes no attack or cost claim against full Trivium; the cited paper treats only 672-, 735- and 767-round reduced variants. Its source-visible publication caveat says direct evaluation of ePrint 2008/385's printed introductory polynomial adds a constant 1 to the stated v3 = 0 face sum, so the lab uses its own independently checkable oracle and does not call that an official erratum. The merged gates cover 38 unit tests, 19 browser tests, all eight panels at desktop/380px plus the 320px extension, and 23 clean-baseline mutations. Walsh probabilities and fixed-subset independence assume independent uniform table inputs; LFSR agreement is measured separately, both state scans are bounded toy searches, nonlinear-superpoly techniques remain out of scope, and algebraic immunity does not exclude every fast algebraic relation. Brute force appears only in the independent unit-test oracle, and known plaintext/ciphertext is prose explaining how an external XOR-stream setting could reveal the already-supplied keystream; neither is an attack workflow executed by this lab. Shamir names a cube-attack coauthor, while Pairing and RC4 are stale or lexical false references, so none of those three belongs in the algorithm reference list. BCH, ChaCha20, SHA-256, SNOW 3G and ZUC remain comparison or evidence context rather than implemented primitives."
+    "implementation": "hand-rolled TypeScript LFSR, Berlekamp–Massey, Geffe, Trivium, historical A5/1, exact four-input Boolean analysis, toy-oracle cube/superpoly analysis and bounded state completion",
+    "note": "Read the complete merged README, source, tests, learner interface and visible limitations at this exact main commit. The existing binary Fibonacci LFSR, Berlekamp-Massey, Geffe-correlation and eSTREAM-vector-checked Trivium lessons remain, and the Trivium implementation anchors directly at the state-advance function rather than at a panel mount. The zero-round recovery builds 66 public equations over 80 key bits, exhausts the remaining 14-bit space, rechecks every candidate against the complete 1,024-bit observation and compares a unique candidate with the hidden key separately; the specified 1,152-round route rejects this model, and the lesson does not claim a cube attack against full Trivium. The Boolean panel exhaustively analyzes an editable four-input truth table: exact ANF and degree, all 16 Walsh coefficients, balance, nonlinearity, every fixed-subset distribution, correlation immunity, resiliency and 4,094 candidate-side checks over all 2,047 nonzero degree-at-most-two polynomials. Its deterministic counterexamples fit parity with Berlekamp-Massey, scan all 105 R1/R2 state pairs against an order-one-resilient function and scan all 127 R4 states against an algebraic-immunity-two function; worker inputs contain only copied output and the fixed public profile, while hidden-state comparisons stay in the controller. The eighth panel executes a cube attack on its own explicit three-secret/four-public degree-four GF(2) toy oracle. Preprocessing exhausts four two-variable cube faces over all eight teaching keys, computes 128 raw evaluations covering 72 distinct secret/public-row pairs and derives each superpoly by Möbius transform. C12, C13 and C24 are affine maxterms whose rank-three system filters 8 → 4 → 2 → 1 to key 110 from sums 111; C34 is a valid cube with the quadratic superpoly k1k2 ⊕ k3, is not a maxterm, and is excluded only from this bounded affine solve. The candidate is frozen before four disjoint held-out public rows; their 1011 fingerprint is injective over the eight teaching keys and precedes a separate controller comparison. Dropping C24 leaves 001 and 110, while flipping C13 recovers wrong candidate 000 before held-outs reject it. Online work is 12 raw cube-vertex evaluations plus four held-outs, 16 raw evaluations across 12 distinct public rows. The panel executes no Trivium state or round and makes no attack or cost claim against full Trivium; the cited paper treats only 672-, 735- and 767-round reduced variants. Its source-visible publication caveat says direct evaluation of ePrint 2008/385's printed introductory polynomial adds a constant 1 to the stated v3 = 0 face sum, so the lab uses its own independently checkable oracle and does not call that an official erratum. The ninth panel implements the reverse-engineered historical BGW A5/1 definition, not a public modern standard: distinct 19/22/23-bit registers, least-significant-bit-first Kc and COUNT loading, 100 output-disabled majority clocks and clock-before-output generation. Independently transcribed setup code derives the post-key, post-COUNT and post-100 checkpoint states, then matches the two published consecutive 114-bit bursts. Its separate bounded adaptation discloses an extraordinary 52 exact bits of one post-100 state, enumerates the remaining 4,096 completions and filters candidate 1425 with 32 aligned known-keystream bits before 32 disjoint held-out bits and a separate controller-state comparison. Sixteen bits leave 11 candidates, regular clocking leaves none after two observations, and flipping observation 29 selects wrong candidate 1409 before 11 held-out mismatches reject it. The worker receives only the masked 52-bit disclosure, copied observations, clock model and run identifier; it receives no full hidden state or Kc. The exercise is not a published A5/1 attack, does not recover Kc and does not model modern cellular encryption. The merged gates cover 47 unit tests, 23 browser tests, all nine panels at desktop/380px plus the 320px extension, and 33 clean-baseline mutations. Walsh probabilities and fixed-subset independence assume independent uniform table inputs; LFSR agreement is measured separately, both state scans are bounded toy searches, nonlinear-superpoly techniques remain out of scope, and algebraic immunity does not exclude every fast algebraic relation. The literal Brute force scanner hit appears only in the independent unit-test oracle. Panel 09 separately exhausts 2^12 state completions under disclosure of 52 exact post-100 state bits; the catalog records that narrowly as bounded state completion, not as a generic brute-force attack or A5/1/Kc attack. Known plaintext/ciphertext remains prose explaining how an external XOR-stream setting could reveal the already-supplied keystream and is not an attack workflow executed by this lab. Shamir names a cube-attack coauthor, while Pairing and RC4 are stale or lexical false references, so none of those three belongs in the algorithm reference list. BCH, ChaCha20, SHA-256, SNOW 3G and ZUC remain comparison or evidence context rather than implemented primitives."
   },
   "crypto-lab-wep-crack": {
     "commit": "0b2433ccb1436ee5e1ad2fdb6605b37c4f701e0c",
@@ -710,16 +719,24 @@
   },
   "crypto-lab-power-trace": {
     "commit": "c8635e31bbc5ec93f0617a3bf5ee3747a08c70f1",
-    "reviewed": "2026-10-22",
+    "reviewed": "2026-10-25",
     "remove": [
       "Chosen-plaintext attack",
       "Fault injection",
       "Timing side-channel",
-      "Cache timing"
+      "Cache timing",
+      "Side-channel (unspecified)"
     ],
-    "note": "Reviewed AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this pin. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line address observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection and timing side-channel claims as executed attacks. Followup commits strengthen browser assertions and remove decorative aria-hidden attributes; AES and attack anchors remain unchanged.",
+    "removeReferences": [
+      "NTT",
+      "Shamir secret sharing"
+    ],
+    "note": "Re-read AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this exact pin while reconciling CL092 and RR-POWER-MEASURED. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, independently ranks all 256 guesses and verifies bounded byte recovery against retained ground truth, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line address observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection, generic side-channel and timing-side-channel claims as separate executed attacks. NTT appears only in a related-demo link, and Shamir is the surname of a historical SPA coauthor rather than secret sharing, so remove both references. The present CPA/DPA path is not a profiled classifier; CL092 contributes future prior-aware measured-data controls, not a deep-learning claim.",
     "add": [
       "AES@src/aes/aes.ts:123"
+    ],
+    "addAttacks": [
+      "Key recovery@src/ui/ui.ts:305"
     ]
   },
   "crypto-lab-elgamal-plain": {
@@ -949,18 +966,21 @@
     "note": "Reviewed the complete nine-act AES-128/192/256 data path, inverse, key expansion, four opt-in layer ablations, structured round-9 DFA and first-round ineffective-fault lesson. Act 9 executes correct and fault-path AES-128 for each finite-sample trial and classifies exact ciphertext equality; its separate 2,048-row census is analytic, not sampled execution evidence. The selection-only ranker receives selected plaintext bytes and a target bit. A secret-independent null removes key-dependent selection. Rejection exposes output absence; the bounded teaching infection hides selection without a classifier, while an explicitly granted exact clean-reference oracle restores it. The transform is not timing-oblivious, hardened, universal or an implementation of the cited circuit defenses. Side-channel and generic timing mentions remain limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson."
   },
   "crypto-lab-clock-arithmetic": {
-    "commit": "5bb86840fab4806e3681c1a378fd4c643831035d",
-    "reviewed": "2026-10-21",
+    "commit": "e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e",
+    "reviewed": "2026-10-25",
     "add": [
-      "Diffie-Hellman@src/nt/toyDh.ts:4"
+      "Diffie-Hellman@src/nt/toyDh.ts:26",
+      "Montgomery multiplication@src/nt/montgomery.ts:96"
     ],
     "remove": [
+      "Brute force",
       "Discrete log",
       "Factoring",
+      "Fault injection",
       "Man-in-the-middle"
     ],
-    "implementation": "hand-rolled BigInt arithmetic",
-    "note": "Reviewed exact modular arithmetic, extended Euclid, Euler phi, orders, generators, subgroup enumeration and generalized CRT. The small-number DH model computes both parties and searches possible shared secrets with an actual guess count at src/nt/toyDh.ts:3. It is not a discrete-log solver or MITM exhibit. Trial division supports the arithmetic lesson rather than an RSA factoring attack; RSA and adjacent algorithms are references only."
+    "implementation": "hand-rolled exact BigInt arithmetic, including power-of-two Montgomery REDC",
+    "note": "Read the complete merged README, source, tests, learner interface and visible limitations at this exact main commit. The existing exact BigInt lessons remain: signed modular wraparound, Euclidean/Bézout inverses, Euler phi by enumeration and factorization, multiplicative orders, generator and subgroup enumeration with toy finite-field Diffie–Hellman, and generalized CRT. The seventh exhibit implements the power-of-two Montgomery specialization for odd N at most 10^12 with a learner-supplied power-of-two R greater than N. Setup derives N′ = −N^-1 mod R and R² mod N; encoding executes REDC(x·R²), and multiplication retains T, its low radix word, m, mN, the divisible sum, the pre-subtraction candidate, the optional final subtraction and the reduced output. The N=9, R=16 fixture exposes candidate 9 before subtraction to 0. A product-square-times-a chain stays encoded until one final REDC and is checked against the ordinary canonical remainder. The fixed comparison executes the same 4,096-operation alternating multiply/square schedule on both routes and reports setup, ordinary loop, Montgomery loop and final decoding separately. The encoded loop performs this implementation’s validation and trace-object work on every operation, so the single Worker timings are not a benchmark, a speedup claim or evidence of constant-time behavior; JavaScript BigInt is not constant-time. Negative and oversized operands are normalized, while even or over-budget moduli and radices that are too small or not powers of two are refused. Montgomery multiplication is distinct from the Montgomery ladder. The bounded trial division and toy shared-secret enumeration support the arithmetic lesson rather than executing factoring, discrete-log, brute-force or man-in-the-middle attacks; software CRT faults and adjacent algorithms occur only in historical handoff prose or related links."
   },
   "crypto-lab-harvest-timeline": {
     "commit": "ea407d665fd8a57676581de216cfc09afddf393a",
@@ -1136,5 +1156,41 @@
     "remove": [],
     "implementation": "WebCrypto X25519 / HKDF-SHA-256 / AES-GCM / simulated hybrid component secrets",
     "note": "Read the original random-component engine, finite candidate-key attempts and conceptual guidance, then the new native X25519 and custom HKDF experiment. Actual X25519 now executes in context.ts; ML-KEM remains simulated context only and no X-Wing construction executes. Inverting a public coordinate reproduces equal raw secrets; binding fixed-width public coordinates changes the derived key. This is not secret-key recovery or a hybrid/multi-user theorem; existing key-recovery credit refers solely to the labeled finite-guess simulated playground. Re-read the PR26 layout-only follow-up: context engine and all other cryptographic source are unchanged; panel/control styles and the owning boot guard changed."
+  },
+  "crypto-lab-ckks-lab": {
+    "commit": "e2f3e59a4c5af667dab219c5c7048401dcd3f83b",
+    "reviewed": "2026-10-25",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Key recovery",
+      "Side-channel (unspecified)"
+    ],
+    "implementation": "local symmetric approximate-RLWE teaching engine",
+    "note": "Read the complete symmetric CKKS teaching engine, UI, README, tests and visible limitations while reconciling CL123. The lab executes bounded encoding, symmetric encryption/decryption, addition, multiplication and rescaling, including gadget/digit evaluation-key key switching for relinearization. It does not implement public-key encryption, fresh public Enc(0), the Galois rotation/key-switching path needed for CoeffToSlot, CoeffToSlot itself, a separate client validity predicate or the paper's adaptive reaction attacker. Chosen-plaintext and key-recovery phrases describe the absent paper attack or limitations rather than an executed attack; the generic side-channel phrase likewise does not identify a separate runnable attack. Remove those three credits. This review does not claim a faithful reaction-attack reproduction or transfer the paper's asymptotic query complexity."
+  },
+  "crypto-lab-spdz-forge": {
+    "commit": "2bfdc83b0ef587a598afad95d6ef0e72bdfd904b",
+    "reviewed": "2026-10-25",
+    "implementation": "local TypeScript BigInt field arithmetic / WebCrypto SHA-256 commitments",
+    "addAttacks": [
+      "Selective failure@src/ui/panels/offkey.ts:128"
+    ],
+    "note": "Read the complete three-party trusted-dealer SPDZ engine, Off-Key extension, UI, tests and README through this exact pin and checked the bounded adaptation against CL079 Sections 3, 3.2, 4.1-4.5, 5 and 5.1. Additive sharing, Beaver multiplication and information-theoretic MAC arithmetic are local BigInt TypeScript; WebCrypto supplies SHA-256 commitments and randomness rather than the whole protocol implementation. The isolated fixture computes the consistent-context residual Delta(g-d) and inconsistent-context residual Delta(g-y) from actual authenticated shares, then derives unmasked recovery and masked bit-promise inference from attacker-visible state without exposing y or honest shares. Its omniscient audit is separately labeled, ordinary corruption remains a correctness control, and the same-context comparison restores the modeled assumption through protocol state rather than client-side validation. Credit the executable selective-failure lesson, not generic key recovery: y is a shared input, not a cryptographic key. This is a three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation, not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework."
+  },
+  "crypto-lab-stark-tower": {
+    "commit": "51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af",
+    "reviewed": "2026-10-25",
+    "remove": [
+      "Discrete log"
+    ],
+    "add": [
+      "FRI@src/stark.ts:754",
+      "Fiat-Shamir@src/stark.ts:421",
+      "Merkle tree@src/merkle.ts:72",
+      "SHA-256@src/merkle.ts:55",
+      "STARK@src/stark.ts:189"
+    ],
+    "implementation": "local TypeScript finite-field, Merkle, FRI and STARK teaching implementation / WebCrypto SHA-256",
+    "note": "Read the complete AIR, quotient, Merkle, FRI, end-to-end prover/verifier, masking and soundness-ledger paths through this exact pin after PR-10. FRI folding and final-code membership are executable, Fiat-Shamir challenges are derived by the prover and independently recomputed by the verifier, and Merkle commitments use WebCrypto SHA-256. The page's discrete-log wording is in a STARK-versus-SNARK comparison and is not an executed attack. Keep capacity-model arithmetic labeled heuristic, theorem formulas conditional on their displayed hypotheses, fixture rejection empirical, and complete FRI/end-to-end soundness unestablished while required proximity, fold-MCA, algebraic/composition, hash and Fiat-Shamir/BCS terms are absent."
   }
 }

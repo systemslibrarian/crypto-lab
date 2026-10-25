@@ -5747,8 +5747,8 @@
       ]
     },
     "crypto-lab-clock-arithmetic": {
-      "commit": "ba94fa18e4272db71173984a2e2fe00d5818cf91",
-      "reviewed": "2026-10-22",
+      "commit": "e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -5764,10 +5764,12 @@
             "zero divisors"
           ],
           "evidence": [
-            "src/main.ts:16",
-            "src/main.ts:26",
-            "src/main.ts:290",
-            "src/worker.ts:1"
+            "src/main.ts:15",
+            "src/main.ts:29",
+            "src/ui/act1.ts:10",
+            "src/ui/act1.ts:25",
+            "src/main.ts:323",
+            "src/worker.ts:12"
           ],
           "limits": "Small-number arithmetic lesson with input limits and no production cryptography.",
           "section": "1. Wrap around"
@@ -5786,10 +5788,13 @@
             "coprimality"
           ],
           "evidence": [
-            "src/main.ts:38",
-            "src/main.ts:46",
-            "src/main.ts:290",
-            "src/ui/act2.ts:9"
+            "src/main.ts:35",
+            "src/main.ts:42",
+            "src/main.ts:44",
+            "src/ui/act2.ts:9",
+            "src/ui/act2.ts:19",
+            "src/ui/act2.ts:32",
+            "src/main.ts:323"
           ],
           "limits": "Exact arithmetic within the lab’s supported modulus range.",
           "section": "2. Undo multiplication"
@@ -5807,10 +5812,12 @@
             "prime factorization"
           ],
           "evidence": [
-            "src/main.ts:60",
-            "src/main.ts:69",
+            "src/main.ts:51",
+            "src/main.ts:62",
+            "src/ui/act3.ts:9",
+            "src/ui/act3.ts:15",
             "src/ui/act3.ts:17",
-            "src/main.ts:290"
+            "src/main.ts:323"
           ],
           "limits": "Direct counting has a tighter bound than factorization and is unavailable for large supported inputs.",
           "section": "3. Count the units"
@@ -5829,10 +5836,15 @@
             "nonunits"
           ],
           "evidence": [
-            "src/main.ts:78",
-            "src/main.ts:89",
+            "src/main.ts:70",
+            "src/main.ts:79",
+            "src/main.ts:80",
+            "src/ui/act4.ts:17",
+            "src/ui/act4.ts:21",
+            "src/ui/act4.ts:44",
+            "src/ui/act4.ts:49",
             "src/ui/clock.ts:41",
-            "src/main.ts:290"
+            "src/main.ts:323"
           ],
           "limits": "Euler theorem applies to units; a nonunit need not return to one.",
           "section": "4. Watch powers cycle"
@@ -5851,10 +5863,20 @@
             "Diffie-Hellman"
           ],
           "evidence": [
-            "src/main.ts:98",
+            "src/nt/toyDh.ts:26",
+            "src/main.ts:86",
+            "src/main.ts:115",
+            "src/main.ts:116",
             "src/main.ts:117",
+            "src/ui/act5.ts:13",
+            "src/ui/act5.ts:15",
+            "src/ui/act5.ts:16",
+            "src/ui/act5.ts:17",
             "src/ui/act5.ts:29",
-            "src/ui/act5.ts:36"
+            "src/ui/act5.ts:31",
+            "src/ui/act5.ts:35",
+            "src/ui/act5.ts:36",
+            "src/main.ts:323"
           ],
           "limits": "Small public teaching exponents and primes are not secure Diffie-Hellman parameters.",
           "section": "5. Generators and subgroups"
@@ -5873,13 +5895,60 @@
             "least common multiple"
           ],
           "evidence": [
-            "src/main.ts:126",
-            "src/main.ts:145",
-            "src/main.ts:290",
+            "src/main.ts:123",
+            "src/main.ts:135",
+            "src/main.ts:136",
+            "src/ui/act6.ts:8",
+            "src/ui/act6.ts:24",
+            "src/ui/act6.ts:52",
+            "src/ui/act6.ts:62",
+            "src/main.ts:323",
             "src/ui/act6.ts:80"
           ],
           "limits": "The example range is bounded; noncoprime moduli require compatibility, not automatic product modulus.",
           "section": "6. Recombine remainders"
+        },
+        {
+          "id": "montgomery-redc",
+          "title": "Montgomery REDC, Encoded Chaining and Fixed Work",
+          "kind": "interactive",
+          "action": "Choose two integers, an odd modulus N and a power-of-two radix R greater than N; encode through REDC, inspect one encoded product and a product-and-square chain, then run the fixed 4,096-operation ordinary/Montgomery comparison.",
+          "outcome": "For N = 17 and R = 32, the panel derives N′ = 15, R² mod N = 4, low-word cancellation and decoded product 15; it keeps (a·b)²·a encoded to result 12, while N = 9 and R = 16 expose raw candidate 9 and the required 9 − 9 final subtraction. Setup, ordinary-loop, Montgomery-loop and final-decode measurements remain separate, and both fixed schedules agree.",
+          "concepts": [
+            "Montgomery multiplication",
+            "Montgomery reduction",
+            "REDC",
+            "residue representation",
+            "modular multiplication",
+            "encoded chaining",
+            "fixed-work comparison"
+          ],
+          "evidence": [
+            "src/main.ts:140",
+            "src/main.ts:163",
+            "src/nt/montgomery.ts:69",
+            "src/nt/montgomery.ts:76",
+            "src/nt/montgomery.ts:96",
+            "src/nt/montgomery.ts:123",
+            "src/nt/montgomery.ts:153",
+            "src/nt/montgomery.ts:176",
+            "src/nt/montgomery.ts:196",
+            "src/nt/montgomery.ts:213",
+            "src/ui/act7.ts:22",
+            "src/ui/act7.ts:93",
+            "src/ui/act7.ts:98",
+            "src/ui/act7.ts:100",
+            "src/ui/act7.ts:130",
+            "src/ui/act7.ts:138",
+            "src/ui/act7.ts:143",
+            "src/ui/act7.ts:157",
+            "src/ui/act7.ts:165",
+            "src/ui/predictions.ts:40",
+            "src/worker.ts:12"
+          ],
+          "section": "7. Montgomery multiplication",
+          "execution": "real-values",
+          "limits": "This is a bounded TypeScript BigInt power-of-two specialization for odd N at most 10^12 and a supplied power-of-two R greater than N. The single Worker timings include validation and trace-object work and establish neither a general performance result nor constant-time behavior; JavaScript BigInt is not constant-time. This is teaching code, not production cryptography, and Montgomery multiplication is distinct from the Montgomery ladder."
         }
       ]
     },
@@ -15835,8 +15904,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hidden-bit": {
-      "commit": "5c74e5bf8a1826bc2bc60ac42559eec0033f2da0",
-      "reviewed": "2026-10-23",
+      "commit": "7f143a4e94038a534198c3f69af8d93ccedd86c1",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "ind-cpa",
@@ -16001,6 +16070,40 @@
             "src/game/multiKey.ts:45"
           ],
           "limits": "Abstract tagged-leak game, not encryption, AES, a proof for a real scheme, or a reason to multiply a bound that already counted queries. One sample outcome does not estimate advantage."
+        },
+        {
+          "id": "hybrid-hardcore",
+          "title": "Adjacent hybrids and verified hard-core reconstruction",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "section": "Move one game at a time",
+          "action": "Advance through H0–H5 one adjacent hop at a time, run the AES and ideal-oracle boundary checks, inspect the exposed predicate, then run the bounded reconstruction.",
+          "outcome": "Classify exact rewrites, the symbolic AES-PRP replacement and the exact q(q−1)/2^129 collision ceiling; then independently verify a candidate recovered from the stipulated inner-product predictor without giving the decoder x.",
+          "concepts": [
+            "adjacent hybrids",
+            "security reductions",
+            "PRP/PRF switching",
+            "hard-core predicate",
+            "Goldreich–Levin",
+            "preimage verification"
+          ],
+          "evidence": [
+            "index.html:161",
+            "src/ui/hybridProof.ts:43",
+            "src/ui/hybridProof.ts:52",
+            "src/ui/hybridProof.ts:90",
+            "src/ui/hybridProof.ts:253",
+            "src/ui/hybridProof.ts:317",
+            "src/ui/hybridProof.ts:349",
+            "src/ui/hybridProof.ts:377",
+            "src/ui/hybridProof.ts:394",
+            "src/ui/hybridProof.ts:418",
+            "src/proofs/hybridLedger.ts:121",
+            "src/proofs/hybridLedger.ts:204",
+            "src/proofs/goldreichLevin.ts:47",
+            "src/proofs/goldreichLevin.ts:96"
+          ],
+          "limits": "The route combines real AES-128 with exact finite bookkeeping and lazily sampled ideal oracles, but leaves the AES-PRP term symbolic. Its n=8 hash fixture and stipulated fixed-x predictor are exhaustible teaching devices, not a one-way-function premise, a SHA-256 attack or an asymptotic theorem experiment. Reconstruction is probabilistic and accepts candidates only after an independent f(candidate)=y check."
         }
       ],
       "reviewScope": "complete"
@@ -21294,7 +21397,7 @@
       ]
     },
     "crypto-lab-lfsr-forge": {
-      "commit": "66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4",
+      "commit": "c4ef2da4b33fd08382a4309d9665745cb30bbda5",
       "reviewed": "2026-10-25",
       "exhibits": [
         {
@@ -21309,7 +21412,7 @@
             "keystream observation"
           ],
           "evidence": [
-            "src/main.ts:143",
+            "src/main.ts:144",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Watch a register run",
@@ -21328,7 +21431,7 @@
             "minimal recurrence"
           ],
           "evidence": [
-            "src/main.ts:144",
+            "src/main.ts:145",
             "src/lfsr/bm.ts:1"
           ],
           "section": "Follow Berlekamp–Massey",
@@ -21347,7 +21450,7 @@
             "ambiguous prefix"
           ],
           "evidence": [
-            "src/main.ts:145",
+            "src/main.ts:146",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Predict, freeze, check",
@@ -21365,7 +21468,7 @@
             "correlation bias"
           ],
           "evidence": [
-            "src/main.ts:146",
+            "src/main.ts:147",
             "src/geffe/geffe.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -21385,7 +21488,7 @@
             "search budget"
           ],
           "evidence": [
-            "src/main.ts:147",
+            "src/main.ts:148",
             "src/geffe/attack.worker.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -21484,6 +21587,40 @@
           "section": "Sum a cube, recover a superpoly",
           "execution": "real-values",
           "limits": "This is a separate three-secret/four-public degree-four toy oracle. Preprocessing enumerates all eight teaching keys; online recovery assumes repeated chosen-public-input queries under one fixed secret. C34 is a valid cube whose quadratic superpoly is not a maxterm and is excluded only from this bounded affine solve. The lesson executes no Trivium state or round and makes no attack or performance claim against reduced-round or full Trivium."
+        },
+        {
+          "id": "historical-a51",
+          "title": "Historical A5/1 Majority Clocking and Bounded State Completion",
+          "kind": "interactive",
+          "action": "Run the reverse-engineered BGW Kc/COUNT setup, derive the post-key, post-COUNT and post-100 checkpoints, reproduce both 114-bit burst values, predict a pre-clock majority decision, compare regular clocking, then enumerate 4,096 completions of a 52-disclosed/12-hidden post-warm-up state.",
+          "outcome": "An independent transcription agrees at three derived setup checkpoints and reproduces both BGW burst values; the first fixture step advances R1/R2. The bounded route filters to candidate 1425, whose frozen continuation matches 32 disjoint held-out bits before a separate controller-state comparison confirms the state. Sixteen observations leave 11 completions; for this fixture the regular-clock model leaves none after two bits, while corrupted observation 29 selects candidate 1409 before 11 held-out mismatches reject it.",
+          "concepts": [
+            "A5/1",
+            "irregular clocking",
+            "majority clocking",
+            "known keystream",
+            "state completion",
+            "held-out validation",
+            "historical cryptanalysis"
+          ],
+          "evidence": [
+            "src/a51/a51.ts:16",
+            "src/a51/a51.ts:94",
+            "src/a51/a51.ts:113",
+            "src/a51/a51.ts:125",
+            "src/a51/a51.ts:139",
+            "src/a51/a51.ts:158",
+            "src/a51/a51.ts:182",
+            "src/a51/recovery.ts:7",
+            "src/a51/recovery.ts:58",
+            "src/a51/recovery.ts:107",
+            "src/a51/panel.ts:91",
+            "src/a51/panel.ts:105",
+            "src/a51/panel.ts:117"
+          ],
+          "section": "Clock historical A5/1",
+          "execution": "real-crypto",
+          "limits": "The internal cipher definition is the reverse-engineered historical BGW version, not public modern-standard text. The state-completion exercise assumes an aligned 32-bit known keystream and extraordinary disclosure of 52 exact post-100 state bits; its 4,096 raw completions are not proved reachable from Kc setup. It is not a published A5/1 attack, does not recover Kc, processes no radio capture and says nothing about modern cellular encryption."
         }
       ],
       "reviewScope": "complete"
@@ -30004,8 +30141,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-proof-tally": {
-      "commit": "f1220e93baa5a5cf549915a1d8a6104748e56303",
-      "reviewed": "2026-10-24",
+      "commit": "9394e3fd3fd84cab5cfa95016f21808ca9f4e395",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "report-shares",
@@ -30023,8 +30160,8 @@
           "evidence": [
             "index.html:71",
             "index.html:74",
-            "src/ui/app.ts:193",
-            "src/ui/app.ts:207",
+            "src/ui/app.ts:198",
+            "src/ui/app.ts:210",
             "src/prio3/core.ts:1"
           ],
           "section": "One report, two envelopes",
@@ -30044,8 +30181,8 @@
           ],
           "evidence": [
             "index.html:108",
-            "src/ui/app.ts:159",
-            "src/ui/app.ts:216",
+            "src/ui/app.ts:168",
+            "src/ui/app.ts:220",
             "src/prio3/aggregate.ts:1"
           ],
           "section": "Collector tally",
@@ -30065,13 +30202,13 @@
             "nonce registry"
           ],
           "evidence": [
-            "index.html:172",
-            "index.html:175",
-            "index.html:181",
-            "index.html:187",
-            "src/ui/app.ts:276",
-            "src/ui/app.ts:288",
-            "src/ui/app.ts:298"
+            "index.html:188",
+            "index.html:193",
+            "index.html:199",
+            "index.html:205",
+            "src/ui/app.ts:282",
+            "src/ui/app.ts:292",
+            "src/ui/app.ts:311"
           ],
           "section": "Make the verifier say no",
           "execution": "real-crypto",
@@ -30089,10 +30226,11 @@
             "aggregation trust"
           ],
           "evidence": [
-            "index.html:194",
-            "index.html:195",
-            "index.html:196",
-            "src/ui/app.ts:360"
+            "index.html:210",
+            "index.html:211",
+            "index.html:212",
+            "index.html:213",
+            "src/ui/app.ts:370"
           ],
           "section": "Put both envelopes on one desk",
           "execution": "real-values"
@@ -30109,13 +30247,14 @@
             "aggregate privacy"
           ],
           "evidence": [
-            "index.html:201",
-            "index.html:205",
-            "index.html:208",
-            "index.html:213",
-            "index.html:215",
-            "src/ui/app.ts:376",
-            "src/ui/app.ts:393"
+            "index.html:217",
+            "index.html:218",
+            "index.html:222",
+            "index.html:224",
+            "index.html:229",
+            "index.html:231",
+            "src/ui/app.ts:381",
+            "src/ui/app.ts:397"
           ],
           "section": "What a valid proof cannot prove",
           "execution": "real-crypto"
@@ -30135,14 +30274,14 @@
             "TurboSHAKE128"
           ],
           "evidence": [
-            "index.html:221",
-            "index.html:222",
-            "index.html:224",
-            "index.html:226",
-            "index.html:227",
-            "src/ui/app.ts:405",
-            "src/ui/app.ts:411",
-            "src/ui/app.ts:421"
+            "index.html:236",
+            "index.html:237",
+            "index.html:238",
+            "index.html:242",
+            "index.html:243",
+            "src/ui/app.ts:408",
+            "src/ui/app.ts:414",
+            "src/ui/app.ts:422"
           ],
           "section": "Pinned evidence",
           "execution": "real-values",
@@ -30191,7 +30330,7 @@
             "index.html:130",
             "index.html:134",
             "index.html:146",
-            "index.html:168",
+            "index.html:150",
             "src/distributed/noise.ts:95",
             "src/distributed/report.ts:310",
             "src/distributed/release.ts:133",
@@ -30215,9 +30354,9 @@
             "collector view"
           ],
           "evidence": [
-            "index.html:153",
-            "index.html:161",
-            "index.html:168",
+            "index.html:169",
+            "index.html:173",
+            "index.html:177",
             "src/distributed/parameters.ts:117",
             "src/ui/distributed.ts:234",
             "src/ui/distributed.ts:246",
@@ -30227,6 +30366,42 @@
           "section": "Same goal, different trust boundary",
           "execution": "conceptual",
           "limits": "Only the bounded distributed route is implemented here. Central, local and shuffle DP are comparison rows; the lab implements no shuffler or amplification theorem, and the per-client trace is explicitly not collector-visible."
+        },
+        {
+          "id": "abort-retry-transcript",
+          "title": "Compute visible-abort and retry privacy transcripts",
+          "kind": "interactive",
+          "execution": "real-values",
+          "action": "Choose a one- through three-attempt cap and compute exact neighboring probabilities for an ordinary release, one visible selective abort, publication conditioned on success, capped fresh retries and an independent-abort control.",
+          "outcome": "Shows exact neighboring probabilities for every complete public transcript, each mechanism's tight likelihood-ratio envelope, the conditioned distribution's delta at the original ratio, stopping conditions and separate public, aborter-only and teaching views.",
+          "concepts": [
+            "differential privacy",
+            "selective abort",
+            "retry transcript",
+            "conditional distribution",
+            "privacy accounting",
+            "observer boundary"
+          ],
+          "evidence": [
+            "index.html:153",
+            "index.html:154",
+            "index.html:156",
+            "index.html:164",
+            "index.html:166",
+            "src/distributed/abortModel.ts:210",
+            "src/distributed/abortModel.ts:249",
+            "src/distributed/abortModel.ts:262",
+            "src/distributed/abortModel.ts:285",
+            "src/distributed/abortModel.ts:306",
+            "src/ui/abortModel.ts:75",
+            "src/ui/abortModel.ts:80",
+            "src/ui/abortModel.ts:81",
+            "src/ui/abortModel.ts:85",
+            "src/ui/abortModel.ts:98",
+            "src/ui/abortModel.ts:103"
+          ],
+          "section": "Who sees an abort changes the mechanism",
+          "limits": "A separate exact finite additive-noise model motivated by CL084, not an attack on the S04 construction or a claim that every abort violates differential privacy. The omniscient distribution ledger is teaching-only; a public observer does not see rejected candidate values."
         }
       ],
       "reviewScope": "complete"
@@ -35580,8 +35755,8 @@
       ]
     },
     "crypto-lab-snark-arena": {
-      "commit": "5999c14d2565ad4393f505b7f5c00ac9fdba7f49",
-      "reviewed": "2026-10-22",
+      "commit": "025f878b22b2fa3df945359548c2422d9548c1f4",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -35598,11 +35773,16 @@
             "constraint satisfaction"
           ],
           "evidence": [
-            "index.html:176",
-            "index.html:199",
-            "index.html:215",
-            "src/ui/playground.ts:1",
-            "src/crypto/r1cs.ts:1"
+            "index.html:177",
+            "index.html:200",
+            "index.html:202",
+            "index.html:216",
+            "src/ui/playground.ts:94",
+            "src/ui/playground.ts:96",
+            "src/ui/playground.ts:119",
+            "src/crypto/r1cs.ts:81",
+            "src/crypto/r1cs.ts:93",
+            "src/crypto/r1cs.ts:97"
           ],
           "limits": "Transparent playground exposes the witness; it teaches constraints rather than proving zero knowledge.",
           "section": "What is a zk-SNARK?"
@@ -35621,15 +35801,69 @@
             "public signal"
           ],
           "evidence": [
-            "index.html:228",
-            "index.html:247",
+            "index.html:229",
+            "index.html:231",
             "index.html:248",
             "index.html:249",
-            "src/ui/realproof.ts:1",
-            "src/ui/realproof.ts:107"
+            "index.html:250",
+            "src/ui/realproof.ts:92",
+            "src/ui/realproof.ts:133",
+            "src/ui/realproof.ts:158"
           ],
           "limits": "Static proving artifacts have unverified original ceremony provenance; small output range reveals x, so this demo is not witness-private.",
           "section": "Now Prove It For Real"
+        },
+        {
+          "id": "constraint-gap",
+          "title": "Prove an unintended assignment, then repair the relation",
+          "section": "A Valid Proof Can Prove the Wrong Application Claim",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Select public a and b, compare intended Boolean XOR with equation-only and bit-constrained Circom relations, generate and verify each real Groth16 path, then swap proof elements as an ordinary-tampering control.",
+          "outcome": "Both relations accept legitimate binary XOR rows; for a=b=2 the weak relation verifies an unmodified proof with public signals [r-4,2,2], while the repaired circuit's in-relation bit constraints prevent proof generation; swapped proof elements are rejected.",
+          "concepts": [
+            "computation-constraint inconsistency",
+            "underconstrained relation",
+            "unintended satisfying assignment",
+            "phantom output",
+            "Groth16",
+            "Circom",
+            "in-circuit bit constraint",
+            "artifact regeneration",
+            "proof tampering"
+          ],
+          "evidence": [
+            "index.html:261",
+            "index.html:263",
+            "index.html:266",
+            "index.html:267",
+            "index.html:268",
+            "index.html:294",
+            "index.html:301",
+            "index.html:306",
+            "index.html:311",
+            "index.html:314",
+            "index.html:315",
+            "public/zk/xor_weak.circom:11",
+            "public/zk/xor_repaired.circom:10",
+            "public/zk/xor_repaired.circom:11",
+            "public/zk/xor_repaired.circom:12",
+            "src/crypto/constraint-gap.ts:26",
+            "src/crypto/constraint-gap.ts:31",
+            "src/crypto/constraint-gap.ts:35",
+            "src/ui/constraint-gap.ts:64",
+            "src/ui/constraint-gap.ts:129",
+            "src/ui/constraint-gap.ts:131",
+            "src/ui/constraint-gap.ts:145",
+            "src/ui/constraint-gap.ts:157",
+            "src/ui/constraint-gap.ts:192",
+            "src/ui/constraint-gap.ts:197",
+            "src/ui/constraint-gap.ts:198",
+            "src/ui/constraint-gap.ts:229",
+            "src/ui/constraint-gap.ts:230",
+            "src/ui/constraint-gap.ts:237"
+          ],
+          "limits": "Bounded adaptation of Kolozyan et al., ePrint 2025/2120 revision 7, especially Sections 2.1-2.3 and 3.2.3. It executes two tiny public-input Circom/Groth16 relations over the BN254 scalar field with single-party demo proving material whose toxic-waste destruction is unverified. It demonstrates one explicit XOR computation/constraint mismatch and repair; it does not implement CCC-Check, reproduce Section 5, generalize detection, establish universal circuit correctness, or treat a browser input check as a relation repair."
         },
         {
           "id": "setup-comparison",
@@ -35645,13 +35879,16 @@
             "universal SRS"
           ],
           "evidence": [
-            "index.html:260",
-            "index.html:262",
-            "index.html:312",
-            "index.html:314",
-            "index.html:369",
-            "index.html:371",
-            "index.html:395"
+            "index.html:321",
+            "index.html:325",
+            "index.html:348",
+            "index.html:373",
+            "index.html:377",
+            "index.html:396",
+            "index.html:430",
+            "index.html:452",
+            "index.html:454",
+            "index.html:462"
           ],
           "limits": "PLONK panel is explanatory; it does not generate a PLONK proof.",
           "section": "Groth16 vs PLONK on the Same Circuit"
@@ -35671,13 +35908,28 @@
             "soundness"
           ],
           "evidence": [
-            "index.html:432",
-            "index.html:445",
-            "index.html:451",
-            "index.html:462",
-            "index.html:468",
-            "src/ui/kzg.ts:8",
-            "src/crypto/setup.ts:1"
+            "index.html:493",
+            "index.html:504",
+            "index.html:510",
+            "index.html:521",
+            "index.html:526",
+            "index.html:527",
+            "src/ui/ceremony.ts:117",
+            "src/ui/ceremony.ts:122",
+            "src/ui/ceremony.ts:125",
+            "src/ui/ceremony.ts:131",
+            "src/ui/kzg.ts:45",
+            "src/ui/kzg.ts:46",
+            "src/ui/kzg.ts:62",
+            "src/ui/kzg.ts:65",
+            "src/crypto/setup.ts:72",
+            "src/crypto/setup.ts:103",
+            "src/crypto/setup.ts:116",
+            "src/crypto/setup.ts:148",
+            "src/crypto/setup.ts:195",
+            "src/crypto/setup.ts:214",
+            "src/crypto/setup.ts:217",
+            "src/crypto/setup.ts:218"
           ],
           "limits": "This KZG visualizer uses a tiny F17 scalar field and modeled pairing relation; it is separate from the real Groth16 panel.",
           "section": "Trusted Setup Problem in Depth"
@@ -35697,11 +35949,15 @@
             "multi-party ceremony"
           ],
           "evidence": [
-            "index.html:263",
-            "index.html:277",
-            "index.html:294",
-            "index.html:298",
-            "index.html:301"
+            "index.html:322",
+            "index.html:336",
+            "index.html:353",
+            "index.html:357",
+            "index.html:360",
+            "src/main.ts:124",
+            "src/main.ts:125",
+            "src/main.ts:126",
+            "src/main.ts:137"
           ],
           "limits": "Animation is conceptual; separate toy field ceremony in Exhibit 5 and real Groth16 uses shipped demo keys."
         },
@@ -35721,11 +35977,12 @@
             "custom gates"
           ],
           "evidence": [
-            "index.html:317",
-            "index.html:336",
-            "index.html:348",
-            "index.html:354",
-            "index.html:359"
+            "index.html:376",
+            "index.html:395",
+            "index.html:396",
+            "index.html:409",
+            "index.html:413",
+            "index.html:418"
           ],
           "limits": "The PLONK bytes are filler; no PLONK prover artifacts ship in this build."
         },
@@ -35744,11 +36001,11 @@
             "identity proof"
           ],
           "evidence": [
-            "index.html:494",
-            "index.html:498",
-            "index.html:503",
-            "index.html:508",
-            "index.html:513"
+            "index.html:553",
+            "index.html:558",
+            "index.html:563",
+            "index.html:568",
+            "index.html:573"
           ],
           "limits": "Context cards; examples are not run against those production services."
         },
@@ -35766,10 +36023,14 @@
             "SNARK terminology"
           ],
           "evidence": [
-            "index.html:543",
-            "index.html:545",
-            "index.html:547",
-            "index.html:548"
+            "index.html:602",
+            "index.html:604",
+            "index.html:605",
+            "src/ui/quiz.ts:11",
+            "src/ui/quiz.ts:82",
+            "src/ui/quiz.ts:100",
+            "src/ui/quiz.ts:115",
+            "src/ui/quiz.ts:117"
           ],
           "limits": "Instructional quiz; no cryptographic proof."
         }
@@ -35926,8 +36187,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-spdz-forge": {
-      "commit": "d5d8b60211fa4842cd83ebab27699a9b097a9b10",
-      "reviewed": "2026-10-22",
+      "commit": "2bfdc83b0ef587a598afad95d6ef0e72bdfd904b",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -36035,7 +36296,7 @@
           ],
           "evidence": [
             "index.html:235",
-            "src/ui/panels/maccheck.ts:126",
+            "src/ui/panels/maccheck.ts:129",
             "src/ui/panels/maccheck.ts:131",
             "src/ui/panels/maccheck.ts:181",
             "src/ui/panels/maccheck.ts:240"
@@ -36058,7 +36319,7 @@
           ],
           "evidence": [
             "src/ui/panels/maccheck.ts:259",
-            "src/ui/panels/maccheck.ts:272",
+            "src/ui/panels/maccheck.ts:273",
             "src/ui/panels/maccheck.ts:276",
             "src/ui/panels/maccheck.ts:352"
           ],
@@ -36079,7 +36340,7 @@
             "MASCOT"
           ],
           "evidence": [
-            "index.html:246",
+            "index.html:260",
             "src/ui/panels/preprocessing.ts:18",
             "src/ui/panels/preprocessing.ts:54",
             "src/ui/panels/preprocessing.ts:59"
@@ -36101,13 +36362,61 @@
             "SPDZ"
           ],
           "evidence": [
-            "index.html:252",
+            "index.html:266",
             "src/ui/panels/variance.ts:37",
             "src/ui/panels/variance.ts:53",
             "src/ui/panels/variance.ts:101",
             "src/ui/panels/variance.ts:133"
           ],
           "limits": "Three parties are represented in one browser; no actual hospitals or network privacy boundary."
+        },
+        {
+          "id": "off-key-selective-failure",
+          "title": "Compare consistent and shifted MAC-key contexts",
+          "section": "When abort becomes a privacy oracle",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Choose a hidden bit and corrupt-party guess, then run the same authenticated-share request against a key-bound alpha mask and a deliberately shifted beta=alpha+Delta mask/check context.",
+          "outcome": "Computes the public blind opening, unmasked residual, fresh-nonzero-mu masked value and accept/abort result; the Off-Key route recovers the input or tests the promised bit while the same-context and ordinary-corruption controls do not leak it.",
+          "concepts": [
+            "SPDZ MAC",
+            "inconsistent MAC-key context",
+            "selective failure",
+            "blind opening",
+            "privacy versus correctness",
+            "key-binding state"
+          ],
+          "evidence": [
+            "index.html:246",
+            "index.html:248",
+            "index.html:250",
+            "index.html:253",
+            "src/spdz/offkey.ts:149",
+            "src/spdz/offkey.ts:163",
+            "src/spdz/offkey.ts:179",
+            "src/spdz/offkey.ts:195",
+            "src/spdz/offkey.ts:254",
+            "src/spdz/offkey.ts:262",
+            "src/spdz/offkey.ts:273",
+            "src/spdz/offkey.ts:283",
+            "src/spdz/offkey.ts:288",
+            "src/spdz/offkey.ts:310",
+            "src/spdz/offkey.ts:317",
+            "src/ui/panels/offkey.ts:57",
+            "src/ui/panels/offkey.ts:70",
+            "src/ui/panels/offkey.ts:107",
+            "src/ui/panels/offkey.ts:113",
+            "src/ui/panels/offkey.ts:120",
+            "src/ui/panels/offkey.ts:128",
+            "src/ui/panels/offkey.ts:148",
+            "src/ui/panels/offkey.ts:193",
+            "src/ui/panels/offkey.ts:205",
+            "src/ui/panels/offkey.ts:207",
+            "src/ui/panels/offkey.ts:208",
+            "src/ui/panels/offkey.ts:235",
+            "src/ui/panels/offkey.ts:250"
+          ],
+          "limits": "A three-party trusted-dealer algebraic adaptation of CL079 with one unbatched opening and mu sampled from the nonzero field. It does not reproduce two-party distributed preprocessing, the full private-affine circuit, persistence, batching, concurrency or any evaluated framework. The omniscient audit is not attacker-visible."
         }
       ]
     },
@@ -36911,8 +37220,8 @@
       ]
     },
     "crypto-lab-stark-tower": {
-      "commit": "e9f938d5fc19e065cdc21e458e266c0db8426c3f",
-      "reviewed": "2026-10-22",
+      "commit": "51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -36934,8 +37243,9 @@
             "index.html:219",
             "index.html:220",
             "index.html:221",
-            "src/stark.ts:104",
-            "src/stark.ts:543"
+            "src/stark.ts:108",
+            "src/stark.ts:115",
+            "src/stark.ts:574"
           ],
           "limits": "Small field and simple recurrence are a learning example.",
           "section": "Step 1 — Arithmetic Intermediate Representation (AIR)"
@@ -36958,7 +37268,9 @@
             "index.html:251",
             "index.html:267",
             "index.html:268",
-            "src/stark.ts:585"
+            "src/stark.ts:616",
+            "src/stark.ts:641",
+            "src/stark.ts:664"
           ],
           "limits": "A finite toy interpolation demonstrates the reduction but does not establish a full soundness bound.",
           "section": "From “constraint broken” to “degree too high”"
@@ -36980,11 +37292,15 @@
             "index.html:287",
             "index.html:289",
             "index.html:321",
-            "src/stark.ts:664",
+            "src/stark.ts:696",
+            "src/stark.ts:710",
             "src/stark.ts:714",
-            "src/merkle.ts:1"
+            "src/stark.ts:716",
+            "src/stark.ts:722",
+            "src/stark.ts:754",
+            "src/merkle.ts:72"
           ],
-          "limits": "Teaching parameters and query count give limited illustrative soundness.",
+      "limits": "The executed folds and final-code membership are component checks. A complete FRI or end-to-end STARK soundness bound additionally needs proximity, fold-MCA, composition, commitment/hash and Fiat–Shamir/BCS terms that this run does not establish.",
           "section": "Step 2 — FRI: The Heart of STARKs"
         },
         {
@@ -37002,13 +37318,16 @@
             "proof verification"
           ],
           "evidence": [
-            "index.html:394",
-            "index.html:396",
-            "index.html:411",
-            "index.html:412",
-            "index.html:413",
-            "src/stark.ts:184",
-            "src/stark.ts:366"
+            "index.html:401",
+            "index.html:403",
+            "index.html:404",
+            "index.html:418",
+            "index.html:419",
+            "index.html:420",
+            "src/stark.ts:189",
+            "src/stark.ts:371",
+            "src/stark.ts:420",
+            "src/stark.ts:540"
           ],
           "limits": "Toy parameters and narrow field do not imply production security strength.",
           "section": "Step 3 — Prove and Verify in the Browser"
@@ -37027,12 +37346,14 @@
             "simulation"
           ],
           "evidence": [
-            "index.html:445",
-            "index.html:447",
+            "index.html:452",
+            "index.html:454",
             "index.html:456",
-            "index.html:465",
-            "src/stark.ts:805",
-            "src/stark.ts:893"
+            "index.html:463",
+            "index.html:472",
+            "src/stark.ts:845",
+            "src/stark.ts:885",
+            "src/stark.ts:933"
           ],
           "limits": "A masked-opening distribution is necessary evidence, not a full zero-knowledge proof for entire transcripts.",
           "section": "The \"zk\" in zk-STARK"
@@ -37063,29 +37384,38 @@
         },
         {
           "id": "stark-size-tradeoff",
-          "title": "Adjust FRI blowup and query count",
+      "title": "Recompute FRI query terms and proof-size costs",
           "section": "The Cost: Proof Size",
           "kind": "interactive",
           "execution": "real-values",
-          "action": "Move blowup and FRI query sliders and inspect benchmark chart, heuristic security and estimated query bytes.",
-          "outcome": "Increasing either knob raises the heuristic detection strength at a cost in proof size and verification work.",
+      "action": "Move blowup and query sliders, then compare capacity-model arithmetic, conditional query-only references, missing theorem terms, authentication bytes and measured proof-size rows.",
+      "outcome": "Recomputes every displayed value while classifying the capacity formula as heuristic, theorem-based references as conditional or limiting, and complete FRI and STARK bounds as unestablished when required inputs are absent.",
           "concepts": [
             "FRI soundness",
             "blowup factor",
             "query count",
-            "proof size"
+        "proof size",
+        "soundness ledger",
+        "union bound"
           ],
           "evidence": [
             "index.html:354",
-            "index.html:360",
+            "index.html:359",
             "index.html:370",
             "index.html:373",
             "index.html:376",
-            "index.html:380",
-            "src/main.ts:397",
-            "src/main.ts:423"
+        "index.html:380",
+        "index.html:404",
+        "src/main.ts:450",
+        "src/main.ts:458",
+        "src/main.ts:497",
+        "src/main.ts:503",
+        "src/soundness.ts:107",
+        "src/soundness.ts:137",
+        "src/soundness.ts:152",
+        "src/soundness.ts:190"
           ],
-          "limits": "Heuristic estimates and representative benchmark rows; not a production security bound."
+      "limits": "The rate^queries figure is only capacity-model query arithmetic. Unique-radius and Johnson rows are query-only references under stated distance/MCA hypotheses; sampled fixture rejection and representative size rows do not establish universal soundness or production security."
         },
         {
           "id": "stark-deployments",
@@ -37102,11 +37432,12 @@
             "rollup"
           ],
           "evidence": [
-            "index.html:489",
-            "index.html:491",
-            "index.html:493",
+            "index.html:496",
+            "index.html:498",
             "index.html:501",
-            "index.html:505"
+            "index.html:505",
+            "index.html:509",
+            "index.html:513"
           ],
           "limits": "Context cards, not live deployment verification."
         }

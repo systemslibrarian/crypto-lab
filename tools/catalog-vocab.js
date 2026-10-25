@@ -42,6 +42,11 @@ const ALGORITHMS = [
   { name: 'Fermat primality test', kind: 'algorithm', family: 'primality test', re: /fermat[-_ –]?(?:primality|test)/i, std: null },
   { name: 'Jacobi symbol', kind: 'algorithm', family: 'number theory', re: /\bjacobi\b/i, std: null },
   { name: 'Tonelli–Shanks', kind: 'algorithm', family: 'modular square root', re: /tonelli[-_ –]?shanks/i, std: null },
+  /* Montgomery multiplication is modular reduction in a residue representation,
+     not the Montgomery ladder used for exponentiation or scalar multiplication.
+     Keep the executable REDC/multiply spellings narrow so ordinary references to
+     the ladder cannot earn this implementation credit. */
+  { name: 'Montgomery multiplication', kind: 'algorithm', family: 'modular arithmetic', re: /montgomery[-_ ]?(?:multiplication|multiply|reduction|redc)\b|\bredc\b/i, chipRe: /^montgomery[-_ ]?(?:multiplication|reduction|redc)$/i, std: null },
   { name: 'Goldwasser–Micali', kind: 'algorithm', family: 'public-key encryption', re: /goldwasser[-_ –]?micali/i, std: null },
   { name: 'Rabin encryption', kind: 'algorithm', family: 'public-key encryption', re: /rabin[-_ ]?encryption/i, std: null },
   { name: 'Pohlig–Hellman', kind: 'algorithm', family: 'discrete log algorithm', re: /pohlig(?:[-_ –]?hellman)?/i, std: null },
@@ -73,6 +78,11 @@ const ALGORITHMS = [
   { name: 'ChaCha20', kind: 'algorithm', family: 'stream cipher', re: /chacha20?/i, std: 'IETF:RFC 8439' },
   { name: 'Poly1305', kind: 'algorithm', family: 'MAC', re: /poly1305/i, std: 'IETF:RFC 8439' },
   { name: 'Salsa20', kind: 'algorithm', family: 'stream cipher', re: /salsa20/i, std: null },
+  /* A5/1's public teaching baseline is the reverse-engineered historical BGW
+     definition. ETSI documents Kc, COUNT and the burst interface but refers the
+     internal algorithm elsewhere, so this entry intentionally names no standards
+     body. `A51` admits the executable TypeScript identifiers as well as A5/1. */
+  { name: 'A5/1', kind: 'algorithm', family: 'historical stream cipher', re: /(?<![a-z0-9])a5(?:[\/_-]?1)(?![a-z0-9])/i, chipRe: /^(?:historical[-_ ]?)?a5[\/_-]?1$/i, std: null },
   /* eSTREAM hardware-profile cipher. Absent from this vocabulary until 2026-10-21,
      which is the ZUC and Kupyna situation a third time: crypto-lab-lfsr-forge
      implements it in src/trivium/trivium.ts with the specification's own constants
@@ -117,10 +127,11 @@ const ALGORITHMS = [
 
   /* PTW sits in ALGORITHMS rather than ATTACKS, and that is a judgement worth
      flagging rather than burying. It IS an attack -- Tews, Weinmann and Pyshkin
-     2007 -- but `add` validates only against ALGORITHMS, so a term in ATTACKS
-     could never be asserted by a reviewed pin. It is also a real computation a
-     lab can implement, which is what `data-implements` records. `pathRe` carries
-     the detection because the implementation lives in a file named for it. */
+     2007 -- but it is also a concrete computation a lab can implement, which is
+     what `data-implements` records. (`addAttacks` can now pin an attack exhibit,
+     but it deliberately cannot publish that exhibit as an implemented
+     primitive.) `pathRe` carries the detection because the implementation lives
+     in a file named for it. */
   { name: 'PTW', kind: 'algorithm', family: 'key-recovery attack', re: /\bptw\b/i, pathRe: /(^|\/)ptw(\.|\/|$)/i, std: null },
   { name: 'DES', kind: 'algorithm', family: 'block cipher', re: /\bdes\b(?!ign|crip|tin)/i, std: 'NIST:FIPS 46-3 (withdrawn)' },
   { name: '3DES', kind: 'algorithm', family: 'block cipher', re: /(?<![a-z0-9])(?:3des|triple[-_ ]?des)(?![a-z0-9])/i, std: 'NIST:SP 800-67' },
@@ -566,6 +577,12 @@ const ATTACKS = [
      profile, not the active candidate enumeration recorded above. Keep the
      spelling narrow: ordinary "keyword search" is not evidence of an attack. */
   { name: 'Keyword inference', re: /\bikk[-_ ]?attack\b|keyword[-_ ]?inference|query[-_ ]?recovery/i },
+  /* An observable accept/abort result made dependent on a secret. Keep the
+     spelling exact: ordinary protocol aborts and failure handling are not
+     selective-failure attacks. The first executable fleet example is SPDZ
+     Forge's reviewed Off-Key fixture; Garbled Gate currently names the attack
+     only as a malicious-security limit. */
+  { name: 'Selective failure', re: /selective[-_ ]?failure(?:[-_ ]?(?:attack|oracle))?/i },
   { name: 'Differential cryptanalysis', re: /differential[-_ ]?cryptanalysis/i },
   { name: 'Linear cryptanalysis', re: /linear[-_ ]?cryptanalysis/i },
   { name: 'Lattice reduction', re: /\blll\b|lattice[-_ ]?reduction|\bbkz\b/i },

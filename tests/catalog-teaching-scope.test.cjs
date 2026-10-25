@@ -521,7 +521,7 @@ function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed 
     /software CRT faults and adjacent algorithms occur only in historical handoff prose or related links/);
 
   const review = manifest.labs[slug];
-  assert.equal(review.commit, 'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e');
+  assert.equal(review.commit, 'b97b515033e235b05f55cc461bb454cf88c003b5');
   assert.equal(review.reviewed, '2026-10-25');
   assert.equal(review.reviewScope, 'complete');
   assert.equal(review.exhibits.length, 7);
@@ -1379,6 +1379,186 @@ test('Matsui Line A-D-14 controls reject lost credit, stale pins and weakened li
   const staleReview = JSON.parse(JSON.stringify(catalogReviewed));
   staleReview['crypto-lab-matsui-line'].commit = 'e218f2e71938d1514cbfde224fc61b1d68fc2e3a';
   assert.throws(() => checkMatsuiAd14Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});
+
+function checkHiddenBitS09Scope(source, manifest = exhibitManifest) {
+  const slug = 'crypto-lab-hidden-bit';
+  const block = blockFor(source, slug);
+  assert.match(block, /compare target-before-key with key-first collision games/);
+  assert.ok(chipsFor(source, slug).includes('Target Collision'));
+  assert.ok(!implementationsFor(source, slug).includes('UOWHF'),
+    'The finite order game is not a UOWHF construction credit');
+  assert.doesNotMatch(openingFor(source, slug), /UOWHF@/);
+
+  const mapped = manifest.labs[slug];
+  assert.equal(mapped.commit, '2f1ea68ada54b88a89ccb0ae2c026eccabd37a83');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.equal(mapped.exhibits.length, 9);
+  const tcr = mapped.exhibits.find(exhibit => exhibit.id === 'target-collision-order');
+  assert.ok(tcr);
+  assert.equal(tcr.execution, 'real-operation');
+  assert.equal(tcr.section, 'The same family, two orders of play');
+  assert.match(tcr.action, /target-before-key and key-first state machines/);
+  assert.match(tcr.outcome, /2-of-256 target-first and 256-of-256 key-first/);
+  assert.match(tcr.outcome, /signed \(key, digest\) application boundary/);
+  for (const anchor of [
+    'index.html:164',
+    'src/ui/tcr.ts:61',
+    'src/ui/tcr.ts:175',
+    'src/game/tcr.ts:128',
+    'src/game/tcr.ts:221',
+    'src/game/tcr.ts:330',
+    'src/game/tcr.ts:412',
+    'src/game/tcr.ts:531',
+  ]) {
+    assert.ok(tcr.evidence.includes(anchor), `S09 must retain evidence ${anchor}`);
+  }
+  assert.match(tcr.limits, /not a UOWHF construction/);
+  assert.match(tcr.limits, /not .* asymptotic separation/);
+  assert.match(tcr.limits, /not .* evidence about a real hash/);
+  assert.match(tcr.limits, /does not establish malicious-signer non-repudiation/);
+}
+
+test('Hidden Bit records S09 order-of-play evidence without claiming a UOWHF construction', () => {
+  checkHiddenBitS09Scope(html);
+});
+
+test('Hidden Bit S09 controls reject lost order credit, stale pins and weakened limits', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hidden-bit\/"[\s\S]*?<\/a>/;
+  for (const changed of [
+    html.replace(cardRe, card => card.replace('compare target-before-key with key-first collision games', 'compare collision games')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Target Collision</span>', '')),
+    html.replace(cardRe, card => card.replace('data-implements="', 'data-implements="UOWHF@src/game/tcr.ts:1 | ')),
+  ]) {
+    assert.notEqual(changed, html, 'S09 negative control must change its card');
+    assert.throws(() => checkHiddenBitS09Scope(changed), assert.AssertionError);
+  }
+
+  const stale = structuredClone(exhibitManifest);
+  stale.labs['crypto-lab-hidden-bit'].commit = '7f143a4e94038a534198c3f69af8d93ccedd86c1';
+  assert.throws(() => checkHiddenBitS09Scope(html, stale), assert.AssertionError);
+
+  const missingCount = structuredClone(exhibitManifest);
+  missingCount.labs['crypto-lab-hidden-bit'].exhibits
+    .find(exhibit => exhibit.id === 'target-collision-order').outcome =
+      'Compare the two orders with a bounded sample.';
+  assert.throws(() => checkHiddenBitS09Scope(html, missingCount), assert.AssertionError);
+
+  const missingAnchor = structuredClone(exhibitManifest);
+  const tcr = missingAnchor.labs['crypto-lab-hidden-bit'].exhibits
+    .find(exhibit => exhibit.id === 'target-collision-order');
+  tcr.evidence = tcr.evidence.filter(anchor => anchor !== 'src/game/tcr.ts:531');
+  assert.throws(() => checkHiddenBitS09Scope(html, missingAnchor), assert.AssertionError);
+
+  const overclaim = structuredClone(exhibitManifest);
+  overclaim.labs['crypto-lab-hidden-bit'].exhibits
+    .find(exhibit => exhibit.id === 'target-collision-order').limits =
+      'This constructs a secure UOWHF and proves an asymptotic separation.';
+  assert.throws(() => checkHiddenBitS09Scope(html, overclaim), assert.AssertionError);
+});
+
+function checkSumcheckGkrScope(source, manifest = exhibitManifest) {
+  const slug = 'crypto-lab-zk-proof-lab';
+  const opening = openingFor(source, slug);
+  const block = blockFor(source, slug);
+  assert.deepEqual(implementationsFor(source, slug), [
+    'Fiat-Shamir',
+    'GKR',
+    'Miller–Rabin',
+    'RSA',
+    'RSA-PSS',
+    'Schnorr',
+    'SHA-256',
+    'Sum-check',
+  ]);
+  assert.match(opening, /GKR@js\/gkr\.js:207/);
+  assert.match(opening, /Sum-check@js\/sumcheck\.js:89/);
+  assert.match(block, /Eight exhibits from Ali Baba cave to exact interactive proofs/);
+  assert.match(block, /interactive verifiable computation, not zero knowledge or a SNARK/);
+  assert.ok(chipsFor(source, slug).includes('Sum-check'));
+  assert.ok(chipsFor(source, slug).includes('GKR'));
+
+  const mapped = manifest.labs[slug];
+  assert.equal(mapped.commit, 'df4db000b0c8ec2ecbc33fea39505de42f036a4e');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.equal(mapped.exhibits.length, 10);
+  const lesson = mapped.exhibits.find(exhibit => exhibit.id === 'sumcheck-gkr');
+  assert.ok(lesson);
+  assert.equal(lesson.execution, 'real-operation');
+  assert.equal(lesson.section, 'Sum-check and a GKR layer walk');
+  assert.match(lesson.outcome, /every round polynomial, degree and recurrence check/);
+  assert.match(lesson.outcome, /post-message challenge and direct final evaluation/);
+  assert.match(lesson.outcome, /two wiring-identity reductions/);
+  assert.match(lesson.outcome, /terminal multilinear-extension evaluation/);
+  for (const anchor of [
+    'index.html:238',
+    'exhibits/sumcheck-gkr.html:66',
+    'exhibits/sumcheck-gkr.html:216',
+    'js/sumcheck.js:89',
+    'js/sumcheck.js:308',
+    'js/sumcheck.js:513',
+    'js/gkr.js:87',
+    'js/gkr.js:207',
+    'js/gkr.js:334',
+    'js/gkr.js:562',
+  ]) {
+    assert.ok(lesson.evidence.includes(anchor), `RR-SUMCHECK-GKR must retain evidence ${anchor}`);
+  }
+  assert.match(lesson.limits, /interactive proof, not zero knowledge or a SNARK/);
+  assert.match(lesson.limits, /omits GKR's uniformity machinery, sublinear verifier and general theorem/);
+  assert.match(lesson.limits, /seeded challenges are replay controls/);
+  assert.match(lesson.limits, /do not satisfy the displayed soundness premise/);
+}
+
+test('ZK Proof Lab credits executable Sum-check and bounded GKR with explicit proof boundaries', () => {
+  checkSumcheckGkrScope(html);
+});
+
+test('Sum-check and GKR vocabulary selects executable proof code, not its UI retirement helper', () => {
+  const sumcheck = ALGORITHMS.find(term => term.name === 'Sum-check');
+  const gkr = ALGORITHMS.find(term => term.name === 'GKR');
+  assert.ok(sumcheck);
+  assert.ok(gkr);
+  assert.ok(sumcheck.re.test('create sum-check verifier'));
+  assert.equal(sumcheck.re.test('retire Sumcheck'), false);
+  assert.ok(gkr.re.test('create GKR verifier'));
+  assert.equal(gkr.re.test('background renderer'), false);
+});
+
+test('Sum-check/GKR controls reject lost credit, stale pins and theorem overclaims', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-zk-proof-lab\/"[\s\S]*?<\/a>/;
+  for (const changed of [
+    html.replace(cardRe, card => card.replace(/GKR@js\/gkr\.js:207\s*\|\s*/, '')),
+    html.replace(cardRe, card => card.replace('Sum-check@js/sumcheck.js:89', 'Sum-check@js/sumcheck-ui.js:260')),
+    html.replace(cardRe, card => card.replace('Eight exhibits', 'Six exhibits')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Sum-check</span>', '')),
+    html.replace(cardRe, card => card.replace('not zero knowledge or a SNARK', 'a zero-knowledge SNARK')),
+  ]) {
+    assert.notEqual(changed, html, 'Sum-check/GKR negative control must change its card');
+    assert.throws(() => checkSumcheckGkrScope(changed), assert.AssertionError);
+  }
+
+  const stale = structuredClone(exhibitManifest);
+  stale.labs['crypto-lab-zk-proof-lab'].commit = '9af5d31e20b0559999611e6536c767da7b890a70';
+  assert.throws(() => checkSumcheckGkrScope(html, stale), assert.AssertionError);
+
+  const missingAnchor = structuredClone(exhibitManifest);
+  const lesson = missingAnchor.labs['crypto-lab-zk-proof-lab'].exhibits
+    .find(exhibit => exhibit.id === 'sumcheck-gkr');
+  lesson.evidence = lesson.evidence.filter(anchor => anchor !== 'js/sumcheck.js:513');
+  assert.throws(() => checkSumcheckGkrScope(html, missingAnchor), assert.AssertionError);
+
+  const missingOrder = structuredClone(exhibitManifest);
+  missingOrder.labs['crypto-lab-zk-proof-lab'].exhibits
+    .find(exhibit => exhibit.id === 'sumcheck-gkr').outcome =
+      'Inspect a few prover messages and a circuit result.';
+  assert.throws(() => checkSumcheckGkrScope(html, missingOrder), assert.AssertionError);
+
+  const overclaim = structuredClone(exhibitManifest);
+  overclaim.labs['crypto-lab-zk-proof-lab'].exhibits
+    .find(exhibit => exhibit.id === 'sumcheck-gkr').limits =
+      'This is a zero-knowledge SNARK implementing the general GKR theorem.';
+  assert.throws(() => checkSumcheckGkrScope(html, overclaim), assert.AssertionError);
 });
 
 function checkScope(source) {

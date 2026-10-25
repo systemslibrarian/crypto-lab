@@ -292,6 +292,12 @@
       "why": "school-level primitives: SHA-256, HKDF, AES",
       "reviewed": "rule"
     },
+    "crypto-lab-ipsec-ike": {
+      "title": "IPsec / IKE",
+      "level": "advanced",
+      "why": "Assumes comfort with SPD/SAD policy, the IKEv2 transcript and key schedule, directional Child SAs, ESP packet processing, replay windows and rekey state.",
+      "reviewed": "2026-10-25: complete README, source, tests and seven-part learner flow"
+    },
     "crypto-lab-mac-race": {
       "title": "MAC Race",
       "level": "intermediate",

@@ -43339,6 +43339,165 @@
         }
       ],
       "reviewScope": "complete"
+    },
+    "crypto-lab-ipsec-ike": {
+      "commit": "ecbf8413e81d43967b0a0fbb3b7dda812d6f4f8d",
+      "reviewed": "2026-10-25",
+      "exhibits": [
+        {
+          "id": "policy-selectors",
+          "title": "Ordered Security Policy and Selector Narrowing",
+          "kind": "comparison",
+          "execution": "real-operation",
+          "action": "Run concrete Telnet, DNS and ICMP flows through the ordered SPD and compare each first-match disposition with the independently selected route.",
+          "outcome": "Shows DISCARD, BYPASS and PROTECT outcomes beside routing, then computes the traffic-selector intersection installed for the Child SA.",
+          "concepts": [
+            "Security Policy Database",
+            "traffic selectors",
+            "policy ordering",
+            "routing separation"
+          ],
+          "evidence": [
+            "src/main.ts:178",
+            "src/protocol/spd.ts:78",
+            "src/protocol/spd.ts:118"
+          ],
+          "section": "Policy before cryptography",
+          "limits": "Uses fixed IPv4 TEST-NET flows and an in-browser policy model rather than a kernel SPD or routing table."
+        },
+        {
+          "id": "ikev2-handshake",
+          "title": "Four-Message PSK IKEv2 Handshake",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Run fresh or fixed evidence to encode IKE_SA_INIT, compute X25519 and the IKE key schedule, authenticate both identities, and seal and open both IKE_AUTH messages.",
+          "outcome": "Displays the exact four-message transcript, shared secret, SKEYSEED, PSK AUTH, IKE AAD and independently verified identities and transcript bindings.",
+          "concepts": [
+            "IKEv2",
+            "X25519",
+            "prf+",
+            "preshared-key authentication",
+            "encrypted IKE_AUTH"
+          ],
+          "evidence": [
+            "src/main.ts:188",
+            "src/protocol/ike-wire.ts:91",
+            "src/protocol/ike.ts:237",
+            "src/protocol/ike.ts:567"
+          ],
+          "section": "Four-message IKEv2",
+          "limits": "The bounded profile supports one PSK, one transform proposal and no certificate, EAP, NAT-traversal, MOBIKE or interoperable socket layer."
+        },
+        {
+          "id": "child-sa-directions",
+          "title": "Two Directional Child Security Associations",
+          "kind": "explanation",
+          "execution": "real-values",
+          "action": "Inspect the receiver-selected SPI, AES key and salt for each simplex direction after initial Child KEYMAT derivation.",
+          "outcome": "Shows that initiator-to-responder and responder-to-initiator traffic use distinct 20-byte KEYMAT slices and inbound SA identifiers.",
+          "concepts": [
+            "Child SA",
+            "directional key material",
+            "Security Association Database",
+            "SPI"
+          ],
+          "evidence": [
+            "src/main.ts:206",
+            "src/protocol/ike.ts:237",
+            "src/protocol/esp.ts:490"
+          ],
+          "section": "Two simplex SAs",
+          "limits": "The first Child SA has no fresh DH exchange and the lesson models one selector pair and one transform suite."
+        },
+        {
+          "id": "mode-negotiation",
+          "title": "Transport Echo, Tunnel Fallback, and Protected Deletion",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Request tunnel or transport mode, vary the responder echo and local fallback policy, and rerun the negotiation.",
+          "outcome": "Establishes transport only when USE_TRANSPORT_MODE is echoed, otherwise executes tunnel fallback or a protected paired-SPI Child-SA deletion.",
+          "concepts": [
+            "IPsec transport mode",
+            "IPsec tunnel mode",
+            "USE_TRANSPORT_MODE",
+            "Child-SA deletion"
+          ],
+          "evidence": [
+            "src/main.ts:223",
+            "src/protocol/ike.ts:529",
+            "src/protocol/rekey.ts:250"
+          ],
+          "section": "Mode negotiation",
+          "limits": "Mode negotiation is confined to the declared IKEv2 teaching profile and does not install operating-system policy."
+        },
+        {
+          "id": "esp-packet",
+          "title": "Authenticated ESP Packet and IPv4 Boundaries",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Protect an actual IPv4 fixture in the negotiated mode, inspect every ESP field, then authenticate, decrypt and reconstruct the packet.",
+          "outcome": "Displays clear SPI, sequence and explicit IV, exact AAD, nonce, ciphertext, encrypted trailer and 16-byte tag while contrasting transport and tunnel packet boundaries.",
+          "concepts": [
+            "IPsec ESP",
+            "AES-GCM",
+            "authenticated data",
+            "transport mode",
+            "tunnel mode"
+          ],
+          "evidence": [
+            "src/main.ts:238",
+            "src/protocol/esp.ts:176",
+            "src/protocol/ipv4.ts:82"
+          ],
+          "section": "Actual ESP packet",
+          "limits": "The sequence-derived explicit IV is this profile's uniqueness construction, not a universal negotiated ESP rule."
+        },
+        {
+          "id": "anti-replay",
+          "title": "ESP Replay-Window Receiver State Machine",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Submit reordered, duplicate, too-old, modified-ahead, later-valid and unknown-SPI packets to controlled receiver states.",
+          "outcome": "Shows SAD lookup, pure replay precheck, AES-GCM authentication and replay-state commit in order, including that an invalid tag cannot advance the window.",
+          "concepts": [
+            "anti-replay window",
+            "SAD lookup",
+            "authentication ordering",
+            "packet reordering"
+          ],
+          "evidence": [
+            "src/main.ts:263",
+            "src/protocol/esp.ts:125",
+            "src/protocol/esp.ts:305"
+          ],
+          "section": "Receiver state machine",
+          "limits": "Uses a 64-packet non-ESN window and synthetic in-browser packets; it does not measure network timing or loss."
+        },
+        {
+          "id": "child-sa-rekey",
+          "title": "Child-SA Rekey, Overlap, and Retirement",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Derive fresh Child-SA keys and SPIs, accept old and new generations during overlap, try old key material under the new SPI, then delete and retire the old pair.",
+          "outcome": "Shows fresh keys, salts, counters and replay windows, authentication failure for wrong-generation keying, protected paired-SPI deletion and refusal after retirement.",
+          "concepts": [
+            "Child-SA rekey",
+            "key separation",
+            "SA overlap",
+            "SA retirement",
+            "sequence restart"
+          ],
+          "evidence": [
+            "src/main.ts:274",
+            "src/protocol/rekey.ts:83",
+            "src/protocol/rekey.ts:108",
+            "src/protocol/esp.ts:476"
+          ],
+          "section": "Child-SA rekey",
+          "limits": "This is Child-SA rekey without a fresh DH transform; it does not implement IKE-SA rekey or production lifecycle coordination."
+        }
+      ],
+      "reviewScope": "complete"
     }
   }
 }

@@ -3,9 +3,9 @@
   "generated": "2026-10-25",
   "root": "..",
   "totals": {
-    "labs": 249,
-    "autoMergeJobs": 247,
-    "dispatchSites": 246
+    "labs": 250,
+    "autoMergeJobs": 248,
+    "dispatchSites": 247
   },
   "withDispatchSite": [
     "crypto-compare",
@@ -109,6 +109,7 @@
     "crypto-lab-hybrid-wire",
     "crypto-lab-ibe-gate",
     "crypto-lab-icy-dvrf",
+    "crypto-lab-ipsec-ike",
     "crypto-lab-iron-letter",
     "crypto-lab-iron-serpent",
     "crypto-lab-isogeny-atlas",

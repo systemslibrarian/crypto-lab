@@ -2275,7 +2275,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">244</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">245</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -6592,6 +6592,30 @@
                 <span class="chip">HKDF</span>
                 <span class="chip">WireGuard</span>
                 <span class="chip">Handshake Patterns</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-ipsec-ike/"
+            data-implements="AES@src/protocol/primitives.ts:45 | AES-GCM@src/protocol/primitives.ts:45 | Diffie-Hellman@src/protocol/ike.ts:573 | HMAC@src/protocol/primitives.ts:19 | IKEv2@src/protocol/ike-wire.ts:91 | IPsec ESP@src/protocol/esp.ts:149 | SHA-256@src/protocol/primitives.ts:19 | X25519@src/protocol/x25519.ts:17"
+            data-references="EC point arithmetic | X448"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto AES-GCM, HMAC and SHA-256 / local TypeScript and BigInt X25519, IKEv2, ESP, IPv4 and protocol-state teaching implementations"
+            data-review-commit="ecbf8413e81d43967b0a0fbb3b7dda812d6f4f8d"
+            data-review-note="Read the complete merged README, implementation brief, TypeScript protocol source, tests, learner interface and visible limits at this current main revision. Main is the reviewed implementation merge 6644abcb691bcddac323ee552af4cae2f102cd9e plus a workflow-only Dependabot commit; README and src are byte-identical to the deployed implementation tree. The lab executes ordered SPD outcomes separately from routing, policy-based traffic-selector narrowing, a real four-message PSK IKEv2 exchange with X25519, SKEYSEED/prf+ and encrypted IKE_AUTH, and the initial Child SA inside IKE_AUTH. Two directional AES-GCM-16/128 ESP SAs use receiver-selected SPIs, distinct key/salt material, sequence and replay state; actual IPv4 transport/tunnel packets expose exact AAD, nonce, ciphertext, trailer and tag bytes before reconstruction and checksum verification. Receiver cases execute SAD lookup, non-mutating replay precheck, authentication-before-window-commit, reordering, duplicate, too-old, invalid-tag and unknown-SPI behavior. Separate transport echo/fallback, protected deletion and Child-SA rekey cases retain fresh SPIs, keys, counters and replay windows and explicitly reject wrong-generation keying. This is a bounded IPv4 teaching profile, not an interoperable VPN daemon or production credential store; it excludes certificates, EAP, IPv6, NAT traversal, fragmentation, MOBIKE, AH, ESN and kernel routing, and its BigInt X25519 is not constant-time. Implementation-merge quality/deployment run 40226926121 passed 102 unit tests, seven hosted learner-claim/accessibility/reflow tests and all 17 clean-baseline mutations; CodeQL run 40226926164 passed. The deployed HTML, JavaScript and CSS were fetched on 2026-10-25 and matched a fresh build from the implementation merge byte for byte."
+            data-level="advanced" data-added="2026-10" data-added-on="2026-10-25" data-updated="2026-10"
+            data-overlaps="crypto-lab-noise-pipe: Noise Pipe executes Noise patterns and an application-channel/WireGuard comparison; IPsec / IKE instead executes ordered SPD policy, IKEv2 and Child-SA negotiation, ESP packet processing, replay state, protected deletion and rekeying."
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">IKEv2 / ESP Packet Flow</div>
+            <div class="project-title">IPsec / IKE</div>
+            <div class="project-copy">Apply an ordered SPD, run a four-message PSK IKEv2 exchange, derive two simplex Child SAs, then protect real IPv4 bytes with ESP AES-GCM while exercising mode negotiation, replay handling, deletion, and rekey.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">IKEv2</span>
+                <span class="chip">ESP</span>
+                <span class="chip">AES-GCM-16</span>
+                <span class="chip">Anti-Replay</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -21777,6 +21801,7 @@
           { title: 'X3DH Wire' },
           { title: 'Ratchet Wire' },
           { title: 'Noise Pipe' },
+          { title: 'IPsec / IKE' },
           { title: 'OPAQUE Gate' },
           { title: 'TLS Handshake' },
           { title: 'Kyber Vault' },
@@ -21844,6 +21869,7 @@
       'Signature Gate': 'public-key',
       'Hybrid Wire': 'key-exchange', 'X3DH Wire': 'key-exchange',
       'Noise Pipe': 'key-exchange', 'Ratchet Wire': 'key-exchange',
+      'IPsec / IKE': 'key-exchange',
       'MLS Group': 'key-exchange', 'Kerberos v5': 'key-exchange',
       'PKI Chain': 'key-exchange', 'Chain of Trust': 'key-exchange', 'OPAQUE Gate': 'key-exchange',
       'Envelope KMS': 'key-exchange',
@@ -21956,7 +21982,7 @@
       'TESLA Broadcast',
       'DVD Scramble',
       'Kerberos v5','PKI Chain','Chain of Trust','MLS Group','Ratchet Wire','X3DH Wire',
-      'Noise Pipe','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
+      'Noise Pipe','IPsec / IKE','Envelope KMS','PQ TLS Handshake','OPAQUE Gate','GG20 Wallet',
       'WebAuthn','Web of Trust','SSH Handshake','Bitcoin Wallet',
       'Bitcoin Script','TLS Handshake','Blind Hello','Blind Relay',
       'Key Mirror','SPAKE Gate','Encrochat','Beacon Lock','Token Tell',

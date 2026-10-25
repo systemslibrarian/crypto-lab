@@ -926,5 +926,9 @@
  {
   "port": 4747,
   "lab": "crypto-lab-clock-arithmetic"
+ },
+ {
+  "port": 4748,
+  "lab": "crypto-lab-ipsec-ike"
  }
 ]

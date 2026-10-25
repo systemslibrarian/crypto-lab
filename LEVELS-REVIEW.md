@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 146. Total 245.
+**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 147. Total 246.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -141,7 +141,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (146)
+## Advanced — `advanced` (147)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -200,6 +200,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Hybrid Wire](https://systemslibrarian.github.io/crypto-lab-hybrid-wire/) | rule | needs specialist background: ML-KEM, Kyber, quantum |
 | [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) | rule | needs specialist background: pairing, BLS12, bilinear |
 | [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) | rule | needs specialist background: Shamir, FROST |
+| [IPsec / IKE](https://systemslibrarian.github.io/crypto-lab-ipsec-ike/) | 2026-10-25: complete README, source, tests and seven-part learner flow | Assumes comfort with SPD/SAD policy, the IKEv2 transcript and key schedule, directional Child SAs, ESP packet processing, replay windows and rekey state. |
 | [Isogeny Atlas](https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/) | rule | needs specialist background: isogeny, CSIDH, quantum |
 | [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) | rule | needs specialist background: isogeny, SIDH, CSIDH |
 | [J-UNIWARD](https://systemslibrarian.github.io/crypto-lab-j-uniward/) | rule | needs specialist background: wavelet, adaptive embedding |

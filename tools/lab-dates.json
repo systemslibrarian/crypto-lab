@@ -418,6 +418,14 @@
    "updatedFrom": "2026-10-09T18:19:46-04:00",
    "updatedCommit": "9cc606e6158e89a6996aea0b911e61532ca4d00d"
   },
+  "crypto-lab-ipsec-ike": {
+   "added": "2026-10",
+   "addedOn": "2026-10-25",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-25T18:33:46Z",
+   "updatedFrom": "2026-10-25T15:37:39-04:00",
+   "updatedCommit": "6644abcb691bcddac323ee552af4cae2f102cd9e"
+  },
   "crypto-lab-mac-race": {
    "added": "2026-04",
    "addedOn": "2026-04-07",

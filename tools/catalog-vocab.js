@@ -321,6 +321,8 @@ const ALGORITHMS = [
 
   // --- protocols and deployed systems ---
   { name: 'TLS 1.3', kind: 'algorithm', family: 'protocol', re: /tls[-_ ]?1\.3/i, structures: ['ClientHello', 'ServerHello', 'EncryptedExtensions', 'HelloRetryRequest', 'CertificateVerify', 'NewSessionTicket'], std: 'IETF:RFC 9846' },
+  { name: 'IKEv2', kind: 'algorithm', family: 'protocol', re: /\bikev?2\b/i, chipRe: /^ikev?2$/i, structures: ['IkePayload', 'IkeMessage', 'IkeHeader', 'IkeSa', 'IkeAuth'], std: 'IETF:RFC 7296' },
+  { name: 'IPsec ESP', kind: 'algorithm', family: 'protocol', re: /\bipsec[-_ ]?esp\b|\bencapsulating[-_ ]?security[-_ ]?payload\b/i, chipRe: /^(?:ipsec[-_ ]?)?esp$/i, structures: ['EspSa', 'ReplayWindow'], std: 'IETF:RFC 4303' },
   { name: 'Noise protocol', kind: 'algorithm', family: 'protocol', re: /noise[-_ ]?(?:protocol|xx|ik|nk|handshake)/i, structures: ['MixHash', 'MixKey'], std: null },
   { name: 'X3DH', kind: 'algorithm', family: 'protocol', re: /x3dh/i, std: null },
   { name: 'PQXDH', kind: 'algorithm', family: 'protocol', re: /pqxdh/i, std: null },

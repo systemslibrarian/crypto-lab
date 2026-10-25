@@ -392,6 +392,15 @@ corrupted equations produce explicit ambiguity or held-out rejection. This
 executes no Trivium state or round and makes no attack or performance claim
 against reduced-round or full Trivium. Catalogued total remains 245.*
 
+*Version 49 — files IPsec / IKE under §16 as a bounded executable network-layer
+secure-channel lesson. An ordered SPD decision precedes route selection; a four-message
+PSK IKEv2 exchange derives its IKE SA and the first pair of directional Child SAs; and
+actual IPv4 transport- and tunnel-mode bytes pass through AES-GCM-16 ESP, SPI lookup,
+authentication and replay-window state. Protected deletion and Child-SA rekeying use
+fresh SPIs, keys, counters and replay windows. The IPv4-only, certificate-free profile
+does not claim VPN interoperability or production credential handling. Section §16 was
+already `DEEP`; no concept status changes. Catalogued total moves to 246.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -742,7 +751,7 @@ neighbour to cross-link, not a component to import.
 ## III. Protocol ideas
 
 **16. Key exchange and forward secrecy — `DEEP`**
-Key Exchange · Curve Lens · DH MITM · X3DH Wire · Ratchet Wire · Noise Pipe · MLS Group ·
+Key Exchange · Curve Lens · DH MITM · X3DH Wire · Ratchet Wire · Noise Pipe · IPsec / IKE · MLS Group ·
 SSH Handshake · TLS Handshake · Hybrid Wire · PQ TLS Handshake · Downgrade Wire · HPKE
 Envelope · PQXDH Wire · Agreeing in Public · Twist Trap · AKE Ladder. The classical → KEM → hybrid arc is complete.
 
@@ -1406,7 +1415,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 245.**
+**Catalogued total: 246.**
 
 ---
 

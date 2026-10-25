@@ -1880,3 +1880,105 @@ test('new lab cards retain real computations without borrowing neighboring attac
   assert.ok(attacksFor(html, 'crypto-lab-hash-hunt').includes('Collision attack'));
   assert.ok(attacksFor(html, 'crypto-lab-log-forge').includes('Discrete log'));
 });
+
+function checkIpsecIkeScope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-ipsec-ike';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'AES',
+    'AES-GCM',
+    'Diffie-Hellman',
+    'HMAC',
+    'IKEv2',
+    'IPsec ESP',
+    'SHA-256',
+    'X25519',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Replay and wrong-generation-key cases are receiver controls, not catalogued cryptanalytic attacks');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-review-commit="3019cef4c514b5649aa530b74f3a6053deda4b4c"/);
+  assert.match(opening, /IKEv2@src\/protocol\/ike-wire\.ts:91/);
+  assert.match(opening, /IPsec ESP@src\/protocol\/esp\.ts:149/);
+  assert.match(opening, /WebCrypto AES-GCM, HMAC and SHA-256 \/ local TypeScript and BigInt X25519, IKEv2, ESP, IPv4 and protocol-state teaching implementations/);
+  assert.match(opening, /bounded IPv4 teaching profile, not an interoperable VPN daemon or production credential store/);
+  assert.deepEqual(referencesFor(source, slug), ['EC point arithmetic', 'X448']);
+  assert.deepEqual(chipsFor(source, slug), ['IKEv2', 'ESP', 'AES-GCM-16', 'Anti-Replay']);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '3019cef4c514b5649aa530b74f3a6053deda4b4c');
+  assert.deepEqual(review.add, [
+    'IKEv2@src/protocol/ike-wire.ts:91',
+    'IPsec ESP@src/protocol/esp.ts:149',
+  ]);
+  assert.match(review.note, /README and src remain byte-identical to the implementation tree/);
+  assert.match(review.note, /authentication-before-window-commit/);
+  assert.match(review.note, /Current-main quality\/deployment run 40229891529/);
+  assert.match(review.note, /all three public files byte for byte/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'policy-selectors',
+    'ikev2-handshake',
+    'child-sa-directions',
+    'mode-negotiation',
+    'esp-packet',
+    'anti-replay',
+    'child-sa-rekey',
+  ]);
+  assert.equal(mapped.exhibits.find((item) => item.id === 'ikev2-handshake').execution, 'real-crypto');
+  assert.match(mapped.exhibits.find((item) => item.id === 'anti-replay').outcome,
+    /invalid tag cannot advance the window/);
+  assert.match(mapped.exhibits.find((item) => item.id === 'child-sa-rekey').limits,
+    /without a fresh DH transform/);
+}
+
+test('IPsec / IKE credits the executable protocols without promoting receiver controls to attacks', () => {
+  checkIpsecIkeScope(html);
+});
+
+test('IKEv2 and IPsec ESP vocabulary requires their protocol identities, not generic prose', () => {
+  const ikev2 = ALGORITHMS.find((term) => term.name === 'IKEv2');
+  const esp = ALGORITHMS.find((term) => term.name === 'IPsec ESP');
+  assert.ok(ikev2);
+  assert.ok(esp);
+  assert.ok(ikev2.re.test('IKEv2'));
+  assert.equal(ikev2.re.test('bike version 2'), false);
+  assert.ok(esp.re.test('IPsec ESP'));
+  assert.ok(esp.re.test('Encapsulating Security Payload'));
+  assert.equal(esp.re.test('an ESP32 microcontroller'), false);
+  assert.deepEqual(esp.structures, ['EspSa', 'ReplayWindow']);
+});
+
+test('IPsec / IKE scope controls reject lost, moved, invented or incomplete evidence', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-ipsec-ike\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(/IKEv2@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'IPsec ESP@src/protocol/esp.ts:149',
+      'IPsec ESP@src/protocol/esp.ts:148',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-references="',
+      'data-attacks="Replay attack@src/lab.ts:387" data-references="',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-review-commit="3019cef4c514b5649aa530b74f3a6053deda4b4c"',
+      'data-review-commit="ecbf8413e81d43967b0a0fbb3b7dda812d6f4f8d"',
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the IPsec / IKE card');
+    assert.throws(() => checkIpsecIkeScope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = structuredClone(exhibitManifest);
+  missingExhibit.labs['crypto-lab-ipsec-ike'].exhibits = missingExhibit.labs['crypto-lab-ipsec-ike'].exhibits
+    .filter((item) => item.id !== 'anti-replay');
+  assert.throws(() => checkIpsecIkeScope(html, missingExhibit, catalogReviewed), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-ipsec-ike'].commit = '0'.repeat(40);
+  assert.throws(() => checkIpsecIkeScope(html, exhibitManifest, staleReview), assert.AssertionError);
+});

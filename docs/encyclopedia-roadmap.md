@@ -20,8 +20,8 @@ S02 is **live** at exact Envelope KMS main `d2b6614a9fad`. The delivered integri
 
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 33 |
-| In progress | 0 |
+| Planned | 32 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 15 |
@@ -56,7 +56,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Implement S04 in Proof Tally as a bounded participant-contributed differential-privacy lesson without changing its standardized Prio3 route; independently audit its sampler, clipping, adjacency, sensitivity, honest-party, dropout, one-release, wrap and collector-view boundaries, then verify the complete hosted gate, deployment and served assets.
 - [x] Implement S02 in Envelope KMS as a bounded key-evolving audit-log lesson; independently audit its HMAC schedule, compromise boundary, prior/suffix attacks, checkpoint and truncation results, then verify the complete hosted gate, exact-main deployment and served assets.
 
-**Implementation work:** S02 is live and the next planned P1 item is A-D-04. Initialize the newly created DC-net repository from current remote state, then implement a fresh-mask parity lesson whose algebra, observer views, disruption limits and mask-reuse failures remain separate. L-R-01 is assigned to a separate implementation worker in Clock Arithmetic and remains Planned until repository evidence earns a status change. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
+**Implementation work:** S02 is live and A-D-04 is in progress from the new DC-net repository's exact bootstrap main `51237cbc73f5`. The active implementation uses a five-participant key-sharing cycle and keeps fresh-mask algebra, coalition components, collision parity, disruption, commitments and mask-reuse failures separate. L-R-01 is assigned to a separate implementation worker in Clock Arithmetic and remains Planned until repository evidence earns a status change. Optional P2 workshop depth and P3 specialist scope remain queued choices, with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -65,7 +65,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **A-D-04 — DC-net anonymity, collision and disruption:** initialize the focused DC-net repository, execute pairwise-mask cancellation with explicit observer and collusion views, and keep parity, sender anonymity, collision, jamming and mask-reuse claims separate.
+1. **A-D-04 — DC-net anonymity, collision and disruption (in progress):** implement the focused lab from exact bootstrap main `51237cbc73f5`, execute pairwise-mask cancellation with explicit observer and coalition views, and keep parity, sender anonymity, collision, jamming, dropout, commitment and mask-reuse claims separate.
 2. **L-R-01 — Montgomery multiplication:** separately assigned in Clock Arithmetic; retain Planned status until reviewed implementation, test, merge, deployment and live evidence are available.
 
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
@@ -726,7 +726,7 @@ Add the remaining P1 mechanisms with explicit protocol, adversary and arithmetic
 
 ### A-D-04 — Dining-cryptographers anonymous broadcast
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** Anonymous communication.
+**Priority:** P1 — next · **Status:** In progress · **Workstream:** Anonymous communication.
 
 **Target:** New focused DC-net lab.
 
@@ -738,7 +738,7 @@ Add the remaining P1 mechanisms with explicit protocol, adversary and arithmetic
 - Compare each participant's and a coalition's possible-sender views under the declared key graph.
 - Exercise simultaneous senders, malformed contributions and mask reuse, with synchrony and disruption assumptions visible.
 
-**Next action:** Define the small participant graph and adversary views, then implement the classical DC-net mechanism.
+**Next action:** Complete the five-participant cycle implementation, independent exhaustive checks, learner-visible failure cases and full hosted claim/accessibility/mutation gate; do not credit delivery before merge, deployment and public verification.
 
 **Scope and limits:** Separate information-theoretic fresh masks from pseudorandom generation and avoid importing dated open-problem claims.
 
@@ -1650,6 +1650,7 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-24 | S04 Hub publication | [Crypto Lab PR #275](https://github.com/systemslibrarian/crypto-lab/pull/275) merged as `97bf61563a64`. Six PR workflows passed; seven exact-main workflows then passed 14 jobs, with only the event-inapplicable schedule drift job skipped. Pages [run 40126836731](https://github.com/systemslibrarian/crypto-lab/actions/runs/40126836731) deployed that exact merge. The live Hub now exposes Proof Tally's bounded-cohort exact-differencing/noisy-release description, `Discrete Laplace` topic, nine-section source-reviewed exhibit inventory and S04-to-S02 roadmap transition. |
 | 2026-10-25 | S02 key-evolving audit-log delivery | [Envelope KMS PR #45](https://github.com/systemslibrarian/crypto-lab-envelope-kms/pull/45) merged as exact main `d2b6614a9fad`. Final-head runs 40136700628 and 40136700660 passed; exact-main Pages/build run 40166747041 and CodeQL run 40166747021 passed. The complete gate reports 154 unit tests, two publishing controls, 49 Chromium claim/accessibility/reflow tests, zero dependency vulnerabilities, coverage of 91.79% statements/88.00% branches/96.07% functions/93.11% lines and all 18 combined claim mutations killed. The public HTML, JavaScript and CSS matched the reviewed build byte for byte. The live lesson separately executes prior rewrite, compromised-suffix forgery, checkpoint comparison, truncation/completeness and freshness while retaining its HMAC, one-way-evolution, modeled-erasure, private-verifier and non-global-consistency limits. S02 is **Live**; A-D-04 is next. |
 | 2026-10-25 | S02 Hub publication | [Crypto Lab PR #277](https://github.com/systemslibrarian/crypto-lab/pull/277) merged as `80e80a0cd0b6`. All six PR workflows passed. Seven exact-main workflows then passed 14 jobs, with only the event-inapplicable schedule drift job skipped: [README/catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40169161608), [public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40169161618), [Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40169161616), [learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40169161607), [protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40169161621), [arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40169161626) and [Pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40169161095). Pages deployed that exact merge. The served `index.html`, roadmap, catalog, README, concept coverage and knowledge-map JSON each matched the reviewed tree byte for byte. The live Hub now exposes Envelope KMS's HMAC implementation, Merkle reference-only comparison, eleven-section source-reviewed inventory, precise S02 limits and the S02-to-A-D-04 roadmap transition without inventing fault or side-channel coverage. |
+| 2026-10-25 | A-D-04 DC-net implementation start | The newly created [DC-net repository](https://github.com/systemslibrarian/crypto-lab-dc-net) was confirmed to have no commit, branch or workflow, so a normal implementation pull request had no possible base. A minimal title-and-roadmap bootstrap was pushed as exact main `51237cbc73f5`; the implementation then started on `codex/ad04-dc-net-20261025` from that exact revision. Dedup Vault `3cbf467bdb1a`, Proof Tally `f1220e93baa5` and Sphinx Mix `51c0b320ba40` were refreshed and inspected for current quality, deployment and privacy-lesson patterns. Primary-source review fixed the model as a five-participant cycle with independent one-use edge masks, component-parity coalition views, prior-preserving posteriors, parity-only collision output, abort-and-reform dropout handling, bounded SHA-256 commit/reveal and explicit reuse/erasure limits. A-D-04 is **In progress** only; this entry credits no implemented learner behavior, test, merge or deployment. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

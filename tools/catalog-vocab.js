@@ -171,6 +171,7 @@ const ALGORITHMS = [
   { name: 'EdDSA', kind: 'algorithm', family: 'signature', re: /eddsa/i, std: 'IETF:RFC 8032' },
   { name: 'Ed25519', kind: 'algorithm', family: 'signature', re: /ed25519/i, alias: 'EdDSA', std: 'IETF:RFC 8032' },
   { name: 'Ed448', kind: 'algorithm', family: 'signature', re: /ed448/i, alias: 'EdDSA', std: 'IETF:RFC 8032' },
+  { name: 'Sign-then-Encrypt', kind: 'algorithm', family: 'signcryption composition', re: /sign[-_ ]?then[-_ ]?encrypt|\bsigncrypt\b/i, std: null },
   { name: 'X25519', kind: 'algorithm', family: 'key exchange', re: /x25519|curve25519/i, std: 'IETF:RFC 7748' },
   { name: 'X448', kind: 'algorithm', family: 'key exchange', re: /x448/i, std: 'IETF:RFC 7748' },
   { name: 'P-256', kind: 'algorithm', family: 'elliptic curve', re: /\bp-?256\b|secp256r1|prime256v1/i, std: 'NIST:SP 800-186' },
@@ -543,6 +544,9 @@ const ATTACKS = [
   { name: 'Downgrade attack', re: /downgrade[-_ ]?attack|version[-_ ]?rollback/i },
   { name: 'Replay attack', re: /replay[-_ ]?attack/i },
   { name: 'Man-in-the-middle', re: /man[-_ ]in[-_ ]the[-_ ]middle|\bmitm\b/i },
+  /* Keep this to executable forgery spellings. AKE Ladder and other labs link
+     to KCI lessons without themselves mounting a recipient-key KCI attack. */
+  { name: 'Key-compromise impersonation', re: /forge[-_ ]?auth[-_ ]?after[-_ ]?recipient[-_ ]?compromise|kci[-_ ]?forg(?:e|ery)/i },
   { name: 'Key recovery', re: /key[-_ ]?recovery/i },
   { name: 'Frequency analysis', re: /frequency[-_ ]?analysis/i },
   /* A declared known-empty input is a known all-zero plaintext, and mask/pad

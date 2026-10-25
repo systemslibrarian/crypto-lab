@@ -15959,8 +15959,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hpke-envelope": {
-      "commit": "bb39ab7a5f048ffd51396de8dc8b99c255f61948",
-      "reviewed": "2026-10-22",
+      "commit": "fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "pipeline",
@@ -16103,27 +16103,40 @@
           "limits": "The post-quantum KEM is described here, not built or exercised in this lab."
         },
         {
-          "id": "hpke-kci-boundary",
-          "title": "HPKE Auth Mode KCI Boundary",
-          "kind": "explanation",
-          "action": "Read the scope note about recipient-key compromise and the cited Auth and AuthPSK conditions.",
-          "outcome": "Explains that DHKEM Auth sender authentication can fail when the recipient secret is compromised, and AuthPSK adds a PSK-compromise condition.",
+          "id": "hpke-kci-signcryption",
+          "title": "HPKE Auth KCI and Identity-Bound Sign-then-Encrypt",
+          "kind": "comparison",
+          "action": "Generate a fresh three-party key set, then run nine cases spanning honest delivery, outsider tampering, recipient-key KCI, recipient and sender compromise, forwarding, public evidence and replay.",
+          "outcome": "Executes an Auth ciphertext forgery with recipient skR and public sender pkS, then contrasts it with strict Ed25519 evidence over sender, recipient, independently expected context and message.",
           "concepts": [
-            "HPKE",
+            "HPKE Auth",
             "key-compromise impersonation",
-            "DHKEM Auth",
-            "AuthPSK",
-            "signature binding"
+            "Sign-then-Encrypt",
+            "Ed25519",
+            "insider security",
+            "transferable evidence"
           ],
           "evidence": [
-            "src/ui/statics.ts:127",
-            "src/ui/statics.ts:135",
-            "src/ui/statics.ts:136",
-            "src/ui/modes.ts:46"
+            "src/ui/signcryption.ts:127",
+            "src/ui/signcryption.ts:130",
+            "src/ui/signcryption.ts:205",
+            "src/ui/signcryption.ts:225",
+            "src/ui/signcryption.ts:265",
+            "src/ui/signcryption.ts:289",
+            "src/ui/signcryption.ts:301",
+            "src/ui/signcryption.ts:322",
+            "src/ui/signcryption.ts:339",
+            "src/ui/signcryption.ts:379",
+            "src/ui/signcryption.ts:399",
+            "src/signcryption/ste.ts:311",
+            "src/signcryption/ste.ts:360",
+            "src/signcryption/ste.ts:441",
+            "src/signcryption/ste.ts:484",
+            "src/signcryption/ste.ts:641"
           ],
-          "section": "What this lab isn’t",
-          "execution": "conceptual",
-          "limits": "KCI is named and scoped here, not exercised by the interactive modes."
+          "section": "Sender evidence under key compromise: Auth versus Sign-then-Encrypt",
+          "execution": "real-crypto",
+          "limits": "Bounded teaching profile, not a standardized signcryption wire format or proof transfer. Evidence proves only that a separately pinned key signed the exact disclosed fields; it does not prove transmission, receipt, time, human intent or legal non-repudiation, and replay remains application state."
         }
       ],
       "reviewScope": "complete"

@@ -15799,13 +15799,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hpke-envelope/"
-            data-implements="AES@src/hpke/aead.ts:35 | AES-GCM@src/hpke/aead.ts:54 | ChaCha20@src/hpke/aead.ts:51 | ChaCha20-Poly1305@src/hpke/aead.ts:51 | DHKEM@src/hpke/hpke.ts:14 | Diffie-Hellman@src/hpke/dhkem.ts:22 | HKDF@src/hpke/kdf.ts:7 | HPKE@src/hpke/consts.ts:62 | Poly1305@src/hpke/aead.ts:51 | SHA-256@src/hpke/kdf.ts:8 | X25519@src/hpke/dhkem.ts:10"
+          <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE | SIGNATURES | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hpke-envelope/"
+            data-implements="AES@src/hpke/aead.ts:35 | AES-GCM@src/hpke/aead.ts:54 | ChaCha20@src/hpke/aead.ts:51 | ChaCha20-Poly1305@src/hpke/aead.ts:51 | DHKEM@src/hpke/hpke.ts:14 | Diffie-Hellman@src/hpke/dhkem.ts:22 | Ed25519@src/signcryption/ste.ts:325 | HKDF@src/hpke/kdf.ts:7 | HPKE@src/hpke/consts.ts:62 | Poly1305@src/hpke/aead.ts:51 | SHA-256@src/hpke/kdf.ts:8 | Sign-then-Encrypt@src/signcryption/ste.ts:311 | X25519@src/hpke/dhkem.ts:10"
             data-comment-only="AEGIS-256@src/hpke/aead.ts:5 | EC point arithmetic@src/hpke/dhkem.ts:4 | Encrypted Client Hello@src/ui/links.ts:15"
-            data-references="AEGIS-256 | Ascon | Ed25519 | Encrypted Client Hello | Kyber | ML-KEM | MLS"
-            data-attacks="Key recovery@src/ui/statics.ts:21 | Nonce reuse@src/ui/links.ts:12"
+            data-references="AEGIS-256 | Ascon | Encrypted Client Hello | Kyber | ML-KEM | MLS"
+            data-attacks="Key-compromise impersonation@src/signcryption/ste.ts:641"
             data-standards="IETF | NIST"
-            data-implementation="WebCrypto"
+            data-implementation="WebCrypto AES-GCM / @noble X25519, HKDF and strict Ed25519 / local RFC 9180 and bounded Sign-then-Encrypt teaching profile"
+            data-review-commit="fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8"
+            data-review-note="Read the complete merged README, HPKE implementation, Sign-then-Encrypt core, learner interface, unit/browser tests, mutation runner and visible limitations at this exact main commit. The original RFC 9180 pipeline, all four modes, context-binding failures, replay and non-goals remain. The S01 comparison now executes the RFC 9180 Auth recipient-key KCI forgery with recipient skR and public sender pkS, without sender skS. Its separate versioned multi-user Sign-then-Encrypt profile signs sender, recipient, independently expected application context and message with strict Ed25519, then encrypts the framed signed payload with Base HPKE; pinned identity-to-key records are external to the packet. Executed cases cover outsider tampering, recipient/sender/both-key compromise, recipient forwarding, public signature evidence and replay. Application plaintext and evidence remain quarantined until signature and all identity/context bindings pass. The profile is an An-Dodis-Rabin-style teaching instantiation, not a standardized wire format, production protocol or automatic transfer of the paper's proof. Public evidence establishes only that the separately pinned signing key signed the exact disclosed fields; it does not prove ciphertext authorship, transmission, receipt, time, human intent or legal non-repudiation. The phrase Apple iCloud key recovery names a provider feature, and the nonce-collision URL is a related-lab link; neither is an attack executed here, so both old scanner credits are removed. Exact-main run 40179028196 passed 258 unit tests, all 19 clean-baseline mutations, the production build and all 27 hosted browser/accessibility tests, deployed, and the served HTML, JavaScript and CSS matched the exact reviewed tree byte for byte."
             data-level="intermediate" data-added="2026-07" data-added-on="2026-07-15" data-updated="2026-10"
            
            
@@ -15883,13 +15885,15 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Hybrid Encryption</div>
             <div class="project-title">HPKE Envelope</div>
-            <div class="project-copy">RFC 9180 with every stage exposed — a KEM, a KDF, and an AEAD composed into one scheme; edit the info string or AAD and watch the real AEAD reject.</div>
+            <div class="project-copy">RFC 9180 with every stage exposed, plus an executable Auth recipient-key KCI forgery beside a bounded identity- and context-bound Base-HPKE + Ed25519 Sign-then-Encrypt comparison with explicit evidence limits.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">DHKEM X25519</span>
                 <span class="chip">HKDF-SHA256</span>
                 <span class="chip">AES-GCM</span>
                 <span class="chip">RFC 9180</span>
+                <span class="chip">Auth KCI</span>
+                <span class="chip">Sign-then-Encrypt</span>
               </div>
               <span class="arrow">→</span>
             </div>

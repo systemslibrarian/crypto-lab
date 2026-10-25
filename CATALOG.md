@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1775 sections in 246 of 246 labs**
+The exhibit map currently records **1776 sections in 246 of 246 labs**
 (246 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -1114,7 +1114,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Shamir secret sharing
 
 - **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:123`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:105`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:291`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`
-- **Also referenced by:** *Key Lifecycle*, *KpqC Pair*, *Misty Lens*, *ZK Proof Lab*, *Patron Shield*, *DKG Gate*, *Garbled Gate*, *Iron Serpent*, *Biham Lens*, *Babel Hash*, *OT Gate*, *Oblivious Shelf*, *GG20 Wallet*, *Ring Sign*, *Lattice Fault*, *VRF Gate*, *Schnorr Forge*, *IBE Gate*, *ORAM Vault*, *Paillier Gate*, *Threshold ML-DSA*, *Bulletproofs*, *ZK Arena*, *Jevil*, *PQ Families*, *Multivariate UOV*, *Time-Lock Puzzle*, *VDF*, *Frozen Heart*, *Credential Veil*, *SPDZ Forge*, *Traitor Trace*, *Lattice Gentle*, *Beacon Lock*, *Card Trick*, *Matsui Line*, *Attribute Gate*, *Fold Gate*, *Covert Channel Studio*, *Return Path*, *Function Key*, *WEP Crack*, *Signature Gate*, *DC-net*
+- **Also referenced by:** *Key Lifecycle*, *KpqC Pair*, *Misty Lens*, *ZK Proof Lab*, *Patron Shield*, *DKG Gate*, *Garbled Gate*, *Iron Serpent*, *Biham Lens*, *Babel Hash*, *OT Gate*, *Oblivious Shelf*, *GG20 Wallet*, *Ring Sign*, *Lattice Fault*, *VRF Gate*, *Schnorr Forge*, *IBE Gate*, *ORAM Vault*, *Paillier Gate*, *Threshold ML-DSA*, *Bulletproofs*, *ZK Arena*, *Jevil*, *PQ Families*, *Multivariate UOV*, *Time-Lock Puzzle*, *VDF*, *Frozen Heart*, *Credential Veil*, *SPDZ Forge*, *Traitor Trace*, *Lattice Gentle*, *Beacon Lock*, *Card Trick*, *Attribute Gate*, *Fold Gate*, *Covert Channel Studio*, *Return Path*, *Function Key*, *WEP Crack*, *Signature Gate*, *DC-net*
 
 ### signature
 
@@ -9988,63 +9988,71 @@ First-order Boolean masking flattens the CPA that Power Trace runs — so combin
 
 [`crypto-lab-matsui-line`](https://systemslibrarian.github.io/crypto-lab-matsui-line/) · Linear Cryptanalysis · ATTACKS
 
-Run linear analysis on a toy SPN: compare trails with key-dependent hulls, count two masks and a structural zero, then measure repeated versus distinct known plaintexts.
+Run linear and differential–linear attacks on a toy SPN: compare trails with key-dependent hulls, join a chosen-difference prefix to a parity suffix, rank a last-round whitening byte, and test a cancelling control.
 
-- **Card topics (discovery only):** Linear Cryptanalysis, LAT, Piling-Up Lemma, Known-Plaintext, Multiple Masks — labels do not establish what any section runs.
+- **Card topics (discovery only):** Linear Cryptanalysis, LAT, Piling-Up Lemma, Known-Plaintext, Multiple Masks, Differential Cryptanalysis — labels do not establish what any section runs.
 - **Implements:** Toy SPN `src/crypto/spn.ts:66`
-- **Source review:** [e218f2e71938](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/e218f2e71938d1514cbfde224fc61b1d68fc2e3a) — Reviewed the toy SPN, attack and new two-mask/structural-zero panel at this exact commit. It counts two parity relations and all four joint outcomes on the same 16/64/256 plaintexts, and checks a no-nonzero-trail pair whose full-codebook correlation is zero across keys. This is a bounded toy-SPN observation, not a multidimensional key-recovery attack or a reproduction of the cited ChaCha research. Existing single-trail versus full linear-hull and repeated versus distinct plaintext comparisons remain separate. The toy SPN implementation anchor is unchanged; no full DES or production cipher is attacked.
-- **References:** AES, ChaCha20, DES, Enigma, Serpent, Shamir secret sharing, Vigenere cipher
-- **Attacks shown:** Key recovery `index.html:19`, Known-plaintext attack `src/ui/piling.ts:105`, Linear cryptanalysis `src/main.ts:264`
+- **Source review:** [7a85fbf1e6f5](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/7a85fbf1e6f566f7b0b718cb93f5dd737950faaa) — Read the complete README, index, source, tests, browser gates and mutation runner at this exact commit. The existing real 8-bit toy SPN, Matsui Algorithm 2 nibble recovery, LAT/trail/hull teaching, two-mask/structural-zero panel and repeated-versus-distinct sampling remain. The new fixed three-round Heys-S-box exercise uses chosen pairs with difference 0x0B, joins at the round-2 input, computes the DDT row, suffix correlations, naive 9/64 and signed-path 9/32 estimates, measures the real key-dependent 1/4 or 5/16 codebook bias, ranks 256 observable final-whitening-byte hypotheses, and independently checks a winner on unused pairs when the selected budget leaves a holdout. Its cancelling lambda-in 0x04 control exposes the naive 1/16 estimate versus exact zero signed-path and full-codebook bias and ranks only 16 visible high-nibble hypotheses. The deterministic 512-key odd-stride curve is bounded reproducible evidence, not a random population estimate. Credit the real chosen-plaintext, differential, linear and key-recovery work alongside the legacy known-plaintext attack. Brute-force count is unit-test and exhaustive-oracle wording, not a learner attack, and the scanner's Fault injection hit is the substring across default attack; remove both. Biham and Shamir names the differential-cryptanalysis authors, not Shamir secret sharing, so remove that reference. The lesson does not recover the 16-bit master key, attack the full four-round toy cipher, establish optimal masks, reproduce DES, or attack production cryptography.
+- **References:** AES, ChaCha20, DES, Enigma, Serpent, Vigenere cipher
+- **Attacks shown:** Chosen-plaintext attack `src/crypto/difflin.ts:310`, Differential cryptanalysis `src/crypto/difflin.ts:136`, Key recovery `src/crypto/attack.ts:159`, Known-plaintext attack `src/crypto/attack.ts:46`, Linear cryptanalysis `src/crypto/attack.ts:159`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e218f2e71938](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/e218f2e71938d1514cbfde224fc61b1d68fc2e3a) reviewed 2026-10-23; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7a85fbf1e6f5](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/7a85fbf1e6f566f7b0b718cb93f5dd737950faaa) reviewed 2026-10-25; 11 mapped sections.
   - **Break the toy cipher** (`attack`; interactive; real-operation)
     - **Visible section:** Break the toy cipher
     - **Learner action:** Choose known-plaintext traffic, rounds, S-box, final-key nibble and approximation; run the attack or use starvation, added-round, and bad-relation presets.
     - **Observed result:** Sixteen candidate counters rank a guessed four-bit last-round subkey with success/failure verdict and screening context.
     - **Concepts taught:** Matsui linear cryptanalysis; known-plaintext attack; last-round partial decryption; linear approximation; key-candidate ranking; wrong-key hypothesis
     - **Limits:** Only an 8-bit toy SPN and a four-bit subkey nibble are attacked; a successful run is not a modern cipher break.
-    - **Evidence at pinned commit:** `index.html:190`, `index.html:218`, `index.html:260`, `src/main.ts:600`, `src/main.ts:700`
+    - **Evidence at pinned commit:** `index.html:191`, `index.html:193`, `index.html:218`, `index.html:260`, `src/main.ts:636`, `src/main.ts:644`, `src/main.ts:649`, `src/main.ts:659`, `src/main.ts:737`
   - **Reduced-Round ChaCha Research Context** (`chacha-context`; explanation; conceptual)
     - **Visible section:** Research context: reduced-round ChaCha
     - **Learner action:** Read the linked differential-linear research context.
     - **Observed result:** The note distinguishes paper cost estimates on reduced-round ChaCha from the full 20-round construction and from this toy demo.
     - **Concepts taught:** reduced-round ChaCha; differential-linear cryptanalysis; research scope
-    - **Evidence at pinned commit:** `index.html:615`, `index.html:617`, `index.html:618`
+    - **Evidence at pinned commit:** `index.html:700`, `index.html:701`, `index.html:702`, `index.html:703`
   - **Inspect the cipher** (`cipher`; interactive; real-operation)
     - **Visible section:** Inspect the cipher
     - **Learner action:** Slide an eight-bit plaintext value through the selected SPN.
     - **Observed result:** The encryption walkthrough updates and highlights the pre-final-round state that a nibble guess can partially undo.
     - **Concepts taught:** substitution-permutation network; S-box layer; round-key XOR; partial last-round inversion
     - **Limits:** Eight-bit classroom cipher; the walkthrough is not DES or AES.
-    - **Evidence at pinned commit:** `index.html:370`, `index.html:380`, `src/main.ts:336`, `src/main.ts:739`
+    - **Evidence at pinned commit:** `index.html:371`, `index.html:373`, `index.html:382`, `index.html:386`, `src/main.ts:371`, `src/main.ts:373`, `src/crypto/spn.ts:66`, `src/ui/cipher.ts:9`
   - **The pair-mate attack** (`compare`; explanation; conceptual)
     - **Visible section:** The pair-mate attack
     - **Learner action:** Read the comparison table of differential and linear cryptanalysis on the same toy SPN.
     - **Observed result:** The page contrasts attack access, measured relation and target information for the two cryptanalytic methods.
     - **Concepts taught:** differential cryptanalysis versus linear cryptanalysis; chosen-plaintext versus known-plaintext attack; toy SPN cross-lab comparison
     - **Limits:** The comparison is explanatory; this section does not run a differential attack.
-    - **Evidence at pinned commit:** `index.html:497`, `index.html:505`
+    - **Evidence at pinned commit:** `index.html:495`, `index.html:497`, `index.html:504`, `index.html:516`, `index.html:554`
+  - **Differential–Linear Composition and Subkey Ranking** (`differential-linear-composition`; interactive; real-operation)
+    - **Visible section:** Weld the two attacks together
+    - **Learner action:** Choose a pair budget and run the fixed three-round differential–linear experiment, then compare its main path with a cancelling control.
+    - **Observed result:** The lab computes the prefix DDT and signed suffix paths, measures the real pair statistic, ranks observable final-whitening material and checks the winner on unused pairs when a holdout exists.
+    - **Concepts taught:** differential-linear cryptanalysis; chosen-plaintext attack; DDT; linear suffix; explicit joining state; signed differential paths; heuristic versus measured bias; last-round subkey ranking; held-out verification; finite-sample ties; failing-assumption control
+    - **Limits:** Fixed three-round 8-bit Heys toy only. The exercise does not recover the 16-bit master key, attack the full four-round toy cipher, reproduce DES, attack production cryptography, or treat its deterministic 512-key sample as a random-population estimate.
+    - **Evidence at pinned commit:** `index.html:567`, `index.html:569`, `index.html:571`, `index.html:582`, `index.html:587`, `index.html:591`, `index.html:610`, `index.html:613`, `index.html:618`, `index.html:624`, `index.html:633`, `src/crypto/difflin.ts:52`, `src/crypto/difflin.ts:55`, `src/crypto/difflin.ts:73`, `src/crypto/difflin.ts:86`, `src/crypto/difflin.ts:103`, `src/crypto/difflin.ts:136`, `src/crypto/difflin.ts:168`, `src/crypto/difflin.ts:189`, `src/crypto/difflin.ts:207`, `src/crypto/difflin.ts:237`, `src/crypto/difflin.ts:247`, `src/crypto/difflin.ts:255`, `src/crypto/difflin.ts:310`, `src/crypto/difflin.ts:419`, `src/ui/difflin.ts:32`, `src/ui/difflin.ts:83`, `src/ui/difflin.ts:126`, `src/ui/difflin.ts:184`, `src/ui/difflin.ts:247`, `src/ui/difflin.ts:313`, `src/ui/difflin.ts:344`, `src/main.ts:914`, `src/main.ts:969`, `src/main.ts:992`, `src/main.ts:993`, `src/main.ts:994`, `src/main.ts:995`, `src/main.ts:996`, `src/main.ts:1007`, `src/main.ts:1023`, `src/workers/dl.worker.ts:24`, `src/workers/dl.worker.ts:28`
   - **Attack Fidelity and Limits** (`fidelity`; explanation; conceptual)
     - **Visible section:** What this is, and what it does not prove
     - **Learner action:** Read the real-versus-not checklist for the cipher, LAT, exhaustive mask trail and the scope of key recovery.
-    - **Observed result:** The text limits the result to four final-subkey bits of the toy cipher and does not extend it to AES or DES.
-    - **Concepts taught:** toy cipher; LAT enumeration; partial subkey recovery; cryptanalysis scope
-    - **Evidence at pinned commit:** `index.html:568`, `index.html:573`, `index.html:589`, `index.html:597`
+    - **Observed result:** The legacy linear attack recovers four final-subkey bits; the differential–linear route ranks a final whitening byte, and neither is full key recovery or evidence about AES or DES.
+    - **Concepts taught:** toy cipher; LAT enumeration; partial subkey recovery; cryptanalysis scope; differential-linear scope; heuristic boundary
+    - **Limits:** The differential-linear result is limited to a fixed three-round 8-bit Heys toy and observable whitening material; it does not recover the master key, attack the full four-round toy, reproduce DES, or attack production cryptography.
+    - **Evidence at pinned commit:** `index.html:646`, `index.html:647`, `index.html:652`, `index.html:668`, `index.html:676`, `index.html:680`
   - **Inspect one S-box leak** (`lat`; interactive; real-operation)
     - **Visible section:** Inspect one S-box leak
     - **Learner action:** Select an input-mask/output-mask cell in the 16×16 linear approximation table.
     - **Observed result:** A detail view enumerates all sixteen S-box inputs and shows agreement counts and bias for the selected parity equation.
     - **Concepts taught:** linear approximation table; S-box input/output parity masks; linear bias; trivial zero mask
     - **Limits:** The statistics are exact for a four-bit teaching S-box; LAT cells are not direct attack success probabilities.
-    - **Evidence at pinned commit:** `index.html:394`, `src/ui/lat.ts:17`, `src/ui/lat.ts:66`, `src/main.ts:733`
+    - **Evidence at pinned commit:** `index.html:392`, `index.html:394`, `index.html:402`, `src/main.ts:387`, `src/main.ts:396`, `src/main.ts:397`, `src/crypto/lat.ts:34`, `src/crypto/lat.ts:86`, `src/ui/lat.ts:22`, `src/ui/lat.ts:71`
   - **Why the Linear Attack Works** (`mechanism-chain`; interactive; real-values)
     - **Visible section:** Why did that work?
     - **Learner action:** Select links in the mechanism chain from S-box imbalance to a final-round key-guess counter.
     - **Observed result:** The panel connects bias, piling-up and the measured distinguishing signal for the selected settings.
     - **Concepts taught:** linear cryptanalysis; S-box bias; piling-up lemma; known plaintext
     - **Limits:** The attack is on an 8-bit toy SPN.
-    - **Evidence at pinned commit:** `index.html:305`, `index.html:307`, `index.html:313`, `index.html:320`
+    - **Evidence at pinned commit:** `index.html:303`, `index.html:305`, `index.html:307`, `index.html:313`, `src/main.ts:520`, `src/main.ts:527`, `src/main.ts:586`
   - **Two masks and a structural zero** (`multiple-relations`; comparison; real-operation)
     - **Visible section:** Look at more than one relation
     - **Learner action:** Choose one of three fixed toy keys and 16, 64, or all 256 distinct plaintexts; compare two mask relations and their joint outcomes with a no-trail pair.
@@ -10058,14 +10066,14 @@ Run linear analysis on a toy SPN: compare trails with key-dependent hulls, count
     - **Observed result:** Per-round correlations and predicted aggregate bias shrink; a full-codebook measurement across keys exposes linear-hull reinforcement or cancellation.
     - **Concepts taught:** piling-up lemma; linear trail; correlation multiplication; linear hull effect; key-dependent cancellation; round-count effect
     - **Limits:** The lemma assumes independent approximations; real whole-cipher bias can differ, as the panel itself measures.
-    - **Evidence at pinned commit:** `index.html:417`, `src/ui/piling.ts:19`, `src/ui/piling.ts:51`, `src/ui/piling.ts:130`, `src/main.ts:742`
+    - **Evidence at pinned commit:** `index.html:415`, `index.html:417`, `index.html:425`, `index.html:438`, `src/main.ts:418`, `src/main.ts:423`, `src/main.ts:436`, `src/main.ts:437`, `src/main.ts:438`, `src/ui/piling.ts:19`, `src/ui/piling.ts:51`, `src/ui/piling.ts:96`, `src/ui/piling.ts:135`
   - **How much traffic do you need?** (`samples`; comparison; simulation)
     - **Visible section:** How much traffic do you need?
     - **Learner action:** Run complete attacks over sixty toy keys at several sample sizes, then compare repeated versus distinct known-plaintext sampling.
     - **Observed result:** Tables juxtapose the inverse-square single-counter prediction with measured key-ranking success, duplicate-input counts, Wilson intervals, and finite-population correction.
     - **Concepts taught:** linear attack sample complexity; inverse-square bias rule; measured versus theoretical success; sampling with replacement; distinct known plaintexts; finite-population correction
     - **Limits:** Measurements are over random keys of an 8-bit toy cipher; intervals describe across-key proportions, not guarantees for a key or a real cipher.
-    - **Evidence at pinned commit:** `index.html:466`, `index.html:478`, `index.html:485`, `src/ui/samples.ts:9`, `src/ui/samples.ts:44`, `src/ui/samples.ts:92`, `src/main.ts:769`
+    - **Evidence at pinned commit:** `index.html:464`, `index.html:466`, `index.html:477`, `index.html:478`, `index.html:485`, `src/main.ts:806`, `src/main.ts:817`, `src/main.ts:831`, `src/main.ts:832`, `src/main.ts:833`, `src/main.ts:848`, `src/ui/samples.ts:9`, `src/ui/samples.ts:44`, `src/ui/samples.ts:93`
 
 ### MAYO Seal
 

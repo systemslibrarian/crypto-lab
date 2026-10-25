@@ -43341,7 +43341,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-ipsec-ike": {
-      "commit": "ecbf8413e81d43967b0a0fbb3b7dda812d6f4f8d",
+      "commit": "3019cef4c514b5649aa530b74f3a6053deda4b4c",
       "reviewed": "2026-10-25",
       "exhibits": [
         {

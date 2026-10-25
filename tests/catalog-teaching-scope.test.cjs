@@ -1897,7 +1897,7 @@ function checkIpsecIkeScope(source, manifests = exhibitManifest, reviews = catal
     'Replay and wrong-generation-key cases are receiver controls, not catalogued cryptanalytic attacks');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="ecbf8413e81d43967b0a0fbb3b7dda812d6f4f8d"/);
+  assert.match(opening, /data-review-commit="3019cef4c514b5649aa530b74f3a6053deda4b4c"/);
   assert.match(opening, /IKEv2@src\/protocol\/ike-wire\.ts:91/);
   assert.match(opening, /IPsec ESP@src\/protocol\/esp\.ts:149/);
   assert.match(opening, /WebCrypto AES-GCM, HMAC and SHA-256 \/ local TypeScript and BigInt X25519, IKEv2, ESP, IPv4 and protocol-state teaching implementations/);
@@ -1906,13 +1906,15 @@ function checkIpsecIkeScope(source, manifests = exhibitManifest, reviews = catal
   assert.deepEqual(chipsFor(source, slug), ['IKEv2', 'ESP', 'AES-GCM-16', 'Anti-Replay']);
 
   const review = reviews[slug];
-  assert.equal(review.commit, 'ecbf8413e81d43967b0a0fbb3b7dda812d6f4f8d');
+  assert.equal(review.commit, '3019cef4c514b5649aa530b74f3a6053deda4b4c');
   assert.deepEqual(review.add, [
     'IKEv2@src/protocol/ike-wire.ts:91',
     'IPsec ESP@src/protocol/esp.ts:149',
   ]);
-  assert.match(review.note, /README and src are byte-identical to the deployed implementation tree/);
+  assert.match(review.note, /README and src remain byte-identical to the implementation tree/);
   assert.match(review.note, /authentication-before-window-commit/);
+  assert.match(review.note, /Current-main quality\/deployment run 40229891529/);
+  assert.match(review.note, /all three public files byte for byte/);
 
   const mapped = manifests.labs[slug];
   assert.equal(mapped.commit, review.commit);
@@ -1963,8 +1965,8 @@ test('IPsec / IKE scope controls reject lost, moved, invented or incomplete evid
       'data-attacks="Replay attack@src/lab.ts:387" data-references="',
     )),
     html.replace(cardRe, (card) => card.replace(
+      'data-review-commit="3019cef4c514b5649aa530b74f3a6053deda4b4c"',
       'data-review-commit="ecbf8413e81d43967b0a0fbb3b7dda812d6f4f8d"',
-      'data-review-commit="6644abcb691bcddac323ee552af4cae2f102cd9e"',
     )),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the IPsec / IKE card');

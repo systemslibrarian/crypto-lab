@@ -467,7 +467,7 @@ server already listening on that port is reused and the command never runs at al
 are mutation-testing locally, make sure no stray preview is holding the port.
 
 **CI:** in `deploy.yml`, before deploy — `npm test` (the unit/correctness suite), then
-`npx playwright install chromium`, then `npm run test:a11y`; any of them failing
+`npx playwright install --with-deps chromium`, then `npm run test:a11y`; any of them failing
 blocks the deploy on `main` (see §6 for the full job).
 
 **Gate on the WHOLE suite, not just the a11y half.** A 2026-08-14 sweep found **29 repos whose
@@ -726,7 +726,7 @@ concurrency:
 - run: npm test
 - run: npm run build
 - name: Install Playwright browser
-  run: npx playwright install chromium
+  run: npx playwright install --with-deps chromium
 - name: Accessibility gate (axe-core, WCAG A/AA)
   run: npm run test:a11y
 - uses: actions/upload-pages-artifact@v5

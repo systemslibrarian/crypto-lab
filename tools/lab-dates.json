@@ -327,8 +327,8 @@
    "addedOn": "2026-04-06",
    "updated": "2026-10",
    "addedFrom": "2026-04-06T10:15:14Z",
-   "updatedFrom": "2026-10-25T12:26:02-04:00",
-   "updatedCommit": "66b52142e40fe0e435a011eb04d11393a62e1b42"
+   "updatedFrom": "2026-10-25T12:30:00-04:00",
+   "updatedCommit": "94885b4ee96f00d6bc523c66a434a9c5c908a99a"
   },
   "crypto-lab-biham-lens": {
    "added": "2026-04",

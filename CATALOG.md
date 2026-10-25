@@ -15002,7 +15002,7 @@ Stateless hash-based signatures (SLH-DSA) in the browser. Explore hash-based mat
 - **References:** Dilithium, ECDSA, Ed25519, Falcon, Grover's algorithm, HAETAE, LMS, LWE, ML-DSA, ML-KEM, NTRU, RSA, SHA-3, SHA-512, SHAKE, Shor's algorithm, X3DH, XMSS
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [66b52142e40f](https://github.com/systemslibrarian/crypto-lab-sphincs-ledger/commit/66b52142e40fe0e435a011eb04d11393a62e1b42) reviewed 2026-10-25; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [94885b4ee96f](https://github.com/systemslibrarian/crypto-lab-sphincs-ledger/commit/94885b4ee96f00d6bc523c66a434a9c5c908a99a) reviewed 2026-10-25; 11 mapped sections.
   - **FORS Few-Time Collision Tolerance** (`collision-tolerance`; interactive; simulation)
     - **Visible section:** Collision Tolerance — Why FORS Degrades Gracefully
     - **Learner action:** Sign two messages with the same key, compare index vectors, then estimate a reuse margin for N signatures.

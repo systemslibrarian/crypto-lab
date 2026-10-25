@@ -36426,7 +36426,7 @@
       ]
     },
     "crypto-lab-sphincs-ledger": {
-      "commit": "66b52142e40fe0e435a011eb04d11393a62e1b42",
+      "commit": "94885b4ee96f00d6bc523c66a434a9c5c908a99a",
       "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [

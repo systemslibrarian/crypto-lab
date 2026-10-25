@@ -21320,22 +21320,22 @@
             </div><span class="arrow">&rarr;</span></div>
           </a>
           <a class="project-card" data-category="ENCRYPTION | RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lfsr-forge/"
-            data-implements="Trivium@src/trivium/panel.ts:15"
+            data-implements="Trivium@src/trivium/trivium.ts:29"
             data-comment-only="SHA-256@src/trivium/vectors.ts:7"
-            data-references="BCH | ChaCha20 | Pairing | RC4 | SHA-256 | SNOW 3G | Shamir secret sharing | ZUC"
-            data-attacks="Brute force@README.md:73 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:139"
+            data-references="BCH | ChaCha20 | SHA-256 | SNOW 3G | ZUC"
+            data-attacks="Key recovery@src/trivium/panel.ts:37"
             data-standards="ISO"
-            data-implementation="hand-rolled"
-            data-review-commit="2800c76acf9ddc7bd79210327372b95b64d444e6"
-            data-review-note="NO LONGER N/A. This lab added src/trivium/ since the 2026-10-09 review, and it is a real eSTREAM Trivium: INIT_ROUNDS 1152, AND_TAPS [[91,92],[175,176],[286,287]] and a 288-bit state, the specification's own constants. The vocabulary could not NAME Trivium until 2026-10-21, so the lab was invisible in both directions -- neither credited with it nor judged by the chip rule -- which is the ZUC and Kupyna situation a third time. The term now exists and the implementation anchors on its own at src/trivium/panel.ts. The earlier reading stands for what it covered: src/lfsr/lfsr.ts and bm.ts, src/geffe/ geffe.ts and correlation.ts compute binary Fibonacci LFSRs, Berlekamp-Massey synthesis over GF(2) and a fixed 7/11/13 Geffe combiner, which remain outside the vocabulary. BCH, ChaCha20, SNOW 3G and ZUC are comparisons, not implemented."
+            data-implementation="hand-rolled TypeScript LFSR, Berlekamp-Massey, Geffe, Trivium and exact four-input Boolean analysis"
+            data-review-commit="7c6246133b9ea5d2acda5ee1cddeada6e5b1e607"
+            data-review-note="Read the complete merged README, source, tests, learner interface and visible limitations at this exact main commit. The existing binary Fibonacci LFSR, Berlekamp-Massey, Geffe-correlation and eSTREAM-vector-checked Trivium lessons remain, and the Trivium implementation now anchors directly at the state-advance function rather than at a panel mount. The zero-round recovery builds 66 public equations over 80 key bits, exhausts the remaining 14-bit space, rechecks every candidate against the complete 1,024-bit observation and compares a unique candidate with the hidden key separately; the specified 1,152-round route rejects this model, and the lesson does not claim a cube attack against full Trivium. The new panel exhaustively analyzes an editable four-input truth table: exact ANF and degree, all 16 Walsh coefficients, balance, nonlinearity, every fixed-subset distribution, correlation immunity, resiliency and 4,094 candidate-side checks over all 2,047 nonzero degree-at-most-two polynomials. Its deterministic counterexamples fit parity with Berlekamp-Massey, scan all 105 R1/R2 state pairs against an order-one-resilient function and scan all 127 R4 states against an algebraic-immunity-two function; worker inputs contain only copied output and the fixed public profile, while hidden-state comparisons stay in the controller. Walsh probabilities and fixed-subset independence assume independent uniform table inputs; LFSR agreement is measured separately, the scans are bounded exhaustive toy searches rather than production fast-correlation attacks, and algebraic immunity does not exclude every fast algebraic relation. Brute force appears only in the independent unit-test oracle, and known plaintext/ciphertext is prose explaining how an external XOR-stream setting could reveal the already-supplied keystream; neither is an attack workflow executed by this lab. Shamir names a cube-attack coauthor, while Pairing and RC4 are stale or lexical false references, so none of those three belongs in the algorithm reference list. BCH, ChaCha20, SHA-256, SNOW 3G and ZUC remain comparison or evidence context rather than implemented primitives."
             data-level="intermediate" data-added="2026-10" data-added-on="2026-10-06" data-updated="2026-10"
             target="_blank" rel="noopener" style="--accent: #9f88ff;"
             data-overlaps="crypto-lab-chacha20-stream: ChaCha20 Stream visualizes a modern ARX construction; LFSR Forge reconstructs tiny binary recurrences and exploits Geffe correlation from known keystream, without attacking ChaCha20">
             <div class="card-kicker">Fit, Forecast, Then Verify</div>
             <div class="project-title">LFSR Forge</div>
-            <div class="project-copy">Step binary LFSRs, synthesize a recurrence with Berlekamp–Massey, freeze an unseen forecast, and recover tiny Geffe generator states with a bounded correlation attack on known keystream.</div>
+            <div class="project-copy">Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium clocking, and audit editable four-input Boolean combiners with exact Walsh, resiliency, algebraic-immunity, and bounded state scans.</div>
             <div class="project-meta"><div class="stack">
-              <span class="chip">LFSR</span><span class="chip">Berlekamp–Massey</span><span class="chip">Geffe Generator</span><span class="chip">Known Keystream</span>
+              <span class="chip">LFSR</span><span class="chip">Berlekamp–Massey</span><span class="chip">Geffe Generator</span><span class="chip">Trivium</span><span class="chip">Boolean Function Audit</span>
             </div><span class="arrow">&rarr;</span></div>
           </a>
 

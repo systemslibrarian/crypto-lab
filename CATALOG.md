@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1755 sections in 245 of 245 labs**
+The exhibit map currently records **1756 sections in 245 of 245 labs**
 (245 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -880,7 +880,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Pairing
 
 - **Implemented by:** [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/ats/bls-ats.ts:205`; [Pairing Gate](https://systemslibrarian.github.io/crypto-lab-pairing-gate/) `src/main.ts:111`; [IBE Gate](https://systemslibrarian.github.io/crypto-lab-ibe-gate/) `src/ibe.ts:176`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/ciphersuite.ts:152`; [Beacon Lock](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) `src/core/bls.ts:66`; [Search Vault](https://systemslibrarian.github.io/crypto-lab-search-vault/) `src/peks/core.ts:137`; [Rekey Relay](https://systemslibrarian.github.io/crypto-lab-rekey-relay/) `src/crypto/group.ts:41`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/bls.ts:83`; [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) `src/fame/bls.ts:191`; [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) `src/drand/verify.ts:86`; [SM9 Forge](https://systemslibrarian.github.io/crypto-lab-sm9-forge/) `src/sm9/encrypt.ts:223`; [Signature Gate](https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/) `research/real-pairing/core.mjs:89`
-- **Also referenced by:** *Quantum Vault KpqC*, *STARK Tower*, *SNARK Arena*, *Dilithium Seal*, *GG20 Wallet*, *Blind Sign*, *Ring Sign*, *OPAQUE Gate*, *Harvest Timeline*, *ZK Arena*, *PQ Families*, *Key Exchange*, *Syndrome Drain*, *Hybrid PQC*, *SPAKE Gate*, *Quantum Entropy*, *Icy DVRF*, *MuSig Gate*, *Ablation Wire*, *Accumulator*, *Context Ward*, *Masked Core*, *Covert Channel Studio*, *Point Ledger*, *PQ Chooser*, *Agreeing in Public*, *LFSR Forge*
+- **Also referenced by:** *Quantum Vault KpqC*, *STARK Tower*, *SNARK Arena*, *Dilithium Seal*, *GG20 Wallet*, *Blind Sign*, *Ring Sign*, *OPAQUE Gate*, *Harvest Timeline*, *ZK Arena*, *PQ Families*, *Key Exchange*, *Syndrome Drain*, *Hybrid PQC*, *SPAKE Gate*, *Quantum Entropy*, *Icy DVRF*, *MuSig Gate*, *Ablation Wire*, *Accumulator*, *Context Ward*, *Masked Core*, *Covert Channel Studio*, *Point Ledger*, *PQ Chooser*, *Agreeing in Public*
 
 ### pairing curve
 
@@ -1090,7 +1090,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Shamir secret sharing
 
 - **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:123`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:105`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:291`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`
-- **Also referenced by:** *Key Lifecycle*, *KpqC Pair*, *Misty Lens*, *ZK Proof Lab*, *Patron Shield*, *DKG Gate*, *Garbled Gate*, *Iron Serpent*, *Biham Lens*, *Babel Hash*, *OT Gate*, *Oblivious Shelf*, *GG20 Wallet*, *Ring Sign*, *Lattice Fault*, *VRF Gate*, *Schnorr Forge*, *IBE Gate*, *ORAM Vault*, *Paillier Gate*, *Threshold ML-DSA*, *Bulletproofs*, *ZK Arena*, *Jevil*, *PQ Families*, *Multivariate UOV*, *Time-Lock Puzzle*, *VDF*, *Frozen Heart*, *Credential Veil*, *Power Trace*, *SPDZ Forge*, *Traitor Trace*, *Lattice Gentle*, *Beacon Lock*, *Card Trick*, *Matsui Line*, *Attribute Gate*, *Fold Gate*, *Covert Channel Studio*, *Return Path*, *Function Key*, *WEP Crack*, *LFSR Forge*, *Signature Gate*, *DC-net*
+- **Also referenced by:** *Key Lifecycle*, *KpqC Pair*, *Misty Lens*, *ZK Proof Lab*, *Patron Shield*, *DKG Gate*, *Garbled Gate*, *Iron Serpent*, *Biham Lens*, *Babel Hash*, *OT Gate*, *Oblivious Shelf*, *GG20 Wallet*, *Ring Sign*, *Lattice Fault*, *VRF Gate*, *Schnorr Forge*, *IBE Gate*, *ORAM Vault*, *Paillier Gate*, *Threshold ML-DSA*, *Bulletproofs*, *ZK Arena*, *Jevil*, *PQ Families*, *Multivariate UOV*, *Time-Lock Puzzle*, *VDF*, *Frozen Heart*, *Credential Veil*, *Power Trace*, *SPDZ Forge*, *Traitor Trace*, *Lattice Gentle*, *Beacon Lock*, *Card Trick*, *Matsui Line*, *Attribute Gate*, *Fold Gate*, *Covert Channel Studio*, *Return Path*, *Function Key*, *WEP Crack*, *Signature Gate*, *DC-net*
 
 ### signature
 
@@ -1158,7 +1158,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### RC4
 
 - **Implemented by:** [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) `src/rc4/rc4.ts:131`
-- **Also referenced by:** *Shamir Gate*, *AES Modes*, *TLS Handshake*, *LFSR Forge*, *DVD Scramble*
+- **Also referenced by:** *Shamir Gate*, *AES Modes*, *TLS Handshake*, *DVD Scramble*
 
 #### SNOW 3G
 
@@ -1172,7 +1172,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Trivium
 
-- **Implemented by:** [LFSR Forge](https://systemslibrarian.github.io/crypto-lab-lfsr-forge/) `src/trivium/panel.ts:15`
+- **Implemented by:** [LFSR Forge](https://systemslibrarian.github.io/crypto-lab-lfsr-forge/) `src/trivium/trivium.ts:29`
 - **Also referenced by:** —
 
 #### ZUC
@@ -9366,57 +9366,64 @@ The lattice picture underneath ML-KEM and ML-DSA: drag basis vectors through SVP
 
 [`crypto-lab-lfsr-forge`](https://systemslibrarian.github.io/crypto-lab-lfsr-forge/) · Fit, Forecast, Then Verify · ENCRYPTION, RANDOMNESS, ATTACKS
 
-Step binary LFSRs, synthesize a recurrence with Berlekamp–Massey, freeze an unseen forecast, and recover tiny Geffe generator states with a bounded correlation attack on known keystream.
+Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium clocking, and audit editable four-input Boolean combiners with exact Walsh, resiliency, algebraic-immunity, and bounded state scans.
 
-- **Card topics (discovery only):** LFSR, Berlekamp–Massey, Geffe Generator, Known Keystream — labels do not establish what any section runs.
-- **Implements:** Trivium `src/trivium/panel.ts:15`
-- **Source review:** [2800c76acf9d](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/2800c76acf9ddc7bd79210327372b95b64d444e6) — NO LONGER N/A. This lab added src/trivium/ since the 2026-10-09 review, and it is a real eSTREAM Trivium: INIT_ROUNDS 1152, AND_TAPS [[91,92],[175,176],[286,287]] and a 288-bit state, the specification's own constants. The vocabulary could not NAME Trivium until 2026-10-21, so the lab was invisible in both directions -- neither credited with it nor judged by the chip rule -- which is the ZUC and Kupyna situation a third time. The term now exists and the implementation anchors on its own at src/trivium/panel.ts. The earlier reading stands for what it covered: src/lfsr/lfsr.ts and bm.ts, src/geffe/ geffe.ts and correlation.ts compute binary Fibonacci LFSRs, Berlekamp-Massey synthesis over GF(2) and a fixed 7/11/13 Geffe combiner, which remain outside the vocabulary. BCH, ChaCha20, SNOW 3G and ZUC are comparisons, not implemented.
-- **References:** BCH, ChaCha20, Pairing, RC4, SHA-256, SNOW 3G, Shamir secret sharing, ZUC
-- **Attacks shown:** Brute force `README.md:73`, Key recovery `src/trivium/panel.ts:37`, Known-plaintext attack `src/main.ts:139`
+- **Card topics (discovery only):** LFSR, Berlekamp–Massey, Geffe Generator, Trivium, Boolean Function Audit — labels do not establish what any section runs.
+- **Implements:** Trivium `src/trivium/trivium.ts:29`
+- **Source review:** [7c6246133b9e](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/7c6246133b9ea5d2acda5ee1cddeada6e5b1e607) — Read the complete merged README, source, tests, learner interface and visible limitations at this exact main commit. The existing binary Fibonacci LFSR, Berlekamp-Massey, Geffe-correlation and eSTREAM-vector-checked Trivium lessons remain, and the Trivium implementation now anchors directly at the state-advance function rather than at a panel mount. The zero-round recovery builds 66 public equations over 80 key bits, exhausts the remaining 14-bit space, rechecks every candidate against the complete 1,024-bit observation and compares a unique candidate with the hidden key separately; the specified 1,152-round route rejects this model, and the lesson does not claim a cube attack against full Trivium. The new panel exhaustively analyzes an editable four-input truth table: exact ANF and degree, all 16 Walsh coefficients, balance, nonlinearity, every fixed-subset distribution, correlation immunity, resiliency and 4,094 candidate-side checks over all 2,047 nonzero degree-at-most-two polynomials. Its deterministic counterexamples fit parity with Berlekamp-Massey, scan all 105 R1/R2 state pairs against an order-one-resilient function and scan all 127 R4 states against an algebraic-immunity-two function; worker inputs contain only copied output and the fixed public profile, while hidden-state comparisons stay in the controller. Walsh probabilities and fixed-subset independence assume independent uniform table inputs; LFSR agreement is measured separately, the scans are bounded exhaustive toy searches rather than production fast-correlation attacks, and algebraic immunity does not exclude every fast algebraic relation. Brute force appears only in the independent unit-test oracle, and known plaintext/ciphertext is prose explaining how an external XOR-stream setting could reveal the already-supplied keystream; neither is an attack workflow executed by this lab. Shamir names a cube-attack coauthor, while Pairing and RC4 are stale or lexical false references, so none of those three belongs in the algorithm reference list. BCH, ChaCha20, SHA-256, SNOW 3G and ZUC remain comparison or evidence context rather than implemented primitives.
+- **References:** BCH, ChaCha20, SHA-256, SNOW 3G, ZUC
+- **Attacks shown:** Key recovery `src/trivium/panel.ts:37`
 - **Standards body:** ISO
-- **Implementation:** hand-rolled
+- **Implementation:** hand-rolled TypeScript LFSR, Berlekamp-Massey, Geffe, Trivium and exact four-input Boolean analysis
 - **Overlaps:** `crypto-lab-chacha20-stream` — ChaCha20 Stream visualizes a modern ARX construction; LFSR Forge reconstructs tiny binary recurrences and exploits Geffe correlation from known keystream, without attacking ChaCha20
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2800c76acf9d](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/2800c76acf9ddc7bd79210327372b95b64d444e6) reviewed 2026-10-23; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7c6246133b9e](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/7c6246133b9ea5d2acda5ee1cddeada6e5b1e607) reviewed 2026-10-25; 7 mapped sections.
   - **Berlekamp–Massey Recurrence Fit** (`bm`; interactive; real-values)
     - **Visible section:** Follow Berlekamp–Massey
     - **Learner action:** Step through discrepancy updates or analyze up to 1,024 manually entered bits.
     - **Observed result:** The shortest fitted recurrence and candidate continuation are displayed from observed bits.
     - **Concepts taught:** Berlekamp–Massey; linear complexity; minimal recurrence
     - **Limits:** A manually entered sequence has no source generator here, so its prediction cannot be independently verified.
-    - **Evidence at pinned commit:** `src/main.ts:142`, `src/lfsr/bm.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:143`, `src/lfsr/bm.ts:1`
+  - **Exact Four-Input Boolean Combiner Audit** (`boolean-combiner-audit`; interactive; real-values)
+    - **Visible section:** Audit a Boolean combiner
+    - **Learner action:** Edit any of the 16 outputs, inspect exact algebraic and correlation criteria, then run bounded recurrence, pair-state and single-state counterexamples.
+    - **Observed result:** Parity remains linearly predictable, an order-one-resilient table exposes an order-two relation, and an algebraic-immunity-two table still yields its R4 state in the bounded scan.
+    - **Concepts taught:** Boolean function; algebraic normal form; Walsh spectrum; nonlinearity; correlation immunity; resiliency; algebraic immunity; bounded correlation scan
+    - **Limits:** Exactly four inputs are analyzed; Walsh probabilities assume independent uniform bits, while deterministic LFSR agreement is measured separately. The scans cover only 127 states or 105 state pairs, and algebraic immunity two does not exclude every fast algebraic relation.
+    - **Evidence at pinned commit:** `src/boolean/panel.ts:12`, `src/boolean/analysis.ts:73`, `src/boolean/analysis.ts:92`, `src/boolean/analysis.ts:108`, `src/boolean/analysis.ts:146`, `src/boolean/attacks.ts:49`, `src/boolean/attacks.ts:63`, `src/boolean/attacks.ts:79`, `src/boolean/panel.ts:155`
   - **Freeze and Check a Hidden Forecast** (`forecast`; interactive; real-values)
     - **Visible section:** Predict, freeze, check
     - **Learner action:** Freeze 64 predicted bits, compare with the generator continuation, and try ambiguity or early-failure fixtures.
     - **Observed result:** The frozen forecast is evaluated against unseen bits, separating a prefix fit from verified prediction.
     - **Concepts taught:** out-of-sample prediction; LFSR reconstruction; ambiguous prefix
-    - **Evidence at pinned commit:** `src/main.ts:143`, `src/lfsr/lfsr.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:144`, `src/lfsr/lfsr.ts:1`
   - **Geffe Combiner Inspection** (`geffe`; interactive; real-values)
     - **Visible section:** Increase complexity
     - **Learner action:** Clock three disclosed registers and measure a 466-bit output correlation profile.
     - **Observed result:** The nonlinear selector combines LFSRs while output retains detectable correlations with component streams.
     - **Concepts taught:** Geffe generator; nonlinear combiner; correlation bias
-    - **Evidence at pinned commit:** `src/main.ts:144`, `src/geffe/geffe.ts:1`, `src/geffe/correlation.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:145`, `src/geffe/geffe.ts:1`, `src/geffe/correlation.ts:1`
   - **Hidden Geffe State Recovery** (`recover`; interactive; real-values)
     - **Visible section:** Recover hidden states
     - **Learner action:** Start a hidden Geffe session or fixed fixture, run or cancel correlation recovery, and verify a frozen continuation.
     - **Observed result:** A worker searches R1 and R3 states, derives R2 constraints, and checks recovered state separately from output agreement.
     - **Concepts taught:** correlation attack; hidden-state recovery; Geffe generator; search budget
     - **Limits:** A failed finite-budget scan is not proof of cryptographic security, and this attack is not claimed against SNOW 3G or ZUC.
-    - **Evidence at pinned commit:** `src/main.ts:145`, `src/geffe/attack.worker.ts:1`, `src/geffe/correlation.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:146`, `src/geffe/attack.worker.ts:1`, `src/geffe/correlation.ts:1`
   - **Visible and Hidden LFSR** (`register`; interactive; real-values)
     - **Visible section:** Watch a register run
     - **Learner action:** Clock a visible five-stage register and collect bits from a new hidden degree-3–12 register.
     - **Observed result:** The visible transition and hidden output prefix establish the observation available to an attacker.
     - **Concepts taught:** linear feedback shift register; primitive taps; keystream observation
     - **Limits:** The hidden generator is a deliberately simple LFSR, not a modern stream cipher.
-    - **Evidence at pinned commit:** `src/main.ts:141`, `src/lfsr/lfsr.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:142`, `src/lfsr/lfsr.ts:1`
   - **Trivium Initialization and Zero-Round Key Recovery** (`trivium`; interactive; real-crypto)
     - **Visible section:** The deployed answer: Trivium
     - **Learner action:** Clock Trivium's 288-bit state, measure Berlekamp–Massey profiles and freeze 64-bit forecasts, then compare full initialization with a zero-round key-recovery experiment.
     - **Observed result:** The eSTREAM-vector-checked generator produces measured recurrence fits and forecast checks. A worker uses the public IV and 1,024 output bits to solve 66 equations and test 16,384 candidate keys before a separate hidden-key comparison.
     - **Concepts taught:** Trivium; nonlinear feedback shift register; initialization rounds; Berlekamp–Massey; finite-prefix linear complexity; zero-round key recovery
     - **Limits:** The recovery equations target zero initialization, not the specified 1,152-round cipher; this is not a cube attack. Finite-prefix profiles and failed recovery do not certify security.
-    - **Evidence at pinned commit:** `src/trivium/panel.ts:17`, `src/trivium/trivium.ts:23`, `src/trivium/panel.ts:98`, `src/trivium/zero-round.ts:46`, `src/trivium/panel.ts:114`, `src/trivium/vectors.ts:95`
+    - **Evidence at pinned commit:** `src/trivium/panel.ts:17`, `src/trivium/trivium.ts:29`, `src/trivium/panel.ts:98`, `src/trivium/zero-round.ts:46`, `src/trivium/zero-round.ts:54`, `src/trivium/panel.ts:114`, `src/trivium/vectors.ts:95`
 
 ### LLL Break
 

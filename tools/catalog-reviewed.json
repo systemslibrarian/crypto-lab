@@ -1097,5 +1097,44 @@
     ],
     "implementation": "WebCrypto / @noble/curves BLS12-381 and ristretto255 / local leakage and bounded attack models",
     "note": "Read the complete merged README, SSE, query-integrity, PEKS and OXT source, tests, learner interface, primary-source boundaries and visible limitations at this exact main commit. The static SSE still executes HMAC-derived search tokens, AES-256-GCM postings, count and IKK keyword inference, and a client-retained result-integrity checkpoint. The PEKS exhibit retains its Type-3 BLS12-381 adaptation, randomized public tags, deterministic trapdoor, public Test scan and bounded exposed-trapdoor dictionary attack. The new Boolean-search exhibit compares two actual isolated SSE lookups with a static two-distinct-keyword OXT adapter. Five independent keys, framed HMAC-SHA-512 scalar derivation, canonical RFC 9496 ristretto255 operations, shuffled flat TSet rows, AES-GCM identifier ciphertexts and a sorted exact XSet execute the cancellation equation; all 91 keyword pairs in both operand orders are checked against plaintext intersections. Learners observe exact query volume, list sizes, matches, repeated stags and conditional candidate-point equality through overlapping, disjoint, changed-x, repeated-s and identical-query controls. The Path ORAM table is derived arithmetic for N=24, Z=4 and L=5, not an ORAM execution or a claim that ORAM composition hides the OXT transcript. This bounded adapter supports one AND over two known distinct terms, does not transfer the paper's full theorem, and does not establish active-server soundness, completeness or freshness. The original Type-3 PEKS proof and GT-encoding limitations also remain. BLS signatures is still a false positive from an imported module alias, Fault injection is still a false positive from a UI default, and Ed25519 is a reference false positive from noble's ristretto module filename; none is implemented here. Exact-main run 40088072088 passed 180 unit tests and all 37 browser/accessibility tests with zero dependency vulnerabilities, then deployed byte-matching assets."
+  },
+  "crypto-lab-aegis-gate": {
+    "commit": "85dbee492ea12792b8ebe1397b10104e53623ac5",
+    "reviewed": "2026-10-25",
+    "remove": [
+      "Padding oracle"
+    ],
+    "implementation": "local TypeScript AEGIS-256 / WebCrypto AES-GCM benchmark",
+    "note": "Reviewed the AEGIS engine, six-state trace, new Appendix A.2 fixture and both authentication controls. Padding-oracle text is a related-demo link, not an executed attack. The new fixture establishes a two-key/AD full-robustness counterexample, not unknown-key recovery. Existing primitive anchors remain and the new exhibit map records the computed commitment experiment."
+  },
+  "crypto-lab-polynomial-forge": {
+    "commit": "f35718189d119ca86025fe31cbb52966e934c628",
+    "reviewed": "2026-10-25",
+    "remove": [
+      "BLS signatures",
+      "Groth16",
+      "Discrete log"
+    ],
+    "implementation": "@noble BLS12-381 group operations and pairings / local KZG, IPA and FRI teaching implementations",
+    "note": "Read the group wrapper, KZG, IPA, FRI and comparison source and new batch verifier/forgery. The bls12_381 import provides curve groups and pairings, not BLS signing; Act 7 only explains Groth16, and the discrete-log line describes an IPA security assumption, not an executed discrete-log attack. Remove those three false implementation/attack credits. The public-SRS two-opening attack computes real witnesses and pairing verdicts; its proof-bound control does not claim a general security theorem."
+  },
+  "crypto-lab-format-ward": {
+    "commit": "0549c626c3b8bf7555c43e990ecfefc42753c3dc",
+    "reviewed": "2026-10-25",
+    "remove": [
+      "Frequency analysis",
+      "Known-plaintext attack",
+      "Linear cryptanalysis",
+      "Nonce reuse"
+    ],
+    "implementation": "local FF1 and FF3-1 / WebCrypto AES / synthetic format matching",
+    "note": "Read FF1/FF3-1 calls, the codebook oracle and enumeration, equality/tweak displays, historical attack prose, and the new synthetic roster release/matcher. The executable codebook is exhaustive chosen-plaintext recovery. Frequency analysis is described as possible after equality counts, not performed; known-plaintext and linear-cryptanalysis claims describe historical papers; nonce reuse appears in a related-demo link. Remove those unsupported attack credits. New FF1 field encryption and fixed-length AES-GCM control are real; matching uses only public shapes, with an explicit complete invented roster and uniform prior."
+  },
+  "crypto-lab-hybrid-guide": {
+    "commit": "b798585d2aaa7ae810ec83dbe7a5f3974f642378",
+    "reviewed": "2026-10-25",
+    "remove": [],
+    "implementation": "WebCrypto X25519 / HKDF-SHA-256 / AES-GCM / simulated hybrid component secrets",
+    "note": "Read the original random-component engine, finite candidate-key attempts and conceptual guidance, then the new native X25519 and custom HKDF experiment. Actual X25519 now executes in context.ts; ML-KEM remains simulated context only and no X-Wing construction executes. Inverting a public coordinate reproduces equal raw secrets; binding fixed-width public coordinates changes the derived key. This is not secret-key recovery or a hybrid/multi-user theorem; existing key-recovery credit refers solely to the labeled finite-guess simulated playground. Re-read the PR26 layout-only follow-up: context engine and all other cryptographic source are unchanged; panel/control styles and the owning boot guard changed."
   }
 }

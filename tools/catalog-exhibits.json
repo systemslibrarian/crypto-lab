@@ -554,8 +554,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-aegis-gate": {
-      "commit": "96c9e52024915148f967a8d0c9b57feaa6eb4d9b",
-      "reviewed": "2026-10-22",
+      "commit": "85dbee492ea12792b8ebe1397b10104e53623ac5",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "aead-roundtrip",
@@ -570,9 +570,9 @@
             "integrity"
           ],
           "evidence": [
-            "src/main.ts:181",
-            "src/main.ts:201",
-            "src/main.ts:586",
+            "src/main.ts:182",
+            "src/main.ts:202",
+            "src/main.ts:588",
             "src/aegis.ts:239",
             "src/aegis.ts:295"
           ],
@@ -593,9 +593,9 @@
             "AEAD tag"
           ],
           "evidence": [
-            "src/main.ts:216",
-            "src/main.ts:221",
-            "src/main.ts:674",
+            "src/main.ts:217",
+            "src/main.ts:222",
+            "src/main.ts:676",
             "src/aegis.ts:48",
             "src/aegis.ts:197"
           ],
@@ -615,8 +615,8 @@
             "MixColumns"
           ],
           "evidence": [
-            "src/main.ts:241",
-            "src/main.ts:247",
+            "src/main.ts:242",
+            "src/main.ts:248",
             "src/aes-round-vis.ts:32"
           ],
           "section": "Open the black box: watch one AES round mix",
@@ -634,8 +634,8 @@
             "initialization"
           ],
           "evidence": [
-            "src/main.ts:260",
-            "src/main.ts:263",
+            "src/main.ts:261",
+            "src/main.ts:264",
             "src/avalanche.ts:51"
           ],
           "section": "Avalanche: what the 16 setup updates buy",
@@ -653,9 +653,9 @@
             "plaintext recovery"
           ],
           "evidence": [
-            "src/main.ts:276",
-            "src/main.ts:285",
-            "src/main.ts:877",
+            "src/main.ts:277",
+            "src/main.ts:286",
+            "src/main.ts:879",
             "src/nonce-reuse.ts:60"
           ],
           "section": "Exhibit 3: The Nonce-Reuse Catastrophe",
@@ -674,8 +674,8 @@
             "nonce size"
           ],
           "evidence": [
-            "src/main.ts:319",
-            "src/main.ts:902",
+            "src/main.ts:320",
+            "src/main.ts:904",
             "src/birthday.ts:24"
           ],
           "section": "How long are random nonces safe? The birthday bound, live",
@@ -693,9 +693,9 @@
             "throughput"
           ],
           "evidence": [
-            "src/main.ts:328",
-            "src/main.ts:330",
-            "src/main.ts:904",
+            "src/main.ts:329",
+            "src/main.ts:331",
+            "src/main.ts:906",
             "src/benchmark.ts:83",
             "src/benchmark.ts:116"
           ],
@@ -717,13 +717,13 @@
             "SIMD"
           ],
           "evidence": [
-            "src/main.ts:304",
             "src/main.ts:305",
-            "src/main.ts:309",
-            "src/main.ts:314",
-            "src/main.ts:338",
-            "src/main.ts:341",
-            "src/main.ts:346"
+            "src/main.ts:306",
+            "src/main.ts:310",
+            "src/main.ts:315",
+            "src/main.ts:339",
+            "src/main.ts:342",
+            "src/main.ts:347"
           ],
           "section": "Exhibit 4: Why AEGIS Over AES-GCM?",
           "execution": "conceptual",
@@ -743,17 +743,39 @@
             "AEAD deployment"
           ],
           "evidence": [
-            "src/main.ts:336",
             "src/main.ts:337",
             "src/main.ts:338",
-            "src/main.ts:340",
-            "src/main.ts:344",
-            "src/main.ts:349",
-            "src/main.ts:352"
+            "src/main.ts:339",
+            "src/main.ts:341",
+            "src/main.ts:345",
+            "src/main.ts:350",
+            "src/main.ts:353"
           ],
           "section": "Exhibit 6: Why This Matters",
           "execution": "conceptual",
           "limits": "The adjacent 2026 RFC and draft status statements are pinned to this source, not a live standardization check."
+        },
+        {
+          "id": "two-key-commitment",
+          "title": "One ciphertext, two keys",
+          "section": "Exhibit 7: One ciphertext, two keys",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Replay the published two-key fixture, switch tag lengths, and compare constructed, identical and tampered associated data.",
+          "outcome": "Actual state traces converge for the constructed contexts; both keys authenticate the same ciphertext, while the negative controls reject the second context.",
+          "concepts": [
+            "key commitment",
+            "AEGIS-256",
+            "full robustness",
+            "state collision"
+          ],
+          "evidence": [
+            "src/commitment-ui.ts:5",
+            "src/commitment-ui.ts:68",
+            "src/commitment.ts:27",
+            "src/commitment.ts:40"
+          ],
+          "limits": "Known attacker-chosen key and associated-data contexts; no unknown-key recovery or fixed-key authentication forgery."
         }
       ],
       "reviewScope": "complete"
@@ -12413,8 +12435,8 @@
       ]
     },
     "crypto-lab-format-ward": {
-      "commit": "596ebd44d2c0427d53e915d208e24b567b76f929",
-      "reviewed": "2026-10-22",
+      "commit": "0549c626c3b8bf7555c43e990ecfefc42753c3dc",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -12625,6 +12647,31 @@
             "src/ui.ts:924"
           ],
           "limits": "Historical and design explanation; live codebook demo is a separate simplified small-domain attack."
+        },
+        {
+          "id": "format-reidentification",
+          "title": "Match encrypted records by retained format",
+          "section": "Format can identify a record without decrypting it",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Encrypt eight synthetic records with fresh FF1 tweaks and match name/city shapes against an auxiliary roster; compare padded AES-GCM records.",
+          "outcome": "Public format-only matching narrows candidate sets and computes uniform-prior Shannon leakage; the equal-length padded control leaves all eight candidates.",
+          "concepts": [
+            "format leakage",
+            "reidentification",
+            "auxiliary information",
+            "Shannon entropy",
+            "padding"
+          ],
+          "evidence": [
+            "src/reidentification-ui.ts:6",
+            "src/reidentification-ui.ts:34",
+            "src/reidentification.ts:25",
+            "src/reidentification.ts:45",
+            "src/reidentification.ts:56",
+            "src/reidentification.ts:73"
+          ],
+          "limits": "Invented complete roster and uniform prior; unique candidate is not real-world identity proof. No FF1 key recovery and no general anonymity guarantee from padding."
         }
       ]
     },
@@ -16776,8 +16823,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hybrid-guide": {
-      "commit": "c15c7a6d256c481f50e23f6f18134aa037f6b67b",
-      "reviewed": "2026-10-22",
+      "commit": "b798585d2aaa7ae810ec83dbe7a5f3974f642378",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -16916,6 +16963,31 @@
             "src/data.ts:38"
           ],
           "limits": "The guidance is source-sensitive and no live deployment negotiation executes here."
+        },
+        {
+          "id": "real-public-context",
+          "title": "Reproduce a real X25519 public-input collision",
+          "section": "Real X25519: different public inputs, the same raw secret",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Generate native X25519 keys, invert a public coordinate, and compare secret-only and public-context-bound HKDF derivations with same-input and independent controls.",
+          "outcome": "The public inverse coordinate produces the same raw DH secret and secret-only key; including public coordinates in derivation changes the key.",
+          "concepts": [
+            "X25519",
+            "public context",
+            "raw-DH binding",
+            "HKDF",
+            "inverse coordinate"
+          ],
+          "evidence": [
+            "src/context-ui.ts:5",
+            "src/context-ui.ts:31",
+            "src/context.ts:15",
+            "src/context.ts:25",
+            "src/context.ts:34",
+            "src/context.ts:47"
+          ],
+          "limits": "Custom raw-DH/HKDF illustration; executes no ML-KEM, X-Wing or HPKE and proves no universal hybrid or multi-user security theorem."
         }
       ]
     },
@@ -24820,8 +24892,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-noise-to-numbers": {
-      "commit": "f468565fbc6530fcd98508b2493370dfa61aa88a",
-      "reviewed": "2026-10-22",
+      "commit": "4496fd24173ae0e578d23f8811acd6b22c8ac6bf",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -25135,6 +25207,29 @@
             "index.html:212",
             "src/ui/honesty.ts:1"
           ]
+        },
+        {
+          "id": "markov-parity",
+          "title": "Compute exact parity bias with source memory",
+          "section": "Does XOR remove bias when the source remembers?",
+          "kind": "interactive",
+          "execution": "real-values",
+          "action": "Choose independent, repeating or alternating binary sources, initial law and block length; compute exact parity probabilities.",
+          "outcome": "The signed transition kernel exposes dependence missed by multiplying marginal biases, including even/odd behavior, distance from a fair bit and the first-order bound.",
+          "concepts": [
+            "Markov chain",
+            "parity bias",
+            "source memory",
+            "signed transition kernel",
+            "finite-length bound"
+          ],
+          "evidence": [
+            "src/ui/parityPanel.ts:46",
+            "src/ui/parityPanel.ts:25",
+            "src/entropy/parity.ts:16",
+            "src/entropy/parity.ts:26"
+          ],
+          "limits": "Analytic homogeneous first-order binary model with declared probabilities; not a hardware measurement, source assessment, independent-block certificate or hidden/unbounded-memory guarantee."
         }
       ]
     },
@@ -28211,8 +28306,8 @@
       ]
     },
     "crypto-lab-polynomial-forge": {
-      "commit": "24aa348a654b5521489aa5d607a3f99add7f34dd",
-      "reviewed": "2026-10-22",
+      "commit": "f35718189d119ca86025fe31cbb52966e934c628",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -28347,7 +28442,7 @@
             "circuit-specific setup"
           ],
           "evidence": [
-            "src/main.ts:37",
+            "src/main.ts:39",
             "src/ui/act-compare.ts:170",
             "src/ui/act-compare.ts:173",
             "src/ui/act-compare.ts:190",
@@ -28355,6 +28450,29 @@
             "src/crypto/compare.ts:203"
           ],
           "limits": "Conceptual comparison; this act does not implement Groth16 proving."
+        },
+        {
+          "id": "last-challenge",
+          "title": "Construct two false openings that cancel in a batch",
+          "section": "The last challenge: when two false openings cancel",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Compare honest openings with public-SRS proofs chosen after the batching challenge, then bind both proof points into the challenge.",
+          "outcome": "Individual false openings reject; the premature weighted pairing accepts them and the proof-bound challenge rejects this construction.",
+          "concepts": [
+            "KZG batching",
+            "Fiat-Shamir transcript",
+            "last challenge",
+            "public-SRS forgery"
+          ],
+          "evidence": [
+            "src/ui/act-batch.ts:95",
+            "src/ui/act-batch.ts:60",
+            "src/crypto/batch.ts:22",
+            "src/crypto/batch.ts:43",
+            "src/crypto/batch.ts:60"
+          ],
+          "limits": "Two-opening counterexample, not the full PLONK exploit, a trapdoor recovery, or a general security proof for the repaired control."
         }
       ]
     },

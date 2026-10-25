@@ -6782,12 +6782,14 @@
           </a>
 
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-format-ward/"
-            data-implements="AES@src/ff1.ts:47 | AES-CBC@src/ff1.ts:150 | FF1@src/attack.ts:23"
-            data-references="AES-GCM | AES-KW | AES-SIV | ChaCha20 | ChaCha20-Poly1305 | Poly1305 | RSA | RSA-OAEP"
-            data-attacks="Brute force@src/ui.ts:774 | Chosen-plaintext attack@src/ui.ts:775 | Frequency analysis@src/ui.ts:720 | Known-plaintext attack@src/ui.ts:851 | Linear cryptanalysis@src/ui.ts:862 | Nonce reuse@README.md:81"
+            data-implements="AES@src/ff1.ts:47 | AES-CBC@src/ff1.ts:150 | AES-GCM@src/reidentification.ts:62 | FF1@src/attack.ts:23"
+            data-references="AES-KW | AES-SIV | ChaCha20 | ChaCha20-Poly1305 | Poly1305 | RSA | RSA-OAEP | SHA-256"
+            data-attacks="Brute force@src/ui.ts:774 | Chosen-plaintext attack@src/ui.ts:775"
             data-standards="NIST"
-            data-implementation="hand-rolled"
-            data-level="advanced" data-added="2026-04" data-added-on="2026-04-07" data-updated="2026-08"
+            data-implementation="local FF1 and FF3-1 / WebCrypto AES / synthetic format matching"
+            data-review-commit="0549c626c3b8bf7555c43e990ecfefc42753c3dc"
+            data-review-note="Read FF1/FF3-1 calls, the codebook oracle and enumeration, equality/tweak displays, historical attack prose, and the new synthetic roster release/matcher. The executable codebook is exhaustive chosen-plaintext recovery. Frequency analysis is described as possible after equality counts, not performed; known-plaintext and linear-cryptanalysis claims describe historical papers; nonce reuse appears in a related-demo link. Remove those unsupported attack credits. New FF1 field encryption and fixed-length AES-GCM control are real; matching uses only public shapes, with an explicit complete invented roster and uniform prior."
+            data-level="advanced" data-added="2026-04" data-added-on="2026-04-07" data-updated="2026-10"
            
            
            
@@ -6862,7 +6864,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Format-Preserving Encryption</div>
             <div class="project-title">Format Ward</div>
-            <div class="project-copy">FF1 and FF3-1 tokenization of credit cards, SSNs, and phone numbers — with the linear cryptanalysis that got FF3-1 cut from NIST's draft revision.</div>
+            <div class="project-copy">Run FF1 and FF3-1 format-preserving encryption, a tiny-domain codebook attack, and format-only matching of invented records. Compare retained shapes with padded authenticated encryption.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">FF1</span>
@@ -10113,11 +10115,13 @@
 
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-aegis-gate/"
             data-implements="AEGIS-256@src/aegis.ts:239 | AES@src/aes-round-vis.ts:32 | AES-GCM@src/benchmark.ts:116"
-            data-references="AES-CCM | AES-SIV | Ascon | Caesar cipher | ChaCha20 | ChaCha20-Poly1305 | GHASH | Poly1305 | TLS 1.3"
-            data-attacks="Birthday bound@src/main.ts:319 | Known-plaintext attack@src/nonce-reuse.ts:63 | Nonce reuse@src/birthday.ts:24 | Padding oracle@src/main.ts:355"
+            data-references="AES-CCM | AES-SIV | Ascon | Caesar cipher | ChaCha20 | ChaCha20-Poly1305 | GHASH | Poly1305 | SHA-256 | TLS 1.3"
+            data-attacks="Birthday bound@src/main.ts:320 | Known-plaintext attack@src/nonce-reuse.ts:63 | Nonce reuse@src/birthday.ts:24"
             data-standards="IETF | NIST"
-            data-implementation="WebCrypto"
-            data-level="advanced" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-09"
+            data-implementation="local TypeScript AEGIS-256 / WebCrypto AES-GCM benchmark"
+            data-review-commit="85dbee492ea12792b8ebe1397b10104e53623ac5"
+            data-review-note="Reviewed the AEGIS engine, six-state trace, new Appendix A.2 fixture and both authentication controls. Padding-oracle text is a related-demo link, not an executed attack. The new fixture establishes a two-key/AD full-robustness counterexample, not unknown-key recovery. Existing primitive anchors remain and the new exhibit map records the computed commitment experiment."
+            data-level="advanced" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
            
            
            
@@ -10191,7 +10195,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Authenticated Encryption</div>
             <div class="project-title">AEGIS Gate</div>
-            <div class="project-copy">AEGIS-256 as described in CFRG Informational RFC 10032, with AES round-function state updates, six-register sponge flow, tag derivation, and RFC test-vector verification in the browser.</div>
+            <div class="project-copy">Trace AEGIS-256 state updates and authentication, then replay a published ciphertext accepted under two different key/associated-data contexts. Compare tag lengths and negative controls.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">AEGIS-256</span>
@@ -13958,12 +13962,14 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-hybrid-guide/"
-            data-implements="AES@src/engine.ts:99 | AES-GCM@src/engine.ts:115 | SHA-256@src/engine.ts:50"
-            data-comment-only="ML-KEM@src/engine.ts:5 | SHA-3@src/engine.ts:8 | X25519@src/engine.ts:4"
-            data-references="Diffie-Hellman | Kyber | ML-KEM | PQXDH | SHA-3 | TLS 1.3 | X25519"
+            data-implements="AES@src/engine.ts:99 | AES-GCM@src/engine.ts:115 | Diffie-Hellman@src/context.ts:23 | HKDF@src/context.ts:34 | SHA-256@src/engine.ts:50 | X25519@src/context.ts:25"
+            data-comment-only="HPKE@src/context.ts:3 | ML-KEM@src/engine.ts:5 | SHA-3@src/engine.ts:8"
+            data-references="HPKE | Kyber | ML-KEM | PQXDH | SHA-3 | TLS 1.3"
             data-attacks="Key recovery@src/engine.ts:170"
-            data-standards="NIST"
-            data-implementation="WebCrypto"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto X25519 / HKDF-SHA-256 / AES-GCM / simulated hybrid component secrets"
+            data-review-commit="b798585d2aaa7ae810ec83dbe7a5f3974f642378"
+            data-review-note="Read the original random-component engine, finite candidate-key attempts and conceptual guidance, then the new native X25519 and custom HKDF experiment. Actual X25519 now executes in context.ts; ML-KEM remains simulated context only and no X-Wing construction executes. Inverting a public coordinate reproduces equal raw secrets; binding fixed-width public coordinates changes the derived key. This is not secret-key recovery or a hybrid/multi-user theorem; existing key-recovery credit refers solely to the labeled finite-guess simulated playground. Re-read the PR26 layout-only follow-up: context engine and all other cryptographic source are unchanged; panel/control styles and the owning boot guard changed."
             data-level="intermediate" data-added="2026-06" data-added-on="2026-06-06" data-updated="2026-10"
            
            
@@ -14041,13 +14047,13 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Hybrid PQC</div>
             <div class="project-title">Hybrid Guide</div>
-            <div class="project-copy">A guide to hybrid post-quantum key exchange — a KEM combiner pairs X25519 with ML-KEM-768 so the session key holds as long as either half survives. Break each component to see the hedge.</div>
+            <div class="project-copy">Explore simulated hybrid component compromise, then run a real X25519 public-input collision and compare secret-only with context-bound key derivation. ML-KEM remains a model.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">KEM Combiner</span>
                 <span class="chip">X25519</span>
-                <span class="chip">ML-KEM-768</span>
-                <span class="chip">X-Wing</span>
+                <span class="chip">Modelled ML-KEM</span>
+                <span class="chip">Public Context Binding</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -19092,13 +19098,14 @@
           </a>
 
           <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-polynomial-forge/"
-            data-implements="BLS signatures@src/crypto/bls.ts:15 | BLS12-381@src/crypto/bls.ts:15 | FRI@src/crypto/fri.ts:83 | Groth16@src/ui/act-compare.ts:170 | Hash-to-curve@src/crypto/bls.ts:171 | KZG commitment@src/crypto/compare.ts:108 | Merkle tree@src/crypto/compare.ts:30 | Pairing@src/crypto/bls.ts:83 | SHA-256@src/crypto/kzg.ts:115"
-            data-comment-only="Bulletproofs@src/crypto/ipa.ts:4 | EC point arithmetic@src/crypto/bls.ts:31 | Fiat-Shamir@src/crypto/fr.ts:81 | Grover's algorithm@src/crypto/merkle.ts:6 | NTT@src/crypto/compare.ts:13 | PLONK@src/crypto/degree-attack.ts:5 | Reed-Solomon@src/crypto/degree-attack.ts:5 | Shor's algorithm@src/crypto/merkle.ts:9 | STARK@src/crypto/fri.ts:4"
-            data-references="Bulletproofs | EC point arithmetic | Fiat-Shamir | Grover's algorithm | Halo2 | NTT | PLONK | Pedersen commitment | Reed-Solomon | STARK | Shor's algorithm"
-            data-attacks="Discrete log@src/crypto/compare.ts:159"
+            data-implements="BLS12-381@src/crypto/bls.ts:15 | FRI@src/crypto/fri.ts:83 | Hash-to-curve@src/crypto/bls.ts:171 | KZG commitment@src/crypto/compare.ts:108 | Merkle tree@src/crypto/compare.ts:30 | Pairing@src/crypto/bls.ts:83 | SHA-256@src/crypto/kzg.ts:115"
+            data-comment-only="Bulletproofs@src/crypto/ipa.ts:4 | EC point arithmetic@src/crypto/bls.ts:31 | Fiat-Shamir@src/crypto/fr.ts:81 | Grover's algorithm@src/crypto/merkle.ts:6 | NTT@src/crypto/compare.ts:13 | PLONK@src/crypto/batch.ts:3 | Reed-Solomon@src/crypto/degree-attack.ts:5 | Shor's algorithm@src/crypto/merkle.ts:9 | STARK@src/crypto/fri.ts:4"
+            data-references="BLS signatures | Bulletproofs | EC point arithmetic | Fiat-Shamir | Grover's algorithm | Halo2 | NTT | PLONK | Pedersen commitment | Reed-Solomon | STARK | Shor's algorithm"
             data-standards="IETF | NIST"
-            data-implementation="@noble"
-            data-level="advanced" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-08"
+            data-implementation="@noble BLS12-381 group operations and pairings / local KZG, IPA and FRI teaching implementations"
+            data-review-commit="f35718189d119ca86025fe31cbb52966e934c628"
+            data-review-note="Read the group wrapper, KZG, IPA, FRI and comparison source and new batch verifier/forgery. The bls12_381 import provides curve groups and pairings, not BLS signing; Act 7 only explains Groth16, and the discrete-log line describes an IPA security assumption, not an executed discrete-log attack. Remove those three false implementation/attack credits. The public-SRS two-opening attack computes real witnesses and pairing verdicts; its proof-bound control does not claim a general security theorem."
+            data-level="advanced" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-10"
            
            
            
@@ -19172,7 +19179,7 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Polynomial Commitments</div>
             <div class="project-title">Polynomial Forge</div>
-            <div class="project-copy">One polynomial committed three ways — KZG, IPA, FRI — then the failure nothing else teaches: omit the degree bound and every cryptographic check still passes while the low-degree claim is gone.</div>
+            <div class="project-copy">Commit with KZG, IPA and FRI; explore missing degree checks and toxic setup. Construct two false KZG openings that pass a premature batch challenge, then bind the proofs into the transcript.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">KZG</span>
@@ -20956,7 +20963,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Entropy Assessment</div>
             <div class="project-title">Noise to Numbers</div>
-            <div class="project-copy">Compare pinned SP 800-90B and Theseus results on seven reproducible inputs, inspect variability across simulated runs, and challenge the IID assumption. Entropy belongs to the source, not a statistical score.</div>
+            <div class="project-copy">Compare pinned entropy assessments and source-model limits, then compute exact XOR bias for correlated binary Markov chains. See why balanced individual bits need not give unbiased parity.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">SP 800-90B</span>

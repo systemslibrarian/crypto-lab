@@ -336,8 +336,9 @@ changed merely to make the paper visible.
 
 #### Catalog corrections found during reconciliation
 
-The current central-catalog change set stages the corrections found during this
-reconciliation: CKKS Lab no longer advertises a reproduced chosen-plaintext or
+[Crypto Lab PR #291](https://github.com/systemslibrarian/crypto-lab/pull/291)
+delivered the corrections found during this reconciliation: CKKS Lab no longer
+advertises a reproduced chosen-plaintext or
 key-recovery attack; Power Trace's key-recovery credit points to its executable
 bounded recovery and its unimplemented NTT/Shamir references are removed; SNARK
 Arena removes false discrete-log and PLONK implementation credit while preserving
@@ -345,8 +346,44 @@ the toxic-waste forgery in learner copy and its pinned exhibit (the attack
 vocabulary has no honest term for that failure); SPDZ Forge describes BigInt
 field arithmetic with WebCrypto SHA-256 commitments; and Proof Tally attributes
 its local Field64/Prio3 and exact rational DP logic separately from noble's
-TurboSHAKE128. These are staged until the Hub change itself passes, merges and is
-verified live.
+TurboSHAKE128. The same Hub delivery publishes exact reviewed pins and exhibit
+maps for all six targets without changing the recommendations' dispositions.
+
+#### Central catalog delivery
+
+PR #291 merged as exact main
+[`2927f2a2b9a0`](https://github.com/systemslibrarian/crypto-lab/tree/2927f2a2b9a08dc7d5d1598e38bb60be10fb5709).
+Its seven PR workflows passed all 13 applicable jobs, with only the
+event-inapplicable drift job skipped: [README/catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209640766),
+[Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209640791),
+[learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209640843),
+[public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209640876),
+[protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209640757),
+[arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209640712)
+and [maintenance verification](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209640833).
+The logs report zero failed tests, 24 live worksheets with 554 controls and zero
+drift, and successful final maintenance stages. The six target review pins match
+their current clean mains; 51 mapped exhibits and every recorded target anchor
+validate. Fifteen separately reported full-fleet stale pins belong to other labs
+whose mains moved and were not silently re-reviewed here.
+
+Seven exact-main workflows then passed 14 jobs with the same single skip:
+[README/catalog](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209975632),
+[Teach pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209975673),
+[learning games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209975631),
+[public evidence](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209975608),
+[protocol workshops](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209975602),
+[arcade games](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209975679)
+and [Pages](https://github.com/systemslibrarian/crypto-lab/actions/runs/40209975187).
+Pages artifact `12604959808` (5,748,550 bytes, SHA-256
+`785c40b07639a0f7fe0f92e7432ddb75cc65b9b41feef693e5dae0d2da803ee8`)
+produced successful deployment `7315606531`. The public catalog (821,746 bytes,
+SHA-256 `4338aeb90432f4a2ae1a327cde45146c5634dfaf108fd157d1e024115e7c2125`)
+and knowledge-map JSON (257,251 bytes, SHA-256
+`b893d0099741da57825baea0cedb9d7095d6d3e657645b6b705bf25d1422140c`)
+matched the artifact and exact main byte for byte. Served `README.md`, `CATALOG.md`,
+the encyclopedia roadmap and this checklist before the present evidence-only
+follow-up matched exact main as well.
 
 Across the initial PR-01, PR-02, PR-07, PR-08 and PR-09 deliveries and six
 reconciled recommendations, unrelated cryptographic engines and fleet

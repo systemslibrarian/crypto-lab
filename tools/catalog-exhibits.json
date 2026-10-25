@@ -21222,8 +21222,8 @@
       ]
     },
     "crypto-lab-lfsr-forge": {
-      "commit": "2800c76acf9ddc7bd79210327372b95b64d444e6",
-      "reviewed": "2026-10-23",
+      "commit": "7c6246133b9ea5d2acda5ee1cddeada6e5b1e607",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "register",
@@ -21237,7 +21237,7 @@
             "keystream observation"
           ],
           "evidence": [
-            "src/main.ts:141",
+            "src/main.ts:142",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Watch a register run",
@@ -21256,7 +21256,7 @@
             "minimal recurrence"
           ],
           "evidence": [
-            "src/main.ts:142",
+            "src/main.ts:143",
             "src/lfsr/bm.ts:1"
           ],
           "section": "Follow Berlekamp–Massey",
@@ -21275,7 +21275,7 @@
             "ambiguous prefix"
           ],
           "evidence": [
-            "src/main.ts:143",
+            "src/main.ts:144",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Predict, freeze, check",
@@ -21293,7 +21293,7 @@
             "correlation bias"
           ],
           "evidence": [
-            "src/main.ts:144",
+            "src/main.ts:145",
             "src/geffe/geffe.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -21313,7 +21313,7 @@
             "search budget"
           ],
           "evidence": [
-            "src/main.ts:145",
+            "src/main.ts:146",
             "src/geffe/attack.worker.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -21337,15 +21337,47 @@
           ],
           "evidence": [
             "src/trivium/panel.ts:17",
-            "src/trivium/trivium.ts:23",
+            "src/trivium/trivium.ts:29",
             "src/trivium/panel.ts:98",
             "src/trivium/zero-round.ts:46",
+            "src/trivium/zero-round.ts:54",
             "src/trivium/panel.ts:114",
             "src/trivium/vectors.ts:95"
           ],
           "section": "The deployed answer: Trivium",
           "execution": "real-crypto",
           "limits": "The recovery equations target zero initialization, not the specified 1,152-round cipher; this is not a cube attack. Finite-prefix profiles and failed recovery do not certify security."
+        },
+        {
+          "id": "boolean-combiner-audit",
+          "title": "Exact Four-Input Boolean Combiner Audit",
+          "kind": "interactive",
+          "action": "Edit any of the 16 outputs, inspect exact algebraic and correlation criteria, then run bounded recurrence, pair-state and single-state counterexamples.",
+          "outcome": "Parity remains linearly predictable, an order-one-resilient table exposes an order-two relation, and an algebraic-immunity-two table still yields its R4 state in the bounded scan.",
+          "concepts": [
+            "Boolean function",
+            "algebraic normal form",
+            "Walsh spectrum",
+            "nonlinearity",
+            "correlation immunity",
+            "resiliency",
+            "algebraic immunity",
+            "bounded correlation scan"
+          ],
+          "evidence": [
+            "src/boolean/panel.ts:12",
+            "src/boolean/analysis.ts:73",
+            "src/boolean/analysis.ts:92",
+            "src/boolean/analysis.ts:108",
+            "src/boolean/analysis.ts:146",
+            "src/boolean/attacks.ts:49",
+            "src/boolean/attacks.ts:63",
+            "src/boolean/attacks.ts:79",
+            "src/boolean/panel.ts:155"
+          ],
+          "section": "Audit a Boolean combiner",
+          "execution": "real-values",
+          "limits": "Exactly four inputs are analyzed; Walsh probabilities assume independent uniform bits, while deterministic LFSR agreement is measured separately. The scans cover only 127 states or 105 state pairs, and algebraic immunity two does not exclude every fast algebraic relation."
         }
       ],
       "reviewScope": "complete"

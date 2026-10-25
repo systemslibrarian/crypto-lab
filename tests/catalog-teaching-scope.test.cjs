@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { attackContextAllows, lex } = require('../tools/catalog-evidence.js');
 const { ALGORITHMS, ATTACKS } = require('../tools/catalog-vocab.js');
+const exhibitManifest = require('../tools/catalog-exhibits.json');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 
@@ -19,6 +20,27 @@ function implementationsFor(source, slug) {
   assert.ok(card, `Missing ${slug} card`);
   return (card[0].match(/\bdata-implements="([^"]*)"/)?.[1] ?? '')
     .split(' | ').map(value => value.split('@')[0]);
+}
+
+function openingFor(source, slug) {
+  const card = source.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[^>]*>'));
+  assert.ok(card, `Missing ${slug} card`);
+  return card[0];
+}
+
+function blockFor(source, slug) {
+  const card = source.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[\\s\\S]*?</a>'));
+  assert.ok(card, `Missing ${slug} card block`);
+  return card[0];
+}
+
+function referencesFor(source, slug) {
+  return (openingFor(source, slug).match(/\bdata-references="([^"]*)"/)?.[1] ?? '')
+    .split(' | ').filter(Boolean);
+}
+
+function chipsFor(source, slug) {
+  return [...blockFor(source, slug).matchAll(/class="chip">([^<]+)</g)].map(match => match[1]);
 }
 
 function checkEnvelopeKmsScope(source) {
@@ -188,6 +210,86 @@ test('HPKE S01 scope controls reject lost or displaced reviewed credit', () => {
     assert.notEqual(changed, html, 'Negative control must change the HPKE Envelope card');
     assert.throws(() => checkHpkeS01Scope(changed), assert.AssertionError);
   }
+});
+
+function checkLfsrForgeScope(source, manifest = exhibitManifest) {
+  const slug = 'crypto-lab-lfsr-forge';
+  assert.deepEqual(implementationsFor(source, slug), ['Trivium'],
+    'Only the vocabulary-named, executed Trivium primitive belongs in data-implements');
+  assert.deepEqual(attacksFor(source, slug), ['Key recovery'],
+    'Retain executable zero-round recovery without promoting test or provenance prose to attacks');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-review-commit="7c6246133b9ea5d2acda5ee1cddeada6e5b1e607"/);
+  assert.match(opening, /Trivium@src\/trivium\/trivium\.ts:29/,
+    'Trivium must anchor at the actual state advance, not a panel mount');
+  for (const falseReference of ['Pairing', 'RC4', 'Shamir secret sharing']) {
+    assert.ok(!referencesFor(source, slug).includes(falseReference),
+      `${falseReference} is not an LFSR Forge algorithm reference`);
+  }
+
+  const block = blockFor(source, slug);
+  assert.match(block, /inspect real Trivium clocking/);
+  assert.match(block, /editable four-input Boolean combiners/);
+  const chips = chipsFor(source, slug);
+  assert.ok(chips.includes('Trivium'), 'The learner-facing card must expose its Trivium lesson');
+  assert.ok(chips.includes('Boolean Function Audit'), 'The learner-facing card must expose the Boolean audit');
+
+  const review = manifest.labs[slug];
+  assert.equal(review.commit, '7c6246133b9ea5d2acda5ee1cddeada6e5b1e607');
+  assert.equal(review.reviewScope, 'complete');
+  assert.equal(review.exhibits.length, 7);
+  const trivium = review.exhibits.find(exhibit => exhibit.id === 'trivium');
+  assert.ok(trivium);
+  assert.ok(trivium.evidence.includes('src/trivium/trivium.ts:29'));
+  assert.ok(trivium.evidence.includes('src/trivium/zero-round.ts:54'),
+    'The map must retain the full-observation candidate recheck');
+  const booleanAudit = review.exhibits.find(exhibit => exhibit.id === 'boolean-combiner-audit');
+  assert.ok(booleanAudit);
+  for (const anchor of [
+    'src/boolean/analysis.ts:73',
+    'src/boolean/analysis.ts:92',
+    'src/boolean/analysis.ts:108',
+    'src/boolean/analysis.ts:146',
+    'src/boolean/attacks.ts:49',
+    'src/boolean/attacks.ts:63',
+    'src/boolean/attacks.ts:79',
+    'src/boolean/panel.ts:155',
+  ]) assert.ok(booleanAudit.evidence.includes(anchor), `Missing Boolean evidence ${anchor}`);
+  assert.match(booleanAudit.limits, /independent uniform bits/);
+  assert.match(booleanAudit.limits, /127 states or 105 state pairs/);
+  assert.match(booleanAudit.limits, /does not exclude every fast algebraic relation/);
+}
+
+test('LFSR Forge publishes Trivium and exact Boolean analysis without inherited false credits', () => {
+  checkLfsrForgeScope(html);
+});
+
+test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-lfsr-forge\/"[\s\S]*?<\/a>/;
+  for (const changed of [
+    html.replace(cardRe, card => card.replace(/Trivium@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, card => card.replace('Trivium@src/trivium/trivium.ts:29', 'Trivium@src/trivium/trivium.ts:28')),
+    html.replace(cardRe, card => card.replace('data-attacks="Key recovery@src/trivium/panel.ts:37"',
+      'data-attacks="Brute force@README.md:80 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:140"')),
+    html.replace(cardRe, card => card.replace('data-references="', 'data-references="Pairing | RC4 | Shamir secret sharing | ')),
+    html.replace(cardRe, card => card.replace('7c6246133b9ea5d2acda5ee1cddeada6e5b1e607', '2800c76acf9ddc7bd79210327372b95b64d444e6')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Trivium</span>', '')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Boolean Function Audit</span>', '')),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the LFSR Forge card');
+    assert.throws(() => checkLfsrForgeScope(changed), assert.AssertionError);
+  }
+
+  const missingBoolean = JSON.parse(JSON.stringify(exhibitManifest));
+  missingBoolean.labs['crypto-lab-lfsr-forge'].exhibits = missingBoolean.labs['crypto-lab-lfsr-forge'].exhibits
+    .filter(exhibit => exhibit.id !== 'boolean-combiner-audit');
+  assert.throws(() => checkLfsrForgeScope(html, missingBoolean), assert.AssertionError);
+
+  const missingRecheck = JSON.parse(JSON.stringify(exhibitManifest));
+  const trivium = missingRecheck.labs['crypto-lab-lfsr-forge'].exhibits.find(exhibit => exhibit.id === 'trivium');
+  trivium.evidence = trivium.evidence.filter(anchor => anchor !== 'src/trivium/zero-round.ts:54');
+  assert.throws(() => checkLfsrForgeScope(html, missingRecheck), assert.AssertionError);
 });
 
 function checkDictionaryScope(source) {

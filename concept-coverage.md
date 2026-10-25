@@ -367,6 +367,18 @@ ciphertext authorship, transmission, receipt, time, human intent or legal
 non-repudiation. The profile is not a standardized wire format or a transfer of the
 cited construction's proof. Catalogued total remains 245.*
 
+*Version 47 — records LFSR Forge's A-D-05 Boolean-combiner extension under §30
+without adding a lab or changing a concept status. An editable four-input table
+now computes exact ANF, degree, the complete 16-coefficient Walsh spectrum,
+balance, nonlinearity, every fixed-subset distribution, correlation immunity,
+resiliency and a complete degree-at-most-two algebraic-immunity search. Separate
+deterministic fixtures show a resilient function with an order-two relation, an
+algebraic-immunity-two function with a recoverable tiny register state and parity
+with a predictable equivalent recurrence. Independent-uniform table
+probabilities remain distinct from measured LFSR agreement, and the 127-state
+and 105-pair scans are bounded teaching experiments rather than production
+fast-correlation attacks. Catalogued total remains 245.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1112,6 +1124,20 @@ approximation table in place of the DDT, bias accumulation in place of character
 probability, with 96 cross-implementation vectors reproducing Biham Lens's ciphertexts. It
 also earns its place by showing where the lemma *fails*: over three rounds the linear hull
 effect scatters the true bias across keys while the piling-up prediction sits unmoved.
+
+LFSR Forge now makes the Boolean-combiner design tradeoffs executable instead of
+leaving correlation at the Geffe example. Learners can edit all 16 rows of a
+four-input truth table and compare ANF degree, Walsh coefficients, nonlinearity,
+fixed-subset independence, correlation immunity, resiliency and the complete
+four-variable algebraic-immunity bound. The counterexamples deliberately separate
+properties: parity is highly correlation immune but linearly predictable; an
+order-one-resilient function retains an exploitable order-two relation; and a
+function with maximum algebraic immunity for four variables still correlates with
+one tiny register in the bounded fixture. Those results assume independent uniform
+bits when interpreting the truth table, measure deterministic LFSR agreement
+separately, and do not claim that the small exhaustive scans implement a production
+fast-correlation attack or that algebraic immunity rules out every fast algebraic
+relation.
 
 **31. Formal security analysis: symbolic and computational — `COVERED`**
 Protocol Checker (Dolev-Yao, rediscovers Lowe's attack by search) · Hidden Bit.

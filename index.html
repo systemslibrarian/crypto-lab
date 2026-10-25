@@ -12109,12 +12109,12 @@
           </a>
 
           <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-envelope-kms/"
-            data-implements="AES@src/crypto/aead.ts:9 | AES-CTR@src/security/properties.ts:90 | AES-GCM@src/crypto/aead.ts:9 | AES-KW@src/crypto/aes-kw.ts:78 | HKDF@src/crypto/kdf.ts:1 | SHA-256@src/crypto/kdf.ts:1"
-            data-references="Argon2 | FF1 | PBKDF2 | RSA | scrypt"
+            data-implements="AES@src/crypto/aead.ts:9 | AES-CTR@src/security/properties.ts:90 | AES-GCM@src/crypto/aead.ts:9 | AES-KW@src/crypto/aes-kw.ts:78 | HKDF@src/crypto/kdf.ts:1 | HMAC@src/kms/forward-secure-log.ts:220 | SHA-256@src/crypto/kdf.ts:1"
+            data-references="Argon2 | FF1 | Merkle tree | PBKDF2 | RSA | scrypt"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="50fcf5130274de940aba5a3ada405d95243e4fcb"
-            data-review-note="Reviewed the complete E-K-01 key-handle model, interfaces, browser claims, tests, security notes and change inventory at the merged source. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged. The first exercise still uses real RFC 3394 wrapping and WebCrypto AES-GCM: unsafe mutable usages disclose a sensitive wrappable key, fixed roles preserve protected unwrap and a nonextractable target refuses wrapping. The later deterministic breadth-first explorer covers mutable-role, known-key-import/template-confusion and distinct same-value-handle presets under the displayed four-call, four-handle, four-blob and three-template model. It distinguishes bounded no-witness from incomplete cutoff, retains terminal symbolic evidence, replays found witnesses with real RFC 3394 and independently checks the recovered target with AES-GCM. Hosted run 40047035613 passed 119 unit tests, 2 publishing-command controls, 39 browser/accessibility tests and all 10 named mutation cases; CodeQL run 40047035602 passed. Remove Fault injection because source mutation verifies tests rather than executing a cryptographic fault attack; remove Side-channel (unspecified) because the briefs exclude that claim. This is not PKCS #11 conformance, HSM isolation, a vendor vulnerability or an unbounded API-policy security proof. Merge, deployment and live evidence are recorded separately in the implementation roadmap."
+            data-review-commit="d2b6614a9fad2fe9667b05d35e3a1e6895ad3293"
+            data-review-note="Reviewed the complete E-K-01 key-handle and S02 key-evolving audit-log source, interfaces, tests, browser claims, security notes and change inventory at exact merged main. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged; S02 adds a direct HMAC-SHA-256 implementation anchor. The key-handle exercises retain real RFC 3394 replay, independent AES-GCM verification, three declared finite presets, bounded no-witness versus incomplete-cutoff reporting and the non-PKCS #11/non-HSM boundary. The new integrity-only lesson compares a static HMAC key with a domain-separated evolving state, models compromise immediately before period c, rejects an earlier evolving-key rewrite under the one-way-evolution and erasure assumptions, and shows that both tracks can forge from c onward. Retained checkpoint, expected CLOSE and outside-heartbeat inputs produce separate integrity, consistency, completeness and freshness results. Exact-main run 40166747041 passed 154 unit tests, 2 publishing controls, 49 browser/accessibility/reflow tests, zero dependency vulnerabilities and all 18 combined mutations; CodeQL run 40166747021 passed. Remove Fault injection because source mutation verifies tests rather than executing a cryptographic fault attack; remove Side-channel (unspecified) because the briefs exclude that claim. The S02 construction is a bounded single-logger/private-verifier adaptation, not the full Schneier–Kelsey protocol, Bellare–Yee's exact construction, a standardized wire format or a security proof; JavaScript cannot guarantee erasure, messages remain plaintext and key evolution or a linear checkpoint alone does not establish completeness, freshness, availability, global consistency or split-view resistance. Merge, deployment and byte-matched live evidence are recorded separately in the implementation roadmap."
             data-level="beginner" data-added="2026-04" data-added-on="2026-04-22" data-updated="2026-10"
            
            
@@ -12189,13 +12189,14 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Envelope Encryption</div>
             <div class="project-title">Envelope KMS</div>
-            <div class="project-copy">Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, and caller authorization before unwrap. Trace a KMS-style rewrap and audit log. Search a bounded key-handle model for mutable-role, known-key-import, and same-value-handle disclosure witnesses, then replay found traces with real AES-KW and verify recovered material with AES-GCM.</div>
+            <div class="project-copy">Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, and caller authorization before unwrap. Search a bounded key-handle model for disclosure witnesses, then replay found traces with real AES-KW and verify recovered material with AES-GCM. Compare static and key-evolving HMAC audit logs under logger compromise, suffix forgery, truncation, checkpoints, and external freshness evidence.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">RFC 3394</span>
                 <span class="chip">AES Key Wrap</span>
                 <span class="chip">DEK/KEK</span>
                 <span class="chip">Key Rotation</span>
+                <span class="chip">HMAC-SHA-256</span>
               </div>
               <span class="arrow">→</span>
             </div>

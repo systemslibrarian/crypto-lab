@@ -335,6 +335,17 @@ explicitly omniscient teaching trace; sender authentication, durable atomic
 accounting, DAP transport and shuffle amplification remain outside the claim.
 Catalogued total remains 244.*
 
+*Version 44 — records Envelope KMS's S02 key-evolving audit-log extension under
+§39 without adding a lab or changing a concept status. Paired static-key and
+domain-separated HMAC-SHA-256 logs execute a selected logger compromise,
+pre-compromise rewrite, compromised-suffix forgery and truncation. The evolving
+track protects earlier authenticators only under its one-way-evolution and
+modeled-erasure assumptions; separate retained-checkpoint, expected-close and
+outside-heartbeat inputs keep integrity, consistency, completeness and freshness
+from collapsing into one claim. This is a bounded private-verifier teaching
+adaptation, not the cited papers' exact construction or a production logging
+proof. Catalogued total remains 244.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1234,6 +1245,18 @@ real RFC 3394 and independently verify recovered target material with AES-GCM. T
 model does not establish hardware isolation, PKCS #11 conformance, a vendor vulnerability
 or an unbounded API-policy proof. The exact delivered scope and evidence remain in
 [E-K-01](docs/encyclopedia-roadmap.md#e-k-01).
+
+Its separate S02 route builds paired static-key and key-evolving HMAC-SHA-256 logs,
+models compromise immediately before a selected period and then executes an earlier
+rewrite, a replacement suffix from the exposed state and a valid-prefix truncation. The
+earlier evolving authenticator survives only under the stated one-way-evolution and
+modeled-erasure assumptions; the compromised period and future remain forgeable. A
+retained linear checkpoint covers only its exact prefix, while completeness and freshness
+change only when their own trusted external CLOSE or heartbeat evidence is supplied. The
+browser cannot guarantee erasure, its private verifier can forge, messages remain
+plaintext and the exercise does not establish availability, global consistency or
+split-view resistance. The exact delivered scope and evidence remain in
+[S02](docs/encyclopedia-roadmap.md#s02).
 
 Ghost Commit shows what happens when the key never reached a manager at all: a credential
 committed to git keeps its blob name and its contents forever, because

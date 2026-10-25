@@ -10909,8 +10909,8 @@
       ]
     },
     "crypto-lab-envelope-kms": {
-      "commit": "50fcf5130274de940aba5a3ada405d95243e4fcb",
-      "reviewed": "2026-10-23",
+      "commit": "d2b6614a9fad2fe9667b05d35e3a1e6895ad3293",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "envelope-operations",
@@ -10928,15 +10928,15 @@
             "rewrapping"
           ],
           "evidence": [
-            "src/app.ts:436",
-            "src/app.ts:445",
-            "src/app.ts:452",
-            "src/app.ts:455",
-            "src/app.ts:468",
-            "src/app.ts:741",
-            "src/app.ts:759",
-            "src/app.ts:788",
-            "src/app.ts:797"
+            "src/app.ts:437",
+            "src/app.ts:446",
+            "src/app.ts:453",
+            "src/app.ts:456",
+            "src/app.ts:469",
+            "src/app.ts:743",
+            "src/app.ts:761",
+            "src/app.ts:790",
+            "src/app.ts:799"
           ],
           "limits": "The payload context is GCM AAD; RFC 3394 wrapping does not accept separate AAD. In-browser key storage is not a hosted KMS or HSM.",
           "section": "Envelope Operations",
@@ -10955,10 +10955,10 @@
             "least privilege"
           ],
           "evidence": [
-            "src/app.ts:507",
             "src/app.ts:509",
-            "src/app.ts:513",
-            "src/app.ts:824",
+            "src/app.ts:511",
+            "src/app.ts:515",
+            "src/app.ts:828",
             "src/kms/access-policy.ts:31"
           ],
           "limits": "Alice and Mallory are caller-supplied labels; no login, verified IAM principal, HSM, or real non-extractable key boundary.",
@@ -10991,8 +10991,8 @@
             "src/ui/key-handles.ts:179",
             "src/ui/key-handles.ts:230",
             "src/ui/key-handles.ts:247",
-            "src/app.ts:477",
-            "src/app.ts:953"
+            "src/app.ts:478",
+            "src/app.ts:960"
           ],
           "limits": "The token policy is a browser model using real RFC 3394 AES-KW and WebCrypto AES-GCM, not a hardware token or full PKCS #11 emulator. This section executes one API trace; the separate bounded explorer covers declared additional presets but not unmodeled calls. The wrapping key is generated internally and is nonextractable. Copy, derive, authenticated callers and cross-session security are outside scope. Protected unwrap cannot revoke existing key copies.",
           "section": "What may this key do?",
@@ -11039,8 +11039,8 @@
             "src/kms/key-handle-search.ts:657",
             "src/kms/key-handle-search.ts:693",
             "src/kms/key-handle-search.ts:790",
-            "src/app.ts:478",
-            "src/app.ts:954"
+            "src/app.ts:479",
+            "src/app.ts:961"
           ],
           "limits": "The result covers exactly the displayed three presets, four successful calls, at most four handles and blobs, three templates and the selected operational cap. A cap hit is incomplete, while fixed-policy exhaustion means only no witness within these bounds. This is not a PKCS #11 implementation, HSM assessment, vendor vulnerability claim, exhaustive search or security proof.",
           "section": "Can another call sequence expose it?",
@@ -11089,7 +11089,7 @@
             "src/ui/hierarchy-view.ts:57",
             "src/ui/hierarchy-view.ts:77",
             "src/ui/hierarchy-view.ts:93",
-            "src/app.ts:467"
+            "src/app.ts:468"
           ],
           "section": "Hierarchy View",
           "execution": "real-values",
@@ -11112,8 +11112,8 @@
             "src/ui/request-flow.ts:34",
             "src/ui/request-flow.ts:39",
             "src/ui/request-flow.ts:42",
-            "src/app.ts:481",
-            "src/app.ts:892"
+            "src/app.ts:482",
+            "src/app.ts:896"
           ],
           "section": "Request Flow",
           "execution": "simulation",
@@ -11134,11 +11134,11 @@
           "evidence": [
             "src/ui/rotation-panel.ts:13",
             "src/ui/rotation-panel.ts:15",
-            "src/app.ts:486",
-            "src/app.ts:640",
-            "src/app.ts:650",
-            "src/app.ts:788",
-            "src/app.ts:797"
+            "src/app.ts:487",
+            "src/app.ts:642",
+            "src/app.ts:652",
+            "src/app.ts:790",
+            "src/app.ts:799"
           ],
           "section": "Rotation Drill",
           "execution": "real-operation",
@@ -11161,8 +11161,8 @@
             "src/ui/audit-view.ts:59",
             "src/ui/audit-view.ts:69",
             "src/ui/audit-view.ts:76",
-            "src/app.ts:487",
-            "src/app.ts:899"
+            "src/app.ts:488",
+            "src/app.ts:903"
           ],
           "section": "Audit Log",
           "execution": "real-values",
@@ -11185,14 +11185,54 @@
             "src/ui/security-lab.ts:62",
             "src/ui/security-lab.ts:63",
             "src/security/properties.ts:478",
-            "src/app.ts:479",
-            "src/app.ts:869",
-            "src/app.ts:885",
-            "src/app.ts:888"
+            "src/app.ts:480",
+            "src/app.ts:873",
+            "src/app.ts:889",
+            "src/app.ts:892"
           ],
           "section": "Security Properties — Try to Break It",
           "execution": "real-operation",
           "limits": "The browser model does not reproduce IAM, HSM, operational logging, or cloud service failure modes."
+        },
+        {
+          "id": "key-evolving-audit-log",
+          "title": "Key-Evolving Audit Log After Compromise",
+          "kind": "comparison",
+          "action": "Build paired static-key and key-evolving HMAC-SHA-256 logs at a selected compromise boundary, then attempt a pre-compromise rewrite, forge from the exposed period, delete the suffix, and vary trusted CLOSE and heartbeat inputs.",
+          "outcome": "The static key authenticates an earlier rewrite while the evolving track rejects it under the stated one-way-evolution and erasure assumptions; both tracks authenticate a replacement suffix from the compromised period. The retained checkpoint anchors only its prefix, while completeness and freshness change only with their separate external evidence.",
+          "concepts": [
+            "forward integrity",
+            "key-evolving authentication",
+            "HMAC-SHA-256",
+            "logger compromise boundary",
+            "modeled erasure",
+            "retained checkpoint",
+            "truncation and completeness",
+            "freshness"
+          ],
+          "evidence": [
+            "src/ui/key-evolving-audit.ts:641",
+            "src/ui/key-evolving-audit.ts:650",
+            "src/ui/key-evolving-audit.ts:656",
+            "src/ui/key-evolving-audit.ts:665",
+            "src/ui/key-evolving-audit.ts:669",
+            "src/ui/key-evolving-audit.ts:670",
+            "src/ui/key-evolving-audit.ts:671",
+            "src/ui/key-evolving-audit.ts:678",
+            "src/ui/key-evolving-audit.ts:689",
+            "src/ui/key-evolving-audit.ts:704",
+            "src/ui/key-evolving-audit.ts:708",
+            "src/kms/forward-secure-log.ts:226",
+            "src/kms/forward-secure-log.ts:238",
+            "src/kms/forward-secure-log.ts:393",
+            "src/kms/forward-secure-log.ts:459",
+            "src/kms/forward-secure-log.ts:483",
+            "src/kms/forward-secure-log.ts:554",
+            "src/kms/forward-secure-log.ts:707"
+          ],
+          "limits": "This is a bounded, single-logger/private-verifier teaching adaptation, not the full Schneier–Kelsey protocol, Bellare–Yee's exact proven construction, a standardized wire format, or a security proof. Symmetric verifier state can forge; JavaScript cannot guarantee erasure; messages remain plaintext; the checkpoint does not establish completeness, freshness, availability, global consistency, or split-view resistance, and external CLOSE or heartbeat inputs establish only their stated bounds.",
+          "section": "What survives a logging-key compromise?",
+          "execution": "real-crypto"
         }
       ],
       "reviewScope": "complete"

@@ -21,6 +21,51 @@ function implementationsFor(source, slug) {
     .split(' | ').map(value => value.split('@')[0]);
 }
 
+function checkEnvelopeKmsScope(source) {
+  const slug = 'crypto-lab-envelope-kms';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'AES',
+    'AES-CTR',
+    'AES-GCM',
+    'AES-KW',
+    'HKDF',
+    'HMAC',
+    'SHA-256',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Claim-mutation tests and modeled logger compromise are not executed fault or side-channel attacks');
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-envelope-kms\/"[^>]*>/)[0];
+  assert.match(card, /data-review-commit="d2b6614a9fad2fe9667b05d35e3a1e6895ad3293"/);
+  assert.match(card, /HMAC@src\/kms\/forward-secure-log\.ts:220/);
+  assert.match(card, /bounded single-logger\/private-verifier adaptation/);
+  const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
+  assert.ok(references.includes('Merkle tree'),
+    'The lesson compares its linear checkpoint with Merkle consistency proofs without implementing one');
+}
+
+test('Envelope KMS credits S02 HMAC without inventing attacks or stronger log guarantees', () => {
+  checkEnvelopeKmsScope(html);
+});
+
+test('Envelope KMS scope controls reject lost, misplaced, or invented S02 credit', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-envelope-kms\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(/HMAC@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'HMAC@src/kms/forward-secure-log.ts:220',
+      'HMAC@src/kms/forward-secure-log.ts:219',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-standards="',
+      'data-attacks="Fault injection@e2e/key-evolving-audit-claims.spec.ts:1 | Side-channel (unspecified)@SECURITY.md:1" data-standards="',
+    )),
+    html.replace(cardRe, (card) => card.replace('Merkle tree | ', '')),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Envelope KMS card');
+    assert.throws(() => checkEnvelopeKmsScope(changed), assert.AssertionError);
+  }
+});
+
 function checkDictionaryScope(source) {
   const executable = [
     'crypto-lab-phantom-vault',

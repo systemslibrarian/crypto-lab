@@ -181,18 +181,18 @@
   "crypto-lab-stark-tower": {
    "added": "2026-04",
    "addedOn": "2026-04-12",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-12T19:21:08Z",
-   "updatedFrom": "2026-08-19T03:51:06-04:00",
-   "updatedCommit": "fd3eaa064df693858abdeeb7bf89fdb71315fefe"
+   "updatedFrom": "2026-10-25T10:53:11-04:00",
+   "updatedCommit": "51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af"
   },
   "crypto-lab-snark-arena": {
    "added": "2026-04",
    "addedOn": "2026-04-12",
    "updated": "2026-10",
    "addedFrom": "2026-04-12T18:58:27Z",
-   "updatedFrom": "2026-10-11T12:03:37-04:00",
-   "updatedCommit": "9e6e0c68b6bb0bfc1f7ecd74d4e2dff08a2cb220"
+   "updatedFrom": "2026-10-25T11:36:34-04:00",
+   "updatedCommit": "025f878b22b2fa3df945359548c2422d9548c1f4"
   },
   "crypto-lab-blind-oracle": {
    "added": "2026-04",
@@ -1639,8 +1639,8 @@
    "addedOn": "2026-09-11",
    "updated": "2026-10",
    "addedFrom": "2026-09-11T18:11:34Z",
-   "updatedFrom": "2026-10-24T15:30:06-04:00",
-   "updatedCommit": "f1220e93baa5a5cf549915a1d8a6104748e56303"
+   "updatedFrom": "2026-10-25T10:50:44-04:00",
+   "updatedCommit": "9394e3fd3fd84cab5cfa95016f21808ca9f4e395"
   },
   "crypto-lab-fold-gate": {
    "added": "2026-09",

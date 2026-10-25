@@ -127,10 +127,11 @@ const ALGORITHMS = [
 
   /* PTW sits in ALGORITHMS rather than ATTACKS, and that is a judgement worth
      flagging rather than burying. It IS an attack -- Tews, Weinmann and Pyshkin
-     2007 -- but `add` validates only against ALGORITHMS, so a term in ATTACKS
-     could never be asserted by a reviewed pin. It is also a real computation a
-     lab can implement, which is what `data-implements` records. `pathRe` carries
-     the detection because the implementation lives in a file named for it. */
+     2007 -- but it is also a concrete computation a lab can implement, which is
+     what `data-implements` records. (`addAttacks` can now pin an attack exhibit,
+     but it deliberately cannot publish that exhibit as an implemented
+     primitive.) `pathRe` carries the detection because the implementation lives
+     in a file named for it. */
   { name: 'PTW', kind: 'algorithm', family: 'key-recovery attack', re: /\bptw\b/i, pathRe: /(^|\/)ptw(\.|\/|$)/i, std: null },
   { name: 'DES', kind: 'algorithm', family: 'block cipher', re: /\bdes\b(?!ign|crip|tin)/i, std: 'NIST:FIPS 46-3 (withdrawn)' },
   { name: '3DES', kind: 'algorithm', family: 'block cipher', re: /(?<![a-z0-9])(?:3des|triple[-_ ]?des)(?![a-z0-9])/i, std: 'NIST:SP 800-67' },
@@ -576,6 +577,12 @@ const ATTACKS = [
      profile, not the active candidate enumeration recorded above. Keep the
      spelling narrow: ordinary "keyword search" is not evidence of an attack. */
   { name: 'Keyword inference', re: /\bikk[-_ ]?attack\b|keyword[-_ ]?inference|query[-_ ]?recovery/i },
+  /* An observable accept/abort result made dependent on a secret. Keep the
+     spelling exact: ordinary protocol aborts and failure handling are not
+     selective-failure attacks. The first executable fleet example is SPDZ
+     Forge's reviewed Off-Key fixture; Garbled Gate currently names the attack
+     only as a malicious-security limit. */
+  { name: 'Selective failure', re: /selective[-_ ]?failure(?:[-_ ]?(?:attack|oracle))?/i },
   { name: 'Differential cryptanalysis', re: /differential[-_ ]?cryptanalysis/i },
   { name: 'Linear cryptanalysis', re: /linear[-_ ]?cryptanalysis/i },
   { name: 'Lattice reduction', re: /\blll\b|lattice[-_ ]?reduction|\bbkz\b/i },

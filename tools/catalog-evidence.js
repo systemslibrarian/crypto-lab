@@ -435,7 +435,13 @@ function attackContextAllows(term, line, code = '') {
       ? coordinated[1] : before;
     if (/\b(?:not|never|no|neither|without|cannot|can't|doesn't|don't)\b.{0,80}$/i.test(negationBefore)) return false;
     if (/^.{0,45}\b(?:not demonstrated|not implemented|not measured|not reproduced|out of scope|blind spot)\b/i.test(after)) return false;
-    if (/\b(?:co-inventor|biography|born|studied under|assumptions?|risk|warning|production|hardened|prevent\w*|defend\w*|protect\w*|resistan\w*)\b/i.test(before + hit[0] + after)
+    // Markdown risk lists often put the attack name in a short bold sentence,
+    // then explain the pitfall in the next sentence. Clause-bounded negation is
+    // still right above, but that punctuation must not turn a warning heading
+    // into an executed attack.
+    if (/\bpitfall\b/i.test(text)
+      && !/\b(?:demonstrat|execut|enumerat|crack|forge|run|measur)\w*/i.test(text)) return false;
+    if (/\b(?:co-inventor|biography|born|studied under|assumptions?|risk|warning|pitfall|production|hardened|prevent\w*|defend\w*|protect\w*|resistan\w*)\b/i.test(before + hit[0] + after)
       && !/\b(?:demonstrat|execut|enumerat|crack|forge|run|measur)\w*/i.test(before + after)) return false;
     return true;
   });
@@ -840,6 +846,31 @@ function invalidReviewedAdds(add) {
   return bad;
 }
 
+/** Reasons each reviewed `addAttacks` entry does not parse.
+ *
+ * Attack evidence needs the same pinned-review escape hatch as algorithm
+ * evidence.  The scanner deliberately accepts only conservative wording, so a
+ * computation can expose a recovered byte without ever spelling the canonical
+ * vocabulary label "key recovery".  Keeping this separate from `add` prevents
+ * an attack from being published as an implemented primitive.
+ */
+function invalidReviewedAttackAdds(add) {
+  const bad = [];
+  for (const item of add) {
+    const at = item.lastIndexOf('@');
+    const name = item.slice(0, at);
+    const anchor = item.slice(at + 1);
+    if (at < 0) bad.push(`${item} (no @anchor)`);
+    else if (!ATTACKS.some((term) => term.name === name)) bad.push(`${item} (no attack vocabulary term named "${name}")`);
+    else if (!/^.+:\d+$/.test(anchor)) bad.push(`${item} (anchor is not path:line)`);
+  }
+  return bad;
+}
+
+function isReviewedAdd(review, item) {
+  return Boolean(review?.add?.includes(item) || review?.addAttacks?.includes(item));
+}
+
 function evidenceFor(slug) {
   const dir = path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
@@ -1065,7 +1096,10 @@ function evidenceFor(slug) {
     if (!staleReview) {
     /* Validate the WHOLE list before applying any of it, so a lab is either
        fully reviewed or untouched -- never half. */
-    const invalid = invalidReviewedAdds(review.add || []);
+    const invalid = [
+      ...invalidReviewedAdds(review.add || []),
+      ...invalidReviewedAttackAdds(review.addAttacks || []),
+    ];
     if (invalid.length) {
       badReview.set(slug, invalid);
     } else {
@@ -1073,6 +1107,10 @@ function evidenceFor(slug) {
       for (const item of review.add || []) {
         const at = item.lastIndexOf('@');
         hits.set(item.slice(0, at), { at: item.slice(at + 1), shape: 'reviewed' });
+      }
+      for (const item of review.addAttacks || []) {
+        const at = item.lastIndexOf('@');
+        attackHits.set(item.slice(0, at), { at: item.slice(at + 1), shape: 'reviewed' });
       }
       if (review.state === 'N/A' && hits.size) {
         badReview.set(slug, [`state "N/A" conflicts with derived ${[...hits.keys()].join(', ')}`]);
@@ -1148,7 +1186,10 @@ function evidenceFor(slug) {
     unscanned: unreadable,
     notScanned: impl.length === 0 && unreadable.length > 0,
     reviewed: review ? { commit: review.commit, note: review.note, state: review.state || 'covered' } : null,
-    commentOnly: inertOnly,
+    // A pinned source review may promote an operation whose executable symbol
+    // does not itself spell the vocabulary term. Do not keep the earlier
+    // comment-only observation beside that reviewed implementation claim.
+    commentOnly: inertOnly.filter(({ name }) => !hits.has(name)),
     staleReview,
     invalidReview: badReview.get(slug) || null,
     protocolPartial: protocolPartial.filter((x) => !hits.has(x.name)).sort((a, b) => a.name.localeCompare(b.name)),
@@ -1494,7 +1535,7 @@ function verifyAnchors(all) {
       // A reviewed anchor may name the implementing operation generically
       // (generate_shares, for example). Its source commit was checked above;
       // keep the exact line alive without pretending a name grep proved it.
-      if (REVIEWS[c.slug]?.add?.includes(item)) {
+      if (isReviewedAdd(REVIEWS[c.slug], item)) {
         if (!line.trim()) bad.push({ slug: c.slug, item, why: 'reviewed line is blank' });
         continue;
       }
@@ -1756,6 +1797,28 @@ function selftest() {
       if (got !== want) fail.push(`reviewed add validation, ${why}: expected ${want}, got ${got}`);
       else { pass++; console.log(`  ok  reviewed add validation: ${why}`); }
     }
+
+    const realAttack = ATTACKS[0].name;
+    for (const [why, add2, want] of [
+      ['no @anchor', ['Key recovery'], 1],
+      ['algorithm name in attack field', [`${realTerm}@src/fake.ts:43`], 1],
+      ['unknown name', ['Nonexistent-Attack-X@src/fake.ts:43'], 1],
+      ['anchor without a line', [`${realAttack}@src/fake.ts`], 1],
+      ['a valid entry must still pass', [`${realAttack}@src/fake.ts:43`], 0],
+    ]) {
+      const got = invalidReviewedAttackAdds(add2).length;
+      if (got !== want) fail.push(`reviewed attack add validation, ${why}: expected ${want}, got ${got}`);
+      else { pass++; console.log(`  ok  reviewed attack add validation: ${why}`); }
+    }
+    const algorithmAdd = `${realTerm}@src/fake.ts:43`;
+    const attackAdd = `${realAttack}@src/fake.ts:44`;
+    const reviewAdds = { add: [algorithmAdd], addAttacks: [attackAdd] };
+    if (!isReviewedAdd(reviewAdds, algorithmAdd) || !isReviewedAdd(reviewAdds, attackAdd)) {
+      fail.push('reviewed generic-anchor handling did not cover both algorithm and attack additions');
+    } else { pass++; console.log('  ok  reviewed generic-anchor handling covers algorithm and attack additions'); }
+    if (isReviewedAdd(reviewAdds, `${realAttack}@src/fake.ts:45`)) {
+      fail.push('reviewed generic-anchor handling accepted a different source line');
+    } else { pass++; console.log('  ok  reviewed generic-anchor handling stays exact to the recorded source line'); }
 
     fs.writeFileSync(path.join(tmp, 'src', 'main.ts'), 'export function sha512() { return 2 }\n');
     git('add', 'src/main.ts'); git('commit', '-qm', 'change src');

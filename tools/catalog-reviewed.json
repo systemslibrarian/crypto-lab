@@ -216,6 +216,12 @@
     ],
     "note": "Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review. Inspected current dialog/fuzz computations and source-scope text; the October 21 change adds README guidance and limits, with no executable changes. Resource estimates remain cited data and experiments remain classical; no quantum circuit, real-key recovery, ZK proof or benchmark submission is executed. Preserve the ECDSA/SHA-3 removals and existing SHAKE/SHA-256 anchors."
   },
+  "crypto-lab-proof-tally": {
+    "commit": "9394e3fd3fd84cab5cfa95016f21808ca9f4e395",
+    "reviewed": "2026-10-25",
+    "implementation": "local TypeScript Field64/Prio3 and exact BigInt DP model; @noble TurboSHAKE128",
+    "note": "Re-read the current Field64 arithmetic and transforms, BBCGGI19-style FLP circuits, Prio3 report preparation/verification/aggregation, TurboSHAKE128 XOF wrapper, S04 distributed report/release path, exact CL084 abort/retry model, learner UI, tests, mutation records and README through this exact pin. The lab executes a local two-aggregator Prio3Count/Prio3Sum teaching implementation; @noble supplies TurboSHAKE128 only, not Prio3 or field/proof logic. The separate abort lesson uses reduced BigInt rational arithmetic over a finite additive-noise model with neighboring answers zero and one; it computes ordinary, selective-abort, conditioned-publication, capped fresh-retry and independent-abort transcripts without modifying or attacking the Prio3 route. Public, aborter-only and omniscient teaching views remain distinct. The S04 claim still assumes authenticated roster bindings, non-collusion, honest independent noise contributors, complete delivery and one accounted release, while the browser supplies no DAP transport, durable atomic ledger, production attestation or constant-time assurance. The CL084 adaptation does not establish the paper's general bounds or imply that every abort violates differential privacy."
+  },
   "crypto-lab-quantum-entropy": {
     "commit": "44b945c15d5de424f4209239b6d96063eccc82f0",
     "reviewed": "2026-10-19",
@@ -317,15 +323,17 @@
     "note": "Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses Re-read current Rust field/sampler/sharing/reconstruction and README at this exact SHA after Vitest/publisher integrations; implementation unchanged from prior reviewed pin. Current18Rust/18TypeScript/12browser gates and published artifact checks retained; no compiler reproduction claim."
   },
   "crypto-lab-snark-arena": {
-    "commit": "9e6e0c68b6bb0bfc1f7ecd74d4e2dff08a2cb220",
-    "reviewed": "2026-10-11",
+    "commit": "025f878b22b2fa3df945359548c2422d9548c1f4",
+    "reviewed": "2026-10-25",
     "remove": [
-      "PLONK"
+      "PLONK",
+      "Discrete log"
     ],
     "add": [
-      "Groth16@src/ui/realproof.ts:97"
+      "Groth16@src/ui/realproof.ts:92"
     ],
-    "note": "Read current Groth16 fullProve/verify calls, cubic.circom, setup explanations and complete PR21 diff; real proof mechanics disclose the bounded witness through public cubic output, while PLONK remains a comparison. Actual independent Mac and Linux builds from authenticated Circom2.2.3 source ad44e915 with selected Rust1.87 reproduce the exact shipped witness WASM45784cb8; CI retains source-bound receipts and negative controls. The original compiler, ceremony inputs and secret destruction remain unknown; published entropy alone does not establish a leak. Setup trust and vendored snarkjs source reproduction are unverified. Preserve raw WebAssembly scanner coverage separately. Fleet8b6b8411; labPR21."
+    "implementation": "snarkjs Groth16 over compiled Circom WASM/BN254; local TypeScript toy-field arithmetic",
+    "note": "Re-read the complete cubic, weak-XOR and repaired-XOR Groth16 paths; Circom sources and artifacts; toy-field R1CS/KZG setup and ceremony paths; provenance, mutation, browser and unit controls; README; and current main through this exact pin. The weak public-input relation accepts an unmodified proof for (a,b,out)=(2,2,r-4) because it encodes only out=a+b-2ab. The repaired relation adds in-circuit a(a-1)=b(b-1)=0 constraints, uses regenerated circuit-specific WASM/zkey/verification-key material and rejects that assignment while retaining all four binary rows. A browser input check is not the repair, ordinary proof-element tampering is a separate rejected control, and these public inputs establish neither secret nor key recovery. Real cubic proof mechanics disclose the bounded witness through public output; PLONK remains comparison-only. The executable toy KZG lesson forges an opening when the toxic scalar is retained, but the current attack vocabulary has no honest term for that specific failure; discrete-log wording names a hardness assumption rather than an executed attack. Authenticated Circom 2.2.3 rebuilds reproduce all three shipped witness WASM files and bind the XOR R1CS/PTAU/zkey/vkey material, but the single-party demo ceremony, secret destruction and vendored snarkjs source reproduction remain unverified. This bounded CL098 adaptation does not implement CCC-Check, reproduce its evaluation or establish universal circuit correctness. Preserve raw WebAssembly scanner coverage separately."
   },
   "crypto-lab-syndrome-drain": {
     "commit": "7187714a9cadf1570726228f02e00dae48abc9df",
@@ -711,16 +719,24 @@
   },
   "crypto-lab-power-trace": {
     "commit": "c8635e31bbc5ec93f0617a3bf5ee3747a08c70f1",
-    "reviewed": "2026-10-22",
+    "reviewed": "2026-10-25",
     "remove": [
       "Chosen-plaintext attack",
       "Fault injection",
       "Timing side-channel",
-      "Cache timing"
+      "Cache timing",
+      "Side-channel (unspecified)"
     ],
-    "note": "Reviewed AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this pin. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line address observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection and timing side-channel claims as executed attacks. Followup commits strengthen browser assertions and remove decorative aria-hidden attributes; AES and attack anchors remain unchanged.",
+    "removeReferences": [
+      "NTT",
+      "Shamir secret sharing"
+    ],
+    "note": "Re-read AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this exact pin while reconciling CL092 and RR-POWER-MEASURED. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, independently ranks all 256 guesses and verifies bounded byte recovery against retained ground truth, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line address observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection, generic side-channel and timing-side-channel claims as separate executed attacks. NTT appears only in a related-demo link, and Shamir is the surname of a historical SPA coauthor rather than secret sharing, so remove both references. The present CPA/DPA path is not a profiled classifier; CL092 contributes future prior-aware measured-data controls, not a deep-learning claim.",
     "add": [
       "AES@src/aes/aes.ts:123"
+    ],
+    "addAttacks": [
+      "Key recovery@src/ui/ui.ts:305"
     ]
   },
   "crypto-lab-elgamal-plain": {
@@ -1140,5 +1156,41 @@
     "remove": [],
     "implementation": "WebCrypto X25519 / HKDF-SHA-256 / AES-GCM / simulated hybrid component secrets",
     "note": "Read the original random-component engine, finite candidate-key attempts and conceptual guidance, then the new native X25519 and custom HKDF experiment. Actual X25519 now executes in context.ts; ML-KEM remains simulated context only and no X-Wing construction executes. Inverting a public coordinate reproduces equal raw secrets; binding fixed-width public coordinates changes the derived key. This is not secret-key recovery or a hybrid/multi-user theorem; existing key-recovery credit refers solely to the labeled finite-guess simulated playground. Re-read the PR26 layout-only follow-up: context engine and all other cryptographic source are unchanged; panel/control styles and the owning boot guard changed."
+  },
+  "crypto-lab-ckks-lab": {
+    "commit": "e2f3e59a4c5af667dab219c5c7048401dcd3f83b",
+    "reviewed": "2026-10-25",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Key recovery",
+      "Side-channel (unspecified)"
+    ],
+    "implementation": "local symmetric approximate-RLWE teaching engine",
+    "note": "Read the complete symmetric CKKS teaching engine, UI, README, tests and visible limitations while reconciling CL123. The lab executes bounded encoding, symmetric encryption/decryption, addition, multiplication and rescaling, including gadget/digit evaluation-key key switching for relinearization. It does not implement public-key encryption, fresh public Enc(0), the Galois rotation/key-switching path needed for CoeffToSlot, CoeffToSlot itself, a separate client validity predicate or the paper's adaptive reaction attacker. Chosen-plaintext and key-recovery phrases describe the absent paper attack or limitations rather than an executed attack; the generic side-channel phrase likewise does not identify a separate runnable attack. Remove those three credits. This review does not claim a faithful reaction-attack reproduction or transfer the paper's asymptotic query complexity."
+  },
+  "crypto-lab-spdz-forge": {
+    "commit": "2bfdc83b0ef587a598afad95d6ef0e72bdfd904b",
+    "reviewed": "2026-10-25",
+    "implementation": "local TypeScript BigInt field arithmetic / WebCrypto SHA-256 commitments",
+    "addAttacks": [
+      "Selective failure@src/ui/panels/offkey.ts:128"
+    ],
+    "note": "Read the complete three-party trusted-dealer SPDZ engine, Off-Key extension, UI, tests and README through this exact pin and checked the bounded adaptation against CL079 Sections 3, 3.2, 4.1-4.5, 5 and 5.1. Additive sharing, Beaver multiplication and information-theoretic MAC arithmetic are local BigInt TypeScript; WebCrypto supplies SHA-256 commitments and randomness rather than the whole protocol implementation. The isolated fixture computes the consistent-context residual Delta(g-d) and inconsistent-context residual Delta(g-y) from actual authenticated shares, then derives unmasked recovery and masked bit-promise inference from attacker-visible state without exposing y or honest shares. Its omniscient audit is separately labeled, ordinary corruption remains a correctness control, and the same-context comparison restores the modeled assumption through protocol state rather than client-side validation. Credit the executable selective-failure lesson, not generic key recovery: y is a shared input, not a cryptographic key. This is a three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation, not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework."
+  },
+  "crypto-lab-stark-tower": {
+    "commit": "51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af",
+    "reviewed": "2026-10-25",
+    "remove": [
+      "Discrete log"
+    ],
+    "add": [
+      "FRI@src/stark.ts:754",
+      "Fiat-Shamir@src/stark.ts:421",
+      "Merkle tree@src/merkle.ts:72",
+      "SHA-256@src/merkle.ts:55",
+      "STARK@src/stark.ts:189"
+    ],
+    "implementation": "local TypeScript finite-field, Merkle, FRI and STARK teaching implementation / WebCrypto SHA-256",
+    "note": "Read the complete AIR, quotient, Merkle, FRI, end-to-end prover/verifier, masking and soundness-ledger paths through this exact pin after PR-10. FRI folding and final-code membership are executable, Fiat-Shamir challenges are derived by the prover and independently recomputed by the verifier, and Merkle commitments use WebCrypto SHA-256. The page's discrete-log wording is in a STARK-versus-SNARK comparison and is not an executed attack. Keep capacity-model arithmetic labeled heuristic, theorem formulas conditional on their displayed hypotheses, fixture rejection empirical, and complete FRI/end-to-end soundness unestablished while required proximity, fold-MCA, algebraic/composition, hash and Fiat-Shamir/BCS terms are absent."
   }
 }

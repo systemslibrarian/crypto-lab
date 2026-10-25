@@ -3916,12 +3916,14 @@
           </a>
 
           <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-stark-tower/"
-            data-implements="FRI@src/stark.ts:127 | Merkle tree@src/merkle.ts:71 | SHA-256@src/merkle.ts:54 | STARK@src/main.ts:20"
-            data-comment-only="Fiat-Shamir@src/stark.ts:16 | NTT@src/field.ts:6 | Pairing@src/merkle.ts:4"
-            data-references="BLAKE3 | Bulletproofs | Fiat-Shamir | Groth16 | NTT | PLONK | Pairing | Schnorr | Shor's algorithm"
+            data-implements="Fiat-Shamir@src/stark.ts:421 | FRI@src/stark.ts:754 | Merkle tree@src/merkle.ts:72 | SHA-256@src/merkle.ts:55 | STARK@src/stark.ts:189"
+            data-comment-only="NTT@src/field.ts:6 | Pairing@src/merkle.ts:3 | Reed-Solomon@src/soundness.ts:7"
+            data-references="BLAKE3 | Bulletproofs | Groth16 | NTT | PLONK | Pairing | Schnorr | Shor's algorithm"
             data-standards="NIST"
-            data-implementation="WebCrypto"
-            data-level="advanced" data-added="2026-04" data-added-on="2026-04-12" data-updated="2026-08"
+            data-implementation="local TypeScript finite-field, Merkle, FRI and STARK teaching implementation / WebCrypto SHA-256"
+            data-review-commit="51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af"
+            data-review-note="Read the complete AIR, quotient, Merkle, FRI, end-to-end prover/verifier, masking and soundness-ledger paths through this exact pin after PR-10. FRI folding and final-code membership are executable, Fiat-Shamir challenges are derived by the prover and independently recomputed by the verifier, and Merkle commitments use WebCrypto SHA-256. The page's discrete-log wording is in a STARK-versus-SNARK comparison and is not an executed attack. Keep capacity-model arithmetic labeled heuristic, theorem formulas conditional on their displayed hypotheses, fixture rejection empirical, and complete FRI/end-to-end soundness unestablished while required proximity, fold-MCA, algebraic/composition, hash and Fiat-Shamir/BCS terms are absent."
+            data-level="advanced" data-added="2026-04" data-added-on="2026-04-12" data-updated="2026-10"
            
            
            
@@ -3996,27 +3998,26 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Zero-Knowledge Proofs</div>
             <div class="project-title">STARK Tower</div>
-            <div class="project-copy">AIR constraints, FRI polynomial commitments, and end-to-end Fibonacci proof. No trusted setup, post-quantum secure. The protocol behind StarkNet, StarkEx, and Risc Zero.</div>
+            <div class="project-copy">Run a toy STARK prover and verifier over a fixed field, then use a separate ledger to distinguish exact FRI arithmetic, conditional query terms, heuristics, empirical outcomes, and still-missing end-to-end soundness terms.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">zk-STARK</span>
                 <span class="chip">AIR Constraints</span>
                 <span class="chip">FRI</span>
-                <span class="chip">Post-Quantum</span>
+                <span class="chip">Soundness Ledger</span>
               </div>
               <span class="arrow">→</span>
             </div>
           </a>
 
           <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-snark-arena/"
-            data-implements="Groth16@src/ui/realproof.ts:97 | KZG commitment@src/crypto/setup.ts:101"
-            data-unscanned="WebAssembly:1"
-            data-comment-only="Groth16@src/main.ts:45 | Pairing@src/crypto/setup.ts:3"
+            data-implements="Groth16@src/ui/realproof.ts:92 | KZG commitment@src/crypto/setup.ts:116"
+            data-unscanned="WebAssembly:3"
+            data-comment-only="Pairing@src/crypto/setup.ts:3"
             data-references="BLS12-381 | Bulletproofs | Fiat-Shamir | Halo2 | PLONK | Pairing | SHA-256 | STARK | Schnorr | Shor's algorithm"
-            data-attacks="Discrete log@src/ui/ceremony.ts:116"
-            data-implementation="WASM"
-            data-review-commit="9e6e0c68b6bb0bfc1f7ecd74d4e2dff08a2cb220"
-            data-review-note="Read current Groth16 fullProve/verify calls, cubic.circom, setup explanations and complete PR21 diff; real proof mechanics disclose the bounded witness through public cubic output, while PLONK remains a comparison. Actual independent Mac and Linux builds from authenticated Circom2.2.3 source ad44e915 with selected Rust1.87 reproduce the exact shipped witness WASM45784cb8; CI retains source-bound receipts and negative controls. The original compiler, ceremony inputs and secret destruction remain unknown; published entropy alone does not establish a leak. Setup trust and vendored snarkjs source reproduction are unverified. Preserve raw WebAssembly scanner coverage separately. Fleet8b6b8411; labPR21."
+            data-implementation="snarkjs Groth16 over compiled Circom WASM/BN254; local TypeScript toy-field arithmetic"
+            data-review-commit="025f878b22b2fa3df945359548c2422d9548c1f4"
+            data-review-note="Re-read the complete cubic, weak-XOR and repaired-XOR Groth16 paths; Circom sources and artifacts; toy-field R1CS/KZG setup and ceremony paths; provenance, mutation, browser and unit controls; README; and current main through this exact pin. The weak public-input relation accepts an unmodified proof for (a,b,out)=(2,2,r-4) because it encodes only out=a+b-2ab. The repaired relation adds in-circuit a(a-1)=b(b-1)=0 constraints, uses regenerated circuit-specific WASM/zkey/verification-key material and rejects that assignment while retaining all four binary rows. A browser input check is not the repair, ordinary proof-element tampering is a separate rejected control, and these public inputs establish neither secret nor key recovery. Real cubic proof mechanics disclose the bounded witness through public output; PLONK remains comparison-only. The executable toy KZG lesson forges an opening when the toxic scalar is retained, but the current attack vocabulary has no honest term for that specific failure; discrete-log wording names a hardness assumption rather than an executed attack. Authenticated Circom 2.2.3 rebuilds reproduce all three shipped witness WASM files and bind the XOR R1CS/PTAU/zkey/vkey material, but the single-party demo ceremony, secret destruction and vendored snarkjs source reproduction remain unverified. This bounded CL098 adaptation does not implement CCC-Check, reproduce its evaluation or establish universal circuit correctness. Preserve raw WebAssembly scanner coverage separately."
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-12" data-updated="2026-10"
            
            
@@ -4088,13 +4089,14 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Zero-Knowledge Proofs</div>
             <div class="project-title">SNARK Arena</div>
-            <div class="project-copy">Groth16 vs PLONK — trusted setup ceremonies, proof size comparison, the toxic waste problem, and production deployments in Zcash, Polygon zkEVM, WorldID, and zkLogin.</div>
+            <div class="project-copy">Generate and verify real BN254 Groth16 proofs, then compare a deliberately weak XOR relation with an in-circuit bit-constrained repair that rejects the same non-binary assignment. Separate toy-field panels demonstrate powers of tau and an accepted KZG opening forged with retained toxic waste; PLONK remains comparison-only.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Groth16</span>
-                <span class="chip">PLONK</span>
+                <span class="chip">R1CS</span>
+                <span class="chip">Constraint Gap</span>
                 <span class="chip">Trusted Setup</span>
-                <span class="chip">zk-SNARK</span>
+                <span class="chip">vs. PLONK</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -4170,8 +4172,9 @@
             data-implements="CKKS@src/toyCkks.ts:209"
             data-comment-only="NTT@src/toyCkks.ts:37 | Ring-LWE@src/main.ts:870"
             data-references="BFV | BGV | ElGamal | LWE | NTT | Paillier | Private information retrieval | Ring-LWE | TFHE"
-            data-attacks="Chosen-plaintext attack@README.md:72 | Key recovery@src/main.ts:756 | Side-channel (unspecified)@src/main.ts:742"
-            data-implementation="hand-rolled"
+            data-implementation="local symmetric approximate-RLWE teaching engine"
+            data-review-commit="e2f3e59a4c5af667dab219c5c7048401dcd3f83b"
+            data-review-note="Read the complete symmetric CKKS teaching engine, UI, README, tests and visible limitations while reconciling CL123. The lab executes bounded encoding, symmetric encryption/decryption, addition, multiplication and rescaling, including gadget/digit evaluation-key key switching for relinearization. It does not implement public-key encryption, fresh public Enc(0), the Galois rotation/key-switching path needed for CoeffToSlot, CoeffToSlot itself, a separate client validity predicate or the paper's adaptive reaction attacker. Chosen-plaintext and key-recovery phrases describe the absent paper attack or limitations rather than an executed attack; the generic side-channel phrase likewise does not identify a separate runnable attack. Remove those three credits. This review does not claim a faithful reaction-attack reproduction or transfer the paper's asymptotic query complexity."
             data-level="advanced" data-added="2026-04" data-added-on="2026-04-12" data-updated="2026-10"
            
            
@@ -16709,12 +16712,12 @@
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-power-trace/"
             data-implements="AES@src/aes/aes.ts:123"
             data-comment-only="RSA@src/spa/modexp.ts:14"
-            data-references="NTT | RSA | Shamir secret sharing"
-            data-attacks="Key recovery@README.md:69 | Known-plaintext attack@src/ui/cache.ts:59 | Power analysis@src/attack/dpa.ts:112 | Side-channel (unspecified)@src/ui/ui.ts:70"
+            data-references="RSA"
+            data-attacks="Key recovery@src/ui/ui.ts:305 | Known-plaintext attack@src/ui/cache.ts:59 | Power analysis@src/attack/dpa.ts:112"
             data-standards="NIST"
             data-implementation="hand-rolled"
             data-review-commit="c8635e31bbc5ec93f0617a3bf5ee3747a08c70f1"
-            data-review-note="Reviewed AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this pin. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line address observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection and timing side-channel claims as executed attacks. Followup commits strengthen browser assertions and remove decorative aria-hidden attributes; AES and attack anchors remain unchanged."
+            data-review-note="Re-read AES core, CPA/DPA code, leakage traces, Exhibit 8 cache model, UI, README and tests through this exact pin while reconciling CL092 and RR-POWER-MEASURED. CPA means correlation power analysis, not chosen-plaintext attack. Real AES block encryption is anchored at src/aes/aes.ts:123; browser power traces use its S-box intermediate, independently ranks all 256 guesses and verifies bounded byte recovery against retained ground truth, while the shipped JavaScript AES is not constant-time. The separate, idealized T-table exhibit uses a known plaintext byte and one 64-byte cache-line address observation to leave 16 possible key bytes versus 256 in an all-lines control. It neither measures browser cache timing nor recovers a full key. Fault injection is sibling context. Keep power analysis and bounded key-recovery credits; exclude chosen-plaintext, cache-timing, fault-injection, generic side-channel and timing-side-channel claims as separate executed attacks. NTT appears only in a related-demo link, and Shamir is the surname of a historical SPA coauthor rather than secret sharing, so remove both references. The present CPA/DPA path is not a profiled classifier; CL092 contributes future prior-aware measured-data controls, not a deep-learning claim."
             data-level="advanced" data-added="2026-07" data-added-on="2026-07-16" data-updated="2026-10"
            
            
@@ -16965,8 +16968,11 @@
           <a class="project-card" data-category="PROTOCOLS | MPC & THRESHOLD" href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/"
             data-implements="SHA-256@src/spdz/cavp-sha256-vectors.ts:37"
             data-references="Garbled circuits | Oblivious transfer | One-time pad | Shamir secret sharing"
+            data-attacks="Selective failure@src/ui/panels/offkey.ts:128"
             data-standards="NIST"
-            data-implementation="WebCrypto"
+            data-implementation="local TypeScript BigInt field arithmetic / WebCrypto SHA-256 commitments"
+            data-review-commit="2bfdc83b0ef587a598afad95d6ef0e72bdfd904b"
+            data-review-note="Read the complete three-party trusted-dealer SPDZ engine, Off-Key extension, UI, tests and README through this exact pin and checked the bounded adaptation against CL079 Sections 3, 3.2, 4.1-4.5, 5 and 5.1. Additive sharing, Beaver multiplication and information-theoretic MAC arithmetic are local BigInt TypeScript; WebCrypto supplies SHA-256 commitments and randomness rather than the whole protocol implementation. The isolated fixture computes the consistent-context residual Delta(g-d) and inconsistent-context residual Delta(g-y) from actual authenticated shares, then derives unmasked recovery and masked bit-promise inference from attacker-visible state without exposing y or honest shares. Its omniscient audit is separately labeled, ordinary corruption remains a correctness control, and the same-context comparison restores the modeled assumption through protocol state rather than client-side validation. Credit the executable selective-failure lesson, not generic key recovery: y is a shared input, not a cryptographic key. This is a three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation, not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework."
             data-level="advanced" data-added="2026-07" data-added-on="2026-07-16" data-updated="2026-10"
            
            
@@ -17027,13 +17033,14 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Malicious-Secure MPC</div>
             <div class="project-title">SPDZ Forge</div>
-            <div class="project-copy">SPDZ over F_p (2^61−1) — additive shares, Beaver triples, and information-theoretic MACs. Tamper with a share and semi-honest MPC swallows the lie while SPDZ aborts, even with a dishonest majority.</div>
+            <div class="project-copy">Run authenticated sharing, Beaver multiplication, and ordinary tamper detection over F_p (2^61−1). A separate bounded Off-Key fixture contrasts consistent α with β=α+Δ preprocessing, deriving unmasked secret recovery and a masked one-bit selective-failure result from protocol state.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">SPDZ</span>
                 <span class="chip">Beaver Triples</span>
                 <span class="chip">SPDZ MACs</span>
                 <span class="chip">Dishonest Majority</span>
+                <span class="chip">Selective Failure</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -20188,7 +20195,9 @@
             data-comment-only="MD5@tools/verdict-kill.mjs:15 | PQXDH@tools/verdict-kill.mjs:77"
             data-references="Gaussian mechanism | MD5 | SHA-256"
             data-standards="NIST"
-            data-implementation="@noble"
+            data-implementation="local TypeScript Field64/Prio3 and exact BigInt DP model; @noble TurboSHAKE128"
+            data-review-commit="9394e3fd3fd84cab5cfa95016f21808ca9f4e395"
+            data-review-note="Re-read the current Field64 arithmetic and transforms, BBCGGI19-style FLP circuits, Prio3 report preparation/verification/aggregation, TurboSHAKE128 XOF wrapper, S04 distributed report/release path, exact CL084 abort/retry model, learner UI, tests, mutation records and README through this exact pin. The lab executes a local two-aggregator Prio3Count/Prio3Sum teaching implementation; @noble supplies TurboSHAKE128 only, not Prio3 or field/proof logic. The separate abort lesson uses reduced BigInt rational arithmetic over a finite additive-noise model with neighboring answers zero and one; it computes ordinary, selective-abort, conditioned-publication, capped fresh-retry and independent-abort transcripts without modifying or attacking the Prio3 route. Public, aborter-only and omniscient teaching views remain distinct. The S04 claim still assumes authenticated roster bindings, non-collusion, honest independent noise contributors, complete delivery and one accounted release, while the browser supplies no DAP transport, durable atomic ledger, production attestation or constant-time assurance. The CL084 adaptation does not establish the paper's general bounds or imply that every abort violates differential privacy."
             data-level="advanced" data-added="2026-09" data-added-on="2026-09-11" data-updated="2026-10"
            
            
@@ -20263,13 +20272,14 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Verifiable Aggregation</div>
             <div class="project-title">Proof Tally</div>
-            <div class="project-copy">Prio3 lets two aggregators reject a malformed report without reading it. A separate bounded-cohort exercise contrasts 12-slot exact-total differencing with one clipped, participant-noised release, then aborts on collusion, too few honest contributors, mid-report dropout, repeated release, or noise-cap overflow.</div>
+            <div class="project-copy">Prio3 lets two aggregators reject a malformed report without reading it. Separate lessons compare exact-total differencing with one bounded participant-noised release, then compute exact observable transcripts for selective aborts, conditioned publication, capped retries, and an independent-abort control.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Prio3</span>
                 <span class="chip">Fully Linear PCP</span>
                 <span class="chip">Field64</span>
                 <span class="chip">Discrete Laplace</span>
+                <span class="chip">Abort / Retry</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -20367,9 +20377,9 @@
           </a>
 
           <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-hidden-bit/"
-            data-implements="AES@src/prf/ggm.ts:21 | AES-CBC@src/schemes/aes-modes.ts:37 | AES-CTR@src/schemes/aes-modes.ts:47 | AES-GCM@src/schemes/aes-modes.ts:59 | Diffie-Hellman@src/reduction/ddh.ts:87 | ECDSA@src/schemes/ecdsa.ts:10 | Ed25519@src/schemes/ed25519.ts:3 | ElGamal@src/game/cca.ts:34 | Hash-to-curve@src/schemes/elgamal.ts:29 | P-256@src/kats.ts:3 | ristretto255@src/schemes/elgamal.ts:22 | RSA@src/game/cca.ts:84 | RSA-OAEP@src/game/cca.ts:84 | RSA-PSS@src/schemes/rsa-pss.ts:4 | secp256k1@src/schemes/ecdsa.ts:1 | SHA-256@src/schemes/rsa-textbook.ts:52"
+            data-implements="AES@src/prf/ggm.ts:21 | AES-CBC@src/schemes/aes-modes.ts:37 | AES-CTR@src/schemes/aes-modes.ts:47 | AES-GCM@src/schemes/aes-modes.ts:59 | Diffie-Hellman@src/reduction/ddh.ts:87 | ECDSA@src/schemes/ecdsa.ts:10 | Ed25519@src/schemes/ed25519.ts:3 | ElGamal@src/game/cca.ts:34 | Hash-to-curve@src/schemes/elgamal.ts:29 | P-256@src/kats.ts:3 | ristretto255@src/schemes/elgamal.ts:22 | RSA@src/game/cca.ts:84 | RSA-OAEP@src/game/cca.ts:84 | RSA-PSS@src/schemes/rsa-pss.ts:4 | secp256k1@src/schemes/ecdsa.ts:1 | SHA-256@src/ui/hybridProof.ts:148"
             data-references="AES-ECB | AES-SIV | Goldwasser–Micali | ML-KEM | SHA-512 | Simon"
-            data-attacks="Chosen-ciphertext attack@src/game/cca.ts:1 | Chosen-plaintext attack@src/game/challenger.ts:18 | Ciphertext malleability@README.md:42 | Signature malleability@README.md:44"
+            data-attacks="Chosen-ciphertext attack@src/game/cca.ts:1 | Chosen-plaintext attack@src/game/challenger.ts:18 | Ciphertext malleability@README.md:43 | Signature malleability@README.md:45"
             data-standards="IETF | NIST | SECG"
             data-implementation="WebCrypto"
             data-level="advanced" data-added="2026-09" data-added-on="2026-09-11" data-updated="2026-10"
@@ -20446,7 +20456,7 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Security Games</div>
             <div class="project-title">Hidden Bit</div>
-            <div class="project-copy">Test selected security games, trace an AES-based GGM tree, and compare exact and union-bound advantage in an abstract multi-key rare-signal game. Each result has a stated attacker and scope.</div>
+            <div class="project-copy">Test selected security games, trace an AES-based GGM tree, account for adjacent AES hybrids, and run a bounded verified hard-core-predicate reconstruction. Each result states its attacker, assumptions and scope.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">IND-CPA</span>
@@ -20454,6 +20464,8 @@
                 <span class="chip">PRP/PRF Switching</span>
                 <span class="chip">DDH Reduction</span>
                 <span class="chip">Multi-Key Toy</span>
+                <span class="chip">Adjacent Hybrids</span>
+                <span class="chip">Goldreich–Levin</span>
               </div>
               <span class="arrow">→</span>
             </div>

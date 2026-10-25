@@ -8,6 +8,7 @@ const exhibitManifest = require('../tools/catalog-exhibits.json');
 const catalogReviewed = require('../tools/catalog-reviewed.json');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const paperReview = fs.readFileSync(path.join(__dirname, '..', 'docs', 'paper-review-extensions.md'), 'utf8');
 
 function attacksFor(source, slug) {
   const card = source.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[^>]*>'));
@@ -1551,10 +1552,10 @@ test('coordinated negation lists and risk prose remain excluded', () => {
 function checkPowerScope(source) {
   const slug = 'crypto-lab-power-trace';
   const attacks = attacksFor(source, slug);
-  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel']) {
+  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel', 'Side-channel (unspecified)']) {
     assert.ok(!attacks.includes(name), `Power Trace does not demonstrate ${name}`);
   }
-  for (const name of ['Power analysis', 'Key recovery', 'Side-channel (unspecified)']) {
+  for (const name of ['Power analysis', 'Key recovery', 'Known-plaintext attack']) {
     assert.ok(attacks.includes(name), `Preserve Power Trace's actual ${name} exhibit`);
   }
   assert.ok(implementationsFor(source, slug).includes('AES'));
@@ -1568,16 +1569,16 @@ function checkPowerScope(source) {
   assert.doesNotMatch(copy, /(?:cipher is correct and|JavaScript AES is) constant-time/);
 }
 
-test('Power Trace distinguishes correlation CPA, sibling attacks and simulated leakage', () => {
+test('Power Trace distinguishes correlation CPA, the known-plaintext cache model, sibling attacks and simulated leakage', () => {
   checkPowerScope(html);
 });
 
 test('Power Trace controls reject false attacks, timing guarantees and loss of actual analysis', () => {
   const marker = 'href="https://systemslibrarian.github.io/crypto-lab-power-trace/"';
-  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel']) {
+  for (const name of ['Chosen-plaintext attack', 'Fault injection', 'Timing side-channel', 'Side-channel (unspecified)']) {
     assert.throws(() => checkPowerScope(html.replace(marker, `${marker} data-attacks="${name}@README.md:1"`)), assert.AssertionError);
   }
-  for (const name of ['Power analysis', 'Key recovery', 'Side-channel (unspecified)']) {
+  for (const name of ['Power analysis', 'Key recovery', 'Known-plaintext attack']) {
     const token = new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '@[^"|]+');
     const markerAt = html.indexOf(marker);
     const prefix = html.slice(0, markerAt);
@@ -1591,6 +1592,232 @@ test('Power Trace controls reject false attacks, timing guarantees and loss of a
   const importAnchor = html.replace('AES@src/aes/aes.ts:123', 'AES@src/attack/cpa.ts:15');
   assert.notEqual(importAnchor, html, 'The negative control must replace the actual implementation anchor');
   assert.throws(() => checkPowerScope(importAnchor), assert.AssertionError);
+});
+
+test('selective-failure vocabulary does not turn an ordinary abort into an attack', () => {
+  const term = ATTACKS.find(t => t.name === 'Selective failure');
+  assert.ok(term.re.test('selective-failure attack'));
+  assert.ok(term.re.test('selective failure oracle'));
+  assert.equal(term.re.test('ordinary MAC check abort'), false);
+  assert.equal(term.re.test('fail closed after malformed input'), false);
+  assert.equal(attackContextAllows(term,
+    '- **Selective-failure attacks.** If the garbler can make evaluation depend on the private input, the abort leaks a bit — a known pitfall that careful protocol design must close.'), false);
+  assert.equal(attackContextAllows(term,
+    'Run the selective-failure oracle and derive the hidden bit from the observed abort.'), true);
+});
+
+function checkSpdzOffKeyScope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-spdz-forge';
+  const attacks = attacksFor(source, slug);
+  assert.ok(attacks.includes('Selective failure'), 'SPDZ Forge keeps its executable Off-Key selective-failure credit');
+  for (const name of ['Key recovery', 'Side-channel (unspecified)']) {
+    assert.ok(!attacks.includes(name), `recovering shared input y must not become ${name}`);
+  }
+  const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-spdz-forge\/"[\s\S]*?<\/a>/)[0];
+  assert.match(card, /data-attacks="Selective failure@src\/ui\/panels\/offkey\.ts:128"/);
+  assert.match(card, /bounded Off-Key fixture/);
+  assert.match(card, /consistent α with β=α\+Δ preprocessing/);
+  assert.match(card, /masked one-bit selective-failure result/);
+  assert.match(card, /<span class="chip">Selective Failure<\/span>/);
+  assert.match(card, /data-review-commit="2bfdc83b0ef587a598afad95d6ef0e72bdfd904b"/);
+  assert.match(card, /omniscient audit is separately labeled/);
+  assert.match(card, /three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation/);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '2bfdc83b0ef587a598afad95d6ef0e72bdfd904b');
+  assert.deepEqual(review.addAttacks, ['Selective failure@src/ui/panels/offkey.ts:128']);
+  assert.match(review.note, /same-context comparison restores the modeled assumption through protocol state/);
+  assert.match(review.note, /not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.ok(mapped.exhibits.find((item) => item.id === 'preprocessing').evidence.includes('index.html:260'));
+  assert.ok(mapped.exhibits.find((item) => item.id === 'hospital-variance').evidence.includes('index.html:266'));
+  const offkey = mapped.exhibits.find((item) => item.id === 'off-key-selective-failure');
+  assert.ok(offkey.evidence.includes('src/ui/panels/offkey.ts:128'));
+  assert.match(offkey.limits, /three-party trusted-dealer algebraic adaptation/);
+  assert.match(offkey.limits, /omniscient audit is not attacker-visible/);
+}
+
+test('SPDZ Forge credits the protocol-derived Off-Key privacy oracle without calling its input a key', () => {
+  checkSpdzOffKeyScope(html);
+});
+
+test('SPDZ Off-Key scope control rejects lost or invented attack credit', () => {
+  const marker = 'href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/"';
+  const lost = html.replace('Selective failure@src/ui/panels/offkey.ts:128', '');
+  assert.notEqual(lost, html);
+  assert.throws(() => checkSpdzOffKeyScope(lost), assert.AssertionError);
+  for (const name of ['Key recovery', 'Side-channel (unspecified)']) {
+    const invented = html.replace(marker, `${marker} data-attacks="${name}@README.md:20"`);
+    assert.notEqual(invented, html);
+    assert.throws(() => checkSpdzOffKeyScope(invented), assert.AssertionError);
+  }
+  const wrongReview = structuredClone(catalogReviewed);
+  wrongReview['crypto-lab-spdz-forge'].commit = '0'.repeat(40);
+  assert.throws(() => checkSpdzOffKeyScope(html, exhibitManifest, wrongReview), assert.AssertionError);
+  const missingBoundary = structuredClone(exhibitManifest);
+  missingBoundary.labs['crypto-lab-spdz-forge'].exhibits
+    .find((item) => item.id === 'off-key-selective-failure').limits = 'Teaching model.';
+  assert.throws(() => checkSpdzOffKeyScope(html, missingBoundary, catalogReviewed), assert.AssertionError);
+});
+
+function checkProofTallyImplementationScope(source, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-proof-tally';
+  const opening = openingFor(source, slug);
+  assert.match(opening,
+    /data-implementation="local TypeScript Field64\/Prio3 and exact BigInt DP model; @noble TurboSHAKE128"/);
+  assert.match(opening, /data-review-commit="9394e3fd3fd84cab5cfa95016f21808ca9f4e395"/);
+  assert.match(opening, /local two-aggregator Prio3Count\/Prio3Sum teaching implementation/);
+  assert.match(opening, /@noble supplies TurboSHAKE128 only, not Prio3 or field\/proof logic/);
+  const review = reviews[slug];
+  assert.equal(review.commit, '9394e3fd3fd84cab5cfa95016f21808ca9f4e395');
+  assert.match(review.note, /public, aborter-only and omniscient teaching views remain distinct/i);
+  assert.match(review.note, /does not establish the paper's general bounds or imply that every abort violates differential privacy/);
+}
+
+test('Proof Tally attributes its local Prio3 and exact DP work instead of assigning the whole lab to noble', () => {
+  checkProofTallyImplementationScope(html);
+});
+
+test('Proof Tally implementation provenance rejects a stale pin or library-only label', () => {
+  const libraryOnly = html.replace(
+    'local TypeScript Field64/Prio3 and exact BigInt DP model; @noble TurboSHAKE128',
+    '@noble',
+  );
+  assert.notEqual(libraryOnly, html);
+  assert.throws(() => checkProofTallyImplementationScope(libraryOnly), assert.AssertionError);
+  const stale = structuredClone(catalogReviewed);
+  stale['crypto-lab-proof-tally'].commit = '0'.repeat(40);
+  assert.throws(() => checkProofTallyImplementationScope(html, stale), assert.AssertionError);
+});
+
+test('paper-extension exhibit maps keep their reviewed UI sections, not merely nonblank lines', () => {
+  const proof = exhibitManifest.labs['crypto-lab-proof-tally'];
+  assert.deepEqual(proof.exhibits.find((item) => item.id === 'collusion').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:210', 'index.html:211', 'index.html:212', 'index.html:213']);
+  assert.deepEqual(proof.exhibits.find((item) => item.id === 'proof-limits').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:217', 'index.html:218', 'index.html:222', 'index.html:224', 'index.html:229', 'index.html:231']);
+  assert.deepEqual(proof.exhibits.find((item) => item.id === 'vdaf-vectors').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:236', 'index.html:237', 'index.html:238', 'index.html:242', 'index.html:243']);
+  const abortRetry = proof.exhibits.find((item) => item.id === 'abort-retry-transcript');
+  assert.match(abortRetry.action, /one- through three-attempt cap/);
+  assert.doesNotMatch(abortRetry.action, /five-attempt/);
+
+  const stark = exhibitManifest.labs['crypto-lab-stark-tower'];
+  assert.equal(stark.commit, '51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af');
+  assert.deepEqual(stark.exhibits.find((item) => item.id === 'stark-proof').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:401', 'index.html:403', 'index.html:404', 'index.html:418', 'index.html:419', 'index.html:420']);
+  assert.deepEqual(stark.exhibits.find((item) => item.id === 'zk-masking').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:452', 'index.html:454', 'index.html:456', 'index.html:463', 'index.html:472']);
+  assert.deepEqual(stark.exhibits.find((item) => item.id === 'stark-deployments').evidence,
+    ['index.html:496', 'index.html:498', 'index.html:501', 'index.html:505', 'index.html:509', 'index.html:513']);
+  assert.deepEqual(stark.exhibits.find((item) => item.id === 'stark-size-tradeoff').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:354', 'index.html:359', 'index.html:370', 'index.html:373', 'index.html:376', 'index.html:380', 'index.html:404']);
+});
+
+test('PR-06 ledger attributes CL084 correctly and retains the implemented retry cap', () => {
+  assert.match(paperReview, /Source: Fredrik Meisingseth, \*On Aborts in Differential Privacy\*/);
+  assert.doesNotMatch(paperReview, /Source: (?!Fredrik Meisingseth)[^\n]+, \*On Aborts in Differential Privacy\*/);
+  assert.match(exhibitManifest.labs['crypto-lab-proof-tally'].exhibits
+    .find((item) => item.id === 'abort-retry-transcript').action, /one- through three-attempt cap/);
+});
+
+function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-snark-arena';
+  assert.deepEqual(implementationsFor(source, slug), ['Groth16', 'KZG commitment']);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'A computation/constraint inconsistency and retained-toxic-waste KZG forgery must not borrow an unrelated attack name');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /Groth16@src\/ui\/realproof\.ts:92/);
+  assert.match(opening, /KZG commitment@src\/crypto\/setup\.ts:116/);
+  assert.match(opening, /data-unscanned="WebAssembly:3"/);
+  assert.match(opening, /data-review-commit="025f878b22b2fa3df945359548c2422d9548c1f4"/);
+  assert.match(opening, /snarkjs Groth16 over compiled Circom WASM\/BN254; local TypeScript toy-field arithmetic/);
+  assert.doesNotMatch(opening, /data-attacks=/);
+
+  const block = blockFor(source, slug);
+  assert.match(block, /deliberately weak XOR relation/);
+  assert.match(block, /in-circuit bit-constrained repair/);
+  assert.match(block, /PLONK remains comparison-only/);
+  assert.deepEqual(chipsFor(source, slug), ['Groth16', 'R1CS', 'Constraint Gap', 'Trusted Setup', 'vs. PLONK']);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '025f878b22b2fa3df945359548c2422d9548c1f4');
+  assert.deepEqual(review.add, ['Groth16@src/ui/realproof.ts:92']);
+  assert.deepEqual(review.remove, ['PLONK', 'Discrete log']);
+  assert.match(review.note, /browser input check is not the repair/);
+  assert.match(review.note, /does not implement CCC-Check/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewed, '2026-10-25');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.equal(mapped.exhibits.length, 9);
+  assert.deepEqual(mapped.exhibits.find((item) => item.id === 'r1cs').evidence.filter((at) => at.startsWith('index.html:')),
+    ['index.html:177', 'index.html:200', 'index.html:202', 'index.html:216']);
+  assert.deepEqual(mapped.exhibits.find((item) => item.id === 'groth16-real').evidence.filter((at) => at.startsWith('src/ui/realproof.ts:')),
+    ['src/ui/realproof.ts:92', 'src/ui/realproof.ts:133', 'src/ui/realproof.ts:158']);
+  const gap = mapped.exhibits.find((item) => item.id === 'constraint-gap');
+  assert.equal(gap.execution, 'real-crypto');
+  assert.ok(gap.evidence.includes('public/zk/xor_weak.circom:11'));
+  assert.ok(gap.evidence.includes('public/zk/xor_repaired.circom:10'));
+  assert.ok(gap.evidence.includes('src/ui/constraint-gap.ts:129'));
+  assert.ok(gap.evidence.includes('src/ui/constraint-gap.ts:192'));
+  assert.ok(gap.evidence.includes('src/ui/constraint-gap.ts:230'));
+  assert.match(gap.outcome, /unmodified proof/);
+  assert.match(gap.outcome, /prevent proof generation/);
+  assert.match(gap.limits, /public-input Circom\/Groth16 relations/);
+  assert.match(gap.limits, /does not implement CCC-Check/);
+  assert.match(gap.limits, /does not .*treat a browser input check as a relation repair/);
+}
+
+test('SNARK Arena catalogs the real constraint-gap lesson without inventing attack or PLONK credit', () => {
+  checkSnarkConstraintGapScope(html);
+});
+
+test('SNARK Arena constraint-gap controls reject stale pins, moved anchors and weakened scope', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-snark-arena\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace('Groth16@src/ui/realproof.ts:92', 'Groth16@src/ui/realproof.ts:97')),
+    html.replace(cardRe, (card) => card.replace('KZG commitment@src/crypto/setup.ts:116', 'KZG commitment@src/crypto/setup.ts:101')),
+    html.replace(cardRe, (card) => card.replace('data-unscanned="WebAssembly:3"', 'data-unscanned="WebAssembly:1"')),
+    html.replace(cardRe, (card) => card.replace('data-review-commit="025f878b22b2fa3df945359548c2422d9548c1f4"', 'data-review-commit="5999c14d2565ad4393f505b7f5c00ac9fdba7f49"')),
+    html.replace(cardRe, (card) => card.replace('data-references="', 'data-attacks="Discrete log@src/ui/ceremony.ts:122" data-references="')),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the SNARK Arena card');
+    assert.throws(() => checkSnarkConstraintGapScope(changed), assert.AssertionError);
+  }
+
+  const wrongPin = structuredClone(exhibitManifest);
+  wrongPin.labs['crypto-lab-snark-arena'].commit = '0'.repeat(40);
+  assert.throws(() => checkSnarkConstraintGapScope(html, wrongPin, catalogReviewed), assert.AssertionError);
+
+  const missingGap = structuredClone(exhibitManifest);
+  missingGap.labs['crypto-lab-snark-arena'].exhibits = missingGap.labs['crypto-lab-snark-arena'].exhibits
+    .filter((item) => item.id !== 'constraint-gap');
+  assert.throws(() => checkSnarkConstraintGapScope(html, missingGap, catalogReviewed), assert.AssertionError);
+
+  const weakened = structuredClone(exhibitManifest);
+  weakened.labs['crypto-lab-snark-arena'].exhibits
+    .find((item) => item.id === 'constraint-gap').limits = 'Real Groth16 proof.';
+  assert.throws(() => checkSnarkConstraintGapScope(html, weakened, catalogReviewed), assert.AssertionError);
+});
+
+test('STARK Tower card pins executable Fiat-Shamir and current implementation anchors', () => {
+  const opening = openingFor(html, 'crypto-lab-stark-tower');
+  const implementations = implementationsFor(html, 'crypto-lab-stark-tower');
+  assert.deepEqual(implementations, ['Fiat-Shamir', 'FRI', 'Merkle tree', 'SHA-256', 'STARK']);
+  assert.match(opening, /Fiat-Shamir@src\/stark\.ts:421/);
+  assert.match(opening, /FRI@src\/stark\.ts:754/);
+  assert.match(opening, /Merkle tree@src\/merkle\.ts:72/);
+  assert.match(opening, /SHA-256@src\/merkle\.ts:55/);
+  assert.match(opening, /STARK@src\/stark\.ts:189/);
+  assert.doesNotMatch(opening, /data-attacks=/);
+  assert.doesNotMatch(opening, /data-comment-only="[^"]*Fiat-Shamir/);
+  assert.match(opening, /data-review-commit="51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af"/);
+  assert.match(opening, /data-updated="2026-10"/);
 });
 
 function checkNewResearchScope(source) {

@@ -437,10 +437,10 @@
   "crypto-lab-format-ward": {
    "added": "2026-04",
    "addedOn": "2026-04-07",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-07T15:19:21Z",
-   "updatedFrom": "2026-08-15T21:19:49-04:00",
-   "updatedCommit": "29630a53def49fdd2ed3d40523b1ce99494b7219"
+   "updatedFrom": "2026-10-25T09:32:40-04:00",
+   "updatedCommit": "0549c626c3b8bf7555c43e990ecfefc42753c3dc"
   },
   "crypto-lab-padding-oracle": {
    "added": "2026-04",
@@ -733,10 +733,10 @@
   "crypto-lab-aegis-gate": {
    "added": "2026-04",
    "addedOn": "2026-04-19",
-   "updated": "2026-09",
+   "updated": "2026-10",
    "addedFrom": "2026-04-19T03:52:34Z",
-   "updatedFrom": "2026-09-25T11:48:56-04:00",
-   "updatedCommit": "a57f157a67100ba8f5a21b13e2199129df8e6556"
+   "updatedFrom": "2026-10-25T09:13:54-04:00",
+   "updatedCommit": "85dbee492ea12792b8ebe1397b10104e53623ac5"
   },
   "crypto-lab-ascon": {
    "added": "2026-04",
@@ -1079,8 +1079,8 @@
    "addedOn": "2026-06-06",
    "updated": "2026-10",
    "addedFrom": "2026-06-06T17:52:22Z",
-   "updatedFrom": "2026-10-18T07:54:01-04:00",
-   "updatedCommit": "c15c7a6d256c481f50e23f6f18134aa037f6b67b"
+   "updatedFrom": "2026-10-25T09:41:44-04:00",
+   "updatedCommit": "b798585d2aaa7ae810ec83dbe7a5f3974f642378"
   },
   "crypto-lab-multivariate": {
    "added": "2026-06",
@@ -1541,10 +1541,10 @@
   "crypto-lab-polynomial-forge": {
    "added": "2026-08",
    "addedOn": "2026-08-21",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-08-21T21:12:18Z",
-   "updatedFrom": "2026-08-22T09:54:47-04:00",
-   "updatedCommit": "63e9f33c2029c282dc6dd6c7212259a05a75ad17"
+   "updatedFrom": "2026-10-25T09:24:19-04:00",
+   "updatedCommit": "f35718189d119ca86025fe31cbb52966e934c628"
   },
   "crypto-lab-dnssec-chain": {
    "added": "2026-08",
@@ -1727,8 +1727,8 @@
    "addedOn": "2026-10-01",
    "updated": "2026-10",
    "addedFrom": "2026-10-01T01:47:52Z",
-   "updatedFrom": "2026-10-19T00:25:06-04:00",
-   "updatedCommit": "f468565fbc6530fcd98508b2493370dfa61aa88a"
+   "updatedFrom": "2026-10-25T09:32:37-04:00",
+   "updatedCommit": "4496fd24173ae0e578d23f8811acd6b22c8ac6bf"
   },
   "crypto-lab-pulse-chain": {
    "added": "2026-10",

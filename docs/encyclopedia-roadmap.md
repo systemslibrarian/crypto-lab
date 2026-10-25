@@ -32,10 +32,12 @@ A-D-12 is **live** at exact LFSR Forge main `c4ef2da4b33f`. The ninth panel repr
 
 L-R-01 is **live** at exact Clock Arithmetic main `e6e1e39b124c`. The seventh act derives Montgomery setup, executes REDC with its low radix word, cancellation, radix shift and optional final subtraction, chains encoded products and squares, and measures one fixed 4,096-operation ordinary/Montgomery schedule without treating browser timing as a benchmark or constant-time evidence. The exact-main gate passed 59 unit tests, all 38 clean-baseline mutations and all 40 hosted browser/accessibility tests; exact main deployed, and all four public assets matched the deployed artifact byte for byte.
 
+E-K-03 and A-D-14 are now **in progress**. E-K-03 has begun from the initial public `crypto-lab-ipsec-ike` main commit `724c9bf04af6`; no protocol behavior, test result, merge or deployment is credited yet. A-D-14 remains owned by its separate Matsui Line workstream through open PR #26 at head `309dca5ecc55`; its hosted build is currently failing, so no verification, merge or deployment is credited.
+
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 26 |
-| In progress | 0 |
+| Planned | 24 |
+| In progress | 2 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 22 |
@@ -77,7 +79,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Reconcile and complete L-R-01 in Clock Arithmetic; correct its REDC trace, expose encoded chaining and separated fixed-work measurements, independently audit every hosted mutation log, then verify exact-main deployment and served assets.
 - [x] Implement E-K-04 in Hidden Bit; independently audit its adjacent AES hybrid ledger, exposed-predicate counterexample, bounded Goldreich–Levin reconstruction, proof boundaries and independent preimage verification, then verify the full hosted gate, exact-main deployment and every served asset.
 
-**Implementation work:** A-D-12 is live at exact LFSR Forge main `c4ef2da4b33f`, L-R-01 is live at exact Clock Arithmetic main `e6e1e39b124c`, and E-K-04 is live at exact Hidden Bit main `7f143a4e9403`. E-K-03 and S06 remain the next unshipped P1 items, but each needs a focused repository that does not yet exist. A-D-14 has a separate active implementation owner. The later P2 and P3 scope remains queued, with no implied delivery dates; recheck repository availability and active ownership before expanding this short queue.
+**Implementation work:** A-D-12 is live at exact LFSR Forge main `c4ef2da4b33f`, L-R-01 is live at exact Clock Arithmetic main `e6e1e39b124c`, and E-K-04 is live at exact Hidden Bit main `7f143a4e9403`. E-K-03 is in progress from the initial public `crypto-lab-ipsec-ike` main commit `724c9bf04af6`. S06 remains the next unshipped P1 item and still needs a focused repository and selected protocol. A-D-14 is separately in progress in Matsui Line PR #26. The later P2 and P3 scope remains queued, with no implied delivery dates; recheck repository availability and active ownership before expanding this short queue.
 
 **Maintainer feedback — optional:**
 
@@ -86,9 +88,10 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **E-K-03 — IPsec/IKE security associations and protected packet flow:** create the focused lab only after its repository exists, then implement the bounded RFC 7296/RFC 4303 profile, first Child SA, one-way ESP SAs, SPI lookup, anti-replay state and rekey-boundary cases described below.
+1. **E-K-03 — IPsec/IKE security associations and protected packet flow:** continue the active focused-lab implementation from initial main `724c9bf04af6`, following the bounded RFC 7296/RFC 4303 profile, first Child SA, one-way ESP SAs, SPI lookup, anti-replay state and rekey-boundary criteria below; do not infer implementation credit from the repository skeleton.
 2. **S06 — Distance bounding and relay attacks:** create or select a focused repository, choose one primary-source protocol and specify deterministic propagation, processing, pre-guessing and tolerated-error models before implementation; browser wall-clock timing is not evidence of physical distance.
-3. **A-D-14 — Differential-linear composition:** preserve its separate active implementation owner; do not duplicate work in Biham Lens or Matsui Line.
+3. **A-D-14 — Differential-linear composition:** preserve its separate active owner in Matsui Line PR #26; do not duplicate that work, and do not advance it beyond In progress until its failing hosted gate is repaired and the full acceptance evidence is checked.
+4. **S09 — Target collision resistance:** this is the next unclaimed accepted proposal with an existing target repository if the two new-lab P1 tracks remain blocked; recheck Hidden Bit ownership before starting it.
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
 ## Delivery evidence for completed milestones
@@ -422,8 +425,8 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | --- | ---: | --- | --- |
 | Phase 1 — Stateful key-handle policy | 1 | P1 | 1 live |
 | Phase 2 — Privacy, storage and query integrity | 11 | P1 | 11 live |
-| Phase 3 — Protocols and arithmetic | 5 | P1 | 3 live; 2 planned |
-| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 6 live; 10 planned |
+| Phase 3 — Protocols and arithmetic | 5 | P1 | 3 live; 1 in progress; 1 planned |
+| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 6 live; 1 in progress; 9 planned |
 | Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 1 live; 7 planned |
 | Phase 6 — Optional specialist and research scope | 7 | P3 | 7 planned |
 
@@ -867,11 +870,13 @@ The fixed comparison executes the same 4,096-operation alternating multiply/squa
 
 ### E-K-03 — IPsec/IKE security associations and protected packet flow
 
-**Priority:** P1 — next · **Status:** Planned · **Workstream:** IPsec and IKE.
+**Priority:** P1 — next · **Status:** In progress · **Workstream:** IPsec and IKE.
 
-**Target:** New focused IPsec/IKE lab, linked from Noise Pipe.
+**Target:** Focused `crypto-lab-ipsec-ike`, linked from Noise Pipe.
 
 **Existing base:** Noise Pipe computes Noise handshakes/AEAD transport and maps IKpsk2 onto WireGuard packets. TLS/SSH labs cover other channel protocols. These are strong secure-channel coverage but do not model IPsec.
+
+**Implementation status:** The public repository now exists at initial main `724c9bf04af65c8f636e7dcfd7d9112c24bdb2f8`, and implementation has started from that exact commit. This status records active work only: no acceptance criterion, executable behavior, test result, merge, deployment or public learner experience is credited.
 
 **Acceptance criteria:**
 
@@ -886,7 +891,7 @@ The fixed comparison executes the same 4,096-operation alternating multiply/squa
 
 **Bounded teaching profile:** Use IPv4 TEST-NET fixtures, IKEv2 `Shared Key Message Integrity Code` authentication method 2, Curve25519 Key Exchange Method 31 with X25519 computation, `PRF_HMAC_SHA2_256` transform 5, and `ENCR_AES_GCM_16` Transform ID 20 with Key Length attribute 128 for the IKE SA. Use the same encryption transform and key-length attribute plus Sequence Numbers transform 0 (`32-bit Sequential Numbers`) for ESP, omit the INTEG transform from both AEAD proposals, use a 16-octet tag and maintain a 64-packet receiver window. Transform ID 20 selects the 16-octet ICV variant; the separate Key Length attribute selects AES-128. For IKE key derivation, treat `SK_ai` and `SK_ar` as zero octets and derive `SK_ei` and `SK_er` as 20 octets each: 16-octet AES key followed by four-octet salt. Combine each IKE salt with a unique eight-octet explicit IV per direction and key. IKE encrypted-payload AAD runs from the IKE header through the Encrypted payload header as RFC 5282 specifies; it is not ESP AAD. For each directional ESP SA, consume 20 KEYMAT octets as a 16-octet AES key plus four-octet salt, combine that salt with a unique eight-octet explicit IV, and authenticate the four-octet SPI plus four-octet sequence number as AAD. Tunnel mode is the default; transport mode exists only after the request/echo negotiation above. Learner runs require fresh IKE nonces and ephemeral X25519 keys; deterministic randomness is allowed only through an explicit test seam. These choices bound the lesson rather than claim a deployment mandate: RFC 8247 does not list method 31, so its registered-but-unlisted requirement level defaults to MAY-implement.
 
-**Next action:** Once `crypto-lab-ipsec-ike` exists, refresh its default branch and implement this profile without changing the proposal's Planned status until executable behavior, independent tests, hosted checks, merge, deployment and the public learner experience are verified.
+**Next action:** Continue the focused implementation from fresh main and keep the proposal In progress until executable behavior and independent local evidence satisfy the criteria above. Advance later stages only with their separately required hosted checks, merge, deployment and public learner verification.
 
 **Scope and limits:** This is a bounded protocol-state and packet-cryptography lesson, not an interoperable VPN daemon. Exclude certificates, EAP, IPv6, NAT traversal, fragmentation, MOBIKE, multiple proposals or key exchanges, AH, multicast, traffic-flow confidentiality padding, extended sequence numbers, kernel routing and production credential storage. A demo may make RFC 7748's optional all-zero shared-secret check a local fail-closed rule, but must not present it as an RFC 8031 MUST. Interpret RFC 8031's published X25519 vectors using its little-endian encoding; erratum 6339's substitute vectors are Rejected, while erratum 6931 is Held for Document Update and asks for clearer encoded-input wording. Algorithm requirement levels describe implementation support, not a universal instruction to deploy that algorithm. Any sequence-derived explicit-IV construction is a declared demo choice whose obligation is uniqueness under one key, not an IKEv2-negotiated IV algorithm. Anti-replay enablement is receiver policy even though transform 0 supplies suitable non-wrapping sequence numbers. Keep policy/routing, peer authentication, IKE-SA protection, Child-SA key derivation, ESP processing and replay state as separately testable claims.
 
@@ -1098,11 +1103,13 @@ The separate bounded state-completion exercise starts from the post-100 keystrea
 
 ### A-D-14 — Compose differential and linear cryptanalysis
 
-**Priority:** P2 — depth · **Status:** Planned · **Workstream:** Symmetric cryptanalysis.
+**Priority:** P2 — depth · **Status:** In progress · **Workstream:** Symmetric cryptanalysis.
 
 **Target:** Biham Lens or Matsui Line extension.
 
 **Existing base:** Biham Lens executes differential attacks and Matsui Line executes linear attacks. Matsui’s multiple-mask/four-joint-outcome and structural zero-correlation section is already mapped in the refreshed catalog. The remaining work is an executed differential-linear composition on a shared cipher.
+
+**Implementation status:** [Matsui Line PR #26](https://github.com/systemslibrarian/crypto-lab-matsui-line/pull/26) is open at exact head `309dca5ecc555eb2003d0da6edcc76794bebb87f`. The separate owning workstream has implementation commits, but its current hosted build is failing; this ledger therefore claims no verification, merge, deployment or public learner behavior.
 
 **Acceptance criteria:**
 
@@ -1110,7 +1117,7 @@ The separate bounded state-completion exercise starts from the post-100 keystrea
 - Compute the combined statistic over chosen pairs and compare it with its stated heuristic and a failing-assumption control.
 - Apply the statistic to bounded subkey ranking and verify the ranked result independently.
 
-**Next action:** Choose the shared cipher and joining state with the Biham Lens/Matsui Line implementations.
+**Next action:** Preserve the separate owner, repair the failing hosted gate without weakening it, then independently check the shared-cipher join, statistic, failing-assumption control, bounded ranking and retained limits before any later status transition.
 
 **Scope and limits:** Matsui's two-mask and structural-zero section is already mapped; this adds differential-linear composition, not another multi-mask display.
 
@@ -1796,6 +1803,8 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-25 | PR-05 Off-Key selective-failure delivery | [SPDZ Forge PR #27](https://github.com/systemslibrarian/crypto-lab-spdz-forge/pull/27) merged as exact main `2bfdc83b0ef5`, with reviewed feature and merge trees identical. An independent CL079 paper-to-code audit re-derived the consistent `Delta(g-d)` and inconsistent `Delta(g-y)` residuals, unmasked recovery, masked bit-promise inference and attacker/omniscient boundary without finding a defect. Final-head run 40204049873 and exact-main/deployment run 40204752389 passed 76 unit tests, all three focused mutations from a passing baseline with sources restored, six maintenance checks, the production build and all 18 hosted browser/accessibility tests; exact main reported zero dependency vulnerabilities. Pages artifact `12603930373` identifies the exact merge, and all three public files matched it byte for byte. The live lesson keeps ordinary corruption, legitimate additive MAC-key shares, inconsistent reconstructed contexts, privacy leakage and its bounded three-party trusted-dealer adaptation distinct. PR-05 is **Live** and does not change the encyclopedia proposal count. |
 | 2026-10-25 | PR-03 unintended-witness and constraint-repair delivery | [SNARK Arena PR #26](https://github.com/systemslibrarian/crypto-lab-snark-arena/pull/26) merged as exact main `025f878b22b2`; reviewed feature and merge trees are identical. Final-head run 40207370988 and exact-main/deployment run 40207754121 passed 27 artifact-provenance controls, 51 unit tests, eight maintenance checks, typecheck/build, all 42 hosted browser/claim/accessibility tests and the clean-baseline missing-constraint mutation; source and bundle were restored. Provenance artifact `12604231532` records reproduced-and-bound circuit material, and Pages artifact `12604427228` identifies the exact merge. An independent exact-main build, the Pages artifact and all 18 public files matched byte for byte. The live lesson proves an explicit unintended `(2,2,r-4)` assignment against the weak Groth16 relation, rejects it with separately regenerated repaired-relation artifacts, retains all four legitimate binary witnesses, and keeps circuit repair, client validation and ordinary proof tampering distinct. PR-03 is **Live** and does not change the encyclopedia proposal count. |
 | 2026-10-25 | Paper-review, A-D-12 and L-R-01 Hub publication | [Crypto Lab PR #291](https://github.com/systemslibrarian/crypto-lab/pull/291) merged as exact main `2927f2a2b9a0`. Seven PR workflows passed all 13 applicable jobs and seven exact-main workflows passed all 14 jobs, with only the event-inapplicable drift job skipped in each event. Pages run 40209975187 deployed artifact `12604959808` through successful deployment `7315606531`. The public catalog and knowledge-map JSON matched the artifact and exact main byte for byte. The Hub now publishes exact reviewed pins and exhibit maps for PR-03, PR-04, PR-05, PR-06, PR-10 and PR-11, including the honest CKKS deferral and planned Power Trace controls, while also publishing the already-live A-D-12 and L-R-01 catalog evidence. Full paper versions, limits, workflow links, hashes and unrelated stale-pin boundaries remain in the paper-review checklist. |
+| 2026-10-25 | E-K-03 implementation start | The public [`crypto-lab-ipsec-ike`](https://github.com/systemslibrarian/crypto-lab-ipsec-ike) repository now exists with default branch `main` at initial commit `724c9bf04af65c8f636e7dcfd7d9112c24bdb2f8`, and implementation has started from that exact revision. E-K-03 is **In progress**. The initial repository establishes ownership and a work location only; this entry credits no implemented protocol behavior, tests, merge, deployment or learner-visible result. |
+| 2026-10-25 | A-D-14 active differential-linear implementation | [Matsui Line PR #26](https://github.com/systemslibrarian/crypto-lab-matsui-line/pull/26) remains open at exact head `309dca5ecc555eb2003d0da6edcc76794bebb87f`. Its separate owner has committed the active differential-linear work, but [run 40197890294](https://github.com/systemslibrarian/crypto-lab-matsui-line/actions/runs/40197890294) currently reports the build job failed. A-D-14 is **In progress**, not Verified, Merged or Live; this entry credits no passing hosted gate, deployment or public learner behavior. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

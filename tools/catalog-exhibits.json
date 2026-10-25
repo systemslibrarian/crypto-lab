@@ -21222,7 +21222,7 @@
       ]
     },
     "crypto-lab-lfsr-forge": {
-      "commit": "7c6246133b9ea5d2acda5ee1cddeada6e5b1e607",
+      "commit": "66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4",
       "reviewed": "2026-10-25",
       "exhibits": [
         {
@@ -21237,7 +21237,7 @@
             "keystream observation"
           ],
           "evidence": [
-            "src/main.ts:142",
+            "src/main.ts:143",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Watch a register run",
@@ -21256,7 +21256,7 @@
             "minimal recurrence"
           ],
           "evidence": [
-            "src/main.ts:143",
+            "src/main.ts:144",
             "src/lfsr/bm.ts:1"
           ],
           "section": "Follow Berlekamp–Massey",
@@ -21275,7 +21275,7 @@
             "ambiguous prefix"
           ],
           "evidence": [
-            "src/main.ts:144",
+            "src/main.ts:145",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Predict, freeze, check",
@@ -21293,7 +21293,7 @@
             "correlation bias"
           ],
           "evidence": [
-            "src/main.ts:145",
+            "src/main.ts:146",
             "src/geffe/geffe.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -21313,7 +21313,7 @@
             "search budget"
           ],
           "evidence": [
-            "src/main.ts:146",
+            "src/main.ts:147",
             "src/geffe/attack.worker.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -21378,6 +21378,40 @@
           "section": "Audit a Boolean combiner",
           "execution": "real-values",
           "limits": "Exactly four inputs are analyzed; Walsh probabilities assume independent uniform bits, while deterministic LFSR agreement is measured separately. The scans cover only 127 states or 105 state pairs, and algebraic immunity two does not exclude every fast algebraic relation."
+        },
+        {
+          "id": "cube-superpoly-recovery",
+          "title": "Toy-Oracle Cube Sum and Superpoly Recovery",
+          "kind": "interactive",
+          "action": "Exhaust four two-variable public-input cube faces across all eight teaching keys, recover each superpoly, then query three affine maxterms under one hidden toy key and verify the frozen candidate on four disjoint held-out rows.",
+          "outcome": "C12, C13 and C24 form a rank-three system that filters 8 → 4 → 2 → 1 to key 110. C34 remains a valid cube with a quadratic superpoly; dropping C24 leaves 001/110, and flipping C13 recovers 000 before held-outs reject it.",
+          "concepts": [
+            "cube attack",
+            "cube sum",
+            "superpoly",
+            "maxterm",
+            "algebraic normal form",
+            "Möbius transform",
+            "affine key recovery",
+            "held-out validation"
+          ],
+          "evidence": [
+            "src/cube/oracle.ts:15",
+            "src/cube/oracle.ts:33",
+            "src/cube/analysis.ts:105",
+            "src/cube/analysis.ts:143",
+            "src/cube/analysis.ts:176",
+            "src/cube/analysis.ts:209",
+            "src/cube/panel.ts:19",
+            "src/cube/panel.ts:45",
+            "src/cube/panel.ts:135",
+            "src/cube/panel.ts:143",
+            "src/cube/panel.ts:145",
+            "src/cube/panel.ts:146"
+          ],
+          "section": "Sum a cube, recover a superpoly",
+          "execution": "real-values",
+          "limits": "This is a separate three-secret/four-public degree-four toy oracle. Preprocessing enumerates all eight teaching keys; online recovery assumes repeated chosen-public-input queries under one fixed secret. C34 is a valid cube whose quadratic superpoly is not a maxterm and is excluded only from this bounded affine solve. The lesson executes no Trivium state or round and makes no attack or performance claim against reduced-round or full Trivium."
         }
       ],
       "reviewScope": "complete"

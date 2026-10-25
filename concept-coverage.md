@@ -379,6 +379,19 @@ probabilities remain distinct from measured LFSR agreement, and the 127-state
 and 105-pair scans are bounded teaching experiments rather than production
 fast-correlation attacks. Catalogued total remains 245.*
 
+*Version 48 — records LFSR Forge's A-D-11 cube-sum and superpoly extension under
+§30 without adding a lab or changing a concept status. A separate exact
+three-secret/four-public Boolean oracle now executes both cube-attack phases:
+preprocessing exhausts four complete two-variable cube faces over all eight
+teaching keys and derives their superpolys by Möbius transform; online queries
+three independent affine maxterms under one fixed hidden toy key, filters eight
+candidates to one, and tests that frozen candidate on four disjoint held-out
+rows before a controller comparison. C34 remains a valid cube whose quadratic
+superpoly is excluded only from the bounded affine solve, while missing and
+corrupted equations produce explicit ambiguity or held-out rejection. This
+executes no Trivium state or round and makes no attack or performance claim
+against reduced-round or full Trivium. Catalogued total remains 245.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1137,7 +1150,16 @@ one tiny register in the bounded fixture. Those results assume independent unifo
 bits when interpreting the truth table, measure deterministic LFSR agreement
 separately, and do not claim that the small exhaustive scans implement a production
 fast-correlation attack or that algebraic immunity rules out every fast algebraic
-relation.
+relation. A separate toy-oracle lesson executes cube-attack preprocessing and
+online recovery without relabeling the existing Trivium panel: it exhausts four
+two-variable cube faces over all eight three-bit teaching keys, recovers exact
+superpolys, uses three affine maxterms whose coefficient matrix has rank three
+to filter 8 → 4 → 2 → 1,
+and checks the frozen result on disjoint held-out rows. Its nonlinear C34 result,
+missing-equation ambiguity and corrupted-sum rejection keep a valid cube, a
+usable maxterm and a confirmed key distinct. The model assumes repeated chosen
+public-input queries under one fixed secret; it executes no Trivium state or
+round and does not claim a reduced-round or full-Trivium break.
 
 **31. Formal security analysis: symbolic and computational — `COVERED`**
 Protocol Checker (Dolev-Yao, rediscovers Lowe's attack by search) · Hidden Bit.

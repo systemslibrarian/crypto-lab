@@ -548,6 +548,7 @@ const ATTACKS = [
      to KCI lessons without themselves mounting a recipient-key KCI attack. */
   { name: 'Key-compromise impersonation', re: /forge[-_ ]?auth[-_ ]?after[-_ ]?recipient[-_ ]?compromise|kci[-_ ]?forg(?:e|ery)/i },
   { name: 'Key recovery', re: /key[-_ ]?recovery/i },
+  { name: 'Cube attack', re: /\bcube[-_ ]?attacks?\b/i },
   { name: 'Frequency analysis', re: /frequency[-_ ]?analysis/i },
   /* A declared known-empty input is a known all-zero plaintext, and mask/pad
      reuse can make it the crib that recovers the paired unknown input. Keep

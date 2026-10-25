@@ -216,13 +216,15 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest) {
   const slug = 'crypto-lab-lfsr-forge';
   assert.deepEqual(implementationsFor(source, slug), ['Trivium'],
     'Only the vocabulary-named, executed Trivium primitive belongs in data-implements');
-  assert.deepEqual(attacksFor(source, slug), ['Key recovery'],
-    'Retain executable zero-round recovery without promoting test or provenance prose to attacks');
+  assert.deepEqual(attacksFor(source, slug), ['Cube attack', 'Key recovery'],
+    'Credit the executed toy-oracle cube attack and retain executable zero-round recovery');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="7c6246133b9ea5d2acda5ee1cddeada6e5b1e607"/);
+  assert.match(opening, /data-review-commit="66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4"/);
   assert.match(opening, /Trivium@src\/trivium\/trivium\.ts:29/,
     'Trivium must anchor at the actual state advance, not a panel mount');
+  assert.match(opening, /Cube attack@src\/cube\/panel\.ts:24/,
+    'Cube attack must anchor at the learner-visible executed two-phase lesson');
   for (const falseReference of ['Pairing', 'RC4', 'Shamir secret sharing']) {
     assert.ok(!referencesFor(source, slug).includes(falseReference),
       `${falseReference} is not an LFSR Forge algorithm reference`);
@@ -230,15 +232,18 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest) {
 
   const block = blockFor(source, slug);
   assert.match(block, /inspect real Trivium clocking/);
-  assert.match(block, /editable four-input Boolean combiners/);
+  assert.match(block, /audit editable Boolean combiners/);
+  assert.match(block, /execute cube sums that recover and validate affine superpolys/);
   const chips = chipsFor(source, slug);
   assert.ok(chips.includes('Trivium'), 'The learner-facing card must expose its Trivium lesson');
   assert.ok(chips.includes('Boolean Function Audit'), 'The learner-facing card must expose the Boolean audit');
+  assert.ok(chips.includes('Cube Sums'), 'The learner-facing card must expose the cube-sum lesson');
+  assert.ok(chips.includes('Superpolys'), 'The learner-facing card must expose superpoly recovery');
 
   const review = manifest.labs[slug];
-  assert.equal(review.commit, '7c6246133b9ea5d2acda5ee1cddeada6e5b1e607');
+  assert.equal(review.commit, '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4');
   assert.equal(review.reviewScope, 'complete');
-  assert.equal(review.exhibits.length, 7);
+  assert.equal(review.exhibits.length, 8);
   const trivium = review.exhibits.find(exhibit => exhibit.id === 'trivium');
   assert.ok(trivium);
   assert.ok(trivium.evidence.includes('src/trivium/trivium.ts:29'));
@@ -259,6 +264,28 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest) {
   assert.match(booleanAudit.limits, /independent uniform bits/);
   assert.match(booleanAudit.limits, /127 states or 105 state pairs/);
   assert.match(booleanAudit.limits, /does not exclude every fast algebraic relation/);
+  const cube = review.exhibits.find(exhibit => exhibit.id === 'cube-superpoly-recovery');
+  assert.ok(cube);
+  for (const anchor of [
+    'src/cube/oracle.ts:15',
+    'src/cube/oracle.ts:33',
+    'src/cube/analysis.ts:105',
+    'src/cube/analysis.ts:143',
+    'src/cube/analysis.ts:176',
+    'src/cube/analysis.ts:209',
+    'src/cube/panel.ts:19',
+    'src/cube/panel.ts:45',
+    'src/cube/panel.ts:135',
+    'src/cube/panel.ts:143',
+    'src/cube/panel.ts:145',
+    'src/cube/panel.ts:146',
+  ]) assert.ok(cube.evidence.includes(anchor), `Missing cube-attack evidence ${anchor}`);
+  assert.match(cube.outcome, /8 → 4 → 2 → 1 to key 110/);
+  assert.match(cube.outcome, /C34 remains a valid cube with a quadratic superpoly/);
+  assert.match(cube.outcome, /flipping C13 recovers 000 before held-outs reject it/);
+  assert.match(cube.limits, /three-secret\/four-public degree-four toy oracle/);
+  assert.match(cube.limits, /C34 is a valid cube whose quadratic superpoly is not a maxterm/);
+  assert.match(cube.limits, /executes no Trivium state or round/);
 }
 
 test('LFSR Forge publishes Trivium and exact Boolean analysis without inherited false credits', () => {
@@ -270,12 +297,17 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
   for (const changed of [
     html.replace(cardRe, card => card.replace(/Trivium@[^|" ]+(?: \| )?/, '')),
     html.replace(cardRe, card => card.replace('Trivium@src/trivium/trivium.ts:29', 'Trivium@src/trivium/trivium.ts:28')),
-    html.replace(cardRe, card => card.replace('data-attacks="Key recovery@src/trivium/panel.ts:37"',
-      'data-attacks="Brute force@README.md:80 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:140"')),
+    html.replace(cardRe, card => card.replace(/Cube attack@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, card => card.replace('Cube attack@src/cube/panel.ts:24', 'Cube attack@src/cube/panel.ts:45')),
+    html.replace(cardRe, card => card.replace('data-attacks="Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37"',
+      'data-attacks="Brute force@README.md:80 | Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:140"')),
     html.replace(cardRe, card => card.replace('data-references="', 'data-references="Pairing | RC4 | Shamir secret sharing | ')),
-    html.replace(cardRe, card => card.replace('7c6246133b9ea5d2acda5ee1cddeada6e5b1e607', '2800c76acf9ddc7bd79210327372b95b64d444e6')),
+    html.replace(cardRe, card => card.replace('66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4', '7c6246133b9ea5d2acda5ee1cddeada6e5b1e607')),
     html.replace(cardRe, card => card.replace('<span class="chip">Trivium</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Boolean Function Audit</span>', '')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Cube Sums</span>', '')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Superpolys</span>', '')),
+    html.replace(cardRe, card => card.replace('execute cube sums that recover and validate affine superpolys', 'describe cube terminology')),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the LFSR Forge card');
     assert.throws(() => checkLfsrForgeScope(changed), assert.AssertionError);
@@ -290,6 +322,29 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
   const trivium = missingRecheck.labs['crypto-lab-lfsr-forge'].exhibits.find(exhibit => exhibit.id === 'trivium');
   trivium.evidence = trivium.evidence.filter(anchor => anchor !== 'src/trivium/zero-round.ts:54');
   assert.throws(() => checkLfsrForgeScope(html, missingRecheck), assert.AssertionError);
+
+  const missingCube = JSON.parse(JSON.stringify(exhibitManifest));
+  missingCube.labs['crypto-lab-lfsr-forge'].exhibits = missingCube.labs['crypto-lab-lfsr-forge'].exhibits
+    .filter(exhibit => exhibit.id !== 'cube-superpoly-recovery');
+  assert.throws(() => checkLfsrForgeScope(html, missingCube), assert.AssertionError);
+
+  const mislabeledCube = JSON.parse(JSON.stringify(exhibitManifest));
+  const cube = mislabeledCube.labs['crypto-lab-lfsr-forge'].exhibits
+    .find(exhibit => exhibit.id === 'cube-superpoly-recovery');
+  cube.limits = cube.limits.replace('executes no Trivium state or round', 'executes reduced-round Trivium');
+  assert.throws(() => checkLfsrForgeScope(html, mislabeledCube), assert.AssertionError);
+});
+
+test('cube-attack vocabulary credits execution but rejects a negated full-Trivium claim', () => {
+  const term = ATTACKS.find(entry => entry.name === 'Cube attack');
+  assert.ok(term);
+  assert.ok(term.re.test('cube attack'));
+  assert.ok(term.re.test('cube-attacks'));
+  assert.equal(term.re.test('hypercube attack'), false);
+  assert.equal(attackContextAllows(term,
+    'This companion lesson executes the two phases of a cube attack on a deliberately tiny, inspectable oracle.'), true);
+  assert.equal(attackContextAllows(term,
+    'This page executes only the zero-round linear attack, not a cube attack.'), false);
 });
 
 function checkDictionaryScope(source) {

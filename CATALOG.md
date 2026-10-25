@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1756 sections in 245 of 245 labs**
+The exhibit map currently records **1757 sections in 245 of 245 labs**
 (245 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -9366,24 +9366,24 @@ The lattice picture underneath ML-KEM and ML-DSA: drag basis vectors through SVP
 
 [`crypto-lab-lfsr-forge`](https://systemslibrarian.github.io/crypto-lab-lfsr-forge/) · Fit, Forecast, Then Verify · ENCRYPTION, RANDOMNESS, ATTACKS
 
-Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium clocking, and audit editable four-input Boolean combiners with exact Walsh, resiliency, algebraic-immunity, and bounded state scans.
+Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium clocking, audit editable Boolean combiners, and execute cube sums that recover and validate affine superpolys from a separate toy oracle.
 
-- **Card topics (discovery only):** LFSR, Berlekamp–Massey, Geffe Generator, Trivium, Boolean Function Audit — labels do not establish what any section runs.
+- **Card topics (discovery only):** LFSR, Berlekamp–Massey, Geffe Generator, Trivium, Boolean Function Audit, Cube Sums, Superpolys — labels do not establish what any section runs.
 - **Implements:** Trivium `src/trivium/trivium.ts:29`
-- **Source review:** [7c6246133b9e](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/7c6246133b9ea5d2acda5ee1cddeada6e5b1e607) — Read the complete merged README, source, tests, learner interface and visible limitations at this exact main commit. The existing binary Fibonacci LFSR, Berlekamp-Massey, Geffe-correlation and eSTREAM-vector-checked Trivium lessons remain, and the Trivium implementation now anchors directly at the state-advance function rather than at a panel mount. The zero-round recovery builds 66 public equations over 80 key bits, exhausts the remaining 14-bit space, rechecks every candidate against the complete 1,024-bit observation and compares a unique candidate with the hidden key separately; the specified 1,152-round route rejects this model, and the lesson does not claim a cube attack against full Trivium. The new panel exhaustively analyzes an editable four-input truth table: exact ANF and degree, all 16 Walsh coefficients, balance, nonlinearity, every fixed-subset distribution, correlation immunity, resiliency and 4,094 candidate-side checks over all 2,047 nonzero degree-at-most-two polynomials. Its deterministic counterexamples fit parity with Berlekamp-Massey, scan all 105 R1/R2 state pairs against an order-one-resilient function and scan all 127 R4 states against an algebraic-immunity-two function; worker inputs contain only copied output and the fixed public profile, while hidden-state comparisons stay in the controller. Walsh probabilities and fixed-subset independence assume independent uniform table inputs; LFSR agreement is measured separately, the scans are bounded exhaustive toy searches rather than production fast-correlation attacks, and algebraic immunity does not exclude every fast algebraic relation. Brute force appears only in the independent unit-test oracle, and known plaintext/ciphertext is prose explaining how an external XOR-stream setting could reveal the already-supplied keystream; neither is an attack workflow executed by this lab. Shamir names a cube-attack coauthor, while Pairing and RC4 are stale or lexical false references, so none of those three belongs in the algorithm reference list. BCH, ChaCha20, SHA-256, SNOW 3G and ZUC remain comparison or evidence context rather than implemented primitives.
+- **Source review:** [66d95370b0a3](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4) — Read the complete merged README, source, tests, learner interface and visible limitations at this exact main commit. The existing binary Fibonacci LFSR, Berlekamp-Massey, Geffe-correlation and eSTREAM-vector-checked Trivium lessons remain, and the Trivium implementation anchors directly at the state-advance function rather than at a panel mount. The zero-round recovery builds 66 public equations over 80 key bits, exhausts the remaining 14-bit space, rechecks every candidate against the complete 1,024-bit observation and compares a unique candidate with the hidden key separately; the specified 1,152-round route rejects this model, and the lesson does not claim a cube attack against full Trivium. The Boolean panel exhaustively analyzes an editable four-input truth table: exact ANF and degree, all 16 Walsh coefficients, balance, nonlinearity, every fixed-subset distribution, correlation immunity, resiliency and 4,094 candidate-side checks over all 2,047 nonzero degree-at-most-two polynomials. Its deterministic counterexamples fit parity with Berlekamp-Massey, scan all 105 R1/R2 state pairs against an order-one-resilient function and scan all 127 R4 states against an algebraic-immunity-two function; worker inputs contain only copied output and the fixed public profile, while hidden-state comparisons stay in the controller. The eighth panel executes a cube attack on its own explicit three-secret/four-public degree-four GF(2) toy oracle. Preprocessing exhausts four two-variable cube faces over all eight teaching keys, computes 128 raw evaluations covering 72 distinct secret/public-row pairs and derives each superpoly by Möbius transform. C12, C13 and C24 are affine maxterms whose rank-three system filters 8 → 4 → 2 → 1 to key 110 from sums 111; C34 is a valid cube with the quadratic superpoly k1k2 ⊕ k3, is not a maxterm, and is excluded only from this bounded affine solve. The candidate is frozen before four disjoint held-out public rows; their 1011 fingerprint is injective over the eight teaching keys and precedes a separate controller comparison. Dropping C24 leaves 001 and 110, while flipping C13 recovers wrong candidate 000 before held-outs reject it. Online work is 12 raw cube-vertex evaluations plus four held-outs, 16 raw evaluations across 12 distinct public rows. The panel executes no Trivium state or round and makes no attack or cost claim against full Trivium; the cited paper treats only 672-, 735- and 767-round reduced variants. Its source-visible publication caveat says direct evaluation of ePrint 2008/385's printed introductory polynomial adds a constant 1 to the stated v3 = 0 face sum, so the lab uses its own independently checkable oracle and does not call that an official erratum. The merged gates cover 38 unit tests, 19 browser tests, all eight panels at desktop/380px plus the 320px extension, and 23 clean-baseline mutations. Walsh probabilities and fixed-subset independence assume independent uniform table inputs; LFSR agreement is measured separately, both state scans are bounded toy searches, nonlinear-superpoly techniques remain out of scope, and algebraic immunity does not exclude every fast algebraic relation. Brute force appears only in the independent unit-test oracle, and known plaintext/ciphertext is prose explaining how an external XOR-stream setting could reveal the already-supplied keystream; neither is an attack workflow executed by this lab. Shamir names a cube-attack coauthor, while Pairing and RC4 are stale or lexical false references, so none of those three belongs in the algorithm reference list. BCH, ChaCha20, SHA-256, SNOW 3G and ZUC remain comparison or evidence context rather than implemented primitives.
 - **References:** BCH, ChaCha20, SHA-256, SNOW 3G, ZUC
-- **Attacks shown:** Key recovery `src/trivium/panel.ts:37`
+- **Attacks shown:** Cube attack `src/cube/panel.ts:24`, Key recovery `src/trivium/panel.ts:37`
 - **Standards body:** ISO
-- **Implementation:** hand-rolled TypeScript LFSR, Berlekamp-Massey, Geffe, Trivium and exact four-input Boolean analysis
+- **Implementation:** hand-rolled TypeScript LFSR, Berlekamp–Massey, Geffe, Trivium, exact four-input Boolean analysis and toy-oracle cube/superpoly analysis
 - **Overlaps:** `crypto-lab-chacha20-stream` — ChaCha20 Stream visualizes a modern ARX construction; LFSR Forge reconstructs tiny binary recurrences and exploits Geffe correlation from known keystream, without attacking ChaCha20
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7c6246133b9e](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/7c6246133b9ea5d2acda5ee1cddeada6e5b1e607) reviewed 2026-10-25; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [66d95370b0a3](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4) reviewed 2026-10-25; 8 mapped sections.
   - **Berlekamp–Massey Recurrence Fit** (`bm`; interactive; real-values)
     - **Visible section:** Follow Berlekamp–Massey
     - **Learner action:** Step through discrepancy updates or analyze up to 1,024 manually entered bits.
     - **Observed result:** The shortest fitted recurrence and candidate continuation are displayed from observed bits.
     - **Concepts taught:** Berlekamp–Massey; linear complexity; minimal recurrence
     - **Limits:** A manually entered sequence has no source generator here, so its prediction cannot be independently verified.
-    - **Evidence at pinned commit:** `src/main.ts:143`, `src/lfsr/bm.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:144`, `src/lfsr/bm.ts:1`
   - **Exact Four-Input Boolean Combiner Audit** (`boolean-combiner-audit`; interactive; real-values)
     - **Visible section:** Audit a Boolean combiner
     - **Learner action:** Edit any of the 16 outputs, inspect exact algebraic and correlation criteria, then run bounded recurrence, pair-state and single-state counterexamples.
@@ -9391,32 +9391,39 @@ Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium
     - **Concepts taught:** Boolean function; algebraic normal form; Walsh spectrum; nonlinearity; correlation immunity; resiliency; algebraic immunity; bounded correlation scan
     - **Limits:** Exactly four inputs are analyzed; Walsh probabilities assume independent uniform bits, while deterministic LFSR agreement is measured separately. The scans cover only 127 states or 105 state pairs, and algebraic immunity two does not exclude every fast algebraic relation.
     - **Evidence at pinned commit:** `src/boolean/panel.ts:12`, `src/boolean/analysis.ts:73`, `src/boolean/analysis.ts:92`, `src/boolean/analysis.ts:108`, `src/boolean/analysis.ts:146`, `src/boolean/attacks.ts:49`, `src/boolean/attacks.ts:63`, `src/boolean/attacks.ts:79`, `src/boolean/panel.ts:155`
+  - **Toy-Oracle Cube Sum and Superpoly Recovery** (`cube-superpoly-recovery`; interactive; real-values)
+    - **Visible section:** Sum a cube, recover a superpoly
+    - **Learner action:** Exhaust four two-variable public-input cube faces across all eight teaching keys, recover each superpoly, then query three affine maxterms under one hidden toy key and verify the frozen candidate on four disjoint held-out rows.
+    - **Observed result:** C12, C13 and C24 form a rank-three system that filters 8 → 4 → 2 → 1 to key 110. C34 remains a valid cube with a quadratic superpoly; dropping C24 leaves 001/110, and flipping C13 recovers 000 before held-outs reject it.
+    - **Concepts taught:** cube attack; cube sum; superpoly; maxterm; algebraic normal form; Möbius transform; affine key recovery; held-out validation
+    - **Limits:** This is a separate three-secret/four-public degree-four toy oracle. Preprocessing enumerates all eight teaching keys; online recovery assumes repeated chosen-public-input queries under one fixed secret. C34 is a valid cube whose quadratic superpoly is not a maxterm and is excluded only from this bounded affine solve. The lesson executes no Trivium state or round and makes no attack or performance claim against reduced-round or full Trivium.
+    - **Evidence at pinned commit:** `src/cube/oracle.ts:15`, `src/cube/oracle.ts:33`, `src/cube/analysis.ts:105`, `src/cube/analysis.ts:143`, `src/cube/analysis.ts:176`, `src/cube/analysis.ts:209`, `src/cube/panel.ts:19`, `src/cube/panel.ts:45`, `src/cube/panel.ts:135`, `src/cube/panel.ts:143`, `src/cube/panel.ts:145`, `src/cube/panel.ts:146`
   - **Freeze and Check a Hidden Forecast** (`forecast`; interactive; real-values)
     - **Visible section:** Predict, freeze, check
     - **Learner action:** Freeze 64 predicted bits, compare with the generator continuation, and try ambiguity or early-failure fixtures.
     - **Observed result:** The frozen forecast is evaluated against unseen bits, separating a prefix fit from verified prediction.
     - **Concepts taught:** out-of-sample prediction; LFSR reconstruction; ambiguous prefix
-    - **Evidence at pinned commit:** `src/main.ts:144`, `src/lfsr/lfsr.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:145`, `src/lfsr/lfsr.ts:1`
   - **Geffe Combiner Inspection** (`geffe`; interactive; real-values)
     - **Visible section:** Increase complexity
     - **Learner action:** Clock three disclosed registers and measure a 466-bit output correlation profile.
     - **Observed result:** The nonlinear selector combines LFSRs while output retains detectable correlations with component streams.
     - **Concepts taught:** Geffe generator; nonlinear combiner; correlation bias
-    - **Evidence at pinned commit:** `src/main.ts:145`, `src/geffe/geffe.ts:1`, `src/geffe/correlation.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:146`, `src/geffe/geffe.ts:1`, `src/geffe/correlation.ts:1`
   - **Hidden Geffe State Recovery** (`recover`; interactive; real-values)
     - **Visible section:** Recover hidden states
     - **Learner action:** Start a hidden Geffe session or fixed fixture, run or cancel correlation recovery, and verify a frozen continuation.
     - **Observed result:** A worker searches R1 and R3 states, derives R2 constraints, and checks recovered state separately from output agreement.
     - **Concepts taught:** correlation attack; hidden-state recovery; Geffe generator; search budget
     - **Limits:** A failed finite-budget scan is not proof of cryptographic security, and this attack is not claimed against SNOW 3G or ZUC.
-    - **Evidence at pinned commit:** `src/main.ts:146`, `src/geffe/attack.worker.ts:1`, `src/geffe/correlation.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:147`, `src/geffe/attack.worker.ts:1`, `src/geffe/correlation.ts:1`
   - **Visible and Hidden LFSR** (`register`; interactive; real-values)
     - **Visible section:** Watch a register run
     - **Learner action:** Clock a visible five-stage register and collect bits from a new hidden degree-3–12 register.
     - **Observed result:** The visible transition and hidden output prefix establish the observation available to an attacker.
     - **Concepts taught:** linear feedback shift register; primitive taps; keystream observation
     - **Limits:** The hidden generator is a deliberately simple LFSR, not a modern stream cipher.
-    - **Evidence at pinned commit:** `src/main.ts:142`, `src/lfsr/lfsr.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:143`, `src/lfsr/lfsr.ts:1`
   - **Trivium Initialization and Zero-Round Key Recovery** (`trivium`; interactive; real-crypto)
     - **Visible section:** The deployed answer: Trivium
     - **Learner action:** Clock Trivium's 288-bit state, measure Berlekamp–Massey profiles and freeze 64-bit forecasts, then compare full initialization with a zero-round key-recovery experiment.

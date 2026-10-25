@@ -413,6 +413,15 @@ deterministic 512-key curve is bounded reproducible evidence rather than a popul
 estimate. It recovers no master key, does not attack the full four-round toy or DES,
 and makes no production-cipher claim. Catalogued total remains 246.*
 
+*Version 51 — records two delivered depth extensions without adding a lab or changing
+a concept status. Under §21, ZK Proof Lab now executes the sum-check interactive proof
+over an explicit prime-field polynomial and reuses it for a bounded two-layer GKR walk;
+the lesson is verifiable computation, not zero knowledge, a SNARK or the general GKR
+theorem. Under §31, Hidden Bit now executes target-before-key and key-first collision
+games for the same keyed toy family, with complete key-space counts and a signed-message
+application boundary. The finite 8-to-8-bit separation is not a UOWHF construction,
+asymptotic result or claim about a real hash. Catalogued total remains 246.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -883,6 +892,16 @@ this section whose **verifier is split**: neither aggregator can check the proof
 exists only in the sum of their verifier shares. Every other demo here has a verifier that holds
 the whole proof. Its lead concept is §20.
 
+ZK Proof Lab now adds an interactive-proof and verifiable-computation route beside its
+zero-knowledge exhibits. The sum-check act derives the Boolean-hypercube sum of an explicit
+low-degree polynomial, checks every round's degree and recurrence before drawing that round's
+challenge, and ends with the verifier's direct evaluation. The GKR act reuses that verifier
+for one fixed two-layer add/multiply circuit, independently evaluates the wiring predicates
+and terminates at the public input layer's multilinear extension. Predictable seeded
+challenges are replay controls rather than theorem-grade randomness, and the bounded walk
+implements neither zero knowledge, a SNARK, GKR's uniformity machinery and sublinear
+verifier, nor its general theorem.
+
 **22. Homomorphic computation — `COVERED`**
 Blind Oracle (TFHE) · CKKS Lab · FHE Arena (BGV/BFV) · Paillier Gate. Full trilogy plus
 additive.
@@ -1220,6 +1239,16 @@ stages both halves at once — random guessing and re-encryption both flatten wh
 pass, and the BEAST-style IV predictor still reaches advantage one. Which is why the fifth exhibit
 is a reduction rather than another histogram: an IND-CPA adversary wrapped inside a live DDH
 distinguisher, checked against the `Adv(B) = Adv(A)/2` convention.
+
+Its S09 extension makes a second quantifier-order distinction executable. For the same
+8-to-8-bit keyed family `H_s(x) = h(x xor s)`, one state machine forces the adversary to
+commit its target before `s` exists while the comparison game publishes `s` first. The
+planted-pair strategy wins exactly 2 of 256 target-first games and all 256 key-first games;
+the nibble-fold family is the control that is winnable in both orders. A signed
+`(s, H_s(x))` panel explains the committed-message application, while keeping signature
+binding and malicious-signer behavior separate. These complete finite counts teach order
+of play only: they are not a UOWHF construction, an asymptotic separation, evidence about
+real hash functions or a non-repudiation result.
 
 This was the one placement in v10 that nearly went unfiled. Provable security is the framework the
 rest of this map's claims are **stated in**, not a peer of the primitives it files, so no concept

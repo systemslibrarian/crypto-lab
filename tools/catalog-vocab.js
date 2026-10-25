@@ -482,6 +482,11 @@ const ALGORITHMS = [
   { name: 'MGM', kind: 'algorithm', family: 'AEAD', re: /(?<![a-z0-9])mgm(?![a-z0-9])|multilinear[-_ ]?galois/i, std: 'GOST:R 1323565.1.026-2019 / RFC 9058' },
   { name: 'FF1', kind: 'algorithm', family: 'format-preserving encryption', re: /\bff1\b|format[-_ ]?preserving/i, std: 'NIST:SP 800-38G' },
   { name: 'FRI', kind: 'algorithm', family: 'proof system', re: /\bfri\b(?![-_ ]?(?:day|end))/i, std: null },
+  /* `retireSumcheck` only clears stale UI output. Excluding that one presenter
+     name keeps the derived anchor on the prover/verifier implementation while
+     ordinary prose, chips and the executable `createSumcheck*` symbols match. */
+  { name: 'Sum-check', kind: 'algorithm', family: 'proof system', re: /(?<!retire[-_ ])\bsum[-_ ]?check\b/i, std: null },
+  { name: 'GKR', kind: 'algorithm', family: 'proof system', re: /\bgkr\b/i, std: null },
   { name: 'Private information retrieval', kind: 'algorithm', family: 'PIR', re: /\bpir\b|private[-_ ]?information[-_ ]?retrieval/i, std: null },
   { name: 'CGL hash', kind: 'algorithm', family: 'isogeny', re: /\bcgl\b/i, std: null },
 

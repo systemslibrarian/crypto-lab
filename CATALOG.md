@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1776 sections in 246 of 246 labs**
+The exhibit map currently records **1778 sections in 246 of 246 labs**
 (246 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -73,7 +73,7 @@ before relying on this index for a fresh assessment.
 
 ## Reverse index — which labs implement what
 
-202 algorithms are implemented somewhere in the fleet, grouped by family.
+204 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -814,7 +814,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Babai rounding
 
 - **Implemented by:** [Falcon Seal](https://systemslibrarian.github.io/crypto-lab-falcon-seal/) `src/babai.ts:32`; [HAWK](https://systemslibrarian.github.io/crypto-lab-hawk/) `src/main.ts:958`; [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) `src/lattice/babai.ts:37`; [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) `src/lattice/vec2.ts:81`; [Lattice Builder](https://systemslibrarian.github.io/crypto-lab-lattice-builder/) `src/basis.ts:74`
-- **Also referenced by:** *GGH Trapdoor*
+- **Also referenced by:** *ZK Proof Lab*, *GGH Trapdoor*
 
 ### lattice arithmetic
 
@@ -948,7 +948,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Miller–Rabin
 
-- **Implemented by:** [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/textbook.ts:38`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/vdf.ts:77`; [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) `src/factor/primality.ts:52`; [Prime Witness](https://systemslibrarian.github.io/crypto-lab-prime-witness/) `src/primality/millerRabin.ts:11`; [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/nt/primes.ts:3`
+- **Implemented by:** [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/field.js:39`; [RSA Forge](https://systemslibrarian.github.io/crypto-lab-rsa-forge/) `src/textbook.ts:38`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/vdf.ts:77`; [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) `src/factor/primality.ts:52`; [Prime Witness](https://systemslibrarian.github.io/crypto-lab-prime-witness/) `src/primality/millerRabin.ts:11`; [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/nt/primes.ts:3`
 - **Also referenced by:** *Educational RSA*, *GG20 Wallet*, *Harvest Timeline*, *Accumulator*, *RSA Small Roots*, *Clock Arithmetic*
 
 ### proof system
@@ -957,6 +957,16 @@ A lab in *italics* references the algorithm without implementing it.
 
 - **Implemented by:** [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) `src/stark.ts:754`; [Polynomial Forge](https://systemslibrarian.github.io/crypto-lab-polynomial-forge/) `src/crypto/fri.ts:83`
 - **Also referenced by:** *ZK Proof Lab*, *ORAM Vault*, *ZK Arena*
+
+#### GKR
+
+- **Implemented by:** [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/gkr.js:207`
+- **Also referenced by:** —
+
+#### Sum-check
+
+- **Implemented by:** [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/sumcheck.js:89`
+- **Also referenced by:** —
 
 ### proof transform
 
@@ -1438,6 +1448,7 @@ disagree about who owns SHA-256.
 | Garbled circuits | — | 1 |
 | Gaussian mechanism | — | 2 |
 | GGH | — | 1 |
+| GKR | — | 1 |
 | Goldwasser–Micali | — | 1 |
 | Groth16 | — | 1 |
 | Grover's algorithm | — | 1 |
@@ -1455,7 +1466,7 @@ disagree about who owns SHA-256.
 | LWE | — | 7 |
 | Merkle tree | — | 10 |
 | Message-Locked Encryption | — | 1 |
-| Miller–Rabin | — | 5 |
+| Miller–Rabin | — | 6 |
 | Montgomery ladder | — | 1 |
 | Montgomery multiplication | — | 1 |
 | Noise protocol | — | 1 |
@@ -1491,6 +1502,7 @@ disagree about who owns SHA-256.
 | SMAUG-T | — | 1 |
 | STARK | — | 1 |
 | Stern decoding | — | 1 |
+| Sum-check | — | 1 |
 | TFHE | — | 1 |
 | Toeplitz extractor | — | 1 |
 | Tonelli–Shanks | — | 1 |
@@ -1512,7 +1524,7 @@ may teach the same primitive from different angles — but an overlap **with no 
 difference** is a question nobody has answered, and a visitor choosing between the
 two has nothing to go on.
 
-68 pairs: 10 with a stated difference, **0 examined and found to be duplication**, 58 nobody has looked at.
+69 pairs: 10 with a stated difference, **0 examined and found to be duplication**, 59 nobody has looked at.
 
 A pair marked DUPLICATION is a finding, not a description: someone read both and
 found no difference worth having. It is listed first because it is the only row here
@@ -1533,14 +1545,14 @@ that asks for a decision.
 - **Shared:** Argon2, HKDF, PBKDF2, scrypt, SHA-256
 - **Stated difference:** kdf-chain teaches what problem each KDF solves and walks a decision tree for choosing one; kdf-arena benchmarks the same four side by side and reports attacker cost against wall-clock time
 
-**Factor Forge / Residue Gate**
-
-- **Shared:** Jacobi symbol, Miller–Rabin
-- **Stated difference:** **none stated**
-
 **FROST Threshold / Shamir vs FROST**
 
 - **Shared:** Ed25519, FROST, SHA-512, Shamir secret sharing
+- **Stated difference:** **none stated**
+
+**Factor Forge / Residue Gate**
+
+- **Shared:** Jacobi symbol, Miller–Rabin
 - **Stated difference:** **none stated**
 
 **ZK Arena / Log Forge**
@@ -1726,6 +1738,11 @@ that asks for a decision.
 **RSA Forge / Locks and Keys**
 
 - **Shared:** RSA, RSA-OAEP, RSA-PSS, SHA-256
+- **Stated difference:** **none stated**
+
+**ZK Proof Lab / RSA Forge**
+
+- **Shared:** Miller–Rabin, RSA, RSA-PSS, SHA-256
 - **Stated difference:** **none stated**
 
 **Beacon Lock / Pulse Chain**
@@ -3919,7 +3936,7 @@ Step through exact BigInt arithmetic under RSA and finite-field Diffie–Hellman
 - **Standards body:** IETF
 - **Implementation:** hand-rolled exact BigInt arithmetic, including power-of-two Montgomery REDC
 - **Overlaps:** `crypto-lab-rsa-educational` — Clock Arithmetic exposes inverses and generalized CRT before RSA uses them; `crypto-lab-log-forge` — Clock Arithmetic teaches orders, generators and subgroup sizes before Log Forge attacks discrete logs
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e6e1e39b124c](https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/commit/e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e) reviewed 2026-10-25; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b97b515033e2](https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/commit/b97b515033e235b05f55cc461bb454cf88c003b5) reviewed 2026-10-25; 7 mapped sections.
   - **Recombine two or three congruences** (`crt-recombine`; interactive; real-values)
     - **Visible section:** 6. Recombine remainders
     - **Learner action:** Enter two or three congruences and test compatible or incompatible shared factors.
@@ -7404,21 +7421,21 @@ An educational HAWK lab covering integer-only lattice signatures, discrete Gauss
 
 [`crypto-lab-hidden-bit`](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) · Security Games · ATTACKS
 
-Test selected security games, trace an AES-based GGM tree, account for adjacent AES hybrids, and run a bounded verified hard-core-predicate reconstruction. Each result states its attacker, assumptions and scope.
+Test selected security games, trace an AES-based GGM tree, account for adjacent AES hybrids, run a bounded hard-core-predicate reconstruction, and compare target-before-key with key-first collision games. Each result states its attacker, assumptions and scope.
 
-- **Card topics (discovery only):** IND-CPA, EUF-CMA, PRP/PRF Switching, DDH Reduction, Multi-Key Toy, Adjacent Hybrids, Goldreich–Levin — labels do not establish what any section runs.
+- **Card topics (discovery only):** IND-CPA, EUF-CMA, PRP/PRF Switching, DDH Reduction, Multi-Key Toy, Adjacent Hybrids, Goldreich–Levin, Target Collision — labels do not establish what any section runs.
 - **Implements:** AES `src/prf/ggm.ts:21`, AES-CBC `src/schemes/aes-modes.ts:37`, AES-CTR `src/schemes/aes-modes.ts:47`, AES-GCM `src/schemes/aes-modes.ts:59`, Diffie-Hellman `src/reduction/ddh.ts:87`, ECDSA `src/schemes/ecdsa.ts:10`, Ed25519 `src/schemes/ed25519.ts:3`, ElGamal `src/game/cca.ts:34`, Hash-to-curve `src/schemes/elgamal.ts:29`, P-256 `src/kats.ts:3`, ristretto255 `src/schemes/elgamal.ts:22`, RSA `src/game/cca.ts:84`, RSA-OAEP `src/game/cca.ts:84`, RSA-PSS `src/schemes/rsa-pss.ts:4`, secp256k1 `src/schemes/ecdsa.ts:1`, SHA-256 `src/ui/hybridProof.ts:148`
 - **References:** AES-ECB, AES-SIV, Goldwasser–Micali, ML-KEM, SHA-512, Simon
-- **Attacks shown:** Chosen-ciphertext attack `src/game/cca.ts:1`, Chosen-plaintext attack `src/game/challenger.ts:18`, Ciphertext malleability `README.md:43`, Signature malleability `README.md:45`
+- **Attacks shown:** Chosen-ciphertext attack `src/game/cca.ts:1`, Chosen-plaintext attack `src/game/challenger.ts:18`, Ciphertext malleability `README.md:47`, Signature malleability `README.md:49`
 - **Standards body:** IETF, NIST, SECG
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7f143a4e9403](https://github.com/systemslibrarian/crypto-lab-hidden-bit/commit/7f143a4e94038a534198c3f69af8d93ccedd86c1) reviewed 2026-10-25; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2f1ea68ada54](https://github.com/systemslibrarian/crypto-lab-hidden-bit/commit/2f1ea68ada54b88a89ccb0ae2c026eccabd37a83) reviewed 2026-10-25; 9 mapped sections.
   - **Security game boundaries** (`definition-boundaries`; explanation; conceptual)
     - **Visible section:** What this lab is, and is not
     - **Learner action:** Expand the scope comparison and nearby-definition table.
     - **Observed result:** Distinguish ideal PRP/PRF oracles from real crypto operations and identify CCA1, NM-CPA and KEM security as separate notions.
     - **Concepts taught:** security games; ideal oracle; CCA1; NM-CPA; KEM notions
-    - **Evidence at pinned commit:** `index.html:169`, `index.html:177`, `index.html:181`, `index.html:193`, `index.html:199`, `index.html:200`, `index.html:201`
+    - **Evidence at pinned commit:** `index.html:172`, `index.html:181`, `index.html:185`, `index.html:197`, `index.html:203`, `index.html:204`, `index.html:205`
   - **EUF-CMA and SUF-CMA signing game** (`forgery`; interactive; real-crypto)
     - **Visible section:** Ask for signatures, then make a new one
     - **Learner action:** Choose RSA-PSS, Ed25519, ECDSA high-S or textbook RSA tactics, then ask and forge.
@@ -7464,6 +7481,13 @@ Test selected security games, trace an AES-based GGM tree, account for adjacent 
     - **Observed result:** Compare empirical distinguishability as queries approach the birthday scale.
     - **Concepts taught:** PRP/PRF switching; birthday collision; query complexity
     - **Evidence at pinned commit:** `index.html:152`, `src/ui/switching.ts:16`, `src/ui/switching.ts:38`, `src/ui/switching.ts:161`, `src/ui/switching.ts:193`
+  - **Target collision resistance as an order-of-play game** (`target-collision-order`; interactive; real-operation)
+    - **Visible section:** The same family, two orders of play
+    - **Learner action:** Choose the planted-pair or nibble-fold family and an adversary strategy, then play target-before-key and key-first state machines or exhaust the complete 8-bit key space.
+    - **Observed result:** Compare accepted and refused moves, the planted strategy’s exact 2-of-256 target-first and 256-of-256 key-first counts, family-winnability controls, bounded samples, and the signed (key, digest) application boundary.
+    - **Concepts taught:** target collision resistance; collision resistance; second-preimage resistance; challenge order; hash-then-sign
+    - **Limits:** The fixed length-preserving 8-to-8-bit family is an exhaustible order-of-play model, not a UOWHF construction, an asymptotic separation or evidence about a real hash. The signed-pair panel does not establish malicious-signer non-repudiation.
+    - **Evidence at pinned commit:** `index.html:164`, `src/ui/tcr.ts:61`, `src/ui/tcr.ts:138`, `src/ui/tcr.ts:175`, `src/ui/tcr.ts:183`, `src/game/tcr.ts:128`, `src/game/tcr.ts:221`, `src/game/tcr.ts:330`, `src/game/tcr.ts:412`, `src/game/tcr.ts:531`, `src/game/tcr.ts:577`, `src/game/tcr.ts:614`
 
 ### HPKE Envelope
 
@@ -17409,72 +17433,79 @@ A side-by-side comparison playground for zk-SNARK and zk-STARK proof systems —
 
 [`crypto-lab-zk-proof-lab`](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) · Zero-Knowledge Proofs · ZERO-KNOWLEDGE
 
-Six exhibits from Ali Baba cave to zk-SNARK intuition, with real Schnorr arithmetic, commitments, and replayable transcripts instead of vague metaphors.
+Eight exhibits from Ali Baba cave to exact interactive proofs: real Schnorr/Okamoto/GQ arithmetic, SHA-256 commitments, replayable transcripts, and an executable sum-check with a bounded two-layer GKR walk. Exhibit 08 is interactive verifiable computation, not zero knowledge or a SNARK.
 
-- **Card topics (discovery only):** Schnorr, SHA-256 Commitments, Fiat-Shamir, zk-SNARK — labels do not establish what any section runs.
-- **Implements:** Fiat-Shamir `js/fiat-shamir.js:181`, RSA `js/sigma.js:334`, RSA-PSS `js/sigma.js:335`, Schnorr `js/schnorr.js:46`, SHA-256 `js/shared.js:358`
-- **References:** Bulletproofs, Diffie-Hellman, FRI, Fujisaki-Okamoto transform, Groth16, Halo2, PLONK, Pedersen commitment, STARK, Schnorr identification, Shamir secret sharing, Sigma protocol, secp256k1
-- **Attacks shown:** Brute force `js/extractor.js:169`, Discrete log `README.md:40`, Key recovery `README.md:72`, Nonce reuse `README.md:72`
+- **Card topics (discovery only):** Schnorr, SHA-256 Commitments, Fiat-Shamir, zk-SNARK, Sum-check, GKR — labels do not establish what any section runs.
+- **Implements:** Fiat-Shamir `js/fiat-shamir.js:181`, GKR `js/gkr.js:207`, Miller–Rabin `js/field.js:39`, RSA `js/sigma.js:334`, RSA-PSS `js/sigma.js:335`, Schnorr `js/schnorr.js:46`, SHA-256 `js/shared.js:358`, Sum-check `js/sumcheck.js:89`
+- **References:** Babai rounding, Bulletproofs, Diffie-Hellman, FRI, Fujisaki-Okamoto transform, Groth16, Halo2, PLONK, Pedersen commitment, STARK, Schnorr identification, Shamir secret sharing, Sigma protocol, secp256k1
+- **Attacks shown:** Brute force `js/extractor.js:169`, Discrete log `README.md:42`, Key recovery `README.md:87`, Nonce reuse `README.md:87`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9af5d31e20b0](https://github.com/systemslibrarian/crypto-lab-zk-proof-lab/commit/9af5d31e20b0559999611e6536c767da7b890a70) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [df4db000b0c8](https://github.com/systemslibrarian/crypto-lab-zk-proof-lab/commit/df4db000b0c8ec2ecbc33fea39505de42f036a4e) reviewed 2026-10-25; 10 mapped sections.
   - **Ali Baba cave repeated challenge** (`cave`; interactive; simulation)
     - **Visible section:** The Ali Baba Cave Protocol
     - **Learner action:** Run one or ten rounds with an honest or bluffing prover.
     - **Observed result:** Compare the probability that a bluffer answers independent verifier challenges across rounds.
     - **Concepts taught:** zero-knowledge intuition; challenge-response; soundness amplification
-    - **Evidence at pinned commit:** `index.html:197`, `exhibits/cave.html:120`, `exhibits/cave.html:121`, `js/cave.js:69`, `js/cave.js:174`
+    - **Evidence at pinned commit:** `index.html:197`, `exhibits/cave.html:121`, `exhibits/cave.html:122`, `js/cave.js:69`, `js/cave.js:174`
   - **Hash commit and reveal** (`commit`; interactive; real-crypto)
     - **Visible section:** Hash Commit-Reveal
     - **Learner action:** Submit two bids, reveal nonces and bids, then attempt to change a committed bid.
     - **Observed result:** The verifier recomputes SHA-256 commitments and detects changed openings.
     - **Concepts taught:** hash commitments; binding; hiding; commit-reveal auction
-    - **Evidence at pinned commit:** `index.html:215`, `exhibits/commit-reveal.html:127`, `exhibits/commit-reveal.html:128`, `exhibits/commit-reveal.html:129`, `js/commit.js:115`, `js/commit.js:196`
+    - **Evidence at pinned commit:** `index.html:215`, `exhibits/commit-reveal.html:128`, `exhibits/commit-reveal.html:129`, `exhibits/commit-reveal.html:130`, `js/commit.js:115`, `js/commit.js:196`
   - **Non-interactive Fiat–Shamir proof** (`fiat-shamir`; interactive; real-operation)
     - **Visible section:** Fiat-Shamir (Non-Interactive)
     - **Learner action:** Generate a proof, tamper with its message and compare verification; export transcript.
     - **Observed result:** Inspect how message-derived challenge changes and when the verifier equation fails.
     - **Concepts taught:** Fiat–Shamir transform; non-interactive proof; message binding; toy hash collision
     - **Limits:** The toy challenge domain has 50 values; different messages can collide and the demo explicitly reports that boundary.
-    - **Evidence at pinned commit:** `index.html:221`, `exhibits/fiat-shamir.html:125`, `exhibits/fiat-shamir.html:126`, `js/fiat-shamir.js:150`, `js/fiat-shamir.js:195`
+    - **Evidence at pinned commit:** `index.html:221`, `exhibits/fiat-shamir.html:126`, `exhibits/fiat-shamir.html:127`, `js/fiat-shamir.js:150`, `js/fiat-shamir.js:195`
   - **Graph three-coloring commitments** (`graph`; interactive; real-operation)
     - **Visible section:** Graph 3-Coloring ZKP
     - **Learner action:** Run a graph-coloring proof, challenge an edge, tamper an opening or repeat rounds.
     - **Observed result:** Inspect local edge-color checks and the effect of tampered commitments.
     - **Concepts taught:** graph three-coloring ZKP; commitments; randomized coloring; verifier challenge
-    - **Evidence at pinned commit:** `index.html:203`, `exhibits/graph-coloring.html:138`, `exhibits/graph-coloring.html:139`, `exhibits/graph-coloring.html:140`, `js/graph.js:480`
+    - **Evidence at pinned commit:** `index.html:203`, `exhibits/graph-coloring.html:139`, `exhibits/graph-coloring.html:140`, `exhibits/graph-coloring.html:141`, `js/graph.js:480`
   - **Commitment brute force and transcript extraction** (`graph-attacks`; interactive; real-operation)
     - **Visible section:** Graph 3-Coloring ZKP
     - **Learner action:** Brute-force weak commitment nonces or feed accepted rounds to a transcript extractor.
     - **Observed result:** Compare a small nonce search with stronger randomness and inspect what repeated revealing transcripts expose.
     - **Concepts taught:** commitment hiding; nonce entropy; transcript extraction; special soundness
     - **Limits:** The tiny nonce variant is deliberately weak; it does not generalize to adequately randomized commitments.
-    - **Evidence at pinned commit:** `exhibits/graph-coloring.html:185`, `exhibits/graph-coloring.html:186`, `js/graph.js:345`, `js/graph.js:424`, `js/graph.js:485`
+    - **Evidence at pinned commit:** `exhibits/graph-coloring.html:186`, `exhibits/graph-coloring.html:187`, `js/graph.js:345`, `js/graph.js:424`, `js/graph.js:485`
   - **Schnorr identification and nonce leak** (`schnorr`; interactive; real-operation)
     - **Visible section:** Schnorr Identification Protocol
     - **Learner action:** Run or step a Schnorr identification transcript, simulate cheating and reveal nonce r.
     - **Observed result:** Check the verifier equation and recover the witness when an honest prover’s nonce leaks.
     - **Concepts taught:** Schnorr identification; Sigma protocol; nonce secrecy; witness extraction
     - **Limits:** Uses a small teaching group; the cheat run may have no valid witness to recover.
-    - **Evidence at pinned commit:** `index.html:209`, `exhibits/schnorr.html:159`, `exhibits/schnorr.html:161`, `exhibits/schnorr.html:162`, `js/schnorr.js:172`, `js/schnorr.js:306`, `js/schnorr.js:311`
+    - **Evidence at pinned commit:** `index.html:209`, `exhibits/schnorr.html:160`, `exhibits/schnorr.html:162`, `exhibits/schnorr.html:163`, `js/schnorr.js:172`, `js/schnorr.js:306`, `js/schnorr.js:311`
   - **Okamoto and Guillou–Quisquater** (`sigma-family`; interactive; real-operation)
     - **Visible section:** Beyond Schnorr
     - **Learner action:** Run Okamoto and GQ proofs, rewind answers and test a public-data-only cheater.
     - **Observed result:** Inspect verifier equations, witness extraction under alternate challenges and empirical cheating acceptance.
     - **Concepts taught:** Sigma protocols; Okamoto representation; Guillou–Quisquater; special soundness
-    - **Evidence at pinned commit:** `exhibits/sigma-family.html:72`, `exhibits/sigma-family.html:94`, `exhibits/sigma-family.html:178`, `exhibits/sigma-family.html:193`, `exhibits/sigma-family.html:195`, `js/sigma-ui.js:425`, `js/sigma-ui.js:429`
+    - **Evidence at pinned commit:** `exhibits/sigma-family.html:73`, `exhibits/sigma-family.html:95`, `exhibits/sigma-family.html:179`, `exhibits/sigma-family.html:194`, `exhibits/sigma-family.html:196`, `js/sigma-ui.js:425`, `js/sigma-ui.js:429`
   - **zk-SNARK intuition pipeline** (`snark-intuition`; interactive; simulation)
     - **Visible section:** zk-SNARK Intuition
     - **Learner action:** Generate a toy proof, alter its public input, and compare the verifier result.
     - **Observed result:** Inspect a checked polynomial relation and SHA-256 digest; the proof envelope contains the private witness, making this a visible teaching model.
     - **Concepts taught:** SNARK intuition; public input; witness; verifier pipeline; SHA-256 digest
     - **Limits:** The toy envelope exposes its witness and does not implement a zero-knowledge proof or a SNARK cryptosystem.
-    - **Evidence at pinned commit:** `index.html:227`, `exhibits/snark.html:122`, `exhibits/snark.html:123`, `exhibits/snark.html:129`, `js/snark.js:49`, `js/snark.js:59`, `js/snark.js:61`, `js/snark.js:72`, `js/snark.js:138`
+    - **Evidence at pinned commit:** `index.html:227`, `exhibits/snark.html:123`, `exhibits/snark.html:124`, `exhibits/snark.html:130`, `js/snark.js:49`, `js/snark.js:59`, `js/snark.js:61`, `js/snark.js:72`, `js/snark.js:138`
+  - **Sum-check and a bounded GKR layer walk** (`sumcheck-gkr`; interactive; real-operation)
+    - **Visible section:** Sum-check and a GKR layer walk
+    - **Learner action:** Run or step the sum-check prover and verifier over an explicit prime-field polynomial, replay malformed or dishonest transcripts, then reuse the checked primitive to walk a fixed two-layer circuit from outputs to public inputs.
+    - **Observed result:** Inspect every round polynomial, degree and recurrence check, post-message challenge and direct final evaluation; then inspect two wiring-identity reductions, line checks and the verifier's terminal multilinear-extension evaluation.
+    - **Concepts taught:** sum-check protocol; interactive proofs; GKR protocol; multilinear extensions; verifiable computation
+    - **Limits:** The page executes an interactive proof, not zero knowledge or a SNARK. The fixed two-layer adaptation enumerates six gates and omits GKR's uniformity machinery, sublinear verifier and general theorem; seeded challenges are replay controls and do not satisfy the displayed soundness premise.
+    - **Evidence at pinned commit:** `index.html:238`, `exhibits/sumcheck-gkr.html:66`, `exhibits/sumcheck-gkr.html:69`, `exhibits/sumcheck-gkr.html:76`, `exhibits/sumcheck-gkr.html:216`, `exhibits/sumcheck-gkr.html:283`, `exhibits/sumcheck-gkr.html:284`, `js/sumcheck.js:89`, `js/sumcheck.js:308`, `js/sumcheck.js:408`, `js/sumcheck.js:513`, `js/sumcheck.js:605`, `js/gkr.js:87`, `js/gkr.js:129`, `js/gkr.js:207`, `js/gkr.js:334`, `js/gkr.js:562`
   - **Transcript comparison workbench** (`transcript-lab`; comparison; real-operation)
     - **Visible section:** Transcript Replay Lab
     - **Learner action:** Load or paste two prior proof transcripts and compare their public fields.
     - **Observed result:** Inspect differences and replayable public transcript records across exhibit types.
     - **Concepts taught:** proof transcripts; replay; public evidence; protocol comparison
-    - **Evidence at pinned commit:** `exhibits/transcript-lab.html:65`, `exhibits/transcript-lab.html:89`, `js/transcript-lab.js:227`, `js/transcript-lab.js:235`
+    - **Evidence at pinned commit:** `exhibits/transcript-lab.html:66`, `exhibits/transcript-lab.html:90`, `js/transcript-lab.js:227`, `js/transcript-lab.js:235`
 
 <!-- catalog-sync:end -->

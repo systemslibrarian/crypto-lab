@@ -5747,7 +5747,7 @@
       ]
     },
     "crypto-lab-clock-arithmetic": {
-      "commit": "e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e",
+      "commit": "b97b515033e235b05f55cc461bb454cf88c003b5",
       "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
@@ -15904,7 +15904,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hidden-bit": {
-      "commit": "7f143a4e94038a534198c3f69af8d93ccedd86c1",
+      "commit": "2f1ea68ada54b88a89ccb0ae2c026eccabd37a83",
       "reviewed": "2026-10-25",
       "exhibits": [
         {
@@ -16034,13 +16034,13 @@
             "KEM notions"
           ],
           "evidence": [
-            "index.html:169",
-            "index.html:177",
+            "index.html:172",
             "index.html:181",
-            "index.html:193",
-            "index.html:199",
-            "index.html:200",
-            "index.html:201"
+            "index.html:185",
+            "index.html:197",
+            "index.html:203",
+            "index.html:204",
+            "index.html:205"
           ],
           "section": "What this lab is, and is not"
         },
@@ -16104,6 +16104,37 @@
             "src/proofs/goldreichLevin.ts:96"
           ],
           "limits": "The route combines real AES-128 with exact finite bookkeeping and lazily sampled ideal oracles, but leaves the AES-PRP term symbolic. Its n=8 hash fixture and stipulated fixed-x predictor are exhaustible teaching devices, not a one-way-function premise, a SHA-256 attack or an asymptotic theorem experiment. Reconstruction is probabilistic and accepts candidates only after an independent f(candidate)=y check."
+        },
+        {
+          "id": "target-collision-order",
+          "title": "Target collision resistance as an order-of-play game",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "section": "The same family, two orders of play",
+          "action": "Choose the planted-pair or nibble-fold family and an adversary strategy, then play target-before-key and key-first state machines or exhaust the complete 8-bit key space.",
+          "outcome": "Compare accepted and refused moves, the planted strategy’s exact 2-of-256 target-first and 256-of-256 key-first counts, family-winnability controls, bounded samples, and the signed (key, digest) application boundary.",
+          "concepts": [
+            "target collision resistance",
+            "collision resistance",
+            "second-preimage resistance",
+            "challenge order",
+            "hash-then-sign"
+          ],
+          "evidence": [
+            "index.html:164",
+            "src/ui/tcr.ts:61",
+            "src/ui/tcr.ts:138",
+            "src/ui/tcr.ts:175",
+            "src/ui/tcr.ts:183",
+            "src/game/tcr.ts:128",
+            "src/game/tcr.ts:221",
+            "src/game/tcr.ts:330",
+            "src/game/tcr.ts:412",
+            "src/game/tcr.ts:531",
+            "src/game/tcr.ts:577",
+            "src/game/tcr.ts:614"
+          ],
+          "limits": "The fixed length-preserving 8-to-8-bit family is an exhaustible order-of-play model, not a UOWHF construction, an asymptotic separation or evidence about a real hash. The signed-pair panel does not establish malicious-signer non-repudiation."
         }
       ],
       "reviewScope": "complete"
@@ -43233,8 +43264,8 @@
       ]
     },
     "crypto-lab-zk-proof-lab": {
-      "commit": "9af5d31e20b0559999611e6536c767da7b890a70",
-      "reviewed": "2026-10-22",
+      "commit": "df4db000b0c8ec2ecbc33fea39505de42f036a4e",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "cave",
@@ -43250,8 +43281,8 @@
           ],
           "evidence": [
             "index.html:197",
-            "exhibits/cave.html:120",
             "exhibits/cave.html:121",
+            "exhibits/cave.html:122",
             "js/cave.js:69",
             "js/cave.js:174"
           ],
@@ -43272,9 +43303,9 @@
           ],
           "evidence": [
             "index.html:203",
-            "exhibits/graph-coloring.html:138",
             "exhibits/graph-coloring.html:139",
             "exhibits/graph-coloring.html:140",
+            "exhibits/graph-coloring.html:141",
             "js/graph.js:480"
           ],
           "section": "Graph 3-Coloring ZKP"
@@ -43293,8 +43324,8 @@
             "special soundness"
           ],
           "evidence": [
-            "exhibits/graph-coloring.html:185",
             "exhibits/graph-coloring.html:186",
+            "exhibits/graph-coloring.html:187",
             "js/graph.js:345",
             "js/graph.js:424",
             "js/graph.js:485"
@@ -43317,9 +43348,9 @@
           ],
           "evidence": [
             "index.html:209",
-            "exhibits/schnorr.html:159",
-            "exhibits/schnorr.html:161",
+            "exhibits/schnorr.html:160",
             "exhibits/schnorr.html:162",
+            "exhibits/schnorr.html:163",
             "js/schnorr.js:172",
             "js/schnorr.js:306",
             "js/schnorr.js:311"
@@ -43342,9 +43373,9 @@
           ],
           "evidence": [
             "index.html:215",
-            "exhibits/commit-reveal.html:127",
             "exhibits/commit-reveal.html:128",
             "exhibits/commit-reveal.html:129",
+            "exhibits/commit-reveal.html:130",
             "js/commit.js:115",
             "js/commit.js:196"
           ],
@@ -43365,8 +43396,8 @@
           ],
           "evidence": [
             "index.html:221",
-            "exhibits/fiat-shamir.html:125",
             "exhibits/fiat-shamir.html:126",
+            "exhibits/fiat-shamir.html:127",
             "js/fiat-shamir.js:150",
             "js/fiat-shamir.js:195"
           ],
@@ -43389,9 +43420,9 @@
           ],
           "evidence": [
             "index.html:227",
-            "exhibits/snark.html:122",
             "exhibits/snark.html:123",
-            "exhibits/snark.html:129",
+            "exhibits/snark.html:124",
+            "exhibits/snark.html:130",
             "js/snark.js:49",
             "js/snark.js:59",
             "js/snark.js:61",
@@ -43415,11 +43446,11 @@
             "special soundness"
           ],
           "evidence": [
-            "exhibits/sigma-family.html:72",
-            "exhibits/sigma-family.html:94",
-            "exhibits/sigma-family.html:178",
-            "exhibits/sigma-family.html:193",
-            "exhibits/sigma-family.html:195",
+            "exhibits/sigma-family.html:73",
+            "exhibits/sigma-family.html:95",
+            "exhibits/sigma-family.html:179",
+            "exhibits/sigma-family.html:194",
+            "exhibits/sigma-family.html:196",
             "js/sigma-ui.js:425",
             "js/sigma-ui.js:429"
           ],
@@ -43439,12 +43470,48 @@
             "protocol comparison"
           ],
           "evidence": [
-            "exhibits/transcript-lab.html:65",
-            "exhibits/transcript-lab.html:89",
+            "exhibits/transcript-lab.html:66",
+            "exhibits/transcript-lab.html:90",
             "js/transcript-lab.js:227",
             "js/transcript-lab.js:235"
           ],
           "section": "Transcript Replay Lab"
+        },
+        {
+          "id": "sumcheck-gkr",
+          "title": "Sum-check and a bounded GKR layer walk",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "section": "Sum-check and a GKR layer walk",
+          "action": "Run or step the sum-check prover and verifier over an explicit prime-field polynomial, replay malformed or dishonest transcripts, then reuse the checked primitive to walk a fixed two-layer circuit from outputs to public inputs.",
+          "outcome": "Inspect every round polynomial, degree and recurrence check, post-message challenge and direct final evaluation; then inspect two wiring-identity reductions, line checks and the verifier's terminal multilinear-extension evaluation.",
+          "concepts": [
+            "sum-check protocol",
+            "interactive proofs",
+            "GKR protocol",
+            "multilinear extensions",
+            "verifiable computation"
+          ],
+          "evidence": [
+            "index.html:238",
+            "exhibits/sumcheck-gkr.html:66",
+            "exhibits/sumcheck-gkr.html:69",
+            "exhibits/sumcheck-gkr.html:76",
+            "exhibits/sumcheck-gkr.html:216",
+            "exhibits/sumcheck-gkr.html:283",
+            "exhibits/sumcheck-gkr.html:284",
+            "js/sumcheck.js:89",
+            "js/sumcheck.js:308",
+            "js/sumcheck.js:408",
+            "js/sumcheck.js:513",
+            "js/sumcheck.js:605",
+            "js/gkr.js:87",
+            "js/gkr.js:129",
+            "js/gkr.js:207",
+            "js/gkr.js:334",
+            "js/gkr.js:562"
+          ],
+          "limits": "The page executes an interactive proof, not zero knowledge or a SNARK. The fixed two-layer adaptation enumerates six gates and omits GKR's uniformity machinery, sublinear verifier and general theorem; seeded challenges are replay controls and do not satisfy the displayed soundness premise."
         }
       ],
       "reviewScope": "complete"

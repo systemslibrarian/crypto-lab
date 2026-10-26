@@ -1948,7 +1948,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-attestation-gate": {
-      "commit": "89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61",
+      "commit": "7241e798da975a170d447520a584e6399959a3ac",
       "reviewed": "2026-10-26",
       "exhibits": [
         {
@@ -2096,11 +2096,13 @@
             "failure codes"
           ],
           "evidence": [
-            "src/ui/app.ts:240",
-            "src/ui/app.ts:241",
-            "src/ui/app.ts:243",
-            "src/ui/app.ts:249",
-            "src/ui/app.ts:262",
+            "src/ui/app.ts:257",
+            "src/ui/app.ts:258",
+            "src/ui/app.ts:260",
+            "src/ui/app.ts:266",
+            "src/ui/app.ts:279",
+            "src/ui/app.ts:282",
+            "src/ui/app.ts:283",
             "src/rats/failures.ts:14",
             "src/rats/failures.ts:15",
             "src/rats/failures.ts:21",
@@ -2141,6 +2143,40 @@
           "section": "Anonymous Membership",
           "execution": "real-crypto",
           "limits": "This is a zero-application-attribute, named-basename-only Type-3 BLS12-381 adaptation of CDL Pi_DAA+, not a TPM/ISO ECDAA profile or hardware implementation. The authenticated Join channel and unique-TPM admission rule are external, bsn=bottom and signature revocation are omitted, JavaScript arithmetic is variable-time, and anonymous provenance does not establish runtime integrity."
+        },
+        {
+          "id": "sealed-storage",
+          "title": "PCR-Bound Sealed Storage and Authorized Recovery",
+          "kind": "interactive",
+          "action": "Seal a synthetic secret to the measured boot state, run matching, changed-state, tamper, recovery, fixedTPM-parent compromise and post-release cases, and inspect every policy digest and response code.",
+          "outcome": "Current-run PCR, policy, public-object, protected-private-blob, load and unseal computations determine whether the synthetic secret is released, refused or released before a later runtime compromise.",
+          "concepts": [
+            "TPM sealed storage",
+            "PCR policy",
+            "enhanced authorization",
+            "TPM2_PolicyAuthorize",
+            "TPM2_Load",
+            "TPM2_Unseal",
+            "fixedTPM confinement",
+            "post-release exposure"
+          ],
+          "evidence": [
+            "src/ui/app.ts:37",
+            "src/ui/panels/sealed.ts:117",
+            "src/acts/sealing.ts:226",
+            "src/acts/sealing.ts:495",
+            "src/acts/sealing.ts:960",
+            "src/tpm/policy.ts:368",
+            "src/tpm/policy.ts:417",
+            "src/tpm/policy.ts:457",
+            "src/tpm/policy.ts:561",
+            "src/tpm/seal.ts:351",
+            "src/tpm/seal.ts:498",
+            "src/tpm/seal.ts:612"
+          ],
+          "section": "Sealed Storage",
+          "execution": "real-crypto",
+          "limits": "The TPM and storage-parent confinement are modelled in software; the parent seed and deterministic fixture values exist in page memory. This is not wire-interoperable TPM command/session handling, secure boot, rollback prevention, anti-hammering, hardware isolation or post-release plaintext protection."
         }
       ],
       "reviewScope": "complete"
@@ -9006,8 +9042,8 @@
       ]
     },
     "crypto-lab-dp-noise": {
-      "commit": "ea6eac3e9fc145c9f3306d4f6610b0662f8a794f",
-      "reviewed": "2026-10-22",
+      "commit": "d038ae68a794df7aa73c8fb91e8562d492093257",
+      "reviewed": "2026-10-26",
       "exhibits": [
         {
           "id": "differencing",
@@ -9204,6 +9240,49 @@
           "section": "ε in the wild"
         },
         {
+          "id": "geo",
+          "title": "A privacy budget measured per kilometre",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Set epsilon per kilometre, location separation and release count; inspect the tight ideal-planar likelihood bound and finite-grid control, draw current-run utility samples, and release a path transcript.",
+          "outcome": "Computes an attained epsilon-times-distance ratio, measured and analytic radial utility, nearest-service retention, a naive cropped-grid boundary violation with a bounded half-rate repair, and the composed likelihood of every released point.",
+          "concepts": [
+            "geo-indistinguishability",
+            "planar Laplace mechanism",
+            "metric differential privacy",
+            "location utility",
+            "finite-map boundary",
+            "repeated-release composition",
+            "trajectory privacy boundary"
+          ],
+          "evidence": [
+            "index.html:614",
+            "index.html:630",
+            "index.html:645",
+            "index.html:654",
+            "index.html:667",
+            "index.html:680",
+            "index.html:689",
+            "src/dp/geo.ts:71",
+            "src/dp/geo.ts:77",
+            "src/dp/geo.ts:82",
+            "src/dp/geo.ts:91",
+            "src/dp/geo.ts:102",
+            "src/dp/geo.ts:113",
+            "src/dp/geo.ts:134",
+            "src/dp/geo.ts:188",
+            "src/dp/geo.ts:192",
+            "src/dp/geo.ts:231",
+            "src/dp/geo.ts:256",
+            "src/ui/geo.ts:80",
+            "src/ui/geo.ts:121",
+            "src/ui/geo.ts:189",
+            "src/ui/geo.ts:243"
+          ],
+          "section": "A privacy budget measured per kilometre",
+          "limits": "Uses the ideal planar density with 53-bit IEEE-754 uniforms on a local Euclidean plane. The finite grid is a separate bounded control, the transcript compares two public parallel candidate paths under equal priors, and no finite-precision-paper theorem, correlated-trajectory protection, Earth geometry or production claim is transferred."
+        },
+        {
           "id": "exit",
           "title": "Differential privacy transfer challenge",
           "kind": "interactive",
@@ -9217,10 +9296,10 @@
             "transfer practice"
           ],
           "evidence": [
-            "index.html:671",
-            "index.html:673",
-            "index.html:675",
-            "index.html:681",
+            "index.html:760",
+            "index.html:763",
+            "index.html:769",
+            "index.html:771",
             "src/ui/exit.ts:200",
             "src/ui/exit.ts:211",
             "src/ui/exit.ts:221",

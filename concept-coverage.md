@@ -512,6 +512,29 @@ assumption; combining them reconstructs it. This is a bounded browser adaptation
 complete optimized construction, a transferred proof or a production deployment.
 Catalogued total remains 247.*
 
+*Version 61 — records DP Noise's E-K-07 geo-indistinguishability extension under §23
+without adding a lab or changing a concept status. The new route instantiates the ideal
+planar Laplace density on a declared local Euclidean metric, computes an attained
+epsilon-times-distance likelihood bound, samples radial and nearest-service utility, and
+accounts for each point in a repeated-release transcript. A separate normalized 7 by 7
+grid demonstrates the finite-border failure of a naive cropped exponential mechanism and
+a bounded half-rate control. The sampler uses IEEE-754 uniforms rather than the paper's
+finite-precision digital mechanism, and the two-candidate equal-prior path exercise does
+not establish correlated-trajectory or production location privacy. Catalogued total
+remains 247.*
+
+*Version 62 — records Attestation Gate's S11 sealed-storage extension under §26 without
+adding a lab or changing a concept status. Its eighth interactive tab derives PCR state
+from the existing measured boot, builds a KEYEDHASH sealed object and protected private
+blob, executes PolicyPCR, PolicyAuthorize, PolicyOR and PolicyCommandCode, and obtains
+Load/Unseal verdicts from the current run. Matching, changed-state, tamper, authorized and
+unauthorized recovery, PCR-change-after-check, fixedTPM-parent-seed compromise and
+post-release exposure cases keep object integrity, policy authorization, hardware
+confinement and lifetime boundaries separate. The TPM and parent seed are software
+fixtures; the lesson is not wire-interoperable TPM handling, hardware isolation, secure
+boot, rollback prevention, anti-hammering or protection after plaintext release.
+Catalogued total remains 247.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1081,6 +1104,14 @@ telemetry, analytics). It pairs with `silent-tally` exactly as predicted: MPC pr
 **inputs**, DP protects the **output**, and together they teach that hiding the data is not
 the same as making the answer safe to release.
 
+Its E-K-07 route adds the metric form of that definition rather than reusing scalar payroll
+noise as a location claim. On a local Euclidean plane it computes the ideal planar density,
+a tight epsilon-times-distance witness, radial and nearest-service utility, a finite-grid
+boundary counterexample and the sum of per-point bounds for a released path transcript.
+The finite grid is a separate bounded control, and the floating-point sampler, equal-prior
+two-path inference and independent-release accounting do not promise the paper's digital
+mechanism, correlated-trajectory protection or production location privacy.
+
 Proof Tally now executes that composition boundary rather than merely naming it. Its exact
 control subtracts two real equal-size Prio3Sum outputs and recovers the zero-replaced bounded
 contribution, showing why secret-shared inputs do not make an exact public answer private. The
@@ -1269,7 +1300,13 @@ CDL Pi_DAA+ equations, including BBS+ issuance, named-basename linkability, issu
 re-Join and private-key rogue-list revocation. That bounded Type-3 adaptation is not a
 TPM/ISO ECDAA profile or hardware implementation. A boot quote proves what was measured,
 not what is running; replacing a stable AK name with anonymous provenance does not change
-that boundary.
+that boundary. Its sealed-storage route asks the complementary question: whether a modelled
+TPM releases a synthetic secret in the current measured state. It computes the PCR-policy
+digest chain, protected object load and Unseal decision, then shows separately that an
+authorized recovery branch broadens accepted states, extraction of the fixedTPM parent's
+protection seed breaks the confinement premise, and compromise after release can read what
+the policy legitimately returned. Those are software teaching fixtures, not a real TPM or
+continuing control over released plaintext.
 
 Distance Bounding supplies a different missing boundary: a valid authentication response
 can be relayed, so possession of the right key does not establish proximity. Its declared

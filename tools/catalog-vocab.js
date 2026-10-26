@@ -179,6 +179,7 @@ const ALGORITHMS = [
   { name: 'Argon2', kind: 'algorithm', family: 'password KDF', re: /argon2(?:id|i|d)?/i, std: 'IETF:RFC 9106' },
   { name: 'Toeplitz extractor', kind: 'algorithm', family: 'randomness extractor', re: /toeplitz/i, std: null },
   { name: 'von Neumann extractor', kind: 'algorithm', family: 'randomness extractor', re: /von[-_ ]?neumann/i, std: null },
+  { name: 'Planar Laplace mechanism', kind: 'algorithm', family: 'differential privacy', re: /planar[-_ ]?laplace/i, std: null },
   { name: 'Laplace mechanism', kind: 'algorithm', family: 'differential privacy', re: /laplace/i, std: null },
   { name: 'Gaussian mechanism', kind: 'algorithm', family: 'differential privacy', re: /gaussian[-_ ]?mechanism|discrete[-_ ]?gaussian/i, std: null },
   { name: 'bcrypt', kind: 'algorithm', family: 'password KDF', re: /\bbcrypt\b/i, std: null },

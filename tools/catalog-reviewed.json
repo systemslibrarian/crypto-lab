@@ -1138,6 +1138,15 @@
     "implementation": "WebCrypto SHA-256 and random generation / local TypeScript DC-net and exhaustive finite observer models",
     "note": "Read the complete merged README, security notes, implementation, tests and learner interface at this exact main commit. The five-participant cycle computes each one-byte broadcast from one input and every incident pairwise XOR mask, aggregates the public transcript, and independently exhausts small mask assignments for observer-view comparisons. Participant and coalition views remove exactly the masks they know, derive remaining connected components and component parities, and retain supplied priors when the explicit exactly-one-sender assumption is compatible. Separate executable cases cover zero through three senders, one-byte XOR collisions, malformed and correctly shaped dishonest contributions, current-round dropout, graph reformation with replacement masks, complete incident-mask reuse and later disclosure. The SHA-256 commit/reveal route is a bounded collect-all-then-reveal teaching adaptation: under collision and second-preimage resistance it binds the encoded context and contribution, while the nonce raises exhaustive-opening cost; it does not prove hiding, equation compliance, identity, availability, accountability or Dissent/Verdict properties. The anonymity result assumes the declared key graph, independent uniform secret one-use masks, synchrony and the stated observer knowledge; WebCrypto randomness is a concrete CSPRNG-backed execution, not proof of the information-theoretic theorem, and all roles share one browser origin. Hosted final-head and exact-main gates passed 44 unit tests, 11 learner-claim tests, 12 accessibility/reflow tests, zero audited dependency vulnerabilities and all 22 named mutations; exact-main CodeQL and Pages deployment passed, and the live HTML, JavaScript and CSS matched the reviewed build byte for byte."
   },
+  "crypto-lab-distance-bounding": {
+    "commit": "4458307b57a02da4362cee5b799f20bdade03fd4",
+    "reviewed": "2026-10-26",
+    "remove": [
+      "Nonce reuse"
+    ],
+    "implementation": "local TypeScript HMAC-SHA-256, Hancke–Kuhn protocol, exact rational timing/probability and attack-event teaching models",
+    "note": "Read the complete current README, protocol, PRF, timing, probability, attack/scenario, UI, test, browser-quality, accessibility, mutation and workflow source through this exact main. The learner executes the verifier-nonce Hancke–Kuhn rapid-bit profile with hand-rolled HMAC-SHA-256, exact BigInt rational event timing and probabilities, an ordinary authenticated relay, a timed online relay, mafia pre-asking, dishonest-prover distance fraud and exact independent-noise sampling. The nonce-reuse switch fixes the response table and withdraws the repeated-attempt independence formula; the page explains complementary pre-asks, while the complete two-session register recovery is a unit control rather than a learner-executed attack exhibit, so the README-derived Nonce reuse attack credit is removed. All distance, speed, processing and noise values are declared model inputs; this is not radio measurement, localisation, an interoperable protocol, Brands–Chaum, physical-layer early-detect/late-commit, terrorist-fraud analysis, constant-time code or production parameter guidance. Exact-main quality/deployment run 40312352129 passed 96 unit tests, 99.44/98.42/100/100 coverage, 20 learner-claim checks, 10 accessibility/reflow/keyboard checks and all 15 clean-baseline mutations; CodeQL run 40312351878 passed, and the public files matched the Pages artifact and a fresh exact-main build byte for byte."
+  },
   "crypto-lab-hybrid-sign": {
     "commit": "e9e4ddb545c6f934064483f43e924416d26f009d",
     "reviewed": "2026-10-24",
@@ -1280,6 +1289,19 @@
     ],
     "implementation": "local TypeScript finite-field, Merkle, FRI and STARK teaching implementation / WebCrypto SHA-256",
     "note": "Read the complete AIR, quotient, Merkle, FRI, end-to-end prover/verifier, masking and soundness-ledger paths through this exact pin after PR-10. FRI folding and final-code membership are executable, Fiat-Shamir challenges are derived by the prover and independently recomputed by the verifier, and Merkle commitments use WebCrypto SHA-256. The page's discrete-log wording is in a STARK-versus-SNARK comparison and is not an executed attack. Keep capacity-model arithmetic labeled heuristic, theorem formulas conditional on their displayed hypotheses, fixture rejection empirical, and complete FRI/end-to-end soundness unestablished while required proximity, fold-MCA, algebraic/composition, hash and Fiat-Shamir/BCS terms are absent."
+  },
+  "crypto-lab-ibe-gate": {
+    "commit": "6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f",
+    "reviewed": "2026-10-26",
+    "remove": [
+      "BLS signatures",
+      "Chosen-ciphertext attack",
+      "Chosen-plaintext attack",
+      "Ciphertext malleability",
+      "Malleability (unspecified)"
+    ],
+    "implementation": "WebCrypto RSA-OAEP, P-256 ECDSA, HMAC and SHA-256 / @noble/curves BLS12-381 and @noble/hashes SHA-256 / local BasicIdent, HIBE and bounded certificateless teaching implementations",
+    "note": "Read the complete current README, BasicIdent and Type-3 HIBE engines, bounded Huang–Wong-style certificateless adapter, learner interface, tests and visible limitations through this exact main. The local scheme code performs BasicIdent and the depth-three HIBE over @noble/curves BLS12-381 group and pairing operations; @noble/hashes supplies SHA-256 in the original pairing routes. It never calls BLS signing or verification, so BLS signatures is removed as an imported-namespace false positive. The IND-CPA/IND-CCA and malleability warnings describe absent security properties rather than learner-executed chosen-plaintext, chosen-ciphertext or malleability attacks, so all four scanner categories produced by that prose are removed. The seventh exhibit adds WebCrypto RSA-OAEP, P-256 ECDSA, HMAC-SHA-256 and SHA-256 around the existing real BasicIdent operation, with capability-limited Type-I and Type-II actors, explicit combined compromise, key-displacement denial and tag-tamper controls. BasicIdent remains IND-CPA, so the cited generic IND-CCA theorem premise is unmet; the one-shot actors are not full adaptive games, a directory-authentication mechanism remains external, and browser JavaScript is not constant-time. This reviewed implementation label records the mixed stack rather than incorrectly describing the whole lab as either only WebCrypto or only @noble."
   },
   "crypto-lab-ipsec-ike": {
     "commit": "3019cef4c514b5649aa530b74f3a6053deda4b4c",

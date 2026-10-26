@@ -9357,6 +9357,208 @@
       ],
       "reviewScope": "complete"
     },
+    "crypto-lab-distance-bounding": {
+      "commit": "4458307b57a02da4362cee5b799f20bdade03fd4",
+      "reviewed": "2026-10-26",
+      "reviewScope": "complete",
+      "exhibits": [
+        {
+          "id": "session-controls",
+          "title": "Choose one declared distance-bounding session",
+          "section": "Parameters",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Choose one of six actor views, set exact timing and error parameters, select broken assumptions, and run a freshly derived verifier-nonce session.",
+          "outcome": "The page derives response registers, challenges, round trips, verdicts and applicable exact probabilities from the displayed inputs, while changed inputs retire the prior result.",
+          "concepts": [
+            "Hancke–Kuhn distance bounding",
+            "verifier nonce",
+            "rapid-bit exchange",
+            "exact rational timing",
+            "result retirement"
+          ],
+          "evidence": [
+            "src/ui/app.ts:34",
+            "src/ui/app.ts:98",
+            "src/ui/app.ts:101",
+            "src/ui/app.ts:105",
+            "src/ui/app.ts:120",
+            "src/ui/app.ts:125",
+            "src/ui/app.ts:363",
+            "src/db/scenario.ts:127",
+            "src/db/scenario.ts:182",
+            "src/db/protocol.ts:4",
+            "src/db/prf.ts:82"
+          ],
+          "limits": "The declared synchronous HMAC-SHA-256 profile is one teaching instantiation of the paper's hash function, not an interoperable radio protocol or a proof that the hand-rolled PRF is secure."
+        },
+        {
+          "id": "ordinary-authenticated-relay",
+          "title": "Authentication is not proximity",
+          "section": "Result",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Relay an ordinary domain-separated HMAC-SHA-256 challenge and response, then alter the returned tag as a negative control.",
+          "outcome": "The genuine relayed tag authenticates without proving proximity, while the altered tag is rejected; no rapid phase or distance verdict is fabricated.",
+          "concepts": [
+            "authentication versus proximity",
+            "relay attack",
+            "HMAC-SHA-256",
+            "negative control"
+          ],
+          "evidence": [
+            "src/ui/app.ts:215",
+            "src/ui/app.ts:230",
+            "src/ui/app.ts:240",
+            "src/db/scenario.ts:288",
+            "src/db/scenario.ts:292",
+            "src/db/scenario.ts:297",
+            "src/db/attacks.ts:334"
+          ],
+          "limits": "This is a bounded authentication contrast, not a complete deployed authentication protocol; it intentionally makes no timing or distance claim."
+        },
+        {
+          "id": "rapid-timing-relay",
+          "title": "Exact rapid rounds and a late online relay",
+          "section": "Rapid rounds",
+          "kind": "comparison",
+          "execution": "simulation",
+          "action": "Compare an honest in-range session with an online relay whose answers are all correct but whose complete modeled path is charged to every round trip.",
+          "outcome": "Exact threshold arithmetic accepts the honest transcript and rejects the relay on timing; late answers cannot consume the separate content-error allowance.",
+          "concepts": [
+            "rapid-bit timing",
+            "online relay",
+            "round-trip threshold",
+            "content-error allowance",
+            "distance upper bound"
+          ],
+          "evidence": [
+            "src/ui/app.ts:269",
+            "src/ui/app.ts:324",
+            "src/ui/app.ts:337",
+            "src/ui/app.ts:349",
+            "src/ui/app.ts:356",
+            "src/db/scenario.ts:243",
+            "src/db/scenario.ts:316",
+            "src/db/protocol.ts:97",
+            "src/db/protocol.ts:106",
+            "src/db/timing.ts:108",
+            "src/db/timing.ts:120",
+            "src/db/timing.ts:136"
+          ],
+          "limits": "All distances, speeds and delays are declared exact model quantities; no browser or network clock measures physical propagation."
+        },
+        {
+          "id": "mafia-preask",
+          "title": "Mafia fraud by pre-asking",
+          "section": "Exact probabilities",
+          "kind": "interactive",
+          "execution": "simulation",
+          "action": "Choose how many rounds the nearby attacker pre-asks, how many content errors are tolerated, and whether challenges are predictable or the verifier nonce is reused.",
+          "outcome": "The attacker answers from stored oracle results without receiving the key or registers; the page computes the applicable exact full or partial pre-ask probability and withdraws formulas when their assumptions are broken.",
+          "concepts": [
+            "mafia fraud",
+            "pre-ask attack",
+            "attacker knowledge boundary",
+            "threshold success probability",
+            "nonce reuse"
+          ],
+          "evidence": [
+            "src/ui/app.ts:280",
+            "src/ui/app.ts:293",
+            "src/ui/app.ts:357",
+            "src/db/scenario.ts:213",
+            "src/db/scenario.ts:335",
+            "src/db/scenario.ts:362",
+            "src/db/attacks.ts:123",
+            "src/db/attacks.ts:175",
+            "src/db/probability.ts:56",
+            "src/db/probability.ts:89",
+            "src/db/probability.ts:189"
+          ],
+          "limits": "The exact formulas assume ideal independent response bits, unpredictable challenges and a fresh verifier nonce; physical-layer early-detect/late-commit behavior is outside the model."
+        },
+        {
+          "id": "distance-fraud",
+          "title": "Dishonest-prover distance fraud",
+          "section": "Exact probabilities",
+          "kind": "interactive",
+          "execution": "simulation",
+          "action": "Run a distant legitimate key holder that commits before seeing each challenge, vary its actual delay, and compare the realized register-distance probability with the ideal ensemble average.",
+          "outcome": "The page keeps this actor distinct from a relay, computes success from the current response table's Hamming distance, and exposes when an unsafe processing-delay floor makes the prover appear nearer.",
+          "concepts": [
+            "distance fraud",
+            "dishonest key holder",
+            "realized response table",
+            "processing-delay lower bound",
+            "ensemble average"
+          ],
+          "evidence": [
+            "src/ui/app.ts:303",
+            "src/ui/app.ts:329",
+            "src/ui/app.ts:337",
+            "src/db/scenario.ts:387",
+            "src/db/scenario.ts:413",
+            "src/db/attacks.ts:203",
+            "src/db/attacks.ts:218",
+            "src/db/probability.ts:125",
+            "src/db/probability.ts:143",
+            "src/db/timing.ts:151"
+          ],
+          "limits": "The return trip begins only after challenge arrival and removes processing delay rather than modeling scheduled radio pre-transmission or physical synchronization."
+        },
+        {
+          "id": "noisy-channel",
+          "title": "Exact independent-noise acceptance",
+          "section": "Exact probabilities",
+          "kind": "interactive",
+          "execution": "simulation",
+          "action": "Set a rational per-bit error probability and content-error allowance for an honest prover, then inspect the sampled transcript and exact acceptance and false-rejection probabilities.",
+          "outcome": "Rejection sampling realizes the requested rational probability without binary-floor approximation, while timing failures remain outside the content allowance.",
+          "concepts": [
+            "noisy distance bounding",
+            "false rejection",
+            "exact Bernoulli sampling",
+            "error tolerance"
+          ],
+          "evidence": [
+            "src/ui/app.ts:308",
+            "src/db/scenario.ts:265",
+            "src/db/scenario.ts:444",
+            "src/db/attacks.ts:260",
+            "src/db/attacks.ts:278",
+            "src/db/probability.ts:159",
+            "src/db/probability.ts:174",
+            "src/db/protocol.ts:97"
+          ],
+          "limits": "Independent bit flips are not a model of correlated, bursty, multipath or capture-shaped radio errors; the reduced rational denominator is bounded at 2^32."
+        },
+        {
+          "id": "scope-and-sources",
+          "title": "Model and source boundary",
+          "section": "What this lesson does not do",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "action": "Read the implementation limits and the exact primary-source sections used for timing, protocol, attack vocabulary and noisy-channel reasoning.",
+          "outcome": "The page distinguishes this exact arithmetic and event simulator from ranging hardware, localisation, Brands–Chaum, physical-layer attacks, terrorist fraud and production parameter guidance.",
+          "concepts": [
+            "teaching-model boundary",
+            "physical-layer exclusions",
+            "primary-source provenance",
+            "browser-clock exclusion"
+          ],
+          "evidence": [
+            "src/ui/app.ts:43",
+            "src/ui/app.ts:136",
+            "src/ui/app.ts:142",
+            "src/db/timing.ts:4",
+            "src/db/attacks.ts:5",
+            "src/db/scenario.ts:213"
+          ],
+          "limits": "The source list and exclusions explain the model; they are not additional executed protocols, attacks or empirical measurements."
+        }
+      ]
+    },
     "crypto-lab-dedup-vault": {
       "commit": "3cbf467bdb1a67cce39466e2e335e443530ac171",
       "reviewed": "2026-10-23",
@@ -17695,8 +17897,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-ibe-gate": {
-      "commit": "7dfebaff27c4e20cd278a4d41a95c538e8807d31",
-      "reviewed": "2026-10-23",
+      "commit": "6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f",
+      "reviewed": "2026-10-26",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -17714,10 +17916,14 @@
             "BLS12-381"
           ],
           "evidence": [
-            "src/main.ts:496",
-            "src/main.ts:530",
-            "src/main.ts:568",
-            "src/main.ts:604",
+            "src/main.ts:515",
+            "src/main.ts:536",
+            "src/main.ts:580",
+            "src/main.ts:587",
+            "src/main.ts:602",
+            "src/main.ts:617",
+            "src/main.ts:623",
+            "src/main.ts:649",
             "src/ibe.ts:51",
             "src/ibe.ts:76"
           ],
@@ -17738,12 +17944,15 @@
             "pairing-based IBE"
           ],
           "evidence": [
-            "src/main.ts:671",
-            "src/main.ts:718",
-            "src/main.ts:727",
-            "src/main.ts:777",
-            "src/main.ts:805",
-            "src/main.ts:810",
+            "src/main.ts:690",
+            "src/main.ts:703",
+            "src/main.ts:722",
+            "src/main.ts:737",
+            "src/main.ts:746",
+            "src/main.ts:796",
+            "src/main.ts:818",
+            "src/main.ts:824",
+            "src/main.ts:829",
             "src/ibe.ts:100",
             "src/ibe.ts:117",
             "src/ibe.ts:154"
@@ -17764,12 +17973,18 @@
             "wrong-key decryption"
           ],
           "evidence": [
-            "src/main.ts:865",
-            "src/main.ts:911",
-            "src/main.ts:913",
+            "src/main.ts:884",
+            "src/main.ts:901",
             "src/main.ts:916",
-            "src/main.ts:928",
             "src/main.ts:929",
+            "src/main.ts:930",
+            "src/main.ts:932",
+            "src/main.ts:933",
+            "src/main.ts:935",
+            "src/main.ts:947",
+            "src/main.ts:948",
+            "src/main.ts:965",
+            "src/main.ts:984",
             "src/ibe.ts:154",
             "src/ibe.ts:189"
           ],
@@ -17781,8 +17996,8 @@
           "section": "Exhibit 4 — Time-Limited Capabilities",
           "kind": "interactive",
           "execution": "real-crypto",
-          "action": "Run an identity plus time-period scenario with extracted keys for different periods.",
-          "outcome": "The selected period’s key decrypts while a different period’s key does not.",
+          "action": "Encrypt to an email-plus-date identity, then have the PKG issue, refuse or improperly issue the matching private key.",
+          "outcome": "An issued matching key decrypts; when the PKG refuses, Bob’s available undated key produces garbage, while a colluding PKG can issue early and defeat the policy.",
           "concepts": [
             "IBE time-bound identity",
             "epoch key",
@@ -17790,14 +18005,22 @@
             "temporal access"
           ],
           "evidence": [
-            "src/main.ts:985",
-            "src/main.ts:1009",
-            "src/main.ts:1072",
-            "src/main.ts:1085",
-            "src/main.ts:1086",
-            "src/main.ts:1113",
-            "src/main.ts:1114",
-            "src/scenarios.ts:1"
+            "src/main.ts:1004",
+            "src/main.ts:1006",
+            "src/main.ts:1025",
+            "src/main.ts:1049",
+            "src/main.ts:1074",
+            "src/main.ts:1088",
+            "src/main.ts:1091",
+            "src/main.ts:1097",
+            "src/main.ts:1104",
+            "src/main.ts:1105",
+            "src/main.ts:1132",
+            "src/main.ts:1133",
+            "src/main.ts:1163",
+            "src/ibe.ts:100",
+            "src/ibe.ts:117",
+            "src/ibe.ts:154"
           ],
           "limits": "Time scoping depends on PKG key issuance and ciphertext identity conventions; it does not revoke an already issued matching key."
         },
@@ -17815,14 +18038,22 @@
             "key generation authority"
           ],
           "evidence": [
-            "src/main.ts:1166",
-            "src/main.ts:1167",
-            "src/main.ts:1171",
-            "src/main.ts:1245",
-            "src/main.ts:1253",
-            "src/main.ts:1265",
-            "src/main.ts:1270",
-            "src/ibe.ts:100"
+            "src/main.ts:1185",
+            "src/main.ts:1190",
+            "src/main.ts:1199",
+            "src/main.ts:1263",
+            "src/main.ts:1272",
+            "src/main.ts:1284",
+            "src/main.ts:1292",
+            "src/main.ts:1294",
+            "src/scenarios.ts:154",
+            "src/scenarios.ts:167",
+            "src/scenarios.ts:170",
+            "src/scenarios.ts:171",
+            "src/scenarios.ts:175",
+            "src/ibe.ts:100",
+            "src/ibe.ts:117",
+            "src/ibe.ts:154"
           ],
           "limits": "BasicIdent implements none of the listed escrow mitigations; the PKG must be trusted with all identities."
         },
@@ -17842,21 +18073,32 @@
             "PKG escrow"
           ],
           "evidence": [
-            "src/main.ts:1298",
-            "src/main.ts:1327",
-            "src/main.ts:1365",
-            "src/main.ts:1367",
-            "src/main.ts:1368",
-            "src/main.ts:1372",
-            "src/main.ts:1373",
-            "src/main.ts:1376",
-            "src/main.ts:1380",
-            "src/main.ts:1382",
-            "src/main.ts:1389",
+            "src/main.ts:1317",
+            "src/main.ts:1339",
+            "src/main.ts:1366",
+            "src/main.ts:1384",
+            "src/main.ts:1385",
+            "src/main.ts:1386",
+            "src/main.ts:1387",
+            "src/main.ts:1391",
+            "src/main.ts:1392",
+            "src/main.ts:1393",
+            "src/main.ts:1395",
+            "src/main.ts:1396",
+            "src/main.ts:1399",
+            "src/main.ts:1400",
+            "src/main.ts:1401",
+            "src/main.ts:1402",
+            "src/main.ts:1404",
+            "src/main.ts:1405",
+            "src/main.ts:1406",
+            "src/main.ts:1407",
+            "src/main.ts:1408",
+            "src/main.ts:1409",
             "src/main.ts:1420",
-            "src/main.ts:1424",
-            "src/main.ts:1432",
-            "src/main.ts:1437",
+            "src/main.ts:1436",
+            "src/main.ts:1441",
+            "src/main.ts:1445",
             "src/hibe.ts:179",
             "src/hibe.ts:229",
             "src/hibe.ts:274",
@@ -17866,6 +18108,46 @@
             "src/hibe.ts:426"
           ],
           "limits": "Bounded depth-three Type-3 KEM/DEM teaching adaptation; it does not claim the paper's full proof and delegation does not remove root escrow."
+        },
+        {
+          "id": "certificateless-ownership",
+          "title": "Exhibit 7 — Who Must Be Compromised?",
+          "section": "Exhibit 7 — Who Must Be Compromised?",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Run PKI, IBE and bounded certificateless routes for one identity, then compare Type-I, Type-II, combined-compromise, key-replacement and tag-tamper outcomes.",
+          "outcome": "The certified PKI and escrowed IBE routes succeed; neither certificateless adversary class decrypts alone, the combined compromise accepts, and displacement or tag mutation rejects.",
+          "concepts": [
+            "certificateless encryption",
+            "Type-I and Type-II adversaries",
+            "PKI versus IBE versus certificateless ownership",
+            "public-key replacement",
+            "split escrow"
+          ],
+          "evidence": [
+            "src/main.ts:1476",
+            "src/main.ts:1491",
+            "src/main.ts:1576",
+            "src/main.ts:1610",
+            "src/main.ts:1618",
+            "src/main.ts:1641",
+            "src/main.ts:1648",
+            "src/main.ts:1655",
+            "src/main.ts:1663",
+            "src/main.ts:1687",
+            "src/main.ts:1713",
+            "src/main.ts:1726",
+            "src/certificateless.ts:264",
+            "src/certificateless.ts:285",
+            "src/certificateless.ts:329",
+            "src/certificateless.ts:350",
+            "src/certificateless.ts:372",
+            "src/certificateless.ts:395",
+            "src/certificateless.ts:412",
+            "src/certificateless.ts:429",
+            "src/certificateless.ts:453"
+          ],
+          "limits": "Bounded Huang–Wong mechanics adaptation using BasicIdent, so the cited IND-CCA theorem does not apply; one-shot actors are not full adaptive games, JavaScript is not constant-time, and key replacement can still deny service without an authenticated directory."
         }
       ]
     },

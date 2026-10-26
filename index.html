@@ -2275,7 +2275,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">245</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">246</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -8561,7 +8561,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/" data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-08"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/" data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-10"
             data-implements="Private information retrieval@src/pir.ts:89"
             data-references="BFV | CKKS | Diffie-Hellman | LWE | Private set intersection | Shamir secret sharing"
             data-implementation="hand-rolled"
@@ -11164,96 +11164,25 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-ibe-gate/" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
-            data-implements="BLS signatures@src/pairing.ts:11 | BLS12-381@src/pairing.ts:11 | Boneh-Franklin IBE@src/main.ts:604 | Hash-to-curve@src/pairing.ts:58 | HIBE@src/hibe.ts:179 | Pairing@src/ibe.ts:176 | SHA-256@src/hibe.ts:147"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-ibe-gate/"
+            data-implements="BLS12-381@src/pairing.ts:11 | Boneh-Franklin IBE@src/main.ts:1611 | ECDSA@src/certificateless.ts:405 | Hash-to-curve@src/pairing.ts:58 | HIBE@src/hibe.ts:179 | HMAC@src/certificateless.ts:142 | P-256@src/certificateless.ts:405 | Pairing@src/ibe.ts:176 | RSA@src/certificateless.ts:252 | RSA-OAEP@src/certificateless.ts:252 | SHA-256@src/certificateless.ts:128"
             data-comment-only="AES@src/ibe.ts:21"
-            data-references="Diffie-Hellman | EC point arithmetic | FROST | Fujisaki-Okamoto transform | RSA | RSA-OAEP | Shamir secret sharing"
-            data-attacks="Chosen-ciphertext attack@README.md:62 | Chosen-plaintext attack@src/main.ts:420 | Ciphertext malleability@src/main.ts:423"
+            data-references="Diffie-Hellman | EC point arithmetic | FROST | Fujisaki-Okamoto transform | Shamir secret sharing"
             data-standards="IETF | NIST"
-            data-implementation="@noble"
+            data-implementation="WebCrypto RSA-OAEP, P-256 ECDSA, HMAC and SHA-256 / @noble/curves BLS12-381 and @noble/hashes SHA-256 / local BasicIdent, HIBE and bounded certificateless teaching implementations"
+            data-review-commit="6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f"
+            data-review-note="Read the complete current README, BasicIdent and Type-3 HIBE engines, bounded Huang–Wong-style certificateless adapter, learner interface, tests and visible limitations through this exact main. The local scheme code performs BasicIdent and the depth-three HIBE over @noble/curves BLS12-381 group and pairing operations; @noble/hashes supplies SHA-256 in the original pairing routes. It never calls BLS signing or verification, so BLS signatures is removed as an imported-namespace false positive. The IND-CPA/IND-CCA and malleability warnings describe absent security properties rather than learner-executed chosen-plaintext, chosen-ciphertext or malleability attacks, so all four scanner categories produced by that prose are removed. The seventh exhibit adds WebCrypto RSA-OAEP, P-256 ECDSA, HMAC-SHA-256 and SHA-256 around the existing real BasicIdent operation, with capability-limited Type-I and Type-II actors, explicit combined compromise, key-displacement denial and tag-tamper controls. BasicIdent remains IND-CPA, so the cited generic IND-CCA theorem premise is unmet; the one-shot actors are not full adaptive games, a directory-authentication mechanism remains external, and browser JavaScript is not constant-time. This reviewed implementation label records the mixed stack rather than incorrectly describing the whole lab as either only WebCrypto or only @noble."
+            data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
             data-level="advanced"
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Identity-Based Encryption</div>
             <div class="project-title">IBE Gate</div>
-            <div class="project-copy">Run Boneh-Franklin IBE on BLS12-381, then delegate descendant keys in a bounded Type-3 HIBE and measure the sibling, subtree, and root-escrow boundaries.</div>
+            <div class="project-copy">Run Boneh-Franklin IBE and bounded Type-3 HIBE, then compare PKI, IBE, and Huang–Wong-style certificateless key ownership across Type-I and Type-II compromise cases.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Boneh-Franklin</span>
                 <span class="chip">HIBE</span>
-                <span class="chip">BLS12-381</span>
+                <span class="chip">Certificateless</span>
                 <span class="chip">Key Escrow</span>
               </div>
               <span class="arrow">→</span>
@@ -19794,6 +19723,29 @@
             </div>
           </a>
 
+          <a class="project-card" data-category="PROTOCOLS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-distance-bounding/"
+            data-implements="HMAC@src/db/sha256.ts:113 | SHA-256@src/db/sha256.ts:40"
+            data-standards="IETF | NIST"
+            data-implementation="local TypeScript HMAC-SHA-256, Hancke–Kuhn protocol, exact rational timing/probability and attack-event teaching models"
+            data-review-commit="4458307b57a02da4362cee5b799f20bdade03fd4"
+            data-review-note="Read the complete current README, protocol, PRF, timing, probability, attack/scenario, UI, test, browser-quality, accessibility, mutation and workflow source through this exact main. The learner executes the verifier-nonce Hancke–Kuhn rapid-bit profile with hand-rolled HMAC-SHA-256, exact BigInt rational event timing and probabilities, an ordinary authenticated relay, a timed online relay, mafia pre-asking, dishonest-prover distance fraud and exact independent-noise sampling. The nonce-reuse switch fixes the response table and withdraws the repeated-attempt independence formula; the page explains complementary pre-asks, while the complete two-session register recovery is a unit control rather than a learner-executed attack exhibit, so the README-derived Nonce reuse attack credit is removed. All distance, speed, processing and noise values are declared model inputs; this is not radio measurement, localisation, an interoperable protocol, Brands–Chaum, physical-layer early-detect/late-commit, terrorist-fraud analysis, constant-time code or production parameter guidance. Exact-main quality/deployment run 40312352129 passed 96 unit tests, 99.44/98.42/100/100 coverage, 20 learner-claim checks, 10 accessibility/reflow/keyboard checks and all 15 clean-baseline mutations; CodeQL run 40312351878 passed, and the public files matched the Pages artifact and a fresh exact-main build byte for byte."
+            data-added="2026-10" data-added-on="2026-10-26" data-updated="2026-10"
+            data-level="advanced"
+            target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Proximity Authentication</div>
+            <div class="project-title">Distance Bounding</div>
+            <div class="project-copy">Run the verifier-nonce Hancke–Kuhn rapid-bit protocol with exact timing and probability arithmetic, then contrast ordinary relays, mafia pre-asking, distance fraud, channel noise, and broken assumptions.</div>
+            <div class="project-meta">
+              <div class="stack">
+                <span class="chip">Hancke–Kuhn</span>
+                <span class="chip">Distance Bounding</span>
+                <span class="chip">Mafia Fraud</span>
+                <span class="chip">Exact Probabilities</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ggh-trapdoor/" data-added="2026-09" data-added-on="2026-09-08" data-updated="2026-09"
             data-implements="GGH@src/lattice/keygen.ts:72"
             data-comment-only="Babai rounding@src/attack/baseline.ts:40 | Falcon@src/ui/act5.ts:6 | Gaussian mechanism@src/sign/klein.ts:2 | ML-KEM@src/ui/act3.ts:137 | NTRU@src/attack/break2.ts:3"
@@ -21957,6 +21909,7 @@
       'Feistel Forge': 'symmetric', 'Sector Vault': 'symmetric',
       'Rekey Relay': 'public-key', 'Attribute Gate': 'public-key',
       'DNSSEC Chain': 'key-exchange', 'Attestation Gate': 'key-exchange',
+      'Distance Bounding': 'key-exchange',
       'Masked Core': 'cryptanalysis',
       'GGH Trapdoor': 'cryptanalysis', 'Factor Forge': 'cryptanalysis',
       'Lattice Builder': 'post-quantum', 'Covert Channel Studio': 'historical',

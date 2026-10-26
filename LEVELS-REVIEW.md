@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 147. Total 246.
+**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 148. Total 247.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -141,7 +141,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (147)
+## Advanced — `advanced` (148)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -171,6 +171,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Dedup Vault](https://systemslibrarian.github.io/crypto-lab-dedup-vault/) | 2026-10-23: complete README, source, tests and five-exhibit learner flow | Assumes comfort with deterministic encryption leakage, VOPRF proof roles, authenticated key capsules and the distinction among possession, authorization and revocation. |
 | [Dilithium Reject](https://systemslibrarian.github.io/crypto-lab-dilithium-reject/) | rule | needs specialist background: lattice, ML-DSA, Dilithium |
 | [Dilithium Seal](https://systemslibrarian.github.io/crypto-lab-dilithium-seal/) | rule | needs specialist background: lattice, LWE, ML-DSA |
+| [Distance Bounding](https://systemslibrarian.github.io/crypto-lab-distance-bounding/) | 2026-10-26: complete README, source, tests and seven-part learner flow | Requires protocol-threat-model reasoning, exact probability tails and careful separation of authentication, timing, mafia fraud and dishonest-prover distance fraud. |
 | [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) | rule | needs specialist background: secret sharing, DKG, distributed key generation |
 | [DP Noise](https://systemslibrarian.github.io/crypto-lab-dp-noise/) | rule | needs specialist background: advantage, differential privacy |
 | [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) | rule | needs specialist background: DRBG |

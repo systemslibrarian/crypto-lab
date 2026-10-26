@@ -16,9 +16,11 @@ jobs:
         with:
           node-version: 24
       - name: Cryptographic negative controls and reading-path integrity
-        run: node --test tests/protocol-workshops.test.mjs tests/reading-path.test.mjs tests/understanding-cryptography.test.mjs
+        run: node --test tests/protocol-workshops.test.mjs tests/fair-exchange-optimistic.test.mjs tests/reading-path.test.mjs tests/understanding-cryptography.test.mjs
       - name: Timestamp batching and renewal mutation controls
         run: node learn/timestamping/mutations.mjs
+      - name: Optimistic fair-exchange mutation controls
+        run: node learn/fair-exchange/mutations.mjs
       - run: npm ci
         working-directory: tools
       - run: npx playwright install chromium

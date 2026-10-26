@@ -48,8 +48,8 @@ A-D-09 is **live** at exact Signature Gate main `db6695e0f136`. The fifth chapte
 
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 18 |
-| In progress | 0 |
+| Planned | 17 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 30 |

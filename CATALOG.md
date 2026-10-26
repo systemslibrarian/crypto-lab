@@ -61,8 +61,8 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1798 sections in 247 of 247 labs**
-(247 complete lab inventories, 0 selected-section reviews).
+The exhibit map currently records **1802 sections in 248 of 248 labs**
+(248 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
 **PARTIALLY REVIEWED** means only selected sections were mapped: omission says
@@ -73,7 +73,7 @@ before relying on this index for a fresh assessment.
 
 ## Reverse index — which labs implement what
 
-214 algorithms are implemented somewhere in the fleet, grouped by family.
+215 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -628,6 +628,11 @@ A lab in *italics* references the algorithm without implementing it.
 - **Implemented by:** [Drift Key](https://systemslibrarian.github.io/crypto-lab-drift-key/) `src/crypto/bch.ts:62`
 - **Also referenced by:** *HQC Timing Break*, *HQC Timing*, *Syndrome Drain*, *LFSR Forge*
 
+#### Reed-Solomon
+
+- **Implemented by:** [Hostile Paths](https://systemslibrarian.github.io/crypto-lab-hostile-paths/) `src/psmt/decoder.ts:37`
+- **Also referenced by:** *McEliece Gate*, *HQC Vault*, *HQC Timing*, *Syndrome Drain*, *Polynomial Forge*
+
 #### Repetition code
 
 - **Implemented by:** [HQC Timing Break](https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/) `src/engine.ts:163`
@@ -1177,7 +1182,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Shamir secret sharing
 
-- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:123`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:105`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:291`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`
+- **Implemented by:** [Quantum Vault KpqC](https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/) `web-demo/src/crypto/pipeline.ts:16`; [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:695`; [Silent Tally](https://systemslibrarian.github.io/crypto-lab-silent-tally/) `src/lib.rs:123`; [FROST Threshold](https://systemslibrarian.github.io/crypto-lab-frost-threshold/) `src/exhibits/attacks.ts:105`; [Shamir Gate](https://systemslibrarian.github.io/crypto-lab-shamir-gate/) `demos/shamir-gate/index.html:118`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:291`; [Shamir vs FROST](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) `src/frost/field.ts:80`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:370`; [Icy DVRF](https://systemslibrarian.github.io/crypto-lab-icy-dvrf/) `src/dvrf/protocol.ts:50`; [Hostile Paths](https://systemslibrarian.github.io/crypto-lab-hostile-paths/) `src/psmt/protocol.ts:131`
 - **Also referenced by:** *Key Lifecycle*, *KpqC Pair*, *Misty Lens*, *ZK Proof Lab*, *Patron Shield*, *DKG Gate*, *Garbled Gate*, *Iron Serpent*, *Biham Lens*, *Babel Hash*, *OT Gate*, *Oblivious Shelf*, *GG20 Wallet*, *Ring Sign*, *Lattice Fault*, *VRF Gate*, *Schnorr Forge*, *IBE Gate*, *ORAM Vault*, *Paillier Gate*, *Threshold ML-DSA*, *Bulletproofs*, *ZK Arena*, *Jevil*, *PQ Families*, *Multivariate UOV*, *Time-Lock Puzzle*, *VDF*, *Frozen Heart*, *Credential Veil*, *SPDZ Forge*, *Traitor Trace*, *Lattice Gentle*, *Beacon Lock*, *Card Trick*, *Attribute Gate*, *Fold Gate*, *Covert Channel Studio*, *Return Path*, *Function Key*, *WEP Crack*, *Signature Gate*, *DC-net*
 
 ### signature
@@ -1560,12 +1565,13 @@ disagree about who owns SHA-256.
 | Rabin encryption | — | 1 |
 | Rainbow chains | — | 1 |
 | RC4 | — | 1 |
+| Reed-Solomon | — | 1 |
 | Repetition code | — | 1 |
 | Ring-LWE | — | 1 |
 | Schnorr | — | 9 |
 | Schnorr identification | — | 1 |
 | Serpent | — | 1 |
-| Shamir secret sharing | — | 9 |
+| Shamir secret sharing | — | 10 |
 | Shipovnik | — | 1 |
 | Shor's algorithm | — | 3 |
 | Sign-then-Encrypt | — | 1 |
@@ -1651,11 +1657,6 @@ that asks for a decision.
 - **Shared:** AES, AES-CBC, FF1
 - **Stated difference:** format-ward PRESERVES an existing format with FF1 and FF3-1, so ciphertext keeps the length and alphabet of the input; fte TRANSFORMS ciphertext into whatever language a regular expression defines, by ranking a DFA slice
 
-**VSS Gate / Reshare Circle**
-
-- **Shared:** Feldman VSS, Pedersen commitment, Shamir secret sharing
-- **Stated difference:** vss-gate adds VERIFIABILITY to Shamir sharing at deal time, through Feldman and Pedersen commitments; reshare-circle leaves the dealing alone and refreshes shares over time, using HJKY proactive sharing against perpetual leakage
-
 **Blind Hello / Blind Relay**
 
 - **Shared:** DHKEM, HPKE
@@ -1665,6 +1666,11 @@ that asks for a decision.
 
 - **Shared:** DHKEM, HPKE
 - **Stated difference:** **none stated**
+
+**VSS Gate / Reshare Circle**
+
+- **Shared:** Feldman VSS, Pedersen commitment, Shamir secret sharing
+- **Stated difference:** vss-gate adds VERIFIABILITY to Shamir sharing at deal time, through Feldman and Pedersen commitments; reshare-circle leaves the dealing alone and refreshes shares over time, using HJKY proactive sharing against perpetual leakage
 
 **Falcon Seal / HAWK**
 
@@ -1943,7 +1949,7 @@ that asks for a decision.
 
 ## Labs
 
-247 labs. Implementation findings and source coverage are separate questions.
+248 labs. Implementation findings and source coverage are separate questions.
 
 **N/A (7)** — source-reviewed labs that model an attack or
 system but implement no named algorithm in this index. N/A is a reviewed
@@ -7645,6 +7651,48 @@ Test selected security games, trace an AES-based GGM tree, account for adjacent 
     - **Concepts taught:** target collision resistance; collision resistance; second-preimage resistance; challenge order; hash-then-sign
     - **Limits:** The fixed length-preserving 8-to-8-bit family is an exhaustible order-of-play model, not a UOWHF construction, an asymptotic separation or evidence about a real hash. The signed-pair panel does not establish malicious-signer non-repudiation.
     - **Evidence at pinned commit:** `index.html:164`, `src/ui/tcr.ts:61`, `src/ui/tcr.ts:138`, `src/ui/tcr.ts:175`, `src/ui/tcr.ts:183`, `src/game/tcr.ts:128`, `src/game/tcr.ts:221`, `src/game/tcr.ts:330`, `src/game/tcr.ts:412`, `src/game/tcr.ts:531`, `src/game/tcr.ts:577`, `src/game/tcr.ts:614`
+
+### Hostile Paths
+
+[`crypto-lab-hostile-paths`](https://systemslibrarian.github.io/crypto-lab-hostile-paths/) · Perfectly Secure Message Transmission · PROTOCOLS, MPC &amp; THRESHOLD, PRIVACY
+
+Send one field symbol over independently modeled hostile paths: compare naive Shamir interpolation with Welch–Berlekamp correction, vary observation, modification and loss, and compute exact one-round and interactive topology boundaries.
+
+- **Card topics (discovery only):** Shamir Sharing, Reed-Solomon, Welch–Berlekamp, PSMT — labels do not establish what any section runs.
+- **Implements:** Reed-Solomon `src/psmt/decoder.ts:37`, Shamir secret sharing `src/psmt/protocol.ts:131`
+- **Source review:** [4086fff2f6d8](https://github.com/systemslibrarian/crypto-lab-hostile-paths/commit/4086fff2f6d89ce83fa8e4dd2ead1a3c42734229) — Read the complete exact-main README, finite-field arithmetic, one-round encoder, path-action model, privacy census, Welch-Berlekamp and subset decoders, topology planner, learner interface, unit/browser/accessibility tests, mutation runner and workflows. The learner samples a degree-t GF(257) polynomial with the message as its constant term, assigns distinct nonzero evaluations to independently labeled paths, and separately applies observation, modification and recognized loss. The attacker-view census solves the resulting affine systems for every field secret; the receiver compares naive first-share interpolation with Welch-Berlekamp recovery and a separately implemented subset decoder under the inequality 2b+e at most n-(t+1). A computed three-path ambiguity witness falsifies the one-round 2t+1 shortcut. The planner executes only the one-round n at least 3t+1 construction: it reports the two-way interactive n at least 2t+1 theorem boundary but refuses to relabel this decoder as the Spini-Zemor pseudo-basis protocol. The browser does not create physically independent networks, authenticate routers or endpoints, measure timing, cover asynchronous/mobile corruption, implement the paper's optimal multi-symbol rate, or supply a production/constant-time packet format. Exact-main verification and deployment evidence is recorded in the encyclopedia roadmap.
+- **Standards body:** —
+- **Implementation:** local TypeScript GF(257), Shamir-style polynomial sharing, Welch-Berlekamp decoding and independent subset decoding
+- **Overlaps:** `crypto-lab-shamir-gate` — Shamir Gate teaches passive threshold secrecy and reconstruction; Hostile Paths adds active path modification, recognized loss and Reed-Solomon correction.; `crypto-lab-vss-gate` — VSS Gate detects a dishonest dealer before reconstruction; Hostile Paths assumes honest endpoints and corrects faults introduced by Byzantine communication paths.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4086fff2f6d8](https://github.com/systemslibrarian/crypto-lab-hostile-paths/commit/4086fff2f6d89ce83fa8e4dd2ead1a3c42734229) reviewed 2026-10-26; 4 mapped sections.
+  - **Executed claim, source record, and model boundary** (`claim-boundary`; explanation; conceptual)
+    - **Visible section:** What the executable protocol establishes
+    - **Learner action:** Compare the exact privacy and reliability claims with the separately cited interactive theorem and the assumptions retained by the browser model.
+    - **Observed result:** Keeps synchronous private authenticated path labels, static corruption, recognized erasures, honest endpoints, physical independence, constant time, and production packet formats visibly separate.
+    - **Concepts taught:** security model; synchrony; static adversary; private authenticated channels; bounded teaching model
+    - **Limits:** Source-backed explanation only; it does not add a second executable protocol or establish physical network independence.
+    - **Evidence at pinned commit:** `src/ui/app.ts:280`, `src/ui/app.ts:297`
+  - **One-round private and reliable delivery** (`one-round-transcript`; interactive; real-operation)
+    - **Visible section:** Path transcript and verifier evidence
+    - **Learner action:** Sample fresh polynomial masks, send one share per path, apply distinct path actions, and compare naive interpolation with two independently implemented decoders.
+    - **Observed result:** Shows the attacker-visible shares, an exact all-secret completion census, the error and erasure inequality, the naive output, Welch-Berlekamp recovery, and the independent subset-decoder verdict.
+    - **Concepts taught:** Shamir secret sharing; Reed-Solomon decoding; Welch-Berlekamp decoding; information-theoretic privacy; errors and erasures
+    - **Limits:** The browser uses one GF(257) symbol, degree at most four and at most sixteen modeled paths; it does not implement the source paper's optimal multi-symbol transmission rate.
+    - **Evidence at pinned commit:** `src/ui/app.ts:110`, `src/ui/app.ts:167`, `src/psmt/protocol.ts:131`, `src/psmt/protocol.ts:152`, `src/psmt/protocol.ts:185`, `src/psmt/protocol.ts:230`, `src/psmt/decoder.ts:37`, `src/psmt/decoder.ts:91`
+  - **A concrete one-round 2t+1 ambiguity** (`three-path-ambiguity`; comparison; real-values)
+    - **Visible section:** Why 2t+1 paths do not suffice in one round
+    - **Learner action:** Inspect two computed degree-one codewords and one received word at distance one from each candidate.
+    - **Observed result:** Demonstrates that three one-way paths with one Byzantine fault cannot identify which of two secrets was sent, rather than treating a decoder failure as the impossibility proof.
+    - **Concepts taught:** one-round lower bound; Hamming distance; decoding ambiguity; topology threshold
+    - **Limits:** This finite witness falsifies the three-path one-round shortcut; it does not implement or disprove the distinct interactive protocol available with feedback.
+    - **Evidence at pinned commit:** `src/ui/app.ts:213`, `src/psmt/protocol.ts:321`
+  - **Topology, rounds, and path actions** (`topology-planner`; interactive; real-values)
+    - **Visible section:** Topology, rounds, and path actions
+    - **Learner action:** Vary the path count, Byzantine budget, rounds, feedback, observation, modification, and recognized loss before running a fresh transcript.
+    - **Observed result:** Computes the exact one-round or interactive path threshold, refuses feedback inside one transmission round, and states when the selected one-round protocol actually runs.
+    - **Concepts taught:** perfectly secure message transmission; independent paths; Byzantine path budget; round complexity; feedback
+    - **Limits:** The interactive 2t+1 boundary is computed but not executed; two forward-only phases retain the one-way threshold.
+    - **Evidence at pinned commit:** `src/ui/app.ts:247`, `src/ui/app.ts:264`, `src/psmt/protocol.ts:279`
 
 ### HPKE Envelope
 

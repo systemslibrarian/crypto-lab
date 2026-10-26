@@ -1499,6 +1499,12 @@
       "level": "advanced",
       "why": "Requires protocol-threat-model reasoning, exact probability tails and careful separation of authentication, timing, mafia fraud and dishonest-prover distance fraud.",
       "reviewed": "2026-10-26: complete README, source, tests and seven-part learner flow"
+    },
+    "crypto-lab-hostile-paths": {
+      "title": "Hostile Paths",
+      "level": "advanced",
+      "why": "Requires finite-field polynomial sharing, Reed-Solomon error/erasure bounds and careful separation of topology theorems from the protocol actually executed.",
+      "reviewed": "2026-10-26: complete README, source, tests and four-part learner flow"
     }
   }
 }

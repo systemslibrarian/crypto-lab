@@ -3108,6 +3108,112 @@ test('Distance Bounding S06 controls reject lost credit, a false attack, stale p
   assert.throws(() => checkDistanceBoundingS06Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
 
+function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-hostile-paths';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'Reed-Solomon',
+    'Shamir secret sharing',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Byzantine path actions are protocol scenarios, not a catalog attack credit');
+
+  const card = openingFor(source, slug);
+  assert.match(card, /data-review-commit="4086fff2f6d89ce83fa8e4dd2ead1a3c42734229"/);
+  assert.match(card, /GF\(257\), Shamir-style polynomial sharing, Welch-Berlekamp decoding/);
+  assert.doesNotMatch(card, /data-attacks=/);
+  assert.deepEqual(chipsFor(source, slug), [
+    'Shamir Sharing',
+    'Reed-Solomon',
+    'Welch–Berlekamp',
+    'PSMT',
+  ]);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '4086fff2f6d89ce83fa8e4dd2ead1a3c42734229');
+  assert.deepEqual(review.add, [
+    'Reed-Solomon@src/psmt/decoder.ts:37',
+    'Shamir secret sharing@src/psmt/protocol.ts:131',
+  ]);
+  assert.match(review.note, /falsifies the one-round 2t\+1 shortcut/);
+  assert.match(review.note, /refuses to relabel this decoder as the Spini-Zemor pseudo-basis protocol/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'topology-planner',
+    'one-round-transcript',
+    'three-path-ambiguity',
+    'claim-boundary',
+  ]);
+
+  const topology = mapped.exhibits.find((item) => item.id === 'topology-planner');
+  assert.equal(topology.execution, 'real-values');
+  assert.match(topology.outcome, /refuses feedback inside one transmission round/);
+  assert.match(topology.limits, /interactive 2t\+1 boundary is computed but not executed/);
+
+  const transcript = mapped.exhibits.find((item) => item.id === 'one-round-transcript');
+  assert.equal(transcript.execution, 'real-operation');
+  assert.ok(transcript.evidence.includes('src/psmt/protocol.ts:230'));
+  assert.ok(transcript.evidence.includes('src/psmt/decoder.ts:37'));
+  assert.ok(transcript.evidence.includes('src/psmt/decoder.ts:91'));
+  assert.match(transcript.limits, /does not implement the source paper's optimal multi-symbol transmission rate/);
+
+  const ambiguity = mapped.exhibits.find((item) => item.id === 'three-path-ambiguity');
+  assert.equal(ambiguity.execution, 'real-values');
+  assert.match(ambiguity.outcome, /cannot identify which of two secrets was sent/);
+  assert.match(ambiguity.limits, /does not implement or disprove the distinct interactive protocol/);
+
+  const boundary = mapped.exhibits.find((item) => item.id === 'claim-boundary');
+  assert.equal(boundary.execution, 'conceptual');
+  assert.match(boundary.limits, /does not add a second executable protocol/);
+  assert.match(boundary.limits, /physical network independence/);
+}
+
+test('Hostile Paths records L-R-10 computation without promoting path scenarios or the interactive theorem', () => {
+  checkHostilePathsLr10Scope(html);
+});
+
+test('Hostile Paths L-R-10 controls reject lost credit, stale pins, missing ambiguity or stronger protocol claims', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hostile-paths\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(/Reed-Solomon@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'data-overlaps="',
+      'data-attacks="Fault injection@src/psmt/protocol.ts:152" data-overlaps="',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      '4086fff2f6d89ce83fa8e4dd2ead1a3c42734229',
+      '0'.repeat(40),
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Hostile Paths card');
+    assert.throws(() => checkHostilePathsLr10Scope(changed), assert.AssertionError);
+  }
+
+  const missingAmbiguity = structuredClone(exhibitManifest);
+  missingAmbiguity.labs['crypto-lab-hostile-paths'].exhibits =
+    missingAmbiguity.labs['crypto-lab-hostile-paths'].exhibits
+      .filter((item) => item.id !== 'three-path-ambiguity');
+  assert.throws(() => checkHostilePathsLr10Scope(html, missingAmbiguity), assert.AssertionError);
+
+  const executedInteractive = structuredClone(exhibitManifest);
+  executedInteractive.labs['crypto-lab-hostile-paths'].exhibits
+    .find((item) => item.id === 'topology-planner').limits =
+      'The same executable decoder implements the interactive 2t+1 protocol.';
+  assert.throws(() => checkHostilePathsLr10Scope(html, executedInteractive), assert.AssertionError);
+
+  const strongerPhysicalClaim = structuredClone(exhibitManifest);
+  strongerPhysicalClaim.labs['crypto-lab-hostile-paths'].exhibits
+    .find((item) => item.id === 'claim-boundary').limits =
+      'The browser establishes physically independent authenticated network paths.';
+  assert.throws(() => checkHostilePathsLr10Scope(html, strongerPhysicalClaim), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-hostile-paths'].add = ['Shamir secret sharing@src/psmt/protocol.ts:131'];
+  assert.throws(() => checkHostilePathsLr10Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});
+
 function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
   const slug = 'crypto-lab-shamir-gate';
   assert.deepEqual(implementationsFor(source, slug), [

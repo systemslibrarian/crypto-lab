@@ -311,8 +311,8 @@
    "addedOn": "2026-04-06",
    "updated": "2026-10",
    "addedFrom": "2026-04-06T12:59:25Z",
-   "updatedFrom": "2026-10-15T15:56:23Z",
-   "updatedCommit": "66874ed10bbc796b4d81d3e79c23befaf9f395fd"
+   "updatedFrom": "2026-10-26T09:20:52-04:00",
+   "updatedCommit": "48a7a3ab9298edf708f5496159c39f2cdb9d3227"
   },
   "crypto-lab-dead-sea-cipher": {
    "added": "2026-04",

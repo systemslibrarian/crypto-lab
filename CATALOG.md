@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1791 sections in 247 of 247 labs**
+The exhibit map currently records **1792 sections in 247 of 247 labs**
 (247 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -14398,60 +14398,67 @@ Split a secret into shares using Shamir's Secret Sharing and reconstruct with an
 
 - **Card topics (discovery only):** Shamir SSS, Lagrange Interpolation, GF(p) — labels do not establish what any section runs.
 - **Implements:** AES `demos/shamir-gate/src/crypto.ts:55`, AES-GCM `demos/shamir-gate/src/crypto.ts:72`, Shamir secret sharing `demos/shamir-gate/index.html:118`
+- **Source review:** [48a7a3ab9298](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/48a7a3ab9298edf708f5496159c39f2cdb9d3227) — Read the exact merged README, all nine learner tabs, finite-field and share handling, AES vault, new visual-sharing core and UI, tests, publication controls, mutation runner and hosted deployment evidence. The Visual Shares tab executes Naor and Shamir's exact 2-of-2 four-subpixel construction: a fresh uniform weight-two pattern per source pixel, identical share blocks for white, complementary blocks for black, Boolean-OR reconstruction, separately labeled XOR, basis-derived pixel expansion and contrast, and complete enumeration of both labeled one-share distributions. Mask reuse, position-only scrambling and missing-share controls are computed rather than asserted. The construction is binary 2-of-2 only, assumes aligned shares, supplies no authenticity or print/optical model, and co-locates source plus both shares in one browser. The Differential cryptanalysis match is only a historical paragraph in Adi Shamir's biography; the lab does not execute that attack, so the attack credit is removed. Preserve the existing polynomial Shamir, insufficient-share privacy, AES-GCM custody and failure-classification exhibits. Exact-main run 40329795463 passed 73 unit tests, two publication controls, all 14 clean-baseline mutations and 19 hosted browser/accessibility/reflow checks. Pages artifact 12654776334 deployed through deployment 7332922632, and all three public files matched the artifact byte for byte.
 - **References:** DES, Ed25519, FROST, Feldman VSS, Fiat-Shamir, ML-DSA, Pedersen commitment, RC4, RSA, Schnorr
-- **Attacks shown:** Differential cryptanalysis `demos/shamir-gate/src/main.ts:1474`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [66874ed10bbc](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/66874ed10bbc796b4d81d3e79c23befaf9f395fd) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [48a7a3ab9298](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/48a7a3ab9298edf708f5496159c39f2cdb9d3227) reviewed 2026-10-26; 8 mapped sections.
   - **Encrypt data and share AES key** (`aes-vault`; interactive; real-crypto)
     - **Visible section:** AES Vault
     - **Learner action:** Encrypt a message under a new AES-256-GCM key, split the key into t-of-n shares, and paste shares to decrypt.
     - **Observed result:** Shows authenticated decryption on enough valid shares and failure with wrong key, IV or ciphertext.
     - **Concepts taught:** AES-256-GCM; Shamir key custody; key reconstruction; authenticated encryption
     - **Limits:** The browser holds all shares and key; there are no custodians, authenticated share formats or operational ceremonies.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:678`, `demos/shamir-gate/src/main.ts:736`, `demos/shamir-gate/src/main.ts:1297`, `demos/shamir-gate/src/main.ts:1334`, `demos/shamir-gate/src/main.ts:1363`, `demos/shamir-gate/src/crypto.ts:1`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:654`, `demos/shamir-gate/src/main.ts:672`, `demos/shamir-gate/src/main.ts:679`, `demos/shamir-gate/src/main.ts:685`, `demos/shamir-gate/src/main.ts:721`, `demos/shamir-gate/src/main.ts:737`, `demos/shamir-gate/src/main.ts:739`, `demos/shamir-gate/src/crypto.ts:65`, `demos/shamir-gate/src/crypto.ts:88`
   - **Applications and Adi Shamir history** (`context`; explanation; conceptual)
     - **Visible section:** Real World
     - **Learner action:** Read key ceremony, threshold signature and MPC contexts, then browse Adi Shamir contributions.
     - **Observed result:** Connects sharing to custody and cryptographic history without running those external systems.
     - **Concepts taught:** HSM; certificate authority ceremony; FROST; MPC; Adi Shamir
     - **Limits:** Application examples are narrative, not integrations with deployed HSMs or threshold signers.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:1398`, `demos/shamir-gate/src/main.ts:1434`, `demos/shamir-gate/src/main.ts:1446`, `demos/shamir-gate/src/main.ts:1460`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:1403`, `demos/shamir-gate/src/main.ts:1406`, `demos/shamir-gate/src/main.ts:1409`, `demos/shamir-gate/src/main.ts:1412`, `demos/shamir-gate/src/main.ts:1421`, `demos/shamir-gate/src/main.ts:1438`, `demos/shamir-gate/src/main.ts:1465`
   - **Classify share and decryption failures** (`failure-lab`; interactive; real-crypto)
     - **Visible section:** Failure Lab
     - **Learner action:** Trigger malformed share, too-small field, corrupted digit, wrong AES IV and wrong key share cases.
     - **Observed result:** Separates format and mathematical rejection, silent wrong-secret reconstruction and GCM authentication failure.
     - **Concepts taught:** share integrity; field size; AES-GCM authentication; operational failure
     - **Limits:** Plain x:y:p shares have no integrity mechanism; AES-GCM catches wrong keys only when used to decrypt.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:990`, `demos/shamir-gate/src/main.ts:1017`, `demos/shamir-gate/src/main.ts:1035`, `demos/shamir-gate/src/main.ts:1058`, `demos/shamir-gate/src/main.ts:1383`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:950`, `demos/shamir-gate/src/main.ts:956`, `demos/shamir-gate/src/main.ts:990`, `demos/shamir-gate/src/main.ts:1005`, `demos/shamir-gate/src/main.ts:1017`, `demos/shamir-gate/src/main.ts:1035`, `demos/shamir-gate/src/main.ts:1058`, `demos/shamir-gate/src/main.ts:1063`
   - **Generate and reconstruct shares** (`gate`; interactive; real-crypto)
     - **Visible section:** The Gate
     - **Learner action:** Set secret text and t-of-n threshold, generate serialized shares, and submit enough shares for reconstruction.
     - **Observed result:** Displays a changing vault lock, share values, polynomial metadata and reconstructed secret.
     - **Concepts taught:** Shamir secret sharing; threshold reconstruction; polynomial evaluation; Lagrange interpolation
     - **Limits:** All shares are generated and shown in one browser session; the page does not distribute them to independent custodians.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:112`, `demos/shamir-gate/src/main.ts:140`, `demos/shamir-gate/src/main.ts:1155`, `demos/shamir-gate/src/main.ts:1164`, `demos/shamir-gate/src/shares.ts:1`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:111`, `demos/shamir-gate/src/main.ts:133`, `demos/shamir-gate/src/main.ts:191`, `demos/shamir-gate/src/main.ts:210`, `demos/shamir-gate/src/math.ts:158`, `demos/shamir-gate/src/math.ts:203`, `demos/shamir-gate/src/shares.ts:63`
   - **Step through secret sharing** (`lesson`; interactive; conceptual)
     - **Visible section:** Lesson
     - **Learner action:** Advance an illustrated lesson with short checks of threshold and key-custody concepts.
     - **Observed result:** Explains threshold reconstruction, polynomial shares and the distinction between sharing keys and encrypting files.
     - **Concepts taught:** Shamir secret sharing; threshold; finite field; key custody
     - **Limits:** Teaching questions are conceptual; numerical proof is in the other tabs.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:904`, `demos/shamir-gate/src/main.ts:909`, `demos/shamir-gate/src/main.ts:1094`, `demos/shamir-gate/src/main.ts:1110`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:813`, `demos/shamir-gate/src/main.ts:821`, `demos/shamir-gate/src/main.ts:905`, `demos/shamir-gate/src/main.ts:922`
   - **Animate a sharing polynomial** (`polynomial`; interactive; real-crypto)
     - **Visible section:** Polynomial
     - **Learner action:** Configure a finite-field polynomial, generate shares and animate point interpolation.
     - **Observed result:** Shows sampled share points and the Lagrange interpolation steps at zero.
     - **Concepts taught:** finite field; polynomial interpolation; Lagrange basis; threshold
     - **Limits:** Small display field is illustrative; animation is not a custody protocol.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:285`, `demos/shamir-gate/src/main.ts:361`, `demos/shamir-gate/src/main.ts:1178`, `demos/shamir-gate/src/main.ts:1210`, `demos/shamir-gate/src/polynomial-canvas.ts:1`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:265`, `demos/shamir-gate/src/main.ts:309`, `demos/shamir-gate/src/main.ts:425`, `demos/shamir-gate/src/main.ts:442`, `demos/shamir-gate/src/main.ts:459`, `demos/shamir-gate/src/polynomial-canvas.ts:39`
   - **Test fewer than threshold shares** (`privacy`; interactive; real-crypto)
     - **Visible section:** Security Proof
     - **Learner action:** Propose a secret consistent with t-minus-one revealed shares and check it.
     - **Observed result:** Illustrates that every candidate field secret remains possible with insufficient shares.
     - **Concepts taught:** information-theoretic secrecy; t-minus-one shares; field; polynomial family
     - **Limits:** The theorem assumes independent uniform coefficients and proper field and share handling.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:1236`, `demos/shamir-gate/src/main.ts:1238`, `demos/shamir-gate/src/main.ts:1262`, `demos/shamir-gate/src/main.ts:1270`, `demos/shamir-gate/src/main.ts:1281`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:475`, `demos/shamir-gate/src/main.ts:478`, `demos/shamir-gate/src/main.ts:486`, `demos/shamir-gate/src/main.ts:604`, `demos/shamir-gate/src/main.ts:612`, `demos/shamir-gate/src/main.ts:615`
+  - **Generate and stack visual shares** (`visual-sharing`; interactive; real-operation)
+    - **Visible section:** Visual Shares
+    - **Learner action:** Edit a binary source, generate two fresh-pattern shares, stack them with Boolean OR, compare XOR and run exact distribution and negative controls.
+    - **Observed result:** Shows white same-pattern and black complementary-pattern blocks, derives four-subpixel expansion and one-half relative contrast, and proves identical complete one-share distributions by enumeration.
+    - **Concepts taught:** visual secret sharing; Boolean OR stacking; pixel expansion; relative contrast; information-theoretic privacy; mask reuse
+    - **Limits:** Binary 2-of-2 teaching construction only; it assumes exact alignment, has no authenticity or printing and optical model, and retains the source and both shares in one browser.
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/visual.ts:20`, `demos/shamir-gate/src/visual.ts:114`, `demos/shamir-gate/src/visual.ts:129`, `demos/shamir-gate/src/visual.ts:165`, `demos/shamir-gate/src/visual.ts:197`, `demos/shamir-gate/src/visual.ts:224`, `demos/shamir-gate/src/visual.ts:269`, `demos/shamir-gate/src/visual.ts:293`, `demos/shamir-gate/src/visual-ui.ts:264`, `demos/shamir-gate/src/visual-ui.ts:283`, `demos/shamir-gate/src/visual-ui.ts:299`, `demos/shamir-gate/src/visual-ui.ts:304`
 
 ### Shamir vs FROST
 

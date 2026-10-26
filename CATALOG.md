@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1792 sections in 247 of 247 labs**
+The exhibit map currently records **1793 sections in 247 of 247 labs**
 (247 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -4202,7 +4202,14 @@ Compress a secret beside an attacker-controlled guess, then encrypt with AES-GCM
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-protocol-compose` — Protocol Compose surveys CRIME and composition failures; Compression Leak demonstrates a genuine gzip-to-AES-GCM length oracle with measurements and scoped mitigations.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1fed7250ad8b](https://github.com/systemslibrarian/crypto-lab-compression-leak/commit/1fed7250ad8bbe4b7547b21b56d0451fa1002578) reviewed 2026-10-22; 2 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9f9c83e0d60e](https://github.com/systemslibrarian/crypto-lab-compression-leak/commit/9f9c83e0d60ea18671c65fcf1510a95dc847f4b9) reviewed 2026-10-26; 3 mapped sections.
+  - **What passed, and what failed?** (`authenticated-length-boundary`; explanation; real-values)
+    - **Visible section:** What passed, and what failed?
+    - **Learner action:** Run a probe or comparison, then inspect the authentication result, length verdict, negative claim and scope disclosure.
+    - **Observed result:** Actual AES-GCM decrypt-and-authenticate results and measured ciphertext lengths drive the verdict: shared compression can expose a size difference without breaking AES, while one sample or tied lengths remain inconclusive.
+    - **Concepts taught:** authenticated encryption; ciphertext-length metadata; negative security claim; inconclusive evidence
+    - **Limits:** The page observes synthetic local ciphertext lengths, not HTTP or TLS records, network noise or arbitrary secret recovery; equal lengths do not prove secrecy.
+    - **Evidence at pinned commit:** `src/main.ts:4`, `src/main.ts:10`, `src/main.ts:11`, `src/main.ts:12`, `src/main.ts:17`, `src/crypto/oracle.ts:39`, `src/crypto/oracle.ts:40`, `src/crypto/oracle.ts:41`, `src/crypto/oracle.ts:42`
   - **Compare equal-length guesses and mitigations** (`compression-controls`; comparison; real-crypto)
     - **Visible section:** Observed ciphertext sizes
     - **Learner action:** Compare four equal-length candidates under shared gzip, separate gzip dictionaries, or disabled compression.
@@ -4212,11 +4219,11 @@ Compress a secret beside an attacker-controlled guess, then encrypt with AES-GCM
     - **Evidence at pinned commit:** `src/main.ts:4`, `src/crypto/oracle.ts:6`, `src/crypto/oracle.ts:31`, `src/crypto/oracle.ts:41`, `src/crypto/oracle.ts:44`
   - **Ciphertext length probe** (`length-oracle`; interactive; real-crypto)
     - **Visible section:** Length-oracle workbench
-    - **Learner action:** Enter a guessed synthetic token and measure its gzip then AES-GCM ciphertext size.
-    - **Observed result:** Reports raw, compressed and ciphertext byte counts while AES-GCM authentication remains valid.
+    - **Learner action:** Enter a guessed synthetic token and measure the ciphertext size produced by real gzip followed by AES-GCM.
+    - **Observed result:** Reports the measured ciphertext byte count, including the 16-byte authentication tag, while the real decrypt-and-authenticate check remains valid.
     - **Concepts taught:** compression side channel; gzip; AES-GCM; ciphertext length; BREACH mechanism
     - **Limits:** Synthetic local response; no TLS/network probe or general secret recovery.
-    - **Evidence at pinned commit:** `src/main.ts:4`, `src/crypto/oracle.ts:8`, `src/crypto/oracle.ts:20`, `src/crypto/oracle.ts:37`
+    - **Evidence at pinned commit:** `src/main.ts:4`, `src/crypto/oracle.ts:8`, `src/crypto/oracle.ts:20`, `src/crypto/oracle.ts:40`, `src/crypto/oracle.ts:41`, `src/crypto/oracle.ts:42`
 
 ### Context Ward
 

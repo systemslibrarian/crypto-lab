@@ -1471,8 +1471,8 @@
    "addedOn": "2026-08-01",
    "updated": "2026-10",
    "addedFrom": "2026-08-01T13:11:00Z",
-   "updatedFrom": "2026-10-24T06:59:25-04:00",
-   "updatedCommit": "d904972690e1514d70d5f36fc25b75840b0e4590"
+   "updatedFrom": "2026-10-26T12:33:07-04:00",
+   "updatedCommit": "2ecc6612c2602c0f01ac9869fb07c589c5c9bc91"
   },
   "crypto-lab-simon-period": {
    "added": "2026-08",

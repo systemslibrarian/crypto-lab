@@ -836,7 +836,7 @@ function checkSearchVaultScope(source) {
     'Keyword inference',
   ]);
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-search-vault\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="d904972690e1514d70d5f36fc25b75840b0e4590"/);
+  assert.match(card, /data-review-commit="2ecc6612c2602c0f01ac9869fb07c589c5c9bc91"/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
   assert.ok(!references.includes('Ed25519'),
     'noble’s ristretto module filename must not invent an Ed25519 reference');

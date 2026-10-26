@@ -1,6 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
 const path = require('node:path');
 const { verifyPublishJobs } = require('../tools/deploy-sync.js');
 const { loadLab, analyse, withScriptFixture } = require('../tools/gate-sync.js');
@@ -169,4 +170,50 @@ test('the same check before publication still exposes both gate defects', () => 
   const findings = analyse('fixture', f).findings || [];
   assert.equal(findings.some((x) => x.code === 'GATE-WEAKER'), true);
   assert.equal(findings.some((x) => x.code === 'FUSED-GATE-OFF'), true);
+});
+
+function assertSoundArcadeBrowserGate(source) {
+  assert.match(source, /timeout-minutes:\s*15/);
+  assert.match(source, /run:\s*npx playwright install chromium/);
+  assert.doesNotMatch(source, /playwright install[^\n]*--with-deps/);
+  assert.match(
+    source,
+    /run:\s*node --test --test-timeout=180000 tests\/arcade-browser\.test\.cjs/,
+  );
+}
+
+test('arcade browser gate avoids the wedging apt path without dropping browser play', () => {
+  const source = fs.readFileSync(
+    path.join(__dirname, '../.github/workflows/arcade-three-games.yml'),
+    'utf8',
+  );
+  assertSoundArcadeBrowserGate(source);
+});
+
+test('arcade browser gate controls reject apt reinstatement and lost execution bounds', () => {
+  const source = fs.readFileSync(
+    path.join(__dirname, '../.github/workflows/arcade-three-games.yml'),
+    'utf8',
+  );
+  assert.throws(
+    () =>
+      assertSoundArcadeBrowserGate(
+        source.replace('playwright install chromium', 'playwright install --with-deps chromium'),
+      ),
+    assert.AssertionError,
+  );
+  assert.throws(
+    () => assertSoundArcadeBrowserGate(source.replace('timeout-minutes: 15', '')),
+    assert.AssertionError,
+  );
+  assert.throws(
+    () =>
+      assertSoundArcadeBrowserGate(
+        source.replace(
+          'node --test --test-timeout=180000 tests/arcade-browser.test.cjs',
+          'echo browser omitted',
+        ),
+      ),
+    assert.AssertionError,
+  );
 });

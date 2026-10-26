@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1791 sections in 247 of 247 labs**
+The exhibit map currently records **1793 sections in 247 of 247 labs**
 (247 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -253,7 +253,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Private information retrieval
 
-- **Implemented by:** [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) `src/pir.ts:245`; [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) `src/pir.ts:89`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/pir.ts:191`; [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) `src/ui/app.ts:9`
+- **Implemented by:** [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) `src/pir.ts:245`; [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) `src/pir.ts:160`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/pir.ts:191`; [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) `src/ui/app.ts:9`
 - **Also referenced by:** *CKKS Lab*, *FHE Arena*, *Garbled Gate*, *OT Gate*, *J-UNIWARD*, *ORAM Vault*, *PSI Gate*, *Blind Relay*, *Credential Veil*, *Search Vault*
 
 ### PQ KEM
@@ -4202,7 +4202,14 @@ Compress a secret beside an attacker-controlled guess, then encrypt with AES-GCM
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-protocol-compose` — Protocol Compose surveys CRIME and composition failures; Compression Leak demonstrates a genuine gzip-to-AES-GCM length oracle with measurements and scoped mitigations.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1fed7250ad8b](https://github.com/systemslibrarian/crypto-lab-compression-leak/commit/1fed7250ad8bbe4b7547b21b56d0451fa1002578) reviewed 2026-10-22; 2 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9f9c83e0d60e](https://github.com/systemslibrarian/crypto-lab-compression-leak/commit/9f9c83e0d60ea18671c65fcf1510a95dc847f4b9) reviewed 2026-10-26; 3 mapped sections.
+  - **What passed, and what failed?** (`authenticated-length-boundary`; explanation; real-values)
+    - **Visible section:** What passed, and what failed?
+    - **Learner action:** Run a probe or comparison, then inspect the authentication result, length verdict, negative claim and scope disclosure.
+    - **Observed result:** Actual AES-GCM decrypt-and-authenticate results and measured ciphertext lengths drive the verdict: shared compression can expose a size difference without breaking AES, while one sample or tied lengths remain inconclusive.
+    - **Concepts taught:** authenticated encryption; ciphertext-length metadata; negative security claim; inconclusive evidence
+    - **Limits:** The page observes synthetic local ciphertext lengths, not HTTP or TLS records, network noise or arbitrary secret recovery; equal lengths do not prove secrecy.
+    - **Evidence at pinned commit:** `src/main.ts:4`, `src/main.ts:10`, `src/main.ts:11`, `src/main.ts:12`, `src/main.ts:17`, `src/crypto/oracle.ts:39`, `src/crypto/oracle.ts:40`, `src/crypto/oracle.ts:41`, `src/crypto/oracle.ts:42`
   - **Compare equal-length guesses and mitigations** (`compression-controls`; comparison; real-crypto)
     - **Visible section:** Observed ciphertext sizes
     - **Learner action:** Compare four equal-length candidates under shared gzip, separate gzip dictionaries, or disabled compression.
@@ -4212,11 +4219,11 @@ Compress a secret beside an attacker-controlled guess, then encrypt with AES-GCM
     - **Evidence at pinned commit:** `src/main.ts:4`, `src/crypto/oracle.ts:6`, `src/crypto/oracle.ts:31`, `src/crypto/oracle.ts:41`, `src/crypto/oracle.ts:44`
   - **Ciphertext length probe** (`length-oracle`; interactive; real-crypto)
     - **Visible section:** Length-oracle workbench
-    - **Learner action:** Enter a guessed synthetic token and measure its gzip then AES-GCM ciphertext size.
-    - **Observed result:** Reports raw, compressed and ciphertext byte counts while AES-GCM authentication remains valid.
+    - **Learner action:** Enter a guessed synthetic token and measure the ciphertext size produced by real gzip followed by AES-GCM.
+    - **Observed result:** Reports the measured ciphertext byte count, including the 16-byte authentication tag, while the real decrypt-and-authenticate check remains valid.
     - **Concepts taught:** compression side channel; gzip; AES-GCM; ciphertext length; BREACH mechanism
     - **Limits:** Synthetic local response; no TLS/network probe or general secret recovery.
-    - **Evidence at pinned commit:** `src/main.ts:4`, `src/crypto/oracle.ts:8`, `src/crypto/oracle.ts:20`, `src/crypto/oracle.ts:37`
+    - **Evidence at pinned commit:** `src/main.ts:4`, `src/crypto/oracle.ts:8`, `src/crypto/oracle.ts:20`, `src/crypto/oracle.ts:40`, `src/crypto/oracle.ts:41`, `src/crypto/oracle.ts:42`
 
 ### Context Ward
 
@@ -6397,7 +6404,7 @@ Combining two satisfying R1CS instances leaves a computable cross term; relax th
 - **References:** EC point arithmetic, Ed25519, Fiat-Shamir, STARK, Shamir secret sharing
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f6ed4333ed91](https://github.com/systemslibrarian/crypto-lab-fold-gate/commit/f6ed4333ed91995ceb69cd8c5c5c2f6eba63c85f) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [03713c390843](https://github.com/systemslibrarian/crypto-lab-fold-gate/commit/03713c390843084d8b3240a1fbe867351bfbfc04) reviewed 2026-10-26; 5 mapped sections.
   - **Watch the missing term appear** (`cross-term-walkthrough`; interactive; real-crypto)
     - **Visible section:** Watch the missing term appear
     - **Learner action:** Advance from two satisfying instances through a naive fold, cross-term commitment and corrected relaxed fold.
@@ -11387,39 +11394,42 @@ The original 1996 NTRU lattice cryptosystem with polynomial-ring arithmetic from
 
 [`crypto-lab-oblivious-shelf`](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) · IT-PIR · PRIVACY
 
-2-server XOR Private Information Retrieval (Chor et al. 1995) — a patron retrieves any book from a 16-item catalog without the server learning which one was requested. Step-by-step query walkthrough and privacy audit.
+2-server XOR Private Information Retrieval (Chor et al. 1995) — a patron retrieves a selected book's one-bit checked-out flag while either simulated server's protocol query leaves every catalog index possible. Step-by-step query walkthrough and privacy audit.
 
 - **Card topics (discovery only):** XOR PIR, Chor et al. 1995, 2-Server PIR, Privacy Audit — labels do not establish what any section runs.
-- **Implements:** Private information retrieval `src/pir.ts:89`
+- **Implements:** Private information retrieval `src/pir.ts:160`
 - **References:** BFV, CKKS, Diffie-Hellman, LWE, Private set intersection, Shamir secret sharing
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [13bf4fd8b0f5](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/commit/13bf4fd8b0f560b717cbba7d1158e58a247d7339) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [acdc185d61c8](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/commit/acdc185d61c8aca1692be3bb200a873524385489) reviewed 2026-10-26; 4 mapped sections.
   - **Communication and Server Tradeoffs** (`cost`; comparison; conceptual)
     - **Visible section:** Communication Cost and Tradeoffs
-    - **Learner action:** Change catalog or server assumptions in the cost views and inspect CPIR and deployment comparisons.
-    - **Observed result:** The section contrasts download-all, multi-server IT-PIR, and computational PIR cost and trust assumptions.
+    - **Learner action:** Inspect the cost table and read the comparison among download-all, the executed basic XOR scheme, cited multi-server PIR bounds, CPIR and research systems.
+    - **Observed result:** The section identifies the executed basic scheme's two O(n)-bit queries, separates that cost from better cited PIR constructions, and contrasts information-theoretic and computational assumptions.
     - **Concepts taught:** PIR communication cost; multi-server PIR; computational PIR; collusion
-    - **Evidence at pinned commit:** `src/main.ts:373`, `src/main.ts:376`, `src/main.ts:417`, `src/main.ts:465`, `src/main.ts:488`
+    - **Limits:** The advanced communication bounds, CPIR families and research systems are explanatory references; the lab executes only the basic O(n)-communication two-server XOR construction.
+    - **Evidence at pinned commit:** `src/main.ts:373`, `src/main.ts:386`, `src/main.ts:391`, `src/main.ts:399`, `src/main.ts:414`, `src/main.ts:425`, `src/main.ts:478`, `src/main.ts:488`, `src/main.ts:501`
   - **Librarian Privacy and Policy Boundaries** (`dilemma`; explanation; conceptual)
     - **Visible section:** The Librarian's Dilemma
     - **Learner action:** Read the legal landscape, where IT-PIR fits, and honest limitations.
     - **Observed result:** The section connects query confidentiality to operational assumptions without claiming to resolve catalog content or legal policy issues.
     - **Concepts taught:** reader privacy; library records; PIR deployment limitations
-    - **Evidence at pinned commit:** `src/main.ts:518`, `src/main.ts:521`, `src/main.ts:556`, `src/main.ts:589`
+    - **Limits:** The legal history is explanatory and not legal advice; PIR does not erase patron identity, timing, network, application or circulation records.
+    - **Evidence at pinned commit:** `src/main.ts:528`, `src/main.ts:535`, `src/main.ts:542`, `src/main.ts:548`, `src/main.ts:556`, `src/main.ts:563`, `src/main.ts:567`, `src/main.ts:576`, `src/main.ts:609`, `src/main.ts:630`
   - **Two-Server PIR Query** (`live-query`; interactive; real-operation)
     - **Visible section:** Live PIR Query Demo
     - **Learner action:** Select a catalog item and advance the query walkthrough.
-    - **Observed result:** Two independently computed XOR responses combine to retrieve the selected record without either server receiving the index.
-    - **Concepts taught:** private information retrieval; one-hot selection; XOR query mask; server privacy
-    - **Limits:** The two servers and their noncollusion are simulated in one browser; no network servers are contacted.
-    - **Evidence at pinned commit:** `src/main.ts:306`, `src/main.ts:317`, `src/main.ts:331`, `src/pir.ts:1`, `src/catalog.ts:1`
+    - **Observed result:** Actual sampled subset queries and independently computed XOR responses recover the selected one-bit checked-out flag; a direct database comparison checks correctness and each computed one-server anonymity set retains all 16 indices.
+    - **Concepts taught:** private information retrieval; symmetric-difference target toggle; XOR response; one-bit retrieval; one-server anonymity set
+    - **Limits:** The two servers and their noncollusion are simulated in one browser; the protocol retrieves one bit rather than a catalog record, contacts no network servers, models no transport metadata or logs, and loses privacy if the query shares are combined.
+    - **Evidence at pinned commit:** `src/main.ts:285`, `src/main.ts:310`, `src/main.ts:312`, `src/main.ts:856`, `src/main.ts:861`, `src/main.ts:872`, `src/main.ts:905`, `src/main.ts:1013`, `src/main.ts:1038`, `src/main.ts:1063`, `src/pir.ts:160`, `src/pir.ts:177`, `src/pir.ts:184`, `src/pir.ts:214`
   - **Library Query Privacy and XOR Scheme** (`privacy-problem`; explanation; conceptual)
     - **Visible section:** What is IT-PIR?
     - **Learner action:** Read the one-server privacy problem, noncolluding two-server assumption, and XOR query equations.
-    - **Observed result:** The walkthrough explains how each server sees a random-looking query while replies combine to select one catalog item.
-    - **Concepts taught:** information-theoretic PIR; two-server noncollusion; XOR secret sharing; Chor et al. 1995
-    - **Evidence at pinned commit:** `src/main.ts:84`, `src/main.ts:87`, `src/main.ts:172`, `src/main.ts:204`, `src/pir.ts:1`
+    - **Observed result:** The walkthrough explains how each server sees a uniformly distributed subset while the two replies combine to recover only the selected item's checked-out bit.
+    - **Concepts taught:** information-theoretic PIR; two-server noncollusion; uniform subset queries; Chor et al. 1995
+    - **Limits:** The privacy statement assumes uniform independent subset sampling, identical databases, noncolluding servers and a view limited to one protocol query; it excludes transport metadata, logs and collusion.
+    - **Evidence at pinned commit:** `src/main.ts:84`, `src/main.ts:89`, `src/main.ts:126`, `src/main.ts:199`, `src/main.ts:207`, `src/main.ts:223`, `src/main.ts:250`, `src/main.ts:269`, `src/pir.ts:98`, `src/pir.ts:121`, `src/pir.ts:140`
 
 ### OPAQUE Gate
 
@@ -14398,60 +14408,67 @@ Split a secret into shares using Shamir's Secret Sharing and reconstruct with an
 
 - **Card topics (discovery only):** Shamir SSS, Lagrange Interpolation, GF(p) — labels do not establish what any section runs.
 - **Implements:** AES `demos/shamir-gate/src/crypto.ts:55`, AES-GCM `demos/shamir-gate/src/crypto.ts:72`, Shamir secret sharing `demos/shamir-gate/index.html:118`
+- **Source review:** [48a7a3ab9298](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/48a7a3ab9298edf708f5496159c39f2cdb9d3227) — Read the exact merged README, all nine learner tabs, finite-field and share handling, AES vault, new visual-sharing core and UI, tests, publication controls, mutation runner and hosted deployment evidence. The Visual Shares tab executes Naor and Shamir's exact 2-of-2 four-subpixel construction: a fresh uniform weight-two pattern per source pixel, identical share blocks for white, complementary blocks for black, Boolean-OR reconstruction, separately labeled XOR, basis-derived pixel expansion and contrast, and complete enumeration of both labeled one-share distributions. Mask reuse, position-only scrambling and missing-share controls are computed rather than asserted. The construction is binary 2-of-2 only, assumes aligned shares, supplies no authenticity or print/optical model, and co-locates source plus both shares in one browser. The Differential cryptanalysis match is only a historical paragraph in Adi Shamir's biography; the lab does not execute that attack, so the attack credit is removed. Preserve the existing polynomial Shamir, insufficient-share privacy, AES-GCM custody and failure-classification exhibits. Exact-main run 40329795463 passed 73 unit tests, two publication controls, all 14 clean-baseline mutations and 19 hosted browser/accessibility/reflow checks. Pages artifact 12654776334 deployed through deployment 7332922632, and all three public files matched the artifact byte for byte.
 - **References:** DES, Ed25519, FROST, Feldman VSS, Fiat-Shamir, ML-DSA, Pedersen commitment, RC4, RSA, Schnorr
-- **Attacks shown:** Differential cryptanalysis `demos/shamir-gate/src/main.ts:1474`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [66874ed10bbc](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/66874ed10bbc796b4d81d3e79c23befaf9f395fd) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [48a7a3ab9298](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/48a7a3ab9298edf708f5496159c39f2cdb9d3227) reviewed 2026-10-26; 8 mapped sections.
   - **Encrypt data and share AES key** (`aes-vault`; interactive; real-crypto)
     - **Visible section:** AES Vault
     - **Learner action:** Encrypt a message under a new AES-256-GCM key, split the key into t-of-n shares, and paste shares to decrypt.
     - **Observed result:** Shows authenticated decryption on enough valid shares and failure with wrong key, IV or ciphertext.
     - **Concepts taught:** AES-256-GCM; Shamir key custody; key reconstruction; authenticated encryption
     - **Limits:** The browser holds all shares and key; there are no custodians, authenticated share formats or operational ceremonies.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:678`, `demos/shamir-gate/src/main.ts:736`, `demos/shamir-gate/src/main.ts:1297`, `demos/shamir-gate/src/main.ts:1334`, `demos/shamir-gate/src/main.ts:1363`, `demos/shamir-gate/src/crypto.ts:1`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:654`, `demos/shamir-gate/src/main.ts:672`, `demos/shamir-gate/src/main.ts:679`, `demos/shamir-gate/src/main.ts:685`, `demos/shamir-gate/src/main.ts:721`, `demos/shamir-gate/src/main.ts:737`, `demos/shamir-gate/src/main.ts:739`, `demos/shamir-gate/src/crypto.ts:65`, `demos/shamir-gate/src/crypto.ts:88`
   - **Applications and Adi Shamir history** (`context`; explanation; conceptual)
     - **Visible section:** Real World
     - **Learner action:** Read key ceremony, threshold signature and MPC contexts, then browse Adi Shamir contributions.
     - **Observed result:** Connects sharing to custody and cryptographic history without running those external systems.
     - **Concepts taught:** HSM; certificate authority ceremony; FROST; MPC; Adi Shamir
     - **Limits:** Application examples are narrative, not integrations with deployed HSMs or threshold signers.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:1398`, `demos/shamir-gate/src/main.ts:1434`, `demos/shamir-gate/src/main.ts:1446`, `demos/shamir-gate/src/main.ts:1460`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:1403`, `demos/shamir-gate/src/main.ts:1406`, `demos/shamir-gate/src/main.ts:1409`, `demos/shamir-gate/src/main.ts:1412`, `demos/shamir-gate/src/main.ts:1421`, `demos/shamir-gate/src/main.ts:1438`, `demos/shamir-gate/src/main.ts:1465`
   - **Classify share and decryption failures** (`failure-lab`; interactive; real-crypto)
     - **Visible section:** Failure Lab
     - **Learner action:** Trigger malformed share, too-small field, corrupted digit, wrong AES IV and wrong key share cases.
     - **Observed result:** Separates format and mathematical rejection, silent wrong-secret reconstruction and GCM authentication failure.
     - **Concepts taught:** share integrity; field size; AES-GCM authentication; operational failure
     - **Limits:** Plain x:y:p shares have no integrity mechanism; AES-GCM catches wrong keys only when used to decrypt.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:990`, `demos/shamir-gate/src/main.ts:1017`, `demos/shamir-gate/src/main.ts:1035`, `demos/shamir-gate/src/main.ts:1058`, `demos/shamir-gate/src/main.ts:1383`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:950`, `demos/shamir-gate/src/main.ts:956`, `demos/shamir-gate/src/main.ts:990`, `demos/shamir-gate/src/main.ts:1005`, `demos/shamir-gate/src/main.ts:1017`, `demos/shamir-gate/src/main.ts:1035`, `demos/shamir-gate/src/main.ts:1058`, `demos/shamir-gate/src/main.ts:1063`
   - **Generate and reconstruct shares** (`gate`; interactive; real-crypto)
     - **Visible section:** The Gate
     - **Learner action:** Set secret text and t-of-n threshold, generate serialized shares, and submit enough shares for reconstruction.
     - **Observed result:** Displays a changing vault lock, share values, polynomial metadata and reconstructed secret.
     - **Concepts taught:** Shamir secret sharing; threshold reconstruction; polynomial evaluation; Lagrange interpolation
     - **Limits:** All shares are generated and shown in one browser session; the page does not distribute them to independent custodians.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:112`, `demos/shamir-gate/src/main.ts:140`, `demos/shamir-gate/src/main.ts:1155`, `demos/shamir-gate/src/main.ts:1164`, `demos/shamir-gate/src/shares.ts:1`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:111`, `demos/shamir-gate/src/main.ts:133`, `demos/shamir-gate/src/main.ts:191`, `demos/shamir-gate/src/main.ts:210`, `demos/shamir-gate/src/math.ts:158`, `demos/shamir-gate/src/math.ts:203`, `demos/shamir-gate/src/shares.ts:63`
   - **Step through secret sharing** (`lesson`; interactive; conceptual)
     - **Visible section:** Lesson
     - **Learner action:** Advance an illustrated lesson with short checks of threshold and key-custody concepts.
     - **Observed result:** Explains threshold reconstruction, polynomial shares and the distinction between sharing keys and encrypting files.
     - **Concepts taught:** Shamir secret sharing; threshold; finite field; key custody
     - **Limits:** Teaching questions are conceptual; numerical proof is in the other tabs.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:904`, `demos/shamir-gate/src/main.ts:909`, `demos/shamir-gate/src/main.ts:1094`, `demos/shamir-gate/src/main.ts:1110`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:813`, `demos/shamir-gate/src/main.ts:821`, `demos/shamir-gate/src/main.ts:905`, `demos/shamir-gate/src/main.ts:922`
   - **Animate a sharing polynomial** (`polynomial`; interactive; real-crypto)
     - **Visible section:** Polynomial
     - **Learner action:** Configure a finite-field polynomial, generate shares and animate point interpolation.
     - **Observed result:** Shows sampled share points and the Lagrange interpolation steps at zero.
     - **Concepts taught:** finite field; polynomial interpolation; Lagrange basis; threshold
     - **Limits:** Small display field is illustrative; animation is not a custody protocol.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:285`, `demos/shamir-gate/src/main.ts:361`, `demos/shamir-gate/src/main.ts:1178`, `demos/shamir-gate/src/main.ts:1210`, `demos/shamir-gate/src/polynomial-canvas.ts:1`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:265`, `demos/shamir-gate/src/main.ts:309`, `demos/shamir-gate/src/main.ts:425`, `demos/shamir-gate/src/main.ts:442`, `demos/shamir-gate/src/main.ts:459`, `demos/shamir-gate/src/polynomial-canvas.ts:39`
   - **Test fewer than threshold shares** (`privacy`; interactive; real-crypto)
     - **Visible section:** Security Proof
     - **Learner action:** Propose a secret consistent with t-minus-one revealed shares and check it.
     - **Observed result:** Illustrates that every candidate field secret remains possible with insufficient shares.
     - **Concepts taught:** information-theoretic secrecy; t-minus-one shares; field; polynomial family
     - **Limits:** The theorem assumes independent uniform coefficients and proper field and share handling.
-    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:1236`, `demos/shamir-gate/src/main.ts:1238`, `demos/shamir-gate/src/main.ts:1262`, `demos/shamir-gate/src/main.ts:1270`, `demos/shamir-gate/src/main.ts:1281`
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/main.ts:475`, `demos/shamir-gate/src/main.ts:478`, `demos/shamir-gate/src/main.ts:486`, `demos/shamir-gate/src/main.ts:604`, `demos/shamir-gate/src/main.ts:612`, `demos/shamir-gate/src/main.ts:615`
+  - **Generate and stack visual shares** (`visual-sharing`; interactive; real-operation)
+    - **Visible section:** Visual Shares
+    - **Learner action:** Edit a binary source, generate two fresh-pattern shares, stack them with Boolean OR, compare XOR and run exact distribution and negative controls.
+    - **Observed result:** Shows white same-pattern and black complementary-pattern blocks, derives four-subpixel expansion and one-half relative contrast, and proves identical complete one-share distributions by enumeration.
+    - **Concepts taught:** visual secret sharing; Boolean OR stacking; pixel expansion; relative contrast; information-theoretic privacy; mask reuse
+    - **Limits:** Binary 2-of-2 teaching construction only; it assumes exact alignment, has no authenticity or printing and optical model, and retains the source and both shares in one browser.
+    - **Evidence at pinned commit:** `demos/shamir-gate/src/visual.ts:20`, `demos/shamir-gate/src/visual.ts:114`, `demos/shamir-gate/src/visual.ts:129`, `demos/shamir-gate/src/visual.ts:165`, `demos/shamir-gate/src/visual.ts:197`, `demos/shamir-gate/src/visual.ts:224`, `demos/shamir-gate/src/visual.ts:269`, `demos/shamir-gate/src/visual.ts:293`, `demos/shamir-gate/src/visual-ui.ts:264`, `demos/shamir-gate/src/visual-ui.ts:283`, `demos/shamir-gate/src/visual-ui.ts:299`, `demos/shamir-gate/src/visual-ui.ts:304`
 
 ### Shamir vs FROST
 

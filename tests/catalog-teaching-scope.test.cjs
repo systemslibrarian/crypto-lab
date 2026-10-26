@@ -2952,3 +2952,215 @@ test('Distance Bounding S06 controls reject lost credit, a false attack, stale p
   staleReview['crypto-lab-distance-bounding'].remove = [];
   assert.throws(() => checkDistanceBoundingS06Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
+
+function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-shamir-gate';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'AES',
+    'AES-GCM',
+    'Shamir secret sharing',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Adi Shamir biography text is not an executed differential-cryptanalysis attack');
+
+  const card = openingFor(source, slug);
+  assert.match(card, /data-review-commit="48a7a3ab9298edf708f5496159c39f2cdb9d3227"/);
+  assert.doesNotMatch(card, /data-attacks=/);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '48a7a3ab9298edf708f5496159c39f2cdb9d3227');
+  assert.deepEqual(review.remove, ['Differential cryptanalysis']);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'lesson',
+    'gate',
+    'polynomial',
+    'privacy',
+    'visual-sharing',
+    'aes-vault',
+    'failure-lab',
+    'context',
+  ]);
+  const visual = mapped.exhibits.find((item) => item.id === 'visual-sharing');
+  assert.equal(visual.execution, 'real-operation');
+  assert.ok(visual.evidence.includes('demos/shamir-gate/src/visual.ts:165'));
+  assert.ok(visual.evidence.includes('demos/shamir-gate/src/visual-ui.ts:283'));
+  assert.match(visual.action, /Boolean OR/);
+  assert.match(visual.outcome, /identical complete one-share distributions/);
+  assert.match(visual.limits, /Binary 2-of-2 teaching construction only/);
+  assert.match(visual.limits, /no authenticity or printing and optical model/);
+}
+
+test('Shamir Gate records S07 visual sharing without a biography-derived attack credit', () => {
+  checkShamirGateS07Scope(html);
+});
+
+test('Shamir Gate S07 controls reject a false attack, stale pins, missing evidence or stronger scope', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-shamir-gate\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(
+      'data-standards="',
+      'data-attacks="Differential cryptanalysis@demos/shamir-gate/src/main.ts:1479" data-standards="',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      '48a7a3ab9298edf708f5496159c39f2cdb9d3227',
+      '0'.repeat(40),
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Shamir Gate card');
+    assert.throws(() => checkShamirGateS07Scope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = structuredClone(exhibitManifest);
+  missingExhibit.labs['crypto-lab-shamir-gate'].exhibits =
+    missingExhibit.labs['crypto-lab-shamir-gate'].exhibits
+      .filter((item) => item.id !== 'visual-sharing');
+  assert.throws(() => checkShamirGateS07Scope(html, missingExhibit, catalogReviewed), assert.AssertionError);
+
+  const missingEvidence = structuredClone(exhibitManifest);
+  missingEvidence.labs['crypto-lab-shamir-gate'].exhibits
+    .find((item) => item.id === 'visual-sharing').evidence = [];
+  assert.throws(() => checkShamirGateS07Scope(html, missingEvidence, catalogReviewed), assert.AssertionError);
+
+  const overstatedLimits = structuredClone(exhibitManifest);
+  overstatedLimits.labs['crypto-lab-shamir-gate'].exhibits
+    .find((item) => item.id === 'visual-sharing').limits =
+      'A production authenticated k-of-n visual-cryptography and printing system.';
+  assert.throws(() => checkShamirGateS07Scope(html, overstatedLimits, catalogReviewed), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-shamir-gate'].remove = [];
+  assert.throws(() => checkShamirGateS07Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});
+
+function checkObliviousShelfReview(source, manifests = exhibitManifest) {
+  const slug = 'crypto-lab-oblivious-shelf';
+  assert.deepEqual(implementationsFor(source, slug), ['Private information retrieval']);
+
+  const card = openingFor(source, slug);
+  assert.match(card, /data-implements="Private information retrieval@src\/pir\.ts:160"/);
+  const cardBlock = blockFor(source, slug);
+  assert.match(cardBlock, /one-bit checked-out flag/);
+  assert.doesNotMatch(cardBlock, /retrieves any book|retrieves (?:the )?selected record/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, 'acdc185d61c8aca1692be3bb200a873524385489');
+  assert.equal(mapped.reviewed, '2026-10-26');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'privacy-problem',
+    'live-query',
+    'cost',
+    'dilemma',
+  ]);
+
+  const live = mapped.exhibits.find((item) => item.id === 'live-query');
+  assert.equal(live.execution, 'real-operation');
+  assert.match(live.outcome, /one-bit checked-out flag/);
+  assert.match(live.outcome, /direct database comparison checks correctness/);
+  assert.match(live.outcome, /retains all 16 indices/);
+  assert.match(live.limits, /retrieves one bit rather than a catalog record/);
+  assert.match(live.limits, /loses privacy if the query shares are combined/);
+  assert.ok(live.evidence.includes('src/pir.ts:160'));
+  assert.ok(live.evidence.includes('src/pir.ts:214'));
+
+  const cost = mapped.exhibits.find((item) => item.id === 'cost');
+  assert.equal(cost.execution, 'conceptual');
+  assert.doesNotMatch(cost.action, /^Change /);
+  assert.match(cost.outcome, /executed basic scheme's two O\(n\)-bit queries/);
+  assert.match(cost.limits, /executes only the basic O\(n\)-communication/);
+}
+
+test('Oblivious Shelf review credits one-bit XOR PIR without whole-record or interactive-cost overclaims', () => {
+  checkObliviousShelfReview(html);
+});
+
+test('Oblivious Shelf controls reject stale pins, whole-record claims and stronger cost execution', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-oblivious-shelf\/"[^>]*>/;
+  const staleAnchor = html.replace(cardRe, (card) => card.replace('src/pir.ts:160', 'src/pir.ts:89'));
+  assert.notEqual(staleAnchor, html);
+  assert.throws(() => checkObliviousShelfReview(staleAnchor), assert.AssertionError);
+
+  const wholeRecord = html.replace("retrieves a selected book's one-bit checked-out flag", 'retrieves the selected record');
+  assert.notEqual(wholeRecord, html);
+  assert.throws(() => checkObliviousShelfReview(wholeRecord), assert.AssertionError);
+
+  const stalePin = structuredClone(exhibitManifest);
+  stalePin.labs['crypto-lab-oblivious-shelf'].commit = '0'.repeat(40);
+  assert.throws(() => checkObliviousShelfReview(html, stalePin), assert.AssertionError);
+
+  const recordClaim = structuredClone(exhibitManifest);
+  recordClaim.labs['crypto-lab-oblivious-shelf'].exhibits
+    .find((item) => item.id === 'live-query').outcome =
+      'The responses retrieve the complete selected catalog record.';
+  assert.throws(() => checkObliviousShelfReview(html, recordClaim), assert.AssertionError);
+
+  const interactiveCost = structuredClone(exhibitManifest);
+  const cost = interactiveCost.labs['crypto-lab-oblivious-shelf'].exhibits
+    .find((item) => item.id === 'cost');
+  cost.execution = 'real-operation';
+  cost.action = 'Change server assumptions and execute every advanced PIR construction.';
+  cost.limits = 'All cited constructions are implemented.';
+  assert.throws(() => checkObliviousShelfReview(html, interactiveCost), assert.AssertionError);
+});
+
+function checkCompressionLeakReview(manifests = exhibitManifest) {
+  const mapped = manifests.labs['crypto-lab-compression-leak'];
+  assert.equal(mapped.commit, '9f9c83e0d60ea18671c65fcf1510a95dc847f4b9');
+  assert.equal(mapped.reviewed, '2026-10-26');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'length-oracle',
+    'compression-controls',
+    'authenticated-length-boundary',
+  ]);
+
+  const probe = mapped.exhibits.find((item) => item.id === 'length-oracle');
+  assert.equal(probe.execution, 'real-crypto');
+  assert.match(probe.outcome, /measured ciphertext byte count/);
+  assert.match(probe.outcome, /16-byte authentication tag/);
+  assert.match(probe.outcome, /decrypt-and-authenticate check remains valid/);
+  assert.doesNotMatch(probe.outcome, /Reports raw, compressed and ciphertext byte counts/);
+  assert.ok(probe.evidence.includes('src/crypto/oracle.ts:40'));
+  assert.ok(probe.evidence.includes('src/crypto/oracle.ts:42'));
+
+  const boundary = mapped.exhibits.find((item) => item.id === 'authenticated-length-boundary');
+  assert.equal(boundary.section, 'What passed, and what failed?');
+  assert.equal(boundary.execution, 'real-values');
+  assert.match(boundary.outcome, /without breaking AES/);
+  assert.match(boundary.outcome, /one sample or tied lengths remain inconclusive/);
+  assert.match(boundary.limits, /not HTTP or TLS records/);
+  assert.match(boundary.limits, /equal lengths do not prove secrecy/);
+}
+
+test('Compression Leak review reports only learner-visible lengths and retains its security boundary', () => {
+  checkCompressionLeakReview();
+});
+
+test('Compression Leak controls reject stale pins, hidden byte-count claims and missing boundaries', () => {
+  const stalePin = structuredClone(exhibitManifest);
+  stalePin.labs['crypto-lab-compression-leak'].commit = '0'.repeat(40);
+  assert.throws(() => checkCompressionLeakReview(stalePin), assert.AssertionError);
+
+  const hiddenCounts = structuredClone(exhibitManifest);
+  hiddenCounts.labs['crypto-lab-compression-leak'].exhibits
+    .find((item) => item.id === 'length-oracle').outcome =
+      'Reports raw, compressed and ciphertext byte counts while authentication remains valid.';
+  assert.throws(() => checkCompressionLeakReview(hiddenCounts), assert.AssertionError);
+
+  const missingBoundary = structuredClone(exhibitManifest);
+  missingBoundary.labs['crypto-lab-compression-leak'].exhibits =
+    missingBoundary.labs['crypto-lab-compression-leak'].exhibits
+      .filter((item) => item.id !== 'authenticated-length-boundary');
+  assert.throws(() => checkCompressionLeakReview(missingBoundary), assert.AssertionError);
+
+  const secrecyProof = structuredClone(exhibitManifest);
+  const boundary = secrecyProof.labs['crypto-lab-compression-leak'].exhibits
+    .find((item) => item.id === 'authenticated-length-boundary');
+  boundary.outcome = 'Equal ciphertext lengths prove general length secrecy.';
+  boundary.limits = 'The result applies to arbitrary HTTPS traffic.';
+  assert.throws(() => checkCompressionLeakReview(secrecyProof), assert.AssertionError);
+});

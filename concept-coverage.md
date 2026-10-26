@@ -470,6 +470,15 @@ fresh-nonce, unpredictable-challenge and independent-noise assumptions remain vi
 Identity and authentication stays `COVERED`; this adds the previously missing proximity
 boundary rather than closing an open concept gap. Catalogued total moves to 247.*
 
+*Version 57 — records Shamir Gate's S07 visual-sharing extension under §19 without adding
+a lab or changing a concept status. The exact binary 2-of-2 construction draws one fresh
+weight-two four-subpixel pattern per source pixel, uses identical blocks for white and
+complementary blocks for black, and reconstructs through physical Boolean OR. It derives
+pixel expansion and contrast, enumerates the complete labeled one-share distributions, and
+keeps XOR, mask reuse and position-only scrambling as distinct comparisons or failures.
+This is not general k-of-n visual cryptography, an authenticated share format or an optical
+printing model. Catalogued total remains 247.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -896,6 +905,13 @@ Shamir Gate · VSS Gate · DKG Gate · Reshare Circle · FROST Threshold · GG20
 Threshold Decrypt · Threshold ML-DSA · Shamir vs FROST · Icy DVRF · MuSig Gate · Split Point.
 Generation, verification, refresh, and use are all taught, and Split Point changes the object
 being split.
+
+Shamir Gate now also separates polynomial sharing from visual sharing. Its binary 2-of-2
+lesson expands each source pixel into four subpixels, proves one-share privacy by enumerating
+the full six-pattern distribution for each labeled share and source color, and derives the
+OR-stack contrast from the actual basis. XOR is shown only as a digital comparison; reused
+masks and position-only scrambling are explicit counterexamples, not alternate secrecy
+claims.
 
 Split Point is the generalisation the other eleven do not reach. Every one of them splits a
 **value** — a secret, a signing key, a nonce share. A distributed point function splits a

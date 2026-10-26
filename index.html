@@ -5315,9 +5315,10 @@
             data-implements="AES@demos/shamir-gate/src/crypto.ts:55 | AES-GCM@demos/shamir-gate/src/crypto.ts:72 | Shamir secret sharing@demos/shamir-gate/index.html:118"
             data-comment-only="Diffie-Hellman@demos/shamir-gate/src/math.ts:83 | ElGamal@demos/shamir-gate/src/math.ts:83"
             data-references="DES | Ed25519 | FROST | Feldman VSS | Fiat-Shamir | ML-DSA | Pedersen commitment | RC4 | RSA | Schnorr"
-            data-attacks="Differential cryptanalysis@demos/shamir-gate/src/main.ts:1474"
             data-standards="NIST"
             data-implementation="WebCrypto"
+            data-review-commit="48a7a3ab9298edf708f5496159c39f2cdb9d3227"
+            data-review-note="Read the exact merged README, all nine learner tabs, finite-field and share handling, AES vault, new visual-sharing core and UI, tests, publication controls, mutation runner and hosted deployment evidence. The Visual Shares tab executes Naor and Shamir's exact 2-of-2 four-subpixel construction: a fresh uniform weight-two pattern per source pixel, identical share blocks for white, complementary blocks for black, Boolean-OR reconstruction, separately labeled XOR, basis-derived pixel expansion and contrast, and complete enumeration of both labeled one-share distributions. Mask reuse, position-only scrambling and missing-share controls are computed rather than asserted. The construction is binary 2-of-2 only, assumes aligned shares, supplies no authenticity or print/optical model, and co-locates source plus both shares in one browser. The Differential cryptanalysis match is only a historical paragraph in Adi Shamir's biography; the lab does not execute that attack, so the attack credit is removed. Preserve the existing polynomial Shamir, insufficient-share privacy, AES-GCM custody and failure-classification exhibits. Exact-main run 40329795463 passed 73 unit tests, two publication controls, all 14 clean-baseline mutations and 19 hosted browser/accessibility/reflow checks. Pages artifact 12654776334 deployed through deployment 7332922632, and all three public files matched the artifact byte for byte."
             data-level="advanced"
            
            
@@ -8564,7 +8565,7 @@
           </a>
 
           <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/" data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-10"
-            data-implements="Private information retrieval@src/pir.ts:89"
+            data-implements="Private information retrieval@src/pir.ts:160"
             data-references="BFV | CKKS | Diffie-Hellman | LWE | Private set intersection | Shamir secret sharing"
             data-implementation="hand-rolled"
             data-level="advanced"
@@ -8613,7 +8614,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">IT-PIR</div>
             <div class="project-title">Oblivious Shelf</div>
-            <div class="project-copy">2-server XOR Private Information Retrieval (Chor et al. 1995) — a patron retrieves any book from a 16-item catalog without the server learning which one was requested. Step-by-step query walkthrough and privacy audit.</div>
+            <div class="project-copy">2-server XOR Private Information Retrieval (Chor et al. 1995) — a patron retrieves a selected book's one-bit checked-out flag while either simulated server's protocol query leaves every catalog index possible. Step-by-step query walkthrough and privacy audit.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">XOR PIR</span>

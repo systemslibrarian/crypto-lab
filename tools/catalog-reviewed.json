@@ -851,6 +851,14 @@
       "ECDSA@src/endpoint/architecture.ts:18"
     ]
   },
+  "crypto-lab-shamir-gate": {
+    "commit": "48a7a3ab9298edf708f5496159c39f2cdb9d3227",
+    "reviewed": "2026-10-26",
+    "remove": [
+      "Differential cryptanalysis"
+    ],
+    "note": "Read the exact merged README, all nine learner tabs, finite-field and share handling, AES vault, new visual-sharing core and UI, tests, publication controls, mutation runner and hosted deployment evidence. The Visual Shares tab executes Naor and Shamir's exact 2-of-2 four-subpixel construction: a fresh uniform weight-two pattern per source pixel, identical share blocks for white, complementary blocks for black, Boolean-OR reconstruction, separately labeled XOR, basis-derived pixel expansion and contrast, and complete enumeration of both labeled one-share distributions. Mask reuse, position-only scrambling and missing-share controls are computed rather than asserted. The construction is binary 2-of-2 only, assumes aligned shares, supplies no authenticity or print/optical model, and co-locates source plus both shares in one browser. The Differential cryptanalysis match is only a historical paragraph in Adi Shamir's biography; the lab does not execute that attack, so the attack credit is removed. Preserve the existing polynomial Shamir, insufficient-share privacy, AES-GCM custody and failure-classification exhibits. Exact-main run 40329795463 passed 73 unit tests, two publication controls, all 14 clean-baseline mutations and 19 hosted browser/accessibility/reflow checks. Pages artifact 12654776334 deployed through deployment 7332922632, and all three public files matched the artifact byte for byte."
+  },
   "crypto-lab-shamir-vs-frost": {
     "commit": "ccc55f6488b199d64ba9ddcbe9f2f51b5b9a8239",
     "reviewed": "2026-10-23",

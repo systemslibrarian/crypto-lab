@@ -205,13 +205,43 @@ The local authority can genuinely sign a false time: signature validity cannot
 make the clock trustworthy. A linked-log exercise separately compares internal
 consistency with a checkpoint pinned before the rewrite.
 
+The bounded archive lesson groups two, four or eight text documents under a
+position-aware, domain-separated SHA-256 Merkle root. One real ECDSA timestamp
+signs that root; a separate reduced path verifies every document. Wrong-path and
+wrong-root controls keep inclusion, signed-root equality, response nonce and
+signature validity as separate checks. The four-document learner run exposes all
+four current proofs, and the unit oracle independently rebuilds the root from the
+document strings.
+
+The renewal lesson follows the timestamp-renewal shape in RFC 4998 §§1.2 and 5.
+An overlapping successor key hashes and timestamps the complete prior token,
+including its old signature, before a declared old-key trust cutoff. At a later
+evaluation time, an unrenewed record and a cryptographically valid but late
+renewal are refused. The late control actually uses the compromised old private
+key to sign a changed Merkle root while claiming an old generation time, then
+obtains a valid successor stamp after the cutoff. Its verifier-visible checks
+match the late genuine record; only retained teaching ground truth identifies
+which was forged. This is why a late stamp cannot retroactively create the
+missing trustworthy ordering.
+
 This is neither RFC 3161 ASN.1/CMS nor an independently trusted timestamp service.
-Clock, key custody and external publication are simulated. No X.509 validation,
-network TSA, blockchain, durable log or authorship proof is provided.
+It is also not an RFC 4998 ASN.1 EvidenceRecord: the tree and token use a stated
+JSON teaching encoding. Clock trust, key/certificate epochs, algorithm-suitability
+policy, key custody and external publication are simulated inputs. No X.509
+validation, network TSA, blockchain, durable log or authorship proof is provided.
+The executed renewal is appropriate to the declared signing-key cutoff while
+SHA-256 remains trusted. If the tree hash becomes unsuitable, RFC 4998 requires
+hash-tree renewal over the archived objects and older evidence; that procedure is
+not implemented. RFC 4998's reported erratum 7411 concerns sorting in that
+unimplemented hash-tree-renewal procedure.
 
 Sources: [RFC 3161](https://www.rfc-editor.org/rfc/rfc3161.html), especially §§1–2.4;
-[Haber and Stornetta, 1991](https://doi.org/10.1007/BF00196791). The simple hash chain
-illustrates the linking/anchoring distinction, not the complete paper's protocol.
+[RFC 4998](https://www.rfc-editor.org/rfc/rfc4998.html), especially §§1.2 and 4–5;
+[RFC 9169](https://www.rfc-editor.org/rfc/rfc9169.html), which supplies newer-
+convention ASN.1 modules without changing this lesson into an interoperable implementation;
+and [Haber and Stornetta, 1991](https://doi.org/10.1007/BF00196791). The simple hash
+chain illustrates the linking/anchoring distinction, not the complete paper's
+protocol.
 
 ## Fair exchange
 
@@ -237,18 +267,26 @@ formal abort/resolve analysis are further reading, not implemented features.
 ## Verification
 
 `tests/protocol-workshops.test.mjs` covers signature/message/nonce changes, false
-signed times, anchored rewrites, actual decryption, wrong-session evidence,
-tampering, premature release, terminal decisions and interleaving guards.
+signed times, anchored rewrites, an independently rebuilt Merkle root, every
+inclusion path, wrong paths and roots, exact-token renewal binding, strict epoch
+boundaries, expired and untrusted-time cases, and the late-genuine/backdated-forgery
+ambiguity. It also covers actual decryption, wrong-session evidence, tampering,
+premature release, terminal decisions and interleaving guards.
 `tests/reading-path.test.mjs` checks generated chapter coverage and local links.
 `tests/understanding-cryptography.test.mjs` checks the second-edition path,
 its catalog-only connections, filters, progress and static reading fallback.
 `tests/protocol-workshops-browser.test.cjs` exercises full UI flows, filters,
-progress, keyboard controls, axe accessibility audits and mobile/desktop overflow.
+progress, the rendered batching and renewal claims, keyboard controls, axe
+accessibility audits and mobile/desktop overflow. `timestamping/mutations.mjs`
+first proves the unmodified suite passes, then applies nine concrete source
+mutations and requires the named owning test to catch each one before restoring
+the source byte for byte.
 CI includes these suites; the Understanding Cryptography path also received a
 focused local Chromium smoke check.
 
 ```sh
 node --test tests/protocol-workshops.test.mjs tests/reading-path.test.mjs tests/understanding-cryptography.test.mjs
+node learn/timestamping/mutations.mjs
 node --test tests/protocol-workshops-browser.test.cjs
 ```
 

@@ -125,7 +125,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Implement S11 in Attestation Gate; independently audit the PCR policy transitions, sealed object and protected blob, Load/Unseal outcomes, authorized-recovery and fixedTPM-parent semantics, then verify its exact-main unit, mutation, browser/accessibility and deployment gates and every served asset.
 - [x] Implement L-R-10 in Hostile Paths; independently audit the bounded one-round construction, exact privacy census, error/erasure correction, naive comparison, topology thresholds, ambiguity witness and non-executed interactive boundary, then verify its exact-main unit, coverage, mutation, browser/accessibility and CodeQL gates, deployment and every served asset.
 
-**Implementation work:** E-K-09, L-R-02, A-D-13, A-D-08, A-D-07, S06, S07, L-R-06, E-K-08, L-R-08, E-K-07, S11 and L-R-10 are live at exact reviewed source and deployed assets after independent audits corrected their candidate branches where needed. S03 is the next unassigned optional depth item. The later P2 and P3 scope remains queued, with no implied delivery dates; recheck repository availability and active ownership before expanding this short queue.
+**Implementation work:** E-K-09, L-R-02, A-D-13, A-D-08, A-D-07, S06, S07, L-R-06, E-K-08, L-R-08, E-K-07, S11 and L-R-10 are live at exact reviewed source and deployed assets after independent audits corrected their candidate branches where needed. S03 is in progress in the existing hub Timestamping workshop; it is not yet merged or live. The later P2 and P3 scope remains queued, with no implied delivery dates; recheck repository availability and active ownership before expanding this short queue.
 
 **Maintainer feedback — optional:**
 
@@ -134,7 +134,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **S03 — Timestamp batching and timely evidence renewal:** reconcile the existing Timestamping workshop against current source, then add an executable bounded batch-inclusion and renewal lesson only for acceptance criteria that remain genuinely unfinished.
+1. **S03 — Timestamp batching and timely evidence renewal · In progress:** current source still lacked the three acceptance criteria. The implementation now has a four-document signed Merkle batch, wrong-path/root controls and an RFC 4998-shaped timestamp-renewal comparison; full hosted verification, merge and served-asset confirmation remain.
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
 ## Delivery evidence for completed milestones
@@ -1755,7 +1755,7 @@ Deepen query models and network/privacy composition; timestamp renewal and optim
 
 ### S03 — Timestamp batching and timely evidence renewal
 
-**Priority:** P2 — depth · **Status:** Planned · **Workstream:** Durable cryptographic evidence.
+**Priority:** P2 — depth · **Status:** In progress · **Workstream:** Durable cryptographic evidence.
 
 **Target:** Existing hub Timestamping workshop.
 
@@ -1763,15 +1763,17 @@ Deepen query models and network/privacy composition; timestamp renewal and optim
 
 **Acceptance criteria:**
 
-- Extend the existing signed-receipt workshop to stamp a Merkle root and verify each document's inclusion, including wrong-path/root controls.
-- Renew still-trustworthy evidence across a specified key/algorithm epoch before its assurance fails.
-- Compare unrenewed and timely renewed records and show that a late stamp cannot repair already forged or ambiguously compromised history.
+- [x] Extend the existing signed-receipt workshop to stamp a Merkle root and verify each document's inclusion, including wrong-path/root controls.
+- [x] Renew still-trustworthy evidence across a specified key/algorithm epoch before its assurance fails.
+- [x] Compare unrenewed and timely renewed records and show that a late stamp cannot repair already forged or ambiguously compromised history.
 
-**Next action:** Specify a current timestamp/evidence-renewal model and reuse the existing receipt verifier and Merkle proof mechanics.
+**Implementation in progress:** Four current-run document leaves form a position-aware, domain-separated SHA-256 tree; one real P-256 ECDSA timestamp signs its root and each two-step reduced path is verified independently. The wrong-path control corrupts one sibling while preserving the signed root, and the wrong-root control substitutes the root while preserving the signed token, so inclusion and signature failures remain distinct. The renewal route models overlapping key epochs with a strict old-key cutoff, hashes and timestamps the complete prior token including its signature, and evaluates unrenewed, timely, late-genuine and post-compromise-backdated records. The late genuine record and actual old-key forgery have the same successful verifier-visible hash/signature checks and are both refused because the successor first binds them after the cutoff.
 
-**Scope and limits:** Optional depth. Signed digests, nonces, tampering, backdating, chain rewriting and external-checkpoint trust already execute in the hub workshop.
+**Next action:** Complete the full protocol-workshop, browser/accessibility and nine-case clean-baseline mutation gates; independently inspect the diff, merge only after hosted checks pass, then verify exact served assets before marking S03 Live.
 
-**Audit references:** [Time-Stamping (original PDF pp. 6443–6452)](https://doi.org/10.1007/978-3-030-71522-9_136).
+**Scope and limits:** Optional depth. Signed digests, nonces, tampering, backdating, chain rewriting and external-checkpoint trust already execute in the hub workshop. The extension is an RFC 4998-shaped JSON teaching model, not RFC 3161 CMS or ERS ASN.1. It declares the clock/epoch policy trusted only as an explicit model input and executes timestamp renewal because the signing-key epoch ends while SHA-256 remains trusted. RFC 4998 hash-tree renewal, certificate/revocation validation, network TSAs, durable archival custody and production algorithm-policy monitoring remain outside scope.
+
+**Audit references:** [Time-Stamping (original PDF pp. 6443–6452)](https://doi.org/10.1007/978-3-030-71522-9_136); [RFC 3161](https://www.rfc-editor.org/rfc/rfc3161.html) §§2.1–2.4; [RFC 4998](https://www.rfc-editor.org/rfc/rfc4998.html) §§1.2 and 4–5; [RFC 4998 reported erratum 7411](https://errata.rfc-editor.org/search/?rfc_number=4998), which concerns the separate, unimplemented hash-tree-renewal procedure; [RFC 9169](https://www.rfc-editor.org/rfc/rfc9169.html) for newer-convention ERS ASN.1 modules.
 
 **Pinned baseline:** [Timestamping workshop 743f03b9c613](https://github.com/systemslibrarian/crypto-lab/blob/743f03b9c6134cdcf51b79189e4eadab41bf85ea/learn/timestamping/index.html); [Time Trust 1578c9763ac5](https://github.com/systemslibrarian/crypto-lab-time-trust/tree/1578c9763ac5aa15a343ee97a75be29eaddf2d79); [Merkle Proofs bc58ccd5b628](https://github.com/systemslibrarian/crypto-lab-merkle-proofs/tree/bc58ccd5b628403e8c5002df74fa304b0ce16021); [PKI Chain 0ee9ca34cecd](https://github.com/systemslibrarian/crypto-lab-pki-chain/tree/0ee9ca34cecdc1d434f013fa07b23865c56c382b).
 

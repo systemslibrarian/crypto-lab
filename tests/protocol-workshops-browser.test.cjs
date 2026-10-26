@@ -1,4 +1,4 @@
-const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http'),nodeCrypto=require('node:crypto');
 const {chromium}=require('../tools/node_modules/playwright');
 const AxeBuilder=require('../tools/node_modules/@axe-core/playwright').default;
 const root=path.resolve(__dirname,'..');let server,browser,origin;
@@ -16,6 +16,32 @@ test('timestamp UI distinguishes valid signatures, wrong documents, false clocks
   await page.locator('#replay').click();await contains(page,'status','Request nonce: MISMATCH');
   await page.locator('#edit-chain').click();await contains(page,'chain-status','Document or link mismatch');
   await page.locator('#rebuild-chain').click();await contains(page,'chain-status','Consistent rewrite');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);await audit(page);assert.deepEqual(errors,[]);
+ }finally{await page.context().close();}
+});
+function timestampHash(value){return nodeCrypto.createHash('sha256').update(value).digest('hex');}
+function proofRoot(document,proof){let value=timestampHash(JSON.stringify(['crypto-lab-ers-leaf-v1',document]));for(const step of proof)value=timestampHash(JSON.stringify(['crypto-lab-ers-node-v1',...(step.side==='left'?[step.hash,value]:[value,step.hash]) ]));return value;}
+test('timestamp batching and renewal claims come from the rendered run and keep late evidence ambiguous',async()=>{
+ const {page,errors}=await pageAt('timestamping',390);try{
+  await page.locator('#check-batch').click();await contains(page,'batch-status','all 4 inclusions verify');
+  assert.equal(await page.locator('#batch-results li').count(),4);assert.equal(await page.locator('#batch-results li').filter({hasText:'PASS'}).count(),4);
+  const proof=JSON.parse(await page.locator('#batch-proof').textContent());
+  assert.equal(proofRoot(proof.document,proof.proof),proof.calculatedAgainstRoot);assert.equal(proof.calculatedAgainstRoot,proof.signedImprint);
+  await page.locator('#batch-document').selectOption('1');await page.locator('#wrong-path').click();await contains(page,'batch-status','3 of 4 inclusions verify');
+  assert.match(await page.locator('#batch-results li').nth(1).textContent(),/REJECT.*inclusion path: FAIL/s);
+  await page.locator('#wrong-root').click();await contains(page,'batch-status','0 of 4 inclusions verify');
+  assert.equal(await page.locator('#batch-results li').filter({hasText:'REJECT'}).count(),4);
+  await page.locator('#check-batch').click();await contains(page,'batch-status','all 4 inclusions verify');
+  await contains(page,'renewal-status','Timely renewal: evidence accepted');assert.equal(await page.locator('#renewal-summary article').count(),4);
+  assert.equal((await page.locator('#renewal-summary article').nth(1).locator('.scenario-verdict').textContent()).trim(),'ACCEPT');
+  await page.locator('#renewal-case').selectOption('unrenewed');await contains(page,'renewal-status','evidence refused');await contains(page,'renewal-status','expired without a timely successor stamp');
+  await page.locator('#renewal-case').selectOption('late');await contains(page,'renewal-status','valid cryptography after the cutoff');
+  const genuineLate=JSON.parse(await page.locator('#renewal-ledger').textContent());
+  await page.locator('#renewal-case').selectOption('forged');await contains(page,'renewal-status','valid cryptography after the cutoff');
+  const forgedLate=JSON.parse(await page.locator('#renewal-ledger').textContent());
+  for(const ledger of [genuineLate,forgedLate]){assert.equal(ledger.originalChecks.valid,true);assert.equal(ledger.renewalChecks.signature,true);assert.equal(ledger.renewalChecks.imprint,true);assert.equal(ledger.timely,false);assert.equal(ledger.accepted,false);}
+  assert.match(forgedLate.groundTruthTeachingView,/attacker uses the real old private key/);
+  await page.locator('#trusted-time').uncheck();await contains(page,'renewal-status','signatures alone do not establish either generation time');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);await audit(page);assert.deepEqual(errors,[]);
  }finally{await page.context().close();}
 });

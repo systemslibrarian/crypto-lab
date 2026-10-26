@@ -76,7 +76,8 @@ async function optRun(fn){
   try{await fn();drawOptimistic();}catch(error){drawOptimistic();status('Operation rejected',error.message,'bad','opt-status');}
   finally{optimisticBusy=false;optimisticControls();}
 }
-for(const action of ['send-alice','send-bob','abort','b-resolve','a-resolve','forget-state'])$(`opt-${action}`).onclick=()=>optRun(()=>optimisticAct(optimistic,action));
+for(const action of ['send-alice','send-bob','abort','b-resolve','a-resolve'])$(`opt-${action}`).onclick=()=>optRun(()=>optimisticAct(optimistic,action));
+$('opt-forget').onclick=()=>optRun(()=>optimisticAct(optimistic,'forget-state'));
 $('opt-reset').onclick=()=>optRun(resetOptimistic);
 $('opt-available').onchange=event=>{try{setIntermediaryAvailable(optimistic,event.target.checked);drawOptimistic();}catch(error){status('Availability change rejected',error.message,'bad','opt-status');}};
 

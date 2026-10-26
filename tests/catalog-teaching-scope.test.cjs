@@ -3106,3 +3106,61 @@ test('Oblivious Shelf controls reject stale pins, whole-record claims and strong
   cost.limits = 'All cited constructions are implemented.';
   assert.throws(() => checkObliviousShelfReview(html, interactiveCost), assert.AssertionError);
 });
+
+function checkCompressionLeakReview(manifests = exhibitManifest) {
+  const mapped = manifests.labs['crypto-lab-compression-leak'];
+  assert.equal(mapped.commit, '9f9c83e0d60ea18671c65fcf1510a95dc847f4b9');
+  assert.equal(mapped.reviewed, '2026-10-26');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'length-oracle',
+    'compression-controls',
+    'authenticated-length-boundary',
+  ]);
+
+  const probe = mapped.exhibits.find((item) => item.id === 'length-oracle');
+  assert.equal(probe.execution, 'real-crypto');
+  assert.match(probe.outcome, /measured ciphertext byte count/);
+  assert.match(probe.outcome, /16-byte authentication tag/);
+  assert.match(probe.outcome, /decrypt-and-authenticate check remains valid/);
+  assert.doesNotMatch(probe.outcome, /Reports raw, compressed and ciphertext byte counts/);
+  assert.ok(probe.evidence.includes('src/crypto/oracle.ts:40'));
+  assert.ok(probe.evidence.includes('src/crypto/oracle.ts:42'));
+
+  const boundary = mapped.exhibits.find((item) => item.id === 'authenticated-length-boundary');
+  assert.equal(boundary.section, 'What passed, and what failed?');
+  assert.equal(boundary.execution, 'real-values');
+  assert.match(boundary.outcome, /without breaking AES/);
+  assert.match(boundary.outcome, /one sample or tied lengths remain inconclusive/);
+  assert.match(boundary.limits, /not HTTP or TLS records/);
+  assert.match(boundary.limits, /equal lengths do not prove secrecy/);
+}
+
+test('Compression Leak review reports only learner-visible lengths and retains its security boundary', () => {
+  checkCompressionLeakReview();
+});
+
+test('Compression Leak controls reject stale pins, hidden byte-count claims and missing boundaries', () => {
+  const stalePin = structuredClone(exhibitManifest);
+  stalePin.labs['crypto-lab-compression-leak'].commit = '0'.repeat(40);
+  assert.throws(() => checkCompressionLeakReview(stalePin), assert.AssertionError);
+
+  const hiddenCounts = structuredClone(exhibitManifest);
+  hiddenCounts.labs['crypto-lab-compression-leak'].exhibits
+    .find((item) => item.id === 'length-oracle').outcome =
+      'Reports raw, compressed and ciphertext byte counts while authentication remains valid.';
+  assert.throws(() => checkCompressionLeakReview(hiddenCounts), assert.AssertionError);
+
+  const missingBoundary = structuredClone(exhibitManifest);
+  missingBoundary.labs['crypto-lab-compression-leak'].exhibits =
+    missingBoundary.labs['crypto-lab-compression-leak'].exhibits
+      .filter((item) => item.id !== 'authenticated-length-boundary');
+  assert.throws(() => checkCompressionLeakReview(missingBoundary), assert.AssertionError);
+
+  const secrecyProof = structuredClone(exhibitManifest);
+  const boundary = secrecyProof.labs['crypto-lab-compression-leak'].exhibits
+    .find((item) => item.id === 'authenticated-length-boundary');
+  boundary.outcome = 'Equal ciphertext lengths prove general length secrecy.';
+  boundary.limits = 'The result applies to arbitrary HTTPS traffic.';
+  assert.throws(() => checkCompressionLeakReview(secrecyProof), assert.AssertionError);
+});

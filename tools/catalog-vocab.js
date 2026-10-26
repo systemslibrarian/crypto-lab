@@ -203,6 +203,11 @@ const ALGORITHMS = [
   { name: 'BLS signatures', kind: 'algorithm', family: 'signature', re: /\bbls\b(?![-_]?12)/i, std: 'IETF:draft-irtf-cfrg-bls-signature' },
   { name: 'PEKS', kind: 'algorithm', family: 'searchable encryption', re: /\bpeks\b|public[-_ ]?key[-_ ]?encryption[-_ ]?with[-_ ]?keyword[-_ ]?search/i, std: null },
   { name: 'OXT', kind: 'algorithm', family: 'searchable encryption', re: /\boxt\b/i, std: null },
+  /* The CDL Pi_DAA+ credential uses BBS+ (A,e,s), which is distinct from the
+     CFRG BBS scheme's (A,e) credential and proof format. Keep both terms:
+     an executed BBS+ credential must not become a CFRG BBS-signature claim. */
+  { name: 'BBS+', kind: 'algorithm', family: 'anonymous credential', re: /\bbbs(?:[-_ ]?plus|\+)/i, chipRe: /^bbs(?:[-_ ]?plus|\+)$/i, std: null },
+  { name: 'Direct Anonymous Attestation', kind: 'algorithm', family: 'anonymous attestation', re: /\bdirect[-_ ]?anonymous[-_ ]?attestation\b|\bpi[-_ ]?daa\+?/i, chipRe: /^(?:direct[-_ ]?anonymous[-_ ]?attestation|daa|pi[-_ ]?daa\+?)$/i, std: null },
   /* The CFRG BBS scheme uses (A,e), not BBS+'s (A,e,s). The group's
      BLS12-381 name is not evidence of BLS signing. Credential Veil computes
      BBS sign/verify/proofs in src/bbs and checks official draft vectors. Bare

@@ -19700,12 +19700,14 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-attestation-gate/" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-08"
-            data-implements="AES@src/tpm/credential.ts:43 | ECDH@src/tpm/credential.ts:87 | HMAC@src/core/hmac.ts:15 | P-256@src/tpm/credential.ts:44 | SHA-256@src/core/hmac.ts:15"
-            data-comment-only="ECDSA@src/acts/scenarios.ts:263"
-            data-references="ECDSA | Merkle tree | RSA | SHA-1 | SHA-384 | SHA-512"
+          <a class="project-card" data-category="PROTOCOLS | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-attestation-gate/" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-10"
+            data-implements="AES@src/tpm/credential.ts:43 | AES-CFB@src/tpm/credential.ts:121 | BBS+@src/daa/protocol.ts:271 | BLS12-381@src/daa/groups.ts:14 | Direct Anonymous Attestation@src/daa/protocol.ts:384 | ECDH@src/tpm/credential.ts:87 | ECDSA@src/tpm/key.ts:511 | Fiat-Shamir@src/daa/protocol.ts:214 | Hash-to-curve@src/daa/groups.ts:39 | HMAC@src/core/hmac.ts:15 | P-256@src/tpm/credential.ts:44 | Pairing@src/daa/groups.ts:177 | Schnorr identification@src/daa/protocol.ts:259 | SHA-256@src/core/hmac.ts:15"
+            data-comment-only="Diffie-Hellman@src/daa/protocol.ts:5 | Schnorr@src/daa/groups.ts:146"
+            data-references="Merkle tree | RSA | SHA-1 | SHA-384 | SHA-512"
             data-standards="IETF | NIST"
-            data-implementation="@noble"
+            data-implementation="@noble/curves BLS12-381/P-256 and @noble/ciphers AES-CFB / local SHA-256, HMAC, Fiat-Shamir/Schnorr-identification proofs, CDL Pi_DAA+ and TPM/RATS teaching implementations"
+            data-review-commit="89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61"
+            data-review-note="Read the complete merged README, TPM/RATS source, new DAA protocol and attestation adapter, tests, learner interface and visible limitations at this exact main commit. The seventh tab executes the no-application-attribute CDL Pi_DAA+ construction: issuer Setup and DLEQ proof, nonce-bound Join proof, BBS+ credential issuance, randomized Sign/Verify, named-basename Link, issuer rotation and private-key rogue-list revocation over Type-3 BLS12-381. Its Join route recomputes a Fiat-Shamir challenge and verifies the Schnorr-identification knowledge equation; the multi-relation signature proof uses the same transcript pattern. The existing TPM path also executes ECDSA over P-256 and AES-128-CFB credential wrapping, now credited at their actual signing and encryption calls. The empty-qualifiedSigner TPMS_ATTEST adapter retains PCR and nonce binding while avoiding the stable AK Name. BBS+ here is the CDL (A,e,s) credential, not the CFRG BBS signature scheme; the imported BLS12-381 group performs pairing arithmetic but no BLS signing or verification, so BLS signatures is removed. The README's proof-randomness extraction regression tests prevent proof-randomness and commitment reuse but do not execute a nonce-reuse attack exhibit. Pedersen commitment and Shamir secret sharing are scanner substring collisions with the Chaum–Pedersen and Fiat–Shamir names; neither is implemented. Generic Schnorr-signature credit is removed because this route executes an identification proof, not a Schnorr signature. The authenticated Join channel and unique-TPM admission rule are assumed external prerequisites. This is a zero-application-attribute, named-basename-only algebraic teaching adaptation, not a TPM/ISO ECDAA profile, hardware confinement, bsn=bottom, signature revocation, UC proof, post-quantum construction or side-channel-hardened implementation; anonymous provenance still does not establish runtime integrity. Exact-main run 40277880488 passed 247 unit tests, 66 claims tests (65 passed, one intentional desktop coarse-pointer skip), three accessibility/reflow drives, the build and all 16 clean-baseline mutations. Pages artifact 12630499763 deployed through deployment 7325307975; all three public files matched the artifact and a fresh exact-main build byte for byte."
             data-level="advanced"
            
            
@@ -19780,13 +19782,13 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Remote Attestation</div>
             <div class="project-title">Attestation Gate</div>
-            <div class="project-copy">Measured boot into PCRs, a real TPMS_ATTEST quote, a verifier with reference values — then run something outside the measured set after the last measurement and watch every check pass.</div>
+            <div class="project-copy">Build and appraise measured-boot quotes, then replace the stable attestation-key name with a computed CDL Pi_DAA+ issuer-membership proof and exercise basename linkability, re-Join, and private-key rogue-list checking.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">TPM 2.0</span>
-                <span class="chip">TPMS_ATTEST</span>
                 <span class="chip">RATS</span>
-                <span class="chip">Measured Boot</span>
+                <span class="chip">Direct Anonymous Attestation</span>
+                <span class="chip">Controlled Linkability</span>
               </div>
               <span class="arrow">→</span>
             </div>

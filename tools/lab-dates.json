@@ -1597,10 +1597,10 @@
   "crypto-lab-attestation-gate": {
    "added": "2026-08",
    "addedOn": "2026-08-21",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-08-21T21:13:09Z",
-   "updatedFrom": "2026-08-23T02:53:03-04:00",
-   "updatedCommit": "e7afc09189dba9218e2cb9da3f421641579b03f2"
+   "updatedFrom": "2026-10-26T02:00:58-04:00",
+   "updatedCommit": "8f355c197c25414db43c07dedc62ee161538839f"
   },
   "crypto-lab-ggh-trapdoor": {
    "added": "2026-09",

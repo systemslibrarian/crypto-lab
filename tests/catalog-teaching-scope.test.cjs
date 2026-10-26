@@ -2612,3 +2612,169 @@ test('Residue Gate A-D-13 scope controls reject missing credit, false standards,
   staleReview['crypto-lab-residue-gate'].commit = '0'.repeat(40);
   assert.throws(() => checkResidueGateAd13Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
+
+function checkAttestationGateAd08Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-attestation-gate';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'AES',
+    'AES-CFB',
+    'BBS+',
+    'BLS12-381',
+    'Direct Anonymous Attestation',
+    'ECDH',
+    'ECDSA',
+    'Fiat-Shamir',
+    'Hash-to-curve',
+    'HMAC',
+    'P-256',
+    'Pairing',
+    'Schnorr identification',
+    'SHA-256',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Nonce-extraction regression tests are controls, not an executed nonce-reuse attack exhibit');
+  assert.deepEqual(referencesFor(source, slug), [
+    'Merkle tree', 'RSA', 'SHA-1', 'SHA-384', 'SHA-512',
+  ]);
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-category="PROTOCOLS \| PRIVACY"/);
+  assert.match(opening, /data-review-commit="89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61"/);
+  assert.match(opening, /BBS\+@src\/daa\/protocol\.ts:271/);
+  assert.match(opening, /Direct Anonymous Attestation@src\/daa\/protocol\.ts:384/);
+  assert.match(opening, /AES-CFB@src\/tpm\/credential\.ts:121/);
+  assert.match(opening, /ECDSA@src\/tpm\/key\.ts:511/);
+  assert.match(opening, /Fiat-Shamir@src\/daa\/protocol\.ts:214/);
+  assert.match(opening, /Pairing@src\/daa\/groups\.ts:177/);
+  assert.match(opening, /Schnorr identification@src\/daa\/protocol\.ts:259/);
+  assert.match(opening, /zero-application-attribute, named-basename-only algebraic teaching adaptation/);
+  assert.match(opening, /anonymous provenance still does not establish runtime integrity/);
+  assert.deepEqual(chipsFor(source, slug), [
+    'TPM 2.0', 'RATS', 'Direct Anonymous Attestation', 'Controlled Linkability',
+  ]);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61');
+  assert.equal(review.reviewed, '2026-10-26');
+  assert.ok(review.add.includes('BBS+@src/daa/protocol.ts:271'));
+  assert.ok(review.add.includes('Direct Anonymous Attestation@src/daa/protocol.ts:384'));
+  assert.ok(review.add.includes('AES-CFB@src/tpm/credential.ts:121'));
+  assert.ok(review.add.includes('ECDSA@src/tpm/key.ts:511'));
+  assert.ok(review.add.includes('Fiat-Shamir@src/daa/protocol.ts:214'));
+  assert.ok(review.add.includes('Schnorr identification@src/daa/protocol.ts:259'));
+  assert.ok(review.remove.includes('BLS signatures'));
+  assert.ok(review.remove.includes('Nonce reuse'));
+  assert.deepEqual(review.removeReferences, ['Pedersen commitment', 'Schnorr', 'Shamir secret sharing']);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'measured-boot',
+    'quote-verify',
+    'magic-value',
+    'break-it',
+    'time-of-use',
+    'whose-signature',
+    'failure-taxonomy',
+    'anonymous-membership',
+  ]);
+  assert.deepEqual(mapped.exhibits.slice(0, 6).map((item) => item.evidence[0]), [
+    'src/ui/app.ts:29',
+    'src/ui/app.ts:30',
+    'src/ui/app.ts:31',
+    'src/ui/app.ts:32',
+    'src/ui/app.ts:33',
+    'src/ui/app.ts:34',
+  ]);
+  const daa = mapped.exhibits.find((item) => item.id === 'anonymous-membership');
+  assert.equal(daa.execution, 'real-crypto');
+  assert.deepEqual(daa.evidence, [
+    'src/ui/app.ts:35',
+    'src/ui/panels/daa.ts:85',
+    'src/daa/attestation.ts:33',
+    'src/daa/protocol.ts:222',
+    'src/daa/protocol.ts:271',
+    'src/daa/protocol.ts:384',
+    'src/daa/protocol.ts:493',
+    'src/daa/protocol.ts:621',
+    'src/daa/lesson.ts:157',
+    'src/daa/lesson.ts:209',
+    'src/daa/lesson.ts:224',
+  ]);
+  assert.match(daa.limits, /not a TPM\/ISO ECDAA profile or hardware implementation/);
+  assert.match(daa.limits, /anonymous provenance does not establish runtime integrity/);
+}
+
+test('Attestation Gate credits A-D-08 DAA and BBS+ computation without inventing BLS or nonce-reuse claims', () => {
+  checkAttestationGateAd08Scope(html);
+});
+
+test('BBS+ and Direct Anonymous Attestation vocabulary remain distinct from CFRG BBS and generic attestation', () => {
+  const bbsPlus = ALGORITHMS.find((term) => term.name === 'BBS+');
+  const bbs = ALGORITHMS.find((term) => term.name === 'BBS signatures');
+  const daa = ALGORITHMS.find((term) => term.name === 'Direct Anonymous Attestation');
+  assert.ok(bbsPlus && bbs && daa);
+
+  for (const value of ['BBS+', 'bbs_plus', 'BBS-plus', 'BBS plus']) {
+    assert.ok(bbsPlus.re.test(value), `BBS+ should recognize ${value}`);
+  }
+  for (const value of ['BBS proof', 'BBS signature', 'bbsBits']) {
+    assert.equal(bbsPlus.re.test(value), false, `BBS+ must not claim ${value}`);
+  }
+  assert.equal(bbs.re.test('BBS+ credential'), false);
+  assert.ok(bbsPlus.chipRe.test('BBS+'));
+
+  assert.ok(daa.re.test('Direct Anonymous Attestation'));
+  assert.ok(daa.re.test('Pi_DAA+'));
+  assert.ok(daa.chipRe.test('DAA'));
+  assert.equal(daa.re.test('remote attestation'), false);
+  assert.equal(daa.re.test('anonymous credential'), false);
+});
+
+test('Attestation Gate A-D-08 scope controls reject missing credit, false claims, stale pins or an incomplete exhibit map', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-attestation-gate\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(/BBS\+@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(/Direct Anonymous Attestation@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(/AES-CFB@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(/ECDSA@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(/Fiat-Shamir@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(/Schnorr identification@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'Pairing@src/daa/groups.ts:177',
+      'Pairing@src/daa/groups.ts:176',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-implements="',
+      'data-implements="BLS signatures@src/daa/groups.ts:14 | ',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-standards="',
+      'data-attacks="Nonce reuse@src/daa/protocol.test.ts:1" data-standards="',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      '89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61',
+      '0'.repeat(40),
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Attestation Gate card');
+    assert.throws(() => checkAttestationGateAd08Scope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = structuredClone(exhibitManifest);
+  missingExhibit.labs['crypto-lab-attestation-gate'].exhibits =
+    missingExhibit.labs['crypto-lab-attestation-gate'].exhibits
+      .filter((item) => item.id !== 'anonymous-membership');
+  assert.throws(() => checkAttestationGateAd08Scope(html, missingExhibit, catalogReviewed), assert.AssertionError);
+
+  const overstatedLimits = structuredClone(exhibitManifest);
+  overstatedLimits.labs['crypto-lab-attestation-gate'].exhibits
+    .find((item) => item.id === 'anonymous-membership').limits =
+      'A production TPM/ISO ECDAA implementation with complete revocation.';
+  assert.throws(() => checkAttestationGateAd08Scope(html, overstatedLimits, catalogReviewed), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-attestation-gate'].commit = '0'.repeat(40);
+  assert.throws(() => checkAttestationGateAd08Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});

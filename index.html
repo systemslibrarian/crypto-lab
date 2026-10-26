@@ -5596,7 +5596,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-biham-lens/" data-added="2026-04" data-added-on="2026-04-06" data-updated="2026-10"
             data-implements="PRESENT@src/crypto/present/present.ts:21 | Toy SPN@src/crypto/spn.ts:95"
             data-comment-only="DES@src/crypto/attack.ts:5 | Shamir secret sharing@src/crypto/attack.ts:6"
             data-references="AES | AES-CBC | ChaCha20 | DES | Enigma | MD5 | RSA | SHA-1 | Serpent | Shamir secret sharing | Simon | Speck | Vigenere cipher"
@@ -5605,7 +5605,6 @@
             data-implementation="hand-rolled"
             data-review-commit="2592b2d94e17a6359262b1947d52f6069ca9b3f6"
             data-review-note="Re-read the complete prior-pin change inventory, SPN/FEAL source and added PRESENT-80 core, inverse schedule, analysis, worker and UI. The original toy SPN anchor remains; FEAL-4 and full-round PRESENT-80 are distinct engines. PRESENT recovery assumes known K32 and exhausts 16 missing register bits; it does not obtain K32 or break full PRESENT. The October 21 correction changes teaching prose and the DES comparison, not these engines. DES is reference context only; an independent FIPS-table test establishes its nonzero-input DDT maximum of 16/64, with a successful wrong-value mutation kill. No round count guarantees attack immunity. Remove chosen-ciphertext, collision and padding-oracle credits sourced only from Related Demos links, and linear-cryptanalysis credit sourced only from Serpent context; these attacks are not executed here. On 26 October rechecked the merged ebook-review changes: public S-box/permutation preprocessing is now the default under explicit independent-round assumptions; fixed-key enumeration is an instructor-selected mode. It enumerates 256 inputs, distinguishes contributing trails from their endpoint differential, and exposes the 128 unordered-pair limit and repetitions. True-key comparison is instructor evaluation. Existing SPN, FEAL and PRESENT engines and the previously reviewed exclusions are retained."
-            data-added="2026-04" data-added-on="2026-04-06" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -8211,13 +8210,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-lms-ledger/"
+          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-lms-ledger/" data-added="2026-04" data-added-on="2026-04-09" data-updated="2026-10"
             data-implements="LMS@src/lms.ts:268 | SHA-256@src/lms.ts:70 | Winternitz@src/lms.ts:229"
             data-comment-only="Merkle tree@src/lms.ts:4"
             data-references="Dilithium | Dragonfly | ECDSA | Ed25519 | Falcon | Lamport | ML-DSA | Merkle tree | NTRU | RSA | SHAKE | SLH-DSA | SPHINCS+ | XMSS"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-added="2026-04" data-added-on="2026-04-09" data-updated="2026-10"
             data-level="intermediate"
            
            
@@ -8564,11 +8562,10 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/" data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-10"
             data-implements="Private information retrieval@src/pir.ts:160"
             data-references="Diffie-Hellman | LWE | Private set intersection | Shamir secret sharing"
             data-implementation="hand-rolled"
-            data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -9697,7 +9694,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/" data-added="2026-04" data-added-on="2026-04-18" data-updated="2026-10"
             data-implements="Keccak@src/shake256.ts:41 | NTT@src/loopabort.ts:116 | SHAKE@src/shake256.ts:88"
             data-comment-only="Dilithium@src/rejection.ts:6 | ML-KEM@src/ntt.ts:4 | Shamir secret sharing@src/loopabort.ts:5"
             data-references="Dilithium | EC point arithmetic | Fujisaki-Okamoto transform | HQC | Kyber | ML-KEM | Shamir secret sharing"
@@ -9706,7 +9703,6 @@
             data-implementation="Hand-rolled Keccak/SHAKE256 and NTT; simulated physical attacks using ML-KEM decode and ML-DSA components"
             data-review-commit="ba4fb8251734f5c273b75a461d6ceba25399035a"
             data-review-note="Read README.md, src/main.ts, timing.ts, timing.worker.ts, loopabort.ts, rejection.ts, ntt.ts, shake256.ts and relevant tests at this exact commit. Kyber@src/timing.ts:88 models software-divide cycle counts only, not a complete KEM. ML-DSA@src/loopabort.ts:37 is a parameter object; runLoopAbortAttack constructs one 256-coefficient secret polynomial and z=y+c*s1 with selected real FIPS 204 ring/sampling operations, independently randomized challenge/nonce seeds and toy signer assumptions, not full ML-DSA key generation, signing or verification. Preserve actual Keccak-f[1600]/SHAKE256 and NTT. CPA in src/main.ts:40 means correlation power analysis rather than chosen-plaintext attack; padding-oracle at line618 is a sibling name rather than an executed attack. Keep the disclosed bounded power, fault, timing, key-recovery and LLL computations. No constant-time target-hardware, standards-conformance or full signing-key recovery claim is established. Fleet interpretation work 4ad4a3db-52c4-428e-9b19-d0f63199ef6c; this review does not complete its pending hub integration. Re-read the full prior-pin diff on 18 October (6b127eb to ae17f87, three commits): a claims correction, a devDependency bump and an audit-authorization note. src/main.ts gained a cited research note and one reworded result sentence, both of which NARROW the lab's claims rather than widening them: the ordinary ML-DSA-44 signing average is corrected from 4.25 to about 4.36 iterations per Kwiatkowski, ePrint 2026/2456, and the page now says explicitly that this is not an estimate of fault injections per usable signature and that the model checks only the z bound, not a full signer's acceptance conditions. No executable cryptographic operation changed. Verified the cited lines at the new commit: CPA at src/main.ts:40 is still correlation power analysis in the hero description, and the padding-oracle sibling name moved from line 618 to line 625 under Related demos, shifted by the seven-line note added above it, still a name rather than an executed attack. Every removal and limit above therefore still holds of the pinned source. Reviewed the full October 22 diff from ae17f87: only research text, the countermeasure table, README and browser checks changed. The z-bound model is unchanged; final-verification advice is now explicitly fault-model-dependent with ePrint 2026/2567 marked preprint. No full signer or verifier was added; preserve all prior removals and implementation limits. On 26 October rechecked the merged secret-key-unpacking research comparison and rendered-note guard. This is explanatory prose about physical unprotected pqm4 ML-DSA-65 measurements on Cortex-M4 with an estimated enumeration budget; no additional physical attack or full ML-DSA operation is executed by the browser. Preserve all prior implementation and attack exclusions."
-            data-added="2026-04" data-added-on="2026-04-18" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -11170,7 +11166,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-ibe-gate/"
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-ibe-gate/" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
             data-implements="BLS12-381@src/pairing.ts:11 | Boneh-Franklin IBE@src/main.ts:1611 | ECDSA@src/certificateless.ts:405 | Hash-to-curve@src/pairing.ts:58 | HIBE@src/hibe.ts:179 | HMAC@src/certificateless.ts:142 | P-256@src/certificateless.ts:405 | Pairing@src/ibe.ts:176 | RSA@src/certificateless.ts:252 | RSA-OAEP@src/certificateless.ts:252 | SHA-256@src/certificateless.ts:128"
             data-comment-only="AES@src/ibe.ts:21"
             data-references="Diffie-Hellman | EC point arithmetic | FROST | Fujisaki-Okamoto transform | Shamir secret sharing"
@@ -11178,7 +11174,6 @@
             data-implementation="WebCrypto RSA-OAEP, P-256 ECDSA, HMAC and SHA-256 / @noble/curves BLS12-381 and @noble/hashes SHA-256 / local BasicIdent, HIBE and bounded certificateless teaching implementations"
             data-review-commit="6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f"
             data-review-note="Read the complete current README, BasicIdent and Type-3 HIBE engines, bounded Huang–Wong-style certificateless adapter, learner interface, tests and visible limitations through this exact main. The local scheme code performs BasicIdent and the depth-three HIBE over @noble/curves BLS12-381 group and pairing operations; @noble/hashes supplies SHA-256 in the original pairing routes. It never calls BLS signing or verification, so BLS signatures is removed as an imported-namespace false positive. The IND-CPA/IND-CCA and malleability warnings describe absent security properties rather than learner-executed chosen-plaintext, chosen-ciphertext or malleability attacks, so all four scanner categories produced by that prose are removed. The seventh exhibit adds WebCrypto RSA-OAEP, P-256 ECDSA, HMAC-SHA-256 and SHA-256 around the existing real BasicIdent operation, with capability-limited Type-I and Type-II actors, explicit combined compromise, key-displacement denial and tag-tamper controls. BasicIdent remains IND-CPA, so the cited generic IND-CCA theorem premise is unmet; the one-shot actors are not full adaptive games, a directory-authentication mechanism remains external, and browser JavaScript is not constant-time. This reviewed implementation label records the mixed stack rather than incorrectly describing the whole lab as either only WebCrypto or only @noble."
-            data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
             data-level="advanced"
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Identity-Based Encryption</div>
@@ -11288,13 +11283,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-lms-xmss/"
+          <a class="project-card" data-category="SIGNATURES | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-lms-xmss/" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
             data-implements="LMS@src/forge.ts:51 | SHA-256@src/lmots.ts:22"
             data-comment-only="Merkle tree@src/forge.ts:68 | Winternitz@src/forge.ts:10"
             data-references="Dilithium | Falcon | ML-DSA | Merkle tree | NTRU | SHAKE | SLH-DSA | SPHINCS+ | Winternitz | XMSS"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
             data-level="intermediate"
            
            
@@ -11448,12 +11442,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oram-vault/" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-08"
-            data-implements="AES@src/client/encryption.ts:27 | AES-GCM@src/client/encryption.ts:27"
-            data-references="FRI | Merkle tree | Oblivious transfer | Private information retrieval | Private set intersection | Shamir secret sharing"
-            data-attacks="Cache timing@src/main.ts:419 | Side-channel (unspecified)@src/main.ts:419 | Timing side-channel@src/main.ts:415"
-            data-standards="NIST"
-            data-implementation="WebCrypto"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-oram-vault/" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
+            data-implements="AES@src/client/encryption.ts:103 | AES-GCM@src/client/encryption.ts:103 | HMAC@src/hierarchical/client.ts:185 | SHA-256@src/hierarchical/client.ts:185"
+            data-references="Merkle tree | Oblivious transfer | Private information retrieval | Private set intersection | Shamir secret sharing"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto AES-GCM, HMAC and SHA-256 / local TypeScript Path ORAM and bounded hierarchical ORAM teaching implementations"
+            data-review-commit="0c7f89281784748a9c9d4fafb41d85ac1839a4c5"
+            data-review-note="Read the complete exact-main README, Path client/server/encryption implementation, bounded hierarchy client/server/comparison implementation, learner interface, unit and browser tests, mutation runner, workflow and visible limitations. The retained Path route performs fresh leaf remapping, authenticated encrypted-path transfer, stash access and legal greedy eviction. The sixth exhibit separately runs the same eight operations through Path ORAM and a fixed N=16 hierarchy: a fully scanned one-slot top array plus HMAC-SHA-256-selected whole buckets at levels 2, 4, 8 and 16, unique access-number-and-level dummy labels after a hit, fresh level keys on each build, target deletion and binary-carry rebuilds. Displayed traffic comes from each server's events, and an out-of-table full sweep verifies all sixteen blocks against a separate reference map. The intentionally insecure skip-after-hit control returns the same plaintext while exposing one lookup slot instead of the fixed schedule's 31. The hierarchy deliberately gives every capacity-c bucket c slots, uses 341 server slots and transient O(N) rebuild memory, and is not the papers' asymptotically efficient oblivious hash table, a reproduction or repair of Alibi's combined-stash attack, malicious-server protection, recursive client state or production ORAM. Cache timing and generic side-channel phrases occur only in the Path caveat that declares them out of scope, so they are removed from attack credit. The FRI hit is the day abbreviation `Friday`, not Fast Reed-Solomon IOP of Proximity, so it is removed from reference credit. Exact-main run 40416634305 passed zero-vulnerability audits, typecheck and build, 69 unit tests, seven workflow controls and a passing clean baseline followed by all 12 named mutations on Node 22, 24 and 26; hosted browser, deployment and byte-verification evidence is recorded separately in the roadmap."
             data-level="advanced"
            
            
@@ -11528,12 +11523,12 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Access-Pattern Privacy</div>
             <div class="project-title">ORAM Vault</div>
-            <div class="project-copy">A Path ORAM walkthrough with tree buckets, stash growth, position-map updates, and adversary-view visualization for cloud access-pattern hiding.</div>
+            <div class="project-copy">Compare executable Path ORAM with a bounded hierarchical ORAM, measuring fixed probes, binary-carry rebuild spikes, trusted state, and the access-depth leak caused by skipping post-hit probes.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Path ORAM</span>
-                <span class="chip">Position Map</span>
-                <span class="chip">Stash</span>
+                <span class="chip">Hierarchical ORAM</span>
+                <span class="chip">Rebuild Schedule</span>
                 <span class="chip">Access Patterns</span>
               </div>
               <span class="arrow">→</span>
@@ -12082,14 +12077,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-envelope-kms/"
+          <a class="project-card" data-category="ENCRYPTION | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-envelope-kms/" data-added="2026-04" data-added-on="2026-04-22" data-updated="2026-10"
             data-implements="AES@src/crypto/aead.ts:9 | AES-CTR@src/security/properties.ts:90 | AES-GCM@src/crypto/aead.ts:9 | AES-KW@src/crypto/aes-kw.ts:78 | HKDF@src/crypto/kdf.ts:1 | HMAC@src/kms/forward-secure-log.ts:220 | SHA-256@src/crypto/kdf.ts:1"
             data-references="Argon2 | FF1 | Merkle tree | PBKDF2 | RSA | scrypt"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-review-commit="ad7fab7a04aa29b370b7009f1a18bdb8a346cd90"
             data-review-note="Reviewed the complete E-K-01 key-handle and S02 key-evolving audit-log source, interfaces, tests, browser claims, security notes and change inventory at exact merged main. Existing AES, AES-CTR, AES-GCM, AES-KW, HKDF and SHA-256 implementation anchors are unchanged; S02 adds a direct HMAC-SHA-256 implementation anchor. The key-handle exercises retain real RFC 3394 replay, independent AES-GCM verification, three declared finite presets, bounded no-witness versus incomplete-cutoff reporting and the non-PKCS #11/non-HSM boundary. The new integrity-only lesson compares a static HMAC key with a domain-separated evolving state, models compromise immediately before period c, rejects an earlier evolving-key rewrite under the one-way-evolution and erasure assumptions, and shows that both tracks can forge from c onward. Retained checkpoint, expected CLOSE and outside-heartbeat inputs produce separate integrity, consistency, completeness and freshness results. Exact-main run 40166747041 passed 154 unit tests, 2 publishing controls, 49 browser/accessibility/reflow tests, zero dependency vulnerabilities and all 18 combined mutations; CodeQL run 40166747021 passed. Remove Fault injection because source mutation verifies tests rather than executing a cryptographic fault attack; remove Side-channel (unspecified) because the briefs exclude that claim. The S02 construction is a bounded single-logger/private-verifier adaptation, not the full Schneier–Kelsey protocol, Bellare–Yee's exact construction, a standardized wire format or a security proof; JavaScript cannot guarantee erasure, messages remain plaintext and key evolution or a linear checkpoint alone does not establish completeness, freshness, availability, global consistency or split-view resistance. Merge, deployment and byte-matched live evidence are recorded separately in the implementation roadmap. On 26 October rechecked the merged expected-length policy and research wording. KWP still validates the standard AIV, recovered length and padding, then optionally rejects a mismatch against trusted application length. Both RFC processing paths and omitted-policy compatibility remain. The visible note separates conditional forgery analysis from standard requirements and makes no absolute integrity guarantee. The policy is not a new cipher or attack; prior scope exclusions remain valid."
-            data-added="2026-04" data-added-on="2026-04-22" data-updated="2026-10"
             data-level="beginner"
            
            
@@ -17982,14 +17976,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-dp-noise/"
+          <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-dp-noise/" data-added="2026-07" data-added-on="2026-07-30" data-updated="2026-10"
             data-implements="Gaussian mechanism@src/dp/discrete.ts:40 | Laplace mechanism@src/dp/laplace.ts:45 | Planar Laplace mechanism@src/dp/geo.ts:134"
             data-comment-only="Bloom filter@src/dp/params.ts:62"
             data-references="Bloom filter | CKKS"
             data-implementation="hand-rolled"
             data-review-commit="d038ae68a794df7aa73c8fb91e8562d492093257"
             data-review-note="Read the complete current README, source, unit and browser tests, mutation runner and learner interface through this exact main commit. The payroll route still executes exact rational discrete Laplace/Gaussian sampling, declared sensitivity, nonmutating price quotes and fail-closed session accounting. The separate E-K-07 route computes the normalized ideal planar Laplace density on a declared local Euclidean plane, an attained epsilon-times-distance witness, radial CDF/quantiles, 2,000 current-run samples, nearest-service utility and a public two-candidate repeated-release likelihood transcript. Its independent 7 by 7 finite-grid control derives a boundary normalization violation and an epsilon/2 sufficient repair over that bounded grid. This is an IEEE-754 teaching implementation of the paper's ideal density, not its finite-precision digital mechanism, an Earth-scale map, a universal trajectory attack, correlated-path protection or production location privacy. Repeated independent releases pay the sum of per-point metric bounds; the displayed posterior additionally assumes equal candidate-path priors."
-            data-added="2026-07" data-added-on="2026-07-30" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -18131,7 +18124,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-search-vault/"
+          <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-search-vault/" data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
             data-implements="AES@src/core/aead.ts:14 | AES-GCM@src/core/aead.ts:65 | BLS12-381@src/muse/core.ts:143 | Hash-to-curve@src/muse/core.ts:276 | HMAC@src/core/prf.ts:25 | OXT@src/oxt/core.ts:226 | Paillier@src/muse/math.ts:27 | Pairing@src/muse/core.ts:143 | PEKS@src/peks/core.ts:113 | ristretto255@src/oxt/core.ts:22 | SHA-256@src/core/prf.ts:37 | SHA-512@src/core/prf.ts:46"
             data-comment-only="Bloom filter@src/muse/zgbf.ts:1 | EC point arithmetic@src/peks/core.ts:134"
             data-references="Bloom filter | Boneh-Franklin IBE | Diffie-Hellman | Private information retrieval | Private set intersection | SHA-1"
@@ -18140,7 +18133,6 @@
             data-implementation="WebCrypto AES-GCM / @noble/curves BLS12-381 and ristretto255 / hand-rolled Paillier / bounded local models"
             data-review-commit="28bb6f3c50e0584b5b94e0a5a0c0b9f2ef52141d"
             data-review-note="Re-read exact merged main 28bb6f3c50e0, including the complete README, all source and tests, learner interface, primary-source boundaries, workflows and visible limitations. The original static SSE, query-integrity checkpoint, Type-3 PEKS, bounded two-term OXT and fuzzy-search routes remain intact. Exhibit 10 separates three writers from three readers, builds real BLS12-381 pairing-based indexes and reader/writer delegation values, rejects wrong-role and unauthorized operations atomically, and records only actual iterative-test matches. Its Figure-2-style attack consumes those equality edges plus one colluding reader's known query label, then propagates the label through the measured equivalence class into a second reader and an unauthorized writer row; a changed-keyword control remains unlabelled. The separate SCC 2018 adaptation samples fresh xi, builds 128-bit-share zero-sum garbled Bloom filters, encrypts packed Paillier selectors, sanitizes responses with fresh encryptions of zero, seals writer identifiers with AES-256-GCM, shuffles responses and exposes distinct reader, Query Multiplexer and Data Host views. A separate plaintext oracle derives false-positive and false-negative lists, repeat runs require fresh trapdoor and selector bytes, and the combined-view table makes QM/DH collusion failure explicit. This three-writer browser adaptation is not the complete SCC protocol or proof and supplies no recursive OT, in-line ZGBF, optimized or production parameters, malicious security, revocation, dynamic updates, process isolation or general MUSE claim. BLS signatures is a false positive from the BLS12-381 module import; RSA and RSA-OAEP are false positives from using WebCrypto key generation only to obtain fresh prime factors for Paillier, with no RSA encryption; Fault injection is a pre-existing name collision; and the Paillier-malleability sentence states a limitation rather than executing an attack. Ed25519 and OPAQUE remain reference false positives. Diffie-Hellman remains a legitimate OXT assumption from the README, but the scanner's earliest source comment says DH as an abbreviation for Data Host and is suppressed only as a comment-only anchor. Exact-main run 40369941784 passed 232 unit tests, clean fuzzy and MUSE mutation baselines followed by all 16 and 17 mutations caught, the production build and all 51 hosted browser/accessibility checks. Pages artifact 12673115567 deployed, and all nine public files matched it and a fresh exact-main build byte for byte."
-            data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
             data-level="intermediate"
             data-overlaps="crypto-lab-paillier-gate: Paillier Gate teaches additive homomorphic encryption and tallying; Search Vault uses packed Paillier selectors inside a bounded split-trust multi-user search adaptation."
            
@@ -19743,13 +19735,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PROTOCOLS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-distance-bounding/"
+          <a class="project-card" data-category="PROTOCOLS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-distance-bounding/" data-added="2026-10" data-added-on="2026-10-26" data-updated="2026-10"
             data-implements="HMAC@src/db/sha256.ts:113 | SHA-256@src/db/sha256.ts:40"
             data-standards="IETF | NIST"
             data-implementation="local TypeScript HMAC-SHA-256, Hancke–Kuhn protocol, exact rational timing/probability and attack-event teaching models"
             data-review-commit="4458307b57a02da4362cee5b799f20bdade03fd4"
             data-review-note="Read the complete current README, protocol, PRF, timing, probability, attack/scenario, UI, test, browser-quality, accessibility, mutation and workflow source through this exact main. The learner executes the verifier-nonce Hancke–Kuhn rapid-bit profile with hand-rolled HMAC-SHA-256, exact BigInt rational event timing and probabilities, an ordinary authenticated relay, a timed online relay, mafia pre-asking, dishonest-prover distance fraud and exact independent-noise sampling. The nonce-reuse switch fixes the response table and withdraws the repeated-attempt independence formula; the page explains complementary pre-asks, while the complete two-session register recovery is a unit control rather than a learner-executed attack exhibit, so the README-derived Nonce reuse attack credit is removed. All distance, speed, processing and noise values are declared model inputs; this is not radio measurement, localisation, an interoperable protocol, Brands–Chaum, physical-layer early-detect/late-commit, terrorist-fraud analysis, constant-time code or production parameter guidance. Exact-main quality/deployment run 40312352129 passed 96 unit tests, 99.44/98.42/100/100 coverage, 20 learner-claim checks, 10 accessibility/reflow/keyboard checks and all 15 clean-baseline mutations; CodeQL run 40312351878 passed, and the public files matched the Pages artifact and a fresh exact-main build byte for byte."
-            data-added="2026-10" data-added-on="2026-10-26" data-updated="2026-10"
             data-level="advanced"
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Proximity Authentication</div>
@@ -21542,7 +21533,7 @@
             <div class="project-copy">Step through exact BigInt arithmetic under RSA and finite-field Diffie–Hellman: inverses, Euler φ, orders, generators, subgroups and generalized CRT. Then encode, multiply and square through Montgomery REDC while exposing cancellation, radix shifts, final subtraction and bounded fixed-work timings.</div>
             <div class="project-meta"><div class="stack"><span class="chip">Modular Arithmetic</span><span class="chip">Extended Euclid</span><span class="chip">Euler φ</span><span class="chip">CRT</span><span class="chip">Montgomery REDC</span></div><span class="arrow">&rarr;</span></div>
           </a>
-          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-aes-anatomy/"
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-aes-anatomy/" data-added="2026-10" data-added-on="2026-10-21" data-updated="2026-10"
             data-implements="AES@src/aes/cipher.ts:6"
             data-references="AEGIS-256 | AES-CBC | SHA-256 | TLS 1.3"
             data-attacks="Chosen-plaintext attack@src/ui/act10.ts:23 | Differential fault analysis@src/main.ts:103 | Key recovery@src/ui/act8.ts:155 | Known-plaintext attack@src/ui/act7.ts:78 | Statistical ineffective fault attack@src/attack/sifa.ts:22"
@@ -21550,7 +21541,6 @@
             data-implementation="hand-rolled AES / WebCrypto cross-check"
             data-review-commit="fb4d3d8ebeb099d42aeae47d234fe93296ffa544"
             data-review-note="Reviewed the complete ten-act AES-128/192/256 data path, inverse, key expansion, four opt-in layer ablations, structured round-9 DFA and first-round ineffective-fault lesson. Act 9 executes correct and fault-path AES-128 for each finite-sample trial and classifies exact ciphertext equality; its separate 2,048-row census is analytic, not sampled execution evidence. The selection-only ranker receives selected plaintext bytes and a target bit. A secret-independent null removes key-dependent selection. Rejection exposes output absence; the bounded teaching infection hides selection without a classifier, while an explicitly granted exact clean-reference oracle restores it. The transform is not timing-oblivious, hardened, universal or an implementation of the cited circuit defenses. Side-channel and generic timing mentions remain limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson. The merged ebook extension checks ShiftRows column dispersion against an identity-permutation counterexample and distinguishes an observed trail from the four-round theorem. Act 10 runs real AES-128 operations in a reduced four-round construction with no final MixColumns, filters inverse-S-box XOR balances over complete disjoint 256-input sets through an oracle-only attack API, reverses the round-4 schedule only after uniqueness, and separately verifies three held-out plaintexts. It reports query counts and ambiguity, not a full-AES break. The merge retains the previously reviewed fault, channel and WebCrypto boundaries. All 47 semantic mutation cases were caught and exactly restored before merge."
-            data-added="2026-10" data-added-on="2026-10-21" data-updated="2026-10"
             data-level="intermediate" target="_blank" rel="noopener" style="--accent: #9f88ff;"
             data-overlaps="crypto-lab-aegis-gate: AEGIS Gate shows one AES round inside another construction; AES Anatomy adds the full cipher, key schedule and inverse | crypto-lab-aes-modes: AES Anatomy builds the block primitive; AES Modes composes blocks into encryption schemes">
             <div class="card-kicker">Build AES, Then Attack a Fault</div>

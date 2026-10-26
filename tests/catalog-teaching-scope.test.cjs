@@ -3458,3 +3458,105 @@ test('Compression Leak controls reject stale pins, hidden byte-count claims and 
   boundary.limits = 'The result applies to arbitrary HTTPS traffic.';
   assert.throws(() => checkCompressionLeakReview(secrecyProof), assert.AssertionError);
 });
+
+function checkOramVaultReview(source, manifests = exhibitManifest, reviewed = catalogReviewed) {
+  const slug = 'crypto-lab-oram-vault';
+  assert.deepEqual(implementationsFor(source, slug), ['AES', 'AES-GCM', 'HMAC', 'SHA-256']);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'A caveat naming cache and generic side channels is not an executed attack');
+  assert.ok(!referencesFor(source, slug).includes('FRI'),
+    'The weekday fragment in Friday is not a Fast Reed-Solomon IOP reference');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-review-commit="0c7f89281784748a9c9d4fafb41d85ac1839a4c5"/);
+  assert.match(opening, /AES-GCM@src\/client\/encryption\.ts:103/);
+  assert.match(opening, /HMAC@src\/hierarchical\/client\.ts:185/);
+  assert.match(opening, /SHA-256@src\/hierarchical\/client\.ts:185/);
+  assert.match(opening, /fixed N=16 hierarchy/);
+  assert.match(opening, /skip-after-hit control returns the same plaintext/);
+  assert.match(opening, /not the papers' asymptotically efficient oblivious hash table/);
+
+  const review = reviewed[slug];
+  assert.equal(review.commit, '0c7f89281784748a9c9d4fafb41d85ac1839a4c5');
+  assert.deepEqual(review.remove, ['Cache timing', 'Side-channel (unspecified)']);
+  assert.deepEqual(review.removeReferences, ['FRI']);
+  assert.match(review.implementation, /bounded hierarchical ORAM teaching implementations/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, '0c7f89281784748a9c9d4fafb41d85ac1839a4c5');
+  assert.equal(mapped.reviewed, '2026-10-26');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'access-pattern',
+    'tree',
+    'walkthrough',
+    'adversary',
+    'costs',
+    'path-hierarchy',
+  ]);
+
+  const comparison = mapped.exhibits.find((item) => item.id === 'path-hierarchy');
+  assert.equal(comparison.execution, 'real-crypto');
+  assert.match(comparison.action, /same eight operations/);
+  assert.match(comparison.action, /skip-after-hit control/);
+  assert.match(comparison.outcome, /full 16-block verification/);
+  assert.match(comparison.outcome, /equal plaintext with distinguishable one-probe versus all-level traces/);
+  assert.match(comparison.limits, /overprovisions buckets/);
+  assert.match(comparison.limits, /transient O\(N\) client rebuild space/);
+  assert.match(comparison.limits, /not an asymptotically efficient oblivious hash table/);
+  for (const anchor of [
+    'src/hierarchical/client.ts:185',
+    'src/hierarchical/client.ts:478',
+    'src/hierarchical/client.ts:547',
+    'src/hierarchical/comparison.ts:154',
+    'src/hierarchical/comparison.ts:222',
+  ]) {
+    assert.ok(comparison.evidence.includes(anchor), `Missing E-K-10 evidence anchor ${anchor}`);
+  }
+}
+
+test('ORAM Vault review credits the bounded hierarchy without importing caveats or substrings', () => {
+  checkOramVaultReview(html);
+});
+
+test('ORAM Vault controls reject stale pins, false credits and stronger hierarchy claims', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-oram-vault\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(
+      'HMAC@src/hierarchical/client.ts:185',
+      'HMAC@src/hierarchical/client.ts:184',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-standards="',
+      'data-attacks="Cache timing@src/main.ts:87 | Side-channel (unspecified)@README.md:16" data-standards="',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-references="',
+      'data-references="FRI | ',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      "not the papers' asymptotically efficient oblivious hash table",
+      'a production asymptotically efficient oblivious hash table',
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the ORAM Vault card');
+    assert.throws(() => checkOramVaultReview(changed), assert.AssertionError);
+  }
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-oram-vault'].commit = '0'.repeat(40);
+  assert.throws(() => checkOramVaultReview(html, exhibitManifest, staleReview), assert.AssertionError);
+
+  const missingComparison = structuredClone(exhibitManifest);
+  missingComparison.labs['crypto-lab-oram-vault'].exhibits =
+    missingComparison.labs['crypto-lab-oram-vault'].exhibits
+      .filter((item) => item.id !== 'path-hierarchy');
+  assert.throws(() => checkOramVaultReview(html, missingComparison), assert.AssertionError);
+
+  const strongerComparison = structuredClone(exhibitManifest);
+  const comparison = strongerComparison.labs['crypto-lab-oram-vault'].exhibits
+    .find((item) => item.id === 'path-hierarchy');
+  comparison.outcome = 'The full production construction proves obliviousness against every server.';
+  comparison.limits = 'Production ORAM with constant client memory and malicious-server integrity.';
+  assert.throws(() => checkOramVaultReview(html, strongerComparison), assert.AssertionError);
+});

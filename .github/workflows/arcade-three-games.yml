@@ -19,7 +19,10 @@ jobs:
         run: node --test tests/arcade-games.test.mjs tests/arcade-flow.test.mjs
       - run: npm ci
         working-directory: tools
-      - run: npx playwright install --with-deps chromium
+      # The hosted image already carries Chromium's system libraries. Running
+      # Playwright's apt path here has repeatedly wedged until the job timeout;
+      # keep the real browser test below and install only the browser binary.
+      - run: npx playwright install chromium
         working-directory: tools
       - name: Play through three games on desktop and mobile viewports
         run: node --test --test-timeout=180000 tests/arcade-browser.test.cjs

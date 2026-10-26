@@ -6623,13 +6623,16 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-mac-race/" data-added="2026-04" data-added-on="2026-04-07" data-updated="2026-10"
-            data-implements="AES@src/cmac.ts:39 | AES-CBC@src/cmac.ts:73 | CMAC@src/cmac.ts:113 | CRC-32@src/crc/crc32.ts:14 | GHASH@src/ghash.ts:97 | HMAC@src/crc/hmac-receiver.ts:2 | Poly1305@src/poly1305.ts:110 | SHA-256@src/lengthext.ts:39"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-mac-race/"
+            data-implements="AES@src/cmac.ts:39 | AES-CBC@src/cmac.ts:74 | CMAC@src/cmac.ts:114 | CRC-32@src/crc/crc32.ts:14 | GHASH@src/ghash.ts:97 | HMAC@src/crc/hmac-receiver.ts:2 | PMAC@src/pmac/pmac.ts:178 | Poly1305@src/poly1305.ts:110 | SHA-256@src/lengthext.ts:39"
             data-comment-only="AES-GCM@src/ghash.ts:140"
-            data-references="AES-GCM | BLAKE3 | ChaCha20 | ChaCha20-Poly1305 | MD5 | SHA-1 | SHA-3 | SHA-512 | TLS 1.3"
-            data-attacks="Brute force@src/ui.ts:466 | Length extension@src/lengthext.ts:5 | Nonce reuse@src/crc/panel.ts:57 | Side-channel (unspecified)@src/ui.ts:465 | Timing side-channel@src/crc/panel.ts:60"
+            data-references="AES-GCM | BLAKE3 | ChaCha20 | ChaCha20-Poly1305 | MD5 | SHA-1 | SHA-3 | SHA-512 | Simon | TLS 1.3"
+            data-attacks="Brute force@src/poly1305.ts:142 | Length extension@src/lengthext.ts:111 | Timing side-channel@src/timing.ts:127"
             data-standards="IEEE | IETF | NIST"
-            data-implementation="WebCrypto"
+            data-implementation="WebCrypto AES / local TypeScript CMAC, PMAC, Poly1305, GHASH, SHA-256, CRC and teaching attack implementations"
+            data-review-commit="695391521cfdaf4aee0dc3814b1d324b3b1bbdf1"
+            data-review-note="Re-read the complete current README, cryptographic source, learner interface, unit/browser/accessibility tests, mutation runner and workflows through exact main. The existing HMAC, CMAC, Poly1305, GHASH, secret-prefix length-extension, timing-oracle simulation and raw variable-length CBC-MAC lessons remain. The new lesson executes the exact byte-aligned Black-Rogaway 2002 PMAC definition with full tags, AES-128/AES-256 official vectors, Gray-code offsets, independent non-final AES lanes, the distinct complete/partial final rules and a full-byte verifier. It computes content, position and wrong-final-rule controls and compares exact AES dependency work/span with CMAC without claiming browser parallelism or measured speed. Its post-quantum discussion is explicitly limited to ordinary classical-query access and cites the separate published Q2 attack; PMAC is not presented as NIST-standardized. The PMAC implementation anchor is the core function, not the UI wiring declaration the scanner first encounters. Reviewed attack additions override scanner prose/type/link anchors with the executable Poly1305 brute-force loop, length-extension forge entry point and timing-oracle recovery entry point. The GHASH panel is an explicit raw field-product toy with no nonce, so nonce-reuse prose is not credited as a demonstrated attack. Padding-oracle, AES-CCM, FF1 and format-transforming-encryption hits come only from the tracked historical CBC-MAC build brief, not the shipped demo. The unspecified-side-channel hit is a Poly1305 glossary adjective, not an executed side-channel attack. Exact-main run 40254779759 passed two publication controls, 106 unit tests, 39 browser/accessibility/cross-browser checks and all 24 clean-baseline mutation cases. Pages artifact 12621759091 deployed, and all four public files matched it byte for byte."
+            data-added="2026-04" data-added-on="2026-04-07" data-updated="2026-10"
             data-level="intermediate"
            
            
@@ -6704,13 +6707,13 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Message Authentication</div>
             <div class="project-title">MAC Race</div>
-            <div class="project-copy">HMAC, CMAC, Poly1305, and GHASH compared with live length extension attack, timing attack, and nonce reuse demonstrations. Real WebCrypto operations.</div>
+            <div class="project-copy">Compare real HMAC, CMAC, exact Black–Rogaway PMAC, Poly1305, and GHASH computations with bounded length-extension, raw CBC-MAC forgery, timing-oracle, and one-time-key-reuse lessons.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">HMAC</span>
                 <span class="chip">CMAC</span>
+                <span class="chip">PMAC</span>
                 <span class="chip">Poly1305</span>
-                <span class="chip">GHASH</span>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -9785,11 +9788,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lll-break/" data-added="2026-04" data-added-on="2026-04-18" data-updated="2026-08"
-            data-implements="LWE@src/bkz.ts:222"
-            data-references="Dilithium | ECDSA | Falcon | FrodoKEM | Gaussian mechanism | Kyber | ML-DSA | ML-KEM | NTRU | RSA"
-            data-attacks="Brute force@src/bkz.ts:310 | Factoring@docs/model-limitations.md:127 | Lattice reduction@playwright.a11y.config.ts:10 | Side-channel (unspecified)@README.md:48"
-            data-implementation="hand-rolled"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lll-break/"
+            data-implements="Algorithm SV@src/knapsack.ts:689 | LWE@src/bkz.ts:222 | Merkle–Hellman@src/knapsack.ts:271"
+            data-comment-only="Kyber@src/knapsack.ts:36 | Merkle tree@src/knapsack.ts:8 | ML-KEM@src/knapsack.ts:36 | Shamir secret sharing@src/knapsack.ts:22 | Sum-check@src/knapsack.ts:642"
+            data-references="Dilithium | ECDSA | Falcon | FrodoKEM | Kyber | ML-DSA | ML-KEM | NTRU | RSA"
+            data-attacks="Brute force@src/bkz.ts:310 | Lattice reduction@src/bkz.ts:446"
+            data-implementation="hand-rolled TypeScript LLL/BKZ, LWE, Merkle–Hellman and Lagarias–Odlyzko Algorithm SV teaching implementations"
+            data-review-commit="3f7ca812858c87e0ad6d3c403c86c705dde3e16a"
+            data-review-note="Re-read the complete current README, knapsack and lattice source, learner interface, verification scripts, unit/browser/accessibility tests, mutation runner and workflows through exact main. Existing LLL, toy BKZ and toy-LWE exhibits remain. The sixth exhibit generates and validates a toy superincreasing Merkle-Hellman private key, derives its public weights, encrypts and trapdoor-decrypts a bit vector, then passes the original Lagarias-Odlyzko Algorithm SV basis to the lab's existing LLL reducer using only public weights, target and delta. Candidate rows must have one fixed nonzero coordinate value and independently satisfy the public subset sum in BigInt; both reduced bases receive an exact unimodular-transform postcheck. A reproducible in-budget failure and bounded seed sweep are visible, but neither establishes a density threshold or security result. The route recovers selected plaintext bits, not the original trapdoor or Shamir's equivalent decryption pair; it is neither Shamir's attack nor the later Coster embedding and says nothing about ML-KEM or worst-case lattice hardness. The reviewed Lattice reduction attack addition overrides the scanner's false playwright.a11y.config.ts anchor, which was only the lab slug inside a base URL, with the executable attackLWE entry point. Factoring is only the LLL paper title, side-channel is a sibling-lab description, Gaussian mechanism is a regex collision with discrete-Gaussian LWE sampling, and Merkle tree, Schnorr and Shamir-secret-sharing are surname collisions. Exact-main test run 40254867941 and deploy run 40254867984 passed 24/24 knapsack checks, 2/2 publication controls, build, 29/29 browser checks, 2/2 accessibility/reflow checks and all 19 clean-baseline mutations. Pages artifact 12622431732 deployed, and all five public files matched it byte for byte."
+            data-added="2026-04" data-added-on="2026-04-18" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -9850,13 +9857,13 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Post-Quantum Cryptanalysis</div>
             <div class="project-title">LLL Break</div>
-            <div class="project-copy">Step-by-step LLL and BKZ lattice reduction with Gram-Schmidt views, Lovasz condition checks, and a toy LWE primal attack that shows why Kyber-sized parameters do not fall the same way.</div>
+            <div class="project-copy">Step through LLL and toy BKZ/LWE reduction, then build, decrypt, and attack a toy Merkle–Hellman knapsack with the original Lagarias–Odlyzko Algorithm SV lattice.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">LLL</span>
                 <span class="chip">BKZ</span>
-                <span class="chip">Gram-Schmidt</span>
-                <span class="chip">Toy LWE</span>
+                <span class="chip">Merkle–Hellman</span>
+                <span class="chip">Algorithm SV</span>
               </div>
               <span class="arrow">→</span>
             </div>

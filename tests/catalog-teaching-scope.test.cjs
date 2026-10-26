@@ -1658,6 +1658,93 @@ test('Signature Gate A-D-09 controls reject stale evidence and stronger proof cl
   assert.throws(() => checkConfirmerAd09Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
 
+function checkEk09Lr02Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const lll = 'crypto-lab-lll-break';
+  const lllOpening = openingFor(source, lll);
+  assert.deepEqual(implementationsFor(source, lll), ['Algorithm SV', 'LWE', 'Merkle–Hellman']);
+  assert.deepEqual(attacksFor(source, lll), ['Brute force', 'Lattice reduction']);
+  assert.match(lllOpening, /Lattice reduction@src\/bkz\.ts:446/,
+    'Lattice-reduction credit must point at the executable attackLWE entry point');
+  assert.doesNotMatch(lllOpening, /Lattice reduction@playwright\.a11y\.config\.ts/,
+    'The lab slug inside a Playwright base URL is not attack evidence');
+  assert.equal(reviews[lll].commit, '3f7ca812858c87e0ad6d3c403c86c705dde3e16a');
+  assert.ok(reviews[lll].addAttacks.includes('Lattice reduction@src/bkz.ts:446'));
+  assert.match(reviews[lll].note, /overrides the scanner's false playwright\.a11y\.config\.ts anchor/);
+  assert.equal(manifests.labs[lll].commit, reviews[lll].commit);
+  assert.ok(manifests.labs[lll].exhibits.some(exhibit => exhibit.id === 'merkle-hellman-algorithm-sv'));
+
+  const mac = 'crypto-lab-mac-race';
+  const macOpening = openingFor(source, mac);
+  assert.ok(implementationsFor(source, mac).includes('PMAC'));
+  assert.match(macOpening, /PMAC@src\/pmac\/pmac\.ts:178/);
+  assert.deepEqual(attacksFor(source, mac), ['Brute force', 'Length extension', 'Timing side-channel']);
+  assert.match(macOpening, /Brute force@src\/poly1305\.ts:142/);
+  assert.match(macOpening, /Length extension@src\/lengthext\.ts:111/);
+  assert.match(macOpening, /Timing side-channel@src\/timing\.ts:127/,
+    'Timing credit must point at the executable oracle recovery');
+  assert.doesNotMatch(macOpening, /Timing side-channel@src\/crc\/panel\.ts/,
+    'A link to a sibling Timing Oracle lab is not attack evidence');
+  assert.ok(!attacksFor(source, mac).includes('Nonce reuse'),
+    'The raw GHASH field toy explicitly has no nonce');
+  assert.ok(!attacksFor(source, mac).includes('Side-channel (unspecified)'),
+    'A glossary adjective is not an executed side-channel lesson');
+  assert.equal(reviews[mac].commit, '695391521cfdaf4aee0dc3814b1d324b3b1bbdf1');
+  assert.equal(manifests.labs[mac].commit, reviews[mac].commit);
+  const pmac = manifests.labs[mac].exhibits.find(exhibit => exhibit.id === 'pmac');
+  assert.ok(pmac);
+  assert.match(pmac.limits, /not a browser speed benchmark/);
+  assert.match(pmac.limits, /does not implement Q2 oracle access/);
+}
+
+test('E-K-09 and L-R-02 catalog evidence points at executable source with bounded claims', () => {
+  checkEk09Lr02Scope(html);
+});
+
+test('Merkle-tree vocabulary excludes every supported Merkle–Hellman separator', () => {
+  const tree = ALGORITHMS.find(term => term.name === 'Merkle tree');
+  const knapsack = ALGORITHMS.find(term => term.name === 'Merkle–Hellman');
+  assert.ok(tree);
+  assert.ok(knapsack);
+  assert.ok(tree.re.test('Merkle tree'));
+  for (const spelling of ['Merkle-Hellman', 'Merkle Hellman', 'Merkle_Hellman', 'Merkle–Hellman']) {
+    assert.ok(knapsack.re.test(spelling), `${spelling} must resolve to the historical knapsack`);
+    assert.equal(tree.re.test(spelling), false, `${spelling} must not resolve to Merkle tree`);
+  }
+});
+
+test('E-K-09 and L-R-02 scope controls reject scanner-only anchors and lost boundaries', () => {
+  const lllCard = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-lll-break\/"[\s\S]*?<\/a>/;
+  const macCard = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-mac-race\/"[\s\S]*?<\/a>/;
+  for (const changed of [
+    html.replace(lllCard, card => card.replace(
+      'Lattice reduction@src/bkz.ts:446',
+      'Lattice reduction@playwright.a11y.config.ts:10')),
+    html.replace(lllCard, card => card.replace(/Lattice reduction@src\/bkz\.ts:446(?: \| )?/, '')),
+    html.replace(macCard, card => card.replace('PMAC@src/pmac/pmac.ts:178', 'PMAC@src/pmac/panel.ts:9')),
+    html.replace(macCard, card => card.replace('Brute force@src/poly1305.ts:142', 'Brute force@src/ui.ts:474')),
+    html.replace(macCard, card => card.replace('Length extension@src/lengthext.ts:111', 'Length extension@src/lengthext.ts:5')),
+    html.replace(macCard, card => card.replace(
+      'Timing side-channel@src/timing.ts:127',
+      'Timing side-channel@src/crc/panel.ts:60')),
+    html.replace(macCard, card => card.replace('data-attacks="',
+      'data-attacks="Nonce reuse@src/crc/panel.ts:57 | ')),
+    html.replace(macCard, card => card.replace('data-attacks="',
+      'data-attacks="Side-channel (unspecified)@src/ui.ts:473 | ')),
+  ]) {
+    assert.notEqual(changed, html, 'E-K-09/L-R-02 negative control must change its card');
+    assert.throws(() => checkEk09Lr02Scope(changed), assert.AssertionError);
+  }
+
+  const stale = structuredClone(catalogReviewed);
+  stale['crypto-lab-lll-break'].commit = 'a7eea56efd93cb05bc578fe18512416698366f0d';
+  assert.throws(() => checkEk09Lr02Scope(html, exhibitManifest, stale), assert.AssertionError);
+
+  const overclaim = structuredClone(exhibitManifest);
+  overclaim.labs['crypto-lab-mac-race'].exhibits.find(exhibit => exhibit.id === 'pmac').limits =
+    'Measured browser parallelism with post-quantum security.';
+  assert.throws(() => checkEk09Lr02Scope(html, overclaim), assert.AssertionError);
+});
+
 function checkScope(source) {
   // HQC Timing Break cc4305c7: src/engine.ts runs a repetition-code cache
   // model. data.ts's 2020 chosen-ciphertext event and README's Lattice Fault

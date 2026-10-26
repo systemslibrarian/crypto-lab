@@ -422,6 +422,17 @@ games for the same keyed toy family, with complete key-space counts and a signed
 application boundary. The finite 8-to-8-bit separation is not a UOWHF construction,
 asymptotic result or claim about a real hash. Catalogued total remains 246.*
 
+*Version 52 — records two delivered depth extensions without adding a lab or changing
+a concept status. Under §5, MAC Race now executes the byte-aligned Black–Rogaway 2002
+PMAC definition, including Gray-code offsets, distinct full/partial final rules and an
+exact AES dependency comparison with CMAC; modeled waves are not measured browser
+parallelism, and the ordinary classical-query lesson explicitly excludes the published
+Q2 setting. Under §10, LLL Break now builds and trapdoor-decrypts a toy Merkle–Hellman
+knapsack, then gives the original unscaled Lagarias–Odlyzko Algorithm SV basis to its
+existing LLL engine using public data only. The bounded route recovers message bits on
+selected instances, not a trapdoor; its visible failures and finite seed sweep establish
+neither a density threshold nor security. Catalogued total remains 246.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -554,6 +565,13 @@ misuse-resistant AEAD. Stream Ward extends the arc past the single message: chai
 AEAD, where each segment's tag covers a rolling chain state plus its sequence number, so
 reordering or truncating intact valid frames is caught. One-shot AEAD authenticates *content*;
 this authenticates *order and completeness*.
+
+MAC Race now makes the sequential-versus-parallelizable block-cipher-MAC distinction
+executable. Its PMAC route computes the 2002 construction's offsets, independent non-final
+AES lanes and final-block rule, while the adjacent CMAC route supplies the dependency-chain
+control. The displayed work and span are exact for those algorithms and the selected lane
+budget; they are not a JavaScript timing benchmark or a post-quantum claim under superposition
+oracle access.
 
 **6. Key derivation and password hashing — `COVERED`**
 KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault · Drift Key.
@@ -708,6 +726,15 @@ dimensions (n = 8–60) plain LLL on the public basis already recovers a basis a
 private one, so nothing on the page is evidence that GGH was hard at these sizes — it was
 proposed at n = 200–400 for exactly that reason. That makes it a companion to LLL Break and
 Lattice Gentle, not a competitor to them.
+
+LLL Break adds the historical knapsack counterexample to that same lesson. It generates a
+real toy Merkle–Hellman key, encrypts and decrypts with the superincreasing trapdoor, then
+runs the original Lagarias–Odlyzko Algorithm SV lattice against only the public weights and
+ciphertext. Exact public-sum and unimodular-transform checks prevent a short row from becoming
+a claimed plaintext by inspection alone. The route recovers message bits rather than the
+original or an equivalent trapdoor, and its reproducible bounded failures are a warning about
+the teaching attack's reach, not evidence that the broken construction is secure or that a
+toy density sweep locates a theorem threshold.
 
 *Optional depth, not a gap:* the NTT appears **inside** Lattice Fault, KyberSlash, and
 Ciphertext Mirror but never as the transform itself. It is an enabling computational

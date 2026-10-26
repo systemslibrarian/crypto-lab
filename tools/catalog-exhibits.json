@@ -21697,8 +21697,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-lll-break": {
-      "commit": "a7eea56efd93cb05bc578fe18512416698366f0d",
-      "reviewed": "2026-10-22",
+      "commit": "3f7ca812858c87e0ad6d3c403c86c705dde3e16a",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -21716,9 +21716,9 @@
             "integer span"
           ],
           "evidence": [
-            "src/main.ts:50",
             "src/main.ts:66",
-            "src/main.ts:76",
+            "src/main.ts:70",
+            "src/main.ts:92",
             "src/lattice.ts:1"
           ],
           "limits": "Low-dimensional visual example, not a cryptographic lattice parameter set."
@@ -21737,8 +21737,8 @@
             "LLL preparation"
           ],
           "evidence": [
-            "src/main.ts:90",
-            "src/main.ts:104",
+            "src/main.ts:106",
+            "src/main.ts:120",
             "src/lattice.ts:1"
           ],
           "limits": "Geometric display is low dimensional and does not implement high-dimensional numerical stabilization."
@@ -21759,9 +21759,9 @@
             "q-ary lattice"
           ],
           "evidence": [
-            "src/main.ts:127",
-            "src/main.ts:137",
-            "src/main.ts:147",
+            "src/main.ts:143",
+            "src/main.ts:153",
+            "src/main.ts:164",
             "src/lll.ts:1"
           ],
           "limits": "These are tiny instances for inspecting mechanics, not production lattice cryptanalysis."
@@ -21783,10 +21783,10 @@
             "secret recovery"
           ],
           "evidence": [
-            "src/main.ts:174",
-            "src/main.ts:207",
-            "src/main.ts:208",
-            "src/main.ts:244",
+            "src/main.ts:190",
+            "src/main.ts:223",
+            "src/main.ts:224",
+            "src/main.ts:260",
             "src/bkz.ts:1"
           ],
           "limits": "Toy BKZ omits projected blocks, pruning and numerical engineering; Kyber-size action reports a bound rather than running a full attack."
@@ -21807,12 +21807,41 @@
             "dimension"
           ],
           "evidence": [
-            "src/main.ts:256",
-            "src/main.ts:265",
+            "src/main.ts:272",
             "src/main.ts:275",
-            "src/main.ts:285"
+            "src/main.ts:282",
+            "src/main.ts:303"
           ],
           "limits": "The formula is a rough toy slope, explicitly not a security estimate or extrapolation to production parameters."
+        },
+        {
+          "id": "merkle-hellman-algorithm-sv",
+          "title": "Merkle–Hellman and Algorithm SV",
+          "section": "Exhibit 6 - Knapsack Trapdoors and the Limits of Worst-Case Hardness",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Generate a validated toy Merkle–Hellman key, encrypt and trapdoor-decrypt selected bits, then give only the public weights, ciphertext and delta to the original Lagarias–Odlyzko Algorithm SV basis and the lab's existing LLL engine.",
+          "outcome": "Independently checked candidate rows recover the selected plaintext on suitable low-density toy instances; a reproducible in-budget counterexample shows that this bounded LLL route can also fail while trapdoor decryption succeeds.",
+          "concepts": [
+            "Merkle–Hellman",
+            "Algorithm SV",
+            "superincreasing knapsack",
+            "subset-sum lattice",
+            "public-key cryptanalysis",
+            "worst-case versus instance distribution"
+          ],
+          "evidence": [
+            "src/main.ts:322",
+            "src/main.ts:351",
+            "src/main.ts:355",
+            "src/main.ts:1471",
+            "src/knapsack.ts:271",
+            "src/knapsack.ts:338",
+            "src/knapsack.ts:364",
+            "src/knapsack.ts:465",
+            "src/knapsack.ts:689"
+          ],
+          "limits": "Recovers message bits on selected toy instances, not the original or an equivalent trapdoor. It is the unscaled 1985 Algorithm SV embedding, not Shamir's attack or the later Coster variant; failures and the bounded seed sweep establish neither a density threshold nor security, and imply nothing about production lattice schemes."
         },
         {
           "id": "challenges",
@@ -21829,11 +21858,11 @@
             "LWE recovery"
           ],
           "evidence": [
-            "src/main.ts:306",
-            "src/main.ts:311",
-            "src/main.ts:317",
-            "src/main.ts:329",
-            "src/main.ts:341"
+            "src/main.ts:390",
+            "src/main.ts:395",
+            "src/main.ts:401",
+            "src/main.ts:407",
+            "src/main.ts:413"
           ],
           "limits": "Challenges reuse the toy engines and their limits."
         }
@@ -22523,8 +22552,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-mac-race": {
-      "commit": "06b1646ca40d49a8805ddee5b2d6d78b17ce8bcd",
-      "reviewed": "2026-10-22",
+      "commit": "695391521cfdaf4aee0dc3814b1d324b3b1bbdf1",
+      "reviewed": "2026-10-25",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -22543,7 +22572,7 @@
             "chosen CRC"
           ],
           "evidence": [
-            "src/crc/panel.ts:9",
+            "src/crc/panel.ts:11",
             "src/crc/panel.ts:18",
             "src/crc/panel.ts:33",
             "src/crc/panel.ts:40"
@@ -22567,10 +22596,10 @@
             "avalanche"
           ],
           "evidence": [
-            "src/ui.ts:380",
-            "src/ui.ts:391",
-            "src/ui.ts:407",
-            "src/ui.ts:757",
+            "src/ui.ts:385",
+            "src/ui.ts:393",
+            "src/ui.ts:406",
+            "src/ui.ts:758",
             "src/hmac.ts:1"
           ],
           "limits": "Avalanche display alone does not establish authentication security."
@@ -22590,9 +22619,9 @@
             "NIST SP 800-38B"
           ],
           "evidence": [
-            "src/ui.ts:421",
-            "src/ui.ts:432",
-            "src/ui.ts:448",
+            "src/ui.ts:426",
+            "src/ui.ts:434",
+            "src/ui.ts:440",
             "src/cmac.ts:1"
           ],
           "limits": "Key and message are educational inputs in the browser; tag security presumes a secret key."
@@ -22613,9 +22642,9 @@
             "forgery"
           ],
           "evidence": [
-            "src/ui.ts:453",
+            "src/ui.ts:460",
             "src/ui.ts:469",
-            "src/ui.ts:472",
+            "src/ui.ts:471",
             "src/ui.ts:481",
             "src/poly1305.ts:1"
           ],
@@ -22636,9 +22665,9 @@
             "AES-GCM component"
           ],
           "evidence": [
-            "src/ui.ts:495",
-            "src/ui.ts:503",
-            "src/ui.ts:509",
+            "src/ui.ts:502",
+            "src/ui.ts:508",
+            "src/ui.ts:512",
             "src/ui.ts:514",
             "src/ghash.ts:1"
           ],
@@ -22660,10 +22689,10 @@
             "HMAC defense"
           ],
           "evidence": [
-            "src/ui.ts:543",
-            "src/ui.ts:575",
-            "src/ui.ts:579",
-            "src/ui.ts:615",
+            "src/ui.ts:550",
+            "src/ui.ts:582",
+            "src/ui.ts:586",
+            "src/ui.ts:622",
             "src/lengthext.ts:1"
           ],
           "limits": "Requires a correct secret-length guess; it attacks a broken MAC construction, not SHA-256 collision resistance."
@@ -22683,10 +22712,10 @@
             "tag recovery"
           ],
           "evidence": [
-            "src/ui.ts:636",
-            "src/ui.ts:657",
-            "src/ui.ts:671",
+            "src/ui.ts:643",
+            "src/ui.ts:663",
             "src/ui.ts:675",
+            "src/ui.ts:681",
             "src/timing.ts:1"
           ],
           "limits": "The oracle directly exposes prefix length as a noise-free stand-in; browser wall-clock samples cannot resolve each byte this way."
@@ -22707,13 +22736,38 @@
             "prefix-free encoding"
           ],
           "evidence": [
-            "src/cbcmac/panel.ts:10",
-            "src/cbcmac/panel.ts:16",
-            "src/cbcmac/panel.ts:21",
-            "src/cbcmac/panel.ts:70",
+            "src/cbcmac/panel.ts:11",
+            "src/cbcmac/panel.ts:14",
+            "src/cbcmac/panel.ts:22",
+            "src/cbcmac/panel.ts:68",
             "src/cbcmac/forge.ts:1"
           ],
           "limits": "Classical splice assumes variable-length messages and ordinary tag queries; fixed-length quantum-query attacks are outside scope."
+        },
+        {
+          "id": "pmac",
+          "title": "PMAC independent AES lanes",
+          "section": "PMAC: independent AES lanes",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Compute the exact byte-aligned Black–Rogaway 2002 PMAC, inspect Gray-code offsets and lane traces, alter content or position, and compare its dependency waves with CMAC.",
+          "outcome": "Full-byte verification accepts the genuine PMAC tag and rejects content, position and wrong-final-rule controls while exposing the exact AES work and modeled dependency span.",
+          "concepts": [
+            "PMAC",
+            "Gray-code offsets",
+            "parallel block-cipher MAC",
+            "AES dependency graph",
+            "final-block domain separation"
+          ],
+          "evidence": [
+            "src/pmac/panel.ts:9",
+            "src/pmac/panel.ts:18",
+            "src/pmac/panel.ts:41",
+            "src/pmac/panel.ts:54",
+            "src/pmac/pmac.ts:178",
+            "src/pmac/schedule.ts:25"
+          ],
+          "limits": "Implements byte-aligned messages and full tags only. Dependency waves are not a browser speed benchmark; the ordinary classical-query lesson does not implement Q2 oracle access, under which published attacks show PMAC is not secure."
         }
       ]
     },

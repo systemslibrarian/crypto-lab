@@ -288,6 +288,10 @@
   "lab": "crypto-lab-snark-arena"
  },
  {
+  "port": 4305,
+  "lab": "crypto-lab-distance-bounding"
+ },
+ {
   "port": 4310,
   "lab": "crypto-lab-stark-tower"
  },

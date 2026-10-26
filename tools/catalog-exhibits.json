@@ -34634,8 +34634,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-shamir-gate": {
-      "commit": "66874ed10bbc796b4d81d3e79c23befaf9f395fd",
-      "reviewed": "2026-10-22",
+      "commit": "48a7a3ab9298edf708f5496159c39f2cdb9d3227",
+      "reviewed": "2026-10-26",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -34653,10 +34653,10 @@
             "key custody"
           ],
           "evidence": [
-            "demos/shamir-gate/src/main.ts:904",
-            "demos/shamir-gate/src/main.ts:909",
-            "demos/shamir-gate/src/main.ts:1094",
-            "demos/shamir-gate/src/main.ts:1110"
+            "demos/shamir-gate/src/main.ts:813",
+            "demos/shamir-gate/src/main.ts:821",
+            "demos/shamir-gate/src/main.ts:905",
+            "demos/shamir-gate/src/main.ts:922"
           ],
           "limits": "Teaching questions are conceptual; numerical proof is in the other tabs."
         },
@@ -34675,11 +34675,13 @@
             "Lagrange interpolation"
           ],
           "evidence": [
-            "demos/shamir-gate/src/main.ts:112",
-            "demos/shamir-gate/src/main.ts:140",
-            "demos/shamir-gate/src/main.ts:1155",
-            "demos/shamir-gate/src/main.ts:1164",
-            "demos/shamir-gate/src/shares.ts:1"
+            "demos/shamir-gate/src/main.ts:111",
+            "demos/shamir-gate/src/main.ts:133",
+            "demos/shamir-gate/src/main.ts:191",
+            "demos/shamir-gate/src/main.ts:210",
+            "demos/shamir-gate/src/math.ts:158",
+            "demos/shamir-gate/src/math.ts:203",
+            "demos/shamir-gate/src/shares.ts:63"
           ],
           "limits": "All shares are generated and shown in one browser session; the page does not distribute them to independent custodians."
         },
@@ -34698,11 +34700,12 @@
             "threshold"
           ],
           "evidence": [
-            "demos/shamir-gate/src/main.ts:285",
-            "demos/shamir-gate/src/main.ts:361",
-            "demos/shamir-gate/src/main.ts:1178",
-            "demos/shamir-gate/src/main.ts:1210",
-            "demos/shamir-gate/src/polynomial-canvas.ts:1"
+            "demos/shamir-gate/src/main.ts:265",
+            "demos/shamir-gate/src/main.ts:309",
+            "demos/shamir-gate/src/main.ts:425",
+            "demos/shamir-gate/src/main.ts:442",
+            "demos/shamir-gate/src/main.ts:459",
+            "demos/shamir-gate/src/polynomial-canvas.ts:39"
           ],
           "limits": "Small display field is illustrative; animation is not a custody protocol."
         },
@@ -34721,13 +34724,46 @@
             "polynomial family"
           ],
           "evidence": [
-            "demos/shamir-gate/src/main.ts:1236",
-            "demos/shamir-gate/src/main.ts:1238",
-            "demos/shamir-gate/src/main.ts:1262",
-            "demos/shamir-gate/src/main.ts:1270",
-            "demos/shamir-gate/src/main.ts:1281"
+            "demos/shamir-gate/src/main.ts:475",
+            "demos/shamir-gate/src/main.ts:478",
+            "demos/shamir-gate/src/main.ts:486",
+            "demos/shamir-gate/src/main.ts:604",
+            "demos/shamir-gate/src/main.ts:612",
+            "demos/shamir-gate/src/main.ts:615"
           ],
           "limits": "The theorem assumes independent uniform coefficients and proper field and share handling."
+        },
+        {
+          "id": "visual-sharing",
+          "title": "Generate and stack visual shares",
+          "section": "Visual Shares",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Edit a binary source, generate two fresh-pattern shares, stack them with Boolean OR, compare XOR and run exact distribution and negative controls.",
+          "outcome": "Shows white same-pattern and black complementary-pattern blocks, derives four-subpixel expansion and one-half relative contrast, and proves identical complete one-share distributions by enumeration.",
+          "concepts": [
+            "visual secret sharing",
+            "Boolean OR stacking",
+            "pixel expansion",
+            "relative contrast",
+            "information-theoretic privacy",
+            "mask reuse"
+          ],
+          "evidence": [
+            "demos/shamir-gate/src/visual.ts:20",
+            "demos/shamir-gate/src/visual.ts:114",
+            "demos/shamir-gate/src/visual.ts:129",
+            "demos/shamir-gate/src/visual.ts:165",
+            "demos/shamir-gate/src/visual.ts:197",
+            "demos/shamir-gate/src/visual.ts:224",
+            "demos/shamir-gate/src/visual.ts:269",
+            "demos/shamir-gate/src/visual.ts:293",
+            "demos/shamir-gate/src/visual-ui.ts:264",
+            "demos/shamir-gate/src/visual-ui.ts:283",
+            "demos/shamir-gate/src/visual-ui.ts:299",
+            "demos/shamir-gate/src/visual-ui.ts:304"
+          ],
+          "limits": "Binary 2-of-2 teaching construction only; it assumes exact alignment, has no authenticity or printing and optical model, and retains the source and both shares in one browser."
         },
         {
           "id": "aes-vault",
@@ -34744,12 +34780,15 @@
             "authenticated encryption"
           ],
           "evidence": [
-            "demos/shamir-gate/src/main.ts:678",
-            "demos/shamir-gate/src/main.ts:736",
-            "demos/shamir-gate/src/main.ts:1297",
-            "demos/shamir-gate/src/main.ts:1334",
-            "demos/shamir-gate/src/main.ts:1363",
-            "demos/shamir-gate/src/crypto.ts:1"
+            "demos/shamir-gate/src/main.ts:654",
+            "demos/shamir-gate/src/main.ts:672",
+            "demos/shamir-gate/src/main.ts:679",
+            "demos/shamir-gate/src/main.ts:685",
+            "demos/shamir-gate/src/main.ts:721",
+            "demos/shamir-gate/src/main.ts:737",
+            "demos/shamir-gate/src/main.ts:739",
+            "demos/shamir-gate/src/crypto.ts:65",
+            "demos/shamir-gate/src/crypto.ts:88"
           ],
           "limits": "The browser holds all shares and key; there are no custodians, authenticated share formats or operational ceremonies."
         },
@@ -34768,11 +34807,14 @@
             "operational failure"
           ],
           "evidence": [
+            "demos/shamir-gate/src/main.ts:950",
+            "demos/shamir-gate/src/main.ts:956",
             "demos/shamir-gate/src/main.ts:990",
+            "demos/shamir-gate/src/main.ts:1005",
             "demos/shamir-gate/src/main.ts:1017",
             "demos/shamir-gate/src/main.ts:1035",
             "demos/shamir-gate/src/main.ts:1058",
-            "demos/shamir-gate/src/main.ts:1383"
+            "demos/shamir-gate/src/main.ts:1063"
           ],
           "limits": "Plain x:y:p shares have no integrity mechanism; AES-GCM catches wrong keys only when used to decrypt."
         },
@@ -34792,10 +34834,13 @@
             "Adi Shamir"
           ],
           "evidence": [
-            "demos/shamir-gate/src/main.ts:1398",
-            "demos/shamir-gate/src/main.ts:1434",
-            "demos/shamir-gate/src/main.ts:1446",
-            "demos/shamir-gate/src/main.ts:1460"
+            "demos/shamir-gate/src/main.ts:1403",
+            "demos/shamir-gate/src/main.ts:1406",
+            "demos/shamir-gate/src/main.ts:1409",
+            "demos/shamir-gate/src/main.ts:1412",
+            "demos/shamir-gate/src/main.ts:1421",
+            "demos/shamir-gate/src/main.ts:1438",
+            "demos/shamir-gate/src/main.ts:1465"
           ],
           "limits": "Application examples are narrative, not integrations with deployed HSMs or threshold signers."
         }

@@ -2952,3 +2952,86 @@ test('Distance Bounding S06 controls reject lost credit, a false attack, stale p
   staleReview['crypto-lab-distance-bounding'].remove = [];
   assert.throws(() => checkDistanceBoundingS06Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
+
+function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-shamir-gate';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'AES',
+    'AES-GCM',
+    'Shamir secret sharing',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Adi Shamir biography text is not an executed differential-cryptanalysis attack');
+
+  const card = openingFor(source, slug);
+  assert.match(card, /data-review-commit="48a7a3ab9298edf708f5496159c39f2cdb9d3227"/);
+  assert.doesNotMatch(card, /data-attacks=/);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '48a7a3ab9298edf708f5496159c39f2cdb9d3227');
+  assert.deepEqual(review.remove, ['Differential cryptanalysis']);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'lesson',
+    'gate',
+    'polynomial',
+    'privacy',
+    'visual-sharing',
+    'aes-vault',
+    'failure-lab',
+    'context',
+  ]);
+  const visual = mapped.exhibits.find((item) => item.id === 'visual-sharing');
+  assert.equal(visual.execution, 'real-operation');
+  assert.ok(visual.evidence.includes('demos/shamir-gate/src/visual.ts:165'));
+  assert.ok(visual.evidence.includes('demos/shamir-gate/src/visual-ui.ts:283'));
+  assert.match(visual.action, /Boolean OR/);
+  assert.match(visual.outcome, /identical complete one-share distributions/);
+  assert.match(visual.limits, /Binary 2-of-2 teaching construction only/);
+  assert.match(visual.limits, /no authenticity or printing and optical model/);
+}
+
+test('Shamir Gate records S07 visual sharing without a biography-derived attack credit', () => {
+  checkShamirGateS07Scope(html);
+});
+
+test('Shamir Gate S07 controls reject a false attack, stale pins, missing evidence or stronger scope', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-shamir-gate\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(
+      'data-standards="',
+      'data-attacks="Differential cryptanalysis@demos/shamir-gate/src/main.ts:1479" data-standards="',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      '48a7a3ab9298edf708f5496159c39f2cdb9d3227',
+      '0'.repeat(40),
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Shamir Gate card');
+    assert.throws(() => checkShamirGateS07Scope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = structuredClone(exhibitManifest);
+  missingExhibit.labs['crypto-lab-shamir-gate'].exhibits =
+    missingExhibit.labs['crypto-lab-shamir-gate'].exhibits
+      .filter((item) => item.id !== 'visual-sharing');
+  assert.throws(() => checkShamirGateS07Scope(html, missingExhibit, catalogReviewed), assert.AssertionError);
+
+  const missingEvidence = structuredClone(exhibitManifest);
+  missingEvidence.labs['crypto-lab-shamir-gate'].exhibits
+    .find((item) => item.id === 'visual-sharing').evidence = [];
+  assert.throws(() => checkShamirGateS07Scope(html, missingEvidence, catalogReviewed), assert.AssertionError);
+
+  const overstatedLimits = structuredClone(exhibitManifest);
+  overstatedLimits.labs['crypto-lab-shamir-gate'].exhibits
+    .find((item) => item.id === 'visual-sharing').limits =
+      'A production authenticated k-of-n visual-cryptography and printing system.';
+  assert.throws(() => checkShamirGateS07Scope(html, overstatedLimits, catalogReviewed), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-shamir-gate'].remove = [];
+  assert.throws(() => checkShamirGateS07Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});

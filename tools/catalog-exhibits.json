@@ -32115,8 +32115,8 @@
       ]
     },
     "crypto-lab-residue-gate": {
-      "commit": "d1f1c553da40f36f1f02b57800262271278f441a",
-      "reviewed": "2026-10-22",
+      "commit": "f20e6db42edc5d654c9934dda27855dd6e340dfa",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "prime-roots",
@@ -32130,7 +32130,7 @@
             "modular square root"
           ],
           "evidence": [
-            "src/main.ts:8",
+            "src/main.ts:12",
             "src/nt/sqrt.ts:1",
             "src/nt/legendre.ts:1"
           ],
@@ -32149,7 +32149,7 @@
             "pseudosquare"
           ],
           "evidence": [
-            "src/main.ts:9",
+            "src/main.ts:13",
             "src/nt/jacobi.ts:1"
           ],
           "section": "Jacobi +1 leaves two possibilities",
@@ -32161,7 +32161,7 @@
           "title": "Goldwasser–Micali Bit Encryption",
           "kind": "interactive",
           "action": "Enter bits, encrypt twice, decrypt, and multiply a ciphertext by a public pseudosquare.",
-          "outcome": "Randomized encryptions differ while decryption recovers the bits; ciphertext multiplication flips a bit without an integrity check.",
+          "outcome": "The current run reports whether repeated randomized encryptions differ; decryption recovers the bits, and ciphertext multiplication flips a bit without an integrity check.",
           "concepts": [
             "Goldwasser–Micali",
             "probabilistic encryption",
@@ -32169,7 +32169,7 @@
             "malleability"
           ],
           "evidence": [
-            "src/main.ts:15",
+            "src/main.ts:19",
             "src/gm/gm.ts:1"
           ],
           "section": "One encrypted group element per bit",
@@ -32189,7 +32189,7 @@
             "chosen-plaintext security"
           ],
           "evidence": [
-            "src/main.ts:17",
+            "src/main.ts:21",
             "src/rabin/rabin.ts:1"
           ],
           "section": "Squaring is easy. Which root was the message?",
@@ -32209,13 +32209,37 @@
             "gcd"
           ],
           "evidence": [
-            "src/main.ts:21",
+            "src/main.ts:25",
             "src/attack/cca.ts:1",
             "src/rabin/oracle.ts:1"
           ],
           "section": "Ask for one root. Recover the factors.",
           "execution": "real-values",
           "limits": "An oracle refusal stops that query, not all attacks; the toy redundancy and key sharing with Goldwasser–Micali are pedagogical."
+        },
+        {
+          "id": "bbs-bg",
+          "title": "BBS Bits and the Blum–Goldwasser Rewind",
+          "kind": "interactive",
+          "action": "Encrypt a bit string with a fresh or reproducible unit seed, inspect the repeated-squaring stream, rewind the transmitted final state with the factors, and run disclosure, reuse, malleability and validity controls.",
+          "outcome": "The current run exposes both BBS/HAC bit indexing and a factor-assisted Blum–Goldwasser round trip, while the negative controls derive their leaks or failures from the actual state and ciphertext.",
+          "concepts": [
+            "Blum–Blum–Shub",
+            "Blum–Goldwasser",
+            "pseudorandom generator",
+            "state compromise",
+            "seed reuse",
+            "ciphertext malleability"
+          ],
+          "evidence": [
+            "src/main.ts:32",
+            "src/bbs/bbs.ts:108",
+            "src/bbs/bbs.ts:128",
+            "src/worker/compute.worker.ts:10"
+          ],
+          "section": "One group element carries the whole message",
+          "execution": "real-crypto",
+          "limits": "Toy moduli and manually selected short cycles are not security evidence. The implementation follows HAC 8.56 indexing and prime conditions, treats a short final block as a teaching adaptation, and provides neither authentication nor a BBS credential-signature scheme."
         }
       ],
       "reviewScope": "complete"

@@ -433,6 +433,15 @@ existing LLL engine using public data only. The bounded route recovers message b
 selected instances, not a trapdoor; its visible failures and finite seed sweep establish
 neither a density threshold nor security. Catalogued total remains 246.*
 
+*Version 53 — records Residue Gate's A-D-13 extension under §2 without adding a lab
+or changing a concept status. The sixth experiment executes the Blum–Blum–Shub
+repeated-squaring state chain and Blum–Goldwasser encryption/rewind, compares the
+published one-state indexing difference, and derives disclosure, same-seed,
+malleability and validity outcomes from current-run values. The HAC route uses probable
+Blum primes, its short-final-block handling is a teaching adaptation, and a complete
+toy-cycle walk or random-looking output is not a general security result. Catalogued
+total remains 246.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -498,7 +507,7 @@ OTP Vault. Information-theoretic security plus the two-time-pad break that shows
 guarantee actually costs.
 
 **2. Randomness, entropy, and generator failure — `DEEP`**
-DRBG Arena · Corrupted Oracle · Entropy Collapse · Quantum Entropy · VRF Gate · Noise to Numbers · Pulse Chain · Good Randomness · Next Number. Correct
+DRBG Arena · Corrupted Oracle · Entropy Collapse · Quantum Entropy · VRF Gate · Noise to Numbers · Pulse Chain · Good Randomness · Next Number · Residue Gate. Correct
 case, backdoored case, seed-provenance case, physical extraction, and output anyone can
 verify was not ground out to order.
 
@@ -510,6 +519,12 @@ the place people look for it. It then rebuilds the second key by trying ten thou
 which is counting rather than cryptanalysis, while every check on the page still reports
 success. The cipher is hand-rolled rather than imported so a reader can open the file and see
 that nothing is pretending.
+
+Residue Gate adds the number-theoretic generator route: it advances an actual
+Blum–Blum–Shub state, uses the resulting blocks in Blum–Goldwasser encryption, and
+rewinds from the transmitted final state with the factors. Fresh-distribution,
+state-disclosure, seed-reuse, malleability, probable-prime and toy-cycle boundaries
+remain visible rather than being inferred from output that merely looks random.
 
 **3. One-way functions and hashing — `COVERED`**
 Babel Hash · Hash Zoo · World Hashes · Collision Vault · Hash Hunt. Construction, comparison,

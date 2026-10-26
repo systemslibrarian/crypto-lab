@@ -956,19 +956,28 @@
     "note": "Read seven exhibits including the new bounded Lucas\u2013Pratt certificate generator and independent recursive verifier. Trial division creates factor proofs only for p \u2264 1,000,000; the verifier checks the complete factorization of p\u22121, recursive primality proofs and full-order modular witness without calling the generator. Separate Miller\u2013Rabin outputs remain probable for large candidates; the FIPS 186-5 Table B.1 path is a limited generation-shape experiment, not conformant RSA generation or a DRBG. Trial factorization supports Korselt classification and the small proof generator, not a general factoring attack. Unit and browser checks are lab-specific and do not constitute machine verification or production security."
   },
   "crypto-lab-residue-gate": {
-    "commit": "d1f1c553da40f36f1f02b57800262271278f441a",
-    "reviewed": "2026-10-20",
+    "commit": "f20e6db42edc5d654c9934dda27855dd6e340dfa",
+    "reviewed": "2026-10-25",
     "add": [
-      "Jacobi symbol@src/nt/jacobi.ts:4",
-      "Tonelli\u2013Shanks@src/nt/sqrt.ts:7",
+      "Blum\u2013Blum\u2013Shub@src/bbs/bbs.ts:108",
+      "Blum\u2013Goldwasser@src/bbs/bbs.ts:128",
       "Goldwasser\u2013Micali@src/gm/gm.ts:3",
-      "Rabin encryption@src/rabin/oracle.ts:9"
+      "Jacobi symbol@src/nt/jacobi.ts:2",
+      "Miller\u2013Rabin@src/nt/primes.ts:3",
+      "Rabin encryption@src/rabin/oracle.ts:20",
+      "Tonelli\u2013Shanks@src/nt/sqrt.ts:7"
+    ],
+    "addAttacks": [
+      "Chosen-ciphertext attack@src/attack/cca.ts:4",
+      "Ciphertext malleability@src/bbs/bbs.ts:242",
+      "Factoring@src/attack/cca.ts:4"
     ],
     "removeReferences": [
+      "BBS signatures",
       "Boneh-Franklin IBE"
     ],
     "implementation": "local BigInt arithmetic / isolated key-holder worker",
-    "note": "Read binary Jacobi, Euler Legendre, modular roots/CRT, Goldwasser\u2013Micali encryption and the Rabin key-holder closure. The Tonelli anchor executes order halving; the Rabin anchor actually squares the validated message. A public attacker receives N and one root-query closure, never p/q. The canonical QR root oracle yields independently verified factors; redundancy can refuse or accidentally admit a query and is not called CCA security. One-bit Rabin is distinct from GM. Cocks IBE is an extension mention, not Boneh\u2013Franklin IBE. All 17 units, six browser claims, two accessibility views and six mutations passed at the code-identical deployment; this pin changes only integration documentation."
+    "note": "Re-read exact merged main f20e6db42edc5d654c9934dda27855dd6e340dfa: README, all six learner panels, number-theory and encryption source, isolated worker boundary, unit/browser/accessibility tests, mutation runner and deployment evidence. The first five exhibits retain their prior arithmetic: the Tonelli anchor executes order halving, the Rabin anchor squares a validated QR message, and the public root-oracle attacker receives N and one reply but never p or q. Experiment 6 executes the repeated-squaring generator and Blum\u2013Goldwasser encryption from real current-run state: fresh rejection-sampled unit coins by default, the HAC 8.56 state/block convention, factor-assisted rewind, seed-reuse XOR evidence, state disclosure, ciphertext-bit malleability, QR validity controls and bounded public toy-cycle recovery. It pins HAC Example 8.57 and separately displays the one-state indexing difference from BBS 1986. The original BG paper's p,q = 7 mod 8 condition differs from the implemented HAC p,q = 3 mod 4 route; accepted factors are 40-round Miller\u2013Rabin probable primes. Short-final-block support is a disclosed teaching adaptation. BG is unauthenticated and malleable; QR validity is not authentication, toy-cycle recovery is not a general backwards-unpredictability result, output appearance proves no pseudorandomness, and JavaScript cleanup is not physical memory zeroization. The initials do not denote CFRG BBS credential signatures. Cocks IBE remains an extension mention, not Boneh\u2013Franklin IBE. Reviewed-head run 40263223623 and exact-main run 40264103164 each passed 39 unit tests, typecheck/build, 25 browser claims, two accessibility views and all 40 clean-baseline mutations without retries or infrastructure kills. Pages artifact 12626350669 deployed through deployment 7323506551, and all four public files matched the artifact and fresh exact-main build byte for byte."
   },
   "crypto-lab-hash-hunt": {
     "commit": "072a9531796a1c2f9936197077aee2ee0d57b144",

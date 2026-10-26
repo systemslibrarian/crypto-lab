@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1781 sections in 246 of 246 labs**
+The exhibit map currently records **1782 sections in 246 of 246 labs**
 (246 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -73,7 +73,7 @@ before relying on this index for a fresh assessment.
 
 ## Reverse index — which labs implement what
 
-207 algorithms are implemented somewhere in the fleet, grouped by family.
+209 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -873,7 +873,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Jacobi symbol
 
-- **Implemented by:** [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) `src/factor/bigint.ts:139`; [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/nt/jacobi.ts:4`
+- **Implemented by:** [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) `src/factor/bigint.ts:139`; [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/nt/jacobi.ts:2`
 - **Also referenced by:** *Clock Arithmetic*
 
 ### obfuscation
@@ -1050,6 +1050,13 @@ A lab in *italics* references the algorithm without implementing it.
 - **Implemented by:** [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/session-init.ts:133`; [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) `src/x3dh.ts:165`; [MLS Group](https://systemslibrarian.github.io/crypto-lab-mls-group/) `src/app.ts:469`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/main.ts:17`
 - **Also referenced by:** *SPHINCS+ Ledger*, *Curve Lens*, *Noise Pipe*, *Ed25519 Forge*, *OPAQUE Gate*, *Curve448*, *Hybrid Sign*, *Key Exchange*, *SSH Handshake*, *DH MITM*, *Hybrid PQC*, *Key Mirror*, *Encrochat*, *Function Key*, *Agreeing in Public*
 
+### pseudorandom generator
+
+#### Blum–Blum–Shub
+
+- **Implemented by:** [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/bbs/bbs.ts:108`
+- **Also referenced by:** *Next Number*
+
 ### public key
 
 #### RSA
@@ -1063,6 +1070,11 @@ A lab in *italics* references the algorithm without implementing it.
 - **Also referenced by:** *World Hashes*
 
 ### public-key encryption
+
+#### Blum–Goldwasser
+
+- **Implemented by:** [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/bbs/bbs.ts:128`
+- **Also referenced by:** —
 
 #### ElGamal
 
@@ -1081,7 +1093,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Rabin encryption
 
-- **Implemented by:** [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/rabin/oracle.ts:9`
+- **Implemented by:** [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) `src/rabin/oracle.ts:20`
 - **Also referenced by:** —
 
 ### quantum algorithm
@@ -1144,7 +1156,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### BBS signatures
 
 - **Implemented by:** [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/bbs/bbs.ts:151`
-- **Also referenced by:** *Next Number*
+- **Also referenced by:** —
 
 #### BLS signatures
 
@@ -1446,6 +1458,8 @@ disagree about who owns SHA-256.
 | BIKE | — | 1 |
 | BLAKE3 | — | 2 |
 | BLS12-381 | — | 11 |
+| Blum–Blum–Shub | — | 1 |
+| Blum–Goldwasser | — | 1 |
 | Bulletproofs | — | 1 |
 | Caesar cipher | — | 1 |
 | CKKS | — | 1 |
@@ -10793,7 +10807,7 @@ Predict a generator's next output: read a toy LCG off its own recurrence, recove
 
 - **Card topics (discovery only):** LCG, java.util.Random, Lattice Reduction, ChaCha20 — labels do not establish what any section runs.
 - **Implements:** ChaCha20 `src/gen/chacha.ts:5`
-- **References:** BBS signatures
+- **References:** Blum–Blum–Shub
 - **Attacks shown:** Lattice reduction `src/main.ts:16`
 - **Standards body:** IETF
 - **Implementation:** @noble
@@ -13530,53 +13544,60 @@ Refresh threshold shares into a new epoch: every old share becomes garbage, the 
 
 ### Residue Gate
 
-[`crypto-lab-residue-gate`](https://systemslibrarian.github.io/crypto-lab-residue-gate/) · Quadratic Residuosity · ENCRYPTION, ATTACKS
+[`crypto-lab-residue-gate`](https://systemslibrarian.github.io/crypto-lab-residue-gate/) · Quadratic Residuosity · ENCRYPTION, ATTACKS, RANDOMNESS
 
-Compare public Jacobi symbols with private residue classes, encrypt bits, and turn a Rabin decryption oracle into independently verified factors.
+Compare public Jacobi symbols with private residue classes, factor through a Rabin root oracle, and run BBS bits plus Blum–Goldwasser encryption, rewind, disclosure, reuse, and malleability controls.
 
-- **Card topics (discovery only):** Jacobi Symbol, Goldwasser–Micali, Rabin Encryption, Chosen-Ciphertext Attack — labels do not establish what any section runs.
-- **Implements:** Goldwasser–Micali `src/gm/gm.ts:3`, Jacobi symbol `src/nt/jacobi.ts:4`, Miller–Rabin `src/nt/primes.ts:3`, Rabin encryption `src/rabin/oracle.ts:9`, Tonelli–Shanks `src/nt/sqrt.ts:7`
-- **Source review:** [d1f1c553da40](https://github.com/systemslibrarian/crypto-lab-residue-gate/commit/d1f1c553da40f36f1f02b57800262271278f441a) — Read binary Jacobi, Euler Legendre, modular roots/CRT, Goldwasser–Micali encryption and the Rabin key-holder closure. The Tonelli anchor executes order halving; the Rabin anchor actually squares the validated message. A public attacker receives N and one root-query closure, never p/q. The canonical QR root oracle yields independently verified factors; redundancy can refuse or accidentally admit a query and is not called CCA security. One-bit Rabin is distinct from GM. Cocks IBE is an extension mention, not Boneh–Franklin IBE. All 17 units, six browser claims, two accessibility views and six mutations passed at the code-identical deployment; this pin changes only integration documentation.
+- **Card topics (discovery only):** Goldwasser–Micali, Rabin Encryption, BBS Generator, Blum–Goldwasser — labels do not establish what any section runs.
+- **Implements:** Blum–Blum–Shub `src/bbs/bbs.ts:108`, Blum–Goldwasser `src/bbs/bbs.ts:128`, Goldwasser–Micali `src/gm/gm.ts:3`, Jacobi symbol `src/nt/jacobi.ts:2`, Miller–Rabin `src/nt/primes.ts:3`, Rabin encryption `src/rabin/oracle.ts:20`, Tonelli–Shanks `src/nt/sqrt.ts:7`
+- **Source review:** [f20e6db42edc](https://github.com/systemslibrarian/crypto-lab-residue-gate/commit/f20e6db42edc5d654c9934dda27855dd6e340dfa) — Re-read exact merged main f20e6db42edc5d654c9934dda27855dd6e340dfa: README, all six learner panels, number-theory and encryption source, isolated worker boundary, unit/browser/accessibility tests, mutation runner and deployment evidence. The first five exhibits retain their prior arithmetic: the Tonelli anchor executes order halving, the Rabin anchor squares a validated QR message, and the public root-oracle attacker receives N and one reply but never p or q. Experiment 6 executes the repeated-squaring generator and Blum–Goldwasser encryption from real current-run state: fresh rejection-sampled unit coins by default, the HAC 8.56 state/block convention, factor-assisted rewind, seed-reuse XOR evidence, state disclosure, ciphertext-bit malleability, QR validity controls and bounded public toy-cycle recovery. It pins HAC Example 8.57 and separately displays the one-state indexing difference from BBS 1986. The original BG paper's p,q = 7 mod 8 condition differs from the implemented HAC p,q = 3 mod 4 route; accepted factors are 40-round Miller–Rabin probable primes. Short-final-block support is a disclosed teaching adaptation. BG is unauthenticated and malleable; QR validity is not authentication, toy-cycle recovery is not a general backwards-unpredictability result, output appearance proves no pseudorandomness, and JavaScript cleanup is not physical memory zeroization. The initials do not denote CFRG BBS credential signatures. Cocks IBE remains an extension mention, not Boneh–Franklin IBE. Reviewed-head run 40263223623 and exact-main run 40264103164 each passed 39 unit tests, typecheck/build, 25 browser claims, two accessibility views and all 40 clean-baseline mutations without retries or infrastructure kills. Pages artifact 12626350669 deployed through deployment 7323506551, and all four public files matched the artifact and fresh exact-main build byte for byte.
 - **References:** Paillier, RSA, RSA-OAEP
-- **Attacks shown:** Chosen-ciphertext attack `src/main.ts:1`, Ciphertext malleability `README.md:15`, Factoring `src/main.ts:24`
+- **Attacks shown:** Chosen-ciphertext attack `src/attack/cca.ts:4`, Ciphertext malleability `src/bbs/bbs.ts:242`, Factoring `src/attack/cca.ts:4`
 - **Standards body:** —
 - **Implementation:** local BigInt arithmetic / isolated key-holder worker
 - **Overlaps:** `crypto-lab-hidden-bit` — Hidden Bit studies hard-core predicates; Residue Gate computes quadratic residues, Goldwasser–Micali ciphertexts and a Rabin root-oracle factoring reduction. crypto-lab-factor-forge: Factor Forge searches for factors directly; Residue Gate exposes the decryption-oracle assumption that yields them.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d1f1c553da40](https://github.com/systemslibrarian/crypto-lab-residue-gate/commit/d1f1c553da40f36f1f02b57800262271278f441a) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f20e6db42edc](https://github.com/systemslibrarian/crypto-lab-residue-gate/commit/f20e6db42edc5d654c9934dda27855dd6e340dfa) reviewed 2026-10-25; 6 mapped sections.
+  - **BBS Bits and the Blum–Goldwasser Rewind** (`bbs-bg`; interactive; real-crypto)
+    - **Visible section:** One group element carries the whole message
+    - **Learner action:** Encrypt a bit string with a fresh or reproducible unit seed, inspect the repeated-squaring stream, rewind the transmitted final state with the factors, and run disclosure, reuse, malleability and validity controls.
+    - **Observed result:** The current run exposes both BBS/HAC bit indexing and a factor-assisted Blum–Goldwasser round trip, while the negative controls derive their leaks or failures from the actual state and ciphertext.
+    - **Concepts taught:** Blum–Blum–Shub; Blum–Goldwasser; pseudorandom generator; state compromise; seed reuse; ciphertext malleability
+    - **Limits:** Toy moduli and manually selected short cycles are not security evidence. The implementation follows HAC 8.56 indexing and prime conditions, treats a short final block as a teaching adaptation, and provides neither authentication nor a BBS credential-signature scheme.
+    - **Evidence at pinned commit:** `src/main.ts:32`, `src/bbs/bbs.ts:108`, `src/bbs/bbs.ts:128`, `src/worker/compute.worker.ts:10`
   - **Goldwasser–Micali Bit Encryption** (`gm`; interactive; real-crypto)
     - **Visible section:** One encrypted group element per bit
     - **Learner action:** Enter bits, encrypt twice, decrypt, and multiply a ciphertext by a public pseudosquare.
-    - **Observed result:** Randomized encryptions differ while decryption recovers the bits; ciphertext multiplication flips a bit without an integrity check.
+    - **Observed result:** The current run reports whether repeated randomized encryptions differ; decryption recovers the bits, and ciphertext multiplication flips a bit without an integrity check.
     - **Concepts taught:** Goldwasser–Micali; probabilistic encryption; XOR homomorphism; malleability
     - **Limits:** The small shared modulus is a teaching fixture and must not be used as a real key.
-    - **Evidence at pinned commit:** `src/main.ts:15`, `src/gm/gm.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:19`, `src/gm/gm.ts:1`
   - **Jacobi +1 Challenge** (`jacobi`; interactive; real-values)
     - **Visible section:** Jacobi +1 leaves two possibilities
     - **Learner action:** Draw a challenge for a small composite modulus, guess its class, then reveal factors and full grid.
     - **Observed result:** The public +1 symbol admits both square and pseudosquare classes that the factors distinguish.
     - **Concepts taught:** Jacobi symbol; quadratic residuosity assumption; pseudosquare
     - **Limits:** The toy moduli 77 and 437 are too small to provide security.
-    - **Evidence at pinned commit:** `src/main.ts:9`, `src/nt/jacobi.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:13`, `src/nt/jacobi.ts:1`
   - **Rabin Chosen-Ciphertext Factor Recovery** (`oracle`; interactive; real-values)
     - **Visible section:** Ask for one root. Recover the factors.
     - **Learner action:** Send x² to either oracle rule or measure 100 random queries, then compute gcd from an unexpected root.
     - **Observed result:** The canonical-root rule can disclose a factor; redundancy refusals and accidental toy matches are reported separately.
     - **Concepts taught:** Rabin CCA; factoring equivalence; decryption oracle; gcd
     - **Limits:** An oracle refusal stops that query, not all attacks; the toy redundancy and key sharing with Goldwasser–Micali are pedagogical.
-    - **Evidence at pinned commit:** `src/main.ts:21`, `src/attack/cca.ts:1`, `src/rabin/oracle.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:25`, `src/attack/cca.ts:1`, `src/rabin/oracle.ts:1`
   - **Squares and Roots Modulo a Prime** (`prime-roots`; interactive; real-values)
     - **Visible section:** Half of the nonzero values are squares
     - **Learner action:** Choose a small prime and value, find modular roots, and square them back.
     - **Observed result:** The trace and residue table show which nonzero values are quadratic residues and how roots come in ± pairs.
     - **Concepts taught:** quadratic residue; Legendre symbol; modular square root
-    - **Evidence at pinned commit:** `src/main.ts:8`, `src/nt/sqrt.ts:1`, `src/nt/legendre.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:12`, `src/nt/sqrt.ts:1`, `src/nt/legendre.ts:1`
   - **Rabin Four Roots and One-Bit Construction** (`rabin`; interactive; real-crypto)
     - **Visible section:** Squaring is easy. Which root was the message?
     - **Learner action:** Choose redundancy or canonical-root decryption, encrypt and decrypt, and open the randomized one-bit variant.
     - **Observed result:** The four modular roots reveal why decryption needs a disambiguation rule; the one-bit form demonstrates its different CPA claim.
     - **Concepts taught:** Rabin encryption; four square roots; redundancy; chosen-plaintext security
     - **Limits:** Redundancy is not a chosen-ciphertext security proof; the one-bit construction claims CPA security under its assumptions only.
-    - **Evidence at pinned commit:** `src/main.ts:17`, `src/rabin/rabin.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:21`, `src/rabin/rabin.ts:1`
 
 ### Return Path
 

@@ -2476,3 +2476,139 @@ test('IPsec / IKE scope controls reject lost, moved, invented or incomplete evid
   staleReview['crypto-lab-ipsec-ike'].commit = '0'.repeat(40);
   assert.throws(() => checkIpsecIkeScope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
+
+function checkResidueGateAd13Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-residue-gate';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'Blum–Blum–Shub',
+    'Blum–Goldwasser',
+    'Goldwasser–Micali',
+    'Jacobi symbol',
+    'Miller–Rabin',
+    'Rabin encryption',
+    'Tonelli–Shanks',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [
+    'Chosen-ciphertext attack',
+    'Ciphertext malleability',
+    'Factoring',
+  ]);
+  assert.deepEqual(referencesFor(source, slug), ['Paillier', 'RSA', 'RSA-OAEP']);
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-category="ENCRYPTION \| ATTACKS \| RANDOMNESS"/);
+  assert.match(opening, /data-review-commit="f20e6db42edc5d654c9934dda27855dd6e340dfa"/);
+  assert.match(opening, /Blum–Blum–Shub@src\/bbs\/bbs\.ts:108/);
+  assert.match(opening, /Blum–Goldwasser@src\/bbs\/bbs\.ts:128/);
+  assert.match(opening, /Rabin encryption@src\/rabin\/oracle\.ts:20/);
+  assert.doesNotMatch(opening, /data-standards=/,
+    'Number-theoretic BBS/BG must not inherit the CFRG signature draft or SEED RFC');
+  assert.doesNotMatch(opening, /data-references="[^"]*(?:BBS signatures|Boneh-Franklin IBE|\bSEED\b)/,
+    'Explicit out-of-scope prose must not become a catalog reference');
+  assert.deepEqual(chipsFor(source, slug), [
+    'Goldwasser–Micali',
+    'Rabin Encryption',
+    'BBS Generator',
+    'Blum–Goldwasser',
+  ]);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, 'f20e6db42edc5d654c9934dda27855dd6e340dfa');
+  assert.equal(review.reviewed, '2026-10-25');
+  assert.ok(review.add.includes('Blum–Blum–Shub@src/bbs/bbs.ts:108'));
+  assert.ok(review.add.includes('Blum–Goldwasser@src/bbs/bbs.ts:128'));
+  assert.ok(review.addAttacks.includes('Ciphertext malleability@src/bbs/bbs.ts:242'));
+  assert.match(review.note, /HAC 8\.56 state\/block convention/);
+  assert.match(review.note, /all 40 clean-baseline mutations/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'prime-roots', 'jacobi', 'gm', 'rabin', 'oracle', 'bbs-bg',
+  ]);
+  assert.deepEqual(mapped.exhibits.slice(0, 5).map((item) => item.evidence[0]), [
+    'src/main.ts:12', 'src/main.ts:13', 'src/main.ts:19', 'src/main.ts:21', 'src/main.ts:25',
+  ]);
+  const gm = mapped.exhibits.find((item) => item.id === 'gm');
+  assert.equal(gm.outcome,
+    'The current run reports whether repeated randomized encryptions differ; decryption recovers the bits, and ciphertext multiplication flips a bit without an integrity check.');
+  const bbs = mapped.exhibits.find((item) => item.id === 'bbs-bg');
+  assert.equal(bbs.execution, 'real-crypto');
+  assert.deepEqual(bbs.evidence, [
+    'src/main.ts:32',
+    'src/bbs/bbs.ts:108',
+    'src/bbs/bbs.ts:128',
+    'src/worker/compute.worker.ts:10',
+  ]);
+  assert.match(bbs.limits, /not security evidence/);
+}
+
+test('Residue Gate credits A-D-13 BBS/BG computation without inheriting signature or SEED standards', () => {
+  checkResidueGateAd13Scope(html);
+  assert.deepEqual(referencesFor(html, 'crypto-lab-next-number'), ['Blum–Blum–Shub']);
+  assert.ok(implementationsFor(html, 'crypto-lab-credential-veil').includes('BBS signatures'));
+  assert.ok(implementationsFor(html, 'crypto-lab-world-ciphers').includes('SEED'));
+});
+
+test('BBS and SEED vocabulary keeps overloaded names separated', () => {
+  const generator = ALGORITHMS.find((term) => term.name === 'Blum–Blum–Shub');
+  const bg = ALGORITHMS.find((term) => term.name === 'Blum–Goldwasser');
+  const credential = ALGORITHMS.find((term) => term.name === 'BBS signatures');
+  const seed = ALGORITHMS.find((term) => term.name === 'SEED');
+  assert.ok(generator && bg && credential && seed);
+
+  for (const value of ['bbsBits', 'BBS (Residue Gate)', 'Blum–Blum–Shub']) {
+    assert.ok(generator.re.test(value), `generator should recognize ${value}`);
+  }
+  for (const value of ['BBS generator', 'BBS generators', 'BBS proof', 'BBS signature', 'bbsCredential']) {
+    assert.equal(generator.re.test(value), false, `generator must not claim ${value}`);
+  }
+  for (const value of ['BBS proof', 'BBS signature', 'bbsCredential']) {
+    assert.ok(credential.re.test(value), `credential scheme should recognize ${value}`);
+  }
+  assert.equal(credential.re.test('bbsBits'), false);
+  assert.equal(credential.re.test('BBS generator'), false);
+  assert.ok(generator.chipRe.test('BBS Generator'));
+  assert.ok(credential.chipRe.test('BBS'));
+  assert.ok(bg.re.test('encryptBG'));
+  assert.ok(bg.re.test('Blum–Goldwasser'));
+
+  assert.ok(seed.re.test('seedBlockEncrypt'));
+  assert.ok(seed.re.test('KISA_SEED'));
+  assert.ok(seed.re.test('SEED cipher'));
+  assert.equal(seed.re.test('same-seed ciphertexts'), false);
+  assert.equal(seed.re.test('seed ciphertext'), false);
+});
+
+test('Residue Gate A-D-13 scope controls reject missing credit, false standards, stale anchors or an incomplete exhibit map', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-residue-gate\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(/Blum–Goldwasser@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'Rabin encryption@src/rabin/oracle.ts:20',
+      'Rabin encryption@src/rabin/oracle.ts:9',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-implementation="',
+      'data-standards="IETF" data-implementation="',
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Residue Gate card');
+    assert.throws(() => checkResidueGateAd13Scope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = structuredClone(exhibitManifest);
+  missingExhibit.labs['crypto-lab-residue-gate'].exhibits = missingExhibit.labs['crypto-lab-residue-gate'].exhibits
+    .filter((item) => item.id !== 'bbs-bg');
+  assert.throws(() => checkResidueGateAd13Scope(html, missingExhibit, catalogReviewed), assert.AssertionError);
+
+  const overstatedGm = structuredClone(exhibitManifest);
+  overstatedGm.labs['crypto-lab-residue-gate'].exhibits.find((item) => item.id === 'gm').outcome =
+    'Randomized encryptions differ while decryption recovers the bits; ciphertext multiplication flips a bit without an integrity check.';
+  assert.throws(() => checkResidueGateAd13Scope(html, overstatedGm, catalogReviewed), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-residue-gate'].commit = '0'.repeat(40);
+  assert.throws(() => checkResidueGateAd13Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});

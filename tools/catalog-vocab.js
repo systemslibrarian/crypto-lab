@@ -42,6 +42,16 @@ const ALGORITHMS = [
   { name: 'Fermat primality test', kind: 'algorithm', family: 'primality test', re: /fermat[-_ –]?(?:primality|test)/i, std: null },
   { name: 'Jacobi symbol', kind: 'algorithm', family: 'number theory', re: /\bjacobi\b/i, std: null },
   { name: 'Tonelli–Shanks', kind: 'algorithm', family: 'modular square root', re: /tonelli[-_ –]?shanks/i, std: null },
+  /* The initials BBS are overloaded. Blum–Blum–Shub is the repeated-squaring
+     generator; the CFRG BBS entry below is a credential-signature scheme. Keep
+     source detection on the full name, executable bbsBits identifier, or an
+     explicit Residue Gate label. Even `BBS generator` is ambiguous because the
+     signature scheme also has group generators; that phrase is accepted only
+     by the exact card-chip matcher. */
+  { name: 'Blum–Blum–Shub', kind: 'algorithm', family: 'pseudorandom generator', re: /blum[-_ –]?blum[-_ –]?shub|\bbbsBits\b|\bbbs\b(?=\s*\(\s*residue gate\s*\))/i, chipRe: /^(?:bbs[-_ ]?generator|blum[-_ –]?blum[-_ –]?shub)$/i, std: null },
+  /* The implementation names its public operation encryptBG; requiring that
+     complete identifier avoids turning unrelated `bg` locals into evidence. */
+  { name: 'Blum–Goldwasser', kind: 'algorithm', family: 'public-key encryption', re: /blum[-_ –]?goldwasser|\b(?:encrypt|decrypt)BG\b/i, chipRe: /^blum[-_ –]?goldwasser$/i, std: null },
   /* Montgomery multiplication is modular reduction in a residue representation,
      not the Montgomery ladder used for exponentiation or scalar multiplication.
      Keep the executable REDC/multiply spellings narrow so ordinary references to
@@ -195,8 +205,11 @@ const ALGORITHMS = [
   { name: 'OXT', kind: 'algorithm', family: 'searchable encryption', re: /\boxt\b/i, std: null },
   /* The CFRG BBS scheme uses (A,e), not BBS+'s (A,e,s). The group's
      BLS12-381 name is not evidence of BLS signing. Credential Veil computes
-     BBS sign/verify/proofs in src/bbs and checks official draft vectors. */
-  { name: 'BBS signatures', kind: 'algorithm', family: 'signature', re: /\bbbs\b(?!\s*\+)/i, std: 'IETF:draft-irtf-cfrg-bbs-signatures' },
+     BBS sign/verify/proofs in src/bbs and checks official draft vectors. Bare
+     `BBS` remains a valid chip for that reviewed lab, but executable/prose
+     detection requires signature, credential or proof context so `bbsBits`
+     cannot turn a number-theoretic generator into an IETF signature claim. */
+  { name: 'BBS signatures', kind: 'algorithm', family: 'signature', re: /\bbbs[-_ ]?(?:sign(?:ature|atures|ing)?|verify|proofs?|credentials?)\b/i, chipRe: /^bbs(?:[-_ ]?signatures?)?$/i, std: 'IETF:draft-irtf-cfrg-bbs-signatures' },
   { name: 'Schnorr', kind: 'algorithm', family: 'signature', re: /schnorr/i, std: null },
   { name: 'ElGamal', kind: 'algorithm', family: 'public-key encryption', re: /el[-_ ]?gamal/i, std: null },
   { name: 'Paillier', kind: 'algorithm', family: 'homomorphic encryption', re: /paillier/i, std: null },
@@ -453,7 +466,10 @@ const ALGORITHMS = [
   { name: 'KASUMI', kind: 'algorithm', family: 'block cipher', re: /\bkasumi\b/i, std: 'ETSI:SAGE KASUMI' },
   { name: 'Camellia', kind: 'algorithm', family: 'block cipher', re: /\bcamellia\b/i, std: 'IETF:RFC 3713' },
   { name: 'ARIA', kind: 'algorithm', family: 'block cipher', re: /aria[-_ ]?(?:cipher|128|192|256|encrypt|decrypt|sbox|round|key)/i, chipRe: /^aria(?:[-_ ]?(?:128|192|256))?$/i, pathRe: /(^|\/)aria(?:[-_./]|$)/i, std: 'IETF:RFC 5794' },
-  { name: 'SEED', kind: 'algorithm', family: 'block cipher', re: /seed[-_ ]?(?:cipher|block|encrypt|decrypt|round|sbox)|\bkisa[-_ ]?seed\b/i, chipRe: /^seed(?:[-_ ]?128)?$/i, std: 'IETF:RFC 4269' },
+  /* The boundary after the operation is essential: without it, ordinary prose
+     such as `same-seed ciphertexts` matches the `seed cipher` prefix. Preserve
+     World Ciphers' real camel-cased seedBlockEncrypt implementation explicitly. */
+  { name: 'SEED', kind: 'algorithm', family: 'block cipher', re: /seed[-_ ]?(?:cipher|block(?:[-_ ]?(?:encrypt|decrypt))?|encrypt|decrypt|round|sbox)\b|\bkisa[-_ ]?seed\b/i, chipRe: /^seed(?:[-_ ]?128)?$/i, std: 'IETF:RFC 4269' },
   { name: 'LEA', kind: 'algorithm', family: 'block cipher', re: /\blea[-_ ]?(?:cipher|128|192|256|round|encrypt)\b/i, chipRe: /^lea(?:[-_ ]?(?:128|192|256))?$/i, std: 'ISO:ISO/IEC 29192-2' },
   { name: 'HIGHT', kind: 'algorithm', family: 'block cipher', re: /\bhight\b/i, std: 'ISO:ISO/IEC 18033-3' },
   { name: 'EC-KCDSA', kind: 'algorithm', family: 'signature', re: /kcdsa/i, std: 'ISO:ISO/IEC 14888-3' },

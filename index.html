@@ -2275,7 +2275,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">246</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">247</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21592,6 +21592,19 @@
             <div class="project-meta"><div class="stack"><span class="chip">DC-net</span><span class="chip">Pairwise XOR</span><span class="chip">Coalition Views</span><span class="chip">Disruption</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
+          <a class="project-card" data-category="PROTOCOLS | MPC &amp; THRESHOLD | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-hostile-paths/" data-added="2026-10" data-added-on="2026-10-26" data-updated="2026-10" data-level="advanced"
+            data-implements="Reed-Solomon@src/psmt/decoder.ts:37 | Shamir secret sharing@src/psmt/protocol.ts:131"
+            data-implementation="local TypeScript GF(257), Shamir-style polynomial sharing, Welch-Berlekamp decoding and independent subset decoding"
+            data-review-commit="4086fff2f6d89ce83fa8e4dd2ead1a3c42734229"
+            data-review-note="Read the complete exact-main README, finite-field arithmetic, one-round encoder, path-action model, privacy census, Welch-Berlekamp and subset decoders, topology planner, learner interface, unit/browser/accessibility tests, mutation runner and workflows. The learner samples a degree-t GF(257) polynomial with the message as its constant term, assigns distinct nonzero evaluations to independently labeled paths, and separately applies observation, modification and recognized loss. The attacker-view census solves the resulting affine systems for every field secret; the receiver compares naive first-share interpolation with Welch-Berlekamp recovery and a separately implemented subset decoder under the inequality 2b+e at most n-(t+1). A computed three-path ambiguity witness falsifies the one-round 2t+1 shortcut. The planner executes only the one-round n at least 3t+1 construction: it reports the two-way interactive n at least 2t+1 theorem boundary but refuses to relabel this decoder as the Spini-Zemor pseudo-basis protocol. The browser does not create physically independent networks, authenticate routers or endpoints, measure timing, cover asynchronous/mobile corruption, implement the paper's optimal multi-symbol rate, or supply a production/constant-time packet format. Exact-main verification and deployment evidence is recorded in the encyclopedia roadmap."
+            data-overlaps="crypto-lab-shamir-gate: Shamir Gate teaches passive threshold secrecy and reconstruction; Hostile Paths adds active path modification, recognized loss and Reed-Solomon correction. | crypto-lab-vss-gate: VSS Gate detects a dishonest dealer before reconstruction; Hostile Paths assumes honest endpoints and corrects faults introduced by Byzantine communication paths."
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Perfectly Secure Message Transmission</div>
+            <div class="project-title">Hostile Paths</div>
+            <div class="project-copy">Send one field symbol over independently modeled hostile paths: compare naive Shamir interpolation with Welch–Berlekamp correction, vary observation, modification and loss, and compute exact one-round and interactive topology boundaries.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Shamir Sharing</span><span class="chip">Reed-Solomon</span><span class="chip">Welch–Berlekamp</span><span class="chip">PSMT</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -21936,6 +21949,7 @@
       'Lattice Builder': 'post-quantum', 'Covert Channel Studio': 'historical',
       'Privacy Pass': 'privacy', 'Order Leak': 'privacy', 'Split Point': 'foundations',
       'Proof Tally': 'privacy', 'Fold Gate': 'foundations', 'Hidden Bit': 'foundations',
+      'Hostile Paths': 'privacy',
       'PQXDH Wire': 'key-exchange', 'Sleeve Check': 'symmetric',
       'Good Randomness': 'foundations',
       'Agreeing in Public': 'key-exchange',

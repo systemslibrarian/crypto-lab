@@ -535,6 +535,14 @@ fixtures; the lesson is not wire-interoperable TPM handling, hardware isolation,
 boot, rollback prevention, anti-hammering or protection after plaintext release.
 Catalogued total remains 247.*
 
+*Version 63 — files Hostile Paths under §19 as the network-delivery boundary of secret
+sharing. Its one-round GF(257) construction combines Shamir-style polynomial privacy with
+Reed-Solomon error and erasure correction, while an exact privacy census, independent
+decoder and computed three-path ambiguity keep observed success separate from a universal
+PSMT guarantee. The browser reports the interactive 2t+1 theorem boundary but does not
+execute or relabel the two-round pseudo-basis protocol. No concept status changes — §19 was
+already `DEEP`. Catalogued total moves to 248.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -958,9 +966,17 @@ problem") and FRI on STARK Tower, so those are depth here, not the lead.
 
 **19. Secret sharing and distributed trust — `DEEP`**
 Shamir Gate · VSS Gate · DKG Gate · Reshare Circle · FROST Threshold · GG20 Wallet ·
-Threshold Decrypt · Threshold ML-DSA · Shamir vs FROST · Icy DVRF · MuSig Gate · Split Point.
+Threshold Decrypt · Threshold ML-DSA · Shamir vs FROST · Icy DVRF · MuSig Gate · Split Point ·
+Hostile Paths.
 Generation, verification, refresh, and use are all taught, and Split Point changes the object
 being split.
+
+Hostile Paths uses the same polynomial-sharing privacy layer for a different job: delivering
+one message across independently modeled communication paths when a static Byzantine
+adversary may observe, replace or drop whole shares. Its Reed-Solomon decoder and explicit
+one-round ambiguity witness make active channel reliability visible without treating naive
+threshold reconstruction as a PSMT protocol or claiming that browser paths are physically
+independent networks.
 
 Shamir Gate now also separates polynomial sharing from visual sharing. Its binary 2-of-2
 lesson expands each source pixel into four subpixels, proves one-share privacy by enumerating
@@ -1686,7 +1702,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 247.**
+**Catalogued total: 248.**
 
 ---
 

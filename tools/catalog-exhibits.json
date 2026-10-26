@@ -16521,6 +16521,103 @@
       ],
       "reviewScope": "complete"
     },
+    "crypto-lab-hostile-paths": {
+      "commit": "4086fff2f6d89ce83fa8e4dd2ead1a3c42734229",
+      "reviewed": "2026-10-26",
+      "exhibits": [
+        {
+          "id": "topology-planner",
+          "title": "Topology, rounds, and path actions",
+          "kind": "interactive",
+          "execution": "real-values",
+          "section": "Topology, rounds, and path actions",
+          "action": "Vary the path count, Byzantine budget, rounds, feedback, observation, modification, and recognized loss before running a fresh transcript.",
+          "outcome": "Computes the exact one-round or interactive path threshold, refuses feedback inside one transmission round, and states when the selected one-round protocol actually runs.",
+          "concepts": [
+            "perfectly secure message transmission",
+            "independent paths",
+            "Byzantine path budget",
+            "round complexity",
+            "feedback"
+          ],
+          "evidence": [
+            "src/ui/app.ts:247",
+            "src/ui/app.ts:264",
+            "src/psmt/protocol.ts:279"
+          ],
+          "limits": "The interactive 2t+1 boundary is computed but not executed; two forward-only phases retain the one-way threshold."
+        },
+        {
+          "id": "one-round-transcript",
+          "title": "One-round private and reliable delivery",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "section": "Path transcript and verifier evidence",
+          "action": "Sample fresh polynomial masks, send one share per path, apply distinct path actions, and compare naive interpolation with two independently implemented decoders.",
+          "outcome": "Shows the attacker-visible shares, an exact all-secret completion census, the error and erasure inequality, the naive output, Welch-Berlekamp recovery, and the independent subset-decoder verdict.",
+          "concepts": [
+            "Shamir secret sharing",
+            "Reed-Solomon decoding",
+            "Welch-Berlekamp decoding",
+            "information-theoretic privacy",
+            "errors and erasures"
+          ],
+          "evidence": [
+            "src/ui/app.ts:110",
+            "src/ui/app.ts:167",
+            "src/psmt/protocol.ts:131",
+            "src/psmt/protocol.ts:152",
+            "src/psmt/protocol.ts:185",
+            "src/psmt/protocol.ts:230",
+            "src/psmt/decoder.ts:37",
+            "src/psmt/decoder.ts:91"
+          ],
+          "limits": "The browser uses one GF(257) symbol, degree at most four and at most sixteen modeled paths; it does not implement the source paper's optimal multi-symbol transmission rate."
+        },
+        {
+          "id": "three-path-ambiguity",
+          "title": "A concrete one-round 2t+1 ambiguity",
+          "kind": "comparison",
+          "execution": "real-values",
+          "section": "Why 2t+1 paths do not suffice in one round",
+          "action": "Inspect two computed degree-one codewords and one received word at distance one from each candidate.",
+          "outcome": "Demonstrates that three one-way paths with one Byzantine fault cannot identify which of two secrets was sent, rather than treating a decoder failure as the impossibility proof.",
+          "concepts": [
+            "one-round lower bound",
+            "Hamming distance",
+            "decoding ambiguity",
+            "topology threshold"
+          ],
+          "evidence": [
+            "src/ui/app.ts:213",
+            "src/psmt/protocol.ts:321"
+          ],
+          "limits": "This finite witness falsifies the three-path one-round shortcut; it does not implement or disprove the distinct interactive protocol available with feedback."
+        },
+        {
+          "id": "claim-boundary",
+          "title": "Executed claim, source record, and model boundary",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "section": "What the executable protocol establishes",
+          "action": "Compare the exact privacy and reliability claims with the separately cited interactive theorem and the assumptions retained by the browser model.",
+          "outcome": "Keeps synchronous private authenticated path labels, static corruption, recognized erasures, honest endpoints, physical independence, constant time, and production packet formats visibly separate.",
+          "concepts": [
+            "security model",
+            "synchrony",
+            "static adversary",
+            "private authenticated channels",
+            "bounded teaching model"
+          ],
+          "evidence": [
+            "src/ui/app.ts:280",
+            "src/ui/app.ts:297"
+          ],
+          "limits": "Source-backed explanation only; it does not add a second executable protocol or establish physical network independence."
+        }
+      ],
+      "reviewScope": "complete"
+    },
     "crypto-lab-hpke-envelope": {
       "commit": "fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8",
       "reviewed": "2026-10-25",

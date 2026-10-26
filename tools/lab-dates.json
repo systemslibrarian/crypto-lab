@@ -1993,6 +1993,14 @@
    "addedFrom": "2026-10-24T21:50:15Z",
    "updatedFrom": "2026-10-25T03:33:36-04:00",
    "updatedCommit": "8de5cb25042cc70b991fe53211d85e3324bc9684"
+  },
+  "crypto-lab-hostile-paths": {
+   "added": "2026-10",
+   "addedOn": "2026-10-26",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-26T19:39:07Z",
+   "updatedFrom": "2026-10-26T15:58:18-04:00",
+   "updatedCommit": "26ebda7779a525fc12b28360b705990a7a0b6948"
   }
  }
 }

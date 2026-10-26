@@ -3,9 +3,9 @@
   "generated": "2026-10-26",
   "root": "..",
   "totals": {
-    "labs": 251,
-    "autoMergeJobs": 249,
-    "dispatchSites": 248
+    "labs": 252,
+    "autoMergeJobs": 250,
+    "dispatchSites": 249
   },
   "withDispatchSite": [
     "crypto-compare",
@@ -99,6 +99,7 @@
     "crypto-lab-hash-zoo",
     "crypto-lab-hawk",
     "crypto-lab-hidden-bit",
+    "crypto-lab-hostile-paths",
     "crypto-lab-hpke-envelope",
     "crypto-lab-hqc-timing",
     "crypto-lab-hqc-timing-break",

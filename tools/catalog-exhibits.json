@@ -26665,60 +26665,77 @@
       ]
     },
     "crypto-lab-oblivious-shelf": {
-      "commit": "13bf4fd8b0f560b717cbba7d1158e58a247d7339",
-      "reviewed": "2026-10-22",
+      "commit": "acdc185d61c8aca1692be3bb200a873524385489",
+      "reviewed": "2026-10-26",
       "exhibits": [
         {
           "id": "privacy-problem",
           "title": "Library Query Privacy and XOR Scheme",
           "kind": "explanation",
           "action": "Read the one-server privacy problem, noncolluding two-server assumption, and XOR query equations.",
-          "outcome": "The walkthrough explains how each server sees a random-looking query while replies combine to select one catalog item.",
+          "outcome": "The walkthrough explains how each server sees a uniformly distributed subset while the two replies combine to recover only the selected item's checked-out bit.",
           "concepts": [
             "information-theoretic PIR",
             "two-server noncollusion",
-            "XOR secret sharing",
+            "uniform subset queries",
             "Chor et al. 1995"
           ],
           "evidence": [
             "src/main.ts:84",
-            "src/main.ts:87",
-            "src/main.ts:172",
-            "src/main.ts:204",
-            "src/pir.ts:1"
+            "src/main.ts:89",
+            "src/main.ts:126",
+            "src/main.ts:199",
+            "src/main.ts:207",
+            "src/main.ts:223",
+            "src/main.ts:250",
+            "src/main.ts:269",
+            "src/pir.ts:98",
+            "src/pir.ts:121",
+            "src/pir.ts:140"
           ],
           "section": "What is IT-PIR?",
-          "execution": "conceptual"
+          "execution": "conceptual",
+          "limits": "The privacy statement assumes uniform independent subset sampling, identical databases, noncolluding servers and a view limited to one protocol query; it excludes transport metadata, logs and collusion."
         },
         {
           "id": "live-query",
           "title": "Two-Server PIR Query",
           "kind": "interactive",
           "action": "Select a catalog item and advance the query walkthrough.",
-          "outcome": "Two independently computed XOR responses combine to retrieve the selected record without either server receiving the index.",
+          "outcome": "Actual sampled subset queries and independently computed XOR responses recover the selected one-bit checked-out flag; a direct database comparison checks correctness and each computed one-server anonymity set retains all 16 indices.",
           "concepts": [
             "private information retrieval",
-            "one-hot selection",
-            "XOR query mask",
-            "server privacy"
+            "symmetric-difference target toggle",
+            "XOR response",
+            "one-bit retrieval",
+            "one-server anonymity set"
           ],
           "evidence": [
-            "src/main.ts:306",
-            "src/main.ts:317",
-            "src/main.ts:331",
-            "src/pir.ts:1",
-            "src/catalog.ts:1"
+            "src/main.ts:285",
+            "src/main.ts:310",
+            "src/main.ts:312",
+            "src/main.ts:856",
+            "src/main.ts:861",
+            "src/main.ts:872",
+            "src/main.ts:905",
+            "src/main.ts:1013",
+            "src/main.ts:1038",
+            "src/main.ts:1063",
+            "src/pir.ts:160",
+            "src/pir.ts:177",
+            "src/pir.ts:184",
+            "src/pir.ts:214"
           ],
           "section": "Live PIR Query Demo",
           "execution": "real-operation",
-          "limits": "The two servers and their noncollusion are simulated in one browser; no network servers are contacted."
+          "limits": "The two servers and their noncollusion are simulated in one browser; the protocol retrieves one bit rather than a catalog record, contacts no network servers, models no transport metadata or logs, and loses privacy if the query shares are combined."
         },
         {
           "id": "cost",
           "title": "Communication and Server Tradeoffs",
           "kind": "comparison",
-          "action": "Change catalog or server assumptions in the cost views and inspect CPIR and deployment comparisons.",
-          "outcome": "The section contrasts download-all, multi-server IT-PIR, and computational PIR cost and trust assumptions.",
+          "action": "Inspect the cost table and read the comparison among download-all, the executed basic XOR scheme, cited multi-server PIR bounds, CPIR and research systems.",
+          "outcome": "The section identifies the executed basic scheme's two O(n)-bit queries, separates that cost from better cited PIR constructions, and contrasts information-theoretic and computational assumptions.",
           "concepts": [
             "PIR communication cost",
             "multi-server PIR",
@@ -26727,13 +26744,18 @@
           ],
           "evidence": [
             "src/main.ts:373",
-            "src/main.ts:376",
-            "src/main.ts:417",
-            "src/main.ts:465",
-            "src/main.ts:488"
+            "src/main.ts:386",
+            "src/main.ts:391",
+            "src/main.ts:399",
+            "src/main.ts:414",
+            "src/main.ts:425",
+            "src/main.ts:478",
+            "src/main.ts:488",
+            "src/main.ts:501"
           ],
           "section": "Communication Cost and Tradeoffs",
-          "execution": "conceptual"
+          "execution": "conceptual",
+          "limits": "The advanced communication bounds, CPIR families and research systems are explanatory references; the lab executes only the basic O(n)-communication two-server XOR construction."
         },
         {
           "id": "dilemma",
@@ -26747,13 +26769,20 @@
             "PIR deployment limitations"
           ],
           "evidence": [
-            "src/main.ts:518",
-            "src/main.ts:521",
+            "src/main.ts:528",
+            "src/main.ts:535",
+            "src/main.ts:542",
+            "src/main.ts:548",
             "src/main.ts:556",
-            "src/main.ts:589"
+            "src/main.ts:563",
+            "src/main.ts:567",
+            "src/main.ts:576",
+            "src/main.ts:609",
+            "src/main.ts:630"
           ],
           "section": "The Librarian's Dilemma",
-          "execution": "conceptual"
+          "execution": "conceptual",
+          "limits": "The legal history is explanatory and not legal advice; PIR does not erase patron identity, timing, network, application or circulation records."
         }
       ],
       "reviewScope": "complete"

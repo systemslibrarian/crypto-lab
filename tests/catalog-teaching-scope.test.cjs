@@ -3035,3 +3035,74 @@ test('Shamir Gate S07 controls reject a false attack, stale pins, missing eviden
   staleReview['crypto-lab-shamir-gate'].remove = [];
   assert.throws(() => checkShamirGateS07Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
+
+function checkObliviousShelfReview(source, manifests = exhibitManifest) {
+  const slug = 'crypto-lab-oblivious-shelf';
+  assert.deepEqual(implementationsFor(source, slug), ['Private information retrieval']);
+
+  const card = openingFor(source, slug);
+  assert.match(card, /data-implements="Private information retrieval@src\/pir\.ts:160"/);
+  const cardBlock = blockFor(source, slug);
+  assert.match(cardBlock, /one-bit checked-out flag/);
+  assert.doesNotMatch(cardBlock, /retrieves any book|retrieves (?:the )?selected record/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, 'acdc185d61c8aca1692be3bb200a873524385489');
+  assert.equal(mapped.reviewed, '2026-10-26');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'privacy-problem',
+    'live-query',
+    'cost',
+    'dilemma',
+  ]);
+
+  const live = mapped.exhibits.find((item) => item.id === 'live-query');
+  assert.equal(live.execution, 'real-operation');
+  assert.match(live.outcome, /one-bit checked-out flag/);
+  assert.match(live.outcome, /direct database comparison checks correctness/);
+  assert.match(live.outcome, /retains all 16 indices/);
+  assert.match(live.limits, /retrieves one bit rather than a catalog record/);
+  assert.match(live.limits, /loses privacy if the query shares are combined/);
+  assert.ok(live.evidence.includes('src/pir.ts:160'));
+  assert.ok(live.evidence.includes('src/pir.ts:214'));
+
+  const cost = mapped.exhibits.find((item) => item.id === 'cost');
+  assert.equal(cost.execution, 'conceptual');
+  assert.doesNotMatch(cost.action, /^Change /);
+  assert.match(cost.outcome, /executed basic scheme's two O\(n\)-bit queries/);
+  assert.match(cost.limits, /executes only the basic O\(n\)-communication/);
+}
+
+test('Oblivious Shelf review credits one-bit XOR PIR without whole-record or interactive-cost overclaims', () => {
+  checkObliviousShelfReview(html);
+});
+
+test('Oblivious Shelf controls reject stale pins, whole-record claims and stronger cost execution', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-oblivious-shelf\/"[^>]*>/;
+  const staleAnchor = html.replace(cardRe, (card) => card.replace('src/pir.ts:160', 'src/pir.ts:89'));
+  assert.notEqual(staleAnchor, html);
+  assert.throws(() => checkObliviousShelfReview(staleAnchor), assert.AssertionError);
+
+  const wholeRecord = html.replace("retrieves a selected book's one-bit checked-out flag", 'retrieves the selected record');
+  assert.notEqual(wholeRecord, html);
+  assert.throws(() => checkObliviousShelfReview(wholeRecord), assert.AssertionError);
+
+  const stalePin = structuredClone(exhibitManifest);
+  stalePin.labs['crypto-lab-oblivious-shelf'].commit = '0'.repeat(40);
+  assert.throws(() => checkObliviousShelfReview(html, stalePin), assert.AssertionError);
+
+  const recordClaim = structuredClone(exhibitManifest);
+  recordClaim.labs['crypto-lab-oblivious-shelf'].exhibits
+    .find((item) => item.id === 'live-query').outcome =
+      'The responses retrieve the complete selected catalog record.';
+  assert.throws(() => checkObliviousShelfReview(html, recordClaim), assert.AssertionError);
+
+  const interactiveCost = structuredClone(exhibitManifest);
+  const cost = interactiveCost.labs['crypto-lab-oblivious-shelf'].exhibits
+    .find((item) => item.id === 'cost');
+  cost.execution = 'real-operation';
+  cost.action = 'Change server assumptions and execute every advanced PIR construction.';
+  cost.limits = 'All cited constructions are implemented.';
+  assert.throws(() => checkObliviousShelfReview(html, interactiveCost), assert.AssertionError);
+});

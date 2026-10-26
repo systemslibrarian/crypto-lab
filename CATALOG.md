@@ -253,7 +253,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Private information retrieval
 
-- **Implemented by:** [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) `src/pir.ts:245`; [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) `src/pir.ts:89`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/pir.ts:191`; [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) `src/ui/app.ts:9`
+- **Implemented by:** [Patron Shield](https://systemslibrarian.github.io/crypto-lab-patron-shield/) `src/pir.ts:245`; [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) `src/pir.ts:160`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/pir.ts:191`; [Split Point](https://systemslibrarian.github.io/crypto-lab-split-point/) `src/ui/app.ts:9`
 - **Also referenced by:** *CKKS Lab*, *FHE Arena*, *Garbled Gate*, *OT Gate*, *J-UNIWARD*, *ORAM Vault*, *PSI Gate*, *Blind Relay*, *Credential Veil*, *Search Vault*
 
 ### PQ KEM
@@ -11387,39 +11387,42 @@ The original 1996 NTRU lattice cryptosystem with polynomial-ring arithmetic from
 
 [`crypto-lab-oblivious-shelf`](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) · IT-PIR · PRIVACY
 
-2-server XOR Private Information Retrieval (Chor et al. 1995) — a patron retrieves any book from a 16-item catalog without the server learning which one was requested. Step-by-step query walkthrough and privacy audit.
+2-server XOR Private Information Retrieval (Chor et al. 1995) — a patron retrieves a selected book's one-bit checked-out flag while either simulated server's protocol query leaves every catalog index possible. Step-by-step query walkthrough and privacy audit.
 
 - **Card topics (discovery only):** XOR PIR, Chor et al. 1995, 2-Server PIR, Privacy Audit — labels do not establish what any section runs.
-- **Implements:** Private information retrieval `src/pir.ts:89`
+- **Implements:** Private information retrieval `src/pir.ts:160`
 - **References:** BFV, CKKS, Diffie-Hellman, LWE, Private set intersection, Shamir secret sharing
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [13bf4fd8b0f5](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/commit/13bf4fd8b0f560b717cbba7d1158e58a247d7339) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [acdc185d61c8](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/commit/acdc185d61c8aca1692be3bb200a873524385489) reviewed 2026-10-26; 4 mapped sections.
   - **Communication and Server Tradeoffs** (`cost`; comparison; conceptual)
     - **Visible section:** Communication Cost and Tradeoffs
-    - **Learner action:** Change catalog or server assumptions in the cost views and inspect CPIR and deployment comparisons.
-    - **Observed result:** The section contrasts download-all, multi-server IT-PIR, and computational PIR cost and trust assumptions.
+    - **Learner action:** Inspect the cost table and read the comparison among download-all, the executed basic XOR scheme, cited multi-server PIR bounds, CPIR and research systems.
+    - **Observed result:** The section identifies the executed basic scheme's two O(n)-bit queries, separates that cost from better cited PIR constructions, and contrasts information-theoretic and computational assumptions.
     - **Concepts taught:** PIR communication cost; multi-server PIR; computational PIR; collusion
-    - **Evidence at pinned commit:** `src/main.ts:373`, `src/main.ts:376`, `src/main.ts:417`, `src/main.ts:465`, `src/main.ts:488`
+    - **Limits:** The advanced communication bounds, CPIR families and research systems are explanatory references; the lab executes only the basic O(n)-communication two-server XOR construction.
+    - **Evidence at pinned commit:** `src/main.ts:373`, `src/main.ts:386`, `src/main.ts:391`, `src/main.ts:399`, `src/main.ts:414`, `src/main.ts:425`, `src/main.ts:478`, `src/main.ts:488`, `src/main.ts:501`
   - **Librarian Privacy and Policy Boundaries** (`dilemma`; explanation; conceptual)
     - **Visible section:** The Librarian's Dilemma
     - **Learner action:** Read the legal landscape, where IT-PIR fits, and honest limitations.
     - **Observed result:** The section connects query confidentiality to operational assumptions without claiming to resolve catalog content or legal policy issues.
     - **Concepts taught:** reader privacy; library records; PIR deployment limitations
-    - **Evidence at pinned commit:** `src/main.ts:518`, `src/main.ts:521`, `src/main.ts:556`, `src/main.ts:589`
+    - **Limits:** The legal history is explanatory and not legal advice; PIR does not erase patron identity, timing, network, application or circulation records.
+    - **Evidence at pinned commit:** `src/main.ts:528`, `src/main.ts:535`, `src/main.ts:542`, `src/main.ts:548`, `src/main.ts:556`, `src/main.ts:563`, `src/main.ts:567`, `src/main.ts:576`, `src/main.ts:609`, `src/main.ts:630`
   - **Two-Server PIR Query** (`live-query`; interactive; real-operation)
     - **Visible section:** Live PIR Query Demo
     - **Learner action:** Select a catalog item and advance the query walkthrough.
-    - **Observed result:** Two independently computed XOR responses combine to retrieve the selected record without either server receiving the index.
-    - **Concepts taught:** private information retrieval; one-hot selection; XOR query mask; server privacy
-    - **Limits:** The two servers and their noncollusion are simulated in one browser; no network servers are contacted.
-    - **Evidence at pinned commit:** `src/main.ts:306`, `src/main.ts:317`, `src/main.ts:331`, `src/pir.ts:1`, `src/catalog.ts:1`
+    - **Observed result:** Actual sampled subset queries and independently computed XOR responses recover the selected one-bit checked-out flag; a direct database comparison checks correctness and each computed one-server anonymity set retains all 16 indices.
+    - **Concepts taught:** private information retrieval; symmetric-difference target toggle; XOR response; one-bit retrieval; one-server anonymity set
+    - **Limits:** The two servers and their noncollusion are simulated in one browser; the protocol retrieves one bit rather than a catalog record, contacts no network servers, models no transport metadata or logs, and loses privacy if the query shares are combined.
+    - **Evidence at pinned commit:** `src/main.ts:285`, `src/main.ts:310`, `src/main.ts:312`, `src/main.ts:856`, `src/main.ts:861`, `src/main.ts:872`, `src/main.ts:905`, `src/main.ts:1013`, `src/main.ts:1038`, `src/main.ts:1063`, `src/pir.ts:160`, `src/pir.ts:177`, `src/pir.ts:184`, `src/pir.ts:214`
   - **Library Query Privacy and XOR Scheme** (`privacy-problem`; explanation; conceptual)
     - **Visible section:** What is IT-PIR?
     - **Learner action:** Read the one-server privacy problem, noncolluding two-server assumption, and XOR query equations.
-    - **Observed result:** The walkthrough explains how each server sees a random-looking query while replies combine to select one catalog item.
-    - **Concepts taught:** information-theoretic PIR; two-server noncollusion; XOR secret sharing; Chor et al. 1995
-    - **Evidence at pinned commit:** `src/main.ts:84`, `src/main.ts:87`, `src/main.ts:172`, `src/main.ts:204`, `src/pir.ts:1`
+    - **Observed result:** The walkthrough explains how each server sees a uniformly distributed subset while the two replies combine to recover only the selected item's checked-out bit.
+    - **Concepts taught:** information-theoretic PIR; two-server noncollusion; uniform subset queries; Chor et al. 1995
+    - **Limits:** The privacy statement assumes uniform independent subset sampling, identical databases, noncolluding servers and a view limited to one protocol query; it excludes transport metadata, logs and collusion.
+    - **Evidence at pinned commit:** `src/main.ts:84`, `src/main.ts:89`, `src/main.ts:126`, `src/main.ts:199`, `src/main.ts:207`, `src/main.ts:223`, `src/main.ts:250`, `src/main.ts:269`, `src/pir.ts:98`, `src/pir.ts:121`, `src/pir.ts:140`
 
 ### OPAQUE Gate
 

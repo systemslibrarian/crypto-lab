@@ -1,6 +1,6 @@
 # Ebook and research implementation checklist
 
-Scope: the ten recommendations in *Ebook-Based Review: Crypto Lab and Cipher Museum*, reviewed 26 October 2026. This checklist tracks implementation and review evidence. Checked items have source changes and validation prepared in the pull requests below; they do not mean merged or deployed.
+Scope: the ten recommendations in *Ebook-Based Review: Crypto Lab and Cipher Museum*, reviewed 26 October 2026. This checklist tracks implementation and review evidence. Checked items have source changes and validation in the pull requests below. Application merge revisions and deployment runs are recorded separately.
 
 ## Citation policy
 
@@ -21,7 +21,7 @@ Read source books when needed. Credit the full overall book title, author, editi
 
 ## Verification and delivery
 
-The changes are prepared across seven application repositories. None was merged or deployed as part of this work. The hub catalog continues to describe the currently published labs; its AES card must be refreshed against the merged source revision before advertising the tenth act. Do not move a source-review pin to an unmerged feature branch.
+All seven application pull requests were merged on 26 October 2026 after their GitHub checks passed. The hub catalog refresh in this change describes the merged AES and Biham lessons, updates affected source anchors and reviewed revisions, and regenerates README/catalog records through the existing tools. It preserves the existing implementation and attack exclusions. Deployment runs below identify the exact merged revisions; their job conclusions provide the release status for those commits.
 
 | Work | Review | Verification |
 | --- | --- | --- |
@@ -35,7 +35,7 @@ The changes are prepared across seven application repositories. None was merged 
 
 GitHub run status can change; each PR is the authoritative location for current checks. The museum's benchmark has only three original texts and does not establish a population-wide solver ranking. The preprint notes explain source conditions rather than claiming independent cryptographic proofs or physical reproduction.
 
-After application PRs are reviewed and merged, verify their deployments, re-read the actual merged AES/Biham sources, update any affected hub card and reviewed commit through the existing catalog workflow, and regenerate dependent catalog/teaching records. This publication step remains outstanding; the ten implementation checkmarks must not be read as a live-release claim.
+The catalog refresh passed all 93 teaching-scope tests, source-anchor verification for the six affected labs, README/catalog/concept synchronization, and teaching-page generation checks. Deployment verification also checks that live pages load the new lesson content; source and build comparisons are scoped to the fetched assets, not a claim about every cached client.
 
 ## Claim-to-source mapping
 
@@ -48,3 +48,15 @@ After application PRs are reviewed and merged, verify their deployments, re-read
 | M2/M3: Cipher Museum evaluation and columnar search | George Lasry, *A Methodology for the Cryptanalysis of Classical Ciphers with Search Metaheuristics* (2018) | §§4.5–4.7, printed pp. 57–60 / PDF pp. 78–81; §§5.3.2–5.3.4, printed pp. 69–78 / PDF pp. 90–99. Evaluation discipline, segment moves, adjacency and alignment. Bounded browser adaptations do not reproduce the thesis's large-key performance claims. |
 
 R1–R3 cite the supplied October 2026 research papers by full title and public ePrint landing page in their respective README and rendered notes. Those notes distinguish theoretical bounds, physical measurements, estimated computation and the browser demonstrations. They do not cite online book copies.
+
+## Application release records
+
+| Application | Merged revision | Deployment workflow |
+| --- | --- | --- |
+| crypto-lab-lms-ledger | [67c35a0f3c11](https://github.com/systemslibrarian/crypto-lab-lms-ledger/commit/67c35a0f3c116445195af84cb6b1643be2344079) | [Deploy to GitHub Pages](https://github.com/systemslibrarian/crypto-lab-lms-ledger/actions/runs/40341347374) |
+| crypto-lab-lms-xmss | [11a9c2920693](https://github.com/systemslibrarian/crypto-lab-lms-xmss/commit/11a9c292069336abc689ff486abaec735e24e307) | [Deploy to GitHub Pages](https://github.com/systemslibrarian/crypto-lab-lms-xmss/actions/runs/40341356163) |
+| crypto-lab-envelope-kms | [ad7fab7a04aa](https://github.com/systemslibrarian/crypto-lab-envelope-kms/commit/ad7fab7a04aa29b370b7009f1a18bdb8a346cd90) | [Deploy to GitHub Pages](https://github.com/systemslibrarian/crypto-lab-envelope-kms/actions/runs/40341366624) |
+| crypto-lab-lattice-fault | [ba4fb8251734](https://github.com/systemslibrarian/crypto-lab-lattice-fault/commit/ba4fb8251734f5c273b75a461d6ceba25399035a) | [Deploy to GitHub Pages](https://github.com/systemslibrarian/crypto-lab-lattice-fault/actions/runs/40341375007) |
+| crypto-lab-biham-lens | [2592b2d94e17](https://github.com/systemslibrarian/crypto-lab-biham-lens/commit/2592b2d94e17a6359262b1947d52f6069ca9b3f6) | [Deploy to GitHub Pages](https://github.com/systemslibrarian/crypto-lab-biham-lens/actions/runs/40341384118) |
+| crypto-lab-aes-anatomy | [fb4d3d8ebeb0](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/commit/fb4d3d8ebeb099d42aeae47d234fe93296ffa544) | [Deploy to GitHub Pages](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/actions/runs/40342205986) |
+| cipher-museum | [15efc4402155](https://github.com/systemslibrarian/cipher-museum/commit/15efc4402155a35a1b455c9fcb5ba0f507e96d6e) | [CI](https://github.com/systemslibrarian/cipher-museum/actions/runs/40341591457) |

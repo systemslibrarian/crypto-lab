@@ -451,6 +451,25 @@ Type-3 BLS12-381 adaptation is not a
 TPM/ISO ECDAA profile or hardware implementation, and anonymous provenance does not
 establish runtime integrity. Catalogued total remains 246.*
 
+*Version 55 — records IBE Gate's A-D-07 certificateless-ownership extension under §9
+without adding a lab or changing a concept status. One fresh run compares a P-256-signed
+RSA-OAEP PKI route, the existing escrowed Boneh–Franklin IBE route and a bounded
+Huang–Wong-style `IBE → PKE → one-time MAC` envelope. The two certificateless adversary
+APIs keep public-key replacement separate from KGC knowledge: neither side decrypts
+alone, while the explicit combined compromise does. BasicIdent is only IND-CPA, so the
+cited generic IND-CCA theorem does not apply; the one-shot cases are not full adaptive
+games, and key replacement still creates an availability failure without an authenticated
+directory. Catalogued total remains 246.*
+
+*Version 56 — files Distance Bounding under §26 as a new catalogued lab. The executable
+verifier-nonce Hancke–Kuhn profile separates ordinary authenticated relaying, late online
+relaying, mafia pre-asking and dishonest-prover distance fraud, with exact rational timing
+and attack/error probabilities. Browser clocks never reach a verdict; the arithmetic model
+is not a radio, ranging device, location proof or general relay defense, and its ideal-bit,
+fresh-nonce, unpredictable-challenge and independent-noise assumptions remain visible.
+Identity and authentication stays `COVERED`; this adds the previously missing proximity
+boundary rather than closing an open concept gap. Catalogued total moves to 247.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -703,6 +722,17 @@ the target ciphertext, while a same-depth sibling runs the real pairing algebra 
 different target-group secret. This is bounded depth-three teaching code with a fixed-size
 KEM/DEM adaptation, not a claim of the source paper's full proof; hierarchy limits a compromised
 delegate to its prefix but does not remove the root PKG's escrow over every branch.
+
+Its next exhibit places that escrow boundary beside ordinary PKI and certificateless ownership.
+The PKI route verifies a real P-256 CA signature before RSA-OAEP encryption, the IBE route lets
+the KGC freshly extract the target key, and the bounded Huang–Wong-style route wraps BasicIdent
+inside RSA-OAEP and an HMAC-SHA-256 tag. A Type-I actor receives a replacement secret but no
+target partial key; a Type-II actor receives the target partial key but no user secret or
+replacement capability. Each alone rejects and their deliberately combined capabilities
+decrypt, while key displacement and tag mutation remain separate controls. This executes the
+ownership split, not the cited theorem: BasicIdent misses its IND-ID-CCA2 premise, the actors are
+one-shot rather than adaptive oracle games, JavaScript is not constant-time, and an authenticated
+directory remains outside the construction.
 
 **10. Lattices (LWE / SIS / NTRU) — `DEEP`**
 Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · GGH Trapdoor · Dilithium Seal ·
@@ -1144,7 +1174,7 @@ tree rather than asserting the difference, and it demonstrates the cost — a tr
 whose failure it lets you perform.
 
 **26. Identity and authentication — `COVERED`**
-WebAuthn · Kerberos v5 · JWT Forge · Time Trust · Attestation Gate.
+WebAuthn · Kerberos v5 · JWT Forge · Time Trust · Attestation Gate · Distance Bounding.
 
 The first four authenticate a *person* or a *claim*. Attestation Gate authenticates a
 *platform state* — measured boot into PCRs, a real TPMS_ATTEST quote, RATS roles and an EAT
@@ -1156,6 +1186,17 @@ re-Join and private-key rogue-list revocation. That bounded Type-3 adaptation is
 TPM/ISO ECDAA profile or hardware implementation. A boot quote proves what was measured,
 not what is running; replacing a stable AK name with anonymous provenance does not change
 that boundary.
+
+Distance Bounding supplies a different missing boundary: a valid authentication response
+can be relayed, so possession of the right key does not establish proximity. Its declared
+Hancke–Kuhn profile derives two response registers from HMAC-SHA-256, executes one-bit rapid
+challenges and compares exact modeled round trips with an exact threshold. Separate actor
+views keep an ordinary authenticated relay, a late online relay, mafia pre-asking and a
+dishonest distant key holder from collapsing into one attack. The displayed attack and
+noise figures are exact only under their named ideal-bit, fresh-nonce, unpredictable-
+challenge and independent-error assumptions; breaking one retires the inapplicable formula.
+No browser clock reaches the verdict, and this arithmetic/event simulator is not ranging
+hardware, a radio, a location proof or a universal relay defense.
 
 ---
 
@@ -1524,7 +1565,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 246.**
+**Catalogued total: 247.**
 
 ---
 

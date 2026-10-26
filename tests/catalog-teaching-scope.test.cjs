@@ -2778,3 +2778,177 @@ test('Attestation Gate A-D-08 scope controls reject missing credit, false claims
   staleReview['crypto-lab-attestation-gate'].commit = '0'.repeat(40);
   assert.throws(() => checkAttestationGateAd08Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
+
+function checkIbeGateAd07Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-ibe-gate';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'BLS12-381',
+    'Boneh-Franklin IBE',
+    'ECDSA',
+    'Hash-to-curve',
+    'HIBE',
+    'HMAC',
+    'P-256',
+    'Pairing',
+    'RSA',
+    'RSA-OAEP',
+    'SHA-256',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Security warnings and imported BLS group code are not executed attacks or BLS signatures');
+
+  const card = openingFor(source, slug);
+  assert.match(card, /data-review-commit="6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f"/);
+  assert.match(card, /WebCrypto RSA-OAEP, P-256 ECDSA, HMAC and SHA-256/);
+  assert.doesNotMatch(card, /data-implements="[^"]*BLS signatures@/);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f');
+  assert.deepEqual(review.remove, [
+    'BLS signatures',
+    'Chosen-ciphertext attack',
+    'Chosen-plaintext attack',
+    'Ciphertext malleability',
+    'Malleability (unspecified)',
+  ]);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'setup-bilinearity',
+    'encrypt-before-enroll',
+    'wrong-identity',
+    'time-identity',
+    'escrow',
+    'hibe-delegation',
+    'certificateless-ownership',
+  ]);
+  const time = mapped.exhibits.find((item) => item.id === 'time-identity');
+  assert.match(time.action, /PKG issue, refuse or improperly issue/);
+  assert.match(time.outcome, /colluding PKG can issue early and defeat the policy/);
+  const cle = mapped.exhibits.find((item) => item.id === 'certificateless-ownership');
+  assert.equal(cle.execution, 'real-crypto');
+  assert.ok(cle.evidence.includes('src/certificateless.ts:453'));
+  assert.match(cle.limits, /BasicIdent, so the cited IND-CCA theorem does not apply/);
+  assert.match(cle.limits, /not full adaptive games/);
+}
+
+test('IBE Gate credits A-D-07 computation without promoting BLS imports or security warnings', () => {
+  checkIbeGateAd07Scope(html);
+});
+
+test('IBE Gate A-D-07 controls reject false credit, stale pins, stale time prose or an incomplete exhibit map', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-ibe-gate\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(/RSA-OAEP@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'data-implements="',
+      'data-implements="BLS signatures@src/pairing.ts:1 | ',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'data-standards="',
+      'data-attacks="Chosen-ciphertext attack@README.md:84" data-standards="',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      '6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f',
+      '0'.repeat(40),
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the IBE Gate card');
+    assert.throws(() => checkIbeGateAd07Scope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = structuredClone(exhibitManifest);
+  missingExhibit.labs['crypto-lab-ibe-gate'].exhibits =
+    missingExhibit.labs['crypto-lab-ibe-gate'].exhibits
+      .filter((item) => item.id !== 'certificateless-ownership');
+  assert.throws(() => checkIbeGateAd07Scope(html, missingExhibit, catalogReviewed), assert.AssertionError);
+
+  const staleTimeClaim = structuredClone(exhibitManifest);
+  staleTimeClaim.labs['crypto-lab-ibe-gate'].exhibits
+    .find((item) => item.id === 'time-identity').outcome =
+      'A date string cryptographically prevents all early decryption.';
+  assert.throws(() => checkIbeGateAd07Scope(html, staleTimeClaim, catalogReviewed), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-ibe-gate'].remove = ['BLS signatures'];
+  assert.throws(() => checkIbeGateAd07Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});
+
+function checkDistanceBoundingS06Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+  const slug = 'crypto-lab-distance-bounding';
+  assert.deepEqual(implementationsFor(source, slug), ['HMAC', 'SHA-256']);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'The nonce-reuse recovery is a unit control, not a learner-executed attack exhibit');
+
+  const card = openingFor(source, slug);
+  assert.match(card, /data-review-commit="4458307b57a02da4362cee5b799f20bdade03fd4"/);
+  assert.match(card, /exact rational timing\/probability and attack-event teaching models/);
+  assert.deepEqual(chipsFor(source, slug), [
+    'Hancke–Kuhn',
+    'Distance Bounding',
+    'Mafia Fraud',
+    'Exact Probabilities',
+  ]);
+
+  const review = reviews[slug];
+  assert.equal(review.commit, '4458307b57a02da4362cee5b799f20bdade03fd4');
+  assert.deepEqual(review.remove, ['Nonce reuse']);
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'session-controls',
+    'ordinary-authenticated-relay',
+    'rapid-timing-relay',
+    'mafia-preask',
+    'distance-fraud',
+    'noisy-channel',
+    'scope-and-sources',
+  ]);
+  assert.equal(mapped.exhibits.find((item) => item.id === 'ordinary-authenticated-relay').execution, 'real-crypto');
+  assert.equal(mapped.exhibits.find((item) => item.id === 'rapid-timing-relay').execution, 'simulation');
+  assert.match(mapped.exhibits.find((item) => item.id === 'rapid-timing-relay').limits,
+    /no browser or network clock measures physical propagation/);
+  assert.match(mapped.exhibits.find((item) => item.id === 'scope-and-sources').limits,
+    /not additional executed protocols, attacks or empirical measurements/);
+}
+
+test('Distance Bounding records S06 computation and modeled actors without a false nonce-reuse attack credit', () => {
+  checkDistanceBoundingS06Scope(html);
+});
+
+test('Distance Bounding S06 controls reject lost credit, a false attack, stale pins or an incomplete exhibit map', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-distance-bounding\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(/HMAC@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, (card) => card.replace(
+      'data-standards="',
+      'data-attacks="Nonce reuse@README.md:19" data-standards="',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      '4458307b57a02da4362cee5b799f20bdade03fd4',
+      '0'.repeat(40),
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Distance Bounding card');
+    assert.throws(() => checkDistanceBoundingS06Scope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = structuredClone(exhibitManifest);
+  missingExhibit.labs['crypto-lab-distance-bounding'].exhibits =
+    missingExhibit.labs['crypto-lab-distance-bounding'].exhibits
+      .filter((item) => item.id !== 'ordinary-authenticated-relay');
+  assert.throws(() => checkDistanceBoundingS06Scope(html, missingExhibit, catalogReviewed), assert.AssertionError);
+
+  const overstatedTiming = structuredClone(exhibitManifest);
+  overstatedTiming.labs['crypto-lab-distance-bounding'].exhibits
+    .find((item) => item.id === 'rapid-timing-relay').limits =
+      'The browser measures physical propagation and proves the prover distance.';
+  assert.throws(() => checkDistanceBoundingS06Scope(html, overstatedTiming, catalogReviewed), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-distance-bounding'].remove = [];
+  assert.throws(() => checkDistanceBoundingS06Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});

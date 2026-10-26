@@ -1493,6 +1493,12 @@
       "level": "intermediate",
       "why": "Assumes byte XOR, graph connectivity, component parity and basic probability; it introduces the observer and coalition model without requiring groups, fields or lattices.",
       "reviewed": "2026-10-25: complete README, source, tests and five-part learner flow"
+    },
+    "crypto-lab-distance-bounding": {
+      "title": "Distance Bounding",
+      "level": "advanced",
+      "why": "Requires protocol-threat-model reasoning, exact probability tails and careful separation of authentication, timing, mafia fraud and dishonest-prover distance fraud.",
+      "reviewed": "2026-10-26: complete README, source, tests and seven-part learner flow"
     }
   }
 }

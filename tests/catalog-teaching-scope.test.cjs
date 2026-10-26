@@ -59,7 +59,7 @@ function checkEnvelopeKmsScope(source) {
   assert.deepEqual(attacksFor(source, slug), [],
     'Claim-mutation tests and modeled logger compromise are not executed fault or side-channel attacks');
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-envelope-kms\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="d2b6614a9fad2fe9667b05d35e3a1e6895ad3293"/);
+  assert.match(card, /data-review-commit="ad7fab7a04aa29b370b7009f1a18bdb8a346cd90"/);
   assert.match(card, /HMAC@src\/kms\/forward-secure-log\.ts:220/);
   assert.match(card, /bounded single-logger\/private-verifier adaptation/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');

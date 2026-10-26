@@ -55,6 +55,38 @@ test('all three exchange scenarios expose direct loss, validate deposits, releas
   }await audit(page);assert.deepEqual(errors,[]);
  }finally{await page.context().close();}
 });
+test('ASW optimistic exchange renders current evidence, both race orders, availability and durable-state failure',async()=>{
+ const {page,errors}=await pageAt('fair-exchange',390);try{
+  await contains(page,'opt-proof','16 rounds');await contains(page,'opt-proof','VERIFIED');
+  let view=JSON.parse(await page.locator('#opt-evidence').textContent());
+  assert.equal(view.proof.rounds,16);assert.equal(view.proof.challenge.length,16);assert.notEqual(view.proof.challenge,'0'.repeat(16));
+  assert.equal(view.intermediary.contacts,0);assert.equal(view.alice.usablePeerSignature,false);assert.equal(view.bob.usablePeerSignature,false);
+  assert.equal(await page.locator('a[href="https://link.springer.com/chapter/10.1007/BFb0054156"]').count(),1);
+  await page.locator('#opt-send-alice').click();await contains(page,'opt-log','E4: Alice sent');assert.equal(await page.locator('#opt-abort').isDisabled(),true);
+  await page.locator('#opt-reset').click();await contains(page,'opt-status','Recoverable promises, no usable peer signature yet');
+  await page.locator('#opt-honest').click();await contains(page,'opt-status','Fair completion — both signatures usable');
+  view=JSON.parse(await page.locator('#opt-evidence').textContent());assert.equal(view.intermediary.contacts,0);assert.equal(view.alice.usablePeerSignature,true);assert.equal(view.bob.usablePeerSignature,true);
+
+  await page.locator('#opt-abort-first').click();await contains(page,'opt-status','Compatible abort — neither signature usable');
+  view=JSON.parse(await page.locator('#opt-evidence').textContent());assert.deepEqual(view.intermediary.records,['ABORT']);assert.equal(view.alice.usablePeerSignature,false);assert.equal(view.bob.usablePeerSignature,false);await contains(page,'opt-log','B-resolve refused');
+
+  await page.locator('#opt-resolve-first').click();await contains(page,'opt-status','Fair completion — both signatures usable');
+  view=JSON.parse(await page.locator('#opt-evidence').textContent());assert.deepEqual(view.intermediary.records,['DEPOSIT']);assert.equal(view.lastOutcome,'abort-returned-deposit');await contains(page,'opt-log','returned its inverse to Alice');
+
+  await page.locator('#opt-a-resolve-path').click();await contains(page,'opt-status','Fair completion — both signatures usable');
+  view=JSON.parse(await page.locator('#opt-evidence').textContent());assert.deepEqual(view.intermediary.records,['NO-ABORT','DEPOSIT']);assert.equal(view.lastOutcome,'abort-refused-no-abort');
+
+  await page.locator('#opt-unavailable-path').click();await contains(page,'opt-status','Termination waits for intermediary availability');
+  view=JSON.parse(await page.locator('#opt-evidence').textContent());assert.equal(view.intermediary.attempts,1);assert.equal(view.intermediary.contacts,0);assert.deepEqual(view.intermediary.records,[]);
+  await page.locator('#opt-available').check();await page.locator('#opt-b-resolve').click();await contains(page,'opt-status','Temporarily one-sided — resolution remains available');
+  view=JSON.parse(await page.locator('#opt-evidence').textContent());assert.equal(view.intermediary.contacts,1);assert.deepEqual(view.intermediary.records,['DEPOSIT']);
+
+  await page.locator('#opt-lost-state').click();await contains(page,'opt-status','Fairness lost when durable state is erased');
+  view=JSON.parse(await page.locator('#opt-evidence').textContent());assert.equal(view.intermediary.durable,false);assert.deepEqual(view.intermediary.records,['ABORT']);assert.equal(view.alice.usablePeerSignature,false);assert.equal(view.bob.usablePeerSignature,true);
+  assert.match(await page.locator('#optimistic-exchange').textContent(),/recoverable evidence/i);assert.match(await page.locator('main').textContent(),/1\/65,535/);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);await audit(page);assert.deepEqual(errors,[]);
+ }finally{await page.context().close();}
+});
 test('reading filters, browser-local progress, no-JS links and historical guide discovery work',async()=>{
  const {page,errors}=await pageAt('applied-cryptography',390);try{
   assert.equal(await page.locator('.chapter').count(),25);await page.locator('#search').fill('chapter 8');assert.equal(await page.locator('.chapter:visible').count(),1);

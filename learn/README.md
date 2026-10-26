@@ -252,17 +252,62 @@ to a party who stops. An ideal always-involved intermediary validates deposits,
 then makes a single terminal abort/release decision. Both items are checked before
 either retrieval right is committed. Concurrent actions are rejected.
 
-The receipt authorizes release of a bound message; it does not prove human reading.
-The model's release means both parties can retrieve evidence, not simultaneous
-network delivery. Identity, custody, durable decision storage and availability are
-assumptions. Every secret is accessible to the one-browser simulator. This is not
-a deployed service, an optimistic fair-exchange implementation or a new protocol
-security claim.
+`fair-exchange/optimistic.mjs` separately executes a bounded adaptation of
+Asokan–Shoup–Waidner Protocol E from the expanded 18 October 1999 report. Bob's
+Schnorr signature is reduced to a public promise and a private inverse. Alice
+places her actual signature in condition-bound RSA-OAEP escrow; Bob proves, with
+the report's interactive Protocol D cut-and-choose structure, that his escrow can
+recover the inverse matching his promise. The honest E1–E6 path exchanges Alice's
+signature and Bob's inverse directly and contacts the trusted intermediary zero
+times. The executable fallback implements the paper's distinct `ABORT`, `DEPOSIT`
+and `NO-ABORT` records, both serialized abort/B-resolve race orders, A-resolve,
+temporary intermediary unavailability and a counterfactual state-loss control.
+Following Protocol E's exact order, A-resolve durably writes `NO-ABORT` before
+checking either escrow; a later error does not roll that record back. The report's
+atomic-request assumption prevents interleaving rather than promising rollback.
 
-Sources: [Asokan, Shoup and Waidner](https://eprint.iacr.org/1997/015),
-[expanded paper](https://www.shoup.net/papers/fex.pdf), and
-[Chatterjee and Raman](https://arxiv.org/abs/1004.2697). Optimistic constructions and
-formal abort/resolve analysis are further reading, not implemented features.
+The Schnorr teaching instantiation uses the RFC 7919 ffdhe2048 group and SHA-256.
+The escrow key is 3072-bit RSA-OAEP with SHA-256 and exponent 65537; OAEP's
+actual label binds the ciphertext to Protocol E's condition. Protocol D uses
+deterministic RFC 8017 OAEP
+encoding only where the prover must recompute a ciphertext from its revealed
+randomness. Domain-separated SHA-256 expansion with rejection sampling instantiates
+Protocol D's H1, and a distinct SHA-256 domain instantiates H2. Every pair is fixed
+under the aggregate H2 commitment before the verifier samples its challenge. The
+ordinary and verifiable escrows share the same TTP key under the
+expanded report's specific Remark 20 allowance for its suggested implementation;
+this is not generalized into a claim that arbitrary escrow schemes may share keys.
+Sixteen nonzero-challenge rounds keep a current run inspectable. For a
+transcript compatible with exactly one nonzero challenge vector, that vector is
+selected with probability 1/65,535. The paper's example uses 40 interactive
+rounds, a 1024-bit prime with a 160-bit subgroup, a 160-bit H1 input and H2
+output, and 1024-bit RSA-OAEP with exponent 3; this adaptation's declared
+parameters differ. The finite calculation is not a production security claim,
+and the paper's random-oracle theorem does not automatically transfer to this
+modernized browser adaptation.
+
+The UI distinguishes Bob's verified, recoverable promise/Protocol D escrow from a
+peer signature that Alice can independently use. Alice's `alpha` is deliberately
+ordinary, non-verifiable escrow: Bob has its ciphertext, but only the TTP can
+decrypt it and check that it contains Alice's valid signature. The receipt in
+the earlier baseline authorizes release of a bound message; it does not prove
+human reading. Neither model promises simultaneous packets. The ASW route
+assumes that the intermediary is honest, eventually available, serializes
+requests atomically and preserves durable transaction state. The original model
+assumes a private client–TTP channel and authenticated server responses, but not
+authenticated client requests. This one-process simulator executes one
+transaction with session-generated request fields; it does not supply an
+adversarial network/API, authenticated identities, private TTP channels,
+certificates, crash-safe replicated storage, production parameter review or a
+deployment proof. Every secret remains accessible to the browser-local teaching
+process.
+
+Primary sources: [Asokan, Shoup and Waidner's expanded report](https://www.shoup.net/papers/fex.pdf),
+especially §§3–7 and Protocols D/E; the earlier
+[EUROCRYPT extended abstract](https://link.springer.com/chapter/10.1007/BFb0054156);
+[RFC 7919 Appendix A.1](https://www.rfc-editor.org/rfc/rfc7919.html#appendix-A.1)
+for the declared finite group; and [RFC 8017 §7.1](https://www.rfc-editor.org/rfc/rfc8017.html#section-7.1)
+for RSAES-OAEP. RFC 7919 does not standardize Schnorr or ASW.
 
 ## Verification
 
@@ -272,6 +317,13 @@ inclusion path, wrong paths and roots, exact-token renewal binding, strict epoch
 boundaries, expired and untrusted-time cases, and the late-genuine/backdated-forgery
 ambiguity. It also covers actual decryption, wrong-session evidence, tampering,
 premature release, terminal decisions and interleaving guards.
+`tests/fair-exchange-optimistic.test.mjs` independently recomputes a fixed Schnorr
+vector and group invariant, checks both Protocol D branches, condition and
+commitment binding, actual TTP decryption, the zero-contact normal path, all three
+durable records, both abort/resolve race orders, delayed and unavailable cases,
+state-loss failure and request serialization. `fair-exchange/mutations.mjs` first
+runs the clean baseline, then requires every named source mutation to fail its
+owning test and restores the source byte for byte.
 `tests/reading-path.test.mjs` checks generated chapter coverage and local links.
 `tests/understanding-cryptography.test.mjs` checks the second-edition path,
 its catalog-only connections, filters, progress and static reading fallback.

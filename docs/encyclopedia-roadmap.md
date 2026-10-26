@@ -66,8 +66,8 @@ A-D-09 is **live** at exact Signature Gate main `db6695e0f136`. The fifth chapte
 
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 8 |
-| In progress | 0 |
+| Planned | 7 |
+| In progress | 1 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 40 |
@@ -127,8 +127,9 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Implement S11 in Attestation Gate; independently audit the PCR policy transitions, sealed object and protected blob, Load/Unseal outcomes, authorized-recovery and fixedTPM-parent semantics, then verify its exact-main unit, mutation, browser/accessibility and deployment gates and every served asset.
 - [x] Implement L-R-10 in Hostile Paths; independently audit the bounded one-round construction, exact privacy census, error/erasure correction, naive comparison, topology thresholds, ambiguity witness and non-executed interactive boundary, then verify its exact-main unit, coverage, mutation, browser/accessibility and CodeQL gates, deployment and every served asset.
 - [x] Implement S03 in the Hub Timestamping workshop; independently audit signed-root batching, every reduced proof, complete-token renewal, the strict cutoff and late-genuine/post-compromise ambiguity, then verify its exact-main logic, mutation, browser/accessibility/reflow, deployment and every served asset.
+- [ ] Complete E-K-05 in the Hub Fair Exchange workshop; independently audit the expanded ASW Protocol E schedule, Schnorr reduction, condition-bound ordinary and verifiable escrows, serialized abort/resolve races, evidence states and intermediary assumptions, then verify its full local and hosted gates, exact-main deployment and every served asset.
 
-**Implementation work:** E-K-09, L-R-02, A-D-13, A-D-08, A-D-07, S06, S07, L-R-06, E-K-08, L-R-08, E-K-07, S11, L-R-10 and S03 are live at exact reviewed source and deployed assets after independent audits corrected their candidate branches where needed. E-K-05 is next. The later P2 and P3 scope remains queued, with no implied delivery dates; recheck repository availability and active ownership before expanding this short queue.
+**Implementation work:** E-K-09, L-R-02, A-D-13, A-D-08, A-D-07, S06, S07, L-R-06, E-K-08, L-R-08, E-K-07, S11, L-R-10 and S03 are live at exact reviewed source and deployed assets after independent audits corrected their candidate branches where needed. E-K-05 is in progress in a clean worktree from exact Hub main; its named ASW Protocol E route, primary-source model audit, local logic tests and passing-baseline mutation gate are implemented, with the full Hub gate and hosted review still required. The later P2 and P3 scope remains queued, with no implied delivery dates; recheck repository availability and active ownership before expanding this short queue.
 
 **Maintainer feedback — optional:**
 
@@ -137,7 +138,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 
 ### Next implementation queue — implementation owner: assistant
 
-1. **E-K-05 — Optimistic fair exchange beyond the ideal-intermediary workshop · Planned:** reconcile the current workshop and sources, then implement only the declared optimistic-fair-exchange acceptance criteria without turning the ideal intermediary into an unstated protocol party.
+1. **E-K-05 — Optimistic fair exchange beyond the ideal-intermediary workshop · In progress:** independently verify the bounded ASW Protocol E implementation, preserve its direct/ideal baselines, then carry the reviewed change through hosted gates and exact deployment before marking it live.
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
 ## Delivery evidence for completed milestones
@@ -603,9 +604,9 @@ Phases express a sensible teaching/build sequence, not promised dates. Recheck t
 | --- | ---: | --- | --- |
 | Phase 1 — Stateful key-handle policy | 1 | P1 | 1 live |
 | Phase 2 — Privacy, storage and query integrity | 11 | P1 | 11 live |
-| Phase 3 — Protocols and arithmetic | 5 | P1 | 4 live; 1 planned |
-| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 9 live; 7 planned |
-| Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 2 live; 6 planned |
+| Phase 3 — Protocols and arithmetic | 5 | P1 | 5 live |
+| Phase 4 — Construction and cryptanalysis depth | 16 | P2 | 16 live |
+| Phase 5 — Advanced privacy and optional workshop depth | 8 | P2 | 7 live; 1 in progress |
 | Phase 6 — Optional specialist and research scope | 7 | P3 | 7 planned |
 
 ### Coordination and optional scope
@@ -1794,7 +1795,7 @@ Deepen query models and network/privacy composition; timestamp renewal and optim
 
 ### E-K-05 — Optimistic fair exchange beyond the ideal-intermediary workshop
 
-**Priority:** P2 — depth · **Status:** Planned · **Workstream:** Fair exchange.
+**Priority:** P2 — depth · **Status:** In progress · **Workstream:** Fair exchange.
 
 **Target:** Existing hub Fair Exchange workshop.
 
@@ -1806,11 +1807,15 @@ Deepen query models and network/privacy composition; timestamp renewal and optim
 - Retain recoverable evidence and exercise stop/delay plus compatible abort/resolve races.
 - Track each party's usable evidence and state fairness, timeliness, availability and durable intermediary-state assumptions.
 
-**Next action:** Choose one optimistic signature-exchange protocol and derive its abort/resolve state machine.
+**Implementation in progress, 2026-10-26:** The selected construction is Protocol E from Asokan, Shoup and Waidner's expanded 18 October 1999 report, not a protocol inferred from the older ideal-intermediary UI. Bob's real Schnorr signature is reduced to the report's public `(d,c)` promise and private inverse. Alice's actual signature is placed in ordinary, non-verifiable RSA-OAEP escrow under Protocol E's exact condition; Bob's inverse is placed in the report's Protocol D cut-and-choose verifiable escrow, whose OAEP label additionally binds Alice's escrow ciphertext. The honest E1–E6 path completes with zero intermediary contacts. Executable fallback schedules serialize `ABORT`, `DEPOSIT` and `NO-ABORT`, including abort-first, B-resolve-first and A-resolve cases, unavailable-intermediary retry and a deliberately out-of-model durable-state-loss control. The learner ledger distinguishes Bob's verified/recoverable evidence, Alice's TTP-only-checkable ordinary escrow and independently usable peer signatures. It also preserves Protocol E's exact A-resolve order: `NO-ABORT` is written before either escrow is checked and is not rolled back by a later error.
 
-**Scope and limits:** Optional depth. The hub already executes direct and ideal-intermediary message/receipt, signature and secret exchanges; Adaptor Gate already supplies atomic swaps/PTLC.
+**Current verification:** A separate test module pins the exact RFC 7919 modulus, independently recomputes the group invariant and a fixed Schnorr signature/reduction vector, and exercises both Protocol D branches, exact condition and commitment binding, real OAEP decryption, all fallback schedules, the report's persistent-`NO-ABORT` error order, Alice's transaction-preimage authorization, availability, request serialization and the state-loss counterexample. Its current clean baseline passes 12/12 tests; the complete local logic/reading run passes 43/43. The dedicated mutation runner first passes that baseline, then catches all 16 named source mutations and restores `optimistic.mjs` byte for byte; Timestamping's retained baseline and all nine mutations also pass. All reading, catalog, knowledge-map, game and public-evidence generated-file checks pass. This Mac's Chromium process aborts at launch with the known Mach-port rendezvous error before loading a page, so hosted Linux remains required for browser/accessibility/reflow evidence. Hosted review and deployment remain pending; this item is not yet Verified, Merged or Live.
 
-**Audit references:** [Fair Exchange (original PDF pp. 2246–2249)](https://doi.org/10.1007/978-3-030-71522-9_204).
+**Next action:** Complete the full Hub gate and independent diff/source audit, open the implementation PR, require every hosted job to pass, then merge and verify exact deployed assets before changing this status.
+
+**Scope and limits:** Optional depth. The hub's direct and ideal-intermediary message/receipt, signature and secret exchanges remain intact; Adaptor Gate separately supplies atomic swaps/PTLC. The adaptation uses 16 interactive nonzero-challenge rounds rather than the report's illustrative 40, an RFC 7919 ffdhe2048/SHA-256 Schnorr teaching instantiation and 3072-bit RSA-OAEP/SHA-256. It does not transfer the paper's random-oracle theorem, implement private/authenticated TTP channels, identities, certificates, crash-safe replicated storage or production deployment controls. RFC 7919 supplies only the group and does not standardize Schnorr or ASW.
+
+**Audit references:** [Fair Exchange (original PDF pp. 2246–2249)](https://doi.org/10.1007/978-3-030-71522-9_204); [Asokan, Shoup and Waidner, *Optimistic Fair Exchange of Digital Signatures*, expanded report](https://www.shoup.net/papers/fex.pdf), especially §§2–7 and Protocols D/E; [EUROCRYPT extended abstract](https://link.springer.com/chapter/10.1007/BFb0054156), whose schedule differs from the later expanded report; [RFC 7919 Appendix A.1](https://www.rfc-editor.org/rfc/rfc7919.html#appendix-A.1); [RFC 8017 §7.1](https://www.rfc-editor.org/rfc/rfc8017.html#section-7.1).
 
 **Pinned baseline:** [Fair Exchange workshop 743f03b9c613](https://github.com/systemslibrarian/crypto-lab/blob/743f03b9c6134cdcf51b79189e4eadab41bf85ea/learn/fair-exchange/index.html); [Adaptor Gate 207c2e1a0b8d](https://github.com/systemslibrarian/crypto-lab-adaptor-gate/blob/207c2e1a0b8d82ffe74a9ae43196a65b6ffa4557/README.md); [Protocol Checker adbe6c0612e5](https://github.com/systemslibrarian/crypto-lab-protocol-checker/blob/adbe6c0612e583924ebb0cda3f281521ace9a693/README.md).
 

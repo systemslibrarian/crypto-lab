@@ -1,5 +1,103 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fair Exchange Workshop · Crypto Lab</title><meta name="description" content="Exchange a message for a receipt, trade contract signatures or secrets, and test interruption and trusted-intermediary assumptions."><link rel="stylesheet" href="../shared/workshop.css"><script type="module" src="app.mjs"></script></head><body><a class="skip-link" href="#main">Skip to workshop</a><div class="shell"><nav class="topbar" aria-label="Primary"><a class="brand" href="../../">CRYPTO LAB</a><a href="../applied-cryptography/">Schneier historical companion (1996)</a></nav><main id="main"><header class="hero"><p class="eyebrow">Protocol workshop · Historical reference: Schneier (1996), §§5.7–5.9 · Intermediate</p><h1>Who has to go first?</h1><p class="lede">Two valid signatures. Two willing parties. One opportunity to walk away.</p><p>Trade a message for a receipt, exchange contract signatures, or exchange secrets. Interrupt each run and inspect what each side actually received.</p></header>
-<section class="panel"><h2>Choose the exchange</h2><div class="filters"><div><label for="scenario">What is being exchanged?</label><select id="scenario"><option value="mail">Certified mail: message ↔ receipt</option><option value="contract">Contract: signature ↔ signature</option><option value="secrets">Secrets: one secret ↔ another</option></select></div><div><label for="method">Who coordinates delivery?</label><select id="method"><option value="direct">The two parties, directly</option><option value="escrow">An ideal trusted intermediary</option></select></div></div><p id="goal"></p><div class="custody" aria-label="Evidence custody"><div><b>Alice</b><p id="alice">Preparing…</p></div><div><b>Intermediary</b><p id="broker">Preparing…</p></div><div><b>Bob</b><p id="bob">Preparing…</p></div></div><div class="controls"><button id="send-a">Alice sends</button><button id="send-b">Bob sends</button><button id="resolve">Release both items</button><button class="secondary" id="abort">Stop the exchange</button></div><div class="status" id="status" role="status" aria-live="polite">Generating this session's keys and synthetic items…</div><div class="controls"><button class="secondary" id="tamper">Corrupt Alice’s signature</button><button class="secondary" id="reset">Start a fresh session</button></div><ol id="log" class="steps" aria-label="Exchange transcript"></ol><details><summary>Inspect delivered evidence and signatures</summary><pre id="evidence">No evidence delivered.</pre></details><p class="small">Changing either selector starts a fresh experiment. Resetting this page does not model erasing information someone already received.</p></section>
-<div class="grid"><section class="panel"><h2>Three experiments to try</h2><ol class="steps"><li><strong>Direct delivery:</strong> Alice sends, then stop. Bob keeps the delivered item. Can Alice recover it by deleting her copy?</li><li><strong>Trusted intermediary:</strong> deposit only Alice's item, then abort. Start again, deposit both, and release. Compare the evidence held by each party.</li><li><strong>Broken evidence:</strong> corrupt Alice's signature before submission. A failed verification must block the deposit or direct delivery.</li></ol></section><section class="panel"><h2>Fairness is a protocol property</h2><p>Signature verification checks the signed bytes under a public key. Fair exchange asks whether an honest party can obtain the promised counterpart when the other party obtains theirs.</p><p>The receipt here authorizes release of the bound message; it cannot prove that a human read or understood it. Contract signatures cover the same fictional terms. The secret exchange concerns both parties receiving one another's secret; it differs from oblivious transfer, where a receiver privately chooses among a sender's messages.</p></section></div>
-<section class="panel"><h2>What the intermediary adds</h2><p>This model makes one irreversible decision per session: <strong>abort</strong> or <strong>release</strong>. Release makes both verified items available for retrieval. It does not require two network packets to arrive at the same instant. After either decision, contradictory operations are rejected.</p><p>All parties and keys live in this browser. Actual WebCrypto ECDSA and AES-GCM verify and open the items; availability, identity, custody and the intermediary's durable decision log are simulated. Real services need those properties to hold across crashes, replay, malicious clients and network failures.</p><details><summary>How optimistic fair exchange differs</summary><p>Optimistic protocols involve the trusted third party only when the ordinary exchange fails. They need carefully constructed recoverable evidence and compatible abort/resolve procedures. This workshop uses an always-involved ideal intermediary; it does not implement or claim to prove an optimistic protocol. A timeout alone cannot recall a secret that has already been disclosed.</p></details></section>
-<section class="panel sources"><h2>Sources and next steps</h2><ul><li><a href="https://eprint.iacr.org/1997/015">Asokan, Shoup &amp; Waidner: Optimistic Fair Exchange of Digital Signatures</a> · <a href="https://www.shoup.net/papers/fex.pdf">Expanded paper</a></li><li><a href="https://arxiv.org/abs/1004.2697">Chatterjee &amp; Raman: Assume-Guarantee Synthesis for Digital Contract Signing</a> — why abort/resolve behavior needs formal scrutiny.</li><li><a href="../../games/the-digital-trade/">Play The Digital Trade</a> for the introductory escrow puzzle.</li><li><a href="https://systemslibrarian.github.io/crypto-lab-ot-gate/">OT Gate</a> explores private selection instead of mutual exchange.</li></ul></section><noscript><p class="notice">Enable JavaScript to run the exchanges. The explanations and sources remain available.</p></noscript></main><footer><a href="https://systemslibrarian.github.io/crypto-lab-key-lifecycle/#guided-path">Next: Follow a key through its lifecycle →</a><p>Fictional data only · Runs locally · No messages are sent</p><a href="https://github.com/systemslibrarian/crypto-lab/tree/main/learn/fair-exchange">Source</a></footer></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fair Exchange Workshop · Crypto Lab</title>
+  <meta name="description" content="Compare direct and ideal-intermediary exchange, then execute ASW optimistic signature exchange with recoverable evidence and compatible abort/resolve races.">
+  <link rel="stylesheet" href="../shared/workshop.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to workshop</a>
+<div class="shell">
+  <nav class="topbar" aria-label="Primary"><a class="brand" href="../../">CRYPTO LAB</a><a href="../applied-cryptography/">Schneier historical companion (1996)</a></nav>
+  <main id="main">
+    <header class="hero">
+      <p class="eyebrow">Protocol workshop · Historical reference: Schneier (1996), §§5.7–5.9 · Intermediate</p>
+      <h1>Who has to go first?</h1>
+      <p class="lede">Two valid signatures. Two willing parties. One opportunity to walk away.</p>
+      <p>Start with direct and ideal-intermediary exchange. Then execute the named Asokan–Shoup–Waidner optimistic protocol: its honest path avoids the intermediary, while compatible abort and resolve procedures settle interrupted runs.</p>
+    </header>
+
+    <section class="panel" id="legacy-exchange">
+      <h2>Baseline: direct or ideal-intermediary delivery</h2>
+      <div class="filters">
+        <div><label for="scenario">What is being exchanged?</label><select id="scenario"><option value="mail">Certified mail: message ↔ receipt</option><option value="contract">Contract: signature ↔ signature</option><option value="secrets">Secrets: one secret ↔ another</option></select></div>
+        <div><label for="method">Who coordinates delivery?</label><select id="method"><option value="direct">The two parties, directly</option><option value="escrow">An ideal trusted intermediary</option></select></div>
+      </div>
+      <p id="goal"></p>
+      <div class="custody" aria-label="Baseline evidence custody"><div><b>Alice</b><p id="alice">Preparing…</p></div><div><b>Intermediary</b><p id="broker">Preparing…</p></div><div><b>Bob</b><p id="bob">Preparing…</p></div></div>
+      <div class="controls"><button id="send-a">Alice sends</button><button id="send-b">Bob sends</button><button id="resolve">Release both items</button><button class="secondary" id="abort">Stop the exchange</button></div>
+      <div class="status" id="status" role="status" aria-live="polite">Generating this session’s keys and synthetic items…</div>
+      <div class="controls"><button class="secondary" id="tamper">Corrupt Alice’s signature</button><button class="secondary" id="reset">Start a fresh baseline session</button></div>
+      <ol id="log" class="steps" aria-label="Baseline exchange transcript"></ol>
+      <details><summary>Inspect delivered evidence and signatures</summary><pre id="evidence">No evidence delivered.</pre></details>
+      <p class="small">Changing either selector starts a fresh experiment. Resetting this page does not model erasing information someone already received.</p>
+    </section>
+
+    <section class="panel" id="optimistic-exchange">
+      <p class="eyebrow">E-K-05 · Executable protocol depth</p>
+      <h2>ASW Protocol E: optimistic signature exchange</h2>
+      <p>This bounded adaptation follows the expanded 1999 Asokan–Shoup–Waidner report. Bob first sends a verifiable Schnorr signature promise. Alice returns a condition-bound RSA-OAEP escrow of her actual signature; Bob returns a cut-and-choose verifiable escrow of the inverse that completes his promise. These promises and escrows are recoverable evidence, not yet usable peer signatures. The verifier draws its challenge only after receiving the aggregate commitment. Only then does Alice send her signature and Bob send his inverse directly. The normal E1–E6 path contacts the trusted intermediary zero times.</p>
+      <p id="opt-proof" class="notice">Generating the Protocol D proof…</p>
+      <div class="custody" aria-label="Optimistic protocol evidence custody">
+        <div><b>Alice</b><p id="opt-alice">Preparing promise evidence…</p></div>
+        <div><b>Trusted intermediary</b><p id="opt-ttp">Preparing durable state…</p></div>
+        <div><b>Bob</b><p id="opt-bob">Preparing signature escrow…</p></div>
+      </div>
+      <div class="controls" role="group" aria-label="ASW protocol actions">
+        <button id="opt-send-alice">E4 · Alice sends signature</button>
+        <button id="opt-send-bob">E5 · Bob sends inverse</button>
+        <button class="secondary" id="opt-abort">Alice asks to abort</button>
+        <button class="secondary" id="opt-b-resolve">Bob asks B-resolve</button>
+        <button class="secondary" id="opt-a-resolve">Alice asks A-resolve</button>
+      </div>
+      <p class="small">The honest schedule offers Alice abort before E4 and A-resolve after she sends E4. This client-side stage guard does not authenticate TTP requests or prevent a malicious party from harming itself.</p>
+      <label class="checkpoint" for="opt-available"><input type="checkbox" id="opt-available" checked> Trusted intermediary is currently available</label>
+      <div class="status" id="opt-status" role="status" aria-live="polite">Generating a fresh ASW session and 16-round proof…</div>
+      <ol id="opt-log" class="steps" aria-label="ASW protocol transcript"></ol>
+      <details><summary>Inspect the public evidence ledger</summary><pre id="opt-evidence">Preparing…</pre></details>
+      <div class="controls"><button class="secondary" id="opt-reset">Start a fresh ASW session</button><button class="secondary" id="opt-forget">Counterfactual: erase TTP state</button></div>
+      <p class="small">The state-erasure control deliberately violates the protocol model. It is present to make the durable-state assumption testable, not to propose an allowed intermediary action.</p>
+    </section>
+
+    <section class="panel" id="optimistic-presets">
+      <h2>Run the decisive schedules</h2>
+      <p>Each button creates fresh participant keys, promises and escrows before executing the named schedule. The browser reuses the same simulated TTP key. The two race buttons contain the same requests in opposite serialized orders.</p>
+      <div class="controls">
+        <button id="opt-honest">Honest path · no TTP</button>
+        <button id="opt-abort-first">Race · abort first</button>
+        <button id="opt-resolve-first">Race · B-resolve first</button>
+        <button id="opt-a-resolve-path">Delayed Bob · A-resolve</button>
+        <button id="opt-unavailable-path">TTP unavailable</button>
+        <button id="opt-lost-state">Lost-state failure control</button>
+      </div>
+      <div class="grid">
+        <article><h3>Abort wins</h3><p>The TTP records <strong>ABORT</strong>; B-resolve must refuse. Neither escrow becomes a usable peer signature.</p></article>
+        <article><h3>B-resolve wins</h3><p>The TTP validates Alice’s escrow, stores Bob’s matching <strong>DEPOSIT</strong>, and releases Alice’s signature to Bob. A later abort returns the deposit to Alice rather than contradicting the first decision.</p></article>
+        <article><h3>A-resolve wins</h3><p>The TTP records <strong>NO-ABORT</strong> before checking the escrows, then recovers Bob’s promised signature for Alice. Bob can still resolve Alice’s escrow; a later abort must refuse. As the paper specifies, an escrow error does not roll back that record.</p></article>
+        <article><h3>Availability is separate</h3><p>There is no synchronized-clock timeout. A party can force a compatible result only when the honest TTP eventually becomes reachable and processes requests atomically.</p></article>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel"><h2>What “evidence” means here</h2><p>Bob’s promise and Protocol D escrow are <em>verified recoverable evidence</em>: they are bound to this transaction and give the TTP a checked recovery path, but they are not yet Bob’s usable signature. Alice’s <code>alpha</code> is deliberately an ordinary, non-verifiable escrow: Bob receives its ciphertext, but only the TTP can decrypt it and check that it contains Alice’s valid signature. The custody cards separately report signatures that each recipient can independently verify now.</p><p>RSA-OAEP labels bind both escrows to the transaction, Alice’s key and message, and Bob’s promise; Bob’s escrow also binds Alice’s escrow ciphertext, as Protocol E requires. Client-side labels alone would not suffice; the label is checked by actual OAEP decryption.</p></section>
+      <section class="panel"><h2>Bounded teaching model</h2><p>The paper’s example implementation sets 40 interactive cut-and-choose rounds. This page runs 16 so every current session stays inspectable. Conditioned on a uniformly sampled nonzero challenge, a transcript compatible with only one challenge vector is selected with probability 1/65,535. That calculation is not a production security claim and does not transfer the paper’s random-oracle theorem to this adaptation.</p><p>The Schnorr reduction uses the RFC 7919 ffdhe2048 group and SHA-256; escrow uses 3072-bit RSA-OAEP with SHA-256 and exponent 65537. Domain-separated SHA-256 expansion and rejection sampling instantiate Protocol D’s H1, while a separate SHA-256 domain instantiates H2; the verifier samples its challenge only after the aggregate H2 commitment is fixed. These are declared teaching choices. The ordinary and verifiable escrows share one TTP key only under the report’s specific Remark 20 allowance for its suggested implementation. RFC 7919 does not standardize Schnorr or ASW.</p></section>
+    </div>
+
+    <section class="panel"><h2>Assumptions that the browser cannot supply</h2><p>ASW assumes an honest TTP that is eventually available, processes each request atomically, and preserves its transaction records. Here “atomically” means requests do not interleave; Protocol E deliberately writes NO-ABORT before A-resolve's escrow checks and does not roll it back on a later error. The original model assumes a private client–TTP channel and authenticated server responses, but does not require authenticated client requests. This page simulates one transaction with session-generated request fields in one process; it does not provide an adversarial network/API, authenticated identities, private network channels, crash-safe replicated storage, certificates, production parameter review, or a deployment security proof. The lost-state control shows why durable state is substantive: erase a prior DEPOSIT, then allow a contradictory ABORT, and one party can be left with the only usable peer signature.</p></section>
+
+    <section class="panel sources"><h2>Sources and protocol boundary</h2><ul>
+      <li><a href="https://www.shoup.net/papers/fex.pdf">Asokan, Shoup &amp; Waidner, <cite>Optimistic Fair Exchange of Digital Signatures</cite> (expanded report, 18 October 1999)</a>: §§3–7, especially Protocol D on pp. 19–20 and Protocol E plus abort/resolve on pp. 21–23.</li>
+      <li><a href="https://link.springer.com/chapter/10.1007/BFb0054156">EUROCRYPT ’98 extended abstract</a>. The executable schedule follows the later expanded report where details differ.</li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc7919.html#appendix-A.1">RFC 7919 Appendix A.1</a> supplies the explicit ffdhe2048 group; <a href="https://www.rfc-editor.org/rfc/rfc8017.html#section-7.1">RFC 8017 §7.1</a> specifies RSAES-OAEP.</li>
+      <li><a href="https://arxiv.org/abs/1004.2697">Chatterjee &amp; Raman</a> separately analyzes fair non-repudiation and an ASW certified-mail protocol; it is not a proof of this Protocol E browser adaptation.</li>
+      <li><a href="../../games/the-digital-trade/">The Digital Trade</a> is the introductory escrow puzzle; <a href="https://systemslibrarian.github.io/crypto-lab-adaptor-gate/">Adaptor Gate</a> separately studies atomic swaps and PTLCs.</li>
+    </ul></section>
+    <noscript><p class="notice">Enable JavaScript to run the exchanges. The explanations and primary-source links remain available.</p></noscript>
+  </main>
+  <footer><a href="https://systemslibrarian.github.io/crypto-lab-key-lifecycle/#guided-path">Next: Follow a key through its lifecycle →</a><p>Fictional data only · Runs locally · No messages are sent</p><a href="https://github.com/systemslibrarian/crypto-lab/tree/main/learn/fair-exchange">Source</a></footer>
+</div>
+</body>
+</html>

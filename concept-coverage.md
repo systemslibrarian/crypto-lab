@@ -489,6 +489,17 @@ view retains every target while two views reveal the one-hot vector. This is a b
 linear warmup—not the full Beimel–Stahl or Goldberg construction—and it supplies neither
 answer provenance nor freshness. Catalogued total remains 247.*
 
+*Version 59 — records Search Vault's E-K-08 fuzzy-search extension under §23 without
+adding a lab or changing a concept status. A separately built deletion-gram index at each
+of edit thresholds 0, 1 and 2 now runs beside exact SSE, returns real encrypted candidate
+rows and applies client-side Levenshtein filtering. Its ledger separates index, query and
+response work, candidate error rates and post-filter document error rates. Retained opaque
+query bundles then make one known-anchor neighborhood relation visible where unequal exact
+tokens reveal no similarity. This is a bounded exact-map adaptation of Li et al.'s listing
+idea—not the paper's trie or performance evaluation, every EFSE construction, LSH,
+semantic search, a malicious-server proof or a general plaintext-recovery result.
+Catalogued total remains 247.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1101,6 +1112,17 @@ single-keyword IKK attack, and claims neither the paper's full theorem nor activ
 soundness, completeness or freshness. Its fixed-volume Path ORAM comparison hides final
 document addresses only under a separate non-colluding semi-honest storage model; it does not
 hide the OXT search transcript.
+
+Its fuzzy-search extension changes the match predicate and exposes the extra transcript that
+typo tolerance requires. Threshold-specific indexes HMAC every order-preserving deletion gram,
+the server returns all matching encrypted candidate rows, and the client applies the declared
+unit-cost Levenshtein distance before requesting documents. A separately implemented plaintext
+oracle derives candidate and final-document false-positive and false-negative rates, including a
+visible threshold-two gram collision that is filtered before access. Retained opaque bundles for
+three queries whose labels later became known let the server link the default typo to `audit`
+even though its exact SSE token matches no anchor. That is one concrete inference under the
+declared known-query assumption, not a claim that all fuzzy-search schemes have the same leakage
+or that a bounded non-link proves privacy.
 
 Order Leak is the leakage that needs no access pattern at all, which stretches this concept in a
 direction worth naming. Everything else here leaks as a consequence of being **used** — ORAM hides

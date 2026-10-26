@@ -34157,8 +34157,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-search-vault": {
-      "commit": "d904972690e1514d70d5f36fc25b75840b0e4590",
-      "reviewed": "2026-10-24",
+      "commit": "2ecc6612c2602c0f01ac9869fb07c589c5c9bc91",
+      "reviewed": "2026-10-26",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -34422,17 +34422,65 @@
           "limits": "Algebra-preserving Type-3 teaching adaptation only: no transfer of the original symmetric-pairing proof, standardized GT encoding, exact 128-bit claim, body encryption, sender authentication, tag/body binding, completeness, freshness, production isolation, hardened side-channel behavior or post-quantum security; a bounded miss proves only that tested candidates did not pass."
         },
         {
+          "id": "fuzzy-search",
+          "title": "Fuzzy search — typo recovery leaks a neighborhood",
+          "section": "Fuzzy search — typo recovery leaks a neighborhood",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Enter one bounded ASCII word, choose edit threshold 0, 1 or 2, and compare the existing exact SSE query with three separately built deletion-gram index alternatives.",
+          "outcome": "Real HMAC trapdoors and encrypted candidate rows expose index, query and response costs; client-side Levenshtein filtering derives candidate and final-document error rates, while retained opaque bundles demonstrate a known-anchor neighborhood link unavailable from unequal exact tokens.",
+          "concepts": [
+            "fuzzy encrypted search",
+            "Levenshtein distance",
+            "deletion grams",
+            "deterministic trapdoor overlap",
+            "candidate false positive",
+            "client-side filtering",
+            "similarity leakage",
+            "known-query inference"
+          ],
+          "related": [
+            "Li et al. ePrint 2009/593",
+            "exact-match SSE"
+          ],
+          "evidence": [
+            "src/ui/fuzzy.ts:10",
+            "src/ui/fuzzy.ts:119",
+            "src/ui/fuzzy.ts:125",
+            "src/ui/fuzzy.ts:137",
+            "src/ui/fuzzy.ts:255",
+            "src/ui/fuzzy.ts:304",
+            "src/ui/fuzzy.ts:368",
+            "src/fuzzy/core.ts:44",
+            "src/fuzzy/core.ts:84",
+            "src/fuzzy/core.ts:133",
+            "src/fuzzy/client.ts:61",
+            "src/fuzzy/client.ts:97",
+            "src/fuzzy/client.ts:115",
+            "src/fuzzy/server.ts:47",
+            "src/fuzzy/server.ts:78",
+            "src/fuzzy/server.ts:90",
+            "src/fuzzy/lesson.ts:114",
+            "src/fuzzy/lesson.ts:183",
+            "src/fuzzy/lesson.ts:242",
+            "src/fuzzy/oracle.ts:10",
+            "e2e/fuzzy.spec.ts:45"
+          ],
+          "limits": "Bounded exact-map teaching adaptation over 14 ASCII keywords and 24 documents at d=0,1,2; not the paper's trie or performance evaluation, LSH, semantic or ranked search, transposition distance, dynamic or multi-user EFSE, a transferred theorem, a malicious-server result proof or a claim about every fuzzy-search construction."
+        },
+        {
           "id": "scope",
           "title": "What is real here, what is scaled down, and what is not proved",
           "section": "What is real here, what is scaled down, and what is not proved",
           "kind": "explanation",
           "execution": "conceptual",
           "action": "Read the scope panel and introductory glossary.",
-          "outcome": "It labels real WebCrypto, pairing and ristretto255 operations, the scaled corpus and stores, exact-statistics controls, the bounded OXT and Type-3 PEKS proof boundaries, and excluded dynamic or volume-hiding schemes.",
+          "outcome": "It labels real WebCrypto, pairing, ristretto255 and fuzzy-search operations, the scaled corpus and stores, exact-statistics controls, the bounded OXT, Type-3 PEKS and deletion-gram adaptation boundaries, and excluded dynamic or volume-hiding schemes.",
           "concepts": [
             "SSE threat model",
             "OXT threat model",
             "PEKS threat model",
+            "fuzzy-search threat model",
             "RFC 9496 ristretto255",
             "Type-3 pairing adaptation",
             "static index",
@@ -34444,11 +34492,13 @@
             "src/ui/scope.ts:5",
             "src/ui/scope.ts:18",
             "src/ui/scope.ts:23",
-            "src/ui/scope.ts:36",
-            "src/ui/scope.ts:51",
-            "src/ui/scope.ts:62"
+            "src/ui/scope.ts:25",
+            "src/ui/scope.ts:41",
+            "src/ui/scope.ts:57",
+            "src/ui/scope.ts:58",
+            "src/ui/scope.ts:70"
           ],
-          "limits": "No claim is made about the security of AES-GCM or HMAC themselves, all searchable-encryption designs, transfer of the full OXT theorem or original PEKS proof, standardized GT bytes, active-server OXT completeness or freshness, production role isolation, executed ORAM, or security after a bounded dictionary miss."
+          "limits": "No claim is made about the security of AES-GCM or HMAC themselves, all searchable-encryption designs, transfer of the full OXT theorem, original PEKS proof or fuzzy-search paper proof, standardized GT bytes, active-server completeness or freshness, production role isolation, executed ORAM, arbitrary plaintext recovery, or security after a bounded dictionary miss."
         }
       ]
     },

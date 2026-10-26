@@ -18129,15 +18129,16 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-search-vault/" data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
+          <a class="project-card" data-category="PRIVACY | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-search-vault/"
             data-implements="AES@src/core/aead.ts:14 | AES-GCM@src/core/aead.ts:65 | BLS12-381@src/peks/core.ts:19 | Hash-to-curve@src/peks/core.ts:109 | HMAC@src/core/prf.ts:25 | OXT@src/oxt/core.ts:226 | Pairing@src/peks/core.ts:137 | PEKS@src/peks/core.ts:113 | ristretto255@src/oxt/core.ts:22 | SHA-256@src/core/prf.ts:37 | SHA-512@src/core/prf.ts:46"
             data-comment-only="Bloom filter@src/oxt/core.ts:19 | EC point arithmetic@src/peks/core.ts:134"
-            data-references="Bloom filter | Boneh-Franklin IBE | Private information retrieval | Private set intersection"
+            data-references="Bloom filter | Boneh-Franklin IBE | Private information retrieval | Private set intersection | SHA-1"
             data-attacks="Dictionary attack@src/peks/dictionary.ts:12 | Keyword inference@src/ui/attack-view.ts:43"
             data-standards="IETF | NIST"
-            data-implementation="WebCrypto / @noble/curves BLS12-381 and ristretto255 / local leakage and bounded attack models"
-            data-review-commit="d904972690e1514d70d5f36fc25b75840b0e4590"
-            data-review-note="Read the complete merged README, SSE, query-integrity, PEKS and OXT source, tests, learner interface, primary-source boundaries and visible limitations at this exact main commit. The static SSE still executes HMAC-derived search tokens, AES-256-GCM postings, count and IKK keyword inference, and a client-retained result-integrity checkpoint. The PEKS exhibit retains its Type-3 BLS12-381 adaptation, randomized public tags, deterministic trapdoor, public Test scan and bounded exposed-trapdoor dictionary attack. The new Boolean-search exhibit compares two actual isolated SSE lookups with a static two-distinct-keyword OXT adapter. Five independent keys, framed HMAC-SHA-512 scalar derivation, canonical RFC 9496 ristretto255 operations, shuffled flat TSet rows, AES-GCM identifier ciphertexts and a sorted exact XSet execute the cancellation equation; all 91 keyword pairs in both operand orders are checked against plaintext intersections. Learners observe exact query volume, list sizes, matches, repeated stags and conditional candidate-point equality through overlapping, disjoint, changed-x, repeated-s and identical-query controls. The Path ORAM table is derived arithmetic for N=24, Z=4 and L=5, not an ORAM execution or a claim that ORAM composition hides the OXT transcript. This bounded adapter supports one AND over two known distinct terms, does not transfer the paper's full theorem, and does not establish active-server soundness, completeness or freshness. The original Type-3 PEKS proof and GT-encoding limitations also remain. BLS signatures is still a false positive from an imported module alias, Fault injection is still a false positive from a UI default, and Ed25519 is a reference false positive from noble's ristretto module filename; none is implemented here. Exact-main run 40088072088 passed 180 unit tests and all 37 browser/accessibility tests with zero dependency vulnerabilities, then deployed byte-matching assets."
+            data-implementation="WebCrypto / @noble/curves BLS12-381 and ristretto255 / local exact, fuzzy, leakage and bounded attack models"
+            data-review-commit="2ecc6612c2602c0f01ac9869fb07c589c5c9bc91"
+            data-review-note="Read the complete merged README, SSE, query-integrity, PEKS, OXT and fuzzy-search source, tests, learner interface, primary-source boundaries and visible limitations at this exact main commit. The original static SSE, checkpoint, Type-3 PEKS and bounded two-term OXT routes remain intact. Exhibit 9 adds a bounded exact-map adaptation of Li et al. ePrint 2009/593 Algorithm 2: HMAC-SHA-256 protects every deletion-gram trapdoor, independently randomized AES-256-GCM payloads bind to those trapdoors, the server returns encrypted candidate rows, and the client applies rolling-row unit-cost Levenshtein distance. A separately implemented full-matrix oracle checks candidate and final-document false-positive and false-negative rates for thresholds 0, 1 and 2. The default one-edit typo retrieves audit where exact SSE misses; threshold 2 also produces a lawsuit gram collision at real distance 3 which the client filters before the final document request. Three prior query bundles actually cross isolated exact and fuzzy server boundaries and are retained as bytes before outside-context labels are attached, so the server's added audit-neighborhood inference uses only deterministic bundle overlap. The UI keeps exact-label equality, a unique extra fuzzy link, ambiguous/no-link controls and bounded non-inference distinct. This exact-map adapter is not the paper's trie or performance evaluation, LSH, semantic/ranked search, transposition distance, a dynamic or multi-user scheme, a transferred theorem, a malicious-server proof or a claim about all encrypted fuzzy search. BLS signatures is still a false positive from an imported module alias, Fault injection is still a false positive from a UI default, and Ed25519 is a reference false positive from noble's ristretto module filename; none is implemented here. Exact-main run 40360215127 passed 209 unit tests, a clean baseline and all 16 fuzzy-search mutations, the production build and all 45 browser/accessibility checks, then deployed byte-matching assets."
+            data-added="2026-08" data-added-on="2026-08-01" data-updated="2026-10"
             data-level="intermediate"
            
            
@@ -18212,13 +18213,16 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Searchable Encryption</div>
             <div class="project-title">Search Vault</div>
-            <div class="project-copy">Real single-keyword SSE, bounded two-keyword OXT, and Type-3 BLS12-381 PEKS side by side — compare query transcripts, run leakage inference and exposed-trapdoor guessing, then test completeness and freshness against a malicious server.</div>
+            <div class="project-copy">Real exact and fuzzy SSE, bounded two-keyword OXT, and Type-3 BLS12-381 PEKS side by side — measure deletion-gram costs and errors, expose similarity and query-pattern leakage, run trapdoor guessing, and test result integrity.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">SSE</span>
                 <span class="chip">OXT</span>
                 <span class="chip">PEKS</span>
                 <span class="chip">BLS12-381</span>
+                <span class="chip">Fuzzy Search</span>
+                <span class="chip">Edit Distance</span>
+                <span class="chip">Similarity Leakage</span>
                 <span class="chip">Leakage Abuse</span>
                 <span class="chip">Query Integrity</span>
               </div>

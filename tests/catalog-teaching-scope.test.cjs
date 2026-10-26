@@ -825,6 +825,7 @@ function checkSearchVaultScope(source) {
     'Hash-to-curve',
     'HMAC',
     'OXT',
+    'Paillier',
     'Pairing',
     'PEKS',
     'ristretto255',
@@ -836,13 +837,15 @@ function checkSearchVaultScope(source) {
     'Keyword inference',
   ]);
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-search-vault\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="2ecc6612c2602c0f01ac9869fb07c589c5c9bc91"/);
+  assert.match(card, /data-review-commit="28bb6f3c50e0584b5b94e0a5a0c0b9f2ef52141d"/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
   assert.ok(!references.includes('Ed25519'),
     'noble’s ristretto module filename must not invent an Ed25519 reference');
+  assert.ok(!references.includes('OPAQUE'),
+    'ordinary opaque-token wording must not invent an OPAQUE reference');
 }
 
-test('Search Vault credits real SSE, OXT and PEKS operations without signature, Ed25519 or fault false positives', () => {
+test('Search Vault credits real SSE, OXT, PEKS and MUSE operations without scanner false positives', () => {
   checkSearchVaultScope(html);
 });
 
@@ -896,6 +899,7 @@ test('Search Vault scope controls reject removed or invented implementation cred
     'BLS12-381',
     'Hash-to-curve',
     'OXT',
+    'Paillier',
     'Pairing',
     'PEKS',
     'ristretto255',
@@ -924,6 +928,20 @@ test('Search Vault scope controls reject removed or invented implementation cred
     card.replace('data-references="', 'data-references="Ed25519 | '));
   assert.notEqual(inventedEd25519, html);
   assert.throws(() => checkSearchVaultScope(inventedEd25519), assert.AssertionError);
+  for (const name of ['RSA', 'RSA-OAEP']) {
+    const inventedRsa = html.replace(cardRe, (card) =>
+      card.replace('data-implements="', `data-implements="${name}@src/muse/math.ts:36 | `));
+    assert.notEqual(inventedRsa, html);
+    assert.throws(() => checkSearchVaultScope(inventedRsa), assert.AssertionError);
+  }
+  const inventedMalleability = html.replace(cardRe, (card) =>
+    card.replace('data-attacks="', 'data-attacks="Malleability (unspecified)@README.md:132 | '));
+  assert.notEqual(inventedMalleability, html);
+  assert.throws(() => checkSearchVaultScope(inventedMalleability), assert.AssertionError);
+  const inventedOpaque = html.replace(cardRe, (card) =>
+    card.replace('data-references="', 'data-references="OPAQUE | '));
+  assert.notEqual(inventedOpaque, html);
+  assert.throws(() => checkSearchVaultScope(inventedOpaque), assert.AssertionError);
 });
 
 function checkHybridSignScope(source) {

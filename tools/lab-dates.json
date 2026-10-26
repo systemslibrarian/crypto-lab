@@ -599,8 +599,8 @@
    "addedOn": "2026-04-08",
    "updated": "2026-10",
    "addedFrom": "2026-04-08T23:52:20Z",
-   "updatedFrom": "2026-10-26T06:26:47-04:00",
-   "updatedCommit": "c29ff46e6f41d63bb2b4854b64a949357e0d98b2"
+   "updatedFrom": "2026-10-26T11:29:01-04:00",
+   "updatedCommit": "7529bf0099a8fb835a7108150ca082e61928ba7e"
   },
   "crypto-lab-stego-suite": {
    "added": "2026-04",

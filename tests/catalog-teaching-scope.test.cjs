@@ -1202,6 +1202,95 @@ test('Lattice Fault scope rejects false credits and loss of real computations', 
   }
 });
 
+function checkDpNoiseEk07Scope(source, manifest = exhibitManifest, reviewed = catalogReviewed) {
+  const slug = 'crypto-lab-dp-noise';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'Gaussian mechanism',
+    'Laplace mechanism',
+    'Planar Laplace mechanism',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), []);
+  assert.match(openingFor(source, slug), /data-review-commit="d038ae68a794df7aa73c8fb91e8562d492093257"/);
+  assert.match(blockFor(source, slug), /distinguishing advantage bounded/);
+  assert.match(blockFor(source, slug), /ε-times-distance/);
+  assert.ok(chipsFor(source, slug).includes('Planar Laplace Mechanism'));
+
+  const review = reviewed[slug];
+  assert.equal(review.commit, 'd038ae68a794df7aa73c8fb91e8562d492093257');
+  assert.ok(review.add.includes('Planar Laplace mechanism@src/dp/geo.ts:134'));
+  assert.match(review.note, /ideal planar Laplace density/);
+  assert.match(review.note, /not its finite-precision digital mechanism/);
+  assert.match(review.note, /equal candidate-path priors/);
+
+  const mapped = manifest.labs[slug];
+  assert.equal(mapped.commit, 'd038ae68a794df7aa73c8fb91e8562d492093257');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.equal(mapped.exhibits.length, 10);
+  const geo = mapped.exhibits.find(exhibit => exhibit.id === 'geo');
+  assert.ok(geo);
+  assert.equal(geo.execution, 'real-operation');
+  assert.equal(geo.section, 'A privacy budget measured per kilometre');
+  for (const anchor of [
+    'src/dp/geo.ts:71',
+    'src/dp/geo.ts:134',
+    'src/dp/geo.ts:192',
+    'src/dp/geo.ts:231',
+    'src/dp/geo.ts:256',
+    'src/ui/geo.ts:189',
+    'src/ui/geo.ts:243',
+  ]) assert.ok(geo.evidence.includes(anchor), `E-K-07 must retain evidence ${anchor}`);
+  assert.ok(geo.concepts.includes('metric differential privacy'));
+  assert.ok(geo.concepts.includes('finite-map boundary'));
+  assert.ok(geo.concepts.includes('repeated-release composition'));
+  assert.match(geo.limits, /53-bit IEEE-754 uniforms/);
+  assert.match(geo.limits, /two public parallel candidate paths under equal priors/);
+  assert.match(geo.limits, /no finite-precision-paper theorem/);
+  assert.match(geo.limits, /correlated-trajectory protection/);
+}
+
+test('DP Noise records E-K-07 computation without transferring digital or trajectory claims', () => {
+  checkDpNoiseEk07Scope(html);
+  const planar = ALGORITHMS.find(term => term.name === 'Planar Laplace mechanism');
+  assert.ok(planar);
+  assert.ok(planar.re.test('samplePlanarLaplace'));
+  assert.ok(planar.re.test('planar Laplace mechanism'));
+  assert.equal(planar.re.test('continuous Laplace sampler'), false);
+});
+
+test('DP Noise E-K-07 controls reject stale pins, lost credit and weakened limits', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-dp-noise\/"[\s\S]*?<\/a>/;
+  for (const changed of [
+    html.replace(cardRe, card => card.replace(/\s*\| Planar Laplace mechanism@src\/dp\/geo\.ts:134/, '')),
+    html.replace(cardRe, card => card.replace(
+      'd038ae68a794df7aa73c8fb91e8562d492093257',
+      'ea6eac3e9fc145c9f3306d4f6610b0662f8a794f')),
+    html.replace(cardRe, card => card.replace('distinguishing advantage bounded', 'locations become indistinguishable')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Planar Laplace Mechanism</span>', '')),
+  ]) {
+    assert.notEqual(changed, html, 'E-K-07 negative control must change the DP Noise card');
+    assert.throws(() => checkDpNoiseEk07Scope(changed), assert.AssertionError);
+  }
+
+  const missingExhibit = structuredClone(exhibitManifest);
+  missingExhibit.labs['crypto-lab-dp-noise'].exhibits =
+    missingExhibit.labs['crypto-lab-dp-noise'].exhibits.filter(exhibit => exhibit.id !== 'geo');
+  assert.throws(() => checkDpNoiseEk07Scope(html, missingExhibit), assert.AssertionError);
+
+  const missingAnchor = structuredClone(exhibitManifest);
+  const geo = missingAnchor.labs['crypto-lab-dp-noise'].exhibits.find(exhibit => exhibit.id === 'geo');
+  geo.evidence = geo.evidence.filter(anchor => anchor !== 'src/dp/geo.ts:231');
+  assert.throws(() => checkDpNoiseEk07Scope(html, missingAnchor), assert.AssertionError);
+
+  const overclaim = structuredClone(exhibitManifest);
+  overclaim.labs['crypto-lab-dp-noise'].exhibits.find(exhibit => exhibit.id === 'geo').limits =
+    'This production mechanism protects arbitrary correlated trajectories.';
+  assert.throws(() => checkDpNoiseEk07Scope(html, overclaim), assert.AssertionError);
+
+  const staleReview = structuredClone(catalogReviewed);
+  staleReview['crypto-lab-dp-noise'].commit = 'ea6eac3e9fc145c9f3306d4f6610b0662f8a794f';
+  assert.throws(() => checkDpNoiseEk07Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+});
+
 test('visible catalog summaries distinguish BBS naming and bounded DP advantage', () => {
   const card = slug => html.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[\\s\\S]*?</a>'))[0];
   assert.match(card('crypto-lab-credential-veil'), /BBS selective disclosure/);
@@ -2631,7 +2720,7 @@ test('Residue Gate A-D-13 scope controls reject missing credit, false standards,
   assert.throws(() => checkResidueGateAd13Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
 
-function checkAttestationGateAd08Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
+function checkAttestationGateAd08S11Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {
   const slug = 'crypto-lab-attestation-gate';
   assert.deepEqual(implementationsFor(source, slug), [
     'AES',
@@ -2657,7 +2746,7 @@ function checkAttestationGateAd08Scope(source, manifests = exhibitManifest, revi
 
   const opening = openingFor(source, slug);
   assert.match(opening, /data-category="PROTOCOLS \| PRIVACY"/);
-  assert.match(opening, /data-review-commit="89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61"/);
+  assert.match(opening, /data-review-commit="7241e798da975a170d447520a584e6399959a3ac"/);
   assert.match(opening, /BBS\+@src\/daa\/protocol\.ts:271/);
   assert.match(opening, /Direct Anonymous Attestation@src\/daa\/protocol\.ts:384/);
   assert.match(opening, /AES-CFB@src\/tpm\/credential\.ts:121/);
@@ -2667,12 +2756,16 @@ function checkAttestationGateAd08Scope(source, manifests = exhibitManifest, revi
   assert.match(opening, /Schnorr identification@src\/daa\/protocol\.ts:259/);
   assert.match(opening, /zero-application-attribute, named-basename-only algebraic teaching adaptation/);
   assert.match(opening, /anonymous provenance still does not establish runtime integrity/);
+  assert.match(opening, /fixedTPM lesson follows the reference ObjectLoad path/);
+  assert.match(opening, /non-fixed-parent control rejects the same public\/sensitive mismatch with TPM_RC_BINDING/);
+  assert.match(opening, /A satisfied policy governs release only/);
   assert.deepEqual(chipsFor(source, slug), [
     'TPM 2.0', 'RATS', 'Direct Anonymous Attestation', 'Controlled Linkability',
+    'TPM Sealed Storage',
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61');
+  assert.equal(review.commit, '7241e798da975a170d447520a584e6399959a3ac');
   assert.equal(review.reviewed, '2026-10-26');
   assert.ok(review.add.includes('BBS+@src/daa/protocol.ts:271'));
   assert.ok(review.add.includes('Direct Anonymous Attestation@src/daa/protocol.ts:384'));
@@ -2681,6 +2774,7 @@ function checkAttestationGateAd08Scope(source, manifests = exhibitManifest, revi
   assert.ok(review.add.includes('Fiat-Shamir@src/daa/protocol.ts:214'));
   assert.ok(review.add.includes('Schnorr identification@src/daa/protocol.ts:259'));
   assert.ok(review.remove.includes('BLS signatures'));
+  assert.ok(review.remove.includes('Dictionary attack'));
   assert.ok(review.remove.includes('Nonce reuse'));
   assert.deepEqual(review.removeReferences, ['Pedersen commitment', 'Schnorr', 'Shamir secret sharing']);
 
@@ -2696,6 +2790,7 @@ function checkAttestationGateAd08Scope(source, manifests = exhibitManifest, revi
     'whose-signature',
     'failure-taxonomy',
     'anonymous-membership',
+    'sealed-storage',
   ]);
   assert.deepEqual(mapped.exhibits.slice(0, 6).map((item) => item.evidence[0]), [
     'src/ui/app.ts:29',
@@ -2722,10 +2817,38 @@ function checkAttestationGateAd08Scope(source, manifests = exhibitManifest, revi
   ]);
   assert.match(daa.limits, /not a TPM\/ISO ECDAA profile or hardware implementation/);
   assert.match(daa.limits, /anonymous provenance does not establish runtime integrity/);
+
+  const sealed = mapped.exhibits.find((item) => item.id === 'sealed-storage');
+  assert.equal(sealed.execution, 'real-crypto');
+  assert.equal(sealed.section, 'Sealed Storage');
+  assert.deepEqual(sealed.evidence, [
+    'src/ui/app.ts:37',
+    'src/ui/panels/sealed.ts:117',
+    'src/acts/sealing.ts:226',
+    'src/acts/sealing.ts:495',
+    'src/acts/sealing.ts:960',
+    'src/tpm/policy.ts:368',
+    'src/tpm/policy.ts:417',
+    'src/tpm/policy.ts:457',
+    'src/tpm/policy.ts:561',
+    'src/tpm/seal.ts:351',
+    'src/tpm/seal.ts:498',
+    'src/tpm/seal.ts:612',
+  ]);
+  for (const concept of [
+    'TPM sealed storage',
+    'PCR policy',
+    'TPM2_PolicyAuthorize',
+    'fixedTPM confinement',
+    'post-release exposure',
+  ]) assert.ok(sealed.concepts.includes(concept), `S11 must retain ${concept}`);
+  assert.match(sealed.limits, /parent seed and deterministic fixture values exist in page memory/);
+  assert.match(sealed.limits, /not wire-interoperable TPM command\/session handling/);
+  assert.match(sealed.limits, /post-release plaintext protection/);
 }
 
-test('Attestation Gate credits A-D-08 DAA and BBS+ computation without inventing BLS or nonce-reuse claims', () => {
-  checkAttestationGateAd08Scope(html);
+test('Attestation Gate credits A-D-08 and S11 computation without inventing BLS, nonce-reuse or hardware claims', () => {
+  checkAttestationGateAd08S11Scope(html);
 });
 
 test('BBS+ and Direct Anonymous Attestation vocabulary remain distinct from CFRG BBS and generic attestation', () => {
@@ -2750,7 +2873,7 @@ test('BBS+ and Direct Anonymous Attestation vocabulary remain distinct from CFRG
   assert.equal(daa.re.test('anonymous credential'), false);
 });
 
-test('Attestation Gate A-D-08 scope controls reject missing credit, false claims, stale pins or an incomplete exhibit map', () => {
+test('Attestation Gate A-D-08 and S11 scope controls reject missing credit, false claims, stale pins or an incomplete exhibit map', () => {
   const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-attestation-gate\/"[^>]*>/;
   for (const changed of [
     html.replace(cardRe, (card) => card.replace(/BBS\+@[^|" ]+(?: \| )?/, '')),
@@ -2772,29 +2895,43 @@ test('Attestation Gate A-D-08 scope controls reject missing credit, false claims
       'data-attacks="Nonce reuse@src/daa/protocol.test.ts:1" data-standards="',
     )),
     html.replace(cardRe, (card) => card.replace(
-      '89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61',
+      '7241e798da975a170d447520a584e6399959a3ac',
       '0'.repeat(40),
     )),
+    html.replace('<span class="chip">TPM Sealed Storage</span>', ''),
+    html.replace(cardRe, (card) => card.replace('A satisfied policy governs release only', 'A satisfied policy protects plaintext forever')),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the Attestation Gate card');
-    assert.throws(() => checkAttestationGateAd08Scope(changed), assert.AssertionError);
+    assert.throws(() => checkAttestationGateAd08S11Scope(changed), assert.AssertionError);
   }
 
   const missingExhibit = structuredClone(exhibitManifest);
   missingExhibit.labs['crypto-lab-attestation-gate'].exhibits =
     missingExhibit.labs['crypto-lab-attestation-gate'].exhibits
       .filter((item) => item.id !== 'anonymous-membership');
-  assert.throws(() => checkAttestationGateAd08Scope(html, missingExhibit, catalogReviewed), assert.AssertionError);
+  assert.throws(() => checkAttestationGateAd08S11Scope(html, missingExhibit, catalogReviewed), assert.AssertionError);
+
+  const missingSealed = structuredClone(exhibitManifest);
+  missingSealed.labs['crypto-lab-attestation-gate'].exhibits =
+    missingSealed.labs['crypto-lab-attestation-gate'].exhibits
+      .filter((item) => item.id !== 'sealed-storage');
+  assert.throws(() => checkAttestationGateAd08S11Scope(html, missingSealed, catalogReviewed), assert.AssertionError);
 
   const overstatedLimits = structuredClone(exhibitManifest);
   overstatedLimits.labs['crypto-lab-attestation-gate'].exhibits
     .find((item) => item.id === 'anonymous-membership').limits =
       'A production TPM/ISO ECDAA implementation with complete revocation.';
-  assert.throws(() => checkAttestationGateAd08Scope(html, overstatedLimits, catalogReviewed), assert.AssertionError);
+  assert.throws(() => checkAttestationGateAd08S11Scope(html, overstatedLimits, catalogReviewed), assert.AssertionError);
+
+  const hardwareOverclaim = structuredClone(exhibitManifest);
+  hardwareOverclaim.labs['crypto-lab-attestation-gate'].exhibits
+    .find((item) => item.id === 'sealed-storage').limits =
+      'This production hardware TPM permanently protects plaintext after release.';
+  assert.throws(() => checkAttestationGateAd08S11Scope(html, hardwareOverclaim, catalogReviewed), assert.AssertionError);
 
   const staleReview = structuredClone(catalogReviewed);
   staleReview['crypto-lab-attestation-gate'].commit = '0'.repeat(40);
-  assert.throws(() => checkAttestationGateAd08Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+  assert.throws(() => checkAttestationGateAd08S11Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
 
 function checkIbeGateAd07Scope(source, manifests = exhibitManifest, reviews = catalogReviewed) {

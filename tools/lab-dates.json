@@ -1455,8 +1455,8 @@
    "addedOn": "2026-07-30",
    "updated": "2026-10",
    "addedFrom": "2026-07-30T22:14:09Z",
-   "updatedFrom": "2026-10-11T22:42:29-04:00",
-   "updatedCommit": "1a71ad1030045c5ac66c674442823d1bc81ece95"
+   "updatedFrom": "2026-10-26T14:39:37-04:00",
+   "updatedCommit": "d038ae68a794df7aa73c8fb91e8562d492093257"
   },
   "crypto-lab-matsui-line": {
    "added": "2026-08",
@@ -1599,8 +1599,8 @@
    "addedOn": "2026-08-21",
    "updated": "2026-10",
    "addedFrom": "2026-08-21T21:13:09Z",
-   "updatedFrom": "2026-10-26T02:00:58-04:00",
-   "updatedCommit": "8f355c197c25414db43c07dedc62ee161538839f"
+   "updatedFrom": "2026-10-26T15:03:17-04:00",
+   "updatedCommit": "7241e798da975a170d447520a584e6399959a3ac"
   },
   "crypto-lab-distance-bounding": {
    "added": "2026-10",

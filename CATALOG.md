@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1796 sections in 247 of 247 labs**
+The exhibit map currently records **1798 sections in 247 of 247 labs**
 (247 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -73,7 +73,7 @@ before relying on this index for a fresh assessment.
 
 ## Reverse index — which labs implement what
 
-213 algorithms are implemented somewhere in the fleet, grouped by family.
+214 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -543,6 +543,11 @@ A lab in *italics* references the algorithm without implementing it.
 #### Laplace mechanism
 
 - **Implemented by:** [DP Noise](https://systemslibrarian.github.io/crypto-lab-dp-noise/) `src/dp/laplace.ts:45`; [Proof Tally](https://systemslibrarian.github.io/crypto-lab-proof-tally/) `src/distributed/noise.ts:95`
+- **Also referenced by:** —
+
+#### Planar Laplace mechanism
+
+- **Implemented by:** [DP Noise](https://systemslibrarian.github.io/crypto-lab-dp-noise/) `src/dp/geo.ts:134`
 - **Also referenced by:** —
 
 ### discrete log algorithm
@@ -1543,6 +1548,7 @@ disagree about who owns SHA-256.
 | Pairing | — | 13 |
 | Pedersen commitment | — | 7 |
 | PEKS | — | 1 |
+| Planar Laplace mechanism | — | 1 |
 | PMAC | — | 1 |
 | Pohlig–Hellman | — | 2 |
 | Pollard kangaroo | — | 1 |
@@ -2626,15 +2632,15 @@ NIST's lightweight cryptography standard with Ascon-AEAD128, Ascon-Hash256, aval
 
 [`crypto-lab-attestation-gate`](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) · Remote Attestation · PROTOCOLS, PRIVACY
 
-Build and appraise measured-boot quotes, then replace the stable attestation-key name with a computed CDL Pi_DAA+ issuer-membership proof and exercise basename linkability, re-Join, and private-key rogue-list checking.
+Build and appraise measured-boot quotes, replace the stable key name with computed DAA membership, then execute PCR-bound sealing, authorized recovery, tamper refusal, fixedTPM seed compromise, and post-release exposure.
 
-- **Card topics (discovery only):** TPM 2.0, RATS, Direct Anonymous Attestation, Controlled Linkability — labels do not establish what any section runs.
+- **Card topics (discovery only):** TPM 2.0, RATS, Direct Anonymous Attestation, Controlled Linkability, TPM Sealed Storage — labels do not establish what any section runs.
 - **Implements:** AES `src/tpm/credential.ts:43`, AES-CFB `src/tpm/credential.ts:121`, BBS+ `src/daa/protocol.ts:271`, BLS12-381 `src/daa/groups.ts:14`, Direct Anonymous Attestation `src/daa/protocol.ts:384`, ECDH `src/tpm/credential.ts:87`, ECDSA `src/tpm/key.ts:511`, Fiat-Shamir `src/daa/protocol.ts:214`, Hash-to-curve `src/daa/groups.ts:39`, HMAC `src/core/hmac.ts:15`, P-256 `src/tpm/credential.ts:44`, Pairing `src/daa/groups.ts:177`, Schnorr identification `src/daa/protocol.ts:259`, SHA-256 `src/core/hmac.ts:15`
-- **Source review:** [89b2bb4cee6d](https://github.com/systemslibrarian/crypto-lab-attestation-gate/commit/89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61) — Read the complete merged README, TPM/RATS source, new DAA protocol and attestation adapter, tests, learner interface and visible limitations at this exact main commit. The seventh tab executes the no-application-attribute CDL Pi_DAA+ construction: issuer Setup and DLEQ proof, nonce-bound Join proof, BBS+ credential issuance, randomized Sign/Verify, named-basename Link, issuer rotation and private-key rogue-list revocation over Type-3 BLS12-381. Its Join route recomputes a Fiat-Shamir challenge and verifies the Schnorr-identification knowledge equation; the multi-relation signature proof uses the same transcript pattern. The existing TPM path also executes ECDSA over P-256 and AES-128-CFB credential wrapping, now credited at their actual signing and encryption calls. The empty-qualifiedSigner TPMS_ATTEST adapter retains PCR and nonce binding while avoiding the stable AK Name. BBS+ here is the CDL (A,e,s) credential, not the CFRG BBS signature scheme; the imported BLS12-381 group performs pairing arithmetic but no BLS signing or verification, so BLS signatures is removed. The README's proof-randomness extraction regression tests prevent proof-randomness and commitment reuse but do not execute a nonce-reuse attack exhibit. Pedersen commitment and Shamir secret sharing are scanner substring collisions with the Chaum–Pedersen and Fiat–Shamir names; neither is implemented. Generic Schnorr-signature credit is removed because this route executes an identification proof, not a Schnorr signature. The authenticated Join channel and unique-TPM admission rule are assumed external prerequisites. This is a zero-application-attribute, named-basename-only algebraic teaching adaptation, not a TPM/ISO ECDAA profile, hardware confinement, bsn=bottom, signature revocation, UC proof, post-quantum construction or side-channel-hardened implementation; anonymous provenance still does not establish runtime integrity. Exact-main run 40277880488 passed 247 unit tests, 66 claims tests (65 passed, one intentional desktop coarse-pointer skip), three accessibility/reflow drives, the build and all 16 clean-baseline mutations. Pages artifact 12630499763 deployed through deployment 7325307975; all three public files matched the artifact and a fresh exact-main build byte for byte.
+- **Source review:** [7241e798da97](https://github.com/systemslibrarian/crypto-lab-attestation-gate/commit/7241e798da975a170d447520a584e6399959a3ac) — Read the complete exact-main README, boot, TPM, RATS, DAA and sealed-storage source, unit and browser tests, mutation runner, workflow and learner interface. The seventh tab retains the no-application-attribute CDL Pi_DAA+ Setup, Join proof, BBS+ credential, randomized Sign/Verify, named-basename Link, issuer rotation and private-key rogue-list route over Type-3 BLS12-381. The eighth tab derives real PCR state from the lab's boot chain, computes PolicyPCR, PolicyAuthorize, PolicyOR and PolicyCommandCode digest transitions, builds a TPM_ALG_KEYEDHASH public area and AES-128-CFB/HMAC-protected private blob, then obtains every release or refusal from TPM2_Load, policy authorization and TPM2_Unseal. Its cases cover matching and changed state, wrong selection, one-bit public/private tampering, unsigned/wrong-authority/wrong-purpose/wrong-state recovery, authorized recovery, PCR change after PolicyPCR, password refusal, post-release exposure and a forged replacement blob after the modelled fixedTPM parent's seed is extracted. The corrected fixedTPM lesson follows the reference ObjectLoad path: it skips CryptValidateKeys for a child under a fixedTPM parent, while the non-fixed-parent control rejects the same public/sensitive mismatch with TPM_RC_BINDING; this is a confinement premise, not an extra MAC or disclosure of the original secret. BBS+ remains the CDL credential rather than CFRG BBS; the BLS12-381 import performs pairing arithmetic but no BLS signature. The nonce-extraction cases remain controls rather than a nonce-reuse attack exhibit, and Pedersen commitment, generic Schnorr signatures and Shamir secret sharing remain scanner collisions. The `noDA` explanation names dictionary-attack lockout but executes no password-guessing attack, so Dictionary attack is also removed from scanner credit. The DAA path remains a zero-application-attribute, named-basename-only algebraic teaching adaptation; anonymous provenance still does not establish runtime integrity. This is software teaching code with a page-local parent seed, deterministic fixtures, variable-time JavaScript, no command/session transport, no hardware boundary and no production, interoperability, secure-boot, rollback, anti-hammering, correlated-runtime or side-channel claim. A satisfied policy governs release only; it cannot protect plaintext after release. Exact-main run 40383260952 passed 372 unit tests, a passing clean baseline followed by all 35 mutations caught, the build, three accessibility/reflow drives and 101 passed claims checks; one additional desktop coarse-pointer case skipped intentionally. Pages artifact 12680405117 deployed through deployment 7341097853; all three public files matched the artifact and a fresh exact-main build byte for byte.
 - **References:** Merkle tree, RSA, SHA-1, SHA-384, SHA-512
 - **Standards body:** IETF, NIST
-- **Implementation:** @noble/curves BLS12-381/P-256 and @noble/ciphers AES-CFB / local SHA-256, HMAC, Fiat-Shamir/Schnorr-identification proofs, CDL Pi_DAA+ and TPM/RATS teaching implementations
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [89b2bb4cee6d](https://github.com/systemslibrarian/crypto-lab-attestation-gate/commit/89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61) reviewed 2026-10-26; 8 mapped sections.
+- **Implementation:** @noble/curves BLS12-381/P-256 and @noble/ciphers AES-CFB / local SHA-256, HMAC, Fiat-Shamir/Schnorr-identification proofs, CDL Pi_DAA+, byte-accurate TPM object/policy and RATS teaching implementations
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7241e798da97](https://github.com/systemslibrarian/crypto-lab-attestation-gate/commit/7241e798da975a170d447520a584e6399959a3ac) reviewed 2026-10-26; 9 mapped sections.
   - **Direct Anonymous Attestation Membership and Controlled Linkability** (`anonymous-membership`; interactive; real-crypto)
     - **Visible section:** Anonymous Membership
     - **Learner action:** Compare stable attestation-key identity with CDL Pi_DAA+ issuer membership, then exercise same and different basenames, issuer rotation with re-Join, credential corruption, and private-key rogue-list state.
@@ -2654,7 +2660,7 @@ Build and appraise measured-boot quotes, then replace the stable attestation-key
     - **Observed result:** Distinguishes mismatched PCR values, stale nonce, untrusted or uncertified keys, bad signature, missing reference, and algorithm or magic failures.
     - **Concepts taught:** RATS evidence appraisal; PCR mismatch; quote freshness; attestation trust anchor; failure codes
     - **Limits:** Code names are local teaching vocabulary, not standardized TPM or RATS error codes.
-    - **Evidence at pinned commit:** `src/ui/app.ts:240`, `src/ui/app.ts:241`, `src/ui/app.ts:243`, `src/ui/app.ts:249`, `src/ui/app.ts:262`, `src/rats/failures.ts:14`, `src/rats/failures.ts:15`, `src/rats/failures.ts:21`, `src/rats/failures.ts:43`
+    - **Evidence at pinned commit:** `src/ui/app.ts:257`, `src/ui/app.ts:258`, `src/ui/app.ts:260`, `src/ui/app.ts:266`, `src/ui/app.ts:279`, `src/ui/app.ts:282`, `src/ui/app.ts:283`, `src/rats/failures.ts:14`, `src/rats/failures.ts:15`, `src/rats/failures.ts:21`, `src/rats/failures.ts:43`
   - **Restricted Signing and Magic Value** (`magic-value`; interactive; simulation)
     - **Visible section:** The Magic Value
     - **Learner action:** Toggle the attestation-key restricted attribute and the quote magic bytes before signing external data.
@@ -2676,6 +2682,13 @@ Build and appraise measured-boot quotes, then replace the stable attestation-key
     - **Concepts taught:** TPM2_Quote; TPMS_ATTEST; ECDSA P-256; RATS appraisal; EAT
     - **Limits:** The TPM and trust anchors are software fixtures; EAT is not COSE_Sign1 wrapped.
     - **Evidence at pinned commit:** `src/ui/app.ts:30`, `src/ui/panels/quote.ts:30`, `src/ui/panels/quote.ts:47`, `src/rats/verify.ts:1`
+  - **PCR-Bound Sealed Storage and Authorized Recovery** (`sealed-storage`; interactive; real-crypto)
+    - **Visible section:** Sealed Storage
+    - **Learner action:** Seal a synthetic secret to the measured boot state, run matching, changed-state, tamper, recovery, fixedTPM-parent compromise and post-release cases, and inspect every policy digest and response code.
+    - **Observed result:** Current-run PCR, policy, public-object, protected-private-blob, load and unseal computations determine whether the synthetic secret is released, refused or released before a later runtime compromise.
+    - **Concepts taught:** TPM sealed storage; PCR policy; enhanced authorization; TPM2_PolicyAuthorize; TPM2_Load; TPM2_Unseal; fixedTPM confinement; post-release exposure
+    - **Limits:** The TPM and storage-parent confinement are modelled in software; the parent seed and deterministic fixture values exist in page memory. This is not wire-interoperable TPM command/session handling, secure boot, rollback prevention, anti-hammering, hardware isolation or post-release plaintext protection.
+    - **Evidence at pinned commit:** `src/ui/app.ts:37`, `src/ui/panels/sealed.ts:117`, `src/acts/sealing.ts:226`, `src/acts/sealing.ts:495`, `src/acts/sealing.ts:960`, `src/tpm/policy.ts:368`, `src/tpm/policy.ts:417`, `src/tpm/policy.ts:457`, `src/tpm/policy.ts:561`, `src/tpm/seal.ts:351`, `src/tpm/seal.ts:498`, `src/tpm/seal.ts:612`
   - **After-Boot Runtime Compromise** (`time-of-use`; interactive; simulation)
     - **Visible section:** Time of Use
     - **Learner action:** Load a runtime component after the last measured boot event and re-quote.
@@ -5266,15 +5279,15 @@ Strip X25519MLKEM768 from a TLS 1.3 ClientHello and watch two PQ-capable endpoin
 
 [`crypto-lab-dp-noise`](https://systemslibrarian.github.io/crypto-lab-dp-noise/) · Differential Privacy · PRIVACY
 
-Real Laplace and Gaussian mechanisms over a twelve-person payroll — watch the distinguishing advantage between two databases differing by one person become bounded, then watch averaging take the truth back once the budget is spent.
+Real payroll differential privacy keeps distinguishing advantage bounded; geo-indistinguishability then computes ε-times-distance, samples planar utility, exposes finite-map failure, and makes repeated releases compose.
 
-- **Card topics (discovery only):** Laplace Mechanism, Gaussian Mechanism, ε-δ Budget, Composition — labels do not establish what any section runs.
-- **Implements:** Gaussian mechanism `src/dp/discrete.ts:40`, Laplace mechanism `src/dp/laplace.ts:45`
-- **Source review:** [1a71ad103004](https://github.com/systemslibrarian/crypto-lab-dp-noise/commit/1a71ad1030045c5ac66c674442823d1bc81ece95) — Read current README, exact discrete Laplace/Gaussian samplers and continuous Laplace source at this exact commit. Re-read the complete 85ca9a3bf809 to 1a71ad103004 change inventory: only AGENTS.md, src/ui/leak.ts and e2e/claims.spec.ts changed; all DP engine, composition/session-ledger, README, manifest and lock bytes are unchanged. The comparison uses nonmutating ledger quotes and bestComposition over existing spends, the two-query run and all five runs; budget/spend/reset notifications update only its text without billing or resampling the illustration. Admission remains the existing ledger policy. Differential privacy bounds nonzero distinguishing advantage; it does not make neighbouring databases indistinguishable. Existing implementation anchors45/40 and add/remove classifications retained. This bounded teaching-source review is not production, cryptographic-conformance or constant-time assurance.
+- **Card topics (discovery only):** Laplace Mechanism, Gaussian Mechanism, Planar Laplace Mechanism, ε-δ Budget, Composition — labels do not establish what any section runs.
+- **Implements:** Gaussian mechanism `src/dp/discrete.ts:40`, Laplace mechanism `src/dp/laplace.ts:45`, Planar Laplace mechanism `src/dp/geo.ts:134`
+- **Source review:** [d038ae68a794](https://github.com/systemslibrarian/crypto-lab-dp-noise/commit/d038ae68a794df7aa73c8fb91e8562d492093257) — Read the complete current README, source, unit and browser tests, mutation runner and learner interface through this exact main commit. The payroll route still executes exact rational discrete Laplace/Gaussian sampling, declared sensitivity, nonmutating price quotes and fail-closed session accounting. The separate E-K-07 route computes the normalized ideal planar Laplace density on a declared local Euclidean plane, an attained epsilon-times-distance witness, radial CDF/quantiles, 2,000 current-run samples, nearest-service utility and a public two-candidate repeated-release likelihood transcript. Its independent 7 by 7 finite-grid control derives a boundary normalization violation and an epsilon/2 sufficient repair over that bounded grid. This is an IEEE-754 teaching implementation of the paper's ideal density, not its finite-precision digital mechanism, an Earth-scale map, a universal trajectory attack, correlated-path protection or production location privacy. Repeated independent releases pay the sum of per-point metric bounds; the displayed posterior additionally assumes equal candidate-path priors.
 - **References:** Bloom filter, CKKS
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ea6eac3e9fc1](https://github.com/systemslibrarian/crypto-lab-dp-noise/commit/ea6eac3e9fc145c9f3306d4f6610b0662f8a794f) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d038ae68a794](https://github.com/systemslibrarian/crypto-lab-dp-noise/commit/d038ae68a794df7aa73c8fb91e8562d492093257) reviewed 2026-10-26; 10 mapped sections.
   - **Declare sensitivity before release** (`bounds`; interactive; real-operation)
     - **Visible section:** Where does Δ come from? You have to answer
     - **Learner action:** Choose a public clipping bound and a policy for an out-of-range thirteenth record.
@@ -5318,7 +5331,14 @@ Real Laplace and Gaussian mechanisms over a twelve-person payroll — watch the 
     - **Learner action:** Answer four new scenario questions and inspect tailored feedback or linked interactions to revisit.
     - **Observed result:** Test whether lessons about releases, mechanisms, inference and accounting transfer beyond the page’s worked examples.
     - **Concepts taught:** differential privacy reasoning; privacy loss; mechanism design; transfer practice
-    - **Evidence at pinned commit:** `index.html:671`, `index.html:673`, `index.html:675`, `index.html:681`, `src/ui/exit.ts:200`, `src/ui/exit.ts:211`, `src/ui/exit.ts:221`, `src/ui/exit.ts:227`, `src/ui/exit.ts:236`
+    - **Evidence at pinned commit:** `index.html:760`, `index.html:763`, `index.html:769`, `index.html:771`, `src/ui/exit.ts:200`, `src/ui/exit.ts:211`, `src/ui/exit.ts:221`, `src/ui/exit.ts:227`, `src/ui/exit.ts:236`
+  - **A privacy budget measured per kilometre** (`geo`; interactive; real-operation)
+    - **Visible section:** A privacy budget measured per kilometre
+    - **Learner action:** Set epsilon per kilometre, location separation and release count; inspect the tight ideal-planar likelihood bound and finite-grid control, draw current-run utility samples, and release a path transcript.
+    - **Observed result:** Computes an attained epsilon-times-distance ratio, measured and analytic radial utility, nearest-service retention, a naive cropped-grid boundary violation with a bounded half-rate repair, and the composed likelihood of every released point.
+    - **Concepts taught:** geo-indistinguishability; planar Laplace mechanism; metric differential privacy; location utility; finite-map boundary; repeated-release composition; trajectory privacy boundary
+    - **Limits:** Uses the ideal planar density with 53-bit IEEE-754 uniforms on a local Euclidean plane. The finite grid is a separate bounded control, the transcript compares two public parallel candidate paths under equal priors, and no finite-precision-paper theorem, correlated-trajectory protection, Earth geometry or production claim is transferred.
+    - **Evidence at pinned commit:** `index.html:614`, `index.html:630`, `index.html:645`, `index.html:654`, `index.html:667`, `index.html:680`, `index.html:689`, `src/dp/geo.ts:71`, `src/dp/geo.ts:77`, `src/dp/geo.ts:82`, `src/dp/geo.ts:91`, `src/dp/geo.ts:102`, `src/dp/geo.ts:113`, `src/dp/geo.ts:134`, `src/dp/geo.ts:188`, `src/dp/geo.ts:192`, `src/dp/geo.ts:231`, `src/dp/geo.ts:256`, `src/ui/geo.ts:80`, `src/ui/geo.ts:121`, `src/ui/geo.ts:189`, `src/ui/geo.ts:243`
   - **Guess the neighboring world** (`guess`; interactive; real-operation)
     - **Visible section:** Can you tell which world you are in?
     - **Learner action:** Draw 2,000 outputs from both worlds, deal a release and guess Alice’s presence.

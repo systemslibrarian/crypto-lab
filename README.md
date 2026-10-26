@@ -30,7 +30,7 @@ Each independent companion connects original activities to existing exhibits, ci
 
 ### Protocol workshops
 
-Two hub-hosted workshops add real cryptographic experiments: [Timestamping](https://crypto-lab.systemslibrarian.dev/learn/timestamping/) tests signed claims and linked-history rewrites; [Fair Exchange](https://crypto-lab.systemslibrarian.dev/learn/fair-exchange/) compares direct and ideal-intermediary delivery of messages, receipts, contract signatures and secrets. These independent workshops retain their original URLs and are separate from the standalone-repository exhibit count. Their sources and limitations are in [`learn/README.md`](learn/README.md).
+Two hub-hosted workshops add real cryptographic experiments: [Timestamping](https://crypto-lab.systemslibrarian.dev/learn/timestamping/) tests signed claims, linked-history rewrites, a timestamped Merkle batch and timely evidence renewal; [Fair Exchange](https://crypto-lab.systemslibrarian.dev/learn/fair-exchange/) compares direct and ideal-intermediary delivery of messages, receipts, contract signatures and secrets. These independent workshops retain their original URLs and are separate from the standalone-repository exhibit count. Their sources and limitations are in [`learn/README.md`](learn/README.md).
 
 [Chip transaction authentication](https://crypto-lab.systemslibrarian.dev/learn/emv-chip/) is a separate hub-hosted interactive study: approve a synthetic online card packet, change its amount, and replay it to see issuer checks. It uses an educational HMAC model rather than EMV application cryptograms or payment-network rules; its source-backed section is indexed in [`CATALOG.md`](CATALOG.md), outside the standalone-repository count.
 

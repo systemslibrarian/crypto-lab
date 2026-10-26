@@ -861,10 +861,10 @@
   "crypto-lab-oram-vault": {
    "added": "2026-04",
    "addedOn": "2026-04-19",
-   "updated": "2026-08",
+   "updated": "2026-10",
    "addedFrom": "2026-04-19T12:28:45Z",
-   "updatedFrom": "2026-08-19T01:43:02-04:00",
-   "updatedCommit": "8b1a36eaa1371cfd0eb87d58dc472722de3079ca"
+   "updatedFrom": "2026-10-26T19:00:05-04:00",
+   "updatedCommit": "0c7f89281784748a9c9d4fafb41d85ac1839a4c5"
   },
   "crypto-lab-paillier-gate": {
    "added": "2026-04",
@@ -1975,8 +1975,8 @@
    "addedOn": "2026-10-21",
    "updated": "2026-10",
    "addedFrom": "2026-10-21T19:20:17Z",
-   "updatedFrom": "2026-10-23T19:41:02-04:00",
-   "updatedCommit": "1f0f6b86a2dd5b631df13377b5e1a205e712a502"
+   "updatedFrom": "2026-10-26T10:42:54-04:00",
+   "updatedCommit": "fb4d3d8ebeb099d42aeae47d234fe93296ffa544"
   },
   "crypto-lab-dedup-vault": {
    "added": "2026-10",

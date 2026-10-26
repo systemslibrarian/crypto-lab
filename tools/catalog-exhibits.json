@@ -27208,8 +27208,8 @@
       ]
     },
     "crypto-lab-oram-vault": {
-      "commit": "8a2aa66111da27768a42510c02a2391ee409f1e6",
-      "reviewed": "2026-10-22",
+      "commit": "0c7f89281784748a9c9d4fafb41d85ac1839a4c5",
+      "reviewed": "2026-10-26",
       "exhibits": [
         {
           "id": "access-pattern",
@@ -27225,11 +27225,11 @@
             "medical metadata"
           ],
           "evidence": [
-            "src/main.ts:125",
-            "src/main.ts:156",
-            "src/main.ts:177",
-            "src/main.ts:180",
-            "src/main.ts:1231"
+            "src/main.ts:147",
+            "src/main.ts:153",
+            "src/main.ts:179",
+            "src/main.ts:200",
+            "src/main.ts:1110"
           ],
           "section": "Why Encryption Alone Isn't Enough"
         },
@@ -27249,17 +27249,20 @@
             "AES-GCM blocks"
           ],
           "evidence": [
-            "src/main.ts:200",
-            "src/main.ts:204",
-            "src/main.ts:205",
-            "src/main.ts:207",
-            "src/main.ts:217",
-            "src/main.ts:238",
-            "src/main.ts:250",
-            "src/main.ts:1202",
-            "src/client/encryption.ts:28",
-            "src/client/encryption.ts:48",
-            "src/client/encryption.ts:56"
+            "src/main.ts:222",
+            "src/main.ts:226",
+            "src/main.ts:232",
+            "src/main.ts:249",
+            "src/main.ts:260",
+            "src/main.ts:266",
+            "src/main.ts:272",
+            "src/main.ts:720",
+            "src/main.ts:866",
+            "src/main.ts:897",
+            "src/main.ts:922",
+            "src/client/encryption.ts:115",
+            "src/client/encryption.ts:141",
+            "src/client/encryption.ts:175"
           ],
           "limits": "A small in-browser tree makes the mechanism observable and does not measure production-scale performance.",
           "section": "Path ORAM Tree Visualization"
@@ -27279,15 +27282,15 @@
             "AES-GCM blocks"
           ],
           "evidence": [
-            "src/main.ts:262",
-            "src/main.ts:266",
-            "src/main.ts:267",
-            "src/main.ts:268",
-            "src/main.ts:269",
+            "src/main.ts:284",
             "src/main.ts:288",
-            "src/main.ts:1225",
-            "src/client/encryption.ts:43",
-            "src/client/encryption.ts:82"
+            "src/main.ts:299",
+            "src/main.ts:310",
+            "src/main.ts:952",
+            "src/main.ts:984",
+            "src/main.ts:1013",
+            "src/client/encryption.ts:115",
+            "src/client/encryption.ts:141"
           ],
           "section": "Access Walkthrough"
         },
@@ -27305,11 +27308,15 @@
             "randomized paths"
           ],
           "evidence": [
-            "src/main.ts:306",
-            "src/main.ts:310",
-            "src/main.ts:311",
-            "src/main.ts:330",
-            "src/main.ts:1244"
+            "src/main.ts:328",
+            "src/main.ts:332",
+            "src/main.ts:341",
+            "src/main.ts:346",
+            "src/main.ts:352",
+            "src/main.ts:1162",
+            "src/main.ts:1198",
+            "src/main.ts:1224",
+            "src/main.ts:1236"
           ],
           "section": "Adversary's View vs. Client's View"
         },
@@ -27328,16 +27335,73 @@
             "access timing"
           ],
           "evidence": [
-            "src/main.ts:341",
-            "src/main.ts:354",
-            "src/main.ts:357",
-            "src/main.ts:364",
-            "src/main.ts:399",
-            "src/main.ts:413",
-            "src/main.ts:414"
+            "src/main.ts:363",
+            "src/main.ts:376",
+            "src/main.ts:379",
+            "src/main.ts:380",
+            "src/main.ts:386",
+            "src/main.ts:420",
+            "src/main.ts:434",
+            "src/main.ts:435",
+            "src/main.ts:439"
           ],
           "limits": "Counts use the small in-browser tree; production cost and threat models depend on construction and deployment.",
           "section": "Costs and When ORAM Is Worth It"
+        },
+        {
+          "id": "path-hierarchy",
+          "title": "Path ORAM and bounded hierarchical ORAM",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Run the same eight operations through real Path and bounded hierarchical clients, inspect measured traffic and rebuild spikes, then run the skip-after-hit control.",
+          "outcome": "Compares current-run costs and trusted state after full 16-block verification, then shows equal plaintext with distinguishable one-probe versus all-level traces.",
+          "concepts": [
+            "Path ORAM",
+            "hierarchical ORAM",
+            "real and dummy probes",
+            "fresh placement keys",
+            "binary-carry rebuilds",
+            "access-depth leakage",
+            "storage-observer view"
+          ],
+          "evidence": [
+            "src/main.ts:448",
+            "src/main.ts:458",
+            "src/main.ts:464",
+            "src/main.ts:465",
+            "src/main.ts:469",
+            "src/main.ts:473",
+            "src/main.ts:493",
+            "src/main.ts:497",
+            "src/main.ts:510",
+            "src/main.ts:514",
+            "src/main.ts:1277",
+            "src/main.ts:1311",
+            "src/hierarchical/client.ts:156",
+            "src/hierarchical/client.ts:185",
+            "src/hierarchical/client.ts:203",
+            "src/hierarchical/client.ts:215",
+            "src/hierarchical/client.ts:293",
+            "src/hierarchical/client.ts:338",
+            "src/hierarchical/client.ts:478",
+            "src/hierarchical/client.ts:495",
+            "src/hierarchical/client.ts:500",
+            "src/hierarchical/client.ts:521",
+            "src/hierarchical/client.ts:535",
+            "src/hierarchical/client.ts:547",
+            "src/hierarchical/comparison.ts:117",
+            "src/hierarchical/comparison.ts:134",
+            "src/hierarchical/comparison.ts:142",
+            "src/hierarchical/comparison.ts:154",
+            "src/hierarchical/comparison.ts:168",
+            "src/hierarchical/comparison.ts:174",
+            "src/hierarchical/comparison.ts:178",
+            "src/hierarchical/comparison.ts:200",
+            "src/hierarchical/comparison.ts:208",
+            "src/hierarchical/comparison.ts:222"
+          ],
+          "limits": "This fixed N=16 table deliberately overprovisions buckets and uses transient O(N) client rebuild space; it is not an asymptotically efficient oblivious hash table, a reproduction of Alibi's combined-stash attack, or production ORAM.",
+          "section": "Path ORAM vs. a Bounded Hierarchical ORAM"
         }
       ],
       "reviewScope": "complete"

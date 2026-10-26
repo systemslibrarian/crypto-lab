@@ -543,6 +543,18 @@ PSMT guarantee. The browser reports the interactive 2t+1 theorem boundary but do
 execute or relabel the two-round pseudo-basis protocol. No concept status changes — §19 was
 already `DEEP`. Catalogued total moves to 248.*
 
+*Version 64 — records ORAM Vault's E-K-10 construction comparison under §23 without
+adding a lab or changing a concept status. One declared workload now runs through both the
+retained Path ORAM and a bounded N=16 hierarchy that scans its top slot, probes one complete
+HMAC-selected bucket in every hashed level, substitutes unique dummy labels after a hit and
+rotates level keys on binary-carry rebuilds. Server-event traffic exposes the rebuild spikes,
+and a separate full-state sweep checks all sixteen blocks against an independent map. The
+skip-after-hit control returns the same plaintext while reducing the visible lookup from 31
+slots to one. Deliberately c-by-c buckets and transient O(N) rebuild memory make overflow
+impossible in this finite lesson; it is not an asymptotically efficient oblivious hash table,
+a reproduction or repair of Alibi's combined-stash attack, malicious-server protection or
+production ORAM. Catalogued total remains 248.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of

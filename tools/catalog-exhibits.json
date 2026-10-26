@@ -26694,7 +26694,7 @@
       ]
     },
     "crypto-lab-oblivious-shelf": {
-      "commit": "acdc185d61c8aca1692be3bb200a873524385489",
+      "commit": "7529bf0099a8fb835a7108150ca082e61928ba7e",
       "reviewed": "2026-10-26",
       "exhibits": [
         {
@@ -26710,14 +26710,14 @@
             "Chor et al. 1995"
           ],
           "evidence": [
-            "src/main.ts:84",
-            "src/main.ts:89",
-            "src/main.ts:126",
-            "src/main.ts:199",
-            "src/main.ts:207",
-            "src/main.ts:223",
+            "src/main.ts:88",
+            "src/main.ts:94",
+            "src/main.ts:136",
+            "src/main.ts:198",
+            "src/main.ts:209",
+            "src/main.ts:217",
             "src/main.ts:250",
-            "src/main.ts:269",
+            "src/main.ts:278",
             "src/pir.ts:98",
             "src/pir.ts:121",
             "src/pir.ts:140"
@@ -26740,14 +26740,14 @@
             "one-server anonymity set"
           ],
           "evidence": [
-            "src/main.ts:285",
-            "src/main.ts:310",
-            "src/main.ts:312",
-            "src/main.ts:856",
-            "src/main.ts:861",
-            "src/main.ts:872",
-            "src/main.ts:905",
-            "src/main.ts:1013",
+            "src/main.ts:293",
+            "src/main.ts:320",
+            "src/main.ts:323",
+            "src/main.ts:871",
+            "src/main.ts:876",
+            "src/main.ts:920",
+            "src/main.ts:947",
+            "src/main.ts:1015",
             "src/main.ts:1038",
             "src/main.ts:1063",
             "src/pir.ts:160",
@@ -26772,19 +26772,19 @@
             "collusion"
           ],
           "evidence": [
-            "src/main.ts:373",
-            "src/main.ts:386",
-            "src/main.ts:391",
-            "src/main.ts:399",
-            "src/main.ts:414",
+            "src/main.ts:381",
+            "src/main.ts:387",
+            "src/main.ts:396",
+            "src/main.ts:409",
             "src/main.ts:425",
-            "src/main.ts:478",
+            "src/main.ts:436",
             "src/main.ts:488",
-            "src/main.ts:501"
+            "src/main.ts:498",
+            "src/main.ts:515"
           ],
           "section": "Communication Cost and Tradeoffs",
           "execution": "conceptual",
-          "limits": "The advanced communication bounds, CPIR families and research systems are explanatory references; the lab executes only the basic O(n)-communication two-server XOR construction."
+          "limits": "The advanced communication bounds, CPIR families and research systems are explanatory references; the executed basic XOR and bounded GF(8) routes do not claim those asymptotic or deployment efficiencies."
         },
         {
           "id": "dilemma",
@@ -26798,20 +26798,67 @@
             "PIR deployment limitations"
           ],
           "evidence": [
-            "src/main.ts:528",
-            "src/main.ts:535",
+            "src/main.ts:536",
             "src/main.ts:542",
-            "src/main.ts:548",
-            "src/main.ts:556",
-            "src/main.ts:563",
-            "src/main.ts:567",
+            "src/main.ts:547",
+            "src/main.ts:558",
             "src/main.ts:576",
             "src/main.ts:609",
-            "src/main.ts:630"
+            "src/main.ts:618",
+            "src/main.ts:628",
+            "src/main.ts:640"
           ],
           "section": "The Librarian's Dilemma",
           "execution": "conceptual",
           "limits": "The legal history is explanatory and not legal advice; PIR does not erase patron identity, timing, network, application or circulation records."
+        },
+        {
+          "id": "robust-pir",
+          "title": "Robust PIR Fault and Collusion Workbench",
+          "kind": "interactive",
+          "action": "Select a catalog bit, choose honest, unavailable, corrupted or stale behavior independently for five servers, choose one or two query views and run the field arithmetic.",
+          "outcome": "Actual GF(8) unit-vector shares and server dot products form a degree-one Reed-Solomon word; the decoder corrects or refuses within its derived radius, a pinned beyond-bound transcript accepts the wrong bit, one query view retains every target and two distinct views interpolate the one-hot target.",
+          "concepts": [
+            "robust private information retrieval",
+            "degree-one Shamir sharing",
+            "Reed-Solomon unique decoding",
+            "Byzantine and erasure threshold",
+            "query collusion"
+          ],
+          "evidence": [
+            "src/robust-ui.ts:91",
+            "src/robust-ui.ts:96",
+            "src/robust-ui.ts:105",
+            "src/robust-ui.ts:107",
+            "src/robust-ui.ts:123",
+            "src/robust-ui.ts:130",
+            "src/robust-ui.ts:158",
+            "src/robust-ui.ts:181",
+            "src/robust-ui.ts:183",
+            "src/robust-ui.ts:188",
+            "src/robust-ui.ts:314",
+            "src/robust-ui.ts:329",
+            "src/robust-ui.ts:339",
+            "src/robust-ui.ts:361",
+            "src/robust-ui.ts:393",
+            "src/robust-pir.ts:193",
+            "src/robust-pir.ts:208",
+            "src/robust-pir.ts:216",
+            "src/robust-pir.ts:241",
+            "src/robust-pir.ts:268",
+            "src/robust-pir.ts:293",
+            "src/robust-pir.ts:346",
+            "src/robust-pir.ts:394",
+            "src/robust-pir.ts:464",
+            "src/robust-pir.ts:484",
+            "src/robust-pir.ts:568",
+            "src/robust-pir.ts:583",
+            "src/robust-pir.ts:595",
+            "src/robust-pir.ts:623"
+          ],
+          "section": "Robust Shelf: missing and dishonest servers",
+          "execution": "real-operation",
+          "limits": "This is a 1-private, 2-out-of-5 linear unit-vector teaching construction over GF(8), not Beimel-Stahl Theorem 5.2, Goldberg's full protocol, Percy++, RAID-PIR or production. The threshold permits twice the Byzantine count plus the unavailable count to be at most three; it supplies no provenance, freshness or privacy against two colluding query recipients."
         }
       ],
       "reviewScope": "complete"

@@ -3043,11 +3043,12 @@ function checkObliviousShelfReview(source, manifests = exhibitManifest) {
   const card = openingFor(source, slug);
   assert.match(card, /data-implements="Private information retrieval@src\/pir\.ts:160"/);
   const cardBlock = blockFor(source, slug);
-  assert.match(cardBlock, /one-bit checked-out flag/);
+  assert.match(cardBlock, /Retrieve one catalog bit/);
+  assert.match(cardBlock, /<span class="chip">Robust PIR<\/span>/);
   assert.doesNotMatch(cardBlock, /retrieves any book|retrieves (?:the )?selected record/);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, 'acdc185d61c8aca1692be3bb200a873524385489');
+  assert.equal(mapped.commit, '7529bf0099a8fb835a7108150ca082e61928ba7e');
   assert.equal(mapped.reviewed, '2026-10-26');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
@@ -3055,6 +3056,7 @@ function checkObliviousShelfReview(source, manifests = exhibitManifest) {
     'live-query',
     'cost',
     'dilemma',
+    'robust-pir',
   ]);
 
   const live = mapped.exhibits.find((item) => item.id === 'live-query');
@@ -3071,20 +3073,33 @@ function checkObliviousShelfReview(source, manifests = exhibitManifest) {
   assert.equal(cost.execution, 'conceptual');
   assert.doesNotMatch(cost.action, /^Change /);
   assert.match(cost.outcome, /executed basic scheme's two O\(n\)-bit queries/);
-  assert.match(cost.limits, /executes only the basic O\(n\)-communication/);
+  assert.match(cost.limits, /executed basic XOR and bounded GF\(8\) routes/);
+  assert.match(cost.limits, /do not claim those asymptotic or deployment efficiencies/);
+
+  const robust = mapped.exhibits.find((item) => item.id === 'robust-pir');
+  assert.equal(robust.execution, 'real-operation');
+  assert.match(robust.outcome, /degree-one Reed-Solomon word/);
+  assert.match(robust.outcome, /beyond-bound transcript accepts the wrong bit/);
+  assert.match(robust.outcome, /one query view retains every target/);
+  assert.match(robust.outcome, /two distinct views interpolate the one-hot target/);
+  assert.match(robust.limits, /twice the Byzantine count plus the unavailable count to be at most three/);
+  assert.match(robust.limits, /no provenance, freshness or privacy against two colluding query recipients/);
+  assert.match(robust.limits, /not Beimel-Stahl Theorem 5\.2/);
+  assert.ok(robust.evidence.includes('src/robust-pir.ts:464'));
+  assert.ok(robust.evidence.includes('src/robust-ui.ts:393'));
 }
 
-test('Oblivious Shelf review credits one-bit XOR PIR without whole-record or interactive-cost overclaims', () => {
+test('Oblivious Shelf review keeps one-bit XOR PIR and bounded robust-PIR claims separate', () => {
   checkObliviousShelfReview(html);
 });
 
-test('Oblivious Shelf controls reject stale pins, whole-record claims and stronger cost execution', () => {
+test('Oblivious Shelf controls reject stale pins, whole-record claims, stronger cost execution and weakened robustness boundaries', () => {
   const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-oblivious-shelf\/"[^>]*>/;
   const staleAnchor = html.replace(cardRe, (card) => card.replace('src/pir.ts:160', 'src/pir.ts:89'));
   assert.notEqual(staleAnchor, html);
   assert.throws(() => checkObliviousShelfReview(staleAnchor), assert.AssertionError);
 
-  const wholeRecord = html.replace("retrieves a selected book's one-bit checked-out flag", 'retrieves the selected record');
+  const wholeRecord = html.replace('Retrieve one catalog bit', 'Retrieve the selected record');
   assert.notEqual(wholeRecord, html);
   assert.throws(() => checkObliviousShelfReview(wholeRecord), assert.AssertionError);
 
@@ -3105,6 +3120,24 @@ test('Oblivious Shelf controls reject stale pins, whole-record claims and strong
   cost.action = 'Change server assumptions and execute every advanced PIR construction.';
   cost.limits = 'All cited constructions are implemented.';
   assert.throws(() => checkObliviousShelfReview(html, interactiveCost), assert.AssertionError);
+
+  const missingRobust = structuredClone(exhibitManifest);
+  missingRobust.labs['crypto-lab-oblivious-shelf'].exhibits =
+    missingRobust.labs['crypto-lab-oblivious-shelf'].exhibits
+      .filter((item) => item.id !== 'robust-pir');
+  assert.throws(() => checkObliviousShelfReview(html, missingRobust), assert.AssertionError);
+
+  const strongerRobust = structuredClone(exhibitManifest);
+  strongerRobust.labs['crypto-lab-oblivious-shelf'].exhibits
+    .find((item) => item.id === 'robust-pir').limits =
+      'Production robust PIR authenticates every answer, stays fresh and preserves privacy against colluding servers.';
+  assert.throws(() => checkObliviousShelfReview(html, strongerRobust), assert.AssertionError);
+
+  const hiddenFailure = structuredClone(exhibitManifest);
+  hiddenFailure.labs['crypto-lab-oblivious-shelf'].exhibits
+    .find((item) => item.id === 'robust-pir').outcome =
+      'Every threshold violation is detected and refused.';
+  assert.throws(() => checkObliviousShelfReview(html, hiddenFailure), assert.AssertionError);
 });
 
 function checkCompressionLeakReview(manifests = exhibitManifest) {

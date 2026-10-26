@@ -479,6 +479,16 @@ keeps XOR, mask reuse and position-only scrambling as distinct comparisons or fa
 This is not general k-of-n visual cryptography, an authenticated share format or an optical
 printing model. Catalogued total remains 247.*
 
+*Version 58 — records Oblivious Shelf's L-R-06 robust-PIR extension under §23 without
+adding a lab or changing a concept status. Beside the existing two-server XOR route, a
+separate 1-private, 2-out-of-5 teaching construction shares the one-hot query with
+degree-one polynomials over GF(8), computes five real server dot products and decodes the
+degree-one Reed–Solomon answer word. It derives the guarantee `2b+u <= 3`, executes
+erasure, corrupted-answer, stale-replica and exceeded-bound cases, and shows that one query
+view retains every target while two views reveal the one-hot vector. This is a bounded
+linear warmup—not the full Beimel–Stahl or Goldberg construction—and it supplies neither
+answer provenance nor freshness. Catalogued total remains 247.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1019,6 +1029,17 @@ key switching. The published evaluation keys add the lab's stated circular-secur
 Each compressed block expands to sixteen selectors; all four blocks are expanded, all 64 records
 are touched, and four fixed responses return, so this is a measured communication trade rather
 than a claim of multidimensional or sublinear-server PIR.
+
+Oblivious Shelf now adds the fault-tolerance axis without hiding its cost or changing the
+original XOR lesson. Its separate five-replica route evaluates independent degree-one
+unit-vector shares over GF(8), so any two honest answers reconstruct and the degree-one
+Reed–Solomon word uniquely corrects exactly the modeled patterns satisfying `2b+u <= 3`.
+The learner can independently drop, alter or stale each reply, see a beyond-bound transcript
+accept the wrong bit, and compare the full algebraic payload with the two-server baseline.
+One query view remains compatible with every target, while two recipients interpolate the
+one-hot vector; answer correction does not repair collusion, authenticate a replica or prove
+freshness. This is a bounded linear teaching construction rather than the sublinear
+Beimel–Stahl theorem, Goldberg's full robust protocol, Percy++ or production PIR.
 
 Shelf Oracle separately executes a bounded Piano-style stateful preprocessing lesson over the
 same static public database of 64 512-byte records. Client-specific setup streams the database

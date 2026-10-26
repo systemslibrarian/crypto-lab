@@ -183,6 +183,30 @@
       "Differential cryptanalysis"
     ]
   },
+  "crypto-lab-mac-race": {
+    "commit": "695391521cfdaf4aee0dc3814b1d324b3b1bbdf1",
+    "reviewed": "2026-10-25",
+    "add": [
+      "PMAC@src/pmac/pmac.ts:178"
+    ],
+    "addAttacks": [
+      "Brute force@src/poly1305.ts:142",
+      "Length extension@src/lengthext.ts:111",
+      "Timing side-channel@src/timing.ts:127"
+    ],
+    "remove": [
+      "Nonce reuse",
+      "Padding oracle",
+      "Side-channel (unspecified)"
+    ],
+    "removeReferences": [
+      "AES-CCM",
+      "FF1",
+      "Format-transforming encryption"
+    ],
+    "implementation": "WebCrypto AES / local TypeScript CMAC, PMAC, Poly1305, GHASH, SHA-256, CRC and teaching attack implementations",
+    "note": "Re-read the complete current README, cryptographic source, learner interface, unit/browser/accessibility tests, mutation runner and workflows through exact main. The existing HMAC, CMAC, Poly1305, GHASH, secret-prefix length-extension, timing-oracle simulation and raw variable-length CBC-MAC lessons remain. The new lesson executes the exact byte-aligned Black-Rogaway 2002 PMAC definition with full tags, AES-128/AES-256 official vectors, Gray-code offsets, independent non-final AES lanes, the distinct complete/partial final rules and a full-byte verifier. It computes content, position and wrong-final-rule controls and compares exact AES dependency work/span with CMAC without claiming browser parallelism or measured speed. Its post-quantum discussion is explicitly limited to ordinary classical-query access and cites the separate published Q2 attack; PMAC is not presented as NIST-standardized. The PMAC implementation anchor is the core function, not the UI wiring declaration the scanner first encounters. Reviewed attack additions override scanner prose/type/link anchors with the executable Poly1305 brute-force loop, length-extension forge entry point and timing-oracle recovery entry point. The GHASH panel is an explicit raw field-product toy with no nonce, so nonce-reuse prose is not credited as a demonstrated attack. Padding-oracle, AES-CCM, FF1 and format-transforming-encryption hits come only from the tracked historical CBC-MAC build brief, not the shipped demo. The unspecified-side-channel hit is a Poly1305 glossary adjective, not an executed side-channel attack. Exact-main run 40254779759 passed two publication controls, 106 unit tests, 39 browser/accessibility/cross-browser checks and all 24 clean-baseline mutation cases. Pages artifact 12621759091 deployed, and all four public files matched it byte for byte."
+  },
   "crypto-lab-matsui-line": {
     "commit": "7a85fbf1e6f566f7b0b718cb93f5dd737950faaa",
     "reviewed": "2026-10-25",
@@ -705,6 +729,29 @@
     ],
     "implementation": "idealized statistical simulation",
     "note": "Reviewed current engine, comparison/protocol UI, README and browser assertions through this pin. The entangled-pair sampler executes an idealized E91 statistical model; public verdicts describe Bell-test evidence, not a certified quantum source or secret key. BB84 appears only as a simple intercept-resend contrast. Candidate bits require authenticated discussion, reconciliation, privacy amplification and a separate finite-key argument. Preserve the reviewed E91 source anchor and remove BB84/MITM/side-channel algorithm or attack credits that are not executed here. Re-read the 23 October source-only postselection module, UI and README: an eight-instruction local classical model with selective coincidences changes the apparent CHSH statistic from 2 to 4 while retaining one quarter per setting. It executes no quantum source, detector attack or finite-key proof; the existing E91 engine anchor remains unchanged."
+  },
+  "crypto-lab-lll-break": {
+    "commit": "3f7ca812858c87e0ad6d3c403c86c705dde3e16a",
+    "reviewed": "2026-10-25",
+    "add": [
+      "Merkle–Hellman@src/knapsack.ts:271",
+      "Algorithm SV@src/knapsack.ts:689"
+    ],
+    "addAttacks": [
+      "Lattice reduction@src/bkz.ts:446"
+    ],
+    "remove": [
+      "Factoring",
+      "Side-channel (unspecified)"
+    ],
+    "removeReferences": [
+      "Gaussian mechanism",
+      "Merkle tree",
+      "Schnorr",
+      "Shamir secret sharing"
+    ],
+    "implementation": "hand-rolled TypeScript LLL/BKZ, LWE, Merkle–Hellman and Lagarias–Odlyzko Algorithm SV teaching implementations",
+    "note": "Re-read the complete current README, knapsack and lattice source, learner interface, verification scripts, unit/browser/accessibility tests, mutation runner and workflows through exact main. Existing LLL, toy BKZ and toy-LWE exhibits remain. The sixth exhibit generates and validates a toy superincreasing Merkle-Hellman private key, derives its public weights, encrypts and trapdoor-decrypts a bit vector, then passes the original Lagarias-Odlyzko Algorithm SV basis to the lab's existing LLL reducer using only public weights, target and delta. Candidate rows must have one fixed nonzero coordinate value and independently satisfy the public subset sum in BigInt; both reduced bases receive an exact unimodular-transform postcheck. A reproducible in-budget failure and bounded seed sweep are visible, but neither establishes a density threshold or security result. The route recovers selected plaintext bits, not the original trapdoor or Shamir's equivalent decryption pair; it is neither Shamir's attack nor the later Coster embedding and says nothing about ML-KEM or worst-case lattice hardness. The reviewed Lattice reduction attack addition overrides the scanner's false playwright.a11y.config.ts anchor, which was only the lab slug inside a base URL, with the executable attackLWE entry point. Factoring is only the LLL paper title, side-channel is a sibling-lab description, Gaussian mechanism is a regex collision with discrete-Gaussian LWE sampling, and Merkle tree, Schnorr and Shamir-secret-sharing are surname collisions. Exact-main test run 40254867941 and deploy run 40254867984 passed 24/24 knapsack checks, 2/2 publication controls, build, 29/29 browser checks, 2/2 accessibility/reflow checks and all 19 clean-baseline mutations. Pages artifact 12622431732 deployed, and all five public files matched it byte for byte."
   },
   "crypto-lab-lattice-fault": {
     "commit": "27a332b8d83845632a09046dd76c51343fb20514",

@@ -159,6 +159,7 @@ const ALGORITHMS = [
   { name: 'Poseidon', kind: 'algorithm', family: 'hash', re: /poseidon/i, std: null },
   { name: 'HMAC', kind: 'algorithm', family: 'MAC', re: /\bhmac\b/i, std: 'IETF:RFC 2104' },
   { name: 'CMAC', kind: 'algorithm', family: 'MAC', re: /\bcmac\b/i, std: 'NIST:SP 800-38B' },
+  { name: 'PMAC', kind: 'algorithm', family: 'MAC', re: /\bpmac(?:[-_ ]?2002)?\b/i, std: null },
   { name: 'KMAC', kind: 'algorithm', family: 'MAC', re: /\bkmac\b/i, std: 'NIST:SP 800-185' },
 
   // --- KDFs and password hashing ---
@@ -223,6 +224,8 @@ const ALGORITHMS = [
   { name: 'LWE', kind: 'algorithm', family: 'lattice problem', re: /\blwe\b|learning[-_ ]with[-_ ]errors/i, std: null },
   { name: 'Ring-LWE', kind: 'algorithm', family: 'lattice problem', re: /ring[-_ ]?lwe|\brlwe\b/i, std: null },
   { name: 'NTT', kind: 'algorithm', family: 'lattice arithmetic', re: /\bntt\b|number[-_ ]theoretic[-_ ]transform/i, std: null },
+  { name: 'Merkle–Hellman', kind: 'algorithm', family: 'historical public-key encryption', re: /merkle[-_ –]?hellman/i, std: null, status: 'broken' },
+  { name: 'Algorithm SV', kind: 'algorithm', family: 'subset-sum recovery algorithm', re: /\balgorithm[-_ ]?sv\b/i, std: null },
 
   // --- codes, secret sharing, commitments ---
   { name: 'Reed-Solomon', kind: 'algorithm', family: 'error-correcting code', re: /reed[-_ ]?solomon/i, std: null },
@@ -281,7 +284,10 @@ const ALGORITHMS = [
   { name: 'Fuzzy extractor', kind: 'algorithm', family: 'KDF', re: /fuzzy[-_ ]?extractor|secure[-_ ]?sketch|code[-_ ]?offset[^\n]{0,24}sketch/i, chipRe: /fuzzy[-_ ]?extractor|secure[-_ ]?sketch/i, structures: ['PublicHelper', 'EnrollmentSecret', 'ReproduceAttempt'], std: null },
   { name: 'Feldman VSS', kind: 'algorithm', family: 'secret sharing', re: /feldman/i, std: null },
   { name: 'Pedersen commitment', kind: 'algorithm', family: 'commitment', re: /pedersen/i, std: null },
-  { name: 'Merkle tree', kind: 'algorithm', family: 'authenticated data structure', re: /merkle(?![-_ ]?damg)/i, std: null },
+  /* Keep the authenticated structure distinct from Merkle–Hellman's historical
+     knapsack cryptosystem. Both begin with the same surname, and the old pattern
+     excluded Merkle–Damgård but would have credited a Merkle tree to LLL Break. */
+  { name: 'Merkle tree', kind: 'algorithm', family: 'authenticated data structure', re: /merkle(?![-_ –]?(?:damg|hellman))/i, std: null },
   { name: 'Bloom filter', kind: 'algorithm', family: 'probabilistic structure', re: /bloom[-_ ]?filter/i, std: null },
 
   // --- zero knowledge ---

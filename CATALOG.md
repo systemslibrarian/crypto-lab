@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1779 sections in 246 of 246 labs**
+The exhibit map currently records **1781 sections in 246 of 246 labs**
 (246 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -73,7 +73,7 @@ before relying on this index for a fresh assessment.
 
 ## Reverse index — which labs implement what
 
-204 algorithms are implemented somewhere in the fleet, grouped by family.
+207 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -177,7 +177,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### CMAC
 
-- **Implemented by:** [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:113`
+- **Implemented by:** [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:114`
 - **Also referenced by:** *Hash Zoo*, *World Hashes*, *Poly1305 MAC*, *Protocol Compose*, *Collision Vault*, *TESLA Broadcast*, *Dedup Vault*
 
 #### GHASH
@@ -193,6 +193,11 @@ A lab in *italics* references the algorithm without implementing it.
 #### KMAC
 
 - **Implemented by:** [KMAC Gate](https://systemslibrarian.github.io/crypto-lab-kmac-gate/) `src/demo/naive-mac.ts:70`
+- **Also referenced by:** —
+
+#### PMAC
+
+- **Implemented by:** [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/pmac/pmac.ts:178`
 - **Also referenced by:** —
 
 #### Poly1305
@@ -443,13 +448,13 @@ A lab in *italics* references the algorithm without implementing it.
 #### Simon
 
 - **Implemented by:** [Simon's Period](https://systemslibrarian.github.io/crypto-lab-simon-period/) `src/quantum/simon.ts:66`
-- **Also referenced by:** *Patron Shield*, *Biham Lens*, *Feistel Forge*, *Hidden Bit*
+- **Also referenced by:** *Patron Shield*, *Biham Lens*, *MAC Race*, *Feistel Forge*, *Hidden Bit*
 
 ### block cipher mode
 
 #### AES-CBC
 
-- **Implemented by:** [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:62`; [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) `src/main.ts:177`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/cbc.ts:30`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:73`; [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) `src/ff1.ts:150`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/oracle.ts:96`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:47`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/crypto/simplified-profile.ts:80`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/cbc-and-mac.ts:49`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:94`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/ff1.ts:90`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/aes-modes.ts:37`
+- **Implemented by:** [DRBG Arena](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) `src/crypto/utils.ts:62`; [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) `src/main.ts:177`; [AES Modes](https://systemslibrarian.github.io/crypto-lab-aes-modes/) `src/cbc.ts:30`; [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/cmac.ts:74`; [Format Ward](https://systemslibrarian.github.io/crypto-lab-format-ward/) `src/ff1.ts:150`; [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) `src/oracle.ts:96`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/compose.ts:47`; [Kerberos v5](https://systemslibrarian.github.io/crypto-lab-kerberos/) `src/crypto/simplified-profile.ts:80`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/cbc-and-mac.ts:49`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aes.ts:94`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/ff1.ts:90`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/schemes/aes-modes.ts:37`
 - **Also referenced by:** *Quantum Vault KpqC*, *Air Stream*, *Biham Lens*, *Key Exchange*, *Sector Vault*, *Glass Box*, *AES Anatomy*
 
 #### AES-CTR
@@ -514,7 +519,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Gaussian mechanism
 
 - **Implemented by:** [HAWK](https://systemslibrarian.github.io/crypto-lab-hawk/) `src/gaussian.ts:82`; [DP Noise](https://systemslibrarian.github.io/crypto-lab-dp-noise/) `src/dp/discrete.ts:40`
-- **Also referenced by:** *Quantum Vault KpqC*, *Frodo Vault*, *Falcon Seal*, *LLL Break*, *GGH Trapdoor*, *Proof Tally*
+- **Also referenced by:** *Quantum Vault KpqC*, *Frodo Vault*, *Falcon Seal*, *GGH Trapdoor*, *Proof Tally*
 
 #### Laplace mechanism
 
@@ -722,6 +727,14 @@ A lab in *italics* references the algorithm without implementing it.
 
 - **Implemented by:** [Dead Sea Cipher](https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/) `demos/dead-sea-cipher/src/ciphers/vigenere.ts:11`; [Vigenère Break](https://systemslibrarian.github.io/crypto-lab-vigenere-break/) `src/vigenere/cipher.ts:105`
 - **Also referenced by:** *Biham Lens*, *Enigma Forge*, *OTP Vault*, *Matsui Line*
+
+### historical public-key encryption
+
+#### Merkle–Hellman
+
+- **Historical status:** broken
+- **Implemented by:** [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) `src/knapsack.ts:271`
+- **Also referenced by:** —
 
 ### historical stream cipher
 
@@ -1214,6 +1227,13 @@ A lab in *italics* references the algorithm without implementing it.
 - **Implemented by:** [Air Stream](https://systemslibrarian.github.io/crypto-lab-air-stream/) `src/zuc/zuc.ts:69`
 - **Also referenced by:** *LFSR Forge*
 
+### subset-sum recovery algorithm
+
+#### Algorithm SV
+
+- **Implemented by:** [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) `src/knapsack.ts:689`
+- **Also referenced by:** —
+
 ### teaching AEAD
 
 #### Toy HiAE
@@ -1416,6 +1436,7 @@ disagree about who owns SHA-256.
 | A5/1 | — | 1 |
 | ABDP15 IPFE | — | 1 |
 | AIMer | — | 1 |
+| Algorithm SV | — | 1 |
 | Babai rounding | — | 5 |
 | Baby-step giant-step | — | 6 |
 | BB84 | — | 1 |
@@ -1465,6 +1486,7 @@ disagree about who owns SHA-256.
 | Laplace mechanism | — | 2 |
 | LWE | — | 7 |
 | Merkle tree | — | 10 |
+| Merkle–Hellman | — | 1 |
 | Message-Locked Encryption | — | 1 |
 | Miller–Rabin | — | 6 |
 | Montgomery ladder | — | 1 |
@@ -1480,6 +1502,7 @@ disagree about who owns SHA-256.
 | Pairing | — | 12 |
 | Pedersen commitment | — | 7 |
 | PEKS | — | 1 |
+| PMAC | — | 1 |
 | Pohlig–Hellman | — | 2 |
 | Pollard kangaroo | — | 1 |
 | Pollard rho (discrete log) | — | 1 |
@@ -9566,57 +9589,65 @@ Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium
 
 [`crypto-lab-lll-break`](https://systemslibrarian.github.io/crypto-lab-lll-break/) · Post-Quantum Cryptanalysis · POST-QUANTUM, ATTACKS
 
-Step-by-step LLL and BKZ lattice reduction with Gram-Schmidt views, Lovasz condition checks, and a toy LWE primal attack that shows why Kyber-sized parameters do not fall the same way.
+Step through LLL and toy BKZ/LWE reduction, then build, decrypt, and attack a toy Merkle–Hellman knapsack with the original Lagarias–Odlyzko Algorithm SV lattice.
 
-- **Card topics (discovery only):** LLL, BKZ, Gram-Schmidt, Toy LWE — labels do not establish what any section runs.
-- **Implements:** LWE `src/bkz.ts:222`
-- **References:** Dilithium, ECDSA, Falcon, FrodoKEM, Gaussian mechanism, Kyber, ML-DSA, ML-KEM, NTRU, RSA
-- **Attacks shown:** Brute force `src/bkz.ts:310`, Factoring `docs/model-limitations.md:127`, Lattice reduction `playwright.a11y.config.ts:10`, Side-channel (unspecified) `README.md:48`
+- **Card topics (discovery only):** LLL, BKZ, Merkle–Hellman, Algorithm SV — labels do not establish what any section runs.
+- **Implements:** Algorithm SV `src/knapsack.ts:689`, LWE `src/bkz.ts:222`, Merkle–Hellman `src/knapsack.ts:271`
+- **Source review:** [3f7ca812858c](https://github.com/systemslibrarian/crypto-lab-lll-break/commit/3f7ca812858c87e0ad6d3c403c86c705dde3e16a) — Re-read the complete current README, knapsack and lattice source, learner interface, verification scripts, unit/browser/accessibility tests, mutation runner and workflows through exact main. Existing LLL, toy BKZ and toy-LWE exhibits remain. The sixth exhibit generates and validates a toy superincreasing Merkle-Hellman private key, derives its public weights, encrypts and trapdoor-decrypts a bit vector, then passes the original Lagarias-Odlyzko Algorithm SV basis to the lab's existing LLL reducer using only public weights, target and delta. Candidate rows must have one fixed nonzero coordinate value and independently satisfy the public subset sum in BigInt; both reduced bases receive an exact unimodular-transform postcheck. A reproducible in-budget failure and bounded seed sweep are visible, but neither establishes a density threshold or security result. The route recovers selected plaintext bits, not the original trapdoor or Shamir's equivalent decryption pair; it is neither Shamir's attack nor the later Coster embedding and says nothing about ML-KEM or worst-case lattice hardness. The reviewed Lattice reduction attack addition overrides the scanner's false playwright.a11y.config.ts anchor, which was only the lab slug inside a base URL, with the executable attackLWE entry point. Factoring is only the LLL paper title, side-channel is a sibling-lab description, Gaussian mechanism is a regex collision with discrete-Gaussian LWE sampling, and Merkle tree, Schnorr and Shamir-secret-sharing are surname collisions. Exact-main test run 40254867941 and deploy run 40254867984 passed 24/24 knapsack checks, 2/2 publication controls, build, 29/29 browser checks, 2/2 accessibility/reflow checks and all 19 clean-baseline mutations. Pages artifact 12622431732 deployed, and all five public files matched it byte for byte.
+- **References:** Dilithium, ECDSA, Falcon, FrodoKEM, Kyber, ML-DSA, ML-KEM, NTRU, RSA
+- **Attacks shown:** Brute force `src/bkz.ts:310`, Lattice reduction `src/bkz.ts:446`
 - **Standards body:** —
-- **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a7eea56efd93](https://github.com/systemslibrarian/crypto-lab-lll-break/commit/a7eea56efd93cb05bc578fe18512416698366f0d) reviewed 2026-10-22; 6 mapped sections.
+- **Implementation:** hand-rolled TypeScript LLL/BKZ, LWE, Merkle–Hellman and Lagarias–Odlyzko Algorithm SV teaching implementations
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3f7ca812858c](https://github.com/systemslibrarian/crypto-lab-lll-break/commit/3f7ca812858c87e0ad6d3c403c86c705dde3e16a) reviewed 2026-10-25; 7 mapped sections.
   - **Guided reduction challenges** (`challenges`; interactive; real-values)
     - **Visible section:** Challenges
     - **Learner action:** Set up LLL swap, delta or toy-LWE challenges and test results in the preceding exhibits.
     - **Observed result:** Provides reproducible paths through basis reduction and attack controls.
     - **Concepts taught:** LLL practice; delta sensitivity; BKZ comparison; LWE recovery
     - **Limits:** Challenges reuse the toy engines and their limits.
-    - **Evidence at pinned commit:** `src/main.ts:306`, `src/main.ts:311`, `src/main.ts:317`, `src/main.ts:329`, `src/main.ts:341`
+    - **Evidence at pinned commit:** `src/main.ts:390`, `src/main.ts:395`, `src/main.ts:401`, `src/main.ts:407`, `src/main.ts:413`
   - **Gram–Schmidt stepper** (`gram-schmidt`; interactive; real-values)
     - **Visible section:** Exhibit 2 - Gram-Schmidt Orthogonalization
     - **Learner action:** Advance through orthogonalization of basis vectors.
     - **Observed result:** Displays projections and the orthogonal component used in reduction.
     - **Concepts taught:** Gram–Schmidt orthogonalization; basis projection; LLL preparation
     - **Limits:** Geometric display is low dimensional and does not implement high-dimensional numerical stabilization.
-    - **Evidence at pinned commit:** `src/main.ts:90`, `src/main.ts:104`, `src/lattice.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:106`, `src/main.ts:120`, `src/lattice.ts:1`
   - **Same lattice, different basis** (`lattice-basis`; interactive; real-values)
     - **Visible section:** Exhibit 1 - What Is a Lattice?
     - **Learner action:** Change a basis and inspect lattice points and determinant.
     - **Observed result:** Shows two bases generate the same discrete lattice and fundamental area.
     - **Concepts taught:** lattice; basis change; determinant; integer span
     - **Limits:** Low-dimensional visual example, not a cryptographic lattice parameter set.
-    - **Evidence at pinned commit:** `src/main.ts:50`, `src/main.ts:66`, `src/main.ts:76`, `src/lattice.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:66`, `src/main.ts:70`, `src/main.ts:92`, `src/lattice.ts:1`
   - **LLL reduction step by step** (`lll-stepper`; interactive; real-values)
     - **Visible section:** Exhibit 3 - LLL Step-by-Step
     - **Learner action:** Choose a 2D, 3D or q-ary preset, set delta and step or autoplay size reduction and swaps.
     - **Observed result:** Shows changed basis, Gram–Schmidt data and short vectors after LLL operations.
     - **Concepts taught:** LLL; size reduction; Lovász condition; basis swap; q-ary lattice
     - **Limits:** These are tiny instances for inspecting mechanics, not production lattice cryptanalysis.
-    - **Evidence at pinned commit:** `src/main.ts:127`, `src/main.ts:137`, `src/main.ts:147`, `src/lll.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:143`, `src/main.ts:153`, `src/main.ts:164`, `src/lll.ts:1`
+  - **Merkle–Hellman and Algorithm SV** (`merkle-hellman-algorithm-sv`; interactive; real-crypto)
+    - **Visible section:** Exhibit 6 - Knapsack Trapdoors and the Limits of Worst-Case Hardness
+    - **Learner action:** Generate a validated toy Merkle–Hellman key, encrypt and trapdoor-decrypt selected bits, then give only the public weights, ciphertext and delta to the original Lagarias–Odlyzko Algorithm SV basis and the lab's existing LLL engine.
+    - **Observed result:** Independently checked candidate rows recover the selected plaintext on suitable low-density toy instances; a reproducible in-budget counterexample shows that this bounded LLL route can also fail while trapdoor decryption succeeds.
+    - **Concepts taught:** Merkle–Hellman; Algorithm SV; superincreasing knapsack; subset-sum lattice; public-key cryptanalysis; worst-case versus instance distribution
+    - **Limits:** Recovers message bits on selected toy instances, not the original or an equivalent trapdoor. It is the unscaled 1985 Algorithm SV embedding, not Shamir's attack or the later Coster variant; failures and the bounded seed sweep establish neither a density threshold nor security, and imply nothing about production lattice schemes.
+    - **Evidence at pinned commit:** `src/main.ts:322`, `src/main.ts:351`, `src/main.ts:355`, `src/main.ts:1471`, `src/knapsack.ts:271`, `src/knapsack.ts:338`, `src/knapsack.ts:364`, `src/knapsack.ts:465`, `src/knapsack.ts:689`
   - **Rough BKZ parameter model** (`parameter-explorer`; interactive; conceptual)
     - **Visible section:** Exhibit 5 - Parameter Explorer
     - **Learner action:** Move n to compare illustrative block-size slope and published security context.
     - **Observed result:** Highlights why the simple beta formula gives wildly wrong absolute values for ML-KEM-size instances.
     - **Concepts taught:** BKZ block size; lattice estimator; ML-KEM; core-SVP cost; dimension
     - **Limits:** The formula is a rough toy slope, explicitly not a security estimate or extrapolation to production parameters.
-    - **Evidence at pinned commit:** `src/main.ts:256`, `src/main.ts:265`, `src/main.ts:275`, `src/main.ts:285`
+    - **Evidence at pinned commit:** `src/main.ts:272`, `src/main.ts:275`, `src/main.ts:282`, `src/main.ts:303`
   - **Recover toy LWE secret** (`toy-lwe`; interactive; real-values)
     - **Visible section:** Exhibit 4 - Break a Toy LWE Instance
     - **Learner action:** Generate small LWE samples, vary n/q/noise/BKZ block size and run reduction; inspect primal embedding cancellation.
     - **Observed result:** Reports whether reduction actually exposes (-s,e,±1), separately from an exhaustive search teaching baseline.
     - **Concepts taught:** LWE; Kannan embedding; LLL; BKZ; short vector; secret recovery
     - **Limits:** Toy BKZ omits projected blocks, pruning and numerical engineering; Kyber-size action reports a bound rather than running a full attack.
-    - **Evidence at pinned commit:** `src/main.ts:174`, `src/main.ts:207`, `src/main.ts:208`, `src/main.ts:244`, `src/bkz.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:190`, `src/main.ts:223`, `src/main.ts:224`, `src/main.ts:260`, `src/bkz.ts:1`
 
 ### LMS Ledger
 
@@ -9889,71 +9920,79 @@ Counts how many leakage hints collapse an LWE lattice problem on sparse ternary 
 
 [`crypto-lab-mac-race`](https://systemslibrarian.github.io/crypto-lab-mac-race/) · Message Authentication · HASHING & KDFS
 
-HMAC, CMAC, Poly1305, and GHASH compared with live length extension attack, timing attack, and nonce reuse demonstrations. Real WebCrypto operations.
+Compare real HMAC, CMAC, exact Black–Rogaway PMAC, Poly1305, and GHASH computations with bounded length-extension, raw CBC-MAC forgery, timing-oracle, and one-time-key-reuse lessons.
 
-- **Card topics (discovery only):** HMAC, CMAC, Poly1305, GHASH — labels do not establish what any section runs.
-- **Implements:** AES `src/cmac.ts:39`, AES-CBC `src/cmac.ts:73`, CMAC `src/cmac.ts:113`, CRC-32 `src/crc/crc32.ts:14`, GHASH `src/ghash.ts:97`, HMAC `src/crc/hmac-receiver.ts:2`, Poly1305 `src/poly1305.ts:110`, SHA-256 `src/lengthext.ts:39`
-- **References:** AES-GCM, BLAKE3, ChaCha20, ChaCha20-Poly1305, MD5, SHA-1, SHA-3, SHA-512, TLS 1.3
-- **Attacks shown:** Brute force `src/ui.ts:466`, Length extension `src/lengthext.ts:5`, Nonce reuse `src/crc/panel.ts:57`, Side-channel (unspecified) `src/ui.ts:465`, Timing side-channel `src/crc/panel.ts:60`
+- **Card topics (discovery only):** HMAC, CMAC, PMAC, Poly1305 — labels do not establish what any section runs.
+- **Implements:** AES `src/cmac.ts:39`, AES-CBC `src/cmac.ts:74`, CMAC `src/cmac.ts:114`, CRC-32 `src/crc/crc32.ts:14`, GHASH `src/ghash.ts:97`, HMAC `src/crc/hmac-receiver.ts:2`, PMAC `src/pmac/pmac.ts:178`, Poly1305 `src/poly1305.ts:110`, SHA-256 `src/lengthext.ts:39`
+- **Source review:** [695391521cfd](https://github.com/systemslibrarian/crypto-lab-mac-race/commit/695391521cfdaf4aee0dc3814b1d324b3b1bbdf1) — Re-read the complete current README, cryptographic source, learner interface, unit/browser/accessibility tests, mutation runner and workflows through exact main. The existing HMAC, CMAC, Poly1305, GHASH, secret-prefix length-extension, timing-oracle simulation and raw variable-length CBC-MAC lessons remain. The new lesson executes the exact byte-aligned Black-Rogaway 2002 PMAC definition with full tags, AES-128/AES-256 official vectors, Gray-code offsets, independent non-final AES lanes, the distinct complete/partial final rules and a full-byte verifier. It computes content, position and wrong-final-rule controls and compares exact AES dependency work/span with CMAC without claiming browser parallelism or measured speed. Its post-quantum discussion is explicitly limited to ordinary classical-query access and cites the separate published Q2 attack; PMAC is not presented as NIST-standardized. The PMAC implementation anchor is the core function, not the UI wiring declaration the scanner first encounters. Reviewed attack additions override scanner prose/type/link anchors with the executable Poly1305 brute-force loop, length-extension forge entry point and timing-oracle recovery entry point. The GHASH panel is an explicit raw field-product toy with no nonce, so nonce-reuse prose is not credited as a demonstrated attack. Padding-oracle, AES-CCM, FF1 and format-transforming-encryption hits come only from the tracked historical CBC-MAC build brief, not the shipped demo. The unspecified-side-channel hit is a Poly1305 glossary adjective, not an executed side-channel attack. Exact-main run 40254779759 passed two publication controls, 106 unit tests, 39 browser/accessibility/cross-browser checks and all 24 clean-baseline mutation cases. Pages artifact 12621759091 deployed, and all four public files matched it byte for byte.
+- **References:** AES-GCM, BLAKE3, ChaCha20, ChaCha20-Poly1305, MD5, SHA-1, SHA-3, SHA-512, Simon, TLS 1.3
+- **Attacks shown:** Brute force `src/poly1305.ts:142`, Length extension `src/lengthext.ts:111`, Timing side-channel `src/timing.ts:127`
 - **Standards body:** IEEE, IETF, NIST
-- **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [06b1646ca40d](https://github.com/systemslibrarian/crypto-lab-mac-race/commit/06b1646ca40d49a8805ddee5b2d6d78b17ce8bcd) reviewed 2026-10-22; 8 mapped sections.
+- **Implementation:** WebCrypto AES / local TypeScript CMAC, PMAC, Poly1305, GHASH, SHA-256, CRC and teaching attack implementations
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [695391521cfd](https://github.com/systemslibrarian/crypto-lab-mac-race/commit/695391521cfdaf4aee0dc3814b1d324b3b1bbdf1) reviewed 2026-10-25; 9 mapped sections.
   - **Variable-length raw CBC-MAC forgery** (`cbc-mac`; interactive; real-crypto)
     - **Visible section:** Raw CBC-MAC: fixed length only
     - **Learner action:** Acquire one or two valid tags, splice a longer message and compare raw, agreed-length, prefixed-length and CMAC verifiers.
     - **Observed result:** Raw variable-length receiver accepts a forged tag; correctly scoped controls reject, and chaining traces show convergence.
     - **Concepts taught:** CBC-MAC; length binding; chosen-message forgery; AES-CMAC; prefix-free encoding
     - **Limits:** Classical splice assumes variable-length messages and ordinary tag queries; fixed-length quantum-query attacks are outside scope.
-    - **Evidence at pinned commit:** `src/cbcmac/panel.ts:10`, `src/cbcmac/panel.ts:16`, `src/cbcmac/panel.ts:21`, `src/cbcmac/panel.ts:70`, `src/cbcmac/forge.ts:1`
+    - **Evidence at pinned commit:** `src/cbcmac/panel.ts:11`, `src/cbcmac/panel.ts:14`, `src/cbcmac/panel.ts:22`, `src/cbcmac/panel.ts:68`, `src/cbcmac/forge.ts:1`
   - **CRC corruption versus MAC** (`checksum`; interactive; real-crypto)
     - **Visible section:** Checksum vs MAC
     - **Learner action:** Send accidentally corrupted or deliberately changed payment, repair or force CRC, then submit the same change to an HMAC receiver.
     - **Observed result:** CRC catches accident but an attacker can recompute it; a secret-key HMAC rejects unless the key leaks.
     - **Concepts taught:** CRC-32; checksum; HMAC; message authentication; chosen CRC
     - **Limits:** A MAC does not encrypt or prevent replay; the key-leak checkbox deliberately removes its secrecy assumption.
-    - **Evidence at pinned commit:** `src/crc/panel.ts:9`, `src/crc/panel.ts:18`, `src/crc/panel.ts:33`, `src/crc/panel.ts:40`
+    - **Evidence at pinned commit:** `src/crc/panel.ts:11`, `src/crc/panel.ts:18`, `src/crc/panel.ts:33`, `src/crc/panel.ts:40`
   - **AES-CMAC stages** (`cmac`; interactive; real-crypto)
     - **Visible section:** CMAC
     - **Learner action:** Compute, step and verify CMAC over entered bytes.
     - **Observed result:** Shows K1/K2 derivation from AES_K(0), final block treatment and tag verdict.
     - **Concepts taught:** AES-CMAC; subkey generation; block-cipher MAC; NIST SP 800-38B
     - **Limits:** Key and message are educational inputs in the browser; tag security presumes a secret key.
-    - **Evidence at pinned commit:** `src/ui.ts:421`, `src/ui.ts:432`, `src/ui.ts:448`, `src/cmac.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:426`, `src/ui.ts:434`, `src/ui.ts:440`, `src/cmac.ts:1`
   - **Raw GHASH field toy** (`ghash`; interactive; real-values)
     - **Visible section:** GHASH
     - **Learner action:** Compute field products and run fixed-H linearity and recovery on raw single-block toy tags.
     - **Observed result:** Shows T=C·H algebra under XOR and recoverable H for distinct toy blocks.
     - **Concepts taught:** GHASH; GF(2^128); field linearity; AES-GCM component
     - **Limits:** Omits AAD, length block and nonce-derived mask; no complete AES-GCM forgery endpoint. Real one-block full GCM tag differences involve ΔC·H².
-    - **Evidence at pinned commit:** `src/ui.ts:495`, `src/ui.ts:503`, `src/ui.ts:509`, `src/ui.ts:514`, `src/ghash.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:502`, `src/ui.ts:508`, `src/ui.ts:512`, `src/ui.ts:514`, `src/ghash.ts:1`
   - **HMAC internals and verification** (`hmac`; interactive; real-crypto)
     - **Visible section:** HMAC
     - **Learner action:** Enter key and message, step through inner and outer pad hashes, compare bit changes and verify a candidate tag.
     - **Observed result:** Displays SHA-256 HMAC stages and accepted or rejected tags.
     - **Concepts taught:** HMAC-SHA256; ipad; opad; keyed hash; tag verification; avalanche
     - **Limits:** Avalanche display alone does not establish authentication security.
-    - **Evidence at pinned commit:** `src/ui.ts:380`, `src/ui.ts:391`, `src/ui.ts:407`, `src/ui.ts:757`, `src/hmac.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:385`, `src/ui.ts:393`, `src/ui.ts:406`, `src/ui.ts:758`, `src/hmac.ts:1`
   - **Secret-prefix length extension** (`length-extension`; interactive; real-crypto)
     - **Visible section:** Length Extension Attack
     - **Learner action:** Capture a bare SHA-256 secret-prefix tag, guess secret length, forge an appended message and submit to bare and HMAC receivers.
     - **Observed result:** The bare verifier accepts a correctly padded extension while HMAC rejects.
     - **Concepts taught:** length-extension attack; secret-prefix MAC; SHA-256; glue padding; HMAC defense
     - **Limits:** Requires a correct secret-length guess; it attacks a broken MAC construction, not SHA-256 collision resistance.
-    - **Evidence at pinned commit:** `src/ui.ts:543`, `src/ui.ts:575`, `src/ui.ts:579`, `src/ui.ts:615`, `src/lengthext.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:550`, `src/ui.ts:582`, `src/ui.ts:586`, `src/ui.ts:622`, `src/lengthext.ts:1`
+  - **PMAC independent AES lanes** (`pmac`; interactive; real-crypto)
+    - **Visible section:** PMAC: independent AES lanes
+    - **Learner action:** Compute the exact byte-aligned Black–Rogaway 2002 PMAC, inspect Gray-code offsets and lane traces, alter content or position, and compare its dependency waves with CMAC.
+    - **Observed result:** Full-byte verification accepts the genuine PMAC tag and rejects content, position and wrong-final-rule controls while exposing the exact AES work and modeled dependency span.
+    - **Concepts taught:** PMAC; Gray-code offsets; parallel block-cipher MAC; AES dependency graph; final-block domain separation
+    - **Limits:** Implements byte-aligned messages and full tags only. Dependency waves are not a browser speed benchmark; the ordinary classical-query lesson does not implement Q2 oracle access, under which published attacks show PMAC is not secure.
+    - **Evidence at pinned commit:** `src/pmac/panel.ts:9`, `src/pmac/panel.ts:18`, `src/pmac/panel.ts:41`, `src/pmac/panel.ts:54`, `src/pmac/pmac.ts:178`, `src/pmac/schedule.ts:25`
   - **Poly1305 one-time key reuse** (`poly1305`; interactive; real-crypto)
     - **Visible section:** Poly1305
     - **Learner action:** Compute a tag, reuse one narrowed one-time key for two messages, recover candidates and submit a forged tag.
     - **Observed result:** The original authenticator accepts a forgery under the deliberately reused key.
     - **Concepts taught:** Poly1305; one-time key; nonce reuse; polynomial MAC; forgery
     - **Limits:** The attack chooses only 16 free r bits for live search; full-size Poly1305 has about 106 free clamped bits and the demonstration is not a general recovery algorithm.
-    - **Evidence at pinned commit:** `src/ui.ts:453`, `src/ui.ts:469`, `src/ui.ts:472`, `src/ui.ts:481`, `src/poly1305.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:460`, `src/ui.ts:469`, `src/ui.ts:471`, `src/ui.ts:481`, `src/poly1305.ts:1`
   - **Byte-by-byte tag comparison oracle** (`timing-recovery`; interactive; simulation)
     - **Visible section:** MAC Comparison + Timing Attack
     - **Learner action:** Measure comparison timing illustrations and recover selected tag bytes using the longest-prefix signal.
     - **Observed result:** Shows a byte-wise search when an oracle reveals exact matched-prefix length.
     - **Concepts taught:** timing side channel; non-constant-time comparison; prefix oracle; tag recovery
     - **Limits:** The oracle directly exposes prefix length as a noise-free stand-in; browser wall-clock samples cannot resolve each byte this way.
-    - **Evidence at pinned commit:** `src/ui.ts:636`, `src/ui.ts:657`, `src/ui.ts:671`, `src/ui.ts:675`, `src/timing.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:643`, `src/ui.ts:663`, `src/ui.ts:675`, `src/ui.ts:681`, `src/timing.ts:1`
 
 ### Masked Core
 

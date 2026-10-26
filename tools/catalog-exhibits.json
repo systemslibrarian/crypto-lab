@@ -1948,8 +1948,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-attestation-gate": {
-      "commit": "e78e756f43202bf6ab3ea47d2013a9b805f9a07b",
-      "reviewed": "2026-10-22",
+      "commit": "89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61",
+      "reviewed": "2026-10-26",
       "exhibits": [
         {
           "id": "measured-boot",
@@ -1964,7 +1964,7 @@
             "event log"
           ],
           "evidence": [
-            "src/ui/app.ts:28",
+            "src/ui/app.ts:29",
             "src/ui/panels/boot.ts:175",
             "src/ui/panels/boot.ts:310",
             "src/boot/stages.ts:1"
@@ -1987,7 +1987,7 @@
             "EAT"
           ],
           "evidence": [
-            "src/ui/app.ts:29",
+            "src/ui/app.ts:30",
             "src/ui/panels/quote.ts:30",
             "src/ui/panels/quote.ts:47",
             "src/rats/verify.ts:1"
@@ -2009,7 +2009,7 @@
             "attestation forgery"
           ],
           "evidence": [
-            "src/ui/app.ts:30",
+            "src/ui/app.ts:31",
             "src/ui/panels/magic.ts:42",
             "src/ui/panels/magic.ts:55",
             "src/ui/panels/magic.ts:65"
@@ -2031,7 +2031,7 @@
             "reference values"
           ],
           "evidence": [
-            "src/ui/app.ts:31",
+            "src/ui/app.ts:32",
             "src/ui/panels/breakit.ts:57",
             "src/ui/panels/breakit.ts:73",
             "src/ui/panels/breakit.ts:110"
@@ -2051,10 +2051,10 @@
             "static PCR scope"
           ],
           "evidence": [
-            "src/ui/app.ts:32",
+            "src/ui/app.ts:33",
             "src/ui/panels/timeofuse.ts:32",
             "src/ui/panels/timeofuse.ts:38",
-            "src/ui/app.ts:138"
+            "src/ui/app.ts:154"
           ],
           "section": "Time of Use",
           "execution": "simulation",
@@ -2073,7 +2073,7 @@
             "trust anchor"
           ],
           "evidence": [
-            "src/ui/app.ts:33",
+            "src/ui/app.ts:34",
             "src/ui/panels/signature.ts:42",
             "src/ui/panels/signature.ts:65",
             "src/ui/panels/signature.ts:89"
@@ -2096,11 +2096,11 @@
             "failure codes"
           ],
           "evidence": [
-            "src/ui/app.ts:229",
-            "src/ui/app.ts:231",
-            "src/ui/app.ts:238",
-            "src/ui/app.ts:244",
-            "src/ui/app.ts:252",
+            "src/ui/app.ts:240",
+            "src/ui/app.ts:241",
+            "src/ui/app.ts:243",
+            "src/ui/app.ts:249",
+            "src/ui/app.ts:262",
             "src/rats/failures.ts:14",
             "src/rats/failures.ts:15",
             "src/rats/failures.ts:21",
@@ -2109,6 +2109,38 @@
           "section": "Every failure code this verifier can report",
           "execution": "conceptual",
           "limits": "Code names are local teaching vocabulary, not standardized TPM or RATS error codes."
+        },
+        {
+          "id": "anonymous-membership",
+          "title": "Direct Anonymous Attestation Membership and Controlled Linkability",
+          "kind": "interactive",
+          "action": "Compare stable attestation-key identity with CDL Pi_DAA+ issuer membership, then exercise same and different basenames, issuer rotation with re-Join, credential corruption, and private-key rogue-list state.",
+          "outcome": "Current-run Setup, Join, BBS+ credential, Sign, Verify, Link, rotation and private-key rogue-list computations derive the displayed pseudonyms and acceptance or rejection results.",
+          "concepts": [
+            "direct anonymous attestation",
+            "BBS+ credential",
+            "pairing",
+            "basename pseudonym",
+            "controlled linkability",
+            "issuer rotation",
+            "private-key rogue-list revocation"
+          ],
+          "evidence": [
+            "src/ui/app.ts:35",
+            "src/ui/panels/daa.ts:85",
+            "src/daa/attestation.ts:33",
+            "src/daa/protocol.ts:222",
+            "src/daa/protocol.ts:271",
+            "src/daa/protocol.ts:384",
+            "src/daa/protocol.ts:493",
+            "src/daa/protocol.ts:621",
+            "src/daa/lesson.ts:157",
+            "src/daa/lesson.ts:209",
+            "src/daa/lesson.ts:224"
+          ],
+          "section": "Anonymous Membership",
+          "execution": "real-crypto",
+          "limits": "This is a zero-application-attribute, named-basename-only Type-3 BLS12-381 adaptation of CDL Pi_DAA+, not a TPM/ISO ECDAA profile or hardware implementation. The authenticated Join channel and unique-TPM admission rule are external, bsn=bottom and signature revocation are omitted, JavaScript arithmetic is variable-time, and anonymous provenance does not establish runtime integrity."
         }
       ],
       "reviewScope": "complete"

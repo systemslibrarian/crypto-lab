@@ -442,6 +442,15 @@ Blum primes, its short-final-block handling is a teaching adaptation, and a comp
 toy-cycle walk or random-looking output is not a general security result. Catalogued
 total remains 246.*
 
+*Version 54 — records Attestation Gate's A-D-08 extension under §26 without adding a
+lab or changing a concept status. Its eighth mapped exhibit—the seventh interactive tab—
+compares a stable attestation-key identity with computed CDL Pi_DAA+ issuer membership,
+then executes named-basename controlled linkability, issuer rotation and re-Join,
+credential failure and private-key rogue-list revocation. The no-application-attribute
+Type-3 BLS12-381 adaptation is not a
+TPM/ISO ECDAA profile or hardware implementation, and anonymous provenance does not
+establish runtime integrity. Catalogued total remains 246.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1139,9 +1148,14 @@ WebAuthn · Kerberos v5 · JWT Forge · Time Trust · Attestation Gate.
 
 The first four authenticate a *person* or a *claim*. Attestation Gate authenticates a
 *platform state* — measured boot into PCRs, a real TPMS_ATTEST quote, RATS roles and an EAT
-— and then spends its climax on the limit of that guarantee, which belongs as much to §32:
+— and then spends one climax on the limit of that guarantee, which belongs as much to §32:
 execute something outside the measured set after the final boot measurement and every check
-still passes. A boot quote proves what was measured, not what is running.
+still passes. Its anonymous-membership route separately executes the no-application-attribute
+CDL Pi_DAA+ equations, including BBS+ issuance, named-basename linkability, issuer rotation,
+re-Join and private-key rogue-list revocation. That bounded Type-3 adaptation is not a
+TPM/ISO ECDAA profile or hardware implementation. A boot quote proves what was measured,
+not what is running; replacing a stable AK name with anonymous provenance does not change
+that boundary.
 
 ---
 

@@ -6397,7 +6397,7 @@ Combining two satisfying R1CS instances leaves a computable cross term; relax th
 - **References:** EC point arithmetic, Ed25519, Fiat-Shamir, STARK, Shamir secret sharing
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f6ed4333ed91](https://github.com/systemslibrarian/crypto-lab-fold-gate/commit/f6ed4333ed91995ceb69cd8c5c5c2f6eba63c85f) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [03713c390843](https://github.com/systemslibrarian/crypto-lab-fold-gate/commit/03713c390843084d8b3240a1fbe867351bfbfc04) reviewed 2026-10-26; 5 mapped sections.
   - **Watch the missing term appear** (`cross-term-walkthrough`; interactive; real-crypto)
     - **Visible section:** Watch the missing term appear
     - **Learner action:** Advance from two satisfying instances through a naive fold, cross-term commitment and corrected relaxed fold.

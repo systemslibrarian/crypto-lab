@@ -12656,8 +12656,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-fold-gate": {
-      "commit": "f6ed4333ed91995ceb69cd8c5c5c2f6eba63c85f",
-      "reviewed": "2026-10-22",
+      "commit": "03713c390843084d8b3240a1fbe867351bfbfc04",
+      "reviewed": "2026-10-26",
       "reviewScope": "complete",
       "exhibits": [
         {

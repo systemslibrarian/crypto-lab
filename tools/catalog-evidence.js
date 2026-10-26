@@ -1148,6 +1148,7 @@ function evidenceFor(slug) {
   const impl = [...hits.entries()].map(([name, v]) => ({ name, at: v.at, shape: v.shape }))
     .sort((a, b) => a.name.localeCompare(b.name));
   const refs = reviewedReferenceNames(slug, mentions, hits, review, staleReview, reviewHead);
+  const excludedCommentOnly = reviewedCommentOnlyNames(slug, review, staleReview, reviewHead);
   const atks = [...attackHits.entries()].map(([name, v]) => ({ name, at: v.at }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -1189,7 +1190,8 @@ function evidenceFor(slug) {
     // A pinned source review may promote an operation whose executable symbol
     // does not itself spell the vocabulary term. Do not keep the earlier
     // comment-only observation beside that reviewed implementation claim.
-    commentOnly: inertOnly.filter(({ name }) => !hits.has(name)),
+    commentOnly: inertOnly.filter(({ name }) =>
+      !hits.has(name) && !excludedCommentOnly.has(name)),
     staleReview,
     invalidReview: badReview.get(slug) || null,
     protocolPartial: protocolPartial.filter((x) => !hits.has(x.name)).sort((a, b) => a.name.localeCompare(b.name)),
@@ -1648,6 +1650,22 @@ function reviewedReferenceNames(slug, mentions, hits, review, staleReview, head)
   return [...mentions.keys()].filter((name) => !hits.has(name) && !excluded.includes(name)).sort();
 }
 
+/** Remove a scanner-only comment observation under the same exact-commit guard
+ * as every other reviewed correction. This is narrower than removeReferences:
+ * a lab may genuinely reference a term in its README while an unrelated source
+ * abbreviation creates a false comment-only anchor for that same term. */
+function reviewedCommentOnlyNames(slug, review, staleReview, head) {
+  if (!review || staleReview || !/^[0-9a-f]{40}$/.test(review.commit || '') || head !== review.commit) {
+    return new Set();
+  }
+  const excluded = review.removeCommentOnly ?? [];
+  if (!Array.isArray(excluded) || excluded.some((name) =>
+    !ALGORITHMS.some((term) => term.name === name))) {
+    throw new Error(`${slug}: removeCommentOnly must contain canonical algorithm names`);
+  }
+  return new Set(excluded);
+}
+
 
 /** Apply a pinned review's `remove` list to BOTH derived claim maps.
  *
@@ -1819,6 +1837,25 @@ function selftest() {
     if (isReviewedAdd(reviewAdds, `${realAttack}@src/fake.ts:45`)) {
       fail.push('reviewed generic-anchor handling accepted a different source line');
     } else { pass++; console.log('  ok  reviewed generic-anchor handling stays exact to the recorded source line'); }
+
+    const reviewCommit = 'a'.repeat(40);
+    const commentReview = { commit: reviewCommit, removeCommentOnly: [realTerm] };
+    if (!reviewedCommentOnlyNames('fixture', commentReview, null, reviewCommit).has(realTerm)) {
+      fail.push('current pinned review did not suppress its named comment-only false positive');
+    } else { pass++; console.log('  ok  a current pinned review suppresses one comment-only false positive'); }
+    if (reviewedCommentOnlyNames('fixture', commentReview, { pinned: reviewCommit }, reviewCommit).size !== 0
+      || reviewedCommentOnlyNames('fixture', commentReview, null, 'b'.repeat(40)).size !== 0) {
+      fail.push('stale or mismatched review inherited a comment-only suppression');
+    } else { pass++; console.log('  ok  stale and mismatched reviews do not inherit comment-only suppressions'); }
+    let invalidCommentRemovalThrew = false;
+    try {
+      reviewedCommentOnlyNames('fixture', {
+        commit: reviewCommit,
+        removeCommentOnly: ['Nonexistent-Cipher-X'],
+      }, null, reviewCommit);
+    } catch { invalidCommentRemovalThrew = true; }
+    if (!invalidCommentRemovalThrew) fail.push('unknown comment-only suppression name was accepted');
+    else { pass++; console.log('  ok  comment-only suppressions require canonical algorithm names'); }
 
     fs.writeFileSync(path.join(tmp, 'src', 'main.ts'), 'export function sha512() { return 2 }\n');
     git('add', 'src/main.ts'); git('commit', '-qm', 'change src');

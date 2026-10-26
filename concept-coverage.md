@@ -500,6 +500,18 @@ idea—not the paper's trie or performance evaluation, every EFSE construction, 
 semantic search, a malicious-server proof or a general plaintext-recovery result.
 Catalogued total remains 247.*
 
+*Version 60 — records Search Vault's L-R-08 multi-user-search extension under §23
+without adding a lab or changing a concept status. Distinct writer and reader roles now
+execute pairing-based delegation, authorization acceptance and rejection, and the
+iterative-test equality graph that lets one disclosed query label cross another user's
+authorization boundary. A separately scoped Query-Multiplexer/Data-Host route executes
+fresh query blinding, zero-sum garbled Bloom filters, packed Paillier selection, shuffled
+encrypted writer identifiers and an independent result oracle. The two isolated service
+views hide the positivity-to-writer association only under their stated non-collusion
+assumption; combining them reconstructs it. This is a bounded browser adaptation, not the
+complete optimized construction, a transferred proof or a production deployment.
+Catalogued total remains 247.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1123,6 +1135,19 @@ three queries whose labels later became known let the server link the default ty
 even though its exact SSE token matches no anchor. That is one concrete inference under the
 declared known-query assumption, not a claim that all fuzzy-search schemes have the same leakage
 or that a bounded non-link proves privacy.
+
+Its multi-user extension changes who may write and search without treating authorization as
+query privacy. Three writers create independently keyed pairing-based indexes and delegate to
+selected readers; wrong-role and unauthorized operations fail before a server transcript is
+created. In the single-server route, actual iterative-test matches form an equality graph, and
+one colluding reader's known `audit` query labels another reader's query and a matching row in
+a writer the colluder cannot search. The split route blinds each repeated query afresh, builds
+real zero-sum garbled Bloom filters and Paillier selectors, and separates the Query
+Multiplexer's positivity view from the Data Host's writer routing. The reader result is checked
+against an independent plaintext oracle, while a combined-view table deliberately reconstructs
+the association to show exactly where QM/DH non-collusion is required. The three-writer,
+1024-bit-Paillier browser adaptation does not claim the full SCC protocol or proof, malicious
+security, revocation, dynamic search, network isolation or privacy after those roles collude.
 
 Order Leak is the leakage that needs no access pattern at all, which stretches this concept in a
 direction worth naming. Everything else here leaks as a consequence of being **used** — ORAM hides

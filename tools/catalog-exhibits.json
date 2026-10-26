@@ -34157,7 +34157,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-search-vault": {
-      "commit": "2ecc6612c2602c0f01ac9869fb07c589c5c9bc91",
+      "commit": "28bb6f3c50e0584b5b94e0a5a0c0b9f2ef52141d",
       "reviewed": "2026-10-26",
       "reviewScope": "complete",
       "exhibits": [
@@ -34469,18 +34469,78 @@
           "limits": "Bounded exact-map teaching adaptation over 14 ASCII keywords and 24 documents at d=0,1,2; not the paper's trie or performance evaluation, LSH, semantic or ranked search, transposition distance, dynamic or multi-user EFSE, a transferred theorem, a malicious-server result proof or a claim about every fuzzy-search construction."
         },
         {
+          "id": "multi-user-search",
+          "title": "Multi-user search: one known query travels farther than permission",
+          "section": "Multi-user search: one known query travels farther than permission",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Generate fresh reader and writer keys, execute authorized and rejected operations, propagate one known-query label through a single-server equality graph, then compare the same target query with a Query-Multiplexer/Data-Host split.",
+          "outcome": "Real BLS12-381 pairings expose cross-user keyword-access-pattern propagation in the iterative-testing route; the split route executes fresh blinding, zero-sum garbled Bloom filters, packed Paillier selectors, shuffled AES-GCM writer envelopes, an independent result oracle and the QM/DH collusion failure boundary.",
+          "concepts": [
+            "multi-user searchable encryption",
+            "reader and writer authorization",
+            "known-query attack",
+            "keyword access pattern",
+            "user/server collusion",
+            "BLS12-381 pairing",
+            "zero-sum garbled Bloom filter",
+            "Paillier selector",
+            "split trust",
+            "non-collusion assumption"
+          ],
+          "related": [
+            "Van Rompay–Molva–Önen PoPETs 2017",
+            "Van Rompay–Molva–Önen SCC 2018",
+            "Rekey Relay"
+          ],
+          "evidence": [
+            "src/ui/muse.ts:9",
+            "src/ui/muse.ts:95",
+            "src/ui/muse.ts:146",
+            "src/ui/muse.ts:171",
+            "src/ui/muse.ts:215",
+            "src/ui/muse.ts:297",
+            "src/ui/muse.ts:330",
+            "src/ui/muse.ts:373",
+            "src/ui/muse.ts:423",
+            "src/muse/core.ts:69",
+            "src/muse/core.ts:122",
+            "src/muse/core.ts:137",
+            "src/muse/core.ts:148",
+            "src/muse/core.ts:186",
+            "src/muse/attack.ts:25",
+            "src/muse/lesson.ts:128",
+            "src/muse/lesson.ts:161",
+            "src/muse/lesson.ts:185",
+            "src/muse/split.ts:114",
+            "src/muse/split.ts:136",
+            "src/muse/split.ts:158",
+            "src/muse/split.ts:202",
+            "src/muse/split.ts:225",
+            "src/muse/split.ts:300",
+            "src/muse/zgbf.ts:71",
+            "src/muse/math.ts:102",
+            "src/muse/math.ts:130",
+            "e2e/muse.spec.ts:81",
+            "e2e/muse.spec.ts:140"
+          ],
+          "limits": "Bounded three-writer, three-reader browser adaptation with a deliberately non-production 1024-bit Paillier modulus; not the complete optimized SCC 2018 construction or proof, recursive OT, in-line ZGBF, malicious security, revocation, dynamic or conjunctive search, production process isolation or a claim that split trust survives QM/DH collusion."
+        },
+        {
           "id": "scope",
           "title": "What is real here, what is scaled down, and what is not proved",
           "section": "What is real here, what is scaled down, and what is not proved",
           "kind": "explanation",
           "execution": "conceptual",
           "action": "Read the scope panel and introductory glossary.",
-          "outcome": "It labels real WebCrypto, pairing, ristretto255 and fuzzy-search operations, the scaled corpus and stores, exact-statistics controls, the bounded OXT, Type-3 PEKS and deletion-gram adaptation boundaries, and excluded dynamic or volume-hiding schemes.",
+          "outcome": "It labels real WebCrypto, pairing, ristretto255, fuzzy-search, Paillier and split-trust operations, the scaled corpus and stores, exact-statistics controls, the bounded OXT, Type-3 PEKS, deletion-gram and multi-user adaptation boundaries, and excluded dynamic or volume-hiding schemes.",
           "concepts": [
             "SSE threat model",
             "OXT threat model",
             "PEKS threat model",
             "fuzzy-search threat model",
+            "multi-user search threat model",
+            "split-trust non-collusion",
             "RFC 9496 ristretto255",
             "Type-3 pairing adaptation",
             "static index",
@@ -34493,12 +34553,13 @@
             "src/ui/scope.ts:18",
             "src/ui/scope.ts:23",
             "src/ui/scope.ts:25",
-            "src/ui/scope.ts:41",
-            "src/ui/scope.ts:57",
-            "src/ui/scope.ts:58",
-            "src/ui/scope.ts:70"
+            "src/ui/scope.ts:26",
+            "src/ui/scope.ts:43",
+            "src/ui/scope.ts:61",
+            "src/ui/scope.ts:62",
+            "src/ui/scope.ts:75"
           ],
-          "limits": "No claim is made about the security of AES-GCM or HMAC themselves, all searchable-encryption designs, transfer of the full OXT theorem, original PEKS proof or fuzzy-search paper proof, standardized GT bytes, active-server completeness or freshness, production role isolation, executed ORAM, arbitrary plaintext recovery, or security after a bounded dictionary miss."
+          "limits": "No claim is made about the security of AES-GCM or HMAC themselves, all searchable-encryption designs, transfer of the full OXT, original PEKS, fuzzy-search or MUSE proofs, standardized GT bytes, active-server completeness or freshness, production role isolation, executed ORAM, arbitrary plaintext recovery, security after a bounded dictionary miss, or privacy when QM and DH collude."
         }
       ]
     },

@@ -39,7 +39,7 @@
     <section class="panel" id="optimistic-exchange">
       <p class="eyebrow">E-K-05 · Executable protocol depth</p>
       <h2>ASW Protocol E: optimistic signature exchange</h2>
-      <p>This bounded adaptation follows the expanded 1999 Asokan–Shoup–Waidner report. Bob first sends a verifiable Schnorr signature promise. Alice returns a condition-bound RSA-OAEP escrow of her actual signature; Bob returns a cut-and-choose verifiable escrow of the inverse that completes his promise. The verifier draws its challenge only after receiving the aggregate commitment. Only then does Alice send her signature and Bob send his inverse directly. The normal E1–E6 path contacts the trusted intermediary zero times.</p>
+      <p>This bounded adaptation follows the expanded 1999 Asokan–Shoup–Waidner report. Bob first sends a verifiable Schnorr signature promise. Alice returns a condition-bound RSA-OAEP escrow of her actual signature; Bob returns a cut-and-choose verifiable escrow of the inverse that completes his promise. These promises and escrows are recoverable evidence, not yet usable peer signatures. The verifier draws its challenge only after receiving the aggregate commitment. Only then does Alice send her signature and Bob send his inverse directly. The normal E1–E6 path contacts the trusted intermediary zero times.</p>
       <p id="opt-proof" class="notice">Generating the Protocol D proof…</p>
       <div class="custody" aria-label="Optimistic protocol evidence custody">
         <div><b>Alice</b><p id="opt-alice">Preparing promise evidence…</p></div>

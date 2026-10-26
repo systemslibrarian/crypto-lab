@@ -27120,8 +27120,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-order-leak": {
-      "commit": "79fcd970a163286ec89fde254bfa63b1d81a09a7",
-      "reviewed": "2026-10-22",
+      "commit": "37b98a13be0293ca2dfd857604e23c4da244ec9a",
+      "reviewed": "2026-10-26",
       "exhibits": [
         {
           "id": "deterministic-equality",
@@ -30228,8 +30228,8 @@
       ]
     },
     "crypto-lab-pqxdh-wire": {
-      "commit": "d057c986bbb35d4677af9e9b868d217f27445880",
-      "reviewed": "2026-10-22",
+      "commit": "f1c4fa1156cbd8738976563ea8aba78a3a9f4d60",
+      "reviewed": "2026-10-26",
       "exhibits": [
         {
           "id": "build-transcript",

@@ -11552,7 +11552,7 @@ A column you can still sort or match on has already published the shape of its a
 - **Attacks shown:** Frequency analysis `src/app.ts:243`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [79fcd970a163](https://github.com/systemslibrarian/crypto-lab-order-leak/commit/79fcd970a163286ec89fde254bfa63b1d81a09a7) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [37b98a13be02](https://github.com/systemslibrarian/crypto-lab-order-leak/commit/37b98a13be0293ca2dfd857604e23c4da244ec9a) reviewed 2026-10-26; 5 mapped sections.
   - **Auxiliary Population Sensitivity** (`auxiliary-population-sensitivity`; interactive; real-operation)
     - **Visible section:** Public population
     - **Learner action:** Vary table size and switch matching synthetic, shifted, or mismatched public distributions, then rerun recovery and reveal truth.
@@ -12742,7 +12742,7 @@ One ML-KEM secret added to the X3DH transcript is what survives a future curve b
 - **References:** Double Ratchet, EdDSA, Kyber, Shor's algorithm
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d057c986bbb3](https://github.com/systemslibrarian/crypto-lab-pqxdh-wire/commit/d057c986bbb35d4677af9e9b868d217f27445880) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f1c4fa1156cb](https://github.com/systemslibrarian/crypto-lab-pqxdh-wire/commit/f1c4fa1156cbd8738976563ea8aba78a3a9f4d60) reviewed 2026-10-26; 7 mapped sections.
   - **Grant curve and lattice breaks to an adversary model** (`adversary-secret-grants`; interactive; simulation)
     - **Visible section:** Open the boxes the model grants
     - **Learner action:** Complete the handshake, grant the model all X25519 private keys with Curve break, then optionally grant it the ML-KEM secret with Lattice break.

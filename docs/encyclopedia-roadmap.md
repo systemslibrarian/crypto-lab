@@ -70,8 +70,8 @@ A-D-09 is **live** at exact Signature Gate main `db6695e0f136`. The fifth chapte
 
 | Proposal status | Count |
 | --- | ---: |
-| Planned | 5 |
-| In progress | 1 |
+| Planned | 4 |
+| In progress | 2 |
 | Verified | 0 |
 | Merged | 0 |
 | Live | 42 |
@@ -135,7 +135,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 - [x] Reconcile ORAM Vault PR #30 before E-K-10; independently correct its dependency, implementation-boundary, storage, tree-height, stash-evidence and publication-policy defects, then verify its exact-main hosted gate, deployment and every served asset.
 - [x] Implement E-K-10 beside the retained Path ORAM baseline; execute the bounded hierarchy, unique real/dummy probes, fresh-key rebuilds, same-workload comparison, rebuild spikes and skipped-dummy leak, then verify the complete local and hosted gate before claiming delivery.
 
-**Implementation work:** E-K-09, L-R-02, A-D-13, A-D-08, A-D-07, S06, S07, L-R-06, E-K-08, L-R-08, E-K-07, S11, L-R-10, S03, E-K-05 and E-K-10 are live at exact reviewed source and deployed assets after independent audits corrected their candidate branches where needed. E-K-10's bounded hierarchy is deployed and byte-verified at exact ORAM Vault main `0c7f89281784`; L-R-13 is the next active specialist item. The other five P3 proposals remain queued with no implied delivery dates.
+**Implementation work:** E-K-09, L-R-02, A-D-13, A-D-08, A-D-07, S06, S07, L-R-06, E-K-08, L-R-08, E-K-07, S11, L-R-10, S03, E-K-05 and E-K-10 are live at exact reviewed source and deployed assets after independent audits corrected their candidate branches where needed. E-K-10's bounded hierarchy is deployed and byte-verified at exact ORAM Vault main `0c7f89281784`; L-R-13 and S10 are the active specialist items in separate repositories. The other four P3 proposals remain queued with no implied delivery dates.
 
 **Maintainer feedback — optional:**
 
@@ -145,6 +145,7 @@ This is the implementation ledger for the user-authorized encyclopedia rollout. 
 ### Next implementation queue — implementation owner: assistant
 
 1. **L-R-13 — Mutually distrustful clients sharing an ORAM · In progress:** extend current ORAM Vault main only after reconciling E-K-10's exact delivered state. Give clients distinct rights and explicit observations over one encrypted store; execute the concrete state-divergence or rollback failure caused by naively sharing single-client ORAM state; and compare it with a narrowly justified coordination or integrity mechanism. Preserve E-K-10's fixed all-level schedule and do not imply that encryption alone supplies multi-client consistency.
+2. **S10 — Rank-metric code cryptography · In progress:** build the standalone [Rank Metric](https://github.com/systemslibrarian/crypto-lab-rank-metric) companion from its source-reviewed baseline. Expand `GF(16)^4` vectors into binary matrices, compute Hamming and rank weight on the same inputs, enumerate and decode a bounded `[4,2,3]` Gabidulin/MRD code, and execute both within-radius correction and beyond-radius refusal/miscorrection controls. Keep code mathematics separate from GPT/Faure–Loidreau/RQC deployment status and from the Hamming-metric constructions in McEliece Gate and HQC Vault.
 The phase tables below group the whole backlog; this short queue records the next work to pick up. Recheck current source before starting each item.
 
 ## Delivery evidence for completed milestones
@@ -1893,9 +1894,9 @@ Retain the six unfinished P3 proposals for deliberate development after E-K-10's
 
 ### S10 — Rank-metric code cryptography
 
-**Priority:** P3 — specialist · **Status:** Planned · **Workstream:** Code-based families.
+**Priority:** P3 — specialist · **Status:** In progress · **Workstream:** Code-based families.
 
-**Target:** Code-based family companion linked to PQ Families/McEliece Gate/HQC Vault.
+**Target:** Standalone [Rank Metric](https://github.com/systemslibrarian/crypto-lab-rank-metric) companion linked to PQ Families/McEliece Gate/HQC Vault.
 
 **Existing base:** Code-based labs teach binary/Hamming-code constructions and decoding failures.
 
@@ -1905,13 +1906,15 @@ Retain the six unfinished P3 proposals for deliberate development after E-K-10's
 - Execute a small rank-decoding/MRD or Gabidulin example and expose how its metric changes the problem.
 - Clearly separate family mathematics from any historical scheme's current security status.
 
-**Next action:** Select field parameters and a primary construction or decoding example; review current cryptanalysis before naming a usable scheme.
+**Implementation start, 2026-10-26:** PQ Families, McEliece Gate and HQC Vault were refreshed from GitHub at exact current main revisions `6f52ee3228a7`, `3f4a0d6ad769` and `55575851a069` before selecting a separate lab. Public repository `crypto-lab-rank-metric` was created and its honest design-only baseline committed at `c69f7f7`; the `s10-rank-metric-20261026` feature branch carries implementation work. The reviewed design fixes a binary-extension `[4,2,3]` Gabidulin code over `GF(16)`, an exhaustive radius-one decoder and complete rank-two refusal/miscorrection controls, while explicitly withholding encryption, KEM, approved-parameter and efficient-algebraic-decoder claims. This status credits no learner implementation, test, merge, deployment or live result.
+
+**Next action:** Implement the field, vector/matrix isometry, full toy-code census, bounded decoder, independent checks and learner UI; then pass unit/coverage, mutation, browser/accessibility/reflow, build, audit and CodeQL gates before review.
 
 **Scope and limits:** Optional mathematical-family extension; no legacy rank-code deployment endorsement.
 
 **Audit references:** [Schemes Based on Rank Codes (original PDF pp. 5355–5363)](https://doi.org/10.1007/978-3-030-71522-9_388).
 
-**Pinned baseline:** [PQ Families ac2429239a36](https://github.com/systemslibrarian/crypto-lab-pq-families/tree/ac2429239a3645c3c3455597f68f7c65856bb26d); [McEliece Gate 3f4a0d6ad769](https://github.com/systemslibrarian/crypto-lab-mceliece-gate/tree/3f4a0d6ad7697a9027f3c703dbcc935a08dd1e25); [HQC Vault 55575851a069](https://github.com/systemslibrarian/crypto-lab-hqc-vault/tree/55575851a069914cddc33e5025edd519a7f9e391).
+**Pinned baseline:** [Rank Metric c69f7f7](https://github.com/systemslibrarian/crypto-lab-rank-metric/tree/c69f7f7); [PQ Families 6f52ee3228a7](https://github.com/systemslibrarian/crypto-lab-pq-families/tree/6f52ee3228a7df0cf8c0bdc88dd415bbf557bd5f); [McEliece Gate 3f4a0d6ad769](https://github.com/systemslibrarian/crypto-lab-mceliece-gate/tree/3f4a0d6ad7697a9027f3c703dbcc935a08dd1e25); [HQC Vault 55575851a069](https://github.com/systemslibrarian/crypto-lab-hqc-vault/tree/55575851a069914cddc33e5025edd519a7f9e391).
 
 <a id="s12"></a>
 
@@ -2113,6 +2116,7 @@ For each proposal, append a dated entry below when its state changes. Preserve t
 | 2026-10-26 | E-K-10 hierarchical-ORAM delivery | [ORAM Vault PR #32](https://github.com/systemslibrarian/crypto-lab-oram-vault/pull/32) squash-merged reviewed head `fe6693e36aac` as exact main `0c7f89281784`; their trees are identical. Final-head run `40416343567` and exact-main/deployment [run 40416634305](https://github.com/systemslibrarian/crypto-lab-oram-vault/actions/runs/40416634305) passed 69 unit tests, seven workflow controls, all 12 clean-baseline mutations, build/audit/typecheck on Node 22/24/26 and 21 browser/accessibility checks. Pages artifact `12696305279` (30,503 bytes; ZIP SHA-256 `853eea09f8be264f2a43ab7a20214f3dbc9ffb03e032953d3a6ead3f29f596df`) deployed through `7345877335` / `20674868077`; all three public files matched a fresh exact-main build byte for byte. The live sixth exhibit executes fixed all-level HMAC placement, fresh-key binary-carry rebuilds, independent 16-block verification and the equal-plaintext/shorter-trace skipped-probe counterexample while retaining its deliberately overprovisioned finite-table and no-proof-transfer limits. E-K-10 is **Live**; the ledger now records 42 Live / 6 Planned proposals with L-R-13 next. |
 | 2026-10-26 | L-R-13 multi-client ORAM start | ORAM Vault was refreshed at exact current main `0c7f89281784`, and the dedicated `lr13-multi-client-oram-20261026` worktree was created from that revision. Primary-source and construction review is active. L-R-13 is **In progress** only: this row credits no new learner behavior, test, merge, deployment or live result. The current ledger is 42 Live / 1 In progress / 5 Planned. |
 | 2026-10-26 | E-K-10 Hub publication | [Crypto Lab PR #331](https://github.com/systemslibrarian/crypto-lab/pull/331) squash-merged reviewed head `1e13144e0dfd` as exact main `778c54adadf1`; their trees are identical and the remote branch was removed. All 11 applicable PR jobs and all 14 applicable exact-main jobs passed, with only event-inapplicable Teach drift skipped. Exact-main Protocol Workshops run `40420810765` passed 43 logic tests, both clean mutation baselines, all 9 timestamp and 16 fair-exchange mutations and 11 browser/accessibility/reflow tests. Pages run `40420809773` deployed artifact `12697199108` (6,017,639 bytes; ZIP SHA-256 `ee8093e280b284c7e7915f691f66a08ca8a5c26acbe1fc71abdc641df070520e`) through deployment `7346284666` / status `20676344482`; all ten changed files matched exact main, the artifact and the public custom-domain copies byte for byte. The current ledger remains 42 Live / 1 In progress / 5 Planned with L-R-13 active. |
+| 2026-10-26 | S10 rank-metric start | The linked code-based repositories were refreshed at exact current main before choosing a separate companion: PQ Families `6f52ee3228a7`, McEliece Gate `3f4a0d6ad769` and HQC Vault `55575851a069`. Public [Rank Metric](https://github.com/systemslibrarian/crypto-lab-rank-metric) was created with an honest design-only baseline `c69f7f7`; implementation is isolated on `s10-rank-metric-20261026`. Gabidulin 1985, Gaborit–Otmani–Talé Kalachi §§2–3/6 and NIST IR 8309 §3.16 support the bounded `[4,2,3]` design and its deployment-status boundary. S10 is **In progress** only: this row credits no learner implementation, test, merge, deployment or live result. The current ledger is 42 Live / 2 In progress / 4 Planned. |
 
 Apply the repository’s existing workflows from [CLAUDE.md](../CLAUDE.md) and the relevant lab’s instructions. Re-read current source before upgrading a pin. Generated algorithm fields and catalog/README output remain generator-owned. Preserve exact evidence and current-source guards; do not turn a README mention, UI label or failed finite search into an implementation/security claim. Each rendered result must be derived from that run, and changed inputs must retire stale verdicts.
 

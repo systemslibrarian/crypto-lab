@@ -127,6 +127,46 @@
     "note": "Read the complete current README, source, unit and browser tests, mutation runner and learner interface through this exact main commit. The payroll route still executes exact rational discrete Laplace/Gaussian sampling, declared sensitivity, nonmutating price quotes and fail-closed session accounting. The separate E-K-07 route computes the normalized ideal planar Laplace density on a declared local Euclidean plane, an attained epsilon-times-distance witness, radial CDF/quantiles, 2,000 current-run samples, nearest-service utility and a public two-candidate repeated-release likelihood transcript. Its independent 7 by 7 finite-grid control derives a boundary normalization violation and an epsilon/2 sufficient repair over that bounded grid. This is an IEEE-754 teaching implementation of the paper's ideal density, not its finite-precision digital mechanism, an Earth-scale map, a universal trajectory attack, correlated-path protection or production location privacy. Repeated independent releases pay the sum of per-point metric bounds; the displayed posterior additionally assumes equal candidate-path priors.",
     "remove": []
   },
+  "crypto-lab-ec-point-arithmetic": {
+    "commit": "9b0ec4204aa0b36aa4ed4ca6b8763c197f1d0764",
+    "reviewed": "2026-10-27",
+    "remove": [
+      "Nonce reuse"
+    ],
+    "note": "Read the complete exact-main README, learner interface, finite-field and elliptic-curve arithmetic, ECDLP exercise, tests and visible limitations. The lab executes affine point addition, doubling, scalar multiplication, point enumeration and a bounded brute-force discrete-log search on small teaching curves. The README's nonce-reuse wording is only a Related Demos link to ECDSA Forge; this lab does not execute a nonce-reuse attack, so that scanner credit is removed. The browser uses tiny public parameters and variable-time JavaScript and makes no production, constant-time or real-curve security claim."
+  },
+  "crypto-lab-nonce-collision": {
+    "commit": "6a879f002a78f671ff855f4681c70b2a2a37d48d",
+    "reviewed": "2026-10-27",
+    "add": [
+      "ChaCha20-Poly1305@src/crypto/aead.ts:70"
+    ],
+    "addAttacks": [
+      "Chosen-plaintext attack@src/main.ts:391"
+    ],
+    "remove": [
+      "Padding oracle"
+    ],
+    "note": "Read the complete exact-main README, nonce-reuse and predictable-IV source, local ChaCha20/Poly1305/AEAD implementation, WebCrypto AES modes, learner interface, tests and visible limits. The lab really encrypts and verifies ChaCha20-Poly1305 at src/crypto/aead.ts:70, so that composite AEAD is promoted from a comment-only scanner hit. Its CBC experiment commits a compensating plaintext block against a predictable next IV and runs the comparison at src/main.ts:391, which is the executed chosen-plaintext anchor. The README explicitly says padding-oracle behavior is skipped; that phrase is a scope boundary rather than an attack exhibit and is removed. The retained demonstrations are bounded nonce/IV misuse experiments, not breaks of correctly used AEAD or full-strength primitives. Re-read the one-line accessibility-only change merged by PR #24 at this exact pin: it adds group semantics to the CBC predictable-IV card without changing any cryptographic computation or claim. Exact-main run 40454599347 passed 48 unit tests and all 26 Chromium, Firefox and WebKit claim/accessibility tests, deployed Pages artifact 12712202022, and all three public files match that artifact byte for byte."
+  },
+  "crypto-lab-vigenere-break": {
+    "commit": "b3c2f04f4d575a734a065d8fc96dcf3ec431264b",
+    "reviewed": "2026-10-27",
+    "remove": [
+      "Factoring",
+      "Known-plaintext attack"
+    ],
+    "note": "Read the complete exact-main README, Vigenere cipher and break pipeline, Kasiski spacing analysis, index-of-coincidence and chi-squared engines, learner interface, samples, tests and visible limitations. The lab executes a ciphertext-only classical break and preserves Frequency analysis credit. Its transcript factors integer spacings between repeated substrings to rank possible keyword lengths; it does not factor a cryptographic modulus or execute a factoring attack. References to a known plaintext language and bundled known answers describe the English-frequency model and post-solve verification only; neither supplies plaintext to the solver, so Known-plaintext attack is also removed. The browser uses a bounded English-language heuristic over an obsolete classical cipher and refuses to treat plausible output or sparse evidence as independent verification."
+  },
+  "crypto-lab-otp-vault": {
+    "commit": "04b056901a337a23cafc9340e8e8bf36b01fc06b",
+    "reviewed": "2026-10-27",
+    "remove": [
+      "Chosen-plaintext attack",
+      "Frequency analysis"
+    ],
+    "note": "Read the complete exact-main README, OTP and XOR arithmetic, perfect-secrecy and prior engines, two-time-pad and generic crib-dragging paths, learner interface, tests and visible limitations. The lab executes fresh-pad encryption, repeated-key plaintext recovery, a stand-in repeated-keystream nonce-misuse comparison, exact finite prior/posterior calculations and K-L Example 2.8's bounded Vigenere distinguishing game. Preserve Known-plaintext attack: the prior comparison explicitly takes P1 and C1 from one encryption, derives the reused pad, and recovers the independently selected second message. Preserve Nonce reuse and the Vigenere cipher implementation credit for their actual bounded computations. The user-selected alternate plaintext in the perfect-secrecy panel derives a compatible key for one fixed ciphertext; it is not a chosen-plaintext oracle attack. Frequency analysis appears only in a Related Demos description and is removed. The modeled keystream panel is not a ChaCha20 or AES implementation, and the browser makes no production-security claim."
+  },
   "crypto-lab-export-grade": {
     "commit": "b61f133b5e1392eb8d9809de0d9478097a4f0a43",
     "reviewed": "2026-09-29",
@@ -345,8 +385,8 @@
     "note": "Legacy Python RSA scripts inspected; browser lab implements RSA in JS Re-read current textbook.ts/RSA tests/UI and focused encoding repair PR21: browser implements RSA, explicitly rejects non-ASCII/leading NUL instead of silently losing bytes; empty/internal/trailing zero handling and primitive mathematics preserved. Independent completed Dot report36870c37 review at this exact source SHA recorded separately. Current catalogue interpretation review: textbook.ts:21 encrypt computes m^e mod n through modexpTraced and its decrypt/sign/verify operations are consumed by UI; use this implementation anchor instead of a UI import. oaep.ts implements separate real 2048-bit WebCrypto RSA-OAEP. factor.ts:52 is Pollard rho integer factorization via gcd, not a discrete-log solver; real-world.ts:91 discusses the sibling RSA Forge padding oracle, not an executed local oracle attack. Remove those two attack credits, preserving real ciphertext malleability, factoring and private-exponent recovery. Textbook signing uses a disclosed toy FNV-1a hash; realistic factoring time is a projection, not a 2048-bit benchmark. Preserve the existing bounded Python review and all prior findings; no production RSA assurance. Fleet work5259971f-74ae-40db-b33b-d97d2223021d."
   },
   "crypto-lab-shadow-vault": {
-    "commit": "8b9fa363e0337d5e7647a004fdd72149a233da0b",
-    "reviewed": "2026-10-11",
+    "commit": "403cebb8c387fc27acbf20cfcb7f2574c912ec84",
+    "reviewed": "2026-10-27",
     "add": [
       "ChaCha20-Poly1305@crate/src/lib.rs:13",
       "SHA-256@crate/src/lib.rs:17"
@@ -356,7 +396,7 @@
       "Python"
     ],
     "implementation": "RustCrypto / compiled WASM",
-    "note": "Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22\u201326 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review. Re-reviewed integrated PR27 at 8b9fa363e0337d5e7647a004fdd72149a233da0b: only security workflow, SECURITY.md, Cargo license metadata, cargo-deny policy and five offline real-tool controls changed. Rust/TypeScript runtime sources and both dependency locks are byte-identical to the prior inspected revision. Read the complete changes, verify existing MIT license, preserve all cryptographic exclusions and opaque binary/compiler limits. The restored blocking cargo-deny gate and separate application/deployment checks do not establish original compiler provenance. The sole tracked Python file, verification/test_supply_chain_policy.py, is the fully read and executed five-case offline supply-chain policy fixture, not browser cryptography. Cover this exact file at this pin while retaining opaque WASM; raw scanner language counts remain separate.",
+    "note": "Read current Rust Argon2id/ChaCha20/SHA-256 operations, public role/counter/open path, Worker benchmark, README/THREAT_MODEL/SPEC/SECURITY and every indexed attack context; reviewed validated PR22\u201326 diffs and independent real-binary controls. Risk prose, historical audit assertions and strength/cost models are not executed browser attacks. Independent bounded password/role controls are separately documented. Rust source is covered; opaque WASM and exact served compiler/binary correspondence remain explicit. No constant-time, entropy, forensic-deniability or full security claim; unrelated passphrase-strength heuristic remains outside this bounded review. Re-reviewed integrated PR27 at 8b9fa363e0337d5e7647a004fdd72149a233da0b: only security workflow, SECURITY.md, Cargo license metadata, cargo-deny policy and five offline real-tool controls changed. Rust/TypeScript runtime sources and both dependency locks are byte-identical to the prior inspected revision. Read the complete changes, verify existing MIT license, preserve all cryptographic exclusions and opaque binary/compiler limits. The restored blocking cargo-deny gate and separate application/deployment checks do not establish original compiler provenance. The sole tracked Python file, verification/test_supply_chain_policy.py, is the fully read and executed five-case offline supply-chain policy fixture, not browser cryptography. Cover this exact file at this pin while retaining opaque WASM; raw scanner language counts remain separate. PR28 added reproducible current-source WASM controls: immutable committed Rust inputs, pinned Rust 1.87.0, wasm-pack 0.15.0 and wasm-bindgen 0.2.117, verified tool archives and locked dependencies, two independent offline builds, and a build receipt consumed by Pages. This establishes correspondence between this source revision and its deployed artifact, not historical compiler provenance, constant-time behavior or production suitability. Later dependency updates did not alter cryptographic Rust source; PR31 restored publish controls and maintenance evidence. Accessibility repair PR32 synchronizes visible and accessible labels across initial, loaded, rejected and modal states without changing Rust cryptography. Exact-main security run 40458954031 passed 81 Rust tests, five supply-chain policy controls, 22 WASM provenance controls, blocking dependency audits with zero npm vulnerabilities, 27 browser tests and two full-state accessibility/reflow tests. Exact-main Pages run 40458954033 produced artifact 12713238723; all 109 served files matched that artifact byte-for-byte.",
     "remove": [
       "Brute force",
       "Cache timing",
@@ -570,8 +610,8 @@
     "note": "Read RC4 KSA/PRGA, WEP protected-body/CRC-32 and PTW engines, public attacker contracts, receiver/secret validation, README and tests at this SHA. Generated traffic only, not complete 802.11 frames or a real-network capture tool. The RC4 anchor points to the keystream engine rather than a UI type. Chosen-ciphertext attack was picked from a build brief and Padding oracle from a sibling link, neither a demonstrated oracle attack here; remove those credits. CRC-32 ciphertext forgery and bounded probabilistic PTW recovery are actual computations; exact key equality is checked separately. 149 unit, 2 accessibility and 49 claims/interaction tests passed."
   },
   "crypto-lab-rsa-small-roots": {
-    "commit": "71e571b0b8524400a2c0e1f299adff8c46ee1087",
-    "reviewed": "2026-10-09",
+    "commit": "763afac1320d2778d3b95e028c22d427e9b8d223",
+    "reviewed": "2026-10-26",
     "add": [
       "RSA@src/simulator/oracle.ts:23"
     ],
@@ -579,7 +619,7 @@
       "RSA-OAEP",
       "RSA-PSS"
     ],
-    "note": "Read exact public challenge, monic lattice basis, fraction-free LLL, independent rational GSO/unimodular verifier, strict finite/norm bounds, bounded Sturm search, worker allowlists and simulator acceptance at this SHA. Implements textbook exponent-3 RSA and larger-prime high-bit leakage attacks, not RSA-OAEP or RSA-PSS. Prediction, certificate, recovery and incomplete search remain distinct; not arbitrary RSA decryption. 43 unit/fixture and 14 browser/claim tests executed successfully. The inspected source is unchanged from the tested implementation; this SHA adds a JSON-report unit-count gate. Existing main run 37894238587 passed and published; live JavaScript and CSS matched the inspected build byte for byte. Publication was observed, not triggered by this maintenance session."
+    "note": "Re-read the complete committed README and source through this exact main pin, including both existing small-root scenarios and the new Wiener continued-fraction lesson. The public attacker enumerates convergents of e/N, derives candidate phi values, requires an integral nonnegative square discriminant and exact factors of N, then independently checks ed = 1 mod phi(N) and a fresh RSA round trip before reporting recovery. The sufficient teaching boundary is tested as the exact integer inequality 81d^4 < N; an outside-bound success is not relabeled as guaranteed, and complete no-solution is kept distinct from resource exhaustion. The existing textbook exponent-3 and larger-prime high-bit leakage paths retain their exact lattice, finite-bound, Sturm-search, worker-allowlist and public-verification controls. The lab implements textbook RSA and Wiener recovery, not RSA-OAEP, RSA-PSS or the mentioned-but-unimplemented Boneh-Durfee extension."
   },
   "crypto-lab-bitcoin-script": {
     "commit": "6c2dc4b5873d933bf124e71cc849927bebf9105e",
@@ -615,21 +655,26 @@
     "note": "Re-read README.md, src/math.ts, src/frodo-kem.ts, src/key-use.ts and src/main.ts, including the toy-LWE, real KEM, comparison, hybrid, failure and new key-use handlers. The 255-ciphertext limit is an enforced eFrodoKEM public-key-use policy, not a chosen-plaintext attack. The source still only discusses CPA security and explicitly disclaims constant-time/browser side-channel guarantees, so those two prose-derived attack credits remain removed. Preserve the real chosen-ciphertext tamper experiment: it flips an actual ciphertext bit and decapsulates with the stored secret key to show an unrelated implicit-rejection secret. That is bounded tamper/rejection teaching, not adaptive-oracle exploitation or key recovery. Opaque third-party WASM remains a separate evidence boundary."
   },
   "crypto-lab-sphincs-ledger": {
-    "commit": "73ce1d64f8d2bf94be787e2df0e4641bbad6db17",
-    "reviewed": "2026-10-12",
+    "commit": "94885b4ee96f00d6bc523c66a434a9c5c908a99a",
+    "reviewed": "2026-10-26",
     "remove": [
       "Discrete log",
-      "Factoring"
+      "Factoring",
+      "Power analysis"
     ],
-    "note": "Read current hash-only assumption/comparison panel, noble SLH-DSA adapter, selected-set params.ts equations and reduced complete-WOTS+ source, README/scaled-values limits, verified PR12/13 controls. Factoring/discrete-log remain comparisons/negations, not executed attacks. Standard 35/67-chain comparison is distinct from the real-hash reduced 8-chain teaching model; no FIPS-conformance claim for that model. Re-read the 12 October signature-budget panel, BigInt arithmetic, noble adapter and prior-pin diff: cryptographic source is unchanged. The calculator is a balanced workload teaching model, not a durable signing counter or implementation of draft limited-use profiles. Factoring/discrete-log remain comparison context, not executed attacks."
+    "note": "Re-read the complete committed README, SLH-DSA adapter, selected-set parameter equations, reduced complete-WOTS+ source, learner UI and the full change since the prior pin. The new ePrint 2026/2584 text is visibly dated preprint context: it reports non-profiled correlation power analysis against SLH-DSA-SHAKE on a 32-bit microcontroller and explicitly says this SHA-2 browser lab does not reproduce that experiment or establish the same target vulnerability. Exclude that prose-derived Power analysis credit along with the existing factoring and discrete-log comparisons. The standard 35/67-chain comparison remains distinct from the real-hash reduced eight-chain teaching model, with no FIPS-conformance claim for the latter; the signature-budget calculator remains a balanced workload model rather than a durable signing counter or limited-use-profile implementation."
   },
   "crypto-lab-dead-sea-cipher": {
-    "commit": "f0bf09cc973e79eeabc7e1401b7ea66c36175094",
-    "reviewed": "2026-10-09",
+    "commit": "be9d4ad49dc40641f16d1366434e4c14353c3070",
+    "reviewed": "2026-10-26",
+    "addAttacks": [
+      "Key recovery@demos/dead-sea-cipher/src/analysis/affine-crack.ts:38",
+      "Known-plaintext attack@demos/dead-sea-cipher/src/analysis/affine-crack.ts:38"
+    ],
     "remove": [
       "Side-channel (unspecified)"
     ],
-    "note": "Read current README production limitation and classical cipher/AES source. Missing protection from side-channel extraction is a limitation; preserve real brute-force and frequency-analysis demonstrations."
+    "note": "Re-read the complete committed README, classical-cipher and AES source, tests and the full change since the prior pin. The new affine lesson computes y = ax + b mod 26, restricts reversible keys to the 12 units modulo 26, exposes collisions for non-units, ranks all 312 admissible keys for ciphertext-only analysis, and solves a supplied known-letter pair only by exhaustive admissible-key filtering; the independent test census covers all 26^4 ordered letter-pair tuples. Preserve the existing executable brute-force and frequency-analysis credits. The production warning about missing side-channel protection remains a limitation rather than a demonstrated attack, so the prior Side-channel removal remains correct."
   },
   "crypto-lab-kyber-vault": {
     "commit": "394479e8df1e941e4618de5f407fe810bdc7ba26",
@@ -950,12 +995,12 @@
     "note": "Reviewed the new SQIsign source note, README scope table, Exhibit 4 and csidh.ts bruteForceStep/recovery. The executable attack is the toy CSIDH exhaustive search retained as Brute force; the separate Key recovery hit now points to the SQIsign paper discussion, not that computation. Power analysis is reported research, not an executed experiment. The sidhOutput variable is a CSIDH display element, not a SIKE implementation; the lattice-reduction hit is a related-demo link. Preserve CSIDH, EC arithmetic and isogeny walks. This is a bounded catalog classification review, not a full cryptographic audit. Reviewed the 21 October source-note, README and browser-check diff against the previous pinned head. The deterministic-CSIDH/OSIDH-LD fault preprint is reported context: software key recovery and a separate hardware instruction-skip experiment, not an executed attack in this lab. Cryptographic implementation files are unchanged; retain existing classifications."
   },
   "crypto-lab-pq-families": {
-    "commit": "ac2429239a3645c3c3455597f68f7c65856bb26d",
-    "reviewed": "2026-10-22",
+    "commit": "6f52ee3228a7df0cf8c0bdc88dd415bbf557bd5f",
+    "reviewed": "2026-10-26",
     "remove": [
       "Power analysis"
     ],
-    "note": "Reviewed the new isogeny attack/reference entries, README and crypto.ts's executable exhibits. The SQIsign power-analysis preprint is a cited comparison entry only; the lab does not implement SQIsign or reproduce the reported experiment. Exclude the new Power analysis credit. This review is limited to that new claim; it does not revalidate the pre-existing comparison corpus. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus. Reviewed the 21 October source-note, README and browser-check diff against the previous pinned head. The deterministic-CSIDH/OSIDH-LD fault preprint is reported context: software key recovery and a separate hardware instruction-skip experiment, not an executed attack in this lab. Cryptographic implementation files are unchanged; retain existing classifications. Reviewed the 22 October family-status and HQC-size diff: code-based is selected rather than standardized; Rainbow and SIKE remain broken individual schemes while multivariate and isogeny families remain research. The HQC-1 reference values use the 12 October 2026 team specification, including a 32-byte default compressed decapsulation key. crypto.ts executable exhibits are unchanged; the SQIsign power-analysis and CSIDH fault papers remain cited context, not implemented attacks. Prior Power analysis exclusion remains valid."
+    "note": "Re-read the complete committed README, typed comparison data, executable crypto.ts exhibits, research-note browser control and the full change since the prior pin. The new ePrint 2026/2584 item is a dated preprint comparison: it reports non-profiled correlation power analysis and secret-seed recovery for SLH-DSA-SHAKE on a 32-bit microcontroller, while the lab explicitly requires physical traces, does not reproduce the experiment and does not transfer the result to its SHA-2 browser examples. Keep Power analysis removed. The executable corpus remains Lamport/SHA-256, information-set decoding and the previously reviewed bounded teaching examples; no cryptographic implementation file changed. Existing notes about SQIsign leakage, deterministic CSIDH faults, model-dependent MSIS estimates and HQC sizes remain contextual rather than reproduced attacks."
   },
   "crypto-lab-confirmer-signatures": {
     "commit": "db6695e0f136507572dcc10e652bff83ea357383",
@@ -1006,11 +1051,12 @@
       "Factoring@src/attack/cca.ts:4"
     ],
     "removeReferences": [
+      "BBS+",
       "BBS signatures",
       "Boneh-Franklin IBE"
     ],
     "implementation": "local BigInt arithmetic / isolated key-holder worker",
-    "note": "Re-read exact merged main f20e6db42edc5d654c9934dda27855dd6e340dfa: README, all six learner panels, number-theory and encryption source, isolated worker boundary, unit/browser/accessibility tests, mutation runner and deployment evidence. The first five exhibits retain their prior arithmetic: the Tonelli anchor executes order halving, the Rabin anchor squares a validated QR message, and the public root-oracle attacker receives N and one reply but never p or q. Experiment 6 executes the repeated-squaring generator and Blum\u2013Goldwasser encryption from real current-run state: fresh rejection-sampled unit coins by default, the HAC 8.56 state/block convention, factor-assisted rewind, seed-reuse XOR evidence, state disclosure, ciphertext-bit malleability, QR validity controls and bounded public toy-cycle recovery. It pins HAC Example 8.57 and separately displays the one-state indexing difference from BBS 1986. The original BG paper's p,q = 7 mod 8 condition differs from the implemented HAC p,q = 3 mod 4 route; accepted factors are 40-round Miller\u2013Rabin probable primes. Short-final-block support is a disclosed teaching adaptation. BG is unauthenticated and malleable; QR validity is not authentication, toy-cycle recovery is not a general backwards-unpredictability result, output appearance proves no pseudorandomness, and JavaScript cleanup is not physical memory zeroization. The initials do not denote CFRG BBS credential signatures. Cocks IBE remains an extension mention, not Boneh\u2013Franklin IBE. Reviewed-head run 40263223623 and exact-main run 40264103164 each passed 39 unit tests, typecheck/build, 25 browser claims, two accessibility views and all 40 clean-baseline mutations without retries or infrastructure kills. Pages artifact 12626350669 deployed through deployment 7323506551, and all four public files matched the artifact and fresh exact-main build byte for byte."
+    "note": "Re-read exact merged main f20e6db42edc5d654c9934dda27855dd6e340dfa: README, all six learner panels, number-theory and encryption source, isolated worker boundary, unit/browser/accessibility tests, mutation runner and deployment evidence. The first five exhibits retain their prior arithmetic: the Tonelli anchor executes order halving, the Rabin anchor squares a validated QR message, and the public root-oracle attacker receives N and one reply but never p or q. Experiment 6 executes the repeated-squaring generator and Blum\u2013Goldwasser encryption from real current-run state: fresh rejection-sampled unit coins by default, the HAC 8.56 state/block convention, factor-assisted rewind, seed-reuse XOR evidence, state disclosure, ciphertext-bit malleability, QR validity controls and bounded public toy-cycle recovery. It pins HAC Example 8.57 and separately displays the one-state indexing difference from BBS 1986. The original BG paper's p,q = 7 mod 8 condition differs from the implemented HAC p,q = 3 mod 4 route; accepted factors are 40-round Miller\u2013Rabin probable primes. Short-final-block support is a disclosed teaching adaptation. BG is unauthenticated and malleable; QR validity is not authentication, toy-cycle recovery is not a general backwards-unpredictability result, output appearance proves no pseudorandomness, and JavaScript cleanup is not physical memory zeroization. The initials do not denote CFRG BBS or BBS+ credential signatures. Cocks IBE remains an extension mention, not Boneh\u2013Franklin IBE. Reviewed-head run 40263223623 and exact-main run 40264103164 each passed 39 unit tests, typecheck/build, 25 browser claims, two accessibility views and all 40 clean-baseline mutations without retries or infrastructure kills. Pages artifact 12626350669 deployed through deployment 7323506551, and all four public files matched the artifact and fresh exact-main build byte for byte."
   },
   "crypto-lab-hash-hunt": {
     "commit": "072a9531796a1c2f9936197077aee2ee0d57b144",
@@ -1028,8 +1074,8 @@
     "note": "Reviewed the existing shortened-SHA-256 collision, meaningful-letter HMAC composition, chain and salt exhibits plus the new bounded table-flood panel. It searches distinct names that hit one public FNV-1a bucket, counts linear-probing slot visits, then reuses the same names with fresh secret WebCrypto HMAC-SHA-256 buckets. It does not implement SipHash or measure a real server. The separate tag transfer attacks a deliberately collision-prone hash-then-MAC composition, not HMAC or full SHA-256; Hellman/rainbow and salt limits remain. Unit, browser and mutation gates passed on the lab main build."
   },
   "crypto-lab-log-forge": {
-    "commit": "2b5ade3940e3ae2879823c40cbc0587be6655aef",
-    "reviewed": "2026-10-20",
+    "commit": "d81c706537f4946c60b5f9dcc24f6ba2e5e3d15e",
+    "reviewed": "2026-10-26",
     "add": [
       "EC point arithmetic@src/group/ec.ts:4",
       "Pollard rho (discrete log)@src/dlog/generic/rho.ts:3",
@@ -1042,17 +1088,20 @@
       "Man-in-the-middle"
     ],
     "implementation": "local generic group solvers / finite-field and toy-curve arithmetic",
-    "note": "Read counted opaque group operations, generic brute force/BSGS/rho/kangaroo, Pohlig\u2013Hellman digit lifting and CRT, safe-prime index-calculus relations/rank/parity and reusable precomputation. Generic solvers cannot import field/curve implementations. Every candidate is rechecked by an independent exponent or curve verifier. The curve is p=211 with verified order 223, not a production curve. Factored group order is input, not an integer-factoring attack; MITM is a related-demo link, not an executed network attack. Large-order cases report partial information or budget exhaustion. All 26 units, nine browser claims, two accessibility views and nine mutations passed at the code-identical deployment; this pin updates integration documentation."
+    "note": "Re-read the complete committed README, generic group/field/curve solvers, source tests and the full static-DH change through this exact pin. The original counted brute-force, BSGS, rho, kangaroo, Pohlig-Hellman and index-calculus paths remain, with independent candidate verification. The new executable Cheon q-1 lesson validates d divides q-1, obtains g^(alpha d) only through a raw-response static-DH oracle, performs the two subgroup BSGS passes and verifies the recovered exponent against the public group element; cancellation, malformed oracle replies, q+1 comparison-only scope and real-group non-attack boundaries remain visible. Generic solvers still cannot import field/curve implementations, the toy curve remains p=211 of verified order 223, and supplied order factors are not integer factoring. Keep Factoring and Man-in-the-middle removed: TLS is deployment context, not an implemented handshake or network attack."
   },
   "crypto-lab-dvd-scramble": {
-    "commit": "f3d4bad6c5cf660ebea5306460481099521d927d",
-    "reviewed": "2026-10-21",
+    "commit": "2a02c59f611b1a3aca698b737a31611fccbdd0d8",
+    "reviewed": "2026-10-26",
     "state": "N/A",
-    "note": "Source review of src/css/lfsr.ts, src/css/css.ts, src/attack/divide.ts and src/verify/verify.ts. lfsr.ts cites Boneh-Shoup v0.6 section 3.8 Figure 3.10 and computes a bit-serial LFSR: step() returns bit 0, XORs the declared taps, right-shifts and feeds back into the top bit; byte() clocks eight steps LSB- or MSB-first. css.ts generate() seeds a 17-bit register with taps [14,0] and a 25-bit register with taps [12,4,3,0], clocks a byte from each and adds them with carry, so z = (x+y+carry) mod 256 and the carry persists -- the CSS byte-serial combiner. The key space is 16 bits plus 24 bits, validated as such, which is the 40 bits the attack exhibit is about. divide.ts recover() enumerates smaller-register seeds and returns counted candidates; verify.ts checks a candidate against continuation bytes the search never saw. Zero runtime dependencies. N/A means no named algorithm IN THIS INDEX, not no computation: the Content Scrambling System and the LFSR family are outside the current vocabulary, the same reason crypto-lab-lfsr-forge was reviewed N/A on 2026-10-09. Scope recorded with it: this is the textbook generator, and the source says so in its own extension note -- deployed CSS changes insertion positions, discards early bytes and has inverter modes, none of which are implemented here. So the card must not be read as a deployed-CSS implementation."
+    "removeReferences": [
+      "Schnorr"
+    ],
+    "note": "Re-read the complete committed README, src/css/lfsr.ts, src/css/css.ts, src/attack/divide.ts, src/verify/verify.ts, learner UI, tests and the full audit repair since the prior pin. The bit-serial 17/25-bit teaching generator now consistently propagates the full x+y+incoming-carry byte relation. Recovery always enumerates all 65,536 smaller-register seeds, derives the other 24-bit seed from the first three public bytes, and reports zero, one or multiple public candidates without a false early-stop claim. Private continuation bytes are consulted only after public evidence leaves exactly one candidate and therefore cannot select among candidates. The page exposes impossible, ambiguous, cancellation and manual-public-byte states. N/A still means no named algorithm in this index, not no computation: the Content Scrambling System and the LFSR family remain outside the declared vocabulary. This is the documented Boneh-Shoup teaching variant, not deployed DVD CSS with its changed insertion positions, discarded early bytes and inverter modes."
   },
   "crypto-lab-aes-anatomy": {
-    "commit": "fb4d3d8ebeb099d42aeae47d234fe93296ffa544",
-    "reviewed": "2026-10-26",
+    "commit": "61be3762a50c5640460aac91850ba4d038d0218a",
+    "reviewed": "2026-10-27",
     "add": [
       "AES@src/aes/cipher.ts:6"
     ],
@@ -1061,7 +1110,7 @@
       "Timing side-channel"
     ],
     "implementation": "hand-rolled AES / WebCrypto cross-check",
-    "note": "Reviewed the complete ten-act AES-128/192/256 data path, inverse, key expansion, four opt-in layer ablations, structured round-9 DFA and first-round ineffective-fault lesson. Act 9 executes correct and fault-path AES-128 for each finite-sample trial and classifies exact ciphertext equality; its separate 2,048-row census is analytic, not sampled execution evidence. The selection-only ranker receives selected plaintext bytes and a target bit. A secret-independent null removes key-dependent selection. Rejection exposes output absence; the bounded teaching infection hides selection without a classifier, while an explicitly granted exact clean-reference oracle restores it. The transform is not timing-oblivious, hardened, universal or an implementation of the cited circuit defenses. Side-channel and generic timing mentions remain limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson. The merged ebook extension checks ShiftRows column dispersion against an identity-permutation counterexample and distinguishes an observed trail from the four-round theorem. Act 10 runs real AES-128 operations in a reduced four-round construction with no final MixColumns, filters inverse-S-box XOR balances over complete disjoint 256-input sets through an oracle-only attack API, reverses the round-4 schedule only after uniqueness, and separately verifies three held-out plaintexts. It reports query counts and ambiguity, not a full-AES break. The merge retains the previously reviewed fault, channel and WebCrypto boundaries. All 47 semantic mutation cases were caught and exactly restored before merge."
+    "note": "Reviewed the complete ten-act AES-128/192/256 data path, inverse, key expansion, four opt-in layer ablations, structured round-9 DFA and first-round ineffective-fault lesson. Act 9 executes correct and fault-path AES-128 for each finite-sample trial and classifies exact ciphertext equality; its separate 2,048-row census is analytic, not sampled execution evidence. The selection-only ranker receives selected plaintext bytes and a target bit. A secret-independent null removes key-dependent selection. Rejection exposes output absence; the bounded teaching infection hides selection without a classifier, while an explicitly granted exact clean-reference oracle restores it. The transform is not timing-oblivious, hardened, universal or an implementation of the cited circuit defenses. Side-channel and generic timing mentions remain limits or neighboring labs, not executed attacks. WebCrypto independently checks the hand-written cipher; AES-CBC is an oracle wrapper, not a mode lesson. The merged ebook extension checks ShiftRows column dispersion against an identity-permutation counterexample and distinguishes an observed trail from the four-round theorem. Act 10 runs real AES-128 operations in a reduced four-round construction with no final MixColumns, filters inverse-S-box XOR balances over complete disjoint 256-input sets through an oracle-only attack API, reverses the round-4 schedule only after uniqueness, and separately verifies three held-out plaintexts. It reports query counts and ambiguity, not a full-AES break. The merge retains the previously reviewed fault, channel and WebCrypto boundaries. Exact-main maintenance run 40452726229 passed 56 unit tests, 22 production-browser/accessibility checks and all 47 semantic mutations before deploying Pages artifact 12712075195; all four served files matched a fresh exact-main build byte for byte."
   },
   "crypto-lab-clock-arithmetic": {
     "commit": "e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e",
@@ -1158,8 +1207,8 @@
     "note": "Read the complete current README, protocol, PRF, timing, probability, attack/scenario, UI, test, browser-quality, accessibility, mutation and workflow source through this exact main. The learner executes the verifier-nonce Hancke–Kuhn rapid-bit profile with hand-rolled HMAC-SHA-256, exact BigInt rational event timing and probabilities, an ordinary authenticated relay, a timed online relay, mafia pre-asking, dishonest-prover distance fraud and exact independent-noise sampling. The nonce-reuse switch fixes the response table and withdraws the repeated-attempt independence formula; the page explains complementary pre-asks, while the complete two-session register recovery is a unit control rather than a learner-executed attack exhibit, so the README-derived Nonce reuse attack credit is removed. All distance, speed, processing and noise values are declared model inputs; this is not radio measurement, localisation, an interoperable protocol, Brands–Chaum, physical-layer early-detect/late-commit, terrorist-fraud analysis, constant-time code or production parameter guidance. Exact-main quality/deployment run 40312352129 passed 96 unit tests, 99.44/98.42/100/100 coverage, 20 learner-claim checks, 10 accessibility/reflow/keyboard checks and all 15 clean-baseline mutations; CodeQL run 40312351878 passed, and the public files matched the Pages artifact and a fresh exact-main build byte for byte."
   },
   "crypto-lab-hostile-paths": {
-    "commit": "4086fff2f6d89ce83fa8e4dd2ead1a3c42734229",
-    "reviewed": "2026-10-26",
+    "commit": "e954fe1101dd6311f2434409664964f9ed2b5c8c",
+    "reviewed": "2026-10-27",
     "add": [
       "Reed-Solomon@src/psmt/decoder.ts:37",
       "Shamir secret sharing@src/psmt/protocol.ts:131"
@@ -1342,16 +1391,46 @@
     "note": "Read the complete merged README, implementation brief, TypeScript protocol source, tests, learner interface and visible limits through this current main revision. Main is the reviewed implementation merge 6644abcb691bcddac323ee552af4cae2f102cd9e, a workflow-only Dependabot commit, and the one-line dark-theme root pin merged in PR #4; README and src remain byte-identical to the implementation tree. The lab executes ordered SPD outcomes separately from routing, policy-based traffic-selector narrowing, a real four-message PSK IKEv2 exchange with X25519, SKEYSEED/prf+ and encrypted IKE_AUTH, and the initial Child SA inside IKE_AUTH. Two directional AES-GCM-16/128 ESP SAs use receiver-selected SPIs, distinct key/salt material, sequence and replay state; actual IPv4 transport/tunnel packets expose exact AAD, nonce, ciphertext, encrypted trailer and tag bytes before reconstruction and checksum verification. Receiver cases execute SAD lookup, non-mutating replay precheck, authentication-before-window-commit, reordering, duplicate, too-old, invalid-tag and unknown-SPI behavior. Separate transport echo/fallback, protected deletion and Child-SA rekey cases retain fresh SPIs, keys, counters and replay windows and explicitly reject wrong-generation keying. This is a bounded IPv4 teaching profile, not an interoperable VPN daemon or production credential store; it excludes certificates, EAP, IPv6, NAT traversal, fragmentation, MOBIKE, AH, ESN and kernel routing, and its BigInt X25519 is not constant-time. Implementation-merge quality/deployment run 40226926121 passed 102 unit tests, seven hosted learner-claim/accessibility/reflow tests and all 17 clean-baseline mutations; CodeQL run 40226926164 passed. Current-main quality/deployment run 40229891529 passed the same core and rendered suites and deployed successfully; CodeQL run 40229891505 passed. A fresh build from current main matched all three public files byte for byte on 2026-10-25."
   },
   "crypto-lab-oram-vault": {
-    "commit": "0c7f89281784748a9c9d4fafb41d85ac1839a4c5",
-    "reviewed": "2026-10-26",
+    "commit": "7a882b09e7a06e2ede8774d2abf92fa27856f01c",
+    "reviewed": "2026-10-27",
     "remove": [
       "Cache timing",
+      "Discrete log",
       "Side-channel (unspecified)"
     ],
     "removeReferences": [
-      "FRI"
+      "FRI",
+      "Pairing"
     ],
-    "implementation": "WebCrypto AES-GCM, HMAC and SHA-256 / local TypeScript Path ORAM and bounded hierarchical ORAM teaching implementations",
-    "note": "Read the complete exact-main README, Path client/server/encryption implementation, bounded hierarchy client/server/comparison implementation, learner interface, unit and browser tests, mutation runner, workflow and visible limitations. The retained Path route performs fresh leaf remapping, authenticated encrypted-path transfer, stash access and legal greedy eviction. The sixth exhibit separately runs the same eight operations through Path ORAM and a fixed N=16 hierarchy: a fully scanned one-slot top array plus HMAC-SHA-256-selected whole buckets at levels 2, 4, 8 and 16, unique access-number-and-level dummy labels after a hit, fresh level keys on each build, target deletion and binary-carry rebuilds. Displayed traffic comes from each server's events, and an out-of-table full sweep verifies all sixteen blocks against a separate reference map. The intentionally insecure skip-after-hit control returns the same plaintext while exposing one lookup slot instead of the fixed schedule's 31. The hierarchy deliberately gives every capacity-c bucket c slots, uses 341 server slots and transient O(N) rebuild memory, and is not the papers' asymptotically efficient oblivious hash table, a reproduction or repair of Alibi's combined-stash attack, malicious-server protection, recursive client state or production ORAM. Cache timing and generic side-channel phrases occur only in the Path caveat that declares them out of scope, so they are removed from attack credit. The FRI hit is the day abbreviation `Friday`, not Fast Reed-Solomon IOP of Proximity, so it is removed from reference credit. Exact-main run 40416634305 passed zero-vulnerability audits, typecheck and build, 69 unit tests, seven workflow controls and a passing clean baseline followed by all 12 named mutations on Node 22, 24 and 26; hosted browser, deployment and byte-verification evidence is recorded separately in the roadmap."
+    "implementation": "WebCrypto AES-GCM, P-256 ECDSA, HMAC and SHA-256 / local TypeScript Path, bounded hierarchical and bounded multi-client ORAM teaching implementations",
+    "note": "Read the complete exact-main README, all Path, hierarchy and multi-client source, learner interface, unit/browser/accessibility tests, mutation runner, workflow and visible limitations. The retained Path route performs fresh leaf remapping, authenticated encrypted-path transfer, stash access and legal greedy eviction. The sixth exhibit retains its fixed N=16 hierarchy comparison, actual server-event traffic, separate full-store reference check and insecure skipped-probe counterexample. The seventh exhibit executes three fixed-rights clients over one encrypted store: per-client key wraps and indistinguishable dummy wraps gate reads; P-256 ECDSA capabilities and writer signatures gate and attribute uploads; a signed hash-chained log supports catch-up and blame; per-client watermarks detect rollback only for returning clients; serialization refuses the modeled stale concurrent write. Its naive shared-client-state and client-server-collusion cases expose actual failures, and the corrected honest route uses fixed-shape writeback for authorization refusals. This bounded composition deliberately does not claim a globally signed freshness head, first-contact rollback detection, full malicious-server integrity, linearizability, protection from log-length leakage, or obliviousness against client-server collusion; a valid unauthorized upload can land while every honest reader rejects it and attributes blame. Cache timing and generic side-channel phrases remain out-of-scope caveats, and the discrete-log text explains why a candidate chameleon-hash route was not built, so none is an executed attack. `Friday` is not FRI, and pairing appears only in the rejected full-GORAM dependency analysis; both are removed from reference credit. Implementation exact-main run 40441270598 passed 120 unit tests, seven workflow controls, 29 browser/accessibility/reflow checks, a passing clean baseline followed by all 22 mutations caught, Node 22/24/26 quality jobs, build and deployment. The only subsequent change is the deployment-workflow repair at this current pin. Current exact-main run 40448172454 repeated the 120 unit, seven workflow, 22-mutation and 29-browser gates and deployed Pages artifact 12708818815; all three public assets match that artifact byte for byte."
+  },
+  "crypto-lab-rank-metric": {
+    "commit": "b9d9ba5887b1a59894d9deb3ae08225cbb239f6f",
+    "reviewed": "2026-10-27",
+    "remove": [
+      "Key recovery",
+      "Side-channel (unspecified)"
+    ],
+    "implementation": "local TypeScript GF(2^4), binary-matrix rank and exhaustive Gabidulin-code teaching implementation",
+    "note": "Read the complete exact-main README, design/evidence records, finite-field, binary-rank, Gabidulin, scenario and UI source, tests, mutation runner, workflows and learner-visible limits. The lab expands the same GF(16)^4 vector into a binary matrix for rank weight, contrasts that result with Hamming weight, enumerates all 256 words of a fixed [4,2,3] Gabidulin/MRD code, exhaustively decodes within radius one, and enumerates all rank-two errors to show both refusal and miscorrection beyond the unique-decoding guarantee. Every displayed decoder result comes from the selected message and actual error, with exhaustive correctness and census checks. It implements code mathematics only: no encryption, KEM, production parameter set, efficient algebraic decoder or security reduction. Classic McEliece and HQC are legitimate comparison references, but the paper-title key-recovery phrase and the deployment-limit side-channel phrase are not attacks this lab executes, so both attack credits are removed. Exact-main run 40443630174 passed 22 unit tests with 99.48/95.60/100/100 coverage, six learner-claim checks, five accessibility/reflow checks, a passing clean baseline followed by all 10 mutations caught, format/typecheck/lint/build and deployment; exact-main CodeQL run 40443630203 passed. The maintenance-only exact-main run 40452133432 repeated the full gate after pinning the canonical dark-theme marker, and CodeQL run 40452133386 passed. The three public assets matched Pages artifact 12709999378 and a fresh exact-main build byte for byte."
+  },
+  "crypto-lab-saml-binding": {
+    "commit": "9c7a967fe9f7ed839889df93130e9ae24365d2ad",
+    "reviewed": "2026-10-27",
+    "add": [
+      "RSA@src/saml/keys.ts:31",
+      "SAML 2.0@src/saml/build.ts:84",
+      "SHA-256@src/saml/keys.ts:33",
+      "XML Signature@src/saml/sign.ts:42"
+    ],
+    "addAttacks": [
+      "XML signature wrapping@src/saml/attacks.ts:116"
+    ],
+    "remove": [
+      "Man-in-the-middle"
+    ],
+    "implementation": "xmldsigjs XML Signature / WebCrypto RSA-2048 and SHA-256 / local TypeScript bounded SAML profile, element-binding and replay-state teaching implementation",
+    "note": "Read the complete exact-main README, source/design/evidence records, XML builder/parser/profile/signature/verifier/consumer/attack/lesson source, tests, mutation runner, workflows and learner interface. The declared S12-WBSSO-POST-SYNTH/1 subset creates fresh RSA-2048 signing keys, builds synthetic SAML Responses, applies exclusive canonicalization and one same-document XML Signature reference, and derives all outcomes from signature, profile, element-binding and replay-state checks. The executable wrapping document keeps a genuinely valid signature over the identity provider's assertion while a vulnerable first-match consumer selects an attacker assertion; the repaired route authorizes only from the exact verified element. Separate unsigned-first, duplicate-ID, signature-placement, destination, audience, recipient, time, request-correlation, dependency-disagreement and replay controls distinguish element binding from ordinary byte tampering and fail closed before replay-state consumption. The implementation intentionally enforces a narrower selected-assertion AuthnStatement rule than SAML Errata E26 permits. It is not a complete SAML implementation or interoperability claim: there is no live IdP/SP, metadata, X.509 trust, schema validation, encryption, logout, artifact binding, full transform/canonicalization surface or universal wrapping defense, and only the declared synthetic profile and attack families are covered. Implementation exact-main run 40444225981 passed 88 unit tests on Node 22/24/26, 17 browser/accessibility/reflow checks, a passing clean baseline followed by all 26 mutations caught, build and deployment; exact-main CodeQL run 40442953143 passed with no open main-branch alert. The only subsequent change is the deployment-workflow repair at this current pin. Current exact-main run 40448175345 repeated the 88-unit, 26-mutation and 17-browser gates and deployed Pages artifact 12708639155; CodeQL run 40448175378 passed, and all four public assets match that artifact byte for byte."
   }
 }

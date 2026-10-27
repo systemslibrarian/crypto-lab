@@ -66,6 +66,8 @@ const ALGORITHMS = [
   { name: 'Floyd cycle finding', kind: 'algorithm', family: 'cycle finding', re: /floyd[-_ ]?(?:cycle|collision)/i, std: null },
   { name: 'Hellman chains', kind: 'algorithm', family: 'hash precomputation', re: /hellman[-_ ]?chains?/i, std: null },
   { name: 'Rainbow chains', kind: 'algorithm', family: 'hash precomputation', re: /rainbow[-_ ]?chains?/i, std: null },
+  { name: 'Wiener attack', kind: 'algorithm', family: 'RSA key-recovery attack', re: /\bwiener(?:['’]s)?[-_ ]?(?:attack|recover|recovery)\b/i, pathRe: /(?:^|\/)wiener\/(?:attack|cf|verify)\.ts$/i, std: null },
+  { name: 'Cheon attack', kind: 'algorithm', family: 'discrete-log key-recovery attack', re: /\bcheon(?:['’]s)?(?:[-_ ]?(?:attack|construction|recovery))?\b/i, pathRe: /(?:^|\/)dlog\/aux\/cheon\.ts$/i, std: null },
 
   // --- symmetric: ciphers and modes ---
   { name: 'AES', kind: 'algorithm', family: 'block cipher', re: /\baes\b|advanced[-_ ]encryption/i, std: 'NIST:FIPS 197' },
@@ -251,6 +253,7 @@ const ALGORITHMS = [
   { name: 'Reed-Muller', kind: 'algorithm', family: 'error-correcting code', re: /reed[-_ ]?muller/i, std: null },
   { name: 'BCH', kind: 'algorithm', family: 'error-correcting code', re: /\bbch\b/i, chipRe: /\bbch\b/i, pathRe: /(?:^|\/)bch(?:[-_.]|$)/i, std: null },
   { name: 'Hamming code', kind: 'algorithm', family: 'error-correcting code', re: /hamming[-_ ]?code/i, std: null },
+  { name: 'Gabidulin code', kind: 'algorithm', family: 'rank-metric code', re: /gabidulin/i, std: null },
   { name: 'Shamir secret sharing', kind: 'algorithm', family: 'secret sharing', re: /(?<!fiat)(?<!fiat[-_ ])\bshamir\b/i, std: null },
   { name: 'FROST', kind: 'algorithm', family: 'threshold signature', re: /\bfrost(?:[-_ ]|\b)/i, std: 'IETF:RFC 9591' },
   { name: 'Five-card trick', kind: 'algorithm', family: 'card-based MPC', re: /five[-_ ]card|den[-_ ]?boer/i, std: null },
@@ -355,6 +358,8 @@ const ALGORITHMS = [
   { name: 'MLS', kind: 'algorithm', family: 'protocol', re: /\bmls\b(?![-_ ]?(?:results?|list))/i, structures: ['KeyPackage', 'TreeKEM', 'RatchetTree'], std: 'IETF:RFC 9420' },
   { name: 'Kerberos', kind: 'algorithm', family: 'protocol', re: /kerberos/i, structures: ['AsReq', 'AsRep', 'TgsReq', 'TgsRep', 'ApReq'], std: 'IETF:RFC 4120' },
   { name: 'WebAuthn', kind: 'algorithm', family: 'protocol', re: /webauthn/i, structures: ['AttestationObject', 'AuthenticatorData', 'ClientDataJson'], std: 'W3C:WebAuthn Level 3' },
+  { name: 'SAML 2.0', kind: 'algorithm', family: 'federated-identity protocol', re: /\bsaml(?:[-_ ]?2(?:\.0)?)?\b/i, std: 'OASIS:SAML 2.0' },
+  { name: 'XML Signature', kind: 'algorithm', family: 'signature format', re: /xml[-_ ]?(?:digital[-_ ]?)?signature|\bxml[-_ ]?dsig\b|\bxmldsig\b/i, std: 'W3C:XML Signature 1.1' },
   /* CASE-SENSITIVE, because `opaque` is an ordinary English adjective and this
      term is the one place in the vocabulary where the algorithm's name collides
      with one. Measured 2026-10-15 inside the scanner's own scope (NOT_THE_LAB
@@ -405,6 +410,7 @@ const ALGORITHMS = [
   // --- historical ---
   { name: 'Caesar cipher', kind: 'algorithm', family: 'historical cipher', re: /caesar/i, std: null },
   { name: 'Vigenere cipher', kind: 'algorithm', family: 'historical cipher', re: /vigen[eè]re/i, std: null },
+  { name: 'Affine cipher', kind: 'algorithm', family: 'historical cipher', re: /\baffine[-_ ]?(?:cipher|encrypt|decrypt|crack)\b/i, pathRe: /(?:^|\/)(?:ciphers\/affine|analysis\/affine-crack)\.ts$/i, std: null },
   { name: 'Playfair cipher', kind: 'algorithm', family: 'historical cipher', re: /playfair/i, std: null },
   { name: 'Hill cipher', kind: 'algorithm', family: 'historical cipher', re: /hill[-_ ]?cipher/i, std: null },
   { name: 'Enigma', kind: 'algorithm', family: 'historical cipher', re: /enigma/i, std: null },
@@ -589,6 +595,7 @@ const ATTACKS = [
   { name: 'Chosen-plaintext attack', re: /chosen[-_ ]?plaintext|\bcpa\b/i },
   { name: 'Downgrade attack', re: /downgrade[-_ ]?attack|version[-_ ]?rollback/i },
   { name: 'Replay attack', re: /replay[-_ ]?attack/i },
+  { name: 'XML signature wrapping', re: /(?:xml[-_ ]?)?signature[-_ ]?wrapping|\bxsw\b/i },
   { name: 'Man-in-the-middle', re: /man[-_ ]in[-_ ]the[-_ ]middle|\bmitm\b/i },
   /* Keep this to executable forgery spellings. AKE Ladder and other labs link
      to KCI lessons without themselves mounting a recipient-key KCI attack. */

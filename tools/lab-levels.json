@@ -1505,6 +1505,18 @@
       "level": "advanced",
       "why": "Requires finite-field polynomial sharing, Reed-Solomon error/erasure bounds and careful separation of topology theorems from the protocol actually executed.",
       "reviewed": "2026-10-26: complete README, source, tests and four-part learner flow"
+    },
+    "crypto-lab-rank-metric": {
+      "title": "Rank Metric",
+      "level": "advanced",
+      "why": "Requires finite-field extensions, binary-matrix rank, linearized polynomials, Gabidulin codes and unique-decoding boundaries.",
+      "reviewed": "2026-10-27: complete README, source, tests and learner flow"
+    },
+    "crypto-lab-saml-binding": {
+      "title": "SAML Binding",
+      "level": "advanced",
+      "why": "Requires XML canonicalization and signature-reference semantics, SAML profile constraints, replay state and careful separation of cryptographic verification from application-object selection.",
+      "reviewed": "2026-10-27: complete README, source, tests and learner flow"
     }
   }
 }

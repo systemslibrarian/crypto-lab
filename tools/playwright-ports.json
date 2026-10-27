@@ -144,6 +144,10 @@
   "lab": "crypto-lab-merkle-vault"
  },
  {
+  "port": 4235,
+  "lab": "crypto-lab-hostile-paths"
+ },
+ {
   "port": 4237,
   "lab": "crypto-lab-search-vault"
  },
@@ -748,6 +752,10 @@
   "lab": "crypto-lab-noise-to-numbers"
  },
  {
+  "port": 4675,
+  "lab": "crypto-lab-saml-binding"
+ },
+ {
   "port": 4676,
   "lab": "crypto-lab-bitcoin-script"
  },
@@ -934,5 +942,9 @@
  {
   "port": 4748,
   "lab": "crypto-lab-ipsec-ike"
+ },
+ {
+  "port": 4749,
+  "lab": "crypto-lab-rank-metric"
  }
 ]

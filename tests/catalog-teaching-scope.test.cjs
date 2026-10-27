@@ -1312,7 +1312,7 @@ function checkBookReviewScope(source) {
   const executed = {
     'crypto-lab-ec-point-arithmetic': ['Brute force', 'Discrete log'],
     'crypto-lab-vigenere-break': ['Frequency analysis'],
-    'crypto-lab-otp-vault': ['Nonce reuse'],
+    'crypto-lab-otp-vault': ['Known-plaintext attack', 'Nonce reuse'],
     'crypto-lab-nonce-collision': [
       'Birthday bound', 'Chosen-plaintext attack', 'IV reuse', 'Key recovery', 'Nonce reuse',
     ],
@@ -1328,7 +1328,10 @@ function checkBookReviewScope(source) {
     assert.deepEqual(attacksFor(source, slug), attacks, `${slug}: count only its own bounded exhibits`);
   }
   assert.deepEqual(implementationsFor(source, 'crypto-lab-vigenere-break'), ['Vigenere cipher']);
-  assert.deepEqual(implementationsFor(source, 'crypto-lab-otp-vault'), ['One-time pad']);
+  assert.deepEqual(implementationsFor(source, 'crypto-lab-otp-vault'), [
+    'One-time pad',
+    'Vigenere cipher',
+  ]);
   assert.ok(implementationsFor(source, 'crypto-lab-nonce-collision').includes('ChaCha20-Poly1305'),
     'Nonce Collision actually encrypts and verifies this AEAD, not just mentions it');
   assert.ok(!implementationsFor(source, 'crypto-lab-pki-chain').includes('ML-DSA'),
@@ -3118,7 +3121,7 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
     'Byzantine path actions are protocol scenarios, not a catalog attack credit');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="4086fff2f6d89ce83fa8e4dd2ead1a3c42734229"/);
+  assert.match(card, /data-review-commit="e954fe1101dd6311f2434409664964f9ed2b5c8c"/);
   assert.match(card, /GF\(257\), Shamir-style polynomial sharing, Welch-Berlekamp decoding/);
   assert.doesNotMatch(card, /data-attacks=/);
   assert.deepEqual(chipsFor(source, slug), [
@@ -3129,7 +3132,8 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '4086fff2f6d89ce83fa8e4dd2ead1a3c42734229');
+  assert.equal(review.commit, 'e954fe1101dd6311f2434409664964f9ed2b5c8c');
+  assert.equal(review.reviewed, '2026-10-27');
   assert.deepEqual(review.add, [
     'Reed-Solomon@src/psmt/decoder.ts:37',
     'Shamir secret sharing@src/psmt/protocol.ts:131',
@@ -3183,7 +3187,7 @@ test('Hostile Paths L-R-10 controls reject lost credit, stale pins, missing ambi
       'data-attacks="Fault injection@src/psmt/protocol.ts:152" data-overlaps="',
     )),
     html.replace(cardRe, (card) => card.replace(
-      '4086fff2f6d89ce83fa8e4dd2ead1a3c42734229',
+      'e954fe1101dd6311f2434409664964f9ed2b5c8c',
       '0'.repeat(40),
     )),
   ]) {
@@ -3461,30 +3465,40 @@ test('Compression Leak controls reject stale pins, hidden byte-count claims and 
 
 function checkOramVaultReview(source, manifests = exhibitManifest, reviewed = catalogReviewed) {
   const slug = 'crypto-lab-oram-vault';
-  assert.deepEqual(implementationsFor(source, slug), ['AES', 'AES-GCM', 'HMAC', 'SHA-256']);
+  assert.deepEqual(implementationsFor(source, slug), [
+    'AES',
+    'AES-GCM',
+    'ECDSA',
+    'HMAC',
+    'P-256',
+    'SHA-256',
+  ]);
   assert.deepEqual(attacksFor(source, slug), [],
     'A caveat naming cache and generic side channels is not an executed attack');
   assert.ok(!referencesFor(source, slug).includes('FRI'),
     'The weekday fragment in Friday is not a Fast Reed-Solomon IOP reference');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="0c7f89281784748a9c9d4fafb41d85ac1839a4c5"/);
+  assert.match(opening, /data-review-commit="7a882b09e7a06e2ede8774d2abf92fa27856f01c"/);
   assert.match(opening, /AES-GCM@src\/client\/encryption\.ts:103/);
   assert.match(opening, /HMAC@src\/hierarchical\/client\.ts:185/);
-  assert.match(opening, /SHA-256@src\/hierarchical\/client\.ts:185/);
+  assert.match(opening, /SHA-256@src\/multiclient\/protocol\.ts:219/);
   assert.match(opening, /fixed N=16 hierarchy/);
-  assert.match(opening, /skip-after-hit control returns the same plaintext/);
-  assert.match(opening, /not the papers' asymptotically efficient oblivious hash table/);
+  assert.match(opening, /insecure skipped-probe counterexample/);
+  assert.match(opening, /fixed N=16 hierarchy comparison/);
+  assert.match(opening, /three fixed-rights clients over one encrypted store/);
+  assert.match(opening, /valid unauthorized upload can land while every honest reader rejects it/);
 
   const review = reviewed[slug];
-  assert.equal(review.commit, '0c7f89281784748a9c9d4fafb41d85ac1839a4c5');
-  assert.deepEqual(review.remove, ['Cache timing', 'Side-channel (unspecified)']);
-  assert.deepEqual(review.removeReferences, ['FRI']);
-  assert.match(review.implementation, /bounded hierarchical ORAM teaching implementations/);
+  assert.equal(review.commit, '7a882b09e7a06e2ede8774d2abf92fa27856f01c');
+  assert.equal(review.reviewed, '2026-10-27');
+  assert.deepEqual(review.remove, ['Cache timing', 'Discrete log', 'Side-channel (unspecified)']);
+  assert.deepEqual(review.removeReferences, ['FRI', 'Pairing']);
+  assert.match(review.implementation, /bounded multi-client ORAM teaching implementations/);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, '0c7f89281784748a9c9d4fafb41d85ac1839a4c5');
-  assert.equal(mapped.reviewed, '2026-10-26');
+  assert.equal(mapped.commit, '7a882b09e7a06e2ede8774d2abf92fa27856f01c');
+  assert.equal(mapped.reviewed, '2026-10-27');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'access-pattern',
@@ -3493,6 +3507,7 @@ function checkOramVaultReview(source, manifests = exhibitManifest, reviewed = ca
     'adversary',
     'costs',
     'path-hierarchy',
+    'multi-client',
   ]);
 
   const comparison = mapped.exhibits.find((item) => item.id === 'path-hierarchy');
@@ -3512,6 +3527,22 @@ function checkOramVaultReview(source, manifests = exhibitManifest, reviewed = ca
     'src/hierarchical/comparison.ts:222',
   ]) {
     assert.ok(comparison.evidence.includes(anchor), `Missing E-K-10 evidence anchor ${anchor}`);
+  }
+
+  const multiClient = mapped.exhibits.find((item) => item.id === 'multi-client');
+  assert.equal(multiClient.execution, 'real-crypto');
+  assert.match(multiClient.action, /naive shared-client deployment/);
+  assert.match(multiClient.action, /client-server collusion attack/);
+  assert.match(multiClient.outcome, /derives releases and refusals from live protocol state/i);
+  assert.match(multiClient.limits, /does not provide global freshness/i);
+  assert.match(multiClient.limits, /client-collusion security/i);
+  for (const anchor of [
+    'src/multiclient/scenario.ts:353',
+    'src/multiclient/scenario.ts:499',
+    'src/multiclient/protocol.ts:694',
+    'src/multiclient/protocol.ts:1126',
+  ]) {
+    assert.ok(multiClient.evidence.includes(anchor), `Missing L-R-13 evidence anchor ${anchor}`);
   }
 }
 
@@ -3535,8 +3566,8 @@ test('ORAM Vault controls reject stale pins, false credits and stronger hierarch
       'data-references="FRI | ',
     )),
     html.replace(cardRe, (card) => card.replace(
-      "not the papers' asymptotically efficient oblivious hash table",
-      'a production asymptotically efficient oblivious hash table',
+      'fixed N=16 hierarchy comparison',
+      'production asymptotically efficient hierarchy',
     )),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the ORAM Vault card');
@@ -3553,10 +3584,171 @@ test('ORAM Vault controls reject stale pins, false credits and stronger hierarch
       .filter((item) => item.id !== 'path-hierarchy');
   assert.throws(() => checkOramVaultReview(html, missingComparison), assert.AssertionError);
 
+  const missingMultiClient = structuredClone(exhibitManifest);
+  missingMultiClient.labs['crypto-lab-oram-vault'].exhibits =
+    missingMultiClient.labs['crypto-lab-oram-vault'].exhibits
+      .filter((item) => item.id !== 'multi-client');
+  assert.throws(() => checkOramVaultReview(html, missingMultiClient), assert.AssertionError);
+
+  const strongerMultiClient = structuredClone(exhibitManifest);
+  const multiClient = strongerMultiClient.labs['crypto-lab-oram-vault'].exhibits
+    .find((item) => item.id === 'multi-client');
+  multiClient.limits = 'Production multi-client ORAM with global freshness and client-collusion security.';
+  assert.throws(() => checkOramVaultReview(html, strongerMultiClient), assert.AssertionError);
+
   const strongerComparison = structuredClone(exhibitManifest);
   const comparison = strongerComparison.labs['crypto-lab-oram-vault'].exhibits
     .find((item) => item.id === 'path-hierarchy');
   comparison.outcome = 'The full production construction proves obliviousness against every server.';
   comparison.limits = 'Production ORAM with constant client memory and malicious-server integrity.';
   assert.throws(() => checkOramVaultReview(html, strongerComparison), assert.AssertionError);
+});
+
+function checkRankMetricReview(source, manifests = exhibitManifest, reviewed = catalogReviewed) {
+  const slug = 'crypto-lab-rank-metric';
+  assert.deepEqual(implementationsFor(source, slug), ['Gabidulin code']);
+  assert.deepEqual(attacksFor(source, slug), [],
+    'Historical key-recovery and deployment side-channel prose are not executed attacks');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-review-commit="b9d9ba5887b1a59894d9deb3ae08225cbb239f6f"/);
+  assert.match(opening, /all 256 words of a fixed \[4,2,3\] Gabidulin\/MRD code/);
+  assert.match(opening, /enumerates all rank-two errors to show both refusal and miscorrection/);
+  assert.match(opening, /no encryption, KEM, production parameter set, efficient algebraic decoder or security reduction/);
+
+  const review = reviewed[slug];
+  assert.equal(review.commit, 'b9d9ba5887b1a59894d9deb3ae08225cbb239f6f');
+  assert.equal(review.reviewed, '2026-10-27');
+  assert.deepEqual(review.remove, ['Key recovery', 'Side-channel (unspecified)']);
+  assert.match(review.implementation, /binary-matrix rank and exhaustive Gabidulin-code teaching implementation/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, 'b9d9ba5887b1a59894d9deb3ae08225cbb239f6f');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'metric-weights',
+    'gabidulin-census',
+    'bounded-decoder',
+    'deployment-boundary',
+  ]);
+
+  const decoder = mapped.exhibits.find((item) => item.id === 'bounded-decoder');
+  assert.equal(decoder.execution, 'real-values');
+  assert.match(decoder.outcome, /exhaustive decoder returns only a unique radius-one word/);
+  assert.match(decoder.limits, /guarantee ends at rank weight one/);
+  assert.match(decoder.limits, /not deployment failure rates/);
+  for (const anchor of ['src/rank/scenarios.ts:47', 'src/rank/gabidulin.ts:184']) {
+    assert.ok(decoder.evidence.includes(anchor), `Missing S10 evidence anchor ${anchor}`);
+  }
+}
+
+test('Rank Metric credits exact code mathematics without importing paper-title attacks', () => {
+  checkRankMetricReview(html);
+});
+
+test('Rank Metric controls reject stale pins, false attacks and a stronger decoder claim', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-rank-metric\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(
+      'data-references="',
+      'data-attacks="Key recovery@README.md:1" data-references="',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      'b9d9ba5887b1a59894d9deb3ae08225cbb239f6f',
+      '0'.repeat(40),
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the Rank Metric card');
+    assert.throws(() => checkRankMetricReview(changed), assert.AssertionError);
+  }
+
+  const missingDecoder = structuredClone(exhibitManifest);
+  missingDecoder.labs['crypto-lab-rank-metric'].exhibits =
+    missingDecoder.labs['crypto-lab-rank-metric'].exhibits
+      .filter((item) => item.id !== 'bounded-decoder');
+  assert.throws(() => checkRankMetricReview(html, missingDecoder), assert.AssertionError);
+
+  const strongerDecoder = structuredClone(exhibitManifest);
+  strongerDecoder.labs['crypto-lab-rank-metric'].exhibits
+    .find((item) => item.id === 'bounded-decoder').limits =
+      'This efficient production decoder corrects every rank-two error.';
+  assert.throws(() => checkRankMetricReview(html, strongerDecoder), assert.AssertionError);
+});
+
+function checkSamlBindingReview(source, manifests = exhibitManifest, reviewed = catalogReviewed) {
+  const slug = 'crypto-lab-saml-binding';
+  assert.deepEqual(implementationsFor(source, slug), [
+    'RSA',
+    'SAML 2.0',
+    'SHA-256',
+    'XML Signature',
+  ]);
+  assert.deepEqual(attacksFor(source, slug), ['XML signature wrapping'],
+    'A standards bibliography entry about MITM is not an executed SAML Binding attack');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-review-commit="9c7a967fe9f7ed839889df93130e9ae24365d2ad"/);
+  assert.match(opening, /genuinely valid signature over the identity provider's assertion/);
+  assert.match(opening, /repaired route authorizes only from the exact verified element/);
+  assert.match(opening, /not a complete SAML implementation or interoperability claim/);
+
+  const review = reviewed[slug];
+  assert.equal(review.commit, '9c7a967fe9f7ed839889df93130e9ae24365d2ad');
+  assert.equal(review.reviewed, '2026-10-27');
+  assert.deepEqual(review.addAttacks, ['XML signature wrapping@src/saml/attacks.ts:116']);
+  assert.deepEqual(review.remove, ['Man-in-the-middle']);
+  assert.match(review.implementation, /bounded SAML profile, element-binding and replay-state teaching implementation/);
+
+  const mapped = manifests.labs[slug];
+  assert.equal(mapped.commit, '9c7a967fe9f7ed839889df93130e9ae24365d2ad');
+  assert.equal(mapped.reviewScope, 'complete');
+  assert.deepEqual(mapped.exhibits.map((item) => item.id), [
+    'declared-profile',
+    'validation-layers',
+    'wrapping-comparison',
+    'negative-controls',
+    'omissions',
+  ]);
+
+  const wrapping = mapped.exhibits.find((item) => item.id === 'wrapping-comparison');
+  assert.equal(wrapping.execution, 'real-crypto');
+  assert.match(wrapping.outcome, /real RSA signature still verifies/);
+  assert.match(wrapping.outcome, /repaired consumer uses only the exact verified assertion/);
+  assert.match(wrapping.limits, /does not claim every wrapping permutation/);
+  for (const anchor of ['src/saml/attacks.ts:116', 'src/saml/consumers.ts:177']) {
+    assert.ok(wrapping.evidence.includes(anchor), `Missing S12 evidence anchor ${anchor}`);
+  }
+}
+
+test('SAML Binding credits the executed wrapping attack without importing standards prose', () => {
+  checkSamlBindingReview(html);
+});
+
+test('SAML Binding controls reject bibliography attacks, stale pins and universal-defense claims', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-saml-binding\/"[^>]*>/;
+  for (const changed of [
+    html.replace(cardRe, (card) => card.replace(
+      'data-attacks="',
+      'data-attacks="Man-in-the-middle@docs/design-and-sources.md:52 | ',
+    )),
+    html.replace(cardRe, (card) => card.replace(
+      '9c7a967fe9f7ed839889df93130e9ae24365d2ad',
+      '0'.repeat(40),
+    )),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the SAML Binding card');
+    assert.throws(() => checkSamlBindingReview(changed), assert.AssertionError);
+  }
+
+  const missingWrapping = structuredClone(exhibitManifest);
+  missingWrapping.labs['crypto-lab-saml-binding'].exhibits =
+    missingWrapping.labs['crypto-lab-saml-binding'].exhibits
+      .filter((item) => item.id !== 'wrapping-comparison');
+  assert.throws(() => checkSamlBindingReview(html, missingWrapping), assert.AssertionError);
+
+  const universalDefense = structuredClone(exhibitManifest);
+  universalDefense.labs['crypto-lab-saml-binding'].exhibits
+    .find((item) => item.id === 'wrapping-comparison').limits =
+      'This is a universal wrapping defense for every SAML deployment.';
+  assert.throws(() => checkSamlBindingReview(html, universalDefense), assert.AssertionError);
 });

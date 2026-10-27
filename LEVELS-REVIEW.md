@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 152. Total 251.
+**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 153. Total 252.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -141,7 +141,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (152)
+## Advanced — `advanced` (153)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -149,6 +149,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Adaptor Gate](https://systemslibrarian.github.io/crypto-lab-adaptor-gate/) | rule | needs specialist background: adaptor signature |
 | [AEGIS Gate](https://systemslibrarian.github.io/crypto-lab-aegis-gate/) | rule | needs specialist background: sponge **(flagged)** |
 | [AKE Ladder](https://systemslibrarian.github.io/crypto-lab-ake-ladder/) | 2026-10-21: README exhibits and src | the AKE1-AKE5 family, CCA encryption and channel binding over ristretto255 |
+| [Anamorphic Channel](https://systemslibrarian.github.io/crypto-lab-anamorphic/) | 2026-10-27: complete README, source map, implementation, tests and learner flow | Requires prime-order group ElGamal, PRF reductions, coercive key-disclosure models, synchronized state and careful separation of syntactic ciphertext shape from computational indistinguishability. |
 | [Ascon](https://systemslibrarian.github.io/crypto-lab-ascon/) | rule | needs specialist background: sponge |
 | [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) | hand | TPM 2.0 measured boot, TPMS_ATTEST quotes and RATS verification **(flagged)** |
 | [Attribute Gate](https://systemslibrarian.github.io/crypto-lab-attribute-gate/) | rule | needs specialist background: BLS12, attribute-based |

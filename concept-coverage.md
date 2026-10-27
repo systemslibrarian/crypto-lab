@@ -591,6 +591,16 @@ implements neither standard-model HIBE nor a production or approved post-quantum
 and ML-KEM is not presented as a drop-in identity-extraction replacement. §10 remains
 `DEEP`; no gap closes. Catalogued total moves to 251.*
 
+*Version 68 — files Anamorphic Channel under §23b as the receiver-anamorphic
+counterpart to Shadow Vault's two-slot deniable container. One conventional two-point
+ElGamal ciphertext opens to the prescribed overt group message under the surrendered
+ordinary secret key, while a separate PRF double key and synchronized counter recover a
+bounded covert symbol. The lab makes counter reuse and double-key compromise explicit and
+keeps the PRF's anamorphic-indistinguishability role separate from DDH's protection of the
+ordinary ElGamal message from outsiders. §23b remains `COVERED`: two sharply different
+mechanisms deepen the coercive-adversary boundary but are not several independent treatments
+of either construction. No gap closes. Catalogued total moves to 252.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1319,8 +1329,14 @@ is covered several times over. A reader who split it into three concepts, as the
 invites, would find three `COVERED` entries rather than one `DEEP` one.
 
 **23b. Deniability — `COVERED`**
-Shadow Vault. One container, two passphrases, two plaintexts, and no way to prove a second
-message exists.
+Shadow Vault · Anamorphic Channel.
+
+Shadow Vault has one container, two passphrases and two independently encrypted slots; a
+format-aware reader still learns the configured role of a disclosed passphrase. Anamorphic
+Channel answers a different coercive disclosure: the surrendered ordinary ElGamal key opens
+the prescribed overt message from a conventional two-point ciphertext, while only the
+separate PRF double key and synchronized counter recover the bounded covert symbol. It does
+not turn endpoint compromise, traffic analysis or operational coercion into solved problems.
 
 Split out of §23 in v4. Every other concept in this section hides *who, what, or which* —
 deniability attacks a different question, whether there is anything to hide at all, and the
@@ -1816,7 +1832,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 251.**
+**Catalogued total: 252.**
 
 ---
 

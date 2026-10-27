@@ -29,6 +29,21 @@
     ],
     "note": "secp256k1 is added by review because the scanner now reads `import { schnorr } from '@noble/curves/secp256k1.js'` as a module path rather than an implementation, which is right in general and wrong here: src/crypto/secp.ts wraps that import into the lab's own point and scalar layer (N, G, mulG, mul, liftX, invModN) and src/crypto/adaptor.ts computes the adaptor construction on it directly. The anchor is the defining point addition, R + T, not the import. Adaptor layer is the lab's own code over @noble/curves point/scalar ops; the completed signature is verified by the library's unmodified BIP-340 verify. Ledgers and PTLC routing are modeled and labelled as such in-page; PTLC settlement is causal (each hop consumes the value extracted downstream), not precomputed."
   },
+  "crypto-lab-anamorphic": {
+    "commit": "53a3ce20441e633c283fbdd1dcc6b4b0914e1cfe",
+    "reviewed": "2026-10-27",
+    "add": [
+      "ElGamal@src/anamorphic.ts:230"
+    ],
+    "remove": [
+      "Chosen-plaintext attack",
+      "Ciphertext malleability",
+      "Key recovery",
+      "Malleability (unspecified)"
+    ],
+    "implementation": "@noble/curves ristretto255 / @noble/hashes HMAC-SHA-512 and SHA-256 / local TypeScript bounded synchronized robust Anamorphic ElGamal teaching implementation",
+    "note": "Read the complete exact-main README, design brief, source map, construction, message, scenario, comparison and learner-interface source, unit and browser tests, mutation runner, workflows and visible limits. The lab transcribes Banfi et al.'s synchronized robust Anamorphic ElGamal Construction 6 into additive ristretto255 notation. An ordinary two-point ciphertext opens to the prescribed overt group message under the surrendered ordinary secret key, while a separate HMAC-SHA-512 PRF double key and synchronized counter recover one of eight bounded covert symbols. Ordinary, wrong-counter, independently generated wrong-key, repeated-counter and fresh-counter controls are separately computed. Independent review corrected the randomness domain from the covert-message count to the group order, separated the PRF's anamorphic-indistinguishability role from DDH's ordinary ElGamal role, bounded rejection sampling against a stuck RNG and prevented a vacuous wrong-key control. The page states that counter reuse repeats C2, double-key compromise is retroactive, plain ElGamal is malleable and unauthenticated, and no browser sample proves the computational security definition. The chosen-plaintext and key-recovery terms occur only in security-model and source-title prose; ciphertext malleability is a tested negative property but not a learner-executed attack exhibit, so none receives attack credit. ElGamal is review-anchored at the actual ciphertext equation rather than left as a prose reference. Exact-main run 40494493381 passed 32 unit tests on Node 22/24/26 with 97.67/93.50/100/98.21 coverage, 11 learner-claim checks, four accessibility/reflow/keyboard checks and all 15 named mutations; CodeQL run 40494493385 passed. All four public files match Pages artifact 12730386869 and a fresh exact-main build byte for byte."
+  },
   "crypto-lab-attestation-gate": {
     "commit": "7241e798da975a170d447520a584e6399959a3ac",
     "reviewed": "2026-10-26",

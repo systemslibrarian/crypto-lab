@@ -218,18 +218,18 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   const slug = 'crypto-lab-lfsr-forge';
   assert.deepEqual(implementationsFor(source, slug), ['A5/1', 'Trivium'],
     'Credit the executed historical A5/1 and Trivium primitives without promoting comparisons');
-  assert.deepEqual(attacksFor(source, slug), ['Cube attack', 'Key recovery'],
-    'Credit the executed toy-oracle cube attack and retain executable zero-round recovery');
+  assert.deepEqual(attacksFor(source, slug), ['Key recovery'],
+    'Retain executable zero-round recovery without crediting the relocated toy-oracle cube attack');
 
   const opening = openingFor(source, slug);
   assert.match(opening, /data-category="[^"]*\bHISTORICAL\b/);
-  assert.match(opening, /data-review-commit="c4ef2da4b33fd08382a4309d9665745cb30bbda5"/);
+  assert.match(opening, /data-review-commit="03f34f75743da3a540e3816b4e426f7999960a05"/);
   assert.match(opening, /A5\/1@src\/a51\/a51\.ts:125/,
     'A5/1 must anchor at the actual majority-controlled clock step');
   assert.match(opening, /Trivium@src\/trivium\/trivium\.ts:29/,
     'Trivium must anchor at the actual state advance, not a panel mount');
-  assert.match(opening, /Cube attack@src\/cube\/panel\.ts:24/,
-    'Cube attack must anchor at the learner-visible executed two-phase lesson');
+  assert.doesNotMatch(opening, /Cube attack@|src\/cube\//,
+    'The removed standalone cube lesson must not retain LFSR Forge credit');
   for (const falseReference of ['Pairing', 'RC4', 'Shamir secret sharing']) {
     assert.ok(!referencesFor(source, slug).includes(falseReference),
       `${falseReference} is not an LFSR Forge algorithm reference`);
@@ -238,48 +238,43 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   const block = blockFor(source, slug);
   assert.match(block, /inspect real Trivium clocking/);
   assert.match(block, /audit editable Boolean combiners/);
-  assert.match(block, /execute toy-oracle cube sums that recover affine superpolys/);
   assert.match(block, /reverse-engineered historical A5\/1 majority clocking/);
   assert.match(block, /bounded leaked-state completion/);
+  assert.doesNotMatch(block, /execute toy-oracle cube sums|recover affine superpolys/);
   const chips = chipsFor(source, slug);
   assert.ok(chips.includes('Trivium'), 'The learner-facing card must expose its Trivium lesson');
   assert.ok(chips.includes('Boolean Function Audit'), 'The learner-facing card must expose the Boolean audit');
-  assert.ok(chips.includes('Cube Sums'), 'The learner-facing card must expose the cube-sum lesson');
-  assert.ok(chips.includes('Superpolys'), 'The learner-facing card must expose superpoly recovery');
+  assert.ok(!chips.includes('Cube Sums'), 'The relocated cube-sum lesson must be absent');
+  assert.ok(!chips.includes('Superpolys'), 'The relocated superpoly lesson must be absent');
   assert.ok(chips.includes('Historical A5/1'), 'The learner-facing card must identify the historical cipher');
   assert.ok(chips.includes('Majority Clocking'), 'The learner-facing card must expose irregular clocking');
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, 'c4ef2da4b33fd08382a4309d9665745cb30bbda5');
+  assert.equal(sourceReview.commit, '03f34f75743da3a540e3816b4e426f7999960a05');
   assert.deepEqual(sourceReview.add, [
     'A5/1@src/a51/a51.ts:125',
     'Trivium@src/trivium/trivium.ts:29',
   ]);
-  assert.deepEqual(sourceReview.remove, ['Brute force', 'Known-plaintext attack']);
+  assert.deepEqual(sourceReview.remove, ['Brute force', 'Cube attack', 'Known-plaintext attack']);
   assert.match(sourceReview.implementation, /historical A5\/1/);
   assert.match(sourceReview.implementation, /bounded state completion/);
-  assert.match(sourceReview.note, /Independently transcribed setup code derives the post-key, post-COUNT and post-100 checkpoint states/);
-  assert.match(sourceReview.note, /matches the two published consecutive 114-bit bursts/);
-  assert.match(sourceReview.note, /separate controller-state comparison/);
-  assert.match(sourceReview.note, /masked 52-bit disclosure, copied observations, clock model and run identifier/);
-  assert.match(sourceReview.note, /no full hidden state or Kc/);
-  assert.match(sourceReview.note, /not a published A5\/1 attack/);
-  assert.match(sourceReview.note, /does not recover Kc/);
+  assert.match(sourceReview.note, /standalone toy-oracle cube code and panel are absent/);
+  assert.match(sourceReview.note, /Boolean-combiner panel remains 07 and historical A5\/1 is now panel 08/);
+  assert.match(sourceReview.note, /Trivium panel now links to SAT Break's separate cube exhibit/);
+  assert.match(sourceReview.note, /derives setup checkpoints, reproduces both published bursts/);
+  assert.match(sourceReview.note, /neither a published A5\/1 attack nor Kc recovery/);
   for (const claimSource of [opening, sourceReview.note]) {
     assert.match(claimSource,
-      /literal Brute force scanner hit appears only in the independent unit-test oracle/);
+      /literal Brute force scanner hit remains only in the independent unit-test oracle/);
     assert.match(claimSource,
-      /Panel 09 separately exhausts 2\^12 state completions under disclosure of 52 exact post-100 state bits/);
-    assert.match(claimSource,
-      /bounded state completion, not as a generic brute-force attack or A5\/1\/Kc attack/);
-    assert.match(claimSource,
-      /Known plaintext\/ciphertext remains prose[\s\S]*is not an attack workflow executed by this lab/);
+      /known plaintext\/ciphertext remains explanatory prose rather than an executed attack/);
   }
 
   const review = manifest.labs[slug];
-  assert.equal(review.commit, 'c4ef2da4b33fd08382a4309d9665745cb30bbda5');
+  assert.equal(review.commit, '03f34f75743da3a540e3816b4e426f7999960a05');
   assert.equal(review.reviewScope, 'complete');
-  assert.equal(review.exhibits.length, 9);
+  assert.equal(review.exhibits.length, 8);
+  assert.equal(review.exhibits.some(exhibit => exhibit.id === 'cube-superpoly-recovery'), false);
   const trivium = review.exhibits.find(exhibit => exhibit.id === 'trivium');
   assert.ok(trivium);
   assert.ok(trivium.evidence.includes('src/trivium/trivium.ts:29'));
@@ -300,28 +295,6 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   assert.match(booleanAudit.limits, /independent uniform bits/);
   assert.match(booleanAudit.limits, /127 states or 105 state pairs/);
   assert.match(booleanAudit.limits, /does not exclude every fast algebraic relation/);
-  const cube = review.exhibits.find(exhibit => exhibit.id === 'cube-superpoly-recovery');
-  assert.ok(cube);
-  for (const anchor of [
-    'src/cube/oracle.ts:15',
-    'src/cube/oracle.ts:33',
-    'src/cube/analysis.ts:105',
-    'src/cube/analysis.ts:143',
-    'src/cube/analysis.ts:176',
-    'src/cube/analysis.ts:209',
-    'src/cube/panel.ts:19',
-    'src/cube/panel.ts:45',
-    'src/cube/panel.ts:135',
-    'src/cube/panel.ts:143',
-    'src/cube/panel.ts:145',
-    'src/cube/panel.ts:146',
-  ]) assert.ok(cube.evidence.includes(anchor), `Missing cube-attack evidence ${anchor}`);
-  assert.match(cube.outcome, /8 → 4 → 2 → 1 to key 110/);
-  assert.match(cube.outcome, /C34 remains a valid cube with a quadratic superpoly/);
-  assert.match(cube.outcome, /flipping C13 recovers 000 before held-outs reject it/);
-  assert.match(cube.limits, /three-secret\/four-public degree-four toy oracle/);
-  assert.match(cube.limits, /C34 is a valid cube whose quadratic superpoly is not a maxterm/);
-  assert.match(cube.limits, /executes no Trivium state or round/);
 
   const a51 = review.exhibits.find(exhibit => exhibit.id === 'historical-a51');
   assert.ok(a51);
@@ -358,6 +331,88 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   assert.match(a51.limits, /nothing about modern cellular encryption/);
 }
 
+function checkSatBreakCubeScope(source, manifest = exhibitManifest, reviewed = catalogReviewed) {
+  const slug = 'crypto-lab-sat-break';
+  assert.deepEqual(implementationsFor(source, slug), ['Toy SPN']);
+  assert.deepEqual(attacksFor(source, slug), ['Cube attack', 'Key recovery'],
+    'Credit both the executed cube-sum recovery and its key-recovery result');
+
+  const opening = openingFor(source, slug);
+  assert.match(opening, /data-category="[^"]*\bATTACKS\b/);
+  assert.match(opening, /data-review-commit="e4cc4813e6feec10cfa616c4090f8d2c7a48a9f5"/);
+  assert.match(opening, /Cube attack@src\/cube\/panel\.ts:25/,
+    'Cube attack must anchor at the learner-visible two-phase lesson');
+  assert.match(opening, /Key recovery@src\/cube\/analysis\.ts:176/,
+    'Key recovery must anchor at the executed affine solve');
+  assert.ok(referencesFor(source, slug).includes('Trivium'),
+    'Trivium remains comparison context, not an executed primitive');
+  assert.ok(!referencesFor(source, slug).includes('Shamir secret sharing'));
+
+  const block = blockFor(source, slug);
+  assert.match(block, /two algebraic techniques/);
+  assert.match(block, /cube sums that yield linear superpolys/);
+  assert.match(block, /held-out verification/);
+  const chips = chipsFor(source, slug);
+  for (const chip of ['SAT', 'CNF', 'CaDiCaL', 'Toy SPN', 'Cube Sums', 'Superpolys']) {
+    assert.ok(chips.includes(chip), `The SAT Break card must expose ${chip}`);
+  }
+
+  const sourceReview = reviewed[slug];
+  assert.equal(sourceReview.commit, 'e4cc4813e6feec10cfa616c4090f8d2c7a48a9f5');
+  assert.deepEqual(sourceReview.add, ['Toy SPN@src/crypto/spn.ts:99']);
+  assert.deepEqual(sourceReview.addAttacks, [
+    'Cube attack@src/cube/panel.ts:25',
+    'Key recovery@src/cube/analysis.ts:176',
+  ]);
+  assert.deepEqual(sourceReview.remove, [
+    'Differential cryptanalysis',
+    'Impossible differential',
+    'Linear cryptanalysis',
+  ]);
+  assert.match(sourceReview.implementation, /toy-oracle cube\/superpoly analysis/);
+  assert.match(sourceReview.note, /128 raw evaluations over 72 distinct secret\/public-row pairs/);
+  assert.match(sourceReview.note, /rank-three system filters 8 → 4 → 2 → 1 to key 110 from sums 111/);
+  assert.match(sourceReview.note, /C34 is a valid cube with quadratic superpoly k1k2 ⊕ k3/);
+  assert.match(sourceReview.note, /flipping C13 recovers wrong candidate 000 before held-outs reject it/);
+  assert.match(sourceReview.note, /16 raw calls across 12 distinct public rows/);
+  assert.match(sourceReview.note, /toy-oracle counts, not attack costs/);
+  assert.match(sourceReview.note, /executes no LFSR or Trivium state or round/);
+
+  const review = manifest.labs[slug];
+  assert.equal(review.commit, 'e4cc4813e6feec10cfa616c4090f8d2c7a48a9f5');
+  assert.equal(review.reviewScope, 'complete');
+  assert.equal(review.exhibits.length, 8);
+  const cube = review.exhibits.find(exhibit => exhibit.id === 'cube-superpoly-recovery');
+  assert.ok(cube);
+  for (const anchor of [
+    'src/cube/oracle.ts:15',
+    'src/cube/oracle.ts:33',
+    'src/cube/oracle.ts:69',
+    'src/cube/analysis.ts:105',
+    'src/cube/analysis.ts:143',
+    'src/cube/analysis.ts:176',
+    'src/cube/analysis.ts:209',
+    'src/cube/panel.ts:19',
+    'src/cube/panel.ts:24',
+    'src/cube/panel.ts:46',
+    'src/cube/panel.ts:96',
+    'src/cube/panel.ts:100',
+    'src/cube/panel.ts:140',
+    'src/cube/panel.ts:146',
+  ]) assert.ok(cube.evidence.includes(anchor), `Missing cube-attack evidence ${anchor}`);
+  assert.equal(cube.execution, 'real-values');
+  assert.match(cube.action, /all eight teaching keys/);
+  assert.match(cube.action, /four disjoint held-out rows/);
+  assert.match(cube.outcome, /8 → 4 → 2 → 1 to key 110/);
+  assert.match(cube.outcome, /C34 remains a valid cube with a quadratic superpoly/);
+  assert.match(cube.outcome, /dropping C24 leaves 001\/110/);
+  assert.match(cube.outcome, /flipping C13 recovers 000 before held-outs reject it/);
+  assert.match(cube.limits, /three-secret\/four-public degree-four toy oracle/);
+  assert.match(cube.limits, /128 preprocessing calls and 16 online calls are toy-oracle counts, not attack costs/);
+  assert.match(cube.limits, /C34 is a valid cube whose quadratic superpoly is not a maxterm/);
+  assert.match(cube.limits, /executes no LFSR or Trivium state or round/);
+}
+
 test('LFSR Forge publishes historical A5/1, Trivium and exact Boolean analysis without false credits', () => {
   checkLfsrForgeScope(html);
 });
@@ -369,20 +424,15 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
     html.replace(cardRe, card => card.replace('A5/1@src/a51/a51.ts:125', 'A5/1@src/a51/a51.ts:124')),
     html.replace(cardRe, card => card.replace(/Trivium@[^|" ]+(?: \| )?/, '')),
     html.replace(cardRe, card => card.replace('Trivium@src/trivium/trivium.ts:29', 'Trivium@src/trivium/trivium.ts:28')),
-    html.replace(cardRe, card => card.replace(/Cube attack@[^|" ]+(?: \| )?/, '')),
-    html.replace(cardRe, card => card.replace('Cube attack@src/cube/panel.ts:24', 'Cube attack@src/cube/panel.ts:45')),
-    html.replace(cardRe, card => card.replace('data-attacks="Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37"',
-      'data-attacks="Brute force@README.md:80 | Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:140"')),
+    html.replace(cardRe, card => card.replace('data-attacks="Key recovery@src/trivium/panel.ts:37"',
+      'data-attacks="Cube attack@src/trivium/panel.ts:37 | Key recovery@src/trivium/panel.ts:37"')),
     html.replace(cardRe, card => card.replace('data-references="', 'data-references="Pairing | RC4 | Shamir secret sharing | ')),
-    html.replace(cardRe, card => card.replace('c4ef2da4b33fd08382a4309d9665745cb30bbda5', '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4')),
+    html.replace(cardRe, card => card.replace('03f34f75743da3a540e3816b4e426f7999960a05', '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4')),
     html.replace(cardRe, card => card.replace(' | HISTORICAL', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Trivium</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Boolean Function Audit</span>', '')),
-    html.replace(cardRe, card => card.replace('<span class="chip">Cube Sums</span>', '')),
-    html.replace(cardRe, card => card.replace('<span class="chip">Superpolys</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Historical A5/1</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Majority Clocking</span>', '')),
-    html.replace(cardRe, card => card.replace('execute toy-oracle cube sums that recover affine superpolys', 'describe cube terminology')),
     html.replace(cardRe, card => card.replace('reverse-engineered historical A5/1 majority clocking', 'a cellular cipher')),
     html.replace(cardRe, card => card.replace('bounded leaked-state completion', 'key recovery')),
   ]) {
@@ -399,17 +449,6 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
   const trivium = missingRecheck.labs['crypto-lab-lfsr-forge'].exhibits.find(exhibit => exhibit.id === 'trivium');
   trivium.evidence = trivium.evidence.filter(anchor => anchor !== 'src/trivium/zero-round.ts:54');
   assert.throws(() => checkLfsrForgeScope(html, missingRecheck), assert.AssertionError);
-
-  const missingCube = JSON.parse(JSON.stringify(exhibitManifest));
-  missingCube.labs['crypto-lab-lfsr-forge'].exhibits = missingCube.labs['crypto-lab-lfsr-forge'].exhibits
-    .filter(exhibit => exhibit.id !== 'cube-superpoly-recovery');
-  assert.throws(() => checkLfsrForgeScope(html, missingCube), assert.AssertionError);
-
-  const mislabeledCube = JSON.parse(JSON.stringify(exhibitManifest));
-  const cube = mislabeledCube.labs['crypto-lab-lfsr-forge'].exhibits
-    .find(exhibit => exhibit.id === 'cube-superpoly-recovery');
-  cube.limits = cube.limits.replace('executes no Trivium state or round', 'executes reduced-round Trivium');
-  assert.throws(() => checkLfsrForgeScope(html, mislabeledCube), assert.AssertionError);
 
   const missingA51 = JSON.parse(JSON.stringify(exhibitManifest));
   missingA51.labs['crypto-lab-lfsr-forge'].exhibits = missingA51.labs['crypto-lab-lfsr-forge'].exhibits
@@ -437,11 +476,57 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
   const blurredPublicationBoundary = JSON.parse(JSON.stringify(catalogReviewed));
   blurredPublicationBoundary['crypto-lab-lfsr-forge'].note = blurredPublicationBoundary['crypto-lab-lfsr-forge'].note
     .replace(
-      'Independently transcribed setup code derives the post-key, post-COUNT and post-100 checkpoint states',
-      'The published source supplies the three internal checkpoint states',
+      'derives setup checkpoints, reproduces both published bursts',
+      'imports setup checkpoints and published bursts',
     );
   assert.throws(
     () => checkLfsrForgeScope(html, exhibitManifest, blurredPublicationBoundary),
+    assert.AssertionError,
+  );
+});
+
+test('SAT Break publishes the relocated cube-sum recovery with its exact boundaries', () => {
+  checkSatBreakCubeScope(html);
+});
+
+test('SAT Break cube scope controls reject lost, moved or overclaimed credit', () => {
+  const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-sat-break\/"[\s\S]*?<\/a>/;
+  for (const changed of [
+    html.replace(cardRe, card => card.replace(/Cube attack@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, card => card.replace('Cube attack@src/cube/panel.ts:25', 'Cube attack@src/cube/panel.ts:24')),
+    html.replace(cardRe, card => card.replace(/Key recovery@[^|" ]+(?: \| )?/, '')),
+    html.replace(cardRe, card => card.replace('Key recovery@src/cube/analysis.ts:176', 'Key recovery@src/cube/analysis.ts:175')),
+    html.replace(cardRe, card => card.replace('e4cc4813e6feec10cfa616c4090f8d2c7a48a9f5', '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Cube Sums</span>', '')),
+    html.replace(cardRe, card => card.replace('<span class="chip">Superpolys</span>', '')),
+    html.replace(cardRe, card => card.replace('cube sums that yield linear superpolys', 'cube terminology')),
+    html.replace(cardRe, card => card.replace('held-out verification', 'visual confirmation')),
+  ]) {
+    assert.notEqual(changed, html, 'Negative control must change the SAT Break card');
+    assert.throws(() => checkSatBreakCubeScope(changed), assert.AssertionError);
+  }
+
+  const missingCube = JSON.parse(JSON.stringify(exhibitManifest));
+  missingCube.labs['crypto-lab-sat-break'].exhibits = missingCube.labs['crypto-lab-sat-break'].exhibits
+    .filter(exhibit => exhibit.id !== 'cube-superpoly-recovery');
+  assert.throws(() => checkSatBreakCubeScope(html, missingCube), assert.AssertionError);
+
+  const missingHeldOut = JSON.parse(JSON.stringify(exhibitManifest));
+  const cubeWithoutHeldOut = missingHeldOut.labs['crypto-lab-sat-break'].exhibits
+    .find(exhibit => exhibit.id === 'cube-superpoly-recovery');
+  cubeWithoutHeldOut.evidence = cubeWithoutHeldOut.evidence.filter(anchor => anchor !== 'src/cube/panel.ts:146');
+  assert.throws(() => checkSatBreakCubeScope(html, missingHeldOut), assert.AssertionError);
+
+  const mislabeledCube = JSON.parse(JSON.stringify(exhibitManifest));
+  const cube = mislabeledCube.labs['crypto-lab-sat-break'].exhibits
+    .find(exhibit => exhibit.id === 'cube-superpoly-recovery');
+  cube.limits = cube.limits.replace('executes no LFSR or Trivium state or round', 'executes reduced-round Trivium');
+  assert.throws(() => checkSatBreakCubeScope(html, mislabeledCube), assert.AssertionError);
+
+  const staleReview = JSON.parse(JSON.stringify(catalogReviewed));
+  staleReview['crypto-lab-sat-break'].addAttacks = ['Cube attack@src/cube/panel.ts:25'];
+  assert.throws(
+    () => checkSatBreakCubeScope(html, exhibitManifest, staleReview),
     assert.AssertionError,
   );
 });

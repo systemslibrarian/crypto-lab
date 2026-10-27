@@ -1313,7 +1313,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Trivium
 
 - **Implemented by:** [LFSR Forge](https://systemslibrarian.github.io/crypto-lab-lfsr-forge/) `src/trivium/trivium.ts:29`
-- **Also referenced by:** —
+- **Also referenced by:** *SAT Break*
 
 #### ZUC
 
@@ -9801,24 +9801,24 @@ Map identity bytes to a lattice syndrome, sample a trapdoor preimage, and run GP
 
 [`crypto-lab-lfsr-forge`](https://systemslibrarian.github.io/crypto-lab-lfsr-forge/) · Fit, Forecast, Then Verify · ENCRYPTION, RANDOMNESS, ATTACKS, HISTORICAL
 
-Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium clocking, audit editable Boolean combiners, execute toy-oracle cube sums that recover affine superpolys, and trace reverse-engineered historical A5/1 majority clocking with a bounded leaked-state completion.
+Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium clocking, audit editable Boolean combiners, and trace reverse-engineered historical A5/1 majority clocking with a bounded leaked-state completion.
 
-- **Card topics (discovery only):** LFSR, Berlekamp–Massey, Geffe Generator, Trivium, Boolean Function Audit, Cube Sums, Superpolys, Historical A5/1, Majority Clocking — labels do not establish what any section runs.
+- **Card topics (discovery only):** LFSR, Berlekamp–Massey, Geffe Generator, Trivium, Boolean Function Audit, Historical A5/1, Majority Clocking — labels do not establish what any section runs.
 - **Implements:** A5/1 `src/a51/a51.ts:125`, Trivium `src/trivium/trivium.ts:29`
-- **Source review:** [c4ef2da4b33f](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/c4ef2da4b33fd08382a4309d9665745cb30bbda5) — Read the complete merged README, source, tests, learner interface and visible limitations at this exact main commit. The existing binary Fibonacci LFSR, Berlekamp-Massey, Geffe-correlation and eSTREAM-vector-checked Trivium lessons remain, and the Trivium implementation anchors directly at the state-advance function rather than at a panel mount. The zero-round recovery builds 66 public equations over 80 key bits, exhausts the remaining 14-bit space, rechecks every candidate against the complete 1,024-bit observation and compares a unique candidate with the hidden key separately; the specified 1,152-round route rejects this model, and the lesson does not claim a cube attack against full Trivium. The Boolean panel exhaustively analyzes an editable four-input truth table: exact ANF and degree, all 16 Walsh coefficients, balance, nonlinearity, every fixed-subset distribution, correlation immunity, resiliency and 4,094 candidate-side checks over all 2,047 nonzero degree-at-most-two polynomials. Its deterministic counterexamples fit parity with Berlekamp-Massey, scan all 105 R1/R2 state pairs against an order-one-resilient function and scan all 127 R4 states against an algebraic-immunity-two function; worker inputs contain only copied output and the fixed public profile, while hidden-state comparisons stay in the controller. The eighth panel executes a cube attack on its own explicit three-secret/four-public degree-four GF(2) toy oracle. Preprocessing exhausts four two-variable cube faces over all eight teaching keys, computes 128 raw evaluations covering 72 distinct secret/public-row pairs and derives each superpoly by Möbius transform. C12, C13 and C24 are affine maxterms whose rank-three system filters 8 → 4 → 2 → 1 to key 110 from sums 111; C34 is a valid cube with the quadratic superpoly k1k2 ⊕ k3, is not a maxterm, and is excluded only from this bounded affine solve. The candidate is frozen before four disjoint held-out public rows; their 1011 fingerprint is injective over the eight teaching keys and precedes a separate controller comparison. Dropping C24 leaves 001 and 110, while flipping C13 recovers wrong candidate 000 before held-outs reject it. Online work is 12 raw cube-vertex evaluations plus four held-outs, 16 raw evaluations across 12 distinct public rows. The panel executes no Trivium state or round and makes no attack or cost claim against full Trivium; the cited paper treats only 672-, 735- and 767-round reduced variants. Its source-visible publication caveat says direct evaluation of ePrint 2008/385's printed introductory polynomial adds a constant 1 to the stated v3 = 0 face sum, so the lab uses its own independently checkable oracle and does not call that an official erratum. The ninth panel implements the reverse-engineered historical BGW A5/1 definition, not a public modern standard: distinct 19/22/23-bit registers, least-significant-bit-first Kc and COUNT loading, 100 output-disabled majority clocks and clock-before-output generation. Independently transcribed setup code derives the post-key, post-COUNT and post-100 checkpoint states, then matches the two published consecutive 114-bit bursts. Its separate bounded adaptation discloses an extraordinary 52 exact bits of one post-100 state, enumerates the remaining 4,096 completions and filters candidate 1425 with 32 aligned known-keystream bits before 32 disjoint held-out bits and a separate controller-state comparison. Sixteen bits leave 11 candidates, regular clocking leaves none after two observations, and flipping observation 29 selects wrong candidate 1409 before 11 held-out mismatches reject it. The worker receives only the masked 52-bit disclosure, copied observations, clock model and run identifier; it receives no full hidden state or Kc. The exercise is not a published A5/1 attack, does not recover Kc and does not model modern cellular encryption. The merged gates cover 47 unit tests, 23 browser tests, all nine panels at desktop/380px plus the 320px extension, and 33 clean-baseline mutations. Walsh probabilities and fixed-subset independence assume independent uniform table inputs; LFSR agreement is measured separately, both state scans are bounded toy searches, nonlinear-superpoly techniques remain out of scope, and algebraic immunity does not exclude every fast algebraic relation. The literal Brute force scanner hit appears only in the independent unit-test oracle. Panel 09 separately exhausts 2^12 state completions under disclosure of 52 exact post-100 state bits; the catalog records that narrowly as bounded state completion, not as a generic brute-force attack or A5/1/Kc attack. Known plaintext/ciphertext remains prose explaining how an external XOR-stream setting could reveal the already-supplied keystream and is not an attack workflow executed by this lab. Shamir names a cube-attack coauthor, while Pairing and RC4 are stale or lexical false references, so none of those three belongs in the algorithm reference list. BCH, ChaCha20, SHA-256, SNOW 3G and ZUC remain comparison or evidence context rather than implemented primitives.
+- **Source review:** [03f34f75743d](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/03f34f75743da3a540e3816b4e426f7999960a05) — Read the complete candidate README, source, tests, learner interface and visible limitations at this exact commit. The standalone toy-oracle cube code and panel are absent; the Boolean-combiner panel remains 07 and historical A5/1 is now panel 08. The binary Fibonacci LFSR, Berlekamp-Massey, Geffe-correlation and eSTREAM-vector-checked Trivium lessons remain behaviorally unchanged. Zero-round Trivium recovery still builds 66 public equations over 80 key bits, exhausts the remaining 14-bit space, rechecks every candidate against the complete 1,024-bit observation and compares a unique candidate with the hidden key separately; the specified 1,152-round route rejects this model. The Trivium panel now links to SAT Break's separate cube exhibit and states that cube attacks were first aimed at reduced-round Trivium without claiming that this lab runs one. The editable four-input Boolean audit still computes exact ANF, Walsh, restriction and complete degree-at-most-two annihilator results and executes its bounded parity, pair-state and single-state counterexamples. The eighth panel still implements the reverse-engineered historical BGW A5/1 definition, derives setup checkpoints, reproduces both published bursts and runs the 4,096-completion fixture with ambiguity, wrong-clock, corruption, held-out and controller checks; it remains neither a published A5/1 attack nor Kc recovery. The candidate gates passed 41 unit assertions, 18 browser claim tests, three accessibility/reflow passes, the production build and all 27 clean-baseline mutations. The literal Brute force scanner hit remains only in the independent unit-test oracle, and known plaintext/ciphertext remains explanatory prose rather than an executed attack. Pairing and RC4 remain stale or lexical references; Shamir no longer appears with the moved cube lesson. BCH, ChaCha20, SHA-256, SNOW 3G and ZUC remain comparison or evidence context rather than implemented primitives.
 - **References:** BCH, ChaCha20, SHA-256, SNOW 3G, ZUC
-- **Attacks shown:** Cube attack `src/cube/panel.ts:24`, Key recovery `src/trivium/panel.ts:37`
+- **Attacks shown:** Key recovery `src/trivium/panel.ts:37`
 - **Standards body:** ISO
-- **Implementation:** hand-rolled TypeScript LFSR, Berlekamp–Massey, Geffe, Trivium, historical A5/1, exact four-input Boolean analysis, toy-oracle cube/superpoly analysis and bounded state completion
+- **Implementation:** hand-rolled TypeScript LFSR, Berlekamp–Massey, Geffe, Trivium, historical A5/1, exact four-input Boolean analysis and bounded state completion
 - **Overlaps:** `crypto-lab-chacha20-stream` — ChaCha20 Stream visualizes a modern ARX construction; LFSR Forge reconstructs tiny binary recurrences and exploits Geffe correlation from known keystream, without attacking ChaCha20
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c4ef2da4b33f](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/c4ef2da4b33fd08382a4309d9665745cb30bbda5) reviewed 2026-10-25; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [03f34f75743d](https://github.com/systemslibrarian/crypto-lab-lfsr-forge/commit/03f34f75743da3a540e3816b4e426f7999960a05) reviewed 2026-10-27; 8 mapped sections.
   - **Berlekamp–Massey Recurrence Fit** (`bm`; interactive; real-values)
     - **Visible section:** Follow Berlekamp–Massey
     - **Learner action:** Step through discrepancy updates or analyze up to 1,024 manually entered bits.
     - **Observed result:** The shortest fitted recurrence and candidate continuation are displayed from observed bits.
     - **Concepts taught:** Berlekamp–Massey; linear complexity; minimal recurrence
     - **Limits:** A manually entered sequence has no source generator here, so its prediction cannot be independently verified.
-    - **Evidence at pinned commit:** `src/main.ts:145`, `src/lfsr/bm.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:144`, `src/lfsr/bm.ts:1`
   - **Exact Four-Input Boolean Combiner Audit** (`boolean-combiner-audit`; interactive; real-values)
     - **Visible section:** Audit a Boolean combiner
     - **Learner action:** Edit any of the 16 outputs, inspect exact algebraic and correlation criteria, then run bounded recurrence, pair-state and single-state counterexamples.
@@ -9826,25 +9826,18 @@ Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium
     - **Concepts taught:** Boolean function; algebraic normal form; Walsh spectrum; nonlinearity; correlation immunity; resiliency; algebraic immunity; bounded correlation scan
     - **Limits:** Exactly four inputs are analyzed; Walsh probabilities assume independent uniform bits, while deterministic LFSR agreement is measured separately. The scans cover only 127 states or 105 state pairs, and algebraic immunity two does not exclude every fast algebraic relation.
     - **Evidence at pinned commit:** `src/boolean/panel.ts:12`, `src/boolean/analysis.ts:73`, `src/boolean/analysis.ts:92`, `src/boolean/analysis.ts:108`, `src/boolean/analysis.ts:146`, `src/boolean/attacks.ts:49`, `src/boolean/attacks.ts:63`, `src/boolean/attacks.ts:79`, `src/boolean/panel.ts:155`
-  - **Toy-Oracle Cube Sum and Superpoly Recovery** (`cube-superpoly-recovery`; interactive; real-values)
-    - **Visible section:** Sum a cube, recover a superpoly
-    - **Learner action:** Exhaust four two-variable public-input cube faces across all eight teaching keys, recover each superpoly, then query three affine maxterms under one hidden toy key and verify the frozen candidate on four disjoint held-out rows.
-    - **Observed result:** C12, C13 and C24 form a rank-three system that filters 8 → 4 → 2 → 1 to key 110. C34 remains a valid cube with a quadratic superpoly; dropping C24 leaves 001/110, and flipping C13 recovers 000 before held-outs reject it.
-    - **Concepts taught:** cube attack; cube sum; superpoly; maxterm; algebraic normal form; Möbius transform; affine key recovery; held-out validation
-    - **Limits:** This is a separate three-secret/four-public degree-four toy oracle. Preprocessing enumerates all eight teaching keys; online recovery assumes repeated chosen-public-input queries under one fixed secret. C34 is a valid cube whose quadratic superpoly is not a maxterm and is excluded only from this bounded affine solve. The lesson executes no Trivium state or round and makes no attack or performance claim against reduced-round or full Trivium.
-    - **Evidence at pinned commit:** `src/cube/oracle.ts:15`, `src/cube/oracle.ts:33`, `src/cube/analysis.ts:105`, `src/cube/analysis.ts:143`, `src/cube/analysis.ts:176`, `src/cube/analysis.ts:209`, `src/cube/panel.ts:19`, `src/cube/panel.ts:45`, `src/cube/panel.ts:135`, `src/cube/panel.ts:143`, `src/cube/panel.ts:145`, `src/cube/panel.ts:146`
   - **Freeze and Check a Hidden Forecast** (`forecast`; interactive; real-values)
     - **Visible section:** Predict, freeze, check
     - **Learner action:** Freeze 64 predicted bits, compare with the generator continuation, and try ambiguity or early-failure fixtures.
     - **Observed result:** The frozen forecast is evaluated against unseen bits, separating a prefix fit from verified prediction.
     - **Concepts taught:** out-of-sample prediction; LFSR reconstruction; ambiguous prefix
-    - **Evidence at pinned commit:** `src/main.ts:146`, `src/lfsr/lfsr.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:145`, `src/lfsr/lfsr.ts:1`
   - **Geffe Combiner Inspection** (`geffe`; interactive; real-values)
     - **Visible section:** Increase complexity
     - **Learner action:** Clock three disclosed registers and measure a 466-bit output correlation profile.
     - **Observed result:** The nonlinear selector combines LFSRs while output retains detectable correlations with component streams.
     - **Concepts taught:** Geffe generator; nonlinear combiner; correlation bias
-    - **Evidence at pinned commit:** `src/main.ts:147`, `src/geffe/geffe.ts:1`, `src/geffe/correlation.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:146`, `src/geffe/geffe.ts:1`, `src/geffe/correlation.ts:1`
   - **Historical A5/1 Majority Clocking and Bounded State Completion** (`historical-a51`; interactive; real-crypto)
     - **Visible section:** Clock historical A5/1
     - **Learner action:** Run the reverse-engineered BGW Kc/COUNT setup, derive the post-key, post-COUNT and post-100 checkpoints, reproduce both 114-bit burst values, predict a pre-clock majority decision, compare regular clocking, then enumerate 4,096 completions of a 52-disclosed/12-hidden post-warm-up state.
@@ -9858,14 +9851,14 @@ Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium
     - **Observed result:** A worker searches R1 and R3 states, derives R2 constraints, and checks recovered state separately from output agreement.
     - **Concepts taught:** correlation attack; hidden-state recovery; Geffe generator; search budget
     - **Limits:** A failed finite-budget scan is not proof of cryptographic security, and this attack is not claimed against SNOW 3G or ZUC.
-    - **Evidence at pinned commit:** `src/main.ts:148`, `src/geffe/attack.worker.ts:1`, `src/geffe/correlation.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:147`, `src/geffe/attack.worker.ts:1`, `src/geffe/correlation.ts:1`
   - **Visible and Hidden LFSR** (`register`; interactive; real-values)
     - **Visible section:** Watch a register run
     - **Learner action:** Clock a visible five-stage register and collect bits from a new hidden degree-3–12 register.
     - **Observed result:** The visible transition and hidden output prefix establish the observation available to an attacker.
     - **Concepts taught:** linear feedback shift register; primitive taps; keystream observation
     - **Limits:** The hidden generator is a deliberately simple LFSR, not a modern stream cipher.
-    - **Evidence at pinned commit:** `src/main.ts:144`, `src/lfsr/lfsr.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:143`, `src/lfsr/lfsr.ts:1`
   - **Trivium Initialization and Zero-Round Key Recovery** (`trivium`; interactive; real-crypto)
     - **Visible section:** The deployed answer: Trivium
     - **Learner action:** Clock Trivium's 288-bit state, measure Berlekamp–Massey profiles and freeze 64-bit forecasts, then compare full initialization with a zero-round key-recovery experiment.
@@ -14289,65 +14282,73 @@ Sign a synthetic SAML response, then watch a genuine XML signature verify while 
 
 [`crypto-lab-sat-break`](https://systemslibrarian.github.io/crypto-lab-sat-break/) · Constraint-Based Cryptanalysis · ATTACKS
 
-Encode a toy cipher as Boolean clauses, recover consistent keys with a real SAT solver, and test how observations, withheld pairs, and equivalent keys limit the claim.
+Recover toy keys with two algebraic techniques: encode an SPN as clauses for a real SAT solver, then contrast it with cube sums that yield linear superpolys and require held-out verification.
 
-- **Card topics (discovery only):** SAT, CNF, CaDiCaL, Toy SPN — labels do not establish what any section runs.
+- **Card topics (discovery only):** SAT, CNF, CaDiCaL, Toy SPN, Cube Sums, Superpolys — labels do not establish what any section runs.
 - **Implements:** Toy SPN `src/crypto/spn.ts:99`
-- **Source review:** [38b92b51cb42](https://github.com/systemslibrarian/crypto-lab-sat-break/commit/38b92b51cb4264c325824d9dd3dbafcfa725a769) — Read src/crypto/spn.ts, src/cnf/encode.ts, src/workers/solve.ts, src/workers/exhaustive.ts, src/verify.ts, src/main.ts and README.md at this pin. The lab implements the small SPN at the encryption function and encodes it into CNF. CaDiCaL is pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation. Differential, impossible-differential and linear cryptanalysis appear only as related-lab prose in the README, so the derived attack entries are removed. The lab checks satisfying keys against direct encryption and uses an exhaustive scan to distinguish incomplete enumeration from a proven complete set. The guided challenge, gate explanations, and measured timing breakdown added in this revision do not change the cipher, SAT attack, or evidence boundary. The final status correction preserves a proven complete SAT enumeration when a separate benchmark is stopped. Re-reviewed the current SPN, CNF encoder, real solver/exhaustive workers, direct verifier, teaching UI and README after owner PR1. These implementation/README and shipped solver blobs are unchanged from the previous pin. The new solver-assets test checks documented 64-hex digests against both committed files with truncated/nonhex/changed-byte/missing-digest controls; this is documentation consistency, not reproducible compiler or source-to-binary provenance. Existing opaque component and partial coverage distinctions remain. Re-reviewed PR2 at integrated38b92b51cb4264c325824d9dd3dbafcfa725a769: the SPN, CNF encoder, solver and exhaustive workers, direct verifier, UI, README, C++ wrapper and both shipped assets are byte-identical to the preceding pin. The clean build recipe captures immutable CaDiCaL c60730422e758ef1cebe7aeddf2dda31c996bf04 source and fresh objects/caches, with fourteen offline hygiene/failure controls. Integrated workflow38102731905 independently reproduces both shipped assets using the pinned official SDK, establishing measured source-to-byte correspondence. The original compiler identity remains unknown; static C/C++ and WASM coverage limits and cryptographic/constant-time limits remain. Documentation hash checks alone still do not establish reproduction.
+- **Source review:** [e4cc4813e6fe](https://github.com/systemslibrarian/crypto-lab-sat-break/commit/e4cc4813e6feec10cfa616c4090f8d2c7a48a9f5) — Read the complete candidate README, source, tests, learner interface, solver provenance and visible limitations at this exact commit. The existing 8-bit SPN, CNF encoder, real CaDiCaL WASM worker, independent exhaustive worker and direct verifier are unchanged except for line shifts from mounting the new exhibit. CaDiCaL remains pinned upstream solver code compiled to WebAssembly, not a hand-written SAT implementation; the clean build recipe establishes measured source-to-byte correspondence while the original compiler identity and static C/C++/WASM coverage remain unknown. Differential, impossible-differential and linear cryptanalysis still appear only as related-lab prose and receive no attack credit. Exhibit 06 ports A-D-11's explicit three-secret/four-public degree-four GF(2) toy oracle without behavioral changes. Preprocessing exhausts four two-variable cube faces over all eight teaching keys, making 128 raw evaluations over 72 distinct secret/public-row pairs and deriving each superpoly by Möbius transform. C12, C13 and C24 are affine maxterms whose rank-three system filters 8 → 4 → 2 → 1 to key 110 from sums 111; C34 is a valid cube with quadratic superpoly k1k2 ⊕ k3 and is excluded only from the affine solve. The candidate is frozen before four disjoint held-out rows; dropping C24 leaves 001/110, while flipping C13 recovers wrong candidate 000 before held-outs reject it. Online work is exactly 12 raw cube-vertex calls plus four held-outs, 16 raw calls across 12 distinct public rows. These are toy-oracle counts, not attack costs. The exhibit executes no LFSR or Trivium state or round and makes no reduced-round or full-Trivium attack or performance claim. The candidate gates passed 71 unit assertions, 13 browser claim tests, three accessibility/reflow passes including the cube exhibit at 320px, the production build and all 15 clean-baseline mutations.
 - **Partially unread:** WebAssembly:1, C/C++:1 — source or compiled binary not fully available for review here.
-- **References:** AES, SHA-256
+- **References:** AES, SHA-256, Trivium
+- **Attacks shown:** Cube attack `src/cube/panel.ts:25`, Key recovery `src/cube/analysis.ts:176`
 - **Standards body:** —
-- **Implementation:** WASM
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9dffc06332e5](https://github.com/systemslibrarian/crypto-lab-sat-break/commit/9dffc06332e5f3ade685a43c560104f0305f0ed2) reviewed 2026-10-22; 7 mapped sections.
+- **Implementation:** CaDiCaL WebAssembly plus hand-rolled TypeScript toy SPN, CNF and toy-oracle cube/superpoly analysis
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e4cc4813e6fe](https://github.com/systemslibrarian/crypto-lab-sat-break/commit/e4cc4813e6feec10cfa616c4090f8d2c7a48a9f5) reviewed 2026-10-27; 8 mapped sections.
   - **Time SAT and exhaustive search** (`benchmark`; comparison; real-operation)
     - **Visible section:** Compare like with like
     - **Learner action:** Choose first-match or complete-set task, then run five measured trials and warmups per method.
     - **Observed result:** Displays median, range, stage timing and environment for CaDiCaL and exhaustive workers.
     - **Concepts taught:** SAT benchmark; exhaustive search; first match; complete candidate set
     - **Limits:** Results depend on machine and browser; a trial times out at 30 seconds and no universal speed claim follows.
-    - **Evidence at pinned commit:** `src/main.ts:47`, `src/main.ts:48`, `src/main.ts:289`, `src/main.ts:347`, `src/main.ts:357`
+    - **Evidence at pinned commit:** `src/main.ts:48`, `src/main.ts:49`, `src/main.ts:291`, `src/main.ts:347`, `src/main.ts:359`
   - **Verify candidate beyond observations** (`candidate-check`; interactive; real-crypto)
     - **Visible section:** Check a candidate
     - **Learner action:** Select a solver result and test observed pairs, withheld pairs, all 256 outputs and key identity.
     - **Observed result:** Distinguishes fitting observations from matching the encryption function and original master key.
     - **Concepts taught:** key equivalence; known plaintext; out-of-sample check; full codebook
     - **Limits:** Passing sampled withheld checks does not prove identity; even full function equality may leave different one-round key bits.
-    - **Evidence at pinned commit:** `src/main.ts:46`, `src/main.ts:192`, `src/main.ts:387`, `src/verify.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:47`, `src/main.ts:194`, `src/main.ts:389`, `src/verify.ts:1`
   - **Trace example encryption** (`cipher-trace`; interactive; real-crypto)
     - **Visible section:** Choose the evidence
     - **Learner action:** Enter a visible example key and plaintext to inspect each XOR, S-box and permutation step.
     - **Observed result:** Displays direct cipher round states independent of the hidden experiment key.
     - **Concepts taught:** SPN round function; S-box; permutation; key schedule
     - **Limits:** The visible trace key is a teaching input, not the secret key selected for the attack.
-    - **Evidence at pinned commit:** `src/main.ts:30`, `src/main.ts:32`, `src/crypto/spn.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:31`, `src/main.ts:33`, `src/crypto/spn.ts:1`
   - **Inspect SAT circuit and clauses** (`cnf`; interactive; real-operation)
     - **Visible section:** Inspect the actual circuit
     - **Learner action:** Select a gate and inspect its Boolean clauses; download the base DIMACS formula.
     - **Observed result:** Shows actual CNF variable and clause structure sent to the local solver.
     - **Concepts taught:** SAT; CNF; Boolean circuit; DIMACS; S-box encoding
     - **Limits:** A Boolean encoding of a toy SPN, not a proof that SAT is efficient against modern ciphers.
-    - **Evidence at pinned commit:** `src/main.ts:34`, `src/main.ts:36`, `src/cnf/encode.ts:1`, `src/main.ts:281`
+    - **Evidence at pinned commit:** `src/main.ts:35`, `src/main.ts:37`, `src/cnf/encode.ts:1`, `src/main.ts:282`
+  - **Toy-Oracle Cube Sum and Superpoly Recovery** (`cube-superpoly-recovery`; interactive; real-values)
+    - **Visible section:** Sum a cube, recover a superpoly
+    - **Learner action:** Exhaust four two-variable public-input cube faces across all eight teaching keys, recover each superpoly, then query three affine maxterms under one hidden toy key and verify the frozen candidate on four disjoint held-out rows.
+    - **Observed result:** C12, C13 and C24 form a rank-three system that filters 8 → 4 → 2 → 1 to key 110. C34 remains a valid cube with a quadratic superpoly; dropping C24 leaves 001/110, and flipping C13 recovers 000 before held-outs reject it.
+    - **Concepts taught:** cube attack; cube sum; superpoly; maxterm; algebraic normal form; Möbius transform; affine key recovery; held-out validation
+    - **Limits:** This is a separate three-secret/four-public degree-four toy oracle. Preprocessing enumerates all eight teaching keys; online recovery assumes repeated chosen-public-input queries under one fixed secret. Its 128 preprocessing calls and 16 online calls are toy-oracle counts, not attack costs. C34 is a valid cube whose quadratic superpoly is not a maxterm and is excluded only from this bounded affine solve. The lesson executes no LFSR or Trivium state or round and makes no attack or performance claim against reduced-round or full Trivium.
+    - **Evidence at pinned commit:** `src/cube/oracle.ts:15`, `src/cube/oracle.ts:33`, `src/cube/oracle.ts:69`, `src/cube/analysis.ts:105`, `src/cube/analysis.ts:143`, `src/cube/analysis.ts:176`, `src/cube/analysis.ts:209`, `src/cube/panel.ts:19`, `src/cube/panel.ts:24`, `src/cube/panel.ts:46`, `src/cube/panel.ts:96`, `src/cube/panel.ts:100`, `src/cube/panel.ts:140`, `src/cube/panel.ts:146`
   - **Compare exhaustive candidate set** (`exhaustive`; comparison; real-operation)
     - **Visible section:** Find consistent keys
     - **Learner action:** Scan all 65,536 master keys against the same observations.
     - **Observed result:** Counts and compares keys found by exhaustive search and solver enumeration.
     - **Concepts taught:** exhaustive key search; candidate set; SAT validation
     - **Limits:** Tiny key space makes exhaustive comparison practical here.
-    - **Evidence at pinned commit:** `src/main.ts:44`, `src/main.ts:252`, `src/workers/exhaustive.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:45`, `src/main.ts:254`, `src/workers/exhaustive.ts:1`
   - **Choose known plaintext pairs** (`observations`; interactive; real-crypto)
     - **Visible section:** Choose the evidence
     - **Learner action:** Pick a four-round fixture, one-round equivalent-key fixture or random cipher, and vary rounds and observed pairs.
     - **Observed result:** Shows public plaintext-ciphertext observations, withheld checks and a separately revealed original key.
     - **Concepts taught:** known-plaintext attack; SPN; observed pair; equivalent key
     - **Limits:** The 8-bit block and 16-bit key are deliberately exhaustible; withheld checks exist in browser memory.
-    - **Evidence at pinned commit:** `src/main.ts:27`, `src/main.ts:28`, `src/main.ts:29`, `src/main.ts:31`, `src/experiment.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:28`, `src/main.ts:29`, `src/main.ts:30`, `src/main.ts:32`, `src/experiment.ts:1`
   - **Find consistent keys with CaDiCaL** (`sat-search`; interactive; real-operation)
     - **Visible section:** Find consistent keys
     - **Learner action:** Find one or another model, continue enumeration in batches, or check a supplied hex key.
     - **Observed result:** Returns keys satisfying observed pairs and checks every returned model against direct encryption.
     - **Concepts taught:** CDCL SAT; CaDiCaL WASM; model enumeration; blocking clause; candidate key
     - **Limits:** Runs in a browser worker with a 30-second interaction timeout and at most 512 new keys per enumeration click.
-    - **Evidence at pinned commit:** `src/main.ts:40`, `src/main.ts:41`, `src/main.ts:42`, `src/main.ts:209`, `src/workers/solve.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:41`, `src/main.ts:42`, `src/main.ts:43`, `src/main.ts:210`, `src/workers/solve.ts:1`
 
 ### Schnorr Forge
 

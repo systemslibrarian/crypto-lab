@@ -3,9 +3,9 @@
   "generated": "2026-10-27",
   "root": "..",
   "totals": {
-    "labs": 255,
-    "autoMergeJobs": 253,
-    "dispatchSites": 252
+    "labs": 256,
+    "autoMergeJobs": 254,
+    "dispatchSites": 253
   },
   "withDispatchSite": [
     "crypto-compare",
@@ -19,6 +19,7 @@
     "crypto-lab-agreeing-in-public",
     "crypto-lab-air-stream",
     "crypto-lab-ake-ladder",
+    "crypto-lab-anamorphic",
     "crypto-lab-ascon",
     "crypto-lab-attestation-gate",
     "crypto-lab-attribute-gate",

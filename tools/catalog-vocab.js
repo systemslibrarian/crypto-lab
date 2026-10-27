@@ -220,6 +220,7 @@ const ALGORITHMS = [
   { name: 'BBS signatures', kind: 'algorithm', family: 'signature', re: /\bbbs[-_ ]?(?:sign(?:ature|atures|ing)?|verify|proofs?|credentials?)\b/i, chipRe: /^bbs(?:[-_ ]?signatures?)?$/i, std: 'IETF:draft-irtf-cfrg-bbs-signatures' },
   { name: 'Schnorr', kind: 'algorithm', family: 'signature', re: /schnorr/i, std: null },
   { name: 'ElGamal', kind: 'algorithm', family: 'public-key encryption', re: /el[-_ ]?gamal/i, std: null },
+  { name: 'Anamorphic encryption', kind: 'algorithm', family: 'coercion-resistant encryption', re: /anamorphic[-_ ]?(?:encrypt(?:ion|ed)?|elgamal)|(?:encrypt|decrypt)[-_ ]?anamorphic/i, chipRe: /^(?:receiver[-_ ]?)?anamorphic(?:[-_ ]?(?:encryption|elgamal))?$/i, std: null },
   { name: 'Paillier', kind: 'algorithm', family: 'homomorphic encryption', re: /paillier/i, std: null },
   { name: 'Diffie-Hellman', kind: 'algorithm', family: 'key exchange', re: /diffie[-_ ]?hellman|\bdh\b/i, std: 'IETF:RFC 2631' },
   { name: 'ECDH', kind: 'algorithm', family: 'key exchange', re: /ecdh/i, std: 'NIST:SP 800-56A' },

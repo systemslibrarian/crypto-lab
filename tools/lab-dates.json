@@ -2025,6 +2025,14 @@
    "addedFrom": "2026-10-27T08:37:47Z",
    "updatedFrom": "2026-10-27T06:26:44-04:00",
    "updatedCommit": "b19e2a6cd6869e2bf4d2c3cf05d763b6a3d7f048"
+  },
+  "crypto-lab-anamorphic": {
+   "added": "2026-10",
+   "addedOn": "2026-10-27",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-27T10:23:19Z",
+   "updatedFrom": "2026-10-27T07:13:14-04:00",
+   "updatedCommit": "53a3ce20441e633c283fbdd1dcc6b4b0914e1cfe"
   }
  }
 }

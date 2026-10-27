@@ -1523,6 +1523,12 @@
       "level": "advanced",
       "why": "Requires lattice trapdoors, q-ary kernels, discrete-Gaussian preimage sampling, dual-LWE equations and careful separation of toy parameters from the GPV security result.",
       "reviewed": "2026-10-27: complete README, source, tests and learner flow"
+    },
+    "crypto-lab-anamorphic": {
+      "title": "Anamorphic Channel",
+      "level": "advanced",
+      "why": "Requires prime-order group ElGamal, PRF reductions, coercive key-disclosure models, synchronized state and careful separation of syntactic ciphertext shape from computational indistinguishability.",
+      "reviewed": "2026-10-27: complete README, source map, implementation, tests and learner flow"
     }
   }
 }

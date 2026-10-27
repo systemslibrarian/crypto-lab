@@ -2275,7 +2275,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">250</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">251</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21661,6 +21661,22 @@
             <div class="project-meta"><div class="stack"><span class="chip">GPV IBE</span><span class="chip">SampleISIS</span><span class="chip">Dual-LWE</span><span class="chip">Toy Parameters</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
+          <a class="project-card" data-category="ENCRYPTION | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-anamorphic/" data-added="2026-10" data-added-on="2026-10-27" data-updated="2026-10"
+            data-implements="Anamorphic encryption@src/anamorphic.ts:260 | ElGamal@src/anamorphic.ts:230 | HMAC@src/anamorphic.ts:178 | ristretto255@src/anamorphic.ts:1 | SHA-256@src/anamorphic.ts:309 | SHA-512@src/anamorphic.ts:3"
+            data-references="EC point arithmetic | ECDSA | Ed25519"
+            data-standards="IETF | NIST"
+            data-implementation="@noble/curves ristretto255 / @noble/hashes HMAC-SHA-512 and SHA-256 / local TypeScript bounded synchronized robust Anamorphic ElGamal teaching implementation"
+            data-review-commit="53a3ce20441e633c283fbdd1dcc6b4b0914e1cfe"
+            data-review-note="Read the complete exact-main README, design brief, source map, construction, message, scenario, comparison and learner-interface source, unit and browser tests, mutation runner, workflows and visible limits. The lab transcribes Banfi et al.'s synchronized robust Anamorphic ElGamal Construction 6 into additive ristretto255 notation. An ordinary two-point ciphertext opens to the prescribed overt group message under the surrendered ordinary secret key, while a separate HMAC-SHA-512 PRF double key and synchronized counter recover one of eight bounded covert symbols. Ordinary, wrong-counter, independently generated wrong-key, repeated-counter and fresh-counter controls are separately computed. Independent review corrected the randomness domain from the covert-message count to the group order, separated the PRF's anamorphic-indistinguishability role from DDH's ordinary ElGamal role, bounded rejection sampling against a stuck RNG and prevented a vacuous wrong-key control. The page states that counter reuse repeats C2, double-key compromise is retroactive, plain ElGamal is malleable and unauthenticated, and no browser sample proves the computational security definition. The chosen-plaintext and key-recovery terms occur only in security-model and source-title prose; ciphertext malleability is a tested negative property but not a learner-executed attack exhibit, so none receives attack credit. ElGamal is review-anchored at the actual ciphertext equation rather than left as a prose reference. Exact-main run 40494493381 passed 32 unit tests on Node 22/24/26 with 97.67/93.50/100/98.21 coverage, 11 learner-claim checks, four accessibility/reflow/keyboard checks and all 15 named mutations; CodeQL run 40494493385 passed. All four public files match Pages artifact 12730386869 and a fresh exact-main build byte for byte."
+            data-level="advanced"
+            data-overlaps="crypto-lab-subliminal-channels: Subliminal Channels selects a valid ECDSA signature whose documented public parity carries one bit; Anamorphic Channel encrypts a bounded covert symbol recoverable only with a separate PRF double key. | crypto-lab-shadow-vault: Shadow Vault stores two independently encrypted role-labelled slots; Anamorphic Channel keeps one conventional two-point ElGamal ciphertext with no mode or role field. | crypto-lab-elgamal-plain: ElGamal Plain teaches ordinary ElGamal randomness, homomorphism and rerandomization; Anamorphic Channel implements the synchronized receiver-anamorphic extension and its coercion boundary."
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Receiver-Anamorphic Encryption</div>
+            <div class="project-title">Anamorphic Channel</div>
+            <div class="project-copy">Run one two-point Ristretto ElGamal ciphertext through a surrendered ordinary key and a separate PRF double key, then expose counter reuse, wrong-key and wrong-counter failures, and exactly what the construction does not prove.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Anamorphic Encryption</span><span class="chip">ElGamal</span><span class="chip">Ristretto255</span><span class="chip">HMAC-SHA-512</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -21912,7 +21928,7 @@
       'Educational RSA': 'public-key',
       'Ed25519 Forge': 'public-key', 'Vector Gate': 'public-key', 'ECDSA Forge': 'public-key', 'Schnorr Forge': 'public-key',
       'Curve448': 'public-key', 'ElGamal Plain': 'public-key',
-      'IBE Gate': 'public-key', 'Lattice IBE': 'public-key', 'Blind Sign': 'public-key',
+      'IBE Gate': 'public-key', 'Lattice IBE': 'public-key', 'Anamorphic Channel': 'public-key', 'Blind Sign': 'public-key',
       'Ring Sign': 'public-key', 'SPHINCS+ Ledger': 'public-key',
       'LMS Ledger': 'public-key', 'LMS/XMSS': 'public-key',
       'Pairing Gate': 'public-key',

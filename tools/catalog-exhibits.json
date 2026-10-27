@@ -22087,8 +22087,8 @@
       ]
     },
     "crypto-lab-lfsr-forge": {
-      "commit": "c4ef2da4b33fd08382a4309d9665745cb30bbda5",
-      "reviewed": "2026-10-25",
+      "commit": "03f34f75743da3a540e3816b4e426f7999960a05",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "register",
@@ -22102,7 +22102,7 @@
             "keystream observation"
           ],
           "evidence": [
-            "src/main.ts:144",
+            "src/main.ts:143",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Watch a register run",
@@ -22121,7 +22121,7 @@
             "minimal recurrence"
           ],
           "evidence": [
-            "src/main.ts:145",
+            "src/main.ts:144",
             "src/lfsr/bm.ts:1"
           ],
           "section": "Follow Berlekamp–Massey",
@@ -22140,7 +22140,7 @@
             "ambiguous prefix"
           ],
           "evidence": [
-            "src/main.ts:146",
+            "src/main.ts:145",
             "src/lfsr/lfsr.ts:1"
           ],
           "section": "Predict, freeze, check",
@@ -22158,7 +22158,7 @@
             "correlation bias"
           ],
           "evidence": [
-            "src/main.ts:147",
+            "src/main.ts:146",
             "src/geffe/geffe.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -22178,7 +22178,7 @@
             "search budget"
           ],
           "evidence": [
-            "src/main.ts:148",
+            "src/main.ts:147",
             "src/geffe/attack.worker.ts:1",
             "src/geffe/correlation.ts:1"
           ],
@@ -22243,40 +22243,6 @@
           "section": "Audit a Boolean combiner",
           "execution": "real-values",
           "limits": "Exactly four inputs are analyzed; Walsh probabilities assume independent uniform bits, while deterministic LFSR agreement is measured separately. The scans cover only 127 states or 105 state pairs, and algebraic immunity two does not exclude every fast algebraic relation."
-        },
-        {
-          "id": "cube-superpoly-recovery",
-          "title": "Toy-Oracle Cube Sum and Superpoly Recovery",
-          "kind": "interactive",
-          "action": "Exhaust four two-variable public-input cube faces across all eight teaching keys, recover each superpoly, then query three affine maxterms under one hidden toy key and verify the frozen candidate on four disjoint held-out rows.",
-          "outcome": "C12, C13 and C24 form a rank-three system that filters 8 → 4 → 2 → 1 to key 110. C34 remains a valid cube with a quadratic superpoly; dropping C24 leaves 001/110, and flipping C13 recovers 000 before held-outs reject it.",
-          "concepts": [
-            "cube attack",
-            "cube sum",
-            "superpoly",
-            "maxterm",
-            "algebraic normal form",
-            "Möbius transform",
-            "affine key recovery",
-            "held-out validation"
-          ],
-          "evidence": [
-            "src/cube/oracle.ts:15",
-            "src/cube/oracle.ts:33",
-            "src/cube/analysis.ts:105",
-            "src/cube/analysis.ts:143",
-            "src/cube/analysis.ts:176",
-            "src/cube/analysis.ts:209",
-            "src/cube/panel.ts:19",
-            "src/cube/panel.ts:45",
-            "src/cube/panel.ts:135",
-            "src/cube/panel.ts:143",
-            "src/cube/panel.ts:145",
-            "src/cube/panel.ts:146"
-          ],
-          "section": "Sum a cube, recover a superpoly",
-          "execution": "real-values",
-          "limits": "This is a separate three-secret/four-public degree-four toy oracle. Preprocessing enumerates all eight teaching keys; online recovery assumes repeated chosen-public-input queries under one fixed secret. C34 is a valid cube whose quadratic superpoly is not a maxterm and is excluded only from this bounded affine solve. The lesson executes no Trivium state or round and makes no attack or performance claim against reduced-round or full Trivium."
         },
         {
           "id": "historical-a51",
@@ -34262,8 +34228,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-sat-break": {
-      "commit": "9dffc06332e5f3ade685a43c560104f0305f0ed2",
-      "reviewed": "2026-10-22",
+      "commit": "e4cc4813e6feec10cfa616c4090f8d2c7a48a9f5",
+      "reviewed": "2026-10-27",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -34281,10 +34247,10 @@
             "equivalent key"
           ],
           "evidence": [
-            "src/main.ts:27",
             "src/main.ts:28",
             "src/main.ts:29",
-            "src/main.ts:31",
+            "src/main.ts:30",
+            "src/main.ts:32",
             "src/experiment.ts:1"
           ],
           "limits": "The 8-bit block and 16-bit key are deliberately exhaustible; withheld checks exist in browser memory."
@@ -34304,8 +34270,8 @@
             "key schedule"
           ],
           "evidence": [
-            "src/main.ts:30",
-            "src/main.ts:32",
+            "src/main.ts:31",
+            "src/main.ts:33",
             "src/crypto/spn.ts:1"
           ],
           "limits": "The visible trace key is a teaching input, not the secret key selected for the attack."
@@ -34326,10 +34292,10 @@
             "S-box encoding"
           ],
           "evidence": [
-            "src/main.ts:34",
-            "src/main.ts:36",
+            "src/main.ts:35",
+            "src/main.ts:37",
             "src/cnf/encode.ts:1",
-            "src/main.ts:281"
+            "src/main.ts:282"
           ],
           "limits": "A Boolean encoding of a toy SPN, not a proof that SAT is efficient against modern ciphers."
         },
@@ -34349,10 +34315,10 @@
             "candidate key"
           ],
           "evidence": [
-            "src/main.ts:40",
             "src/main.ts:41",
             "src/main.ts:42",
-            "src/main.ts:209",
+            "src/main.ts:43",
+            "src/main.ts:210",
             "src/workers/solve.ts:1"
           ],
           "limits": "Runs in a browser worker with a 30-second interaction timeout and at most 512 new keys per enumeration click."
@@ -34371,8 +34337,8 @@
             "SAT validation"
           ],
           "evidence": [
-            "src/main.ts:44",
-            "src/main.ts:252",
+            "src/main.ts:45",
+            "src/main.ts:254",
             "src/workers/exhaustive.ts:1"
           ],
           "limits": "Tiny key space makes exhaustive comparison practical here."
@@ -34392,9 +34358,9 @@
             "full codebook"
           ],
           "evidence": [
-            "src/main.ts:46",
-            "src/main.ts:192",
-            "src/main.ts:387",
+            "src/main.ts:47",
+            "src/main.ts:194",
+            "src/main.ts:389",
             "src/verify.ts:1"
           ],
           "limits": "Passing sampled withheld checks does not prove identity; even full function equality may leave different one-round key bits."
@@ -34414,13 +34380,49 @@
             "complete candidate set"
           ],
           "evidence": [
-            "src/main.ts:47",
             "src/main.ts:48",
-            "src/main.ts:289",
+            "src/main.ts:49",
+            "src/main.ts:291",
             "src/main.ts:347",
-            "src/main.ts:357"
+            "src/main.ts:359"
           ],
           "limits": "Results depend on machine and browser; a trial times out at 30 seconds and no universal speed claim follows."
+        },
+        {
+          "id": "cube-superpoly-recovery",
+          "title": "Toy-Oracle Cube Sum and Superpoly Recovery",
+          "section": "Sum a cube, recover a superpoly",
+          "kind": "interactive",
+          "execution": "real-values",
+          "action": "Exhaust four two-variable public-input cube faces across all eight teaching keys, recover each superpoly, then query three affine maxterms under one hidden toy key and verify the frozen candidate on four disjoint held-out rows.",
+          "outcome": "C12, C13 and C24 form a rank-three system that filters 8 → 4 → 2 → 1 to key 110. C34 remains a valid cube with a quadratic superpoly; dropping C24 leaves 001/110, and flipping C13 recovers 000 before held-outs reject it.",
+          "concepts": [
+            "cube attack",
+            "cube sum",
+            "superpoly",
+            "maxterm",
+            "algebraic normal form",
+            "Möbius transform",
+            "affine key recovery",
+            "held-out validation"
+          ],
+          "evidence": [
+            "src/cube/oracle.ts:15",
+            "src/cube/oracle.ts:33",
+            "src/cube/oracle.ts:69",
+            "src/cube/analysis.ts:105",
+            "src/cube/analysis.ts:143",
+            "src/cube/analysis.ts:176",
+            "src/cube/analysis.ts:209",
+            "src/cube/panel.ts:19",
+            "src/cube/panel.ts:24",
+            "src/cube/panel.ts:46",
+            "src/cube/panel.ts:96",
+            "src/cube/panel.ts:100",
+            "src/cube/panel.ts:140",
+            "src/cube/panel.ts:146"
+          ],
+          "limits": "This is a separate three-secret/four-public degree-four toy oracle. Preprocessing enumerates all eight teaching keys; online recovery assumes repeated chosen-public-input queries under one fixed secret. Its 128 preprocessing calls and 16 online calls are toy-oracle counts, not attack costs. C34 is a valid cube whose quadratic superpoly is not a maxterm and is excluded only from this bounded affine solve. The lesson executes no LFSR or Trivium state or round and makes no attack or performance claim against reduced-round or full Trivium."
         }
       ]
     },

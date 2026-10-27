@@ -601,6 +601,15 @@ ordinary ElGamal message from outsiders. §23b remains `COVERED`: two sharply di
 mechanisms deepen the coercive-adversary boundary but are not several independent treatments
 of either construction. No gap closes. Catalogued total moves to 252.*
 
+*Version 69 — relocates A-D-11's unchanged cube-sum and superpoly exhibit from
+LFSR Forge to SAT Break under §30. The standalone three-secret/four-public toy
+polynomial executes no LFSR or Trivium state, so SAT Break now owns both algebraic
+key-recovery interfaces: clause solving for its toy SPN and cube sums yielding
+linear superpolys for the separate oracle. LFSR Forge retains its Boolean-combiner
+audit, real Trivium path and historical A5/1 lesson, with a cross-link from Trivium
+to the relocated exhibit. No lab or concept status changes, and the catalogued
+total remains 252.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1566,8 +1575,10 @@ one tiny register in the bounded fixture. Those results assume independent unifo
 bits when interpreting the truth table, measure deterministic LFSR agreement
 separately, and do not claim that the small exhaustive scans implement a production
 fast-correlation attack or that algebraic immunity rules out every fast algebraic
-relation. A separate toy-oracle lesson executes cube-attack preprocessing and
-online recovery without relabeling the existing Trivium panel: it exhausts four
+relation.
+
+SAT Break's separate toy-oracle exhibit executes cube-attack preprocessing and
+online recovery beside, not inside, its clause-solving exhibits: it exhausts four
 two-variable cube faces over all eight three-bit teaching keys, recovers exact
 superpolys, uses three affine maxterms whose coefficient matrix has rank three
 to filter 8 → 4 → 2 → 1,

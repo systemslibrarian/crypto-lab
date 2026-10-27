@@ -946,5 +946,9 @@
  {
   "port": 4749,
   "lab": "crypto-lab-rank-metric"
+ },
+ {
+  "port": 4751,
+  "lab": "crypto-lab-lattice-ibe"
  }
 ]

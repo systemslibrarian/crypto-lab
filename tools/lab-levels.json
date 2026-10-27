@@ -1517,6 +1517,12 @@
       "level": "advanced",
       "why": "Requires XML canonicalization and signature-reference semantics, SAML profile constraints, replay state and careful separation of cryptographic verification from application-object selection.",
       "reviewed": "2026-10-27: complete README, source, tests and learner flow"
+    },
+    "crypto-lab-lattice-ibe": {
+      "title": "Lattice IBE",
+      "level": "advanced",
+      "why": "Requires lattice trapdoors, q-ary kernels, discrete-Gaussian preimage sampling, dual-LWE equations and careful separation of toy parameters from the GPV security result.",
+      "reviewed": "2026-10-27: complete README, source, tests and learner flow"
     }
   }
 }

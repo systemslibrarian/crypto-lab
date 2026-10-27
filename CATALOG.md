@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1814 sections in 250 of 250 labs**
+The exhibit map currently records **1815 sections in 250 of 250 labs**
 (250 complete lab inventories, 0 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -5344,72 +5344,79 @@ Strip X25519MLKEM768 from a TLS 1.3 ClientHello and watch two PQ-capable endpoin
 
 [`crypto-lab-dp-noise`](https://systemslibrarian.github.io/crypto-lab-dp-noise/) · Differential Privacy · PRIVACY
 
-Real payroll differential privacy keeps distinguishing advantage bounded; geo-indistinguishability then computes ε-times-distance, samples planar utility, exposes finite-map failure, and makes repeated releases compose.
+Real payroll differential privacy keeps distinguishing advantage bounded; an expert card computes distinct ℓ-diversity, ordered t-closeness, utility loss, and linked-release disclosure, while geo-indistinguishability computes its ε-times-distance privacy bound.
 
-- **Card topics (discovery only):** Laplace Mechanism, Gaussian Mechanism, Planar Laplace Mechanism, ε-δ Budget, Composition — labels do not establish what any section runs.
+- **Card topics (discovery only):** Laplace Mechanism, Gaussian Mechanism, Planar Laplace Mechanism, ε-δ Budget, Composition, ℓ-Diversity, t-Closeness — labels do not establish what any section runs.
 - **Implements:** Gaussian mechanism `src/dp/discrete.ts:40`, Laplace mechanism `src/dp/laplace.ts:45`, Planar Laplace mechanism `src/dp/geo.ts:134`
-- **Source review:** [d038ae68a794](https://github.com/systemslibrarian/crypto-lab-dp-noise/commit/d038ae68a794df7aa73c8fb91e8562d492093257) — Read the complete current README, source, unit and browser tests, mutation runner and learner interface through this exact main commit. The payroll route still executes exact rational discrete Laplace/Gaussian sampling, declared sensitivity, nonmutating price quotes and fail-closed session accounting. The separate E-K-07 route computes the normalized ideal planar Laplace density on a declared local Euclidean plane, an attained epsilon-times-distance witness, radial CDF/quantiles, 2,000 current-run samples, nearest-service utility and a public two-candidate repeated-release likelihood transcript. Its independent 7 by 7 finite-grid control derives a boundary normalization violation and an epsilon/2 sufficient repair over that bounded grid. This is an IEEE-754 teaching implementation of the paper's ideal density, not its finite-precision digital mechanism, an Earth-scale map, a universal trajectory attack, correlated-path protection or production location privacy. Repeated independent releases pay the sum of per-point metric bounds; the displayed posterior additionally assumes equal candidate-path priors.
+- **Source review:** [e4443eab8e77](https://github.com/systemslibrarian/crypto-lab-dp-noise/commit/e4443eab8e77eebc16278ff76ee2f5c462f27785) — Read the complete current README, source, unit and browser tests, mutation runner and learner interface through this exact main commit. The payroll route still executes exact rational discrete Laplace/Gaussian sampling, declared sensitivity, nonmutating price quotes and fail-closed session accounting. The separate E-K-07 route computes the normalized ideal planar Laplace density on a declared local Euclidean plane, an attained epsilon-times-distance witness, radial CDF/quantiles, 2,000 current-run samples, nearest-service utility and a public two-candidate repeated-release likelihood transcript. Its independent 7 by 7 finite-grid control derives a boundary normalization violation and an epsilon/2 sufficient repair over that bounded grid. L-R-11 adds a second 16-record synthetic registry whose five generalizations derive k, distinct ℓ-diversity and ordered t-closeness with exact-integer Earth Mover distances, plus one age-query utility interval. Two independently policy-compliant public projections each leave three possible salary bands; explicit ZIP-prefix and under-30 observations locate the target's classes, whose supports intersect to one published band without exposing record ids, names, exact ages or raw salaries to the attacker. A separate deterministic neighboring-database event is computed to distinguish those single-table criteria from differential privacy. The age split and band domain are bounded teaching constructions, distinct ℓ-diversity is not entropy or recursive diversity, and the one intersection is neither unique identification, raw-salary recovery nor a composition theorem. The geo route remains an IEEE-754 teaching implementation of the paper's ideal density, not its finite-precision digital mechanism, an Earth-scale map, a universal trajectory attack, correlated-path protection or production location privacy. Repeated independent geo releases pay the sum of per-point metric bounds; the displayed posterior additionally assumes equal candidate-path priors.
 - **References:** Bloom filter, CKKS
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d038ae68a794](https://github.com/systemslibrarian/crypto-lab-dp-noise/commit/d038ae68a794df7aa73c8fb91e8562d492093257) reviewed 2026-10-26; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e4443eab8e77](https://github.com/systemslibrarian/crypto-lab-dp-noise/commit/e4443eab8e77eebc16278ff76ee2f5c462f27785) reviewed 2026-10-27; 11 mapped sections.
   - **Declare sensitivity before release** (`bounds`; interactive; real-operation)
     - **Visible section:** Where does Δ come from? You have to answer
     - **Learner action:** Choose a public clipping bound and a policy for an out-of-range thirteenth record.
     - **Observed result:** Inspect clipping or exclusion bias and why data-dependent sensitivity would misstate the privacy guarantee.
     - **Concepts taught:** global sensitivity; clipping; data-independent bounds; selection bias
-    - **Evidence at pinned commit:** `index.html:474`, `index.html:487`, `index.html:502`, `src/ui/bounds.ts:49`, `src/ui/bounds.ts:91`, `src/ui/bounds.ts:141`
+    - **Evidence at pinned commit:** `index.html:504`, `index.html:517`, `index.html:532`, `src/ui/bounds.ts:49`, `src/ui/bounds.ts:91`, `src/ui/bounds.ts:141`
   - **Composition ledger and averaging** (`budget`; interactive; real-operation)
     - **Visible section:** Composition: ε is a budget, not a setting
     - **Learner action:** Issue queries against a finite epsilon ledger and run repeated queries without a budget.
     - **Observed result:** See summed privacy cost and how averaging many noisy releases can expose the signal.
     - **Concepts taught:** basic composition; privacy budget; repeated-query averaging
-    - **Evidence at pinned commit:** `index.html:522`, `index.html:548`, `index.html:550`, `index.html:567`, `index.html:577`
+    - **Evidence at pinned commit:** `index.html:552`, `index.html:578`, `index.html:580`, `index.html:597`, `index.html:607`
   - **The differential privacy guarantee** (`definition`; comparison; real-operation)
     - **Visible section:** The definition, drawn
     - **Learner action:** Adjust epsilon and mechanism to inspect neighboring database output distributions and their likelihood ratio rails.
     - **Observed result:** The charts compute exact probabilities and check the epsilon bound or a measured delta needed for the selected mechanism.
     - **Concepts taught:** neighboring databases; epsilon differential privacy; likelihood ratio; discrete Laplace; Gaussian delta
     - **Limits:** Gaussian calibration derives from a continuous bound but the panel samples a discrete approximation.
-    - **Evidence at pinned commit:** `index.html:322`, `index.html:355`, `index.html:364`, `src/ui/definition.ts:40`, `src/ui/definition.ts:237`, `src/ui/definition.ts:285`
+    - **Evidence at pinned commit:** `index.html:352`, `index.html:385`, `index.html:394`, `src/ui/definition.ts:40`, `src/ui/definition.ts:237`, `src/ui/definition.ts:285`
   - **Privacy parameters in deployed systems** (`deployments`; comparison; real-values)
     - **Visible section:** ε in the wild
     - **Learner action:** Inspect deployment ε values, provenance labels, belief bounds and four accounting conversions for one Census release.
     - **Observed result:** Compare e^ε and posterior bounds and see how differing accountants can label the same underlying ρ budget.
     - **Concepts taught:** differential privacy deployment; epsilon provenance; Bayesian bound; zCDP conversion; privacy accounting
     - **Limits:** The figures have different published, measured or derived provenance and accounting choices; a raw ε comparison alone is incomplete.
-    - **Evidence at pinned commit:** `index.html:584`, `index.html:594`, `index.html:599`, `index.html:604`, `src/ui/deployments.ts:29`, `src/ui/deployments.ts:35`, `src/ui/deployments.ts:59`, `src/ui/deployments.ts:64`, `src/ui/deployments.ts:136`, `src/ui/deployments.ts:142`, `src/ui/deployments.ts:153`, `src/ui/deployments.ts:161`
+    - **Evidence at pinned commit:** `index.html:614`, `index.html:624`, `index.html:629`, `index.html:634`, `src/ui/deployments.ts:29`, `src/ui/deployments.ts:35`, `src/ui/deployments.ts:59`, `src/ui/deployments.ts:64`, `src/ui/deployments.ts:136`, `src/ui/deployments.ts:142`, `src/ui/deployments.ts:153`, `src/ui/deployments.ts:161`
   - **Epsilon utility dial** (`dial`; interactive; real-operation)
     - **Visible section:** The dial: what ε costs in usefulness
     - **Learner action:** Move epsilon and release multiple noisy answers or a post-processed mean.
     - **Observed result:** See how noise and usefulness change and that deterministic post-processing spends no additional privacy budget.
     - **Concepts taught:** epsilon-utility tradeoff; Laplace mechanism; post-processing
-    - **Evidence at pinned commit:** `index.html:418`, `index.html:446`, `index.html:449`, `index.html:461`
+    - **Evidence at pinned commit:** `index.html:448`, `index.html:476`, `index.html:479`, `index.html:491`
   - **Two totals leak one salary** (`differencing`; interactive; real-operation)
     - **Visible section:** Two harmless totals, one person's salary
     - **Learner action:** Run a differencing attack against exact and noisy aggregate releases.
     - **Observed result:** Subtracting exact neighboring totals reveals one salary; noisy releases vary while each query spends privacy budget.
     - **Concepts taught:** differencing attack; aggregate disclosure; Laplace noise; privacy budget
     - **Evidence at pinned commit:** `index.html:263`, `index.html:291`, `src/ui/leak.ts:115`, `src/ui/leak.ts:193`, `src/ui/leak.ts:202`, `src/ui/leak.ts:228`
+  - **Distinct ℓ-diversity, ordered t-closeness and linked releases** (`diversity-closeness`; interactive; real-operation)
+    - **Visible section:** The repairs: ℓ-diversity, then t-closeness
+    - **Learner action:** Choose among five synthetic generalizations, inspect exact k, distinct ℓ and ordered Earth Mover distance, compare one age-query utility interval, then publish and intersect two compliant views.
+    - **Observed result:** The page derives homogeneity and similarity failures, three releases that meet the declared t at equality, and a linked-release attack in which two three-band views intersect to the one published band b4.
+    - **Concepts taught:** distinct ℓ-diversity; ordered t-closeness; Earth Mover distance; utility tradeoff; intersection attack; release criteria versus differential privacy
+    - **Limits:** Uses a declared 16-record, five-band teaching construction and distinct rather than entropy or recursive ℓ-diversity. The intersection discloses one published salary band, not a raw salary or identity, and is a bounded counterexample rather than a composition theorem.
+    - **Evidence at pinned commit:** `index.html:313`, `index.html:338`, `src/dp/diversity.ts:60`, `src/dp/diversity.ts:105`, `src/dp/diversity.ts:211`, `src/dp/diversity.ts:311`, `src/dp/diversity.ts:375`, `src/dp/diversity.ts:417`, `src/dp/diversity.ts:511`, `src/ui/diversity.ts:173`, `src/ui/diversity.ts:300`
   - **Differential privacy transfer challenge** (`exit`; interactive; conceptual)
     - **Visible section:** Four situations this page has not shown you
     - **Learner action:** Answer four new scenario questions and inspect tailored feedback or linked interactions to revisit.
     - **Observed result:** Test whether lessons about releases, mechanisms, inference and accounting transfer beyond the page’s worked examples.
     - **Concepts taught:** differential privacy reasoning; privacy loss; mechanism design; transfer practice
-    - **Evidence at pinned commit:** `index.html:760`, `index.html:763`, `index.html:769`, `index.html:771`, `src/ui/exit.ts:200`, `src/ui/exit.ts:211`, `src/ui/exit.ts:221`, `src/ui/exit.ts:227`, `src/ui/exit.ts:236`
+    - **Evidence at pinned commit:** `index.html:790`, `index.html:793`, `index.html:799`, `index.html:801`, `src/ui/exit.ts:200`, `src/ui/exit.ts:211`, `src/ui/exit.ts:221`, `src/ui/exit.ts:227`, `src/ui/exit.ts:236`
   - **A privacy budget measured per kilometre** (`geo`; interactive; real-operation)
     - **Visible section:** A privacy budget measured per kilometre
     - **Learner action:** Set epsilon per kilometre, location separation and release count; inspect the tight ideal-planar likelihood bound and finite-grid control, draw current-run utility samples, and release a path transcript.
     - **Observed result:** Computes an attained epsilon-times-distance ratio, measured and analytic radial utility, nearest-service retention, a naive cropped-grid boundary violation with a bounded half-rate repair, and the composed likelihood of every released point.
     - **Concepts taught:** geo-indistinguishability; planar Laplace mechanism; metric differential privacy; location utility; finite-map boundary; repeated-release composition; trajectory privacy boundary
     - **Limits:** Uses the ideal planar density with 53-bit IEEE-754 uniforms on a local Euclidean plane. The finite grid is a separate bounded control, the transcript compares two public parallel candidate paths under equal priors, and no finite-precision-paper theorem, correlated-trajectory protection, Earth geometry or production claim is transferred.
-    - **Evidence at pinned commit:** `index.html:614`, `index.html:630`, `index.html:645`, `index.html:654`, `index.html:667`, `index.html:680`, `index.html:689`, `src/dp/geo.ts:71`, `src/dp/geo.ts:77`, `src/dp/geo.ts:82`, `src/dp/geo.ts:91`, `src/dp/geo.ts:102`, `src/dp/geo.ts:113`, `src/dp/geo.ts:134`, `src/dp/geo.ts:188`, `src/dp/geo.ts:192`, `src/dp/geo.ts:231`, `src/dp/geo.ts:256`, `src/ui/geo.ts:80`, `src/ui/geo.ts:121`, `src/ui/geo.ts:189`, `src/ui/geo.ts:243`
+    - **Evidence at pinned commit:** `index.html:644`, `index.html:660`, `index.html:675`, `index.html:684`, `index.html:697`, `index.html:710`, `index.html:719`, `src/dp/geo.ts:71`, `src/dp/geo.ts:77`, `src/dp/geo.ts:82`, `src/dp/geo.ts:91`, `src/dp/geo.ts:102`, `src/dp/geo.ts:113`, `src/dp/geo.ts:134`, `src/dp/geo.ts:188`, `src/dp/geo.ts:192`, `src/dp/geo.ts:231`, `src/dp/geo.ts:256`, `src/ui/geo.ts:80`, `src/ui/geo.ts:121`, `src/ui/geo.ts:189`, `src/ui/geo.ts:243`
   - **Guess the neighboring world** (`guess`; interactive; real-operation)
     - **Visible section:** Can you tell which world you are in?
     - **Learner action:** Draw 2,000 outputs from both worlds, deal a release and guess Alice’s presence.
     - **Observed result:** Compare sampled histograms to exact probabilities and see guessing results against the privacy bound.
     - **Concepts taught:** membership inference; privacy-loss bound; sampling variation; Bayesian guessing
-    - **Evidence at pinned commit:** `index.html:377`, `index.html:391`, `index.html:407`, `src/ui/guess.ts:89`, `src/ui/guess.ts:148`, `src/ui/guess.ts:245`
+    - **Evidence at pinned commit:** `index.html:407`, `index.html:421`, `index.html:437`, `src/ui/guess.ts:89`, `src/ui/guess.ts:148`, `src/ui/guess.ts:245`
   - **Generalization and homogeneity attack** (`k-anonymity`; interactive; real-operation)
     - **Visible section:** What about anonymising the table instead?
     - **Learner action:** Choose quasi-identifier generalization and inspect the measured k and salary-band classes.

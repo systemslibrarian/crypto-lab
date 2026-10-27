@@ -569,6 +569,17 @@ watermarks, while its naive-state and client-server-collusion cases execute the 
 that fail. It claims neither global freshness nor integrity or obliviousness outside that
 bounded model. No concept status changes. Catalogued total moves to 250.*
 
+*Version 66 — records DP Noise's L-R-11 release-criteria extension under §23 without
+adding a lab or changing a concept status. A second synthetic registry now derives k,
+distinct ℓ-diversity and ordered t-closeness from five generalizations using exact-integer
+Earth Mover distances, and measures one age-query utility interval. Two independently
+compliant public projections each leave three candidate salary bands; explicit ZIP-prefix
+and under-thirty background observations locate the published classes, whose supports
+intersect to one band. The bounded construction discloses neither a row identity nor a raw
+salary and is not a composition theorem. A separately computed deterministic neighboring-
+database event keeps those single-table criteria distinct from differential privacy.
+Catalogued total remains 250.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1177,6 +1188,17 @@ boundary counterexample and the sum of per-point bounds for a released path tran
 The finite grid is a separate bounded control, and the floating-point sampler, equal-prior
 two-path inference and independent-release accounting do not promise the paper's digital
 mechanism, correlated-trajectory protection or production location privacy.
+
+Its L-R-11 route turns the release-criteria contrast into an executable sequence: one
+homogeneous class fails distinct ℓ-diversity, a distinct-three-valued class fails ordered
+t-closeness, and three generalizations meet the declared k, ℓ and t policy at an exact
+9/64 boundary. The page derives the utility interval from published age ranges, strips
+identities and raw values from the attacker view, and intersects two independently
+compliant class supports under explicit background observations to disclose one published
+salary band. This is a declared sixteen-record construction showing residual linked-release
+disclosure, not unique identification, salary recovery or a theorem about arbitrary
+compositions; its separate deterministic neighboring-world event explains why the three
+single-table criteria are not differential privacy.
 
 Proof Tally now executes that composition boundary rather than merely naming it. Its exact
 control subtracts two real equal-size Prio3Sum outputs and recovers the zero-replaced bounded

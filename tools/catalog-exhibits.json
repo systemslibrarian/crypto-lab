@@ -9095,8 +9095,8 @@
       ]
     },
     "crypto-lab-dp-noise": {
-      "commit": "d038ae68a794df7aa73c8fb91e8562d492093257",
-      "reviewed": "2026-10-26",
+      "commit": "e4443eab8e77eebc16278ff76ee2f5c462f27785",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "differencing",
@@ -9150,6 +9150,37 @@
           "section": "What about anonymising the table instead?"
         },
         {
+          "id": "diversity-closeness",
+          "title": "Distinct ℓ-diversity, ordered t-closeness and linked releases",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Choose among five synthetic generalizations, inspect exact k, distinct ℓ and ordered Earth Mover distance, compare one age-query utility interval, then publish and intersect two compliant views.",
+          "outcome": "The page derives homogeneity and similarity failures, three releases that meet the declared t at equality, and a linked-release attack in which two three-band views intersect to the one published band b4.",
+          "concepts": [
+            "distinct ℓ-diversity",
+            "ordered t-closeness",
+            "Earth Mover distance",
+            "utility tradeoff",
+            "intersection attack",
+            "release criteria versus differential privacy"
+          ],
+          "evidence": [
+            "index.html:313",
+            "index.html:338",
+            "src/dp/diversity.ts:60",
+            "src/dp/diversity.ts:105",
+            "src/dp/diversity.ts:211",
+            "src/dp/diversity.ts:311",
+            "src/dp/diversity.ts:375",
+            "src/dp/diversity.ts:417",
+            "src/dp/diversity.ts:511",
+            "src/ui/diversity.ts:173",
+            "src/ui/diversity.ts:300"
+          ],
+          "limits": "Uses a declared 16-record, five-band teaching construction and distinct rather than entropy or recursive ℓ-diversity. The intersection discloses one published salary band, not a raw salary or identity, and is a bounded counterexample rather than a composition theorem.",
+          "section": "The repairs: ℓ-diversity, then t-closeness"
+        },
+        {
           "id": "definition",
           "title": "The differential privacy guarantee",
           "kind": "comparison",
@@ -9164,9 +9195,9 @@
             "Gaussian delta"
           ],
           "evidence": [
-            "index.html:322",
-            "index.html:355",
-            "index.html:364",
+            "index.html:352",
+            "index.html:385",
+            "index.html:394",
             "src/ui/definition.ts:40",
             "src/ui/definition.ts:237",
             "src/ui/definition.ts:285"
@@ -9188,9 +9219,9 @@
             "Bayesian guessing"
           ],
           "evidence": [
-            "index.html:377",
-            "index.html:391",
             "index.html:407",
+            "index.html:421",
+            "index.html:437",
             "src/ui/guess.ts:89",
             "src/ui/guess.ts:148",
             "src/ui/guess.ts:245"
@@ -9210,10 +9241,10 @@
             "post-processing"
           ],
           "evidence": [
-            "index.html:418",
-            "index.html:446",
-            "index.html:449",
-            "index.html:461"
+            "index.html:448",
+            "index.html:476",
+            "index.html:479",
+            "index.html:491"
           ],
           "section": "The dial: what ε costs in usefulness"
         },
@@ -9231,9 +9262,9 @@
             "selection bias"
           ],
           "evidence": [
-            "index.html:474",
-            "index.html:487",
-            "index.html:502",
+            "index.html:504",
+            "index.html:517",
+            "index.html:532",
             "src/ui/bounds.ts:49",
             "src/ui/bounds.ts:91",
             "src/ui/bounds.ts:141"
@@ -9253,11 +9284,11 @@
             "repeated-query averaging"
           ],
           "evidence": [
-            "index.html:522",
-            "index.html:548",
-            "index.html:550",
-            "index.html:567",
-            "index.html:577"
+            "index.html:552",
+            "index.html:578",
+            "index.html:580",
+            "index.html:597",
+            "index.html:607"
           ],
           "section": "Composition: ε is a budget, not a setting"
         },
@@ -9276,10 +9307,10 @@
             "privacy accounting"
           ],
           "evidence": [
-            "index.html:584",
-            "index.html:594",
-            "index.html:599",
-            "index.html:604",
+            "index.html:614",
+            "index.html:624",
+            "index.html:629",
+            "index.html:634",
             "src/ui/deployments.ts:29",
             "src/ui/deployments.ts:35",
             "src/ui/deployments.ts:59",
@@ -9309,13 +9340,13 @@
             "trajectory privacy boundary"
           ],
           "evidence": [
-            "index.html:614",
-            "index.html:630",
-            "index.html:645",
-            "index.html:654",
-            "index.html:667",
-            "index.html:680",
-            "index.html:689",
+            "index.html:644",
+            "index.html:660",
+            "index.html:675",
+            "index.html:684",
+            "index.html:697",
+            "index.html:710",
+            "index.html:719",
             "src/dp/geo.ts:71",
             "src/dp/geo.ts:77",
             "src/dp/geo.ts:82",
@@ -9349,10 +9380,10 @@
             "transfer practice"
           ],
           "evidence": [
-            "index.html:760",
-            "index.html:763",
-            "index.html:769",
-            "index.html:771",
+            "index.html:790",
+            "index.html:793",
+            "index.html:799",
+            "index.html:801",
             "src/ui/exit.ts:200",
             "src/ui/exit.ts:211",
             "src/ui/exit.ts:221",

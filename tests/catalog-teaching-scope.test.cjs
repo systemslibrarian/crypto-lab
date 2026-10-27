@@ -1202,7 +1202,7 @@ test('Lattice Fault scope rejects false credits and loss of real computations', 
   }
 });
 
-function checkDpNoiseEk07Scope(source, manifest = exhibitManifest, reviewed = catalogReviewed) {
+function checkDpNoiseScope(source, manifest = exhibitManifest, reviewed = catalogReviewed) {
   const slug = 'crypto-lab-dp-noise';
   assert.deepEqual(implementationsFor(source, slug), [
     'Gaussian mechanism',
@@ -1210,22 +1210,27 @@ function checkDpNoiseEk07Scope(source, manifest = exhibitManifest, reviewed = ca
     'Planar Laplace mechanism',
   ]);
   assert.deepEqual(attacksFor(source, slug), []);
-  assert.match(openingFor(source, slug), /data-review-commit="d038ae68a794df7aa73c8fb91e8562d492093257"/);
+  assert.match(openingFor(source, slug), /data-review-commit="e4443eab8e77eebc16278ff76ee2f5c462f27785"/);
   assert.match(blockFor(source, slug), /distinguishing advantage bounded/);
   assert.match(blockFor(source, slug), /ε-times-distance/);
   assert.ok(chipsFor(source, slug).includes('Planar Laplace Mechanism'));
+  assert.ok(chipsFor(source, slug).includes('ℓ-Diversity'));
+  assert.ok(chipsFor(source, slug).includes('t-Closeness'));
 
   const review = reviewed[slug];
-  assert.equal(review.commit, 'd038ae68a794df7aa73c8fb91e8562d492093257');
+  assert.equal(review.commit, 'e4443eab8e77eebc16278ff76ee2f5c462f27785');
   assert.ok(review.add.includes('Planar Laplace mechanism@src/dp/geo.ts:134'));
   assert.match(review.note, /ideal planar Laplace density/);
   assert.match(review.note, /not its finite-precision digital mechanism/);
   assert.match(review.note, /equal candidate-path priors/);
+  assert.match(review.note, /distinct ℓ-diversity and ordered t-closeness/);
+  assert.match(review.note, /without exposing record ids, names, exact ages or raw salaries/);
+  assert.match(review.note, /neither unique identification, raw-salary recovery nor a composition theorem/);
 
   const mapped = manifest.labs[slug];
-  assert.equal(mapped.commit, 'd038ae68a794df7aa73c8fb91e8562d492093257');
+  assert.equal(mapped.commit, 'e4443eab8e77eebc16278ff76ee2f5c462f27785');
   assert.equal(mapped.reviewScope, 'complete');
-  assert.equal(mapped.exhibits.length, 10);
+  assert.equal(mapped.exhibits.length, 11);
   const geo = mapped.exhibits.find(exhibit => exhibit.id === 'geo');
   assert.ok(geo);
   assert.equal(geo.execution, 'real-operation');
@@ -1246,10 +1251,30 @@ function checkDpNoiseEk07Scope(source, manifest = exhibitManifest, reviewed = ca
   assert.match(geo.limits, /two public parallel candidate paths under equal priors/);
   assert.match(geo.limits, /no finite-precision-paper theorem/);
   assert.match(geo.limits, /correlated-trajectory protection/);
+
+  const diversity = mapped.exhibits.find(exhibit => exhibit.id === 'diversity-closeness');
+  assert.ok(diversity);
+  assert.equal(diversity.execution, 'real-operation');
+  assert.equal(diversity.section, 'The repairs: ℓ-diversity, then t-closeness');
+  for (const anchor of [
+    'src/dp/diversity.ts:60',
+    'src/dp/diversity.ts:211',
+    'src/dp/diversity.ts:375',
+    'src/dp/diversity.ts:417',
+    'src/dp/diversity.ts:511',
+    'src/ui/diversity.ts:173',
+    'src/ui/diversity.ts:300',
+  ]) assert.ok(diversity.evidence.includes(anchor), `L-R-11 must retain evidence ${anchor}`);
+  assert.ok(diversity.concepts.includes('distinct ℓ-diversity'));
+  assert.ok(diversity.concepts.includes('ordered t-closeness'));
+  assert.ok(diversity.concepts.includes('release criteria versus differential privacy'));
+  assert.match(diversity.limits, /16-record, five-band teaching construction/);
+  assert.match(diversity.limits, /not a raw salary or identity/);
+  assert.match(diversity.limits, /bounded counterexample rather than a composition theorem/);
 }
 
-test('DP Noise records E-K-07 computation without transferring digital or trajectory claims', () => {
-  checkDpNoiseEk07Scope(html);
+test('DP Noise records E-K-07 and L-R-11 computations without transferring stronger claims', () => {
+  checkDpNoiseScope(html);
   const planar = ALGORITHMS.find(term => term.name === 'Planar Laplace mechanism');
   assert.ok(planar);
   assert.ok(planar.re.test('samplePlanarLaplace'));
@@ -1257,38 +1282,61 @@ test('DP Noise records E-K-07 computation without transferring digital or trajec
   assert.equal(planar.re.test('continuous Laplace sampler'), false);
 });
 
-test('DP Noise E-K-07 controls reject stale pins, lost credit and weakened limits', () => {
+test('DP Noise E-K-07 and L-R-11 controls reject stale pins, lost credit and weakened limits', () => {
   const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-dp-noise\/"[\s\S]*?<\/a>/;
   for (const changed of [
     html.replace(cardRe, card => card.replace(/\s*\| Planar Laplace mechanism@src\/dp\/geo\.ts:134/, '')),
     html.replace(cardRe, card => card.replace(
-      'd038ae68a794df7aa73c8fb91e8562d492093257',
+      'e4443eab8e77eebc16278ff76ee2f5c462f27785',
       'ea6eac3e9fc145c9f3306d4f6610b0662f8a794f')),
     html.replace(cardRe, card => card.replace('distinguishing advantage bounded', 'locations become indistinguishable')),
     html.replace(cardRe, card => card.replace('<span class="chip">Planar Laplace Mechanism</span>', '')),
+    html.replace(cardRe, card => card.replace('<span class="chip">ℓ-Diversity</span>', '')),
   ]) {
-    assert.notEqual(changed, html, 'E-K-07 negative control must change the DP Noise card');
-    assert.throws(() => checkDpNoiseEk07Scope(changed), assert.AssertionError);
+    assert.notEqual(changed, html, 'DP Noise negative control must change the card');
+    assert.throws(() => checkDpNoiseScope(changed), assert.AssertionError);
   }
 
   const missingExhibit = structuredClone(exhibitManifest);
   missingExhibit.labs['crypto-lab-dp-noise'].exhibits =
     missingExhibit.labs['crypto-lab-dp-noise'].exhibits.filter(exhibit => exhibit.id !== 'geo');
-  assert.throws(() => checkDpNoiseEk07Scope(html, missingExhibit), assert.AssertionError);
+  assert.throws(() => checkDpNoiseScope(html, missingExhibit), assert.AssertionError);
+
+  const missingDiversity = structuredClone(exhibitManifest);
+  missingDiversity.labs['crypto-lab-dp-noise'].exhibits =
+    missingDiversity.labs['crypto-lab-dp-noise'].exhibits
+      .filter(exhibit => exhibit.id !== 'diversity-closeness');
+  assert.throws(() => checkDpNoiseScope(html, missingDiversity), assert.AssertionError);
 
   const missingAnchor = structuredClone(exhibitManifest);
   const geo = missingAnchor.labs['crypto-lab-dp-noise'].exhibits.find(exhibit => exhibit.id === 'geo');
   geo.evidence = geo.evidence.filter(anchor => anchor !== 'src/dp/geo.ts:231');
-  assert.throws(() => checkDpNoiseEk07Scope(html, missingAnchor), assert.AssertionError);
+  assert.throws(() => checkDpNoiseScope(html, missingAnchor), assert.AssertionError);
+
+  const missingDiversityAnchor = structuredClone(exhibitManifest);
+  const diversity = missingDiversityAnchor.labs['crypto-lab-dp-noise'].exhibits
+    .find(exhibit => exhibit.id === 'diversity-closeness');
+  diversity.evidence = diversity.evidence.filter(anchor => anchor !== 'src/dp/diversity.ts:417');
+  assert.throws(() => checkDpNoiseScope(html, missingDiversityAnchor), assert.AssertionError);
 
   const overclaim = structuredClone(exhibitManifest);
   overclaim.labs['crypto-lab-dp-noise'].exhibits.find(exhibit => exhibit.id === 'geo').limits =
     'This production mechanism protects arbitrary correlated trajectories.';
-  assert.throws(() => checkDpNoiseEk07Scope(html, overclaim), assert.AssertionError);
+  assert.throws(() => checkDpNoiseScope(html, overclaim), assert.AssertionError);
+
+  const diversityOverclaim = structuredClone(exhibitManifest);
+  diversityOverclaim.labs['crypto-lab-dp-noise'].exhibits
+    .find(exhibit => exhibit.id === 'diversity-closeness').limits =
+      'This proves every compliant release composes safely and identifies the person.';
+  assert.throws(() => checkDpNoiseScope(html, diversityOverclaim), assert.AssertionError);
 
   const staleReview = structuredClone(catalogReviewed);
   staleReview['crypto-lab-dp-noise'].commit = 'ea6eac3e9fc145c9f3306d4f6610b0662f8a794f';
-  assert.throws(() => checkDpNoiseEk07Scope(html, exhibitManifest, staleReview), assert.AssertionError);
+  assert.throws(() => checkDpNoiseScope(html, exhibitManifest, staleReview), assert.AssertionError);
+
+  const staleExhibitPin = structuredClone(exhibitManifest);
+  staleExhibitPin.labs['crypto-lab-dp-noise'].commit = 'd038ae68a794df7aa73c8fb91e8562d492093257';
+  assert.throws(() => checkDpNoiseScope(html, staleExhibitPin), assert.AssertionError);
 });
 
 test('visible catalog summaries distinguish BBS naming and bounded DP advantage', () => {

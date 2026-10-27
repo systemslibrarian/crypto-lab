@@ -3,9 +3,9 @@
   "generated": "2026-10-27",
   "root": "..",
   "totals": {
-    "labs": 254,
-    "autoMergeJobs": 252,
-    "dispatchSites": 251
+    "labs": 255,
+    "autoMergeJobs": 253,
+    "dispatchSites": 252
   },
   "withDispatchSite": [
     "crypto-compare",
@@ -133,6 +133,7 @@
     "crypto-lab-lattice-builder",
     "crypto-lab-lattice-fault",
     "crypto-lab-lattice-gentle",
+    "crypto-lab-lattice-ibe",
     "crypto-lab-lfsr-forge",
     "crypto-lab-lll-break",
     "crypto-lab-lms-ledger",

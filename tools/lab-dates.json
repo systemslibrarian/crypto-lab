@@ -1455,8 +1455,8 @@
    "addedOn": "2026-07-30",
    "updated": "2026-10",
    "addedFrom": "2026-07-30T22:14:09Z",
-   "updatedFrom": "2026-10-26T14:39:37-04:00",
-   "updatedCommit": "d038ae68a794df7aa73c8fb91e8562d492093257"
+   "updatedFrom": "2026-10-27T03:44:59-04:00",
+   "updatedCommit": "e4443eab8e77eebc16278ff76ee2f5c462f27785"
   },
   "crypto-lab-matsui-line": {
    "added": "2026-08",
@@ -2017,6 +2017,14 @@
    "addedFrom": "2026-10-27T00:29:39Z",
    "updatedFrom": "2026-10-26T23:13:20-04:00",
    "updatedCommit": "17b148b74d548a1b840890c63975005a64a83e41"
+  },
+  "crypto-lab-lattice-ibe": {
+   "added": "2026-10",
+   "addedOn": "2026-10-27",
+   "updated": "2026-10",
+   "addedFrom": "2026-10-27T08:37:47Z",
+   "updatedFrom": "2026-10-27T06:26:44-04:00",
+   "updatedCommit": "b19e2a6cd6869e2bf4d2c3cf05d763b6a3d7f048"
   }
  }
 }

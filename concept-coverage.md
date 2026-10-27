@@ -580,6 +580,17 @@ salary and is not a composition theorem. A separately computed deterministic nei
 database event keeps those single-table criteria distinct from differential privacy.
 Catalogued total remains 250.*
 
+*Version 67 — files Lattice IBE under §10 as the catalog's first executable
+lattice identity-extraction route. Exact identity bytes map to a public syndrome, a
+verified q-ary-kernel basis drives bounded GPV SampleD/SampleISIS extraction, and the
+resulting preimage runs dual-LWE bit encryption and decryption. The tiny profile also
+admits a public bounded preimage search, while displayed dimension, modulus and Gaussian
+checks show that the paper's security prerequisites are not met. The comparison with
+pairing-based BasicIdent and FAME is about interfaces, not shared assumptions; the lab
+implements neither standard-model HIBE nor a production or approved post-quantum scheme,
+and ML-KEM is not presented as a drop-in identity-extraction replacement. §10 remains
+`DEEP`; no gap closes. Catalogued total moves to 251.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -847,10 +858,18 @@ directory remains outside the construction.
 **10. Lattices (LWE / SIS / NTRU) — `DEEP`**
 Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · GGH Trapdoor · Dilithium Seal ·
 Dilithium Reject · Falcon Seal · HAWK · LLL Break · LWE Hints · Quantum Vault KpqC ·
-Lattice Gentle · Lattice Builder · KpqC Pair · RSA Small Roots.
+Lattice Gentle · Lattice Builder · KpqC Pair · RSA Small Roots · Lattice IBE.
 Lattice Gentle is the entry point by hand — SVP/CVP and LLL worked through before any named
 scheme appears — and Lattice Builder is the entry point by eye, two dials straightening a
 scrambled field until the shortest vector is readable.
+
+Lattice IBE adds identity-derived trapdoor extraction without moving the concept boundary.
+The learner sees exact identity bytes become a public syndrome, a short preimage sampled
+with a verified q-ary-kernel basis, and that preimage used in dual-LWE bit decryption. The
+same page's public bounded search recovers a working preimage at the deliberately tiny
+profile, and its parameter panel reports which GPV prerequisites fail. Pairing-based IBE
+Gate and Attribute Gate remain interface comparisons only; this lab does not turn FAME
+into lattice ABE or implement the Agrawal–Boneh–Boyen standard-model HIBE machinery.
 
 Lattice Builder earns a second citation beside Kyber Vault rather than duplicating it, on the
 strength of one exercise: it is the only demo in this section staged to show the assumption
@@ -1797,7 +1816,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 250.**
+**Catalogued total: 251.**
 
 ---
 

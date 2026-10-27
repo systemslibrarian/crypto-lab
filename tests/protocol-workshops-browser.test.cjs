@@ -123,11 +123,11 @@ test('modern reading path filters exact chapters, restores progress and keeps th
   await audit(page);assert.deepEqual(errors,[]);
   await page.goto(origin+'/learn/applied-cryptography/');assert.equal(await page.locator('#chapter-4 input').isChecked(),true,'resetting Katz–Lindell must preserve Schneier progress');
   await page.goto(origin+'/');
-  await page.locator('#path-band-modern-cryptography').waitFor({state:'visible'});
-  assert.equal(await page.locator('#path-band-modern-cryptography').count(),1);
+  assert.equal(await page.locator('#path-band-modern-cryptography').count(),0,'the book companion stays off the home-page learning-path band');
   assert.equal(await page.locator('#path-band-applied-cryptography').count(),0);
   assert.equal(await page.locator('#path-band-start-here').count(),1);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
+  assert.equal(await page.locator('.nav-menu-educators[href="learn/modern-cryptography/"]').count(),1,'the book companion remains in the menu');
   await page.locator('#menuToggle').click();await page.locator('.nav-menu-educators[href="learn/modern-cryptography/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Introduction to Modern Cryptography/);
  }finally{await page.context().close();}
  const noJS=await browser.newPage({javaScriptEnabled:false});try{await noJS.goto(origin+'/learn/modern-cryptography/');assert.equal(await noJS.locator('.chapter:visible').count(),15);assert.ok(await noJS.locator('.chapter-labs a').count()>40);assert.equal(await noJS.locator('#reader-controls').isVisible(),false);}finally{await noJS.close();}
@@ -160,8 +160,8 @@ test('Boneh–Shoup filters, draft boundaries, part navigation, progress isolati
   await page.goto(origin+'/learn/boneh-shoup/');await contains(page,'progress','1 of 23');await page.locator('#clear-progress').click();await contains(page,'progress','0 of 23');
   await page.goto(origin+'/learn/modern-cryptography/');assert.equal(await page.locator('#chapter-3 input').isChecked(),true);
   await page.goto(origin+'/');
-  await page.locator('#path-band-boneh-shoup').waitFor({state:'visible'});
-  assert.equal(await page.locator('#path-band-boneh-shoup').count(),1);
+  assert.equal(await page.locator('#path-band-boneh-shoup').count(),0,'the book companion stays off the home-page learning-path band');
+  assert.equal(await page.locator('.nav-menu-educators[href="learn/boneh-shoup/"]').count(),1,'the book companion remains in the menu');
   await page.locator('#menuToggle').click();await page.locator('.nav-menu-educators[href="learn/boneh-shoup/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Graduate Course/);
   await audit(page);assert.deepEqual(errors,[]);
  }finally{await page.context().close();}

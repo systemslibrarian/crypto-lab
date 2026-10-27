@@ -2275,7 +2275,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">249</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">250</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21645,6 +21645,22 @@
             <div class="project-meta"><div class="stack"><span class="chip">SAML 2.0 Subset</span><span class="chip">XML Signature</span><span class="chip">Signature Wrapping</span><span class="chip">Element Binding</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
+          <a class="project-card" data-category="ENCRYPTION | POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-ibe/" data-added="2026-10" data-added-on="2026-10-27" data-updated="2026-10"
+            data-implements="LWE@src/ibe.ts:41 | SHA-256@src/hash.ts:21"
+            data-references="AES | AES-GCM | BLS signatures | BLS12-381 | Boneh-Franklin IBE | GGH | HIBE | HKDF | ML-KEM | Pairing"
+            data-standards="NIST"
+            data-implementation="WebCrypto SHA-256 / local TypeScript bounded GPV SampleISIS, discrete-Gaussian and dual-LWE teaching implementation"
+            data-review-commit="b19e2a6cd6869e2bf4d2c3cf05d763b6a3d7f048"
+            data-review-note="Read the complete exact-main README, design brief, parameter, arithmetic, deterministic-randomness, identity-hash, trapdoor, preimage-sampling, IBE, bounded-search, scenario and learner-interface source, unit and browser tests, mutation runner, workflows and visible limitations. Exact printable-ASCII identity bytes are domain-separated and rejection-sampled through SHA-256 into a public syndrome; a fixed full-row-rank matrix and complete q-ary-kernel basis feed a four-round GPV SampleD/SampleISIS extraction, and the resulting short preimage runs the actual dual-LWE bit equations. Fresh-authority, cache, changed-identity, mutated-key, wrong-decoder-key, oversized-noise and both-message controls are separately computed. The public bounded search uses only the matrix, syndrome and declared coordinate bound, finds a working preimage at the intentionally tiny profile and independently decrypts with it. The page measures the paper's dimension, modulus and Gaussian prerequisites and shows that this profile fails them; it is not TrapGen, a security proof, production parameter set, approved scheme, standard-model HIBE, constant-time implementation or cryptographic RNG. Agrawal–Boneh–Boyen is comparison-only because FRD encoding and SampleLeft/SampleRight are not implemented; NIST's ML-KEM is identified as a KEM rather than a drop-in identity-extraction replacement. The scanner's generic `ibe` path maps an import-closing line to Boneh–Franklin even though this lab executes no pairing-based BasicIdent, and `CPA` in the UI names the security level of the bare bit primitive rather than an executed chosen-plaintext attack, so both false credits are removed. LWE is review-anchored at the actual `p = A^T s + x` computation instead of promoted from prose. The complete 6e387b04efe4..b19e2a6cd686 follow-up diff leaves every cryptographic source file unchanged and applies the Crypto Lab master template: standard top bar and hero, a visible Why it matters section, pre-paint dark theme, skip target, favicon, scripture footer, standard README structure, template claim tests and registered Playwright port 4751. Current exact-main run 40488524715 passed 37 unit tests on Node 22/24/26 with 99.00/94.88/100/99.39 coverage, 11 learner-claim checks, five accessibility/reflow/keyboard checks, and a passing clean baseline followed by all 14 named mutations caught with byte-for-byte restoration; CodeQL run 40488524746 passed."
+            data-level="advanced"
+            data-overlaps="crypto-lab-ibe-gate: IBE Gate executes pairing-based BasicIdent and HIBE; Lattice IBE executes bounded GPV trapdoor preimage extraction and dual-LWE encryption. | crypto-lab-attribute-gate: Attribute Gate encrypts to pairing-based access policies; Lattice IBE maps one exact identity to a lattice syndrome and does not implement ABE. | crypto-lab-ggh-trapdoor: GGH Trapdoor explains good and bad lattice bases through GGH encryption and attacks; Lattice IBE uses a verified short q-ary-kernel basis for GPV SampleISIS extraction."
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Post-Quantum Identity Extraction</div>
+            <div class="project-title">Lattice IBE</div>
+            <div class="project-copy">Map identity bytes to a lattice syndrome, sample a trapdoor preimage, and run GPV dual-LWE bit encryption—then break the deliberately tiny profile with a public bounded search.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">GPV IBE</span><span class="chip">SampleISIS</span><span class="chip">Dual-LWE</span><span class="chip">Toy Parameters</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -21734,14 +21750,14 @@
         steps: [{title: 'Dead Sea Cipher'}, {title: 'ChaCha20 Stream'}, {title: 'Feistel Forge'}, {title: 'AES Anatomy'}, {title: 'Clock Arithmetic'}, {title: 'Educational RSA'}, {title: 'Point Arithmetic'}, {title: 'ECDSA Forge'}, {title: 'KMAC Gate'}, {title: 'Lattice Gentle'}, {title: 'MAC Race'}, {title: 'PKI Chain'}]
       },
       {
-        id: 'modern-cryptography', label: 'Introduction to Modern Cryptography', home: true,
+        id: 'modern-cryptography', label: 'Introduction to Modern Cryptography', home: false,
         focus: 'Katz & Lindell: define the goal, test an attack, inspect the assumption.',
         blurb: 'An independent companion to Katz and Lindell’s 2025 revised third edition. Start with these selected experiments, then follow all 15 chapters with reading pointers, original activities and explicit boundaries between experiments and proofs.',
         guide: {href: 'learn/modern-cryptography/', label: 'Open the 15-chapter reading guide →'},
         steps: [{title: 'OTP Vault'}, {title: 'Hidden Bit'}, {title: 'MAC Race'}, {title: 'Padding Oracle'}, {title: 'Hash Zoo'}, {title: 'AES Anatomy'}, {title: 'Clock Arithmetic'}, {title: 'Factor Forge'}, {title: 'DH MITM'}, {title: 'RSA Forge'}, {title: 'LMS Ledger'}, {title: 'Paillier Gate'}]
       },
       {
-        id: 'boneh-shoup', label: 'Boneh & Shoup: A Graduate Course in Applied Cryptography', home: true,
+        id: 'boneh-shoup', label: 'Boneh & Shoup: A Graduate Course in Applied Cryptography', home: false,
         focus: 'Connect practical constructions to security definitions and proofs.',
         blurb: 'An independent companion to the free version 0.6 draft. Follow 23 chapter entries with official PDF links, original experiments and explicit boundaries for unfinished sections.',
         guide: {href: 'learn/boneh-shoup/', label: 'Open the Boneh–Shoup reading guide →'},
@@ -21896,7 +21912,7 @@
       'Educational RSA': 'public-key',
       'Ed25519 Forge': 'public-key', 'Vector Gate': 'public-key', 'ECDSA Forge': 'public-key', 'Schnorr Forge': 'public-key',
       'Curve448': 'public-key', 'ElGamal Plain': 'public-key',
-      'IBE Gate': 'public-key', 'Blind Sign': 'public-key',
+      'IBE Gate': 'public-key', 'Lattice IBE': 'public-key', 'Blind Sign': 'public-key',
       'Ring Sign': 'public-key', 'SPHINCS+ Ledger': 'public-key',
       'LMS Ledger': 'public-key', 'LMS/XMSS': 'public-key',
       'Pairing Gate': 'public-key',

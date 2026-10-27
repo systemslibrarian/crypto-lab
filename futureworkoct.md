@@ -1,294 +1,223 @@
 # Future work — October 2026
 
-A working list, so items can be picked by number. **Items are REMOVED as they
-complete**; the ledger at the end is one line each, pointing at where the detail
-lives. Every figure here was re-measured on the date beside it — if a count
-disagrees with its command, the command is right and the line is stale.
+This is a working queue. Remove settled work instead of growing a history log.
+Counts are dated snapshots; the generating command or Fleet Console is
+authoritative when they disagree.
 
----
+## Live handoff — 2026-10-27, measured at 07:11 EDT
 
-## Where this left off — 2026-10-21
+Both remotes were fetched immediately before this handoff was written.
+`crypto-lab` `origin/main` is **`8c11d75`** and `crypto-counsel`
+`origin/main` is **`2be1cd0`**. This replacement branch starts exactly at that
+Hub main. The local counsel checkout is clean but still at **`dbc0912`**, one
+commit behind its remote; that distinction explains the local `corpus-sync`
+result below.
 
-Both repos are clean and fully merged. `crypto-lab` main is **`34d7b50`**,
-`crypto-counsel` main is **`52098dc`**. Nothing is in flight: no open PRs in
-either repo, no branches besides `main` on either remote, no stale
-remote-tracking refs, and no local branches besides `main`.
+The catalog contains **251** cards. The hero reads **250**, which is what the
+grid shows after excluding the one `learning-game` card. The encyclopedia
+roadmap is at **47 Live / 1 Planned** after L-R-12; A-D-15 is the remaining
+roadmap integration.
 
-Landed this session: **#239** (five new cards), **#240** (cryptanalyst split
-PROPOSAL only), **#241** (this file), and crypto-counsel **#16** (five corpus
-entries) and **#17** (eleven stale snapshot lines, Snow 2 moved to Related
-Projects, `validate.mjs` widened with M25-M27).
+Nothing below is merged merely because its checks pass.
 
-**Two things are waiting on a maintainer DECISION rather than on work** — items 6
-and 7 below. Item 6 is the one that blocks a change already written down.
+### Hub consistency — 10 of 13 pass in this workspace
 
-**Pick up with:** item 6 if you want to decide the path split; otherwise item 2
-(#31 vectors, five rows left) is the largest piece of real work and item 3 (the
-20 stale corpus entries) is the one with the clearest starting point.
+`readme-sync`, `concept-sync`, `catalog-sync`, `tools-sync`, `theme-sync`,
+`gate-sync`, `lab-dates`, `games-sync`, `teach-build` and
+`knowledge-map-sync` pass against the current Hub tree.
 
-Before touching anything, re-fetch and re-run the fast loop — the figures below
-were measured on the dates beside them and other sessions work in these repos:
+The three failures have specific, non-overlapping causes:
 
-```
-git -C . fetch origin && git -C ../crypto-counsel fetch origin
+- **`corpus-sync` is reading the stale local counsel checkout.** It sees 251
+  catalog demos against 250 corpus demos and names `lattice-ibe` as missing.
+  Counsel PR #26 already added that record to `origin/main` at `2be1cd0`.
+  Checking the exact remote file through `/dev/stdin` passes at 251/251 with
+  zero missing and zero stale entries. There is no Lattice corpus content work
+  left; an authorized counsel maintenance pass only needs to fast-forward its
+  clean local checkout.
+- **`dispatch-sync` fails only on `crypto-lab-anamorphic`.** It observes 256
+  labs / 254 auto-merge jobs / 253 dispatch sites against census pins of
+  255 / 253 / 252. The one unpinned lab accounts for all three count failures
+  and the derived evidence-coverage refusal.
+- **`port-sync` fails only on `crypto-lab-anamorphic`.** Its Playwright config
+  uses unique port **4750** with `--strictPort`; the value is not yet in
+  `tools/playwright-ports.json`.
+
+Anamorphic was unmerged when the earlier draft was measured. It is now on
+`main`, so its card and both pins belong in the upcoming A-D-15 Hub integration.
+
+### Open Hub pull requests — re-read 2026-10-27
+
+Eight older Hub PRs were open before this replacement branch was pushed. This
+branch is intended to add a ninth and supersede #243 without closing or
+force-pushing it.
+
+| PR | State | Note |
+|---|---|---|
+| **#243** | mergeable, unstable | old handoff branch at pushed head `318e42d`; its one failed check describes that old head, not this replacement |
+| **#244** | conflicting | |
+| **#245** | mergeable, clean | still stacked on #244 rather than `main` |
+| **#246** | conflicting | |
+| **#247** | conflicting | |
+| **#248** | conflicting | |
+| **#249** | mergeable, clean | |
+| **#251** | conflicting | |
+
+Five of the eight conflict. Refresh or supersede them, and re-read every open
+PR after any further movement on Hub main; a historical green run does not
+resolve a merge conflict.
+
+### A-D-15 — implementation and Pages delivered; integration remains
+
+`systemslibrarian/crypto-lab-anamorphic` PR #1 was independently corrected at
+head **`3f5ce684a4c0`** and merged as main **`c2ef8df2dd20`** on 2026-10-27.
+All five PR quality jobs plus CodeQL passed. Exact-main run **40493251507** passed
+Node 22/24/26, browser/accessibility/reflow and clean-baseline mutation gates,
+then deployed successfully; exact-main CodeQL also passed. GitHub Pages now uses
+`build_type: workflow`, the public URL returns HTTP 200, and its served
+JavaScript contains the reviewed `WHY IT MATTERS` marker.
+
+The lab is live, but **A-D-15 is not yet published into the Hub, counsel corpus
+or roadmap and must not be marked 48/48 early**. Remaining work:
+
+1. Continue in the separate A-D-15 integration lane, not in this tracker PR.
+   `../crypto-lab-ad15-integration` is clean at current Hub main on
+   `codex/ad15-hub-integration-20261027`. The older
+   `../crypto-lab-ad15-hub` still holds an uncommitted roadmap edit on
+   `codex/ad15-roadmap-20261027`; it is two Hub-main commits behind and must be
+   reconciled with merged #338/#339 rather than overwritten or duplicated.
+2. Add the Hub card and exact source review, then run `readme-sync`,
+   `lab-dates`, `node tools/catalog-evidence.js write` and
+   `catalog-sync check`.
+3. Add counsel entry `demo_crypto_lab_anamorphic`, review its prose against
+   exact main, and run `corpus-sync check` against the resulting counsel tree.
+4. Add the concept-coverage citation and append-only version note, and advance
+   the encyclopedia roadmap from 47 Live / 1 Planned to 48/48 only after the
+   publication evidence exists.
+5. Regenerate the teach layer with `teach-build.js`; a new card otherwise puts
+   `teach/index.html` out of date.
+6. Pin Playwright port 4750 with `port-sync.js` and update the dispatch census
+   with `dispatch-census.js write`.
+7. Run all thirteen Hub checkers, finish any card-stamping pass with
+   `node tools/level-sync.js`, and verify the deployed Hub and counsel assets.
+8. Remove the frozen pre-audit copy `~/repos/_ad15-anamorphic-audit` only after
+   the integration owner confirms it is no longer needed. It was not removed
+   during this tracker-only pass.
+
+### Fleet pull requests — measured 2026-10-27 at 07:07 EDT
+
+Repositories whose names begin with `crypto-lab` have **293** open PRs:
+**223 Dependabot** and **70 owner-authored**. Eight owner-authored PRs are the
+Hub PRs above, leaving **62 owner-authored lab PRs**. Per-lab evidence lives in
+the Fleet records and PR comments and is not duplicated here. The open
+exceptions that still need explicit handling are:
+
+- **Conflicting; rebase before evaluating:** PQ Rotation **#24**
+  (`59b1c6dd2f4e`), Search Vault **#23** (`344a310bac0a`) and Shamir Gate
+  **#17** (`1968e533e9ac`).
+- **Mergeable and clean; stored evidence still unreconciled:** Scloud Vault
+  **#21** (`20569e371a4f`) and Shor **#21** (`5982efd13589`). Their build jobs
+  passed, but the auto-merge jobs skipped; reconcile their advanced heads
+  before any merge.
+- Code scanning remains explicitly **unmeasured since 2026-10-23** for the
+  reviewed fleet. An absent, disabled or unreadable provider is never
+  zero-alert evidence.
+
+Only four of the 223 open fleet Dependabot PRs predate 2026-10-20, and all four
+are majors the auto-merge workflow deliberately leaves for a human:
+
+| Lab | PR | Bump |
+|---|---|---|
+| `crypto-lab-pake-gate` | #43 | `globals` 13.24.0 → 17.13.0 |
+| `crypto-lab-air-stream` | #7 | `typescript` 5.9.3 → 7.0.2 |
+| `crypto-lab-sm9-forge` | #7 | `typescript` 5.9.3 → 7.0.2 |
+| `crypto-lab-tc26-pair` | #8 | `typescript` 5.9.3 → 7.0.2 |
+
+The three TypeScript 5 → 7 bumps are one decision, not three.
+
+**Next security review in the last authoritative Fleet snapshot:** Mayo Seal
+item `e67e91de-dce3-4f95-bb27-134a200d6a7b`. Continue queued reviews one lab at
+a time.
+
+## Fleet Console state — measured 2026-10-23, not re-measured
+
+The work-store counts below could not be re-derived from repositories. They are
+four days old; the Fleet Console is authoritative over them and no current-state
+claim should be inferred from this section.
+
+The last snapshot had **1,204 total, 1,073 complete and 131 active** items:
+**98 queued, 27 working and 6 blocked**.
+
+- **98 queued security-evidence reviews.** Mayo Seal was next.
+- **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
+  security item for PR **#8**.
+- **4 blocked security items:** Time Trust and LLL Break needed GitHub
+  alert-state reconciliation; Confirmer Signatures and Subliminal Channels
+  returned `Dependabot alerts are disabled`.
+- **2 cross-repository blockers:** Dot's all-lab reading report and the Counsel
+  primary API TLS route.
+
+The evidence standard for every queued item is unchanged:
+
+1. Fetch the repository immediately before evaluation, pin fresh committed
+   `origin/main`, and re-fetch before recording evidence so mid-review movement
+   is detected. Never describe an uncommitted working tree.
+2. Read the committed README and implementation.
+3. Query authenticated Dependabot, secret-scanning and code-scanning endpoints,
+   preserving disabled and unavailable states.
+4. Query every exact lockfile version against the applicable registry.
+5. Run the repository's real unit/build/browser gates and inspect exact-head
+   workflow provenance. A timestamp or absent alert list is not a pass.
+6. Track source repair separately and leave deployment unverified while its PR
+   remains open.
+
+At the 2026-10-23 measurement, the saved Fleet snapshot was dated 2026-10-19 at
+Hub **`b1b9876`** and contained **232 labs**. Against today's 251 catalog cards,
+that saved count is nineteen labs behind. Its daily 02:00 America/New_York
+refresh was disabled at that measurement; its current schedule state was not
+re-read. After open maintenance settles, refresh against the catalog count
+reported that day and verify the saved readback before publishing it. Enabling
+the schedule or changing repository security settings is an owner decision.
+
+## Hub verification
+
+Before another handoff, fetch both repositories and run each checker once:
+
+```sh
+git -C . fetch origin
+git -C ../crypto-counsel fetch origin
 for c in readme-sync corpus-sync concept-sync catalog-sync tools-sync \
          theme-sync gate-sync dispatch-sync port-sync lab-dates \
          games-sync teach-build knowledge-map-sync; do
-  printf '%-22s ' "$c"; node "tools/$c.js" check >/dev/null 2>&1 && echo PASS || echo FAIL
+  printf '%-22s ' "$c"
+  node "tools/$c.js" check >/dev/null 2>&1 && echo PASS || echo FAIL
 done
 ```
 
-(Quote `"tools/$c.js"` and pass `check` as its own argument. zsh does not
-word-split an unquoted `$c`, so `node tools/$c` with `c="x.js check"` looks for a
-file literally named `x.js check` and every checker reports MODULE_NOT_FOUND.)
+`corpus-sync` reads the counsel **working tree**, not its fetched remote. Until
+that clean clone is fast-forwarded, verify the remote corpus without modifying
+it:
 
----
-
-## 1. Nine snapshot lines carry HTML entities where the card has the character
-
-Reported by the maintainer 2026-10-21, **NOT verified here and explicitly deferred
-— do not start it without being asked.** In `../crypto-counsel`'s
-`crypto_lab_readme` All Demos lines: `&amp;` where the card has `&`, and
-`&#949;-&#948;` where it has `ε-δ`.
-
-Named: Commit Gate, PKI Chain, WebAuthn, Syndrome Drain, Chain of Trust, Lattice
-Gentle, MuSig Gate, DP Noise, Covert Channel Studio.
-
-**Re-derive the set before fixing it rather than trusting this list** — it is a
-report, not a measurement, and the count is the part most likely to be stale. The
-derivation that found the eleven drift lines is the one to reuse: read each card's
-kicker and chips out of `index.html`, cross-check against the generated All Demos
-table in `README.md`, and compare. Decoding entities is a separate question from
-that comparison, so whatever closes this should also say which side is canonical.
-
-Do NOT bundle it with a drift pass: an entity fix touches lines no card changed,
-and mixing the two makes both unreviewable.
-
----
-
-## 2. #31 — published test vectors, 13 of 18 rows done
-
-Five unnamed rows remain. **The issue's own ranking is stale — re-derive before
-picking:** `node tools/depth-audit.js`, then read `audits/DEPTH-AUDIT-<today>.md`.
-
-**How these rows have actually gone, after thirteen:**
-
-- **Where the vector lives.** The hand-rolled hard maths almost always has
-  tests; the primitive that seals, keys, tags or commits its output almost never
-  does. In nine of thirteen the untested module was the symmetric one. When a lab
-  has no obvious KAT, ask what standardized primitive its output passes through
-  before concluding none applies — `paillier-gate` (HMAC, RFC 4231) and
-  `spdz-forge` (SHA-256 commitment, CAVP) both looked like "no vector applies".
-- **Copy the bytes from the publication.** A vector regenerated from `@noble` or
-  WebCrypto agrees with the code for the same reason it agrees with itself.
-- **Assert THROUGH the lab's own function**, never against `crypto.subtle`
-  beside it. In `bike-vault` the second form let a SHA-1 mutation pass.
-- **Check the extraction against the publication's own octet counts.** Pulling
-  hex runs of 8+ characters out of RFC 8554 dropped a message's final `2e0a` —
-  160 bytes where Appendix F says 162 — and the truncated message made a correct
-  lab look broken. RFC 4231 Test Case 3 writes `Key` with no `=` sign, alone
-  among seven, so a reader keyed on `Key =` built a zero-length key.
-- **Pin what the KEY carries, not just what the function computes.** In
-  `paillier-gate` the exported `hmacSha256` takes a `CryptoKey`, so the hash
-  lives in the key: all seven RFC vectors stayed green when `generateBallotKey`
-  was switched to SHA-1. One assertion on `key.algorithm.hash` noticed.
-- **Check what a lab's "reference" actually IS.** `kyberslash`'s was its own
-  formula transcribed — a differential, blind to the same wrong constant in both
-  copies. The tell is that the reference expression and the implementation
-  expression are the same shape.
-- **Check what the GATE invokes, not that it went green.** `hqc-vault`'s build
-  job never ran `npm test`, so ten new tests ran nowhere.
-  `gh api .../jobs --jq '.jobs[] | .steps[] | .name'` settles it.
-- **Expect four outcomes**, not two. Of thirteen: three carried a real
-  conformance bug, eight were correct but unverified, one cannot take a vector at
-  all (`falcon-seal` — randomized signing, non-reference encoding), and one was
-  verified against a transcription of itself.
-
----
-
-## 3. Corpus prose — 20 stale, 185 never reviewed
-
-233 entries: 28 current, 20 stale, 185 never reviewed (2026-10-20). A review
-backlog, not a defect, and it cannot be swept: each entry means reading a lab and
-confirming the prose describes it. **Start with the 20 STALE** — someone checked
-those and the lab moved underneath them.
-
-**Check the publication before correcting a citation.** `tls-handshake`'s entry
-cites "TLS 1.3 (RFC 9846)" and RFC 9846 is REAL — July 2026, obsoleting 8446. The
-lab cites it 22 times. One edit from correcting a correct citation.
-
-**`corpus-freshness` counting a README-only change as substantive is CORRECT** and
-was checked: the prose is written FROM the README, so a rewritten README can
-invalidate prose derived from the old one. Do not "fix" it.
-
-Check: `node tools/corpus-freshness.js` (`--stale`, or `--fetch` for an answer
-that does not depend on when you last pulled)
-
----
-
-## 4. Teach layer — 43 unchecked claims
-
-Each needs a needle taken from the live page and VERIFIED before it can become an
-automated probe, because an unverified needle reports a false failure. The report
-names a cadence per item. Judgement per item, not a sweep.
-
-The 4 UNREADABLE are **gone** — they were uninstalled local Firefox and WebKit
-binaries, and all four became MATCHES once installed
-(`cd tools && npx playwright install firefox webkit`).
-
-Check: `node tools/teach-issues.js`
-
----
-
-## 5. Chip rule — advisory, and staying advisory for now
-
-The 23 findings are dispositioned in `audits/CHIP-DISPOSITION-2026-10-20.md`.
-The maintainer's decisions of 2026-10-21 are implemented in
-`tools/catalog-sync.js`: four new qualifier words scoped to the chip they appear
-in, a declared `ENTAILS` table keyed on anchored implementations, one declared
-`QUALIFYING_SIBLINGS` pair, and the executed-stack rule requiring a verified call
-site rather than a dependency listing.
-
-**Remaining before anyone proposes enabling the gate:** finish validating the
-rules, and keep the distinction between implementing and discussing. The gate
-decision is the maintainer's.
-
-Check: `node tools/catalog-sync.js chips`
-
----
-
-## 6. DECISION: split the Cryptanalyst Path, or leave it at 20 steps
-
-**Waiting on the maintainer. No code is written and nothing is blocked
-technically — the proposal is the deliverable and it is already merged.**
-
-`audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md` (merged in #240) sets out
-the case. The path is 20 steps against `CLAUDE.md`'s "keep `steps` <= ~12"; it was
-17 before #239 added three, so the additions are not the cause. It is the longest
-of the eight paths and the only one past 17.
-
-Three options:
-
-1. **Leave it at 20.** Nothing to do; delete this item.
-2. **Two paths**, as proposed — A "Structure and Statistics" 11 steps (1 beginner,
-   5 intermediate, 5 advanced; keeps the only beginner on-ramp), B "Implementation
-   and Composition" 9 steps (1 intermediate, 8 advanced). Verified against merged
-   main: all 20 appear exactly once, none duplicated, no group names a non-step.
-3. **Three paths.** The proposal names the seed if composition deserves its own:
-   Salamander, Frozen Heart and Padding Oracle, matching
-   `concept-coverage.md` §29 "Composition and parsing failures".
-
-If 2 or 3 is chosen, the implementation is mechanical and the proposal lists it.
-**The one trap is writer order:** `knowledge-map-sync write` records a path count
-and hashes `index.html`, so it must run AFTER any card stamper, or the map's hash
-describes a file that no longer exists in that form.
-
----
-
-## 7. DECISION: two drifted Related Projects lines in the corpus snapshot
-
-**Offered during #17 and deliberately left out of it**, because the instruction
-was to add Snow 2 "in the same form as the other three" — so all three were left
-untouched. Two of them have since been shown to differ from the catalog README:
-
-| | snapshot | catalog README |
-|---|---|---|
-| Cipher Museum | `Interactive museum spanning ... history — thirteen halls` | `An interactive museum spanning ... history. Thirteen halls` |
-| Meow Decoder | ends at `via QR-code GIFs.` | plus `AES-256-GCM + Argon2id + ML-KEM-1024 + fountain codes. Python + Rust.` |
-
-Both are wording, neither is a link. Small, and a one-line re-derivation each
-from the README's Related Projects block.
-
-**The third line, Crypto Compare, is NOT a defect — do not "fix" it.** The
-snapshot's `https://crypto-compare.systemslibrarian.dev/` is that project's own
-live address: its repository's `CNAME` contains exactly that host and its README
-links it. An earlier read of mine called it dead by applying the rule about
-`crypto-lab.systemslibrarian.dev/<slug>/` 404ing, which is a DIFFERENT host
-serving the catalog page. The conflation is the thing worth remembering.
-
-If anything the discrepancy runs the other way: **the catalog README uses the
-github.io form for a project that has its own domain.** That is a question about
-`README.md` here, not about the snapshot, and nobody has decided it. Changing it
-would also move the generated All Demos table's sibling block, so check what
-`readme-sync` writes before assuming it is a one-line edit.
-
----
-
-## 8. The nine detached worktrees under `~/repos/.fleet-maintenance-20261009/`
-
-**Left alone on 2026-10-21 by instruction. Listed here so the state is not
-rediscovered as a surprise.**
-
-All nine are `crypto-counsel` worktrees on DETACHED HEADs, and all nine were
-clean (no uncommitted paths) when checked. Because they hold no branch, their
-commits — `0d032ee`, `051a93c`, `2186e49` (x2), `4de0cfe`, `7631877`, `a6b1036`,
-`08dade2` (x2) — are now referenced ONLY by those worktrees. Nothing points at
-them from any branch in either repo.
-
-So: removing a worktree makes its commit unreachable and eventually
-garbage-collectable. Not urgent, and not a decision to take casually — if any of
-that work matters, tag it or push it to a branch BEFORE removing the worktree,
-not after.
-
-```
-git -C ../crypto-counsel worktree list
+```sh
+git -C ../crypto-counsel show origin/main:corpus.json \
+  | node tools/corpus-sync.js check /dev/stdin
 ```
 
----
+Record what the run reports, not what this handoff predicted. Keep lab-side and
+roadmap integration edits out of this tracker-only PR.
 
-## 9. Branch-cleanup restore window
+## Optional cleanup — no cleanup performed
 
-`~/branch-cleanup-2026-10-21.txt` holds 34 rows: 30 deleted remote branches
-(26 crypto-lab from PRs #192-#240, 4 crypto-counsel from #14-#17) and 4 deleted
-local branches, each with its full tip SHA, PR number and the PR's merged head
-SHA. Every row restores with:
-
-```
-git push origin <sha>:refs/heads/<branch>
-```
-
-or the "Restore branch" button on that PR. 20 stale remote-tracking refs were
-pruned in crypto-lab, 0 in crypto-counsel.
-
-**Delete that file once you are satisfied nothing is missing.** It is the only
-record outside GitHub's own reflog, and keeping it indefinitely makes it look
-like a live list rather than a receipt.
-
-"Automatically delete head branches" is now ON in both repos, so this was
-one-time: a merged PR's branch goes away on its own from here.
-
----
-
-## Done — one line each
-
-| item | where the detail is |
-|---|---|
-| #31, 13 of 18 rows | the lab PRs; three real conformance bugs (both TLS labs' RFC 5869 absent salt, `lms-xmss`' RFC 8554 HSS) |
-| 4a chip disposition | `audits/CHIP-DISPOSITION-2026-10-20.md` |
-| 4d unmarked title | "Mental Poker, Simplified: Shuffle Showdown" |
-| 4e game CSPs | all 11 pages under the gate; `merkle-mystery` needed a real fix — CSSOM positioning, not `unsafe-inline` |
-| 5a gate.ts copy count | 83 of 184, re-derived; CLAUDE.md |
-| 5b legacy toggles | warning had gone SILENT; 46 build one, 36 confirmed wired; CLAUDE.md |
-| 6 protection-census | scheduled; `FLEET_READ_TOKEN` set, census PASSED in CI in 33s |
-| 7 write half of #125 | one `stampTag()`; `tests/card-stamp.test.cjs` fails 2 of 6 against the old writers |
-| Trivium, Davies-Meyer | both were absent from the vocabulary; `lfsr-forge`'s N/A was false |
-| five uncarded labs + four missing corpus entries | #239 and crypto-counsel #16; `fleet-sync` and `corpus-sync` both clean |
-| cryptanalyst path at 20 steps | PROPOSAL ONLY in crypto-lab #240, `audits/CRYPTANALYST-PATH-SPLIT-PROPOSAL-2026-10-21.md`; the split is the maintainer's call |
-| eleven stale `crypto_lab_readme` lines | crypto-counsel #17; Snow 2 was a MOVE to Related Projects, and `validate.mjs` was widened with M25-M27 as its controls |
-| branch cleanup, both repos | 30 remote + 4 local deleted, 20 tracking refs pruned; manifest `~/branch-cleanup-2026-10-21.txt`; auto-delete now ON, so one-time. Decide from the PR, never `git branch --merged` — squash merges make almost every merged branch read as unmerged |
-| futureworkoct queue update | #241 |
-
-**Finish a card-stamping pass with `node tools/level-sync.js`.** `data-level` sits
-where the writer that ran last put it; running it last took a real repin's diff
-from 704 lines to 10.
-
-## Settled — do not re-file these
-
-- **`key-rush`'s "checked by recombining the actual share values" is TRUE.**
-  `core.mjs:59` Lagrange-interpolates and `:60` throws `Reconstruction mismatch`.
-- **`secret-council/vault.mjs:92`'s count is DERIVED**, from `result.possibilities`.
-- **The games being outside the derived catalog views** is deliberate: they get
-  `games-sync`, not cards and not an exemption.
-- **`quantum-vault-kpqc`'s light theme**, **`blind-oracle-api`'s missing page**,
-  and **`confirmer-signatures`' absent `dependabot.yml`** are load-bearing
-  divergences. A sweep that flattens one is a regression.
+- Nine detached `crypto-counsel` worktrees remain under
+  `~/repos/.fleet-maintenance-20261009/`. All nine are clean and their commits
+  are ancestors of counsel `origin/main` at `2be1cd0`, but the directory was
+  explicitly left untouched.
+- That maintenance directory is **49 GB** with **1,420 top-level entries** and
+  **472 top-level directories**. Reclaiming it is a separate, destructive
+  owner decision; do not conflate it with the nine counsel registrations.
+- Three dead-path worktree registrations are prunable but were not pruned: Hub
+  paths `/private/tmp/catalog-evidence-current.64nVx9/crypto-lab` and
+  `/private/tmp/lr04-hub-validate.eS15cU/crypto-lab`, plus counsel path
+  `/private/tmp/catalog-evidence-current.64nVx9/crypto-counsel`.
+- `~/branch-cleanup-2026-10-21.txt` still exists and records deleted branches
+  and restore SHAs. Keep it until the restore window is intentionally closed.

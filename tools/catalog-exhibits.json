@@ -781,8 +781,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-aes-anatomy": {
-      "commit": "1f0f6b86a2dd5b631df13377b5e1a205e712a502",
-      "reviewed": "2026-10-23",
+      "commit": "61be3762a50c5640460aac91850ba4d038d0218a",
+      "reviewed": "2026-10-27",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -840,13 +840,15 @@
           "section": "Move and mix",
           "kind": "interactive",
           "execution": "real-operation",
-          "action": "Step ShiftRows and MixColumns on the state grid for the selected key and block.",
-          "outcome": "See byte locations, column mixing and structural dependencies as the state changes.",
+          "action": "Step ShiftRows and MixColumns on the state grid, then check column dispersion and compare it with an identity-permutation counterexample.",
+          "outcome": "See byte locations and column mixing, verify the structural hypotheses used by the four-round wide-trail argument, and keep one observed trail separate from the theorem.",
           "concepts": [
             "AES state",
             "ShiftRows",
             "MixColumns",
             "diffusion",
+            "wide-trail strategy",
+            "active S-box bound",
             "column-major layout"
           ],
           "evidence": [
@@ -855,9 +857,14 @@
             "src/main.ts:198",
             "src/main.ts:324",
             "src/main.ts:332",
-            "src/ui/act3.ts:14"
+            "src/ui/act3.ts:14",
+            "src/ui/act3.ts:77",
+            "src/ui/act3.ts:80",
+            "src/ui/act3.ts:82",
+            "src/wide-trail.ts:5",
+            "src/wide-trail.ts:11"
           ],
-          "limits": "Structural dependency does not ensure a visible difference on every chosen input."
+          "limits": "The program checks dispersion and shows one fixed-key trace; the cited theorem supplies the four-round active-S-box bound. Trail probability or correlation bounds are not differential, hull or full-cipher security bounds."
         },
         {
           "id": "key-expansion",
@@ -1044,6 +1051,42 @@
             "src/ui/act9.ts:264"
           ],
           "limits": "Chosen-input one-byte logical model with a declared profiled landing rate; the census is analytic rather than sampled evidence, and the deterministic teaching infection is not timing-oblivious, hardened, universal or the cited circuit defense."
+        },
+        {
+          "id": "reduced-integral",
+          "title": "Four-round AES integral key recovery",
+          "section": "Balance a set, recover a reduced-round key",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Run complete disjoint 256-plaintext Lambda-sets through four-round AES-128, filter round-4 key-byte candidates, reverse the reduced key schedule and verify the candidate on three held-out plaintexts.",
+          "outcome": "Displays integral propagation, current-run candidate counts and query use; a key is reported only after every byte is unique and all three separate held-out encryptions match.",
+          "concepts": [
+            "AES-128",
+            "integral cryptanalysis",
+            "Lambda-set",
+            "balanced property",
+            "chosen-plaintext attack",
+            "key-schedule reversal"
+          ],
+          "evidence": [
+            "src/main.ts:115",
+            "src/main.ts:233",
+            "src/integral.ts:5",
+            "src/integral.ts:19",
+            "src/integral.ts:30",
+            "src/integral.ts:37",
+            "src/integral.ts:50",
+            "src/ui/act10.ts:5",
+            "src/ui/act10.ts:9",
+            "src/ui/act10.ts:13",
+            "src/ui/act10.ts:15",
+            "src/ui/act10.ts:18",
+            "src/ui/act10.ts:23",
+            "src/ui/act10.ts:24",
+            "src/integral.test.ts:26",
+            "e2e/integral.spec.ts:3"
+          ],
+          "limits": "This is four reduced AES rounds—three rounds with MixColumns and a final-shaped fourth round without it—not an attack on full ten-round AES-128. It uses at most six complete sets and exposes ambiguous or empty candidates instead of claiming recovery."
         }
       ]
     },
@@ -1360,8 +1403,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-agreeing-in-public": {
-      "commit": "e5cbf32207ebc6628884e3673238199c60ed1210",
-      "reviewed": "2026-10-22",
+    "commit": "0aea1597dcf46dcb48268ad585f47259011a78d0",
+    "reviewed": "2026-10-27",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -3057,8 +3100,8 @@
       ]
     },
     "crypto-lab-biham-lens": {
-      "commit": "864ee0572f3e90496a240347a6094580a88a6318",
-      "reviewed": "2026-10-22",
+      "commit": "2592b2d94e17a6359262b1947d52f6069ca9b3f6",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "trace",
@@ -3087,23 +3130,33 @@
           "title": "Live differential attack",
           "kind": "interactive",
           "execution": "real-operation",
-          "action": "Set input and target differences, collect chosen plaintext pairs and run a last-round attack or pair-count sweep.",
-          "outcome": "See ranked key candidates, bias distribution and whether the recovered last-round key separates from noise.",
+          "action": "Choose public-model or instructor-assisted preprocessing, set the input and target differences, collect chosen-plaintext pairs, and run a last-round attack or pair-count sweep.",
+          "outcome": "See ranked key candidates and bias distribution while the page separates repeated samples from distinct data and labels true-key rank as instructor evaluation.",
           "concepts": [
             "chosen-plaintext differential attack",
             "differential bias",
             "last-round key recovery",
-            "sample complexity"
+            "sample complexity",
+            "differential versus characteristic",
+            "attacker knowledge"
           ],
           "evidence": [
             "index.html:266",
-            "index.html:290",
-            "index.html:301",
-            "index.html:310",
+            "index.html:281",
+            "index.html:291",
+            "index.html:299",
+            "index.html:309",
+            "src/main.ts:324",
+            "src/main.ts:352",
+            "src/main.ts:373",
             "src/main.ts:393",
-            "src/main.ts:461"
+            "src/main.ts:441",
+            "src/crypto/attack.ts:192",
+            "src/crypto/attack.ts:210",
+            "src/crypto/attack.ts:232",
+            "src/crypto/attack.ts:243"
           ],
-          "limits": "The attack targets a toy cipher; statistical outcomes depend on chosen differences and pair count.",
+          "limits": "The attack targets an 8-bit toy cipher with a dependent rotating key schedule. The public preprocessing is an independent-uniform-round-input model, not the exact fixed-key probability; instructor mode reads hidden states, there are only 128 distinct unordered pairs for a nonzero difference, and repeats are not fresh data.",
           "section": "Live Differential Attack"
         },
         {
@@ -11536,8 +11589,8 @@
       ]
     },
     "crypto-lab-envelope-kms": {
-      "commit": "d2b6614a9fad2fe9667b05d35e3a1e6895ad3293",
-      "reviewed": "2026-10-25",
+      "commit": "ad7fab7a04aa29b370b7009f1a18bdb8a346cd90",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "envelope-operations",
@@ -11799,18 +11852,27 @@
           "id": "security",
           "title": "Security Properties Under Weakened Conditions",
           "kind": "interactive",
-          "action": "Run all security experiments in defended or weakened mode and inspect each result.",
-          "outcome": "Compare defended and weakened results for context binding, ciphertext authentication, tenant key isolation, wrapped-key integrity and rotation preserving access.",
+          "action": "Run all security experiments in defended or weakened mode, inspect each result, and compare the observed key-wrap rejection with the separately documented KWP length policy and forgery bounds.",
+          "outcome": "Compare defended and weakened results for context binding, ciphertext authentication, tenant key isolation, wrapped-key integrity and rotation preserving access without turning one rejected corruption into a universal integrity claim.",
           "concepts": [
             "security property test",
             "AAD binding",
             "key isolation",
+            "AES-KWP expected-length policy",
+            "conditional forgery bound",
             "threat modeling"
           ],
           "evidence": [
             "src/ui/security-lab.ts:59",
             "src/ui/security-lab.ts:62",
             "src/ui/security-lab.ts:63",
+            "src/ui/security-lab.ts:65",
+            "src/ui/security-lab.ts:68",
+            "src/crypto/aes-kwp.ts:41",
+            "src/crypto/aes-kwp.ts:70",
+            "src/crypto/aes-kwp.ts:78",
+            "src/crypto/key-wrap.test.ts:134",
+            "e2e/key-wrap-research.spec.ts:3",
             "src/security/properties.ts:478",
             "src/app.ts:480",
             "src/app.ts:873",
@@ -11819,7 +11881,7 @@
           ],
           "section": "Security Properties — Try to Break It",
           "execution": "real-operation",
-          "limits": "The browser model does not reproduce IAM, HSM, operational logging, or cloud service failure modes."
+          "limits": "The browser model does not reproduce IAM, HSM, operational logging, or cloud service failure modes. The trusted expected length must come from application policy; the cited ideal-permutation expression is conditional rather than a universal adaptive bound, and replay and context binding remain separate responsibilities."
         },
         {
           "id": "key-evolving-audit-log",
@@ -16522,8 +16584,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hostile-paths": {
-      "commit": "4086fff2f6d89ce83fa8e4dd2ead1a3c42734229",
-      "reviewed": "2026-10-26",
+      "commit": "e954fe1101dd6311f2434409664964f9ed2b5c8c",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "topology-planner",
@@ -21719,8 +21781,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-lattice-fault": {
-      "commit": "27a332b8d83845632a09046dd76c51343fb20514",
-      "reviewed": "2026-10-22",
+      "commit": "ba4fb8251734f5c273b75a461d6ceba25399035a",
+      "reviewed": "2026-10-27",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -21821,19 +21883,26 @@
           "section": "ATTACK 5: THE BIGGER PICTURE",
           "kind": "explanation",
           "execution": "conceptual",
-          "action": "Compare the implementation attack mechanisms and read the countermeasures and references.",
-          "outcome": "The recap distinguishes mathematical assumptions from power, fault and timing failures.",
+          "action": "Compare the implementation attack mechanisms and read the countermeasures, references and separate ML-DSA secret-key-unpacking research note.",
+          "outcome": "The recap distinguishes mathematical assumptions from power, fault and timing failures and labels the single-trace hardware result as unimplemented research context.",
           "concepts": [
             "post-quantum implementation security",
+            "ML-DSA secret-key unpacking",
+            "non-profiled single-trace analysis",
             "side-channel countermeasure",
             "fault detection"
           ],
           "evidence": [
             "src/main.ts:579",
+            "src/main.ts:599",
+            "src/main.ts:610",
+            "src/main.ts:612",
+            "src/main.ts:613",
             "src/main.ts:621",
-            "src/main.ts:641"
+            "src/main.ts:641",
+            "e2e/unpacking-research.spec.ts:3"
           ],
-          "limits": "A synthesis panel; it does not independently test all countermeasures on real devices."
+          "limits": "A synthesis panel; it does not independently test all countermeasures on real devices. The browser does not reproduce the physical ML-DSA-65 unpacking attack, its modified 6 MHz measurement setup, or its estimated 2^70-operation enumeration budget."
         }
       ]
     },
@@ -26124,8 +26193,8 @@
       ]
     },
     "crypto-lab-nonce-collision": {
-      "commit": "67b5574673ca767f9ad4d594663665c6075b9ca4",
-      "reviewed": "2026-10-22",
+      "commit": "6a879f002a78f671ff855f4681c70b2a2a37d48d",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "reveal",
@@ -27208,8 +27277,8 @@
       ]
     },
     "crypto-lab-oram-vault": {
-      "commit": "0c7f89281784748a9c9d4fafb41d85ac1839a4c5",
-      "reviewed": "2026-10-26",
+      "commit": "7a882b09e7a06e2ede8774d2abf92fa27856f01c",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "access-pattern",
@@ -27225,11 +27294,11 @@
             "medical metadata"
           ],
           "evidence": [
-            "src/main.ts:147",
-            "src/main.ts:153",
-            "src/main.ts:179",
-            "src/main.ts:200",
-            "src/main.ts:1110"
+            "src/main.ts:162",
+            "src/main.ts:193",
+            "src/main.ts:212",
+            "src/main.ts:214",
+            "src/main.ts:1350"
           ],
           "section": "Why Encryption Alone Isn't Enough"
         },
@@ -27249,17 +27318,18 @@
             "AES-GCM blocks"
           ],
           "evidence": [
-            "src/main.ts:222",
-            "src/main.ts:226",
-            "src/main.ts:232",
-            "src/main.ts:249",
+            "src/main.ts:237",
+            "src/main.ts:241",
+            "src/main.ts:254",
             "src/main.ts:260",
             "src/main.ts:266",
-            "src/main.ts:272",
-            "src/main.ts:720",
-            "src/main.ts:866",
-            "src/main.ts:897",
-            "src/main.ts:922",
+            "src/main.ts:275",
+            "src/main.ts:281",
+            "src/main.ts:287",
+            "src/main.ts:960",
+            "src/main.ts:1106",
+            "src/main.ts:1137",
+            "src/main.ts:1162",
             "src/client/encryption.ts:115",
             "src/client/encryption.ts:141",
             "src/client/encryption.ts:175"
@@ -27282,13 +27352,15 @@
             "AES-GCM blocks"
           ],
           "evidence": [
-            "src/main.ts:284",
-            "src/main.ts:288",
             "src/main.ts:299",
-            "src/main.ts:310",
-            "src/main.ts:952",
-            "src/main.ts:984",
-            "src/main.ts:1013",
+            "src/main.ts:303",
+            "src/main.ts:304",
+            "src/main.ts:305",
+            "src/main.ts:306",
+            "src/main.ts:309",
+            "src/main.ts:1192",
+            "src/main.ts:1224",
+            "src/main.ts:1253",
             "src/client/encryption.ts:115",
             "src/client/encryption.ts:141"
           ],
@@ -27308,15 +27380,14 @@
             "randomized paths"
           ],
           "evidence": [
-            "src/main.ts:328",
-            "src/main.ts:332",
-            "src/main.ts:341",
+            "src/main.ts:343",
             "src/main.ts:346",
+            "src/main.ts:347",
+            "src/main.ts:348",
             "src/main.ts:352",
-            "src/main.ts:1162",
-            "src/main.ts:1198",
-            "src/main.ts:1224",
-            "src/main.ts:1236"
+            "src/main.ts:367",
+            "src/main.ts:1387",
+            "src/main.ts:1402"
           ],
           "section": "Adversary's View vs. Client's View"
         },
@@ -27335,15 +27406,14 @@
             "access timing"
           ],
           "evidence": [
-            "src/main.ts:363",
-            "src/main.ts:376",
-            "src/main.ts:379",
-            "src/main.ts:380",
-            "src/main.ts:386",
-            "src/main.ts:420",
-            "src/main.ts:434",
+            "src/main.ts:378",
+            "src/main.ts:391",
+            "src/main.ts:394",
+            "src/main.ts:401",
+            "src/main.ts:425",
             "src/main.ts:435",
-            "src/main.ts:439"
+            "src/main.ts:449",
+            "src/main.ts:455"
           ],
           "limits": "Counts use the small in-browser tree; production cost and threat models depend on construction and deployment.",
           "section": "Costs and When ORAM Is Worth It"
@@ -27365,18 +27435,17 @@
             "storage-observer view"
           ],
           "evidence": [
-            "src/main.ts:448",
-            "src/main.ts:458",
+            "src/main.ts:463",
             "src/main.ts:464",
-            "src/main.ts:465",
             "src/main.ts:469",
             "src/main.ts:473",
-            "src/main.ts:493",
-            "src/main.ts:497",
-            "src/main.ts:510",
-            "src/main.ts:514",
-            "src/main.ts:1277",
-            "src/main.ts:1311",
+            "src/main.ts:479",
+            "src/main.ts:484",
+            "src/main.ts:488",
+            "src/main.ts:512",
+            "src/main.ts:515",
+            "src/main.ts:1517",
+            "src/main.ts:1551",
             "src/hierarchical/client.ts:156",
             "src/hierarchical/client.ts:185",
             "src/hierarchical/client.ts:203",
@@ -27402,9 +27471,337 @@
           ],
           "limits": "This fixed N=16 table deliberately overprovisions buckets and uses transient O(N) client rebuild space; it is not an asymptotically efficient oblivious hash table, a reproduction of Alibi's combined-stash attack, or production ORAM.",
           "section": "Path ORAM vs. a Bounded Hierarchical ORAM"
+        },
+        {
+          "id": "multi-client",
+          "title": "Three mutually distrustful clients sharing one encrypted store",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Run the rights baseline, the naive shared-client deployment, the client-server collusion attack, and every integrity, freshness, concurrency, revocation and trace-shape control.",
+          "outcome": "Derives releases and refusals from live protocol state, demonstrates why single-client state sharing fails, narrows addresses under collusion, and exposes the bounded construction's retained security limits.",
+          "concepts": [
+            "multi-client ORAM",
+            "access-control matrix",
+            "per-client key wrapping",
+            "signed write capabilities",
+            "accountable upload log",
+            "rollback watermark",
+            "client-server collusion",
+            "selective rights"
+          ],
+          "evidence": [
+            "src/main.ts:543",
+            "src/main.ts:584",
+            "src/main.ts:597",
+            "src/main.ts:619",
+            "src/main.ts:634",
+            "src/main.ts:660",
+            "src/main.ts:686",
+            "src/main.ts:1717",
+            "src/main.ts:1742",
+            "src/main.ts:1788",
+            "src/main.ts:1828",
+            "src/multiclient/scenario.ts:69",
+            "src/multiclient/scenario.ts:89",
+            "src/multiclient/scenario.ts:170",
+            "src/multiclient/scenario.ts:272",
+            "src/multiclient/scenario.ts:353",
+            "src/multiclient/scenario.ts:439",
+            "src/multiclient/scenario.ts:499",
+            "src/multiclient/scenario.ts:561",
+            "src/multiclient/scenario.ts:626",
+            "src/multiclient/protocol.ts:437",
+            "src/multiclient/protocol.ts:531",
+            "src/multiclient/protocol.ts:694",
+            "src/multiclient/protocol.ts:1126"
+          ],
+          "limits": "A fixed 16-entry browser adaptation with a non-colluding-server assumption. It does not provide global freshness, first-contact rollback detection, linearizability, hidden log catch-up, full malicious-server integrity, client-collusion security, process isolation, or production hardening.",
+          "section": "Mutually Distrustful Clients Sharing One ORAM"
         }
       ],
       "reviewScope": "complete"
+    },
+    "crypto-lab-rank-metric": {
+      "commit": "b9d9ba5887b1a59894d9deb3ae08225cbb239f6f",
+      "reviewed": "2026-10-27",
+      "reviewScope": "complete",
+      "exhibits": [
+        {
+          "id": "metric-weights",
+          "title": "Hamming weight and rank weight on one vector",
+          "section": "One vector, two different weights",
+          "kind": "interactive",
+          "execution": "real-values",
+          "action": "Choose four GF(16) symbols and compute both Hamming weight and binary-matrix rank weight.",
+          "outcome": "Displays the same vector's two weights and the exact 4 by 4 binary coordinate matrix used for the rank calculation.",
+          "concepts": [
+            "rank metric",
+            "Hamming metric",
+            "GF(16)",
+            "binary matrix rank",
+            "extension-field basis"
+          ],
+          "evidence": [
+            "index.html:37",
+            "index.html:39",
+            "index.html:41",
+            "index.html:57",
+            "index.html:60",
+            "index.html:73",
+            "src/main.ts:56",
+            "src/rank/matrix.ts:5",
+            "src/rank/matrix.ts:14",
+            "src/rank/matrix.ts:41",
+            "src/rank/matrix.ts:45"
+          ],
+          "limits": "The field and four-symbol vectors are deliberately tiny teaching parameters; the computation establishes no cryptosystem security."
+        },
+        {
+          "id": "gabidulin-census",
+          "title": "Complete [4,2,3] Gabidulin and MRD census",
+          "section": "A complete [4, 2, 3] Gabidulin census",
+          "kind": "comparison",
+          "execution": "real-values",
+          "action": "Inspect the generator matrix and the census recomputed from all 256 messages.",
+          "outcome": "Reports 256 distinct words, the full nonzero rank distribution, measured minimum rank distance and equality in the rank-metric Singleton bound.",
+          "concepts": [
+            "Gabidulin code",
+            "MRD code",
+            "linearized polynomial",
+            "minimum rank distance",
+            "Singleton bound"
+          ],
+          "evidence": [
+            "index.html:95",
+            "index.html:97",
+            "index.html:99",
+            "index.html:102",
+            "index.html:105",
+            "index.html:138",
+            "src/main.ts:109",
+            "src/rank/gabidulin.ts:54",
+            "src/rank/gabidulin.ts:59",
+            "src/rank/gabidulin.ts:114",
+            "src/rank/gabidulin.ts:141"
+          ],
+          "limits": "The exhaustive census is exact for this fixed 256-word code only; it is not an efficient production decoder or parameter analysis."
+        },
+        {
+          "id": "bounded-decoder",
+          "title": "Radius-one correction and complete rank-two controls",
+          "section": "Decode by actual rank distance",
+          "kind": "interactive",
+          "execution": "real-values",
+          "action": "Select a message and a rank-one correction, rank-two refusal or rank-two miscorrection scenario, then enumerate every rank-two error from the zero word.",
+          "outcome": "The exhaustive decoder returns only a unique radius-one word, independently checks reported words, and shows how beyond-radius errors divide between refusal and miscorrection.",
+          "concepts": [
+            "bounded-distance decoding",
+            "unique-decoding radius",
+            "rank-one correction",
+            "rank-two refusal",
+            "miscorrection",
+            "complete error census"
+          ],
+          "evidence": [
+            "index.html:161",
+            "index.html:163",
+            "index.html:165",
+            "index.html:179",
+            "index.html:185",
+            "index.html:214",
+            "index.html:221",
+            "index.html:231",
+            "src/main.ts:167",
+            "src/main.ts:229",
+            "src/rank/scenarios.ts:47",
+            "src/rank/gabidulin.ts:121",
+            "src/rank/gabidulin.ts:184"
+          ],
+          "limits": "The correction guarantee ends at rank weight one. Refusal and miscorrection counts are properties of this tiny code and exhaustive decoder, not deployment failure rates."
+        },
+        {
+          "id": "deployment-boundary",
+          "title": "Rank-code mathematics versus deployment status",
+          "section": "Code family is not deployment status",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "action": "Compare the executable Gabidulin code with GPT, Faure-Loidreau, RQC, Classic McEliece and HQC, then read the model limits.",
+          "outcome": "Separates rank-metric code arithmetic from cryptosystem constructions, historical attacks, standardization and Hamming-metric code families.",
+          "concepts": [
+            "rank-code cryptography",
+            "construction-specific security",
+            "GPT",
+            "Faure-Loidreau",
+            "RQC",
+            "Classic McEliece",
+            "HQC"
+          ],
+          "evidence": [
+            "index.html:238",
+            "index.html:240",
+            "index.html:255",
+            "index.html:263",
+            "index.html:271",
+            "index.html:279",
+            "index.html:291",
+            "index.html:309"
+          ],
+          "limits": "A source-backed comparison panel; none of the named public-key constructions is implemented or endorsed by this lab."
+        }
+      ]
+    },
+    "crypto-lab-saml-binding": {
+      "commit": "9c7a967fe9f7ed839889df93130e9ae24365d2ad",
+      "reviewed": "2026-10-27",
+      "reviewScope": "complete",
+      "exhibits": [
+        {
+          "id": "declared-profile",
+          "title": "Declared bounded SAML profile",
+          "section": "What this is, and what it is not",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "action": "Inspect the exact SAML Web Browser SSO subset, algorithms, message direction, synthetic parties and fixed-clock model the lesson accepts.",
+          "outcome": "Makes the implemented profile and every major interoperability boundary explicit before any signature result is shown.",
+          "concepts": [
+            "SAML 2.0",
+            "Web Browser SSO",
+            "HTTP POST binding",
+            "synthetic identity provider",
+            "RSA-SHA256",
+            "exclusive canonicalization"
+          ],
+          "evidence": [
+            "src/main.ts:72",
+            "src/main.ts:74",
+            "src/main.ts:81",
+            "src/main.ts:88",
+            "src/saml/profile.ts:20",
+            "src/saml/profile.ts:48",
+            "src/saml/profile.ts:108"
+          ],
+          "limits": "S12-WBSSO-POST-SYNTH/1 is a lab-defined synthetic subset, not an OASIS profile identifier or interoperable SAML stack."
+        },
+        {
+          "id": "validation-layers",
+          "title": "Signature, binding, profile and authorization layers",
+          "section": "Four questions a single boolean hides",
+          "kind": "explanation",
+          "execution": "real-operation",
+          "action": "Follow the four validation layers and compare a consumer that re-queries the document with one that authorizes from the verified element.",
+          "outcome": "Separates valid signature bytes from unambiguous reference resolution, SAML profile validity and the final application authorization decision.",
+          "concepts": [
+            "XML Signature verification",
+            "same-document reference",
+            "element binding",
+            "SAML profile validation",
+            "application authorization"
+          ],
+          "evidence": [
+            "src/main.ts:107",
+            "src/main.ts:113",
+            "src/main.ts:117",
+            "src/main.ts:120",
+            "src/main.ts:126",
+            "src/saml/verify.ts:89",
+            "src/saml/verify.ts:197",
+            "src/saml/verify.ts:240",
+            "src/saml/verify.ts:379",
+            "src/saml/consumers.ts:122",
+            "src/saml/consumers.ts:177"
+          ],
+          "limits": "The verifier accepts only the declared transform and structure subset; it is not a complete XML Schema, canonicalization or SAML profile validator."
+        },
+        {
+          "id": "wrapping-comparison",
+          "title": "Valid signature, wrong assertion and element-binding repair",
+          "section": "Run the comparison",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Run the honest response and the XML Signature wrapping document through vulnerable and repaired consumers.",
+          "outcome": "A real RSA signature still verifies while the vulnerable first-match query authorizes the attacker's assertion; the repaired consumer uses only the exact verified assertion.",
+          "concepts": [
+            "XML signature wrapping",
+            "RSA-2048",
+            "SHA-256",
+            "signed assertion",
+            "first-match query",
+            "verified-element binding"
+          ],
+          "evidence": [
+            "src/main.ts:161",
+            "src/main.ts:163",
+            "src/main.ts:164",
+            "src/main.ts:409",
+            "src/saml/lesson.ts:107",
+            "src/saml/lesson.ts:114",
+            "src/saml/attacks.ts:116",
+            "src/saml/sign.ts:35",
+            "src/saml/consumers.ts:122",
+            "src/saml/consumers.ts:177"
+          ],
+          "limits": "The lab executes one Advice-based wrapping form plus related reference defects; it does not claim every wrapping permutation or a vulnerability in any named deployment."
+        },
+        {
+          "id": "negative-controls",
+          "title": "Signature, binding, profile and replay controls",
+          "section": "Negative controls",
+          "kind": "interactive",
+          "execution": "real-crypto",
+          "action": "Run every malformed-signature, ambiguous-reference, profile, time, request-correlation, dependency-disagreement and replay case.",
+          "outcome": "Each live document is refused at its owning layer, replay state is consumed only after envelope checks, and the result table identifies the source rule.",
+          "concepts": [
+            "signature tampering",
+            "duplicate ID",
+            "reference ambiguity",
+            "audience restriction",
+            "bearer subject confirmation",
+            "request correlation",
+            "replay prevention"
+          ],
+          "evidence": [
+            "src/main.ts:165",
+            "src/main.ts:175",
+            "src/main.ts:447",
+            "src/saml/lesson.ts:143",
+            "src/saml/lesson.ts:180",
+            "src/saml/attacks.ts:146",
+            "src/saml/attacks.ts:175",
+            "src/saml/attacks.ts:197",
+            "src/saml/attacks.ts:212"
+          ],
+          "limits": "Passing these bounded controls does not establish secure configuration, parser hardening or complete protocol conformance in a production service provider."
+        },
+        {
+          "id": "omissions",
+          "title": "SAML implementation and threat-model boundaries",
+          "section": "What is deliberately not here",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "action": "Read the explicit exclusions for metadata, certificates, XML Encryption, parser hardening, other bindings and full multi-assertion conformance.",
+          "outcome": "Prevents the bounded element-binding lesson from being mistaken for a production SAML stack or universal wrapping defense.",
+          "concepts": [
+            "SAML metadata",
+            "X.509 trust",
+            "XML Encryption",
+            "parser hardening",
+            "multi-assertion profile",
+            "SAML bindings"
+          ],
+          "evidence": [
+            "src/main.ts:181",
+            "src/main.ts:186",
+            "src/main.ts:193",
+            "src/main.ts:197",
+            "src/main.ts:199",
+            "src/main.ts:205",
+            "src/main.ts:209",
+            "src/main.ts:214",
+            "src/main.ts:224"
+          ],
+          "limits": "This exhibit records omissions rather than implementing them."
+        }
+      ]
     },
     "crypto-lab-order-leak": {
       "commit": "37b98a13be0293ca2dfd857604e23c4da244ec9a",
@@ -34948,8 +35345,8 @@
       ]
     },
     "crypto-lab-shadow-vault": {
-      "commit": "5d0ec559a3dbd3f2ab3ebb7647f35d4b5433844d",
-      "reviewed": "2026-10-22",
+      "commit": "403cebb8c387fc27acbf20cfcb7f2574c912ec84",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "create",
@@ -35056,9 +35453,10 @@
           "evidence": [
             "index.html:360",
             "index.html:396",
-            "src/ui/decrypt.ts:54",
-            "src/ui/decrypt.ts:128",
-            "src/ui/decrypt.ts:160"
+            "src/ui/decrypt.ts:60",
+            "src/ui/decrypt.ts:129",
+            "src/ui/decrypt.ts:165",
+            "src/ui/decrypt.ts:208"
           ],
           "section": "MESSAGE",
           "execution": "real-crypto",

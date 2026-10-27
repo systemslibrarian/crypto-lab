@@ -555,6 +555,20 @@ impossible in this finite lesson; it is not an asymptotically efficient obliviou
 a reproduction or repair of Alibi's combined-stash attack, malicious-server protection or
 production ORAM. Catalogued total remains 248.*
 
+*Version 65 — files Rank Metric under §11 and SAML Binding under §§26 and 29, and records
+ORAM Vault's L-R-13 multi-client extension under §23. Rank Metric makes the metric itself
+executable: one GF(16)^4 vector gets both Hamming and binary-matrix rank weights, all 256
+words of a fixed [4,2,3] Gabidulin/MRD code are enumerated, and a radius-one decoder is
+tested against every rank-two error. It is code mathematics, not a KEM or security claim.
+SAML Binding executes a genuine RSA-SHA256 XML Signature wrapping failure inside a declared
+synthetic Web Browser SSO subset and fixes the application boundary by authorizing from the
+exact verified element; it is neither a complete SAML stack nor a universal wrapping
+defense. ORAM Vault now gives three mutually distrustful clients fixed rights, signed
+capabilities and updates, per-client key wraps, a signed upload log and local freshness
+watermarks, while its naive-state and client-server-collusion cases execute the assumptions
+that fail. It claims neither global freshness nor integrity or obliviousness outside that
+bounded model. No concept status changes. Catalogued total moves to 250.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -882,7 +896,18 @@ security concept. An "under the hood" NTT demo would be a fine addition; concept
 completeness does not depend on it.
 
 **11. Codes / syndrome decoding — `COVERED`**
-McEliece Gate · BIKE Vault · HQC Vault · Syndrome Drain · Syndrome Hints · TC26 Pair.
+McEliece Gate · BIKE Vault · HQC Vault · Syndrome Drain · Syndrome Hints · TC26 Pair ·
+Rank Metric.
+
+Rank Metric adds the code family the Hamming-metric labs deliberately do not teach. The same
+GF(16)^4 vector is expanded into a binary matrix so rank weight and Hamming weight can differ
+in front of the learner; a fixed [4,2,3] Gabidulin code then exhausts all 256 messages, measures
+minimum rank distance three and meets the rank-metric Singleton bound. Its exhaustive
+radius-one decoder corrects every promised error and its complete rank-two census separates
+refusal from miscorrection beyond the guarantee. GPT, Faure–Loidreau and RQC remain sourced
+construction context rather than implementations, and Classic McEliece and HQC remain
+Hamming-metric comparisons. The tiny field, exhaustive decoder and MRD census establish no
+encryption, KEM, production parameter, efficient decoder or security reduction.
 
 **12. Multivariate / MQ — `COVERED`**
 Multivariate UOV · MAYO Seal. UOV plus its designated successor: MAYO Seal runs real keygen,
@@ -1090,6 +1115,19 @@ additive.
 **23. Obliviousness — access-pattern and metadata privacy — `COVERED`**
 ORAM Vault · Oblivious Shelf · Patron Shield · PSI Gate · Blind Relay · Blind Hello ·
 DP Noise · Proof Tally · Search Vault · Shelf Oracle · Order Leak · Split Point · Dedup Vault.
+
+ORAM Vault's multi-client extension asks what breaks when one trusted client becomes three
+mutually distrustful ones. A fixed rights matrix is enforced through per-client data-key wraps
+and owner-signed write capabilities; writer signatures and a signed append-only upload log make
+tampering attributable, while remembered log heads and per-entry watermarks catch only rollback
+relative to state that client has already seen. The deliberately naive route shares the original
+Path ORAM key and client state and produces cross-client plaintext exposure, unusable partial
+state and divergent maps. The collusion route combines the shared encrypted leaf map with the
+server's observed path to shrink the candidate set, directly exhibiting why the non-collusion
+assumption matters. An unauthorized upload can still land before every honest reader rejects it,
+a first-contact client cannot detect the modeled rollback, and variable log catch-up stays
+visible; the bounded adaptation therefore claims neither full integrity, global freshness,
+linearizability nor obliviousness against client-server collusion.
 
 Shelf Oracle completes the PIR axis. Oblivious Shelf and Patron Shield are
 information-theoretic and buy that guarantee with a second server that must never collude;
@@ -1317,7 +1355,8 @@ tree rather than asserting the difference, and it demonstrates the cost — a tr
 whose failure it lets you perform.
 
 **26. Identity and authentication — `COVERED`**
-WebAuthn · Kerberos v5 · JWT Forge · Time Trust · Attestation Gate · Distance Bounding.
+WebAuthn · Kerberos v5 · JWT Forge · Time Trust · Attestation Gate · Distance Bounding ·
+SAML Binding.
 
 The first four authenticate a *person* or a *claim*. Attestation Gate authenticates a
 *platform state* — measured boot into PCRs, a real TPMS_ATTEST quote, RATS roles and an EAT
@@ -1346,6 +1385,18 @@ noise figures are exact only under their named ideal-bit, fresh-nonce, unpredict
 challenge and independent-error assumptions; breaking one retires the inapplicable formula.
 No browser clock reaches the verdict, and this arithmetic/event simulator is not ranging
 hardware, a radio, a location proof or a universal relay defense.
+
+SAML Binding adds federated assertion consumption rather than another credential or proximity
+check. Its declared synthetic Web Browser SSO/HTTP POST subset generates fresh RSA-2048 keys,
+signs a SAML assertion with XML Signature and runs the resulting document through both a
+vulnerable and repaired service provider. The wrapped document's signature genuinely verifies,
+yet a separate first-match query selects and authorizes an attacker assertion; the repaired
+consumer carries the exact verified element into profile validation and authorization. Audience,
+recipient, time, request-correlation, duplicate-ID, dependency-disagreement and replay controls
+keep signature validity, element binding, profile validity and application authorization as four
+different questions. This is synthetic one-direction teaching code with a pinned raw public key,
+not a live identity provider, metadata/X.509 trust, schema-complete parser, interoperable SAML
+stack or proof that every wrapping permutation is defeated.
 
 ---
 
@@ -1391,7 +1442,7 @@ Forge · SM2 Forge.
 
 **29. Composition and parsing failures — `COVERED`**
 Protocol Compose · Signed Bytes · Salamander · KEM Trap · JWT Forge · Padding Oracle ·
-Ablation Wire · Sector Vault · Compression Leak · HPKE Envelope. The first six break a composition; Ablation Wire inverts the
+Ablation Wire · Sector Vault · Compression Leak · HPKE Envelope · SAML Binding. The first six break a composition; Ablation Wire inverts the
 question and asks which layer was carrying the guarantee all along — switch one off and watch
 what an adversary recovers. It also separates hybrid-PQ confidentiality from authentication,
 which is the distinction a single "PQ" badge hides.
@@ -1411,6 +1462,16 @@ valid signature but fails the signed-recipient binding; replay remains valid
 cryptography requiring application state. The disclosed signature is transferable
 only as evidence that a separately pinned key signed those exact fields, not as proof
 of ciphertext creation, delivery, timing, intent or legal non-repudiation.
+
+SAML Binding is the parsing-and-binding version of the same boundary. Cryptographic validation
+answers whether one referenced XML element was signed; an application that then asks the whole
+document which assertion comes first can authorize different bytes with the valid-signature bit
+still true. The Advice-wrapping and unsigned-first variants make the load-bearing repair
+executable: the application consumes the exact element returned by verification, never a second
+query. Strict reference shape, direct signature placement, complete bearer-confirmation tuples
+and replay-state ordering are declared rules of this bounded profile, not a claim that client-side
+checks repair every SAML deployment or that one parser/model covers the full XML Signature attack
+surface.
 
 **30. Classical cryptanalytic technique — `COVERED`**
 Biham Lens (differential) · Matsui Line (linear) · Vigenère Break · Collision Vault ·
@@ -1714,7 +1775,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 248.**
+**Catalogued total: 250.**
 
 ---
 

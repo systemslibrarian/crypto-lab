@@ -20,6 +20,37 @@ roadmap integration.
 
 Nothing below is merged merely because its checks pass.
 
+### Non-overlap boundary for the next Claude session
+
+**Reserved for the current Codex/owner lane:** all A-D-15 publication work,
+including `crypto-lab-anamorphic`, both A-D worktrees, Hub cards/generated
+files/pins, `docs/encyclopedia-roadmap.md`, `concept-coverage.md`,
+`crypto-counsel`, deployment verification and the final 48/48 claim. Do not
+pick up, rebase, commit, push or merge any part of that lane from this queue.
+The eight older Hub PRs are also poor parallel work while the integration is
+moving Hub main.
+
+The safe Claude queue is isolated lab-side work, in this order. Re-fetch and
+confirm no other session has claimed the repository before starting any item:
+
+1. **Mayo Seal security-evidence review** — Fleet item
+   `e67e91de-dce3-4f95-bb27-134a200d6a7b`. This is the next item in the last
+   authoritative Fleet snapshot. Work only in `crypto-lab-mayo-seal`; treat
+   its open Dependabot #30 separately, and do not touch Hub or counsel files.
+2. **Reconcile evidence at the two clean advanced heads:** Scloud Vault #21 and
+   Shor #21. Read-only reconciliation is safe; do not merge or deploy either PR
+   from a maintenance pass.
+3. **Triage the three conflicting lab PRs:** PQ Rotation #24, Search Vault #23
+   and Shamir Gate #17. A conflict report and rebase plan are safe. Rewriting or
+   force-pushing their branches requires an explicit selected repair task.
+4. **Assess the four held major dependency bumps** listed below. Produce one
+   recommendation for the three TypeScript 7 bumps and a separate recommendation
+   for PAKE Gate's `globals` bump; do not merge them as part of analysis.
+
+If the Fleet Console shows Mayo Seal is no longer queued, use its current next
+unclaimed security-review item instead. Do not infer a new queue order from the
+four-day-old counts in this file.
+
 ### Hub consistency — 10 of 13 pass in this workspace
 
 `readme-sync`, `concept-sync`, `catalog-sync`, `tools-sync`, `theme-sync`,
@@ -67,7 +98,7 @@ Five of the eight conflict. Refresh or supersede them, and re-read every open
 PR after any further movement on Hub main; a historical green run does not
 resolve a merge conflict.
 
-### A-D-15 — implementation and Pages delivered; integration remains
+### A-D-15 — implementation and Pages delivered; reserved integration remains
 
 `systemslibrarian/crypto-lab-anamorphic` PR #1 was independently corrected at
 head **`3f5ce684a4c0`** and merged as main **`c2ef8df2dd20`** on 2026-10-27.
@@ -78,7 +109,9 @@ then deployed successfully; exact-main CodeQL also passed. GitHub Pages now uses
 JavaScript contains the reviewed `WHY IT MATTERS` marker.
 
 The lab is live, but **A-D-15 is not yet published into the Hub, counsel corpus
-or roadmap and must not be marked 48/48 early**. Remaining work:
+or roadmap and must not be marked 48/48 early**. The following belongs to the
+reserved Codex/owner lane and is recorded only so another session does not
+duplicate it:
 
 1. Continue in the separate A-D-15 integration lane, not in this tracker PR.
    `../crypto-lab-ad15-integration` is clean at current Hub main on

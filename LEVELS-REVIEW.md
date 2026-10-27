@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 151. Total 250.
+**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 152. Total 251.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -141,7 +141,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (151)
+## Advanced — `advanced` (152)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -214,6 +214,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [KyberSlash](https://systemslibrarian.github.io/crypto-lab-kyberslash/) | rule | needs specialist background: ML-KEM, Kyber, side-channel |
 | [Lattice Fault](https://systemslibrarian.github.io/crypto-lab-lattice-fault/) | rule | needs specialist background: lattice, ML-KEM, ML-DSA |
 | [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) | rule | needs specialist background: lattice, LWE, ML-KEM |
+| [Lattice IBE](https://systemslibrarian.github.io/crypto-lab-lattice-ibe/) | 2026-10-27: complete README, source, tests and learner flow | Requires lattice trapdoors, q-ary kernels, discrete-Gaussian preimage sampling, dual-LWE equations and careful separation of toy parameters from the GPV security result. |
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | rule | needs specialist background: lattice, LWE, learning with errors |
 | [LWE Hints](https://systemslibrarian.github.io/crypto-lab-lwe-hints/) | rule | needs specialist background: lattice, LWE, learning with errors |
 | [Masked Core](https://systemslibrarian.github.io/crypto-lab-masked-core/) | rule | needs specialist background: power analysis |

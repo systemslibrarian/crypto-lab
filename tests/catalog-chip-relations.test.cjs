@@ -11,13 +11,38 @@
  */
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { execFileSync } = require('node:child_process');
 const {
   ENTAILS, entailedBy, QUALIFYING_SIBLINGS, qualifiedBySibling,
   EXECUTED_STACK, executedStack, lessSpecific, satisfiedByGranularity,
+  evaluateChipRule,
 } = require('../tools/catalog-sync.js');
-const { lex } = require('../tools/catalog-evidence.js');
+const { lex, evidenceFor } = require('../tools/catalog-evidence.js');
+const { forget } = require('../tools/clone-source.js');
+const { ALGORITHMS } = require('../tools/catalog-vocab.js');
 
 const term = (name) => ({ name });
+const terms = (...names) => names.map((name) => {
+  const found = ALGORITHMS.find((t) => t.name === name);
+  assert.ok(found, `fixture needs a vocabulary term named ${name}`);
+  return found;
+});
+const card = (overrides = {}) => ({
+  slug: 'crypto-lab-fixture',
+  title: 'Fixture',
+  kicker: '',
+  copy: '',
+  chips: [],
+  implements: [],
+  notScanned: false,
+  unscanned: [],
+  commentOnly: [],
+  protocolPartial: [],
+  ...overrides,
+});
 
 test('every ENTAILS entry fires on its entailing algorithm and not without it', () => {
   assert.ok(ENTAILS.length > 0, 'the table must not be empty');
@@ -38,6 +63,23 @@ test('every ENTAILS entry fires on its entailing algorithm and not without it', 
       `${rule.chip} must NOT be entailed by a lab credited with nothing`,
     );
     assert.ok(rule.why && rule.why.length > 40, `${rule.chip} must record WHY`);
+  }
+});
+
+test('every ENTAILS entry reaches the production classifier in both directions', () => {
+  for (const rule of ENTAILS) {
+    const algorithm = terms(rule.chip);
+    const fixture = card({
+      slug: `crypto-lab-${rule.chip.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+      chips: [rule.chip],
+      implements: [{ name: rule.from[0] }],
+    });
+    const positive = evaluateChipRule([fixture], algorithm);
+    assert.deepEqual(positive.clearedByRelation.map((x) => x.kind), ['entailed'],
+      `${rule.chip} must reach the production entailment branch`);
+    const negative = evaluateChipRule([{ ...fixture, implements: [] }], algorithm);
+    assert.deepEqual(negative.violations.map((x) => x.algorithm), [rule.chip],
+      `${rule.chip} must fail when its entailing implementation is removed`);
   }
 });
 
@@ -94,21 +136,78 @@ test('granularity only ever makes a chip LESS specific', () => {
   assert.equal(satisfiedByGranularity('ML-KEM-768', new Set()), null);
 });
 
+test('the production classifier reaches all four declared mechanisms', () => {
+  const fixtures = [
+    card({
+      slug: 'crypto-lab-entailment-fixture',
+      chips: ['RLWE'],
+      implements: [{ name: 'CKKS' }],
+      /* Positive evidence wins over this weaker cannot-judge evidence. */
+      commentOnly: [{ name: 'Ring-LWE', at: 'src/main.ts:1' }],
+    }),
+    card({
+      slug: 'crypto-lab-sibling-fixture',
+      chips: ['SIDH', 'Castryck-Decru'],
+      implements: [{ name: 'CSIDH' }],
+    }),
+    card({
+      slug: 'crypto-lab-bcrypt-forge',
+      chips: ['Blowfish'],
+    }),
+    card({
+      slug: 'crypto-lab-granularity-fixture',
+      chips: ['AES-256-GCM'],
+      implements: [{ name: 'AES-GCM' }],
+    }),
+  ];
+  const algorithms = terms('Ring-LWE', 'SIKE', 'Blowfish', 'AES');
+  const result = evaluateChipRule(fixtures, algorithms);
+  assert.deepEqual(result.clearedByRelation.map((x) => x.kind),
+    ['entailed', 'sibling', 'executed', 'granularity']);
+  assert.equal(result.cannotJudge.length, 0,
+    'the entailment must run before the weaker comment-only exemption');
+  assert.equal(result.violations.length, 0);
+
+  const mutations = [
+    { index: 0, change: { implements: [{ name: 'Paillier' }], commentOnly: [] }, expected: 'Ring-LWE' },
+    { index: 1, change: { chips: ['SIDH', 'Comparison'] }, expected: 'SIKE' },
+    { index: 2, change: { slug: 'crypto-lab-dependency-only' }, expected: 'Blowfish' },
+    { index: 3, change: { implements: [{ name: 'ChaCha20' }] }, expected: 'AES' },
+  ];
+  for (const mutation of mutations) {
+    const changed = fixtures.map((x, i) => i === mutation.index ? { ...x, ...mutation.change } : x);
+    const out = evaluateChipRule(changed, algorithms);
+    assert.ok(out.violations.some((x) => x.algorithm === mutation.expected),
+      `removing the declared ${result.clearedByRelation[mutation.index].kind} evidence must expose a violation`);
+  }
+});
+
+test('the production classifier keeps qualifier, prose and uncertainty boundaries separate', () => {
+  const algorithms = terms('AES');
+  const qualifiers = ['estimates', 'compared', 'surveyed', 'explained', 'context'];
+  const result = evaluateChipRule([
+    card({ slug: 'crypto-lab-bare', chips: ['AES', 'Comparison'] }),
+    ...qualifiers.map((word) => card({ slug: `crypto-lab-marked-${word}`, chips: [`AES ${word}`] })),
+    card({ slug: 'crypto-lab-prose', copy: 'Compare this design against AES.' }),
+    card({ slug: 'crypto-lab-unread', chips: ['AES'], unscanned: ['Rust:1'] }),
+    card({ slug: 'crypto-lab-comment', chips: ['AES'], commentOnly: [{ name: 'AES', at: 'src/main.ts:1' }] }),
+    card({ slug: 'crypto-lab-partial', chips: ['AES'], protocolPartial: [{ name: 'AES', at: 'src/main.ts:2' }] }),
+    card({ slug: 'crypto-lab-not-scanned', chips: ['AES'], notScanned: true }),
+  ], algorithms);
+
+  assert.deepEqual(result.violations.map((x) => x.slug), ['crypto-lab-bare'],
+    'a marker in a sibling chip must not qualify a bare algorithm chip');
+  assert.deepEqual(result.clearedByProse.map((x) => x.slug),
+    [...qualifiers.map((word) => `crypto-lab-marked-${word}`), 'crypto-lab-prose']);
+  assert.deepEqual(result.cannotJudge.map((x) => x.slug),
+    ['crypto-lab-unread', 'crypto-lab-comment', 'crypto-lab-partial']);
+  assert.ok(!Object.values(result).flat().some((x) => x.slug === 'crypto-lab-not-scanned'),
+    'a source the scanner never read must not become either a pass or an accusation');
+});
+
 test('lex puts a standalone BLOCK comment in the inert view (the contract the fix rests on)', () => {
-  /* HONEST SCOPE. `lex` was never the bug and these two tests would pass against the
-     old code: the 2026-10-21 fix was in the per-line LOOP, which opened
-     `if (!line.trim()) continue` on the STRINGS view -- blank for a line that is
-     nothing but a comment -- so the comment-only check BELOW it never ran for one.
-     crypto-lab-commit-gate, the case CLAUDE.md cites FOR this exemption, names P-256
-     in a block comment and had never been exempted once.
-     An end-to-end test of the loop would need a fixture lab at ../crypto-lab-<slug>,
-     which makes it a 237th lab to every fleet checker -- the hazard CLAUDE.md records
-     for worktrees. So the loop fix is verified by a before/after on the real fleet,
-     recorded in the pull request: commit-gate's commentOnly went [] -> [Hash-to-curve,
-     P-256], accumulator [] -> [Miller-Rabin, RSA], beacon-lock [] -> [Boneh-Franklin
-     IBE, ...], sleeve-check [] -> [Streebog], with catalog-recall unchanged at 89.2%.
-     What these two DO pin is the property that fix depends on, and the boundary that
-     must never move with it. */
+  /* The lexer contract is still worth pinning separately from the full scanner:
+     a standalone comment must survive in inert while disappearing from strings. */
   const src = [
     '/**',
     " * The RSA accumulator itself — Benaloh-de Mare (1993).",
@@ -120,7 +219,62 @@ test('lex puts a standalone BLOCK comment in the inert view (the contract the fi
   const inertLines = out.inert.split('\n');
   assert.ok(inertLines[1].trim(), 'the comment line must be non-blank in the inert view');
   assert.equal(out.strings.split('\n')[1].trim(), '',
-    'and blank in the strings view — which is exactly why the old early-exit skipped it');
+    'and blank in the strings view — which is exactly why the former early-exit skipped it');
+});
+
+test('the complete scanner records a standalone comment without treating a UI string as one', (t) => {
+  /* This is the end-to-end control the original fix lacked. The explicit fixture
+     directory keeps it out of sibling-repository discovery, so running the test
+     cannot change any fleet denominator. */
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-comment-fixture-'));
+  t.after(() => {
+    forget(dir);
+    fs.rmSync(dir, { recursive: true, force: true });
+  });
+  fs.mkdirSync(path.join(dir, 'src'));
+  fs.writeFileSync(path.join(dir, 'src', 'main.ts'), [
+    '/**',
+    ' * P-256 group arithmetic lives here.',
+    ' */',
+    'export function addPoints(a: bigint, b: bigint) { return a + b; }',
+    'export const label = "RSA explained";',
+  ].join('\n'));
+  execFileSync('git', ['init', '-q'], { cwd: dir });
+  execFileSync('git', ['add', 'src/main.ts'], { cwd: dir });
+  execFileSync('git', [
+    '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+    'commit', '-qm', 'fixture',
+  ], { cwd: dir });
+
+  // main's signature is evidenceFor(slug, atCommit, dirOverride): the third
+  // argument is the fixture checkout this control needs, and the second stays
+  // null so the derivation reads the fixture's working tree.
+  const out = evidenceFor('crypto-lab-comment-fixture', null, dir);
+  assert.deepEqual(out.commentOnly.filter((x) => x.name === 'P-256'),
+    [{ name: 'P-256', at: 'src/main.ts:2' }],
+    'the production per-line loop must see a name on a standalone block-comment line');
+  assert.ok(!out.commentOnly.some((x) => x.name === 'RSA'),
+    'a UI string must not cross the comment-only boundary');
+  assert.ok(out.references.includes('RSA'),
+    'the control string must still be observed as prose/reference evidence');
+
+  const classify = (slug, chip) => card({
+    slug,
+    chips: [chip],
+    implements: out.implements,
+    notScanned: out.notScanned,
+    unscanned: out.unscanned,
+    commentOnly: out.commentOnly,
+    protocolPartial: out.protocolPartial,
+  });
+  const result = evaluateChipRule([
+    classify('crypto-lab-comment-chip', 'P-256'),
+    classify('crypto-lab-string-chip', 'RSA'),
+  ], terms('P-256', 'RSA'));
+  assert.deepEqual(result.cannotJudge.map((x) => x.slug), ['crypto-lab-comment-chip'],
+    'a standalone source comment must reach the production cannot-judge branch');
+  assert.deepEqual(result.violations.map((x) => x.slug), ['crypto-lab-string-chip'],
+    'a UI string must remain discussion evidence and cannot exempt a bare chip');
 });
 
 test('a UI STRING still does NOT reach the comment-only view', () => {

@@ -733,8 +733,9 @@ function vocabChecks(list, opts = {}) {
  *
  * Deliberately short. A long speculative table would clear chips on resemblance,
  * which is the accusation-without-a-finding problem in reverse. Every entry below
- * was reached by reading the lab, and `node tools/catalog-sync.js entailment`
- * asserts each one against a fixture both ways.
+ * was reached by reading the lab, and
+ * `node --test tests/catalog-chip-relations.test.cjs` asserts each one against
+ * a fixture both ways and through the production classifier.
  *
  * What this is NOT: a way to credit `data-implements` with anything new. The
  * catalog still says hqc-vault implements HQC, not Reed-Solomon. It says only
@@ -819,6 +820,82 @@ const qualifiedBySibling = (t, chips) => {
   return sib ? { why: rule.why, sibling: sib } : null;
 };
 
+/* The marker vocabulary. `estimates`, `compared`, `surveyed`, `explained` and
+ * `context` were added 2026-10-21 by the maintainer's decision, after the
+ * disposition in audits/CHIP-DISPOSITION-2026-10-20.md found cards flagged for
+ * chips that were already qualified in plain English and in words this list did
+ * not contain -- crypto-lab-point-ledger's `Shor Estimates` names a fidelity as
+ * clearly as `Toy-Scale Only` does. A qualifier is scoped to the chip it appears
+ * IN, never to its neighbours. */
+const CHIP_MARKER = /^(?:vs\.?|versus|against|attacks?|breaks?|targets?)\b|\b(?:target|toy|modelled|modeled|simulated|stand-?in|abstract|educational|only|estimates?|compared|surveyed|explained|context)\b/i;
+
+/* The chip rule as a pure classification step. Keeping the decision separate
+ * from cards() and console output lets the permanent tests exercise the SAME
+ * loop production uses, including ordering between positive relations,
+ * cannot-judge evidence and violations. Helper-only tests did not establish
+ * that those helpers were actually called, or called before the exemptions. */
+function evaluateChipRule(list, algorithms = ALGORITHMS) {
+  const violations = [];
+  const clearedByProse = [];
+  const clearedByRelation = [];
+  const cannotJudge = [];
+  /* An algorithm is implemented if the lab implements it under EITHER name. */
+  const satisfied = (impl, t) => impl.has(t.name)
+    || (t.alias && impl.has(t.alias))
+    || algorithms.some((o) => o.alias === t.name && impl.has(o.name));
+  for (const c of list) {
+    if (c.notScanned) continue;
+    const impl = new Set(c.implements.map((i) => i.name));
+    const prose = `${c.kicker} ${c.copy}`;
+    for (const t of algorithms) {
+      const inChip = c.chips.find((ch) => namesChip(t, ch));
+      const inProse = t.re.test(prose);
+      if (!inChip && !inProse) continue;
+      if (satisfied(impl, t)) continue;
+      /* A COMPOSITE chip — `ChaCha20-Poly1305`, `HKDF-SHA256`, `SHA-1 / SHA-256`
+         — names several algorithms in one breath. If the lab implements any of
+         them the chip is not a false claim, it is a chip about a construction
+         whose parts this index lists separately. */
+      if (inChip && algorithms.filter((o) => namesChip(o, inChip)).some((o) => satisfied(impl, o))) continue;
+      /* The declared mechanisms run BEFORE the cannot-judge checks, because
+         "this lab implements CKKS, and CKKS is an RLWE scheme" is a positive
+         answer and "the name is only in a comment" is the absence of one. Order
+         them the other way and every entailment is reported as a shrug. */
+      /* The four declared mechanisms, each keyed on something read rather than
+         inferred, and each recorded separately so a reader can see WHY a chip
+         cleared. None of them credits data-implements with anything new. */
+      if (inChip) {
+        const ent = entailedBy(inChip, t, impl);
+        if (ent) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'entailed', detail: `implements ${ent.from} — ${ent.why}` }); continue; }
+        const sib = qualifiedBySibling(t, c.chips);
+        if (sib) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'sibling', detail: `qualified by the chip "${sib.sibling}" — ${sib.why}` }); continue; }
+        const exe = executedStack(c.slug, t);
+        if (exe) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'executed', detail: `${exe.pkg} invoked at ${exe.at} — ${exe.why}` }); continue; }
+        const gran = satisfiedByGranularity(inChip, impl);
+        if (gran) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'granularity', detail: `strictly more specific than the credited "${gran.from}"` }); continue; }
+      }
+      /* A lab this scanner only partly read cannot be judged: the algorithm
+         may well be in the part it did not open. shadow-vault chips
+         ChaCha20-Poly1305 and keeps its stream cipher in Rust. Reporting that
+         as a card error is the accusation-without-a-finding this whole file
+         is built to avoid. */
+      if (c.unscanned.length) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `partially unread (${c.unscanned.join(', ')})` }); continue; }
+      const inert = c.commentOnly.find((x) => x.name === t.name);
+      if (inert) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `named only in non-executable code at ${inert.at}` }); continue; }
+      const partial = c.protocolPartial.find((x) => x.name === t.name);
+      if (partial) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `partial protocol evidence at ${partial.at}` }); continue; }
+      if (inChip && !CHIP_MARKER.test(inChip)) {
+        violations.push({ slug: c.slug, title: c.title, algorithm: t.name, chip: inChip });
+      } else if (inChip) {
+        clearedByProse.push({ slug: c.slug, algorithm: t.name, why: `marked chip "${inChip}"` });
+      } else {
+        clearedByProse.push({ slug: c.slug, algorithm: t.name, why: 'named in the description only' });
+      }
+    }
+  }
+  return { violations, clearedByProse, clearedByRelation, cannotJudge };
+}
+
 
 function main() {
   const mode = process.argv[2];
@@ -866,73 +943,7 @@ function main() {
      *   does NOT exempt, because that is a lab talking about an algorithm rather
      *   than code annotated with it. That boundary is what keeps the four fixed
      *   cards flagged. */
-    /* The marker vocabulary. `estimates`, `compared`, `surveyed`, `explained` and
-     * `context` were added 2026-10-21 by the maintainer's decision, after the
-     * disposition in audits/CHIP-DISPOSITION-2026-10-20.md found cards flagged for
-     * chips that were already qualified in plain English and in words this list did
-     * not contain -- crypto-lab-point-ledger's `Shor Estimates` names a fidelity as
-     * clearly as `Toy-Scale Only` does. A qualifier is scoped to the chip it appears
-     * IN, never to its neighbours: the test below runs on `inChip` alone. */
-    const MARKED = /^(?:vs\.?|versus|against|attacks?|breaks?|targets?)\b|\b(?:target|toy|modelled|modeled|simulated|stand-?in|abstract|educational|only|estimates?|compared|surveyed|explained|context)\b/i;
-
-    const violations = [];
-    const clearedByProse = [];
-    const clearedByRelation = [];
-    const cannotJudge = [];
-    /* An algorithm is implemented if the lab implements it under EITHER name. */
-    const satisfied = (impl, t) => impl.has(t.name)
-      || (t.alias && impl.has(t.alias))
-      || ALGORITHMS.some((o) => o.alias === t.name && impl.has(o.name));
-    for (const c of list) {
-      if (c.notScanned) continue;
-      const impl = new Set(c.implements.map((i) => i.name));
-      const prose = `${c.kicker} ${c.copy}`;
-      for (const t of ALGORITHMS) {
-        const inChip = c.chips.find((ch) => namesChip(t, ch));
-        const inProse = t.re.test(prose);
-        if (!inChip && !inProse) continue;
-        if (satisfied(impl, t)) continue;
-        /* A COMPOSITE chip — `ChaCha20-Poly1305`, `HKDF-SHA256`, `SHA-1 / SHA-256`
-           — names several algorithms in one breath. If the lab implements any of
-           them the chip is not a false claim, it is a chip about a construction
-           whose parts this index lists separately. */
-        if (inChip && ALGORITHMS.filter((o) => namesChip(o, inChip)).some((o) => satisfied(impl, o))) continue;
-        /* The declared mechanisms run BEFORE the cannot-judge checks, because
-           "this lab implements CKKS, and CKKS is an RLWE scheme" is a positive
-           answer and "the name is only in a comment" is the absence of one. Order
-           them the other way and every entailment is reported as a shrug. */
-        /* The four declared mechanisms, each keyed on something read rather than
-           inferred, and each recorded separately so a reader can see WHY a chip
-           cleared. None of them credits data-implements with anything new. */
-        if (inChip) {
-          const ent = entailedBy(inChip, t, impl);
-          if (ent) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'entailed', detail: `implements ${ent.from} — ${ent.why}` }); continue; }
-          const sib = qualifiedBySibling(t, c.chips);
-          if (sib) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'sibling', detail: `qualified by the chip "${sib.sibling}" — ${sib.why}` }); continue; }
-          const exe = executedStack(c.slug, t);
-          if (exe) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'executed', detail: `${exe.pkg} invoked at ${exe.at} — ${exe.why}` }); continue; }
-          const gran = satisfiedByGranularity(inChip, impl);
-          if (gran) { clearedByRelation.push({ slug: c.slug, algorithm: t.name, chip: inChip, kind: 'granularity', detail: `strictly more specific than the credited "${gran.from}"` }); continue; }
-        }
-        /* A lab this scanner only partly read cannot be judged: the algorithm
-           may well be in the part it did not open. shadow-vault chips
-           ChaCha20-Poly1305 and keeps its stream cipher in Rust. Reporting that
-           as a card error is the accusation-without-a-finding this whole file
-           is built to avoid. */
-        if (c.unscanned.length) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `partially unread (${c.unscanned.join(', ')})` }); continue; }
-        const inert = c.commentOnly.find((x) => x.name === t.name);
-        if (inert) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `named only in non-executable code at ${inert.at}` }); continue; }
-        const partial = c.protocolPartial.find((x) => x.name === t.name);
-        if (partial) { cannotJudge.push({ slug: c.slug, algorithm: t.name, why: `partial protocol evidence at ${partial.at}` }); continue; }
-        if (inChip && !MARKED.test(inChip)) {
-          violations.push({ slug: c.slug, title: c.title, algorithm: t.name, chip: inChip });
-        } else if (inChip) {
-          clearedByProse.push({ slug: c.slug, algorithm: t.name, why: `marked chip "${inChip}"` });
-        } else {
-          clearedByProse.push({ slug: c.slug, algorithm: t.name, why: 'named in the description only' });
-        }
-      }
-    }
+    const { violations, clearedByProse, clearedByRelation, cannotJudge } = evaluateChipRule(list);
     const labs = new Set(violations.map((v) => v.slug));
     console.log('RULE: a chip naming an algorithm the lab does not implement must be MARKED');
     console.log('      (a target — "vs. HQC" — or a fidelity — "Toy-Scale Only"). Prose is free.');
@@ -1077,4 +1088,5 @@ if (require.main === module) main();
 module.exports = {
   ENTAILS, entailedBy, QUALIFYING_SIBLINGS, qualifiedBySibling,
   EXECUTED_STACK, executedStack, lessSpecific, satisfiedByGranularity,
+  CHIP_MARKER, evaluateChipRule,
 };

@@ -59,7 +59,7 @@ function checkEnvelopeKmsScope(source) {
   assert.deepEqual(attacksFor(source, slug), [],
     'Claim-mutation tests and modeled logger compromise are not executed fault or side-channel attacks');
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-envelope-kms\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="ad7fab7a04aa29b370b7009f1a18bdb8a346cd90"/);
+  assert.match(card, /data-review-commit="2810fceac30c775940de851aff0e1de2ed038360"/);
   assert.match(card, /HMAC@src\/kms\/forward-secure-log\.ts:220/);
   assert.match(card, /bounded single-logger\/private-verifier adaptation/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
@@ -223,7 +223,7 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
 
   const opening = openingFor(source, slug);
   assert.match(opening, /data-category="[^"]*\bHISTORICAL\b/);
-  assert.match(opening, /data-review-commit="c4ef2da4b33fd08382a4309d9665745cb30bbda5"/);
+  assert.match(opening, /data-review-commit="9f9bc3f49a6eddc33d7ad4d3bf59a3385c597589"/);
   assert.match(opening, /A5\/1@src\/a51\/a51\.ts:125/,
     'A5/1 must anchor at the actual majority-controlled clock step');
   assert.match(opening, /Trivium@src\/trivium\/trivium\.ts:29/,
@@ -250,7 +250,7 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   assert.ok(chips.includes('Majority Clocking'), 'The learner-facing card must expose irregular clocking');
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, 'c4ef2da4b33fd08382a4309d9665745cb30bbda5');
+  assert.equal(sourceReview.commit, '9f9bc3f49a6eddc33d7ad4d3bf59a3385c597589');
   assert.deepEqual(sourceReview.add, [
     'A5/1@src/a51/a51.ts:125',
     'Trivium@src/trivium/trivium.ts:29',
@@ -277,7 +277,7 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   }
 
   const review = manifest.labs[slug];
-  assert.equal(review.commit, 'c4ef2da4b33fd08382a4309d9665745cb30bbda5');
+  assert.equal(review.commit, '9f9bc3f49a6eddc33d7ad4d3bf59a3385c597589');
   assert.equal(review.reviewScope, 'complete');
   assert.equal(review.exhibits.length, 9);
   const trivium = review.exhibits.find(exhibit => exhibit.id === 'trivium');
@@ -303,8 +303,8 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   const cube = review.exhibits.find(exhibit => exhibit.id === 'cube-superpoly-recovery');
   assert.ok(cube);
   for (const anchor of [
-    'src/cube/oracle.ts:15',
-    'src/cube/oracle.ts:33',
+    'src/cube/oracle.ts:25',
+    'src/cube/oracle.ts:43',
     'src/cube/analysis.ts:105',
     'src/cube/analysis.ts:143',
     'src/cube/analysis.ts:176',
@@ -374,7 +374,7 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
     html.replace(cardRe, card => card.replace('data-attacks="Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37"',
       'data-attacks="Brute force@README.md:80 | Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:140"')),
     html.replace(cardRe, card => card.replace('data-references="', 'data-references="Pairing | RC4 | Shamir secret sharing | ')),
-    html.replace(cardRe, card => card.replace('c4ef2da4b33fd08382a4309d9665745cb30bbda5', '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4')),
+    html.replace(cardRe, card => card.replace('9f9bc3f49a6eddc33d7ad4d3bf59a3385c597589', '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4')),
     html.replace(cardRe, card => card.replace(' | HISTORICAL', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Trivium</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Boolean Function Audit</span>', '')),
@@ -477,7 +477,7 @@ function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed 
     'Bounded enumeration, trial division and historical CRT-fault prose are not attack exhibits');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e"/);
+  assert.match(opening, /data-review-commit="b97b515033e235b05f55cc461bb454cf88c003b5"/);
   assert.match(opening, /Diffie-Hellman@src\/nt\/toyDh\.ts:26/,
     'Diffie-Hellman credit must anchor at the executable toy exchange');
   assert.match(opening, /Montgomery multiplication@src\/nt\/montgomery\.ts:96/,
@@ -496,8 +496,8 @@ function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed 
   assert.ok(chipsFor(source, slug).includes('Montgomery REDC'));
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, 'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e');
-  assert.equal(sourceReview.reviewed, '2026-10-25');
+  assert.equal(sourceReview.commit, 'b97b515033e235b05f55cc461bb454cf88c003b5');
+  assert.equal(sourceReview.reviewed, '2026-10-27');
   assert.deepEqual(sourceReview.add, [
     'Diffie-Hellman@src/nt/toyDh.ts:26',
     'Montgomery multiplication@src/nt/montgomery.ts:96',
@@ -660,7 +660,7 @@ test('Clock Arithmetic scope controls reject lost, stale, moved or invented cred
       '            data-attacks="Fault injection@catalog-handoff.md:67"\n            data-standards="IETF"',
     )),
     html.replace(cardRe, card => card.replace(
-      'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e',
+      'b97b515033e235b05f55cc461bb454cf88c003b5',
       '5bb86840fab4806e3681c1a378fd4c643831035d',
     )),
     html.replace(cardRe, card => card.replace('<span class="chip">Montgomery REDC</span>', '')),
@@ -837,7 +837,7 @@ function checkSearchVaultScope(source) {
     'Keyword inference',
   ]);
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-search-vault\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="28bb6f3c50e0584b5b94e0a5a0c0b9f2ef52141d"/);
+  assert.match(card, /data-review-commit="63179ac8935525fed1247e9476f1b08e7333e4ee"/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
   assert.ok(!references.includes('Ed25519'),
     'noble’s ristretto module filename must not invent an Ed25519 reference');
@@ -1043,7 +1043,7 @@ function checkAttributeGateScope(source) {
   ]);
   assert.deepEqual(attacksFor(source, slug), []);
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-attribute-gate\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="ab293fd0386fac2a4e89cede2b414056df3188eb"/);
+  assert.match(card, /data-review-commit="4c0d031835f6c39844a00d80f55020de73f56f44"/);
   assert.match(card, /Pairing@src\/fame\/bls\.ts:191/);
   assert.doesNotMatch(card, /Pairing@src\/fame\/bls\.ts:183/);
   assert.match(card, /BLS signatures is a scanner false positive and is removed/);
@@ -1426,7 +1426,7 @@ function checkMatsuiAd14Scope(source, manifest = exhibitManifest, reviewed = cat
     'Known-plaintext attack',
     'Linear cryptanalysis',
   ]);
-  assert.match(opening, /data-review-commit="7a85fbf1e6f566f7b0b718cb93f5dd737950faaa"/);
+  assert.match(opening, /data-review-commit="11381feca9b68717dbef169d5dae4d157eb47093"/);
   assert.ok(!referencesFor(source, slug).includes('Shamir secret sharing'),
     'Biham and Shamir names authors here; it is not a secret-sharing reference');
   assert.match(block, /join a chosen-difference prefix to a parity suffix/);
@@ -1441,7 +1441,7 @@ function checkMatsuiAd14Scope(source, manifest = exhibitManifest, reviewed = cat
   ]);
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, '7a85fbf1e6f566f7b0b718cb93f5dd737950faaa');
+  assert.equal(sourceReview.commit, '11381feca9b68717dbef169d5dae4d157eb47093');
   assert.deepEqual(sourceReview.remove, ['Brute force', 'Fault injection']);
   assert.deepEqual(sourceReview.removeReferences, ['Shamir secret sharing']);
   assert.deepEqual(sourceReview.addAttacks, [
@@ -1453,7 +1453,7 @@ function checkMatsuiAd14Scope(source, manifest = exhibitManifest, reviewed = cat
   ]);
 
   const mapped = manifest.labs[slug];
-  assert.equal(mapped.commit, '7a85fbf1e6f566f7b0b718cb93f5dd737950faaa');
+  assert.equal(mapped.commit, '11381feca9b68717dbef169d5dae4d157eb47093');
   assert.equal(mapped.reviewScope, 'complete');
   assert.equal(mapped.exhibits.length, 11);
   const composition = mapped.exhibits.find(exhibit => exhibit.id === 'differential-linear-composition');
@@ -1464,7 +1464,7 @@ function checkMatsuiAd14Scope(source, manifest = exhibitManifest, reviewed = cat
     'src/crypto/difflin.ts:136',
     'src/crypto/difflin.ts:310',
     'src/crypto/difflin.ts:419',
-    'src/ui/difflin.ts:344',
+    'src/ui/difflin.ts:362',
     'src/workers/dl.worker.ts:24',
   ]) {
     assert.ok(composition.evidence.includes(anchor), `A-D-14 must retain evidence ${anchor}`);
@@ -1497,7 +1497,7 @@ test('Matsui Line A-D-14 controls reject lost credit, stale pins and weakened li
     html.replace(cardRe, card => card.replace(
       'data-references="AES', 'data-references="Shamir secret sharing | AES')),
     html.replace(cardRe, card => card.replace(
-      '7a85fbf1e6f566f7b0b718cb93f5dd737950faaa',
+      '11381feca9b68717dbef169d5dae4d157eb47093',
       'e218f2e71938d1514cbfde224fc61b1d68fc2e3a')),
     html.replace(cardRe, card => card.replace(
       'join a chosen-difference prefix to a parity suffix',
@@ -1825,7 +1825,7 @@ function checkEk09Lr02Scope(source, manifests = exhibitManifest, reviews = catal
     'Lattice-reduction credit must point at the executable attackLWE entry point');
   assert.doesNotMatch(lllOpening, /Lattice reduction@playwright\.a11y\.config\.ts/,
     'The lab slug inside a Playwright base URL is not attack evidence');
-  assert.equal(reviews[lll].commit, '3f7ca812858c87e0ad6d3c403c86c705dde3e16a');
+  assert.equal(reviews[lll].commit, 'df6ab9b713516cf4729dfc252db5cabde91ca996');
   assert.ok(reviews[lll].addAttacks.includes('Lattice reduction@src/bkz.ts:446'));
   assert.match(reviews[lll].note, /overrides the scanner's false playwright\.a11y\.config\.ts anchor/);
   assert.equal(manifests.labs[lll].commit, reviews[lll].commit);
@@ -1846,7 +1846,7 @@ function checkEk09Lr02Scope(source, manifests = exhibitManifest, reviews = catal
     'The raw GHASH field toy explicitly has no nonce');
   assert.ok(!attacksFor(source, mac).includes('Side-channel (unspecified)'),
     'A glossary adjective is not an executed side-channel lesson');
-  assert.equal(reviews[mac].commit, '695391521cfdaf4aee0dc3814b1d324b3b1bbdf1');
+  assert.equal(reviews[mac].commit, '5b839f5a40b30bc7bf50b1de67ccfa0f3ac9cd7a');
   assert.equal(manifests.labs[mac].commit, reviews[mac].commit);
   const pmac = manifests.labs[mac].exhibits.find(exhibit => exhibit.id === 'pmac');
   assert.ok(pmac);
@@ -2319,11 +2319,11 @@ function checkProofTallyImplementationScope(source, reviews = catalogReviewed) {
   const opening = openingFor(source, slug);
   assert.match(opening,
     /data-implementation="local TypeScript Field64\/Prio3 and exact BigInt DP model; @noble TurboSHAKE128"/);
-  assert.match(opening, /data-review-commit="9394e3fd3fd84cab5cfa95016f21808ca9f4e395"/);
+  assert.match(opening, /data-review-commit="6f38a066d304823fc4724a2ab2fcff1a573131fe"/);
   assert.match(opening, /local two-aggregator Prio3Count\/Prio3Sum teaching implementation/);
   assert.match(opening, /@noble supplies TurboSHAKE128 only, not Prio3 or field\/proof logic/);
   const review = reviews[slug];
-  assert.equal(review.commit, '9394e3fd3fd84cab5cfa95016f21808ca9f4e395');
+  assert.equal(review.commit, '6f38a066d304823fc4724a2ab2fcff1a573131fe');
   assert.match(review.note, /public, aborter-only and omniscient teaching views remain distinct/i);
   assert.match(review.note, /does not establish the paper's general bounds or imply that every abort violates differential privacy/);
 }
@@ -3004,12 +3004,12 @@ function checkIbeGateAd07Scope(source, manifests = exhibitManifest, reviews = ca
     'Security warnings and imported BLS group code are not executed attacks or BLS signatures');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f"/);
+  assert.match(card, /data-review-commit="5f8bb600b33842f2db0d06ac701b2e96887dc501"/);
   assert.match(card, /WebCrypto RSA-OAEP, P-256 ECDSA, HMAC and SHA-256/);
   assert.doesNotMatch(card, /data-implements="[^"]*BLS signatures@/);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f');
+  assert.equal(review.commit, '5f8bb600b33842f2db0d06ac701b2e96887dc501');
   assert.deepEqual(review.remove, [
     'BLS signatures',
     'Chosen-ciphertext attack',
@@ -3057,7 +3057,7 @@ test('IBE Gate A-D-07 controls reject false credit, stale pins, stale time prose
       'data-attacks="Chosen-ciphertext attack@README.md:84" data-standards="',
     )),
     html.replace(cardRe, (card) => card.replace(
-      '6c0b3fbd9ebf167491eedff70b1b7cb7fee5f26f',
+      '5f8bb600b33842f2db0d06ac701b2e96887dc501',
       '0'.repeat(40),
     )),
   ]) {
@@ -3277,11 +3277,11 @@ function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = 
     'Adi Shamir biography text is not an executed differential-cryptanalysis attack');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="48a7a3ab9298edf708f5496159c39f2cdb9d3227"/);
+  assert.match(card, /data-review-commit="b05e05d981b009bc114e3bb615f3083ec0cb7cf1"/);
   assert.doesNotMatch(card, /data-attacks=/);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '48a7a3ab9298edf708f5496159c39f2cdb9d3227');
+  assert.equal(review.commit, 'b05e05d981b009bc114e3bb615f3083ec0cb7cf1');
   assert.deepEqual(review.remove, ['Differential cryptanalysis']);
 
   const mapped = manifests.labs[slug];
@@ -3319,7 +3319,7 @@ test('Shamir Gate S07 controls reject a false attack, stale pins, missing eviden
       'data-attacks="Differential cryptanalysis@demos/shamir-gate/src/main.ts:1479" data-standards="',
     )),
     html.replace(cardRe, (card) => card.replace(
-      '48a7a3ab9298edf708f5496159c39f2cdb9d3227',
+      'b05e05d981b009bc114e3bb615f3083ec0cb7cf1',
       '0'.repeat(40),
     )),
   ]) {
@@ -3659,19 +3659,19 @@ function checkRankMetricReview(source, manifests = exhibitManifest, reviewed = c
     'Historical key-recovery and deployment side-channel prose are not executed attacks');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="b9d9ba5887b1a59894d9deb3ae08225cbb239f6f"/);
+  assert.match(opening, /data-review-commit="5e867fd42282a180bc0b5983e2cc16ce3683ae1a"/);
   assert.match(opening, /all 256 words of a fixed \[4,2,3\] Gabidulin\/MRD code/);
   assert.match(opening, /enumerates all rank-two errors to show both refusal and miscorrection/);
   assert.match(opening, /no encryption, KEM, production parameter set, efficient algebraic decoder or security reduction/);
 
   const review = reviewed[slug];
-  assert.equal(review.commit, 'b9d9ba5887b1a59894d9deb3ae08225cbb239f6f');
+  assert.equal(review.commit, '5e867fd42282a180bc0b5983e2cc16ce3683ae1a');
   assert.equal(review.reviewed, '2026-10-27');
   assert.deepEqual(review.remove, ['Key recovery', 'Side-channel (unspecified)']);
   assert.match(review.implementation, /binary-matrix rank and exhaustive Gabidulin-code teaching implementation/);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, 'b9d9ba5887b1a59894d9deb3ae08225cbb239f6f');
+  assert.equal(mapped.commit, '5e867fd42282a180bc0b5983e2cc16ce3683ae1a');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'metric-weights',
@@ -3702,7 +3702,7 @@ test('Rank Metric controls reject stale pins, false attacks and a stronger decod
       'data-attacks="Key recovery@README.md:1" data-references="',
     )),
     html.replace(cardRe, (card) => card.replace(
-      'b9d9ba5887b1a59894d9deb3ae08225cbb239f6f',
+      '5e867fd42282a180bc0b5983e2cc16ce3683ae1a',
       '0'.repeat(40),
     )),
   ]) {

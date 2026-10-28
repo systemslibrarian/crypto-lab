@@ -2655,7 +2655,7 @@ function checkResidueGateAd13Scope(source, manifests = exhibitManifest, reviews 
 
   const opening = openingFor(source, slug);
   assert.match(opening, /data-category="ENCRYPTION \| ATTACKS \| RANDOMNESS"/);
-  assert.match(opening, /data-review-commit="f20e6db42edc5d654c9934dda27855dd6e340dfa"/);
+  assert.match(opening, /data-review-commit="76061cd80df38ebc723e344a0c61567b974aa269"/);
   assert.match(opening, /Blum–Blum–Shub@src\/bbs\/bbs\.ts:108/);
   assert.match(opening, /Blum–Goldwasser@src\/bbs\/bbs\.ts:128/);
   assert.match(opening, /Rabin encryption@src\/rabin\/oracle\.ts:20/);
@@ -2671,8 +2671,8 @@ function checkResidueGateAd13Scope(source, manifests = exhibitManifest, reviews 
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, 'f20e6db42edc5d654c9934dda27855dd6e340dfa');
-  assert.equal(review.reviewed, '2026-10-25');
+  assert.equal(review.commit, '76061cd80df38ebc723e344a0c61567b974aa269');
+  assert.equal(review.reviewed, '2026-10-27');
   assert.ok(review.add.includes('Blum–Blum–Shub@src/bbs/bbs.ts:108'));
   assert.ok(review.add.includes('Blum–Goldwasser@src/bbs/bbs.ts:128'));
   assert.ok(review.addAttacks.includes('Ciphertext malleability@src/bbs/bbs.ts:242'));

@@ -15813,8 +15813,8 @@
       ]
     },
     "crypto-lab-hash-hunt": {
-      "commit": "072a9531796a1c2f9936197077aee2ee0d57b144",
-      "reviewed": "2026-10-23",
+      "commit": "9cca4441e6f15f37529fdb0d61ce1cf1aa8f3208",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "birthday",
@@ -22869,8 +22869,8 @@
       ]
     },
     "crypto-lab-log-forge": {
-      "commit": "d81c706537f4946c60b5f9dcc24f6ba2e5e3d15e",
-      "reviewed": "2026-10-22",
+      "commit": "4ac3dd1edee161ae42bf7f71e1b0b3225a14060b",
+      "reviewed": "2026-10-27",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -31129,8 +31129,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-prime-witness": {
-      "commit": "b2f3fb06c1ed1729ab194cb8623c52188aed24cc",
-      "reviewed": "2026-10-23",
+      "commit": "8b65d6dd1b5e1518e622c69db158c1ac0c211bb8",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "chain",
@@ -33202,8 +33202,8 @@
       ]
     },
     "crypto-lab-residue-gate": {
-      "commit": "f20e6db42edc5d654c9934dda27855dd6e340dfa",
-      "reviewed": "2026-10-25",
+      "commit": "76061cd80df38ebc723e344a0c61567b974aa269",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "prime-roots",
@@ -37096,8 +37096,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-sm9-forge": {
-      "commit": "9009a2f627a563dc0bf08ee6a9cfac232b3e6415",
-      "reviewed": "2026-10-22",
+      "commit": "de47816eed5ee048847a6a1e8a398fe10eb1ef68",
+      "reviewed": "2026-10-27",
       "reviewScope": "complete",
       "exhibits": [
         {

@@ -68,6 +68,7 @@
  */
 'use strict';
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { ALGORITHMS, ATTACKS } = require('./catalog-vocab.js');
@@ -871,8 +872,65 @@ function isReviewedAdd(review, item) {
   return Boolean(review?.add?.includes(item) || review?.addAttacks?.includes(item));
 }
 
-function evidenceFor(slug) {
-  const dir = path.join(REPOS, slug);
+/* A lab's tree at one commit, extracted so the SAME scanner can read it.
+ * Cached per clone+commit: a fleet run asks for a pinned tree once per lab and
+ * the extraction, not the scan, is the expensive half. */
+const treeCache = new Map();
+function treeAt(dir, commit) {
+  const key = `${dir}@${commit}`;
+  if (treeCache.has(key)) return treeCache.get(key);
+  let out = null;
+  try {
+    const dest = fs.mkdtempSync(path.join(os.tmpdir(), 'ce-at-'));
+    const tar = path.join(dest, 'tree.tar');
+    execFileSync('git', ['-C', dir, 'archive', '--format=tar', `--output=${tar}`, commit], { stdio: ['ignore', 'ignore', 'ignore'] });
+    execFileSync('tar', ['-xf', tar, '-C', dest], { stdio: ['ignore', 'ignore', 'ignore'] });
+    fs.rmSync(tar, { force: true });
+    out = dest;
+  } catch { out = null; }        // absent commit, shallow clone, empty repository
+  treeCache.set(key, out);
+  return out;
+}
+
+/* THE REFERENCE SET A PIN WAS REVIEWED AGAINST, derived by the production
+ * pipeline rather than by a second copy of it.
+ *
+ * `movedSubstantively` asks whether README.md or src/ changed, because those are
+ * what the IMPLEMENTATION derivation reads. References are not derived from
+ * those alone: every .md in a lab is scanned, AGENTS.md and docs/ included. A
+ * docs edit therefore changes a card's references under a pin the movement rule
+ * still calls fresh — the gap recorded beside the cab71cb fix.
+ *
+ * Asking the question by RESULT closes it without guessing at paths: derive the
+ * reference set at the pin and at HEAD and compare. Identical means the pin
+ * holds however many files moved; different means the lab is stale and the
+ * names that moved are reported. Both sides run `evidenceFor` with no review
+ * applied, so the comparison is between two raw scanner outputs and never
+ * between a reviewed card and an unreviewed one. */
+function referenceDrift(slug, dir, pin, head) {
+  if (pin === head) return null;
+  const at = (commit) => {
+    const ev = evidenceFor(slug, commit, dir);
+    return ev && !ev.notScanned ? ev.references : null;
+  };
+  const before = at(pin);
+  const after = at(head);
+  if (!before || !after) return null;          // could not look is not a finding
+  const b = new Set(before);
+  const a = new Set(after);
+  const added = after.filter((n) => !b.has(n));
+  const dropped = before.filter((n) => !a.has(n));
+  return added.length || dropped.length ? { added, dropped } : null;
+}
+
+/** @param atCommit    derive from the lab's tree at this commit, with NO review
+ *    applied. Used by referenceDrift; never recurses, because the review block
+ *    below is skipped whenever it is set.
+ *  @param dirOverride  read this clone instead of the one named by the slug, so
+ *    the selftest can drive the production derivation against a throwaway
+ *    repository rather than against a second copy of the rules. */
+function evidenceFor(slug, atCommit = null, dirOverride = null) {
+  const dir = dirOverride || path.join(REPOS, slug);
   if (!fs.existsSync(path.join(dir, '.git'))) {
     /* A lab with no clone here is NOT-SCANNED, not UNKNOWN. UNKNOWN means every
        file this tool reads was read and nothing was derivable; this is the tool
@@ -896,7 +954,14 @@ function evidenceFor(slug) {
       commentOnly: [], protocolPartial: [], staleReview: null,
     };
   }
-  const read = src.root;
+  const read = atCommit ? treeAt(dir, atCommit) : src.root;
+  if (atCommit && !read) {
+    return {
+      slug, cloned: true, implements: [], references: [], attacks: [], standards: [],
+      implementation: 'UNKNOWN', unscanned: [`tree at ${atCommit} could not be extracted`], notScanned: true,
+      commentOnly: [], protocolPartial: [], staleReview: null,
+    };
+  }
   const { code, prose, unread, unreadable: cannotList } = labFiles(read, dir);
   if (cannotList) {
     return {
@@ -1070,7 +1135,7 @@ function evidenceFor(slug) {
 
   const review = REVIEWS[slug];
   let staleReview = null;
-  if (review) {
+  if (review && !atCommit) {
     const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
     const movement = head === review.commit ? 'not-moved' : movedSubstantively(dir, review.commit, head);
     if (movement === 'unreadable') {
@@ -1080,6 +1145,15 @@ function evidenceFor(slug) {
          established that this lab moved. */
       pinUnreadable.add(slug);
       staleReview = { pinned: review.commit, current: head, unreadable: true };
+    }
+    /* The path rule and the result rule are both allowed to call a pin stale,
+       and neither can overrule the other into silence. A docs-only edit that
+       leaves the reference set alone keeps the pin; one that changes it does
+       not, and the names that moved are carried on the state so the report can
+       print them instead of asking a person to go and find them. */
+    if (movement === 'not-moved' && head !== review.commit) {
+      const drift = referenceDrift(slug, dir, review.commit, head);
+      if (drift) staleReview = { pinned: review.commit, current: head, refDrift: drift };
     }
     if (movement === 'moved') {
       /* A stale pin is RECORDED here and acted on by each caller; nothing throws.
@@ -1371,7 +1445,14 @@ function writeCards(all) {
     }).sort((a, b) => (b.days ?? -1) - (a.days ?? -1));
     console.log(`\nSTALE-REVIEW (${stale.length}) — left untouched, byte-identical, holding the state each was last reviewed in. Oldest first:`);
     for (const a of aged) {
-      console.log(`  ${a.days === null ? '  undated' : `${String(a.days).padStart(4)}d`}  ${a.c.slug.padEnd(32)} reviewed ${a.on || '(no date)'}`);
+      const drift = a.c.ev && a.c.ev.staleReview && a.c.ev.staleReview.refDrift;
+      /* A pin the path rule calls fresh is here because its RESULT changed, and
+         the names are the whole finding: without them this line sends a person
+         to re-read a lab without saying what to look for. */
+      const why = drift
+        ? `  — references moved${drift.added.length ? `, added ${drift.added.join(', ')}` : ''}${drift.dropped.length ? `, dropped ${drift.dropped.join(', ')}` : ''}`
+        : '';
+      console.log(`  ${a.days === null ? '  undated' : `${String(a.days).padStart(4)}d`}  ${a.c.slug.padEnd(32)} reviewed ${a.on || '(no date)'}${why}`);
     }
     console.log('Re-read those labs and update their pins in tools/catalog-reviewed.json.');
     console.log('Exiting non-zero: the rest of the catalog is written, and this stays red until they are cleared.');
@@ -1490,6 +1571,21 @@ function verifyAnchors(all) {
               item: 'source review',
               why: `reviewed ${review.commit.slice(0, 12)}, lab is now ${remote.slice(0, 12)}; re-review and update the pin`,
             });
+          } else {
+            /* The result rule, asked here too. A verifier that called a pin fresh
+               while the writer refused to apply it would be the two-readers defect
+               this file keeps re-finding, with the disagreement invisible until a
+               card silently stopped carrying a correction. */
+            const drift = referenceDrift(c.slug, dir, review.commit, remote);
+            if (drift) {
+              bad.push({
+                slug: c.slug,
+                item: 'source review',
+                why: `reviewed ${review.commit.slice(0, 12)}, lab is now ${remote.slice(0, 12)}; no README/src change, but the derived references moved`
+                  + `${drift.added.length ? ` — added ${drift.added.join(', ')}` : ''}`
+                  + `${drift.dropped.length ? ` — dropped ${drift.dropped.join(', ')}` : ''}; re-review and update the pin`,
+              });
+            }
           }
         }
       }
@@ -1762,7 +1858,6 @@ function applyDerived(block, slug, parts) {
  * other file in the fixture mentions, so if it leaks the difference is obvious.
  */
 function selftest() {
-  const os = require('os');
   const { execFileSync } = require('child_process');
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ce-tracked-'));
   const git = (...a) => execFileSync('git', ['-C', tmp, ...a], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
@@ -1876,6 +1971,79 @@ function selftest() {
     } catch { invalidCommentRemovalThrew = true; }
     if (!invalidCommentRemovalThrew) fail.push('unknown comment-only suppression name was accepted');
     else { pass++; console.log('  ok  comment-only suppressions require canonical algorithm names'); }
+
+    /* RESULT-BASED STALENESS, on a throwaway lab whose docs the scanner reads.
+       The path rule asks whether README.md or src/ moved. References are derived
+       from every .md in a lab, AGENTS.md and docs/ included, so a docs edit can
+       change them under a pin that rule still calls fresh — the gap recorded
+       beside the cab71cb fix. Asking by RESULT closes it: derive the reference
+       set at both commits and compare.
+
+       Each case asserts BOTH halves — that the movement really is
+       non-substantive by the path rule, AND what the result rule then decides.
+       Asserting only the second would pass against a rule that calls everything
+       stale, which is the opposite defect and just as useless.
+
+       Its own repository, because clone-source caches a clone's tracked-file
+       list for the run: a fixture that gains a file after that list is read
+       would never have the new file scanned, and the case would pass for a
+       reason that has nothing to do with the rule under test. */
+    const refTmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ce-refdrift-'));
+    const refGit = (...a) => execFileSync('git', ['-C', refTmp, ...a], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    refGit('init', '-q', '-b', 'main');
+    refGit('config', 'user.email', 'selftest@example.invalid');
+    refGit('config', 'user.name', 'selftest');
+    fs.mkdirSync(path.join(refTmp, 'src'), { recursive: true });
+    fs.mkdirSync(path.join(refTmp, 'docs'), { recursive: true });
+    fs.writeFileSync(path.join(refTmp, 'src', 'main.ts'), 'export function sha256() { return 1 }\n');
+    fs.writeFileSync(path.join(refTmp, 'docs', 'notes.md'), 'This lab is a teaching exhibit.\n');
+    fs.writeFileSync(path.join(refTmp, 'package.json'), '{ "name": "lab" }\n');
+    refGit('add', '.'); refGit('commit', '-qm', 'base');
+    const docsPin = refGit('rev-parse', 'HEAD').trim();
+
+    const refsAt = (commit) => {
+      const ev = evidenceFor('fixture-lab', commit, refTmp);
+      return ev && !ev.notScanned ? ev.references : null;
+    };
+
+    // (1) a docs edit that changes no reference: the pin holds.
+    fs.writeFileSync(path.join(refTmp, 'docs', 'notes.md'), 'This lab is a teaching exhibit, reworded.\n');
+    refGit('add', 'docs/notes.md'); refGit('commit', '-qm', 'reword docs');
+    const docsInert = refGit('rev-parse', 'HEAD').trim();
+    if (movedSubstantively(refTmp, docsPin, docsInert) !== 'not-moved') {
+      fail.push('a docs-only reword was called substantive by the path rule');
+    } else { pass++; console.log('  ok  a docs-only reword is non-substantive by the path rule'); }
+    if (referenceDrift('fixture-lab', refTmp, docsPin, docsInert) !== null) {
+      fail.push('a docs edit that changed no reference was reported as drift');
+    } else { pass++; console.log('  ok  a docs edit leaving the reference set alone KEEPS the pin'); }
+
+    /* (2) a docs edit that ADDS one: stale, and the name is reported. Streebog is
+       in the vocabulary and in no other fixture file, so a leak is unambiguous. */
+    fs.appendFileSync(path.join(refTmp, 'docs', 'notes.md'), '\nCompare this with Streebog, which it does not implement.\n');
+    refGit('add', 'docs/notes.md'); refGit('commit', '-qm', 'mention Streebog in docs');
+    const docsAdds = refGit('rev-parse', 'HEAD').trim();
+    if (movedSubstantively(refTmp, docsInert, docsAdds) !== 'not-moved') {
+      fail.push('a docs-only addition was called substantive by the path rule');
+    } else { pass++; console.log('  ok  a docs-only addition is still non-substantive by the path rule'); }
+    const addedDrift = referenceDrift('fixture-lab', refTmp, docsInert, docsAdds);
+    if (!addedDrift || !addedDrift.added.includes('Streebog') || addedDrift.dropped.length) {
+      fail.push(`a docs edit that ADDED a reference was not reported: ${JSON.stringify(addedDrift)}`);
+    } else { pass++; console.log('  ok  a docs edit that ADDS a reference reports stale and NAMES it'); }
+    if (refsAt(docsInert).includes('Streebog') || !refsAt(docsAdds).includes('Streebog')) {
+      fail.push('the derived reference sets do not bracket the added name');
+    } else { pass++; console.log('  ok  the two derived reference sets bracket the added name'); }
+
+    // (3) the cab71cb regression: a lockfile bump changes nothing the scanner reads.
+    fs.writeFileSync(path.join(refTmp, 'package.json'), '{ "name": "lab", "devDependencies": { "vite": "8.3.5" } }\n');
+    fs.writeFileSync(path.join(refTmp, 'package-lock.json'), '{ "lockfileVersion": 3 }\n');
+    refGit('add', '.'); refGit('commit', '-qm', 'bump vite');
+    const afterBump = refGit('rev-parse', 'HEAD').trim();
+    if (movedSubstantively(refTmp, docsAdds, afterBump) !== 'not-moved') {
+      fail.push('a lockfile-only bump was called substantive by the path rule');
+    } else { pass++; console.log('  ok  a lockfile-only bump is non-substantive by the path rule'); }
+    if (referenceDrift('fixture-lab', refTmp, docsAdds, afterBump) !== null) {
+      fail.push('a lockfile-only bump was reported as reference drift');
+    } else { pass++; console.log('  ok  a lockfile-only bump KEEPS the pin under the result rule too'); }
 
     /* THE DEPENDABOT CASE, end to end on a real repository.
        A reviewed exclusion used to be applied only when the clone's HEAD equalled
@@ -2290,6 +2458,9 @@ function main() {
 module.exports = {
   lex,
   reviewedReferenceNames,
+  evidenceFor,
+  treeAt,
+  referenceDrift,
   attackContextAllows,
   camelSplit,
   verifyTerms,

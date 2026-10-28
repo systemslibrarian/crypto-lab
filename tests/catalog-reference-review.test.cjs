@@ -7,8 +7,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const pin = 'a'.repeat(40);
-const refs = (slug, raw, hits, review, stale, head = pin) =>
-  reviewedReferenceNames(slug, raw, hits, review, stale, head);
+const refs = (slug, raw, hits, review, stale) =>
+  reviewedReferenceNames(slug, raw, hits, review, stale);
 
 const mentions = () => new Map([['OPAQUE', 'opaque-WASM coverage'], ['Streebog', 'hash reference']]);
 
@@ -62,10 +62,23 @@ test('TC26 excludes the coverage adjective while preserving its compiled-source 
 });
 
 
-test('a different HEAD cannot inherit a reference exclusion even if implementation source is unchanged', () => {
-  assert.deepEqual(refs('fixture', mentions(), new Map(), {commit: pin, removeReferences: ['OPAQUE']}, null, 'b'.repeat(40)), ['OPAQUE', 'Streebog']);
+/* These two replace a pair that asserted the opposite, and the reason they were
+   wrong is the defect they let through. The exclusion used to require the clone's
+   HEAD to equal the pin exactly, while the `remove` list applied whenever the pin
+   survived a non-substantive move. Those rules disagree on exactly the commits
+   `movedSubstantively` calls 'not-moved', so a Dependabot bump touching only
+   package.json and the lockfile silently DELETED a reviewed correction from a card.
+   Seen 2026-10-27 on crypto-lab-residue-gate, which regained BBS signatures, BBS+
+   and Boneh-Franklin IBE. Staleness is the single gate now; the end-to-end case on
+   a real repository is in `catalog-evidence.js selftest`. */
+test('a pin that survives a non-substantive move keeps applying its reference exclusion', () => {
+  assert.deepEqual(refs('fixture', mentions(), new Map(), {commit: pin, removeReferences: ['OPAQUE']}, null), ['Streebog']);
 });
 
-test('missing source identity cannot authorize a reference exclusion', () => {
-  assert.deepEqual(reviewedReferenceNames('fixture', mentions(), new Map(), {commit: pin, removeReferences: ['OPAQUE']}, null, undefined), ['OPAQUE', 'Streebog']);
+test('staleness, not commit identity, is what withholds a reference exclusion', () => {
+  const review = {commit: pin, removeReferences: ['OPAQUE']};
+  assert.deepEqual(refs('fixture', mentions(), new Map(), review, null), ['Streebog']);
+  for (const stale of [{pinned: 'old', current: 'new'}, {unreadable: true}]) {
+    assert.deepEqual(refs('fixture', mentions(), new Map(), review, stale), ['OPAQUE', 'Streebog']);
+  }
 });

@@ -1070,10 +1070,8 @@ function evidenceFor(slug) {
 
   const review = REVIEWS[slug];
   let staleReview = null;
-  let reviewHead = null;
   if (review) {
     const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-    reviewHead = head;
     const movement = head === review.commit ? 'not-moved' : movedSubstantively(dir, review.commit, head);
     if (movement === 'unreadable') {
       /* Could not look is not permission to apply the pin. The recorded add and
@@ -1147,8 +1145,8 @@ function evidenceFor(slug) {
   }
   const impl = [...hits.entries()].map(([name, v]) => ({ name, at: v.at, shape: v.shape }))
     .sort((a, b) => a.name.localeCompare(b.name));
-  const refs = reviewedReferenceNames(slug, mentions, hits, review, staleReview, reviewHead);
-  const excludedCommentOnly = reviewedCommentOnlyNames(slug, review, staleReview, reviewHead);
+  const refs = reviewedReferenceNames(slug, mentions, hits, review, staleReview);
+  const excludedCommentOnly = reviewedCommentOnlyNames(slug, review, staleReview);
   const atks = [...attackHits.entries()].map(([name, v]) => ({ name, at: v.at }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -1633,14 +1631,32 @@ function verifyAnchors(all) {
   console.log('Every anchor still resolves and every pinned source review matches its lab clone.');
 }
 
-function reviewedReferenceNames(slug, mentions, hits, review, staleReview, head) {
+function reviewedReferenceNames(slug, mentions, hits, review, staleReview) {
   // "opaque WASM" describes a coverage limit, not the OPAQUE PAKE.
   // Correct such ambiguous mentions only under the same source-review guard
   // as algorithm/attack corrections. Keep the raw evidence and claim maps.
   let excluded = [];
-  // Reference wording can change in docs outside the legacy implementation
-  // movement scope. Never inherit a reference exclusion at a different HEAD.
-  if (review && !staleReview && /^[0-9a-f]{40}$/.test(review.commit || '') && head === review.commit) {
+  /* The SAME guard the `remove` list uses, and it has to be the same one.
+     It used to additionally require `head === review.commit`, on the argument
+     that reference wording can change in docs outside the implementation
+     movement scope. The effect was the opposite of careful: `movedSubstantively`
+     calls a lockfile-only commit 'not-moved', so the pin survived and `remove`
+     kept applying, while this stricter test quietly stopped applying — and a
+     Dependabot bump therefore DELETED a human's correction from the card with
+     nothing reporting it. Observed 2026-10-27 on crypto-lab-residue-gate: a
+     vite bump touching only package.json and the lockfile put `BBS signatures`,
+     `BBS+` and `Boneh-Franklin IBE` back on the card, three names a review had
+     removed on purpose.
+     A reviewed correction is now either applied or the lab is reported STALE and
+     its card is not rewritten at all. There is no third path where the review is
+     half-applied. The residual case the old comment was reaching for — prose the
+     scanner reads changing under a pin that still holds — is real and is NOT
+     closed by a stricter guard here, because dropping the exclusion publishes a
+     name the reviewer rejected rather than withholding one. Closing it means
+     widening what counts as substantive to the files the scanner actually reads;
+     that is a separate decision with a measured cost (23 labs would need
+     re-reading for AGENTS.md edits alone) and belongs to the maintainer. */
+  if (review && !staleReview && /^[0-9a-f]{40}$/.test(review.commit || '')) {
     excluded = review.removeReferences ?? [];
     if (!Array.isArray(excluded) || excluded.some((name) =>
       !ALGORITHMS.some((term) => term.name === name))) {
@@ -1650,12 +1666,17 @@ function reviewedReferenceNames(slug, mentions, hits, review, staleReview, head)
   return [...mentions.keys()].filter((name) => !hits.has(name) && !excluded.includes(name)).sort();
 }
 
-/** Remove a scanner-only comment observation under the same exact-commit guard
- * as every other reviewed correction. This is narrower than removeReferences:
- * a lab may genuinely reference a term in its README while an unrelated source
- * abbreviation creates a false comment-only anchor for that same term. */
-function reviewedCommentOnlyNames(slug, review, staleReview, head) {
-  if (!review || staleReview || !/^[0-9a-f]{40}$/.test(review.commit || '') || head !== review.commit) {
+/** Remove a scanner-only comment observation under the same guard as every
+ * other reviewed correction. This is narrower than removeReferences: a lab may
+ * genuinely reference a term in its README while an unrelated source
+ * abbreviation creates a false comment-only anchor for that same term.
+ *
+ * It carried the same exact-commit test removeReferences did, and the same
+ * defect with it: a pin that survives a non-substantive move kept applying
+ * `remove` while silently dropping this one. Same rule now, for the same
+ * reason. */
+function reviewedCommentOnlyNames(slug, review, staleReview) {
+  if (!review || staleReview || !/^[0-9a-f]{40}$/.test(review.commit || '')) {
     return new Set();
   }
   const excluded = review.removeCommentOnly ?? [];
@@ -1840,26 +1861,73 @@ function selftest() {
 
     const reviewCommit = 'a'.repeat(40);
     const commentReview = { commit: reviewCommit, removeCommentOnly: [realTerm] };
-    if (!reviewedCommentOnlyNames('fixture', commentReview, null, reviewCommit).has(realTerm)) {
+    if (!reviewedCommentOnlyNames('fixture', commentReview, null).has(realTerm)) {
       fail.push('current pinned review did not suppress its named comment-only false positive');
     } else { pass++; console.log('  ok  a current pinned review suppresses one comment-only false positive'); }
-    if (reviewedCommentOnlyNames('fixture', commentReview, { pinned: reviewCommit }, reviewCommit).size !== 0
-      || reviewedCommentOnlyNames('fixture', commentReview, null, 'b'.repeat(40)).size !== 0) {
-      fail.push('stale or mismatched review inherited a comment-only suppression');
-    } else { pass++; console.log('  ok  stale and mismatched reviews do not inherit comment-only suppressions'); }
+    if (reviewedCommentOnlyNames('fixture', commentReview, { pinned: reviewCommit }).size !== 0) {
+      fail.push('stale review inherited a comment-only suppression');
+    } else { pass++; console.log('  ok  a STALE review does not inherit a comment-only suppression'); }
     let invalidCommentRemovalThrew = false;
     try {
       reviewedCommentOnlyNames('fixture', {
         commit: reviewCommit,
         removeCommentOnly: ['Nonexistent-Cipher-X'],
-      }, null, reviewCommit);
+      }, null);
     } catch { invalidCommentRemovalThrew = true; }
     if (!invalidCommentRemovalThrew) fail.push('unknown comment-only suppression name was accepted');
     else { pass++; console.log('  ok  comment-only suppressions require canonical algorithm names'); }
 
+    /* THE DEPENDABOT CASE, end to end on a real repository.
+       A reviewed exclusion used to be applied only when the clone's HEAD equalled
+       the pin exactly, while `remove` applied whenever the pin survived. Those two
+       rules disagree precisely on a commit `movedSubstantively` calls 'not-moved',
+       so a lockfile bump deleted a human's correction from the card and nothing
+       reported it. Both halves are asserted here: the movement really is
+       non-substantive, AND the exclusions really do still apply across it. Asserting
+       only the second would pass against a function that ignores staleness entirely,
+       which is the opposite defect. */
+    const pinnedCommit = git('rev-parse', 'HEAD').trim();
+    fs.writeFileSync(path.join(tmp, 'package-lock.json'), '{ "name": "lab", "lockfileVersion": 3 }\n');
+    fs.writeFileSync(path.join(tmp, 'package.json'), '{ "name": "lab", "devDependencies": { "vite": "8.3.5" } }\n');
+    git('add', 'package.json', 'package-lock.json'); git('commit', '-qm', 'bump vite');
+    const afterLockfile = git('rev-parse', 'HEAD').trim();
+
+    if (movedSubstantively(tmp, pinnedCommit, afterLockfile) !== 'not-moved') {
+      fail.push('a lockfile-only commit was called substantive');
+    } else { pass++; console.log('  ok  a lockfile-only commit does NOT invalidate a pin'); }
+
+    const bumpedReview = { commit: pinnedCommit, removeReferences: [realTerm], removeCommentOnly: [realTerm] };
+    const bumpedStale = movedSubstantively(tmp, pinnedCommit, afterLockfile) === 'moved'
+      ? { pinned: pinnedCommit, current: afterLockfile } : null;
+    const bumpedRefs = reviewedReferenceNames('fixture',
+      new Map([[realTerm, 'prose:1'], ['Streebog', 'prose:2']]), new Map(), bumpedReview, bumpedStale);
+    if (bumpedRefs.includes(realTerm)) {
+      fail.push(`a lockfile-only bump resurrected the removed reference ${realTerm}`);
+    } else { pass++; console.log('  ok  a lockfile-only bump keeps a reviewed reference removal applied'); }
+    if (!reviewedCommentOnlyNames('fixture', bumpedReview, bumpedStale).has(realTerm)) {
+      fail.push('a lockfile-only bump dropped a reviewed comment-only suppression');
+    } else { pass++; console.log('  ok  a lockfile-only bump keeps a reviewed comment-only suppression applied'); }
+
     fs.writeFileSync(path.join(tmp, 'src', 'main.ts'), 'export function sha512() { return 2 }\n');
     git('add', 'src/main.ts'); git('commit', '-qm', 'change src');
     const afterSrc = git('rev-parse', 'HEAD').trim();
+
+    /* The control for the pair above: a substantive move must report STALE, and the
+       removed name must not come back quietly on the card. It does not come back,
+       because writeCards skips a stale lab entirely and the run exits non-zero —
+       the removals are withheld together with every other reviewed edit, which is a
+       reported state rather than a silent half-application. */
+    const srcMoveStale = movedSubstantively(tmp, afterLockfile, afterSrc) === 'moved'
+      ? { pinned: afterLockfile, current: afterSrc } : null;
+    if (!srcMoveStale) {
+      fail.push('a src/ change after a lockfile bump did not produce a stale review');
+    } else { pass++; console.log('  ok  a src/ change after a bump DOES report the review stale'); }
+    const staleRefs = reviewedReferenceNames('fixture',
+      new Map([[realTerm, 'prose:1'], ['Streebog', 'prose:2']]), new Map(),
+      { commit: afterLockfile, removeReferences: [realTerm] }, srcMoveStale);
+    if (!staleRefs.includes(realTerm)) {
+      fail.push('a stale review silently applied a reference removal');
+    } else { pass++; console.log('  ok  a STALE review withholds its reference removal, and says so'); }
     if (movedSubstantively(tmp, afterIgnoreOnly, afterSrc) !== 'moved') fail.push('a src/ change was not called substantive');
     else { pass++; console.log('  ok  a src/ change DOES invalidate a pin'); }
 

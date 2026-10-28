@@ -229,147 +229,206 @@
       {
         "text": "patron-shield: after a query runs, the privacy analysis lists the catalog slots each server received as two different random subsets and says neither server alone saw the query; the retrieved title appears with a correctness badge driven by the page's own byte-for-byte check.",
         "exhibit": "patron-shield",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "✓ Correct — r₁ ⊕ r₂ rebuilt all 64 bytes of the stored record",
+          "steps": [
+            "#book-0",
+            "#query-btn",
+            "#toggle-pir",
+            "#toggle-naive",
+            "#toggle-pir",
+            "#toggle-naive",
+            "#toggle-pir",
+            "#toggle-naive",
+            "#toggle-pir",
+            "#toggle-naive",
+            "#toggle-pir",
+            "#toggle-naive"
+          ],
+          "note": "the completed live query's byte-for-byte correctness verdict; the harmless comparison toggles allow its paced animation to finish"
         }
       },
       {
         "text": "patron-shield: pressing 'Simulate the servers colluding' combines the two requests and names the book that was requested; the naive view shows the exact title in a plain search request, while the PIR view shows a random mask. Only the first four book cards exist before the shelf is expanded, so a worksheet step that names a card names one of those four.",
         "exhibit": "patron-shield",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "Colluding servers learn instantly that you asked for \"The Midnight Library\". Privacy is gone.",
+          "steps": [
+            "#book-0",
+            "#query-btn",
+            "#toggle-pir",
+            "#toggle-naive",
+            "#toggle-pir",
+            "#toggle-naive",
+            "#toggle-pir",
+            "#toggle-naive",
+            "#toggle-pir",
+            "#toggle-naive",
+            "#toggle-pir",
+            "#toggle-naive",
+            "#collude-btn"
+          ],
+          "note": "the live collusion verdict for the first card, after the paced query animation finishes"
         }
       },
       {
         "text": "blind-relay: the page prompts for 'a query you would rather not have attached to your name'. Have students type an invented query rather than a real one; the exhibit is a teaching demonstration, not a place for real searches. The field is still labelled as a sensitive input and still ships pre-filled with an example query, and an empty box falls back to that example, so tell students to replace it with one they invent rather than clearing it.",
         "exhibit": "blind-relay",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "Invent a query you would rather not have attached to your name (make one up; do not type a real search of your own)",
+          "steps": [],
+          "note": "the live prompt immediately above the pre-filled sensitive-input field"
         }
       },
       {
         "text": "blind-relay: stepping the exchange fills each party's card at the step where it acquires a fact; the relay's card lists the client address and a ciphertext it cannot open, and the gateway's lists the decrypted request with the relay, not the client, as its connection source.",
         "exhibit": "blind-relay",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "connection source (TCP) relay.example.net (192.0.2.44)",
+          "steps": [
+            "#run-btn",
+            "#all-btn"
+          ],
+          "note": "the live gateway fact after running the exchange and jumping to the completed party views"
         }
       },
       {
         "text": "blind-relay: turning on 'Relay and gateway compare notes' changes the privacy verdict to BROKEN while the separate cryptographic-result indicator still reports that the encryption verified.",
         "exhibit": "blind-relay",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "Every HPKE seal/open verified — the mathematics did exactly what it promises.",
+          "steps": [
+            "#run-btn",
+            "#collude-switch"
+          ],
+          "note": "the live cryptographic-result indicator that remains beside the BROKEN privacy verdict after collusion"
         }
       },
       "blind-relay: without padding, joining the two logs on size links clients to their requests; with padding on, the size join collapses into one anonymity set, but the timing join still links clients to requests.",
       {
         "text": "dp-noise: in exact mode the differencing attack recovers the target's salary exactly; in the differential-privacy mode repeated runs return different values that miss it, and the panel notes what the attack itself cost in privacy budget.",
         "exhibit": "dp-noise",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "Alice's salary recovered exactly: $142,000",
+          "steps": [
+            "#leak-run"
+          ],
+          "note": "the exact-mode live verdict produced by the default differencing attack; the adjacent mode remains the reviewed DP contrast"
         }
       },
       {
         "text": "dp-noise: the core-path navigator marks a step Established after the learner runs that step's interaction, not by scrolling past it or by a linked ε arriving from another exhibit.",
         "exhibit": "dp-noise",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "1 of 4 core ideas established",
+          "steps": [
+            "#leak-run"
+          ],
+          "note": "the live core-path counter after running the first interaction"
         }
       },
       "dp-noise: at a fixed ε, switching the dial's question from the headcount to the total payroll changes the noise by a very large factor, because one person can move a payroll total far more than a headcount.",
       {
         "text": "dp-noise: in the sensitivity exercise, the option to raise the bound so the new hire fits is refused, with the reason given on the page.",
         "exhibit": "dp-noise",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "Refused — this is not a private calibration",
+          "steps": [
+            "#bound-expand"
+          ],
+          "note": "the live refusal produced by choosing the data-dependent bound expansion"
         }
       },
       "dp-noise: the averaging attack's error shrinks as more answers are averaged until the true payroll is recovered, and the ledger refuses a query that would overdraw the budget.",
       {
-        "text": "dp-noise: noisy results differ from run to run unless Classroom mode (seeded sampling) is switched on, and seeded panels say so on screen. Current-source clarification (2026-10-11; inspected commit 1a71ad103004; source and deployed artifact inspected): Exhibit 1's DP comparison reads the selected session budget, charged ε, and remaining budget. Changing the budget, spending, or resetting the ledger updates that comparison without charging the unbudgeted illustration or resampling its displayed answers. The copy distinguishes ε = 2 per two-query run from ε = 10 across the five displayed runs. This clarification does not change the historical live-review date below. Separately dated public verification (2026-10-12 UTC; application 1a71ad103004; Linux Chromium; Actions run 38200157954): all ten original browser fixtures passed, including the budget/spend/reset/no-charge/no-resampling controls and the configured dark desktop and narrow checks. Other themes and browser engines were not tested by this verification. The manual record below retains its historical date and UNCHECKED status.",
+        "text": "dp-noise: noisy results differ from run to run unless Classroom mode (seeded sampling) is switched on, and seeded panels say so on screen. Current-source and live-page check (2026-10-21; inspected commit ea6eac3e9fc1): Exhibit 1's DP comparison reads the selected session budget, charged ε, and remaining budget. Changing the budget, spending, or resetting the ledger updates that comparison without charging the unbudgeted illustration or resampling its displayed answers. The copy distinguishes ε = 2 per two-query run from ε = 10 across the five displayed runs. Separately dated public verification (2026-10-12 UTC; application 1a71ad103004; Linux Chromium; Actions run 38200157954): all ten original browser fixtures passed, including the budget/spend/reset/no-charge/no-resampling controls and the configured dark desktop and narrow checks. Other themes and browser engines were not tested by that verification.",
         "exhibit": "dp-noise",
-        "rederived": "2026-09-22",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "Reproducible classroom run.",
+          "steps": [
+            "#seed-toggle"
+          ],
+          "note": "the live mode label after enabling the explicitly seeded classroom sampler"
         }
       },
       {
         "text": "shelf-oracle (extension): with fresh randomness the distinguisher's measured accuracy is set against a coin-flip baseline; with the reuse switch on, the same crude attack succeeds reliably. Until the chosen record is folded in, the accumulator decrypts to zero, and the two-server column's collusion button recovers the index in a single operation. Panels mount when their tab is first opened, so nothing outside The Shelf exists on the page until a student goes there; and the Break the encryption switch redraws the tile grid above it rather than gating the trials below it, which run both columns either way.",
-        "rederived": "2026-09-22",
+        "exhibit": "shelf-oracle",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "The same attack, against encryptions that stopped being random.",
+          "steps": [
+            "#tab-server",
+            "[data-role=\"run-trials\"]",
+            "#tab-server",
+            "#tab-server"
+          ],
+          "note": "the live reused-randomness verdict after the server-view panel mounts and runs both distinguisher columns"
         }
       }
     ],
     "misconceptions": [
       {
         "text": "Encrypting a search keeps it private. Blind Relay shows encryption stops a party reading a request but not knowing that someone asked; the collusion join recovers who asked what without decrypting anything.",
-        "rederived": "2026-09-22",
+        "exhibit": "blind-relay",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "Nothing below was decrypted for this view.",
+          "steps": [
+            "#run-btn",
+            "#collude-switch"
+          ],
+          "note": "the live collusion join's explicit statement that it used facts the parties already held"
         }
       },
       "Private retrieval hides that a patron searched. Patron Shield hides which record was requested, not that a query happened, who asked, when, how often, or the response size.",
       {
         "text": "If each server behaves on its own terms, the patron is protected. Both labs' privacy depends on the operators not pooling what they hold, and Blind Relay's client card states that non-collusion is an assumption the client cannot verify cryptographically.",
-        "rederived": "2026-09-22",
+        "exhibit": "blind-relay",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "non-collusion is an assumption the client cannot verify cryptographically",
+          "steps": [
+            "#run-btn"
+          ],
+          "note": "the live client-card limitation populated by a completed exchange"
         }
       },
       "Keeping the servers apart also means the right book comes back. Patron Shield separates the two: one dishonest server learns nothing alone, but a single malicious server can return a corrupted record with nothing in the protocol to flag it.",
       {
         "text": "Padding solves traffic analysis. In Blind Relay, padding defeats the size join but not the timing join; the page names batching or mixing, which OHTTP does not provide, as the remaining countermeasure.",
-        "rederived": "2026-09-22",
+        "exhibit": "blind-relay",
+        "rederived": "2026-10-21",
         "observable": {
-          "kind": "manual",
-          "why": "not yet given an automated probe: the claim is checkable, but its needle has to be taken from the page’s own wording and verified, and an unverified needle reports a false failure",
-          "cadence": "choose a needle from the live page and convert to an automated check; until then re-derive by hand each academic term",
-          "cadence_days": 120
+          "kind": "text-present",
+          "needle": "The countermeasure is batching or mixing — a cost OHTTP explicitly declines to pay",
+          "steps": [
+            "#crowd-pad",
+            "#crowd-btn",
+            "#crowd-join-time"
+          ],
+          "note": "the live timing-join conclusion after padding and rerunning the four-client crowd"
         }
       },
       "If each published answer is noisy, publishing many is harmless. DP Noise's averaging attack recovers the true payroll from many individually private answers, which is why its ledger refuses further queries once the budget is spent.",

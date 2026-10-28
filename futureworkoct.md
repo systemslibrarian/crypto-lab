@@ -77,26 +77,27 @@ The three failures have specific, non-overlapping causes:
 Anamorphic was unmerged when the earlier draft was measured. It is now on
 `main`, so its card and both pins belong in the upcoming A-D-15 Hub integration.
 
-### Open Hub pull requests — re-read 2026-10-27
+### Open Hub pull requests — cleared 2026-10-28
 
-Eight older Hub PRs were open before this replacement branch was pushed. This
-branch is intended to add a ninth and supersede #243 without closing or
-force-pushing it.
+The eight older Hub PRs and this one have all been resolved. Hub `main` is
+`d7e66a58`; only #245 remains open, and it is waiting on a person rather than
+on a rebase.
 
-| PR | State | Note |
+| PR | Outcome | Evidence |
 |---|---|---|
-| **#243** | mergeable, unstable | old handoff branch at pushed head `318e42d`; its one failed check describes that old head, not this replacement |
-| **#244** | conflicting | |
-| **#245** | mergeable, clean | still stacked on #244 rather than `main` |
-| **#246** | conflicting | |
-| **#247** | conflicting | |
-| **#248** | conflicting | |
-| **#249** | mergeable, clean | |
-| **#251** | conflicting | |
+| **#243** | closed, superseded | by this branch, as it said it would be; branch deleted |
+| **#244** | closed, superseded | regenerated a 243-card ledger; `main` carries 252 and `lab-dates`, `level-sync` and `knowledge-map-sync` all pass |
+| **#245** | **open — needs a human re-read** | 25 of its 30 differing review pins name a commit their lab has already moved past; applying them would record a review against changed source |
+| **#246** | merged `cfe48e53` | 43 manual teach claims became live-page probes; manual claims fell 45 → 1 |
+| **#247** | merged `d7e66a58` | chip-rule validation; its `options.dir` hook reconciled with the `(slug, atCommit, dirOverride)` signature `241a414` introduced |
+| **#248** | merged `bd417ea3` | Cryptanalyst split into two paths; the catalog now carries 10 learning paths |
+| **#249** | merged `13f48a88` | `Reads:`/purpose headers for the two knowledge-map tools |
+| **#251** | closed, superseded | set the roadmap to 45 planned / 1 live; `main` reads 0 planned / 48 Live |
+| **#340** | this branch | refreshed against `main` before merging |
 
-Five of the eight conflict. Refresh or supersede them, and re-read every open
-PR after any further movement on Hub main; a historical green run does not
-resolve a merge conflict.
+Every merge was rebased onto current `main` first, its generated files
+re-derived with the `tools/` sync scripts rather than carried over, and its
+gate watched to completion. No check was bypassed.
 
 ### A-D-15 — implementation and Pages delivered; reserved integration remains
 
@@ -179,9 +180,17 @@ four days old; the Fleet Console is authoritative over them and no current-state
 claim should be inferred from this section.
 
 The last snapshot had **1,204 total, 1,073 complete and 131 active** items:
-**98 queued, 27 working and 6 blocked**.
+**98 queued, 27 working and 6 blocked**. Those figures are the Fleet Console's
+and could not be re-derived on 2026-10-28; the console has no interface from a
+checkout. What *was* re-measured that day is below.
 
 - **98 queued security-evidence reviews.** Mayo Seal was next.
+- **Two of the blocked items are unblocked as of 2026-10-28.** Dependabot alerts
+  were enabled on all 24 crypto-lab repositories that had them off, Confirmer
+  Signatures and Subliminal Channels included; all 24 now answer HTTP 204. Time
+  Trust and LLL Break already answered 204 before that pass.
+- **CodeQL default setup was enabled on 243 public crypto-lab repositories**
+  that had no code-scanning analysis, one repository at a time, 0 failures.
 - **27 working items:** 26 repairs awaiting merge/deployment and Adaptor Gate's
   security item for PR **#8**.
 - **4 blocked security items:** Time Trust and LLL Break needed GitHub
@@ -245,7 +254,8 @@ roadmap integration edits out of this tracker-only PR.
   `~/repos/.fleet-maintenance-20261009/`. All nine are clean and their commits
   are ancestors of counsel `origin/main` at `2be1cd0`, but the directory was
   explicitly left untouched.
-- That maintenance directory is **49 GB** with **1,420 top-level entries** and
+- That maintenance directory was **49 GB**; its 35 GB `dots-report-resolution-20261009`
+  subtree was deleted on 2026-10-28, leaving **15 GB**. It still holds
   **472 top-level directories**. Reclaiming it is a separate, destructive
   owner decision; do not conflate it with the nine counsel registrations.
 - Three dead-path worktree registrations are prunable but were not pruned: Hub

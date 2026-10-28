@@ -477,7 +477,7 @@ function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed 
     'Bounded enumeration, trial division and historical CRT-fault prose are not attack exhibits');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e"/);
+  assert.match(opening, /data-review-commit="b97b515033e235b05f55cc461bb454cf88c003b5"/);
   assert.match(opening, /Diffie-Hellman@src\/nt\/toyDh\.ts:26/,
     'Diffie-Hellman credit must anchor at the executable toy exchange');
   assert.match(opening, /Montgomery multiplication@src\/nt\/montgomery\.ts:96/,
@@ -496,8 +496,8 @@ function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed 
   assert.ok(chipsFor(source, slug).includes('Montgomery REDC'));
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, 'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e');
-  assert.equal(sourceReview.reviewed, '2026-10-25');
+  assert.equal(sourceReview.commit, 'b97b515033e235b05f55cc461bb454cf88c003b5');
+  assert.equal(sourceReview.reviewed, '2026-10-27');
   assert.deepEqual(sourceReview.add, [
     'Diffie-Hellman@src/nt/toyDh.ts:26',
     'Montgomery multiplication@src/nt/montgomery.ts:96',
@@ -660,7 +660,7 @@ test('Clock Arithmetic scope controls reject lost, stale, moved or invented cred
       '            data-attacks="Fault injection@catalog-handoff.md:67"\n            data-standards="IETF"',
     )),
     html.replace(cardRe, card => card.replace(
-      'e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e',
+      'b97b515033e235b05f55cc461bb454cf88c003b5',
       '5bb86840fab4806e3681c1a378fd4c643831035d',
     )),
     html.replace(cardRe, card => card.replace('<span class="chip">Montgomery REDC</span>', '')),

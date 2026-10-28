@@ -246,7 +246,10 @@ test('the complete scanner records a standalone comment without treating a UI st
     'commit', '-qm', 'fixture',
   ], { cwd: dir });
 
-  const out = evidenceFor('crypto-lab-comment-fixture', { dir });
+  // main's signature is evidenceFor(slug, atCommit, dirOverride): the third
+  // argument is the fixture checkout this control needs, and the second stays
+  // null so the derivation reads the fixture's working tree.
+  const out = evidenceFor('crypto-lab-comment-fixture', null, dir);
   assert.deepEqual(out.commentOnly.filter((x) => x.name === 'P-256'),
     [{ name: 'P-256', at: 'src/main.ts:2' }],
     'the production per-line loop must see a name on a standalone block-comment line');

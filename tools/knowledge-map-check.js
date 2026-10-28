@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /*
+ * knowledge-map-check.js — Exercise the generated learner map in Chromium and verify its navigation, content, accessibility, persistence, responsive layout and failure handling.
+ *
  * Run: node tools/knowledge-map-check.js
  * Prevents: learner-map navigation showing the wrong lab, broken topic search or links, inaccessible keyboard controls and horizontal overflow
  * Reads: knowledge-map/index.html, map.js, map-model.js, guides.js, map.css, factor-playground.js,

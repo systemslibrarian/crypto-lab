@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /*
+ * knowledge-map-sync.js — Generate and verify the learner-map catalog from cards, authored concepts, learning paths and course modules.
+ *
  * Run: node tools/knowledge-map-sync.js check
  * Prevents: the learner map serving stale cards, missing authored neighbors or invented module requirements
  * Reads: index.html's cards and navigation literals, concept-coverage.md, teach/_src/modules/*.json,

@@ -2225,7 +2225,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-attribute-gate": {
-      "commit": "4c0d031835f6c39844a00d80f55020de73f56f44",
+      "commit": "43d1c3ca0fa272b8bdb9e13da209a818911db421",
       "reviewed": "2026-10-27",
       "reviewScope": "complete",
       "exhibits": [
@@ -3100,7 +3100,7 @@
       ]
     },
     "crypto-lab-biham-lens": {
-      "commit": "2592b2d94e17a6359262b1947d52f6069ca9b3f6",
+      "commit": "14edadfdb75107d6a29e9aa31eb76408fef6ef96",
       "reviewed": "2026-10-27",
       "exhibits": [
         {
@@ -11620,7 +11620,7 @@
       ]
     },
     "crypto-lab-envelope-kms": {
-      "commit": "2810fceac30c775940de851aff0e1de2ed038360",
+      "commit": "004f9f3b0c5a904b6c84e48ca1d232916186bc44",
       "reviewed": "2026-10-27",
       "exhibits": [
         {
@@ -13400,7 +13400,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-frost-threshold": {
-      "commit": "a9beb37a9ce72b0b06ff725c840c9a8ffe952aac",
+      "commit": "7b443db4395705684be9f315d96f9c863dca8c54",
       "reviewed": "2026-10-23",
       "reviewScope": "complete",
       "exhibits": [
@@ -22087,7 +22087,7 @@
       ]
     },
     "crypto-lab-lfsr-forge": {
-      "commit": "9f9bc3f49a6eddc33d7ad4d3bf59a3385c597589",
+      "commit": "ded9fe27c2e5e70b459ec0e1ed7e364be6e680da",
       "reviewed": "2026-10-27",
       "exhibits": [
         {
@@ -22316,7 +22316,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-lll-break": {
-      "commit": "df6ab9b713516cf4729dfc252db5cabde91ca996",
+      "commit": "a0157f2313290e0b652429680cbf0b55dc0e1fd4",
       "reviewed": "2026-10-27",
       "reviewScope": "complete",
       "exhibits": [
@@ -23543,7 +23543,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-matsui-line": {
-      "commit": "11381feca9b68717dbef169d5dae4d157eb47093",
+      "commit": "fb59aa5c0e0578f6df79b64b28255db29ae17c36",
       "reviewed": "2026-10-27",
       "exhibits": [
         {
@@ -24083,7 +24083,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-mceliece-gate": {
-      "commit": "3f4a0d6ad7697a9027f3c703dbcc935a08dd1e25",
+      "commit": "455c19a375a6f1570fe02f26123d42a58180492b",
       "reviewed": "2026-10-22",
       "exhibits": [
         {
@@ -27308,7 +27308,7 @@
       ]
     },
     "crypto-lab-oram-vault": {
-      "commit": "7a882b09e7a06e2ede8774d2abf92fa27856f01c",
+      "commit": "ea127659ac6b340c7b22984041a8a2a3ad1cd8a0",
       "reviewed": "2026-10-27",
       "exhibits": [
         {
@@ -28104,7 +28104,7 @@
       ]
     },
     "crypto-lab-otp-vault": {
-      "commit": "04b056901a337a23cafc9340e8e8bf36b01fc06b",
+      "commit": "791eecd3187612d2600373eba5ee42d0a7e5dcf7",
       "reviewed": "2026-10-22",
       "exhibits": [
         {
@@ -30303,7 +30303,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-pq-families": {
-      "commit": "6f52ee3228a7df0cf8c0bdc88dd415bbf557bd5f",
+      "commit": "5d07cfc5f65315a2b764feb9ae94a737583b0b66",
       "reviewed": "2026-10-25",
       "exhibits": [
         {
@@ -35732,7 +35732,7 @@
       ]
     },
     "crypto-lab-shamir-vs-frost": {
-      "commit": "ccc55f6488b199d64ba9ddcbe9f2f51b5b9a8239",
+      "commit": "df7522815b0fad17216c7ba131f1bfa09774aa1e",
       "reviewed": "2026-10-23",
       "exhibits": [
         {
@@ -42439,7 +42439,7 @@
       ]
     },
     "crypto-lab-vigenere-break": {
-      "commit": "b3c2f04f4d575a734a065d8fc96dcf3ec431264b",
+      "commit": "4ee5afc1d73112fb352d3191157985c1e511ae3b",
       "reviewed": "2026-10-22",
       "exhibits": [
         {

@@ -321,13 +321,13 @@
     "note": "Re-read the current README, toy HiAE core, AESL implementation, oracle attack and UI after the research-cost clarification. The browser still executes a deliberately reduced-seed, structurally toy HiAE model with real AESL and a computed oracle-driven recovery; it does not implement or reproduce either cited full-scale attack. Preserve Toy HiAE as the bounded implementation credit, not the production cipher. The new nonce-misuse phrase only summarizes a cited paper result that the lab explicitly treats separately; this demo neither reuses a nonce nor runs that attack, so it is not an attack credit."
   },
   "crypto-lab-point-ledger": {
-    "commit": "b7bf1099557c0323e9d84f408c34efb56458c3d8",
-    "reviewed": "2026-10-21",
+    "commit": "521530af6672f0f9110281158d473ff54253b2ce",
+    "reviewed": "2026-10-28",
     "remove": [
       "ECDSA",
       "SHA-3"
     ],
-    "note": "Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review. Inspected current dialog/fuzz computations and source-scope text; the October 21 change adds README guidance and limits, with no executable changes. Resource estimates remain cited data and experiments remain classical; no quantum circuit, real-key recovery, ZK proof or benchmark submission is executed. Preserve the ECDSA/SHA-3 removals and existing SHAKE/SHA-256 anchors."
+    "note": "Re-read the prior-pin inventory: only AGENTS and package metadata changed before this review. Inspected current dialog/fuzz computations and source-scope text; the October 21 change adds README guidance and limits, with no executable changes. Resource estimates remain cited data and experiments remain classical; no quantum circuit, real-key recovery, ZK proof or benchmark submission is executed. Preserve the ECDSA/SHA-3 removals and existing SHAKE/SHA-256 anchors. Re-read at this pin. The only source change is the brand link dropping its redundant aria-label in src/main.tsx so the accessible name comes from the visible text. No computation changed, so the ECDSA and SHA-3 removals stand."
   },
   "crypto-lab-proof-tally": {
     "commit": "6f38a066d304823fc4724a2ab2fcff1a573131fe",
@@ -353,8 +353,8 @@
     "note": "Bounded current-source review of the Brute force credit only. README.md:223 (formerly :210 before a thirteen-line documentation insertion) describes a Jacobi unit-test reference oracle; src/factor/bigint.test.ts:76-85 enumerates quadratic residues for five small primes to check jacobi. This is test support, not an attack exhibit, so exclude that README-derived Brute force credit. The actual trial-division implementation and its registry/worker wiring were inspected and remain unchanged. Preserve all other derived classifications and source limitations; this clarification does not claim a fresh live exercise, full cryptographic review or constant-time assurance."
   },
   "crypto-lab-quantum-vault-kpqc": {
-    "commit": "507ae5ac644072152d76610fe1cb8c1f3ae8f05a",
-    "reviewed": "2026-10-12",
+    "commit": "fc7041b8b7c6541cc2d4c03ade7a2718884c7318",
+    "reviewed": "2026-10-28",
     "add": [
       "SMAUG-T@wasm/src/smaug_exports.c:2",
       "HAETAE@wasm/src/haetae_exports.c:2",
@@ -365,7 +365,7 @@
       "C/C++"
     ],
     "implementation": "Rust/C wrappers and WASM",
-    "note": "Read current Rust HKDF/encryption, C SMAUG-T/HAETAE wrappers, browser sealing/reconstruction/signature flow, README limits and PR16/17 trust controls. Algorithm identity is supported by the actual encapsulate/sign callers; normal threshold reconstruction is not an adversarial key-recovery exhibit, and signature/integrity rejection does not implement the adaptive chosen-ciphertext model discussed in SECURITY.md. Excluded attack names remain risk/threat, historical audit, negated defence or comparison references. Re-read all eleven PR18 files at 81b55d486bde75b340516cd0462ab5a3ad03e755, including complete source/wrapper/recipe inventories, bounded isolated compiler verification, 28 positive/negative controls, source-gated Rust/web/Pages workflow, corrected deployment zeroization notes and real-panel focus regression. Authenticated archived SMAUG 2c039df2 and HAETAE 743c31df source, immutable historical wrappers and digest-pinned actual Emscripten 5.0.3/285c424 cleanly reproduce BOTH active complete JS/WASM pairs without replacing expected bytes. All 33 C objects are freshly compiled; source and 1,913 compiler inputs remain unchanged. This establishes a reproducing source recipe, not the original publisher compiler or constant-time behavior. Historical newer-SMAUG missing-input and HAETAE 6.0.10/earlier 5.0.3 mismatches remain preserved. Current development HAETAE secure-zeroize wrapper is absent from the active restored O2 artifact; current TypeScript frees without claiming erasure. The third tracked WASM is a duplicate distribution artifact; raw WASM/Python static coverage limits remain explicit. Build/verification Python utilities are supporting tools, not browser crypto. Current panel preserves user focus and disconnected fields; real baseline control failed and fixed positive/negative browser controls passed. Application tests, provider captures and deployment remain separate from source correspondence. Follow-up dependency-change review examined the complete 81b55d486bde75b340516cd0462ab5a3ad03e755..507ae5ac644072152d76610fe1cb8c1f3ae8f05a diff: only AGENTS.md plus web-demo README, manifest, lockfile and the TypeScript tooling guard changed; 150 of 155 current tracked paths are unchanged. The reviewed Rust HKDF/encryption, C SMAUG-T/HAETAE wrappers and browser AES/keywrap/pipeline anchors retain identical Git blobs. The manifest migration deliberately separates the native TypeScript 7 compiler from the TypeScript 6 JavaScript API used by lint tooling, with exact identity and strict positive/negative compiler controls. Exact-head PR checks, post-merge default-branch workflows and the 16-file Pages artifact passed at 507ae5ac644072152d76610fe1cb8c1f3ae8f05a; this tooling-only follow-up does not alter the prior algorithm or attack-credit conclusions.",
+    "note": "Read current Rust HKDF/encryption, C SMAUG-T/HAETAE wrappers, browser sealing/reconstruction/signature flow, README limits and PR16/17 trust controls. Algorithm identity is supported by the actual encapsulate/sign callers; normal threshold reconstruction is not an adversarial key-recovery exhibit, and signature/integrity rejection does not implement the adaptive chosen-ciphertext model discussed in SECURITY.md. Excluded attack names remain risk/threat, historical audit, negated defence or comparison references. Re-read all eleven PR18 files at 81b55d486bde75b340516cd0462ab5a3ad03e755, including complete source/wrapper/recipe inventories, bounded isolated compiler verification, 28 positive/negative controls, source-gated Rust/web/Pages workflow, corrected deployment zeroization notes and real-panel focus regression. Authenticated archived SMAUG 2c039df2 and HAETAE 743c31df source, immutable historical wrappers and digest-pinned actual Emscripten 5.0.3/285c424 cleanly reproduce BOTH active complete JS/WASM pairs without replacing expected bytes. All 33 C objects are freshly compiled; source and 1,913 compiler inputs remain unchanged. This establishes a reproducing source recipe, not the original publisher compiler or constant-time behavior. Historical newer-SMAUG missing-input and HAETAE 6.0.10/earlier 5.0.3 mismatches remain preserved. Current development HAETAE secure-zeroize wrapper is absent from the active restored O2 artifact; current TypeScript frees without claiming erasure. The third tracked WASM is a duplicate distribution artifact; raw WASM/Python static coverage limits remain explicit. Build/verification Python utilities are supporting tools, not browser crypto. Current panel preserves user focus and disconnected fields; real baseline control failed and fixed positive/negative browser controls passed. Application tests, provider captures and deployment remain separate from source correspondence. Follow-up dependency-change review examined the complete 81b55d486bde75b340516cd0462ab5a3ad03e755..507ae5ac644072152d76610fe1cb8c1f3ae8f05a diff: only AGENTS.md plus web-demo README, manifest, lockfile and the TypeScript tooling guard changed; 150 of 155 current tracked paths are unchanged. The reviewed Rust HKDF/encryption, C SMAUG-T/HAETAE wrappers and browser AES/keywrap/pipeline anchors retain identical Git blobs. The manifest migration deliberately separates the native TypeScript 7 compiler from the TypeScript 6 JavaScript API used by lint tooling, with exact identity and strict positive/negative compiler controls. Exact-head PR checks, post-merge default-branch workflows and the 16-file Pages artifact passed at 507ae5ac644072152d76610fe1cb8c1f3ae8f05a; this tooling-only follow-up does not alter the prior algorithm or attack-credit conclusions. Re-read at this pin after PR21 restored the security evidence and fail-closed boundaries. Counted the credited algorithms across crates/ and wasm/ at both commits: SMAUG 397 to 394, HAETAE 362 to 360, HKDF 22 to 22. No algorithm enters or leaves, so all three anchors and the exclusions stand.",
     "remove": [
       "Nonce reuse",
       "Key recovery",
@@ -424,8 +424,8 @@
     ]
   },
   "crypto-lab-silent-tally": {
-    "commit": "390d3dc54422f5abdfb194131049410bc6c960c9",
-    "reviewed": "2026-10-09",
+    "commit": "9155d660eb2fd97a8ddfd8b6ddfc2d2305141485",
+    "reviewed": "2026-10-28",
     "add": [
       "Shamir secret sharing@src/lib.rs:123"
     ],
@@ -433,7 +433,7 @@
       "Rust"
     ],
     "implementation": "Rust/WASM",
-    "note": "Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses Re-read current Rust field/sampler/sharing/reconstruction and README at this exact SHA after Vitest/publisher integrations; implementation unchanged from prior reviewed pin. Current18Rust/18TypeScript/12browser gates and published artifact checks retained; no compiler reproduction claim."
+    "note": "Rust field arithmetic, unbiased 61-bit rejection sampling, Shamir sharing and Lagrange reconstruction re-reviewed after PR26; single-browser semi-honest demo without secure channels, authentication or malicious-party defenses Re-read current Rust field/sampler/sharing/reconstruction and README at this exact SHA after Vitest/publisher integrations; implementation unchanged from prior reviewed pin. Current18Rust/18TypeScript/12browser gates and published artifact checks retained; no compiler reproduction claim. Re-read at this pin after the privacy/publishing hardening and the accessibility-drive alignment. src/lib.rs gained input canonicalisation and a duplicate-abscissa check in Lagrange interpolation; the Shamir section, generate_shares and lagrange_interpolate are hardened, not changed in kind, so the Shamir credit and the Rust coverage stand."
   },
   "crypto-lab-snark-arena": {
     "commit": "025f878b22b2fa3df945359548c2422d9548c1f4",
@@ -455,13 +455,13 @@
     "note": "Models decode-one-of-many work factors; no code-based KEM or decoder implemented"
   },
   "crypto-lab-syndrome-hints": {
-    "commit": "ad09e97936353a54a7b57b5a49d8c17a12f463b3",
-    "reviewed": "2026-10-22",
+    "commit": "46f9dc0ba2c0f9732e99d84ee1558cb22bfdf6e8",
+    "reviewed": "2026-10-28",
     "add": [
       "Information-set decoding@src/sdp/isd.ts:4",
       "Stern decoding@src/sdp/stern.ts:2"
     ],
-    "note": "Runs Prange-style and Stern information-set decoding against toy instances. Reviewed the 22 October HQC-1 comparison diff. The cited 2026 team specification gives secret-vector weight omega = 67, while McEliece t = 64 is an injected-error weight; feeding these distinct quantities into the toy hint rule is explicitly not a real-scheme security ranking. Prange and Stern still execute only on toy instances, and their anchored code is unchanged."
+    "note": "Runs Prange-style and Stern information-set decoding against toy instances. Reviewed the 22 October HQC-1 comparison diff. The cited 2026 team specification gives secret-vector weight omega = 67, while McEliece t = 64 is an injected-error weight; feeding these distinct quantities into the toy hint rule is explicitly not a real-scheme security ranking. Prange and Stern still execute only on toy instances, and their anchored code is unchanged. Re-read at this pin after the publish-provenance restoration. Nothing under src/ changed, so the Prange and Stern anchors stand."
   },
   "crypto-lab-tc26-pair": {
     "commit": "fbea18b4ffa52256c686fb14502b5d51dd9981cb",
@@ -628,8 +628,8 @@
     "note": "Read RC4 KSA/PRGA, WEP protected-body/CRC-32 and PTW engines, public attacker contracts, receiver/secret validation, README and tests at this SHA. Generated traffic only, not complete 802.11 frames or a real-network capture tool. The RC4 anchor points to the keystream engine rather than a UI type. Chosen-ciphertext attack was picked from a build brief and Padding oracle from a sibling link, neither a demonstrated oracle attack here; remove those credits. CRC-32 ciphertext forgery and bounded probabilistic PTW recovery are actual computations; exact key equality is checked separately. 149 unit, 2 accessibility and 49 claims/interaction tests passed."
   },
   "crypto-lab-rsa-small-roots": {
-    "commit": "763afac1320d2778d3b95e028c22d427e9b8d223",
-    "reviewed": "2026-10-26",
+    "commit": "48ae1010e430e8a8a6b2182b801e482f83bb319b",
+    "reviewed": "2026-10-28",
     "add": [
       "RSA@src/simulator/oracle.ts:23"
     ],
@@ -637,7 +637,7 @@
       "RSA-OAEP",
       "RSA-PSS"
     ],
-    "note": "Re-read the complete committed README and source through this exact main pin, including both existing small-root scenarios and the new Wiener continued-fraction lesson. The public attacker enumerates convergents of e/N, derives candidate phi values, requires an integral nonnegative square discriminant and exact factors of N, then independently checks ed = 1 mod phi(N) and a fresh RSA round trip before reporting recovery. The sufficient teaching boundary is tested as the exact integer inequality 81d^4 < N; an outside-bound success is not relabeled as guaranteed, and complete no-solution is kept distinct from resource exhaustion. The existing textbook exponent-3 and larger-prime high-bit leakage paths retain their exact lattice, finite-bound, Sturm-search, worker-allowlist and public-verification controls. The lab implements textbook RSA and Wiener recovery, not RSA-OAEP, RSA-PSS or the mentioned-but-unimplemented Boneh-Durfee extension."
+    "note": "Re-read the complete committed README and source through this exact main pin, including both existing small-root scenarios and the new Wiener continued-fraction lesson. The public attacker enumerates convergents of e/N, derives candidate phi values, requires an integral nonnegative square discriminant and exact factors of N, then independently checks ed = 1 mod phi(N) and a fresh RSA round trip before reporting recovery. The sufficient teaching boundary is tested as the exact integer inequality 81d^4 < N; an outside-bound success is not relabeled as guaranteed, and complete no-solution is kept distinct from resource exhaustion. The existing textbook exponent-3 and larger-prime high-bit leakage paths retain their exact lattice, finite-bound, Sturm-search, worker-allowlist and public-verification controls. The lab implements textbook RSA and Wiener recovery, not RSA-OAEP, RSA-PSS or the mentioned-but-unimplemented Boneh-Durfee extension. Re-read at this pin after the evidence-count refresh and Pages hardening. Nothing under src/ changed, so the RSA credit and the RSA-OAEP and RSA-PSS removals stand."
   },
   "crypto-lab-bitcoin-script": {
     "commit": "6c2dc4b5873d933bf124e71cc849927bebf9105e",
@@ -705,8 +705,8 @@
     "note": "Read current LWE search-space helper, FO explanation and assurance/power-research panel. Search-space count is not enumeration; FO prevention and external side-channel research are references/limitations, not browser attacks. Preserve actual LWE/ML-KEM/AES and tests."
   },
   "crypto-lab-dilithium-seal": {
-    "commit": "f5de094309afa62e653c875bb24a3994f50b43d5",
-    "reviewed": "2026-10-18",
+    "commit": "d74006bbf5bc3b0dcb8820bd13ff6228da64782c",
+    "reviewed": "2026-10-28",
     "remove": [
       "Discrete log",
       "Factoring",
@@ -714,7 +714,7 @@
       "Key recovery",
       "Side-channel (unspecified)"
     ],
-    "note": "Re-read current ML-DSA/SHA-256 sealing, unsigned metadata disclosures, README and comparison/timing panels against verified PR40. Preserve five removals: risk/negated/comparison assertions are not executed attacks. Timing variability remains an actual measurement with no key-recovery/hardware-trace or constant-time claim. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus."
+    "note": "Re-read current ML-DSA/SHA-256 sealing, unsigned metadata disclosures, README and comparison/timing panels against verified PR40. Preserve five removals: risk/negated/comparison assertions are not executed attacks. Timing variability remains an actual measurement with no key-recovery/hardware-trace or constant-time claim. Reviewed the 18 October learning-material update against ePrint 2026/607 revision of 16 October: MSIS figures are model-dependent estimates, not an executed production-key recovery or a FIPS category change. The cryptographic implementation is unchanged; preserve existing classifications and map existing evidence anchors past the inserted text. This focused update does not re-audit the prior comparison corpus. Re-read at this pin. The only source change is the NIST IR 8547 citation moving from the November 2024 initial public draft to the 27 October 2026 final report, with the locator and transition note updated to match. Counted each of the five removed attack names across src/ at both commits and every count is identical, so the removals stand."
   },
   "crypto-lab-zk-arena": {
     "commit": "96f5ec88184aef25f7ed141e4dc35ccd83043b64",
@@ -1148,13 +1148,13 @@
     "note": "Read the complete merged README, source, tests, learner interface and visible limitations at this exact main commit. The existing exact BigInt lessons remain: signed modular wraparound, Euclidean/Bézout inverses, Euler phi by enumeration and factorization, multiplicative orders, generator and subgroup enumeration with toy finite-field Diffie–Hellman, and generalized CRT. The seventh exhibit implements the power-of-two Montgomery specialization for odd N at most 10^12 with a learner-supplied power-of-two R greater than N. Setup derives N′ = −N^-1 mod R and R² mod N; encoding executes REDC(x·R²), and multiplication retains T, its low radix word, m, mN, the divisible sum, the pre-subtraction candidate, the optional final subtraction and the reduced output. The N=9, R=16 fixture exposes candidate 9 before subtraction to 0. A product-square-times-a chain stays encoded until one final REDC and is checked against the ordinary canonical remainder. The fixed comparison executes the same 4,096-operation alternating multiply/square schedule on both routes and reports setup, ordinary loop, Montgomery loop and final decoding separately. The encoded loop performs this implementation’s validation and trace-object work on every operation, so the single Worker timings are not a benchmark, a speedup claim or evidence of constant-time behavior; JavaScript BigInt is not constant-time. Negative and oversized operands are normalized, while even or over-budget moduli and radices that are too small or not powers of two are refused. Montgomery multiplication is distinct from the Montgomery ladder. The bounded trial division and toy shared-secret enumeration support the arithmetic lesson rather than executing factoring, discrete-log, brute-force or man-in-the-middle attacks; software CRT faults and adjacent algorithms occur only in historical handoff prose or related links. Re-pinned 2026-10-27 at b97b515033e2 after reading the one commit since e6e1e39b124c (PR #4): it changes one line of index.html, the pinned dark-theme marker, and nothing under src/, so the review above still describes the current source."
   },
   "crypto-lab-harvest-timeline": {
-    "commit": "ea407d665fd8a57676581de216cfc09afddf393a",
-    "reviewed": "2026-10-22",
+    "commit": "18fdd48211869ef4ca60d4c8a613ce14f4ce7533",
+    "reviewed": "2026-10-28",
     "remove": [
       "Grover's algorithm",
       "Discrete log"
     ],
-    "note": "Reviewed current confidentiality/HNDL pickers, risk engine, tiny RSA factoring engine, README and tests through this pin. Retrospective decryption requires vulnerable key establishment or encryption; signature-only migration addresses future authenticity, not past ciphertext. The Grover exponent reduction is theoretical and the chart 0.5 modifier is explicitly hypothetical, not a measured decryption probability or a Grover implementation. NIST guidance does not deem AES-128 practically broken by Grover; the lab no longer assigns it an actionable modeled decryption verdict. factorPollardRho at src/rekey.ts:140 factors an integer modulus for the bounded RSA example, not an elliptic-curve discrete log. Preserve toy RSA/AES credits and factoring attack; exclude Grover implementation and discrete-log attack credits."
+    "note": "Reviewed current confidentiality/HNDL pickers, risk engine, tiny RSA factoring engine, README and tests through this pin. Retrospective decryption requires vulnerable key establishment or encryption; signature-only migration addresses future authenticity, not past ciphertext. The Grover exponent reduction is theoretical and the chart 0.5 modifier is explicitly hypothetical, not a measured decryption probability or a Grover implementation. NIST guidance does not deem AES-128 practically broken by Grover; the lab no longer assigns it an actionable modeled decryption verdict. factorPollardRho at src/rekey.ts:140 factors an integer modulus for the bounded RSA example, not an elliptic-curve discrete log. Preserve toy RSA/AES credits and factoring attack; exclude Grover implementation and discrete-log attack credits. Re-read at this pin. The only source change is the NIST IR 8547 citation moving from the initial public draft to the 27 October 2026 final report. No engine, picker or estimate changed, so the Grover and discrete-log exclusions stand."
   },
   "crypto-lab-mceliece-gate": {
     "commit": "3f4a0d6ad7697a9027f3c703dbcc935a08dd1e25",

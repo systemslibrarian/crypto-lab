@@ -7638,9 +7638,30 @@
       ]
     },
     "crypto-lab-credential-veil": {
-      "commit": "f06bbcaefb287e438d9d626581f417f0d0fc81f0",
-      "reviewed": "2026-10-22",
+      "commit": "389e0eaa6c6f80dd07f1491fca366db965e59104",
+      "reviewed": "2026-10-30",
       "exhibits": [
+        {
+          "id": "bbs-draft-update",
+          "title": "Draft-14 Baseline and Empty-Message Correction",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "section": "Updated 30 October 2026:",
+          "action": "Read the numbered draft and publisher-vector baseline note and its zero-message correction.",
+          "outcome": "Distinguish an empty signed-message list from an empty field value or revealing no fields, while retaining issuer-key and header binding.",
+          "concepts": [
+            "BBS draft-14",
+            "zero-message signatures",
+            "domain binding",
+            "test-vector provenance"
+          ],
+          "limits": "This source note is explanatory; the interactive credential still has six fields. Draft checks do not validate the custom age proof, browser side channels or final-standard status.",
+          "evidence": [
+            "index.html:217",
+            "index.html:218",
+            "src/bbs/bbs.ts:134"
+          ]
+        },
         {
           "id": "baseline",
           "title": "All-or-Nothing Credential Baseline",
@@ -7653,8 +7674,8 @@
             "verifier visibility"
           ],
           "evidence": [
-            "index.html:231",
-            "index.html:236",
+            "index.html:232",
+            "index.html:237",
             "src/main.ts:197",
             "src/baseline/ed25519.ts:1"
           ],
@@ -7674,8 +7695,8 @@
             "proof randomization"
           ],
           "evidence": [
-            "index.html:241",
-            "index.html:251",
+            "index.html:242",
+            "index.html:252",
             "src/main.ts:310",
             "src/main.ts:326",
             "src/bbs/bbs.ts:1"
@@ -7695,9 +7716,9 @@
             "BBS verification"
           ],
           "evidence": [
-            "index.html:257",
-            "index.html:263",
+            "index.html:258",
             "index.html:264",
+            "index.html:265",
             "src/main.ts:388",
             "src/main.ts:395"
           ],
@@ -7717,9 +7738,9 @@
             "metadata correlation"
           ],
           "evidence": [
-            "index.html:271",
-            "index.html:282",
+            "index.html:272",
             "index.html:283",
+            "index.html:284",
             "src/main.ts:459",
             "src/main.ts:526"
           ],
@@ -7740,10 +7761,10 @@
             "BBS proof binding"
           ],
           "evidence": [
-            "index.html:295",
-            "index.html:303",
+            "index.html:296",
             "index.html:304",
             "index.html:305",
+            "index.html:306",
             "src/main.ts:606",
             "src/main.ts:676",
             "src/predicate/ageProof.ts:1"
@@ -7765,10 +7786,10 @@
             "accumulators"
           ],
           "evidence": [
-            "index.html:312",
-            "index.html:319",
+            "index.html:313",
             "index.html:320",
-            "index.html:330",
+            "index.html:321",
+            "index.html:331",
             "src/main.ts:785",
             "src/main.ts:804"
           ],
@@ -7789,10 +7810,10 @@
             "BBS versus BBS+"
           ],
           "evidence": [
-            "index.html:378",
-            "index.html:382",
-            "index.html:389",
-            "index.html:406"
+            "index.html:379",
+            "index.html:383",
+            "index.html:390",
+            "index.html:407"
           ],
           "section": "What hides what, from whom",
           "execution": "conceptual"

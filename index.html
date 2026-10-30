@@ -16588,14 +16588,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/" data-added="2026-07" data-added-on="2026-07-16" data-updated="2026-10"
+          <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/"
             data-implements="BBS signatures@src/bbs/bbs.ts:151 | BLS12-381@src/bbs/ciphersuite.ts:152 | Ed25519@src/baseline/ed25519.ts:29 | Hash-to-curve@src/bbs/generators.ts:18 | Pairing@src/bbs/ciphersuite.ts:152 | Pedersen commitment@src/predicate/ageProof.ts:127 | SHA-256@src/bbs/ciphersuite.ts:91"
             data-comment-only="Bulletproofs@src/predicate/ageProof.ts:20 | EC point arithmetic@src/bbs/ciphersuite.ts:120 | Fiat-Shamir@src/predicate/ageProof.ts:6 | Schnorr@src/predicate/ageProof.ts:9 | Sigma protocol@src/predicate/ageProof.ts:11"
             data-references="BBS+ | Bulletproofs | EC point arithmetic | Private information retrieval | RSA | SHAKE | Schnorr | Schnorr identification | Shamir secret sharing | Sigma protocol"
             data-standards="IETF | NIST"
             data-implementation="@noble"
-            data-review-commit="963e6f6635b2bb1c4915bff53fa4ed296872aa82"
-            data-review-note="Reviewed the draft-13 baseline upgrade at this commit: numbered 13 October 2026 reference and publisher snapshot 104bdcd85869ac05d1c621e064222441404e019b. All 30 SHA-256 publisher fixture files are unchanged; remote reference/artifact hashes, 103 unit tests and production build passed. The core now rejects zero signed messages under section 4.2.3 while preserving empty-valued messages and no/some/all disclosure. Separate helper arguments and point sums implement the reviewed equations; the review documents this layout difference from draft-13. BBS proof-value unlinkability covers issuer/verifier coalitions, but identifying disclosures and context remain correlatable. Preserve the earlier source classification: implements CFRG draft BBS (A,e), not BBS+ or BLS signing; discrete-log assumptions and lack of side-channel review are risk prose, not executed attacks. The q-signature key-recovery paper is research context, not an attack this lab executes. Draft vectors do not validate the custom DOB/age-proof composition, production privacy, constant-time behavior or final-RFC status. Original source revision remains unknown in the historical note."
+            data-review-commit="389e0eaa6c6f80dd07f1491fca366db965e59104"
+            data-review-note="Reviewed the draft-14 baseline upgrade: numbered 29 October 2026 reference and publisher snapshot 434522cf17ad970707080a62ce5ac19bcdb82acd. All 30 SHA-256 publisher fixture files are unchanged; remote reference/artifact hashes, 105 unit tests and production build passed. Draft-14 removes the incorrect section 4.2.3 rejection of zero signed messages. The core accepts an empty signed-message list while binding the issuer key and header; this differs from an empty-valued message or no disclosures from a populated credential. Boundary tests cover acceptance, tampering and malformed inputs. Existing index bounds, randomness count and three-point proof parsing already match draft-14 corrections. Implements CFRG draft BBS (A,e), not BBS+ or BLS signing. Discrete-log assumptions, side-channel limitations and the q-signature key-recovery paper are context, not executed attacks. Proof-value unlinkability covers issuer/verifier coalitions; identifying disclosures and context remain correlatable. Draft vectors do not validate the custom DOB/age-proof composition, production privacy, constant-time behavior or final-RFC status. Earlier baseline reviews and unknown original source provenance remain documented."
+            data-added="2026-07" data-added-on="2026-07-16" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -16669,7 +16670,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Anonymous Credentials</div>
             <div class="project-title">Credential Veil</div>
-            <div class="project-copy">BBS selective disclosure over BLS12-381, checked against draft-13 vectors. Reveal chosen fields, compare presentation linkability, and explore a custom over-18 proof.</div>
+            <div class="project-copy">BBS selective disclosure over BLS12-381, checked against draft-14 vectors. Reveal chosen fields, compare presentation linkability, and explore a custom over-18 proof.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">BBS</span>

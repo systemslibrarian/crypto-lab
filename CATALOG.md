@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1815 sections in 250 of 252 labs**
+The exhibit map currently records **1816 sections in 250 of 252 labs**
 (246 complete lab inventories, 4 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -4640,60 +4640,67 @@ The same bits moved eleven ways — DNS labels, ICMP echoes, inter-arrival gaps,
 
 [`crypto-lab-credential-veil`](https://systemslibrarian.github.io/crypto-lab-credential-veil/) · Anonymous Credentials · SIGNATURES, PRIVACY, ZERO-KNOWLEDGE
 
-BBS selective disclosure over BLS12-381, checked against draft-13 vectors. Reveal chosen fields, compare presentation linkability, and explore a custom over-18 proof.
+BBS selective disclosure over BLS12-381, checked against draft-14 vectors. Reveal chosen fields, compare presentation linkability, and explore a custom over-18 proof.
 
 - **Card topics (discovery only):** BBS, Selective Disclosure, Unlinkability, Range Proof — labels do not establish what any section runs.
 - **Implements:** BBS signatures `src/bbs/bbs.ts:151`, BLS12-381 `src/bbs/ciphersuite.ts:152`, Ed25519 `src/baseline/ed25519.ts:29`, Hash-to-curve `src/bbs/generators.ts:18`, Pairing `src/bbs/ciphersuite.ts:152`, Pedersen commitment `src/predicate/ageProof.ts:127`, SHA-256 `src/bbs/ciphersuite.ts:91`
-- **Source review:** [963e6f6635b2](https://github.com/systemslibrarian/crypto-lab-credential-veil/commit/963e6f6635b2bb1c4915bff53fa4ed296872aa82) — Reviewed the draft-13 baseline upgrade at this commit: numbered 13 October 2026 reference and publisher snapshot 104bdcd85869ac05d1c621e064222441404e019b. All 30 SHA-256 publisher fixture files are unchanged; remote reference/artifact hashes, 103 unit tests and production build passed. The core now rejects zero signed messages under section 4.2.3 while preserving empty-valued messages and no/some/all disclosure. Separate helper arguments and point sums implement the reviewed equations; the review documents this layout difference from draft-13. BBS proof-value unlinkability covers issuer/verifier coalitions, but identifying disclosures and context remain correlatable. Preserve the earlier source classification: implements CFRG draft BBS (A,e), not BBS+ or BLS signing; discrete-log assumptions and lack of side-channel review are risk prose, not executed attacks. The q-signature key-recovery paper is research context, not an attack this lab executes. Draft vectors do not validate the custom DOB/age-proof composition, production privacy, constant-time behavior or final-RFC status. Original source revision remains unknown in the historical note.
+- **Source review:** [389e0eaa6c6f](https://github.com/systemslibrarian/crypto-lab-credential-veil/commit/389e0eaa6c6f80dd07f1491fca366db965e59104) — Reviewed the draft-14 baseline upgrade: numbered 29 October 2026 reference and publisher snapshot 434522cf17ad970707080a62ce5ac19bcdb82acd. All 30 SHA-256 publisher fixture files are unchanged; remote reference/artifact hashes, 105 unit tests and production build passed. Draft-14 removes the incorrect section 4.2.3 rejection of zero signed messages. The core accepts an empty signed-message list while binding the issuer key and header; this differs from an empty-valued message or no disclosures from a populated credential. Boundary tests cover acceptance, tampering and malformed inputs. Existing index bounds, randomness count and three-point proof parsing already match draft-14 corrections. Implements CFRG draft BBS (A,e), not BBS+ or BLS signing. Discrete-log assumptions, side-channel limitations and the q-signature key-recovery paper are context, not executed attacks. Proof-value unlinkability covers issuer/verifier coalitions; identifying disclosures and context remain correlatable. Draft vectors do not validate the custom DOB/age-proof composition, production privacy, constant-time behavior or final-RFC status. Earlier baseline reviews and unknown original source provenance remain documented.
 - **References:** BBS+, Bulletproofs, EC point arithmetic, Private information retrieval, RSA, SHAKE, Schnorr, Schnorr identification, Shamir secret sharing, Sigma protocol
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f06bbcaefb28](https://github.com/systemslibrarian/crypto-lab-credential-veil/commit/f06bbcaefb287e438d9d626581f417f0d0fc81f0) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [389e0eaa6c6f](https://github.com/systemslibrarian/crypto-lab-credential-veil/commit/389e0eaa6c6f80dd07f1491fca366db965e59104) reviewed 2026-10-30; 8 mapped sections.
   - **Age Predicate without Birth Date** (`age`; interactive; real-crypto)
     - **Visible section:** 4 · Predicate proof: "over 18" without a birth date
     - **Learner action:** Prove a qualifying 1999 birth date, try an honest underage 2010 date, or force a forged proof.
     - **Observed result:** The real pairing and range-proof checks accept the qualifying claim and reject the underage or forged claim without disclosing DOB.
     - **Concepts taught:** age predicate; Pedersen commitment; range proof; BBS proof binding
     - **Limits:** The custom range construction is a teaching implementation, not a production credential system.
-    - **Evidence at pinned commit:** `index.html:295`, `index.html:303`, `index.html:304`, `index.html:305`, `src/main.ts:606`, `src/main.ts:676`, `src/predicate/ageProof.ts:1`
+    - **Evidence at pinned commit:** `index.html:296`, `index.html:304`, `index.html:305`, `index.html:306`, `src/main.ts:606`, `src/main.ts:676`, `src/predicate/ageProof.ts:1`
   - **All-or-Nothing Credential Baseline** (`baseline`; interactive; real-crypto)
     - **Visible section:** 1 · The problem: all-or-nothing disclosure
     - **Learner action:** Prove an age claim with the conventional signed credential baseline.
     - **Observed result:** The verifier receives and checks the full credential payload, exposing fields beyond the requested predicate.
     - **Concepts taught:** Ed25519 signed credential; overdisclosure; verifier visibility
-    - **Evidence at pinned commit:** `index.html:231`, `index.html:236`, `src/main.ts:197`, `src/baseline/ed25519.ts:1`
+    - **Evidence at pinned commit:** `index.html:232`, `index.html:237`, `src/main.ts:197`, `src/baseline/ed25519.ts:1`
+  - **Draft-14 Baseline and Empty-Message Correction** (`bbs-draft-update`; explanation; conceptual)
+    - **Visible section:** Updated 30 October 2026:
+    - **Learner action:** Read the numbered draft and publisher-vector baseline note and its zero-message correction.
+    - **Observed result:** Distinguish an empty signed-message list from an empty field value or revealing no fields, while retaining issuer-key and header binding.
+    - **Concepts taught:** BBS draft-14; zero-message signatures; domain binding; test-vector provenance
+    - **Limits:** This source note is explanatory; the interactive credential still has six fields. Draft checks do not validate the custom age proof, browser side channels or final-standard status.
+    - **Evidence at pinned commit:** `index.html:217`, `index.html:218`, `src/bbs/bbs.ts:134`
   - **Credential Privacy Comparison** (`credential-comparison`; comparison; conceptual)
     - **Visible section:** What hides what, from whom
     - **Learner action:** Read the table of issuer visibility, verifier visibility, linkability, and selective disclosure.
     - **Observed result:** Compare plain signed credentials, BBS, blind signatures, and other credential patterns by whose information is hidden.
     - **Concepts taught:** issuer privacy; verifier privacy; selective disclosure; BBS versus BBS+
-    - **Evidence at pinned commit:** `index.html:378`, `index.html:382`, `index.html:389`, `index.html:406`
+    - **Evidence at pinned commit:** `index.html:379`, `index.html:383`, `index.html:390`, `index.html:407`
   - **BBS Selective Disclosure** (`disclose`; interactive; real-crypto)
     - **Visible section:** 2 · Selective disclosure — the headline
     - **Learner action:** Choose revealed claims, generate a presentation, and step through the BBS proof.
     - **Observed result:** A fresh proof verifies the issuer’s signature on revealed claims while hidden fields remain undisclosed.
     - **Concepts taught:** BBS signatures; selective disclosure; zero-knowledge proof; proof randomization
-    - **Evidence at pinned commit:** `index.html:241`, `index.html:251`, `src/main.ts:310`, `src/main.ts:326`, `src/bbs/bbs.ts:1`
+    - **Evidence at pinned commit:** `index.html:242`, `index.html:252`, `src/main.ts:310`, `src/main.ts:326`, `src/bbs/bbs.ts:1`
   - **Status-List Revocation Tradeoff** (`revocation`; interactive; real-crypto)
     - **Visible section:** 5 · Revocation — the honest tension
     - **Learner action:** Toggle credential #17’s status and ask the verifier to check its proof and published status bit.
     - **Observed result:** The proof binds the claimed index, so revocation works but the stable index reconnects otherwise randomized showings.
     - **Concepts taught:** revocation status list; stable identifier; presentation linkability; accumulators
     - **Limits:** The status list does not provide zero-knowledge non-revocation; accumulator designs are compared in prose only.
-    - **Evidence at pinned commit:** `index.html:312`, `index.html:319`, `index.html:320`, `index.html:330`, `src/main.ts:785`, `src/main.ts:804`
+    - **Evidence at pinned commit:** `index.html:313`, `index.html:320`, `index.html:321`, `index.html:331`, `src/main.ts:785`, `src/main.ts:804`
   - **Tamper a Revealed Claim** (`tamper`; interactive; real-crypto)
     - **Visible section:** Break it yourself
     - **Learner action:** Change a disclosed class claim after proof generation and reverify the honest presentation.
     - **Observed result:** The actual verifier rejects changed revealed bytes and accepts the original proof.
     - **Concepts taught:** presentation integrity; revealed-message binding; BBS verification
-    - **Evidence at pinned commit:** `index.html:257`, `index.html:263`, `index.html:264`, `src/main.ts:388`, `src/main.ts:395`
+    - **Evidence at pinned commit:** `index.html:258`, `index.html:264`, `index.html:265`, `src/main.ts:388`, `src/main.ts:395`
   - **BBS and Ed25519 Three-Presentation Comparison** (`unlinkability`; comparison; real-crypto)
     - **Visible section:** 3 · Unlinkability — compare three presentations
     - **Learner action:** Make three BBS presentations and three Ed25519 showings, then inspect verification and shared byte runs.
     - **Observed result:** Randomized BBS proofs differ while a conventional signature repeats, subject to disclosed-data and metadata linkability.
     - **Concepts taught:** cryptographic unlinkability; signature reuse; proof randomization; metadata correlation
     - **Limits:** Unique revealed claims, headers, issuer keys, and status identifiers can still correlate presentations.
-    - **Evidence at pinned commit:** `index.html:271`, `index.html:282`, `index.html:283`, `src/main.ts:459`, `src/main.ts:526`
+    - **Evidence at pinned commit:** `index.html:272`, `index.html:283`, `index.html:284`, `src/main.ts:459`, `src/main.ts:526`
 
 ### Curve Lens
 

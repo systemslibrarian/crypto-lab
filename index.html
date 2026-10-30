@@ -7748,14 +7748,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/" data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-10"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/"
             data-implements="AES@src/blockcipher/dm.ts:21 | BLAKE3@src/hasher.ts:154 | Davies-Meyer@src/blockcipher/dm.ts:22 | SHA-256@src/hasher.ts:241 | SHA-3@src/hasher.ts:151"
-            data-references="Argon2 | CMAC | DES | GHASH | HKDF | HMAC | Keccak | MD5 | Merkle tree | PBKDF2 | Poly1305 | SHA-1 | SHA-512 | TLS 1.3 | scrypt"
+            data-references="Argon2 | CMAC | DES | GHASH | HKDF | HMAC | KMAC | Keccak | MD5 | Merkle tree | PBKDF2 | Poly1305 | SHA-1 | SHA-512 | TLS 1.3 | scrypt"
             data-attacks="Brute force@README.md:45 | Length extension@src/hasher.ts:216 | Side-channel (unspecified)@README.md:48 | Timing side-channel@README.md:48"
             data-standards="NIST"
             data-implementation="@noble"
-            data-review-commit="e86dac25e78bc6876e9fd644d1c6a0b823e06039"
-            data-review-note="Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault’s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
+            data-review-commit="1ba6cb3fa9aad400024b12af55900b4039ece412"
+            data-review-note="Focused book-companion alignment: re-read the README/UI changes from the prior pin through PR24, including the accessibility-only changes. Guidance now names HMAC, KMAC or BLAKE3 keyed mode rather than treating plain SHA-3/BLAKE3 as authentication; avalanche is an observation, not a security proof, and sponge capacity is internal state rather than an authentication key. Full-round hashing and length-extension code are byte-identical to the prior pin. Retain the existing Collision attack exclusion: reduced-round results link to Collision Vault, but no collision search or pair verification executes here. This is a scoped source/copy refresh, not a new full cryptographic audit."
+            data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-10"
             data-level="beginner"
            
            

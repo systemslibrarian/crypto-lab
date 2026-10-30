@@ -976,12 +976,12 @@
     "note": "Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault\u2019s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
   },
   "crypto-lab-hash-zoo": {
-    "commit": "e86dac25e78bc6876e9fd644d1c6a0b823e06039",
-    "reviewed": "2026-10-21",
+    "commit": "1ba6cb3fa9aad400024b12af55900b4039ece412",
+    "reviewed": "2026-10-30",
     "remove": [
       "Collision attack"
     ],
-    "note": "Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault\u2019s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations."
+    "note": "Focused book-companion alignment: re-read the README/UI changes from the prior pin through PR24, including the accessibility-only changes. Guidance now names HMAC, KMAC or BLAKE3 keyed mode rather than treating plain SHA-3/BLAKE3 as authentication; avalanche is an observation, not a security proof, and sponge capacity is internal state rather than an authentication key. Full-round hashing and length-extension code are byte-identical to the prior pin. Retain the existing Collision attack exclusion: reduced-round results link to Collision Vault, but no collision search or pair verification executes here. This is a scoped source/copy refresh, not a new full cryptographic audit."
   },
   "crypto-lab-sector-vault": {
     "commit": "d65d542f2cb770e41ccb0486c68048c571285786",

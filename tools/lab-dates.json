@@ -527,8 +527,8 @@
    "addedOn": "2026-04-08",
    "updated": "2026-10",
    "addedFrom": "2026-04-08T06:49:28Z",
-   "updatedFrom": "2026-10-28T18:32:24-04:00",
-   "updatedCommit": "48c88619d7f0bd59fa7a3a7cc45941d6329d112a"
+   "updatedFrom": "2026-10-30T05:48:20-04:00",
+   "updatedCommit": "1ba6cb3fa9aad400024b12af55900b4039ece412"
   },
   "crypto-lab-world-hashes": {
    "added": "2026-04",
@@ -583,8 +583,8 @@
    "addedOn": "2026-04-09",
    "updated": "2026-10",
    "addedFrom": "2026-04-09T00:01:41Z",
-   "updatedFrom": "2026-10-28T18:34:33-04:00",
-   "updatedCommit": "d78488b6626a418c376647dd8181e03d2a66bea7"
+   "updatedFrom": "2026-10-30T05:48:29-04:00",
+   "updatedCommit": "1cbd17d6fbb2c7337ea116b1fe018d4133b63ea5"
   },
   "crypto-lab-pairing-gate": {
    "added": "2026-04",
@@ -775,8 +775,8 @@
    "addedOn": "2026-04-19",
    "updated": "2026-10",
    "addedFrom": "2026-04-19T00:09:30Z",
-   "updatedFrom": "2026-10-28T18:31:25-04:00",
-   "updatedCommit": "8ebae92f62297c9ea57db496d3477f011a0ee4bf"
+   "updatedFrom": "2026-10-30T05:48:23-04:00",
+   "updatedCommit": "aa9ff4084c26ceb1ce7cd4710b66e619a283c6cd"
   },
   "crypto-lab-schnorr-forge": {
    "added": "2026-07",
@@ -1151,8 +1151,8 @@
    "addedOn": "2026-06-28",
    "updated": "2026-10",
    "addedFrom": "2026-06-28T17:02:15Z",
-   "updatedFrom": "2026-10-28T18:32:45-04:00",
-   "updatedCommit": "6bc542d3c9804e574ea8f22b48e35c16788fcefd"
+   "updatedFrom": "2026-10-30T05:48:26-04:00",
+   "updatedCommit": "8408b3f2003f23dd750eb34a04bfbf8e9c504ff9"
   },
   "crypto-lab-merkle-proofs": {
    "added": "2026-06",

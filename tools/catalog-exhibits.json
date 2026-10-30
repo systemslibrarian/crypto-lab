@@ -10667,8 +10667,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-ecdsa-forge": {
-      "commit": "bf95494737ddaed711ee2a348435aa0b5f70dbb5",
-      "reviewed": "2026-10-22",
+      "commit": "aa9ff4084c26ceb1ce7cd4710b66e619a283c6cd",
+      "reviewed": "2026-10-30",
       "exhibits": [
         {
           "id": "sign-verify",
@@ -10720,8 +10720,8 @@
           "id": "nonce-attack",
           "title": "ECDSA Nonce-Reuse Key Recovery",
           "kind": "interactive",
-          "action": "Try the two-signature equations on a toy curve and run full compromise on 256-bit keys.",
-          "outcome": "Repeated r permits recovery of nonce k and private key d, followed by a forged signature that verifies.",
+          "action": "Work through the toy equations, then select Run Full Compromise to recover a signing key and verify a forged signature.",
+          "outcome": "The fixture deliberately reuses one nonce under one key for distinct message hashes; its invertible differences recover k and d, and the forged signature verifies.",
           "concepts": [
             "ECDSA nonce reuse",
             "private-key recovery",
@@ -10730,23 +10730,24 @@
           ],
           "evidence": [
             "src/main.ts:365",
-            "src/main.ts:384",
-            "src/main.ts:403",
+            "src/main.ts:371",
             "src/main.ts:415",
-            "src/main.ts:421",
+            "src/main.ts:651",
+            "src/main.ts:652",
             "src/attack.ts:36",
+            "src/attack.ts:53",
             "src/attack.ts:82"
           ],
           "section": "The Nonce-Reuse Attack",
           "execution": "real-crypto",
-          "limits": "The full-compromise run deliberately injects reuse; it is not an attack on correctly generated nonces."
+          "limits": "Equal r alone is a warning sign, not proof of identical nonces: k and its negation share a point x-coordinate. This fixture injects reuse; it does not attack correctly generated nonces."
         },
         {
           "id": "deterministic",
           "title": "Deterministic Nonce Defense",
           "kind": "interactive",
-          "action": "Sign repeated inputs with random and RFC 6979 nonces, then try the reuse attack against deterministic signing.",
-          "outcome": "Nonce samples and attack control show why RFC 6979 derives k from private key and message rather than relying on fresh randomness.",
+          "action": "Select Sign Random and Sign RFC 6979 twice for the same message, then select Try the nonce-reuse attack against RFC 6979 to test two distinct messages.",
+          "outcome": "Repeated deterministic signing reproduces the same signature for the same key and message hash. The separate two-message control refuses recovery when the signatures have different r values.",
           "concepts": [
             "RFC 6979",
             "HMAC-DRBG",
@@ -10755,14 +10756,19 @@
           ],
           "evidence": [
             "src/main.ts:444",
+            "src/main.ts:445",
             "src/main.ts:451",
             "src/main.ts:452",
+            "src/main.ts:455",
             "src/main.ts:466",
+            "src/main.ts:720",
+            "src/main.ts:729",
             "src/rfc6979.ts:91",
             "src/rfc6979.ts:131"
           ],
           "section": "RFC 6979 Deterministic Nonces",
-          "execution": "real-crypto"
+          "execution": "real-crypto",
+          "limits": "Identical deterministic signatures do not supply the distinct equations needed for nonce-reuse recovery. Correct derivation avoids fresh per-signature randomness; this finite control does not exclude bugs, faults, side channels or all nonce collisions."
         },
         {
           "id": "applications",
@@ -10781,13 +10787,16 @@
             "src/main.ts:474",
             "src/main.ts:478",
             "src/main.ts:483",
-            "src/main.ts:490"
+            "src/main.ts:490",
+            "src/main.ts:504",
+            "src/main.ts:510"
           ],
           "section": "ECDSA vs Ed25519",
-          "execution": "conceptual"
+          "execution": "conceptual",
+          "limits": "The comparison is explanatory. Ed25519 derives nonces deterministically, but forced nonce reuse across distinct challenges can still expose the signing scalar."
         }
       ],
-      "reviewScope": "complete"
+      "reviewScope": "selected"
     },
     "crypto-lab-ed25519-forge": {
       "commit": "f2db62ca3bed2ec10dd7d432d2849e2bd7a696c5",
@@ -15977,9 +15986,9 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hash-zoo": {
-      "commit": "e86dac25e78bc6876e9fd644d1c6a0b823e06039",
-      "reviewed": "2026-10-22",
-      "reviewScope": "complete",
+      "commit": "1ba6cb3fa9aad400024b12af55900b4039ece412",
+      "reviewed": "2026-10-30",
+      "reviewScope": "selected",
       "exhibits": [
         {
           "id": "hash-intro",
@@ -16058,7 +16067,7 @@
           "kind": "explanation",
           "execution": "conceptual",
           "action": "Inspect diagrams and information tabs for SHA-256, SHA-3 and BLAKE3.",
-          "outcome": "Compares exposed chaining state, hidden sponge capacity and parallelizable tree structure.",
+          "outcome": "Compares exposed SHA-256 chaining state, the sponge capacity omitted from the digest, and parallelizable tree structure.",
           "concepts": [
             "Merkle–Damgård",
             "sponge construction",
@@ -16073,7 +16082,7 @@
             "src/ui.ts:315",
             "src/ui.ts:352"
           ],
-          "limits": "The diagrams describe constructions; native BLAKE3 SIMD and multicore speed is not demonstrated by this page."
+          "limits": "The capacity is internal state, not a secret authentication key. These diagrams do not demonstrate native BLAKE3 SIMD or multicore speed, and an unkeyed digest does not authenticate a sender."
         },
         {
           "id": "length-extension",
@@ -16081,7 +16090,7 @@
           "section": "Section C - Construction Comparison",
           "kind": "interactive",
           "execution": "real-crypto",
-          "action": "Supply a demonstration secret and attacker suffix, then continue hashing from a published tag.",
+          "action": "Supply the demonstration secret and attacker suffix, forge an extended prefix-MAC message from the published tag, then read the specified keyed-MAC defense.",
           "outcome": "Recomputed SHA-256 verifies an extended secret-prefix message without knowing secret bytes when their length is known.",
           "concepts": [
             "length extension",
@@ -16092,9 +16101,11 @@
           "evidence": [
             "src/ui.ts:333",
             "src/ui.ts:341",
+            "src/ui.ts:347",
+            "src/ui.ts:384",
             "src/hasher.ts:1"
           ],
-          "limits": "This attacks bare SHA-256(secret||message), not HMAC-SHA256 or a proper authenticated protocol."
+          "limits": "This attacks bare SHA-256(secret||message), not HMAC-SHA256. Authentication calls for a specified keyed construction such as HMAC, KMAC or BLAKE3 keyed mode; plain SHA-3/BLAKE3 is not a MAC. The keyed alternatives are guidance, not executed defense controls here."
         },
         {
           "id": "davies-meyer",
@@ -17698,8 +17709,8 @@
       ]
     },
     "crypto-lab-hybrid-pqc": {
-      "commit": "747b5e9f218e9e69c97731db4aa93296a78ae0a3",
-      "reviewed": "2026-10-22",
+      "commit": "8408b3f2003f23dd750eb34a04bfbf8e9c504ff9",
+      "reviewed": "2026-10-30",
       "exhibits": [
         {
           "id": "key-exchange",
@@ -17719,9 +17730,10 @@
             "src/ui/kemPanel.ts:148",
             "src/ui/kemPanel.ts:163",
             "src/ui/kemPanel.ts:169",
+            "src/ui/kemPanel.ts:173",
             "src/ui/actions.ts:20"
           ],
-          "limits": "This lab uses an HKDF combiner binding both ciphertexts; deployed X25519MLKEM768 in TLS combines secrets via the TLS key schedule.",
+          "limits": "The lab uses an HKDF combiner binding both ciphertexts; TLS X25519MLKEM768 combines secrets through its key schedule. Matching honest keys and failed recovery attempts do not prove either protocol secure.",
           "section": "🔑 Interactive Key Exchange"
         },
         {
@@ -17751,8 +17763,8 @@
           "title": "Compromise-one-half security model",
           "kind": "interactive",
           "execution": "simulation",
-          "action": "Toggle a break of the classical or lattice family and inspect key-recovery and fresh-message forgery attempts.",
-          "outcome": "One compromised component fails while the hybrid key and signature survive if the other component remains secure; breaking both defeats all.",
+          "action": "Toggle Quantum computer exists or Lattices fall to disclose that family’s component secrets, then compare candidate session keys and new-message forgery results.",
+          "outcome": "With one family disclosed, the displayed hybrid recovery and forgery attempts fail; with both disclosed, these attempts recover the key and produce an accepted new-message forgery.",
           "concepts": [
             "hybrid hedging",
             "KEM key recovery",
@@ -17760,13 +17772,17 @@
             "one-of-two security"
           ],
           "evidence": [
-            "src/ui/securityModel.ts:111",
             "src/ui/securityModel.ts:113",
-            "src/ui/securityModel.ts:127",
-            "src/ui/securityModel.ts:133",
-            "src/ui/actions.ts:64"
+            "src/ui/securityModel.ts:117",
+            "src/ui/securityModel.ts:119",
+            "src/ui/securityModel.ts:122",
+            "src/ui/securityModel.ts:130",
+            "src/ui/securityModel.ts:131",
+            "src/ui/actions.ts:64",
+            "src/ui/stepper.ts:25",
+            "src/ui/stepper.ts:27"
           ],
-          "limits": "The toggles model algorithm compromise. The AND signature does not promise strong unforgeability after one component is broken.",
+          "limits": "The switches disclose secrets; they do not execute Shor’s algorithm or a lattice break. Failed attempts are observations, not a security proof. General resilience depends on the combiner and protocol; AND verification does not promise strong unforgeability after one component is compromised.",
           "section": "🧪 The Security Model — break a half"
         },
         {
@@ -17784,8 +17800,8 @@
           "evidence": [
             "src/ui/content.ts:61",
             "src/ui/content.ts:62",
-            "src/ui/content.ts:142",
-            "src/ui/content.ts:143",
+            "src/ui/content.ts:146",
+            "src/ui/content.ts:147",
             "src/ui/kemPanel.ts:155",
             "src/ui/sigPanel.ts:162"
           ],
@@ -17811,8 +17827,8 @@
             "src/data.ts:47",
             "src/data.ts:95",
             "src/ui/content.ts:33",
-            "src/ui/content.ts:117",
-            "src/ui/content.ts:124"
+            "src/ui/content.ts:121",
+            "src/ui/content.ts:128"
           ],
           "limits": "Deployment cards are source-linked snapshots, not live discovery of the current state of each service.",
           "section": "🌐 Real-World Context"
@@ -17830,9 +17846,9 @@
             "deployment boundary"
           ],
           "evidence": [
-            "src/ui/content.ts:151",
-            "src/ui/content.ts:153",
-            "src/ui/content.ts:158",
+            "src/ui/content.ts:155",
+            "src/ui/content.ts:157",
+            "src/ui/content.ts:162",
             "src/data.ts:179",
             "src/data.ts:181",
             "src/data.ts:183"
@@ -17844,8 +17860,8 @@
           "title": "Six-step hybrid migration tour",
           "kind": "interactive",
           "execution": "simulation",
-          "action": "Start the tour and advance through key exchange, signatures, one-family failure and two-family failure.",
-          "outcome": "Watch the same shared threat state drive all three live columns at each deterministic step.",
+          "action": "Start the tour and advance through key exchange, signatures, one-family secret disclosure and two-family secret disclosure.",
+          "outcome": "The shared threat state drives the live columns through successful pure-scheme attacks, failed hybrid attempts with one secret undisclosed, and successful hybrid attacks with both disclosed.",
           "concepts": [
             "hybrid hedging",
             "algorithm migration",
@@ -17855,15 +17871,19 @@
           "evidence": [
             "src/main.ts:23",
             "src/ui/stepper.ts:22",
+            "src/ui/stepper.ts:25",
+            "src/ui/stepper.ts:26",
+            "src/ui/stepper.ts:27",
+            "src/ui/stepper.ts:28",
             "src/ui/stepper.ts:52",
             "src/ui/stepper.ts:73",
             "src/ui/stepper.ts:90"
           ],
-          "limits": "Break toggles are modeled compromises of an algorithm family.",
+          "limits": "The tour models compromise by disclosing secrets. A finite failed recovery or forgery attempt does not establish security against every attack.",
           "section": "Guided tour"
         }
       ],
-      "reviewScope": "complete"
+      "reviewScope": "selected"
     },
     "crypto-lab-hybrid-sign": {
       "commit": "e9e4ddb545c6f934064483f43e924416d26f009d",
@@ -26462,15 +26482,15 @@
       "reviewScope": "complete"
     },
     "crypto-lab-nonce-guard": {
-      "commit": "ffbbecaba2e78830bcec32c5565e95d233c4e52d",
-      "reviewed": "2026-10-22",
+      "commit": "1cbd17d6fbb2c7337ea116b1fe018d4133b63ea5",
+      "reviewed": "2026-10-30",
       "exhibits": [
         {
           "id": "reuse-compare",
           "title": "AES-GCM versus AES-GCM-SIV Nonce Reuse",
           "kind": "comparison",
           "action": "Encrypt two editable messages with reused or fresh nonces and run the attack.",
-          "outcome": "Shows AES-GCM plaintext XOR and tag-forgery exposure against misuse-resistant SIV output.",
+          "outcome": "Computes GCM plaintext XOR and a tag forgery, alongside actual SIV ciphertexts and tags for the chosen inputs.",
           "concepts": [
             "AES-GCM",
             "AES-GCM-SIV",
@@ -26484,10 +26504,13 @@
             "index.html:229",
             "index.html:237",
             "src/main.ts:123",
-            "src/main.ts:138"
+            "src/main.ts:138",
+            "src/main.ts:359",
+            "src/main.ts:369"
           ],
           "section": "B — See It Break (Live Attack Demo)",
-          "execution": "real-crypto"
+          "execution": "real-crypto",
+          "limits": "The SIV comparison uses empty AAD and does not attempt a SIV forgery. Repeated full inputs reproduce the encrypted result; equality and length remain visible."
         },
         {
           "id": "gcm-keystream",
@@ -26513,7 +26536,7 @@
           "id": "forbidden-attack",
           "title": "GHASH Key Recovery and Tag Forgery",
           "kind": "interactive",
-          "action": "Use the two chosen messages and run the recovered-H attack, then verify a forged tag.",
+          "action": "In B — See It Break (Live), choose two distinct messages no longer than 512 bytes, enable nonce reuse, select Encrypt Both, then Run Attack. Inspect the recovered H and accepted forged tag.",
           "outcome": "Factors the nonce-reuse equation over GF(2^128), tests candidates, and has real AES-GCM accept the forgery.",
           "concepts": [
             "GHASH",
@@ -26537,7 +26560,7 @@
           "title": "Synthetic IV Derivation",
           "kind": "interactive",
           "action": "Edit the SIV plaintext or compare a repeated message with one changed byte.",
-          "outcome": "Shows POLYVAL-derived tag, synthetic CTR IV, and ciphertext change together.",
+          "outcome": "Displays the computed tag, derived CTR IV and ciphertext; identical full inputs reproduce all three and the keystream.",
           "concepts": [
             "AES-GCM-SIV",
             "POLYVAL",
@@ -26545,15 +26568,16 @@
             "deterministic reuse leakage"
           ],
           "evidence": [
-            "index.html:343",
             "index.html:393",
+            "index.html:394",
             "index.html:396",
             "index.html:403",
-            "src/main.ts:138"
+            "src/main.ts:138",
+            "src/main.ts:493"
           ],
           "section": "D3 — Tag-as-IV, Live: plaintext → tag → IV → ciphertext",
           "execution": "real-crypto",
-          "limits": "Reusing a nonce under SIV still reveals when plaintext and associated data repeat."
+          "limits": "Full inputs include key, nonce, associated data and plaintext; this panel fixes AAD to empty. Changed sample outputs do not rule out collisions for all inputs."
         },
         {
           "id": "nonce-rule",
@@ -26580,8 +26604,8 @@
           "id": "siv-construction",
           "title": "Synthetic-IV Construction",
           "kind": "explanation",
-          "action": "Trace AES-GCM-SIV from per-nonce keys through POLYVAL, encrypted tag, and the CTR initial block.",
-          "outcome": "Shows why different plaintexts under a repeated nonce use different keystreams, with identical-input equality still visible.",
+          "action": "In SIV: Misuse Resistance and Its Limits, trace per-nonce keys, POLYVAL, encrypted tag and CTR input separation.",
+          "outcome": "Explains why the direct GCM cancellation attacks do not transfer, while identical full inputs reproduce the tag, IV, keystream and ciphertext.",
           "concepts": [
             "AES-GCM-SIV",
             "synthetic IV",
@@ -26600,7 +26624,7 @@
           ],
           "section": "D0 — The synthetic-IV construction (RFC 8452)",
           "execution": "conceptual",
-          "limits": "This section explains the pipeline; the D3 panel executes a live tag/IV comparison."
+          "limits": "This is a construction explanation, not a general security proof. Misuse resistance depends on RFC 8452 assumptions and usage bounds; equality and length remain visible."
         },
         {
           "id": "siv-key-derivation",
@@ -26644,7 +26668,8 @@
             "index.html:389"
           ],
           "section": "D2 — POLYVAL Authentication (why the cancel trick dies)",
-          "execution": "conceptual"
+          "execution": "conceptual",
+          "limits": "Blocking this common-mask cancellation equation is not proof that all attacks fail; the construction assumptions and usage bounds still apply."
         },
         {
           "id": "gcm-siv-decision",
@@ -26686,9 +26711,9 @@
             "GCM revision proposal"
           ],
           "evidence": [
-            "index.html:465",
             "index.html:466",
-            "index.html:467"
+            "index.html:467",
+            "index.html:468"
           ],
           "section": "Under consideration: wider-block GCM",
           "execution": "conceptual",
@@ -26701,7 +26726,7 @@
           "kind": "explanation",
           "execution": "conceptual",
           "action": "Read the limitation list beside the AES-GCM and AES-GCM-SIV selection table.",
-          "outcome": "Identifies the lack of FIPS approval, the need to buffer plaintext before encryption, the second pass, and narrower deployment experience.",
+          "outcome": "Names bounded misuse resistance, full-input equality and length leakage, plus the stated FIPS, buffering, two-pass and deployment limitations.",
           "concepts": [
             "AES-GCM-SIV",
             "FIPS approval",
@@ -26711,15 +26736,16 @@
           ],
           "evidence": [
             "index.html:455",
+            "index.html:457",
             "index.html:458",
             "index.html:459",
             "index.html:460",
             "index.html:461"
           ],
-          "limits": "Status and deployment experience are the claims made by this pinned page, not a live standards or implementation survey."
+          "limits": "The panel attempts no SIV forgery and measures no security bound. Status and deployment statements describe this pinned page, not a live survey; nonce uniqueness remains the recommended policy."
         }
       ],
-      "reviewScope": "complete"
+      "reviewScope": "selected"
     },
     "crypto-lab-nonce-lattice": {
       "commit": "6cd0b424d212f330debee615b026893339e7c135",

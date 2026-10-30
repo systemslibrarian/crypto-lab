@@ -62,7 +62,7 @@ A `related` term is context only, never proof that a concept is taught or implem
 The implementation index farther down answers a different question.
 
 The exhibit map currently records **1815 sections in 250 of 252 labs**
-(250 complete lab inventories, 0 selected-section reviews).
+(246 complete lab inventories, 4 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
 **PARTIALLY REVIEWED** means only selected sections were mapped: omission says
@@ -193,7 +193,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### KMAC
 
 - **Implemented by:** [KMAC Gate](https://systemslibrarian.github.io/crypto-lab-kmac-gate/) `src/demo/naive-mac.ts:70`
-- **Also referenced by:** —
+- **Also referenced by:** *Hash Zoo*
 
 #### PMAC
 
@@ -5695,19 +5695,21 @@ ECDSA on secp256k1 and P-256 with sign/verify workflows, RFC 6979 deterministic 
 - **Attacks shown:** Discrete log `src/content.ts:40`, Key recovery `README.md:5`, Lattice reduction `README.md:44`, Nonce reuse `src/attack.ts:36`, Signature malleability `src/main.ts:505`
 - **Standards body:** IETF, NIST, SECG
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bf95494737dd](https://github.com/systemslibrarian/crypto-lab-ecdsa-forge/commit/bf95494737ddaed711ee2a348435aa0b5f70dbb5) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** PARTIALLY REVIEWED — selected sections only; unmapped sections may teach other concepts. Source pin [aa9ff4084c26](https://github.com/systemslibrarian/crypto-lab-ecdsa-forge/commit/aa9ff4084c26ceb1ce7cd4710b66e619a283c6cd) reviewed 2026-10-30; 5 mapped sections.
   - **ECDSA Use Cases and Ed25519 Comparison** (`applications`; comparison; conceptual)
     - **Visible section:** ECDSA vs Ed25519
     - **Learner action:** Read examples across TLS, cryptocurrencies, SSH, JWT, WebAuthn, and the ECDSA versus Ed25519 table.
     - **Observed result:** The explanatory material places signatures in deployed protocols and distinguishes the two designs.
     - **Concepts taught:** TLS certificates; Bitcoin; WebAuthn; Ed25519; JWT ES256
-    - **Evidence at pinned commit:** `src/main.ts:474`, `src/main.ts:478`, `src/main.ts:483`, `src/main.ts:490`
+    - **Limits:** The comparison is explanatory. Ed25519 derives nonces deterministically, but forced nonce reuse across distinct challenges can still expose the signing scalar.
+    - **Evidence at pinned commit:** `src/main.ts:474`, `src/main.ts:478`, `src/main.ts:483`, `src/main.ts:490`, `src/main.ts:504`, `src/main.ts:510`
   - **Deterministic Nonce Defense** (`deterministic`; interactive; real-crypto)
     - **Visible section:** RFC 6979 Deterministic Nonces
-    - **Learner action:** Sign repeated inputs with random and RFC 6979 nonces, then try the reuse attack against deterministic signing.
-    - **Observed result:** Nonce samples and attack control show why RFC 6979 derives k from private key and message rather than relying on fresh randomness.
+    - **Learner action:** Select Sign Random and Sign RFC 6979 twice for the same message, then select Try the nonce-reuse attack against RFC 6979 to test two distinct messages.
+    - **Observed result:** Repeated deterministic signing reproduces the same signature for the same key and message hash. The separate two-message control refuses recovery when the signatures have different r values.
     - **Concepts taught:** RFC 6979; HMAC-DRBG; deterministic ECDSA; nonce safety
-    - **Evidence at pinned commit:** `src/main.ts:444`, `src/main.ts:451`, `src/main.ts:452`, `src/main.ts:466`, `src/rfc6979.ts:91`, `src/rfc6979.ts:131`
+    - **Limits:** Identical deterministic signatures do not supply the distinct equations needed for nonce-reuse recovery. Correct derivation avoids fresh per-signature randomness; this finite control does not exclude bugs, faults, side channels or all nonce collisions.
+    - **Evidence at pinned commit:** `src/main.ts:444`, `src/main.ts:445`, `src/main.ts:451`, `src/main.ts:452`, `src/main.ts:455`, `src/main.ts:466`, `src/main.ts:720`, `src/main.ts:729`, `src/rfc6979.ts:91`, `src/rfc6979.ts:131`
   - **Curve Geometry and Finite-Field Arithmetic** (`geometry`; interactive; real-values)
     - **Visible section:** The Math You Can See
     - **Learner action:** Inspect visual real-coordinate point addition and try finite-field curve arithmetic.
@@ -5717,11 +5719,11 @@ ECDSA on secp256k1 and P-256 with sign/verify workflows, RFC 6979 deterministic 
     - **Evidence at pinned commit:** `src/main.ts:337`, `src/main.ts:342`, `src/main.ts:351`, `src/realcurve.ts:45`, `src/toycurve.ts:1`
   - **ECDSA Nonce-Reuse Key Recovery** (`nonce-attack`; interactive; real-crypto)
     - **Visible section:** The Nonce-Reuse Attack
-    - **Learner action:** Try the two-signature equations on a toy curve and run full compromise on 256-bit keys.
-    - **Observed result:** Repeated r permits recovery of nonce k and private key d, followed by a forged signature that verifies.
+    - **Learner action:** Work through the toy equations, then select Run Full Compromise to recover a signing key and verify a forged signature.
+    - **Observed result:** The fixture deliberately reuses one nonce under one key for distinct message hashes; its invertible differences recover k and d, and the forged signature verifies.
     - **Concepts taught:** ECDSA nonce reuse; private-key recovery; signature forgery; modular inverse
-    - **Limits:** The full-compromise run deliberately injects reuse; it is not an attack on correctly generated nonces.
-    - **Evidence at pinned commit:** `src/main.ts:365`, `src/main.ts:384`, `src/main.ts:403`, `src/main.ts:415`, `src/main.ts:421`, `src/attack.ts:36`, `src/attack.ts:82`
+    - **Limits:** Equal r alone is a warning sign, not proof of identical nonces: k and its negation share a point x-coordinate. This fixture injects reuse; it does not attack correctly generated nonces.
+    - **Evidence at pinned commit:** `src/main.ts:365`, `src/main.ts:371`, `src/main.ts:415`, `src/main.ts:651`, `src/main.ts:652`, `src/attack.ts:36`, `src/attack.ts:53`, `src/attack.ts:82`
   - **ECDSA Key Generation, Signing, Verification** (`sign-verify`; interactive; real-crypto)
     - **Visible section:** What Is ECDSA?
     - **Learner action:** Generate a P-256 or secp256k1 keypair, sign a message with random or RFC 6979 nonce, and verify.
@@ -7536,12 +7538,12 @@ SHA-256 vs SHA3-256 vs BLAKE3 internals — live avalanche analysis, Merkle-Damg
 
 - **Card topics (discovery only):** SHA-256, SHA3-256, BLAKE3, Merkle-Damgård — labels do not establish what any section runs.
 - **Implements:** AES `src/blockcipher/dm.ts:21`, BLAKE3 `src/hasher.ts:154`, Davies-Meyer `src/blockcipher/dm.ts:22`, SHA-256 `src/hasher.ts:241`, SHA-3 `src/hasher.ts:151`
-- **Source review:** [e86dac25e78b](https://github.com/systemslibrarian/crypto-lab-hash-zoo/commit/e86dac25e78bc6876e9fd644d1c6a0b823e06039) — Read current README/UI and complete published cross-link change. The paper-only SHA2 collision results are linked to Collision Vault’s actual Table2 verifier; no pair verification or attack search executes here. Full-round hash and length-extension code remain byte-identical. Remove the referenced collision-attack credit and retain the actual demonstrations.
-- **References:** Argon2, CMAC, DES, GHASH, HKDF, HMAC, Keccak, MD5, Merkle tree, PBKDF2, Poly1305, SHA-1, SHA-512, TLS 1.3, scrypt
+- **Source review:** [1ba6cb3fa9aa](https://github.com/systemslibrarian/crypto-lab-hash-zoo/commit/1ba6cb3fa9aad400024b12af55900b4039ece412) — Focused book-companion alignment: re-read the README/UI changes from the prior pin through PR24, including the accessibility-only changes. Guidance now names HMAC, KMAC or BLAKE3 keyed mode rather than treating plain SHA-3/BLAKE3 as authentication; avalanche is an observation, not a security proof, and sponge capacity is internal state rather than an authentication key. Full-round hashing and length-extension code are byte-identical to the prior pin. Retain the existing Collision attack exclusion: reduced-round results link to Collision Vault, but no collision search or pair verification executes here. This is a scoped source/copy refresh, not a new full cryptographic audit.
+- **References:** Argon2, CMAC, DES, GHASH, HKDF, HMAC, KMAC, Keccak, MD5, Merkle tree, PBKDF2, Poly1305, SHA-1, SHA-512, TLS 1.3, scrypt
 - **Attacks shown:** Brute force `README.md:45`, Length extension `src/hasher.ts:216`, Side-channel (unspecified) `README.md:48`, Timing side-channel `README.md:48`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e86dac25e78b](https://github.com/systemslibrarian/crypto-lab-hash-zoo/commit/e86dac25e78bc6876e9fd644d1c6a0b823e06039) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** PARTIALLY REVIEWED — selected sections only; unmapped sections may teach other concepts. Source pin [1ba6cb3fa9aa](https://github.com/systemslibrarian/crypto-lab-hash-zoo/commit/1ba6cb3fa9aad400024b12af55900b4039ece412) reviewed 2026-10-30; 7 mapped sections.
   - **Single-bit flip and sweep** (`avalanche`; interactive; real-crypto)
     - **Visible section:** Section B - Avalanche Effect
     - **Learner action:** Pick an input bit, inspect changed digest bits, and sweep every bit or a sample for long messages.
@@ -7552,9 +7554,9 @@ SHA-256 vs SHA3-256 vs BLAKE3 internals — live avalanche analysis, Merkle-Damg
   - **Merkle–Damgård, sponge and tree** (`constructions`; explanation; conceptual)
     - **Visible section:** Section C - Construction Comparison
     - **Learner action:** Inspect diagrams and information tabs for SHA-256, SHA-3 and BLAKE3.
-    - **Observed result:** Compares exposed chaining state, hidden sponge capacity and parallelizable tree structure.
+    - **Observed result:** Compares exposed SHA-256 chaining state, the sponge capacity omitted from the digest, and parallelizable tree structure.
     - **Concepts taught:** Merkle–Damgård; sponge construction; tree hashing; capacity; parallelism
-    - **Limits:** The diagrams describe constructions; native BLAKE3 SIMD and multicore speed is not demonstrated by this page.
+    - **Limits:** The capacity is internal state, not a secret authentication key. These diagrams do not demonstrate native BLAKE3 SIMD or multicore speed, and an unkeyed digest does not authenticate a sender.
     - **Evidence at pinned commit:** `src/ui.ts:271`, `src/ui.ts:275`, `src/ui.ts:293`, `src/ui.ts:315`, `src/ui.ts:352`
   - **Block cipher compression and fixed points** (`davies-meyer`; interactive; real-crypto)
     - **Visible section:** Section D — A hash from a block cipher
@@ -7579,11 +7581,11 @@ SHA-256 vs SHA3-256 vs BLAKE3 internals — live avalanche analysis, Merkle-Damg
     - **Evidence at pinned commit:** `src/ui.ts:174`, `src/ui.ts:181`, `src/hasher.ts:1`
   - **Forge a bare SHA-256 prefix MAC** (`length-extension`; interactive; real-crypto)
     - **Visible section:** Section C - Construction Comparison
-    - **Learner action:** Supply a demonstration secret and attacker suffix, then continue hashing from a published tag.
+    - **Learner action:** Supply the demonstration secret and attacker suffix, forge an extended prefix-MAC message from the published tag, then read the specified keyed-MAC defense.
     - **Observed result:** Recomputed SHA-256 verifies an extended secret-prefix message without knowing secret bytes when their length is known.
     - **Concepts taught:** length extension; SHA-256 secret-prefix MAC; Merkle–Damgård state; HMAC
-    - **Limits:** This attacks bare SHA-256(secret||message), not HMAC-SHA256 or a proper authenticated protocol.
-    - **Evidence at pinned commit:** `src/ui.ts:333`, `src/ui.ts:341`, `src/hasher.ts:1`
+    - **Limits:** This attacks bare SHA-256(secret||message), not HMAC-SHA256. Authentication calls for a specified keyed construction such as HMAC, KMAC or BLAKE3 keyed mode; plain SHA-3/BLAKE3 is not a MAC. The keyed alternatives are guidance, not executed defense controls here.
+    - **Evidence at pinned commit:** `src/ui.ts:333`, `src/ui.ts:341`, `src/ui.ts:347`, `src/ui.ts:384`, `src/hasher.ts:1`
   - **Reduced-round SHA-2 research context** (`reduced-sha2`; explanation; conceptual)
     - **Visible section:** Reduced-round SHA-2 research
     - **Learner action:** Read citations and full-round boundary.
@@ -8150,41 +8152,41 @@ Compare classical, post-quantum, and hybrid key exchange and signatures. Break o
 - **Attacks shown:** Discrete log `src/ui/securityModel.ts:76`, Key recovery `src/crypto/attack.ts:31`, Side-channel (unspecified) `src/data.ts:181`, Timing side-channel `src/data.ts:181`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [747b5e9f218e](https://github.com/systemslibrarian/crypto-lab-hybrid-pqc/commit/747b5e9f218e9e69c97731db4aa93296a78ae0a3) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** PARTIALLY REVIEWED — selected sections only; unmapped sections may teach other concepts. Source pin [8408b3f2003f](https://github.com/systemslibrarian/crypto-lab-hybrid-pqc/commit/8408b3f2003f23dd750eb34a04bfbf8e9c504ff9) reviewed 2026-10-30; 7 mapped sections.
   - **Compromise-one-half security model** (`break-half`; interactive; simulation)
     - **Visible section:** 🧪 The Security Model — break a half
-    - **Learner action:** Toggle a break of the classical or lattice family and inspect key-recovery and fresh-message forgery attempts.
-    - **Observed result:** One compromised component fails while the hybrid key and signature survive if the other component remains secure; breaking both defeats all.
+    - **Learner action:** Toggle Quantum computer exists or Lattices fall to disclose that family’s component secrets, then compare candidate session keys and new-message forgery results.
+    - **Observed result:** With one family disclosed, the displayed hybrid recovery and forgery attempts fail; with both disclosed, these attempts recover the key and produce an accepted new-message forgery.
     - **Concepts taught:** hybrid hedging; KEM key recovery; EUF-CMA; one-of-two security
-    - **Limits:** The toggles model algorithm compromise. The AND signature does not promise strong unforgeability after one component is broken.
-    - **Evidence at pinned commit:** `src/ui/securityModel.ts:111`, `src/ui/securityModel.ts:113`, `src/ui/securityModel.ts:127`, `src/ui/securityModel.ts:133`, `src/ui/actions.ts:64`
+    - **Limits:** The switches disclose secrets; they do not execute Shor’s algorithm or a lattice break. Failed attempts are observations, not a security proof. General resilience depends on the combiner and protocol; AND verification does not promise strong unforgeability after one component is compromised.
+    - **Evidence at pinned commit:** `src/ui/securityModel.ts:113`, `src/ui/securityModel.ts:117`, `src/ui/securityModel.ts:119`, `src/ui/securityModel.ts:122`, `src/ui/securityModel.ts:130`, `src/ui/securityModel.ts:131`, `src/ui/actions.ts:64`, `src/ui/stepper.ts:25`, `src/ui/stepper.ts:27`
   - **Six-step hybrid migration tour** (`guided-tour`; interactive; simulation)
     - **Visible section:** Guided tour
-    - **Learner action:** Start the tour and advance through key exchange, signatures, one-family failure and two-family failure.
-    - **Observed result:** Watch the same shared threat state drive all three live columns at each deterministic step.
+    - **Learner action:** Start the tour and advance through key exchange, signatures, one-family secret disclosure and two-family secret disclosure.
+    - **Observed result:** The shared threat state drives the live columns through successful pure-scheme attacks, failed hybrid attempts with one secret undisclosed, and successful hybrid attacks with both disclosed.
     - **Concepts taught:** hybrid hedging; algorithm migration; single-family compromise; two-family compromise
-    - **Limits:** Break toggles are modeled compromises of an algorithm family.
-    - **Evidence at pinned commit:** `src/main.ts:23`, `src/ui/stepper.ts:22`, `src/ui/stepper.ts:52`, `src/ui/stepper.ts:73`, `src/ui/stepper.ts:90`
+    - **Limits:** The tour models compromise by disclosing secrets. A finite failed recovery or forgery attempt does not establish security against every attack.
+    - **Evidence at pinned commit:** `src/main.ts:23`, `src/ui/stepper.ts:22`, `src/ui/stepper.ts:25`, `src/ui/stepper.ts:26`, `src/ui/stepper.ts:27`, `src/ui/stepper.ts:28`, `src/ui/stepper.ts:52`, `src/ui/stepper.ts:73`, `src/ui/stepper.ts:90`
   - **Classical, PQ and hybrid KEM** (`key-exchange`; comparison; real-crypto)
     - **Visible section:** 🔑 Interactive Key Exchange
     - **Learner action:** Establish X25519, ML-KEM-768 and combined sessions, then re-run or re-time each.
     - **Observed result:** Inspect matched sender and receiver keys, handshake bytes and local timings for all three approaches.
     - **Concepts taught:** X25519; ML-KEM-768; hybrid key exchange; HKDF combiner
-    - **Limits:** This lab uses an HKDF combiner binding both ciphertexts; deployed X25519MLKEM768 in TLS combines secrets via the TLS key schedule.
-    - **Evidence at pinned commit:** `src/ui/kemPanel.ts:137`, `src/ui/kemPanel.ts:148`, `src/ui/kemPanel.ts:163`, `src/ui/kemPanel.ts:169`, `src/ui/actions.ts:20`
+    - **Limits:** The lab uses an HKDF combiner binding both ciphertexts; TLS X25519MLKEM768 combines secrets through its key schedule. Matching honest keys and failed recovery attempts do not prove either protocol secure.
+    - **Evidence at pinned commit:** `src/ui/kemPanel.ts:137`, `src/ui/kemPanel.ts:148`, `src/ui/kemPanel.ts:163`, `src/ui/kemPanel.ts:169`, `src/ui/kemPanel.ts:173`, `src/ui/actions.ts:20`
   - **Hybrid PQ migration context** (`migration-context`; explanation; conceptual)
     - **Visible section:** 🌐 Real-World Context
     - **Learner action:** Read the rationale, deployment and standards cards, and the crypto-agility notes.
     - **Observed result:** Compare harvest-now-decrypt-later exposure, algorithm hedge assumptions and listed real-world hybrid key exchanges with their dated source links.
     - **Concepts taught:** post-quantum migration; harvest now decrypt later; hybrid deployment; crypto agility
     - **Limits:** Deployment cards are source-linked snapshots, not live discovery of the current state of each service.
-    - **Evidence at pinned commit:** `src/main.ts:24`, `src/main.ts:30`, `src/data.ts:13`, `src/data.ts:47`, `src/data.ts:95`, `src/ui/content.ts:33`, `src/ui/content.ts:117`, `src/ui/content.ts:124`
+    - **Evidence at pinned commit:** `src/main.ts:24`, `src/main.ts:30`, `src/data.ts:13`, `src/data.ts:47`, `src/data.ts:95`, `src/ui/content.ts:33`, `src/ui/content.ts:121`, `src/ui/content.ts:128`
   - **Hybrid protocol scope** (`scope`; explanation; conceptual)
     - **Visible section:** Scope & Honest Caveats
     - **Learner action:** Read the caveats section after the deployment comparison.
     - **Observed result:** Identify the classroom combiner and threat-model boundaries before applying the results to deployed protocols.
     - **Concepts taught:** hybrid protocol; teaching model; deployment boundary
-    - **Evidence at pinned commit:** `src/ui/content.ts:151`, `src/ui/content.ts:153`, `src/ui/content.ts:158`, `src/data.ts:179`, `src/data.ts:181`, `src/data.ts:183`
+    - **Evidence at pinned commit:** `src/ui/content.ts:155`, `src/ui/content.ts:157`, `src/ui/content.ts:162`, `src/data.ts:179`, `src/data.ts:181`, `src/data.ts:183`
   - **Classical, PQ and hybrid signatures** (`signatures`; comparison; real-crypto)
     - **Visible section:** ✍️ Hybrid Digital Signatures
     - **Learner action:** Edit a message and sign with Ed25519, ML-DSA-65 and both components.
@@ -8196,7 +8198,7 @@ Compare classical, post-quantum, and hybrid key exchange and signatures. Break o
     - **Learner action:** Compare byte-size bars, implementation notes and protocol-fidelity table.
     - **Observed result:** See the wire and verification-material cost of carrying both classical and post-quantum components.
     - **Concepts taught:** cryptographic agility; hybrid overhead; protocol fidelity
-    - **Evidence at pinned commit:** `src/ui/content.ts:61`, `src/ui/content.ts:62`, `src/ui/content.ts:142`, `src/ui/content.ts:143`, `src/ui/kemPanel.ts:155`, `src/ui/sigPanel.ts:162`
+    - **Evidence at pinned commit:** `src/ui/content.ts:61`, `src/ui/content.ts:62`, `src/ui/content.ts:146`, `src/ui/content.ts:147`, `src/ui/kemPanel.ts:155`, `src/ui/sigPanel.ts:162`
 
 ### Hybrid Sign
 
@@ -11387,10 +11389,10 @@ AES-GCM vs AES-GCM-SIV comparison — live nonce reuse attack showing keystream 
 - **Attacks shown:** Birthday bound `README.md:46`, Factoring `src/main.ts:243`, Key recovery `src/main.ts:233`, Known-plaintext attack `src/crypto.ts:212`, Nonce reuse `src/crypto.ts:183`, Padding oracle `README.md:74`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ffbbecaba2e7](https://github.com/systemslibrarian/crypto-lab-nonce-guard/commit/ffbbecaba2e78830bcec32c5565e95d233c4e52d) reviewed 2026-10-22; 11 mapped sections.
+- **Exhibit map:** PARTIALLY REVIEWED — selected sections only; unmapped sections may teach other concepts. Source pin [1cbd17d6fbb2](https://github.com/systemslibrarian/crypto-lab-nonce-guard/commit/1cbd17d6fbb2c7337ea116b1fe018d4133b63ea5) reviewed 2026-10-30; 11 mapped sections.
   - **GHASH Key Recovery and Tag Forgery** (`forbidden-attack`; interactive; real-crypto)
     - **Visible section:** C2 — Level 2: authentication-key recovery (integrity)
-    - **Learner action:** Use the two chosen messages and run the recovered-H attack, then verify a forged tag.
+    - **Learner action:** In B — See It Break (Live), choose two distinct messages no longer than 512 bytes, enable nonce reuse, select Encrypt Both, then Run Attack. Inspect the recovered H and accepted forged tag.
     - **Observed result:** Factors the nonce-reuse equation over GF(2^128), tests candidates, and has real AES-GCM accept the forgery.
     - **Concepts taught:** GHASH; Joux forbidden attack; authentication key recovery; tag forgery
     - **Limits:** Known plaintext is needed to construct chosen forged ciphertext; the browser caps messages at 512 bytes for the root search.
@@ -11419,19 +11421,21 @@ AES-GCM vs AES-GCM-SIV comparison — live nonce reuse attack showing keystream 
     - **Learner action:** Inspect the POLYVAL equation and the AES encryption of its output.
     - **Observed result:** Explains why XOR of two published SIV tags does not expose the linear polynomial in H as the GCM reused-nonce attack does.
     - **Concepts taught:** POLYVAL; authentication tag; GHASH contrast; nonce reuse
+    - **Limits:** Blocking this common-mask cancellation equation is not proof that all attacks fail; the construction assumptions and usage bounds still apply.
     - **Evidence at pinned commit:** `index.html:382`, `index.html:383`, `index.html:384`, `index.html:385`, `index.html:389`
   - **AES-GCM versus AES-GCM-SIV Nonce Reuse** (`reuse-compare`; comparison; real-crypto)
     - **Visible section:** B — See It Break (Live Attack Demo)
     - **Learner action:** Encrypt two editable messages with reused or fresh nonces and run the attack.
-    - **Observed result:** Shows AES-GCM plaintext XOR and tag-forgery exposure against misuse-resistant SIV output.
+    - **Observed result:** Computes GCM plaintext XOR and a tag forgery, alongside actual SIV ciphertexts and tags for the chosen inputs.
     - **Concepts taught:** AES-GCM; AES-GCM-SIV; nonce reuse; AEAD misuse resistance
-    - **Evidence at pinned commit:** `index.html:181`, `index.html:209`, `index.html:217`, `index.html:229`, `index.html:237`, `src/main.ts:123`, `src/main.ts:138`
+    - **Limits:** The SIV comparison uses empty AAD and does not attempt a SIV forgery. Repeated full inputs reproduce the encrypted result; equality and length remain visible.
+    - **Evidence at pinned commit:** `index.html:181`, `index.html:209`, `index.html:217`, `index.html:229`, `index.html:237`, `src/main.ts:123`, `src/main.ts:138`, `src/main.ts:359`, `src/main.ts:369`
   - **Synthetic-IV Construction** (`siv-construction`; explanation; conceptual)
     - **Visible section:** D0 — The synthetic-IV construction (RFC 8452)
-    - **Learner action:** Trace AES-GCM-SIV from per-nonce keys through POLYVAL, encrypted tag, and the CTR initial block.
-    - **Observed result:** Shows why different plaintexts under a repeated nonce use different keystreams, with identical-input equality still visible.
+    - **Learner action:** In SIV: Misuse Resistance and Its Limits, trace per-nonce keys, POLYVAL, encrypted tag and CTR input separation.
+    - **Observed result:** Explains why the direct GCM cancellation attacks do not transfer, while identical full inputs reproduce the tag, IV, keystream and ciphertext.
     - **Concepts taught:** AES-GCM-SIV; synthetic IV; POLYVAL; misuse resistance; equality leakage
-    - **Limits:** This section explains the pipeline; the D3 panel executes a live tag/IV comparison.
+    - **Limits:** This is a construction explanation, not a general security proof. Misuse resistance depends on RFC 8452 assumptions and usage bounds; equality and length remain visible.
     - **Evidence at pinned commit:** `index.html:339`, `index.html:343`, `index.html:346`, `index.html:347`, `index.html:348`, `index.html:350`, `index.html:352`
   - **AES-GCM-SIV Per-Nonce Keys** (`siv-key-derivation`; explanation; conceptual)
     - **Visible section:** D1 — Key Derivation
@@ -11442,24 +11446,24 @@ AES-GCM vs AES-GCM-SIV comparison — live nonce reuse attack showing keystream 
   - **AES-GCM-SIV Operational Limitations** (`siv-operational-limits`; explanation; conceptual)
     - **Visible section:** E3 — Honest Limitations of AES-GCM-SIV
     - **Learner action:** Read the limitation list beside the AES-GCM and AES-GCM-SIV selection table.
-    - **Observed result:** Identifies the lack of FIPS approval, the need to buffer plaintext before encryption, the second pass, and narrower deployment experience.
+    - **Observed result:** Names bounded misuse resistance, full-input equality and length leakage, plus the stated FIPS, buffering, two-pass and deployment limitations.
     - **Concepts taught:** AES-GCM-SIV; FIPS approval; online encryption; two-pass encryption; deployment guidance
-    - **Limits:** Status and deployment experience are the claims made by this pinned page, not a live standards or implementation survey.
-    - **Evidence at pinned commit:** `index.html:455`, `index.html:458`, `index.html:459`, `index.html:460`, `index.html:461`
+    - **Limits:** The panel attempts no SIV forgery and measures no security bound. Status and deployment statements describe this pinned page, not a live survey; nonce uniqueness remains the recommended policy.
+    - **Evidence at pinned commit:** `index.html:455`, `index.html:457`, `index.html:458`, `index.html:459`, `index.html:460`, `index.html:461`
   - **Synthetic IV Derivation** (`siv-tag-iv`; interactive; real-crypto)
     - **Visible section:** D3 — Tag-as-IV, Live: plaintext → tag → IV → ciphertext
     - **Learner action:** Edit the SIV plaintext or compare a repeated message with one changed byte.
-    - **Observed result:** Shows POLYVAL-derived tag, synthetic CTR IV, and ciphertext change together.
+    - **Observed result:** Displays the computed tag, derived CTR IV and ciphertext; identical full inputs reproduce all three and the keystream.
     - **Concepts taught:** AES-GCM-SIV; POLYVAL; synthetic IV; deterministic reuse leakage
-    - **Limits:** Reusing a nonce under SIV still reveals when plaintext and associated data repeat.
-    - **Evidence at pinned commit:** `index.html:343`, `index.html:393`, `index.html:396`, `index.html:403`, `src/main.ts:138`
+    - **Limits:** Full inputs include key, nonce, associated data and plaintext; this panel fixes AAD to empty. Changed sample outputs do not rule out collisions for all inputs.
+    - **Evidence at pinned commit:** `index.html:393`, `index.html:394`, `index.html:396`, `index.html:403`, `src/main.ts:138`, `src/main.ts:493`
   - **Proposed Wider-Block GCM Boundary** (`wide-block-gcm-context`; explanation; conceptual)
     - **Visible section:** Under consideration: wider-block GCM
     - **Learner action:** Read the dated research note distinguishing a proposed 256-bit-block cipher mode from AES-256 and this lab’s implemented modes.
     - **Observed result:** Clarifies that increasing an AES key length does not increase its 128-bit block size or implement the proposal.
     - **Concepts taught:** wGCM; Rijndael-256; AES block size; GCM revision proposal
     - **Limits:** This pinned note describes a proposal as of October 2026; the lab neither implements wGCM nor establishes its current standards status.
-    - **Evidence at pinned commit:** `index.html:465`, `index.html:466`, `index.html:467`
+    - **Evidence at pinned commit:** `index.html:466`, `index.html:467`, `index.html:468`
 
 ### Nonce Lattice
 

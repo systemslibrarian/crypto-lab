@@ -18,6 +18,10 @@ A curated collection of interactive cryptography exhibits, from classical cipher
 ---
 
 
+## Research implementation records
+
+The [31 October research review implementation](docs/research-review-2026-10-31.md) links the twelve correction/enhancement findings to their source changes, tests and project PRs. The three advanced options retain their deferred status; reading depth, implementation and deployment evidence are recorded separately.
+
 ## Book reading companions
 
 Choose a route that matches your learning goal:

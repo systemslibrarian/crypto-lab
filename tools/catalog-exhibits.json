@@ -18965,8 +18965,8 @@
       ]
     },
     "crypto-lab-isogeny-atlas": {
-      "commit": "70870f42c90fc8912276fade08685bce318c29c9",
-      "reviewed": "2026-10-22",
+      "commit": "bf5fd888a6ef82eeb3c61eabcef4e68e97f5f4d3",
+      "reviewed": "2026-10-31",
       "exhibits": [
         {
           "id": "atlas",
@@ -19130,9 +19130,10 @@
             "src/ui/problems.ts:33",
             "src/main.ts:457",
             "src/main.ts:470",
-            "src/main.ts:473"
+            "src/main.ts:473",
+            "src/ui/problems.ts:35"
           ],
-          "limits": "Tiny graph search does not estimate concrete cost at cryptographic size.",
+          "limits": "Tiny graph search does not estimate concrete cost at cryptographic size. The expanded precise-problem panel cites the 30 October 2026 Mamah preprint revision and distinguishes heuristic concrete attack costs from this tiny-graph experiment.",
           "section": "The seven open problems, drawn on the graph"
         },
         {
@@ -19177,9 +19178,10 @@
             "src/ui/problems.ts:73",
             "src/main.ts:480",
             "src/main.ts:487",
-            "src/main.ts:502"
+            "src/main.ts:502",
+            "src/ui/problems.ts:75"
           ],
-          "limits": "Small graph cycle search is a teaching instance, not a research-scale solver.",
+          "limits": "Small graph cycle search is a teaching instance, not a research-scale solver. The expanded precise-problem panel cites the 30 October 2026 Mamah preprint revision and distinguishes heuristic concrete attack costs from this tiny-graph experiment.",
           "section": "The seven open problems, drawn on the graph"
         },
         {
@@ -30350,8 +30352,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-pq-families": {
-      "commit": "5d07cfc5f65315a2b764feb9ae94a737583b0b66",
-      "reviewed": "2026-10-25",
+      "commit": "87c1917c18a865a1117dcc718948fff060981801",
+      "reviewed": "2026-10-31",
       "exhibits": [
         {
           "id": "five-families",
@@ -30382,9 +30384,10 @@
             "src/ui.ts:349",
             "src/ui.ts:386",
             "src/data.ts:459",
-            "src/data.ts:503"
+            "src/data.ts:503",
+            "src/data.ts:682"
           ],
-          "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity."
+          "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery."
         },
         {
           "id": "size-comparison",
@@ -30591,7 +30594,7 @@
             "src/ui.ts:952",
             "src/ui.ts:955",
             "src/ui.ts:971",
-            "src/data.ts:804"
+            "src/data.ts:817"
           ],
           "limits": "A curated historical summary, not an automatically refreshed standards feed or implementation."
         },
@@ -30685,7 +30688,7 @@
           "evidence": [
             "src/ui.ts:2397",
             "src/ui.ts:2407",
-            "src/data.ts:952"
+            "src/data.ts:965"
           ],
           "limits": "The glossary is an explanatory reference, not a runnable construction or formal security definition."
         },

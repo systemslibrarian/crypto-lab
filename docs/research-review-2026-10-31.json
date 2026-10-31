@@ -36,7 +36,7 @@
         {
           "name": "hosted CI",
           "result": "passed",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244234168,
@@ -84,14 +84,14 @@
         },
         {
           "name": "hosted CI",
-          "result": "pending",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244878878,
               "name": "Deploy to GitHub Pages",
-              "status": "in_progress",
-              "conclusion": null,
+              "status": "completed",
+              "conclusion": "success",
               "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-drbg-arena/actions/runs/41244878878/jobs"
             }
           ]
@@ -141,7 +141,7 @@
         {
           "name": "hosted CI",
           "result": "passed",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244724118,
@@ -195,14 +195,14 @@
         },
         {
           "name": "hosted CI",
-          "result": "pending",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244449676,
               "name": "CI",
-              "status": "in_progress",
-              "conclusion": null,
+              "status": "completed",
+              "conclusion": "success",
               "jobsUrl": "https://api.github.com/repos/systemslibrarian/cipher-museum/actions/runs/41244449676/jobs"
             }
           ]
@@ -250,14 +250,14 @@
         },
         {
           "name": "hosted CI",
-          "result": "pending",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244449676,
               "name": "CI",
-              "status": "in_progress",
-              "conclusion": null,
+              "status": "completed",
+              "conclusion": "success",
               "jobsUrl": "https://api.github.com/repos/systemslibrarian/cipher-museum/actions/runs/41244449676/jobs"
             }
           ]
@@ -298,14 +298,14 @@
         },
         {
           "name": "hosted CI",
-          "result": "pending",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244449676,
               "name": "CI",
-              "status": "in_progress",
-              "conclusion": null,
+              "status": "completed",
+              "conclusion": "success",
               "jobsUrl": "https://api.github.com/repos/systemslibrarian/cipher-museum/actions/runs/41244449676/jobs"
             }
           ]
@@ -346,14 +346,14 @@
         },
         {
           "name": "hosted CI",
-          "result": "pending",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244449676,
               "name": "CI",
-              "status": "in_progress",
-              "conclusion": null,
+              "status": "completed",
+              "conclusion": "success",
               "jobsUrl": "https://api.github.com/repos/systemslibrarian/cipher-museum/actions/runs/41244449676/jobs"
             }
           ]
@@ -395,7 +395,7 @@
         {
           "name": "hosted CI",
           "result": "passed",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244265171,
@@ -444,7 +444,7 @@
         {
           "name": "hosted CI",
           "result": "passed",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244268641,
@@ -513,7 +513,7 @@
         {
           "name": "hosted CI",
           "result": "passed",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244572076,
@@ -560,14 +560,14 @@
         },
         {
           "name": "hosted CI",
-          "result": "pending",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244881188,
               "name": "Deploy to GitHub Pages",
-              "status": "in_progress",
-              "conclusion": null,
+              "status": "completed",
+              "conclusion": "success",
               "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-multivariate/actions/runs/41244881188/jobs"
             }
           ]
@@ -610,7 +610,7 @@
         {
           "name": "hosted CI",
           "result": "passed",
-          "summary": "See PR checks; final run observations will be recorded before delivery.",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
           "runs": [
             {
               "id": 41244284736,
@@ -843,5 +843,11 @@
       "finding": "An existing test assumed a fair random sample always passes all four diagnostics; it now checks the tally against the actual painted bytes.",
       "resolutionCommit": "419a3d615133ce61a98c78eb8f36ba46bbcaff37"
     }
-  ]
+  ],
+  "finalImplementationCI": {
+    "result": "passed",
+    "projectCount": 9,
+    "scope": "Exact-head PR workflows, not main-branch deployment.",
+    "observedOn": "2026-10-31"
+  }
 }

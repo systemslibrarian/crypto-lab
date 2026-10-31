@@ -26,11 +26,13 @@ Museum R01–R14 and F01–F13, the correct TreeKEM convergence and entropy arit
 
 ## Validation and limits
 
+All nine implementation PRs passed their hosted workflows at the exact head revisions recorded in the JSON ledger. The PRs remain open; successful PR checks are not evidence of a merge or deployment.
+
 All eight modified Crypto Lab projects passed local unit tests and production builds. New interactions were also exercised with rendered DOM tests: finite P/Q comparisons, all five authenticated group scenarios, semantic proof outcomes, one-use inventory, full-helper coalitions and AEAD property tables. Individual counts and exact source revisions are recorded in the [machine-readable finding ledger](research-review-2026-10-31.json).
 
 The Museum passed the new metadata/bundle/typed-key regressions, existing workbench/DOM checks, v1/v2 fixture replays, release metadata and HTML lint across 216 pages. Its full suite initially had one timing-canary failure while other work was running. The complete engine suite was rerun in isolation and passed, including all 713 engine tests, timing and mutation canaries, and corpus replay. Every other suite in the full run passed. Rebuilt evaluation files update source hashes and machine-specific timing/heap measurements; non-timing outcomes were compared and preserved.
 
-Local Chromium launch was blocked by the execution environment before page execution. Hosted PR workflows run the actual browser/accessibility gates; their observed conclusions are retained in the JSON ledger. The first hosted pass found the new Salamander panel count and missing UOV button styles; both were fixed without weakening the accessibility gate. Historical failures remain in GitHub run history.
+Local Chromium launch was blocked by the execution environment before page execution. Hosted PR workflows ran the actual browser/accessibility gates; their successful conclusions are retained in the JSON ledger. Earlier passes found the new Salamander panel count, UOV button/select styling and an existing DRBG test that incorrectly expected every random sample to pass. The fixes preserve the accessibility gate and compare the DRBG tally against the actual painted bytes. Historical failures remain in GitHub run history. Three deliberate regressions were also caught by their owning tests: discarding Q's sign, blessing inconsistent histories and dropping extended source fields; each source file was restored byte for byte.
 
 No independent paper proof certification, production attack reproduction, live vulnerability verification or deployed-site audit is claimed. The public-helper equations were derived from the saved paper's sections III–IV with valid tiny parameters; an independent algebraic recovery check covers all 625 dealer choices and a full census covers every coalition.
 

@@ -1,6 +1,6 @@
 # Research review implementation 31 October 2026
 
-Twelve correction/enhancement findings from the supplied review are implemented across nine project PRs. The four-item first batch and the bounded Museum/Crypto Lab follow-ons are included. The three advanced options remain queued with their original conditions. The PRs are open; this record does not claim they are merged or deployed.
+Twelve correction/enhancement findings from the supplied review are implemented and merged into main across nine projects. The four-item first batch and the bounded Museum/Crypto Lab follow-ons are included. The three advanced options remain queued with their original conditions. Merged commits and deployment observations are recorded separately.
 
 | Finding | Resulting lesson or behavior | Delivery |
 | --- | --- | --- |
@@ -26,7 +26,7 @@ Museum R01–R14 and F01–F13, the correct TreeKEM convergence and entropy arit
 
 ## Validation and limits
 
-All nine implementation PRs passed their hosted workflows at the exact head revisions recorded in the JSON ledger. The PRs remain open; successful PR checks are not evidence of a merge or deployment.
+All nine implementation PRs passed their hosted workflows at the exact head revisions recorded in the JSON ledger, then were squash-merged with those expected heads. Their main references were checked against the returned merge commits. Post-merge workflows and deployment observations are tracked separately in the JSON ledger.
 
 All eight modified Crypto Lab projects passed local unit tests and production builds. New interactions were also exercised with rendered DOM tests: finite P/Q comparisons, all five authenticated group scenarios, semantic proof outcomes, one-use inventory, full-helper coalitions and AEAD property tables. Individual counts and exact source revisions are recorded in the [machine-readable finding ledger](research-review-2026-10-31.json).
 
@@ -41,3 +41,19 @@ No independent paper proof certification, production attack reproduction, live v
 Use stable paper IDs and saved-file SHA-256 values to join reading evidence to exact versions. Intake status, reading depth, implementation and deployment are separate fields. The supplied report's 24 complete reads/492 pages (36/856 cumulatively) remain attributed to that report. This implementation pass does not claim those reads again, recheck all 1,468 saved hashes or replace the existing reading ledgers. Missing hashes stay unknown. Preserve unchanged-version readings, rejected claims and unresolved issues; reopen a paper for a changed version or a concrete new question.
 
 The existing generated CATALOG remains pinned to its earlier section reviews; it was checked for synchronization and was not silently re-pinned as a new full-fleet audit. This supplemental ledger supplies exact commits and paths for the new controls. A later catalog refresh should review and re-anchor the affected sections before advancing its source pins.
+
+## Merged implementations
+
+| Project PR | Merge commit |
+| --- | --- |
+| [crypto-lab-quantum-entropy #25](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/25) | [690cfa687dac](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/commit/690cfa687dac827e88c5bad3989da8c0674f3195) |
+| [crypto-lab-drbg-arena #26](https://github.com/systemslibrarian/crypto-lab-drbg-arena/pull/26) | [0643a7c7c0d2](https://github.com/systemslibrarian/crypto-lab-drbg-arena/commit/0643a7c7c0d22bd43e94463ea860bacd3669533a) |
+| [crypto-lab-mls-group #30](https://github.com/systemslibrarian/crypto-lab-mls-group/pull/30) | [1738d76601f4](https://github.com/systemslibrarian/crypto-lab-mls-group/commit/1738d76601f4f4df0d430f7ae444c8fd00185619) |
+| [crypto-lab-vector-gate #11](https://github.com/systemslibrarian/crypto-lab-vector-gate/pull/11) | [bf020f31fce1](https://github.com/systemslibrarian/crypto-lab-vector-gate/commit/bf020f31fce12253ad9b82a97794269b0b0b4644) |
+| [crypto-lab-snark-arena #27](https://github.com/systemslibrarian/crypto-lab-snark-arena/pull/27) | [45808098106b](https://github.com/systemslibrarian/crypto-lab-snark-arena/commit/45808098106b26da8a69fa56ad5f51809f2b4efa) |
+| [crypto-lab-salamander #33](https://github.com/systemslibrarian/crypto-lab-salamander/pull/33) | [828d659533f3](https://github.com/systemslibrarian/crypto-lab-salamander/commit/828d659533f37c538769a45386fb4c55cbbf5d7c) |
+| [crypto-lab-multivariate #23](https://github.com/systemslibrarian/crypto-lab-multivariate/pull/23) | [c11034447f72](https://github.com/systemslibrarian/crypto-lab-multivariate/commit/c11034447f72516d0a1fac0ee2d72cd824db3bbf) |
+| [crypto-lab-hostile-paths #5](https://github.com/systemslibrarian/crypto-lab-hostile-paths/pull/5) | [bee18d960928](https://github.com/systemslibrarian/crypto-lab-hostile-paths/commit/bee18d960928c1c3cb815ff1828e2ffba76e9609) |
+| [cipher-museum #21](https://github.com/systemslibrarian/cipher-museum/pull/21) | [ac659d89de84](https://github.com/systemslibrarian/cipher-museum/commit/ac659d89de8422209fdca944f6d5d5abf9de0797) |
+
+Each merge used the reviewed head as a lease. The deployment status in the JSON ledger is an observed checkpoint; merge completion alone does not establish deployed content.

@@ -19,8 +19,29 @@
         "paths": [
           "README.md"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "690cfa687dac827e88c5bad3989da8c0674f3195",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "690cfa687dac827e88c5bad3989da8c0674f3195",
+        "postMergeRuns": [
+          {
+            "id": 41245263477,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41245263477"
+          },
+          {
+            "id": 41245263556,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41245263556"
+          }
+        ]
       },
       "checks": [
         {
@@ -68,8 +89,29 @@
           "src/stats/signed-monobit.ts",
           "src/ui/signed-monobit.ts"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "0643a7c7c0d22bd43e94463ea860bacd3669533a",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "0643a7c7c0d22bd43e94463ea860bacd3669533a",
+        "postMergeRuns": [
+          {
+            "id": 41245267124,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-drbg-arena/actions/runs/41245267124"
+          },
+          {
+            "id": 41245267465,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-drbg-arena/actions/runs/41245267465"
+          }
+        ]
       },
       "checks": [
         {
@@ -124,8 +166,29 @@
           "src/group/group-state.ts",
           "src/ui/application-consistency.ts"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "1738d76601f4f4df0d430f7ae444c8fd00185619",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "1738d76601f4f4df0d430f7ae444c8fd00185619",
+        "postMergeRuns": [
+          {
+            "id": 41245270547,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-mls-group/actions/runs/41245270547"
+          },
+          {
+            "id": 41245270968,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/systemslibrarian/crypto-lab-mls-group/actions/runs/41245270968"
+          }
+        ]
       },
       "checks": [
         {
@@ -179,8 +242,21 @@
           "js/research-ui.js",
           "lab/evidence-workbench.html"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "postMergeRuns": [
+          {
+            "id": 41245290939,
+            "name": "CI",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/cipher-museum/actions/runs/41245290939"
+          }
+        ]
       },
       "checks": [
         {
@@ -234,8 +310,21 @@
           "js/research-model.js",
           "lab/evidence-workbench.html"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "postMergeRuns": [
+          {
+            "id": 41245290939,
+            "name": "CI",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/cipher-museum/actions/runs/41245290939"
+          }
+        ]
       },
       "checks": [
         {
@@ -282,8 +371,21 @@
         "paths": [
           "ciphers/voynich.html"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "postMergeRuns": [
+          {
+            "id": 41245290939,
+            "name": "CI",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/cipher-museum/actions/runs/41245290939"
+          }
+        ]
       },
       "checks": [
         {
@@ -330,8 +432,21 @@
         "paths": [
           "ciphers/diffie-hellman.html"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "postMergeRuns": [
+          {
+            "id": 41245290939,
+            "name": "CI",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/cipher-museum/actions/runs/41245290939"
+          }
+        ]
       },
       "checks": [
         {
@@ -378,8 +493,29 @@
         "paths": [
           "src/main.ts"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "bf020f31fce12253ad9b82a97794269b0b0b4644",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "bf020f31fce12253ad9b82a97794269b0b0b4644",
+        "postMergeRuns": [
+          {
+            "id": 41245273932,
+            "name": "Verify and deploy Vector Gate",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-vector-gate/actions/runs/41245273932"
+          },
+          {
+            "id": 41245273470,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-vector-gate/actions/runs/41245273470"
+          }
+        ]
       },
       "checks": [
         {
@@ -427,8 +563,29 @@
           "src/crypto/semantic-outcomes.ts",
           "src/ui/semantic-outcomes.ts"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "45808098106b26da8a69fa56ad5f51809f2b4efa",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "45808098106b26da8a69fa56ad5f51809f2b4efa",
+        "postMergeRuns": [
+          {
+            "id": 41245276564,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-snark-arena/actions/runs/41245276564"
+          },
+          {
+            "id": 41245276088,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-snark-arena/actions/runs/41245276088"
+          }
+        ]
       },
       "checks": [
         {
@@ -496,8 +653,29 @@
         "paths": [
           "src/ui/property-scope.ts"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "828d659533f37c538769a45386fb4c55cbbf5d7c",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "828d659533f37c538769a45386fb4c55cbbf5d7c",
+        "postMergeRuns": [
+          {
+            "id": 41245279491,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-salamander/actions/runs/41245279491"
+          },
+          {
+            "id": 41245279148,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-salamander/actions/runs/41245279148"
+          }
+        ]
       },
       "checks": [
         {
@@ -544,8 +722,29 @@
         "paths": [
           "src/precomputation.ts"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "c11034447f72516d0a1fac0ee2d72cd824db3bbf",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "c11034447f72516d0a1fac0ee2d72cd824db3bbf",
+        "postMergeRuns": [
+          {
+            "id": 41245283472,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-multivariate/actions/runs/41245283472"
+          },
+          {
+            "id": 41245282499,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-multivariate/actions/runs/41245282499"
+          }
+        ]
       },
       "checks": [
         {
@@ -593,8 +792,29 @@
           "src/psmt/public-helper.ts",
           "src/ui/public-helper.ts"
         ],
-        "status": "open-pr-not-merged",
-        "deployment": "not-verified"
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "bee18d960928c1c3cb815ff1828e2ffba76e9609",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "bee18d960928c1c3cb815ff1828e2ffba76e9609",
+        "postMergeRuns": [
+          {
+            "id": 41245287349,
+            "name": "CodeQL",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-hostile-paths/actions/runs/41245287349"
+          },
+          {
+            "id": 41245287295,
+            "name": "Verify and deploy",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-hostile-paths/actions/runs/41245287295"
+          }
+        ]
       },
       "checks": [
         {
@@ -849,5 +1069,10 @@
     "projectCount": 9,
     "scope": "Exact-head PR workflows, not main-branch deployment.",
     "observedOn": "2026-10-31"
+  },
+  "mergeSummary": {
+    "mergedProjects": 9,
+    "centralRecordPullRequest": "https://github.com/systemslibrarian/crypto-lab/pull/347",
+    "deploymentEvidence": "Post-merge workflows recorded separately; merge is not deployment confirmation."
   }
 }

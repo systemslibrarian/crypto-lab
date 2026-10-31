@@ -1,0 +1,1078 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-10-31",
+  "scope": "Twelve correction/enhancement findings implemented across nine project PRs; three advanced options retained as options.",
+  "findings": [
+    {
+      "id": "R20261031-01",
+      "classification": "Correction",
+      "disposition": "implemented",
+      "change": "Correct the leftover-hash vacuity boundary.",
+      "paperIds": [],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-quantum-entropy",
+        "baselineCommit": "656adbf11c4f110b57f55978213c6c832cfc7b87",
+        "commit": "d724ced0edb78aaac443bf48254933a36e027954",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/25",
+        "paths": [
+          "README.md"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "690cfa687dac827e88c5bad3989da8c0674f3195",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "690cfa687dac827e88c5bad3989da8c0674f3195",
+        "postMergeRuns": [
+          {
+            "id": 41245263477,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41245263477"
+          },
+          {
+            "id": 41245263556,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41245263556"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "51 unit tests and production build passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244234168,
+              "name": "Deploy to GitHub Pages",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41244234168/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R20261031-02",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Compare signed monobit statistics and folded P/signed Q with exact finite-binomial expectations.",
+      "paperIds": [
+        "CL974"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-drbg-arena",
+        "baselineCommit": "fac6ec03d85a41ff82d993706e66e8d609c76597",
+        "commit": "419a3d615133ce61a98c78eb8f36ba46bbcaff37",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-drbg-arena/pull/26",
+        "paths": [
+          "src/stats/signed-monobit.ts",
+          "src/ui/signed-monobit.ts"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "0643a7c7c0d22bd43e94463ea860bacd3669533a",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "0643a7c7c0d22bd43e94463ea860bacd3669533a",
+        "postMergeRuns": [
+          {
+            "id": 41245267124,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-drbg-arena/actions/runs/41245267124"
+          },
+          {
+            "id": 41245267465,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-drbg-arena/actions/runs/41245267465"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "55 unit tests, production build, and rendered DOM interaction checks passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244878878,
+              "name": "Deploy to GitHub Pages",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-drbg-arena/actions/runs/41244878878/jobs"
+            }
+          ]
+        },
+        {
+          "name": "owning regression test rejects a deliberate defect",
+          "result": "passed",
+          "summary": "Discarding signed Q direction, blessing inconsistent histories, or dropping extended source fields was caught by the respective owning test; files restored byte for byte."
+        }
+      ]
+    },
+    {
+      "id": "R20261031-03",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Separate received histories, authenticated semantic disagreement and edit reconciliation from epoch-key equality.",
+      "paperIds": [
+        "CL1190",
+        "CL1196"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-mls-group",
+        "baselineCommit": "f82c120bbf0aee60e8b0717d7fa7bb6e517f86b2",
+        "commit": "9938d603e58fba265c94678f8ec3ace3dbf8208e",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-mls-group/pull/30",
+        "paths": [
+          "src/group/application-consistency.ts",
+          "src/group/group-state.ts",
+          "src/ui/application-consistency.ts"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "1738d76601f4f4df0d430f7ae444c8fd00185619",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "1738d76601f4f4df0d430f7ae444c8fd00185619",
+        "postMergeRuns": [
+          {
+            "id": 41245270547,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-mls-group/actions/runs/41245270547"
+          },
+          {
+            "id": 41245270968,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/systemslibrarian/crypto-lab-mls-group/actions/runs/41245270968"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "34 unit tests, production build and rendered DOM interactions passed, including all five transport scenarios and separate message-set/order controls."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244724118,
+              "name": "Deploy to GitHub Pages",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-mls-group/actions/runs/41244724118/jobs"
+            }
+          ]
+        },
+        {
+          "name": "owning regression test rejects a deliberate defect",
+          "result": "passed",
+          "summary": "Discarding signed Q direction, blessing inconsistent histories, or dropping extended source fields was caught by the respective owning test; files restored byte for byte."
+        }
+      ]
+    },
+    {
+      "id": "R20261031-04",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Preserve custody, origin, script/language, uncertainty and separate object/image/transcription rights.",
+      "paperIds": [
+        "CL1237"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/cipher-museum",
+        "baselineCommit": "fdf437462fec5518bd98dea9126ab7923bf48b9f",
+        "commit": "bf9b660dcd594cabb831d90a5d3a3d6d7a304ef4",
+        "pullRequest": "https://github.com/systemslibrarian/cipher-museum/pull/21",
+        "paths": [
+          "js/research-model.js",
+          "js/research-ui.js",
+          "lab/evidence-workbench.html"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "postMergeRuns": [
+          {
+            "id": 41245290939,
+            "name": "CI",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/cipher-museum/actions/runs/41245290939"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "New archival and bundle regression; workbench/DOM; v1/v2 fixture replay; 216-file HTML lint; release metadata; full suite with engine canary rerun in isolation passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244449676,
+              "name": "CI",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/cipher-museum/actions/runs/41244449676/jobs"
+            }
+          ]
+        },
+        {
+          "name": "owning regression test rejects a deliberate defect",
+          "result": "passed",
+          "summary": "Discarding signed Q direction, blessing inconsistent histories, or dropping extended source fields was caught by the respective owning test; files restored byte for byte."
+        }
+      ]
+    },
+    {
+      "id": "R20261031-05",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Add optional linguistic categories and an invented ending/punctuation worked example.",
+      "paperIds": [
+        "CL1187"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/cipher-museum",
+        "baselineCommit": "fdf437462fec5518bd98dea9126ab7923bf48b9f",
+        "commit": "bf9b660dcd594cabb831d90a5d3a3d6d7a304ef4",
+        "pullRequest": "https://github.com/systemslibrarian/cipher-museum/pull/21",
+        "paths": [
+          "ciphers/nomenclator.html",
+          "js/research-model.js",
+          "lab/evidence-workbench.html"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "postMergeRuns": [
+          {
+            "id": 41245290939,
+            "name": "CI",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/cipher-museum/actions/runs/41245290939"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "New archival and bundle regression; workbench/DOM; v1/v2 fixture replay; 216-file HTML lint; release metadata; full suite with engine canary rerun in isolation passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244449676,
+              "name": "CI",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/cipher-museum/actions/runs/41244449676/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R20261031-06",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Keep language benchmark stages and historical hypothesis claims separate.",
+      "paperIds": [
+        "CL1238"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/cipher-museum",
+        "baselineCommit": "fdf437462fec5518bd98dea9126ab7923bf48b9f",
+        "commit": "bf9b660dcd594cabb831d90a5d3a3d6d7a304ef4",
+        "pullRequest": "https://github.com/systemslibrarian/cipher-museum/pull/21",
+        "paths": [
+          "ciphers/voynich.html"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "postMergeRuns": [
+          {
+            "id": 41245290939,
+            "name": "CI",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/cipher-museum/actions/runs/41245290939"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "New archival and bundle regression; workbench/DOM; v1/v2 fixture replay; 216-file HTML lint; release metadata; full suite with engine canary rerun in isolation passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244449676,
+              "name": "CI",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/cipher-museum/actions/runs/41244449676/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R20261031-07",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Attach full DH oracle access, simulation, offline and online costs to the conditional reduction.",
+      "paperIds": [
+        "CL1152"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/cipher-museum",
+        "baselineCommit": "fdf437462fec5518bd98dea9126ab7923bf48b9f",
+        "commit": "bf9b660dcd594cabb831d90a5d3a3d6d7a304ef4",
+        "pullRequest": "https://github.com/systemslibrarian/cipher-museum/pull/21",
+        "paths": [
+          "ciphers/diffie-hellman.html"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "ac659d89de8422209fdca944f6d5d5abf9de0797",
+        "postMergeRuns": [
+          {
+            "id": 41245290939,
+            "name": "CI",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/cipher-museum/actions/runs/41245290939"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "New archival and bundle regression; workbench/DOM; v1/v2 fixture replay; 216-file HTML lint; release metadata; full suite with engine canary rerun in isolation passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244449676,
+              "name": "CI",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/cipher-museum/actions/runs/41244449676/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R20261031-08",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Name the Jasmin compiler-preservation result with dependencies and exclusions.",
+      "paperIds": [
+        "CL1241"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-vector-gate",
+        "baselineCommit": "69e3b2c04ca87ecd4528474616a7f824aca40b99",
+        "commit": "95eee78a405fbd2466905fe0fec5a271e44f2508",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-vector-gate/pull/11",
+        "paths": [
+          "src/main.ts"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "bf020f31fce12253ad9b82a97794269b0b0b4644",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "bf020f31fce12253ad9b82a97794269b0b0b4644",
+        "postMergeRuns": [
+          {
+            "id": 41245273932,
+            "name": "Verify and deploy Vector Gate",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-vector-gate/actions/runs/41245273932"
+          },
+          {
+            "id": 41245273470,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-vector-gate/actions/runs/41245273470"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "34 unit tests and the production build passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244265171,
+              "name": "Verify and deploy Vector Gate",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-vector-gate/actions/runs/41244265171/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R20261031-09",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Classify semantic proof outcomes, ineffective mutations and malformed-proof controls.",
+      "paperIds": [
+        "CL1192"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-snark-arena",
+        "baselineCommit": "ae44a374b082e275d3c8092fa0cfdade7bc110bc",
+        "commit": "141d141f705a66f8c3de470c7e7dc5174a4b911c",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-snark-arena/pull/27",
+        "paths": [
+          "src/crypto/semantic-outcomes.ts",
+          "src/ui/semantic-outcomes.ts"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "45808098106b26da8a69fa56ad5f51809f2b4efa",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "45808098106b26da8a69fa56ad5f51809f2b4efa",
+        "postMergeRuns": [
+          {
+            "id": 41245276564,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-snark-arena/actions/runs/41245276564"
+          },
+          {
+            "id": 41245276088,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-snark-arena/actions/runs/41245276088"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "53 unit tests, eight maintenance checks, production build, and rendered DOM interactions passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244268641,
+              "name": "Deploy to GitHub Pages",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-snark-arena/actions/runs/41244268641/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R20261031-10",
+      "classification": "Advanced option",
+      "disposition": "deferred-option",
+      "change": "Preserve the existing noisy-oracle core; optional information-bound and burst-noise extension remains queued.",
+      "paperIds": [
+        "CL1207"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": null,
+      "checks": [
+        {
+          "name": "implementation",
+          "result": "not-run",
+          "summary": "Optional/deferred in the supplied review; no new calculator, proof claim or attack replay implemented."
+        }
+      ]
+    },
+    {
+      "id": "R20261031-11",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Separate authenticity, context commitment, passive leakage and distinct active-fault models.",
+      "paperIds": [
+        "CL1268",
+        "CL1271",
+        "CL1091"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-salamander",
+        "baselineCommit": "a775b4af39ee8154dee174aca58fa10a7e7b8ef8",
+        "commit": "0d58475ed71a66fd47e15ca81717c002361683ec",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-salamander/pull/33",
+        "paths": [
+          "src/ui/property-scope.ts"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "828d659533f37c538769a45386fb4c55cbbf5d7c",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "828d659533f37c538769a45386fb4c55cbbf5d7c",
+        "postMergeRuns": [
+          {
+            "id": 41245279491,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-salamander/actions/runs/41245279491"
+          },
+          {
+            "id": 41245279148,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-salamander/actions/runs/41245279148"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "34 unit tests, production build, and rendered scope-table checks passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244572076,
+              "name": "Deploy to GitHub Pages",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-salamander/actions/runs/41244572076/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R20261031-12",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Compute offline/online/total UOV costs and enforce modeled one-use inventory.",
+      "paperIds": [
+        "CL1257"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-multivariate",
+        "baselineCommit": "836369d660f5160c0eb48130238a31c1ced58eca",
+        "commit": "f13f8e41e945193e447faa13c8f9fa4bfbe41d67",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-multivariate/pull/23",
+        "paths": [
+          "src/precomputation.ts"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "c11034447f72516d0a1fac0ee2d72cd824db3bbf",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "c11034447f72516d0a1fac0ee2d72cd824db3bbf",
+        "postMergeRuns": [
+          {
+            "id": 41245283472,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-multivariate/actions/runs/41245283472"
+          },
+          {
+            "id": 41245282499,
+            "name": "Push on main",
+            "event": "dynamic",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-multivariate/actions/runs/41245282499"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "47 unit tests, production build, and rendered lifecycle/reuse checks passed."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244881188,
+              "name": "Deploy to GitHub Pages",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-multivariate/actions/runs/41244881188/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R20261031-13",
+      "classification": "Enhancement",
+      "disposition": "implemented",
+      "change": "Enumerate full-public-helper views for a separately labeled broken polynomial-CRT construction.",
+      "paperIds": [
+        "ARX-2610.06312v1"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-hostile-paths",
+        "baselineCommit": "e954fe1101dd6311f2434409664964f9ed2b5c8c",
+        "commit": "3d2100ac2737bb822aefc3f57cfefb157f2fb07e",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-hostile-paths/pull/5",
+        "paths": [
+          "src/psmt/public-helper.ts",
+          "src/ui/public-helper.ts"
+        ],
+        "status": "merged",
+        "deployment": "not-verified",
+        "mergeCommit": "bee18d960928c1c3cb815ff1828e2ffba76e9609",
+        "mergeMethod": "squash",
+        "mainObservedAtMerge": "bee18d960928c1c3cb815ff1828e2ffba76e9609",
+        "postMergeRuns": [
+          {
+            "id": 41245287349,
+            "name": "CodeQL",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-hostile-paths/actions/runs/41245287349"
+          },
+          {
+            "id": 41245287295,
+            "name": "Verify and deploy",
+            "event": "push",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/systemslibrarian/crypto-lab-hostile-paths/actions/runs/41245287295"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "name": "source and local validation",
+          "result": "passed",
+          "summary": "36 unit tests, format, typecheck, lint, coverage thresholds, production build, build evidence checks, and rendered coalition controls passed. Algebraic single-member recovery was checked for all 625 dealer choices."
+        },
+        {
+          "name": "local Chromium",
+          "result": "not-run",
+          "summary": "Environment blocked Chromium Unix sockets before page execution."
+        },
+        {
+          "name": "hosted CI",
+          "result": "passed",
+          "summary": "All observed pull-request workflows for this exact head completed successfully; this is not merge or deployment evidence.",
+          "runs": [
+            {
+              "id": 41244284736,
+              "name": "Verify and deploy",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-hostile-paths/actions/runs/41244284736/jobs"
+            },
+            {
+              "id": 41244284804,
+              "name": "CodeQL",
+              "status": "completed",
+              "conclusion": "success",
+              "jobsUrl": "https://api.github.com/repos/systemslibrarian/crypto-lab-hostile-paths/actions/runs/41244284804/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R20261031-14",
+      "classification": "Advanced option",
+      "disposition": "deferred-option",
+      "change": "Keep the application-specific KDF calculator queued pending resolution of the converse-proof issue and separate parameter/game scope.",
+      "paperIds": [
+        "CL965"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": null,
+      "checks": [
+        {
+          "name": "implementation",
+          "result": "not-run",
+          "summary": "Optional/deferred in the supplied review; no new calculator, proof claim or attack replay implemented."
+        }
+      ]
+    },
+    {
+      "id": "R20261031-15",
+      "classification": "Advanced option",
+      "disposition": "deferred-option",
+      "change": "Keep the PQ proof-wrapper dependency graph as a separately scoped optional extension.",
+      "paperIds": [
+        "ARX-2610.11490v1"
+      ],
+      "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
+      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
+      "implementation": null,
+      "checks": [
+        {
+          "name": "implementation",
+          "result": "not-run",
+          "summary": "Optional/deferred in the supplied review; no new calculator, proof claim or attack replay implemented."
+        }
+      ]
+    }
+  ],
+  "readingContinuity": {
+    "identity": "stable paper ID + saved-file SHA-256",
+    "intakeStatusSeparate": true,
+    "readDepthSeparate": true,
+    "implementationStatusSeparate": true,
+    "savedHashPolicy": "Do not invent missing hashes. Preserve the existing reading ledgers and reread only changed versions or concrete new questions. The attached report does not carry the per-paper hash ledger; no full-collection hash recheck was performed here.",
+    "newIndependentSourceRead": "R20261031-13: saved source text, sections III-IV, for finite-field equations and parameter derivation; not claimed as independent proof certification.",
+    "reportedCounts": {
+      "currentFullReads": 24,
+      "currentPages": 492,
+      "cumulativeFullReads": 36,
+      "cumulativePages": 856,
+      "catalogScreened": 1468
+    },
+    "evidenceLimits": "These reading counts come from the supplied report, not new reading in this implementation pass."
+  },
+  "noChangeDecisions": [
+    "Museum R01-R14 and F01-F13 remain implemented.",
+    "Existing weak-XOR, key-commitment, FROST-participation and entropy-source lessons retained.",
+    "Existing ECC engines retained; no optimization-driven replacement.",
+    "CL1003 battery false-acceptance prescription not adopted.",
+    "CL1037 measured-leakage evidence remains supporting material; no dataset redistributed.",
+    "CL1188/CL964 support existing assumption lessons; no duplicate generic worksheet."
+  ],
+  "sources": {
+    "CL974": {
+      "primarySource": "https://eprint.iacr.org/2016/863",
+      "reportPages": "7–10, 14–17",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1190": {
+      "primarySource": "https://www.usenix.org/conference/usenixsecurity26/presentation/gegenhuber",
+      "reportPages": "4–5, 9–10, 12–14, 20–21",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1196": {
+      "primarySource": "https://www.usenix.org/conference/usenixsecurity26/presentation/knabenhans",
+      "reportPages": "3–5, 12–13, 20–21",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1237": {
+      "primarySource": "https://aclanthology.org/2026.lt4hala-1.17/",
+      "reportPages": "4–10",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1187": {
+      "primarySource": "https://ecp.ep.liu.se/index.php/histocrypt/article/view/404",
+      "reportPages": "2–8",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1238": {
+      "primarySource": "https://aclanthology.org/Q16-1006/",
+      "reportPages": "4–11",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1152": {
+      "primarySource": "https://tches.iacr.org/index.php/TCHES/article/view/11161",
+      "reportPages": "2–3, 7, 12–16",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1241": {
+      "primarySource": "https://arxiv.org/abs/2511.11292v2",
+      "reportPages": "2, 6–7, 13",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1192": {
+      "primarySource": "https://www.usenix.org/conference/usenixsecurity26/presentation/hochrainer",
+      "reportPages": "5–10, 12, 20–21",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1207": {
+      "primarySource": "https://www.usenix.org/conference/usenixsecurity26/presentation/guo-qian",
+      "reportPages": "5–16, 19–20",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1268": {
+      "primarySource": "https://doi.org/10.46586/tosc.v2024.i2.348-370",
+      "reportPages": "2–3, 6–9, 14–20",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1271": {
+      "primarySource": "https://doi.org/10.46586/tosc.v2022.i4.291-324",
+      "reportPages": "9–15, 26–34",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1091": {
+      "primarySource": "https://doi.org/10.46586/tosc.v2025.i4.199-230",
+      "reportPages": "2, 14–16, 22–25, 31–32",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL1257": {
+      "primarySource": "https://doi.org/10.46586/tches.v2022.i1.245-269",
+      "reportPages": "14–21; Table 6 p. 17",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "ARX-2610.06312v1": {
+      "primarySource": "https://arxiv.org/abs/2610.06312v1",
+      "reportPages": "2–5",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "CL965": {
+      "primarySource": "https://eprint.iacr.org/2013/708",
+      "reportPages": "4, 8–16; unresolved Lemma 3.6 p. 10",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    },
+    "ARX-2610.11490v1": {
+      "primarySource": "https://arxiv.org/abs/2610.11490v1",
+      "reportPages": "5–6, 11–12",
+      "savedSha256": null,
+      "hashState": "not-carried-in-attached-report",
+      "readingDepth": "as-reported-in-attached-review; no upgrade from implementation"
+    }
+  },
+  "deliveryHistory": [
+    {
+      "repository": "systemslibrarian/crypto-lab-salamander",
+      "runId": 41244274289,
+      "result": "failed",
+      "finding": "Expected panel count needed to include the new tenth panel.",
+      "resolutionCommit": "0d58475ed71a66fd47e15ca81717c002361683ec"
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-multivariate",
+      "runId": 41244280948,
+      "result": "failed",
+      "finding": "New inventory buttons lacked the existing accessible styles.",
+      "resolutionCommit": "f13f8e41e945193e447faa13c8f9fa4bfbe41d67"
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-multivariate",
+      "runId": 41244574677,
+      "result": "failed",
+      "finding": "Post-interaction populated select needed the existing contrast-safe control styling.",
+      "resolutionCommit": "f13f8e41e945193e447faa13c8f9fa4bfbe41d67"
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-drbg-arena",
+      "runId": 41244611167,
+      "result": "failed",
+      "finding": "An existing test assumed a fair random sample always passes all four diagnostics; it now checks the tally against the actual painted bytes.",
+      "resolutionCommit": "419a3d615133ce61a98c78eb8f36ba46bbcaff37"
+    }
+  ],
+  "finalImplementationCI": {
+    "result": "passed",
+    "projectCount": 9,
+    "scope": "Exact-head PR workflows, not main-branch deployment.",
+    "observedOn": "2026-10-31"
+  },
+  "mergeSummary": {
+    "mergedProjects": 9,
+    "centralRecordPullRequest": "https://github.com/systemslibrarian/crypto-lab/pull/347",
+    "deploymentEvidence": "Post-merge workflows recorded separately; merge is not deployment confirmation."
+  }
+}

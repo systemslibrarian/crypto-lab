@@ -12300,8 +12300,8 @@
       ]
     },
     "crypto-lab-falcon-seal": {
-      "commit": "9558adf185c09cd28e780397d64d555221b89eeb",
-      "reviewed": "2026-10-22",
+      "commit": "9778ca52c846c64cc5264756ec43265cca24abb4",
+      "reviewed": "2026-11-01",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -12325,10 +12325,10 @@
             "src/ui.ts:646",
             "src/ui.ts:651",
             "src/ui.ts:683",
-            "src/ui.ts:1039",
-            "src/ui.ts:1074",
-            "src/ui.ts:1108",
-            "src/ui.ts:1299",
+            "src/ui.ts:1040",
+            "src/ui.ts:1075",
+            "src/ui.ts:1109",
+            "src/ui.ts:1300",
             "src/falcon.ts:253",
             "src/falcon.ts:308",
             "src/falcon.ts:409"
@@ -12354,16 +12354,17 @@
           "evidence": [
             "src/ui.ts:771",
             "src/ui.ts:775",
-            "src/ui.ts:801",
-            "src/ui.ts:811",
-            "src/ui.ts:1018",
-            "src/ui.ts:1174",
-            "src/ui.ts:1246",
-            "src/ui.ts:1259",
+            "src/ui.ts:802",
+            "src/ui.ts:812",
+            "src/ui.ts:1019",
+            "src/ui.ts:1175",
+            "src/ui.ts:1247",
+            "src/ui.ts:1260",
             "src/ntru.ts:119",
-            "src/attack.ts:87"
+            "src/attack.ts:87",
+            "src/ui.ts:788"
           ],
-          "limits": "No browser clock or physical leakage is measured. The leaky/flat timing formulas predetermine this model's outcome; it does not reproduce the cited hardware power attacks or certify an implementation's side-channel resistance."
+          "limits": "No browser clock or physical leakage is measured. The leaky/flat timing formulas predetermine this model's outcome; it does not reproduce the cited hardware power attacks or certify an implementation's side-channel resistance. The 28 October 2026 Kim et al. preprint reports combined profiled power leaks against evaluated hardware implementations despite a constant-time CLZ conversion; its 38-of-50-key result within 200 signatures is not reproduced by this timing model or evidence against the browser build."
         },
         {
           "id": "wasm-falcon",
@@ -12383,11 +12384,11 @@
             "signature size"
           ],
           "evidence": [
-            "src/ui.ts:842",
-            "src/ui.ts:849",
-            "src/ui.ts:1373",
-            "src/ui.ts:1377",
-            "src/ui.ts:1380",
+            "src/ui.ts:843",
+            "src/ui.ts:850",
+            "src/ui.ts:1374",
+            "src/ui.ts:1378",
+            "src/ui.ts:1381",
             "src/real-falcon.ts:44",
             "src/real-falcon.ts:50",
             "src/real-falcon.ts:52",
@@ -12511,9 +12512,9 @@
           "evidence": [
             "src/ui.ts:614",
             "src/ui.ts:645",
-            "src/ui.ts:842",
-            "src/ui.ts:860",
-            "src/ui.ts:863"
+            "src/ui.ts:843",
+            "src/ui.ts:861",
+            "src/ui.ts:864"
           ],
           "section": "References and Notes",
           "execution": "conceptual"
@@ -18965,8 +18966,8 @@
       ]
     },
     "crypto-lab-isogeny-atlas": {
-      "commit": "bf5fd888a6ef82eeb3c61eabcef4e68e97f5f4d3",
-      "reviewed": "2026-10-31",
+      "commit": "38b0f613421ad514b55989e873af0a1cab18315f",
+      "reviewed": "2026-11-01",
       "exhibits": [
         {
           "id": "atlas",
@@ -19133,7 +19134,7 @@
             "src/main.ts:473",
             "src/ui/problems.ts:35"
           ],
-          "limits": "Tiny graph search does not estimate concrete cost at cryptographic size. The expanded precise-problem panel cites the 30 October 2026 Mamah preprint revision and distinguishes heuristic concrete attack costs from this tiny-graph experiment.",
+          "limits": "Tiny graph search does not estimate concrete cost at cryptographic size. The expanded precise-problem panel cites the 30 October 2026 Mamah preprint revision and distinguishes heuristic concrete attack costs from this tiny-graph experiment. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions.",
           "section": "The seven open problems, drawn on the graph"
         },
         {
@@ -19181,7 +19182,7 @@
             "src/main.ts:502",
             "src/ui/problems.ts:75"
           ],
-          "limits": "Small graph cycle search is a teaching instance, not a research-scale solver. The expanded precise-problem panel cites the 30 October 2026 Mamah preprint revision and distinguishes heuristic concrete attack costs from this tiny-graph experiment.",
+          "limits": "Small graph cycle search is a teaching instance, not a research-scale solver. The expanded precise-problem panel cites the 30 October 2026 Mamah preprint revision and distinguishes heuristic concrete attack costs from this tiny-graph experiment. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions.",
           "section": "The seven open problems, drawn on the graph"
         },
         {
@@ -30352,8 +30353,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-pq-families": {
-      "commit": "87c1917c18a865a1117dcc718948fff060981801",
-      "reviewed": "2026-10-31",
+      "commit": "4e87b559586170bb054d0c4d98f5c79a95e0e269",
+      "reviewed": "2026-11-01",
       "exhibits": [
         {
           "id": "five-families",
@@ -30385,9 +30386,10 @@
             "src/ui.ts:386",
             "src/data.ts:459",
             "src/data.ts:503",
-            "src/data.ts:682"
+            "src/data.ts:688",
+            "src/data.ts:680"
           ],
-          "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery."
+          "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions."
         },
         {
           "id": "size-comparison",
@@ -30594,7 +30596,7 @@
             "src/ui.ts:952",
             "src/ui.ts:955",
             "src/ui.ts:971",
-            "src/data.ts:817"
+            "src/data.ts:830"
           ],
           "limits": "A curated historical summary, not an automatically refreshed standards feed or implementation."
         },
@@ -30688,7 +30690,7 @@
           "evidence": [
             "src/ui.ts:2397",
             "src/ui.ts:2407",
-            "src/data.ts:965"
+            "src/data.ts:978"
           ],
           "limits": "The glossary is an explanatory reference, not a runnable construction or formal security definition."
         },

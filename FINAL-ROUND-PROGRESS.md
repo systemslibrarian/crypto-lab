@@ -125,3 +125,27 @@ local sweep tell "already on main" apart from "not merged yet": `git branch -d`
 compares against the current HEAD, so a stale local `main` refuses deletions
 that are perfectly safe. 22 refusals turned into deletions after the fetch.
 
+## Corrections
+
+**The grep lesson, corrected (2026-11-02).** `crypto-lab-ibe-gate` commit `ec3bdc1`
+says the pattern `${identity}` "could never match because `$` is an end-of-line anchor
+in a BRE". That reason is wrong and the commit message cannot be rewritten, so the
+correction lives here: in POSIX BRE a non-trailing `$` is **literal**, and the pattern
+would have matched. It failed because `grep` on this machine is **ugrep 7.8.4**, where
+`$` anchors anywhere in the pattern. Verified four ways on a one-line fixture: bare
+`grep '${identity}'` exits 1 with the text present, while `-F`, `-E` and `\$` each match.
+
+**Standing rule.** Literal searches use `-F`. Interpolation and sink audits **parse** the
+source — lex template literals and `${...}` with brace nesting — because a regex cannot
+see nesting and a silent zero-match is indistinguishable from a clean result. A CodeQL XSS
+alert always names a sink, so "no sinks found" means the search was for the wrong KIND of
+sink; read the SARIF `codeFlow` instead.
+
+**Re-audit by parsing (item 4).** Every XSS clearance that had rested on a grep was redone
+by parsing: lex each sink-bound template, extract its interpolations, and report those
+mentioning a value read directly from the DOM and not passed through an escaper. Ten labs
+— curve448, harvest-timeline, dilithium-reject, hash-zoo, curve-lens, aes-anatomy,
+aes-modes, compression-leak, harvest-vault, factor-forge. **No DOM-derived value reaches an
+HTML sink unescaped in any of them.** The residual flags were all ternaries yielding string
+literals or numeric formatters (`formatMicros(...timeMs)`, `ariaSort('miss')`,
+`match ? '…' : '…'`), read individually. The grep answers were right; the method was not.

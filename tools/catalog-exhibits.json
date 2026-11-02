@@ -26772,8 +26772,8 @@
       "reviewScope": "selected"
     },
     "crypto-lab-nonce-lattice": {
-      "commit": "6cd0b424d212f330debee615b026893339e7c135",
-      "reviewed": "2026-10-22",
+      "commit": "5d59d3ba2d5821242e92f7b7ea84f31d641d7a34",
+      "reviewed": "2026-11-02",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -32400,8 +32400,8 @@
       ]
     },
     "crypto-lab-quantum-entropy": {
-      "commit": "44b945c15d5de424f4209239b6d96063eccc82f0",
-      "reviewed": "2026-10-22",
+      "commit": "5e9d5994cb41e81184beb0253b5d2376796e2e91",
+      "reviewed": "2026-11-02",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -32491,11 +32491,11 @@
             "health-test gate"
           ],
           "evidence": [
-            "src/ui/toeplitzPanel.ts:18",
-            "src/ui/toeplitzPanel.ts:30",
-            "src/ui/toeplitzPanel.ts:63",
-            "src/ui/toeplitzPanel.ts:218",
-            "src/ui/toeplitzPanel.ts:247"
+            "src/ui/toeplitzPanel.ts:19",
+            "src/ui/toeplitzPanel.ts:32",
+            "src/ui/toeplitzPanel.ts:65",
+            "src/ui/toeplitzPanel.ts:222",
+            "src/ui/toeplitzPanel.ts:251"
           ],
           "limits": "Input is simulated and k comes from its configured model; Toeplitz is not listed as a vetted SP 800-90B conditioning component; the displayed policy thresholds are teaching choices."
         },
@@ -32547,6 +32547,30 @@
             "src/ui/healthWorkshop.ts:53"
           ],
           "limits": "Small, fixed-seed synthetic trials; manual thresholds require source-specific deployment justification and do not alter the commissioned monitor above."
+        },
+        {
+          "id": "entropy-rate-uniformity",
+          "title": "Does 99% entropy mean almost uniform?",
+          "section": "Does 99% entropy mean almost uniform?",
+          "kind": "interactive",
+          "execution": "simulation",
+          "action": "Vary a public zero prefix from 0 to 1,000 bits and reveal an optimal prefix-check distinguisher.",
+          "outcome": "Calculates min-entropy, entropy rate and exact total variation distance for a fixed-prefix, fair-suffix distribution; the 99% rate preset has distance 1023/1024 from uniform.",
+          "concepts": [
+            "min-entropy rate",
+            "total variation distance",
+            "uniform randomness",
+            "public prefix",
+            "distinguisher",
+            "adversary information"
+          ],
+          "evidence": [
+            "src/ui/prefixPanel.ts:6",
+            "src/ui/prefixPanel.ts:19",
+            "src/ui/prefixPanel.ts:34",
+            "src/entropy/prefix-model.ts:2"
+          ],
+          "limits": "An exact synthetic distribution calculation; not a physical source certificate, quantum-protocol implementation, or change to the existing extractor. Public beacon output is not a secret pad."
         }
       ]
     },
@@ -40955,8 +40979,8 @@
       ]
     },
     "crypto-lab-timing-sidechannel": {
-      "commit": "8d72e1b854fac5f03755017fef758e900ee2a7da",
-      "reviewed": "2026-10-22",
+      "commit": "bc2e93f8cd153f0eac08fd448b2b323e0e441e71",
+      "reviewed": "2026-11-02",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -41087,13 +41111,37 @@
             "cryptographic blinding"
           ],
           "evidence": [
-            "src/ui.ts:289",
-            "src/ui.ts:291",
-            "src/ui.ts:295",
-            "src/ui.ts:299",
-            "src/ui.ts:309"
+            "src/ui.ts:324",
+            "src/ui.ts:326",
+            "src/ui.ts:330",
+            "src/ui.ts:334",
+            "src/ui.ts:344"
           ],
           "limits": "JavaScript source pattern is not proof of constant-time machine behavior."
+        },
+        {
+          "id": "key-lifecycle",
+          "title": "Follow the key beyond the primitive",
+          "section": "Follow the key beyond the primitive",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "action": "Predict and reveal potential leakage at private-key import, cryptographic operation, encoding/export, and error handling.",
+          "outcome": "Explains why the review boundary must include more than the primitive and why repeated measurement of a fixed encoded length does not automatically reveal more secret bits.",
+          "concepts": [
+            "private-key loading",
+            "constant-time model",
+            "key encoding",
+            "side-channel boundary",
+            "error handling",
+            "measurement versus information"
+          ],
+          "evidence": [
+            "src/ui.ts:290",
+            "src/ui.ts:295",
+            "src/ui.ts:314",
+            "src/ui.ts:319"
+          ],
+          "limits": "Motivated by Brumley’s WOOT 2026 paper; no reproduction of its attack, key recovery, or demonstrated browser vulnerability."
         }
       ]
     },

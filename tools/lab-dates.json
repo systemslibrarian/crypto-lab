@@ -117,10 +117,10 @@
   "crypto-lab-drbg-arena": {
    "added": "2026-04",
    "addedOn": "2026-04-12",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-12T16:09:18Z",
-   "updatedFrom": "2026-10-28T22:21:04-04:00",
-   "updatedCommit": "f6eee07dfb92f720647fa28659698bad6cba89c1"
+   "updatedFrom": "2026-11-02T09:37:02-05:00",
+   "updatedCommit": "f0a2012659b500fd6c7cf9d578ce6013df501a96"
   },
   "crypto-lab-bb84": {
    "added": "2026-04",
@@ -933,10 +933,10 @@
   "crypto-lab-nonce-lattice": {
    "added": "2026-04",
    "addedOn": "2026-04-23",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-23T01:05:59Z",
-   "updatedFrom": "2026-10-28T18:34:35-04:00",
-   "updatedCommit": "325c6fc2bcc67f10b85c80d89689f6b35f9958c2"
+   "updatedFrom": "2026-11-02T09:37:35-05:00",
+   "updatedCommit": "791de653185cbf7a6b6d55b522c39fd2d3599279"
   },
   "crypto-lab-kerberos": {
    "added": "2026-04",
@@ -1189,10 +1189,10 @@
   "crypto-lab-timing-sidechannel": {
    "added": "2026-06",
    "addedOn": "2026-06-28",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-06-28T17:01:41Z",
-   "updatedFrom": "2026-10-28T18:37:04-04:00",
-   "updatedCommit": "5fba8f070797945411bb62bea57fe4bd6e836960"
+   "updatedFrom": "2026-11-02T09:38:06-05:00",
+   "updatedCommit": "bc2e93f8cd153f0eac08fd448b2b323e0e441e71"
   },
   "crypto-lab-tls-handshake": {
    "added": "2026-06",
@@ -1349,10 +1349,10 @@
   "crypto-lab-quantum-entropy": {
    "added": "2026-07",
    "addedOn": "2026-07-16",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-07-16T23:11:19Z",
-   "updatedFrom": "2026-10-28T18:35:35-04:00",
-   "updatedCommit": "bcb96307d15c83217797cc18a99b061f9c8a0d53"
+   "updatedFrom": "2026-11-02T09:38:02-05:00",
+   "updatedCommit": "5e9d5994cb41e81184beb0253b5d2376796e2e91"
   },
   "crypto-lab-spdz-forge": {
    "added": "2026-07",

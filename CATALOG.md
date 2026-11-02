@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1816 sections in 250 of 252 labs**
+The exhibit map currently records **1818 sections in 250 of 252 labs**
 (246 complete lab inventories, 4 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -5459,7 +5459,7 @@ HMAC_DRBG, CTR_DRBG, and Hash_DRBG with state visualizers, reseeding, and live s
 - **Card topics (discovery only):** HMAC_DRBG, CTR_DRBG, Hash_DRBG, NIST SP 800-90A — labels do not establish what any section runs.
 - **Implements:** AES `src/crypto/utils.ts:56`, AES-CBC `src/crypto/utils.ts:62`, CTR-DRBG `src/crypto/ctr-drbg.ts:25`, HMAC `src/crypto/hmac-drbg.ts:20`, HMAC-DRBG `src/crypto/hmac-drbg.ts:20`, SHA-256 `src/crypto/utils.ts:38`, SHA-512 `src/crypto/utils.ts:43`
 - **References:** Argon2, ECDSA, HKDF, PBKDF2, scrypt
-- **Attacks shown:** Discrete log `src/ui/exhibit5.ts:176`
+- **Attacks shown:** Discrete log `src/ui/exhibit5.ts:177`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4739c152e1ce](https://github.com/systemslibrarian/crypto-lab-drbg-arena/commit/4739c152e1ce7a143e359dc671663a5fb82e7b4d) reviewed 2026-10-22; 11 mapped sections.
@@ -11485,7 +11485,7 @@ ECDSA nonce-bias lattice attack on secp256k1 and P-256 — Hidden Number Problem
 - **Attacks shown:** Key recovery `src/app.ts:219`, Lattice reduction `src/app.ts:161`, Nonce reuse `src/app.ts:147`, Side-channel (unspecified) `src/app.ts:338`, Timing side-channel `src/app.ts:287`
 - **Standards body:** IETF, NIST, SECG
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6cd0b424d212](https://github.com/systemslibrarian/crypto-lab-nonce-lattice/commit/6cd0b424d212f330debee615b026893339e7c135) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5d59d3ba2d58](https://github.com/systemslibrarian/crypto-lab-nonce-lattice/commit/5d59d3ba2d5821242e92f7b7ea84f31d641d7a34) reviewed 2026-11-02; 5 mapped sections.
   - **Attack workflow vs. defense** (`attack-context`; comparison; real-values)
     - **Visible section:** Attack workflow vs. defense
     - **Learner action:** Read the ECDSA equation, historical cases and paired attack/defense workflow.
@@ -13441,7 +13441,14 @@ A modelled beam-splitter QRNG, min-entropy accounting, von Neumann debiasing, an
 - **References:** BB84, E91, Pairing
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [44b945c15d5d](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/commit/44b945c15d5de424f4209239b6d96063eccc82f0) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5e9d5994cb41](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/commit/5e9d5994cb41e81184beb0253b5d2376796e2e91) reviewed 2026-11-02; 7 mapped sections.
+  - **Does 99% entropy mean almost uniform?** (`entropy-rate-uniformity`; interactive; simulation)
+    - **Visible section:** Does 99% entropy mean almost uniform?
+    - **Learner action:** Vary a public zero prefix from 0 to 1,000 bits and reveal an optimal prefix-check distinguisher.
+    - **Observed result:** Calculates min-entropy, entropy rate and exact total variation distance for a fixed-prefix, fair-suffix distribution; the 99% rate preset has distance 1023/1024 from uniform.
+    - **Concepts taught:** min-entropy rate; total variation distance; uniform randomness; public prefix; distinguisher; adversary information
+    - **Limits:** An exact synthetic distribution calculation; not a physical source certificate, quantum-protocol implementation, or change to the existing extractor. Public beacon output is not a secret pad.
+    - **Evidence at pinned commit:** `src/ui/prefixPanel.ts:6`, `src/ui/prefixPanel.ts:19`, `src/ui/prefixPanel.ts:34`, `src/entropy/prefix-model.ts:2`
   - **Continuous RCT/APT monitor** (`health-monitor`; interactive; real-operation)
     - **Visible section:** SP 800-90B health tests — because a dead source outputs a beautiful constant
     - **Learner action:** Stick and repair the detector, then explicitly recommission after an alarm.
@@ -13476,7 +13483,7 @@ A modelled beam-splitter QRNG, min-entropy accounting, von Neumann debiasing, an
     - **Observed result:** A real GF(2) Toeplitz matrix-vector product displays output, seed/matrix, first-row parity, and Leftover Hash Lemma distance bound; a latched health alarm blocks extraction.
     - **Concepts taught:** Toeplitz hashing; seeded extractor; two-universal hashing; Leftover Hash Lemma; min-entropy budget; health-test gate
     - **Limits:** Input is simulated and k comes from its configured model; Toeplitz is not listed as a vetted SP 800-90B conditioning component; the displayed policy thresholds are teaching choices.
-    - **Evidence at pinned commit:** `src/ui/toeplitzPanel.ts:18`, `src/ui/toeplitzPanel.ts:30`, `src/ui/toeplitzPanel.ts:63`, `src/ui/toeplitzPanel.ts:218`, `src/ui/toeplitzPanel.ts:247`
+    - **Evidence at pinned commit:** `src/ui/toeplitzPanel.ts:19`, `src/ui/toeplitzPanel.ts:32`, `src/ui/toeplitzPanel.ts:65`, `src/ui/toeplitzPanel.ts:222`, `src/ui/toeplitzPanel.ts:251`
   - **Von Neumann debiasing** (`von-neumann`; interactive; real-operation)
     - **Visible section:** Von Neumann debiasing: perfect balance, brutal cost, wrong assumption
     - **Learner action:** Step bit pairs, run the rest, then make the source 80% streaky.
@@ -16644,10 +16651,10 @@ Recover a hidden secret one byte at a time from an early-exit comparison, then w
 - **Implements:** N/A — reviewed source implements no named algorithm in this index
 - **Source review:** [72aceaa93383](https://github.com/systemslibrarian/crypto-lab-timing-sidechannel/commit/72aceaa9338370fdb34eec26cc6431c3ab1a1e61) — Re-read the current early-exit/all-byte comparators, timing probes, recovery engine, verdict logic, UI and README. The change correctly makes incomplete recoveries inconclusive and labels the defended result as a source-model result; cited Hertzbleed and GoFetch hardware channels are explicitly not reproduced. No named cryptographic primitive is implemented, so N/A remains accurate. The constant-work JavaScript pattern is not a browser-engine or machine-code constant-time guarantee.
 - **References:** AES, Diffie-Hellman, HMAC, HQC, RSA
-- **Attacks shown:** Brute force `src/ui.ts:216`, Fault injection `src/timing/attack.ts:39`, Padding oracle `src/ui.ts:303`, Side-channel (unspecified) `src/ui.ts:119`, Timing side-channel `src/ui.ts:119`
+- **Attacks shown:** Brute force `src/ui.ts:216`, Fault injection `src/timing/attack.ts:39`, Padding oracle `src/ui.ts:338`, Side-channel (unspecified) `src/ui.ts:119`, Timing side-channel `src/ui.ts:119`
 - **Standards body:** —
 - **Implementation:** N/A (model or attack)
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8d72e1b854fa](https://github.com/systemslibrarian/crypto-lab-timing-sidechannel/commit/8d72e1b854fac5f03755017fef758e900ee2a7da) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bc2e93f8cd15](https://github.com/systemslibrarian/crypto-lab-timing-sidechannel/commit/bc2e93f8cd153f0eac08fd448b2b323e0e441e71) reviewed 2026-11-02; 7 mapped sections.
   - **Measure early-exit and constant-time comparisons** (`comparison-timing`; comparison; real-operation)
     - **Visible section:** 2 · Vulnerable vs constant-time
     - **Learner action:** Measure both comparators and sweep matching-prefix lengths.
@@ -16669,13 +16676,20 @@ Recover a hidden secret one byte at a time from an early-exit comparison, then w
     - **Concepts taught:** timing oracle; measurement noise; defense comparison; idealized channel
     - **Limits:** Noisy live runs can vary; a failed bounded attack does not prove a real implementation secure.
     - **Evidence at pinned commit:** `src/ui.ts:266`, `src/ui.ts:268`, `src/timing/measure.ts:3`, `src/timing/measure.ts:106`
+  - **Follow the key beyond the primitive** (`key-lifecycle`; explanation; conceptual)
+    - **Visible section:** Follow the key beyond the primitive
+    - **Learner action:** Predict and reveal potential leakage at private-key import, cryptographic operation, encoding/export, and error handling.
+    - **Observed result:** Explains why the review boundary must include more than the primitive and why repeated measurement of a fixed encoded length does not automatically reveal more secret bits.
+    - **Concepts taught:** private-key loading; constant-time model; key encoding; side-channel boundary; error handling; measurement versus information
+    - **Limits:** Motivated by Brumley’s WOOT 2026 paper; no reproduction of its attack, key recovery, or demonstrated browser vulnerability.
+    - **Evidence at pinned commit:** `src/ui.ts:290`, `src/ui.ts:295`, `src/ui.ts:314`, `src/ui.ts:319`
   - **Review constant-time comparison practices** (`timing-defenses`; explanation; conceptual)
     - **Visible section:** 5 · Defenses & best practices
     - **Learner action:** Read the checklist and implementation caveats.
     - **Observed result:** Shows branch, memory and loop discipline and use of vetted comparison primitives.
     - **Concepts taught:** constant-time equality; side-channel mitigation; cryptographic blinding
     - **Limits:** JavaScript source pattern is not proof of constant-time machine behavior.
-    - **Evidence at pinned commit:** `src/ui.ts:289`, `src/ui.ts:291`, `src/ui.ts:295`, `src/ui.ts:299`, `src/ui.ts:309`
+    - **Evidence at pinned commit:** `src/ui.ts:324`, `src/ui.ts:326`, `src/ui.ts:330`, `src/ui.ts:334`, `src/ui.ts:344`
   - **Understand how early rejection leaks prefixes** (`timing-primer`; explanation; conceptual)
     - **Visible section:** 1 · What is a timing side-channel?
     - **Learner action:** Read the comparator timing analogy and attack examples.

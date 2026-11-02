@@ -149,10 +149,10 @@
   "crypto-lab-model-breach": {
    "added": "2026-04",
    "addedOn": "2026-04-17",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-17T06:47:41Z",
-   "updatedFrom": "2026-10-28T18:34:17-04:00",
-   "updatedCommit": "952f95c8ce3a4c96c25f4f4da381115322c40168"
+   "updatedFrom": "2026-11-02T09:07:08-05:00",
+   "updatedCommit": "0772371dcaaf82367dda526697deb94ffd0e26e9"
   },
   "crypto-lab-iron-letter": {
    "added": "2026-04",

@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1820 sections in 250 of 252 labs**
+The exhibit map currently records **1821 sections in 250 of 252 labs**
 (246 complete lab inventories, 4 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -5461,7 +5461,7 @@ Real payroll differential privacy keeps distinguishing advantage bounded; an exp
 
 [`crypto-lab-drbg-arena`](https://systemslibrarian.github.io/crypto-lab-drbg-arena/) · CSPRNG · RANDOMNESS
 
-HMAC_DRBG, CTR_DRBG, and Hash_DRBG with state visualizers, reseeding, and live statistical tests. Route two sources through a Hash_DRBG experiment and distinguish input influence from credited entropy.
+Explore HMAC_DRBG, CTR_DRBG, and Hash_DRBG state and reseeding. Compare statistical tests, including a signed monobit exercise, and distinguish plausible output from seed freshness and credited entropy.
 
 - **Card topics (discovery only):** HMAC_DRBG, CTR_DRBG, Hash_DRBG, NIST SP 800-90A — labels do not establish what any section runs.
 - **Implements:** AES `src/crypto/utils.ts:56`, AES-CBC `src/crypto/utils.ts:62`, CTR-DRBG `src/crypto/ctr-drbg.ts:25`, HMAC `src/crypto/hmac-drbg.ts:20`, HMAC-DRBG `src/crypto/hmac-drbg.ts:20`, SHA-256 `src/crypto/utils.ts:38`, SHA-512 `src/crypto/utils.ts:43`
@@ -5469,7 +5469,7 @@ HMAC_DRBG, CTR_DRBG, and Hash_DRBG with state visualizers, reseeding, and live s
 - **Attacks shown:** Discrete log `src/ui/exhibit5.ts:177`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4739c152e1ce](https://github.com/systemslibrarian/crypto-lab-drbg-arena/commit/4739c152e1ce7a143e359dc671663a5fb82e7b4d) reviewed 2026-10-22; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f0a2012659b5](https://github.com/systemslibrarian/crypto-lab-drbg-arena/commit/f0a2012659b500fd6c7cf9d578ce6013df501a96) reviewed 2026-11-02; 12 mapped sections.
   - **Stolen State and Reseed** (`compromise`; comparison; real-crypto)
     - **Visible section:** Exhibit 6 — Steal the state
     - **Learner action:** Seed two generators, steal their states, attempt past/future recovery, and reseed from fresh entropy.
@@ -5531,6 +5531,13 @@ HMAC_DRBG, CTR_DRBG, and Hash_DRBG with state visualizers, reseeding, and live s
     - **Concepts taught:** SP 800-90C; RBG1; RBG2; RBG3; RBGC
     - **Limits:** The class panel generates no bytes and is not NIST validation.
     - **Evidence at pinned commit:** `src/ui/construction-context.ts:4`, `src/ui/construction-context.ts:9`, `src/ui/construction-context.ts:22`, `src/ui/construction-context.ts:27`
+  - **What a two-sided P value hides** (`signed-monobit`; comparison; real-values)
+    - **Visible section:** What a two-sided P value hides
+    - **Learner action:** Choose block size, sample count and normal or exact-binomial calibration; compare original fair-bit blocks with versions whose negative monobit statistics are complemented.
+    - **Observed result:** The absolute statistic and two-sided P remain invariant under the fold, while the signed Q distribution changes; inspect finite-null expected bin counts and ties.
+    - **Concepts taught:** monobit test; signed statistic; two-sided P value; signed survival transform; binomial tails; finite-sample calibration
+    - **Limits:** This diagnostic uses browser CSPRNG bytes and assumes independent fair bits for its null. It does not implement a calibrated second-level rejection test or certify a generator; exact binomial finite-null expectations are a lab teaching adaptation.
+    - **Evidence at pinned commit:** `src/ui/exhibit5.ts:213`, `src/ui/signed-monobit.ts:8`, `src/ui/signed-monobit.ts:15`, `src/ui/signed-monobit.ts:37`, `src/ui/signed-monobit.ts:52`, `src/stats/signed-monobit.ts:20`, `src/stats/signed-monobit.ts:37`
   - **Validated Source Versus Extra Input** (`source-credit-standard-boundary`; explanation; conceptual)
     - **Visible section:** What is required, and what is Hill’s analysis?
     - **Learner action:** Open the disclosure on source-credit requirements and the cited external-conditioner analysis.
@@ -5543,8 +5550,8 @@ HMAC_DRBG, CTR_DRBG, and Hash_DRBG with state visualizers, reseeding, and live s
     - **Learner action:** Run simplified tests on the DRBGs and compare their byte grids to a weak LCG.
     - **Observed result:** Reports statistics and visual differences while showing that passing tests cannot establish unpredictability.
     - **Concepts taught:** statistical randomness tests; Shannon entropy; linear congruential generator; Dual_EC_DRBG lesson
-    - **Limits:** Simplified SP 800-22-style checks are not certification or proof of cryptographic security; Dual_EC is simulated.
-    - **Evidence at pinned commit:** `src/ui/exhibit5.ts:83`, `src/ui/exhibit5.ts:103`, `src/ui/exhibit5.ts:141`, `src/ui/exhibit5.ts:179`, `src/ui/exhibit5.ts:220`
+    - **Limits:** Simplified SP 800-22-style checks are not certification, seed-freshness evidence or proof of cryptographic security; fixed or public seeds may pass. Dual_EC is simulated with OS random bytes.
+    - **Evidence at pinned commit:** `src/ui/exhibit5.ts:84`, `src/ui/exhibit5.ts:104`, `src/ui/exhibit5.ts:142`, `src/ui/exhibit5.ts:180`, `src/ui/exhibit5.ts:223`
 
 ### Drift Key
 

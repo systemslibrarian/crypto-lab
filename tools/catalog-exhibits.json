@@ -9950,8 +9950,8 @@
       ]
     },
     "crypto-lab-drbg-arena": {
-      "commit": "4739c152e1ce7a143e359dc671663a5fb82e7b4d",
-      "reviewed": "2026-10-22",
+      "commit": "f0a2012659b500fd6c7cf9d578ce6013df501a96",
+      "reviewed": "2026-11-02",
       "exhibits": [
         {
           "id": "hmac-drbg",
@@ -10031,15 +10031,15 @@
             "Dual_EC_DRBG lesson"
           ],
           "evidence": [
-            "src/ui/exhibit5.ts:83",
-            "src/ui/exhibit5.ts:103",
-            "src/ui/exhibit5.ts:141",
-            "src/ui/exhibit5.ts:179",
-            "src/ui/exhibit5.ts:220"
+            "src/ui/exhibit5.ts:84",
+            "src/ui/exhibit5.ts:104",
+            "src/ui/exhibit5.ts:142",
+            "src/ui/exhibit5.ts:180",
+            "src/ui/exhibit5.ts:223"
           ],
           "section": "Exhibit 5 — Statistical Output Quality",
           "execution": "real-values",
-          "limits": "Simplified SP 800-22-style checks are not certification or proof of cryptographic security; Dual_EC is simulated."
+          "limits": "Simplified SP 800-22-style checks are not certification, seed-freshness evidence or proof of cryptographic security; fixed or public seeds may pass. Dual_EC is simulated with OS random bytes."
         },
         {
           "id": "compromise",
@@ -10208,6 +10208,33 @@
           "section": "What is required, and what is Hill’s analysis?",
           "execution": "conceptual",
           "limits": "Credited bits are hypothetical source assumptions; the fixed public inputs prove influence only, and the cited proposal is not treated as a standard."
+        },
+        {
+          "id": "signed-monobit",
+          "title": "What a two-sided P value hides",
+          "section": "What a two-sided P value hides",
+          "kind": "comparison",
+          "execution": "real-values",
+          "action": "Choose block size, sample count and normal or exact-binomial calibration; compare original fair-bit blocks with versions whose negative monobit statistics are complemented.",
+          "outcome": "The absolute statistic and two-sided P remain invariant under the fold, while the signed Q distribution changes; inspect finite-null expected bin counts and ties.",
+          "concepts": [
+            "monobit test",
+            "signed statistic",
+            "two-sided P value",
+            "signed survival transform",
+            "binomial tails",
+            "finite-sample calibration"
+          ],
+          "evidence": [
+            "src/ui/exhibit5.ts:213",
+            "src/ui/signed-monobit.ts:8",
+            "src/ui/signed-monobit.ts:15",
+            "src/ui/signed-monobit.ts:37",
+            "src/ui/signed-monobit.ts:52",
+            "src/stats/signed-monobit.ts:20",
+            "src/stats/signed-monobit.ts:37"
+          ],
+          "limits": "This diagnostic uses browser CSPRNG bytes and assumes independent fair bits for its null. It does not implement a calibrated second-level rejection test or certify a generator; exact binomial finite-null expectations are a lab teaching adaptation."
         }
       ],
       "reviewScope": "complete"
